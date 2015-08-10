@@ -147,82 +147,83 @@
 <context>
     <name>Otter::AddressWidget</name>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="85"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="92"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="114"/>
         <source>Enter address or search…</source>
         <translation>Typ een adres of zoekopdracht...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="239"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="249"/>
         <source>Undo</source>
         <translation>Ongedaan maken</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="240"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="250"/>
         <source>Redo</source>
         <translation>Herhalen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="242"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="252"/>
         <source>Cut</source>
         <translation>Knippen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="243"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="253"/>
         <source>Copy</source>
         <translation>Kopiëren</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="244"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="254"/>
         <source>Paste</source>
         <translation>Plakken</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="251"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="261"/>
         <source>Delete</source>
         <translation>Verwijderen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="253"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="263"/>
         <source>Copy to Note</source>
         <translation>Kopiëren naar notitie</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="255"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="265"/>
         <source>Clear All</source>
         <translation>Alles wissen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="256"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="266"/>
         <source>Select All</source>
         <translation>Alles selecteren</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="485"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="505"/>
         <source>Remove Bookmark</source>
         <translation>Bladwijzer verwijderen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="485"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="505"/>
         <source>Add Bookmark</source>
         <translation>Bladwijzer toevoegen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="501"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="521"/>
         <source>Feed List</source>
         <translation>Feedslijst</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="529"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="549"/>
         <source>Click to load all plugins on the page</source>
         <translation>Klik om alle plug-ins op de pagina de laden</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="791"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="871"/>
         <source>(Untitled)</source>
         <translation>(Naamloos)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="826"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="906"/>
         <source>Remove This Icon</source>
         <translation>Dit pictogram verwijderen</translation>
     </message>
@@ -230,48 +231,48 @@
 <context>
     <name>Otter::Application</name>
     <message>
-        <location filename="../../src/core/Application.cpp" line="366"/>
+        <location filename="../../src/core/Application.cpp" line="377"/>
         <source>Warning</source>
         <translation>Waarschuwing</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="366"/>
+        <location filename="../../src/core/Application.cpp" line="377"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
         <translation>Deze sessie was onjuist opgeslagen.
 Weet u zeker dat u de sessie tóch wilt herstellen?</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="589"/>
-        <location filename="../../src/core/Application.cpp" line="638"/>
+        <location filename="../../src/core/Application.cpp" line="612"/>
+        <location filename="../../src/core/Application.cpp" line="661"/>
         <source>Question</source>
         <translation>Vraag</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/core/Application.cpp" line="590"/>
+        <location filename="../../src/core/Application.cpp" line="613"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
         <translation><numerusform>U bent van plan af te sluiten terwijl er nog %n bestand wordt gedownload.</numerusform><numerusform>U bent van plan af te sluiten terwijl er nog %n bestanden wordt gedownload.</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="591"/>
-        <location filename="../../src/core/Application.cpp" line="640"/>
+        <location filename="../../src/core/Application.cpp" line="614"/>
+        <location filename="../../src/core/Application.cpp" line="663"/>
         <source>Do you want to continue?</source>
         <translation>Wilt u doorgaan?</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="595"/>
-        <location filename="../../src/core/Application.cpp" line="644"/>
+        <location filename="../../src/core/Application.cpp" line="618"/>
+        <location filename="../../src/core/Application.cpp" line="667"/>
         <source>Do not show this message again</source>
         <translation>Dit bericht niet opnieuw weergeven</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="597"/>
-        <location filename="../../src/core/Application.cpp" line="646"/>
+        <location filename="../../src/core/Application.cpp" line="620"/>
+        <location filename="../../src/core/Application.cpp" line="669"/>
         <source>Hide</source>
         <translation>Verbergen</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="639"/>
+        <location filename="../../src/core/Application.cpp" line="662"/>
         <source>You are about to quit the current Otter Browser session.</source>
         <translation>U staat op het punt om de huidige Otter Webbrowser-sessie af te sluiten.</translation>
     </message>
@@ -443,12 +444,12 @@ Weet u zeker dat u de sessie tóch wilt herstellen?</translation>
 <context>
     <name>Otter::BookmarksComboBoxWidget</name>
     <message>
-        <location filename="../../src/ui/BookmarksComboBoxWidget.cpp" line="47"/>
+        <location filename="../../src/ui/BookmarksComboBoxWidget.cpp" line="50"/>
         <source>Folder Name</source>
         <translation>Mapnaam</translation>
     </message>
     <message>
-        <location filename="../../src/ui/BookmarksComboBoxWidget.cpp" line="47"/>
+        <location filename="../../src/ui/BookmarksComboBoxWidget.cpp" line="50"/>
         <source>Select name of new folder:</source>
         <translation>Selecteer de naam van de nieuwe map:</translation>
     </message>
@@ -496,69 +497,69 @@ Weet u zeker dat u de sessie tóch wilt herstellen?</translation>
         <translation>Toevoegen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="43"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="163"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="200"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="45"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="165"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="202"/>
         <source>Add Folder</source>
         <translation>Map toevoegen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="44"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="164"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="199"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="46"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="166"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="201"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="203"/>
         <source>Add Bookmark</source>
         <translation>Bladwijzer toevoegen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="45"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="165"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="202"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="47"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="204"/>
         <source>Add Separator</source>
         <translation>Scheidingsteken toevoegen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="159"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="161"/>
         <source>Empty Trash</source>
         <translation>Prullenbak legen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="171"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="173"/>
         <source>Open</source>
         <translation>Openen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="172"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="174"/>
         <source>Open in New Tab</source>
         <translation>Openen op nieuw tabblad</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="173"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="175"/>
         <source>Open in New Background Tab</source>
         <translation>Openen op nieuw achtergrondtabblad</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="175"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="177"/>
         <source>Open in New Window</source>
         <translation>Openen in nieuw venster</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="176"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="178"/>
         <source>Open in New Background Window</source>
         <translation>Openen in nieuw achtergrondvenster</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="211"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="213"/>
         <source>Restore Bookmark</source>
         <translation>Bladwijzer herstellen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="219"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="221"/>
         <source>Properties…</source>
         <translation>Eigenschappen...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="320"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="322"/>
         <source>Bookmarks Manager</source>
         <translation>Bladwijzerbeheer</translation>
     </message>
@@ -1087,44 +1088,44 @@ Weet u zeker dat u de sessie tóch wilt herstellen?</translation>
         <translation>Toepassen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="261"/>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="280"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="273"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="292"/>
         <source>Question</source>
         <translation>Vraag</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="262"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="274"/>
         <source>You are about to delete %n cookies.</source>
         <translation><numerusform>U staat op het punt om %n cookie te verwijderen.</numerusform><numerusform>U staat op het punt om %n cookies te verwijderen.</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="263"/>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="282"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="275"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="294"/>
         <source>Do you want to continue?</source>
         <translation>Wilt u doorgaan?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="281"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="293"/>
         <source>You are about to delete all cookies.</source>
         <translation>U staat op het punt om alle cookies te verwijderen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="302"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="314"/>
         <source>Remove Cookie</source>
         <translation>Cookie verwijderen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="305"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="317"/>
         <source>Remove All Cookies from This Domain…</source>
         <translation>Alle cookies van dit domein verwijderen...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="308"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="320"/>
         <source>Remove All Cookies…</source>
         <translation>Alle cookies verwijderen...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="433"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="445"/>
         <source>Cookies Manager</source>
         <translation>Cookiesbeheerder</translation>
     </message>
@@ -1165,7 +1166,7 @@ Weet u zeker dat u de sessie tóch wilt herstellen?</translation>
         <translation>Informatie</translation>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp" line="215"/>
+        <location filename="../../src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp" line="216"/>
         <source>Notification</source>
         <translation>Melding</translation>
     </message>
@@ -1409,18 +1410,18 @@ Weet u zeker dat u de sessie tóch wilt herstellen?</translation>
         <translation>Bron:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="91"/>
-        <location filename="../../src/ui/ImportDialog.cpp" line="108"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="96"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="113"/>
         <source>Error</source>
         <translation>Fout</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="91"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="96"/>
         <source>Unable to import selected type.</source>
         <translation>Niet in staat om geselecteerd type te importeren.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="108"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="113"/>
         <source>Failed to open file for reading.</source>
         <translation>Het is niet gelukt om het bestand te lezen.</translation>
     </message>
@@ -1552,32 +1553,32 @@ Weet u zeker dat u de sessie tóch wilt herstellen?</translation>
         <translation>Bestand openen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="751"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="754"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.</source>
         <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Webbrowser wordt bestuurd door de gebruiker en niet andersom.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="752"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="755"/>
         <source>Web backend: %1 %2.</source>
         <translation>Web-backend: %1 %2.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="756"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="759"/>
         <source>SSL library version: %1.</source>
         <translation>SSL-bibliotheekversie: %1.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="760"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="763"/>
         <source>SSL library not available.</source>
         <translation>SSL-bibliotheek niet beschikbaar.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="840"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="852"/>
         <source>Warning</source>
         <translation>Waarschuwing</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="840"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="852"/>
         <source>You already have this address in your bookmarks.
 Do you want to continue?</source>
         <translation>U heeft dit adres al in uw bladwijzers.
@@ -1587,101 +1588,106 @@ Wilt u doorgaan?</translation>
 <context>
     <name>Otter::Menu</name>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="96"/>
-        <source>Import Opera Bookmarks</source>
-        <translation>Opera-bladwijzers importeren</translation>
-    </message>
-    <message>
         <location filename="../../src/ui/Menu.cpp" line="97"/>
-        <source>Import HTML Bookmarks</source>
-        <translation>HTML-bladwijzers importeren</translation>
+        <source>Import Opera Bookmarks…</source>
+        <translation>Opera-bladwijzers importeren...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="183"/>
+        <location filename="../../src/ui/Menu.cpp" line="98"/>
+        <source>Import HTML Bookmarks…</source>
+        <translation>HTML-bladwijzers importeren...</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/Menu.cpp" line="100"/>
+        <source>Import Opera Notes…</source>
+        <translation>Opera-notities importeren...</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/Menu.cpp" line="186"/>
         <source>Open</source>
         <translation>Openen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="184"/>
+        <location filename="../../src/ui/Menu.cpp" line="187"/>
         <source>Open in New Tab</source>
         <translation>Openen op nieuw tabblad</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="185"/>
+        <location filename="../../src/ui/Menu.cpp" line="188"/>
         <source>Open in New Background Tab</source>
         <translation>Openen op nieuw achtergrondtabblad</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="187"/>
+        <location filename="../../src/ui/Menu.cpp" line="190"/>
         <source>Open in New Window</source>
         <translation>Openen in nieuw venster</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="188"/>
+        <location filename="../../src/ui/Menu.cpp" line="191"/>
         <source>Open in New Background Window</source>
         <translation>Openen in nieuw achtergrondvenster</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="275"/>
+        <location filename="../../src/ui/Menu.cpp" line="313"/>
         <source>Open All</source>
         <translation>Alles openen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="294"/>
-        <location filename="../../src/ui/Menu.cpp" line="442"/>
-        <location filename="../../src/ui/Menu.cpp" line="457"/>
-        <location filename="../../src/ui/Menu.cpp" line="474"/>
-        <location filename="../../src/ui/Menu.cpp" line="524"/>
+        <location filename="../../src/ui/Menu.cpp" line="332"/>
+        <location filename="../../src/ui/Menu.cpp" line="480"/>
+        <location filename="../../src/ui/Menu.cpp" line="495"/>
+        <location filename="../../src/ui/Menu.cpp" line="512"/>
+        <location filename="../../src/ui/Menu.cpp" line="562"/>
         <source>(Untitled)</source>
         <translation>(Zonder titel)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="332"/>
+        <location filename="../../src/ui/Menu.cpp" line="370"/>
         <source>Auto Detect</source>
         <translation>Automatisch detecteren</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="387"/>
+        <location filename="../../src/ui/Menu.cpp" line="425"/>
         <source>Clear</source>
         <translation>Wissen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="397"/>
+        <location filename="../../src/ui/Menu.cpp" line="435"/>
         <source>Window - %1</source>
         <translation>Venster - %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/Menu.cpp" line="457"/>
+        <location filename="../../src/ui/Menu.cpp" line="495"/>
         <source>%1 (%n tab(s))</source>
         <translation><numerusform>%1 (%n tabbladen)</numerusform><numerusform>%1 (%n tabbladen)</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="486"/>
+        <location filename="../../src/ui/Menu.cpp" line="524"/>
         <source>Add New</source>
         <translation>Nieuwe toevoegen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="487"/>
+        <location filename="../../src/ui/Menu.cpp" line="525"/>
         <source>Add Toolbar</source>
         <translation>Werkbalk toevoegen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="488"/>
+        <location filename="../../src/ui/Menu.cpp" line="526"/>
         <source>Add Bookmarks Bar…</source>
         <translation>Bladwijzersbalk toevoegen...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="493"/>
+        <location filename="../../src/ui/Menu.cpp" line="531"/>
         <source>Reset to Defaults…</source>
         <translation>Herstellen naar standaardwaarden...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="512"/>
+        <location filename="../../src/ui/Menu.cpp" line="550"/>
         <source>Default</source>
         <translation>Standaard</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="534"/>
+        <location filename="../../src/ui/Menu.cpp" line="572"/>
         <source>Custom</source>
         <translation>Aangepast</translation>
     </message>
@@ -1754,63 +1760,63 @@ Wilt u doorgaan?</translation>
         <translation>Toevoegen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="44"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="153"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="184"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="46"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="155"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="186"/>
         <source>Add Folder</source>
         <translation>Map toevoegen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="45"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="183"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="47"/>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="185"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="187"/>
         <source>Add Note</source>
         <translation>Notitie toevoegen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="46"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="155"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="186"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="48"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="157"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="188"/>
         <source>Add Separator</source>
         <translation>Scheidingsteken toevoegen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="56"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="58"/>
         <source>Add note…</source>
         <translation>Notitie toevoegen...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="101"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="103"/>
         <source>Select Folder Name</source>
         <translation>Mapnaam selecteren</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="101"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="103"/>
         <source>Enter folder name:</source>
         <translation>Vul een mapnaam in:</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="149"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="151"/>
         <source>Empty Trash</source>
         <translation>Prullenbak legen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="154"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="156"/>
         <source>Add Bookmark</source>
         <translation>Bladwijzer toevoegen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="169"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="171"/>
         <source>Open source page</source>
         <translation>Bronpagina openen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="195"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="197"/>
         <source>Restore Note</source>
         <translation>Notitie herstellen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="366"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="368"/>
         <source>Notes Manager</source>
         <translation>Notitiesbeheerder</translation>
     </message>
@@ -1865,6 +1871,29 @@ Wilt u doorgaan?</translation>
         <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="103"/>
         <source>Opera bookmarks files (bookmarks.adr)</source>
         <translation>Opera-bladwijzers-bestanden (bookmarks.adr)</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::OperaNotesImporter</name>
+    <message>
+        <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="109"/>
+        <source>Import into folder:</source>
+        <translation>Importeren naar map:</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="117"/>
+        <source>Opera Notes</source>
+        <translation>Opera-notities</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="122"/>
+        <source>Imports notes from Opera Browser version 12 or earlier</source>
+        <translation>Notities importeren vanuit Opera-browser versie 12 of lager</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="132"/>
+        <source>Opera notes files (notes.adr)</source>
+        <translation>Opera-notitiebestanden (notes.adr)</translation>
     </message>
 </context>
 <context>
@@ -2931,17 +2960,17 @@ Wilt u doorgaan?</translation>
         <translation>Dit bericht niet opnieuw weergeven</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="257"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="269"/>
         <source>Receiving data from %1…</source>
         <translation>Bezig met ontvangen van data van %1...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="299"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="311"/>
         <source>Completed request to %1</source>
         <translation>Aanvraag naar %1 voltooid</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="472"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="508"/>
         <source>Sending request to %1…</source>
         <translation>Bezig met vezenden van verzoek naar %1...</translation>
     </message>
@@ -2950,65 +2979,65 @@ Wilt u doorgaan?</translation>
     <name>Otter::QtWebKitPage</name>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="186"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="321"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="357"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="324"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="360"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="187"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="322"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="358"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="325"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="361"/>
         <source>Disable JavaScript popups</source>
         <translation>JavaScript-popups uitschakelen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="271"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="284"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="463"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="274"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="287"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="466"/>
         <source>Question</source>
         <translation>Vraag</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="271"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="285"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="274"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="288"/>
         <source>Are you sure that you want to send form data again?</source>
         <translation>Weet u zeker dat u de formuliergegevens opnieuw wilt versturen?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="271"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="286"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="274"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="289"/>
         <source>Do you want to resend data?</source>
         <translation>Wilt u de gegevens opnieuw versturen?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="272"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="290"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="275"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="293"/>
         <source>Do not show this message again</source>
         <translation>Dit bericht niet opnieuw tonen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="399"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="402"/>
         <source>Open File</source>
         <translation>Bestand openen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="421"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="424"/>
         <source>Error %1</source>
         <translation>Fout %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="451"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="454"/>
         <source>%1 error #%2: %3</source>
         <translation>%1 fout #%2: %3</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="463"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="466"/>
         <source>The script on this page appears to have a problem.</source>
         <translation>Het script op deze pagina lijkt een probleem te vertonen.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="463"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="466"/>
         <source>Do you want to stop the script?</source>
         <translation>Wilt u het script stoppen?</translation>
     </message>
@@ -3037,77 +3066,77 @@ Wilt u doorgaan?</translation>
 <context>
     <name>Otter::QtWebKitWebWidget</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="300"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="298"/>
         <source>Error</source>
         <translation>Fout</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="300"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="298"/>
         <source>Failed to open file for writing.</source>
         <translation>Het is niet gelukt om het bestand te openen voor schrijven.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="320"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="318"/>
         <source>file</source>
         <translation>bestand</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="331"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="329"/>
         <source>Failed to save image: %1</source>
         <translation>Het is niet gelukt om de afbeelding op te slaan: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="449"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="452"/>
         <source>Print Preview</source>
         <translation>Afdrukvoorbeeld</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="503"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="511"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="503"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="511"/>
         <source>Webpage wants to close this tab, do you want to allow to close it?</source>
         <translation>De webpagina wil dit tabblad sluiten. Wilt u toestaan het te sluiten?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="504"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="512"/>
         <source>Do not show this message again</source>
         <translation>Dit bericht niet opnieuw tonen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="624"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="632"/>
         <source>Undo</source>
         <translation>Ongedaan maken</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="624"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="632"/>
         <source>Undo: %1</source>
         <translation>Ongedaan maken: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="629"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="637"/>
         <source>Redo</source>
         <translation>Herhalen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="629"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="637"/>
         <source>Redo: %1</source>
         <translation>Herhalen: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1335"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1351"/>
         <source>Close</source>
         <translation>Sluiten</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1627"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1650"/>
         <source>Blank Page</source>
         <translation>Lege pagina</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1640"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1663"/>
         <source>(Untitled)</source>
         <translation>(Zonder titel)</translation>
     </message>
@@ -3320,59 +3349,60 @@ Wilt u deze overschrijven?</translation>
 <context>
     <name>Otter::SearchWidget</name>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="194"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="94"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="321"/>
+        <source>Search using %1</source>
+        <translation>Zoeken met %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="200"/>
         <source>Undo</source>
         <translation>Ongedaan maken</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="195"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="201"/>
         <source>Redo</source>
         <translation>Herhalen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="197"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="203"/>
         <source>Cut</source>
         <translation>Knippen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="198"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="204"/>
         <source>Copy</source>
         <translation>Kopiëren</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="199"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="205"/>
         <source>Paste</source>
         <translation>Plakken</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="200"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="206"/>
         <source>Paste and Go</source>
         <translation>Plakken en gaan</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="201"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="207"/>
         <source>Delete</source>
         <translation>Verwijderen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="203"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="209"/>
         <source>Copy to Note</source>
         <translation>Kopiëren naar notitie</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="205"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="211"/>
         <source>Clear All</source>
         <translation>Alles wissen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="206"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="212"/>
         <source>Select All</source>
         <translation>Alles selecteren</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="315"/>
-        <source>Search using %1</source>
-        <translation>Zoeken met %1</translation>
     </message>
 </context>
 <context>
@@ -3619,7 +3649,12 @@ Do you want to save your changes or discard them?</source>
 Wilt u de wijzigingen opslaan of verwerpen?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="453"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="281"/>
+        <source>Show Line Numbers</source>
+        <translation>Regelnummers weergeven</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="471"/>
         <source>Source Viewer</source>
         <translation>Bronweergave</translation>
     </message>
@@ -3677,6 +3712,11 @@ Wilt u de wijzigingen opslaan of verwerpen?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="141"/>
+        <source>Show search field</source>
+        <translation>Zoekveld weergeven</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="148"/>
         <source>Show tile to add new entries</source>
         <translation>Tegel weergeven voor het toevoegen van nieuwe invoeren</translation>
     </message>
@@ -3709,37 +3749,37 @@ Wilt u de wijzigingen opslaan of verwerpen?</translation>
 <context>
     <name>Otter::StartPageWidget</name>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="306"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="357"/>
         <source>Add Tile</source>
         <translation>Tegel toevoegen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="459"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="510"/>
         <source>Open</source>
         <translation>Openen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="461"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="512"/>
         <source>Edit…</source>
         <translation>Bewerken...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="462"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="513"/>
         <source>Reload</source>
         <translation>Herladen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="464"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="515"/>
         <source>Delete</source>
         <translation>Verwijderen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="468"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="519"/>
         <source>Configure…</source>
         <translation>Instellen...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="469"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="520"/>
         <source>Add Tile…</source>
         <translation>Tegel toevoegen...</translation>
     </message>
@@ -3792,27 +3832,27 @@ Wilt u de wijzigingen opslaan of verwerpen?</translation>
 <context>
     <name>Otter::TabBarWidget</name>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="162"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="163"/>
         <source>Arrange</source>
         <translation>Ordenen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="172"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="173"/>
         <source>Switch tabs using the mouse wheel</source>
         <translation>Tussen tabbladen schakelen met het muiswiel</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="189"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="190"/>
         <source>Customize</source>
         <translation>Aanpassen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="476"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="477"/>
         <source>(Untitled)</source>
         <translation>(Zonder titel)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="948"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="962"/>
         <source>Close Tab</source>
         <translation>Tabblad sluiten</translation>
     </message>
@@ -4364,19 +4404,9 @@ Selecteer een ander pad.</translation>
 <context>
     <name>Otter::UpdateChecker</name>
     <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="144"/>
+        <location filename="../../src/core/UpdateChecker.cpp" line="136"/>
         <source>New update %1 from %2 channel is available!</source>
         <translation>Er is een nieuwe update, %1, uit het %2-kanaal beschikbaar!</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="149"/>
-        <source>New version of Otter Browser is available</source>
-        <translation>Er is een nieuwe versie van Otter Browser beschikbaar</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="151"/>
-        <source>Do you want to open a new tab with download page?</source>
-        <translation>Wilt u een nieuw tabblad met daarop de downloadpagina openen?</translation>
     </message>
 </context>
 <context>
@@ -4390,6 +4420,26 @@ Selecteer een ander pad.</translation>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="20"/>
         <source>Checking for update…</source>
         <translation>Bezig met het controleren op updates...</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="64"/>
+        <source>There are no new updates.</source>
+        <translation>Er zijn geen nieuwe updates.</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="68"/>
+        <source>Available updates:</source>
+        <translation>Beschikbare updates:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="72"/>
+        <source>Update…</source>
+        <translation>Bijwerken...</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="75"/>
+        <source>Version %1 from %2 channel</source>
+        <translation>Versie %1 vanuit kanaal %2</translation>
     </message>
 </context>
 <context>
@@ -4486,87 +4536,82 @@ Selecteer een ander pad.</translation>
 <context>
     <name>Otter::WebWidget</name>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="191"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="224"/>
         <source>Default Application</source>
         <translation>Standaard applicatie</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="197"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="230"/>
         <source>Unknown</source>
         <translation>Onbekend</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="283"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="316"/>
         <source>Title: %1</source>
         <translation>Titel: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="283"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="316"/>
         <source>Address: %1</source>
         <translation>Adres: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="426"/>
-        <source>Frame</source>
-        <translation>Frame</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="699"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="567"/>
         <source>No search engines defined</source>
         <translation>Er zijn geen zoekmachines opgegeven</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="842"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="710"/>
         <source>Open Image in New Tab (Untitled)</source>
         <translation>Afbeelding openen op een nieuw tabblad (naamloos)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="842"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="710"/>
         <source>Open Image in New Tab (%1)</source>
         <translation>Afbeelding openen op een nieuw tabblad (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="848"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="716"/>
         <source>Open Image in New Background Tab (Untitled)</source>
         <translation>Afbeelding openen op een nieuw achtergrondtabblad (naamloos)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="848"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="716"/>
         <source>Open Image in New Background Tab (%1)</source>
         <translation>Afbeelding openen op een nieuw achtergrondtabblad (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1140"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1008"/>
         <source>30 Minutes</source>
         <translation>30 minuten</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1141"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1009"/>
         <source>1 Hour</source>
         <translation>1 uur</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1142"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1010"/>
         <source>2 Hours</source>
         <translation>2 uren</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1143"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1011"/>
         <source>6 Hours</source>
         <translation>6 uren</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1144"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1012"/>
         <source>Never</source>
         <translation>Nooit</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1145"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1013"/>
         <source>Custom…</source>
         <translation>Aangepast...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1147"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1015"/>
         <source>Page Default</source>
         <translation>Paginastandaard</translation>
     </message>
@@ -4978,9 +5023,9 @@ Selecteer een ander pad.</translation>
         <translation>Dit bericht niet opnieuw weergeven</translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="783"/>
-        <location filename="../../src/core/WindowsManager.cpp" line="846"/>
-        <location filename="../../src/core/WindowsManager.cpp" line="972"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="789"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="842"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="966"/>
         <source>Empty</source>
         <translation>Leeg</translation>
     </message>
@@ -4988,24 +5033,24 @@ Selecteer een ander pad.</translation>
 <context>
     <name>Otter::WindowsPlatformIntegration</name>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="161"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="156"/>
         <source>Failed to run command &quot;%1&quot;, file is not executable</source>
         <translation>Uitvoeren van commando &quot;%1&quot; is mislukt; bestand is niet uitvoerbaar</translation>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="191"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="183"/>
         <source>Failed to run command &quot;%1&quot; (arguments: &quot;%2&quot;)</source>
         <translation>Commando &quot;%1&quot; draaien is gelukt (argumenten: &quot;%2&quot;)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="236"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="228"/>
         <source>No valid suffix for given MIME type: %1</source>
         <translation>Er is geen geldige extensie opgegeven voor MIME-type:
 %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="298"/>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="348"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="290"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="340"/>
         <source>Failed to load a valid application path for MIME type %1: %2</source>
         <translation>Mislukt om een geldig applicatiepad te laden voor MIME-type %1:
 %2</translation>
@@ -5014,7 +5059,7 @@ Selecteer een ander pad.</translation>
 <context>
     <name>Otter::WorkspaceWidget</name>
     <message>
-        <location filename="../../src/ui/WorkspaceWidget.cpp" line="319"/>
+        <location filename="../../src/ui/WorkspaceWidget.cpp" line="322"/>
         <source>Arrange</source>
         <translation>Ordenen</translation>
     </message>
@@ -5118,853 +5163,858 @@ Selecteer een ander pad.</translation>
         <translation>Instellingen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="262"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="259"/>
+        <source>Frame</source>
+        <translation>Frame</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="263"/>
         <source>New Tab</source>
         <translation>Nieuw tabblad</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="263"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="264"/>
         <source>New Private Tab</source>
         <translation>Nieuw incognito-tabblad</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="264"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="265"/>
         <source>New Window</source>
         <translation>Nieuw venster</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="265"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="266"/>
         <source>New Private Window</source>
         <translation>Nieuw incognito-venster</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="266"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="267"/>
         <source>Open…</source>
         <translation>Openen...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="267"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="268"/>
         <source>Save…</source>
         <translation>Opslaan...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="268"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="269"/>
         <source>Clone Tab</source>
         <translation>Tabblad klonen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="269"/>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="124"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="270"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="125"/>
         <source>Pin Tab</source>
         <translation>Tabblad vastzetten</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="270"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="271"/>
         <source>Detach Tab</source>
         <translation>Tabblad losmaken</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="271"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="272"/>
         <source>Maximize</source>
         <translation>Maximaliseren</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="271"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="272"/>
         <source>Maximize Tab</source>
         <translation>Tabblad maximaliseren</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="272"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="273"/>
         <source>Minimize</source>
         <translation>Minimaliseren</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="272"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="273"/>
         <source>Minimize Tab</source>
         <translation>Tabblad minimaliseren</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="273"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="274"/>
         <source>Restore</source>
         <translation>Herstellen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="273"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="274"/>
         <source>Restore Tab</source>
         <translation>Tabblad herstellen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="274"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="275"/>
         <source>Stay on Top</source>
         <translation>Voorop houden</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="275"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="276"/>
         <source>Close Tab</source>
         <translation>Tabblad sluiten</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="276"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="277"/>
         <source>Close Other Tabs</source>
         <translation>Andere tabbladen sluiten</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="277"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="278"/>
         <source>Close All Private Tabs</source>
         <translation>Alle incognito-tabbladen sluiten</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="277"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="278"/>
         <source>Close All Private Tabs in Current Window</source>
         <translation>Alle incognito-tabbladen in huidig venster sluiten</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="278"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="279"/>
         <source>Close Private Tabs and Windows</source>
         <translation>Alle incognito-tabbladen en -vensters sluiten</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="279"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="280"/>
         <source>Reopen Previously Closed Tab</source>
         <translation>Vorig gesloten tabblad heropenen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="280"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="281"/>
         <source>Maximize All</source>
         <translation>Alles maximaliseren</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="281"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="282"/>
         <source>Minimize All</source>
         <translation>Alles minimaliseren</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="282"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="283"/>
         <source>Restore All</source>
         <translation>Alles herstellen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="283"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="284"/>
         <source>Cascade</source>
         <translation>Trapsgewijs</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="284"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="285"/>
         <source>Tile</source>
         <translation>Tegels</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="285"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="286"/>
         <source>Close Window</source>
         <translation>Venster sluiten</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="286"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="287"/>
         <source>Manage Sessions…</source>
         <translation>Sessies beheren...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="287"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="288"/>
         <source>Save Current Session…</source>
         <translation>Huidige sessie opslaan...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="288"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="304"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="289"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="305"/>
         <source>Open</source>
         <translation>Openen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="289"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="290"/>
         <source>Open in This Tab</source>
         <translation>Openen op dit tabblad</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="290"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="305"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="291"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="306"/>
         <source>Open in New Tab</source>
         <translation>Openen op nieuw tabblad</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="291"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="306"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="292"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="307"/>
         <source>Open in New Background Tab</source>
         <translation>Openen op nieuw achtergrondtabblad</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="292"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="293"/>
         <source>Open in New Window</source>
         <translation>Openen in nieuw venster</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="293"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="294"/>
         <source>Open in New Background Window</source>
         <translation>Openen in nieuw achtergrondvenster</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="294"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="295"/>
         <source>Open in New Private Tab</source>
         <translation>Openen op nieuw incognito-tabblad</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="295"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="296"/>
         <source>Open in New Private Background Tab</source>
         <translation>Openen op nieuw incognito-achtergrondtabblad</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="296"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="297"/>
         <source>Open in New Private Window</source>
         <translation>Openen in nieuw incognito-venster</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="297"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="298"/>
         <source>Open in New Private Background Window</source>
         <translation>Openen in nieuw incognito-achtergrondvenster</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="298"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="307"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="396"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="299"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="308"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="397"/>
         <source>Open with…</source>
         <translation>Openen met...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="298"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="299"/>
         <source>Open link with external application</source>
         <translation>Link openen in een externe applicatie</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="299"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="300"/>
         <source>Copy Link to Clipboard</source>
         <translation>Link kopiëren naar klembord</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="300"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="779"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="301"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="647"/>
         <source>Bookmark Link…</source>
         <translation>Link toevoegen aan bladwijzers...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="301"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="302"/>
         <source>Save Link Target As…</source>
         <translation>Link opslaan als...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="302"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="303"/>
         <source>Save to Downloads</source>
         <translation>Opslaan naar Downloads</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="303"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="304"/>
         <source>Go to This Address</source>
         <translation>Naar dit adres gaan</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="304"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="305"/>
         <source>Open Frame in This Tab</source>
         <translation>Frame openen op dit tabblad</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="305"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="306"/>
         <source>Open Frame in New Tab</source>
         <translation>Frame openen op nieuw tabblad</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="306"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="307"/>
         <source>Open Frame in New Background Tab</source>
         <translation>Frame openen op nieuw achtergrondtabblad</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="307"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="308"/>
         <source>Open frame with external application</source>
         <translation>Frame openen in een externe applicatie</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="308"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="309"/>
         <source>Copy Frame Link to Clipboard</source>
         <translation>Frame-link kopiëren naar klembord</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="309"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="334"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="310"/>
         <location filename="../../src/core/ActionsManager.cpp" line="335"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="336"/>
         <source>Reload</source>
         <translation>Herladen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="309"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="310"/>
         <source>Reload Frame</source>
         <translation>Frame herladen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="310"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="311"/>
         <source>View Frame Source</source>
         <translation>Broncode van frame weergeven</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="311"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="312"/>
         <source>Open Image In New Tab</source>
         <translation>Afbeelding openen op een nieuw tabblad</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="312"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="848"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="313"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="716"/>
         <source>Open Image in New Background Tab</source>
         <translation>Afbeelding openen op een nieuw achtergrondtabblad</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="313"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="314"/>
         <source>Save Image…</source>
         <translation>Afbeelding opslaan...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="314"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="315"/>
         <source>Copy Image to Clipboard</source>
         <translation>Afbeelding kopiëren naar klembord</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="315"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="316"/>
         <source>Copy Image Link to Clipboard</source>
         <translation>Afbeeldingslink kopiëren naar klembord</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="316"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="317"/>
         <source>Reload Image</source>
         <translation>Afbeelding herladen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="317"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="318"/>
         <source>Image Properties…</source>
         <translation>Afbeeldingseigenschappen...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="318"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="319"/>
         <source>Save Media…</source>
         <translation>Media opslaan...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="319"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="320"/>
         <source>Copy Media Link to Clipboard</source>
         <translation>Medialink kopiëren naar klembord</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="320"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="321"/>
         <source>Show Controls</source>
         <translation>Bediening weergeven</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="321"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="322"/>
         <source>Looping</source>
         <translation>Herhalende</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="322"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="911"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="323"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="779"/>
         <source>Play</source>
         <translation>Afspelen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="323"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="918"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="324"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="786"/>
         <source>Mute</source>
         <translation>Dempen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="324"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="325"/>
         <source>Go</source>
         <translation>Gaan</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="325"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="326"/>
         <source>Back</source>
         <translation>Vorige</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="326"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="327"/>
         <source>Forward</source>
         <translation>Volgende</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="327"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="328"/>
         <source>Go to Page or Search</source>
         <translation>Ga naar pagina of zoeken</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="328"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="329"/>
         <source>Go to Home Page</source>
         <translation>Ga naar startpagina</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="329"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="330"/>
         <source>Go to Parent Directory</source>
         <translation>Ga naar hoofdmap</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="330"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="331"/>
         <source>Rewind</source>
         <translation>Terugspoelen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="331"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="332"/>
         <source>Fast Forward</source>
         <translation>Vooruitspoelen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="332"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="333"/>
         <source>Stop</source>
         <translation>Stoppen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="333"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="334"/>
         <source>Stop Scheduled Page Reload</source>
         <translation>Ingeplande paginaverversing stopzetten</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="335"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="336"/>
         <source>Reload or Stop</source>
         <translation>Herladen of stoppen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="336"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="337"/>
         <source>Reload and Bypass Cache</source>
         <translation>Herladen en cache omzeilen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="337"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="338"/>
         <source>Reload All Tabs</source>
         <translation>Alle tabbladen herladen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="338"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="339"/>
         <source>Reload Every</source>
         <translation>Herladen, elke</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="339"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="340"/>
         <source>Show Context Menu</source>
         <translation>Contextmenu weergeven</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="340"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="341"/>
         <source>Undo</source>
         <translation>Ongedaan maken</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="341"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="342"/>
         <source>Redo</source>
         <translation>Herhalen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="342"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="343"/>
         <source>Cut</source>
         <translation>Knippen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="343"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="344"/>
         <source>Copy</source>
         <translation>Kopiëren</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="344"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="345"/>
         <source>Copy as Plain Text</source>
         <translation>Kopiëren als platte tekst</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="345"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="346"/>
         <source>Copy Address</source>
         <translation>Adres kopiëren</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="346"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="347"/>
         <source>Copy to Note</source>
         <translation>Kopiëren naar notitie</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="347"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="348"/>
         <source>Paste</source>
         <translation>Plakken</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="348"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="349"/>
         <source>Paste and Go</source>
         <translation>Plakken en gaan</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="349"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="350"/>
         <source>Insert Note</source>
         <translation>Notitie invoegen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="350"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="351"/>
         <source>Delete</source>
         <translation>Verwijderen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="351"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="352"/>
         <source>Select All</source>
         <translation>Alles selecteren</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="352"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="353"/>
         <source>Clear All</source>
         <translation>Alles wissen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="353"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="354"/>
         <source>Check Spelling</source>
         <translation>Spelling controleren</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="354"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="355"/>
         <source>Find…</source>
         <translation>Zoeken..</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="355"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="356"/>
         <source>Find Next</source>
         <translation>Volgende zoeken</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="356"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="357"/>
         <source>Find Previous</source>
         <translation>Vorige zoeken</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="357"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="358"/>
         <source>Quick Find</source>
         <translation>Snel vinden</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="358"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="698"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="359"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="566"/>
         <source>Search</source>
         <translation>Zoeken</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="359"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="360"/>
         <source>Search Using</source>
         <translation>Zoeken met</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="360"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="361"/>
         <source>Create Search…</source>
         <translation>Zoekmachine creëren...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="361"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="362"/>
         <source>Zoom In</source>
         <translation>Inzoomen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="362"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="363"/>
         <source>Zoom Out</source>
         <translation>Uitzoomen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="363"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="364"/>
         <source>Zoom Original</source>
         <translation>Originele zoom</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="364"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="365"/>
         <source>Go to Start of the Page</source>
         <translation>Ga naar begin van de pagina</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="365"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="366"/>
         <source>Go to the End of the Page</source>
         <translation>Ga naar einde van de pagina</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="366"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="367"/>
         <source>Page Up</source>
         <translation>Pagina omhoog</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="367"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="368"/>
         <source>Page Down</source>
         <translation>Pagina omlaag</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="368"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="369"/>
         <source>Page Left</source>
         <translation>Pagina links</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="369"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="370"/>
         <source>Page Right</source>
         <translation>Pagina rechts</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="370"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="371"/>
         <source>Enter Drag Scroll Mode</source>
         <translation>Sleep-scrollmodus inschakelen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="371"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="372"/>
         <source>Enter Move Scroll Mode</source>
         <translation>Verplaats-scrollmodus inschakelen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="372"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="373"/>
         <source>Exit Scroll Mode</source>
         <translation>Scrollmodus uitschakelen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="373"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="374"/>
         <source>Print…</source>
         <translation>Afdrukken...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="374"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="375"/>
         <source>Print Preview</source>
         <translation>Afdrukvoorbeeld</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="375"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="376"/>
         <source>Activate Address Field</source>
         <translation>Adresveld activeren</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="376"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="377"/>
         <source>Activate Search Field</source>
         <translation>Zoekveld activeren</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="377"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="378"/>
         <source>Activate Content</source>
         <translation>Inhoud activeren</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="378"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="379"/>
         <source>Go to Tab on Left</source>
         <translation>Naar linkertabblad gaan</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="379"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="380"/>
         <source>Go to Tab on Right</source>
         <translation>Naar rechtertabblad gaan</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="380"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="381"/>
         <source>Manage Bookmarks</source>
         <translation>Bladwijzers beheren</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="381"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="578"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="382"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="446"/>
         <source>Add Bookmark…</source>
         <translation>Bladwijzer toevoegen...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="382"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="383"/>
         <source>Quick Bookmark Access</source>
         <translation>Snelle bladwijzertoegang</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="383"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="384"/>
         <source>Block pop-ups</source>
         <translation>Pop-ups blokkeren</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="384"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="385"/>
         <source>Load Images</source>
         <translation>Afbeeldingen laden</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="385"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="386"/>
         <source>Cookies</source>
         <translation>Cookies</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="386"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="387"/>
         <source>Cookies Policy</source>
         <translation>Cookies-beleid</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="387"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="388"/>
         <source>Third-party Cookies Policy</source>
         <translation>Cookies-beleid omtrent derde partijen:</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="388"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="389"/>
         <source>Plugins</source>
         <translation>Plugins</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="389"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="390"/>
         <source>Load Plugins</source>
         <translation>Plugins laden</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="390"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="391"/>
         <source>Enable JavaScript</source>
         <translation>JavaScript inschakelen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="391"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="392"/>
         <source>Enable Java</source>
         <translation>Java inschakelen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="392"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="393"/>
         <source>Enable Referrer</source>
         <translation>Verwijzing inschakelen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="393"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="394"/>
         <source>Proxy</source>
         <translation>Proxy</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="394"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="395"/>
         <source>Enable Proxy</source>
         <translation>Proxy inschakelen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="395"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="396"/>
         <source>View Source</source>
         <translation>Broncode weergeven</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="396"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="397"/>
         <source>Open current page with external application</source>
         <translation>Huidige pagina openen in een externe applicatie</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="397"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="398"/>
         <source>Validate</source>
         <translation>Valideren</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="398"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="399"/>
         <source>Inspect Page</source>
         <translation>Pagina inspecteren</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="399"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="400"/>
         <source>Inspect Element…</source>
         <translation>Element inspecteren...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="400"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="401"/>
         <source>Work Offline</source>
         <translation>Offline werken</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="401"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="402"/>
         <source>Full Screen</source>
         <translation>Volledig scherm</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="402"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="403"/>
         <source>Show Tab Switcher</source>
         <translation>Tabbladschakelaar weergeven</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="403"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="404"/>
         <source>Show Menubar</source>
         <translation>Menubalk weergeven</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="404"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="405"/>
         <source>Show Tabbar</source>
         <translation>Tabbladenbalk weergeven</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="405"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="406"/>
         <source>Show Sidebar</source>
         <translation>Zijbalk weergeven</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="406"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="407"/>
         <source>Show Error Console</source>
         <translation>Foutprompt weergeven</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="407"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="408"/>
         <source>Lock Toolbars</source>
         <translation>Werkbalken vergrendelen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="408"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="409"/>
         <source>Open Panel as Tab</source>
         <translation>Paneel openen als tabblad</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="409"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="410"/>
         <source>Close Panel</source>
         <translation>Paneel sluiten</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="410"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="411"/>
         <source>Content Blocking…</source>
         <translation>Inhoudsblokkering...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="411"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="412"/>
         <source>View History</source>
         <translation>Geschiedenis weergeven</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="412"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="413"/>
         <source>Clear History…</source>
         <translation>Geschiedenis verwijderen...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="413"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="414"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="46"/>
         <source>Notes</source>
         <translation>Notities</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="414"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="415"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="44"/>
         <source>Transfers</source>
         <translation>Bestandsoverdrachten</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="415"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="416"/>
         <source>Preferences…</source>
         <translation>Voorkeuren...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="416"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="417"/>
         <source>Website Preferences…</source>
         <translation>Website-eigenschappen...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="417"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="418"/>
         <source>Quick Preferences</source>
         <translation>Snelle voorkeuren</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="418"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="419"/>
         <source>Reset Options</source>
         <translation>Herstellen naar standaardwaarden</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="419"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="420"/>
         <source>Switch Application Language…</source>
         <translation>Browsertaal wijzigen...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="420"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="421"/>
         <source>Check for Updates…</source>
         <translation>Controleren op updates...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="421"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="422"/>
         <source>About Otter…</source>
         <translation>Over Otter...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="422"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="423"/>
         <source>About Qt…</source>
         <translation>Over Qt...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="423"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="424"/>
         <source>Exit</source>
         <translation>Afsluiten</translation>
     </message>
@@ -5989,17 +6039,17 @@ Selecteer een ander pad.</translation>
         <translation>Statusbalk</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="294"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="296"/>
         <source>Remove Bookmark</source>
         <translation>Bladwijzer verwijderen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="332"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="334"/>
         <source>Copy address of source page</source>
         <translation>Adres van bronpagina kopiëren</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="124"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="125"/>
         <source>Unpin Tab</source>
         <translation>Tabblad losmaken</translation>
     </message>
@@ -6009,52 +6059,52 @@ Selecteer een ander pad.</translation>
         <translation>Vensters weergeven</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="578"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="446"/>
         <source>Edit Bookmark…</source>
         <translation>Bladwijzer bewerken..</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="779"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="647"/>
         <source>Edit Link Bookmark…</source>
         <translation>Bladwijzerlink bewerken...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="842"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="710"/>
         <source>Open Image in New Tab</source>
         <translation>Afbeelding openen op een nieuw tabblad</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="887"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="755"/>
         <source>Save Video…</source>
         <translation>Video opslaan...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="887"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="755"/>
         <source>Save Audio…</source>
         <translation>Audio opslaan...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="893"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="761"/>
         <source>Copy Video Link to Clipboard</source>
         <translation>Videolink kopiëren naar klembord</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="893"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="761"/>
         <source>Copy Audio Link to Clipboard</source>
         <translation>Audiolink kopiëren naar klembord</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="911"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="779"/>
         <source>Pause</source>
         <translation>Pauzeren</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="918"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="786"/>
         <source>Unmute</source>
         <translation>Ontdempen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WorkspaceWidget.cpp" line="308"/>
+        <location filename="../../src/ui/WorkspaceWidget.cpp" line="311"/>
         <source>Close</source>
         <translation>Sluiten</translation>
     </message>
@@ -6062,37 +6112,37 @@ Selecteer een ander pad.</translation>
 <context>
     <name>main</name>
     <message>
-        <location filename="../../src/core/Application.cpp" line="96"/>
+        <location filename="../../src/core/Application.cpp" line="101"/>
         <source>URL to open</source>
         <translation>URL om te openen</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="97"/>
+        <location filename="../../src/core/Application.cpp" line="102"/>
         <source>Uses &lt;path&gt; as cache directory</source>
         <translation>Gebruikt &lt;path&gt; als cache-map</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="98"/>
+        <location filename="../../src/core/Application.cpp" line="103"/>
         <source>Uses &lt;path&gt; as profile directory</source>
         <translation>Gebruikt &lt;path&gt; als profielmap</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="99"/>
+        <location filename="../../src/core/Application.cpp" line="104"/>
         <source>Restores session &lt;session&gt; if it exists</source>
         <translation>Herstelt sessie &lt;session&gt; als deze bestaat</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="100"/>
+        <location filename="../../src/core/Application.cpp" line="105"/>
         <source>Starts private session</source>
         <translation>Begint een incognitosessie</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="101"/>
+        <location filename="../../src/core/Application.cpp" line="106"/>
         <source>Forces session chooser dialog</source>
         <translation>Forceert het sessiekiezer-dialoogvenster</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="102"/>
+        <location filename="../../src/core/Application.cpp" line="107"/>
         <source>Sets profile and cache paths to directories inside the same directory as that of application binary</source>
         <translation>Stelt profiel- en cache-paden in als mappen in dezelfde map als die van het uitvoerbare bestand van de browser</translation>
     </message>
@@ -6107,23 +6157,23 @@ Selecteer een ander pad.</translation>
         <translation>Het is niet gelukt om het inhoudblokkering-profielbestand te laden: ongeldige kop</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="446"/>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="468"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="444"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="466"/>
         <source>Failed to update content blocking profile: %1</source>
         <translation>Het is niet gelukt om het inhoudblokkering-profielbestand bij te werken: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="458"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="456"/>
         <source>Failed to update content blocking profile: checksum mismatch</source>
         <translation>Het is niet gelukt om het inhoudblokkering-profielbestand te laden: controlesom komt niet overeen</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="550"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="548"/>
         <source>Failed to update content blocking profile, update URL is empty</source>
         <translation>Het is niet gelukt om het inhoudblokkering-profielbestand te laden: de bijwerkURL is leeg.</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="554"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="552"/>
         <source>Failed to update content blocking profile, update URL (%1) is invalid</source>
         <translation>Het is niet gelukt om het inhoudblokkering-profielbestand te laden; de bijwerkURL (%1) is ongeldig</translation>
     </message>
@@ -6139,17 +6189,17 @@ Selecteer een ander pad.</translation>
         <translation>(Zonder titel)</translation>
     </message>
     <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="51"/>
+        <location filename="../../src/core/UpdateChecker.cpp" line="47"/>
         <source>Unable to check for updates. Invalid URL: %1</source>
         <translation>Het is niet mogelijk om te controleren op updates; de URL is ongeldig: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="72"/>
+        <location filename="../../src/core/UpdateChecker.cpp" line="68"/>
         <source>Unable to check for updates: %1</source>
         <translation>Het is niet mogelijk om te controleren op updates: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="121"/>
+        <location filename="../../src/core/UpdateChecker.cpp" line="100"/>
         <source>Unable to parse version number: %1</source>
         <translation>Het is niet mogelijk om het versienummer te verwerken: %1</translation>
     </message>
@@ -6159,17 +6209,17 @@ Selecteer een ander pad.</translation>
         <translation>Standaard</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="424"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="460"/>
         <source>Blocked request</source>
         <translation>Geblokkeerde aanvraag</translation>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="427"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="419"/>
         <source>Failed to run File Associations Manager, error code: %1</source>
         <translation>Bestandstoewijzingbeheerder kon niet worden uitgevoerd, foutcode: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="482"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="474"/>
         <source>Failed to register application to system registry: %1, %2</source>
         <translation>Mislukt om applicatie te registreren in systeemregister: %0, %1</translation>
     </message>
@@ -6177,22 +6227,22 @@ Selecteer een ander pad.</translation>
 <context>
     <name>notifications</name>
     <message>
-        <location filename="../../src/core/NotificationsManager.cpp" line="72"/>
+        <location filename="../../src/core/NotificationsManager.cpp" line="88"/>
         <source>Transfer Completed</source>
         <translation>Overdracht afgerond</translation>
     </message>
     <message>
-        <location filename="../../src/core/NotificationsManager.cpp" line="72"/>
+        <location filename="../../src/core/NotificationsManager.cpp" line="88"/>
         <source>File transfer was completed</source>
         <translation>Bestandsoverdracht is afgerond</translation>
     </message>
     <message>
-        <location filename="../../src/core/NotificationsManager.cpp" line="73"/>
+        <location filename="../../src/core/NotificationsManager.cpp" line="89"/>
         <source>Update Available</source>
         <translation>Update beschikbaar</translation>
     </message>
     <message>
-        <location filename="../../src/core/NotificationsManager.cpp" line="73"/>
+        <location filename="../../src/core/NotificationsManager.cpp" line="89"/>
         <source>Update is available to be downloaded</source>
         <translation>Er staat een update klaar om gedownload te worden</translation>
     </message>
