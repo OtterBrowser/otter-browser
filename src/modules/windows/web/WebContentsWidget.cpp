@@ -661,6 +661,15 @@ void WebContentsWidget::updateFindHighlight(WebWidget::FindFlags flags)
 
 void WebContentsWidget::setScrollMode(ScrollMode mode)
 {
+	if (m_scrollMode == NoScroll && mode != NoScroll)
+	{
+		m_webWidget->installEventFilter(this);
+	}
+	else if (m_scrollMode != NoScroll && mode == NoScroll)
+	{
+		m_webWidget->removeEventFilter(this);
+	}
+
 	m_scrollMode = mode;
 
 	switch (mode)
@@ -979,6 +988,16 @@ bool WebContentsWidget::isLoading() const
 bool WebContentsWidget::isPrivate() const
 {
 	return m_webWidget->isPrivate();
+}
+
+bool WebContentsWidget::eventFilter(QObject *object, QEvent *event)
+{
+	if (event->type() == QEvent::Wheel && m_scrollMode != NoScroll)
+	{
+		setScrollMode(NoScroll);
+	}
+
+	return QObject::eventFilter(object, event);
 }
 
 }

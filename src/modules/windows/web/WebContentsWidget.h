@@ -80,6 +80,7 @@ public:
 	bool canZoom() const;
 	bool isLoading() const;
 	bool isPrivate() const;
+	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
 	void goToHistoryIndex(int index);
