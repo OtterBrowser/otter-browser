@@ -510,7 +510,12 @@ void StartPageWidget::showContextMenu(const QPoint &position)
 		menu.addAction(tr("Open"), this, SLOT(openTile()));
 		menu.addSeparator();
 		menu.addAction(tr("Edit…"), this, SLOT(editTile()));
-		menu.addAction(tr("Reload"), this, SLOT(reloadTile()))->setEnabled(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark);
+
+		if (SettingsManager::getValue(QLatin1String("StartPage/TileBackgroundMode")) == QLatin1String("thumbnail"))
+		{
+			menu.addAction(tr("Reload"), this, SLOT(reloadTile()))->setEnabled(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark);
+		}
+
 		menu.addSeparator();
 		menu.addAction(tr("Delete"), this, SLOT(removeTile()));
 	}

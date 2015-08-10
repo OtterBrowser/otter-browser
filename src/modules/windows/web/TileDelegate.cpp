@@ -19,6 +19,7 @@
 
 #include "TileDelegate.h"
 #include "../../../core/BookmarksModel.h"
+#include "../../../core/HistoryManager.h"
 #include "../../../core/SessionsManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/Utils.h"
@@ -38,6 +39,7 @@ TileDelegate::TileDelegate(QObject *parent) : QStyledItemDelegate(parent)
 void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
 	const int textHeight = (option.fontMetrics.boundingRect(QLatin1String("X")).height() * 1.5);
+	const QString tileBackgroundMode = SettingsManager::getValue(QLatin1String("StartPage/TileBackgroundMode")).toString();
 	QRect rectangle(option.rect);
 	rectangle.adjust(3, 3, -3, -3);
 
@@ -81,25 +83,40 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 	painter->setClipPath(path);
 	painter->fillRect(rectangle, QGuiApplication::palette().color(QPalette::Window));
 
-	rectangle.adjust(0, 0, 0, -textHeight);
+	if (tileBackgroundMode != QLatin1String("none"))
+	{
+		rectangle.adjust(0, 0, 0, -textHeight);
+	}
 
 	const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt());
 
-	if (type == BookmarksModel::FolderBookmark)
+	if (type == BookmarksModel::FolderBookmark && tileBackgroundMode != QLatin1String("none"))
 	{
 		Utils::getIcon(QLatin1String("inode-directory")).paint(painter, rectangle);
 	}
-	else
+	else if (tileBackgroundMode == QLatin1String("thumbnail"))
 	{
 		painter->setBrush(Qt::white);
 		painter->setPen(Qt::transparent);
 		painter->drawRect(rectangle);
 		painter->drawPixmap(rectangle, QPixmap(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")) + QString::number(index.data(BookmarksModel::IdentifierRole).toULongLong()) + QLatin1String(".png")));
 	}
+	else if (tileBackgroundMode == QLatin1String("favicon"))
+	{
+		HistoryManager::getIcon(index.data(BookmarksModel::UrlRole).toUrl()).paint(painter, rectangle);
+	}
 
 	painter->setClipping(false);
 	painter->setPen(QGuiApplication::palette().color(QPalette::Text));
-	painter->drawText(QRect(rectangle.x(), (rectangle.y() + rectangle.height()), rectangle.width(), textHeight), Qt::AlignCenter, option.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(), option.textElideMode, (rectangle.width() - 20)));
+
+	if (tileBackgroundMode == QLatin1String("none"))
+	{
+		painter->drawText(rectangle, Qt::AlignCenter, option.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(), option.textElideMode, (rectangle.width() - 20)));
+	}
+	else
+	{
+		painter->drawText(QRect(rectangle.x(), (rectangle.y() + rectangle.height()), rectangle.width(), textHeight), Qt::AlignCenter, option.fontMetrics.elidedText(index.data(Qt::DisplayRole).toString(), option.textElideMode, (rectangle.width() - 20)));
+	}
 
 	if (option.state.testFlag(QStyle::State_MouseOver) || option.state.testFlag(QStyle::State_HasFocus))
 	{
@@ -130,6 +147,7 @@ QWidget* TileDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem 
 	Q_UNUSED(index)
 
 	QLabel *editor = new QLabel(parent);
+
 	editor->setAlignment(Qt::AlignCenter);
 
 	QMovie *movie = new QMovie(QLatin1String(":/icons/loading.gif"), QByteArray(), editor);

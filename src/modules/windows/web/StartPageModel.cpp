@@ -157,7 +157,7 @@ void StartPageModel::reloadModel()
 				QStandardItem *item = m_bookmark->child(i)->clone();
 				item->setData(identifier, BookmarksModel::IdentifierRole);
 
-				if (static_cast<BookmarksModel::BookmarkType>(item->data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark && !QFile::exists(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")) + QString::number(identifier) + QLatin1String(".png")))
+				if (url.isValid() && SettingsManager::getValue(QLatin1String("StartPage/TileBackgroundMode")) == QLatin1String("thumbnail") && !QFile::exists(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")) + QString::number(identifier) + QLatin1String(".png")))
 				{
 					m_reloads[url] = qMakePair(identifier, false);
 
@@ -186,9 +186,26 @@ void StartPageModel::reloadModel()
 
 void StartPageModel::reloadTile(const QModelIndex &index, bool full)
 {
-	if (static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark && AddonsManager::getWebBackend()->requestThumbnail(index.data(BookmarksModel::UrlRole).toUrl(), QSize(SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt(), SettingsManager::getValue(QLatin1String("StartPage/TileHeight")).toInt())))
+	const QUrl url = index.data(BookmarksModel::UrlRole).toUrl();
+
+	if (url.isValid())
 	{
-		m_reloads[index.data(BookmarksModel::UrlRole).toUrl()] = qMakePair(index.data(BookmarksModel::IdentifierRole).toULongLong(), full);
+		QSize size;
+
+		if (SettingsManager::getValue(QLatin1String("StartPage/TileBackgroundMode")) == QLatin1String("thumbnail"))
+		{
+			size.setWidth(SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt());
+			size.setHeight(SettingsManager::getValue(QLatin1String("StartPage/TileHeight")).toInt());
+		}
+		else if (!full)
+		{
+			return;
+		}
+
+		if (AddonsManager::getWebBackend()->requestThumbnail(url, size))
+		{
+			m_reloads[index.data(BookmarksModel::UrlRole).toUrl()] = qMakePair(index.data(BookmarksModel::IdentifierRole).toULongLong(), full);
+		}
 	}
 }
 

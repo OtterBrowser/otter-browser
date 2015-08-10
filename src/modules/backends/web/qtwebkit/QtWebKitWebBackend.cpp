@@ -101,27 +101,34 @@ void QtWebKitWebBackend::pageLoaded(bool success)
 
 	if (success)
 	{
-		QSize contentsSize = page->mainFrame()->contentsSize();
+		QPixmap pixmap;
 
-		page->setViewportSize(contentsSize);
-
-		if (contentsSize.width() > 2000)
+		if (!m_thumbnailRequests[page].second.isEmpty())
 		{
-			contentsSize.setWidth(2000);
+			QSize contentsSize = page->mainFrame()->contentsSize();
+
+			page->setViewportSize(contentsSize);
+
+			if (contentsSize.width() > 2000)
+			{
+				contentsSize.setWidth(2000);
+			}
+
+			contentsSize.setHeight(m_thumbnailRequests[page].second.height() * (qreal(contentsSize.width()) / m_thumbnailRequests[page].second.width()));
+
+			pixmap = QPixmap(contentsSize);
+			pixmap.fill(Qt::white);
+
+			QPainter painter(&pixmap);
+
+			page->mainFrame()->render(&painter, QWebFrame::ContentsLayer, QRegion(QRect(QPoint(0, 0), contentsSize)));
+
+			painter.end();
+
+			pixmap = pixmap.scaled(m_thumbnailRequests[page].second, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 		}
 
-		contentsSize.setHeight(m_thumbnailRequests[page].second.height() * (qreal(contentsSize.width()) / m_thumbnailRequests[page].second.width()));
-
-		QPixmap pixmap(contentsSize);
-		pixmap.fill(Qt::white);
-
-		QPainter painter(&pixmap);
-
-		page->mainFrame()->render(&painter, QWebFrame::ContentsLayer, QRegion(QRect(QPoint(0, 0), contentsSize)));
-
-		painter.end();
-
-		emit thumbnailAvailable(m_thumbnailRequests[page].first, pixmap.scaled(m_thumbnailRequests[page].second, Qt::KeepAspectRatio, Qt::SmoothTransformation), page->mainFrame()->title());
+		emit thumbnailAvailable(m_thumbnailRequests[page].first, pixmap, page->mainFrame()->title());
 	}
 	else
 	{
