@@ -403,6 +403,13 @@ void QtWebKitWebWidget::linkHovered(const QString &link)
 void QtWebKitWebWidget::clearPluginToken()
 {
 	m_pluginToken = QString();
+
+	Action *loadPluginsAction = getExistingAction(ActionsManager::LoadPluginsAction);
+
+	if (loadPluginsAction)
+	{
+		loadPluginsAction->setEnabled(true);
+	}
 }
 
 void QtWebKitWebWidget::openRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData)
