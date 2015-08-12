@@ -351,9 +351,10 @@ bool QtWebKitPage::javaScriptPrompt(QWebFrame *frame, const QString &message, co
 	QWidget *widget = new QWidget(m_widget);
 	QLineEdit *lineEdit = new QLineEdit(defaultValue, widget);
 	QLabel *label = new QLabel(message, widget);
+	label->setBuddy(lineEdit);
 	label->setTextFormat(Qt::PlainText);
 
-	QHBoxLayout *layout = new QHBoxLayout(widget);
+	QVBoxLayout *layout = new QVBoxLayout(widget);
 	layout->addWidget(label);
 	layout->addWidget(lineEdit);
 
