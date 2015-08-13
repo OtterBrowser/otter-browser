@@ -63,7 +63,7 @@ class WorkspaceWidget : public QWidget
 public:
 	explicit WorkspaceWidget(QWidget *parent = NULL);
 
-	void addWindow(Window *window, const QRect &geometry, WindowState state, bool isAlwaysOnTop);
+	void addWindow(Window *window, const QRect &geometry = QRect(), WindowState state = MaximizedWindowState, bool isAlwaysOnTop = false);
 	void setActiveWindow(Window *window);
 	Window* getActiveWindow();
 
@@ -77,6 +77,7 @@ protected:
 	void resizeEvent(QResizeEvent *event);
 
 protected slots:
+	void optionChanged(const QString &option, const QVariant &value);
 	void activeSubWindowChanged(QMdiSubWindow *subWindow);
 
 private:

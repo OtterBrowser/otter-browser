@@ -152,16 +152,13 @@ WorkspaceWidget::WorkspaceWidget(QWidget *parent) : QWidget(parent),
 	m_restoreTimer(0),
 	m_isRestored(false)
 {
-	if (SettingsManager::getValue(QLatin1String("Interface/EnableMdi")).toBool())
-	{
-		m_mdi = new MdiWidget(this);
-		m_mdi->setOption(QMdiArea::DontMaximizeSubWindowOnActivation, true);
+	QVBoxLayout *layout = new QVBoxLayout(this);
+	layout->setContentsMargins(0, 0, 0, 0);
+	layout->setSpacing(0);
 
-		QVBoxLayout *layout = new QVBoxLayout(this);
-		layout->setContentsMargins(0, 0, 0, 0);
-		layout->setSpacing(0);
-		layout->addWidget(m_mdi);
-	}
+	optionChanged(QLatin1String("Interface/EnableMdi"), SettingsManager::getValue(QLatin1String("Interface/EnableMdi")));
+
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
 
 void WorkspaceWidget::timerEvent(QTimerEvent *event)
@@ -183,6 +180,71 @@ void WorkspaceWidget::resizeEvent(QResizeEvent *event)
 	if (m_activeWindow && !m_mdi)
 	{
 		m_activeWindow->resize(size());
+	}
+}
+
+void WorkspaceWidget::optionChanged(const QString &option, const QVariant &value)
+{
+	if (option == QLatin1String("Interface/EnableMdi"))
+	{
+		if (!m_mdi && value.toBool())
+		{
+			Window *activeWindow = m_activeWindow;
+
+			m_mdi = new MdiWidget(this);
+			m_mdi->setOption(QMdiArea::DontMaximizeSubWindowOnActivation, true);
+
+			layout()->addWidget(m_mdi);
+
+			m_isRestored = false;
+
+			QList<Window*> windows = findChildren<Window*>();
+
+			for (int i = 0; i < windows.count(); ++i)
+			{
+				windows.at(i)->setVisible(true);
+
+				addWindow(windows.at(i));
+			}
+
+			m_activeWindow = NULL;
+
+			setActiveWindow(activeWindow);
+			markRestored();
+		}
+		else if (m_mdi && !value.toBool())
+		{
+			Window *activeWindow = m_activeWindow;
+			QMdiArea *mdi = m_mdi;
+
+			m_mdi = NULL;
+
+			const QList<QMdiSubWindow*> subWindows = mdi->subWindowList();
+
+			for (int i = 0; i < subWindows.count(); ++i)
+			{
+				Window *window = qobject_cast<Window*>(subWindows.at(i)->widget());
+
+				if (window)
+				{
+					window->setParent(this);
+
+					subWindows.at(i)->setWidget(NULL);
+
+					window->setWindowFlags(Qt::Widget);
+
+					addWindow(window);
+				}
+			}
+
+			layout()->removeWidget(mdi);
+
+			mdi->deleteLater();
+
+			m_activeWindow = NULL;
+
+			setActiveWindow(activeWindow);
+		}
 	}
 }
 
