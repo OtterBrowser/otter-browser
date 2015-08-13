@@ -118,7 +118,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 		default:
 			if (identifier == ActionsManager::PasteAndGoAction && (!window || window->getType() != QLatin1String("web")))
 			{
-				window = new Window(m_isPrivate, NULL, m_mainWindow->getWorkspace());
+				window = new Window(m_isPrivate);
 
 				addWindow(window, NewTabOpen);
 
@@ -244,7 +244,7 @@ void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints)
 
 void WindowsManager::openTab(const QUrl &url, OpenHints hints)
 {
-	Window *window = new Window((hints & PrivateOpen), NULL, m_mainWindow->getWorkspace());
+	Window *window = new Window(hints & PrivateOpen);
 
 	addWindow(window, hints);
 
@@ -356,7 +356,7 @@ void WindowsManager::restore(const SessionMainWindow &session)
 	{
 		for (int i = 0; i < session.windows.count(); ++i)
 		{
-			Window *window = new Window(m_isPrivate, NULL, m_mainWindow->getWorkspace());
+			Window *window = new Window(m_isPrivate);
 			window->setSession(session.windows.at(i));
 
 			addWindow(window, DefaultOpen, -1, session.windows.at(i).geometry, session.windows.at(i).state, session.windows.at(i).isAlwaysOnTop);
@@ -415,7 +415,7 @@ void WindowsManager::restore(int index)
 		}
 	}
 
-	Window *window = new Window(m_isPrivate, NULL, m_mainWindow->getWorkspace());
+	Window *window = new Window(m_isPrivate);
 	window->setSession(closedWindow.window);
 
 	m_closedWindows.removeAt(index);
@@ -538,7 +538,7 @@ void WindowsManager::openWindow(ContentsWidget *widget, OpenHints hints)
 	}
 	else
 	{
-		addWindow(new Window(widget->isPrivate(), widget, m_mainWindow->getWorkspace()), hints);
+		addWindow(new Window(widget->isPrivate(), widget), hints);
 	}
 }
 

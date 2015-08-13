@@ -66,7 +66,7 @@ class Window : public QWidget
 	Q_PROPERTY(bool isPrivate READ isPrivate)
 
 public:
-	explicit Window(bool isPrivate, ContentsWidget *widget, QWidget *parent = NULL);
+	explicit Window(bool isPrivate, ContentsWidget *widget = NULL, QWidget *parent = NULL);
 
 	void clear();
 	void attachAddressWidget(AddressWidget *widget);

@@ -156,9 +156,12 @@ WorkspaceWidget::WorkspaceWidget(QWidget *parent) : QWidget(parent),
 	layout->setContentsMargins(0, 0, 0, 0);
 	layout->setSpacing(0);
 
-	optionChanged(QLatin1String("Interface/EnableMdi"), SettingsManager::getValue(QLatin1String("Interface/EnableMdi")));
+	optionChanged(QLatin1String("Interface/NewTabOpeningAction"), SettingsManager::getValue(QLatin1String("Interface/NewTabOpeningAction")));
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	if (!m_mdi)
+	{
+		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	}
 }
 
 void WorkspaceWidget::timerEvent(QTimerEvent *event)
@@ -177,7 +180,7 @@ void WorkspaceWidget::resizeEvent(QResizeEvent *event)
 {
 	QWidget::resizeEvent(event);
 
-	if (m_activeWindow && !m_mdi)
+	if (!m_mdi && m_activeWindow)
 	{
 		m_activeWindow->resize(size());
 	}
@@ -185,66 +188,50 @@ void WorkspaceWidget::resizeEvent(QResizeEvent *event)
 
 void WorkspaceWidget::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == QLatin1String("Interface/EnableMdi"))
+	if (!m_mdi && option == QLatin1String("Interface/NewTabOpeningAction") && value.toString() != QLatin1String("maximizeTab"))
 	{
-		if (!m_mdi && value.toBool())
-		{
-			Window *activeWindow = m_activeWindow;
+		createMdi();
+	}
+}
 
-			m_mdi = new MdiWidget(this);
-			m_mdi->setOption(QMdiArea::DontMaximizeSubWindowOnActivation, true);
+void WorkspaceWidget::createMdi()
+{
+	if (m_mdi)
+	{
+		return;
+	}
 
-			layout()->addWidget(m_mdi);
+	disconnect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 
-			m_isRestored = false;
+	Window *activeWindow = m_activeWindow;
 
-			QList<Window*> windows = findChildren<Window*>();
+	m_mdi = new MdiWidget(this);
+	m_mdi->setOption(QMdiArea::DontMaximizeSubWindowOnActivation, true);
 
-			for (int i = 0; i < windows.count(); ++i)
-			{
-				windows.at(i)->setVisible(true);
+	layout()->addWidget(m_mdi);
 
-				addWindow(windows.at(i));
-			}
+	const bool wasRestored = m_isRestored;
 
-			m_activeWindow = NULL;
+	if (wasRestored)
+	{
+		m_isRestored = false;
+	}
 
-			setActiveWindow(activeWindow);
-			markRestored();
-		}
-		else if (m_mdi && !value.toBool())
-		{
-			Window *activeWindow = m_activeWindow;
-			QMdiArea *mdi = m_mdi;
+	QList<Window*> windows = findChildren<Window*>();
 
-			m_mdi = NULL;
+	for (int i = 0; i < windows.count(); ++i)
+	{
+		windows.at(i)->setVisible(true);
 
-			const QList<QMdiSubWindow*> subWindows = mdi->subWindowList();
+		addWindow(windows.at(i));
+	}
 
-			for (int i = 0; i < subWindows.count(); ++i)
-			{
-				Window *window = qobject_cast<Window*>(subWindows.at(i)->widget());
+	if (wasRestored)
+	{
+		m_activeWindow = NULL;
 
-				if (window)
-				{
-					window->setParent(this);
-
-					subWindows.at(i)->setWidget(NULL);
-
-					window->setWindowFlags(Qt::Widget);
-
-					addWindow(window);
-				}
-			}
-
-			layout()->removeWidget(mdi);
-
-			mdi->deleteLater();
-
-			m_activeWindow = NULL;
-
-			setActiveWindow(activeWindow);
-		}
+		setActiveWindow(activeWindow);
+		markRestored();
 	}
 }
 
@@ -252,7 +239,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 {
 	if (!m_mdi)
 	{
-		return;
+		createMdi();
 	}
 
 	switch (identifier)
@@ -362,6 +349,11 @@ void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowSta
 {
 	if (window)
 	{
+		if (!m_mdi && (state != MaximizedWindowState || geometry.isValid()))
+		{
+			createMdi();
+		}
+
 		if (m_mdi)
 		{
 			disconnect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
@@ -430,8 +422,6 @@ void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowSta
 				connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
 			}
 
-			updateActions();
-
 			connect(closeAction, SIGNAL(triggered()), window, SLOT(close()));
 			connect(mdiWindow, SIGNAL(windowStateChanged(Qt::WindowStates,Qt::WindowStates)), this, SLOT(updateActions()));
 			connect(window, SIGNAL(destroyed()), this, SLOT(updateActions()));
@@ -442,6 +432,8 @@ void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowSta
 			window->setParent(this);
 			window->move(0, 0);
 		}
+
+		updateActions();
 	}
 }
 
@@ -465,7 +457,8 @@ void WorkspaceWidget::activeSubWindowChanged(QMdiSubWindow *subWindow)
 void WorkspaceWidget::updateActions()
 {
 	const QList<QMdiSubWindow*> subWindows = (m_mdi ? m_mdi->subWindowList() : QList<QMdiSubWindow*>());
-	int maximizedSubWindows = 0;
+	const int subWindowsCount = (m_mdi ? subWindows.count() : findChildren<Window*>().count());
+	int maximizedSubWindows = (m_mdi ? 0 : subWindowsCount);
 	int minimizedSubWindows = 0;
 	int restoredSubWindows = 0;
 
@@ -487,17 +480,17 @@ void WorkspaceWidget::updateActions()
 		}
 	}
 
-	ActionsManager::getAction(ActionsManager::MaximizeAllAction, this)->setEnabled(maximizedSubWindows < subWindows.count());
-	ActionsManager::getAction(ActionsManager::MinimizeAllAction, this)->setEnabled(minimizedSubWindows < subWindows.count());
-	ActionsManager::getAction(ActionsManager::RestoreAllAction, this)->setEnabled(restoredSubWindows < subWindows.count());
-	ActionsManager::getAction(ActionsManager::CascadeAllAction, this)->setEnabled(subWindows.count() > 0);
-	ActionsManager::getAction(ActionsManager::TileAllAction, this)->setEnabled(subWindows.count() > 0);
+	ActionsManager::getAction(ActionsManager::MaximizeAllAction, this)->setEnabled(maximizedSubWindows < subWindowsCount);
+	ActionsManager::getAction(ActionsManager::MinimizeAllAction, this)->setEnabled(minimizedSubWindows < subWindowsCount);
+	ActionsManager::getAction(ActionsManager::RestoreAllAction, this)->setEnabled(restoredSubWindows < subWindowsCount);
+	ActionsManager::getAction(ActionsManager::CascadeAllAction, this)->setEnabled(subWindowsCount > 0);
+	ActionsManager::getAction(ActionsManager::TileAllAction, this)->setEnabled(subWindowsCount > 0);
 
 	QMdiSubWindow *activeSubWindow = (m_mdi ? m_mdi->activeSubWindow() : NULL);
 
 	ActionsManager::getAction(ActionsManager::MaximizeTabAction, this)->setEnabled(activeSubWindow && !activeSubWindow->windowState().testFlag(Qt::WindowMaximized));
 	ActionsManager::getAction(ActionsManager::MinimizeTabAction, this)->setEnabled(activeSubWindow && !activeSubWindow->windowState().testFlag(Qt::WindowMinimized));
-	ActionsManager::getAction(ActionsManager::RestoreTabAction, this)->setEnabled(activeSubWindow && (activeSubWindow->windowState().testFlag(Qt::WindowMaximized) || activeSubWindow->windowState().testFlag(Qt::WindowMinimized)));
+	ActionsManager::getAction(ActionsManager::RestoreTabAction, this)->setEnabled(!m_mdi || (activeSubWindow && (activeSubWindow->windowState().testFlag(Qt::WindowMaximized) || activeSubWindow->windowState().testFlag(Qt::WindowMinimized))));
 	ActionsManager::getAction(ActionsManager::AlwaysOnTopTabAction, this)->setEnabled(activeSubWindow);
 	ActionsManager::getAction(ActionsManager::AlwaysOnTopTabAction, this)->setChecked(activeSubWindow && activeSubWindow->windowFlags().testFlag(Qt::WindowStaysOnTopHint));
 }

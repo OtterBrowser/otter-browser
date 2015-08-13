@@ -254,9 +254,11 @@ void Window::markActive()
 
 void Window::handleIconChanged(const QIcon &icon)
 {
-	if (SettingsManager::getValue(QLatin1String("Interface/EnableMdi")).toBool())
+	QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow*>(parentWidget());
+
+	if (subWindow)
 	{
-		parentWidget()->setWindowIcon(icon);
+		subWindow->setWindowIcon(icon);
 	}
 }
 
@@ -291,17 +293,14 @@ void Window::handleSearchRequest(const QString &query, const QString &engine, Op
 
 void Window::handleGeometryChangeRequest(const QRect &geometry)
 {
-	if (SettingsManager::getValue(QLatin1String("Interface/EnableMdi")).toBool())
-	{
-		QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow*>(parentWidget());
+	QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow*>(parentWidget());
 
-		if (subWindow)
-		{
-			subWindow->setWindowFlags(Qt::SubWindow);
-			subWindow->showNormal();
-			subWindow->resize((geometry.size() * (static_cast<qreal>(getContentsWidget()->getZoom()) / 100)) + (subWindow->geometry().size() - m_contentsWidget->size()));
-			subWindow->move(geometry.topLeft());
-		}
+	if (subWindow)
+	{
+		subWindow->setWindowFlags(Qt::SubWindow);
+		subWindow->showNormal();
+		subWindow->resize((geometry.size() * (static_cast<qreal>(getContentsWidget()->getZoom()) / 100)) + (subWindow->geometry().size() - m_contentsWidget->size()));
+		subWindow->move(geometry.topLeft());
 	}
 }
 
@@ -670,24 +669,21 @@ SessionWindow Window::getSession() const
 	session.index = history.index;
 	session.isPinned = isPinned();
 
-	if (SettingsManager::getValue(QLatin1String("Interface/EnableMdi")).toBool())
-	{
-		QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow*>(parentWidget());
+	QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow*>(parentWidget());
 
-		if (subWindow)
+	if (subWindow)
+	{
+		if (subWindow->isMaximized())
 		{
-			if (subWindow->isMaximized())
-			{
-				session.state = MaximizedWindowState;
-			}
-			else if (subWindow->isMinimized())
-			{
-				session.state = MinimizedWindowState;
-			}
-			else
-			{
-				session.geometry = subWindow->geometry();
-			}
+			session.state = MaximizedWindowState;
+		}
+		else if (subWindow->isMinimized())
+		{
+			session.state = MinimizedWindowState;
+		}
+		else
+		{
+			session.geometry = subWindow->geometry();
 		}
 	}
 

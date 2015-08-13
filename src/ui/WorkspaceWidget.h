@@ -75,6 +75,7 @@ public slots:
 protected:
 	void timerEvent(QTimerEvent *event);
 	void resizeEvent(QResizeEvent *event);
+	void createMdi();
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
