@@ -72,6 +72,20 @@ void InputInterpreter::verifyLookup(const QHostInfo &host)
 
 void InputInterpreter::interpret(const QString &text, OpenHints hints, bool ignoreBookmarks)
 {
+	if (text.startsWith(QLatin1String("bookmarks:")))
+	{
+		BookmarksItem *bookmark = (text.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getItem(text.mid(11)) : BookmarksManager::getBookmark(text.mid(10).toULongLong()));
+
+		if (bookmark)
+		{
+			emit requestedOpenBookmark(bookmark, hints);
+
+			deleteLater();
+
+			return;
+		}
+	}
+
 	if (!ignoreBookmarks)
 	{
 		BookmarksItem *bookmark = BookmarksManager::getBookmark(text);
