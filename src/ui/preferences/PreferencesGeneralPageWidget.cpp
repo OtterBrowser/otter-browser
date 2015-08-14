@@ -124,6 +124,10 @@ void PreferencesGeneralPageWidget::useBookmarkAsHomePage(QAction *action)
 		{
 			m_ui->homePageLineEdit->setText(url);
 		}
+		else
+		{
+			m_ui->homePageLineEdit->setText(QLatin1String("bookmarks:") + QString::number(action->data().toModelIndex().data(BookmarksModel::IdentifierRole).toULongLong()));
+		}
 	}
 }
 
