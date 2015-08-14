@@ -517,7 +517,7 @@ QWidget* ToolBarWidget::createWidget(const ToolBarActionDefinition &definition)
 
 	if (definition.action.startsWith(QLatin1String("bookmarks:")))
 	{
-		BookmarksItem *bookmark = (definition.action.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getItem(definition.action.mid(11)) : BookmarksManager::getBookmark(definition.action.mid(11).toULongLong()));
+		BookmarksItem *bookmark = (definition.action.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getItem(definition.action.mid(11)) : BookmarksManager::getBookmark(definition.action.mid(10).toULongLong()));
 
 		if (bookmark)
 		{

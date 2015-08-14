@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "ToolBarDialog.h"
+#include "Menu.h"
 #include "../core/ActionsManager.h"
 #include "../core/BookmarksManager.h"
 #include "../core/BookmarksModel.h"
@@ -131,8 +132,14 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : QDialog(parent),
 
 	m_definition.actions.clear();
 
+	Menu *bookmarksMenu = new Menu(Menu::BookmarkSelectorMenuRole, m_ui->addEntryButton);
+
+	m_ui->addEntryButton->setMenu(bookmarksMenu);
+	m_ui->addEntryButton->setEnabled(BookmarksManager::getModel()->getRootItem()->rowCount() > 0);
+
 	adjustSize();
 
+	connect(bookmarksMenu, SIGNAL(triggered(QAction*)), this, SLOT(addBookmark(QAction*)));
 	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(addEntry()));
 	connect(m_ui->removeButton, SIGNAL(clicked()), m_ui->currentEntriesItemView, SLOT(removeRow()));
 	connect(m_ui->moveDownButton, SIGNAL(clicked()), m_ui->currentEntriesItemView, SLOT(moveDownRow()));
@@ -174,6 +181,24 @@ void ToolBarDialog::updateActions()
 {
 	m_ui->addButton->setEnabled(m_ui->availableEntriesItemView->currentIndex().isValid());
 	m_ui->removeButton->setEnabled(m_ui->currentEntriesItemView->currentIndex().isValid() && m_ui->currentEntriesItemView->currentIndex().data(Qt::UserRole).toString() != QLatin1String("MenuBarWidget") && m_ui->currentEntriesItemView->currentIndex().data(Qt::UserRole).toString() != QLatin1String("TabBarWidget"));
+}
+
+void ToolBarDialog::addEntry()
+{
+	QStandardItem *sourceItem = m_ui->availableEntriesItemView->getItem(m_ui->availableEntriesItemView->getCurrentRow());
+
+	if (sourceItem)
+	{
+		m_ui->currentEntriesItemView->insertRow(sourceItem->clone());
+	}
+}
+
+void ToolBarDialog::addBookmark(QAction *action)
+{
+	if (action && action->data().type() == QVariant::ModelIndex)
+	{
+		m_ui->currentEntriesItemView->insertRow(createEntry(QLatin1String("bookmarks:") + QString::number(action->data().toModelIndex().data(BookmarksModel::IdentifierRole).toULongLong())));
+	}
 }
 
 QStandardItem* ToolBarDialog::createEntry(const QString &identifier)
@@ -228,7 +253,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier)
 	}
 	else if (identifier.startsWith(QLatin1String("bookmarks:")))
 	{
-		BookmarksItem *bookmark = (identifier.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getItem(identifier.mid(11)) : BookmarksManager::getBookmark(identifier.mid(11).toULongLong()));
+		BookmarksItem *bookmark = (identifier.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getItem(identifier.mid(11)) : BookmarksManager::getBookmark(identifier.mid(10).toULongLong()));
 
 		if (bookmark)
 		{
@@ -262,16 +287,6 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier)
 	}
 
 	return item;
-}
-
-void ToolBarDialog::addEntry()
-{
-	QStandardItem *sourceItem = m_ui->availableEntriesItemView->getItem(m_ui->availableEntriesItemView->getCurrentRow());
-
-	if (sourceItem)
-	{
-		m_ui->currentEntriesItemView->insertRow(sourceItem->clone());
-	}
 }
 
 ToolBarDefinition ToolBarDialog::getDefinition()

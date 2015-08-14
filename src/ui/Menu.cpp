@@ -69,7 +69,6 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 			}
 
 			break;
-
 		case CharacterEncodingMenuRole:
 			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateCharacterEncodingMenu()));
 			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectCharacterEncoding(QAction*)));
@@ -107,7 +106,6 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(openSession(QAction*)));
 
 			break;
-
 		case ToolBarsMenuRole:
 			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateToolBarsMenu()));
 
@@ -312,6 +310,14 @@ void Menu::populateModelMenu()
 	{
 		QAction *openAllAction = menu->addAction(Utils::getIcon(QLatin1String("document-open-folder")), tr("Open All"), this, SLOT(openBookmark()));
 		openAllAction->setData(index);
+
+		menu->addSeparator();
+	}
+
+	if (m_role == BookmarkSelectorMenuRole)
+	{
+		QAction *addFolderAction = menu->addAction(Utils::getIcon(QLatin1String("document-open-folder")), tr("This Folder"));
+		addFolderAction->setData(index);
 
 		menu->addSeparator();
 	}
