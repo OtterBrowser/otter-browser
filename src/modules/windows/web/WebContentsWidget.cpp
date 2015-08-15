@@ -341,7 +341,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)));
 				connect(interpreter, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
 
-				interpreter->interpret(QGuiApplication::clipboard()->text().trimmed(), WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers()), true);
+				interpreter->interpret(QGuiApplication::clipboard()->text().trimmed(), (SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool() ? NewTabOpen : CurrentTabOpen), true);
 			}
 
 			break;
