@@ -201,6 +201,7 @@ SOURCES += src/main.cpp \
     src/modules/windows/notes/NotesContentsWidget.cpp \
     src/modules/windows/transfers/ProgressBarDelegate.cpp \
     src/modules/windows/transfers/TransfersContentsWidget.cpp \
+    src/modules/windows/web/PasswordBarWidget.cpp \
     src/modules/windows/web/PermissionBarWidget.cpp \
     src/modules/windows/web/ProgressBarWidget.cpp \
     src/modules/windows/web/SearchBarWidget.cpp \
@@ -344,6 +345,7 @@ HEADERS += src/core/ActionsManager.h \
     src/modules/windows/notes/NotesContentsWidget.h \
     src/modules/windows/transfers/ProgressBarDelegate.h \
     src/modules/windows/transfers/TransfersContentsWidget.h \
+    src/modules/windows/web/PasswordBarWidget.h \
     src/modules/windows/web/PermissionBarWidget.h \
     src/modules/windows/web/ProgressBarWidget.h \
     src/modules/windows/web/SearchBarWidget.h \
@@ -394,6 +396,7 @@ FORMS += src/ui/AcceptCookieDialog.ui \
     src/modules/windows/history/HistoryContentsWidget.ui \
     src/modules/windows/notes/NotesContentsWidget.ui \
     src/modules/windows/transfers/TransfersContentsWidget.ui \
+    src/modules/windows/web/PasswordBarWidget.ui \
     src/modules/windows/web/PermissionBarWidget.ui \
     src/modules/windows/web/SearchBarWidget.ui \
     src/modules/windows/web/StartPagePreferencesDialog.ui

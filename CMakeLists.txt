@@ -208,6 +208,7 @@ set(otter_src
 	src/modules/windows/notes/NotesContentsWidget.cpp
 	src/modules/windows/transfers/ProgressBarDelegate.cpp
 	src/modules/windows/transfers/TransfersContentsWidget.cpp
+	src/modules/windows/web/PasswordBarWidget.cpp
 	src/modules/windows/web/PermissionBarWidget.cpp
 	src/modules/windows/web/ProgressBarWidget.cpp
 	src/modules/windows/web/SearchBarWidget.cpp
@@ -265,6 +266,7 @@ qt5_wrap_ui(otter_ui
 	src/modules/windows/history/HistoryContentsWidget.ui
 	src/modules/windows/notes/NotesContentsWidget.ui
 	src/modules/windows/transfers/TransfersContentsWidget.ui
+	src/modules/windows/web/PasswordBarWidget.ui
 	src/modules/windows/web/PermissionBarWidget.ui
 	src/modules/windows/web/SearchBarWidget.ui
 	src/modules/windows/web/StartPagePreferencesDialog.ui
