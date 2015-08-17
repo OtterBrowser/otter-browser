@@ -287,7 +287,10 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event)
 
 		m_tabSwictherTimer = 0;
 
-		triggerAction((m_tabSwitcherKey == Qt::Key_Tab) ? ActionsManager::ActivatePreviouslyUsedTabAction : ActionsManager::ActivateLeastRecentlyUsedTabAction);
+		QVariantMap parameters;
+		parameters[QLatin1String("includeMinimized")] = true;
+
+		m_workspace->triggerAction(((m_tabSwitcherKey == Qt::Key_Tab) ? ActionsManager::ActivatePreviouslyUsedTabAction : ActionsManager::ActivateLeastRecentlyUsedTabAction), parameters);
 	}
 
 	QMainWindow::keyReleaseEvent(event);

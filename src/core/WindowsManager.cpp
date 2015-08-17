@@ -111,12 +111,13 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 		case ActionsManager::ActivateLeastRecentlyUsedTabAction:
 			{
 				QMultiMap<qint64, quint64> map;
+				const bool includeMinimized = parameters.contains(QLatin1String("includeMinimized"));
 
 				for (int i = 0; i < getWindowCount(); ++i)
 				{
 					Window *window = getWindowByIndex(i);
 
-					if (window)
+					if (window && (includeMinimized || !window->isMinimized()))
 					{
 						map.insert(window->getLastActivity().toMSecsSinceEpoch(), window->getIdentifier());
 					}
