@@ -107,6 +107,30 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 			}
 
 			break;
+		case ActionsManager::ActivatePreviouslyUsedTabAction:
+		case ActionsManager::ActivateLeastRecentlyUsedTabAction:
+			{
+				QMultiMap<qint64, quint64> map;
+
+				for (int i = 0; i < getWindowCount(); ++i)
+				{
+					Window *window = getWindowByIndex(i);
+
+					if (window)
+					{
+						map.insert(window->getLastActivity().toMSecsSinceEpoch(), window->getIdentifier());
+					}
+				}
+
+				const QList<quint64> list = map.values();
+
+				if (list.count() > 1)
+				{
+					setActiveWindowByIdentifier((identifier == ActionsManager::ActivatePreviouslyUsedTabAction) ? list.at(list.count() - 2) : list.first());
+				}
+			}
+
+			break;
 		case ActionsManager::ActivateTabOnLeftAction:
 			m_mainWindow->getTabBar()->activateTabOnLeft();
 

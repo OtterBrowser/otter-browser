@@ -191,6 +191,8 @@ public:
 		ActivateAddressFieldAction,
 		ActivateSearchFieldAction,
 		ActivateContentAction,
+		ActivatePreviouslyUsedTabAction,
+		ActivateLeastRecentlyUsedTabAction,
 		ActivateTabOnLeftAction,
 		ActivateTabOnRightAction,
 		BookmarksAction,

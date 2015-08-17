@@ -287,24 +287,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event)
 
 		m_tabSwictherTimer = 0;
 
-		QMultiMap<qint64, quint64> map;
-
-		for (int i = 0; i < m_windowsManager->getWindowCount(); ++i)
-		{
-			Window *window = m_windowsManager->getWindowByIndex(i);
-
-			if (window)
-			{
-				map.insert(window->getLastActivity().toMSecsSinceEpoch(), window->getIdentifier());
-			}
-		}
-
-		const QList<quint64> list = map.values();
-
-		if (list.count() > 1)
-		{
-			m_windowsManager->setActiveWindowByIdentifier((m_tabSwitcherKey == Qt::Key_Tab) ? list.at(list.count() - 2) : list.first());
-		}
+		triggerAction((m_tabSwitcherKey == Qt::Key_Tab) ? ActionsManager::ActivatePreviouslyUsedTabAction : ActionsManager::ActivateLeastRecentlyUsedTabAction);
 	}
 
 	QMainWindow::keyReleaseEvent(event);
