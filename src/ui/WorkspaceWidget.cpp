@@ -259,9 +259,7 @@ void WorkspaceWidget::createMdi()
 
 	if (wasRestored)
 	{
-		m_activeWindow = NULL;
-
-		setActiveWindow(activeWindow);
+		setActiveWindow(activeWindow, true);
 		markRestored();
 	}
 }
@@ -355,6 +353,8 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 				}
 
 				connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
+
+				setActiveWindow(m_activeWindow, true);
 			}
 
 			break;
@@ -377,6 +377,8 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 				}
 
 				connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
+
+				setActiveWindow(NULL);
 			}
 
 			break;
@@ -399,6 +401,8 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 				}
 
 				connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
+
+				setActiveWindow(m_activeWindow, true);
 			}
 
 			break;
@@ -579,9 +583,9 @@ void WorkspaceWidget::updateActions()
 	ActionsManager::getAction(ActionsManager::AlwaysOnTopTabAction, this)->setChecked(activeSubWindow && activeSubWindow->windowFlags().testFlag(Qt::WindowStaysOnTopHint));
 }
 
-void WorkspaceWidget::setActiveWindow(Window *window)
+void WorkspaceWidget::setActiveWindow(Window *window, bool force)
 {
-	if (window != m_activeWindow)
+	if (force || window != m_activeWindow)
 	{
 		if (m_mdi)
 		{
@@ -607,7 +611,7 @@ void WorkspaceWidget::setActiveWindow(Window *window)
 				window->show();
 			}
 
-			if (m_activeWindow)
+			if (m_activeWindow && m_activeWindow != window)
 			{
 				m_activeWindow->hide();
 			}

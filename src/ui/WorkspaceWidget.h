@@ -72,7 +72,7 @@ public:
 	explicit WorkspaceWidget(QWidget *parent = NULL);
 
 	void addWindow(Window *window, const QRect &geometry = QRect(), WindowState state = MaximizedWindowState, bool isAlwaysOnTop = false);
-	void setActiveWindow(Window *window);
+	void setActiveWindow(Window *window, bool force = false);
 	Window* getActiveWindow();
 
 public slots:
