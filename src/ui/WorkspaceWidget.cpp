@@ -257,6 +257,11 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 			{
 				m_mdi->activeSubWindow()->setWindowFlags(Qt::SubWindow);
 				m_mdi->activeSubWindow()->showMinimized();
+
+				if (m_mdi->subWindowList().count() > 1)
+				{
+					ActionsManager::triggerAction(ActionsManager::ActivatePreviouslyUsedTabAction, this);
+				}
 			}
 
 			break;
