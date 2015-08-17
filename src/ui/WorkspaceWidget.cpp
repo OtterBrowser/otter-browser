@@ -141,6 +141,18 @@ void MdiWindow::mouseReleaseEvent(QMouseEvent *event)
 		showMaximized();
 	}
 
+	if (style()->subControlRect(QStyle::CC_TitleBar, &option, QStyle::SC_TitleBarMinButton, this).contains(event->pos()))
+	{
+		storeState();
+		setWindowFlags(Qt::SubWindow);
+		showMinimized();
+
+		if (mdiArea()->subWindowList().count() > 1)
+		{
+			ActionsManager::triggerAction(ActionsManager::ActivatePreviouslyUsedTabAction, mdiArea());
+		}
+	}
+
 	QMdiSubWindow::mouseReleaseEvent(event);
 }
 
@@ -266,8 +278,14 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 		case ActionsManager::MaximizeTabAction:
 			if (m_mdi->activeSubWindow())
 			{
-				m_mdi->activeSubWindow()->setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
-				m_mdi->activeSubWindow()->showMaximized();
+				MdiWindow *activeSubWindow = qobject_cast<MdiWindow*>(m_mdi->activeSubWindow());
+
+				if (activeSubWindow)
+				{
+					activeSubWindow->setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+					activeSubWindow->showMaximized();
+					activeSubWindow->storeState();
+				}
 			}
 
 			break;
@@ -293,8 +311,14 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 		case ActionsManager::RestoreTabAction:
 			if (m_mdi->activeSubWindow())
 			{
-				m_mdi->activeSubWindow()->setWindowFlags(Qt::SubWindow);
-				m_mdi->activeSubWindow()->showNormal();
+				MdiWindow *activeSubWindow = qobject_cast<MdiWindow*>(m_mdi->activeSubWindow());
+
+				if (activeSubWindow)
+				{
+					activeSubWindow->setWindowFlags(Qt::SubWindow);
+					activeSubWindow->showNormal();
+					activeSubWindow->storeState();
+				}
 			}
 
 			break;
@@ -314,13 +338,23 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 			break;
 		case ActionsManager::MaximizeAllAction:
 			{
+				disconnect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
+
 				const QList<QMdiSubWindow*> subWindows = m_mdi->subWindowList();
 
 				for (int i = 0; i < subWindows.count(); ++i)
 				{
-					subWindows.at(i)->setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
-					subWindows.at(i)->showMaximized();
+					MdiWindow *subWindow = qobject_cast<MdiWindow*>(subWindows.at(i));
+
+					if (subWindow)
+					{
+						subWindow->setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+						subWindow->showMaximized();
+						subWindow->storeState();
+					}
 				}
+
+				connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
 			}
 
 			break;
@@ -348,13 +382,23 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 			break;
 		case ActionsManager::RestoreAllAction:
 			{
+				disconnect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
+
 				const QList<QMdiSubWindow*> subWindows = m_mdi->subWindowList();
 
 				for (int i = 0; i < subWindows.count(); ++i)
 				{
-					subWindows.at(i)->setWindowFlags(Qt::SubWindow);
-					subWindows.at(i)->showNormal();
+					MdiWindow *subWindow = qobject_cast<MdiWindow*>(subWindows.at(i));
+
+					if (subWindow)
+					{
+						subWindow->setWindowFlags(Qt::SubWindow);
+						subWindow->showNormal();
+						subWindow->storeState();
+					}
 				}
+
+				connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
 			}
 
 			break;
