@@ -44,8 +44,13 @@ protected:
 
 class MdiWindow : public QMdiSubWindow
 {
+	Q_OBJECT
+
 public:
 	explicit MdiWindow(Window *window, MdiWidget *parent);
+
+	void storeState();
+	void restoreState();
 
 protected:
 	void changeEvent(QEvent *event);
@@ -54,6 +59,9 @@ protected:
 	void resizeEvent(QResizeEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
 	void mouseDoubleClickEvent(QMouseEvent *event);
+
+private:
+	bool m_wasMaximized;
 };
 
 class WorkspaceWidget : public QWidget
