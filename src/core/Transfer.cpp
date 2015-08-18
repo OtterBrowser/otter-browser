@@ -168,10 +168,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target, bool quickTran
 	}
 
 	m_reply = reply;
-
-	QTemporaryFile temporaryFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QDir::separator() + QLatin1String("otter-download-XXXXXX.dat"), this);
-
-	m_device = &temporaryFile;
+	m_device = new QTemporaryFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QDir::separator() + QLatin1String("otter-download-XXXXXX.dat"), this);
 	m_timeStarted = QDateTime::currentDateTime();
 	m_mimeType = QMimeDatabase().mimeTypeForName(m_reply->header(QNetworkRequest::ContentTypeHeader).toString());
 	m_bytesTotal = m_reply->header(QNetworkRequest::ContentLengthHeader).toLongLong();
@@ -286,54 +283,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target, bool quickTran
 		return;
 	}
 
-	QFile *file = new QFile(m_target);
-
-	if (!file->open(QIODevice::WriteOnly))
-	{
-		m_state = ErrorState;
-
-		file->deleteLater();
-
-		if (m_isAutoDeleted && !m_isSelectingPath)
-		{
-			deleteLater();
-		}
-
-		return;
-	}
-
-	if (m_reply && m_state == RunningState)
-	{
-		disconnect(m_reply, SIGNAL(readyRead()), this, SLOT(downloadData()));
-	}
-
-	temporaryFile.reset();
-
-	file->write(temporaryFile.readAll());
-
-	m_device = file;
-
-	if (m_reply)
-	{
-		if (m_reply->isFinished())
-		{
-			downloadFinished();
-
-			m_device = NULL;
-		}
-		else
-		{
-			downloadData();
-
-			connect(m_reply, SIGNAL(readyRead()), this, SLOT(downloadData()));
-		}
-	}
-	else
-	{
-		m_device = NULL;
-	}
-
-	temporaryFile.close();
+	setTarget(m_target);
 
 	if (m_state == FinishedState)
 	{
@@ -354,19 +304,6 @@ void Transfer::start(QNetworkReply *reply, const QString &target, bool quickTran
 		else
 		{
 			m_mimeType = QMimeDatabase().mimeTypeForFile(m_target);
-		}
-	}
-
-	if (!m_reply || m_reply->isFinished())
-	{
-		file->close();
-		file->deleteLater();
-
-		m_state = FinishedState;
-
-		if (m_isAutoDeleted && !m_isSelectingPath)
-		{
-			deleteLater();
 		}
 	}
 }
@@ -408,6 +345,11 @@ void Transfer::downloadFinished()
 			m_device->close();
 			m_device->deleteLater();
 			m_device = NULL;
+		}
+
+		if (m_isAutoDeleted && !m_isSelectingPath)
+		{
+			deleteLater();
 		}
 
 		return;
@@ -728,6 +670,75 @@ bool Transfer::restart()
 	}
 
 	return true;
+}
+
+bool Transfer::setTarget(const QString &target)
+{
+	if (m_target == target)
+	{
+		return false;
+	}
+
+	if (!m_device)
+	{
+		if (m_state != FinishedState)
+		{
+			return false;
+		}
+
+		const bool success = QFile::rename(m_target, target);
+
+		if (success)
+		{
+			m_target = target;
+		}
+
+		return success;
+	}
+
+	QFile *file = new QFile(target, this);
+
+	if (!file->open(QIODevice::WriteOnly))
+	{
+		m_state = ErrorState;
+
+		file->deleteLater();
+
+		if (m_isAutoDeleted && !m_isSelectingPath)
+		{
+			deleteLater();
+		}
+
+		return false;
+	}
+
+	if (m_device)
+	{
+		if (m_reply && m_state == RunningState)
+		{
+			disconnect(m_reply, SIGNAL(readyRead()), this, SLOT(downloadData()));
+		}
+
+		m_device->reset();
+
+		file->write(m_device->readAll());
+
+		m_device->close();
+		m_device->deleteLater();
+	}
+
+	m_device = file;
+
+	downloadData();
+
+	if (!m_reply || m_reply->isFinished())
+	{
+		downloadFinished();
+	}
+	else
+	{
+		connect(m_reply, SIGNAL(readyRead()), this, SLOT(downloadData()));
+	}
 }
 
 }

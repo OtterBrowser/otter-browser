@@ -20,7 +20,7 @@
 #ifndef OTTER_TRANSFER_H
 #define OTTER_TRANSFER_H
 
-#include <QtCore/QIODevice>
+#include <QtCore/QFile>
 #include <QtCore/QMimeType>
 #include <QtCore/QPointer>
 #include <QtCore/QSettings>
@@ -69,6 +69,7 @@ public slots:
 	virtual void stop();
 	virtual bool resume();
 	virtual bool restart();
+	virtual bool setTarget(const QString &target);
 
 protected:
 	void timerEvent(QTimerEvent *event);
@@ -82,7 +83,7 @@ protected slots:
 
 private:
 	QPointer<QNetworkReply> m_reply;
-	QPointer<QIODevice> m_device;
+	QPointer<QFile> m_device;
 	QUrl m_source;
 	QString m_target;
 	QDateTime m_timeStarted;
