@@ -54,6 +54,7 @@ public:
 	void setAutoDelete(bool autoDelete);
 	virtual void setUpdateInterval(int interval);
 	virtual QUrl getSource() const;
+	virtual QString getSuggestedFileName() const;
 	virtual QString getTarget() const;
 	virtual QDateTime getTimeStarted() const;
 	virtual QDateTime getTimeFinished() const;

@@ -225,45 +225,8 @@ void Transfer::start(QNetworkReply *reply, const QString &target, bool quickTran
 
 	if (target.isEmpty())
 	{
-		QUrl url;
-		QString fileName;
-
-		if (m_reply->hasRawHeader(QStringLiteral("Content-Disposition").toLatin1()))
-		{
-			url = QUrl(QRegularExpression(QLatin1String(" filename=\"?([^\"]+)\"?")).match(QString(m_reply->rawHeader(QStringLiteral("Content-Disposition").toLatin1()))).captured(1));
-
-			fileName = url.fileName();
-		}
-
-		if (fileName.isEmpty())
-		{
-			url = m_source;
-
-			fileName = url.fileName();
-		}
-
-		if (fileName.isEmpty())
-		{
-			fileName = tr("file");
-		}
-
-		if (QFileInfo(fileName).suffix().isEmpty())
-		{
-			QString suffix;
-
-			if (m_reply->header(QNetworkRequest::ContentTypeHeader).isValid())
-			{
-				suffix = m_mimeType.preferredSuffix();
-			}
-
-			if (!suffix.isEmpty())
-			{
-				fileName.append(QLatin1Char('.'));
-				fileName.append(suffix);
-			}
-		}
-
 		QString path;
+		QString fileName = getSuggestedFileName();
 
 		if (!quickTransfer && !SettingsManager::getValue(QLatin1String("Browser/AlwaysAskWhereToSaveDownload")).toBool())
 		{
@@ -591,6 +554,49 @@ void Transfer::setUpdateInterval(int interval)
 QUrl Transfer::getSource() const
 {
 	return m_source;
+}
+
+QString Transfer::getSuggestedFileName() const
+{
+	QUrl url;
+	QString fileName;
+
+	if (m_reply->hasRawHeader(QStringLiteral("Content-Disposition").toLatin1()))
+	{
+		url = QUrl(QRegularExpression(QLatin1String(" filename=\"?([^\"]+)\"?")).match(QString(m_reply->rawHeader(QStringLiteral("Content-Disposition").toLatin1()))).captured(1));
+
+		fileName = url.fileName();
+	}
+
+	if (fileName.isEmpty())
+	{
+		url = m_source;
+
+		fileName = url.fileName();
+	}
+
+	if (fileName.isEmpty())
+	{
+		fileName = tr("file");
+	}
+
+	if (QFileInfo(fileName).suffix().isEmpty())
+	{
+		QString suffix;
+
+		if (m_reply->header(QNetworkRequest::ContentTypeHeader).isValid())
+		{
+			suffix = m_mimeType.preferredSuffix();
+		}
+
+		if (!suffix.isEmpty())
+		{
+			fileName.append(QLatin1Char('.'));
+			fileName.append(suffix);
+		}
+	}
+
+	return fileName;
 }
 
 QString Transfer::getTarget() const
