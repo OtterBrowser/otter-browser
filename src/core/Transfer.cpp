@@ -39,7 +39,7 @@
 namespace Otter
 {
 
-Transfer::Transfer(QObject *parent) : QObject(parent),
+Transfer::Transfer(QObject *parent) : QObject(parent ? parent : TransfersManager::getInstance()),
 	m_reply(NULL),
 	m_device(NULL),
 	m_speed(0),
@@ -55,7 +55,7 @@ Transfer::Transfer(QObject *parent) : QObject(parent),
 {
 }
 
-Transfer::Transfer(const QSettings &settings, QObject *parent) : QObject(parent),
+Transfer::Transfer(const QSettings &settings, QObject *parent) : QObject(parent ? parent : TransfersManager::getInstance()),
 	m_reply(NULL),
 	m_device(NULL),
 	m_source(settings.value(QLatin1String("source")).toUrl()),
@@ -76,7 +76,7 @@ Transfer::Transfer(const QSettings &settings, QObject *parent) : QObject(parent)
 {
 }
 
-Transfer::Transfer(const QUrl &source, const QString &target, bool quickTransfer, bool overwrite, QObject *parent) : QObject(parent),
+Transfer::Transfer(const QUrl &source, const QString &target, bool quickTransfer, bool overwrite, QObject *parent) : QObject(parent ? parent : TransfersManager::getInstance()),
 	m_reply(NULL),
 	m_device(NULL),
 	m_source(source),
@@ -100,7 +100,7 @@ Transfer::Transfer(const QUrl &source, const QString &target, bool quickTransfer
 	start(NetworkManagerFactory::getNetworkManager()->get(request), target, quickTransfer, overwrite);
 }
 
-Transfer::Transfer(const QNetworkRequest &request, const QString &target, bool quickTransfer, bool overwrite, QObject *parent) : QObject(parent),
+Transfer::Transfer(const QNetworkRequest &request, const QString &target, bool quickTransfer, bool overwrite, QObject *parent) : QObject(parent ? parent : TransfersManager::getInstance()),
 	m_reply(NULL),
 	m_device(NULL),
 	m_source(request.url()),
@@ -119,7 +119,7 @@ Transfer::Transfer(const QNetworkRequest &request, const QString &target, bool q
 	start(NetworkManagerFactory::getNetworkManager()->get(request), target, quickTransfer, overwrite);
 }
 
-Transfer::Transfer(QNetworkReply *reply, const QString &target, bool quickTransfer, bool overwrite, QObject *parent) : QObject(parent),
+Transfer::Transfer(QNetworkReply *reply, const QString &target, bool quickTransfer, bool overwrite, QObject *parent) : QObject(parent ? parent : TransfersManager::getInstance()),
 	m_reply(reply),
 	m_source(m_reply->url().adjusted(QUrl::RemovePassword | QUrl::PreferLocalFile)),
 	m_target(target),
@@ -220,6 +220,8 @@ void Transfer::start(QNetworkReply *reply, const QString &target, bool quickTran
 		connect(m_reply, SIGNAL(readyRead()), this, SLOT(downloadData()));
 	}
 
+	QString finalTarget;
+
 	if (target.isEmpty())
 	{
 		QString path;
@@ -264,14 +266,14 @@ void Transfer::start(QNetworkReply *reply, const QString &target, bool quickTran
 			return;
 		}
 
-		m_target = QDir::toNativeSeparators(path);
+		finalTarget = QDir::toNativeSeparators(path);
 	}
 	else
 	{
-		m_target = QFileInfo(QDir::toNativeSeparators(target)).absoluteFilePath();
+		finalTarget = QFileInfo(QDir::toNativeSeparators(target)).absoluteFilePath();
 	}
 
-	if (!target.isEmpty() && QFile::exists(m_target) && !overwrite && QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with the same name already exists.\nDo you want to overwrite it?\n\n%1").arg(m_target), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Cancel)
+	if (!target.isEmpty() && QFile::exists(finalTarget) && !overwrite && QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with the same name already exists.\nDo you want to overwrite it?\n\n%1").arg(finalTarget), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Cancel)
 	{
 		m_state = CancelledState;
 
@@ -283,7 +285,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target, bool quickTran
 		return;
 	}
 
-	setTarget(m_target);
+	setTarget(finalTarget);
 
 	if (m_state == FinishedState)
 	{
@@ -711,6 +713,8 @@ bool Transfer::setTarget(const QString &target)
 
 		return false;
 	}
+
+	m_target = target;
 
 	if (m_device)
 	{

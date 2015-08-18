@@ -45,11 +45,11 @@ public:
 		CancelledState = 4
 	};
 
-	explicit Transfer(QObject *parent);
-	Transfer(const QSettings &settings, QObject *parent);
-	Transfer(const QUrl &source, const QString &target, bool quickTransfer, bool overwrite, QObject *parent);
-	Transfer(const QNetworkRequest &request, const QString &target, bool quickTransfer, bool overwrite, QObject *parent);
-	Transfer(QNetworkReply *reply, const QString &target, bool quickTransfer, bool overwrite, QObject *parent);
+	explicit Transfer(QObject *parent = NULL);
+	Transfer(const QSettings &settings, QObject *parent = NULL);
+	Transfer(const QUrl &source, const QString &target = QString(), bool quickTransfer = false, bool overwrite = false, QObject *parent = NULL);
+	Transfer(const QNetworkRequest &request, const QString &target = QString(), bool quickTransfer = false, bool overwrite = false, QObject *parent = NULL);
+	Transfer(QNetworkReply *reply, const QString &target = QString(), bool quickTransfer = false, bool overwrite = false, QObject *parent = NULL);
 
 	void setAutoDelete(bool autoDelete);
 	virtual void setUpdateInterval(int interval);

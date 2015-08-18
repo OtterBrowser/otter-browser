@@ -33,6 +33,7 @@ class TransfersManager : public QObject
 
 public:
 	static void createInstance(QObject *parent = NULL);
+	static void addTransfer(Transfer *transfer, bool isPrivate, bool canNotify = true);
 	static void clearTransfers(int period = 0);
 	static TransfersManager* getInstance();
 	static Transfer* startTransfer(const QUrl &source, const QString &target = QString(), bool quickTransfer = false, bool isPrivate = false);
@@ -48,7 +49,6 @@ protected:
 
 	void timerEvent(QTimerEvent *event);
 	void scheduleSave();
-	static void addTransfer(Transfer *transfer, bool isPrivate, bool canNotify = true);
 
 protected slots:
 	void save();
