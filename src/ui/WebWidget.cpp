@@ -19,9 +19,11 @@
 **************************************************************************/
 
 #include "WebWidget.h"
+#include "ContentsDialog.h"
 #include "ContentsWidget.h"
 #include "Menu.h"
 #include "ReloadTimeDialog.h"
+#include "TransferDialog.h"
 #include "../core/ActionsManager.h"
 #include "../core/BookmarksManager.h"
 #include "../core/GesturesManager.h"
@@ -153,7 +155,12 @@ void WebWidget::startTransfer(Transfer *transfer)
 		return;
 	}
 
-	TransfersManager::addTransfer(transfer);
+	TransferDialog *transferDialog = new TransferDialog(transfer, this);
+	ContentsDialog dialog(Utils::getIcon(QLatin1String("download")), transferDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, transferDialog, this);
+
+	connect(transferDialog, SIGNAL(finished(int)), &dialog, SLOT(close()));
+
+	showDialog(&dialog);
 }
 
 void WebWidget::pasteNote(QAction *action)

@@ -21,6 +21,7 @@
 #include "../core/Utils.h"
 
 #include <QtGui/QMouseEvent>
+#include <QtWidgets/QDialog>
 #include <QtWidgets/QScrollBar>
 
 namespace Otter
@@ -96,6 +97,7 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 	if (payload || !details.isEmpty())
 	{
 		m_scrollArea = new QScrollArea(this);
+		m_scrollArea->setWidgetResizable(true);
 
 		QWidget *scrollWidget = new QWidget(m_scrollArea);
 		scrollWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -123,6 +125,16 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 			payload->installEventFilter(this);
 
 			scrollLayout->addWidget(payload);
+
+			if (payload->inherits("QDialog"))
+			{
+				QDialog *dialog = qobject_cast<QDialog*>(payload);
+
+				if (dialog)
+				{
+					connect(this, SIGNAL(rejected()), dialog, SLOT(reject()));
+				}
+			}
 		}
 
 		scrollWidget->setLayout(scrollLayout);

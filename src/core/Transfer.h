@@ -79,6 +79,7 @@ public:
 
 public slots:
 	void openTarget();
+	virtual void cancel();
 	virtual void stop();
 	virtual bool resume();
 	virtual bool restart();
@@ -114,6 +115,7 @@ private:
 	bool m_isSelectingPath;
 
 signals:
+	void progressChanged(qint64 bytesReceived, qint64 bytesTotal);
 	void started();
 	void finished();
 	void changed();

@@ -242,28 +242,27 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 			}
 		}
 
-		m_isSelectingPath = true;
-
-		path = TransfersManager::getSavePath(fileName, path);
-
-		m_isSelectingPath = false;
-
-		if (path.isEmpty())
+		if (m_options.testFlag(CanAskForPathOption))
 		{
-			if (m_reply)
+			m_isSelectingPath = true;
+
+			path = TransfersManager::getSavePath(fileName, path);
+
+			m_isSelectingPath = false;
+
+			if (path.isEmpty())
 			{
-				m_reply->abort();
+				if (m_reply)
+				{
+					m_reply->abort();
+				}
+
+				m_device = NULL;
+
+				cancel();
+
+				return;
 			}
-
-			m_device = NULL;
-			m_state = CancelledState;
-
-			if (m_options.testFlag(CanAutoDeleteOption) && !m_isSelectingPath)
-			{
-				deleteLater();
-			}
-
-			return;
 		}
 
 		finalTarget = QDir::toNativeSeparators(path);
@@ -275,17 +274,15 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 
 	if (!target.isEmpty() && QFile::exists(finalTarget) && !m_options.testFlag(CanOverwriteOption) && QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with the same name already exists.\nDo you want to overwrite it?\n\n%1").arg(finalTarget), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Cancel)
 	{
-		m_state = CancelledState;
-
-		if (m_options.testFlag(CanAutoDeleteOption) && !m_isSelectingPath)
-		{
-			deleteLater();
-		}
+		cancel();
 
 		return;
 	}
 
-	setTarget(finalTarget);
+	if (!finalTarget.isEmpty())
+	{
+		setTarget(finalTarget);
+	}
 
 	if (m_state == FinishedState)
 	{
@@ -315,6 +312,8 @@ void Transfer::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 	m_bytesReceivedDifference += (bytesReceived - (m_bytesReceived - m_bytesStart));
 	m_bytesReceived = (m_bytesStart + bytesReceived);
 	m_bytesTotal = (m_bytesStart + bytesTotal);
+
+	emit progressChanged(bytesReceived, bytesTotal);
 }
 
 void Transfer::downloadData()
@@ -429,6 +428,30 @@ void Transfer::downloadError(QNetworkReply::NetworkError error)
 void Transfer::openTarget()
 {
 	Utils::runApplication(QString(), QUrl::fromLocalFile(getTarget()));
+}
+
+void Transfer::cancel()
+{
+	m_state = CancelledState;
+
+	if (m_reply)
+	{
+		m_reply->abort();
+
+		QTimer::singleShot(250, m_reply, SLOT(deleteLater()));
+	}
+
+	if (m_device)
+	{
+		m_device->remove();
+	}
+
+	stop();
+
+	if (m_options.testFlag(CanAutoDeleteOption) && !m_isSelectingPath)
+	{
+		deleteLater();
+	}
 }
 
 void Transfer::stop()

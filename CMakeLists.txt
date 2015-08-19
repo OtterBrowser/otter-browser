@@ -161,6 +161,7 @@ set(otter_src
 	src/ui/ToolBarDialog.cpp
 	src/ui/ToolBarWidget.cpp
 	src/ui/ToolButtonWidget.cpp
+	src/ui/TransferDialog.cpp
 	src/ui/TrayIcon.cpp
 	src/ui/UpdateCheckerDialog.cpp
 	src/ui/UserAgentsManagerDialog.cpp
@@ -247,6 +248,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/SidebarWidget.ui
 	src/ui/StartupDialog.ui
 	src/ui/ToolBarDialog.ui
+	src/ui/TransferDialog.ui
 	src/ui/UpdateCheckerDialog.ui
 	src/ui/UserAgentsManagerDialog.ui
 	src/ui/WebsitePreferencesDialog.ui

@@ -174,7 +174,7 @@ QString formatUnit(qint64 value, bool isSpeed, int precision)
 	return QCoreApplication::translate("utils", (isSpeed ? "%1 B/s" : "%1 B")).arg(value);
 }
 
-QIcon getIcon(const QLatin1String &name, bool fromTheme)
+QIcon getIcon(const QString &name, bool fromTheme)
 {
 	if (fromTheme && QIcon::hasThemeIcon(name))
 	{

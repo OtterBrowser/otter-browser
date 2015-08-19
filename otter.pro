@@ -154,6 +154,7 @@ SOURCES += src/main.cpp \
     src/ui/ToolBarDialog.cpp \
     src/ui/ToolBarWidget.cpp \
     src/ui/ToolButtonWidget.cpp \
+    src/ui/TransferDialog.cpp \
     src/ui/TrayIcon.cpp \
     src/ui/UpdateCheckerDialog.cpp \
     src/ui/UserAgentsManagerDialog.cpp \
@@ -298,6 +299,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/ToolBarDialog.h \
     src/ui/ToolBarWidget.h \
     src/ui/ToolButtonWidget.h \
+    src/ui/TransferDialog.h \
     src/ui/TrayIcon.h \
     src/ui/UpdateCheckerDialog.h \
     src/ui/UserAgentsManagerDialog.h \
@@ -377,6 +379,7 @@ FORMS += src/ui/AcceptCookieDialog.ui \
     src/ui/SidebarWidget.ui \
     src/ui/StartupDialog.ui \
     src/ui/ToolBarDialog.ui \
+    src/ui/TransferDialog.ui \
     src/ui/UpdateCheckerDialog.ui \
     src/ui/UserAgentsManagerDialog.ui \
     src/ui/WebsitePreferencesDialog.ui \
