@@ -626,6 +626,11 @@ void WorkspaceWidget::updateActions()
 
 void WorkspaceWidget::setActiveWindow(Window *window, bool force)
 {
+	if (!force && !m_isRestored && window && window->isMinimized())
+	{
+		return;
+	}
+
 	if (force || window != m_activeWindow)
 	{
 		if (m_mdi)
