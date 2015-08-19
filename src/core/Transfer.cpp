@@ -168,9 +168,24 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 	}
 
 	m_reply = reply;
-	m_device = new QTemporaryFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QDir::separator() + QLatin1String("otter-download-XXXXXX.dat"), this);
-	m_timeStarted = QDateTime::currentDateTime();
 	m_mimeType = QMimeDatabase().mimeTypeForName(m_reply->header(QNetworkRequest::ContentTypeHeader).toString());
+
+	QString temporaryFileName = getSuggestedFileName();
+
+	if (temporaryFileName.isEmpty())
+	{
+		temporaryFileName = QLatin1String("otter-download-XXXXXX.") + m_mimeType.preferredSuffix();
+	}
+	else if (temporaryFileName.contains(QLatin1Char('.')))
+	{
+		QStringList parts = temporaryFileName.split(QLatin1Char('.'));
+		parts[parts.count() - 2].append(QLatin1String("-XXXXXX"));
+
+		temporaryFileName = parts.join(QLatin1Char('.'));
+	}
+
+	m_device = new QTemporaryFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QDir::separator() + temporaryFileName, this);
+	m_timeStarted = QDateTime::currentDateTime();
 	m_bytesTotal = m_reply->header(QNetworkRequest::ContentLengthHeader).toLongLong();
 
 	if (!m_device->open(QIODevice::ReadWrite))
@@ -185,6 +200,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 		return;
 	}
 
+	m_target = m_device->fileName();
 	m_state = (m_reply->isFinished() ? FinishedState : RunningState);
 
 	downloadData();
@@ -405,6 +421,11 @@ void Transfer::downloadFinished()
 		}
 	}
 
+	if (m_state == FinishedState && m_options.testFlag(HasToOpenAfterFinishOption))
+	{
+		openTarget();
+	}
+
 	if (m_options.testFlag(CanAutoDeleteOption) && !m_isSelectingPath)
 	{
 		deleteLater();
@@ -427,7 +448,7 @@ void Transfer::downloadError(QNetworkReply::NetworkError error)
 
 void Transfer::openTarget()
 {
-	Utils::runApplication(QString(), QUrl::fromLocalFile(getTarget()));
+	Utils::runApplication(m_openCommand, QUrl::fromLocalFile(getTarget()));
 }
 
 void Transfer::cancel()
@@ -470,7 +491,7 @@ void Transfer::stop()
 		QTimer::singleShot(250, m_reply, SLOT(deleteLater()));
 	}
 
-	if (m_device)
+	if (m_device && !m_device->inherits(QStringLiteral("QTemporaryFile").toLatin1()))
 	{
 		m_device->close();
 		m_device->deleteLater();
@@ -489,6 +510,18 @@ void Transfer::stop()
 
 	emit stopped();
 	emit changed();
+}
+
+void Transfer::setOpenCommand(const QString &command)
+{
+	m_openCommand = command;
+
+	m_options |= HasToOpenAfterFinishOption;
+
+	if (m_state == FinishedState)
+	{
+		openTarget();
+	}
 }
 
 void Transfer::setUpdateInterval(int interval)
@@ -513,8 +546,13 @@ QUrl Transfer::getSource() const
 	return m_source;
 }
 
-QString Transfer::getSuggestedFileName() const
+QString Transfer::getSuggestedFileName()
 {
+	if (!m_reply)
+	{
+		return m_suggestedFileName;
+	}
+
 	QUrl url;
 	QString fileName;
 
@@ -552,6 +590,8 @@ QString Transfer::getSuggestedFileName() const
 			fileName.append(suffix);
 		}
 	}
+
+	m_suggestedFileName = fileName;
 
 	return fileName;
 }

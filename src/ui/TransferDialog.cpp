@@ -66,16 +66,12 @@ TransferDialog::TransferDialog(Transfer *transfer, QWidget *parent) : QDialog(pa
 		}
 	}
 
-///FIXME
-	m_ui->buttonBox->button(QDialogButtonBox::Open)->setEnabled(false);
-
 	setProgress(m_transfer->getBytesReceived(), m_transfer->getBytesTotal());
 	setWindowTitle(tr("Opening %1").arg(fileName));
 
 	adjustSize();
 
 	connect(transfer, SIGNAL(progressChanged(qint64,qint64)), this, SLOT(setProgress(qint64,qint64)));
-	connect(this, SIGNAL(rejected()), transfer, SLOT(cancel()));
 	connect(m_ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
 }
 
@@ -110,12 +106,14 @@ void TransferDialog::buttonClicked(QAbstractButton *button)
 			m_transfer->cancel();
 		}
 
+		reject();
+
 		return;
 	}
 
 	if (standardButton == QDialogButtonBox::Open)
 	{
-///TODO
+		m_transfer->setOpenCommand(m_ui->openWithComboBox->currentData().toString());
 	}
 	else if (standardButton == QDialogButtonBox::Save)
 	{
@@ -124,6 +122,8 @@ void TransferDialog::buttonClicked(QAbstractButton *button)
 		if (path.isEmpty())
 		{
 			m_transfer->cancel();
+
+			reject();
 
 			return;
 		}

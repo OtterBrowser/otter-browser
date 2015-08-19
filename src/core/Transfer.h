@@ -44,7 +44,8 @@ public:
 		CanAutoDeleteOption = 4,
 		CanAskForPathOption = 8,
 		IsQuickTransferOption = 16,
-		IsPrivateOption = 32
+		IsPrivateOption = 32,
+		HasToOpenAfterFinishOption = 64
 	};
 
 	Q_DECLARE_FLAGS(TransferOptions, TransferOption)
@@ -66,7 +67,7 @@ public:
 
 	virtual void setUpdateInterval(int interval);
 	virtual QUrl getSource() const;
-	virtual QString getSuggestedFileName() const;
+	virtual QString getSuggestedFileName();
 	virtual QString getTarget() const;
 	virtual QDateTime getTimeStarted() const;
 	virtual QDateTime getTimeFinished() const;
@@ -81,6 +82,7 @@ public slots:
 	void openTarget();
 	virtual void cancel();
 	virtual void stop();
+	void setOpenCommand(const QString &command);
 	virtual bool resume();
 	virtual bool restart();
 	virtual bool setTarget(const QString &target);
@@ -100,6 +102,8 @@ private:
 	QPointer<QFile> m_device;
 	QUrl m_source;
 	QString m_target;
+	QString m_openCommand;
+	QString m_suggestedFileName;
 	QDateTime m_timeStarted;
 	QDateTime m_timeFinished;
 	QMimeType m_mimeType;
