@@ -83,6 +83,8 @@ void MdiWindow::restoreState()
 	{
 		showNormal();
 	}
+
+	SessionsManager::markSessionModified();
 }
 
 void MdiWindow::changeEvent(QEvent *event)
@@ -142,8 +144,7 @@ void MdiWindow::mouseReleaseEvent(QMouseEvent *event)
 
 		SessionsManager::markSessionModified();
 	}
-
-	if (style()->subControlRect(QStyle::CC_TitleBar, &option, QStyle::SC_TitleBarMinButton, this).contains(event->pos()))
+	else if (style()->subControlRect(QStyle::CC_TitleBar, &option, QStyle::SC_TitleBarMinButton, this).contains(event->pos()))
 	{
 		storeState();
 		setWindowFlags(Qt::SubWindow);
@@ -155,6 +156,10 @@ void MdiWindow::mouseReleaseEvent(QMouseEvent *event)
 		{
 			ActionsManager::triggerAction(ActionsManager::ActivatePreviouslyUsedTabAction, mdiArea());
 		}
+	}
+	else if (isMinimized())
+	{
+		restoreState();
 	}
 
 	QMdiSubWindow::mouseReleaseEvent(event);
