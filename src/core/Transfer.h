@@ -111,7 +111,6 @@ private:
 	TransferState m_state;
 	int m_updateTimer;
 	int m_updateInterval;
-	bool m_isAutoDeleted;
 	bool m_isSelectingPath;
 
 signals:
