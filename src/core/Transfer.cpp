@@ -801,6 +801,8 @@ bool Transfer::setTarget(const QString &target)
 	{
 		connect(m_reply, SIGNAL(readyRead()), this, SLOT(downloadData()));
 	}
+
+	return false;
 }
 
 }
