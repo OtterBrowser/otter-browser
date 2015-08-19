@@ -201,7 +201,7 @@ void QtWebEngineWebWidget::pageLoadFinished()
 
 void QtWebEngineWebWidget::downloadFile(QWebEngineDownloadItem *item)
 {
-	TransfersManager::startTransfer(item->url(), QString(), false, isPrivate());
+	startTransfer(new Transfer(item->url(), QString(), (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 
 	item->cancel();
 	item->deleteLater();
@@ -247,8 +247,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 					QNetworkRequest request(getUrl());
 					request.setHeader(QNetworkRequest::UserAgentHeader, m_webView->page()->profile()->httpUserAgent());
 
-					Transfer *transfer = new Transfer(request, path, false, true, this);
-					transfer->setAutoDelete(true);
+					new Transfer(request, path, (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::CanOverwriteOption | Transfer::IsPrivateOption));
 				}
 			}
 
@@ -350,11 +349,11 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			return;
 		case ActionsManager::SaveLinkToDiskAction:
-			TransfersManager::startTransfer(m_hitResult.linkUrl.toString(), QString(), false, isPrivate());
+			startTransfer(new Transfer(m_hitResult.linkUrl.toString(), QString(), (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 
 			return;
 		case ActionsManager::SaveLinkToDownloadsAction:
-			TransfersManager::startTransfer(m_hitResult.linkUrl.toString(), QString(), true, isPrivate());
+			startTransfer(new Transfer(m_hitResult.linkUrl.toString(), QString(), (Transfer::CanNotifyOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 
 			return;
 		case ActionsManager::OpenFrameInCurrentTabAction:
@@ -453,8 +452,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 					QNetworkRequest request(m_hitResult.imageUrl);
 					request.setHeader(QNetworkRequest::UserAgentHeader, m_webView->page()->profile()->httpUserAgent());
 
-					Transfer *transfer = new Transfer(request, QString(), false, false, this);
-					transfer->setAutoDelete(true);
+					new Transfer(request, QString(), (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::IsPrivateOption));
 				}
 			}
 
@@ -513,8 +511,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				QNetworkRequest request(m_hitResult.mediaUrl);
 				request.setHeader(QNetworkRequest::UserAgentHeader, m_webView->page()->profile()->httpUserAgent());
 
-				Transfer *transfer = new Transfer(request, QString(), false, false, this);
-				transfer->setAutoDelete(true);
+				new Transfer(request, QString(), (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::IsPrivateOption));
 			}
 
 			return;

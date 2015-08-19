@@ -20,7 +20,6 @@
 #include "TransfersManager.h"
 #include "NotificationsManager.h"
 #include "SessionsManager.h"
-#include "Transfer.h"
 #include "../ui/MainWindow.h"
 
 #include <QtCore/QMimeDatabase>
@@ -69,7 +68,7 @@ void TransfersManager::scheduleSave()
 	}
 }
 
-void TransfersManager::addTransfer(Transfer *transfer, bool isPrivate, bool canNotify)
+void TransfersManager::addTransfer(Transfer *transfer)
 {
 	m_transfers.prepend(transfer);
 
@@ -80,7 +79,7 @@ void TransfersManager::addTransfer(Transfer *transfer, bool isPrivate, bool canN
 	connect(transfer, SIGNAL(changed()), m_instance, SLOT(transferChanged()));
 	connect(transfer, SIGNAL(stopped()), m_instance, SLOT(transferStopped()));
 
-	if (canNotify)
+	if (transfer->getOptions().testFlag(Transfer::CanNotifyOption))
 	{
 		emit m_instance->transferStarted(transfer);
 
@@ -90,7 +89,7 @@ void TransfersManager::addTransfer(Transfer *transfer, bool isPrivate, bool canN
 		}
 	}
 
-	if (isPrivate)
+	if (transfer->getOptions().testFlag(Transfer::IsPrivateOption))
 	{
 		m_privateTransfers.append(transfer);
 	}
@@ -201,9 +200,9 @@ TransfersManager* TransfersManager::getInstance()
 	return m_instance;
 }
 
-Transfer* TransfersManager::startTransfer(const QUrl &source, const QString &target, bool quickTransfer, bool isPrivate)
+Transfer* TransfersManager::startTransfer(const QUrl &source, const QString &target, Transfer::TransferOptions options)
 {
-	Transfer *transfer = new Transfer(source, target, quickTransfer, false, m_instance);
+	Transfer *transfer = new Transfer(source, target, options, m_instance);
 
 	if (transfer->getState() == Transfer::CancelledState)
 	{
@@ -212,14 +211,14 @@ Transfer* TransfersManager::startTransfer(const QUrl &source, const QString &tar
 		return NULL;
 	}
 
-	addTransfer(transfer, isPrivate);
+	addTransfer(transfer);
 
 	return transfer;
 }
 
-Transfer* TransfersManager::startTransfer(const QNetworkRequest &request, const QString &target, bool quickTransfer, bool isPrivate)
+Transfer* TransfersManager::startTransfer(const QNetworkRequest &request, const QString &target, Transfer::TransferOptions options)
 {
-	Transfer *transfer = new Transfer(request, target, quickTransfer, false, m_instance);
+	Transfer *transfer = new Transfer(request, target, options, m_instance);
 
 	if (transfer->getState() == Transfer::CancelledState)
 	{
@@ -228,14 +227,14 @@ Transfer* TransfersManager::startTransfer(const QNetworkRequest &request, const 
 		return NULL;
 	}
 
-	addTransfer(transfer, isPrivate);
+	addTransfer(transfer);
 
 	return transfer;
 }
 
-Transfer* TransfersManager::startTransfer(QNetworkReply *reply, const QString &target, bool quickTransfer, bool isPrivate)
+Transfer* TransfersManager::startTransfer(QNetworkReply *reply, const QString &target, Transfer::TransferOptions options)
 {
-	Transfer *transfer = new Transfer(reply, target, quickTransfer, false, m_instance);
+	Transfer *transfer = new Transfer(reply, target, options, m_instance);
 
 	if (transfer->getState() == Transfer::CancelledState)
 	{
@@ -244,7 +243,7 @@ Transfer* TransfersManager::startTransfer(QNetworkReply *reply, const QString &t
 		return NULL;
 	}
 
-	addTransfer(transfer, isPrivate);
+	addTransfer(transfer);
 
 	return transfer;
 }
@@ -334,7 +333,7 @@ QList<Transfer*> TransfersManager::getTransfers()
 
 			if (!history.value(QLatin1String("source")).toString().isEmpty() && !history.value(QLatin1String("target")).toString().isEmpty())
 			{
-				addTransfer(new Transfer(history, m_instance), false, false);
+				addTransfer(new Transfer(history, m_instance));
 			}
 
 			history.endGroup();

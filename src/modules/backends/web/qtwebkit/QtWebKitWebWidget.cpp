@@ -335,12 +335,11 @@ void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
 		QNetworkRequest mutableRequest(request);
 		mutableRequest.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
 
-		Transfer *transfer = new Transfer(m_networkManager->get(mutableRequest), QString(), false, false, this);
-		transfer->setAutoDelete(true);
+		new Transfer(m_networkManager->get(mutableRequest), QString(), (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::IsPrivateOption));
 	}
 	else
 	{
-		TransfersManager::startTransfer(request, QString(), false, isPrivate());
+		startTransfer(new Transfer(request, QString(), (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 	}
 }
 
@@ -348,7 +347,7 @@ void QtWebKitWebWidget::downloadFile(QNetworkReply *reply)
 {
 	m_networkManager->registerTransfer(reply);
 
-	TransfersManager::startTransfer(reply, QString(), false, isPrivate());
+	startTransfer(new Transfer(reply, QString(), (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 }
 
 void QtWebKitWebWidget::saveState(QWebFrame *frame, QWebHistoryItem *item)
@@ -729,8 +728,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					QNetworkRequest request(getUrl());
 					request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
 
-					Transfer *transfer = new Transfer(m_networkManager->get(request), path, false, true, this);
-					transfer->setAutoDelete(true);
+					new Transfer(m_networkManager->get(request), path, (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::CanOverwriteOption | Transfer::IsPrivateOption));
 				}
 			}
 
@@ -839,7 +837,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::SaveLinkToDownloadsAction:
-			TransfersManager::startTransfer(getCurrentHitTestResult().linkUrl.toString(), QString(), true, isPrivate());
+			startTransfer(new Transfer(getCurrentHitTestResult().linkUrl.toString(), QString(), (Transfer::CanNotifyOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 
 			return;
 		case ActionsManager::OpenFrameInCurrentTabAction:

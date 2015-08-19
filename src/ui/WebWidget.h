@@ -34,6 +34,7 @@ namespace Otter
 
 class ContentsDialog;
 class Menu;
+class Transfer;
 class WebBackend;
 
 class WebWidget : public QWidget
@@ -171,6 +172,7 @@ protected:
 	void openUrl(const QUrl &url, OpenHints hints);
 	virtual void pasteText(const QString &text) = 0;
 	void startReloadTimer();
+	void startTransfer(Transfer *transfer);
 	void handleToolTipEvent(QHelpEvent *event, QWidget *widget);
 	void updateHitTestResult(const QPoint &position);
 	void setAlternateStyleSheets(const QStringList &styleSheets);

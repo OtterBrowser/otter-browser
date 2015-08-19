@@ -36,6 +36,19 @@ class Transfer : public QObject
 	Q_OBJECT
 
 public:
+	enum TransferOption
+	{
+		NoOption = 0,
+		CanOverwriteOption = 1,
+		CanNotifyOption = 2,
+		CanAutoDeleteOption = 4,
+		CanAskForPathOption = 8,
+		IsQuickTransferOption = 16,
+		IsPrivateOption = 32
+	};
+
+	Q_DECLARE_FLAGS(TransferOptions, TransferOption)
+
 	enum TransferState
 	{
 		UnknownState = 0,
@@ -47,11 +60,10 @@ public:
 
 	explicit Transfer(QObject *parent = NULL);
 	Transfer(const QSettings &settings, QObject *parent = NULL);
-	Transfer(const QUrl &source, const QString &target = QString(), bool quickTransfer = false, bool overwrite = false, QObject *parent = NULL);
-	Transfer(const QNetworkRequest &request, const QString &target = QString(), bool quickTransfer = false, bool overwrite = false, QObject *parent = NULL);
-	Transfer(QNetworkReply *reply, const QString &target = QString(), bool quickTransfer = false, bool overwrite = false, QObject *parent = NULL);
+	Transfer(const QUrl &source, const QString &target = QString(), TransferOptions options = CanAskForPathOption, QObject *parent = NULL);
+	Transfer(const QNetworkRequest &request, const QString &target = QString(), TransferOptions options = CanAskForPathOption, QObject *parent = NULL);
+	Transfer(QNetworkReply *reply, const QString &target = QString(), TransferOptions options = CanAskForPathOption, QObject *parent = NULL);
 
-	void setAutoDelete(bool autoDelete);
 	virtual void setUpdateInterval(int interval);
 	virtual QUrl getSource() const;
 	virtual QString getSuggestedFileName() const;
@@ -62,6 +74,7 @@ public:
 	virtual qint64 getSpeed() const;
 	virtual qint64 getBytesReceived() const;
 	virtual qint64 getBytesTotal() const;
+	TransferOptions getOptions() const;
 	virtual TransferState getState() const;
 
 public slots:
@@ -73,7 +86,7 @@ public slots:
 
 protected:
 	void timerEvent(QTimerEvent *event);
-	void start(QNetworkReply *reply, const QString &target, bool quickTransfer, bool overwrite);
+	void start(QNetworkReply *reply, const QString &target);
 
 protected slots:
 	void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
@@ -94,6 +107,7 @@ private:
 	qint64 m_bytesReceivedDifference;
 	qint64 m_bytesReceived;
 	qint64 m_bytesTotal;
+	TransferOptions m_options;
 	TransferState m_state;
 	int m_updateTimer;
 	int m_updateInterval;
@@ -106,6 +120,8 @@ signals:
 	void changed();
 	void stopped();
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Transfer::TransferOptions)
 
 }
 

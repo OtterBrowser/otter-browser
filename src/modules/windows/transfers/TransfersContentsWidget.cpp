@@ -359,7 +359,7 @@ void TransfersContentsWidget::redownloadTransfer()
 
 void TransfersContentsWidget::startQuickTransfer()
 {
-	TransfersManager::startTransfer(m_ui->downloadLineEdit->text(), QString(), true, SessionsManager::isPrivate());
+	TransfersManager::startTransfer(m_ui->downloadLineEdit->text(), QString(), (Transfer::IsQuickTransferOption | (SessionsManager::isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption)));
 
 	m_ui->downloadLineEdit->clear();
 }

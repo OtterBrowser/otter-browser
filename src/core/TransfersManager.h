@@ -20,12 +20,10 @@
 #ifndef OTTER_TRANSFERSMANAGER_H
 #define OTTER_TRANSFERSMANAGER_H
 
-#include <QtNetwork/QNetworkReply>
+#include "Transfer.h"
 
 namespace Otter
 {
-
-class Transfer;
 
 class TransfersManager : public QObject
 {
@@ -33,12 +31,12 @@ class TransfersManager : public QObject
 
 public:
 	static void createInstance(QObject *parent = NULL);
-	static void addTransfer(Transfer *transfer, bool isPrivate, bool canNotify = true);
+	static void addTransfer(Transfer *transfer);
 	static void clearTransfers(int period = 0);
 	static TransfersManager* getInstance();
-	static Transfer* startTransfer(const QUrl &source, const QString &target = QString(), bool quickTransfer = false, bool isPrivate = false);
-	static Transfer* startTransfer(const QNetworkRequest &request, const QString &target = QString(), bool quickTransfer = false, bool isPrivate = false);
-	static Transfer* startTransfer(QNetworkReply *reply, const QString &target = QString(), bool quickTransfer = false, bool isPrivate = false);
+	static Transfer* startTransfer(const QUrl &source, const QString &target = QString(), Transfer::TransferOptions options = Transfer::CanAskForPathOption);
+	static Transfer* startTransfer(const QNetworkRequest &request, const QString &target = QString(), Transfer::TransferOptions options = Transfer::CanAskForPathOption);
+	static Transfer* startTransfer(QNetworkReply *reply, const QString &target = QString(), Transfer::TransferOptions options = Transfer::CanAskForPathOption);
 	static QString getSavePath(const QString &fileName, QString path = QString());
 	static QList<Transfer*> getTransfers();
 	static bool removeTransfer(Transfer *transfer, bool keepFile = true);

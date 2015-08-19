@@ -28,6 +28,8 @@
 #include "../core/NotesManager.h"
 #include "../core/SearchesManager.h"
 #include "../core/SettingsManager.h"
+#include "../core/Transfer.h"
+#include "../core/TransfersManager.h"
 #include "../core/Utils.h"
 
 #include <QtCore/QDir>
@@ -140,6 +142,18 @@ void WebWidget::startReloadTimer()
 			m_reloadTimer = startTimer(reloadTime * 1000);
 		}
 	}
+}
+
+void WebWidget::startTransfer(Transfer *transfer)
+{
+	if (transfer->getState() == Transfer::CancelledState)
+	{
+		transfer->deleteLater();
+
+		return;
+	}
+
+	TransfersManager::addTransfer(transfer);
 }
 
 void WebWidget::pasteNote(QAction *action)
