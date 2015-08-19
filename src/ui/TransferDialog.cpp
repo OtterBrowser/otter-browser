@@ -33,6 +33,7 @@ TransferDialog::TransferDialog(Transfer *transfer, QWidget *parent) : QDialog(pa
 	m_transfer(transfer),
 	m_ui(new Ui::TransferDialog)
 {
+	const QPixmap icon = Utils::getIcon(transfer->getMimeType().iconName()).pixmap(16, 16);
 	QString fileName = transfer->getSuggestedFileName();
 
 	if (fileName.isEmpty())
@@ -41,8 +42,16 @@ TransferDialog::TransferDialog(Transfer *transfer, QWidget *parent) : QDialog(pa
 	}
 
 	m_ui->setupUi(this);
-	m_ui->iconLabel->setFixedSize(16, 16);
-	m_ui->iconLabel->setPixmap(Utils::getIcon(transfer->getMimeType().iconName()).pixmap(16, 16));
+
+	if (icon.isNull())
+	{
+		m_ui->iconLabel->hide();
+	}
+	else
+	{
+		m_ui->iconLabel->setPixmap(icon);
+	}
+
 	m_ui->nameTextLabelWidget->setText(fileName);
 	m_ui->typeTextLabelWidget->setText(transfer->getMimeType().comment());
 	m_ui->fromTextLabelWidget->setText(transfer->getSource().host().isEmpty() ? QLatin1String("localhost") : transfer->getSource().host());
