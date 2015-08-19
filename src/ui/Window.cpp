@@ -656,18 +656,39 @@ QDateTime Window::getLastActivity() const
 
 SessionWindow Window::getSession() const
 {
-	if (!m_contentsWidget)
-	{
-		return m_session;
-	}
-
-	const WindowHistoryInformation history = m_contentsWidget->getHistory();
 	SessionWindow session;
-	session.searchEngine = getSearchEngine();
-	session.history = history.entries;
-	session.group = 0;
-	session.index = history.index;
-	session.isPinned = isPinned();
+
+	if (m_contentsWidget)
+	{
+		const WindowHistoryInformation history = m_contentsWidget->getHistory();
+		session.searchEngine = getSearchEngine();
+		session.history = history.entries;
+		session.group = 0;
+		session.index = history.index;
+		session.isPinned = isPinned();
+
+		if (m_contentsWidget->getType() == QLatin1String("web"))
+		{
+			WebContentsWidget *webWidget = qobject_cast<WebContentsWidget*>(m_contentsWidget);
+
+			if (webWidget)
+			{
+				if (webWidget->getWebWidget()->hasOption(QLatin1String("Content/PageReloadTime")))
+				{
+					session.reloadTime = webWidget->getOption(QLatin1String("Content/PageReloadTime")).toInt();
+				}
+
+				if (webWidget->getWebWidget()->hasOption(QLatin1String("Network/UserAgent")))
+				{
+					session.userAgent = webWidget->getWebWidget()->getOption(QLatin1String("Network/UserAgent")).toString();
+				}
+			}
+		}
+	}
+	else
+	{
+		session = m_session;
+	}
 
 	QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow*>(parentWidget());
 
@@ -676,32 +697,17 @@ SessionWindow Window::getSession() const
 		if (subWindow->isMaximized())
 		{
 			session.state = MaximizedWindowState;
+			session.geometry = QRect();
 		}
 		else if (subWindow->isMinimized())
 		{
 			session.state = MinimizedWindowState;
+			session.geometry = QRect();
 		}
 		else
 		{
+			session.state = NormalWindowState;
 			session.geometry = subWindow->geometry();
-		}
-	}
-
-	if (m_contentsWidget->getType() == QLatin1String("web"))
-	{
-		WebContentsWidget *webWidget = qobject_cast<WebContentsWidget*>(m_contentsWidget);
-
-		if (webWidget)
-		{
-			if (webWidget->getWebWidget()->hasOption(QLatin1String("Content/PageReloadTime")))
-			{
-				session.reloadTime = webWidget->getOption(QLatin1String("Content/PageReloadTime")).toInt();
-			}
-
-			if (webWidget->getWebWidget()->hasOption(QLatin1String("Network/UserAgent")))
-			{
-				session.userAgent = webWidget->getWebWidget()->getOption(QLatin1String("Network/UserAgent")).toString();
-			}
 		}
 	}
 

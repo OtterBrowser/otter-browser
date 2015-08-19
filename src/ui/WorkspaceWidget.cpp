@@ -139,6 +139,8 @@ void MdiWindow::mouseReleaseEvent(QMouseEvent *event)
 	{
 		setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
 		showMaximized();
+
+		SessionsManager::markSessionModified();
 	}
 
 	if (style()->subControlRect(QStyle::CC_TitleBar, &option, QStyle::SC_TitleBarMinButton, this).contains(event->pos()))
@@ -146,6 +148,8 @@ void MdiWindow::mouseReleaseEvent(QMouseEvent *event)
 		storeState();
 		setWindowFlags(Qt::SubWindow);
 		showMinimized();
+
+		SessionsManager::markSessionModified();
 
 		if (mdiArea()->subWindowList().count() > 1)
 		{
@@ -421,6 +425,8 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 		default:
 			break;
 	}
+
+	SessionsManager::markSessionModified();
 }
 
 void WorkspaceWidget::markRestored()
