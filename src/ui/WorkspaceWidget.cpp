@@ -137,25 +137,40 @@ void MdiWindow::mouseReleaseEvent(QMouseEvent *event)
 		option.rect.setHeight(height() - widget()->height());
 	}
 
-	if (style()->subControlRect(QStyle::CC_TitleBar, &option, QStyle::SC_TitleBarMaxButton, this).contains(event->pos()))
+	if (!isMaximized() && style()->subControlRect(QStyle::CC_TitleBar, &option, QStyle::SC_TitleBarMaxButton, this).contains(event->pos()))
 	{
 		setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
 		showMaximized();
 
 		SessionsManager::markSessionModified();
 	}
-	else if (style()->subControlRect(QStyle::CC_TitleBar, &option, QStyle::SC_TitleBarMinButton, this).contains(event->pos()))
+	else if (!isMinimized() && style()->subControlRect(QStyle::CC_TitleBar, &option, QStyle::SC_TitleBarMinButton, this).contains(event->pos()))
 	{
+		const QList<QMdiSubWindow*> subWindows = mdiArea()->subWindowList();
+		int activeSubWindows = 0;
+
+		for (int i = 0; i < subWindows.count(); ++i)
+		{
+			if (!subWindows.at(i)->isMinimized())
+			{
+				++activeSubWindows;
+			}
+		}
+
 		storeState();
 		setWindowFlags(Qt::SubWindow);
 		showMinimized();
 
-		SessionsManager::markSessionModified();
-
-		if (mdiArea()->subWindowList().count() > 1)
+		if (activeSubWindows == 1)
+		{
+			mdiArea()->setActiveSubWindow(NULL);
+		}
+		else if (activeSubWindows > 1)
 		{
 			ActionsManager::triggerAction(ActionsManager::ActivatePreviouslyUsedTabAction, mdiArea());
 		}
+
+		SessionsManager::markSessionModified();
 	}
 	else if (isMinimized())
 	{
@@ -303,11 +318,26 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 
 				if (activeSubWindow)
 				{
+					const QList<QMdiSubWindow*> subWindows = m_mdi->subWindowList();
+					int activeSubWindows = 0;
+
+					for (int i = 0; i < subWindows.count(); ++i)
+					{
+						if (!subWindows.at(i)->isMinimized())
+						{
+							++activeSubWindows;
+						}
+					}
+
 					activeSubWindow->storeState();
 					activeSubWindow->setWindowFlags(Qt::SubWindow);
 					activeSubWindow->showMinimized();
 
-					if (m_mdi->subWindowList().count() > 1)
+					if (activeSubWindows == 1)
+					{
+						setActiveWindow(NULL);
+					}
+					else if (activeSubWindows > 1)
 					{
 						ActionsManager::triggerAction(ActionsManager::ActivatePreviouslyUsedTabAction, this);
 					}
