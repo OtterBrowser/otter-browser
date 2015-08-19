@@ -138,7 +138,11 @@ void TransferDialog::buttonClicked(QAbstractButton *button)
 
 void TransferDialog::setProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
-	if (bytesReceived > 0 && bytesReceived == bytesTotal)
+	if (bytesTotal < 1)
+	{
+		m_ui->sizeTextLabelWidget->setText(tr("unknown"));
+	}
+	else if (bytesReceived > 0 && bytesReceived == bytesTotal)
 	{
 		m_ui->sizeTextLabelWidget->setText(tr("%1 (download completed)").arg(Utils::formatUnit(bytesTotal)));
 	}
