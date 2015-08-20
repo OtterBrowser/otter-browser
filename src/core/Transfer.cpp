@@ -372,6 +372,15 @@ void Transfer::downloadFinished()
 		return;
 	}
 
+	if (!m_reply->attribute(QNetworkRequest::RedirectionTargetAttribute).isNull())
+	{
+		m_source = m_source.resolved(m_reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl());
+
+		restart();
+
+		return;
+	}
+
 	if (m_updateTimer != 0)
 	{
 		killTimer(m_updateTimer);
