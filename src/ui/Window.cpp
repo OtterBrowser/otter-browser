@@ -710,6 +710,11 @@ SessionWindow Window::getSession() const
 			session.geometry = subWindow->geometry();
 		}
 	}
+	else
+	{
+		session.state = MaximizedWindowState;
+		session.geometry = QRect();
+	}
 
 	return session;
 }
