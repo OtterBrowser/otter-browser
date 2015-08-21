@@ -1076,6 +1076,16 @@ void MainWindow::setTabBar(TabBarWidget *tabBar)
 
 MainWindow* MainWindow::findMainWindow(QObject *parent)
 {
+	if (!parent)
+	{
+		return NULL;
+	}
+
+	if (parent->metaObject()->className() == QLatin1String("Otter::MainWindow"))
+	{
+		return qobject_cast<MainWindow*>(parent);
+	}
+
 	MainWindow *window = NULL;
 	QWidget *widget = qobject_cast<QWidget*>(parent);
 

@@ -739,14 +739,9 @@ void WindowsManager::setZoom(int zoom)
 
 void WindowsManager::setActiveWindowByIndex(int index)
 {
-	if (!m_isRestored)
+	if (!m_isRestored || index >= m_mainWindow->getTabBar()->count())
 	{
 		return;
-	}
-
-	if (index < 0 || index >= m_mainWindow->getTabBar()->count())
-	{
-		index = 0;
 	}
 
 	if (index != m_mainWindow->getTabBar()->currentIndex())

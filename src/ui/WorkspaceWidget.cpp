@@ -163,7 +163,16 @@ void MdiWindow::mouseReleaseEvent(QMouseEvent *event)
 
 		if (activeSubWindows == 1)
 		{
-			mdiArea()->setActiveSubWindow(NULL);
+			MainWindow *mainWindow = MainWindow::findMainWindow(mdiArea());
+
+			if (mainWindow)
+			{
+				mainWindow->getWindowsManager()->setActiveWindowByIndex(-1);
+			}
+			else
+			{
+				mdiArea()->setActiveSubWindow(NULL);
+			}
 		}
 		else if (activeSubWindows > 1)
 		{
@@ -201,7 +210,8 @@ void MdiWindow::mouseDoubleClickEvent(QMouseEvent *event)
 	}
 }
 
-WorkspaceWidget::WorkspaceWidget(QWidget *parent) : QWidget(parent),
+WorkspaceWidget::WorkspaceWidget(MainWindow *parent) : QWidget(parent),
+	m_mainWindow(parent),
 	m_mdi(NULL),
 	m_activeWindow(NULL),
 	m_restoreTimer(0),
@@ -335,11 +345,11 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 
 					if (activeSubWindows == 1)
 					{
-						setActiveWindow(NULL);
+						m_mainWindow->getWindowsManager()->setActiveWindowByIndex(-1);
 					}
 					else if (activeSubWindows > 1)
 					{
-						ActionsManager::triggerAction(ActionsManager::ActivatePreviouslyUsedTabAction, this);
+						ActionsManager::triggerAction(ActionsManager::ActivatePreviouslyUsedTabAction, m_mainWindow);
 					}
 				}
 			}
@@ -417,7 +427,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 
 				connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
 
-				setActiveWindow(NULL);
+				m_mainWindow->getWindowsManager()->setActiveWindowByIndex(-1);
 			}
 
 			break;
@@ -496,19 +506,19 @@ void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowSta
 
 			QMenu *menu = new QMenu(mdiWindow);
 			menu->addAction(closeAction);
-			menu->addAction(ActionsManager::getAction(ActionsManager::RestoreTabAction, this));
-			menu->addAction(ActionsManager::getAction(ActionsManager::MinimizeTabAction, this));
-			menu->addAction(ActionsManager::getAction(ActionsManager::MaximizeTabAction, this));
-			menu->addAction(ActionsManager::getAction(ActionsManager::AlwaysOnTopTabAction, this));
+			menu->addAction(ActionsManager::getAction(ActionsManager::RestoreTabAction, m_mainWindow));
+			menu->addAction(ActionsManager::getAction(ActionsManager::MinimizeTabAction, m_mainWindow));
+			menu->addAction(ActionsManager::getAction(ActionsManager::MaximizeTabAction, m_mainWindow));
+			menu->addAction(ActionsManager::getAction(ActionsManager::AlwaysOnTopTabAction, m_mainWindow));
 			menu->addSeparator();
 
 			QMenu *arrangeMenu = menu->addMenu(tr("Arrange"));
-			arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::RestoreAllAction, this));
-			arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::MaximizeAllAction, this));
-			arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::MinimizeAllAction, this));
+			arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::RestoreAllAction, m_mainWindow));
+			arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::MaximizeAllAction, m_mainWindow));
+			arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::MinimizeAllAction, m_mainWindow));
 			arrangeMenu->addSeparator();
-			arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::CascadeAllAction, this));
-			arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::TileAllAction, this));
+			arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::CascadeAllAction, m_mainWindow));
+			arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::TileAllAction, m_mainWindow));
 
 			mdiWindow->show();
 			mdiWindow->lower();
@@ -574,7 +584,7 @@ void WorkspaceWidget::activeSubWindowChanged(QMdiSubWindow *subWindow)
 
 		if (window)
 		{
-			MainWindow::findMainWindow(this)->getWindowsManager()->setActiveWindowByIdentifier(window->getIdentifier());
+			m_mainWindow->getWindowsManager()->setActiveWindowByIdentifier(window->getIdentifier());
 		}
 	}
 	else
@@ -609,19 +619,19 @@ void WorkspaceWidget::updateActions()
 		}
 	}
 
-	ActionsManager::getAction(ActionsManager::MaximizeAllAction, this)->setEnabled(maximizedSubWindows < subWindowsCount);
-	ActionsManager::getAction(ActionsManager::MinimizeAllAction, this)->setEnabled(minimizedSubWindows < subWindowsCount);
-	ActionsManager::getAction(ActionsManager::RestoreAllAction, this)->setEnabled(restoredSubWindows < subWindowsCount);
-	ActionsManager::getAction(ActionsManager::CascadeAllAction, this)->setEnabled(subWindowsCount > 0);
-	ActionsManager::getAction(ActionsManager::TileAllAction, this)->setEnabled(subWindowsCount > 0);
+	ActionsManager::getAction(ActionsManager::MaximizeAllAction, m_mainWindow)->setEnabled(maximizedSubWindows < subWindowsCount);
+	ActionsManager::getAction(ActionsManager::MinimizeAllAction, m_mainWindow)->setEnabled(minimizedSubWindows < subWindowsCount);
+	ActionsManager::getAction(ActionsManager::RestoreAllAction, m_mainWindow)->setEnabled(restoredSubWindows < subWindowsCount);
+	ActionsManager::getAction(ActionsManager::CascadeAllAction, m_mainWindow)->setEnabled(subWindowsCount > 0);
+	ActionsManager::getAction(ActionsManager::TileAllAction, m_mainWindow)->setEnabled(subWindowsCount > 0);
 
 	QMdiSubWindow *activeSubWindow = (m_mdi ? m_mdi->activeSubWindow() : NULL);
 
-	ActionsManager::getAction(ActionsManager::MaximizeTabAction, this)->setEnabled(activeSubWindow && !activeSubWindow->windowState().testFlag(Qt::WindowMaximized));
-	ActionsManager::getAction(ActionsManager::MinimizeTabAction, this)->setEnabled(activeSubWindow && !activeSubWindow->windowState().testFlag(Qt::WindowMinimized));
-	ActionsManager::getAction(ActionsManager::RestoreTabAction, this)->setEnabled(!m_mdi || (activeSubWindow && (activeSubWindow->windowState().testFlag(Qt::WindowMaximized) || activeSubWindow->windowState().testFlag(Qt::WindowMinimized))));
-	ActionsManager::getAction(ActionsManager::AlwaysOnTopTabAction, this)->setEnabled(activeSubWindow);
-	ActionsManager::getAction(ActionsManager::AlwaysOnTopTabAction, this)->setChecked(activeSubWindow && activeSubWindow->windowFlags().testFlag(Qt::WindowStaysOnTopHint));
+	ActionsManager::getAction(ActionsManager::MaximizeTabAction, m_mainWindow)->setEnabled(activeSubWindow && !activeSubWindow->windowState().testFlag(Qt::WindowMaximized));
+	ActionsManager::getAction(ActionsManager::MinimizeTabAction, m_mainWindow)->setEnabled(activeSubWindow && !activeSubWindow->windowState().testFlag(Qt::WindowMinimized));
+	ActionsManager::getAction(ActionsManager::RestoreTabAction, m_mainWindow)->setEnabled(!m_mdi || (activeSubWindow && (activeSubWindow->windowState().testFlag(Qt::WindowMaximized) || activeSubWindow->windowState().testFlag(Qt::WindowMinimized))));
+	ActionsManager::getAction(ActionsManager::AlwaysOnTopTabAction, m_mainWindow)->setEnabled(activeSubWindow);
+	ActionsManager::getAction(ActionsManager::AlwaysOnTopTabAction, m_mainWindow)->setChecked(activeSubWindow && activeSubWindow->windowFlags().testFlag(Qt::WindowStaysOnTopHint));
 }
 
 void WorkspaceWidget::setActiveWindow(Window *window, bool force)

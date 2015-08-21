@@ -29,6 +29,7 @@
 namespace Otter
 {
 
+class MainWindow;
 class Window;
 
 class MdiWidget : public QMdiArea
@@ -69,7 +70,7 @@ class WorkspaceWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit WorkspaceWidget(QWidget *parent = NULL);
+	explicit WorkspaceWidget(MainWindow *parent);
 
 	void addWindow(Window *window, const QRect &geometry = QRect(), WindowState state = MaximizedWindowState, bool isAlwaysOnTop = false);
 	void setActiveWindow(Window *window, bool force = false);
@@ -90,6 +91,7 @@ protected slots:
 	void activeSubWindowChanged(QMdiSubWindow *subWindow);
 
 private:
+	MainWindow *m_mainWindow;
 	MdiWidget *m_mdi;
 	QPointer<Window> m_activeWindow;
 	int m_restoreTimer;
