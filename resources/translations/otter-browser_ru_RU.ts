@@ -4413,12 +4413,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="14"/>
         <source>Check for Updates</source>
-        <translation type="unfinished"/>
+        <translation>Проверка на обновления</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="20"/>
         <source>Checking for update…</source>
-        <translation type="unfinished"/>
+        <translation>Проверяются обновления...</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="64"/>

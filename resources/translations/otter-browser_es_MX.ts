@@ -1590,17 +1590,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="97"/>
         <source>Import Opera Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>Importar marcadores de Opera…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="98"/>
         <source>Import HTML Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>Importar marcadores HTML…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="100"/>
         <source>Import Opera Notes…</source>
-        <translation type="unfinished"/>
+        <translation>Importar notas de Opera…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="186"/>
@@ -1878,22 +1878,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="109"/>
         <source>Import into folder:</source>
-        <translation type="unfinished"/>
+        <translation>Importar en la carpeta:</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="117"/>
         <source>Opera Notes</source>
-        <translation type="unfinished"/>
+        <translation>Notas de Opera</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="122"/>
         <source>Imports notes from Opera Browser version 12 or earlier</source>
-        <translation type="unfinished"/>
+        <translation>Importar notas del navegador Opera version 12 o anterior</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="132"/>
         <source>Opera notes files (notes.adr)</source>
-        <translation type="unfinished"/>
+        <translation>Archivos de notas de Opera (notes.adr)</translation>
     </message>
 </context>
 <context>
@@ -3651,7 +3651,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="281"/>
         <source>Show Line Numbers</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar número de líneas</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="471"/>
@@ -3713,7 +3713,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="141"/>
         <source>Show search field</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar campo de búsqueda</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="148"/>
@@ -4425,22 +4425,22 @@ Seleccione otra.</translation>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="64"/>
         <source>There are no new updates.</source>
-        <translation type="unfinished"/>
+        <translation>No hay nuevas actualizaciones.</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="68"/>
         <source>Available updates:</source>
-        <translation type="unfinished"/>
+        <translation>Actualizaciones disponibles:</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="72"/>
         <source>Update…</source>
-        <translation type="unfinished"/>
+        <translation>Actualizar…</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="75"/>
         <source>Version %1 from %2 channel</source>
-        <translation type="unfinished"/>
+        <translation>Version %1 del canal %2</translation>
     </message>
 </context>
 <context>
@@ -5164,7 +5164,7 @@ Seleccione otra.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="259"/>
         <source>Frame</source>
-        <translation type="unfinished"/>
+        <translation>Marco</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="263"/>

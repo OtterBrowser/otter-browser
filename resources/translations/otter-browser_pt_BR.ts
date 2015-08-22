@@ -606,7 +606,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="177"/>
         <source>Notes</source>
-        <translation>Notas</translation>
+        <translation>Anotações</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="177"/>
@@ -621,7 +621,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="194"/>
         <source>Failed to open notes file: %1</source>
-        <translation>Falhou em abrir o arquivo de notas: %1</translation>
+        <translation>Falhou em abrir o arquivo das anotações: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="194"/>
@@ -631,7 +631,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="218"/>
         <source>Failed to load notes file: %1</source>
-        <translation>Falhou em carregar o arquivo de notas: %1</translation>
+        <translation>Falhou em carregar o arquivo das anotações: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="218"/>
@@ -646,7 +646,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="220"/>
         <source>Failed to load notes file.</source>
-        <translation>Falhou em carregar o arquivo de notas.</translation>
+        <translation>Falhou em carregar o arquivo das anotações.</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="220"/>
@@ -1589,17 +1589,17 @@ Você quer continuar?</translation>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="97"/>
         <source>Import Opera Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>Importar Favoritos do Opera...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="98"/>
         <source>Import HTML Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>Importar Favoritos em HTML...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="100"/>
         <source>Import Opera Notes…</source>
-        <translation type="unfinished"/>
+        <translation>Importar Anotações do Opera...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="186"/>
@@ -1817,7 +1817,7 @@ Você quer continuar?</translation>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="368"/>
         <source>Notes Manager</source>
-        <translation>Gerenciador das Notas</translation>
+        <translation>Gerenciador das Anotações</translation>
     </message>
 </context>
 <context>
@@ -1877,22 +1877,22 @@ Você quer continuar?</translation>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="109"/>
         <source>Import into folder:</source>
-        <translation type="unfinished"/>
+        <translation>Importar para a pasta:</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="117"/>
         <source>Opera Notes</source>
-        <translation type="unfinished"/>
+        <translation>Anotações do Opera</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="122"/>
         <source>Imports notes from Opera Browser version 12 or earlier</source>
-        <translation type="unfinished"/>
+        <translation>Importar anotações da versão 12 ou anterior do navegador Opera</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="132"/>
         <source>Opera notes files (notes.adr)</source>
-        <translation type="unfinished"/>
+        <translation>Arquivos das anotações do Opera (notes.adr)</translation>
     </message>
 </context>
 <context>
@@ -3610,7 +3610,7 @@ Você tem certeza que você quer restaurar esta sessão de qualquer maneira?</tr
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="456"/>
         <source>Notes</source>
-        <translation>Notas</translation>
+        <translation>Anotações</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="461"/>
@@ -3650,7 +3650,7 @@ Você quer salvar suas mudanças ou descartá-las?</translation>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="281"/>
         <source>Show Line Numbers</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar os Números das Linhas</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="471"/>
@@ -3712,7 +3712,7 @@ Você quer salvar suas mudanças ou descartá-las?</translation>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="141"/>
         <source>Show search field</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar o campo da busca</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="148"/>
@@ -4424,22 +4424,22 @@ Selecione outro.</translation>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="64"/>
         <source>There are no new updates.</source>
-        <translation type="unfinished"/>
+        <translation>Não há novas atualizações.</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="68"/>
         <source>Available updates:</source>
-        <translation type="unfinished"/>
+        <translation>Atualizações disponíveis:</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="72"/>
         <source>Update…</source>
-        <translation type="unfinished"/>
+        <translation>Atualização...</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="75"/>
         <source>Version %1 from %2 channel</source>
-        <translation type="unfinished"/>
+        <translation>Versão %1 do canal %2</translation>
     </message>
 </context>
 <context>
@@ -5163,7 +5163,7 @@ Selecione outro.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="259"/>
         <source>Frame</source>
-        <translation type="unfinished"/>
+        <translation>Frame</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="263"/>
@@ -5963,7 +5963,7 @@ Selecione outro.</translation>
         <location filename="../../src/core/ActionsManager.cpp" line="414"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="46"/>
         <source>Notes</source>
-        <translation>Notas</translation>
+        <translation>Anotações</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="415"/>

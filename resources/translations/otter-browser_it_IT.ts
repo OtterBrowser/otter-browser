@@ -622,22 +622,22 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="194"/>
         <source>Failed to open notes file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile aprire il file note %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="194"/>
         <source>Failed to open bookmarks file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile aprire il file dei segnalibri: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="218"/>
         <source>Failed to load notes file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile caricare il file note: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="218"/>
         <source>Failed to load bookmarks file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile caricare il file dei segnalibri: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="220"/>
@@ -647,12 +647,12 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="220"/>
         <source>Failed to load notes file.</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile caricare il file note.</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="220"/>
         <source>Failed to load bookmarks file.</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile caricare il file dei segnalibri.</translation>
     </message>
 </context>
 <context>
@@ -999,7 +999,7 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     <message numerus="yes">
         <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="36"/>
         <source>%n day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n giorno(i)</numerusform><numerusform>%n giorno(i)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="36"/>
@@ -1096,7 +1096,7 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     <message numerus="yes">
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="274"/>
         <source>You are about to delete %n cookies.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Stai per eliminare %n cookie.</numerusform><numerusform>Stai per eliminare %n cookie.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="275"/>
@@ -1318,7 +1318,7 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="185"/>
         <source>HTML files (*.htm *.html)</source>
-        <translation type="unfinished"/>
+        <translation>File HTML  (*.htm *.html)</translation>
     </message>
 </context>
 <context>
@@ -1590,17 +1590,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="97"/>
         <source>Import Opera Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>Importa segnalibri di Opera...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="98"/>
         <source>Import HTML Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>Importa segnalibri HTML...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="100"/>
         <source>Import Opera Notes…</source>
-        <translation type="unfinished"/>
+        <translation>Importa file Note di Opera...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="186"/>
@@ -1739,7 +1739,7 @@ Si desidera continuare?</translation>
     <message>
         <location filename="../../src/core/NetworkProxyFactory.cpp" line="64"/>
         <source>Failed to load proxy auto-config (PAC): %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile caricare proxy auto-config (PAC):%1</translation>
     </message>
 </context>
 <context>
@@ -1878,22 +1878,22 @@ Si desidera continuare?</translation>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="109"/>
         <source>Import into folder:</source>
-        <translation type="unfinished"/>
+        <translation>Importa nella cartella:</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="117"/>
         <source>Opera Notes</source>
-        <translation type="unfinished"/>
+        <translation>Note di Opera</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="122"/>
         <source>Imports notes from Opera Browser version 12 or earlier</source>
-        <translation type="unfinished"/>
+        <translation>Le importazioni note da Opera Browser 12 o precedente</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="132"/>
         <source>Opera notes files (notes.adr)</source>
-        <translation type="unfinished"/>
+        <translation>File di opera note (note.indirizzi)</translation>
     </message>
 </context>
 <context>
@@ -1964,12 +1964,12 @@ Si desidera continuare?</translation>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="65"/>
         <source>%1 wants to lock mouse pointer.</source>
-        <translation type="unfinished"/>
+        <translation>%1 vuole bloccare il puntatore del mouse.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="70"/>
         <source>Invalid permission request from %1.</source>
-        <translation type="unfinished"/>
+        <translation>Richiesta di autorizzazione non valido da %1</translation>
     </message>
 </context>
 <context>

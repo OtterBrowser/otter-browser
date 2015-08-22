@@ -1318,7 +1318,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="185"/>
         <source>HTML files (*.htm *.html)</source>
-        <translation type="unfinished"/>
+        <translation>Ficheros HTML (*.htm *.html)</translation>
     </message>
 </context>
 <context>
@@ -1590,17 +1590,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="97"/>
         <source>Import Opera Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>Importar marcadores de Opera…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="98"/>
         <source>Import HTML Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>Importar marcadores HTML…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="100"/>
         <source>Import Opera Notes…</source>
-        <translation type="unfinished"/>
+        <translation>Importar notas de Opera…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="186"/>
@@ -1878,22 +1878,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="109"/>
         <source>Import into folder:</source>
-        <translation type="unfinished"/>
+        <translation>Importar a carpeta:  </translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="117"/>
         <source>Opera Notes</source>
-        <translation type="unfinished"/>
+        <translation>Notas de Opera</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="122"/>
         <source>Imports notes from Opera Browser version 12 or earlier</source>
-        <translation type="unfinished"/>
+        <translation>Importa notas del navegador Opera versión 12 o anterior</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="132"/>
         <source>Opera notes files (notes.adr)</source>
-        <translation type="unfinished"/>
+        <translation>Ficheros de notas de Opera (notes.adr)</translation>
     </message>
 </context>
 <context>
@@ -2655,7 +2655,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="45"/>
         <source>Show start page</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar página de inicio</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="46"/>
@@ -3639,18 +3639,19 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="113"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Aviso</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="113"/>
         <source>The document has been modified.
 Do you want to save your changes or discard them?</source>
-        <translation type="unfinished"/>
+        <translation>El documento ha sido modificado.
+¿Quieres guardar los cambios o descartarlos?</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="281"/>
         <source>Show Line Numbers</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar números de línea</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="471"/>
@@ -3712,7 +3713,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="141"/>
         <source>Show search field</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar campo de búsqueda</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="148"/>
@@ -3750,7 +3751,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="357"/>
         <source>Add Tile</source>
-        <translation type="unfinished"/>
+        <translation>Añadir cuadro</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="510"/>
@@ -3804,7 +3805,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="114"/>
         <source>Begin with start page</source>
-        <translation type="unfinished"/>
+        <translation>Comenzar con página de inicio</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="124"/>
@@ -4406,7 +4407,7 @@ Elige otro distinto.</translation>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="136"/>
         <source>New update %1 from %2 channel is available!</source>
-        <translation type="unfinished"/>
+        <translation>¡La nueva actualización %1 del canal %2 está disponible!</translation>
     </message>
 </context>
 <context>
@@ -4414,32 +4415,32 @@ Elige otro distinto.</translation>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="14"/>
         <source>Check for Updates</source>
-        <translation type="unfinished"/>
+        <translation>Comprobar actualizaciones</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="20"/>
         <source>Checking for update…</source>
-        <translation type="unfinished"/>
+        <translation>Comprobando actualización...</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="64"/>
         <source>There are no new updates.</source>
-        <translation type="unfinished"/>
+        <translation>No hay actualizaciones nuevas.</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="68"/>
         <source>Available updates:</source>
-        <translation type="unfinished"/>
+        <translation>Actualizaciones disponibles:</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="72"/>
         <source>Update…</source>
-        <translation type="unfinished"/>
+        <translation>Actualizar…</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="75"/>
         <source>Version %1 from %2 channel</source>
-        <translation type="unfinished"/>
+        <translation>Versión %1 del canal %2</translation>
     </message>
 </context>
 <context>
@@ -4538,47 +4539,47 @@ Elige otro distinto.</translation>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="224"/>
         <source>Default Application</source>
-        <translation type="unfinished"/>
+        <translation>Aplicación por defecto</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="230"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Desconocido</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="316"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>Título: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="316"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Dirección: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="567"/>
         <source>No search engines defined</source>
-        <translation type="unfinished"/>
+        <translation>No hay buscadores definidos</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="710"/>
         <source>Open Image in New Tab (Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>Abrir imagen en pestaña nueva (Sin título)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="710"/>
         <source>Open Image in New Tab (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Abrir imagen en pestaña nueva (%1)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="716"/>
         <source>Open Image in New Background Tab (Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>Abrir imagen en pestaña nueva en segundo plano (Sin título)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="716"/>
         <source>Open Image in New Background Tab (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Abrir imagen en pestaña nueva en segundo plano (%1)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1008"/>
@@ -5164,7 +5165,7 @@ Elige otro distinto.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="259"/>
         <source>Frame</source>
-        <translation type="unfinished"/>
+        <translation>Marco</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="263"/>
@@ -5375,12 +5376,12 @@ Elige otro distinto.</translation>
         <location filename="../../src/core/ActionsManager.cpp" line="308"/>
         <location filename="../../src/core/ActionsManager.cpp" line="397"/>
         <source>Open with…</source>
-        <translation type="unfinished"/>
+        <translation>Abrir con...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="299"/>
         <source>Open link with external application</source>
-        <translation type="unfinished"/>
+        <translation>Abrir enlace con aplicación externa</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="300"/>
@@ -5426,7 +5427,7 @@ Elige otro distinto.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="308"/>
         <source>Open frame with external application</source>
-        <translation type="unfinished"/>
+        <translation>Abrir marco con aplicación externa</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="309"/>
@@ -5453,13 +5454,13 @@ Elige otro distinto.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="312"/>
         <source>Open Image In New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Abrir imagen en pestaña nueva</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="313"/>
         <location filename="../../src/ui/WebWidget.cpp" line="716"/>
         <source>Open Image in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Abrir imagen en pestaña nueva en segundo plano</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="314"/>
@@ -5879,7 +5880,7 @@ Elige otro distinto.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="397"/>
         <source>Open current page with external application</source>
-        <translation type="unfinished"/>
+        <translation>Abrir la página actual con aplicación externa</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="398"/>
@@ -6001,7 +6002,7 @@ Elige otro distinto.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="421"/>
         <source>Check for Updates…</source>
-        <translation type="unfinished"/>
+        <translation>Comprobar actualizaciones…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="422"/>
@@ -6071,7 +6072,7 @@ Elige otro distinto.</translation>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="710"/>
         <source>Open Image in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Abrir imagen en pestaña nueva</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="755"/>
@@ -6191,17 +6192,17 @@ Elige otro distinto.</translation>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="47"/>
         <source>Unable to check for updates. Invalid URL: %1</source>
-        <translation type="unfinished"/>
+        <translation>No se pudo comprobar actualizaciones. URL no válida: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="68"/>
         <source>Unable to check for updates: %1</source>
-        <translation type="unfinished"/>
+        <translation>No se pudo comprobar actualizaciones: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="100"/>
         <source>Unable to parse version number: %1</source>
-        <translation type="unfinished"/>
+        <translation>No se pudo comprender el número de versión: %1</translation>
     </message>
     <message>
         <location filename="../../src/main.cpp" line="123"/>

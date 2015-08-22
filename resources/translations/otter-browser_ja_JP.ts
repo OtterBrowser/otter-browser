@@ -1590,17 +1590,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="97"/>
         <source>Import Opera Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>Operaのブックマークをインポート...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="98"/>
         <source>Import HTML Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>HTMLブックマークをインポート...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="100"/>
         <source>Import Opera Notes…</source>
-        <translation type="unfinished"/>
+        <translation>Operaノートをインポート...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="186"/>
@@ -1878,22 +1878,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="109"/>
         <source>Import into folder:</source>
-        <translation type="unfinished"/>
+        <translation>フォルダへインポート...</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="117"/>
         <source>Opera Notes</source>
-        <translation type="unfinished"/>
+        <translation>Operaノート</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="122"/>
         <source>Imports notes from Opera Browser version 12 or earlier</source>
-        <translation type="unfinished"/>
+        <translation>Operaのバージョン12以前から、ノートをインポート</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="132"/>
         <source>Opera notes files (notes.adr)</source>
-        <translation type="unfinished"/>
+        <translation>Operaノートファイル(notes.adr)</translation>
     </message>
 </context>
 <context>
@@ -3651,7 +3651,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="281"/>
         <source>Show Line Numbers</source>
-        <translation type="unfinished"/>
+        <translation>行のナンバーを表示</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="471"/>
@@ -3713,7 +3713,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="141"/>
         <source>Show search field</source>
-        <translation type="unfinished"/>
+        <translation>検索欄を表示</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="148"/>
@@ -4425,22 +4425,22 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="64"/>
         <source>There are no new updates.</source>
-        <translation type="unfinished"/>
+        <translation>新しいアップデートはありません。</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="68"/>
         <source>Available updates:</source>
-        <translation type="unfinished"/>
+        <translation>利用可能なアップデート：</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="72"/>
         <source>Update…</source>
-        <translation type="unfinished"/>
+        <translation>アップデート...</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="75"/>
         <source>Version %1 from %2 channel</source>
-        <translation type="unfinished"/>
+        <translation>バージョン%1へ%2から進むのをキャンセル</translation>
     </message>
 </context>
 <context>
@@ -5165,7 +5165,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="259"/>
         <source>Frame</source>
-        <translation type="unfinished"/>
+        <translation>フレーム</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="263"/>
