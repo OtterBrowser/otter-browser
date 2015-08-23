@@ -137,6 +137,14 @@ Transfer::Transfer(QNetworkReply *reply, const QString &target, TransferOptions 
 	start(reply, target);
 }
 
+Transfer::~Transfer()
+{
+	if (m_options.testFlag(HasToOpenAfterFinishOption) && QFile::exists(m_target))
+	{
+		QFile::remove(m_target);
+	}
+}
+
 void Transfer::timerEvent(QTimerEvent *event)
 {
 	if (event->timerId() == m_updateTimer)
@@ -527,8 +535,23 @@ void Transfer::setOpenCommand(const QString &command)
 
 	m_options |= HasToOpenAfterFinishOption;
 
+	QTemporaryFile *file = qobject_cast<QTemporaryFile*>(m_device);
+
+	if (file)
+	{
+		file->setAutoRemove(false);
+	}
+
 	if (m_state == FinishedState)
 	{
+		if (file)
+		{
+			file->close();
+			file->deleteLater();
+
+			m_device = NULL;
+		}
+
 		openTarget();
 	}
 }

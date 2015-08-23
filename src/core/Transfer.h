@@ -64,6 +64,7 @@ public:
 	Transfer(const QUrl &source, const QString &target = QString(), TransferOptions options = CanAskForPathOption, QObject *parent = NULL);
 	Transfer(const QNetworkRequest &request, const QString &target = QString(), TransferOptions options = CanAskForPathOption, QObject *parent = NULL);
 	Transfer(QNetworkReply *reply, const QString &target = QString(), TransferOptions options = CanAskForPathOption, QObject *parent = NULL);
+	~Transfer();
 
 	virtual void setUpdateInterval(int interval);
 	virtual QUrl getSource() const;
