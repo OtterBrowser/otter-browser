@@ -395,6 +395,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::ViewFrameSourceAction:
 			if (m_hitResult.frameUrl.isValid())
 			{
+				const QString defaultEncoding = m_webView->page()->settings()->defaultTextEncoding();
 				QNetworkRequest request(m_hitResult.frameUrl);
 				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
 				request.setHeader(QNetworkRequest::UserAgentHeader, m_webView->page()->profile()->httpUserAgent());
@@ -402,6 +403,11 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				QNetworkReply *reply = NetworkManagerFactory::getNetworkManager()->get(request);
 				SourceViewerWebWidget *sourceViewer = new SourceViewerWebWidget(isPrivate());
 				sourceViewer->setRequestedUrl(QUrl(QLatin1String("view-source:") + m_hitResult.frameUrl.toString()));
+
+				if (!defaultEncoding.isEmpty())
+				{
+					sourceViewer->setOption(QLatin1String("Content/DefaultCharacterEncoding"), defaultEncoding);
+				}
 
 				m_viewSourceReplies[reply] = sourceViewer;
 
@@ -703,6 +709,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::ViewSourceAction:
 			if (canViewSource())
 			{
+				const QString defaultEncoding = m_webView->page()->settings()->defaultTextEncoding();
 				QNetworkRequest request(getUrl());
 				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
 				request.setHeader(QNetworkRequest::UserAgentHeader, m_webView->page()->profile()->httpUserAgent());
@@ -710,6 +717,11 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				QNetworkReply *reply = NetworkManagerFactory::getNetworkManager()->get(request);
 				SourceViewerWebWidget *sourceViewer = new SourceViewerWebWidget(isPrivate());
 				sourceViewer->setRequestedUrl(QUrl(QLatin1String("view-source:") + getUrl().toString()));
+
+				if (!defaultEncoding.isEmpty())
+				{
+					sourceViewer->setOption(QLatin1String("Content/DefaultCharacterEncoding"), defaultEncoding);
+				}
 
 				m_viewSourceReplies[reply] = sourceViewer;
 

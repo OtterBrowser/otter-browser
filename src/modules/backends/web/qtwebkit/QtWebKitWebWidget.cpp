@@ -885,12 +885,18 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::ViewFrameSourceAction:
 			if (getCurrentHitTestResult().frameUrl.isValid())
 			{
+				const QString defaultEncoding = m_webView->page()->settings()->defaultTextEncoding();
 				QNetworkRequest request(getCurrentHitTestResult().frameUrl);
 				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
 
 				QNetworkReply *reply = m_networkManager->get(request);
 				SourceViewerWebWidget *sourceViewer = new SourceViewerWebWidget(isPrivate());
 				sourceViewer->setRequestedUrl(QUrl(QLatin1String("view-source:") + getCurrentHitTestResult().frameUrl.toString()));
+
+				if (!defaultEncoding.isEmpty())
+				{
+					sourceViewer->setOption(QLatin1String("Content/DefaultCharacterEncoding"), defaultEncoding);
+				}
 
 				m_viewSourceReplies[reply] = sourceViewer;
 
@@ -1322,12 +1328,18 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::ViewSourceAction:
 			if (canViewSource())
 			{
+				const QString defaultEncoding = m_webView->page()->settings()->defaultTextEncoding();
 				QNetworkRequest request(getUrl());
 				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
 
 				QNetworkReply *reply = m_networkManager->get(request);
 				SourceViewerWebWidget *sourceViewer = new SourceViewerWebWidget(isPrivate());
 				sourceViewer->setRequestedUrl(QUrl(QLatin1String("view-source:") + getUrl().toString()));
+
+				if (!defaultEncoding.isEmpty())
+				{
+					sourceViewer->setOption(QLatin1String("Content/DefaultCharacterEncoding"), defaultEncoding);
+				}
 
 				m_viewSourceReplies[reply] = sourceViewer;
 
