@@ -69,7 +69,7 @@ public slots:
 	virtual void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	virtual void print(QPrinter *printer) = 0;
 	virtual void goToHistoryIndex(int index);
-	void showDialog(ContentsDialog *dialog);
+	void showDialog(ContentsDialog *dialog, bool lockEventLoop = true);
 	virtual void setHistory(const WindowHistoryInformation &history);
 	virtual void setZoom(int zoom);
 	virtual void setUrl(const QUrl &url, bool typed = true);

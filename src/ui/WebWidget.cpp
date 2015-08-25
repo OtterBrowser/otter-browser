@@ -156,11 +156,11 @@ void WebWidget::startTransfer(Transfer *transfer)
 	}
 
 	TransferDialog *transferDialog = new TransferDialog(transfer, this);
-	ContentsDialog dialog(Utils::getIcon(QLatin1String("download")), transferDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, transferDialog, this);
+	ContentsDialog *dialog = new ContentsDialog(Utils::getIcon(QLatin1String("download")), transferDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, transferDialog, this);
 
-	connect(transferDialog, SIGNAL(finished(int)), &dialog, SLOT(close()));
+	connect(transferDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
 
-	showDialog(&dialog);
+	showDialog(dialog, false);
 }
 
 void WebWidget::pasteNote(QAction *action)
@@ -362,13 +362,13 @@ void WebWidget::updateHitTestResult(const QPoint &position)
 	m_hitResult = getHitTestResult(position);
 }
 
-void WebWidget::showDialog(ContentsDialog *dialog)
+void WebWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 {
 	ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
 
 	if (parent)
 	{
-		parent->showDialog(dialog);
+		parent->showDialog(dialog, lockEventLoop);
 	}
 }
 

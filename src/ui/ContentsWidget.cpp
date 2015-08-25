@@ -141,7 +141,7 @@ void ContentsWidget::cleanupDialog()
 	}
 }
 
-void ContentsWidget::showDialog(ContentsDialog *dialog)
+void ContentsWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 {
 	if (!dialog)
 	{
@@ -187,12 +187,15 @@ void ContentsWidget::showDialog(ContentsDialog *dialog)
 	dialog->setFocus();
 	dialog->move(geometry().center() - QRect(QPoint(0, 0), dialog->size()).center());
 
-	QEventLoop eventLoop;
+	if (lockEventLoop)
+	{
+		QEventLoop eventLoop;
 
-	connect(dialog, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+		connect(dialog, SIGNAL(finished()), &eventLoop, SLOT(quit()));
+		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
-	eventLoop.exec();
+		eventLoop.exec();
+	}
 }
 
 void ContentsWidget::goToHistoryIndex(int index)
