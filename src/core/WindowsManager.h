@@ -24,9 +24,6 @@
 #include "SessionsManager.h"
 
 #include <QtCore/QUrl>
-#include <QtGui/QStandardItem>
-#include <QtPrintSupport/QPrinter>
-#include <QtWidgets/QMdiArea>
 
 namespace Otter
 {
