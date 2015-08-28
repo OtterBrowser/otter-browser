@@ -83,6 +83,7 @@ SOURCES += src/main.cpp \
     src/core/CookieJarProxy.cpp \
     src/core/FileSystemCompleterModel.cpp \
     src/core/GesturesManager.cpp \
+    src/core/HandlersManager.cpp \
     src/core/HistoryManager.cpp \
     src/core/Importer.cpp \
     src/core/InputInterpreter.cpp \
@@ -228,6 +229,7 @@ HEADERS += src/core/ActionsManager.h \
     src/core/CookieJarProxy.h \
     src/core/FileSystemCompleterModel.h \
     src/core/GesturesManager.h \
+    src/core/HandlersManager.h \
     src/core/HistoryManager.h \
     src/core/Importer.h \
     src/core/InputInterpreter.h \

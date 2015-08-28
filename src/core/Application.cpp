@@ -24,6 +24,7 @@
 #include "BookmarksManager.h"
 #include "Console.h"
 #include "GesturesManager.h"
+#include "HandlersManager.h"
 #include "HistoryManager.h"
 #include "LongTermTimer.h"
 #include "NetworkManagerFactory.h"
@@ -248,6 +249,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	BookmarksManager::createInstance(this);
 
 	GesturesManager::createInstance(this);
+
+	HandlersManager::createInstance(this);
 
 	HistoryManager::createInstance(this);
 
