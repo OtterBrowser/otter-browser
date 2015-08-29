@@ -1714,7 +1714,7 @@ QIcon QtWebKitWebWidget::getIcon() const
 
 QPixmap QtWebKitWebWidget::getThumbnail()
 {
-	if (!m_thumbnail.isNull() && !isLoading())
+	if (!m_thumbnail.isNull() || isLoading())
 	{
 		return m_thumbnail;
 	}
