@@ -34,9 +34,11 @@
 #include "../../core/SearchesManager.h"
 #include "../../core/Utils.h"
 
+#include <QtCore/QMimeData>
 #include <QtCore/QTimer>
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
+#include <QtGui/QDrag>
 #include <QtGui/QPainter>
 #include <QtWidgets/QAbstractItemView>
 #include <QtWidgets/QApplication>
@@ -760,6 +762,20 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == lineEdit() && event->type() == QEvent::MouseButtonPress)
 	{
+		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+		if (mouseEvent)
+		{
+			if (mouseEvent->button() == Qt::LeftButton && m_securityBadgeRectangle.contains(mouseEvent->pos()))
+			{
+				m_dragStartPosition = mouseEvent->pos();
+			}
+			else
+			{
+				m_dragStartPosition = QPoint();
+			}
+		}
+
 		m_wasPopupVisible = (m_popupHideTime.isValid() && m_popupHideTime.msecsTo(QTime::currentTime()) < 100);
 	}
 	else if (object == lineEdit() && event->type() == QEvent::MouseButtonRelease)
@@ -806,6 +822,22 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (mouseEvent)
 		{
+			if (mouseEvent->buttons().testFlag(Qt::LeftButton) && (mouseEvent->pos() - m_dragStartPosition).manhattanLength() >= QApplication::startDragDistance())
+			{
+				QList<QUrl> urls;
+				urls << getUrl();
+
+				QDrag *drag = new QDrag(this);
+				QMimeData *mimeData = new QMimeData();
+				mimeData->setText(getUrl().toString());
+				mimeData->setUrls(urls);
+
+				drag->setMimeData(mimeData);
+				drag->exec(Qt::CopyAction);
+
+				return true;
+			}
+
 			if ((!m_isUsingSimpleMode && m_securityBadgeRectangle.contains(mouseEvent->pos())) || ((m_isHistoryDropdownEnabled || m_isUsingSimpleMode) && m_historyDropdownArrowRectangle.contains(mouseEvent->pos())))
 			{
 				lineEdit()->setCursor(Qt::ArrowCursor);

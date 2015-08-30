@@ -87,6 +87,7 @@ private:
 	QLabel *m_loadPluginsLabel;
 	QLabel *m_urlIconLabel;
 	QTime m_popupHideTime;
+	QPoint m_dragStartPosition;
 	QRect m_historyDropdownArrowRectangle;
 	QRect m_securityBadgeRectangle;
 	OpenHints m_hints;
