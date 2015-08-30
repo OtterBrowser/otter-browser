@@ -760,7 +760,7 @@ QUrl AddressWidget::getUrl() const
 
 bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == lineEdit() && event->type() == QEvent::MouseButtonPress)
+	if ((object == lineEdit() || object == m_urlIconLabel) && event->type() == QEvent::MouseButtonPress)
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
@@ -776,7 +776,10 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 			}
 		}
 
-		m_wasPopupVisible = (m_popupHideTime.isValid() && m_popupHideTime.msecsTo(QTime::currentTime()) < 100);
+		if (object == lineEdit())
+		{
+			m_wasPopupVisible = (m_popupHideTime.isValid() && m_popupHideTime.msecsTo(QTime::currentTime()) < 100);
+		}
 	}
 	else if (object == lineEdit() && event->type() == QEvent::MouseButtonRelease)
 	{
@@ -816,7 +819,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 			}
 		}
 	}
-	else if (object == lineEdit() && event->type() == QEvent::MouseMove)
+	else if ((object == lineEdit() || object == m_urlIconLabel) && event->type() == QEvent::MouseMove)
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
@@ -833,18 +836,22 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 				mimeData->setUrls(urls);
 
 				drag->setMimeData(mimeData);
+				drag->setPixmap((m_window ? m_window->getIcon() : Utils::getIcon(QLatin1String("tab"))).pixmap(16, 16));
 				drag->exec(Qt::CopyAction);
 
 				return true;
 			}
 
-			if ((!m_isUsingSimpleMode && m_securityBadgeRectangle.contains(mouseEvent->pos())) || ((m_isHistoryDropdownEnabled || m_isUsingSimpleMode) && m_historyDropdownArrowRectangle.contains(mouseEvent->pos())))
+			if (object == lineEdit())
 			{
-				lineEdit()->setCursor(Qt::ArrowCursor);
-			}
-			else
-			{
-				lineEdit()->setCursor(Qt::IBeamCursor);
+				if ((!m_isUsingSimpleMode && m_securityBadgeRectangle.contains(mouseEvent->pos())) || ((m_isHistoryDropdownEnabled || m_isUsingSimpleMode) && m_historyDropdownArrowRectangle.contains(mouseEvent->pos())))
+				{
+					lineEdit()->setCursor(Qt::ArrowCursor);
+				}
+				else
+				{
+					lineEdit()->setCursor(Qt::IBeamCursor);
+				}
 			}
 		}
 	}
