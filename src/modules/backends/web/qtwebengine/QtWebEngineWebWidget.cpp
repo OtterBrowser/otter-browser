@@ -353,7 +353,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			return;
 		case ActionsManager::SaveLinkToDownloadsAction:
-			startTransfer(new Transfer(m_hitResult.linkUrl.toString(), QString(), (Transfer::CanNotifyOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
+			TransfersManager::addTransfer(new Transfer(m_hitResult.linkUrl.toString(), QString(), (Transfer::CanNotifyOption | Transfer::CanAskForPathOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 
 			return;
 		case ActionsManager::OpenFrameInCurrentTabAction:

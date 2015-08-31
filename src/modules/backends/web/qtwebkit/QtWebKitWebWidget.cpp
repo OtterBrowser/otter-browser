@@ -837,7 +837,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::SaveLinkToDownloadsAction:
-			startTransfer(new Transfer(getCurrentHitTestResult().linkUrl.toString(), QString(), (Transfer::CanNotifyOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
+			TransfersManager::addTransfer(new Transfer(getCurrentHitTestResult().linkUrl.toString(), QString(), (Transfer::CanNotifyOption | Transfer::CanAskForPathOption | Transfer::IsQuickTransferOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 
 			return;
 		case ActionsManager::OpenFrameInCurrentTabAction:
