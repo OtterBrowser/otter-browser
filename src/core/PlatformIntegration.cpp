@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,7 +20,13 @@
 
 #include "PlatformIntegration.h"
 #include "Application.h"
+#include "Console.h"
+#include "Updater.h"
 #include "Utils.h"
+
+#include <QtCore/QDir>
+#include <QtCore/QProcess>
+#include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
@@ -39,6 +46,16 @@ QList<ApplicationInformation> PlatformIntegration::getApplicationsForMimeType(co
 	Q_UNUSED(mimeType)
 
 	return QList<ApplicationInformation>();
+}
+
+QString PlatformIntegration::getUpdaterBinary() const
+{
+	return QLatin1String("updater");
+}
+
+QString PlatformIntegration::getPlatform() const
+{
+	return QString();
 }
 
 bool PlatformIntegration::canShowNotifications() const
@@ -64,6 +81,32 @@ bool PlatformIntegration::isDefaultBrowser() const
 void PlatformIntegration::showNotification(Notification *notification)
 {
 	Q_UNUSED(notification)
+}
+
+bool PlatformIntegration::installUpdate() const
+{
+	const QString updaterPath = QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + QDir::separator() + getUpdaterBinary());
+	const QString scriptPath = Updater::getScriptPath();
+
+	if (Updater::isReadyToInstall(scriptPath) && QFileInfo(updaterPath).isExecutable())
+	{
+		if (QProcess::startDetached(updaterPath, QStringList() << QLatin1String("--install-dir") << QCoreApplication::applicationDirPath() << QLatin1String("--package-dir") << QFileInfo(scriptPath).absolutePath() << QLatin1String("--script") << scriptPath))
+		{
+			Updater::clearUpdate();
+
+			Application::getInstance()->close();
+
+			return true;
+		}
+	}
+
+	Console::addMessage(QCoreApplication::translate("main", "Failed to install update\nUpdater: %1\n Script: %2").arg(updaterPath).arg(scriptPath), OtherMessageCategory, ErrorMessageLevel);
+
+	QMessageBox::critical(NULL, tr("Error"), tr("Failed to install update."), QMessageBox::Close);
+
+	Updater::clearUpdate();
+
+	return false;
 }
 
 }

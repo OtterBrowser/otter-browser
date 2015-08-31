@@ -33,6 +33,11 @@ struct UpdateInformation
 	QString channel;
 	QString version;
 	QUrl detailsUrl;
+	QUrl scriptUrl;
+	QUrl fileUrl;
+	bool isAvailable;
+
+	UpdateInformation() : isAvailable(false) {}
 };
 
 class UpdateChecker : public QObject
@@ -44,11 +49,9 @@ public:
 
 protected slots:
 	void runUpdateCheck();
-	void runUpdate();
 
 private:
 	QNetworkReply *m_networkReply;
-	QString m_detailsUrl;
 	bool m_isInBackground;
 
 signals:
@@ -56,5 +59,7 @@ signals:
 };
 
 }
+
+Q_DECLARE_METATYPE(Otter::UpdateInformation)
 
 #endif

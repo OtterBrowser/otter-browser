@@ -1,6 +1,5 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -18,45 +17,44 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_UPDATECHECKERDIALOG_H
-#define OTTER_UPDATECHECKERDIALOG_H
+#ifndef OTTER_UPDATER_H
+#define OTTER_UPDATER_H
 
-#include <QAbstractButton>
-#include <QtWidgets/QDialog>
+#include "UpdateChecker.h"
+#include "Transfer.h"
+
+#include <QtCore/QObject>
 
 namespace Otter
 {
 
-namespace Ui
-{
-	class UpdateCheckerDialog;
-}
-
-class UpdateChecker;
-struct UpdateInformation;
-
-class UpdateCheckerDialog : public QDialog
+class Updater : public QObject
 {
 	Q_OBJECT
 
 public:
-	explicit UpdateCheckerDialog(QWidget *parent = NULL, const QList<UpdateInformation> &availableUpdates = QList<UpdateInformation>());
-	~UpdateCheckerDialog();
+	explicit Updater(const UpdateInformation &information, QObject *parent = NULL);
+
+	static void clearUpdate();
+	static QString getScriptPath();
+	static bool installUpdate();
+	static bool isReadyToInstall(QString path = QString());
 
 protected:
-	void changeEvent(QEvent *event);
+	Transfer* downloadFile(const QUrl url, const QString path);
 
 protected slots:
-	void buttonClicked(QAbstractButton *button);
-	void updateCheckFinished(const QList<UpdateInformation> &availableUpdates);
-	void updateProgress(const int progress);
-	void showDetails();
-	void transferFinished(const bool success);
-	void downloadUpdate();
-	void readyToInstall();
+	void transferFinished();
+	void updateProgress(qint64 bytesReceived, qint64 bytesTotal);
 
 private:
-	Ui::UpdateCheckerDialog *m_ui;
+	Transfer *m_transfer;
+	int m_transfersCount;
+	bool m_transfersSuccessful;
+
+signals:
+	void progress(int percentage);
+	void finished(bool success);
 };
 
 }

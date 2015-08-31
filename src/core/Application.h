@@ -21,6 +21,7 @@
 #ifndef OTTER_APPLICATION_H
 #define OTTER_APPLICATION_H
 
+#include "UpdateChecker.h"
 #include "SessionsManager.h"
 
 #include <QtCore/QCommandLineParser>
@@ -58,6 +59,7 @@ public:
 	QList<MainWindow*> getWindows() const;
 	bool canClose();
 	bool isHidden() const;
+	bool isUpdating() const;
 	bool isRunning() const;
 
 public slots:
@@ -66,9 +68,11 @@ public slots:
 	void setHidden(bool hidden);
 
 protected slots:
+	void updateCheckFinished(const QList<UpdateInformation> &availableUpdates);
 	void newConnection();
 	void clearHistory();
 	void periodicUpdateCheck();
+	void showUpdateDetails();
 
 private:
 	PlatformIntegration *m_platformIntegration;
@@ -80,6 +84,7 @@ private:
 	QCommandLineParser m_commandLineParser;
 	QList<MainWindow*> m_windows;
 	bool m_isHidden;
+	bool m_isUpdating;
 
 	static Application *m_instance;
 

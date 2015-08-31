@@ -107,6 +107,7 @@ SOURCES += src/main.cpp \
     src/core/Transfer.cpp \
     src/core/TransfersManager.cpp \
     src/core/UpdateChecker.cpp \
+    src/core/Updater.cpp \
     src/core/Utils.cpp \
     src/core/WebBackend.cpp \
     src/core/WindowsManager.cpp \
@@ -253,6 +254,7 @@ HEADERS += src/core/ActionsManager.h \
     src/core/Transfer.h \
     src/core/TransfersManager.h \
     src/core/UpdateChecker.h \
+    src/core/Updater.h \
     src/core/Utils.h \
     src/core/WebBackend.h \
     src/core/WindowsManager.h \

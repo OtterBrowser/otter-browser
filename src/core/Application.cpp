@@ -35,10 +35,9 @@
 #include "SearchesManager.h"
 #include "SettingsManager.h"
 #include "ToolBarsManager.h"
-#include "Transfer.h"
 #include "TransfersManager.h"
 #include "Utils.h"
-#include "UpdateChecker.h"
+#include "Updater.h"
 #include "./config.h"
 #ifdef Q_OS_WIN
 #include "../modules/platforms/windows/WindowsPlatformIntegration.h"
@@ -50,6 +49,7 @@
 #include "../ui/MainWindow.h"
 #include "../ui/NotificationDialog.h"
 #include "../ui/TrayIcon.h"
+#include "../ui/UpdateCheckerDialog.h"
 
 #include <QtCore/QBuffer>
 #include <QtCore/QCryptographicHash>
@@ -77,7 +77,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	m_qtTranslator(NULL),
 	m_applicationTranslator(NULL),
 	m_localServer(NULL),
-	m_isHidden(false)
+	m_isHidden(false),
+	m_isUpdating(false)
 {
 	setApplicationName(QLatin1String("Otter"));
 	setApplicationVersion(OTTER_VERSION_MAIN);
@@ -276,16 +277,6 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		m_trayIcon = new TrayIcon(this);
 	}
 
-	const QDate lastUpdate = QDate::fromString(SettingsManager::getValue(QLatin1String("Updates/LastCheck")).toString(), Qt::ISODate);
-	const int interval = SettingsManager::getValue(QLatin1String("Updates/CheckInterval")).toInt();
-
-	if (interval > 0 && (lastUpdate.isNull() ? interval : lastUpdate.daysTo(QDate::currentDate())) >= interval && !SettingsManager::getValue(QLatin1String("Updates/ActiveChannels")).toString().isEmpty())
-	{
-		new UpdateChecker(this);
-
-		LongTermTimer::runTimer((interval * SECONDS_IN_DAY), this, SLOT(periodicUpdateCheck()));
-	}
-
 #ifdef Q_OS_WIN
 	m_platformIntegration = new WindowsPlatformIntegration(this);
 #elif defined(Q_OS_MAC)
@@ -293,6 +284,28 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 #elif defined(Q_OS_UNIX)
 	m_platformIntegration = new FreeDesktopOrgPlatformIntegration(this);
 #endif
+
+	if (Updater::isReadyToInstall())
+	{
+		m_isUpdating = Updater::installUpdate();
+
+		if (m_isUpdating)
+		{
+			return;
+		}
+	}
+
+	const QDate lastUpdate = QDate::fromString(SettingsManager::getValue(QLatin1String("Updates/LastCheck")).toString(), Qt::ISODate);
+	const int interval = SettingsManager::getValue(QLatin1String("Updates/CheckInterval")).toInt();
+
+	if (interval > 0 && (lastUpdate.isNull() ? interval : lastUpdate.daysTo(QDate::currentDate())) >= interval && !SettingsManager::getValue(QLatin1String("Updates/ActiveChannels")).toStringList().isEmpty())
+	{
+		UpdateChecker *updateChecker = new UpdateChecker(this);
+
+		connect(updateChecker, SIGNAL(finished(QList<UpdateInformation>)), this, SLOT(updateCheckFinished(QList<UpdateInformation>)));
+
+		LongTermTimer::runTimer((interval * SECONDS_IN_DAY), this, SLOT(periodicUpdateCheck()));
+	}
 
 	connect(this, SIGNAL(aboutToQuit()), this, SLOT(clearHistory()));
 }
@@ -453,13 +466,48 @@ void Application::clearHistory()
 
 void Application::periodicUpdateCheck()
 {
-	new UpdateChecker(this);
+	UpdateChecker *updateChecker = new UpdateChecker(this);
+
+	connect(updateChecker, SIGNAL(finished(QList<UpdateInformation>)), this, SLOT(updateCheckFinished(QList<UpdateInformation>)));
 
 	const int interval = SettingsManager::getValue(QLatin1String("Updates/CheckInterval")).toInt();
 
-	if (interval > 0 && !SettingsManager::getValue(QLatin1String("Updates/ActiveChannels")).toString().isEmpty())
+	if (interval > 0 && !SettingsManager::getValue(QLatin1String("Updates/ActiveChannels")).toStringList().isEmpty())
 	{
 		LongTermTimer::runTimer((interval * SECONDS_IN_DAY), this, SLOT(periodicUpdateCheck()));
+	}
+}
+
+void Application::updateCheckFinished(const QList<UpdateInformation> &availableUpdates)
+{
+	if (availableUpdates.isEmpty())
+	{
+		return;
+	}
+
+	const int latestVersion = (availableUpdates.count() - 1);
+
+	if (SettingsManager::getValue(QLatin1String("Updates/AutomaticInstall")).toBool())
+	{
+		new Updater(availableUpdates.at(latestVersion), this);
+	}
+	else
+	{
+		Notification *notification = NotificationsManager::createNotification(NotificationsManager::UpdateAvailableEvent, tr("New update %1 from %2 channel is available!").arg(availableUpdates.at(latestVersion).version).arg(availableUpdates.at(latestVersion).channel));
+		notification->setData(QVariant::fromValue<QList<UpdateInformation> >(availableUpdates));
+
+		connect(notification, SIGNAL(clicked()), this, SLOT(showUpdateDetails()));
+	}
+}
+
+void Application::showUpdateDetails()
+{
+	Notification *notification = dynamic_cast<Notification*>(sender());
+
+	if (notification)
+	{
+		UpdateCheckerDialog *dialog = new UpdateCheckerDialog(NULL, notification->getData().value<QList<UpdateInformation> >());
+		dialog->show();
 	}
 }
 
@@ -697,6 +745,11 @@ bool Application::canClose()
 bool Application::isHidden() const
 {
 	return m_isHidden;
+}
+
+bool Application::isUpdating() const
+{
+	return m_isUpdating;
 }
 
 bool Application::isRunning() const

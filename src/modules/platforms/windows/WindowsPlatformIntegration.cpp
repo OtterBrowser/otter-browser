@@ -369,6 +369,23 @@ QList<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMime
 	return applications;
 }
 
+QString WindowsPlatformIntegration::getUpdaterBinary() const
+{
+	return QLatin1String("updater.exe");
+}
+
+QString WindowsPlatformIntegration::getPlatform() const
+{
+#if QT_VERSION >= 0x050400
+	if (QSysInfo::buildCpuArchitecture() == QLatin1String("x86_64"))
+	{
+		return QLatin1String("win64");
+	}
+#endif
+	return QLatin1String("win32");
+
+}
+
 bool WindowsPlatformIntegration::canShowNotifications() const
 {
 	return true;

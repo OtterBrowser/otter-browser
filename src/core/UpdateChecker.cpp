@@ -19,19 +19,17 @@
 **************************************************************************/
 
 #include "UpdateChecker.h"
+#include "Application.h"
 #include "Console.h"
 #include "NetworkManager.h"
 #include "NetworkManagerFactory.h"
-#include "NotificationsManager.h"
+#include "PlatformIntegration.h"
 #include "SettingsManager.h"
-#include "WindowsManager.h"
 #include "./config.h"
 
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
-#include <QtWidgets/QMessageBox>
-#include <QtWidgets/QPushButton>
 
 namespace Otter
 {
@@ -77,6 +75,7 @@ void UpdateChecker::runUpdateCheck()
 
 	const QJsonObject updateData = QJsonDocument::fromJson(m_networkReply->readAll()).object();
 	const QJsonArray channels = updateData.value(QLatin1String("channels")).toArray();
+	const QString platform = Application::getInstance()->getPlatformIntegration()->getPlatform();
 	int mainVersion = QCoreApplication::applicationVersion().remove(QChar('.')).toInt();
 	int subVersion = QString(OTTER_VERSION_WEEKLY).toInt();
 	QList<UpdateInformation> availableUpdates;
@@ -109,7 +108,10 @@ void UpdateChecker::runUpdateCheck()
 					UpdateInformation information;
 					information.channel = identifier;
 					information.version = channelVersion;
+					information.isAvailable = object[QLatin1String("availablePlatforms")].toArray().contains(QJsonValue(platform));
 					information.detailsUrl = QUrl(object[QLatin1String("detailsUrl")].toString());
+					information.scriptUrl = QUrl(object[QLatin1String("scriptUrl")].toString().replace(QLatin1String("%VERSION%"), channelVersion).replace(QLatin1String("%PLATFORM%"), platform));
+					information.fileUrl = QUrl(object[QLatin1String("fileUrl")].toString().replace(QLatin1String("%VERSION%"), channelVersion).replace(QLatin1String("%PLATFORM%"), platform).replace(QLatin1String("%TIMESTAMP%"), QString::number(QDateTime::currentDateTime().toUTC().toTime_t())));
 
 					if (!object[QLatin1String("subVersion")].toString().isEmpty())
 					{
@@ -121,8 +123,6 @@ void UpdateChecker::runUpdateCheck()
 					availableVersion = channelVersion;
 					availableChannel = identifier;
 
-					m_detailsUrl = object[QLatin1String("detailsUrl")].toString();
-
 					availableUpdates.append(information);
 				}
 			}
@@ -131,32 +131,7 @@ void UpdateChecker::runUpdateCheck()
 
 	SettingsManager::setValue(QLatin1String("Updates/LastCheck"), QDate::currentDate().toString(Qt::ISODate));
 
-	if (m_isInBackground && !availableVersion.isEmpty())
-	{
-		Notification *notification = NotificationsManager::createNotification(NotificationsManager::UpdateAvailableEvent, tr("New update %1 from %2 channel is available!").arg(availableVersion).arg(availableChannel));
-
-		connect(notification, SIGNAL(clicked()), this, SLOT(runUpdate()));
-		connect(notification, SIGNAL(ignored()), this, SLOT(deleteLater()));
-	}
-	else
-	{
-		deleteLater();
-	}
-
 	emit finished(availableUpdates);
-}
-
-void UpdateChecker::runUpdate()
-{
-	if (!SessionsManager::hasUrl(m_detailsUrl, true))
-	{
-		WindowsManager *manager = SessionsManager::getWindowsManager();
-
-		if (manager)
-		{
-			manager->open(m_detailsUrl);
-		}
-	}
 
 	deleteLater();
 }
