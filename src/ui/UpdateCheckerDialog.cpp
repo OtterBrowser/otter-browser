@@ -89,8 +89,6 @@ void UpdateCheckerDialog::buttonClicked(QAbstractButton *button)
 
 void UpdateCheckerDialog::updateCheckFinished(const QList<UpdateInformation> &availableUpdates)
 {
-	bool isPackageMissing = false;
-
 	m_ui->progressBar->hide();
 
 	if (availableUpdates.isEmpty())
@@ -99,6 +97,8 @@ void UpdateCheckerDialog::updateCheckFinished(const QList<UpdateInformation> &av
 	}
 	else
 	{
+		bool isPackageMissing = false;
+
 		m_ui->label->setText(tr("Available updates:"));
 
 		for (int i = 0; i < availableUpdates.count(); ++i)
