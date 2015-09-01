@@ -41,7 +41,7 @@ struct HandlerDefinition
 	TransferMode transferMode;
 	bool isExplicit;
 
-	HandlerDefinition() : isExplicit(true) {}
+	HandlerDefinition() : transferMode(IgnoreTransferMode), isExplicit(true) {}
 };
 
 class HandlersManager : public QObject
