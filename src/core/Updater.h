@@ -21,12 +21,13 @@
 #define OTTER_UPDATER_H
 
 #include "UpdateChecker.h"
-#include "Transfer.h"
 
 #include <QtCore/QObject>
 
 namespace Otter
 {
+
+class Transfer;
 
 class Updater : public QObject
 {

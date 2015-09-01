@@ -19,7 +19,6 @@
 **************************************************************************/
 
 #include "UpdateCheckerDialog.h"
-#include "../core/UpdateChecker.h"
 #include "../core/Updater.h"
 #include "../core/WindowsManager.h"
 
