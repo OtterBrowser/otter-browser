@@ -37,7 +37,7 @@ public:
 	static Transfer* startTransfer(const QUrl &source, const QString &target = QString(), Transfer::TransferOptions options = Transfer::CanAskForPathOption);
 	static Transfer* startTransfer(const QNetworkRequest &request, const QString &target = QString(), Transfer::TransferOptions options = Transfer::CanAskForPathOption);
 	static Transfer* startTransfer(QNetworkReply *reply, const QString &target = QString(), Transfer::TransferOptions options = Transfer::CanAskForPathOption);
-	static QString getSavePath(const QString &fileName, QString path = QString());
+	static QString getSavePath(const QString &fileName, QString path = QString(), bool forceAsk = false);
 	static QList<Transfer*> getTransfers();
 	static bool removeTransfer(Transfer *transfer, bool keepFile = true);
 	static bool isDownloading(const QString &source, const QString &target = QString());

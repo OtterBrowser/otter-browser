@@ -48,14 +48,45 @@ HandlersManager* HandlersManager::getInstance()
 HandlerDefinition HandlersManager::getHandler(const QString &type)
 {
 	QSettings handlersSettings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")), QSettings::IniFormat);
-	const QString group = (handlersSettings.contains(type) ? type : QLatin1String("*"));
+	HandlerDefinition definition;
 
-	handlersSettings.beginGroup(group);
+	if (type.contains(QLatin1Char('/')))
+	{
+		const QStringList groups = type.split(QLatin1Char('/'));
+
+		definition.isExplicit = true;
+
+		for (int i = 0; i < groups.count(); ++i)
+		{
+			if (handlersSettings.childGroups().contains(groups.at(i)))
+			{
+				handlersSettings.beginGroup(groups.at(i));
+			}
+			else
+			{
+				for (int j = 0; j < i; ++j)
+				{
+					handlersSettings.endGroup();
+				}
+
+				handlersSettings.beginGroup(QLatin1String("*"));
+
+				definition.isExplicit = false;
+
+				break;
+			}
+		}
+	}
+	else
+	{
+		definition.isExplicit = handlersSettings.childGroups().contains(type);
+
+		handlersSettings.beginGroup(definition.isExplicit ? type : QLatin1String("*"));
+	}
 
 	const QString downloadsPath = handlersSettings.value(QLatin1String("downloadsPath"), QString()).toString();
 	const QString transferMode = handlersSettings.value(QLatin1String("transferMode"), QString()).toString();
 
-	HandlerDefinition definition;
 	definition.openCommand = handlersSettings.value(QLatin1String("openCommand"), QString()).toString();
 	definition.downloadsPath = (downloadsPath.isEmpty() ? SettingsManager::getValue(QLatin1String("Paths/Downloads")).toString() : downloadsPath);
 

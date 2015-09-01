@@ -296,13 +296,6 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 		finalTarget = QFileInfo(QDir::toNativeSeparators(target)).absoluteFilePath();
 	}
 
-	if (!target.isEmpty() && QFile::exists(finalTarget) && !m_options.testFlag(CanOverwriteOption) && QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with the same name already exists.\nDo you want to overwrite it?\n\n%1").arg(finalTarget), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Cancel)
-	{
-		cancel();
-
-		return;
-	}
-
 	if (!finalTarget.isEmpty())
 	{
 		setTarget(finalTarget);
@@ -768,6 +761,13 @@ bool Transfer::setTarget(const QString &target)
 {
 	if (m_target == target)
 	{
+		return false;
+	}
+
+	if (QFile::exists(target) && !m_options.testFlag(CanOverwriteOption) && QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with the same name already exists.\nDo you want to overwrite it?\n\n%1").arg(target), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Cancel)
+	{
+		cancel();
+
 		return false;
 	}
 

@@ -132,6 +132,7 @@
         <file>menu/menuBar.json</file>
         <file>menu/menuButton.json</file>
         <file>menu/webWidget.json</file>
+        <file>other/handlers.ini</file>
         <file>other/notifications.ini</file>
         <file>other/syntaxHighlighting.json</file>
         <file>other/toolBars.json</file>

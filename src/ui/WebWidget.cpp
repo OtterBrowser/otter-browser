@@ -27,6 +27,7 @@
 #include "../core/ActionsManager.h"
 #include "../core/BookmarksManager.h"
 #include "../core/GesturesManager.h"
+#include "../core/HandlersManager.h"
 #include "../core/NotesManager.h"
 #include "../core/SearchesManager.h"
 #include "../core/SettingsManager.h"
@@ -155,12 +156,64 @@ void WebWidget::startTransfer(Transfer *transfer)
 		return;
 	}
 
-	TransferDialog *transferDialog = new TransferDialog(transfer, this);
-	ContentsDialog *dialog = new ContentsDialog(Utils::getIcon(QLatin1String("download")), transferDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, transferDialog, this);
+	const HandlerDefinition handler = HandlersManager::getHandler(transfer->getMimeType().name());
 
-	connect(transferDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
+	switch (handler.transferMode)
+	{
+		case IgnoreTransferMode:
+			transfer->cancel();
+			transfer->deleteLater();
 
-	showDialog(dialog, false);
+			break;
+		case AskTransferMode:
+			{
+				TransferDialog *transferDialog = new TransferDialog(transfer, this);
+				ContentsDialog *dialog = new ContentsDialog(Utils::getIcon(QLatin1String("download")), transferDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, transferDialog, this);
+
+				connect(transferDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
+
+				showDialog(dialog, false);
+			}
+
+			break;
+		case OpenTransferMode:
+			transfer->setOpenCommand(handler.openCommand);
+
+			TransfersManager::addTransfer(transfer);
+
+			break;
+		case SaveTransferMode:
+			transfer->setTarget(handler.downloadsPath + QDir::separator() + transfer->getSuggestedFileName());
+
+			if (transfer->getState() == Transfer::CancelledState)
+			{
+				TransfersManager::addTransfer(transfer);
+			}
+			else
+			{
+				transfer->deleteLater();
+			}
+
+			break;
+		case SaveAsTransferMode:
+			{
+				const QString path = TransfersManager::getSavePath(transfer->getSuggestedFileName(), handler.downloadsPath, true);
+
+				if (path.isEmpty())
+				{
+					transfer->cancel();
+					transfer->deleteLater();
+
+					return;
+				}
+
+				transfer->setTarget(path);
+
+				TransfersManager::addTransfer(transfer);
+			}
+
+			break;
+	}
 }
 
 void WebWidget::pasteNote(QAction *action)

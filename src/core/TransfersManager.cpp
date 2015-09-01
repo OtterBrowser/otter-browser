@@ -248,11 +248,16 @@ Transfer* TransfersManager::startTransfer(QNetworkReply *reply, const QString &t
 	return transfer;
 }
 
-QString TransfersManager::getSavePath(const QString &fileName, QString path)
+QString TransfersManager::getSavePath(const QString &fileName, QString path, bool forceAsk)
 {
+	if (!path.isEmpty())
+	{
+		path.append(QDir::separator() + fileName);
+	}
+
 	do
 	{
-		if (path.isEmpty())
+		if (path.isEmpty() || forceAsk)
 		{
 			QString suffix = QMimeDatabase().suffixForFileName(fileName);
 
