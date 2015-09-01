@@ -9,7 +9,7 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="35"/>
         <source>Domain:</source>
-        <translation>Domain:</translation>
+        <translation>Webhely:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="42"/>
@@ -54,7 +54,7 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="61"/>
         <source>This Session Only</source>
-        <translation>Csak most</translation>
+        <translation>Csak ebben a munkamenetben</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="62"/>
@@ -147,83 +147,83 @@
 <context>
     <name>Otter::AddressWidget</name>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="92"/>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="114"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="94"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="116"/>
         <source>Enter address or search…</source>
         <translation>Irjon be egy címet vagy keressen...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="249"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="251"/>
         <source>Undo</source>
         <translation>Visszavonás</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="250"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="252"/>
         <source>Redo</source>
         <translation>Újra</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="252"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="254"/>
         <source>Cut</source>
         <translation>Kivágás</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="253"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="255"/>
         <source>Copy</source>
         <translation>Másolás</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="254"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="256"/>
         <source>Paste</source>
         <translation>Beillesztés</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="261"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="263"/>
         <source>Delete</source>
         <translation>Törlés</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="263"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="265"/>
         <source>Copy to Note</source>
         <translation>Másolás egy jegyzetbe</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="265"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="267"/>
         <source>Clear All</source>
         <translation>Törlés</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="266"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="268"/>
         <source>Select All</source>
         <translation>Mindet kijelöl</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="505"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="507"/>
         <source>Remove Bookmark</source>
         <translation>Könyvjelző eltávolítása</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="505"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="507"/>
         <source>Add Bookmark</source>
         <translation>Könyvjelző hozzáadása</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="521"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="523"/>
         <source>Feed List</source>
         <translation>Feed lista</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="549"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="551"/>
         <source>Click to load all plugins on the page</source>
         <translation>Kattintson ide az oldalon található összes beépülő betöltéséhez</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="871"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="910"/>
         <source>(Untitled)</source>
         <translation>(ismeretlen)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="906"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="945"/>
         <source>Remove This Icon</source>
         <translation>Ikon eltávolítása</translation>
     </message>
@@ -231,48 +231,53 @@
 <context>
     <name>Otter::Application</name>
     <message>
-        <location filename="../../src/core/Application.cpp" line="377"/>
+        <location filename="../../src/core/Application.cpp" line="393"/>
         <source>Warning</source>
         <translation>Figyelem</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="377"/>
+        <location filename="../../src/core/Application.cpp" line="393"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
         <translation>Ez a munkamenet nem megfelelően lett elmentve.
 Biztosan ezt a munkamenetet akarja visszaállítani?</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="612"/>
-        <location filename="../../src/core/Application.cpp" line="661"/>
+        <location filename="../../src/core/Application.cpp" line="496"/>
+        <source>New update %1 from %2 channel is available!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/Application.cpp" line="663"/>
+        <location filename="../../src/core/Application.cpp" line="712"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/core/Application.cpp" line="613"/>
+        <location filename="../../src/core/Application.cpp" line="664"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
-        <translation><numerusform>Ki akar lépni %n fájl letöltése közben.</numerusform><numerusform>Ki akar lépni %n fájl letöltése közben.</numerusform></translation>
+        <translation><numerusform>Ki akar lépni %n fájl letöltése közben.</numerusform><numerusform>Ki akar lépni %n fájl letöltése közben?</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="614"/>
-        <location filename="../../src/core/Application.cpp" line="663"/>
+        <location filename="../../src/core/Application.cpp" line="665"/>
+        <location filename="../../src/core/Application.cpp" line="714"/>
         <source>Do you want to continue?</source>
         <translation>Biztosan folytatja?</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="618"/>
-        <location filename="../../src/core/Application.cpp" line="667"/>
+        <location filename="../../src/core/Application.cpp" line="669"/>
+        <location filename="../../src/core/Application.cpp" line="718"/>
         <source>Do not show this message again</source>
         <translation>Ezt többet ne mutassa</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="620"/>
-        <location filename="../../src/core/Application.cpp" line="669"/>
+        <location filename="../../src/core/Application.cpp" line="671"/>
+        <location filename="../../src/core/Application.cpp" line="720"/>
         <source>Hide</source>
         <translation>Elrejtés</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="662"/>
+        <location filename="../../src/core/Application.cpp" line="713"/>
         <source>You are about to quit the current Otter Browser session.</source>
         <translation>Arra készül, hogy kilépjen a jelenlegi Otter Browser munkamenetből.</translation>
     </message>
@@ -387,7 +392,7 @@ Biztosan ezt a munkamenetet akarja visszaállítani?</translation>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="132"/>
         <source>Bookmark with this keyword already exists.</source>
-        <translation>Már létezik egy könyvjelző evvel a névvel.</translation>
+        <translation>Már létezik egy könyvjelző ezzel a névvel.</translation>
     </message>
 </context>
 <context>
@@ -559,7 +564,7 @@ Biztosan ezt a munkamenetet akarja visszaállítani?</translation>
         <translation>Tulajdonságok...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="322"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="326"/>
         <source>Bookmarks Manager</source>
         <translation>Könyvjelző kezelő</translation>
     </message>
@@ -589,7 +594,7 @@ Biztosan ezt a munkamenetet akarja visszaállítani?</translation>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="107"/>
         <source>Import into subfolder</source>
-        <translation>Importálás ebbe az al-mappába</translation>
+        <translation>Importálás ebbe az almappába</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="120"/>
@@ -703,77 +708,77 @@ Biztosan ezt a munkamenetet akarja visszaállítani?</translation>
         <translation>Törlés</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="112"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="116"/>
         <source>Address</source>
         <translation>Cím</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="112"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="116"/>
         <source>Type</source>
         <translation>Típus</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="112"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="116"/>
         <source>Size</source>
         <translation>Méret</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="112"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="116"/>
         <source>Last Modified</source>
         <translation>Utolsó módosítás</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="112"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="116"/>
         <source>Expires</source>
         <translation>Lejárat</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="385"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="389"/>
         <source>Open</source>
         <translation>Megnyitás</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="386"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="390"/>
         <source>Open in New Tab</source>
         <translation>Megnyitás új fülön</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="387"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="391"/>
         <source>Open in New Background Tab</source>
         <translation>Megnyitás új fülön a háttérben</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="389"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="393"/>
         <source>Open in New Window</source>
         <translation>Megnyitás új ablakban</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="390"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="394"/>
         <source>Open in New Background Window</source>
         <translation>Megnyitás új ablakban a háttérben</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="392"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="396"/>
         <source>Copy Link to Clipboard</source>
         <translation>Link másolása a vágólapra</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="394"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="398"/>
         <source>Remove Entry</source>
         <translation>Bejegyzés eltávolítása</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="399"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="403"/>
         <source>Remove All Entries from This Domain</source>
         <translation>A domain összes bejegyzésének az eltávolítása</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="461"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="465"/>
         <source>Unknown</source>
         <translation>Ismeretlen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="592"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="596"/>
         <source>Cache</source>
         <translation>Gyorsítótár</translation>
     </message>
@@ -869,22 +874,22 @@ Biztosan ezt a munkamenetet akarja visszaállítani?</translation>
         <translation>Érték</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="258"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="262"/>
         <source>Copy Option Name</source>
         <translation>Opció nevének másolása</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="259"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="263"/>
         <source>Copy Option Value</source>
         <translation>Opció értékének másolása</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="261"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="265"/>
         <source>Restore Default Value</source>
         <translation>Visszaállítás alaphelyzetbe</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="268"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="272"/>
         <source>Configuration Manager</source>
         <translation>Beállítások</translation>
     </message>
@@ -951,7 +956,7 @@ Biztosan ezt a munkamenetet akarja visszaállítani?</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="14"/>
         <source>Content Blocking</source>
-        <translation>Reklám szűrés</translation>
+        <translation>Reklámszűrés</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="26"/>
@@ -1024,7 +1029,7 @@ Biztosan ezt a munkamenetet akarja visszaállítani?</translation>
 <context>
     <name>Otter::ContentsDialog</name>
     <message>
-        <location filename="../../src/ui/ContentsDialog.cpp" line="69"/>
+        <location filename="../../src/ui/ContentsDialog.cpp" line="70"/>
         <source>Close</source>
         <translation>Bezár</translation>
     </message>
@@ -1125,7 +1130,7 @@ Biztosan ezt a munkamenetet akarja visszaállítani?</translation>
         <translation>Osszes süti eltávolítása...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="445"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="449"/>
         <source>Cookies Manager</source>
         <translation>Sütikezelő</translation>
     </message>
@@ -1247,58 +1252,58 @@ Biztosan ezt a munkamenetet akarja visszaállítani?</translation>
         <translation>Dátum</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="242"/>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="276"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="246"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="280"/>
         <source>(Untitled)</source>
         <translation>(ismeretlen)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="396"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="400"/>
         <source>Open</source>
         <translation>Megnyitás</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="397"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="401"/>
         <source>Open in New Tab</source>
         <translation>Megnyitás új fülön</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="398"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="402"/>
         <source>Open in New Background Tab</source>
         <translation>Megnyitás új fülön a háttérben</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="400"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="404"/>
         <source>Open in New Window</source>
         <translation>Megnyitás új ablakban</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="401"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="405"/>
         <source>Open in New Background Window</source>
         <translation>Megnyitás új ablakban a háttérben</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="403"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="407"/>
         <source>Add to Bookmarks…</source>
         <translation>Új könyvjelző...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="404"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="408"/>
         <source>Copy Link to Clipboard</source>
         <translation>Link másolása a vágólapra</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="406"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="410"/>
         <source>Remove Entry</source>
         <translation>Bejegyzés eltávolítása</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="407"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="411"/>
         <source>Remove All Entries from This Domain</source>
         <translation>A domain összes bejegyzésének az eltávolítása</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="440"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="444"/>
         <source>History</source>
         <translation>Előzmények</translation>
     </message>
@@ -1548,37 +1553,37 @@ Biztosan ezt a munkamenetet akarja visszaállítani?</translation>
         <translation>Konzol</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="494"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="480"/>
         <source>Open File</source>
         <translation>Fájl megnyitása</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="754"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="740"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.</source>
         <translation>Az &lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;böngészőt a felhasználó irányítja, nem fordítva.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="755"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="741"/>
         <source>Web backend: %1 %2.</source>
         <translation>Web backend: %1 %2.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="759"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="745"/>
         <source>SSL library version: %1.</source>
         <translation>SSL verzió: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="763"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="749"/>
         <source>SSL library not available.</source>
         <translation>SSL nem elérhető</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="852"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="838"/>
         <source>Warning</source>
         <translation>Figyelem</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="852"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="838"/>
         <source>You already have this address in your bookmarks.
 Do you want to continue?</source>
         <translation>Ezt a helyet már elmentette a könyvjelzők közé.
@@ -1588,106 +1593,111 @@ Biztos újra el akarja menteni?</translation>
 <context>
     <name>Otter::Menu</name>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="97"/>
+        <location filename="../../src/ui/Menu.cpp" line="96"/>
         <source>Import Opera Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>Opera könyvjelzők importálása...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="98"/>
+        <location filename="../../src/ui/Menu.cpp" line="97"/>
         <source>Import HTML Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>HTML könyvjelzők importálása...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="100"/>
+        <location filename="../../src/ui/Menu.cpp" line="99"/>
         <source>Import Opera Notes…</source>
-        <translation type="unfinished"/>
+        <translation>Opera Jegyzetek importálása...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="186"/>
+        <location filename="../../src/ui/Menu.cpp" line="184"/>
         <source>Open</source>
         <translation>Megnyitás</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="187"/>
+        <location filename="../../src/ui/Menu.cpp" line="185"/>
         <source>Open in New Tab</source>
         <translation>Megnyitás új fülön</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="188"/>
+        <location filename="../../src/ui/Menu.cpp" line="186"/>
         <source>Open in New Background Tab</source>
         <translation>Megnyitás új fülön a háttérben</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="190"/>
+        <location filename="../../src/ui/Menu.cpp" line="188"/>
         <source>Open in New Window</source>
         <translation>Megnyitás új ablakban</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="191"/>
+        <location filename="../../src/ui/Menu.cpp" line="189"/>
         <source>Open in New Background Window</source>
         <translation>Megnyitás háttérben új ablakban</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="313"/>
+        <location filename="../../src/ui/Menu.cpp" line="311"/>
         <source>Open All</source>
         <translation>Az összes megnyitása</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="332"/>
-        <location filename="../../src/ui/Menu.cpp" line="480"/>
-        <location filename="../../src/ui/Menu.cpp" line="495"/>
-        <location filename="../../src/ui/Menu.cpp" line="512"/>
-        <location filename="../../src/ui/Menu.cpp" line="562"/>
+        <location filename="../../src/ui/Menu.cpp" line="319"/>
+        <source>This Folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/Menu.cpp" line="338"/>
+        <location filename="../../src/ui/Menu.cpp" line="486"/>
+        <location filename="../../src/ui/Menu.cpp" line="501"/>
+        <location filename="../../src/ui/Menu.cpp" line="518"/>
+        <location filename="../../src/ui/Menu.cpp" line="568"/>
         <source>(Untitled)</source>
         <translation>(ismeretlen)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="370"/>
+        <location filename="../../src/ui/Menu.cpp" line="376"/>
         <source>Auto Detect</source>
         <translation>Automatikus felismerés</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="425"/>
+        <location filename="../../src/ui/Menu.cpp" line="431"/>
         <source>Clear</source>
         <translation>Törlés</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="435"/>
+        <location filename="../../src/ui/Menu.cpp" line="441"/>
         <source>Window - %1</source>
         <translation>Ablak - %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/Menu.cpp" line="495"/>
+        <location filename="../../src/ui/Menu.cpp" line="501"/>
         <source>%1 (%n tab(s))</source>
         <translation><numerusform>%1 (%n fül(ek))</numerusform><numerusform>%1 (%n fül(ek))</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="524"/>
+        <location filename="../../src/ui/Menu.cpp" line="530"/>
         <source>Add New</source>
         <translation>Új</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="525"/>
+        <location filename="../../src/ui/Menu.cpp" line="531"/>
         <source>Add Toolbar</source>
-        <translation>Uj eszköztár</translation>
+        <translation>Új eszköztár</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="526"/>
+        <location filename="../../src/ui/Menu.cpp" line="532"/>
         <source>Add Bookmarks Bar…</source>
         <translation>Könyvjelzősor hozzáadása...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="531"/>
+        <location filename="../../src/ui/Menu.cpp" line="537"/>
         <source>Reset to Defaults…</source>
         <translation>Visszaállítás alaphelyzetbe...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="550"/>
+        <location filename="../../src/ui/Menu.cpp" line="556"/>
         <source>Default</source>
         <translation>Alapértelmezett</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="572"/>
+        <location filename="../../src/ui/Menu.cpp" line="578"/>
         <source>Custom</source>
         <translation>Saját</translation>
     </message>
@@ -1739,7 +1749,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/core/NetworkProxyFactory.cpp" line="64"/>
         <source>Failed to load proxy auto-config (PAC): %1</source>
-        <translation>Nem tudtam betölteni a Proxy Automata Config (PAC) fájlt: %1</translation>
+        <translation>Nem tudtam betölteni a proxy automatikus-konfigurációs (PAC) fájlt: %1</translation>
     </message>
 </context>
 <context>
@@ -1793,7 +1803,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="103"/>
         <source>Enter folder name:</source>
-        <translation>Irja be a kívánt mappa nevet:</translation>
+        <translation>Írja be a kívánt mappanevet:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="151"/>
@@ -1816,9 +1826,9 @@ Biztosan folytatja?</translation>
         <translation>Jegyzet visszaállítása</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="368"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="372"/>
         <source>Notes Manager</source>
-        <translation>Jegyzet kezelo</translation>
+        <translation>Jegyzetkezelő</translation>
     </message>
 </context>
 <context>
@@ -1839,7 +1849,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/ui/OpenAddressDialog.ui" line="20"/>
         <source>Enter a web address or choose one from the list:</source>
-        <translation>Irjon be egy címet vagy válasszon ki egyet a listából:</translation>
+        <translation>Írjon be egy címet vagy válasszon ki egyet a listából:</translation>
     </message>
 </context>
 <context>
@@ -1878,22 +1888,22 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="109"/>
         <source>Import into folder:</source>
-        <translation type="unfinished"/>
+        <translation>Importálás mappába:</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="117"/>
         <source>Opera Notes</source>
-        <translation type="unfinished"/>
+        <translation>Opera Jegyzetek</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="122"/>
         <source>Imports notes from Opera Browser version 12 or earlier</source>
-        <translation type="unfinished"/>
+        <translation>Importálja a jegyzeteket az Opera böngésző 12-es, vagy régebbi verziójából</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="132"/>
         <source>Opera notes files (notes.adr)</source>
-        <translation type="unfinished"/>
+        <translation>Opera jegyzetfájl (notes.adr)</translation>
     </message>
 </context>
 <context>
@@ -1910,29 +1920,42 @@ Biztosan folytatja?</translation>
     </message>
 </context>
 <context>
+    <name>Otter::PasswordBarWidget</name>
+    <message>
+        <location filename="../../src/modules/windows/web/PasswordBarWidget.ui" line="61"/>
+        <source>Save</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/PasswordBarWidget.ui" line="68"/>
+        <source>Cancel</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>Otter::PermissionBarWidget</name>
     <message>
-        <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="49"/>
+        <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="62"/>
         <source>Allow this time</source>
         <translation>Most engedje</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="54"/>
+        <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="67"/>
         <source>Always allow</source>
         <translation>Mindig engedje</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="59"/>
+        <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="72"/>
         <source>Always deny</source>
         <translation>Sose engedje</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="67"/>
+        <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="80"/>
         <source>OK</source>
         <translation>Ment és bezár</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="74"/>
+        <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="87"/>
         <source>Cancel</source>
         <translation>Bezár</translation>
     </message>
@@ -1970,6 +1993,19 @@ Biztosan folytatja?</translation>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="70"/>
         <source>Invalid permission request from %1.</source>
         <translation>Hibás kérés %1-tól/től. </translation>
+    </message>
+</context>
+<context>
+    <name>Otter::PlatformIntegration</name>
+    <message>
+        <location filename="../../src/core/PlatformIntegration.cpp" line="105"/>
+        <source>Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/PlatformIntegration.cpp" line="105"/>
+        <source>Failed to install update.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2119,7 +2155,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="397"/>
         <source>Mode:</source>
-        <translation>Mód</translation>
+        <translation>Mód:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="411"/>
@@ -2129,7 +2165,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="416"/>
         <source>System configuration</source>
-        <translation>Rendszerünk beállítása</translation>
+        <translation>Rendszer beállítása</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="421"/>
@@ -2238,12 +2274,12 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="935"/>
         <source>Enable single key shortcuts</source>
-        <translation>Egy gombos gyorsbillentyuk engedélyezése</translation>
+        <translation>Egy gombos gyorsbillentyűk engedélyezése</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="977"/>
         <source>Show tray icon</source>
-        <translation>Ikon mutatása az óra mellett</translation>
+        <translation>Tálcaikon mutatása</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="55"/>
@@ -2263,7 +2299,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="88"/>
         <source>On demand</source>
-        <translation>Kérdezés után</translation>
+        <translation>Szükség esetén</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="89"/>
@@ -2605,7 +2641,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="203"/>
         <source>Activate the next tab</source>
-        <translation>Menjen a következo fülre</translation>
+        <translation>Menjen a következő fülre</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="208"/>
@@ -2640,7 +2676,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="42"/>
         <source>Continue previous session</source>
-        <translation>Elozo munkamenet folytatása</translation>
+        <translation>Előző munkamenet folytatása</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="43"/>
@@ -2660,7 +2696,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="46"/>
         <source>Show empty page</source>
-        <translation>Ures oldalt mutasson</translation>
+        <translation>Üres oldalt mutasson</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="74"/>
@@ -2678,7 +2714,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="32"/>
         <source>Do Not Track:</source>
-        <translation>Ne kövessen:</translation>
+        <translation>Követés:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="57"/>
@@ -2708,7 +2744,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="136"/>
         <source>Remember form history</source>
-        <translation>Emlékezzen az urlap előzményekre</translation>
+        <translation>Emlékezzen az ürlap előzményekre</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="159"/>
@@ -2738,7 +2774,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="268"/>
         <source>Clear history when application closes</source>
-        <translation>Törölje az elozményeket a bongeszo bezárásakor</translation>
+        <translation>Törölje az előzményeket a böngésző bezárásakor</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="288"/>
@@ -2763,7 +2799,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="357"/>
         <source>Use a master password</source>
-        <translation>Mester jelszó használata</translation>
+        <translation>Mesterjelszó használata</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="380"/>
@@ -2862,47 +2898,47 @@ Biztosan folytatja?</translation>
         <translation>Keresési javaslatok engedélyezése</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="47"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="48"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="47"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="48"/>
         <source>Keyword</source>
         <translation>Kulcsszó</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="83"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="84"/>
         <source>New…</source>
         <translation>Új...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="84"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="85"/>
         <source>Readd</source>
         <translation>Hozzáadás újra</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="151"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="152"/>
         <source>New Search Engine</source>
         <translation>Új kereső</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="285"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="286"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="286"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="287"/>
         <source>Do you really want to remove this search engine?</source>
-        <translation>Biztos el akarja távolítani ezt a keresot?</translation>
+        <translation>Biztos el akarja távolítani ezt a kereső-motort?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="295"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="296"/>
         <source>Delete search engine permanently</source>
         <translation>Keresõ végleges eltávolítása</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="365"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="366"/>
         <source>(Untitled)</source>
         <translation>(ismeretlen)</translation>
     </message>
@@ -2952,12 +2988,12 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="180"/>
         <source>SSL errors occured, do you want to continue?</source>
-        <translation>SSL hiba, biztosan folytatja?</translation>
+        <translation>SSL hibák történtek, biztosan folytatja? </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="184"/>
         <source>Do not show this message again</source>
-        <translation>Ezt többet ne mutassa</translation>
+        <translation>Ne mutassa többet ezt az üzenetet</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="269"/>
@@ -2980,21 +3016,21 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="186"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="324"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="360"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="361"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="187"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="325"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="361"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="362"/>
         <source>Disable JavaScript popups</source>
         <translation>Javascriptes felbukkanók kikapcsolása</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="274"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="287"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="466"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="467"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
@@ -3017,27 +3053,27 @@ Biztosan folytatja?</translation>
         <translation>Ezt többet ne mutassa</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="402"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="403"/>
         <source>Open File</source>
         <translation>Fájl megnyitása</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="424"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="425"/>
         <source>Error %1</source>
         <translation>Hiba %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="454"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="455"/>
         <source>%1 error #%2: %3</source>
         <translation>%1 hiba #%2: %3</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="466"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="467"/>
         <source>The script on this page appears to have a problem.</source>
         <translation>Úgy tűnik, hogy az oldalon található script hibás.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="466"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="467"/>
         <source>Do you want to stop the script?</source>
         <translation>Le akarja állítani a scriptet?</translation>
     </message>
@@ -3053,12 +3089,12 @@ Biztosan folytatja?</translation>
 <context>
     <name>Otter::QtWebKitWebBackend</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="172"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="179"/>
         <source>WebKit Backend</source>
         <translation>Webkit Backend</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="177"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="184"/>
         <source>Backend utilizing QtWebKit module</source>
         <translation>A backend a QtWebKit modult használja</translation>
     </message>
@@ -3086,57 +3122,57 @@ Biztosan folytatja?</translation>
         <translation>Nem tudom elmenteni ezt a képet: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="452"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="458"/>
         <source>Print Preview</source>
         <translation>Nyomtatási előnézet</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="511"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="517"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="511"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="517"/>
         <source>Webpage wants to close this tab, do you want to allow to close it?</source>
         <translation>Az oldal be akarja zárni ezt a fület. Engedi?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="512"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="518"/>
         <source>Do not show this message again</source>
         <translation>Ezt többet ne mutassa</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="632"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="638"/>
         <source>Undo</source>
         <translation>Visszavonás</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="632"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="638"/>
         <source>Undo: %1</source>
         <translation>Visszavon: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="637"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="643"/>
         <source>Redo</source>
         <translation>Újra</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="637"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="643"/>
         <source>Redo: %1</source>
         <translation>Újra: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1351"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1368"/>
         <source>Close</source>
         <translation>Bezár</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1650"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1667"/>
         <source>Blank Page</source>
         <translation>Üres oldal</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1663"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1680"/>
         <source>(Untitled)</source>
         <translation>(Névtelen)</translation>
     </message>
@@ -3242,7 +3278,7 @@ Ki akarja cserélni erre?</translation>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="14"/>
         <source>Edit Search Engine</source>
-        <translation>Kereső motor szerkesztése</translation>
+        <translation>Keresőmotor szerkesztése</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="39"/>
@@ -3272,7 +3308,7 @@ Ki akarja cserélni erre?</translation>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="113"/>
         <source>Set as Default Search Engine</source>
-        <translation>Legyen ez az alapértelmezett kereső motor.</translation>
+        <translation>Legyen ez az alapértelmezett keresőmotor</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchPropertiesDialog.ui" line="124"/>
@@ -3432,7 +3468,7 @@ Ki akarja cserélni erre?</translation>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="14"/>
         <source>Sessions Manager</source>
-        <translation>Munkamenet kezelő</translation>
+        <translation>Munkamenet-kezelő</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="62"/>
@@ -3622,39 +3658,39 @@ Biztosan ezt a munkamenetet akarja visszaállítani?</translation>
 <context>
     <name>Otter::SourceViewerWebWidget</name>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="84"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="87"/>
         <source>Failed to save file: %1</source>
-        <translation>Nem tudom elmenteni ezt a fájlt: %1</translation>
+        <translation>Nem tudtam elmenteni ezt a fájlt: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="86"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="89"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="86"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="89"/>
         <source>Failed to save file.</source>
-        <translation>Nem tudom elmenteni ezt a fájlt.</translation>
+        <translation>Nem tudtam elmenteni ezt a fájlt.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="113"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="116"/>
         <source>Warning</source>
         <translation>Figyelem</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="113"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="116"/>
         <source>The document has been modified.
 Do you want to save your changes or discard them?</source>
         <translation>Módosult a weboldal.
 Menti vagy nem?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="281"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="286"/>
         <source>Show Line Numbers</source>
-        <translation type="unfinished"/>
+        <translation>Sorok számának mutatása</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="471"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="476"/>
         <source>Source Viewer</source>
         <translation>Forrás</translation>
     </message>
@@ -3713,7 +3749,7 @@ Menti vagy nem?</translation>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="141"/>
         <source>Show search field</source>
-        <translation type="unfinished"/>
+        <translation>Keresőmező mutatása</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="148"/>
@@ -3764,22 +3800,22 @@ Menti vagy nem?</translation>
         <translation>Szerkesztés...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="513"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="516"/>
         <source>Reload</source>
         <translation>Újratöltés</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="515"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="520"/>
         <source>Delete</source>
         <translation>Törlés</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="519"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="524"/>
         <source>Configure…</source>
         <translation>Beállítás...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="520"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="525"/>
         <source>Add Tile…</source>
         <translation>Csempe hozzáadása...</translation>
     </message>
@@ -3953,7 +3989,7 @@ Menti vagy nem?</translation>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="195"/>
         <source>Actions</source>
-        <translation>Akciók</translation>
+        <translation>Műveletek</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="231"/>
@@ -3982,78 +4018,78 @@ Menti vagy nem?</translation>
         <translation>Szűrés...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="44"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="45"/>
         <source>Custom Toolbar</source>
         <translation>Saját eszköztár</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="187"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="212"/>
         <source>--- separator ---</source>
         <translation>--- elválasztó ---</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="191"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="216"/>
         <source>--- spacer ---</source>
-        <translation>--- szünet ---</translation>
+        <translation>--- helytartó ---</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="195"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="220"/>
         <source>Address Field</source>
         <translation>Címsor</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="199"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="224"/>
         <source>List of Closed Windows and Tabs</source>
         <translation>Becsukott oldalak listája</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="203"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="228"/>
         <source>Menu Bar</source>
         <translation>Menüsor</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="207"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="232"/>
         <source>Menu Button</source>
         <translation>Menü gomb</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="211"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="236"/>
         <source>Sidebar Panel Chooser</source>
         <translation>Oldal panel választ</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="215"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="240"/>
         <source>Search Field</source>
-        <translation>Kereső mező</translation>
+        <translation>Keresőmező</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="219"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="244"/>
         <source>Status Message Field</source>
         <translation>Állapotsor</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="223"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="248"/>
         <source>Tab Bar</source>
         <translation>Fül sor</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="227"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="252"/>
         <source>Zoom Slider</source>
         <translation>Nagyító</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="235"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="260"/>
         <source>(Untitled)</source>
         <translation>(ismeretlen)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="240"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="265"/>
         <source>Invalid Bookmark</source>
-        <translation>Hibás könyvjelzo</translation>
+        <translation>Hibás könyvjelző</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="249"/>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="261"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="274"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="286"/>
         <source>Invalid Entry</source>
         <translation>Hibás bejegyzés</translation>
     </message>
@@ -4150,25 +4186,20 @@ Menti vagy nem?</translation>
 <context>
     <name>Otter::Transfer</name>
     <message>
-        <location filename="../../src/core/Transfer.cpp" line="247"/>
-        <source>file</source>
-        <translation>fájl</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/Transfer.cpp" line="277"/>
-        <location filename="../../src/core/Transfer.cpp" line="314"/>
+        <location filename="../../src/core/Transfer.cpp" line="263"/>
+        <location filename="../../src/core/Transfer.cpp" line="299"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message>
-        <location filename="../../src/core/Transfer.cpp" line="277"/>
+        <location filename="../../src/core/Transfer.cpp" line="263"/>
         <source>File with that name already exists.
 Do you want to overwite it?</source>
         <translation>Már van ilyen nevű fájl.
 Biztos felül akarja írni?</translation>
     </message>
     <message>
-        <location filename="../../src/core/Transfer.cpp" line="314"/>
+        <location filename="../../src/core/Transfer.cpp" line="299"/>
         <source>File with the same name already exists.
 Do you want to overwrite it?
 
@@ -4177,6 +4208,84 @@ Do you want to overwrite it?
 Biztos felül akarja írni?
 
 %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/Transfer.cpp" line="607"/>
+        <source>file</source>
+        <translation>fájl</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::TransferDialog</name>
+    <message>
+        <location filename="../../src/ui/TransferDialog.ui" line="14"/>
+        <source>Opening unknown file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/TransferDialog.ui" line="22"/>
+        <source>Name:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/TransferDialog.ui" line="29"/>
+        <source>Type:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/TransferDialog.ui" line="36"/>
+        <source>Size:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/TransferDialog.ui" line="43"/>
+        <source>From:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/TransferDialog.ui" line="50"/>
+        <source>Open with:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/TransferDialog.ui" line="107"/>
+        <source>Remember choice for this file type</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/TransferDialog.cpp" line="41"/>
+        <source>unknown file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/TransferDialog.cpp" line="63"/>
+        <source>Default Application</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/TransferDialog.cpp" line="69"/>
+        <source>Unknown</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/TransferDialog.cpp" line="79"/>
+        <source>Opening %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/TransferDialog.cpp" line="152"/>
+        <source>unknown</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/TransferDialog.cpp" line="156"/>
+        <source>%1 (download completed)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <location filename="../../src/ui/TransferDialog.cpp" line="162"/>
+        <source>%1 (%n% downloaded)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -4333,7 +4442,7 @@ Folyamat: %5&lt;/div&gt;</translation>
         <translation>Letöltöttek törlése</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="545"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="549"/>
         <source>Transfers Manager</source>
         <translation>Letöltések</translation>
     </message>
@@ -4341,42 +4450,42 @@ Folyamat: %5&lt;/div&gt;</translation>
 <context>
     <name>Otter::TransfersManager</name>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="152"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="151"/>
         <source>Transfer completed:
 %1</source>
         <translation>Sikeres letöltés:
 %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="269"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="268"/>
         <source>%1 files (*.%2)</source>
         <translation>%1 fájlok (*.%2)</translation>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="272"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="271"/>
         <source>All files (*)</source>
         <translation>Osszes fájl (*)</translation>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="274"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="273"/>
         <source>Save File</source>
         <translation>Fájl mentése</translation>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="293"/>
-        <location filename="../../src/core/TransfersManager.cpp" line="302"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="292"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="301"/>
         <source>Warning</source>
         <translation>Figyelem</translation>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="293"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="292"/>
         <source>Target path is already used by another transfer.
 Select another one.</source>
         <translation>Ezt a letöltési helyet már használja egy másik letöltés.
 Kérem válasszon egy másikat.</translation>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="302"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="301"/>
         <source>Target path is not writable.
 Select another one.</source>
         <translation>A célmappa nem írható.
@@ -4403,14 +4512,6 @@ Kérem válasszon egy másikat.</translation>
     </message>
 </context>
 <context>
-    <name>Otter::UpdateChecker</name>
-    <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="136"/>
-        <source>New update %1 from %2 channel is available!</source>
-        <translation>Frissebb %1 verzió érhető el a %2 csatornáról!</translation>
-    </message>
-</context>
-<context>
     <name>Otter::UpdateCheckerDialog</name>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="14"/>
@@ -4423,23 +4524,69 @@ Kérem válasszon egy másikat.</translation>
         <translation>Keresés...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="64"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="51"/>
+        <source>Checking for updates…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="96"/>
         <source>There are no new updates.</source>
-        <translation type="unfinished"/>
+        <translation>Nincsenek új frissítések</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="68"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="102"/>
         <source>Available updates:</source>
+        <translation>Elérhető frissítések:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="106"/>
+        <source>Details…</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="72"/>
-        <source>Update…</source>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="109"/>
+        <source>Download</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="75"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="122"/>
         <source>Version %1 from %2 channel</source>
+        <translation>Verzió a(z) %1-ról a(z) %2 csatornára</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="132"/>
+        <source>Some of the updates does not contains packages for your platform. Try to check for updates later or visit details page for more info.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="178"/>
+        <source>Downloading:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="193"/>
+        <source>Download finished!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="194"/>
+        <source>Install</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="196"/>
+        <source>New version of Otter Browser is ready to install.
+Click Install button to restart browser and install the update or close this dialog to install the update during next browser restart.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="218"/>
+        <source>Download failed!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="220"/>
+        <source>Check Error Console for more information.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -4537,82 +4684,82 @@ Kérem válasszon egy másikat.</translation>
 <context>
     <name>Otter::WebWidget</name>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="224"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="250"/>
         <source>Default Application</source>
         <translation>Alapértelmezett program</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="230"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="256"/>
         <source>Unknown</source>
         <translation>Ismeretlen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="316"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="342"/>
         <source>Title: %1</source>
         <translation>Név: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="316"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="342"/>
         <source>Address: %1</source>
         <translation>Cím: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="567"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="593"/>
         <source>No search engines defined</source>
         <translation>Nincs megadott kereső motor</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="710"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="736"/>
         <source>Open Image in New Tab (Untitled)</source>
         <translation>(Névtelen) kép megnyitása új fülön</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="710"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="736"/>
         <source>Open Image in New Tab (%1)</source>
         <translation>%1 kép megnyitása új fülön</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="716"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="742"/>
         <source>Open Image in New Background Tab (Untitled)</source>
         <translation>(Névtelen) kép megnyitása új fülön a háttérben</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="716"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="742"/>
         <source>Open Image in New Background Tab (%1)</source>
         <translation>%1 kép megnyitása új fülön a háttérben</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1008"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1034"/>
         <source>30 Minutes</source>
         <translation>30 percben</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1009"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1035"/>
         <source>1 Hour</source>
         <translation>1 órában</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1010"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1036"/>
         <source>2 Hours</source>
         <translation>2 órában</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1011"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1037"/>
         <source>6 Hours</source>
         <translation>6 órában</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1012"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1038"/>
         <source>Never</source>
         <translation>Soha</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1013"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1039"/>
         <source>Custom…</source>
         <translation>Egyéni...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1015"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1041"/>
         <source>Page Default</source>
         <translation>Oldal szerinti</translation>
     </message>
@@ -4805,7 +4952,7 @@ Kérem válasszon egy másikat.</translation>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="723"/>
         <source>System configuration</source>
-        <translation>Rendszerünk beállítása</translation>
+        <translation>Rendszerbeállítás</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="728"/>
@@ -4930,7 +5077,7 @@ Kérem válasszon egy másikat.</translation>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
         <source>Only read existing</source>
-        <translation>Csak olvassa a mostaniakat</translation>
+        <translation>Csak a mostaniakat olvassa</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="86"/>
@@ -4981,22 +5128,22 @@ Kérem válasszon egy másikat.</translation>
 <context>
     <name>Otter::Window</name>
     <message>
-        <location filename="../../src/ui/Window.cpp" line="152"/>
+        <location filename="../../src/ui/Window.cpp" line="155"/>
         <source>Print Page</source>
         <translation>Nyomtatás</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Window.cpp" line="165"/>
+        <location filename="../../src/ui/Window.cpp" line="168"/>
         <source>Print Preview</source>
         <translation>Nyomtatási előnézet</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Window.cpp" line="351"/>
+        <location filename="../../src/ui/Window.cpp" line="353"/>
         <source>Select User Agent</source>
         <translation>Böngészőazonosító választása</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Window.cpp" line="351"/>
+        <location filename="../../src/ui/Window.cpp" line="353"/>
         <source>Enter User Agent:</source>
         <translation>Írja be a kívánt böngészőazonosítót:</translation>
     </message>
@@ -5004,29 +5151,29 @@ Kérem válasszon egy másikat.</translation>
 <context>
     <name>Otter::WindowsManager</name>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="210"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="235"/>
         <source>Question</source>
         <translation>Kérdés</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/core/WindowsManager.cpp" line="211"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="236"/>
         <source>You are about to open %n bookmarks.</source>
         <translation><numerusform>Meg akarod nyitni a %n könyvjelzőket.</numerusform><numerusform>Egyszerre akarja megnyitni %n darab könyvjelzőjét.</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="212"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="237"/>
         <source>Do you want to continue?</source>
         <translation>Biztosan folytatja?</translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="216"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="241"/>
         <source>Do not show this message again</source>
         <translation>Ezt többet ne mutassa</translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="789"/>
-        <location filename="../../src/core/WindowsManager.cpp" line="842"/>
-        <location filename="../../src/core/WindowsManager.cpp" line="966"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="809"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="862"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="986"/>
         <source>Empty</source>
         <translation>Üres</translation>
     </message>
@@ -5060,7 +5207,7 @@ Kérem válasszon egy másikat.</translation>
 <context>
     <name>Otter::WorkspaceWidget</name>
     <message>
-        <location filename="../../src/ui/WorkspaceWidget.cpp" line="322"/>
+        <location filename="../../src/ui/WorkspaceWidget.cpp" line="515"/>
         <source>Arrange</source>
         <translation>Rendezés</translation>
     </message>
@@ -5166,7 +5313,7 @@ Kérem válasszon egy másikat.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="259"/>
         <source>Frame</source>
-        <translation type="unfinished"/>
+        <translation>Keret</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="263"/>
@@ -5375,7 +5522,7 @@ Kérem válasszon egy másikat.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="299"/>
         <location filename="../../src/core/ActionsManager.cpp" line="308"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="397"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="399"/>
         <source>Open with…</source>
         <translation>Megnyitás...</translation>
     </message>
@@ -5391,7 +5538,7 @@ Kérem válasszon egy másikat.</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="301"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="647"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="673"/>
         <source>Bookmark Link…</source>
         <translation>Link mentése könyvjelzőként...</translation>
     </message>
@@ -5413,27 +5560,27 @@ Kérem válasszon egy másikat.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="305"/>
         <source>Open Frame in This Tab</source>
-        <translation>Frame megnyitása ebben a fülön</translation>
+        <translation>Keret megnyitása ebben a fülön</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="306"/>
         <source>Open Frame in New Tab</source>
-        <translation>Frame megnyitása új fülön</translation>
+        <translation>Keret megnyitása új fülön</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="307"/>
         <source>Open Frame in New Background Tab</source>
-        <translation>Frame megnyitása a háttérben új fülön</translation>
+        <translation>Keret megnyitása a háttérben új fülön</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="308"/>
         <source>Open frame with external application</source>
-        <translation>Frame megnyitása külső programmal</translation>
+        <translation>Keret megnyitása külső programmal</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="309"/>
         <source>Copy Frame Link to Clipboard</source>
-        <translation>Frame link másolása a vágólapra</translation>
+        <translation>Keret link másolása a vágólapra</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="310"/>
@@ -5445,12 +5592,12 @@ Kérem válasszon egy másikat.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="310"/>
         <source>Reload Frame</source>
-        <translation>Frame újratöltése</translation>
+        <translation>Keret újratöltése</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="311"/>
         <source>View Frame Source</source>
-        <translation>Forrás megtekintése</translation>
+        <translation>Keret forrásának megtekintése</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="312"/>
@@ -5459,7 +5606,7 @@ Kérem válasszon egy másikat.</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="313"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="716"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="742"/>
         <source>Open Image in New Background Tab</source>
         <translation>Kép megnyitása új fülön a háttérben</translation>
     </message>
@@ -5510,13 +5657,13 @@ Kérem válasszon egy másikat.</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="323"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="779"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="805"/>
         <source>Play</source>
         <translation>Lejátszás</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="324"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="786"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="812"/>
         <source>Mute</source>
         <translation>Némítás</translation>
     </message>
@@ -5588,7 +5735,7 @@ Kérem válasszon egy másikat.</translation>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="339"/>
         <source>Reload Every</source>
-        <translation>Töltse újra minden...</translation>
+        <translation>Periodikus frissítés</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="340"/>
@@ -5687,7 +5834,7 @@ Kérem válasszon egy másikat.</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="359"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="566"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="592"/>
         <source>Search</source>
         <translation>Keresés</translation>
     </message>
@@ -5788,234 +5935,244 @@ Kérem válasszon egy másikat.</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="379"/>
+        <source>Go to Previously Used Tab</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="380"/>
+        <source>Go to Least Recently Used Tab</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="381"/>
         <source>Go to Tab on Left</source>
         <translation>Menjen a bal oldali fülre</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="380"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="382"/>
         <source>Go to Tab on Right</source>
         <translation>Menjen a jobb oldali fülre</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="381"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="383"/>
         <source>Manage Bookmarks</source>
         <translation>Könyvjelzők kezelése</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="382"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="446"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="384"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="472"/>
         <source>Add Bookmark…</source>
         <translation>Új könyvjelző...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="383"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="385"/>
         <source>Quick Bookmark Access</source>
         <translation>Gyors könyvjelző elérés</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="384"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="386"/>
         <source>Block pop-ups</source>
         <translation>Blokkolja a felugrókat</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="385"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="387"/>
         <source>Load Images</source>
         <translation>Képek betöltése</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="386"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="388"/>
         <source>Cookies</source>
         <translation>Sütik</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="387"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="389"/>
         <source>Cookies Policy</source>
         <translation>Sütik beállítása</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="388"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="390"/>
         <source>Third-party Cookies Policy</source>
         <translation>Külső féltől származó sütik beállítása</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="389"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="391"/>
         <source>Plugins</source>
         <translation>Beépülök</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="390"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="392"/>
         <source>Load Plugins</source>
         <translation>Beépülök betöltése</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="391"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="393"/>
         <source>Enable JavaScript</source>
         <translation>JavaScript engedélyezése</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="392"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="394"/>
         <source>Enable Java</source>
         <translation>Java engedélyezése</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="393"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="395"/>
         <source>Enable Referrer</source>
         <translation>Küldő engedélyezése</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="394"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="396"/>
         <source>Proxy</source>
         <translation>Proxy</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="395"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="397"/>
         <source>Enable Proxy</source>
         <translation>Proxy engedélyezése</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="396"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="398"/>
         <source>View Source</source>
         <translation>Forrás megtekintése</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="397"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="399"/>
         <source>Open current page with external application</source>
         <translation>Aktuális oldal megnyitása külső programmal</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="398"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="400"/>
         <source>Validate</source>
         <translation>Validálás</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="399"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="401"/>
         <source>Inspect Page</source>
         <translation>Oldal elemzése</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="400"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="402"/>
         <source>Inspect Element…</source>
         <translation>Elem megvizsgálása...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="401"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="403"/>
         <source>Work Offline</source>
         <translation>Kapcsolat nélküli munka</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="402"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="404"/>
         <source>Full Screen</source>
         <translation>Teljes képernyő</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="403"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="405"/>
         <source>Show Tab Switcher</source>
         <translation>Fül váltó mutatása</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="404"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="406"/>
         <source>Show Menubar</source>
         <translation>Menü mutatása</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="405"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="407"/>
         <source>Show Tabbar</source>
         <translation>Fül sor mutatása</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="406"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="408"/>
         <source>Show Sidebar</source>
         <translation>Oldalsáv mutatása</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="407"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="409"/>
         <source>Show Error Console</source>
         <translation>Hiba konzol mutatása</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="408"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="410"/>
         <source>Lock Toolbars</source>
         <translation>Eszköztárak rögzítése</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="409"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="411"/>
         <source>Open Panel as Tab</source>
         <translation>Nyissa meg a panelt fülként</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="410"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="412"/>
         <source>Close Panel</source>
         <translation>Panel bezárása</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="411"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="413"/>
         <source>Content Blocking…</source>
         <translation>Reklám szűrés...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="412"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="414"/>
         <source>View History</source>
         <translation>Előzmények megtekintése</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="413"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="415"/>
         <source>Clear History…</source>
         <translation>Előzmények törlése...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="414"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="416"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="46"/>
         <source>Notes</source>
         <translation>Jegyzetek</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="415"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="417"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="44"/>
         <source>Transfers</source>
         <translation>Letöltések</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="416"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="418"/>
         <source>Preferences…</source>
         <translation>Beállítások...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="417"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="419"/>
         <source>Website Preferences…</source>
         <translation>Weboldal beállításai...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="418"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="420"/>
         <source>Quick Preferences</source>
         <translation>Gyors Beállítások</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="419"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="421"/>
         <source>Reset Options</source>
         <translation>Beállítások alaphelyzetbe állítása</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="420"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="422"/>
         <source>Switch Application Language…</source>
         <translation>Alkalmazás nyelvének váltása...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="421"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="423"/>
         <source>Check for Updates…</source>
         <translation>Frissítések keresése...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="422"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="424"/>
         <source>About Otter…</source>
         <translation>Az Otter névjegye...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="423"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="425"/>
         <source>About Qt…</source>
         <translation>A Qt névjegye...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="424"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="426"/>
         <source>Exit</source>
         <translation>Kilépés</translation>
     </message>
@@ -6040,12 +6197,12 @@ Kérem válasszon egy másikat.</translation>
         <translation>Állapot sor</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="296"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="300"/>
         <source>Remove Bookmark</source>
         <translation>Könyvjelző eltávolítása</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="334"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="338"/>
         <source>Copy address of source page</source>
         <translation>Az aktuális oldal címének a másolása</translation>
     </message>
@@ -6060,52 +6217,52 @@ Kérem válasszon egy másikat.</translation>
         <translation>Mutassa az ablakokat</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="446"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="472"/>
         <source>Edit Bookmark…</source>
         <translation>Könyvjelző szerkesztése...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="647"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="673"/>
         <source>Edit Link Bookmark…</source>
         <translation>Link könyvjelző szerkesztése...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="710"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="736"/>
         <source>Open Image in New Tab</source>
         <translation>Kép megnyitása új fülön</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="755"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="781"/>
         <source>Save Video…</source>
         <translation>Video elmentése...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="755"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="781"/>
         <source>Save Audio…</source>
         <translation>Hang elmentése...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="761"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="787"/>
         <source>Copy Video Link to Clipboard</source>
         <translation>Videó link másolása a vágólapra</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="761"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="787"/>
         <source>Copy Audio Link to Clipboard</source>
         <translation>Hang link másolása a vágólapra</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="779"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="805"/>
         <source>Pause</source>
         <translation>Szünet</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="786"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="812"/>
         <source>Unmute</source>
         <translation>Némítás megszüntetése</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WorkspaceWidget.cpp" line="311"/>
+        <location filename="../../src/ui/WorkspaceWidget.cpp" line="504"/>
         <source>Close</source>
         <translation>Bezár</translation>
     </message>
@@ -6113,37 +6270,37 @@ Kérem válasszon egy másikat.</translation>
 <context>
     <name>main</name>
     <message>
-        <location filename="../../src/core/Application.cpp" line="101"/>
+        <location filename="../../src/core/Application.cpp" line="103"/>
         <source>URL to open</source>
         <translation>URL megnyitása</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="102"/>
+        <location filename="../../src/core/Application.cpp" line="104"/>
         <source>Uses &lt;path&gt; as cache directory</source>
         <translation>Használja a/z &lt;path&gt; útvonalat gyorsítótárként</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="103"/>
+        <location filename="../../src/core/Application.cpp" line="105"/>
         <source>Uses &lt;path&gt; as profile directory</source>
         <translation>Használja a/z &lt;path&gt; útvonalat profilként</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="104"/>
+        <location filename="../../src/core/Application.cpp" line="106"/>
         <source>Restores session &lt;session&gt; if it exists</source>
         <translation>Töltse be a/z &lt;session&gt; munkamenetet, ha az létezik</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="105"/>
+        <location filename="../../src/core/Application.cpp" line="107"/>
         <source>Starts private session</source>
         <translation>Indítson privát munkamenetet</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="106"/>
+        <location filename="../../src/core/Application.cpp" line="108"/>
         <source>Forces session chooser dialog</source>
         <translation>Mindenképp mutassa meg a munkamenet kezelot</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="107"/>
+        <location filename="../../src/core/Application.cpp" line="109"/>
         <source>Sets profile and cache paths to directories inside the same directory as that of application binary</source>
         <translation>Berakja a profil és gyorsítótár mappákat a program mappájába</translation>
     </message>
@@ -6184,28 +6341,41 @@ Kérem válasszon egy másikat.</translation>
         <translation>Nem tudtam betölteni a Proxy Automata Config (PAC) fájlt: %1</translation>
     </message>
     <message>
+        <location filename="../../src/core/PlatformIntegration.cpp" line="103"/>
+        <source>Failed to install update
+Updater: %1
+ Script: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <location filename="../../src/core/SessionsManager.h" line="86"/>
         <location filename="../../src/core/SessionsManager.h" line="89"/>
         <source>(Untitled)</source>
         <translation>(Névtelen)</translation>
     </message>
     <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="47"/>
+        <location filename="../../src/core/UpdateChecker.cpp" line="45"/>
         <source>Unable to check for updates. Invalid URL: %1</source>
         <translation>Nem tudom ellenőrizni a frissítéseket. Hibás link: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="68"/>
+        <location filename="../../src/core/UpdateChecker.cpp" line="66"/>
         <source>Unable to check for updates: %1</source>
         <translation>Nem tudom ellenőrizni a frissítéseket: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="100"/>
+        <location filename="../../src/core/UpdateChecker.cpp" line="99"/>
         <source>Unable to parse version number: %1</source>
         <translation>Nem tudom ellenőrizni a verzió számot: %1</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="123"/>
+        <location filename="../../src/core/Updater.cpp" line="90"/>
+        <source>Unable to download update: %1
+Error: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/main.cpp" line="124"/>
         <source>Default</source>
         <translation>Alapértelmezett</translation>
     </message>
@@ -6215,12 +6385,12 @@ Kérem válasszon egy másikat.</translation>
         <translation>Blokkolt lekérés</translation>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="419"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="436"/>
         <source>Failed to run File Associations Manager, error code: %1</source>
         <translation>Nem tudtuk elindítani a FAM-ot. Hibakód: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="474"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="491"/>
         <source>Failed to register application to system registry: %1, %2</source>
         <translation>Nem tudtam regisztrálni a programot a regisztrációs adatbázisba: %1, %2</translation>
     </message>
