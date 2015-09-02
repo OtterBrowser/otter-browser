@@ -177,7 +177,7 @@
          <item>
           <widget class="QCheckBox" name="httpOnlyCheckBox">
            <property name="text">
-            <string>HTTP only</string>
+            <string>HttpOnly</string>
            </property>
           </widget>
          </item>

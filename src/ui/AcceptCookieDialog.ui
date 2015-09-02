@@ -60,14 +60,14 @@
      <item row="4" column="0">
       <widget class="QLabel" name="secureLabel">
        <property name="text">
-        <string>Is secure:</string>
+        <string>Secure:</string>
        </property>
       </widget>
      </item>
      <item row="5" column="0">
       <widget class="QLabel" name="httpOnlyLabel">
        <property name="text">
-        <string>Is HTTP only:</string>
+        <string>Is HttpOnly:</string>
        </property>
       </widget>
      </item>
