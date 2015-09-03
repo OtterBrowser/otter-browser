@@ -20,6 +20,7 @@
 #include "Menu.h"
 #include "ImportDialog.h"
 #include "MainWindow.h"
+#include "Window.h"
 #include "../core/ActionsManager.h"
 #include "../core/BookmarksManager.h"
 #include "../core/HistoryManager.h"
@@ -28,6 +29,7 @@
 #include "../core/SessionsManager.h"
 #include "../core/ToolBarsManager.h"
 #include "../core/Utils.h"
+#include "../core/WindowsManager.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QJsonArray>
@@ -78,13 +80,13 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 			{
 				setIcon(Utils::getIcon(QLatin1String("user-trash")));
 
-				MainWindow *window = MainWindow::findMainWindow(parent);
+				MainWindow *mainWindow = MainWindow::findMainWindow(parent);
 
-				if (window)
+				if (mainWindow)
 				{
-					setEnabled(!SessionsManager::getClosedWindows().isEmpty() || !window->getWindowsManager()->getClosedWindows().isEmpty());
+					setEnabled(!SessionsManager::getClosedWindows().isEmpty() || !mainWindow->getWindowsManager()->getClosedWindows().isEmpty());
 
-					connect(window->getWindowsManager(), SIGNAL(closedWindowsAvailableChanged(bool)), this, SLOT(updateClosedWindowsMenu()));
+					connect(mainWindow->getWindowsManager(), SIGNAL(closedWindowsAvailableChanged(bool)), this, SLOT(updateClosedWindowsMenu()));
 				}
 
 				connect(SessionsManager::getInstance(), SIGNAL(closedWindowsChanged()), this, SLOT(updateClosedWindowsMenu()));
@@ -113,6 +115,11 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 		case UserAgentMenuRole:
 			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateUserAgentMenu()));
 			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectUserAgent(QAction*)));
+
+			break;
+		case WindowsMenuRole:
+			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateWindowsMenu()));
+			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectWindow(QAction*)));
 
 			break;
 		default:
@@ -156,11 +163,11 @@ void Menu::mouseReleaseEvent(QMouseEvent *event)
 				}
 			}
 
-			MainWindow *window = MainWindow::findMainWindow(parent());
+			MainWindow *mainWindow = MainWindow::findMainWindow(parent());
 
-			if (window)
+			if (mainWindow)
 			{
-				window->getWindowsManager()->open(dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(action->data().toModelIndex())), WindowsManager::calculateOpenHints(event->modifiers(), event->button()));
+				mainWindow->getWindowsManager()->open(dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(action->data().toModelIndex())), WindowsManager::calculateOpenHints(event->modifiers(), event->button()));
 
 				return;
 			}
@@ -398,8 +405,8 @@ void Menu::populateCharacterEncodingMenu()
 		}
 	}
 
-	MainWindow *window = MainWindow::findMainWindow(parent());
-	const QString encoding = (window ? window->getWindowsManager()->getOption(QLatin1String("Content/DefaultCharacterEncoding")).toString().toLower() : QString());
+	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
+	const QString encoding = (mainWindow ? mainWindow->getWindowsManager()->getOption(QLatin1String("Content/DefaultCharacterEncoding")).toString().toLower() : QString());
 
 	for (int i = 2; i < actions().count(); ++i)
 	{
@@ -444,11 +451,11 @@ void Menu::populateClosedWindowsMenu()
 		addSeparator();
 	}
 
-	MainWindow *window = MainWindow::findMainWindow(parent());
+	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
 
-	if (window)
+	if (mainWindow)
 	{
-		const QList<ClosedWindow> tabs = window->getWindowsManager()->getClosedWindows();
+		const QList<ClosedWindow> tabs = mainWindow->getWindowsManager()->getClosedWindows();
 
 		for (int i = 0; i < tabs.count(); ++i)
 		{
@@ -546,9 +553,9 @@ void Menu::populateUserAgentMenu()
 		clear();
 	}
 
-	MainWindow *window = MainWindow::findMainWindow(parent());
+	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
 	const QStringList userAgents = NetworkManagerFactory::getUserAgents();
-	const QString userAgent = (window ? window->getWindowsManager()->getOption(QLatin1String("Network/UserAgent")).toString() : QString());
+	const QString userAgent = (mainWindow ? mainWindow->getWindowsManager()->getOption(QLatin1String("Network/UserAgent")).toString() : QString());
 
 	m_actionGroup = new QActionGroup(this);
 	m_actionGroup->setExclusive(true);
@@ -588,6 +595,42 @@ void Menu::populateUserAgentMenu()
 	}
 }
 
+void Menu::populateWindowsMenu()
+{
+	if (actions().isEmpty())
+	{
+		MainWindow *mainWindow = MainWindow::findMainWindow(this);
+
+		if (mainWindow)
+		{
+			connect(mainWindow->getWindowsManager(), SIGNAL(windowAdded(qint64)), this, SLOT(populateWindowsMenu()));
+			connect(mainWindow->getWindowsManager(), SIGNAL(windowRemoved(qint64)), this, SLOT(populateWindowsMenu()));
+			connect(mainWindow->getWindowsManager(), SIGNAL(windowTitleChanged(QString)), this, SLOT(populateWindowsMenu()));
+		}
+
+		disconnect(this, SIGNAL(aboutToShow()), this, SLOT(populateWindowsMenu()));
+	}
+
+	clear();
+
+	MainWindow *mainWindow = MainWindow::findMainWindow(this);
+
+	if (!mainWindow)
+	{
+		return;
+	}
+
+	for (int i = 0; i < mainWindow->getWindowsManager()->getWindowCount(); ++i)
+	{
+		Window *window = mainWindow->getWindowsManager()->getWindowByIndex(i);
+
+		if (window)
+		{
+			QMenu::addAction(window->getIcon(), (window->getTitle().isEmpty() ? tr("(Untitled)") : Utils::elideText(window->getTitle())))->setData(window->getIdentifier());
+		}
+	}
+}
+
 void Menu::clearModelMenu()
 {
 	const int offset = ((m_role == BookmarksMenuRole && menuAction() && !menuAction()->data().toModelIndex().isValid()) ? 3 : 0);
@@ -614,11 +657,11 @@ void Menu::clearModelMenu()
 
 void Menu::clearClosedWindows()
 {
-	MainWindow *window = MainWindow::findMainWindow(parent());
+	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
 
-	if (window)
+	if (mainWindow)
 	{
-		window->getWindowsManager()->clearClosedWindows();
+		mainWindow->getWindowsManager()->clearClosedWindows();
 	}
 
 	SessionsManager::clearClosedWindows();
@@ -631,11 +674,11 @@ void Menu::restoreClosedWindow()
 
 	if (index > 0)
 	{
-		MainWindow *window = MainWindow::findMainWindow(parent());
+		MainWindow *mainWindow = MainWindow::findMainWindow(parent());
 
-		if (window)
+		if (mainWindow)
 		{
-			window->getWindowsManager()->restore(index - 1);
+			mainWindow->getWindowsManager()->restore(index - 1);
 		}
 	}
 	else if (index < 0)
@@ -659,7 +702,7 @@ void Menu::openBookmark()
 		}
 	}
 
-	MainWindow *window = MainWindow::findMainWindow(parent());
+	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
 	QAction *action = qobject_cast<QAction*>(sender());
 
 	if (action && action->data().type() == QVariant::ModelIndex)
@@ -667,11 +710,11 @@ void Menu::openBookmark()
 		m_bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(action->data().toModelIndex()));
 	}
 
-	if (window)
+	if (mainWindow)
 	{
 		const OpenHints hints = (action ? static_cast<OpenHints>(action->data().toInt()) : DefaultOpen);
 
-		window->getWindowsManager()->open(m_bookmark, ((hints == DefaultOpen) ? WindowsManager::calculateOpenHints() : hints));
+		mainWindow->getWindowsManager()->open(m_bookmark, ((hints == DefaultOpen) ? WindowsManager::calculateOpenHints() : hints));
 	}
 
 	m_bookmark = NULL;
@@ -695,9 +738,9 @@ void Menu::openSession(QAction *action)
 
 void Menu::selectCharacterEncoding(QAction *action)
 {
-	MainWindow *window = MainWindow::findMainWindow(parent());
+	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
 
-	if (!window)
+	if (!mainWindow)
 	{
 		return;
 	}
@@ -714,24 +757,34 @@ void Menu::selectCharacterEncoding(QAction *action)
 		}
 	}
 
-	window->getWindowsManager()->setOption(QLatin1String("Content/DefaultCharacterEncoding"), encoding.toLower());
+	mainWindow->getWindowsManager()->setOption(QLatin1String("Content/DefaultCharacterEncoding"), encoding.toLower());
 }
 
 void Menu::selectUserAgent(QAction *action)
 {
-	MainWindow *window = MainWindow::findMainWindow(parent());
+	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
 
-	if (action && window)
+	if (action && mainWindow)
 	{
-		window->getWindowsManager()->setOption(QLatin1String("Network/UserAgent"), action->data().toString());
+		mainWindow->getWindowsManager()->setOption(QLatin1String("Network/UserAgent"), action->data().toString());
+	}
+}
+
+void Menu::selectWindow(QAction *action)
+{
+	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
+
+	if (action && mainWindow)
+	{
+		mainWindow->getWindowsManager()->setActiveWindowByIdentifier(action->data().toULongLong());
 	}
 }
 
 void Menu::updateClosedWindowsMenu()
 {
-	MainWindow *window = MainWindow::findMainWindow(parent());
+	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
 
-	setEnabled((window && window->getWindowsManager()->getClosedWindows().count() > 0) || SessionsManager::getClosedWindows().count() > 0);
+	setEnabled((mainWindow && mainWindow->getWindowsManager()->getClosedWindows().count() > 0) || SessionsManager::getClosedWindows().count() > 0);
 }
 
 void Menu::setToolBarVisibility(bool visible)
@@ -796,6 +849,11 @@ Menu::MenuRole Menu::getRole(const QString &identifier)
 	if (identifier == QLatin1String("UserAgentMenu"))
 	{
 		return UserAgentMenuRole;
+	}
+
+	if (identifier == QLatin1String("WindowsMenu"))
+	{
+		return WindowsMenuRole;
 	}
 
 	return NoMenuRole;

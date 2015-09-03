@@ -45,7 +45,8 @@ public:
 		ImportExportMenuRole = 7,
 		SessionsMenuRole = 8,
 		ToolBarsMenuRole = 9,
-		UserAgentMenuRole = 10
+		UserAgentMenuRole = 10,
+		WindowsMenuRole = 11
 	};
 
 	explicit Menu(MenuRole role = NoMenuRole, QWidget *parent = NULL);
@@ -68,6 +69,7 @@ protected slots:
 	void populateSessionsMenu();
 	void populateToolBarsMenu();
 	void populateUserAgentMenu();
+	void populateWindowsMenu();
 	void clearModelMenu();
 	void clearClosedWindows();
 	void restoreClosedWindow();
@@ -76,6 +78,7 @@ protected slots:
 	void openSession(QAction *action);
 	void selectCharacterEncoding(QAction *action);
 	void selectUserAgent(QAction *action);
+	void selectWindow(QAction *action);
 	void updateClosedWindowsMenu();
 	void setToolBarVisibility(bool visible);
 
