@@ -825,7 +825,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (mouseEvent)
 		{
-			if (mouseEvent->buttons().testFlag(Qt::LeftButton) && (mouseEvent->pos() - m_dragStartPosition).manhattanLength() >= QApplication::startDragDistance())
+			if (mouseEvent->buttons().testFlag(Qt::LeftButton) && !m_dragStartPosition.isNull() && (mouseEvent->pos() - m_dragStartPosition).manhattanLength() >= QApplication::startDragDistance())
 			{
 				QList<QUrl> urls;
 				urls << getUrl();
