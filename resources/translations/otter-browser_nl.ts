@@ -1924,12 +1924,12 @@ Wilt u doorgaan?</translation>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.ui" line="61"/>
         <source>Save</source>
-        <translation type="unfinished"/>
+        <translation>Opslaan</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.ui" line="68"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Annuleren</translation>
     </message>
 </context>
 <context>
@@ -4225,7 +4225,7 @@ Wilt u deze overschrijven?
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="22"/>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>Naam:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="29"/>

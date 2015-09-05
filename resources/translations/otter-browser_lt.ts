@@ -245,7 +245,7 @@ Ar tikrai norite jį atstatyti?</translation>
     <message>
         <location filename="../../src/core/Application.cpp" line="496"/>
         <source>New update %1 from %2 channel is available!</source>
-        <translation type="unfinished"/>
+        <translation>Yra prieinamas naujas atnaujinimas %1 iš %2 kanalo!</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="663"/>
@@ -1605,7 +1605,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="99"/>
         <source>Import Opera Notes…</source>
-        <translation type="unfinished"/>
+        <translation>Importuoti Opera Pastabas...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="184"/>
@@ -1888,22 +1888,22 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="109"/>
         <source>Import into folder:</source>
-        <translation type="unfinished"/>
+        <translation>Importuoti į aplanką:</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="117"/>
         <source>Opera Notes</source>
-        <translation type="unfinished"/>
+        <translation>Opera Pastabos</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="122"/>
         <source>Imports notes from Opera Browser version 12 or earlier</source>
-        <translation type="unfinished"/>
+        <translation>Importuoja pastabas iš Opera Naršyklės versijos 12 ar ankstesnės</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="132"/>
         <source>Opera notes files (notes.adr)</source>
-        <translation type="unfinished"/>
+        <translation>Opera pastabų failai (notes.adr)</translation>
     </message>
 </context>
 <context>
@@ -1924,12 +1924,12 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.ui" line="61"/>
         <source>Save</source>
-        <translation type="unfinished"/>
+        <translation>Įrašyti</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.ui" line="68"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Atšaukti</translation>
     </message>
 </context>
 <context>
@@ -2000,12 +2000,12 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/core/PlatformIntegration.cpp" line="105"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Klaida</translation>
     </message>
     <message>
         <location filename="../../src/core/PlatformIntegration.cpp" line="105"/>
         <source>Failed to install update.</source>
-        <translation type="unfinished"/>
+        <translation>Nepavyko įdiegti atnaujinimo.</translation>
     </message>
 </context>
 <context>
@@ -2691,7 +2691,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="45"/>
         <source>Show start page</source>
-        <translation>Rodyti pradinį puslapį</translation>
+        <translation>Rodyti pradžios puslapį</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="46"/>
@@ -3749,7 +3749,7 @@ Norite įrašyti pakeitimus ar juos atmesti?</translation>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="141"/>
         <source>Show search field</source>
-        <translation type="unfinished"/>
+        <translation>Rodyti paieškos lauką</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="148"/>
@@ -4220,12 +4220,12 @@ Ar norite jį pakeisti?
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="14"/>
         <source>Opening unknown file</source>
-        <translation type="unfinished"/>
+        <translation>Atveriamas nežinomas failas</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="22"/>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>Pavadinimas:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="29"/>
@@ -4240,52 +4240,52 @@ Ar norite jį pakeisti?
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="43"/>
         <source>From:</source>
-        <translation type="unfinished"/>
+        <translation>Iš:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="50"/>
         <source>Open with:</source>
-        <translation type="unfinished"/>
+        <translation>Atverti, naudojant:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="107"/>
         <source>Remember choice for this file type</source>
-        <translation type="unfinished"/>
+        <translation>Įsiminti pasirinkimą šiam failų tipui</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="41"/>
         <source>unknown file</source>
-        <translation type="unfinished"/>
+        <translation>nežinomas failas</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="63"/>
         <source>Default Application</source>
-        <translation type="unfinished"/>
+        <translation>Numatytoji Programa</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="69"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Nežinoma</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="79"/>
         <source>Opening %1</source>
-        <translation type="unfinished"/>
+        <translation>Atveriama %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="152"/>
         <source>unknown</source>
-        <translation type="unfinished"/>
+        <translation>nežinoma</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="156"/>
         <source>%1 (download completed)</source>
-        <translation type="unfinished"/>
+        <translation>%1 (atsiuntimas užbaigtas)</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/TransferDialog.cpp" line="162"/>
         <source>%1 (%n% downloaded)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%n% atsiųstas)</numerusform><numerusform>%1 (%n% atsiųsti)</numerusform><numerusform>%1 (%n% atsiųsta)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4526,7 +4526,7 @@ Pasirinkite kitą.</translation>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="51"/>
         <source>Checking for updates…</source>
-        <translation type="unfinished"/>
+        <translation>Tikrinami atnaujinimai...</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="96"/>
@@ -4541,53 +4541,54 @@ Pasirinkite kitą.</translation>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="106"/>
         <source>Details…</source>
-        <translation type="unfinished"/>
+        <translation>Išsamiau...</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="109"/>
         <source>Download</source>
-        <translation type="unfinished"/>
+        <translation>Atsisiųsti</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="122"/>
         <source>Version %1 from %2 channel</source>
-        <translation type="unfinished"/>
+        <translation>Versija %1 iš %2 kanalo</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="132"/>
         <source>Some of the updates does not contains packages for your platform. Try to check for updates later or visit details page for more info.</source>
-        <translation type="unfinished"/>
+        <translation>Kai kuriuose atnaujinimuose nėra paketų jūsų platformai. Pabandykite patikrinti prieinamus atnaujinimus vėliau arba aplankykite išsamesnės informacijos puslapį, norėdami sužinoti daugiau.</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="178"/>
         <source>Downloading:</source>
-        <translation type="unfinished"/>
+        <translation>Atsiunčiama:</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="193"/>
         <source>Download finished!</source>
-        <translation type="unfinished"/>
+        <translation>Atsiuntimas užbaigtas!</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="194"/>
         <source>Install</source>
-        <translation type="unfinished"/>
+        <translation>Įdiegti</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="196"/>
         <source>New version of Otter Browser is ready to install.
 Click Install button to restart browser and install the update or close this dialog to install the update during next browser restart.</source>
-        <translation type="unfinished"/>
+        <translation>Nauja Naršyklės Otter versija yra paruošta įdiegimui.
+Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdiegtumėte atnaujinimą arba užverkite šį dialogą, kad įdiegtumėte atnaujinimą kito naršyklės paleidimo metu.</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="218"/>
         <source>Download failed!</source>
-        <translation type="unfinished"/>
+        <translation>Atsiuntimas nepavyko!</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="220"/>
         <source>Check Error Console for more information.</source>
-        <translation type="unfinished"/>
+        <translation>Išsamesnei informacijai, žiūrėkite klaidų pultą.</translation>
     </message>
 </context>
 <context>
@@ -4711,7 +4712,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="736"/>
         <source>Open Image in New Tab (Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>Atverti paveikslą naujoje kortelėje (Be pavadinimo)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="736"/>
@@ -4721,7 +4722,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="742"/>
         <source>Open Image in New Background Tab (Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>Atverti paveikslą naujoje foninėje kortelėje (Be pavadinimo)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="742"/>
@@ -5427,17 +5428,17 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="281"/>
         <source>Maximize All</source>
-        <translation type="unfinished"/>
+        <translation>Padidinti Visas</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="282"/>
         <source>Minimize All</source>
-        <translation type="unfinished"/>
+        <translation>Sumažinti Visas</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="283"/>
         <source>Restore All</source>
-        <translation type="unfinished"/>
+        <translation>Atkurti Visas</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="284"/>
@@ -6343,7 +6344,9 @@ Click Install button to restart browser and install the update or close this dia
         <source>Failed to install update
 Updater: %1
  Script: %2</source>
-        <translation type="unfinished"/>
+        <translation>Nepavyko įdiegti atnaujinimo
+Atnaujinimo įrankis: %1
+ Scenarijus: %2</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="86"/>
@@ -6370,7 +6373,8 @@ Updater: %1
         <location filename="../../src/core/Updater.cpp" line="90"/>
         <source>Unable to download update: %1
 Error: %2</source>
-        <translation type="unfinished"/>
+        <translation>Nepavyko atsisiųsti atnaujinimo: %1
+Klaida: %2</translation>
     </message>
     <message>
         <location filename="../../src/main.cpp" line="124"/>

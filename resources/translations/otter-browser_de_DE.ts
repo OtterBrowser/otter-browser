@@ -245,7 +245,7 @@ Sind Sie sicher, dass Sie sie dennoch wiederherstellen möchten?</translation>
     <message>
         <location filename="../../src/core/Application.cpp" line="496"/>
         <source>New update %1 from %2 channel is available!</source>
-        <translation type="unfinished"/>
+        <translation>Neue Aktualisierung %1 aus Kanal %2 ist verfügbar!</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="663"/>
@@ -1640,7 +1640,7 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="319"/>
         <source>This Folder</source>
-        <translation type="unfinished"/>
+        <translation>Dieser Ordner</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="338"/>
@@ -1924,12 +1924,12 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.ui" line="61"/>
         <source>Save</source>
-        <translation type="unfinished"/>
+        <translation>Speichern</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.ui" line="68"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -2000,12 +2000,12 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/core/PlatformIntegration.cpp" line="105"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Fehler</translation>
     </message>
     <message>
         <location filename="../../src/core/PlatformIntegration.cpp" line="105"/>
         <source>Failed to install update.</source>
-        <translation type="unfinished"/>
+        <translation>Fehler beim Installieren der Aktualisierung.</translation>
     </message>
 </context>
 <context>
@@ -4220,72 +4220,72 @@ Möchten Sie die Datei überschreiben?
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="14"/>
         <source>Opening unknown file</source>
-        <translation type="unfinished"/>
+        <translation>Unbekannte Datei wird geöffnet</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="22"/>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>Name:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="29"/>
         <source>Type:</source>
-        <translation type="unfinished"/>
+        <translation>Typ:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="36"/>
         <source>Size:</source>
-        <translation type="unfinished"/>
+        <translation>Größe:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="43"/>
         <source>From:</source>
-        <translation type="unfinished"/>
+        <translation>Von:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="50"/>
         <source>Open with:</source>
-        <translation type="unfinished"/>
+        <translation>Öffnen mit:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="107"/>
         <source>Remember choice for this file type</source>
-        <translation type="unfinished"/>
+        <translation>Auswahl für diesen Dateityp merken</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="41"/>
         <source>unknown file</source>
-        <translation type="unfinished"/>
+        <translation>unbekannte Datei</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="63"/>
         <source>Default Application</source>
-        <translation type="unfinished"/>
+        <translation>Standardanwendung</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="69"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Unbekannt</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="79"/>
         <source>Opening %1</source>
-        <translation type="unfinished"/>
+        <translation>%1 wird geöffnet</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="152"/>
         <source>unknown</source>
-        <translation type="unfinished"/>
+        <translation>unbekannt</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="156"/>
         <source>%1 (download completed)</source>
-        <translation type="unfinished"/>
+        <translation>%1 (Herunterladen abgeschlossen)</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/TransferDialog.cpp" line="162"/>
         <source>%1 (%n% downloaded)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%n% heruntergeladen)</numerusform><numerusform>%1 (%n% heruntergeladen)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4526,7 +4526,7 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="51"/>
         <source>Checking for updates…</source>
-        <translation type="unfinished"/>
+        <translation>Nach Aktualisierungen wird gesucht…</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="96"/>
@@ -4541,12 +4541,12 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="106"/>
         <source>Details…</source>
-        <translation type="unfinished"/>
+        <translation>Details…</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="109"/>
         <source>Download</source>
-        <translation type="unfinished"/>
+        <translation>Herunterladen</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="122"/>
@@ -4556,38 +4556,38 @@ Bitte wählen Sie einen anderen aus.</translation>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="132"/>
         <source>Some of the updates does not contains packages for your platform. Try to check for updates later or visit details page for more info.</source>
-        <translation type="unfinished"/>
+        <translation>Einige der Aktualisierungen enthalten keine Pakete für Ihre Plattform. Versuchen Sie, später nach Aktualisierungen zu suchen oder besuchen Sie die Detailsseite für weitere Informationen.</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="178"/>
         <source>Downloading:</source>
-        <translation type="unfinished"/>
+        <translation>Wird heruntergeladen:</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="193"/>
         <source>Download finished!</source>
-        <translation type="unfinished"/>
+        <translation>Herunterladen fertig!</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="194"/>
         <source>Install</source>
-        <translation type="unfinished"/>
+        <translation>Installieren</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="196"/>
         <source>New version of Otter Browser is ready to install.
 Click Install button to restart browser and install the update or close this dialog to install the update during next browser restart.</source>
-        <translation type="unfinished"/>
+        <translation>Neue Version von Otter Browser ist zur Installation bereit. Klicken Sie auf die Schaltfläche Installieren, um den Browser neu zu starten und die Aktualisierung zu installieren oder Schließen Sie diesen Dialog, um die Aktualisierung beim nächsten Neustart des Browsers zu installieren.</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="218"/>
         <source>Download failed!</source>
-        <translation type="unfinished"/>
+        <translation>Herunterladen fehlgeschlagen!</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="220"/>
         <source>Check Error Console for more information.</source>
-        <translation type="unfinished"/>
+        <translation>Überprüfen Sie die Fehlerkonsole für weitere Informationen.</translation>
     </message>
 </context>
 <context>
@@ -5934,12 +5934,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="379"/>
         <source>Go to Previously Used Tab</source>
-        <translation type="unfinished"/>
+        <translation>Zum vorher verwendeten Tab gehen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="380"/>
         <source>Go to Least Recently Used Tab</source>
-        <translation type="unfinished"/>
+        <translation>Zum zuletzt verwendeten Tab gehen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="381"/>
@@ -6343,7 +6343,9 @@ Click Install button to restart browser and install the update or close this dia
         <source>Failed to install update
 Updater: %1
  Script: %2</source>
-        <translation type="unfinished"/>
+        <translation>Fehler beim Installieren der Aktualisierung
+Aktualisierungsprogramm: %1
+SKript: %2</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="86"/>
@@ -6370,7 +6372,8 @@ Updater: %1
         <location filename="../../src/core/Updater.cpp" line="90"/>
         <source>Unable to download update: %1
 Error: %2</source>
-        <translation type="unfinished"/>
+        <translation>Aktualisierung kann nicht heruntergeladen werden: %1
+Fehler: %2</translation>
     </message>
     <message>
         <location filename="../../src/main.cpp" line="124"/>

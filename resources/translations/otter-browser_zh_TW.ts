@@ -245,7 +245,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/Application.cpp" line="496"/>
         <source>New update %1 from %2 channel is available!</source>
-        <translation type="unfinished"/>
+        <translation>自 %2 頻道而來的 %1 新更新已經可用！</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="663"/>
@@ -1640,7 +1640,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="319"/>
         <source>This Folder</source>
-        <translation type="unfinished"/>
+        <translation>此資料夾</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="338"/>
@@ -1924,12 +1924,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.ui" line="61"/>
         <source>Save</source>
-        <translation type="unfinished"/>
+        <translation>儲存</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.ui" line="68"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>取消</translation>
     </message>
 </context>
 <context>
@@ -2000,12 +2000,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/PlatformIntegration.cpp" line="105"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>錯誤</translation>
     </message>
     <message>
         <location filename="../../src/core/PlatformIntegration.cpp" line="105"/>
         <source>Failed to install update.</source>
-        <translation type="unfinished"/>
+        <translation>安裝更新失敗。</translation>
     </message>
 </context>
 <context>
@@ -4220,72 +4220,72 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="14"/>
         <source>Opening unknown file</source>
-        <translation type="unfinished"/>
+        <translation>正在開啟未知的檔案</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="22"/>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>名稱：</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="29"/>
         <source>Type:</source>
-        <translation type="unfinished"/>
+        <translation>類型：</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="36"/>
         <source>Size:</source>
-        <translation type="unfinished"/>
+        <translation>大小：</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="43"/>
         <source>From:</source>
-        <translation type="unfinished"/>
+        <translation>從：</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="50"/>
         <source>Open with:</source>
-        <translation type="unfinished"/>
+        <translation>開啟以：</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="107"/>
         <source>Remember choice for this file type</source>
-        <translation type="unfinished"/>
+        <translation>記住此檔案類型的選擇</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="41"/>
         <source>unknown file</source>
-        <translation type="unfinished"/>
+        <translation>未知的檔案</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="63"/>
         <source>Default Application</source>
-        <translation type="unfinished"/>
+        <translation>預設應用程式</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="69"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>未知</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="79"/>
         <source>Opening %1</source>
-        <translation type="unfinished"/>
+        <translation>正在開啟 %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="152"/>
         <source>unknown</source>
-        <translation type="unfinished"/>
+        <translation>未知</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="156"/>
         <source>%1 (download completed)</source>
-        <translation type="unfinished"/>
+        <translation>%1（已下載完成）</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/TransferDialog.cpp" line="162"/>
         <source>%1 (%n% downloaded)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1（%n% 已下載）</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4526,7 +4526,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="51"/>
         <source>Checking for updates…</source>
-        <translation type="unfinished"/>
+        <translation>檢查更新…</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="96"/>
@@ -4541,12 +4541,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="106"/>
         <source>Details…</source>
-        <translation type="unfinished"/>
+        <translation>詳細資訊…</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="109"/>
         <source>Download</source>
-        <translation type="unfinished"/>
+        <translation>下載</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="122"/>
@@ -4556,38 +4556,39 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="132"/>
         <source>Some of the updates does not contains packages for your platform. Try to check for updates later or visit details page for more info.</source>
-        <translation type="unfinished"/>
+        <translation>有些更新不包含您的平臺上的軟體包。請稍候再檢查更新或是造訪詳細資訊頁面以取得更多資訊。</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="178"/>
         <source>Downloading:</source>
-        <translation type="unfinished"/>
+        <translation>正在下載：</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="193"/>
         <source>Download finished!</source>
-        <translation type="unfinished"/>
+        <translation>下載已結束！</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="194"/>
         <source>Install</source>
-        <translation type="unfinished"/>
+        <translation>安裝</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="196"/>
         <source>New version of Otter Browser is ready to install.
 Click Install button to restart browser and install the update or close this dialog to install the update during next browser restart.</source>
-        <translation type="unfinished"/>
+        <translation>新版本的 Otter Browser 已經準備好安裝了。
+按下安裝按鈕以重新啟動瀏覽器並安裝更新，或是關閉這個對話框以在下一次瀏覽器重新啟動時安裝更新，</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="218"/>
         <source>Download failed!</source>
-        <translation type="unfinished"/>
+        <translation>下載失敗！</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="220"/>
         <source>Check Error Console for more information.</source>
-        <translation type="unfinished"/>
+        <translation>檢查錯誤主控臺以取得更詳細的資訊。</translation>
     </message>
 </context>
 <context>
@@ -5934,12 +5935,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="379"/>
         <source>Go to Previously Used Tab</source>
-        <translation type="unfinished"/>
+        <translation>到前一個使用的分頁</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="380"/>
         <source>Go to Least Recently Used Tab</source>
-        <translation type="unfinished"/>
+        <translation>到最少使用的最近分頁</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="381"/>
@@ -6343,7 +6344,9 @@ Click Install button to restart browser and install the update or close this dia
         <source>Failed to install update
 Updater: %1
  Script: %2</source>
-        <translation type="unfinished"/>
+        <translation>安裝更新失敗
+更新程式：%1
+ 指令碼：%2</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="86"/>
@@ -6370,7 +6373,8 @@ Updater: %1
         <location filename="../../src/core/Updater.cpp" line="90"/>
         <source>Unable to download update: %1
 Error: %2</source>
-        <translation type="unfinished"/>
+        <translation>無法下載更新：%1
+錯誤：%2</translation>
     </message>
     <message>
         <location filename="../../src/main.cpp" line="124"/>
