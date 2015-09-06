@@ -110,7 +110,7 @@ void SearchWidget::paintEvent(QPaintEvent *event)
 
 	if (isEnabled())
 	{
-		currentData(Qt::DecorationRole).value<QIcon>().paint(&painter, m_selectButtonIconRectangle);
+		painter.drawPixmap(m_selectButtonIconRectangle, currentData(Qt::DecorationRole).value<QIcon>().pixmap(m_selectButtonIconRectangle.size()));
 
 		QStyleOption arrow;
 		arrow.initFrom(this);
@@ -119,7 +119,7 @@ void SearchWidget::paintEvent(QPaintEvent *event)
 		style()->drawPrimitive(QStyle::PE_IndicatorArrowDown, &arrow, &painter, this);
 	}
 
-	Utils::getIcon(QLatin1String("edit-find")).paint(&painter, m_searchButtonRectangle, Qt::AlignCenter, (isEnabled() ? QIcon::Active : QIcon::Disabled));
+	painter.drawPixmap(m_searchButtonRectangle, Utils::getIcon(QLatin1String("edit-find")).pixmap(m_searchButtonRectangle.size(), (isEnabled() ? QIcon::Active : QIcon::Disabled)));
 }
 
 void SearchWidget::resizeEvent(QResizeEvent *event)
@@ -134,15 +134,15 @@ void SearchWidget::resizeEvent(QResizeEvent *event)
 	const QRect rectangle = style()->subElementRect(QStyle::SE_LineEditContents, &panel, this);
 
 	m_selectButtonIconRectangle = rectangle;
-	m_selectButtonIconRectangle.setWidth(20);
+	m_selectButtonIconRectangle.setWidth(rectangle.height());
 	m_selectButtonIconRectangle = m_selectButtonIconRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
 
 	m_selectButtonArrowRectangle = rectangle;
-	m_selectButtonArrowRectangle.setLeft(rectangle.left() + 20);
+	m_selectButtonArrowRectangle.setLeft(rectangle.left() + rectangle.height());
 	m_selectButtonArrowRectangle.setWidth(12);
 
 	m_searchButtonRectangle = rectangle;
-	m_searchButtonRectangle.setLeft(rectangle.right() - 20);
+	m_searchButtonRectangle.setLeft(rectangle.right() - rectangle.height());
 	m_searchButtonRectangle = m_searchButtonRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
 
 	lineEdit()->resize((rectangle.width() - m_selectButtonIconRectangle.width() - m_selectButtonArrowRectangle.width() - m_searchButtonRectangle.width()), rectangle.height());
