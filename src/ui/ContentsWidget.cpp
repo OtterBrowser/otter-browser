@@ -166,6 +166,10 @@ void ContentsWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 
 	m_dialogs.append(dialog);
 
+#ifdef Q_OS_WIN32
+	if (lockEventLoop)
+	{
+#endif
 	if (!m_layer)
 	{
 		QPalette palette = this->palette();
@@ -178,10 +182,24 @@ void ContentsWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 		m_layer->show();
 		m_layer->raise();
 	}
+#ifdef Q_OS_WIN32
+	}
+#endif
 
 	connect(dialog, SIGNAL(finished()), this, SLOT(cleanupDialog()));
 
+#ifdef Q_OS_WIN32
+	if (!lockEventLoop)
+	{
+		dialog->setParent(this);
+	}
+	else
+	{
+#endif
 	dialog->setParent(m_layer);
+#ifdef Q_OS_WIN32
+	}
+#endif
 	dialog->show();
 	dialog->raise();
 	dialog->setFocus();
