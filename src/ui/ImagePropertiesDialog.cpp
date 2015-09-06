@@ -92,7 +92,7 @@ ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QVariantMap 
 	{
 		if (frames > 1)
 		{
-			m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels @ %3 bits per pixel in %n frames", "", frames).arg(image.width()).arg(image.height()).arg(image.depth()));
+			m_ui->sizeLabelWidget->setText(tr("%1 x %2 pixels @ %3 bits per pixel in %n frame(s)", "", frames).arg(image.width()).arg(image.height()).arg(image.depth()));
 		}
 		else
 		{

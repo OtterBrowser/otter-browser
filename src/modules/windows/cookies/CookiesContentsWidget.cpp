@@ -273,7 +273,7 @@ void CookiesContentsWidget::removeDomainCookies()
 
 	QMessageBox messageBox;
 	messageBox.setWindowTitle(tr("Question"));
-	messageBox.setText(tr("You are about to delete %n cookies.", "", cookies.count()));
+	messageBox.setText(tr("You are about to delete %n cookie(s).", "", cookies.count()));
 	messageBox.setInformativeText(tr("Do you want to continue?"));
 	messageBox.setIcon(QMessageBox::Question);
 	messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
