@@ -66,6 +66,7 @@ int main(int argc, char *argv[])
 	qInstallMessageHandler(otterMessageHander);
 
 	Application application(argc, argv);
+	application.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 
 	if (application.isRunning() || application.isUpdating())
 	{

@@ -1714,7 +1714,7 @@ QIcon QtWebKitWebWidget::getIcon() const
 
 QPixmap QtWebKitWebWidget::getThumbnail()
 {
-	if (!m_thumbnail.isNull() || isLoading())
+	if ((!m_thumbnail.isNull() && m_thumbnail.devicePixelRatio() == devicePixelRatio()) || isLoading())
 	{
 		return m_thumbnail;
 	}
@@ -1751,7 +1751,8 @@ QPixmap QtWebKitWebWidget::getThumbnail()
 
 	painter.end();
 
-	pixmap = pixmap.scaled(thumbnailSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+	pixmap = pixmap.scaled((thumbnailSize * devicePixelRatio()), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+	pixmap.setDevicePixelRatio(devicePixelRatio());
 
 	newView->deleteLater();
 
