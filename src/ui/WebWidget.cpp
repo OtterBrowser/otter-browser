@@ -1404,7 +1404,7 @@ bool WebWidget::handleMousePressEvent(QMouseEvent *event, bool canPropagate, QOb
 
 			openUrl(m_hitResult.linkUrl, WindowsManager::calculateOpenHints(event->modifiers(), event->button(), CurrentTabOpen));
 
-			event->accept();
+			event->ignore();
 
 			return true;
 		}
