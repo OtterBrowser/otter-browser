@@ -139,6 +139,7 @@
         <file>other/userAgents.ini</file>
         <file>schemas/browsingHistory.sql</file>
         <file>schemas/options.ini</file>
+        <file>schemas/update.xsd</file>
         <file>searches/bing.xml</file>
         <file>searches/duckduckgo.xml</file>
         <file>searches/google.xml</file>

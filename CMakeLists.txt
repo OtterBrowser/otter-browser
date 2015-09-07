@@ -68,9 +68,9 @@ include(GNUInstallDirs)
 option(EnableQtwebengine "Enable QtWebEngine backend (requires Qt 5.5)" OFF)
 
 if (EnableQtwebengine)
-	find_package(Qt5 5.5.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Script Sql WebEngine WebEngineWidgets WebKit WebKitWidgets Widgets)
+	find_package(Qt5 5.5.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Script Sql WebEngine WebEngineWidgets WebKit WebKitWidgets Widgets XmlPatterns)
 else (EnableQtwebengine)
-	find_package(Qt5 5.2.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Script Sql WebKit WebKitWidgets Widgets)
+	find_package(Qt5 5.2.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Script Sql WebKit WebKitWidgets Widgets XmlPatterns)
 endif (EnableQtwebengine)
 
 set(otter_src
@@ -361,7 +361,7 @@ elseif (UNIX)
 	qt5_use_modules(otter-browser DBus)
 endif (WIN32)
 
-qt5_use_modules(otter-browser Core Gui Multimedia Network PrintSupport Script Sql WebKit WebKitWidgets Widgets)
+qt5_use_modules(otter-browser Core Gui Multimedia Network PrintSupport Script Sql WebKit WebKitWidgets Widgets XmlPatterns)
 
 set(OTTER_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 set(XDG_APPS_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/applications CACHE FILEPATH "Install path for .desktop files")

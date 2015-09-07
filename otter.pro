@@ -14,7 +14,7 @@ message("otter.pro is deprecated, use CMake instead.")
     error("Qt 5.2.0 or newer is required.")
 }
 
-QT += core gui multimedia network printsupport script sql webkitwidgets widgets
+QT += core gui multimedia network printsupport script sql webkitwidgets widgets xmlpatterns
 
 configHeader.input = config.h.qmake
 configHeader.output = config.h

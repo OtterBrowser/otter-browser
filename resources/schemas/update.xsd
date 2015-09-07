@@ -1,0 +1,51 @@
+﻿<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="update">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="targetVersion"/>
+        <xs:element type="xs:string" name="platform"/>
+        <xs:element name="dependencies">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="file"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="packages">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="package">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="name"/>
+                    <xs:element type="xs:int" name="size"/>
+                    <xs:element type="xs:string" name="hash"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="install">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="file" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="name"/>
+                    <xs:element type="xs:int" name="size"/>
+                    <xs:element type="xs:short" name="permissions"/>
+                    <xs:element type="xs:string" name="hash"/>
+                    <xs:element type="xs:string" name="package"/>
+                    <xs:element type="xs:string" name="is-main-binary" minOccurs="0"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute type="xs:byte" name="version"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
