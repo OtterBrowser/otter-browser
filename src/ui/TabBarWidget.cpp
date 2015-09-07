@@ -733,10 +733,8 @@ void TabBarWidget::updateButtons()
 					QStyleOption option;
 					option.rect = QRect(0, 0, 16, 16);
 
-					const qreal dpiRatio = this->devicePixelRatio();
-
-					QPixmap pixmap(QSize(16, 16) * dpiRatio);
-					pixmap.setDevicePixelRatio(dpiRatio);
+					QPixmap pixmap(QSize(16, 16) * devicePixelRatio());
+					pixmap.setDevicePixelRatio(devicePixelRatio());
 					pixmap.fill(Qt::transparent);
 
 					QPainter painter(&pixmap);
