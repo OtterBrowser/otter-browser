@@ -315,6 +315,11 @@ void WebContentsWidget::goToHistoryIndex(int index)
 
 void WebContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
+	if (parameters.contains(QLatin1String("isBounced")))
+	{
+		return;
+	}
+
 	switch (identifier)
 	{
 		case ActionsManager::OpenSelectionAsLinkAction:
