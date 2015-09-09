@@ -55,7 +55,7 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 
 				Menu *parentMenu = qobject_cast<Menu*>(parent);
 
-				if (!parentMenu || (parentMenu && parentMenu->getRole() != m_role))
+				if (!parentMenu || parentMenu->getRole() != m_role)
 				{
 					if (m_role == NotesMenuRole)
 					{
