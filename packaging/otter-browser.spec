@@ -44,6 +44,7 @@ BuildRequires:  pkgconfig(Qt5Sql) >= 5.2
 BuildRequires:  pkgconfig(Qt5WebKit) >= 5.2
 BuildRequires:  pkgconfig(Qt5WebKitWidgets) >= 5.2
 BuildRequires:  pkgconfig(Qt5Widgets) >= 5.2
+BuildRequires:  pkgconfig(Qt5XmlPatterns) >= 5.2
 
 %description
 Otter Browser aims to recreate classic Opera (Presto) UI using Qt

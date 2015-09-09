@@ -9,6 +9,7 @@ Build-Depends: debhelper (>= 9.0),
  qtdeclarative5-dev (>=5.2.0),
  qtscript5-dev (>=5.2.0),
  qtmultimedia5-dev (>=5.2.0),
+ libqt5xmlpatterns5-dev (>=5.2.0),
  libqt5sql5-sqlite (>=5.2.0)
 Standards-Version: 3.9.6
 Homepage: http://otter-browser.org/
