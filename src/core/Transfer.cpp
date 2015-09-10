@@ -419,7 +419,7 @@ void Transfer::downloadFinished()
 	emit finished();
 	emit changed();
 
-	if (m_device && !m_device->inherits(QStringLiteral("QTemporaryFile").toLatin1()))
+	if (m_device && (m_options.testFlag(HasToOpenAfterFinishOption) || !m_device->inherits(QStringLiteral("QTemporaryFile").toLatin1())))
 	{
 		m_device->close();
 		m_device->deleteLater();
