@@ -50,6 +50,7 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 	m_ui->bookmarksView->setModel(BookmarksManager::getModel());
 	m_ui->bookmarksView->setItemDelegate(new ItemDelegate(this));
 	m_ui->bookmarksView->setExpanded(BookmarksManager::getModel()->getRootItem()->index(), true);
+	m_ui->bookmarksView->installEventFilter(this);
 	m_ui->bookmarksView->viewport()->installEventFilter(this);
 	m_ui->bookmarksView->viewport()->setMouseTracking(true);
 
@@ -385,7 +386,25 @@ bool BookmarksContentsWidget::filterBookmarks(const QString &filter, QStandardIt
 
 bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (event->type() == QEvent::MouseButtonRelease && object == m_ui->bookmarksView->viewport())
+	if (object == m_ui->bookmarksView && event->type() == QEvent::KeyPress)
+	{
+		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+		if (keyEvent && (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
+		{
+			openBookmark();
+
+			return true;
+		}
+
+		if (keyEvent && keyEvent->key() == Qt::Key_Delete)
+		{
+			removeBookmark();
+
+			return true;
+		}
+	}
+	else if (event->type() == QEvent::MouseButtonRelease && object == m_ui->bookmarksView->viewport())
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 		WindowsManager *manager = SessionsManager::getWindowsManager();
