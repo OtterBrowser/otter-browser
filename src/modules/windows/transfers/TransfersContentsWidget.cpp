@@ -599,6 +599,13 @@ bool TransfersContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 			return true;
 		}
+
+		if (keyEvent && keyEvent->key() == Qt::Key_Delete)
+		{
+			removeTransfer();
+
+			return true;
+		}
 	}
 
 	return QWidget::eventFilter(object, event);
