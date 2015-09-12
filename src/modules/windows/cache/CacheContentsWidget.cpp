@@ -44,6 +44,7 @@ CacheContentsWidget::CacheContentsWidget(Window *window) : ContentsWidget(window
 {
 	m_ui->setupUi(this);
 	m_ui->previewLabel->hide();
+	m_ui->cacheView->installEventFilter(this);
 	m_ui->cacheView->viewport()->installEventFilter(this);
 
 	if (!window)
@@ -623,7 +624,25 @@ bool CacheContentsWidget::isLoading() const
 
 bool CacheContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (event->type() == QEvent::MouseButtonRelease && object == m_ui->cacheView->viewport())
+	if (object == m_ui->cacheView && event->type() == QEvent::KeyPress)
+	{
+		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+		if (keyEvent && (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
+		{
+			openEntry();
+
+			return true;
+		}
+
+		if (keyEvent && keyEvent->key() == Qt::Key_Delete)
+		{
+			removeDomainEntriesOrEntry();
+
+			return true;
+		}
+	}
+	else if (event->type() == QEvent::MouseButtonRelease && object == m_ui->cacheView->viewport())
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
