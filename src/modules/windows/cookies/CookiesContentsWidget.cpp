@@ -27,6 +27,7 @@
 #include "ui_CookiesContentsWidget.h"
 
 #include <QtCore/QTimer>
+#include <QtGui/QKeyEvent>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
 
@@ -39,6 +40,7 @@ CookiesContentsWidget::CookiesContentsWidget(Window *window) : ContentsWidget(wi
 	m_ui(new Ui::CookiesContentsWidget)
 {
 	m_ui->setupUi(this);
+	m_ui->cookiesView->installEventFilter(this);
 
 	if (!window)
 	{
@@ -476,6 +478,23 @@ QNetworkCookie CookiesContentsWidget::getCookie(const QModelIndex &index) const
 bool CookiesContentsWidget::isLoading() const
 {
 	return m_isLoading;
+}
+
+bool CookiesContentsWidget::eventFilter(QObject *object, QEvent *event)
+{
+	if (object == m_ui->cookiesView && event->type() == QEvent::KeyPress)
+	{
+		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+		if (keyEvent && keyEvent->key() == Qt::Key_Delete)
+		{
+			removeCookies();
+
+			return true;
+		}
+	}
+
+	return ContentsWidget::eventFilter(object, event);
 }
 
 }

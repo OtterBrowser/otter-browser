@@ -50,6 +50,7 @@ public:
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 	bool isLoading() const;
+	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
