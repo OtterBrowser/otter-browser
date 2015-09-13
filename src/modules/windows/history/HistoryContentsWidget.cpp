@@ -58,6 +58,7 @@ HistoryContentsWidget::HistoryContentsWidget(Window *window) : ContentsWidget(wi
 	m_ui->historyView->setItemDelegate(new ItemDelegate(this));
 	m_ui->historyView->header()->setTextElideMode(Qt::ElideRight);
 	m_ui->historyView->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+	m_ui->historyView->installEventFilter(this);
 	m_ui->historyView->viewport()->installEventFilter(this);
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
@@ -471,7 +472,25 @@ bool HistoryContentsWidget::isLoading() const
 
 bool HistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (event->type() == QEvent::MouseButtonRelease && object == m_ui->historyView->viewport())
+	if (object == m_ui->historyView && event->type() == QEvent::KeyPress)
+	{
+		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+		if (keyEvent && (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
+		{
+			openEntry();
+
+			return true;
+		}
+
+		if (keyEvent && keyEvent->key() == Qt::Key_Delete)
+		{
+			removeEntry();
+
+			return true;
+		}
+	}
+	else if (event->type() == QEvent::MouseButtonRelease && object == m_ui->historyView->viewport())
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
