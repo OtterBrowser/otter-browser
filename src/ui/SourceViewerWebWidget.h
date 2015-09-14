@@ -37,7 +37,7 @@ public:
 	explicit SourceViewerWebWidget(bool isPrivate, ContentsWidget *parent = NULL);
 
 	void print(QPrinter *printer);
-	WebWidget* clone(bool cloneHistory = true);
+	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false);
 	Action* getAction(int identifier);
 	QString getTitle() const;
 	QString getSelectedText() const;

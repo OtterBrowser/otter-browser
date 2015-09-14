@@ -1599,9 +1599,9 @@ void QtWebKitWebWidget::setScrollPosition(const QPoint &position)
 	m_webView->page()->mainFrame()->setScrollPosition(position);
 }
 
-WebWidget* QtWebKitWebWidget::clone(bool cloneHistory)
+WebWidget* QtWebKitWebWidget::clone(bool cloneHistory, bool isPrivate)
 {
-	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), getBackend(), m_networkManager->clone(), NULL);
+	QtWebKitWebWidget *widget = new QtWebKitWebWidget((this->isPrivate() || isPrivate), getBackend(), m_networkManager->clone(), NULL);
 	widget->setOptions(getOptions());
 
 	if (cloneHistory)

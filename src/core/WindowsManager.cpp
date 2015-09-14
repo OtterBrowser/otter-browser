@@ -557,13 +557,13 @@ void WindowsManager::openWindow(ContentsWidget *widget, OpenHints hints)
 
 		if (mainWindow)
 		{
-			mainWindow->getWindowsManager()->openWindow(widget);
+			mainWindow->getWindowsManager()->openWindow(widget, ((hints & PrivateOpen) ? PrivateOpen : DefaultOpen));
 			mainWindow->getWindowsManager()->closeOther();
 		}
 	}
 	else
 	{
-		addWindow(new Window(widget->isPrivate(), widget), hints);
+		addWindow(new Window((widget->isPrivate() || hints & PrivateOpen), widget), hints);
 	}
 }
 

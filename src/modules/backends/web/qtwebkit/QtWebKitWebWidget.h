@@ -50,7 +50,7 @@ public:
 
 	void search(const QString &query, const QString &engine);
 	void print(QPrinter *printer);
-	WebWidget* clone(bool cloneHistory = true);
+	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false);
 	Action* getAction(int identifier);
 	QString getDefaultCharacterEncoding() const;
 	QString getTitle() const;

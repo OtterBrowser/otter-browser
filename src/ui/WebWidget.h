@@ -116,7 +116,7 @@ public:
 	virtual void search(const QString &query, const QString &engine);
 	virtual void print(QPrinter *printer) = 0;
 	void showDialog(ContentsDialog *dialog, bool lockEventLoop = true);
-	virtual WebWidget* clone(bool cloneHistory = true) = 0;
+	virtual WebWidget* clone(bool cloneHistory = true, bool isPrivate = false) = 0;
 	virtual Action* getAction(int identifier);
 	WebBackend* getBackend();
 	virtual QString getTitle() const = 0;

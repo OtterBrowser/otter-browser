@@ -405,9 +405,10 @@ void SourceViewerWebWidget::setContents(const QByteArray &contents, const QStrin
 	emit loadingChanged(false);
 }
 
-WebWidget* SourceViewerWebWidget::clone(bool cloneHistory)
+WebWidget* SourceViewerWebWidget::clone(bool cloneHistory, bool isPrivate)
 {
 	Q_UNUSED(cloneHistory)
+	Q_UNUSED(isPrivate)
 
 	return NULL;
 }
