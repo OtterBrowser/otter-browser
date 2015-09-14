@@ -76,11 +76,9 @@ void UpdateChecker::runUpdateCheck()
 	const QJsonObject updateData = QJsonDocument::fromJson(m_networkReply->readAll()).object();
 	const QJsonArray channels = updateData.value(QLatin1String("channels")).toArray();
 	const QString platform = Application::getInstance()->getPlatformIntegration()->getPlatform();
-	int mainVersion = QCoreApplication::applicationVersion().remove(QChar('.')).toInt();
-	int subVersion = QString(OTTER_VERSION_WEEKLY).toInt();
+	const int mainVersion = QCoreApplication::applicationVersion().remove(QChar('.')).toInt();
+	const int subVersion = QString(OTTER_VERSION_WEEKLY).toInt();
 	QList<UpdateInformation> availableUpdates;
-	QString availableVersion;
-	QString availableChannel;
 
 	for (int i = 0; i < channels.count(); ++i)
 	{
@@ -103,7 +101,7 @@ void UpdateChecker::runUpdateCheck()
 
 				const int channelSubVersion = object[QLatin1String("subVersion")].toString().toInt();
 
-				if ((mainVersion < channelMainVersion) || (channelSubVersion > 0 && subVersion < channelSubVersion))
+				if (mainVersion < channelMainVersion || (subVersion > 0 && subVersion < channelSubVersion))
 				{
 					UpdateInformation information;
 					information.channel = identifier;
@@ -117,11 +115,6 @@ void UpdateChecker::runUpdateCheck()
 					{
 						information.version.append(QLatin1Char('#') + object[QLatin1String("subVersion")].toString());
 					}
-
-					mainVersion = channelMainVersion;
-					subVersion = channelSubVersion;
-					availableVersion = channelVersion;
-					availableChannel = identifier;
 
 					availableUpdates.append(information);
 				}
