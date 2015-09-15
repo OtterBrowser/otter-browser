@@ -245,7 +245,7 @@ Kas tahad tõesti sessiooni taastada?</translation>
     <message>
         <location filename="../../src/core/Application.cpp" line="496"/>
         <source>New update %1 from %2 channel is available!</source>
-        <translation type="unfinished"/>
+        <translation>Saadavl on uus väljalase %1 allikast %2 !</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="663"/>
@@ -1595,17 +1595,17 @@ Kas jätkad?</translation>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="96"/>
         <source>Import Opera Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>Impordi Opera järjekogu</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="97"/>
         <source>Import HTML Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>Impordi HTML järjekogu</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="99"/>
         <source>Import Opera Notes…</source>
-        <translation type="unfinished"/>
+        <translation>Impordi Opera märkmed</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="184"/>
@@ -1640,7 +1640,7 @@ Kas jätkad?</translation>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="319"/>
         <source>This Folder</source>
-        <translation type="unfinished"/>
+        <translation>See kaust</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="338"/>
@@ -1888,22 +1888,22 @@ Kas jätkad?</translation>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="109"/>
         <source>Import into folder:</source>
-        <translation type="unfinished"/>
+        <translation>Impordi kausta:</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="117"/>
         <source>Opera Notes</source>
-        <translation type="unfinished"/>
+        <translation>Opera märkmed</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="122"/>
         <source>Imports notes from Opera Browser version 12 or earlier</source>
-        <translation type="unfinished"/>
+        <translation>Impordi märkmed Opera 12-st või varasemast</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="132"/>
         <source>Opera notes files (notes.adr)</source>
-        <translation type="unfinished"/>
+        <translation>Opera mäkmefail (notes.adr)</translation>
     </message>
 </context>
 <context>
@@ -1924,12 +1924,12 @@ Kas jätkad?</translation>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.ui" line="61"/>
         <source>Save</source>
-        <translation type="unfinished"/>
+        <translation>Salvesta</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.ui" line="68"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Jäta</translation>
     </message>
 </context>
 <context>
@@ -2000,12 +2000,12 @@ Kas jätkad?</translation>
     <message>
         <location filename="../../src/core/PlatformIntegration.cpp" line="105"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Viga</translation>
     </message>
     <message>
         <location filename="../../src/core/PlatformIntegration.cpp" line="105"/>
         <source>Failed to install update.</source>
-        <translation type="unfinished"/>
+        <translation>Ei suutnud uuendust paigaldada.</translation>
     </message>
 </context>
 <context>
@@ -3870,7 +3870,7 @@ Kas salvestad muudatused või mitte?</translation>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="163"/>
         <source>Arrange</source>
-        <translation type="unfinished"/>
+        <translation>Korrasta</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="173"/>
@@ -4112,7 +4112,7 @@ Kas salvestad muudatused või mitte?</translation>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="190"/>
         <source>Arrange</source>
-        <translation type="unfinished"/>
+        <translation>Korrasta</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="460"/>
@@ -4220,72 +4220,72 @@ Kas kirjutad üle?
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="14"/>
         <source>Opening unknown file</source>
-        <translation type="unfinished"/>
+        <translation>Avan tundmatut faili</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="22"/>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>Nimi:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="29"/>
         <source>Type:</source>
-        <translation type="unfinished"/>
+        <translation>Liik:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="36"/>
         <source>Size:</source>
-        <translation type="unfinished"/>
+        <translation>Suurus:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="43"/>
         <source>From:</source>
-        <translation type="unfinished"/>
+        <translation>Allikas:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="50"/>
         <source>Open with:</source>
-        <translation type="unfinished"/>
+        <translation>Ava rakendusega:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="107"/>
         <source>Remember choice for this file type</source>
-        <translation type="unfinished"/>
+        <translation>Mäleta valikut selle failitüübi puhul</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="41"/>
         <source>unknown file</source>
-        <translation type="unfinished"/>
+        <translation>tundmatu fail</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="63"/>
         <source>Default Application</source>
-        <translation type="unfinished"/>
+        <translation>Peamine rakendus</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="69"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Tundmatu</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="79"/>
         <source>Opening %1</source>
-        <translation type="unfinished"/>
+        <translation>Avan %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="152"/>
         <source>unknown</source>
-        <translation type="unfinished"/>
+        <translation>tundmatu</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="156"/>
         <source>%1 (download completed)</source>
-        <translation type="unfinished"/>
+        <translation>%1 (allalaadimine lõppenud)</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/TransferDialog.cpp" line="162"/>
         <source>%1 (%n% downloaded)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%n% alla laetud)</numerusform><numerusform>%1 (%n% alla laetud)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4526,68 +4526,69 @@ Vali muu koht.</translation>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="51"/>
         <source>Checking for updates…</source>
-        <translation type="unfinished"/>
+        <translation>Uuenduste kontroll…</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="96"/>
         <source>There are no new updates.</source>
-        <translation type="unfinished"/>
+        <translation>Uuendusi pole.</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="102"/>
         <source>Available updates:</source>
-        <translation type="unfinished"/>
+        <translation>Saadaolev uuendus:</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="106"/>
         <source>Details…</source>
-        <translation type="unfinished"/>
+        <translation>Üksikasjad…</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="109"/>
         <source>Download</source>
-        <translation type="unfinished"/>
+        <translation>Lae alla</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="122"/>
         <source>Version %1 from %2 channel</source>
-        <translation type="unfinished"/>
+        <translation>Väljaanne %1 allikast %2 </translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="132"/>
         <source>Some of the updates does not contains packages for your platform. Try to check for updates later or visit details page for more info.</source>
-        <translation type="unfinished"/>
+        <translation>Uus väljaanne pole veel pakendatud sinu süsteemile sobivalt. Kontrolli uuendusi hiljem või külasta kodulehte üksikasjalikuma teabe saamiseks.</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="178"/>
         <source>Downloading:</source>
-        <translation type="unfinished"/>
+        <translation>Laeb alla:</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="193"/>
         <source>Download finished!</source>
-        <translation type="unfinished"/>
+        <translation>Allalaadimine lõppenud!</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="194"/>
         <source>Install</source>
-        <translation type="unfinished"/>
+        <translation>Paigalda</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="196"/>
         <source>New version of Otter Browser is ready to install.
 Click Install button to restart browser and install the update or close this dialog to install the update during next browser restart.</source>
-        <translation type="unfinished"/>
+        <translation>Otter brauseri uus väljaanne on paigaldamiseks valmis.
+Kui vajutad Paigalda, siis brauser taaskäivitatakse ja uuendus paigaldatakse. Kui vajutad Sulge, paigaldatakse uuendus järgmisel käivitamisel.</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="218"/>
         <source>Download failed!</source>
-        <translation type="unfinished"/>
+        <translation>Allalaadimine ebaõnnestus!</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="220"/>
         <source>Check Error Console for more information.</source>
-        <translation type="unfinished"/>
+        <translation>Vaata veakonsooli lisateabe saamiseks.</translation>
     </message>
 </context>
 <context>
@@ -6035,7 +6036,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="399"/>
         <source>Open current page with external application</source>
-        <translation type="unfinished"/>
+        <translation>Ava käeslev leht välimises rakenduses</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="400"/>
@@ -6050,7 +6051,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="402"/>
         <source>Inspect Element…</source>
-        <translation type="unfinished"/>
+        <translation>Uuri elementi</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="403"/>
@@ -6105,7 +6106,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="413"/>
         <source>Content Blocking…</source>
-        <translation type="unfinished"/>
+        <translation>Blokeeri sisu</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="414"/>
@@ -6115,7 +6116,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="415"/>
         <source>Clear History…</source>
-        <translation type="unfinished"/>
+        <translation>Kustuta ajalugu</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="416"/>
@@ -6132,12 +6133,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="418"/>
         <source>Preferences…</source>
-        <translation type="unfinished"/>
+        <translation>Eelistused</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="419"/>
         <source>Website Preferences…</source>
-        <translation type="unfinished"/>
+        <translation>Saidi eelistused</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="420"/>
@@ -6152,22 +6153,22 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="422"/>
         <source>Switch Application Language…</source>
-        <translation type="unfinished"/>
+        <translation>Vaheta rakenduse keelt</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="423"/>
         <source>Check for Updates…</source>
-        <translation type="unfinished"/>
+        <translation>Uuenduste kontroll…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="424"/>
         <source>About Otter…</source>
-        <translation type="unfinished"/>
+        <translation>Otteri kohta</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="425"/>
         <source>About Qt…</source>
-        <translation type="unfinished"/>
+        <translation>Qt kohta</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="426"/>
@@ -6217,27 +6218,27 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="472"/>
         <source>Edit Bookmark…</source>
-        <translation type="unfinished"/>
+        <translation>Muuda järge</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="673"/>
         <source>Edit Link Bookmark…</source>
-        <translation type="unfinished"/>
+        <translation>Muuda lingi järge</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="736"/>
         <source>Open Image in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Ava pilt uuel kaardil</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="781"/>
         <source>Save Video…</source>
-        <translation type="unfinished"/>
+        <translation>Salvesta video</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="781"/>
         <source>Save Audio…</source>
-        <translation type="unfinished"/>
+        <translation>Salvesta audio</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="787"/>
@@ -6408,12 +6409,12 @@ Error: %2</source>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="89"/>
         <source>Update Available</source>
-        <translation type="unfinished"/>
+        <translation>Uuendus saadaval</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="89"/>
         <source>Update is available to be downloaded</source>
-        <translation type="unfinished"/>
+        <translation>Uuendus allalaadimiseks saadaval</translation>
     </message>
 </context>
 </TS>

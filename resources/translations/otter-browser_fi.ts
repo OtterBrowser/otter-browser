@@ -245,7 +245,7 @@ Haluatko silti avata tämän istunnon?</translation>
     <message>
         <location filename="../../src/core/Application.cpp" line="496"/>
         <source>New update %1 from %2 channel is available!</source>
-        <translation type="unfinished"/>
+        <translation>Päivitys %1 kanavassa %2 saatavana!</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="663"/>

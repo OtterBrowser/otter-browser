@@ -1560,7 +1560,7 @@ Czy pomimo tego jesteś pewien, że chcesz przywrócić tę sesję?</translation
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="740"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.</source>
-        <translation>Przeglądarka &lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt; kontrolowana przez użytkownika, nie odwrotnie.</translation>
+        <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Przeglądarka internetowa kontrolowana przez użytkownika,&lt;br&gt;nie odwrotnie.</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="741"/>
@@ -4577,7 +4577,7 @@ Wybierz inną.</translation>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="196"/>
         <source>New version of Otter Browser is ready to install.
 Click Install button to restart browser and install the update or close this dialog to install the update during next browser restart.</source>
-        <translation>Nowa wersja przeglądarki Otter Browser jest gotowa do instalacji.
+        <translation>Nowa wersja Otter Browser jest gotowa do instalacji.
 Kliknij przycisk &quot;Zainstaluj&quot;, aby uruchomić ponownie przeglądarkę i zainstalować aktualizację, albo zamknij to okno dialogowe, aby zainstalować aktualizację podczas następnego uruchomienia przeglądarki.</translation>
     </message>
     <message>
@@ -6163,7 +6163,7 @@ Kliknij przycisk &quot;Zainstaluj&quot;, aby uruchomić ponownie przeglądarkę 
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="424"/>
         <source>About Otter…</source>
-        <translation>Informacje o Otterze…</translation>
+        <translation>Informacje o przeglądarce Otter…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="425"/>

@@ -535,12 +535,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="174"/>
         <source>Open in New Tab</source>
-        <translation>gau kalri bu&apos;u lo cnino tapla</translation>
+        <translation>gau kalri bu&apos;u lo cnino jgari</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="175"/>
         <source>Open in New Background Tab</source>
-        <translation>gau kalri bu&apos;u lo ctino tapla</translation>
+        <translation>gau kalri bu&apos;u lo ctino jgari</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="177"/>
@@ -739,12 +739,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="390"/>
         <source>Open in New Tab</source>
-        <translation>gau kalri bu&apos;u lo cnino tapla</translation>
+        <translation>gau kalri bu&apos;u lo cnino jgari</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="391"/>
         <source>Open in New Background Tab</source>
-        <translation>gau kalri bu&apos;u lo ctino tapla</translation>
+        <translation>gau kalri bu&apos;u lo ctino jgari</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="393"/>
@@ -898,12 +898,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="35"/>
         <source>All tabs</source>
-        <translation>lo ro tapla</translation>
+        <translation>lo ro jgari</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="40"/>
         <source>Current tab only</source>
-        <translation>ke po&apos;o lo ca tapla</translation>
+        <translation>ke po&apos;o lo ca jgari</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="45"/>
@@ -1264,12 +1264,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="401"/>
         <source>Open in New Tab</source>
-        <translation>gau kalri bu&apos;u lo cnino tapla</translation>
+        <translation>gau kalri bu&apos;u lo cnino jgari</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="402"/>
         <source>Open in New Background Tab</source>
-        <translation>gau kalri bu&apos;u lo ctino tapla</translation>
+        <translation>gau kalri bu&apos;u lo ctino jgari</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="404"/>
@@ -1411,7 +1411,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/ImportDialog.ui" line="22"/>
         <source>Source:</source>
-        <translation type="unfinished"/>
+        <translation>krasi</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="96"/>
@@ -1593,17 +1593,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="96"/>
         <source>Import Opera Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>importe lo se nelci pe la&apos;oi Opera</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="97"/>
         <source>Import HTML Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>importe lo HTML se nelci</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="99"/>
         <source>Import Opera Notes…</source>
-        <translation type="unfinished"/>
+        <translation>importe lo pinka pe la&apos;oi Opera</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="184"/>
@@ -1613,12 +1613,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="185"/>
         <source>Open in New Tab</source>
-        <translation>gau kalri bu&apos;u lo cnino tapla</translation>
+        <translation>gau kalri bu&apos;u lo cnino jgari</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="186"/>
         <source>Open in New Background Tab</source>
-        <translation>gau kalri bu&apos;u lo ctino tapla</translation>
+        <translation>gau kalri bu&apos;u lo ctino jgari</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="188"/>
@@ -2600,7 +2600,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="147"/>
         <source>Tabs</source>
-        <translation>loi tapla</translation>
+        <translation>loi jgari</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="154"/>
@@ -2615,7 +2615,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="168"/>
         <source>Reuse current tab</source>
-        <translation>za&apos;u re&apos;u pilno lo ca tapla</translation>
+        <translation>za&apos;u re&apos;u pilno lo ca jgari</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="175"/>
@@ -2625,7 +2625,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="184"/>
         <source>When closing tab:</source>
-        <translation>ca lo nu lo tapla gau ganlo</translation>
+        <translation>ca lo nu lo jgari gau ganlo</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="198"/>
@@ -3634,7 +3634,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="451"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>citri</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="456"/>
@@ -3683,7 +3683,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="476"/>
         <source>Source Viewer</source>
-        <translation type="unfinished"/>
+        <translation>tutci lo nu zgana lo krasi</translation>
     </message>
 </context>
 <context>
@@ -3692,7 +3692,7 @@ Do you want to save your changes or discard them?</source>
         <location filename="../../src/modules/windows/web/StartPageModel.cpp" line="175"/>
         <location filename="../../src/modules/windows/web/StartPageModel.cpp" line="176"/>
         <source>Add Tile…</source>
-        <translation type="unfinished"/>
+        <translation>jmina lo tapla</translation>
     </message>
 </context>
 <context>
@@ -3793,7 +3793,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="516"/>
         <source>Reload</source>
-        <translation type="unfinished"/>
+        <translation>za&apos;u re&apos;u cpacu</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="520"/>
@@ -3803,7 +3803,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="524"/>
         <source>Configure…</source>
-        <translation type="unfinished"/>
+        <translation>gau bredi li&apos;o</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="525"/>
@@ -3881,7 +3881,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="962"/>
         <source>Close Tab</source>
-        <translation>lo tapla gau ganlo</translation>
+        <translation>lo jgari gau ganlo</translation>
     </message>
 </context>
 <context>
@@ -4036,12 +4036,12 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="228"/>
         <source>Menu Bar</source>
-        <translation type="unfinished"/>
+        <translation>te cuxna kajna</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="232"/>
         <source>Menu Button</source>
-        <translation type="unfinished"/>
+        <translation>te cuxna batke</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="236"/>
@@ -4061,7 +4061,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="248"/>
         <source>Tab Bar</source>
-        <translation>lo plita kajna</translation>
+        <translation>lo jgari kajna</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="252"/>
@@ -4123,7 +4123,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="559"/>
         <source>Configure…</source>
-        <translation type="unfinished"/>
+        <translation>gau bredi li&apos;o</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="561"/>
@@ -4199,7 +4199,7 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/core/Transfer.cpp" line="607"/>
         <source>file</source>
-        <translation type="unfinished"/>
+        <translation>vreji</translation>
     </message>
 </context>
 <context>
@@ -4285,7 +4285,7 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="126"/>
         <source>Source:</source>
-        <translation type="unfinished"/>
+        <translation>krasi</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="136"/>
@@ -4312,7 +4312,7 @@ Do you want to overwrite it?
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="402"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="436"/>
         <source>Stop</source>
-        <translation type="unfinished"/>
+        <translation>co&apos;u cpacu</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="206"/>
@@ -4495,7 +4495,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="14"/>
         <source>Check for Updates</source>
-        <translation type="unfinished"/>
+        <translation>mitysisku lo cnino ve farvi</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="20"/>
@@ -4710,22 +4710,22 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1034"/>
         <source>30 Minutes</source>
-        <translation type="unfinished"/>
+        <translation>mentu be li 30</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1035"/>
         <source>1 Hour</source>
-        <translation type="unfinished"/>
+        <translation>cacra</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1036"/>
         <source>2 Hours</source>
-        <translation type="unfinished"/>
+        <translation>cacra be li 2</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1037"/>
         <source>6 Hours</source>
-        <translation type="unfinished"/>
+        <translation>cacra be li 6</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1038"/>
@@ -4826,7 +4826,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="278"/>
         <source>Remember browsing history</source>
-        <translation type="unfinished"/>
+        <translation>gau ru&apos;i vreji lo citri be lo nu vitke</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="299"/>
@@ -5203,7 +5203,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="242"/>
         <source>File</source>
-        <translation type="unfinished"/>
+        <translation>vreji</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="243"/>
@@ -5213,7 +5213,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="244"/>
         <source>Import and Export</source>
-        <translation type="unfinished"/>
+        <translation>importe i ekporte</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="245"/>
@@ -5295,12 +5295,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="263"/>
         <source>New Tab</source>
-        <translation>cnino tapla</translation>
+        <translation>cnino jgari</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="264"/>
         <source>New Private Tab</source>
-        <translation>cnino ke na&apos;e se jaspu tapla</translation>
+        <translation>cnino ke na&apos;e se jaspu jgari</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="265"/>
@@ -5325,18 +5325,18 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="269"/>
         <source>Clone Tab</source>
-        <translation>zbasu lo fukpi be lo tapla</translation>
+        <translation>zbasu lo fukpi be lo jgari</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="270"/>
         <location filename="../../src/ui/TabBarWidget.cpp" line="125"/>
         <source>Pin Tab</source>
-        <translation>lo tapla gau se lasna</translation>
+        <translation>lo jgari gau se lasna</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="271"/>
         <source>Detach Tab</source>
-        <translation>lo tapla gau na se jorne</translation>
+        <translation>lo jgari gau na se jorne</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="272"/>
@@ -5346,7 +5346,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="272"/>
         <source>Maximize Tab</source>
-        <translation>lo tapla gau barda</translation>
+        <translation>lo jgari gau barda</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="273"/>
@@ -5356,7 +5356,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="273"/>
         <source>Minimize Tab</source>
-        <translation>lo tapla gau cmalu</translation>
+        <translation>lo jgari gau cmalu</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="274"/>
@@ -5376,27 +5376,27 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="276"/>
         <source>Close Tab</source>
-        <translation>lo tapla gau ganlo</translation>
+        <translation>lo jgari gau ganlo</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="277"/>
         <source>Close Other Tabs</source>
-        <translation>lo drata tapla gau ganlo</translation>
+        <translation>lo drata jgari gau ganlo</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="278"/>
         <source>Close All Private Tabs</source>
-        <translation>gau ganlo fa lo ro na&apos;e se jaspu tapla</translation>
+        <translation>gau ganlo fa lo ro na&apos;e se jaspu jgari</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="278"/>
         <source>Close All Private Tabs in Current Window</source>
-        <translation>gau ganlo fa lo ro na&apos;e se jaspu tapla pe lo dei canko</translation>
+        <translation>gau ganlo fa lo ro na&apos;e se jaspu jgari pe lo dei canko</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="279"/>
         <source>Close Private Tabs and Windows</source>
-        <translation>gau ganlo fa lo ro na&apos;e se jaspu tapla e lo ro na&apos;e se jaspu canko</translation>
+        <translation>gau ganlo fa lo ro na&apos;e se jaspu jgari e lo ro na&apos;e se jaspu canko</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="280"/>
@@ -5452,19 +5452,19 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="290"/>
         <source>Open in This Tab</source>
-        <translation>gau kalri bu&apos;u lo ca tapla</translation>
+        <translation>gau kalri bu&apos;u lo ca jgari</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="291"/>
         <location filename="../../src/core/ActionsManager.cpp" line="306"/>
         <source>Open in New Tab</source>
-        <translation>gau kalri bu&apos;u lo cnino tapla</translation>
+        <translation>gau kalri bu&apos;u lo cnino jgari</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="292"/>
         <location filename="../../src/core/ActionsManager.cpp" line="307"/>
         <source>Open in New Background Tab</source>
-        <translation>gau kalri bu&apos;u lo ctino tapla</translation>
+        <translation>gau kalri bu&apos;u lo ctino jgari</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="293"/>
@@ -5479,12 +5479,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="295"/>
         <source>Open in New Private Tab</source>
-        <translation>gau kalri bu&apos;u lo cnino ke na&apos;e se jaspu tapla</translation>
+        <translation>gau kalri bu&apos;u lo cnino ke na&apos;e se jaspu jgari</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="296"/>
         <source>Open in New Private Background Tab</source>
-        <translation>gau kalri bu&apos;u lo cnino ke ctino ke na&apos;e se jaspu tapla</translation>
+        <translation>gau kalri bu&apos;u lo cnino ke ctino ke na&apos;e se jaspu jgari</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="297"/>
@@ -5564,12 +5564,12 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/core/ActionsManager.cpp" line="335"/>
         <location filename="../../src/core/ActionsManager.cpp" line="336"/>
         <source>Reload</source>
-        <translation type="unfinished"/>
+        <translation>za&apos;u re&apos;u cpacu</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="310"/>
         <source>Reload Frame</source>
-        <translation type="unfinished"/>
+        <translation>za&apos;u re&apos;u cpacu lo se greku</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="311"/>
@@ -5579,13 +5579,13 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="312"/>
         <source>Open Image In New Tab</source>
-        <translation>lo pixra gau kalri bu&apos;u lo cnino tapla</translation>
+        <translation>lo pixra gau kalri bu&apos;u lo cnino jgari</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="313"/>
         <location filename="../../src/ui/WebWidget.cpp" line="742"/>
         <source>Open Image in New Background Tab</source>
-        <translation>lo pixra gau kalri bu&apos;u lo cnino ke ctino tapla</translation>
+        <translation>lo pixra gau kalri bu&apos;u lo cnino ke ctino jgari</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="314"/>
@@ -5605,7 +5605,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="317"/>
         <source>Reload Image</source>
-        <translation type="unfinished"/>
+        <translation>za&apos;u re&apos;u cpacu lo pixra</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="318"/>
@@ -5677,17 +5677,17 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="331"/>
         <source>Rewind</source>
-        <translation type="unfinished"/>
+        <translation>volve</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="332"/>
         <source>Fast Forward</source>
-        <translation type="unfinished"/>
+        <translation>se lidne</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="333"/>
         <source>Stop</source>
-        <translation type="unfinished"/>
+        <translation>co&apos;u cpacu</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="334"/>
@@ -5697,7 +5697,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="336"/>
         <source>Reload or Stop</source>
-        <translation type="unfinished"/>
+        <translation>za&apos;u re&apos;u jo nai co&apos;u cpacu</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="337"/>
@@ -5707,12 +5707,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="338"/>
         <source>Reload All Tabs</source>
-        <translation>za&apos;ure&apos;u cpacu ro lo tapla</translation>
+        <translation>za&apos;u re&apos;u cpacu lo ro jgari</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="339"/>
         <source>Reload Every</source>
-        <translation type="unfinished"/>
+        <translation>za&apos;u re&apos;u cpacu ca ro </translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="340"/>
@@ -6009,7 +6009,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="398"/>
         <source>View Source</source>
-        <translation type="unfinished"/>
+        <translation>zgana lo krasi</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="399"/>
@@ -6034,12 +6034,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="403"/>
         <source>Work Offline</source>
-        <translation type="unfinished"/>
+        <translation>pilno fau lo nu na jorne</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="404"/>
         <source>Full Screen</source>
-        <translation type="unfinished"/>
+        <translation>mulno vidni</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="405"/>
@@ -6049,12 +6049,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="406"/>
         <source>Show Menubar</source>
-        <translation type="unfinished"/>
+        <translation>zgana lo te cuxna kajna</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="407"/>
         <source>Show Tabbar</source>
-        <translation>zgana lo plita kajna</translation>
+        <translation>zgana lo jgari kajna</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="408"/>
@@ -6074,7 +6074,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="411"/>
         <source>Open Panel as Tab</source>
-        <translation>lo plita gau kalri bu&apos;u lo tapla</translation>
+        <translation>lo plita gau kalri bu&apos;u lo jgari</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="412"/>
@@ -6089,12 +6089,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="414"/>
         <source>View History</source>
-        <translation type="unfinished"/>
+        <translation>tcidu lo citri</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="415"/>
         <source>Clear History…</source>
-        <translation type="unfinished"/>
+        <translation>vimcu lo ro se citri li&apos;o</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="416"/>
@@ -6156,12 +6156,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="46"/>
         <source>Menu Bar</source>
-        <translation type="unfinished"/>
+        <translation>te cuxna kajna</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="47"/>
         <source>Tab Bar</source>
-        <translation>lo plita kajna</translation>
+        <translation>lo jgari kajna</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="48"/>
@@ -6186,7 +6186,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="125"/>
         <source>Unpin Tab</source>
-        <translation>lo tapla gau na se lasna</translation>
+        <translation>lo jgari gau na se lasna</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="38"/>
