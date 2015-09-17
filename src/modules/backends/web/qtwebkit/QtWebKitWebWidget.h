@@ -95,7 +95,7 @@ protected:
 		PositionEntryData = 2
 	};
 
-	explicit QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebKitNetworkManager *networkManager, ContentsWidget *parent = NULL);
+	explicit QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebKitNetworkManager *networkManager = NULL, ContentsWidget *parent = NULL);
 
 	void focusInEvent(QFocusEvent *event);
 	void clearPluginToken();
