@@ -54,11 +54,11 @@ void BookmarksComboBoxWidget::createFolder()
 		switch (m_mode)
 		{
 			case BookmarksModel::BookmarksMode:
-				setCurrentFolder(BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, QUrl(), title, getCurrentFolder())->index());
+				setCurrentFolder(BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, QUrl(), title, getCurrentFolder()));
 
 				break;
 			case BookmarksModel::NotesMode:
-				setCurrentFolder(NotesManager::addNote(BookmarksModel::FolderBookmark, QUrl(), title, getCurrentFolder())->index());
+				setCurrentFolder(NotesManager::addNote(BookmarksModel::FolderBookmark, QUrl(), title, getCurrentFolder()));
 
 				break;
 			default:
@@ -96,13 +96,13 @@ void BookmarksComboBoxWidget::updateBranch(QStandardItem *branch)
 	m_view->expandAll();
 }
 
-void BookmarksComboBoxWidget::setCurrentFolder(const QModelIndex &index)
+void BookmarksComboBoxWidget::setCurrentFolder(BookmarksItem *folder)
 {
-	m_index = index;
+	m_index = (folder ? folder->index() : QModelIndex());
 
-	setRootModelIndex(index.parent());
+	setRootModelIndex(m_index.parent());
 	setModelColumn(0);
-	setCurrentIndex(index.row());
+	setCurrentIndex(m_index.row());
 	setRootModelIndex(QModelIndex());
 }
 

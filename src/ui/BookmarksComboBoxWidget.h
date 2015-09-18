@@ -39,7 +39,7 @@ class BookmarksComboBoxWidget : public QComboBox
 public:
 	explicit BookmarksComboBoxWidget(QWidget *parent = NULL);
 
-	void setCurrentFolder(const QModelIndex &index);
+	void setCurrentFolder(BookmarksItem *folder);
 	void setMode(BookmarksModel::FormatMode mode);
 	BookmarksItem* getCurrentFolder();
 	bool eventFilter(QObject *object, QEvent *event);

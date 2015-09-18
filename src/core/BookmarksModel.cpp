@@ -680,6 +680,11 @@ BookmarksItem* BookmarksModel::getBookmark(const QString &keyword) const
 
 BookmarksItem* BookmarksModel::getBookmark(quint64 identifier) const
 {
+	if (identifier == 0)
+	{
+		return getRootItem();
+	}
+
 	if (m_identifiers.contains(identifier))
 	{
 		return m_identifiers[identifier];
@@ -703,6 +708,11 @@ BookmarksItem* BookmarksModel::getItem(const QString &path) const
 	if (path == QLatin1String("/"))
 	{
 		return getRootItem();
+	}
+
+	if (path.startsWith(QLatin1Char('#')))
+	{
+		return getBookmark(path.mid(1).toULongLong());
 	}
 
 	QStandardItem *item = getRootItem();

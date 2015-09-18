@@ -86,8 +86,16 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : QDialog(parent),
 			break;
 	}
 
-	if (!m_definition.bookmarksPath.isEmpty())
+	if (m_definition.bookmarksPath.isEmpty())
 	{
+		m_ui->folderLabel->setParent(NULL);
+		m_ui->folderLabel->deleteLater();
+		m_ui->folderComboBox->setParent(NULL);
+		m_ui->folderComboBox->deleteLater();
+	}
+	else
+	{
+		m_ui->folderComboBox->setCurrentFolder(BookmarksManager::getModel()->getItem(m_definition.bookmarksPath));
 		m_ui->optionsHeader->hide();
 		m_ui->arrangementWidget->hide();
 	}
@@ -342,6 +350,11 @@ ToolBarDefinition ToolBarDialog::getDefinition()
 		action.options = m_ui->currentEntriesItemView->model()->index(i, 0).data(Qt::UserRole + 1).toMap();
 
 		m_definition.actions.append(action);
+	}
+
+	if (!m_definition.bookmarksPath.isEmpty())
+	{
+		m_definition.bookmarksPath = QLatin1Char('#') + QString::number(m_ui->folderComboBox->getCurrentFolder()->data(BookmarksModel::IdentifierRole).toULongLong());
 	}
 
 	return m_definition;
