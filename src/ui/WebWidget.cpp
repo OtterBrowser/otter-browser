@@ -1540,24 +1540,22 @@ bool WebWidget::handleWheelEvent(QWheelEvent *event, bool canPropagate, QObject 
 {
 	Q_UNUSED(sender)
 
+	if (event->buttons() == Qt::RightButton)
 	{
-		if (event->buttons() == Qt::RightButton)
-		{
-			m_ignoreContextMenuNextTime = true;
+		m_ignoreContextMenuNextTime = true;
 
-			event->ignore();
+		event->ignore();
 
-			return false;
-		}
+		return false;
+	}
 
-		if (event->modifiers().testFlag(Qt::ControlModifier))
-		{
-			setZoom(getZoom() + (event->delta() / 16));
+	if (event->modifiers().testFlag(Qt::ControlModifier))
+	{
+		setZoom(getZoom() + (event->delta() / 16));
 
-			event->accept();
+		event->accept();
 
-			return true;
-		}
+		return true;
 	}
 
 	if (canPropagate)
