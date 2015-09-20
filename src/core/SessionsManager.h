@@ -67,7 +67,7 @@ struct SessionWindow
 	bool isAlwaysOnTop;
 	bool isPinned;
 
-	SessionWindow() : state(NormalWindowState), group(0), index(-1), reloadTime(-1), isAlwaysOnTop(false), isPinned(false) {}
+	SessionWindow() : state((SettingsManager::getValue(QLatin1String("Interface/NewTabOpeningAction")).toString() == QLatin1String("maximizeTab")) ? MaximizedWindowState : NormalWindowState), group(0), index(-1), reloadTime(-1), isAlwaysOnTop(false), isPinned(false) {}
 
 	QString getUrl() const
 	{
