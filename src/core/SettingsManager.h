@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -34,9 +34,7 @@ class SettingsManager : public QObject
 
 public:
 	static void createInstance(const QString &path, QObject *parent = NULL);
-	static void registerOption(const QString &key);
 	static void removeOverride(const QUrl &url, const QString &key = QString());
-	static void setDefaultValue(const QString &key, const QVariant &value);
 	static void setValue(const QString &key, const QVariant &value, const QUrl &url = QUrl());
 	static SettingsManager* getInstance();
 	static QVariant getDefaultValue(const QString &key);

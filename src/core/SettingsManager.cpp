@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@
 
 #include <QtCore/QFileInfo>
 #include <QtCore/QSettings>
+#include <QtCore/QStandardPaths>
 
 namespace Otter
 {
@@ -42,14 +43,27 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 		m_instance = new SettingsManager(parent);
 		m_globalPath = path + QLatin1String("/otter.conf");
 		m_overridePath = path + QLatin1String("/override.ini");
+
+		QSettings defaults(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat);
+		const QStringList groups = defaults.childGroups();
+
+		for (int i = 0; i < groups.count(); ++i)
+		{
+			defaults.beginGroup(groups.at(i));
+
+			const QStringList keys = defaults.childGroups();
+
+			for (int j = 0; j < keys.count(); ++j)
+			{
+				m_defaults[QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j))] = defaults.value(QStringLiteral("%1/value").arg(keys.at(j)));
+			}
+
+			defaults.endGroup();
+		}
+
+		m_defaults[QLatin1String("Paths/Downloads")] = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
+		m_defaults[QLatin1String("Paths/SaveFile")] = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
 	}
-}
-
-void SettingsManager::registerOption(const QString &key)
-{
-	QSettings(m_globalPath, QSettings::IniFormat).remove(key);
-
-	emit m_instance->valueChanged(key, getValue(key));
 }
 
 void SettingsManager::removeOverride(const QUrl &url, const QString &key)
@@ -62,13 +76,6 @@ void SettingsManager::removeOverride(const QUrl &url, const QString &key)
 	{
 		QSettings(m_overridePath, QSettings::IniFormat).remove((url.isLocalFile() ? QLatin1String("localhost") : url.host()) + QLatin1Char('/') + key);
 	}
-}
-
-void SettingsManager::setDefaultValue(const QString &key, const QVariant &value)
-{
-	m_defaults[key] = value;
-
-	emit m_instance->valueChanged(key, getValue(key));
 }
 
 void SettingsManager::setValue(const QString &key, const QVariant &value, const QUrl &url)

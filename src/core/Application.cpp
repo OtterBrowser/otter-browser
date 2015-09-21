@@ -58,7 +58,6 @@
 #include <QtCore/QFileInfo>
 #include <QtCore/QLibraryInfo>
 #include <QtCore/QLocale>
-#include <QtCore/QSettings>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QTranslator>
 #include <QtNetwork/QLocalSocket>
@@ -220,26 +219,6 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	Console::createInstance(this);
 
 	SettingsManager::createInstance(profilePath, this);
-
-	QSettings defaults(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat, this);
-	const QStringList groups = defaults.childGroups();
-
-	for (int i = 0; i < groups.count(); ++i)
-	{
-		defaults.beginGroup(groups.at(i));
-
-		const QStringList keys = defaults.childGroups();
-
-		for (int j = 0; j < keys.count(); ++j)
-		{
-			SettingsManager::setDefaultValue(QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j)), defaults.value(QStringLiteral("%1/value").arg(keys.at(j))));
-		}
-
-		defaults.endGroup();
-	}
-
-	SettingsManager::setDefaultValue(QLatin1String("Paths/Downloads"), QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
-	SettingsManager::setDefaultValue(QLatin1String("Paths/SaveFile"), QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
 
 	SessionsManager::createInstance(profilePath, cachePath, isPrivate, this);
 
