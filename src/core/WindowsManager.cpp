@@ -364,6 +364,8 @@ void WindowsManager::closeAll()
 
 void WindowsManager::restore(const SessionMainWindow &session)
 {
+	int index = session.index;
+
 	if (session.windows.isEmpty())
 	{
 		m_isRestored = true;
@@ -384,6 +386,11 @@ void WindowsManager::restore(const SessionMainWindow &session)
 			Window *window = new Window(m_isPrivate);
 			window->setSession(session.windows.at(i));
 
+			if (index < 0 && session.windows.at(i).state != MinimizedWindowState)
+			{
+				index = i;
+			}
+
 			addWindow(window, DefaultOpen, -1, session.windows.at(i).geometry, session.windows.at(i).state, session.windows.at(i).isAlwaysOnTop);
 		}
 	}
@@ -398,7 +405,7 @@ void WindowsManager::restore(const SessionMainWindow &session)
 	connect(m_mainWindow->getTabBar(), SIGNAL(requestedClose(int)), this, SLOT(close(int)));
 	connect(m_mainWindow->getTabBar(), SIGNAL(requestedCloseOther(int)), this, SLOT(closeOther(int)));
 
-	setActiveWindowByIndex(session.index);
+	setActiveWindowByIndex(index);
 
 	m_mainWindow->getWorkspace()->markRestored();
 }
