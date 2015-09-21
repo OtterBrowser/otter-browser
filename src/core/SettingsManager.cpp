@@ -113,15 +113,15 @@ QString SettingsManager::getReport()
 	QString report;
 	QTextStream stream(&report);
 	stream.setFieldAlignment(QTextStream::AlignLeft);
-	stream << QLatin1String("Settings\n");
+	stream << QLatin1String("Settings:\n");
 
 	QStringList excludeValues;
 	QSettings defaults(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat);
-	const QStringList groups = defaults.childGroups();
+	const QStringList defaultsGroups = defaults.childGroups();
 
-	for (int i = 0; i < groups.count(); ++i)
+	for (int i = 0; i < defaultsGroups.count(); ++i)
 	{
-		defaults.beginGroup(groups.at(i));
+		defaults.beginGroup(defaultsGroups.at(i));
 
 		const QStringList keys = defaults.childGroups();
 
@@ -131,11 +131,36 @@ QString SettingsManager::getReport()
 
 			if (type == QLatin1String("string") || type == QLatin1String("path"))
 			{
-				excludeValues.append(QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j)));
+				excludeValues.append(QStringLiteral("%1/%2").arg(defaultsGroups.at(i)).arg(keys.at(j)));
 			}
 		}
 
 		defaults.endGroup();
+	}
+
+	QHash<QString, int> overridenValues;
+	QSettings overrides(m_overridePath, QSettings::IniFormat);
+	const QStringList overridesGroups = overrides.childGroups();
+
+	for (int i = 0; i < overridesGroups.count(); ++i)
+	{
+		overrides.beginGroup(overridesGroups.at(i));
+
+		const QStringList keys = overrides.allKeys();
+
+		for (int j = 0; j < keys.count(); ++j)
+		{
+			if (overridenValues.contains(keys.at(j)))
+			{
+				++overridenValues[keys.at(j)];
+			}
+			else
+			{
+				overridenValues[keys.at(j)] = 1;
+			}
+		}
+
+		overrides.endGroup();
 	}
 
 	QStringList keys = m_defaults.keys();
@@ -158,6 +183,7 @@ QString SettingsManager::getReport()
 		}
 
 		stream << ((m_defaults[keys.at(i)] == getValue(keys.at(i))) ? QLatin1String("default") : QLatin1String("non default"));
+		stream << (overridenValues.contains(keys.at(i)) ? QStringLiteral("%1 override(s)").arg(overridenValues[keys.at(i)]) : QLatin1String("no overrides"));
 		stream.setFieldWidth(0);
 		stream << QLatin1Char('\n');
 	}
