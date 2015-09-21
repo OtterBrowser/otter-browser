@@ -37,6 +37,7 @@ public:
 	static void removeOverride(const QUrl &url, const QString &key = QString());
 	static void setValue(const QString &key, const QVariant &value, const QUrl &url = QUrl());
 	static SettingsManager* getInstance();
+	static QString getReport();
 	static QVariant getDefaultValue(const QString &key);
 	static QVariant getValue(const QString &key, const QUrl &url = QUrl());
 	static bool hasOverride(const QUrl &url, const QString &key = QString());

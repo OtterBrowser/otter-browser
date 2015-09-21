@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 	Application application(argc, argv);
 	application.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 
-	if (application.isRunning() || application.isUpdating())
+	if (application.isRunning() || application.isUpdating() || application.getCommandLineParser()->isSet(QLatin1String("report")))
 	{
 		return 0;
 	}

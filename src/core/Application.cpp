@@ -106,6 +106,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("privatesession"), QCoreApplication::translate("main", "Starts private session")));
 	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("sessionchooser"), QCoreApplication::translate("main", "Forces session chooser dialog")));
 	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("portable"), QCoreApplication::translate("main", "Sets profile and cache paths to directories inside the same directory as that of application binary")));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("report"), QCoreApplication::translate("main", "Prints out diagnostic report and exits application")));
 
 	QStringList arguments = this->arguments();
 	const QString argumentsPath = QDir::current().filePath(QLatin1String("arguments.txt"));
@@ -170,6 +171,78 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	}
 
 	cachePath = QFileInfo(cachePath).absoluteFilePath();
+
+	if (m_commandLineParser.isSet(QLatin1String("report")))
+	{
+		Console::createInstance(this);
+
+		SettingsManager::createInstance(profilePath, this);
+
+		SessionsManager::createInstance(profilePath, cachePath, isPrivate, this);
+
+		QTextStream stream(stdout);
+		stream.setFieldAlignment(QTextStream::AlignLeft);
+		stream << QLatin1String("Otter Browser diagnostic report created on ") << QDateTime::currentDateTimeUtc().toString(Qt::ISODate);
+		stream << QLatin1String("\n\nVersion:\n\t");
+		stream.setFieldWidth(20);
+		stream << QLatin1String("Main Number");
+		stream << OTTER_VERSION_MAIN;
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\t");
+		stream.setFieldWidth(20);
+		stream << QLatin1String("Weekly Number");
+		stream << OTTER_VERSION_WEEKLY;
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\t");
+		stream.setFieldWidth(20);
+		stream << QLatin1String("Context");
+		stream << OTTER_VERSION_CONTEXT;
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\nPaths:\n\t");
+		stream.setFieldWidth(20);
+		stream << QLatin1String("Profile");
+		stream << profilePath;
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\t");
+		stream.setFieldWidth(20);
+		stream << QLatin1String("Configuration");
+		stream << SessionsManager::getWritableDataPath(QLatin1String("otter.conf"));
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\t");
+		stream.setFieldWidth(20);
+		stream << QLatin1String("Session");
+		stream << SessionsManager::getSessionPath(SessionsManager::getCurrentSession());
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\t");
+		stream.setFieldWidth(20);
+		stream << QLatin1String("Overrides");
+		stream << SessionsManager::getWritableDataPath(QLatin1String("override.ini"));
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\t");
+		stream.setFieldWidth(20);
+		stream << QLatin1String("Bookmarks");
+		stream << SessionsManager::getWritableDataPath("bookmarks.xbel");
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\t");
+		stream.setFieldWidth(20);
+		stream << QLatin1String("Notes");
+		stream << SessionsManager::getWritableDataPath("notes.xbel");
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\t");
+		stream.setFieldWidth(20);
+		stream << QLatin1String("History");
+		stream << SessionsManager::getWritableDataPath("browsingHistory.sqlite");
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\t");
+		stream.setFieldWidth(20);
+		stream << QLatin1String("Cache");
+		stream << cachePath;
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\n");
+		stream << SettingsManager::getReport();
+
+		return;
+	}
 
 	QCryptographicHash hash(QCryptographicHash::Md5);
 	hash.addData(profilePath.toUtf8());

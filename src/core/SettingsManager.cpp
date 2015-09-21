@@ -23,6 +23,7 @@
 #include <QtCore/QFileInfo>
 #include <QtCore/QSettings>
 #include <QtCore/QStandardPaths>
+#include <QtCore/QTextStream>
 
 namespace Otter
 {
@@ -105,6 +106,65 @@ void SettingsManager::setValue(const QString &key, const QVariant &value, const 
 SettingsManager* SettingsManager::getInstance()
 {
 	return m_instance;
+}
+
+QString SettingsManager::getReport()
+{
+	QString report;
+	QTextStream stream(&report);
+	stream.setFieldAlignment(QTextStream::AlignLeft);
+	stream << QLatin1String("Settings\n");
+
+	QStringList excludeValues;
+	QSettings defaults(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat);
+	const QStringList groups = defaults.childGroups();
+
+	for (int i = 0; i < groups.count(); ++i)
+	{
+		defaults.beginGroup(groups.at(i));
+
+		const QStringList keys = defaults.childGroups();
+
+		for (int j = 0; j < keys.count(); ++j)
+		{
+			const QString type = defaults.value(QStringLiteral("%1/type").arg(keys.at(j))).toString();
+
+			if (type == QLatin1String("string") || type == QLatin1String("path"))
+			{
+				excludeValues.append(QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j)));
+			}
+		}
+
+		defaults.endGroup();
+	}
+
+	QStringList keys = m_defaults.keys();
+	keys.sort();
+
+	for (int i = 0; i < keys.count(); ++i)
+	{
+		stream << QLatin1Char('\t');
+		stream.setFieldWidth(50);
+		stream << keys.at(i);
+		stream.setFieldWidth(20);
+
+		if (excludeValues.contains(keys.at(i)))
+		{
+			stream << QLatin1Char('-');
+		}
+		else
+		{
+			stream << m_defaults[keys.at(i)].toString();
+		}
+
+		stream << ((m_defaults[keys.at(i)] == getValue(keys.at(i))) ? QLatin1String("default") : QLatin1String("non default"));
+		stream.setFieldWidth(0);
+		stream << QLatin1Char('\n');
+	}
+
+	stream << QLatin1Char('\n');
+
+	return report;
 }
 
 QVariant SettingsManager::getDefaultValue(const QString &key)
