@@ -70,6 +70,7 @@ namespace Otter
 
 QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebKitNetworkManager *networkManager, ContentsWidget *parent) : WebWidget(isPrivate, backend, parent),
 	m_webView(new QWebView(this)),
+	m_inspectorView(NULL),
 	m_page(NULL),
 	m_pluginFactory(new QtWebKitPluginFactory(this)),
 	m_inspector(NULL),
@@ -1361,6 +1362,13 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				m_splitter->addWidget(m_inspector);
 
+				m_inspectorView = m_inspector->findChild<QWebView*>();
+
+				if (m_inspectorView)
+				{
+					m_inspectorView->installEventFilter(this);
+				}
+
 				m_inspectorCloseButton = new QToolButton(m_inspector);
 				m_inspectorCloseButton->setAutoFillBackground(false);
 				m_inspectorCloseButton->setAutoRaise(true);
@@ -2252,6 +2260,10 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 	else if (object == m_inspector && (event->type() == QEvent::Move || event->type() == QEvent::Resize) && m_inspectorCloseButton)
 	{
 		m_inspectorCloseButton->move(QPoint((m_inspector->width() - 19), 3));
+	}
+	else if (object == m_inspectorView && event->type() == QEvent::ContextMenu)
+	{
+		return true;
 	}
 
 	return QObject::eventFilter(object, event);

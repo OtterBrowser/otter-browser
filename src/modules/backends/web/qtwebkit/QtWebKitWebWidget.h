@@ -142,6 +142,7 @@ protected slots:
 
 private:
 	QWebView *m_webView;
+	QWebView *m_inspectorView;
 	QtWebKitPage *m_page;
 	QtWebKitPluginFactory *m_pluginFactory;
 	QWebInspector *m_inspector;
