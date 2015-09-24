@@ -930,7 +930,18 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::CopyImageToClipboardAction:
-			m_webView->page()->triggerAction(QWebPage::CopyImageToClipboard);
+			{
+				const QWebHitTestResult hitResult = m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position);
+
+				if (!hitResult.pixmap().isNull())
+				{
+					QApplication::clipboard()->setPixmap(hitResult.pixmap());
+				}
+				else
+				{
+					m_webView->page()->triggerAction(QWebPage::CopyImageToClipboard);
+				}
+			}
 
 			return;
 		case ActionsManager::CopyImageUrlToClipboardAction:
