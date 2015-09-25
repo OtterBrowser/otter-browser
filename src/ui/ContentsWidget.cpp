@@ -23,9 +23,7 @@
 namespace Otter
 {
 
-ContentsWidget::ContentsWidget(Window *window) : QWidget(window),
-	m_layer(NULL),
-	m_layerTimer(0)
+ContentsWidget::ContentsWidget(Window *window) : QWidget(window)
 {
 	if (window)
 	{
@@ -33,39 +31,17 @@ ContentsWidget::ContentsWidget(Window *window) : QWidget(window),
 	}
 }
 
-void ContentsWidget::timerEvent(QTimerEvent *event)
-{
-	if (event->timerId() == m_layerTimer)
-	{
-		killTimer(m_layerTimer);
-
-		m_layerTimer = 0;
-
-		if (m_layer)
-		{
-			m_layer->hide();
-			m_layer->deleteLater();
-			m_layer = NULL;
-		}
-	}
-}
-
 void ContentsWidget::showEvent(QShowEvent *event)
 {
 	QWidget::showEvent(event);
 
-	if (m_layer)
+	for (int i = 0; i < m_dialogs.count(); ++i)
 	{
-		m_layer->resize(size());
-
-		for (int i = 0; i < m_dialogs.count(); ++i)
+		if (m_dialogs.at(i))
 		{
-			if (m_dialogs.at(i))
-			{
-				m_dialogs.at(i)->raise();
-				m_dialogs.at(i)->adjustSize();
-				m_dialogs.at(i)->move(geometry().center() - QRect(QPoint(0, 0), m_dialogs.at(i)->size()).center());
-			}
+			m_dialogs.at(i)->raise();
+			m_dialogs.at(i)->adjustSize();
+			m_dialogs.at(i)->move(geometry().center() - QRect(QPoint(0, 0), m_dialogs.at(i)->size()).center());
 		}
 	}
 }
@@ -74,17 +50,12 @@ void ContentsWidget::resizeEvent(QResizeEvent *event)
 {
 	QWidget::resizeEvent(event);
 
-	if (m_layer)
+	for (int i = 0; i < m_dialogs.count(); ++i)
 	{
-		m_layer->resize(size());
-
-		for (int i = 0; i < m_dialogs.count(); ++i)
+		if (m_dialogs.at(i))
 		{
-			if (m_dialogs.at(i))
-			{
-				m_dialogs.at(i)->raise();
-				m_dialogs.at(i)->move(geometry().center() - QRect(QPoint(0, 0), m_dialogs.at(i)->size()).center());
-			}
+			m_dialogs.at(i)->raise();
+			m_dialogs.at(i)->move(geometry().center() - QRect(QPoint(0, 0), m_dialogs.at(i)->size()).center());
 		}
 	}
 }
@@ -123,6 +94,14 @@ void ContentsWidget::close()
 	}
 }
 
+void ContentsWidget::lockContents()
+{
+}
+
+void ContentsWidget::unlockContents()
+{
+}
+
 void ContentsWidget::cleanupDialog()
 {
 	ContentsDialog *dialog = qobject_cast<ContentsDialog*>(sender());
@@ -135,9 +114,9 @@ void ContentsWidget::cleanupDialog()
 		dialog->deleteLater();
 	}
 
-	if (m_dialogs.isEmpty() && m_layer && m_layerTimer == 0)
+	if (m_dialogs.isEmpty())
 	{
-		m_layerTimer = startTimer(100);
+		unlockContents();
 	}
 }
 
@@ -157,49 +136,13 @@ void ContentsWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 		return;
 	}
 
-	if (m_layerTimer != 0)
-	{
-		killTimer(m_layerTimer);
-
-		m_layerTimer = 0;
-	}
+	lockContents();
 
 	m_dialogs.append(dialog);
 
-#ifdef Q_OS_WIN32
-	if (lockEventLoop)
-	{
-#endif
-	if (!m_layer)
-	{
-		QPalette palette = this->palette();
-		palette.setColor(QPalette::Window, QColor(0, 0, 0, 70));
-
-		m_layer = new QWidget(this);
-		m_layer->setAutoFillBackground(true);
-		m_layer->setPalette(palette);
-		m_layer->resize(size());
-		m_layer->show();
-		m_layer->raise();
-	}
-#ifdef Q_OS_WIN32
-	}
-#endif
-
 	connect(dialog, SIGNAL(finished()), this, SLOT(cleanupDialog()));
 
-#ifdef Q_OS_WIN32
-	if (!lockEventLoop)
-	{
-		dialog->setParent(this);
-	}
-	else
-	{
-#endif
-	dialog->setParent(m_layer);
-#ifdef Q_OS_WIN32
-	}
-#endif
+	dialog->setParent(this);
 	dialog->show();
 	dialog->raise();
 	dialog->setFocus();

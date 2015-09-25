@@ -32,7 +32,9 @@
 #include <QtGui/QClipboard>
 #include <QtGui/QGuiApplication>
 #include <QtGui/QMouseEvent>
+#include <QtGui/QPainter>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QGraphicsOpacityEffect>
 
 namespace Otter
 {
@@ -150,6 +152,19 @@ void WebContentsWidget::timerEvent(QTimerEvent *event)
 	}
 
 	ContentsWidget::timerEvent(event);
+}
+
+void WebContentsWidget::paintEvent(QPaintEvent *event)
+{
+	if (!m_webWidget || m_webWidget->isEnabled())
+	{
+		QWidget::paintEvent(event);
+
+		return;
+	}
+
+	QPainter painter(this);
+	painter.fillRect(geometry(), QColor(Qt::gray));
 }
 
 void WebContentsWidget::focusInEvent(QFocusEvent *event)
@@ -556,6 +571,33 @@ void WebContentsWidget::scrollContents(const QPoint &delta)
 	else if (m_webWidget)
 	{
 		m_webWidget->setScrollPosition(m_webWidget->getScrollPosition() + delta);
+	}
+}
+
+void WebContentsWidget::lockContents()
+{
+	if (m_webWidget && !m_webWidget->isLocked())
+	{
+		m_webWidget->setLocked(true);
+
+		QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect(m_webWidget);
+		effect->setOpacity(0.5);
+
+		m_webWidget->setGraphicsEffect(effect);
+	}
+}
+
+void WebContentsWidget::unlockContents()
+{
+	if (m_webWidget)
+	{
+		m_webWidget->setLocked(false);
+
+		if (m_webWidget->graphicsEffect())
+		{
+			m_webWidget->graphicsEffect()->deleteLater();
+			m_webWidget->setGraphicsEffect(NULL);
+		}
 	}
 }
 

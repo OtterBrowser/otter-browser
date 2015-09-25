@@ -62,6 +62,7 @@ WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent
 	m_reloadTimer(0),
 	m_ignoreContextMenu(false),
 	m_ignoreContextMenuNextTime(false),
+	m_isLocked(false),
 	m_isUsingRockerNavigation(false)
 {
 	Q_UNUSED(isPrivate)
@@ -374,6 +375,11 @@ void WebWidget::openUrl(const QUrl &url, OpenHints hints)
 
 void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 {
+	if (m_isLocked)
+	{
+		return;
+	}
+
 	const HitTestResult hitResult = getHitTestResult(event->pos());
 	const QString toolTipsMode = SettingsManager::getValue(QLatin1String("Browser/ToolTipsMode")).toString();
 	const QString link = (hitResult.linkUrl.isValid() ? hitResult.linkUrl : hitResult.formUrl).toString();
@@ -869,6 +875,11 @@ void WebWidget::updateBookmarkActions()
 	updateLinkActions();
 }
 
+void WebWidget::setLocked(bool isLocked)
+{
+	m_isLocked = isLocked;
+}
+
 void WebWidget::setAlternateStyleSheets(const QStringList &styleSheets)
 {
 	m_alternateStyleSheets = styleSheets;
@@ -1346,6 +1357,11 @@ bool WebWidget::handleContextMenuEvent(QContextMenuEvent *event, bool canPropaga
 {
 	Q_UNUSED(sender)
 
+	if (m_isLocked)
+	{
+		return true;
+	}
+
 	m_contextMenuReason = event->reason();
 	m_ignoreContextMenu = (event->reason() == QContextMenuEvent::Mouse);
 
@@ -1364,6 +1380,11 @@ bool WebWidget::handleContextMenuEvent(QContextMenuEvent *event, bool canPropaga
 
 bool WebWidget::handleMousePressEvent(QMouseEvent *event, bool canPropagate, QObject *sender)
 {
+	if (m_isLocked)
+	{
+		return true;
+	}
+
 	if (event->button() == Qt::BackButton)
 	{
 		triggerAction(ActionsManager::GoBackAction);
@@ -1455,6 +1476,11 @@ bool WebWidget::handleMousePressEvent(QMouseEvent *event, bool canPropagate, QOb
 
 bool WebWidget::handleMouseReleaseEvent(QMouseEvent *event, bool canPropagate, QObject *sender)
 {
+	if (m_isLocked)
+	{
+		return true;
+	}
+
 	if (event->button() == Qt::RightButton && !event->buttons().testFlag(Qt::LeftButton))
 	{
 		if (m_isUsingRockerNavigation)
@@ -1516,6 +1542,11 @@ bool WebWidget::handleMouseDoubleClickEvent(QMouseEvent *event, bool canPropagat
 {
 	Q_UNUSED(sender)
 
+	if (m_isLocked)
+	{
+		return true;
+	}
+
 	if (SettingsManager::getValue(QLatin1String("Browser/ShowSelectionContextMenuOnDoubleClick")).toBool() && event->button() == Qt::LeftButton)
 	{
 		updateHitTestResult(event->pos());
@@ -1539,6 +1570,11 @@ bool WebWidget::handleMouseDoubleClickEvent(QMouseEvent *event, bool canPropagat
 bool WebWidget::handleWheelEvent(QWheelEvent *event, bool canPropagate, QObject *sender)
 {
 	Q_UNUSED(sender)
+
+	if (m_isLocked)
+	{
+		return true;
+	}
 
 	if (event->buttons() == Qt::RightButton)
 	{
@@ -1603,6 +1639,11 @@ bool WebWidget::hasOption(const QString &key) const
 bool WebWidget::hasSelection() const
 {
 	return false;
+}
+
+bool WebWidget::isLocked() const
+{
+	return m_isLocked;
 }
 
 }

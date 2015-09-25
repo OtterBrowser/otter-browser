@@ -2142,7 +2142,11 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_webView)
 	{
-		if (event->type() == QEvent::ContextMenu)
+		if (event->type() == QEvent::MouseMove && isLocked())
+		{
+			return true;
+		}
+		else if (event->type() == QEvent::ContextMenu)
 		{
 			QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
 
@@ -2181,7 +2185,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (mouseEvent)
 			{
-				if (mouseEvent->button() == Qt::LeftButton && SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), getUrl()).toString() == QLatin1String("onDemand"))
+				if (mouseEvent->button() == Qt::LeftButton && !isLocked() && SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), getUrl()).toString() == QLatin1String("onDemand"))
 				{
 					QWidget *widget = childAt(mouseEvent->pos());
 					const QWebHitTestResult hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());

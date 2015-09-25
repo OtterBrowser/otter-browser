@@ -92,6 +92,7 @@ public slots:
 
 protected:
 	void timerEvent(QTimerEvent *event);
+	void paintEvent(QPaintEvent *event);
 	void focusInEvent(QFocusEvent *event);
 	void resizeEvent(QResizeEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
@@ -100,6 +101,8 @@ protected:
 	void mouseReleaseEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
 	void scrollContents(const QPoint &delta);
+	void lockContents();
+	void unlockContents();
 	void setScrollMode(ScrollMode mode);
 	void setWidget(WebWidget *widget, bool isPrivate);
 
