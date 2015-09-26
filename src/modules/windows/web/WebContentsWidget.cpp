@@ -194,8 +194,6 @@ void WebContentsWidget::contextMenuEvent(QContextMenuEvent *event)
 	if (m_scrollMode == MoveScroll || m_scrollMode == DragScroll)
 	{
 		event->accept();
-
-		return;
 	}
 }
 
