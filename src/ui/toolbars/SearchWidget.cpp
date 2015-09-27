@@ -65,6 +65,7 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : QComboBox(parent),
 	optionChanged(QLatin1String("Search/SearchEnginesSuggestions"), SettingsManager::getValue(QLatin1String("Search/SearchEnginesSuggestions")));
 
 	lineEdit()->setCompleter(m_completer);
+	lineEdit()->setDragEnabled(true);
 	lineEdit()->setStyleSheet(QLatin1String("QLineEdit {background:transparent;}"));
 	lineEdit()->installEventFilter(this);
 

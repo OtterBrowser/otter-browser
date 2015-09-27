@@ -82,6 +82,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 	setWindow(window);
 
 	lineEdit()->setCompleter(m_completer);
+	lineEdit()->setDragEnabled(true);
 	lineEdit()->setStyleSheet(QLatin1String("QLineEdit {background:transparent;}"));
 	lineEdit()->setMouseTracking(true);
 	lineEdit()->installEventFilter(this);
