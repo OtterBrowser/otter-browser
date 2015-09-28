@@ -245,7 +245,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/Application.cpp" line="496"/>
         <source>New update %1 from %2 channel is available!</source>
-        <translation type="unfinished"/>
+        <translation>%2チャンネルからの新しい更新%1が利用可能です！</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="663"/>
@@ -1640,7 +1640,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="319"/>
         <source>This Folder</source>
-        <translation type="unfinished"/>
+        <translation>このフォルダ</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="338"/>
@@ -1924,12 +1924,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.ui" line="61"/>
         <source>Save</source>
-        <translation type="unfinished"/>
+        <translation>保存</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.ui" line="68"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>キャンセル</translation>
     </message>
 </context>
 <context>
@@ -2000,12 +2000,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/PlatformIntegration.cpp" line="105"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>エラー</translation>
     </message>
     <message>
         <location filename="../../src/core/PlatformIntegration.cpp" line="105"/>
         <source>Failed to install update.</source>
-        <translation type="unfinished"/>
+        <translation>アップデートのインストールに失敗しました。</translation>
     </message>
 </context>
 <context>
@@ -4220,72 +4220,72 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="14"/>
         <source>Opening unknown file</source>
-        <translation type="unfinished"/>
+        <translation>未知のファイルを開きます。</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="22"/>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>名前:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="29"/>
         <source>Type:</source>
-        <translation type="unfinished"/>
+        <translation>種類:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="36"/>
         <source>Size:</source>
-        <translation type="unfinished"/>
+        <translation>サイズ:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="43"/>
         <source>From:</source>
-        <translation type="unfinished"/>
+        <translation>送り主:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="50"/>
         <source>Open with:</source>
-        <translation type="unfinished"/>
+        <translation>で開く</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="107"/>
         <source>Remember choice for this file type</source>
-        <translation type="unfinished"/>
+        <translation>この種類のファイルを開くときの選択を記憶する</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="41"/>
         <source>unknown file</source>
-        <translation type="unfinished"/>
+        <translation>未知のファイル</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="63"/>
         <source>Default Application</source>
-        <translation type="unfinished"/>
+        <translation>標準アプリケーション</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="69"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>未知</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="79"/>
         <source>Opening %1</source>
-        <translation type="unfinished"/>
+        <translation>イメージを開く %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="152"/>
         <source>unknown</source>
-        <translation type="unfinished"/>
+        <translation>未知</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="156"/>
         <source>%1 (download completed)</source>
-        <translation type="unfinished"/>
+        <translation>%1 (ダウンロード完了)</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/TransferDialog.cpp" line="162"/>
         <source>%1 (%n% downloaded)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%n% ダウンロードしました)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4526,7 +4526,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="51"/>
         <source>Checking for updates…</source>
-        <translation type="unfinished"/>
+        <translation>更新を確認しています...</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="96"/>
@@ -4541,12 +4541,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="106"/>
         <source>Details…</source>
-        <translation type="unfinished"/>
+        <translation>詳細...</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="109"/>
         <source>Download</source>
-        <translation type="unfinished"/>
+        <translation>ダウンロード</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="122"/>
@@ -4556,38 +4556,39 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="132"/>
         <source>Some of the updates does not contains packages for your platform. Try to check for updates later or visit details page for more info.</source>
-        <translation type="unfinished"/>
+        <translation>アップデートの中には、ご使用のプラットフォーム用のパッケージが含まれていません。後で更新を確認するか、より多くの情報の詳細ページを訪問してみてください。</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="178"/>
         <source>Downloading:</source>
-        <translation type="unfinished"/>
+        <translation>ダウンロード中:</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="193"/>
         <source>Download finished!</source>
-        <translation type="unfinished"/>
+        <translation>ダウンロードが完了しました!</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="194"/>
         <source>Install</source>
-        <translation type="unfinished"/>
+        <translation>インストール</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="196"/>
         <source>New version of Otter Browser is ready to install.
 Click Install button to restart browser and install the update or close this dialog to install the update during next browser restart.</source>
-        <translation type="unfinished"/>
+        <translation>新しいバージョンのOtterブラウザがインストールできます。
+インストールボタンをクリックしてこのダイアログを閉じてブラウザを再起動するとアップデートが始まり、次のバージョンのブラウザになって再起動します。</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="218"/>
         <source>Download failed!</source>
-        <translation type="unfinished"/>
+        <translation>ダウンロードに失敗しました!</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="220"/>
         <source>Check Error Console for more information.</source>
-        <translation type="unfinished"/>
+        <translation>詳細については、エラーコンソールを確認してください。</translation>
     </message>
 </context>
 <context>
@@ -5935,12 +5936,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="379"/>
         <source>Go to Previously Used Tab</source>
-        <translation type="unfinished"/>
+        <translation>以前に使用したタブに移動します</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="380"/>
         <source>Go to Least Recently Used Tab</source>
-        <translation type="unfinished"/>
+        <translation>最近使用したタブに移動します</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="381"/>
@@ -6345,7 +6346,9 @@ Click Install button to restart browser and install the update or close this dia
         <source>Failed to install update
 Updater: %1
  Script: %2</source>
-        <translation type="unfinished"/>
+        <translation>アップデートのインストールに失敗しました。
+アップデーター: %1
+スクリプト: %2</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="86"/>
@@ -6372,7 +6375,8 @@ Updater: %1
         <location filename="../../src/core/Updater.cpp" line="90"/>
         <source>Unable to download update: %1
 Error: %2</source>
-        <translation type="unfinished"/>
+        <translation>更新をダウンロードできません: %1
+エラー: %2</translation>
     </message>
     <message>
         <location filename="../../src/main.cpp" line="124"/>
