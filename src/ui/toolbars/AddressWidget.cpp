@@ -761,7 +761,28 @@ QUrl AddressWidget::getUrl() const
 
 bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if ((object == lineEdit() || object == m_urlIconLabel) && event->type() == QEvent::MouseButtonPress)
+	if (object == lineEdit() && event->type() == QEvent::Drop)
+	{
+		QDropEvent *dropEvent = static_cast<QDropEvent*>(event);
+		const QString dropAction = SettingsManager::getValue(QLatin1String("AddressField/DropAction")).toString();
+
+		if (dropEvent && dropAction != QLatin1String("paste"))
+		{
+			if (dropAction == QLatin1String("pasteAndGo"))
+			{
+				handleUserInput(dropEvent->mimeData()->text(), WindowsManager::calculateOpenHints(dropEvent->keyboardModifiers(), Qt::LeftButton, CurrentTabOpen));
+			}
+			else if (dropAction == QLatin1String("replace"))
+			{
+				lineEdit()->setText(dropEvent->mimeData()->text());
+			}
+
+			event->accept();
+
+			return true;
+		}
+	}
+	else if ((object == lineEdit() || object == m_urlIconLabel) && event->type() == QEvent::MouseButtonPress)
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
@@ -814,7 +835,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 			{
 				handleUserInput(QApplication::clipboard()->text().trimmed());
 
-				mouseEvent->accept();
+				event->accept();
 
 				return true;
 			}

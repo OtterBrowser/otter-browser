@@ -31,6 +31,7 @@
 #include "../../core/SettingsManager.h"
 #include "../../core/Utils.h"
 
+#include <QtCore/QMimeData>
 #include <QtCore/QTimer>
 #include <QtGui/QClipboard>
 #include <QtGui/QMouseEvent>
@@ -555,7 +556,28 @@ QString SearchWidget::getCurrentSearchEngine() const
 
 bool SearchWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == lineEdit() && event->type() == QEvent::MouseButtonRelease && m_shouldSelectAllOnRelease)
+	if (object == lineEdit() && event->type() == QEvent::Drop)
+	{
+		QDropEvent *dropEvent = static_cast<QDropEvent*>(event);
+		const QString dropAction = SettingsManager::getValue(QLatin1String("AddressField/DropAction")).toString();
+
+		if (dropEvent && dropAction != QLatin1String("paste"))
+		{
+			if (dropAction == QLatin1String("pasteAndGo"))
+			{
+				sendRequest(dropEvent->mimeData()->text());
+			}
+			else if (dropAction == QLatin1String("replace"))
+			{
+				lineEdit()->setText(dropEvent->mimeData()->text());
+			}
+
+			event->accept();
+
+			return true;
+		}
+	}
+	else if (object == lineEdit() && event->type() == QEvent::MouseButtonRelease && m_shouldSelectAllOnRelease)
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
