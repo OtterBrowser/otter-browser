@@ -116,7 +116,6 @@ public:
 	virtual void search(const QString &query, const QString &engine);
 	virtual void print(QPrinter *printer) = 0;
 	void showDialog(ContentsDialog *dialog, bool lockEventLoop = true);
-	void setLocked(bool isLocked);
 	virtual WebWidget* clone(bool cloneHistory = true, bool isPrivate = false) = 0;
 	virtual Action* getAction(int identifier);
 	WebBackend* getBackend();
@@ -147,7 +146,6 @@ public:
 	virtual bool handleWheelEvent(QWheelEvent *event, bool canPropagate = true, QObject *sender = NULL);
 	bool hasOption(const QString &key) const;
 	virtual bool hasSelection() const;
-	bool isLocked() const;
 	virtual bool isLoading() const = 0;
 	virtual bool isPrivate() const = 0;
 	virtual bool findInPage(const QString &text, FindFlags flags = NoFlagsFind) = 0;
@@ -231,7 +229,6 @@ private:
 	int m_reloadTimer;
 	bool m_ignoreContextMenu;
 	bool m_ignoreContextMenuNextTime;
-	bool m_isLocked;
 	bool m_isUsingRockerNavigation;
 
 signals:

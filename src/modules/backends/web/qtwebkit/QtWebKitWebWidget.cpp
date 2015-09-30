@@ -77,6 +77,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	m_inspectorCloseButton(NULL),
 	m_networkManager(networkManager),
 	m_splitter(new QSplitter(Qt::Vertical, this)),
+	m_transfersTimer(0),
 	m_canLoadPlugins(false),
 	m_ignoreContextMenu(false),
 	m_ignoreContextMenuNextTime(false),
@@ -162,6 +163,34 @@ QtWebKitWebWidget::~QtWebKitWebWidget()
 {
 	m_webView->stop();
 	m_webView->settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
+}
+
+void QtWebKitWebWidget::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_transfersTimer)
+	{
+		killTimer(m_transfersTimer);
+
+		Transfer *transfer = m_transfers.dequeue();
+
+		if (transfer)
+		{
+			startTransfer(transfer);
+		}
+
+		if (m_transfers.isEmpty())
+		{
+			m_transfersTimer = 0;
+		}
+		else
+		{
+			m_transfersTimer = startTimer(250);
+		}
+	}
+	else
+	{
+		WebWidget::timerEvent(event);
+	}
 }
 
 void QtWebKitWebWidget::focusInEvent(QFocusEvent *event)
@@ -340,7 +369,7 @@ void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
 	}
 	else
 	{
-		startTransfer(new Transfer(request, QString(), (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
+		startDelayedTransfer(new Transfer(request, QString(), (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 	}
 }
 
@@ -348,7 +377,7 @@ void QtWebKitWebWidget::downloadFile(QNetworkReply *reply)
 {
 	m_networkManager->registerTransfer(reply);
 
-	startTransfer(new Transfer(reply, QString(), (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
+	startDelayedTransfer(new Transfer(reply, QString(), (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 }
 
 void QtWebKitWebWidget::saveState(QWebFrame *frame, QWebHistoryItem *item)
@@ -568,6 +597,16 @@ void QtWebKitWebWidget::pasteText(const QString &text)
 	triggerAction(ActionsManager::PasteAction);
 
 	QGuiApplication::clipboard()->setMimeData(mimeData);
+}
+
+void QtWebKitWebWidget::startDelayedTransfer(Transfer *transfer)
+{
+	m_transfers.enqueue(transfer);
+
+	if (m_transfersTimer == 0)
+	{
+		m_transfersTimer = startTimer(250);
+	}
 }
 
 void QtWebKitWebWidget::notifyTitleChanged()
@@ -2142,11 +2181,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_webView)
 	{
-		if (event->type() == QEvent::MouseMove && isLocked())
-		{
-			return true;
-		}
-		else if (event->type() == QEvent::ContextMenu)
+		if (event->type() == QEvent::ContextMenu)
 		{
 			QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
 
@@ -2185,7 +2220,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (mouseEvent)
 			{
-				if (mouseEvent->button() == Qt::LeftButton && !isLocked() && SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), getUrl()).toString() == QLatin1String("onDemand"))
+				if (mouseEvent->button() == Qt::LeftButton && SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), getUrl()).toString() == QLatin1String("onDemand"))
 				{
 					QWidget *widget = childAt(mouseEvent->pos());
 					const QWebHitTestResult hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());

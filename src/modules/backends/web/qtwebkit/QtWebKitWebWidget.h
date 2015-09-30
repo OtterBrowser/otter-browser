@@ -23,6 +23,7 @@
 
 #include "../../../../ui/WebWidget.h"
 
+#include <QtCore/QQueue>
 #include <QtNetwork/QNetworkReply>
 #include <QtWebKitWidgets/QWebHitTestResult>
 #include <QtWebKitWidgets/QWebInspector>
@@ -97,11 +98,13 @@ protected:
 
 	explicit QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebKitNetworkManager *networkManager = NULL, ContentsWidget *parent = NULL);
 
+	void timerEvent(QTimerEvent *event);
 	void focusInEvent(QFocusEvent *event);
 	void clearPluginToken();
 	void openRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
 	void openFormRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
 	void pasteText(const QString &text);
+	void startDelayedTransfer(Transfer *transfer);
 	void handleHistory();
 	void setHistory(QDataStream &stream);
 	void setOptions(const QVariantHash &options);
@@ -153,9 +156,11 @@ private:
 	QPixmap m_thumbnail;
 	QUrl m_formRequestUrl;
 	QByteArray m_formRequestBody;
+	QQueue<Transfer*> m_transfers;
 	QVector<int> m_contentBlockingProfiles;
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
 	QNetworkAccessManager::Operation m_formRequestOperation;
+	int m_transfersTimer;
 	bool m_canLoadPlugins;
 	bool m_ignoreContextMenu;
 	bool m_ignoreContextMenuNextTime;
