@@ -148,7 +148,7 @@ void Menu::mouseReleaseEvent(QMouseEvent *event)
 	{
 		QAction *action = actionAt(event->pos());
 
-		if (action && action->data().type() == QVariant::ModelIndex)
+		if (action && action->isEnabled() && action->data().type() == QVariant::ModelIndex)
 		{
 			QWidget *menu = this;
 
@@ -183,7 +183,7 @@ void Menu::contextMenuEvent(QContextMenuEvent *event)
 	{
 		QAction *action = actionAt(event->pos());
 
-		if (action && action->data().type() == QVariant::ModelIndex)
+		if (action && action->isEnabled() && action->data().type() == QVariant::ModelIndex)
 		{
 			m_bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(action->data().toModelIndex()));
 

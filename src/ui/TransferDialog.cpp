@@ -77,7 +77,6 @@ TransferDialog::TransferDialog(Transfer *transfer, QWidget *parent) : QDialog(pa
 
 	setProgress(m_transfer->getBytesReceived(), m_transfer->getBytesTotal());
 	setWindowTitle(tr("Opening %1").arg(fileName));
-
 	adjustSize();
 
 	connect(transfer, SIGNAL(progressChanged(qint64,qint64)), this, SLOT(setProgress(qint64,qint64)));
