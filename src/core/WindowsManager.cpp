@@ -248,7 +248,7 @@ void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints)
 					SettingsManager::setValue(QLatin1String("Choices/WarnOpenBookmarkFolder"), !messageBox.checkBox()->isChecked());
 				}
 
-				if (!canOpen)
+				if (urls.isEmpty() || !canOpen)
 				{
 					return;
 				}
