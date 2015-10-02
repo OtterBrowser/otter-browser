@@ -163,14 +163,14 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		}
 	}
 
-	profilePath = QFileInfo(profilePath).absoluteFilePath();
+	profilePath = QDir::toNativeSeparators(QFileInfo(profilePath).absoluteFilePath());
 
 	if (m_commandLineParser.isSet(QLatin1String("cache")))
 	{
 		cachePath = m_commandLineParser.value(QLatin1String("cache"));
 	}
 
-	cachePath = QFileInfo(cachePath).absoluteFilePath();
+	cachePath = QDir::toNativeSeparators(QFileInfo(cachePath).absoluteFilePath());
 
 	if (m_commandLineParser.isSet(QLatin1String("report")))
 	{

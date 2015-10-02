@@ -172,7 +172,7 @@ QString SessionsManager::getReadableDataPath(const QString &path, bool forceBund
 
 QString SessionsManager::getWritableDataPath(const QString &path)
 {
-	return m_profilePath + QDir::separator() + path;
+	return QDir::toNativeSeparators(m_profilePath + QDir::separator() + path);
 }
 
 QString SessionsManager::getSessionPath(const QString &path, bool bound)
@@ -200,7 +200,7 @@ QString SessionsManager::getSessionPath(const QString &path, bool bound)
 		}
 	}
 
-	return m_profilePath + QLatin1String("/sessions/") + cleanPath;
+	return QDir::toNativeSeparators(m_profilePath + QLatin1String("/sessions/") + cleanPath);
 }
 
 SessionInformation SessionsManager::getSession(const QString &path)
