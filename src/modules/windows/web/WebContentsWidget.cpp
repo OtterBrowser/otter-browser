@@ -313,11 +313,6 @@ void WebContentsWidget::goToHistoryIndex(int index)
 
 void WebContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	if (parameters.contains(QLatin1String("isBounced")))
-	{
-		return;
-	}
-
 	switch (identifier)
 	{
 		case ActionsManager::OpenSelectionAsLinkAction:
@@ -503,13 +498,16 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		default:
-			if (m_startPageWidget && identifier == ActionsManager::ContextMenuAction)
+			if (!parameters.contains(QLatin1String("isBounced")))
 			{
-				m_startPageWidget->showContextMenu();
-			}
-			else
-			{
-				m_webWidget->triggerAction(identifier, parameters);
+				if (m_startPageWidget && identifier == ActionsManager::ContextMenuAction)
+				{
+					m_startPageWidget->showContextMenu();
+				}
+				else
+				{
+					m_webWidget->triggerAction(identifier, parameters);
+				}
 			}
 
 			break;
