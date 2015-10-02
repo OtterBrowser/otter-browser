@@ -125,6 +125,20 @@ void TransferDialog::buttonClicked(QAbstractButton *button)
 	}
 	else if (standardButton == QDialogButtonBox::Save)
 	{
+		QWidget *dialog = parentWidget();
+
+		while (dialog)
+		{
+			if (dialog->inherits("Otter::ContentsDialog"))
+			{
+				dialog->hide();
+
+				break;
+			}
+
+			dialog = dialog->parentWidget();
+		}
+
 		const QString path = TransfersManager::getSavePath(m_transfer->getSuggestedFileName());
 
 		if (path.isEmpty())
