@@ -52,13 +52,13 @@ void BookmarkWidget::mouseReleaseEvent(QMouseEvent *event)
 {
 	QToolButton::mouseReleaseEvent(event);
 
-	if (event->button() == Qt::LeftButton && m_bookmark)
+	if ((event->button() == Qt::LeftButton || event->button() == Qt::MiddleButton) && m_bookmark)
 	{
-		MainWindow *window = MainWindow::findMainWindow(parentWidget());
+		MainWindow *mainWindow = MainWindow::findMainWindow(parentWidget());
 
-		if (window)
+		if (mainWindow)
 		{
-			window->getWindowsManager()->open(m_bookmark);
+			mainWindow->getWindowsManager()->open(m_bookmark, WindowsManager::calculateOpenHints(event->modifiers(), event->button()));
 		}
 	}
 }
