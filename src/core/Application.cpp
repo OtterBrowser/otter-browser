@@ -239,6 +239,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		stream << cachePath;
 		stream.setFieldWidth(0);
 		stream << QLatin1String("\n\nEnvironment:\n\t");
+#if QT_VERSION >= 0x050400
 		stream.setFieldWidth(30);
 		stream << QLatin1String("System Name");
 		stream << QSysInfo::prettyProductName();
@@ -259,6 +260,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		stream << QSysInfo::currentCpuArchitecture();
 		stream.setFieldWidth(0);
 		stream << QLatin1String("\n\t");
+#endif
 		stream.setFieldWidth(30);
 		stream << QLatin1String("Locale");
 		stream << QLocale::system().name();
