@@ -135,7 +135,7 @@ int main(int argc, char *argv[])
 
 		if (window)
 		{
-			QStringList urls = application.getCommandLineParser()->positionalArguments();
+			const QStringList urls = application.getCommandLineParser()->positionalArguments();
 
 			for (int i = 0; i < urls.count(); ++i)
 			{
