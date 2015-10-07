@@ -42,7 +42,6 @@ public:
 	void setCurrentFolder(BookmarksItem *folder);
 	void setMode(BookmarksModel::FormatMode mode);
 	BookmarksItem* getCurrentFolder();
-	bool eventFilter(QObject *object, QEvent *event);
 
 protected slots:
 	void createFolder();
@@ -50,7 +49,6 @@ protected slots:
 
 private:
 	QTreeView *m_view;
-	QModelIndex m_index;
 	BookmarksModel::FormatMode m_mode;
 };
 

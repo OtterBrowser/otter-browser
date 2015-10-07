@@ -98,11 +98,11 @@ void BookmarksComboBoxWidget::updateBranch(QStandardItem *branch)
 
 void BookmarksComboBoxWidget::setCurrentFolder(BookmarksItem *folder)
 {
-	m_index = (folder ? folder->index() : QModelIndex());
+	const QModelIndex index = (folder ? folder->index() : QModelIndex());
 
-	setRootModelIndex(m_index.parent());
+	setRootModelIndex(index.parent());
 	setModelColumn(0);
-	setCurrentIndex(m_index.row());
+	setCurrentIndex(index.row());
 	setRootModelIndex(QModelIndex());
 }
 
@@ -111,7 +111,6 @@ void BookmarksComboBoxWidget::setMode(BookmarksModel::FormatMode mode)
 	disconnect(model(), SIGNAL(layoutChanged()), this, SLOT(updateBranch()));
 
 	m_mode = mode;
-	m_index = QModelIndex();
 
 	switch (mode)
 	{
@@ -134,24 +133,9 @@ void BookmarksComboBoxWidget::setMode(BookmarksModel::FormatMode mode)
 
 BookmarksItem* BookmarksComboBoxWidget::getCurrentFolder()
 {
-	BookmarksItem *item = qobject_cast<BookmarksModel*>(model())->bookmarkFromIndex(m_index);
+	BookmarksItem *item = qobject_cast<BookmarksModel*>(model())->getBookmark(currentData(BookmarksModel::IdentifierRole).toLongLong());
 
 	return (item ? item :qobject_cast<BookmarksModel*>(model())->getRootItem());
-}
-
-bool BookmarksComboBoxWidget::eventFilter(QObject *object, QEvent *event)
-{
-	if (object == m_view->viewport() && event->type() == QEvent::MouseButtonPress)
-	{
-		QMouseEvent *mouseEvent = dynamic_cast<QMouseEvent*>(event);
-
-		if (mouseEvent)
-		{
-			m_index = m_view->indexAt(mouseEvent->pos());
-		}
-	}
-
-	return QComboBox::eventFilter(object, event);
 }
 
 }
