@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -226,6 +227,8 @@ void ItemViewWidget::setModel(QAbstractItemModel *model)
 	if (model->inherits(QStringLiteral("QStandardItemModel").toLatin1()))
 	{
 		m_model = qobject_cast<QStandardItemModel*>(model);
+
+		connect(m_model, SIGNAL(itemChanged(QStandardItem*)), this, SLOT(notifySelectionChanged()));
 	}
 
 	connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(notifySelectionChanged()));

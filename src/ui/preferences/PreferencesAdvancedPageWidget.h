@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -47,6 +47,7 @@ protected:
 	void changeEvent(QEvent *event);
 	void updateReaddKeyboardProfileMenu();
 	QString createProfileIdentifier(ItemViewWidget *view, const QString &base = QString()) const;
+	QStringList getSelectedUpdateChannels() const;
 	ShortcutsProfile loadKeyboardProfile(const QString &identifier, bool loadShortcuts) const;
 
 protected slots:
@@ -58,6 +59,7 @@ protected slots:
 	void addCipher(QAction *action);
 	void removeCipher();
 	void updateCiphersActions();
+	void updateUpdateChannelsActions();
 	void addKeyboardProfile();
 	void readdKeyboardProfile(QAction *action);
 	void editKeyboardProfile();

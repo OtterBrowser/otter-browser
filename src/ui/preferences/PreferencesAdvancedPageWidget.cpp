@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -188,6 +188,39 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->ciphersMoveDownButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
 	m_ui->ciphersMoveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
 
+	QStandardItemModel *updateChannelsModel = new QStandardItemModel(this);
+	const QStringList availableUpdateChannels = SettingsManager::getValue(QLatin1String("Updates/ActiveChannels")).toStringList();
+
+	QMap<QString, QString> defaultChannels;
+	defaultChannels[QLatin1String("release")] = tr("Stable version");
+	defaultChannels[QLatin1String("beta")] = tr("Beta version");
+	defaultChannels[QLatin1String("weekly")] = tr("Weekly development version");
+
+	QMap<QString, QString>::iterator iterator;
+
+	for (iterator = defaultChannels.begin(); iterator != defaultChannels.end(); ++iterator)
+	{
+		QStandardItem *item = new QStandardItem(iterator.value());
+		item->setData(iterator.key(), Qt::UserRole);
+		item->setCheckable(true);
+
+		if (availableUpdateChannels.contains(iterator.key()))
+		{
+			item->setCheckState(Qt::Checked);
+		}
+
+		updateChannelsModel->appendRow(item);
+	}
+
+	m_ui->updateChannelsItemView->setModel(updateChannelsModel);
+	m_ui->updateChannelsItemView->setItemDelegate(new OptionDelegate(true, this));
+	m_ui->updateChannelsItemView->setHeaderHidden(true);
+
+	m_ui->autoInstallCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Updates/AutomaticInstall")).toBool());
+	m_ui->intervalSpinBox->setValue(SettingsManager::getValue(QLatin1String("Updates/CheckInterval")).toInt());
+
+	updateUpdateChannelsActions();
+
 	m_ui->keyboardMoveDownButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
 	m_ui->keyboardMoveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
 
@@ -242,6 +275,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	connect(m_ui->ciphersRemoveButton, SIGNAL(clicked()), this, SLOT(removeCipher()));
 	connect(m_ui->ciphersMoveDownButton, SIGNAL(clicked()), m_ui->ciphersViewWidget, SLOT(moveDownRow()));
 	connect(m_ui->ciphersMoveUpButton, SIGNAL(clicked()), m_ui->ciphersViewWidget, SLOT(moveUpRow()));
+	connect(m_ui->updateChannelsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateUpdateChannelsActions()));
 	connect(m_ui->keyboardViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->keyboardMoveDownButton, SLOT(setEnabled(bool)));
 	connect(m_ui->keyboardViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->keyboardMoveUpButton, SLOT(setEnabled(bool)));
 	connect(m_ui->keyboardViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateKeyboardProfileActions()));
@@ -457,6 +491,12 @@ void PreferencesAdvancedPageWidget::updateCiphersActions()
 	const int currentRow = m_ui->ciphersViewWidget->getCurrentRow();
 
 	m_ui->ciphersRemoveButton->setEnabled(currentRow >= 0 && currentRow < m_ui->ciphersViewWidget->getRowCount());
+}
+
+void PreferencesAdvancedPageWidget::updateUpdateChannelsActions()
+{
+	m_ui->intervalSpinBox->setEnabled(!getSelectedUpdateChannels().isEmpty());
+	m_ui->autoInstallCheckBox->setEnabled(!getSelectedUpdateChannels().isEmpty());
 }
 
 void PreferencesAdvancedPageWidget::addKeyboardProfile()
@@ -811,6 +851,10 @@ void PreferencesAdvancedPageWidget::save()
 		SettingsManager::setValue(QLatin1String("Security/Ciphers"), ciphers);
 	}
 
+	SettingsManager::setValue(QLatin1String("Updates/ActiveChannels"), getSelectedUpdateChannels());
+	SettingsManager::setValue(QLatin1String("Updates/AutomaticInstall"), m_ui->autoInstallCheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("Updates/CheckInterval"), m_ui->intervalSpinBox->value());
+
 	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("keyboard")));
 
 	QHash<QString, ShortcutsProfile>::iterator shortcutsProfilesIterator;
@@ -903,6 +947,24 @@ QString PreferencesAdvancedPageWidget::createProfileIdentifier(ItemViewWidget *v
 	}
 
 	return Utils::createIdentifier(base, identifiers);
+}
+
+QStringList PreferencesAdvancedPageWidget::getSelectedUpdateChannels() const
+{
+	QStandardItemModel *updateListModel = m_ui->updateChannelsItemView->getModel();
+	QStringList updateChannels;
+
+	for (int i = 0; i < updateListModel->rowCount(); ++i)
+	{
+		QStandardItem *item = updateListModel->item(i);
+
+		if (item->checkState() == Qt::Checked)
+		{
+			updateChannels.append(item->data(Qt::UserRole).toString());
+		}
+	}
+
+	return updateChannels;
 }
 
 ShortcutsProfile PreferencesAdvancedPageWidget::loadKeyboardProfile(const QString &identifier, bool loadShortcuts) const

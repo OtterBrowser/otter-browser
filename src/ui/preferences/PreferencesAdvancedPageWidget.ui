@@ -49,6 +49,11 @@
      </item>
      <item>
       <property name="text">
+       <string>Updates</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>Keyboard</string>
       </property>
      </item>
@@ -788,6 +793,103 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="updatesPage">
+      <layout class="QVBoxLayout" name="updatesPageVerticalLayout">
+       <item>
+        <widget class="QLabel" name="updatesHeader">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Updates</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="updatesDescriptionLabel">
+         <property name="text">
+          <string>Select channels from which you want to recieve updates:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Otter::ItemViewWidget" name="updateChannelsItemView">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="editTriggers">
+          <set>QAbstractItemView::NoEditTriggers</set>
+         </property>
+         <property name="showDropIndicator" stdset="0">
+          <bool>false</bool>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::NoSelection</enum>
+         </property>
+         <property name="isWrapping" stdset="0">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="updatesVerticalLayout">
+         <item>
+          <layout class="QHBoxLayout" name="updatesHorizontalLayout">
+           <item>
+            <widget class="QLabel" name="intervalLabel">
+             <property name="text">
+              <string>Check for updates every</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="intervalSpinBox"/>
+           </item>
+           <item>
+            <widget class="QLabel" name="intervalDaysLabel">
+             <property name="text">
+              <string>day(s)</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="autoInstallCheckBox">
+           <property name="text">
+            <string>Install updates automatically</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="updatesVerticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>114</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="keyboardPage">
       <layout class="QVBoxLayout" name="keyboardLayout">
        <item>
@@ -942,44 +1044,45 @@
       </layout>
      </widget>
      <widget class="QWidget" name="otherPage">
-      <widget class="QLabel" name="otherGeneralHeader">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>442</width>
-         <height>13</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>General</string>
-       </property>
-      </widget>
-      <widget class="QWidget" name="otherGeneralVerticalLayoutWidget">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>30</y>
-         <width>441</width>
-         <height>27</height>
-        </rect>
-       </property>
-       <layout class="QVBoxLayout" name="otherGeneralVerticalLayout">
-        <item>
-         <widget class="QCheckBox" name="enableTrayIconCheckBox">
-          <property name="text">
-           <string>Show tray icon</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="otherGeneralHeader">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>General</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="otherGeneralVerticalLayout">
+         <item>
+          <widget class="QCheckBox" name="enableTrayIconCheckBox">
+           <property name="text">
+            <string>Show tray icon</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="otherVerticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>101</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
      </widget>
     </widget>
    </item>
