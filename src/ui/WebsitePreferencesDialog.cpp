@@ -2,6 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,12 +20,19 @@
 **************************************************************************/
 
 #include "WebsitePreferencesDialog.h"
+#include "OptionDelegate.h"
+#include "preferences/ContentBlockingIntervalDelegate.h"
+#include "../core/ContentBlockingManager.h"
+#include "../core/ContentBlockingProfile.h"
 #include "../core/NetworkManagerFactory.h"
 #include "../core/SettingsManager.h"
+#include "../core/SessionsManager.h"
+#include "../core/Utils.h"
 
 #include "ui_WebsitePreferencesDialog.h"
 
 #include <QtCore/QDateTime>
+#include <QtCore/QSettings>
 #include <QtCore/QTextCodec>
 
 namespace Otter
@@ -170,6 +178,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	adjustSize();
 
 	connect(m_ui->userStyleSheetFilePathWidget, SIGNAL(pathChanged()), this, SLOT(valueChanged()));
+	connect(ContentBlockingManager::getInstance(), SIGNAL(profileModified(QString)), this, SLOT(updateContentBlockingProfile(QString)));
 	connect(m_ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
 }
 
@@ -192,6 +201,7 @@ void WebsitePreferencesDialog::changeEvent(QEvent *event)
 
 void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 {
+	QStringList contentBlockingProfiles;
 	QUrl url;
 	url.setHost(m_ui->websiteLineEdit->text());
 
@@ -218,6 +228,16 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 			SettingsManager::setValue(QLatin1String("Network/EnableReferrer"), (m_ui->sendReferrerOverrideCheckBox->isChecked() ? m_ui->sendReferrerCheckBox->isChecked() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Network/UserAgent"), (m_ui->userAgentOverrideCheckBox->isChecked() ? ((m_ui->userAgentComboBox->currentIndex() == 0) ? QString() : m_ui->userAgentComboBox->currentData(Qt::UserRole).toString()) : QVariant()), url);
 
+			for (int i = 0; i < m_ui->contentBlockingProfilesViewWidget->getRowCount(); ++i)
+			{
+				if (m_ui->contentBlockingProfilesViewWidget->getIndex(i, 0).data(Qt::CheckStateRole).toBool())
+				{
+					contentBlockingProfiles.append(m_ui->contentBlockingProfilesViewWidget->getIndex(i, 0).data(Qt::UserRole).toString());
+				}
+			}
+
+			SettingsManager::setValue(QLatin1String("Content/BlockingProfiles"), contentBlockingProfiles, url);
+
 			accept();
 
 			break;
@@ -232,6 +252,31 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 			break;
 		default:
 			break;
+	}
+}
+
+void WebsitePreferencesDialog::updateContentBlockingProfile(const QString &profile)
+{
+	const ContentBlockingInformation information = ContentBlockingManager::getProfile(profile);
+
+	if (information.name.isEmpty())
+	{
+		return;
+	}
+
+	for (int i = 0; i < m_ui->contentBlockingProfilesViewWidget->model()->rowCount(); ++i)
+	{
+		const QModelIndex index = m_ui->contentBlockingProfilesViewWidget->model()->index(i, 0);
+
+		if (index.data(Qt::UserRole).toString() == profile)
+		{
+			const QSettings profilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
+
+			m_ui->contentBlockingProfilesViewWidget->model()->setData(index, information.title, Qt::DisplayRole);
+			m_ui->contentBlockingProfilesViewWidget->model()->setData(index.sibling(i, 2), Utils::formatDateTime(profilesSettings.value(profile + QLatin1String("/lastUpdate")).toDateTime()), Qt::DisplayRole);
+
+			break;
+		}
 	}
 }
 
@@ -285,6 +330,38 @@ void WebsitePreferencesDialog::updateValues(bool checked)
 	m_ui->thirdPartyCookiesPolicyComboBox->setCurrentIndex((thirdPartyCookiesPolicyIndex < 0) ? 0 : thirdPartyCookiesPolicyIndex);
 	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Network/EnableReferrer"), (m_ui->sendReferrerOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 	m_ui->userAgentComboBox->setCurrentIndex(m_ui->userAgentComboBox->findData(SettingsManager::getValue(QLatin1String("Network/UserAgent"), (m_ui->userAgentOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
+
+	const QSettings contentBlockingProfilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
+	const QStringList contentBlockingGlobalProfiles = SettingsManager::getValue(QLatin1String("Content/BlockingProfiles"), url).toStringList();
+	const QVector<ContentBlockingInformation> contentBlockingProfiles = ContentBlockingManager::getProfiles();
+	QStandardItemModel *contentBlockingProfilesModel = new QStandardItemModel(this);
+	QStringList contentBlockingLabels;
+	contentBlockingLabels << tr("Title") << tr("Update Interval") << tr("Last Update");
+
+	contentBlockingProfilesModel->setHorizontalHeaderLabels(contentBlockingLabels);
+
+	for (int i = 0; i < contentBlockingProfiles.count(); ++i)
+	{
+		QList<QStandardItem*> items;
+		items.append(new QStandardItem(contentBlockingProfiles.at(i).title));
+		items[0]->setFlags(Qt::ItemIsEnabled);
+		items[0]->setData(contentBlockingProfiles.at(i).name, Qt::UserRole);
+		items[0]->setCheckable(true);
+		items[0]->setCheckState(contentBlockingGlobalProfiles.contains(contentBlockingProfiles.at(i).name) ? Qt::Checked : Qt::Unchecked);
+
+		items.append(new QStandardItem(contentBlockingProfilesSettings.value(contentBlockingProfiles.at(i).name + QLatin1String("/updateInterval")).toString()));
+		items[1]->setFlags(Qt::ItemIsEnabled);
+
+		items.append(new QStandardItem(Utils::formatDateTime(contentBlockingProfilesSettings.value(contentBlockingProfiles.at(i).name + QLatin1String("/lastUpdate")).toDateTime())));
+		items[2]->setFlags(Qt::ItemIsEnabled);
+
+		contentBlockingProfilesModel->appendRow(items);
+	}
+
+	m_ui->contentBlockingProfilesViewWidget->setModel(contentBlockingProfilesModel);
+	m_ui->contentBlockingProfilesViewWidget->header()->setVisible(true);
+	m_ui->contentBlockingProfilesViewWidget->setItemDelegate(new OptionDelegate(true, this));
+	m_ui->contentBlockingProfilesViewWidget->setItemDelegateForColumn(1, new ContentBlockingIntervalDelegate(this));
 
 	m_updateOverride = true;
 }

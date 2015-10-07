@@ -967,6 +967,37 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="contentBlockingTab">
+      <attribute name="title">
+       <string>Content Blocking</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="contentBlockingVerticalLayout">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <layout class="QVBoxLayout" name="profliesLayout">
+           <item>
+            <widget class="Otter::ItemViewWidget" name="contentBlockingProfilesViewWidget">
+             <property name="editTriggers">
+              <set>QAbstractItemView::CurrentChanged|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
+             </property>
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+             <property name="selectionMode">
+              <enum>QAbstractItemView::SingleSelection</enum>
+             </property>
+             <property name="selectionBehavior">
+              <enum>QAbstractItemView::SelectRows</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
    <item>
