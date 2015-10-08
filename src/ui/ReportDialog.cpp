@@ -38,6 +38,7 @@ ReportDialog::ReportDialog(QWidget *parent) : QDialog(parent),
 
 	adjustSize();
 
+	connect(this, SIGNAL(finished(int)), this, SLOT(deleteLater()));
 	connect(m_ui->buttonBox->addButton(tr("Copy"), QDialogButtonBox::ActionRole), SIGNAL(clicked()), this, SLOT(copyReport()));
 }
 

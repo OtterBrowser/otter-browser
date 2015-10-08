@@ -30,6 +30,7 @@
 #include "OpenAddressDialog.h"
 #include "OpenBookmarkDialog.h"
 #include "PreferencesDialog.h"
+#include "ReportDialog.h"
 #include "SaveSessionDialog.h"
 #include "SessionsManagerDialog.h"
 #include "StatusBarWidget.h"
@@ -730,6 +731,13 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::CheckForUpdatesAction:
 			{
 				UpdateCheckerDialog *dialog = new UpdateCheckerDialog(this);
+				dialog->show();
+			}
+
+			break;
+		case ActionsManager::DiagnosticReportAction:
+			{
+				ReportDialog *dialog = new ReportDialog(this);
 				dialog->show();
 			}
 

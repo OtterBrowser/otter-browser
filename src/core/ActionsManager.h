@@ -236,6 +236,7 @@ public:
 		ResetQuickPreferencesAction,
 		SwitchApplicationLanguageAction,
 		CheckForUpdatesAction,
+		DiagnosticReportAction,
 		AboutApplicationAction,
 		AboutQtAction,
 		ExitAction,
