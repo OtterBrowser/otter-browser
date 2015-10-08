@@ -54,6 +54,7 @@ public:
 	TrayIcon* getTrayIcon();
 	PlatformIntegration* getPlatformIntegration();
 	QCommandLineParser* getCommandLineParser();
+	static QString createReport();
 	QString getFullVersion() const;
 	QString getLocalePath() const;
 	QList<MainWindow*> getWindows() const;

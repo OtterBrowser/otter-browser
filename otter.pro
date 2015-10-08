@@ -139,6 +139,7 @@ SOURCES += src/main.cpp \
     src/ui/PreferencesDialog.cpp \
     src/ui/PreviewWidget.cpp \
     src/ui/ReloadTimeDialog.cpp \
+    src/ui/ReportDialog.cpp \
     src/ui/SaveSessionDialog.cpp \
     src/ui/SearchDelegate.cpp \
     src/ui/SearchPropertiesDialog.cpp \
@@ -286,6 +287,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/PreferencesDialog.h \
     src/ui/PreviewWidget.h \
     src/ui/ReloadTimeDialog.h \
+    src/ui/ReportDialog.h \
     src/ui/SaveSessionDialog.h \
     src/ui/SearchDelegate.h \
     src/ui/SearchPropertiesDialog.h \
@@ -377,6 +379,7 @@ FORMS += src/ui/AcceptCookieDialog.ui \
     src/ui/OpenBookmarkDialog.ui \
     src/ui/PreferencesDialog.ui \
     src/ui/ReloadTimeDialog.ui \
+    src/ui/ReportDialog.ui \
     src/ui/SaveSessionDialog.ui \
     src/ui/SearchPropertiesDialog.ui \
     src/ui/SessionsManagerDialog.ui \

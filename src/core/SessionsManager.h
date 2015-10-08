@@ -140,6 +140,7 @@ public:
 	static MainWindow* getActiveWindow();
 	static QString getCurrentSession();
 	static QString getCachePath();
+	static QString getProfilePath();
 	static QString getReadableDataPath(const QString &path, bool forceBundled = false);
 	static QString getWritableDataPath(const QString &path);
 	static QString getSessionPath(const QString &path, bool bound = false);

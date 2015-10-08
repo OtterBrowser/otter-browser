@@ -163,6 +163,11 @@ QString SessionsManager::getCachePath()
 	return m_cachePath;
 }
 
+QString SessionsManager::getProfilePath()
+{
+	return m_profilePath;
+}
+
 QString SessionsManager::getReadableDataPath(const QString &path, bool forceBundled)
 {
 	const QString writablePath = getWritableDataPath(path);
