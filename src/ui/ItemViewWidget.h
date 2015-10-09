@@ -39,6 +39,7 @@ public:
 	QStandardItemModel* getModel();
 	QStandardItem* getItem(int row, int column = 0) const;
 	QModelIndex getIndex(int row, int column = 0) const;
+	QSize sizeHint() const;
 	int getCurrentRow() const;
 	int getRowCount() const;
 	int getColumnCount() const;

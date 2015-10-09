@@ -21,6 +21,7 @@
 #include "PreferencesAdvancedPageWidget.h"
 #include "JavaScriptPreferencesDialog.h"
 #include "ShortcutsProfileDialog.h"
+#include "../ItemDelegate.h"
 #include "../OptionDelegate.h"
 #include "../UserAgentsManagerDialog.h"
 #include "../../core/ActionsManager.h"
@@ -48,6 +49,35 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui(new Ui::PreferencesAdvancedPageWidget)
 {
 	m_ui->setupUi(this);
+
+	QStandardItemModel *navigationModel = new QStandardItemModel(this);
+	QStringList navigationTitles;
+	navigationTitles << tr("Notifications") << tr("Address Field") << tr("Content") << QString() << tr("Network") << tr("Security") << tr("Updates") << QString() << tr("Keyboard") << QString() << tr("Other");
+
+	int navigationIndex = 0;
+
+	for (int i = 0; i < navigationTitles.count(); ++i)
+	{
+		QStandardItem *item = new QStandardItem(navigationTitles.at(i));
+
+		if (navigationTitles.at(i).isEmpty())
+		{
+			item->setData(QLatin1String("separator"), Qt::AccessibleDescriptionRole);
+			item->setEnabled(false);
+		}
+		else
+		{
+			item->setData(navigationIndex, Qt::UserRole);
+
+			++navigationIndex;
+		}
+
+		navigationModel->appendRow(item);
+	}
+
+	m_ui->advancedViewWidget->setModel(navigationModel);
+	m_ui->advancedViewWidget->setItemDelegate(new ItemDelegate(m_ui->advancedViewWidget));
+	m_ui->advancedViewWidget->setMinimumWidth(qMax(100, m_ui->advancedViewWidget->sizeHint().width()));
 
 	m_ui->notificationsPlaySoundButton->setIcon(Utils::getIcon(QLatin1String("media-playback-start")));
 
@@ -260,7 +290,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	updateReaddKeyboardProfileMenu();
 
-	connect(m_ui->advancedListWidget, SIGNAL(currentRowChanged(int)), m_ui->advancedStackedWidget, SLOT(setCurrentIndex(int)));
+	connect(m_ui->advancedViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(changeCurrentPage()));
 	connect(m_ui->notificationsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateNotificationsActions()));
 	connect(m_ui->notificationsPlaySoundButton, SIGNAL(clicked()), this, SLOT(playNotificationSound()));
 	connect(m_ui->enableJavaScriptCheckBox, SIGNAL(toggled(bool)), m_ui->javaScriptOptionsButton, SLOT(setEnabled(bool)));
@@ -302,6 +332,7 @@ void PreferencesAdvancedPageWidget::changeEvent(QEvent *event)
 	{
 		case QEvent::LanguageChange:
 			m_ui->retranslateUi(this);
+			m_ui->advancedViewWidget->setMinimumWidth(qMax(100, m_ui->advancedViewWidget->sizeHint().width()));
 
 			break;
 		default:
@@ -719,6 +750,16 @@ void PreferencesAdvancedPageWidget::updateJavaScriptOptions()
 	else if (!isSet)
 	{
 		m_javaScriptOptions.clear();
+	}
+}
+
+void PreferencesAdvancedPageWidget::changeCurrentPage()
+{
+	const QModelIndex index = m_ui->advancedViewWidget->currentIndex();
+
+	if (index.isValid() && index.data(Qt::UserRole).type() == QVariant::Int)
+	{
+		m_ui->advancedStackedWidget->setCurrentIndex(index.data(Qt::UserRole).toInt());
 	}
 }
 

@@ -250,6 +250,18 @@ QModelIndex ItemViewWidget::getIndex(int row, int column) const
 	return (m_model ? m_model->index(row, column) : QModelIndex());
 }
 
+QSize ItemViewWidget::sizeHint() const
+{
+	const QSize size = QTreeView::sizeHint();
+
+	if (m_model && m_model->columnCount() == 1)
+	{
+		return QSize((sizeHintForColumn(0) + (frameWidth() * 2)), size.height());
+	}
+
+	return size;
+}
+
 int ItemViewWidget::getCurrentRow() const
 {
 	return (selectionModel()->hasSelection() ? currentIndex().row() : -1);

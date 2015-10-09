@@ -6,13 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>475</width>
-    <height>442</height>
+    <width>600</width>
+    <height>500</height>
    </rect>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QListWidget" name="advancedListWidget">
+    <widget class="Otter::ItemViewWidget" name="advancedViewWidget">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
        <width>100</width>
@@ -22,46 +28,12 @@
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>
-     <item>
-      <property name="text">
-       <string>Notifications</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Address Field</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Content</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Network</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Security</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Updates</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Keyboard</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Other</string>
-      </property>
-     </item>
+     <property name="textElideMode">
+      <enum>Qt::ElideNone</enum>
+     </property>
+     <attribute name="headerVisible">
+      <bool>false</bool>
+     </attribute>
     </widget>
    </item>
    <item>

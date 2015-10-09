@@ -67,6 +67,7 @@ protected slots:
 	void removeKeyboardProfile();
 	void updateKeyboardProfileActions();
 	void updateJavaScriptOptions();
+	void changeCurrentPage();
 	void save();
 
 private:
