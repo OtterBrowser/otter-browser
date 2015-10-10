@@ -678,7 +678,7 @@ void WindowsManager::handleWindowClose(Window *window)
 
 	if (m_mainWindow->getTabBar()->count() == 1)
 	{
-		if (lastTabClosingAction == QLatin1String("closeWindow"))
+		if (lastTabClosingAction == QLatin1String("closeWindow") || (lastTabClosingAction == QLatin1String("closeWindowIfNotLast") && SessionsManager::getWindows().count() > 1))
 		{
 			m_mainWindow->triggerAction(ActionsManager::CloseWindowAction);
 
@@ -698,7 +698,7 @@ void WindowsManager::handleWindowClose(Window *window)
 		}
 		else
 		{
-			m_mainWindow->getAction(ActionsManager::CloseTabAction)->setEnabled(false);;
+			m_mainWindow->getAction(ActionsManager::CloseTabAction)->setEnabled(false);
 			m_mainWindow->setCurrentWindow(NULL);
 
 			emit windowTitleChanged(QString());
@@ -718,7 +718,7 @@ void WindowsManager::handleWindowClose(Window *window)
 
 	m_windows.remove(window->getIdentifier());
 
-	if (m_mainWindow->getTabBar()->count() < 1 && lastTabClosingAction != QLatin1String("doNothing"))
+	if (m_mainWindow->getTabBar()->count() < 1 && lastTabClosingAction == QLatin1String("openTab"))
 	{
 		open();
 	}

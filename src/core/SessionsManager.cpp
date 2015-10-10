@@ -392,7 +392,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 		QSettings sessionData(sessionPath, QSettings::IniFormat);
 		sessionData.setIniCodec("UTF-8");
 
-		sessionTitle = sessionData.value(QLatin1String("Session/title")).toString();;
+		sessionTitle = sessionData.value(QLatin1String("Session/title")).toString();
 	}
 
 	QSaveFile file(sessionPath);

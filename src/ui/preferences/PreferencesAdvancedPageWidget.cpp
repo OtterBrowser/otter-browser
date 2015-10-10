@@ -541,7 +541,7 @@ void PreferencesAdvancedPageWidget::addKeyboardProfile()
 	}
 
 	ShortcutsProfile profile;
-	profile.title = tr("(Untitled)");;
+	profile.title = tr("(Untitled)");
 
 	m_shortcutsProfiles[identifier] = profile;
 
