@@ -94,12 +94,13 @@ public:
 	BookmarksItem* getTrashItem() const;
 	BookmarksItem* getItem(const QString &path) const;
 	QMimeData* mimeData(const QModelIndexList &indexes) const;
+	static QUrl adjustUrl(QUrl url);
 	QStringList mimeTypes() const;
 	QStringList getKeywords() const;
 	QList<BookmarksItem*> getBookmarks(const QUrl &url) const;
 	QList<BookmarksItem*> findUrls(const QUrl &url, QStandardItem *branch = NULL) const;
 	QList<QUrl> getUrls() const;
-	static QUrl adjustUrl(QUrl url);
+	FormatMode getFormatMode() const;
 	bool moveBookmark(BookmarksItem *bookmark, BookmarksItem *newParent, int newRow = -1);
 	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
 	bool save(const QString &path) const;

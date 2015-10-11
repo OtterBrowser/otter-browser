@@ -22,6 +22,7 @@
 #include "HistoryManager.h"
 #include "Utils.h"
 
+#include <QtCore/QCoreApplication>
 #include <QtCore/QFile>
 #include <QtCore/QMimeData>
 #include <QtWidgets/QMessageBox>
@@ -82,6 +83,28 @@ QStandardItem* BookmarksItem::clone() const
 
 QVariant BookmarksItem::data(int role) const
 {
+	if (role == Qt::DisplayRole)
+	{
+		const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(data(BookmarksModel::TypeRole).toInt());
+
+		if (type == BookmarksModel::RootBookmark)
+		{
+			BookmarksModel *model = qobject_cast<BookmarksModel*>(this->model());
+
+			if (model && model->getFormatMode() == BookmarksModel::NotesMode)
+			{
+				return QCoreApplication::translate("Otter::BookmarksModel", "Notes");
+			}
+
+			return QCoreApplication::translate("Otter::BookmarksModel", "Bookmarks");
+		}
+
+		if (type == BookmarksModel::TrashBookmark)
+		{
+			return QCoreApplication::translate("Otter::BookmarksModel", "Trash");
+		}
+	}
+
 	if (role == Qt::DecorationRole)
 	{
 		const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(data(BookmarksModel::TypeRole).toInt());
@@ -614,7 +637,6 @@ void BookmarksModel::writeBookmark(QXmlStreamWriter *writer, QStandardItem *book
 void BookmarksModel::emptyTrash()
 {
 	BookmarksItem *trashItem = getTrashItem();
-
 	trashItem->removeRows(0, trashItem->rowCount());
 	trashItem->setEnabled(false);
 
@@ -837,6 +859,11 @@ QList<BookmarksItem*> BookmarksModel::findUrls(const QUrl &url, QStandardItem *b
 QList<QUrl> BookmarksModel::getUrls() const
 {
 	return m_urls.keys();
+}
+
+BookmarksModel::FormatMode BookmarksModel::getFormatMode() const
+{
+	return m_mode;
 }
 
 bool BookmarksModel::moveBookmark(BookmarksItem *bookmark, BookmarksItem *newParent, int newRow)
