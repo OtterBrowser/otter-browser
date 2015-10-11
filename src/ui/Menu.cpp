@@ -134,7 +134,10 @@ void Menu::changeEvent(QEvent *event)
 	switch (event->type())
 	{
 		case QEvent::LanguageChange:
-			setTitle(QCoreApplication::translate("actions", m_title.toUtf8().constData()));
+			if (!m_title.isEmpty())
+			{
+				setTitle(QCoreApplication::translate("actions", m_title.toUtf8().constData()));
+			}
 
 			break;
 		default:
