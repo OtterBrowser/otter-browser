@@ -115,6 +115,8 @@ public slots:
 protected:
 	void readBookmark(QXmlStreamReader *reader, BookmarksItem *parent);
 	void writeBookmark(QXmlStreamWriter *writer, QStandardItem *bookmark) const;
+	void removeBookmarkUrl(BookmarksItem *bookmark);
+	void readdBookmarkUrl(BookmarksItem *bookmark);
 
 private:
 	QHash<BookmarksItem*, QPair<QModelIndex, int> > m_trash;

@@ -277,6 +277,8 @@ void BookmarksModel::trashBookmark(BookmarksItem *bookmark)
 			trashItem->appendRow(bookmark->parent()->takeRow(bookmark->row()));
 			trashItem->setEnabled(true);
 
+			removeBookmarkUrl(bookmark);
+
 			emit bookmarkModified(bookmark);
 			emit bookmarkTrashed(bookmark);
 			emit modelModified();
@@ -309,6 +311,8 @@ void BookmarksModel::restoreBookmark(BookmarksItem *bookmark)
 		formerParent->appendRow(bookmark->parent()->takeRow(bookmark->row()));
 	}
 
+	readdBookmarkUrl(bookmark);
+
 	BookmarksItem *trashItem = getTrashItem();
 
 	trashItem->setEnabled(trashItem->rowCount() > 0);
@@ -325,26 +329,13 @@ void BookmarksModel::removeBookmark(BookmarksItem *bookmark)
 		return;
 	}
 
+	removeBookmarkUrl(bookmark);
+
 	const quint64 identifier = bookmark->data(IdentifierRole).toULongLong();
 
 	if (identifier > 0 && m_identifiers.contains(identifier))
 	{
 		m_identifiers.remove(identifier);
-	}
-
-	if (!bookmark->data(UrlRole).toString().isEmpty())
-	{
-		const QUrl url = adjustUrl(bookmark->data(UrlRole).toUrl());
-
-		if (m_urls.contains(url))
-		{
-			m_urls[url].removeAll(bookmark);
-
-			if (m_urls[url].isEmpty())
-			{
-				m_urls.remove(url);
-			}
-		}
 	}
 
 	if (!bookmark->data(KeywordRole).toString().isEmpty() && m_keywords.contains(bookmark->data(KeywordRole).toString()))
@@ -631,6 +622,63 @@ void BookmarksModel::writeBookmark(QXmlStreamWriter *writer, QStandardItem *book
 			writer->writeEmptyElement(QLatin1String("separator"));
 
 			break;
+	}
+}
+
+void BookmarksModel::removeBookmarkUrl(BookmarksItem *bookmark)
+{
+	if (!bookmark)
+	{
+		return;
+	}
+
+	if (static_cast<BookmarkType>(bookmark->data(TypeRole).toInt()) == FolderBookmark)
+	{
+		for (int i = 0; i < bookmark->rowCount(); ++i)
+		{
+			removeBookmarkUrl(dynamic_cast<BookmarksItem*>(bookmark->child(i, 0)));
+		}
+	}
+	else if (!bookmark->data(UrlRole).toUrl().isEmpty())
+	{
+		const QUrl url = adjustUrl(bookmark->data(UrlRole).toUrl());
+
+		if (m_urls.contains(url))
+		{
+			m_urls[url].removeAll(bookmark);
+
+			if (m_urls[url].isEmpty())
+			{
+				m_urls.remove(url);
+			}
+		}
+	}
+}
+
+void BookmarksModel::readdBookmarkUrl(BookmarksItem *bookmark)
+{
+	if (!bookmark)
+	{
+		return;
+	}
+
+	if (static_cast<BookmarkType>(bookmark->data(TypeRole).toInt()) == FolderBookmark)
+	{
+		for (int i = 0; i < bookmark->rowCount(); ++i)
+		{
+			readdBookmarkUrl(dynamic_cast<BookmarksItem*>(bookmark->child(i, 0)));
+		}
+	}
+	else if (!bookmark->data(UrlRole).toUrl().isEmpty())
+	{
+		const QUrl url = adjustUrl(bookmark->data(UrlRole).toUrl());
+
+		if (!m_urls.contains(url))
+		{
+			m_urls[url] = QList<BookmarksItem*>();
+		}
+
+		m_urls[url].append(bookmark);
 	}
 }
 
