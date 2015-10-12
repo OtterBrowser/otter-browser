@@ -27,6 +27,7 @@
 
 #include <QtCore/QSettings>
 #include <QtGui/QClipboard>
+#include <QtGui/QKeyEvent>
 #include <QtWidgets/QMenu>
 
 namespace Otter
@@ -89,6 +90,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 	m_ui->configurationView->setItemDelegate(new ItemDelegate(this));
 	m_ui->configurationView->setItemDelegateForColumn(2, new OptionDelegate(false, this));
 	m_ui->configurationView->header()->setTextElideMode(Qt::ElideRight);
+	m_ui->filterLineEdit->installEventFilter(this);
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(m_ui->configurationView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
@@ -285,6 +287,21 @@ QUrl ConfigurationContentsWidget::getUrl() const
 QIcon ConfigurationContentsWidget::getIcon() const
 {
 	return Utils::getIcon(QLatin1String("configuration"), false);
+}
+
+bool ConfigurationContentsWidget::eventFilter(QObject *object, QEvent *event)
+{
+	if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
+	{
+		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+		if (keyEvent->key() == Qt::Key_Escape)
+		{
+			m_ui->filterLineEdit->clear();
+		}
+	}
+
+	return ContentsWidget::eventFilter(object, event);
 }
 
 }

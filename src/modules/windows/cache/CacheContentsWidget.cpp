@@ -46,6 +46,7 @@ CacheContentsWidget::CacheContentsWidget(Window *window) : ContentsWidget(window
 	m_ui->previewLabel->hide();
 	m_ui->cacheView->installEventFilter(this);
 	m_ui->cacheView->viewport()->installEventFilter(this);
+	m_ui->filterLineEdit->installEventFilter(this);
 
 	if (!window)
 	{
@@ -642,7 +643,7 @@ bool CacheContentsWidget::eventFilter(QObject *object, QEvent *event)
 			return true;
 		}
 	}
-	else if (event->type() == QEvent::MouseButtonRelease && object == m_ui->cacheView->viewport())
+	else if (object == m_ui->cacheView->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
@@ -663,6 +664,15 @@ bool CacheContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 				return true;
 			}
+		}
+	}
+	else if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
+	{
+		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+		if (keyEvent->key() == Qt::Key_Escape)
+		{
+			m_ui->filterLineEdit->clear();
 		}
 	}
 

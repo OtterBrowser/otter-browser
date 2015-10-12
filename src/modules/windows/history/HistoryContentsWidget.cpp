@@ -60,6 +60,7 @@ HistoryContentsWidget::HistoryContentsWidget(Window *window) : ContentsWidget(wi
 	m_ui->historyView->header()->setSectionResizeMode(0, QHeaderView::Stretch);
 	m_ui->historyView->installEventFilter(this);
 	m_ui->historyView->viewport()->installEventFilter(this);
+	m_ui->filterLineEdit->installEventFilter(this);
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
@@ -490,7 +491,7 @@ bool HistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
 			return true;
 		}
 	}
-	else if (event->type() == QEvent::MouseButtonRelease && object == m_ui->historyView->viewport())
+	else if (object == m_ui->historyView->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
@@ -511,6 +512,15 @@ bool HistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 				return true;
 			}
+		}
+	}
+	else if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
+	{
+		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+		if (keyEvent->key() == Qt::Key_Escape)
+		{
+			m_ui->filterLineEdit->clear();
 		}
 	}
 

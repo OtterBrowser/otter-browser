@@ -47,6 +47,7 @@ public:
 	QLatin1String getType() const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
+	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());

@@ -53,6 +53,7 @@ NotesContentsWidget::NotesContentsWidget(Window *window) : ContentsWidget(window
 	m_ui->notesView->setExpanded(NotesManager::getModel()->getRootItem()->index(), true);
 	m_ui->notesView->viewport()->installEventFilter(this);
 	m_ui->notesView->viewport()->setMouseTracking(true);
+	m_ui->filterLineEdit->installEventFilter(this);
 
 #if QT_VERSION >= 0x050300
 	m_ui->textEdit->setPlaceholderText(tr("Add note…"));
@@ -431,7 +432,7 @@ bool NotesContentsWidget::filterNotes(const QString &filter, QStandardItem *bran
 
 bool NotesContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (event->type() == QEvent::MouseButtonRelease && object == m_ui->notesView->viewport())
+	if (object == m_ui->notesView->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 		WindowsManager *manager = SessionsManager::getWindowsManager();
@@ -448,7 +449,7 @@ bool NotesContentsWidget::eventFilter(QObject *object, QEvent *event)
 			}
 		}
 	}
-	else if (event->type() == QEvent::ToolTip && object == m_ui->notesView->viewport())
+	else if (object == m_ui->notesView->viewport() && event->type() == QEvent::ToolTip)
 	{
 		QHelpEvent *helpEvent = static_cast<QHelpEvent*>(event);
 
@@ -463,6 +464,15 @@ bool NotesContentsWidget::eventFilter(QObject *object, QEvent *event)
 			}
 
 			return true;
+		}
+	}
+	else if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
+	{
+		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+		if (keyEvent->key() == Qt::Key_Escape)
+		{
+			m_ui->filterLineEdit->clear();
 		}
 	}
 

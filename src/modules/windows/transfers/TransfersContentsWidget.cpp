@@ -61,6 +61,7 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 	m_ui->transfersView->installEventFilter(this);
 	m_ui->stopResumeButton->setIcon(Utils::getIcon(QLatin1String("task-ongoing")));
 	m_ui->redownloadButton->setIcon(Utils::getIcon(QLatin1String("view-refresh")));
+	m_ui->downloadLineEdit->installEventFilter(this);
 
 	// In order for the sizeHint method to be called, the ResizeToContents needs to be set up
 	m_ui->transfersView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
@@ -605,6 +606,15 @@ bool TransfersContentsWidget::eventFilter(QObject *object, QEvent *event)
 			removeTransfer();
 
 			return true;
+		}
+	}
+	else if (object == m_ui->downloadLineEdit && event->type() == QEvent::KeyPress)
+	{
+		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+		if (keyEvent->key() == Qt::Key_Escape)
+		{
+			m_ui->downloadLineEdit->clear();
 		}
 	}
 

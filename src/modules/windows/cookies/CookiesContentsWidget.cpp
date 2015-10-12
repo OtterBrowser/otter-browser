@@ -41,6 +41,7 @@ CookiesContentsWidget::CookiesContentsWidget(Window *window) : ContentsWidget(wi
 {
 	m_ui->setupUi(this);
 	m_ui->cookiesView->installEventFilter(this);
+	m_ui->filterLineEdit->installEventFilter(this);
 
 	if (!window)
 	{
@@ -491,6 +492,15 @@ bool CookiesContentsWidget::eventFilter(QObject *object, QEvent *event)
 			removeCookies();
 
 			return true;
+		}
+	}
+	else if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
+	{
+		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+		if (keyEvent->key() == Qt::Key_Escape)
+		{
+			m_ui->filterLineEdit->clear();
 		}
 	}
 

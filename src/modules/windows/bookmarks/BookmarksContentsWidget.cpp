@@ -53,6 +53,7 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 	m_ui->bookmarksView->installEventFilter(this);
 	m_ui->bookmarksView->viewport()->installEventFilter(this);
 	m_ui->bookmarksView->viewport()->setMouseTracking(true);
+	m_ui->filterLineEdit->installEventFilter(this);
 
 	if (!window)
 	{
@@ -404,7 +405,7 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 			return true;
 		}
 	}
-	else if (event->type() == QEvent::MouseButtonRelease && object == m_ui->bookmarksView->viewport())
+	else if (object == m_ui->bookmarksView->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 		WindowsManager *manager = SessionsManager::getWindowsManager();
@@ -421,7 +422,7 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 			}
 		}
 	}
-	else if (event->type() == QEvent::ToolTip && object == m_ui->bookmarksView->viewport())
+	else if (object == m_ui->bookmarksView->viewport() && event->type() == QEvent::ToolTip)
 	{
 		QHelpEvent *helpEvent = static_cast<QHelpEvent*>(event);
 
@@ -436,6 +437,15 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 			}
 
 			return true;
+		}
+	}
+	else if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
+	{
+		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+		if (keyEvent->key() == Qt::Key_Escape)
+		{
+			m_ui->filterLineEdit->clear();
 		}
 	}
 
