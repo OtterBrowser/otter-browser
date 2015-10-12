@@ -36,11 +36,13 @@ public:
 	static void createInstance(QObject *parent = NULL);
 	static void updateVisits(const QUrl &url);
 	static void removeBookmark(const QUrl &url);
+	static void setLastUsedFolder(BookmarksItem *folder);
 	static BookmarksManager* getInstance();
 	static BookmarksModel* getModel();
 	static BookmarksItem* addBookmark(BookmarksModel::BookmarkType type, const QUrl &url = QUrl(), const QString &title = QString(), BookmarksItem *parent = NULL);
 	static BookmarksItem* getBookmark(const QString &keyword);
 	static BookmarksItem* getBookmark(quint64 identifier);
+	static BookmarksItem* getLastUsedFolder();
 	static QStringList getKeywords();
 	static QList<QUrl> getUrls();
 	static bool hasBookmark(const QUrl &url);
@@ -59,6 +61,7 @@ private:
 
 	static BookmarksManager *m_instance;
 	static BookmarksModel *m_model;
+	static qulonglong m_lastUsedFolder;
 };
 
 }

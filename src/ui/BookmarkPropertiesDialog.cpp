@@ -39,7 +39,7 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, Book
 	const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt());
 
 	m_ui->setupUi(this);
-	m_ui->folderComboBox->setCurrentFolder(bookmark->parent() ? dynamic_cast<BookmarksItem*>(bookmark->parent()) : BookmarksManager::getModel()->getRootItem());
+	m_ui->folderComboBox->setCurrentFolder((bookmark->parent() && mode != AddBookmarkMode) ? dynamic_cast<BookmarksItem*>(bookmark->parent()) : BookmarksManager::getLastUsedFolder());
 	m_ui->titleLineEdit->setText(m_bookmark->data(BookmarksModel::TitleRole).toString());
 	m_ui->addressLineEdit->setText(m_bookmark->data(BookmarksModel::UrlRole).toString());
 	m_ui->addressLineEdit->setVisible(type == BookmarksModel::UrlBookmark);
@@ -143,6 +143,8 @@ void BookmarkPropertiesDialog::saveBookmark()
 		{
 			BookmarksManager::getModel()->moveBookmark(m_bookmark, m_ui->folderComboBox->getCurrentFolder());
 		}
+
+		BookmarksManager::setLastUsedFolder(m_ui->folderComboBox->getCurrentFolder());
 	}
 
 	accept();

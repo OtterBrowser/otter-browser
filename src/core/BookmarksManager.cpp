@@ -28,6 +28,7 @@ namespace Otter
 
 BookmarksManager* BookmarksManager::m_instance = NULL;
 BookmarksModel* BookmarksManager::m_model = NULL;
+qulonglong BookmarksManager::m_lastUsedFolder = 0;
 
 BookmarksManager::BookmarksManager(QObject *parent) : QObject(parent),
 	 m_saveTimer(0)
@@ -108,6 +109,11 @@ void BookmarksManager::removeBookmark(const QUrl &url)
 	}
 }
 
+void BookmarksManager::setLastUsedFolder(BookmarksItem *folder)
+{
+	m_lastUsedFolder = (folder ? folder->data(BookmarksModel::IdentifierRole).toULongLong() : 0);
+}
+
 BookmarksManager* BookmarksManager::getInstance()
 {
 	return m_instance;
@@ -158,6 +164,13 @@ BookmarksItem* BookmarksManager::getBookmark(quint64 identifier)
 	}
 
 	return m_model->getBookmark(identifier);
+}
+
+BookmarksItem* BookmarksManager::getLastUsedFolder()
+{
+	BookmarksItem *folder = getModel()->getBookmark(m_lastUsedFolder);
+
+	return ((!folder || static_cast<BookmarksModel::BookmarkType>(folder->data(BookmarksModel::TypeRole).toInt()) != BookmarksModel::FolderBookmark) ? getModel()->getRootItem() : folder);
 }
 
 QStringList BookmarksManager::getKeywords()
