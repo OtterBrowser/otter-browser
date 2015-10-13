@@ -225,11 +225,9 @@ void TransfersContentsWidget::updateTransfer(Transfer *transfer)
 			icon = Utils::getIcon(QLatin1String("task-complete"));
 
 			break;
-		case Transfer::ErrorState:
+		default:
 			icon = Utils::getIcon(QLatin1String("task-reject"));
 
-			break;
-		default:
 			break;
 	}
 
