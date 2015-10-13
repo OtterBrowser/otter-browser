@@ -52,6 +52,7 @@ public:
 	static void createInstance(QObject *parent = NULL);
 	static HandlersManager* getInstance();
 	static HandlerDefinition getHandler(const QString &type);
+	static void setHandler(const QString &type, const HandlerDefinition &definition);
 
 protected:
 	explicit HandlersManager(QObject *parent = NULL);

@@ -100,9 +100,6 @@
    </item>
    <item>
     <widget class="QCheckBox" name="rememberChoiceCheckBox">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
      <property name="text">
       <string>Remember choice for this file type</string>
      </property>

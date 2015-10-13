@@ -21,6 +21,7 @@
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 
+#include <QtCore/QFile>
 #include <QtCore/QSettings>
 
 namespace Otter
@@ -112,6 +113,43 @@ HandlerDefinition HandlersManager::getHandler(const QString &type)
 	}
 
 	return definition;
+}
+
+void HandlersManager::setHandler(const QString &type, const HandlerDefinition &definition)
+{
+	const QString path = SessionsManager::getWritableDataPath(QLatin1String("handlers.ini"));
+
+	if (!QFile::exists(path))
+	{
+		QFile::copy(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")), path);
+		QFile::setPermissions(path, (QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ReadGroup | QFileDevice::ReadOther));
+	}
+
+	QString transferMode = QLatin1String("ask");
+
+	if (definition.transferMode == IgnoreTransferMode)
+	{
+		transferMode = QLatin1String("ignore");
+	}
+	else if (definition.transferMode == OpenTransferMode)
+	{
+		transferMode = QLatin1String("open");
+	}
+	else if (definition.transferMode == SaveTransferMode)
+	{
+		transferMode = QLatin1String("save");
+	}
+	else if (definition.transferMode == SaveAsTransferMode)
+	{
+		transferMode = QLatin1String("saveAs");
+	}
+
+	QSettings settings(path, QSettings::IniFormat);
+	settings.setIniCodec("UTF-8");
+	settings.beginGroup(type);
+	settings.setValue(QLatin1String("openCommand"), definition.openCommand);
+	settings.setValue(QLatin1String("downloadsPath"), definition.downloadsPath);
+	settings.setValue(QLatin1String("transferMode"), transferMode);
 }
 
 }

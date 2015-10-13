@@ -18,12 +18,14 @@
 **************************************************************************/
 
 #include "TransferDialog.h"
+#include "../core/HandlersManager.h"
 #include "../core/Transfer.h"
 #include "../core/TransfersManager.h"
 #include "../core/Utils.h"
 
 #include "ui_TransferDialog.h"
 
+#include <QtCore/QFileInfo>
 #include <QtCore/QtMath>
 
 namespace Otter
@@ -112,6 +114,14 @@ void TransferDialog::buttonClicked(QAbstractButton *button)
 		if (m_transfer)
 		{
 			m_transfer->cancel();
+
+			if (m_ui->rememberChoiceCheckBox->isChecked())
+			{
+				HandlerDefinition definition;
+				definition.transferMode = IgnoreTransferMode;
+
+				HandlersManager::setHandler(m_transfer->getMimeType().name(), definition);
+			}
 		}
 
 		reject();
@@ -122,6 +132,15 @@ void TransferDialog::buttonClicked(QAbstractButton *button)
 	if (standardButton == QDialogButtonBox::Open)
 	{
 		m_transfer->setOpenCommand(m_ui->openWithComboBox->currentData().toString());
+
+		if (m_ui->rememberChoiceCheckBox->isChecked())
+		{
+			HandlerDefinition definition;
+			definition.transferMode = OpenTransferMode;
+			definition.openCommand = m_ui->openWithComboBox->currentData().toString();
+
+			HandlersManager::setHandler(m_transfer->getMimeType().name(), definition);
+		}
 	}
 	else if (standardButton == QDialogButtonBox::Save)
 	{
@@ -151,6 +170,15 @@ void TransferDialog::buttonClicked(QAbstractButton *button)
 		}
 
 		m_transfer->setTarget(path);
+
+		if (m_ui->rememberChoiceCheckBox->isChecked())
+		{
+			HandlerDefinition definition;
+			definition.transferMode = SaveTransferMode;
+			definition.downloadsPath = QFileInfo(path).canonicalPath();
+
+			HandlersManager::setHandler(m_transfer->getMimeType().name(), definition);
+		}
 	}
 
 	TransfersManager::addTransfer(m_transfer);
