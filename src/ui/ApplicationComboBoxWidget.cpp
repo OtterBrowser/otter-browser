@@ -1,0 +1,122 @@
+/**************************************************************************
+* Otter Browser: Web browser controlled by the user, not vice-versa.
+* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+**************************************************************************/
+
+#include "ApplicationComboBoxWidget.h"
+#include "../core/Utils.h"
+
+#include <QtCore/QEvent>
+#include <QtCore/QStandardPaths>
+#include <QtWidgets/QFileDialog>
+
+namespace Otter
+{
+
+ApplicationComboBoxWidget::ApplicationComboBoxWidget(QWidget *parent) : QComboBox(parent),
+	m_previousIndex(0)
+{
+	addItem(tr("Default Application"));
+	insertSeparator(1);
+	addItem(tr("Otheṛ…"));
+
+	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
+}
+
+void ApplicationComboBoxWidget::changeEvent(QEvent *event)
+{
+	QComboBox::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange)
+	{
+		setItemData(0, tr("Default Application"), Qt::DisplayRole);
+		setItemData((count() - 1), tr("Otheṛ…"), Qt::DisplayRole);
+	}
+}
+
+void ApplicationComboBoxWidget::indexChanged(int index)
+{
+	if (index == (count() - 1))
+	{
+		disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
+
+		setCurrentIndex(m_previousIndex);
+
+		const QString path = QFileDialog::getOpenFileName(this, tr("Select Application"), QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation).first());
+
+		if (!path.isEmpty())
+		{
+			if (count() == 3)
+			{
+				insertSeparator(2);
+			}
+
+			m_previousIndex = (count() - 2);
+
+			insertItem(m_previousIndex, QFileInfo(path).baseName(), path);
+			setCurrentIndex(m_previousIndex);
+		}
+
+		connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
+	}
+	else
+	{
+		m_previousIndex = index;
+	}
+}
+
+void ApplicationComboBoxWidget::setMimeType(const QMimeType &mimeType)
+{
+	disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
+
+	clear();
+
+	const QList<ApplicationInformation> applications = Utils::getApplicationsForMimeType(mimeType);
+
+	if (applications.isEmpty())
+	{
+		addItem(tr("Default Application"));
+	}
+	else
+	{
+		for (int i = 0; i < applications.count(); ++i)
+		{
+			addItem(applications.at(i).icon, ((applications.at(i).name.isEmpty()) ? tr("Unknown") : applications.at(i).name), applications.at(i).command);
+
+			if (i == 0 && applications.count() > 1)
+			{
+				insertSeparator(1);
+			}
+		}
+	}
+
+	if (applications.count() > 1)
+	{
+		insertSeparator(applications.count() + 1);
+	}
+
+	addItem(tr("Otheṛ…"));
+
+	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
+}
+
+QString ApplicationComboBoxWidget::getCommand() const
+{
+	return currentData().toString();
+}
+
+}

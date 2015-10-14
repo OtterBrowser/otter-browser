@@ -113,6 +113,7 @@ SOURCES += src/main.cpp \
     src/core/WindowsManager.cpp \
     src/ui/AcceptCookieDialog.cpp \
     src/ui/AddressDelegate.cpp \
+    src/ui/ApplicationComboBoxWidget.cpp \
     src/ui/AuthenticationDialog.cpp \
     src/ui/BookmarkPropertiesDialog.cpp \
     src/ui/BookmarksBarDialog.cpp \
@@ -261,6 +262,7 @@ HEADERS += src/core/ActionsManager.h \
     src/core/WindowsManager.h \
     src/ui/AcceptCookieDialog.h \
     src/ui/AddressDelegate.h \
+    src/ui/ApplicationComboBoxWidget.h \
     src/ui/AuthenticationDialog.h \
     src/ui/BookmarkPropertiesDialog.h \
     src/ui/BookmarksBarDialog.h \

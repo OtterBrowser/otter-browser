@@ -57,25 +57,7 @@ TransferDialog::TransferDialog(Transfer *transfer, QWidget *parent) : QDialog(pa
 	m_ui->nameTextLabelWidget->setText(fileName);
 	m_ui->typeTextLabelWidget->setText(transfer->getMimeType().comment());
 	m_ui->fromTextLabelWidget->setText(transfer->getSource().host().isEmpty() ? QLatin1String("localhost") : transfer->getSource().host());
-
-	const QList<ApplicationInformation> applications = Utils::getApplicationsForMimeType(transfer->getMimeType());
-
-	if (applications.isEmpty())
-	{
-		m_ui->openWithComboBox->addItem(tr("Default Application"));
-	}
-	else
-	{
-		for (int i = 0; i < applications.count(); ++i)
-		{
-			m_ui->openWithComboBox->addItem(applications.at(i).icon, ((applications.at(i).name.isEmpty()) ? tr("Unknown") : applications.at(i).name), applications.at(i).command);
-
-			if (i == 0 && applications.count() > 1)
-			{
-				m_ui->openWithComboBox->insertSeparator(1);
-			}
-		}
-	}
+	m_ui->openWithComboBoxWidget->setMimeType(transfer->getMimeType());
 
 	setProgress(m_transfer->getBytesReceived(), m_transfer->getBytesTotal());
 	setWindowTitle(tr("Opening %1").arg(fileName));
@@ -131,13 +113,13 @@ void TransferDialog::buttonClicked(QAbstractButton *button)
 
 	if (standardButton == QDialogButtonBox::Open)
 	{
-		m_transfer->setOpenCommand(m_ui->openWithComboBox->currentData().toString());
+		m_transfer->setOpenCommand(m_ui->openWithComboBoxWidget->getCommand());
 
 		if (m_ui->rememberChoiceCheckBox->isChecked())
 		{
 			HandlerDefinition definition;
 			definition.transferMode = OpenTransferMode;
-			definition.openCommand = m_ui->openWithComboBox->currentData().toString();
+			definition.openCommand = m_ui->openWithComboBoxWidget->getCommand();
 
 			HandlersManager::setHandler(m_transfer->getMimeType().name(), definition);
 		}

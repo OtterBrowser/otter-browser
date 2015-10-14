@@ -94,7 +94,7 @@
       <widget class="Otter::TextLabelWidget" name="fromTextLabelWidget" native="true"/>
      </item>
      <item row="4" column="1">
-      <widget class="QComboBox" name="openWithComboBox"/>
+      <widget class="Otter::ApplicationComboBoxWidget" name="openWithComboBoxWidget"/>
      </item>
     </layout>
    </item>
@@ -123,6 +123,11 @@
    <extends>QWidget</extends>
    <header>src/ui/TextLabelWidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Otter::ApplicationComboBoxWidget</class>
+   <extends>QComboBox</extends>
+   <header>src/ui/ApplicationComboBoxWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
