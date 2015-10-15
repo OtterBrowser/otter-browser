@@ -19,10 +19,10 @@
 
 #include "HandlersManager.h"
 #include "SessionsManager.h"
+#include "Settings.h"
 #include "SettingsManager.h"
 
 #include <QtCore/QFile>
-#include <QtCore/QSettings>
 
 namespace Otter
 {
@@ -48,47 +48,23 @@ HandlersManager* HandlersManager::getInstance()
 
 HandlerDefinition HandlersManager::getHandler(const QString &type)
 {
-	QSettings handlersSettings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")), QSettings::IniFormat);
+	Settings settings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
 	HandlerDefinition definition;
+	definition.isExplicit = settings.getGroups().contains(type);
 
-	if (type.contains(QLatin1Char('/')))
+	if (definition.isExplicit)
 	{
-		const QStringList groups = type.split(QLatin1Char('/'));
-
-		definition.isExplicit = true;
-
-		for (int i = 0; i < groups.count(); ++i)
-		{
-			if (handlersSettings.childGroups().contains(groups.at(i)))
-			{
-				handlersSettings.beginGroup(groups.at(i));
-			}
-			else
-			{
-				for (int j = 0; j < i; ++j)
-				{
-					handlersSettings.endGroup();
-				}
-
-				handlersSettings.beginGroup(QLatin1String("*"));
-
-				definition.isExplicit = false;
-
-				break;
-			}
-		}
+		settings.beginGroup(type);
 	}
 	else
 	{
-		definition.isExplicit = handlersSettings.childGroups().contains(type);
-
-		handlersSettings.beginGroup(definition.isExplicit ? type : QLatin1String("*"));
+		settings.beginGroup(QLatin1String("*"));
 	}
 
-	const QString downloadsPath = handlersSettings.value(QLatin1String("downloadsPath"), QString()).toString();
-	const QString transferMode = handlersSettings.value(QLatin1String("transferMode"), QString()).toString();
+	const QString downloadsPath = settings.getValue(QLatin1String("downloadsPath"), QString()).toString();
+	const QString transferMode = settings.getValue(QLatin1String("transferMode"), QString()).toString();
 
-	definition.openCommand = handlersSettings.value(QLatin1String("openCommand"), QString()).toString();
+	definition.openCommand = settings.getValue(QLatin1String("openCommand"), QString()).toString();
 	definition.downloadsPath = (downloadsPath.isEmpty() ? SettingsManager::getValue(QLatin1String("Paths/Downloads")).toString() : downloadsPath);
 
 	if (transferMode == QLatin1String("ignore"))
@@ -118,13 +94,7 @@ HandlerDefinition HandlersManager::getHandler(const QString &type)
 void HandlersManager::setHandler(const QString &type, const HandlerDefinition &definition)
 {
 	const QString path = SessionsManager::getWritableDataPath(QLatin1String("handlers.ini"));
-
-	if (!QFile::exists(path))
-	{
-		QFile::copy(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")), path);
-		QFile::setPermissions(path, (QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ReadGroup | QFileDevice::ReadOther));
-	}
-
+	Settings settings(QFile::exists(path) ? path : SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
 	QString transferMode = QLatin1String("ask");
 
 	if (definition.transferMode == IgnoreTransferMode)
@@ -144,12 +114,11 @@ void HandlersManager::setHandler(const QString &type, const HandlerDefinition &d
 		transferMode = QLatin1String("saveAs");
 	}
 
-	QSettings settings(path, QSettings::IniFormat);
-	settings.setIniCodec("UTF-8");
 	settings.beginGroup(type);
 	settings.setValue(QLatin1String("openCommand"), definition.openCommand);
 	settings.setValue(QLatin1String("downloadsPath"), definition.downloadsPath);
 	settings.setValue(QLatin1String("transferMode"), transferMode);
+	settings.save(path);
 }
 
 }
