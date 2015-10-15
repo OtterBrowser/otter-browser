@@ -102,6 +102,7 @@ SOURCES += src/main.cpp \
     src/core/SearchSuggester.cpp \
     src/core/SessionModel.cpp \
     src/core/SessionsManager.cpp \
+    src/core/Settings.cpp \
     src/core/SettingsManager.cpp \
     src/core/ToolBarsManager.cpp \
     src/core/Transfer.cpp \
@@ -251,6 +252,7 @@ HEADERS += src/core/ActionsManager.h \
     src/core/SearchSuggester.h \
     src/core/SessionModel.h \
     src/core/SessionsManager.h \
+    src/core/Settings.h \
     src/core/SettingsManager.h \
     src/core/ToolBarsManager.h \
     src/core/Transfer.h \
