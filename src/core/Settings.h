@@ -36,6 +36,7 @@ public:
 
 	void clear();
 	void beginGroup(const QString &group);
+	void removeGroup(const QString &group);
 	void endGroup();
 	void setComment(const QString &comment);
 	void setValue(const QString &key, const QVariant &value);

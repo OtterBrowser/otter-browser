@@ -103,6 +103,19 @@ void Settings::beginGroup(const QString &group)
 	m_group = group;
 }
 
+void Settings::removeGroup(const QString &group)
+{
+	if (m_data.contains(group))
+	{
+		m_data.remove(group);
+	}
+
+	if (m_group == group)
+	{
+		m_group = QString();
+	}
+}
+
 void Settings::endGroup()
 {
 	m_group = QString();

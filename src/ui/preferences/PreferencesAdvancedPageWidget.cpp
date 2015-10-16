@@ -28,11 +28,13 @@
 #include "../../core/NetworkManagerFactory.h"
 #include "../../core/NotificationsManager.h"
 #include "../../core/SessionsManager.h"
+#include "../../core/Settings.h"
 #include "../../core/SettingsManager.h"
 #include "../../core/Utils.h"
 
 #include "ui_PreferencesAdvancedPageWidget.h"
 
+#include <QtCore/QMimeDatabase>
 #include <QtCore/QSettings>
 #include <QtCore/QTimer>
 #include <QtMultimedia/QSoundEffect>
@@ -52,7 +54,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	QStandardItemModel *navigationModel = new QStandardItemModel(this);
 	QStringList navigationTitles;
-	navigationTitles << tr("Notifications") << tr("Address Field") << tr("Content") << QString() << tr("Network") << tr("Security") << tr("Updates") << QString() << tr("Keyboard") << QString() << tr("Other");
+	navigationTitles << tr("Notifications") << tr("Address Field") << tr("Content") << tr("Downloads") << QString() << tr("Network") << tr("Security") << tr("Updates") << QString() << tr("Keyboard") << QString() << tr("Other");
 
 	int navigationIndex = 0;
 
@@ -123,6 +125,38 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->pluginsComboBox->setCurrentIndex((pluginsIndex < 0) ? 1 : pluginsIndex);
 	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Content/UserStyleSheet")).toString());
+
+	QStringList downloadsLabels;
+	downloadsLabels << tr("Name");
+
+	QStandardItemModel *downloadsModel = new QStandardItemModel(this);
+	downloadsModel->setHorizontalHeaderLabels(downloadsLabels);
+
+	Settings handlersSettings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
+	const QStringList handlers = handlersSettings.getGroups();
+
+	for (int i = 0; i < handlers.count(); ++i)
+	{
+		if (handlers.at(i) != QLatin1String("*") && !handlers.at(i).contains(QLatin1Char('/')))
+		{
+			continue;
+		}
+
+		handlersSettings.beginGroup(handlers.at(i));
+
+		QStandardItem *item = new QStandardItem(handlers.at(i));
+		item->setData(handlersSettings.getValue(QLatin1String("transferMode")), Qt::UserRole);
+		item->setData(handlersSettings.getValue(QLatin1String("downloadsPath")), (Qt::UserRole + 1));
+		item->setData(handlersSettings.getValue(QLatin1String("openCommand")), (Qt::UserRole + 2));
+		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+
+		handlersSettings.endGroup();
+
+		downloadsModel->appendRow(item);
+	}
+
+	m_ui->downloadsItemView->setModel(downloadsModel);
+	m_ui->downloadsFilePathWidget->setSelectFile(false);
 
 	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Network/EnableReferrer")).toBool());
 
@@ -296,6 +330,8 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	connect(m_ui->notificationsPlaySoundButton, SIGNAL(clicked()), this, SLOT(playNotificationSound()));
 	connect(m_ui->enableJavaScriptCheckBox, SIGNAL(toggled(bool)), m_ui->javaScriptOptionsButton, SLOT(setEnabled(bool)));
 	connect(m_ui->javaScriptOptionsButton, SIGNAL(clicked()), this, SLOT(updateJavaScriptOptions()));
+	connect(m_ui->downloadsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateDownloadsActions()));
+	connect(m_ui->downloadsButtonGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(updateDownloadsOptions()));
 	connect(m_ui->userAgentButton, SIGNAL(clicked()), this, SLOT(manageUserAgents()));
 	connect(m_ui->proxyModeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(proxyModeChanged(int)));
 	connect(m_ui->ciphersViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->ciphersMoveDownButton, SLOT(setEnabled(bool)));
@@ -385,11 +421,89 @@ void PreferencesAdvancedPageWidget::updateNotificationsOptions()
 
 	if (index.isValid())
 	{
+		connect(m_ui->notificationsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateNotificationsActions()));
+
 		m_ui->notificationsItemView->setData(index, m_ui->notificationsPlaySoundFilePathWidget->getPath(), (Qt::UserRole + 1));
 		m_ui->notificationsItemView->setData(index, m_ui->notificationsShowAlertCheckBox->isChecked(), (Qt::UserRole + 2));
 		m_ui->notificationsItemView->setData(index, m_ui->notificationsShowNotificationCheckBox->isChecked(), (Qt::UserRole + 3));
 
 		emit settingsModified();
+
+		connect(m_ui->notificationsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateNotificationsActions()));
+	}
+}
+
+void PreferencesAdvancedPageWidget::updateDownloadsActions()
+{
+	disconnect(m_ui->downloadsSaveDirectlyCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateDownloadsOptions()));
+	disconnect(m_ui->downloadsFilePathWidget, SIGNAL(pathChanged()), this, SLOT(updateDownloadsOptions()));
+	disconnect(m_ui->downloadsPassUrlCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateDownloadsOptions()));
+	disconnect(m_ui->downloadsApplicationComboBoxWidget, SIGNAL(currentIndexChanged(int)), this, SLOT(updateDownloadsOptions()));
+
+	const QModelIndex index = m_ui->downloadsItemView->getIndex(m_ui->downloadsItemView->getCurrentRow());
+	const QString mode = index.data(Qt::UserRole).toString();
+
+	if (mode == QLatin1String("save") || mode == QLatin1String("saveAs"))
+	{
+		m_ui->downloadsSaveButton->setChecked(true);
+	}
+	else if (mode == QLatin1String("open"))
+	{
+		m_ui->downloadsOpenButton->setChecked(true);
+	}
+	else
+	{
+		m_ui->downloadsAskButton->setChecked(true);
+	}
+
+	m_ui->downloadsOptionsWidget->setEnabled(index.isValid());
+	m_ui->downloadsSaveDirectlyCheckBox->setChecked(mode == QLatin1String("save"));
+	m_ui->downloadsFilePathWidget->setPath(index.data(Qt::UserRole + 1).toString());
+	m_ui->downloadsApplicationComboBoxWidget->setMimeType(QMimeDatabase().mimeTypeForName(index.data(Qt::DisplayRole).toString()));
+
+	connect(m_ui->downloadsSaveDirectlyCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateDownloadsOptions()));
+	connect(m_ui->downloadsFilePathWidget, SIGNAL(pathChanged()), this, SLOT(updateDownloadsOptions()));
+	connect(m_ui->downloadsPassUrlCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateDownloadsOptions()));
+	connect(m_ui->downloadsApplicationComboBoxWidget, SIGNAL(currentIndexChanged(int)), this, SLOT(updateDownloadsOptions()));
+}
+
+void PreferencesAdvancedPageWidget::updateDownloadsOptions()
+{
+	const QModelIndex index = m_ui->downloadsItemView->getIndex(m_ui->downloadsItemView->getCurrentRow());
+
+	m_ui->downloadsOpenOptionsWidget->setEnabled(false);
+	m_ui->downloadsSaveOptionsWidget->setEnabled(false);
+
+	if (index.isValid())
+	{
+		disconnect(m_ui->downloadsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateDownloadsActions()));
+
+		QString mode;
+
+		if (m_ui->downloadsSaveButton->isChecked())
+		{
+			mode = (m_ui->downloadsSaveDirectlyCheckBox->isChecked() ? QLatin1String("saveAs") : QLatin1String("save"));
+
+			m_ui->downloadsSaveOptionsWidget->setEnabled(true);
+		}
+		else if (m_ui->downloadsOpenButton->isChecked())
+		{
+			mode = QLatin1String("open");
+
+			m_ui->downloadsOpenOptionsWidget->setEnabled(true);
+		}
+		else
+		{
+			mode = QLatin1String("ask");
+		}
+
+		m_ui->downloadsItemView->setData(index, mode, Qt::UserRole);
+		m_ui->downloadsItemView->setData(index, ((mode == QLatin1String("save") || mode == QLatin1String("saveAs")) ? m_ui->downloadsFilePathWidget->getPath() : QString()), (Qt::UserRole + 1));
+		m_ui->downloadsItemView->setData(index, ((mode == QLatin1String("open")) ? m_ui->downloadsApplicationComboBoxWidget->getCommand() : QString()), (Qt::UserRole + 2));
+
+		emit settingsModified();
+
+		connect(m_ui->downloadsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateDownloadsActions()));
 	}
 }
 
@@ -804,6 +918,35 @@ void PreferencesAdvancedPageWidget::save()
 	SettingsManager::setValue(QLatin1String("Browser/EnablePlugins"), m_ui->pluginsComboBox->currentData(Qt::UserRole).toString());
 
 	SettingsManager::setValue(QLatin1String("Content/UserStyleSheet"), m_ui->userStyleSheetFilePathWidget->getPath());
+
+	Settings handlersSettings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
+	const QStringList handlers = handlersSettings.getGroups();
+
+	for (int i = 0; i < handlers.count(); ++i)
+	{
+		if (handlers.at(i).contains(QLatin1Char('/')))
+		{
+			handlersSettings.removeGroup(handlers.at(i));
+		}
+	}
+
+	for (int i = 0; i < m_ui->downloadsItemView->getRowCount(); ++i)
+	{
+		const QModelIndex index = m_ui->downloadsItemView->getIndex(i, 0);
+
+		if (index.data(Qt::DisplayRole).isNull())
+		{
+			continue;
+		}
+
+		handlersSettings.beginGroup(index.data(Qt::DisplayRole).toString());
+		handlersSettings.setValue(QLatin1String("transferMode"), index.data(Qt::UserRole).toString());
+		handlersSettings.setValue(QLatin1String("downloadsPath"), index.data(Qt::UserRole + 1).toString());
+		handlersSettings.setValue(QLatin1String("openCommand"), index.data(Qt::UserRole + 2).toString());
+		handlersSettings.endGroup();
+	}
+
+	handlersSettings.save(SessionsManager::getWritableDataPath(QLatin1String("handlers.ini")));
 
 	SettingsManager::setValue(QLatin1String("Network/EnableReferrer"), m_ui->sendReferrerCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("Network/UserAgent"), m_ui->userAgentComboBox->currentData().toString());

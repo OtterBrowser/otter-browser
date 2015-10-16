@@ -54,6 +54,8 @@ protected slots:
 	void playNotificationSound();
 	void updateNotificationsActions();
 	void updateNotificationsOptions();
+	void updateDownloadsActions();
+	void updateDownloadsOptions();
 	void manageUserAgents();
 	void proxyModeChanged(int index);
 	void addCipher(QAction *action);

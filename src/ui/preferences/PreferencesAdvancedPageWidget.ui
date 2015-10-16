@@ -307,6 +307,199 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="downloadsPage">
+      <layout class="QVBoxLayout" name="downloadsLayout">
+       <item>
+        <widget class="QLabel" name="downloadsMimeTypesHeader">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>MIME Types</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Otter::ItemViewWidget" name="downloadsItemView">
+         <property name="editTriggers">
+          <set>QAbstractItemView::NoEditTriggers</set>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <attribute name="headerDefaultSectionSize">
+          <number>200</number>
+         </attribute>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="downloadsOptionsWidget" native="true">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <layout class="QVBoxLayout" name="downloadsOptionsLayout">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QRadioButton" name="downloadsAskButton">
+            <property name="text">
+             <string>Show download dialog</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">downloadsButtonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="downloadsSaveButton">
+            <property name="text">
+             <string>Save to disk</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">downloadsButtonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="downloadsSaveHorizontalLayout">
+            <item>
+             <spacer name="downloadsSaveSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>0</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QWidget" name="downloadsSaveOptionsWidget" native="true">
+              <layout class="QVBoxLayout" name="downloadsSaveVerticalLayout">
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QCheckBox" name="downloadsSaveDirectlyCheckBox">
+                 <property name="text">
+                  <string>Do not ask for folder, save directly to</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="Otter::FilePathWidget" name="downloadsFilePathWidget" native="true"/>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="downloadsOpenButton">
+            <property name="text">
+             <string>Open with application</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">downloadsButtonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="downloadsOpenHorizontalLayout">
+            <item>
+             <spacer name="downloadsOpenSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>0</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QWidget" name="downloadsOpenOptionsWidget" native="true">
+              <layout class="QVBoxLayout" name="downloadsOpenVerticalLayout">
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QCheckBox" name="downloadsPassUrlCheckBox">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>Pass web address directly to application</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="Otter::ApplicationComboBoxWidget" name="downloadsApplicationComboBoxWidget"/>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="downloadsSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>214</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
      <widget class="QWidget" name="networkPage">
       <layout class="QVBoxLayout" name="networkPageLayout" stretch="0,0,0,0,0,0,0,1">
        <item>
@@ -1072,7 +1265,15 @@
    <header>src/ui/FilePathWidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>Otter::ApplicationComboBoxWidget</class>
+   <extends>QComboBox</extends>
+   <header>src/ui/ApplicationComboBoxWidget.h</header>
+  </customwidget>
  </customwidgets>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="downloadsButtonGroup"/>
+ </buttongroups>
 </ui>
