@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 #include "NetworkProxyFactory.h"
 #include "SettingsManager.h"
 
-#include <QtCore/QFileInfo>
+#include <QtCore/QFile>
 #include <QtNetwork/QNetworkProxy>
 
 namespace Otter
@@ -118,6 +118,8 @@ void NetworkProxyFactory::optionChanged(const QString &option)
 				m_proxies[proxyTypes.at(i).second] << QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(QStringLiteral("Proxy/%1Servers").arg(proxyTypes.at(i).second)).toString(), SettingsManager::getValue(QStringLiteral("Proxy/%1Port").arg(proxyTypes.at(i).second)).toInt());
 			}
 		}
+
+		m_proxyExceptions = SettingsManager::getValue(QLatin1String("Proxy/Exceptions")).toString().remove(QLatin1Char(' ')).split(QLatin1Char(','), QString::SkipEmptyParts);
 	}
 	else if (option == QLatin1String("Network/ProxyMode"))
 	{
@@ -158,6 +160,26 @@ QList<QNetworkProxy> NetworkProxyFactory::queryProxy(const QNetworkProxyQuery &q
 
 	if (m_proxyMode == ManualProxy)
 	{
+		const QString host = query.peerHostName();
+
+		for (int i = 0; i < m_proxyExceptions.count(); ++i)
+		{
+			if (m_proxyExceptions.at(i).contains(QLatin1Char('/')))
+			{
+				const QHostAddress address = QHostAddress(host);
+				const QPair<QHostAddress, int> subnet = QHostAddress::parseSubnet(m_proxyExceptions.at(i));
+
+				if (!address.isNull() && subnet.second != -1 && address.isInSubnet(subnet))
+				{
+					return m_proxies[QLatin1String("NoProxy")];
+				}
+			}
+			else if (host.contains(m_proxyExceptions.at(i), Qt::CaseInsensitive))
+			{
+				return m_proxies[QLatin1String("NoProxy")];
+			}
+		}
+
 		const QString protocol = query.protocolTag().toLower();
 
 		if (m_proxies.contains(QLatin1String("socks")))
