@@ -58,6 +58,7 @@ protected slots:
 	void removeDownloadsMimeType();
 	void updateDownloadsActions();
 	void updateDownloadsOptions();
+	void updateDownloadsMode();
 	void manageUserAgents();
 	void proxyModeChanged(int index);
 	void addCipher(QAction *action);

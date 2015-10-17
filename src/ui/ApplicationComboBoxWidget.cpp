@@ -28,7 +28,8 @@ namespace Otter
 {
 
 ApplicationComboBoxWidget::ApplicationComboBoxWidget(QWidget *parent) : QComboBox(parent),
-	m_previousIndex(0)
+	m_previousIndex(0),
+	m_alwaysShowDefaultApplication(false)
 {
 	addItem(tr("Default Application"));
 	insertSeparator(1);
@@ -79,6 +80,35 @@ void ApplicationComboBoxWidget::indexChanged(int index)
 	}
 }
 
+void ApplicationComboBoxWidget::setCurrentCommand(const QString &command)
+{
+	if (command.isEmpty())
+	{
+		if (itemData(0, Qt::UserRole).toString().isEmpty())
+		{
+			setCurrentIndex(0);
+		}
+
+		return;
+	}
+
+	int index = findData(command);
+
+	if (index < 0)
+	{
+		if (count() == 3)
+		{
+			insertSeparator(1);
+		}
+
+		index = (count() - 2);
+
+		insertItem(index, command, command);
+	}
+
+	setCurrentIndex(index);
+}
+
 void ApplicationComboBoxWidget::setMimeType(const QMimeType &mimeType)
 {
 	disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
@@ -87,31 +117,33 @@ void ApplicationComboBoxWidget::setMimeType(const QMimeType &mimeType)
 
 	const QList<ApplicationInformation> applications = Utils::getApplicationsForMimeType(mimeType);
 
-	if (applications.isEmpty())
+	if (applications.isEmpty() || m_alwaysShowDefaultApplication)
 	{
 		addItem(tr("Default Application"));
+		insertSeparator(1);
 	}
-	else
+
+	if (!applications.isEmpty())
 	{
 		for (int i = 0; i < applications.count(); ++i)
 		{
 			addItem(applications.at(i).icon, ((applications.at(i).name.isEmpty()) ? tr("Unknown") : applications.at(i).name), applications.at(i).command);
-
-			if (i == 0 && applications.count() > 1)
-			{
-				insertSeparator(1);
-			}
 		}
 	}
 
-	if (applications.count() > 1)
+	if (count() > 2)
 	{
-		insertSeparator(applications.count() + 1);
+		insertSeparator(count() + 1);
 	}
 
 	addItem(tr("Otheṛ…"));
 
 	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
+}
+
+void ApplicationComboBoxWidget::setAlwaysShowDefaultApplication(bool show)
+{
+	m_alwaysShowDefaultApplication = show;
 }
 
 QString ApplicationComboBoxWidget::getCommand() const

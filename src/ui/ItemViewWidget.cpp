@@ -162,6 +162,9 @@ void ItemViewWidget::notifySelectionChanged()
 {
 	if (m_model)
 	{
+		m_previousIndex = m_currentIndex;
+		m_currentIndex = getIndex(getCurrentRow());
+
 		emit canMoveUpChanged(canMoveUp());
 		emit canMoveDownChanged(canMoveDown());
 		emit needsActionsUpdate();
@@ -265,6 +268,11 @@ QSize ItemViewWidget::sizeHint() const
 int ItemViewWidget::getCurrentRow() const
 {
 	return (selectionModel()->hasSelection() ? currentIndex().row() : -1);
+}
+
+int ItemViewWidget::getPreviousRow() const
+{
+	return m_previousIndex.row();
 }
 
 int ItemViewWidget::getRowCount() const

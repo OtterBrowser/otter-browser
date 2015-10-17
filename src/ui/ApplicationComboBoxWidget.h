@@ -33,7 +33,9 @@ class ApplicationComboBoxWidget : public QComboBox
 public:
 	explicit ApplicationComboBoxWidget(QWidget *parent = NULL);
 
+	void setCurrentCommand(const QString &command);
 	void setMimeType(const QMimeType &mimeType);
+	void setAlwaysShowDefaultApplication(bool show);
 	QString getCommand() const;
 
 protected:
@@ -44,6 +46,7 @@ protected slots:
 
 private:
 	int m_previousIndex;
+	bool m_alwaysShowDefaultApplication;
 };
 
 }

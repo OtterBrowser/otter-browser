@@ -41,6 +41,7 @@ public:
 	QModelIndex getIndex(int row, int column = 0) const;
 	QSize sizeHint() const;
 	int getCurrentRow() const;
+	int getPreviousRow() const;
 	int getRowCount() const;
 	int getColumnCount() const;
 	bool canMoveUp() const;
@@ -66,6 +67,8 @@ protected slots:
 
 private:
 	QStandardItemModel *m_model;
+	QModelIndex m_currentIndex;
+	QModelIndex m_previousIndex;
 	int m_dropRow;
 	bool m_isModified;
 

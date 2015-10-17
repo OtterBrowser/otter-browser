@@ -159,6 +159,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->downloadsItemView->setModel(downloadsModel);
 	m_ui->downloadsItemView->sortByColumn(0, Qt::AscendingOrder);
 	m_ui->downloadsFilePathWidget->setSelectFile(false);
+	m_ui->downloadsApplicationComboBoxWidget->setAlwaysShowDefaultApplication(true);
 
 	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Network/EnableReferrer")).toBool());
 
@@ -336,6 +337,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	connect(m_ui->downloadsAddMimeTypeButton, SIGNAL(clicked(bool)), this, SLOT(addDownloadsMimeType()));
 	connect(m_ui->downloadsRemoveMimeTypeButton, SIGNAL(clicked(bool)), this, SLOT(removeDownloadsMimeType()));
 	connect(m_ui->downloadsButtonGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(updateDownloadsOptions()));
+	connect(m_ui->downloadsButtonGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(updateDownloadsMode()));
 	connect(m_ui->userAgentButton, SIGNAL(clicked()), this, SLOT(manageUserAgents()));
 	connect(m_ui->proxyModeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(proxyModeChanged(int)));
 	connect(m_ui->ciphersViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->ciphersMoveDownButton, SLOT(setEnabled(bool)));
@@ -470,6 +472,7 @@ void PreferencesAdvancedPageWidget::removeDownloadsMimeType()
 
 void PreferencesAdvancedPageWidget::updateDownloadsActions()
 {
+	disconnect(m_ui->downloadsButtonGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(updateDownloadsOptions()));
 	disconnect(m_ui->downloadsSaveDirectlyCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateDownloadsOptions()));
 	disconnect(m_ui->downloadsFilePathWidget, SIGNAL(pathChanged()), this, SLOT(updateDownloadsOptions()));
 	disconnect(m_ui->downloadsPassUrlCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateDownloadsOptions()));
@@ -496,7 +499,9 @@ void PreferencesAdvancedPageWidget::updateDownloadsActions()
 	m_ui->downloadsSaveDirectlyCheckBox->setChecked(mode == QLatin1String("save"));
 	m_ui->downloadsFilePathWidget->setPath(index.data(Qt::UserRole + 1).toString());
 	m_ui->downloadsApplicationComboBoxWidget->setMimeType(QMimeDatabase().mimeTypeForName(index.data(Qt::DisplayRole).toString()));
+	m_ui->downloadsApplicationComboBoxWidget->setCurrentCommand(index.data(Qt::UserRole + 2).toString());
 
+	connect(m_ui->downloadsButtonGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(updateDownloadsOptions()));
 	connect(m_ui->downloadsSaveDirectlyCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateDownloadsOptions()));
 	connect(m_ui->downloadsFilePathWidget, SIGNAL(pathChanged()), this, SLOT(updateDownloadsOptions()));
 	connect(m_ui->downloadsPassUrlCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateDownloadsOptions()));
@@ -507,26 +512,20 @@ void PreferencesAdvancedPageWidget::updateDownloadsOptions()
 {
 	const QModelIndex index = m_ui->downloadsItemView->getIndex(m_ui->downloadsItemView->getCurrentRow());
 
-	m_ui->downloadsOpenOptionsWidget->setEnabled(false);
-	m_ui->downloadsSaveOptionsWidget->setEnabled(false);
+	disconnect(m_ui->downloadsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateDownloadsActions()));
+	disconnect(m_ui->downloadsButtonGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(updateDownloadsOptions()));
 
 	if (index.isValid())
 	{
-		disconnect(m_ui->downloadsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateDownloadsActions()));
-
 		QString mode;
 
 		if (m_ui->downloadsSaveButton->isChecked())
 		{
-			mode = (m_ui->downloadsSaveDirectlyCheckBox->isChecked() ? QLatin1String("saveAs") : QLatin1String("save"));
-
-			m_ui->downloadsSaveOptionsWidget->setEnabled(true);
+			mode = (m_ui->downloadsSaveDirectlyCheckBox->isChecked() ? QLatin1String("save") : QLatin1String("saveAs"));
 		}
 		else if (m_ui->downloadsOpenButton->isChecked())
 		{
 			mode = QLatin1String("open");
-
-			m_ui->downloadsOpenOptionsWidget->setEnabled(true);
 		}
 		else
 		{
@@ -536,11 +535,18 @@ void PreferencesAdvancedPageWidget::updateDownloadsOptions()
 		m_ui->downloadsItemView->setData(index, mode, Qt::UserRole);
 		m_ui->downloadsItemView->setData(index, ((mode == QLatin1String("save") || mode == QLatin1String("saveAs")) ? m_ui->downloadsFilePathWidget->getPath() : QString()), (Qt::UserRole + 1));
 		m_ui->downloadsItemView->setData(index, ((mode == QLatin1String("open")) ? m_ui->downloadsApplicationComboBoxWidget->getCommand() : QString()), (Qt::UserRole + 2));
-
-		emit settingsModified();
-
-		connect(m_ui->downloadsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateDownloadsActions()));
 	}
+
+	emit settingsModified();
+
+	connect(m_ui->downloadsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateDownloadsActions()));
+	connect(m_ui->downloadsButtonGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(updateDownloadsOptions()));
+}
+
+void PreferencesAdvancedPageWidget::updateDownloadsMode()
+{
+	m_ui->downloadsOpenOptionsWidget->setEnabled(m_ui->downloadsOpenButton->isChecked());
+	m_ui->downloadsSaveOptionsWidget->setEnabled(m_ui->downloadsSaveButton->isChecked());
 }
 
 void PreferencesAdvancedPageWidget::manageUserAgents()
