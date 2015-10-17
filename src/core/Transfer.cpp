@@ -764,11 +764,32 @@ bool Transfer::setTarget(const QString &target)
 		return false;
 	}
 
-	if (QFile::exists(target) && !m_options.testFlag(CanOverwriteOption) && QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with the same name already exists.\nDo you want to overwrite it?\n\n%1").arg(target), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Cancel)
-	{
-		cancel();
+	QString mutableTarget(target);
 
-		return false;
+	if (QFile::exists(target) && !m_options.testFlag(CanOverwriteOption))
+	{
+		const QMessageBox::StandardButton result = QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with the same name already exists.\nDo you want to overwrite it?\n\n%1").arg(target), (QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel));
+
+		if (result == QMessageBox::No)
+		{
+			QFileInfo information(target);
+			const QString path = TransfersManager::getSavePath(information.fileName(), information.path(), true);
+
+			if (path.isEmpty())
+			{
+				cancel();
+
+				return false;
+			}
+
+			mutableTarget = path;
+		}
+		else if (result == QMessageBox::Cancel)
+		{
+			cancel();
+
+			return false;
+		}
 	}
 
 	if (!m_device)
@@ -778,17 +799,17 @@ bool Transfer::setTarget(const QString &target)
 			return false;
 		}
 
-		const bool success = QFile::rename(m_target, target);
+		const bool success = QFile::rename(m_target, mutableTarget);
 
 		if (success)
 		{
-			m_target = target;
+			m_target = mutableTarget;
 		}
 
 		return success;
 	}
 
-	QFile *file = new QFile(target, this);
+	QFile *file = new QFile(mutableTarget, this);
 
 	if (!file->open(QIODevice::WriteOnly))
 	{
@@ -804,7 +825,7 @@ bool Transfer::setTarget(const QString &target)
 		return false;
 	}
 
-	m_target = target;
+	m_target = mutableTarget;
 
 	if (m_device)
 	{
