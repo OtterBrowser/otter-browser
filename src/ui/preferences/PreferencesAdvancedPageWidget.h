@@ -54,6 +54,8 @@ protected slots:
 	void playNotificationSound();
 	void updateNotificationsActions();
 	void updateNotificationsOptions();
+	void addDownloadsMimeType();
+	void removeDownloadsMimeType();
 	void updateDownloadsActions();
 	void updateDownloadsOptions();
 	void manageUserAgents();

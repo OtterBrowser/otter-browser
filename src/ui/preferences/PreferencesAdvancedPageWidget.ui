@@ -323,17 +323,49 @@
         </widget>
        </item>
        <item>
-        <widget class="Otter::ItemViewWidget" name="downloadsItemView">
-         <property name="editTriggers">
-          <set>QAbstractItemView::NoEditTriggers</set>
-         </property>
-         <property name="alternatingRowColors">
-          <bool>true</bool>
-         </property>
-         <attribute name="headerDefaultSectionSize">
-          <number>200</number>
-         </attribute>
-        </widget>
+        <layout class="QHBoxLayout" name="downloadsMimeTypesLayout">
+         <item>
+          <widget class="Otter::ItemViewWidget" name="downloadsItemView">
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <attribute name="headerDefaultSectionSize">
+            <number>200</number>
+           </attribute>
+          </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="downloadsMimeTypesButtonsLayout" stretch="0,0,1">
+           <item>
+            <widget class="QPushButton" name="downloadsAddMimeTypeButton">
+             <property name="text">
+              <string>Add</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="downloadsRemoveMimeTypeButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Remove</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="downloadsButtonslSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
        </item>
        <item>
         <widget class="QWidget" name="downloadsOptionsWidget" native="true">

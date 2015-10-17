@@ -40,6 +40,7 @@
 #include <QtMultimedia/QSoundEffect>
 #include <QtNetwork/QSslSocket>
 #include <QtNetwork/QSslCipher>
+#include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
 
@@ -156,6 +157,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	}
 
 	m_ui->downloadsItemView->setModel(downloadsModel);
+	m_ui->downloadsItemView->sortByColumn(0, Qt::AscendingOrder);
 	m_ui->downloadsFilePathWidget->setSelectFile(false);
 
 	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Network/EnableReferrer")).toBool());
@@ -331,6 +333,8 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	connect(m_ui->enableJavaScriptCheckBox, SIGNAL(toggled(bool)), m_ui->javaScriptOptionsButton, SLOT(setEnabled(bool)));
 	connect(m_ui->javaScriptOptionsButton, SIGNAL(clicked()), this, SLOT(updateJavaScriptOptions()));
 	connect(m_ui->downloadsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateDownloadsActions()));
+	connect(m_ui->downloadsAddMimeTypeButton, SIGNAL(clicked(bool)), this, SLOT(addDownloadsMimeType()));
+	connect(m_ui->downloadsRemoveMimeTypeButton, SIGNAL(clicked(bool)), this, SLOT(removeDownloadsMimeType()));
 	connect(m_ui->downloadsButtonGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(updateDownloadsOptions()));
 	connect(m_ui->userAgentButton, SIGNAL(clicked()), this, SLOT(manageUserAgents()));
 	connect(m_ui->proxyModeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(proxyModeChanged(int)));
@@ -433,6 +437,37 @@ void PreferencesAdvancedPageWidget::updateNotificationsOptions()
 	}
 }
 
+void PreferencesAdvancedPageWidget::addDownloadsMimeType()
+{
+	const QString mimeType = QInputDialog::getText(this, tr("MIME Type Name"), tr("Select name of MIME Type:"));
+
+	if (!mimeType.isEmpty())
+	{
+		if (QRegularExpression("^[a-zA-Z]+/[a-zA-Z0-9\\.\\+\\-_]+$").match(mimeType).hasMatch())
+		{
+			QStandardItem *item = new QStandardItem(mimeType);
+			item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+
+			m_ui->downloadsItemView->insertRow(item);
+			m_ui->downloadsItemView->sortByColumn(0, Qt::AscendingOrder);
+		}
+		else
+		{
+			QMessageBox::critical(this, tr("Error"), tr("Invalid MIME Type name."));
+		}
+	}
+}
+
+void PreferencesAdvancedPageWidget::removeDownloadsMimeType()
+{
+	const QModelIndex index = m_ui->downloadsItemView->getIndex(m_ui->downloadsItemView->getCurrentRow());
+
+	if (index.isValid() && index.data(Qt::DisplayRole).toString() != QLatin1String("*"))
+	{
+		m_ui->downloadsItemView->removeRow();
+	}
+}
+
 void PreferencesAdvancedPageWidget::updateDownloadsActions()
 {
 	disconnect(m_ui->downloadsSaveDirectlyCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateDownloadsOptions()));
@@ -456,6 +491,7 @@ void PreferencesAdvancedPageWidget::updateDownloadsActions()
 		m_ui->downloadsAskButton->setChecked(true);
 	}
 
+	m_ui->downloadsRemoveMimeTypeButton->setEnabled(index.isValid() && index.data(Qt::DisplayRole).toString() != QLatin1String("*"));
 	m_ui->downloadsOptionsWidget->setEnabled(index.isValid());
 	m_ui->downloadsSaveDirectlyCheckBox->setChecked(mode == QLatin1String("save"));
 	m_ui->downloadsFilePathWidget->setPath(index.data(Qt::UserRole + 1).toString());
