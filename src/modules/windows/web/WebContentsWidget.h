@@ -84,6 +84,7 @@ public:
 
 public slots:
 	void goToHistoryIndex(int index);
+	void removeHistoryIndex(int index, bool purge = false);
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void setOption(const QString &key, const QVariant &value);
 	void setHistory(const WindowHistoryInformation &history);

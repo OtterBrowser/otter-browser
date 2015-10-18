@@ -155,6 +155,7 @@ public slots:
 	virtual void clearOptions();
 	virtual void clearSelection() = 0;
 	virtual void goToHistoryIndex(int index) = 0;
+	virtual void removeHistoryIndex(int index, bool purge = false) = 0;
 	virtual void showContextMenu(const QPoint &position = QPoint());
 	virtual void setPermission(const QString &key, const QUrl &url, PermissionPolicies policies);
 	virtual void setOption(const QString &key, const QVariant &value);

@@ -229,6 +229,27 @@ void QtWebEngineWebWidget::goToHistoryIndex(int index)
 	m_webView->history()->goToItem(m_webView->history()->itemAt(index));
 }
 
+void QtWebEngineWebWidget::removeHistoryIndex(int index, bool purge)
+{
+	Q_UNUSED(purge)
+
+	WindowHistoryInformation history = getHistory();
+
+	if (index < 0 || index >= history.entries.count())
+	{
+		return;
+	}
+
+	history.entries.removeAt(index);
+
+	if (history.index >= index)
+	{
+		history.index = (history.index - 1);
+	}
+
+	setHistory(history);
+}
+
 void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &parameters)
 {
 	if (parameters.contains(QLatin1String("isBounced")))

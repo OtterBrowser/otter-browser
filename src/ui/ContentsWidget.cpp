@@ -203,6 +203,12 @@ void ContentsWidget::goToHistoryIndex(int index)
 	Q_UNUSED(index)
 }
 
+void ContentsWidget::removeHistoryIndex(int index, bool purge)
+{
+	Q_UNUSED(index)
+	Q_UNUSED(purge)
+}
+
 void ContentsWidget::setHistory(const WindowHistoryInformation &history)
 {
 	Q_UNUSED(history)

@@ -268,6 +268,12 @@ void SourceViewerWebWidget::goToHistoryIndex(int index)
 	Q_UNUSED(index)
 }
 
+void SourceViewerWebWidget::removeHistoryIndex(int index, bool purge)
+{
+	Q_UNUSED(index)
+	Q_UNUSED(purge)
+}
+
 void SourceViewerWebWidget::handleZoomChange()
 {
 	SessionsManager::markSessionModified();
