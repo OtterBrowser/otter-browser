@@ -111,57 +111,77 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	hidePreview();
 
+	MainWindow *mainWindow = MainWindow::findMainWindow(this);
+	QVariantMap parameters;
 	QMenu menu(this);
 	menu.addAction(ActionsManager::getAction(ActionsManager::NewTabAction, this));
 	menu.addAction(ActionsManager::getAction(ActionsManager::NewTabPrivateAction, this));
 
 	if (m_clickedTab >= 0)
 	{
+		Window *window = getWindow(m_clickedTab);
+
+		if (window)
+		{
+			parameters[QLatin1String("window")] = window->getIdentifier();
+		}
+
+		const int amount = (count() - getPinnedTabsAmount());
 		const bool isPinned = getTabProperty(m_clickedTab, QLatin1String("isPinned"), false).toBool();
 		Action *cloneTabAction = new Action(ActionsManager::CloneTabAction, &menu);
 		cloneTabAction->setEnabled(getTabProperty(m_clickedTab, QLatin1String("canClone"), false).toBool());
+		cloneTabAction->setData(parameters);
 
 		Action *pinTabAction = new Action(ActionsManager::PinTabAction, &menu);
 		pinTabAction->setOverrideText(isPinned ? QT_TRANSLATE_NOOP("actions", "Unpin Tab") : QT_TRANSLATE_NOOP("actions", "Pin Tab"));
+		pinTabAction->setData(parameters);
 
 		Action *detachTabAction = new Action(ActionsManager::DetachTabAction, &menu);
 		detachTabAction->setEnabled(count() > 1);
+		detachTabAction->setData(parameters);
+
+		Action *closeTabAction = new Action(ActionsManager::CloseTabAction, &menu);
+		closeTabAction->setEnabled(!isPinned);
+		closeTabAction->setData(parameters);
+
+		Action *closeOtherTabsAction = new Action(ActionsManager::CloseOtherTabsAction, &menu);
+		closeOtherTabsAction->setEnabled(amount > 0 && !(amount == 1 && !isPinned));
+		closeOtherTabsAction->setData(parameters);
 
 		menu.addAction(cloneTabAction);
 		menu.addAction(pinTabAction);
 		menu.addSeparator();
 		menu.addAction(detachTabAction);
 		menu.addSeparator();
-
-		if (isPinned)
-		{
-			Action *closeTabAction = new Action(ActionsManager::CloseTabAction, &menu);
-			closeTabAction->setEnabled(false);
-
-			menu.addAction(closeTabAction);
-		}
-		else
-		{
-			menu.addAction(ActionsManager::getAction(ActionsManager::CloseTabAction, this));
-		}
-
-		const int amount = (count() - getPinnedTabsAmount());
-		Action *closeOtherTabsAction = new Action(ActionsManager::CloseOtherTabsAction, &menu);
-		closeOtherTabsAction->setEnabled(amount > 0 && !(amount == 1 && !isPinned));
-
+		menu.addAction(closeTabAction);
 		menu.addAction(closeOtherTabsAction);
 		menu.addAction(ActionsManager::getAction(ActionsManager::ClosePrivateTabsAction, this));
 
-		connect(cloneTabAction, SIGNAL(triggered()), this, SLOT(cloneTab()));
-		connect(pinTabAction, SIGNAL(triggered()), this, SLOT(pinTab()));
-		connect(detachTabAction, SIGNAL(triggered()), this, SLOT(detachTab()));
-		connect(closeOtherTabsAction, SIGNAL(triggered()), this, SLOT(closeOtherTabs()));
+		connect(cloneTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
+		connect(pinTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
+		connect(detachTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
+		connect(closeTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
+		connect(closeOtherTabsAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
 	}
 
 	menu.addSeparator();
 
 	QMenu *arrangeMenu = menu.addMenu(tr("Arrange"));
-	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::RestoreTabAction, this));
+	Action *restoreTabAction = new Action(ActionsManager::RestoreTabAction, &menu);
+	restoreTabAction->setEnabled(m_clickedTab >= 0);
+	restoreTabAction->setData(parameters);
+
+	Action *minimizeTabAction = new Action(ActionsManager::MinimizeTabAction, &menu);
+	minimizeTabAction->setEnabled(m_clickedTab >= 0);
+	minimizeTabAction->setData(parameters);
+
+	Action *maximizeTabAction = new Action(ActionsManager::MaximizeTabAction, &menu);
+	maximizeTabAction->setEnabled(m_clickedTab >= 0);
+	maximizeTabAction->setData(parameters);
+
+	arrangeMenu->addAction(restoreTabAction);
+	arrangeMenu->addAction(minimizeTabAction);
+	arrangeMenu->addAction(maximizeTabAction);
 	arrangeMenu->addSeparator();
 	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::RestoreAllAction, this));
 	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::MaximizeAllAction, this));
@@ -175,6 +195,9 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	cycleAction->setChecked(!SettingsManager::getValue(QLatin1String("TabBar/RequireModifierToSwitchTabOnScroll")).toBool());
 
 	connect(cycleAction, SIGNAL(toggled(bool)), this, SLOT(setCycle(bool)));
+	connect(restoreTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
+	connect(minimizeTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
+	connect(maximizeTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
 
 	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parentWidget());
 
@@ -209,11 +232,14 @@ void TabBarWidget::mousePressEvent(QMouseEvent *event)
 {
 	if (event->button() == Qt::LeftButton && event->modifiers().testFlag(Qt::ShiftModifier))
 	{
-		const int tab = tabAt(event->pos());
+		Window *window = getWindow(tabAt(event->pos()));
 
-		if (tab >= 0)
+		if (window)
 		{
-			emit requestedClose(tab);
+			QVariantMap parameters;
+			parameters[QLatin1String("window")] = window->getIdentifier();
+
+			ActionsManager::triggerAction(ActionsManager::CloseTabAction, this, parameters);
 
 			return;
 		}
@@ -231,7 +257,15 @@ void TabBarWidget::mousePressEvent(QMouseEvent *event)
 		}
 		else if (SettingsManager::getValue(QLatin1String("TabBar/CloseOnMiddleClick")).toBool())
 		{
-			emit requestedClose(tab);
+			Window *window = getWindow(tab);
+
+			if (window)
+			{
+				QVariantMap parameters;
+				parameters[QLatin1String("window")] = window->getIdentifier();
+
+				ActionsManager::triggerAction(ActionsManager::CloseTabAction, this, parameters);
+			}
 		}
 	}
 
@@ -240,16 +274,19 @@ void TabBarWidget::mousePressEvent(QMouseEvent *event)
 
 void TabBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
 {
-	if (event->button() != Qt::LeftButton)
+	if (event->button() != Qt::LeftButton || !SettingsManager::getValue(QLatin1String("TabBar/CloseOnDoubleClick")).toBool())
 	{
 		return;
 	}
 
-	const int tab = tabAt(event->pos());
+	Window *window = getWindow(tabAt(event->pos()));
 
-	if (tab >= 0 && SettingsManager::getValue(QLatin1String("TabBar/CloseOnDoubleClick")).toBool())
+	if (window)
 	{
-		emit requestedClose(tab);
+		QVariantMap parameters;
+		parameters[QLatin1String("window")] = window->getIdentifier();
+
+		ActionsManager::triggerAction(ActionsManager::CloseTabAction, this, parameters);
 	}
 }
 
@@ -646,38 +683,6 @@ void TabBarWidget::currentTabChanged(int index)
 	}
 }
 
-void TabBarWidget::closeOtherTabs()
-{
-	if (m_clickedTab >= 0)
-	{
-		emit requestedCloseOther(m_clickedTab);
-	}
-}
-
-void TabBarWidget::cloneTab()
-{
-	if (m_clickedTab >= 0)
-	{
-		emit requestedClone(m_clickedTab);
-	}
-}
-
-void TabBarWidget::detachTab()
-{
-	if (m_clickedTab >= 0)
-	{
-		emit requestedDetach(m_clickedTab);
-	}
-}
-
-void TabBarWidget::pinTab()
-{
-	if (m_clickedTab >= 0)
-	{
-		emit requestedPin(m_clickedTab, !getTabProperty(m_clickedTab, QLatin1String("isPinned"), false).toBool());
-	}
-}
-
 void TabBarWidget::updatePinnedTabsAmount()
 {
 	int amount = 0;
@@ -864,6 +869,11 @@ void TabBarWidget::setTabProperty(int index, const QString &key, const QVariant 
 
 Window* TabBarWidget::getWindow(int index) const
 {
+	if (index < 0 || index >= count())
+	{
+		return NULL;
+	}
+
 	MainWindow *mainWindow = MainWindow::findMainWindow(parentWidget());
 
 	if (mainWindow)

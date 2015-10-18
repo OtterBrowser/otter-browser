@@ -58,30 +58,117 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 
 			break;
 		case ActionsManager::CloneTabAction:
-			cloneWindow(m_mainWindow->getTabBar()->currentIndex());
+			{
+				Window *window = NULL;
+
+				if (parameters.contains(QLatin1String("window")))
+				{
+					window = getWindowByIdentifier(parameters[QLatin1String("window")].toULongLong());
+				}
+				else
+				{
+					window = getWindowByIndex(m_mainWindow->getTabBar()->currentIndex());
+				}
+
+				if (window && window->canClone())
+				{
+					addWindow(window->clone(true, m_mainWindow->getWorkspace()));
+				}
+			}
 
 			break;
 		case ActionsManager::PinTabAction:
 			{
-				const int index = m_mainWindow->getTabBar()->currentIndex();
+				Window *window = NULL;
 
-				pinWindow(index, !m_mainWindow->getTabBar()->getTabProperty(index, QLatin1String("isPinned"), false).toBool());
+				if (parameters.contains(QLatin1String("window")))
+				{
+					window = getWindowByIdentifier(parameters[QLatin1String("window")].toULongLong());
+				}
+				else
+				{
+					window = getWindowByIndex(m_mainWindow->getTabBar()->currentIndex());
+				}
+
+				if (window)
+				{
+					window->setPinned(!window->isPinned());
+				}
 			}
 
 			break;
 		case ActionsManager::DetachTabAction:
 			if (m_mainWindow->getTabBar()->count() > 1)
 			{
-				detachWindow(m_mainWindow->getTabBar()->currentIndex());
+				Window *window = NULL;
+
+				if (parameters.contains(QLatin1String("window")))
+				{
+					window = getWindowByIdentifier(parameters[QLatin1String("window")].toULongLong());
+				}
+				else
+				{
+					window = getWindowByIndex(m_mainWindow->getTabBar()->currentIndex());
+				}
+
+				if (window)
+				{
+					MainWindow *mainWindow = Application::getInstance()->createWindow(window->isPrivate(), true);
+
+					if (mainWindow)
+					{
+						window->getContentsWidget()->setParent(NULL);
+
+						mainWindow->getWindowsManager()->openWindow(window->getContentsWidget());
+						mainWindow->getWindowsManager()->closeOther();
+
+						m_mainWindow->getTabBar()->removeTab(getWindowIndex(window->getIdentifier()));
+
+						Action *closePrivateTabsAction = m_mainWindow->getAction(ActionsManager::ClosePrivateTabsAction);
+
+						if (closePrivateTabsAction->isEnabled() && getWindowCount(true) == 0)
+						{
+							closePrivateTabsAction->setEnabled(false);
+						}
+
+						m_windows.remove(window->getIdentifier());
+
+						emit windowRemoved(window->getIdentifier());
+					}
+				}
 			}
 
 			break;
 		case ActionsManager::CloseTabAction:
-			close(m_mainWindow->getTabBar()->currentIndex());
+			if (parameters.contains(QLatin1String("window")))
+			{
+				Window *window = getWindowByIdentifier(parameters[QLatin1String("window")].toULongLong());
+
+				if (window)
+				{
+					close(getWindowIndex(window->getIdentifier()));
+				}
+			}
+			else
+			{
+				close(m_mainWindow->getTabBar()->currentIndex());
+			}
 
 			break;
 		case ActionsManager::CloseOtherTabsAction:
-			closeOther(m_mainWindow->getTabBar()->currentIndex());
+			if (parameters.contains(QLatin1String("window")))
+			{
+				const int index = getWindowIndex(parameters[QLatin1String("window")].toULongLong());
+
+				if (index >= 0)
+				{
+					closeOther(index);
+				}
+			}
+			else
+			{
+				closeOther(m_mainWindow->getTabBar()->currentIndex());
+			}
 
 			break;
 		case ActionsManager::ClosePrivateTabsAction:
@@ -399,11 +486,6 @@ void WindowsManager::restore(const SessionMainWindow &session)
 
 	connect(SessionsManager::getInstance(), SIGNAL(requestedRemoveStoredUrl(QString)), this, SLOT(removeStoredUrl(QString)));
 	connect(m_mainWindow->getTabBar(), SIGNAL(currentChanged(int)), this, SLOT(setActiveWindowByIndex(int)));
-	connect(m_mainWindow->getTabBar(), SIGNAL(requestedClone(int)), this, SLOT(cloneWindow(int)));
-	connect(m_mainWindow->getTabBar(), SIGNAL(requestedDetach(int)), this, SLOT(detachWindow(int)));
-	connect(m_mainWindow->getTabBar(), SIGNAL(requestedPin(int,bool)), this, SLOT(pinWindow(int,bool)));
-	connect(m_mainWindow->getTabBar(), SIGNAL(requestedClose(int)), this, SLOT(close(int)));
-	connect(m_mainWindow->getTabBar(), SIGNAL(requestedCloseOther(int)), this, SLOT(closeOther(int)));
 
 	setActiveWindowByIndex(index);
 
@@ -572,54 +654,6 @@ void WindowsManager::openWindow(ContentsWidget *widget, OpenHints hints)
 	{
 		addWindow(new Window((widget->isPrivate() || hints & PrivateOpen), widget), hints);
 	}
-}
-
-void WindowsManager::cloneWindow(int index)
-{
-	Window *window = getWindowByIndex(index);
-
-	if (window && window->canClone())
-	{
-		addWindow(window->clone(true, m_mainWindow->getWorkspace()));
-	}
-}
-
-void WindowsManager::detachWindow(int index)
-{
-	Window *window = getWindowByIndex(index);
-
-	if (!window)
-	{
-		return;
-	}
-
-	MainWindow *mainWindow = Application::getInstance()->createWindow(window->isPrivate(), true);
-
-	if (mainWindow)
-	{
-		window->getContentsWidget()->setParent(NULL);
-
-		mainWindow->getWindowsManager()->openWindow(window->getContentsWidget());
-		mainWindow->getWindowsManager()->closeOther();
-
-		m_mainWindow->getTabBar()->removeTab(index);
-
-		Action *closePrivateTabsAction = m_mainWindow->getAction(ActionsManager::ClosePrivateTabsAction);
-
-		if (closePrivateTabsAction->isEnabled() && getWindowCount(true) == 0)
-		{
-			closePrivateTabsAction->setEnabled(false);
-		}
-
-		m_windows.remove(window->getIdentifier());
-
-		emit windowRemoved(window->getIdentifier());
-	}
-}
-
-void WindowsManager::pinWindow(int index, bool pin)
-{
-	m_mainWindow->getTabBar()->setTabProperty(index, QLatin1String("isPinned"), pin);
 }
 
 void WindowsManager::removeStoredUrl(const QString &url)

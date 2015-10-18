@@ -816,7 +816,7 @@ void MainWindow::triggerAction()
 
 	if (action)
 	{
-		triggerAction(action->getIdentifier());
+		triggerAction(action->getIdentifier(), action->data().toMap());
 	}
 }
 
@@ -828,7 +828,7 @@ void MainWindow::triggerAction(bool checked)
 
 	if (action)
 	{
-		QVariantMap parameters;
+		QVariantMap parameters = action->data().toMap();
 
 		if (action->isCheckable())
 		{

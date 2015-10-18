@@ -74,10 +74,6 @@ protected:
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void currentTabChanged(int index);
-	void closeOtherTabs();
-	void cloneTab();
-	void detachTab();
-	void pinTab();
 	void updatePinnedTabsAmount();
 	void updateButtons();
 	void updateTabs(int index = -1);
@@ -99,11 +95,6 @@ private:
 
 signals:
 	void layoutChanged();
-	void requestedClone(int index);
-	void requestedDetach(int index);
-	void requestedPin(int index, bool pin);
-	void requestedClose(int index);
-	void requestedCloseOther(int index);
 	void tabsAmountChanged(int amount);
 };
 

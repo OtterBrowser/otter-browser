@@ -92,7 +92,6 @@ public slots:
 	void open(BookmarksItem *bookmark, OpenHints hints = DefaultOpen);
 	void search(const QString &query, const QString &engine, OpenHints hints = DefaultOpen);
 	void close(int index);
-	void closeOther(int index = -1);
 	void closeAll();
 	void restore(int index = 0);
 	void restore(const SessionMainWindow &session);
@@ -104,14 +103,12 @@ public slots:
 
 protected:
 	void openTab(const QUrl &url, OpenHints hints = DefaultOpen);
+	void closeOther(int index = -1);
 	bool event(QEvent *event);
 
 protected slots:
 	void addWindow(Window *window, OpenHints hints = DefaultOpen, int index = -1, const QRect &geometry = QRect(), WindowState state = NormalWindowState, bool isAlwaysOnTop = false);
 	void openWindow(ContentsWidget *widget, OpenHints hints = DefaultOpen);
-	void cloneWindow(int index);
-	void detachWindow(int index);
-	void pinWindow(int index, bool pin);
 	void removeStoredUrl(const QString &url);
 	void handleWindowClose(Window *window);
 	void setTitle(const QString &title);
