@@ -28,13 +28,13 @@
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="63"/>
-        <source>Is secure:</source>
-        <translation>Безбједан:</translation>
+        <source>Secure:</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="70"/>
-        <source>Is HTTP only:</source>
-        <translation>Само ХТТП:</translation>
+        <source>Is HttpOnly:</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="47"/>
@@ -147,83 +147,83 @@
 <context>
     <name>Otter::AddressWidget</name>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="94"/>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="116"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="95"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="117"/>
         <source>Enter address or search…</source>
         <translation>Унесите адресу или појам за претрагу…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="251"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="252"/>
         <source>Undo</source>
         <translation>Опозови</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="252"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="253"/>
         <source>Redo</source>
         <translation>Понови</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="254"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="255"/>
         <source>Cut</source>
         <translation>Исијеци</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="255"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="256"/>
         <source>Copy</source>
         <translation>Копирај</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="256"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="257"/>
         <source>Paste</source>
         <translation>Налијепи</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="263"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="264"/>
         <source>Delete</source>
         <translation>Обриши</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="265"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="266"/>
         <source>Copy to Note</source>
         <translation>Копирај у биљешку</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="267"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="268"/>
         <source>Clear All</source>
         <translation>Очисти све</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="268"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="269"/>
         <source>Select All</source>
         <translation>Изабери све</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="507"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="508"/>
         <source>Remove Bookmark</source>
         <translation>Уклони обиљеживач</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="507"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="508"/>
         <source>Add Bookmark</source>
         <translation>Додај обиљеживач</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="523"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="524"/>
         <source>Feed List</source>
         <translation>Списак довода</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="551"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="552"/>
         <source>Click to load all plugins on the page</source>
         <translation>Кликните да учитате све прикључке на страници</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="910"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="932"/>
         <source>(Untitled)</source>
         <translation>(Неименован)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="945"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="967"/>
         <source>Remove This Icon</source>
         <translation>Уклони ову икону</translation>
     </message>
@@ -231,55 +231,82 @@
 <context>
     <name>Otter::Application</name>
     <message>
-        <location filename="../../src/core/Application.cpp" line="393"/>
+        <location filename="../../src/core/Application.cpp" line="395"/>
         <source>Warning</source>
         <translation>Упозорење</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="393"/>
+        <location filename="../../src/core/Application.cpp" line="395"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
         <translation>Ова сесија није правилно сачувана.
 Желите ли заиста да вратите ову сесију?</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="496"/>
+        <location filename="../../src/core/Application.cpp" line="498"/>
         <source>New update %1 from %2 channel is available!</source>
-        <translation type="unfinished"/>
+        <translation>Нова надоградња %1 са %2 канала је доступна!</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="663"/>
-        <location filename="../../src/core/Application.cpp" line="712"/>
+        <location filename="../../src/core/Application.cpp" line="774"/>
+        <location filename="../../src/core/Application.cpp" line="823"/>
         <source>Question</source>
         <translation>Питање</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/core/Application.cpp" line="664"/>
+        <location filename="../../src/core/Application.cpp" line="775"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
         <translation><numerusform>Напустићете програм док се %n фајл и даље преузима.</numerusform><numerusform>Напустићете програм док се %n фајла и даље преузимају.</numerusform><numerusform>Напустићете програм док се %n фајлова и даље преузима.</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="665"/>
-        <location filename="../../src/core/Application.cpp" line="714"/>
+        <location filename="../../src/core/Application.cpp" line="776"/>
+        <location filename="../../src/core/Application.cpp" line="825"/>
         <source>Do you want to continue?</source>
         <translation>Желите ли да наставите?</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="669"/>
-        <location filename="../../src/core/Application.cpp" line="718"/>
+        <location filename="../../src/core/Application.cpp" line="780"/>
+        <location filename="../../src/core/Application.cpp" line="829"/>
         <source>Do not show this message again</source>
         <translation>Не приказуј више ову поруку</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="671"/>
-        <location filename="../../src/core/Application.cpp" line="720"/>
+        <location filename="../../src/core/Application.cpp" line="782"/>
+        <location filename="../../src/core/Application.cpp" line="831"/>
         <source>Hide</source>
         <translation>Сакриј</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="713"/>
+        <location filename="../../src/core/Application.cpp" line="824"/>
         <source>You are about to quit the current Otter Browser session.</source>
         <translation>Напустићете текућу сесију Отер прегледача.</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::ApplicationComboBoxWidget</name>
+    <message>
+        <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="34"/>
+        <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="47"/>
+        <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="122"/>
+        <source>Default Application</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="36"/>
+        <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="48"/>
+        <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="139"/>
+        <source>Otheṛ…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="60"/>
+        <source>Select Application</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="130"/>
+        <source>Unknown</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -503,68 +530,68 @@ Are you sure that you want to restore this session anyway?</source>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="45"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="165"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="202"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="204"/>
         <source>Add Folder</source>
         <translation>Додај фасциклу</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="46"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="166"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="201"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="168"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="203"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="205"/>
         <source>Add Bookmark</source>
         <translation>Додај обиљеживач</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="47"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="204"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="169"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="206"/>
         <source>Add Separator</source>
         <translation>Додај раздвајач</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="161"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="163"/>
         <source>Empty Trash</source>
         <translation>Испразни отпад</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="173"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="175"/>
         <source>Open</source>
         <translation>Отвори</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="174"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="176"/>
         <source>Open in New Tab</source>
         <translation>Отвори у новом језичку</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="175"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="177"/>
         <source>Open in New Background Tab</source>
         <translation>Отвори у језичку у позадини</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="177"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="179"/>
         <source>Open in New Window</source>
         <translation>Отвори у новом прозору</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="178"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="180"/>
         <source>Open in New Background Window</source>
         <translation>Отвори у прозору у позадини</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="213"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="215"/>
         <source>Restore Bookmark</source>
         <translation>Врати обиљеживач</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="221"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="223"/>
         <source>Properties…</source>
         <translation>Својства…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="326"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="328"/>
         <source>Bookmarks Manager</source>
         <translation>Менаџер обиљеживача</translation>
     </message>
@@ -610,52 +637,55 @@ Are you sure that you want to restore this session anyway?</source>
 <context>
     <name>Otter::BookmarksModel</name>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="177"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="96"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="200"/>
         <source>Notes</source>
         <translation>Биљешке</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="177"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="99"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="200"/>
         <source>Bookmarks</source>
         <translation>Обиљеживачи</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="182"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="104"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="205"/>
         <source>Trash</source>
         <translation>Отпад</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="194"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="217"/>
         <source>Failed to open notes file: %1</source>
         <translation>Неуспјех отварања фајла биљешки: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="194"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="217"/>
         <source>Failed to open bookmarks file: %1</source>
         <translation>Неуспјех отварања фајла обиљеживача: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="218"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="241"/>
         <source>Failed to load notes file: %1</source>
         <translation>Неуспјех учитавања фајла биљешки: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="218"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="241"/>
         <source>Failed to load bookmarks file: %1</source>
         <translation>Неуспјех учитавања фајла обиљеживача: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="220"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="243"/>
         <source>Error</source>
         <translation>Грешка</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="220"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="243"/>
         <source>Failed to load notes file.</source>
         <translation>Неуспјех учитавања фајла биљешки.</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="220"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="243"/>
         <source>Failed to load bookmarks file.</source>
         <translation>Неуспјех учитавања фајла обиљеживача.</translation>
     </message>
@@ -708,77 +738,77 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>Обриши</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="116"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="118"/>
         <source>Address</source>
         <translation>адреса</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="116"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="118"/>
         <source>Type</source>
         <translation>тип</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="116"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="118"/>
         <source>Size</source>
         <translation>величина</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="116"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="118"/>
         <source>Last Modified</source>
         <translation>задња измјена</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="116"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="118"/>
         <source>Expires</source>
         <translation>истиче</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="389"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="391"/>
         <source>Open</source>
         <translation>Отвори</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="390"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="392"/>
         <source>Open in New Tab</source>
         <translation>Отвори у новом језичку</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="391"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="393"/>
         <source>Open in New Background Tab</source>
         <translation>Отвори у језичку у позадини</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="393"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="395"/>
         <source>Open in New Window</source>
         <translation>Отвори у новом прозору</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="394"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="396"/>
         <source>Open in New Background Window</source>
         <translation>Отвори у прозору у позадини</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="396"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="398"/>
         <source>Copy Link to Clipboard</source>
         <translation>Копирај везу на клипборд</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="398"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="400"/>
         <source>Remove Entry</source>
         <translation>Уклони унос</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="403"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="405"/>
         <source>Remove All Entries from This Domain</source>
         <translation>Уклони све уносе од овог домена</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="465"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="467"/>
         <source>Unknown</source>
         <translation>непозната</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="596"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="598"/>
         <source>Cache</source>
         <translation>Кеш</translation>
     </message>
@@ -859,37 +889,37 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>Тражи…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="83"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="84"/>
         <source>Name</source>
         <translation>име</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="83"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="84"/>
         <source>Type</source>
         <translation>тип</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="83"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="84"/>
         <source>Value</source>
         <translation>вриједност</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="262"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="264"/>
         <source>Copy Option Name</source>
         <translation>Копирај назив опције</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="263"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="265"/>
         <source>Copy Option Value</source>
         <translation>Копирај вриједност опције</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="265"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="267"/>
         <source>Restore Default Value</source>
         <translation>Врати подразумијевано</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="272"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="274"/>
         <source>Configuration Manager</source>
         <translation>Менаџер поставки</translation>
     </message>
@@ -1074,8 +1104,8 @@ Are you sure that you want to restore this session anyway?</source>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="180"/>
-        <source>HTTP only</source>
-        <translation>Само ХТТП</translation>
+        <source>HttpOnly</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="195"/>
@@ -1093,44 +1123,44 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>Примијени</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="273"/>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="292"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="276"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="295"/>
         <source>Question</source>
         <translation>Питање</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="274"/>
-        <source>You are about to delete %n cookies.</source>
-        <translation><numerusform>Обрисаћете %n колачић.</numerusform><numerusform>Обрисаћете %n колачића.</numerusform><numerusform>Обрисаћете %n колачића.</numerusform></translation>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="277"/>
+        <source>You are about to delete %n cookie(s).</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="275"/>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="294"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="278"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="297"/>
         <source>Do you want to continue?</source>
         <translation>Желите ли да наставите?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="293"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="296"/>
         <source>You are about to delete all cookies.</source>
         <translation>Обрисаћете све колачиће.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="314"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="317"/>
         <source>Remove Cookie</source>
         <translation>Уклони колачић</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="317"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="320"/>
         <source>Remove All Cookies from This Domain…</source>
         <translation>Уклони све колачиће од овог домена…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="320"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="323"/>
         <source>Remove All Cookies…</source>
         <translation>Уклони све колачиће…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="449"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="452"/>
         <source>Cookies Manager</source>
         <translation>Менаџер колачића</translation>
     </message>
@@ -1252,58 +1282,58 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>датум</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="246"/>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="280"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="248"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="282"/>
         <source>(Untitled)</source>
         <translation>(Неименован)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="400"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="402"/>
         <source>Open</source>
         <translation>Отвори</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="401"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="403"/>
         <source>Open in New Tab</source>
         <translation>Отвори у новом језичку</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="402"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="404"/>
         <source>Open in New Background Tab</source>
         <translation>Отвори у језичку у позадини</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="404"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="406"/>
         <source>Open in New Window</source>
         <translation>Отвори у новом прозору</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="405"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="407"/>
         <source>Open in New Background Window</source>
         <translation>Отвори у прозору у позадини</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="407"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="409"/>
         <source>Add to Bookmarks…</source>
         <translation>Додај у обиљеживаче…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="408"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="410"/>
         <source>Copy Link to Clipboard</source>
         <translation>Копирај везу на клипборд</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="410"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="412"/>
         <source>Remove Entry</source>
         <translation>Уклони унос</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="411"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="413"/>
         <source>Remove All Entries from This Domain</source>
         <translation>Уклони све уносе од овог домена</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="444"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="446"/>
         <source>History</source>
         <translation>Историјат</translation>
     </message>
@@ -1323,7 +1353,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="185"/>
         <source>HTML files (*.htm *.html)</source>
-        <translation type="unfinished"/>
+        <translation>ХТМЛ фајлови (*.htm *.html)</translation>
     </message>
 </context>
 <context>
@@ -1392,8 +1422,8 @@ Are you sure that you want to restore this session anyway?</source>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="95"/>
-        <source>%1 x %2 pixels @ %3 bits per pixel in %n frames</source>
-        <translation><numerusform>%1 x %2 пиксела @ %3 бита по пикселу у %n фрејму</numerusform><numerusform>%1 x %2 пиксела @ %3 бита по пикселу у %n фрејма</numerusform><numerusform>%1 x %2 пиксела @ %3 бита по пикселу у %n фрејма</numerusform></translation>
+        <source>%1 x %2 pixels @ %3 bits per pixel in %n frame(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="99"/>
@@ -1553,37 +1583,37 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>Конзола</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="480"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="481"/>
         <source>Open File</source>
         <translation>Отварање фајла</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="740"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="748"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.</source>
         <translation>&lt;b&gt;Отер %1&lt;/b&gt;&lt;br&gt;Веб прегледач којим управља корисник, а не обрнуто.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="741"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="749"/>
         <source>Web backend: %1 %2.</source>
         <translation>Веб мотор: %1 %2.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="745"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="753"/>
         <source>SSL library version: %1.</source>
         <translation>Издање ССЛ библиотеке: %1.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="749"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="757"/>
         <source>SSL library not available.</source>
         <translation>ССЛ библиотека није доступна.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="838"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="846"/>
         <source>Warning</source>
         <translation>Упозорење</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="838"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="846"/>
         <source>You already have this address in your bookmarks.
 Do you want to continue?</source>
         <translation>Већ имате ову адресу у вашим обиљеживачима.
@@ -1593,111 +1623,112 @@ Do you want to continue?</source>
 <context>
     <name>Otter::Menu</name>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="96"/>
+        <location filename="../../src/ui/Menu.cpp" line="98"/>
         <source>Import Opera Bookmarks…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/Menu.cpp" line="97"/>
-        <source>Import HTML Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>Увези Оперине обиљеживаче…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="99"/>
-        <source>Import Opera Notes…</source>
-        <translation type="unfinished"/>
+        <source>Import HTML Bookmarks…</source>
+        <translation>Увези ХТМЛ обиљеживаче…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="184"/>
+        <location filename="../../src/ui/Menu.cpp" line="101"/>
+        <source>Import Opera Notes…</source>
+        <translation>Увези Оперине биљешке…</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/Menu.cpp" line="186"/>
         <source>Open</source>
         <translation>Отвори</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="185"/>
+        <location filename="../../src/ui/Menu.cpp" line="187"/>
         <source>Open in New Tab</source>
         <translation>Отвори у новом језичку</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="186"/>
+        <location filename="../../src/ui/Menu.cpp" line="188"/>
         <source>Open in New Background Tab</source>
         <translation>Отвори у језичку у позадини</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="188"/>
+        <location filename="../../src/ui/Menu.cpp" line="190"/>
         <source>Open in New Window</source>
         <translation>Отвори у новом прозору</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="189"/>
+        <location filename="../../src/ui/Menu.cpp" line="191"/>
         <source>Open in New Background Window</source>
         <translation>Отвори у прозору у позадини</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="311"/>
+        <location filename="../../src/ui/Menu.cpp" line="313"/>
         <source>Open All</source>
         <translation>Отвори све</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="319"/>
+        <location filename="../../src/ui/Menu.cpp" line="321"/>
         <source>This Folder</source>
-        <translation type="unfinished"/>
+        <translation>Ову фасциклу</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="338"/>
-        <location filename="../../src/ui/Menu.cpp" line="486"/>
-        <location filename="../../src/ui/Menu.cpp" line="501"/>
-        <location filename="../../src/ui/Menu.cpp" line="518"/>
-        <location filename="../../src/ui/Menu.cpp" line="568"/>
+        <location filename="../../src/ui/Menu.cpp" line="340"/>
+        <location filename="../../src/ui/Menu.cpp" line="488"/>
+        <location filename="../../src/ui/Menu.cpp" line="503"/>
+        <location filename="../../src/ui/Menu.cpp" line="520"/>
+        <location filename="../../src/ui/Menu.cpp" line="570"/>
+        <location filename="../../src/ui/Menu.cpp" line="624"/>
         <source>(Untitled)</source>
         <translation>(Неименована)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="376"/>
+        <location filename="../../src/ui/Menu.cpp" line="378"/>
         <source>Auto Detect</source>
         <translation>Аутоматско</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="431"/>
+        <location filename="../../src/ui/Menu.cpp" line="433"/>
         <source>Clear</source>
         <translation>Очисти</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="441"/>
+        <location filename="../../src/ui/Menu.cpp" line="443"/>
         <source>Window - %1</source>
         <translation>Прозор — %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/Menu.cpp" line="501"/>
+        <location filename="../../src/ui/Menu.cpp" line="503"/>
         <source>%1 (%n tab(s))</source>
         <translation><numerusform>%1 (%n језичак)</numerusform><numerusform>%1 (%n језичка)</numerusform><numerusform>%1 (%n језичака)</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="530"/>
+        <location filename="../../src/ui/Menu.cpp" line="532"/>
         <source>Add New</source>
         <translation>Додај нову</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="531"/>
+        <location filename="../../src/ui/Menu.cpp" line="533"/>
         <source>Add Toolbar</source>
         <translation>Траку алатки</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="532"/>
+        <location filename="../../src/ui/Menu.cpp" line="534"/>
         <source>Add Bookmarks Bar…</source>
         <translation>Траку обиљеживача…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="537"/>
+        <location filename="../../src/ui/Menu.cpp" line="539"/>
         <source>Reset to Defaults…</source>
         <translation>Врати подразумијевано…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="556"/>
+        <location filename="../../src/ui/Menu.cpp" line="558"/>
         <source>Default</source>
         <translation>Подразумијевана</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="578"/>
+        <location filename="../../src/ui/Menu.cpp" line="580"/>
         <source>Custom</source>
         <translation>Прилагођена</translation>
     </message>
@@ -1747,9 +1778,15 @@ Do you want to continue?</source>
 <context>
     <name>Otter::NetworkProxyFactory</name>
     <message>
-        <location filename="../../src/core/NetworkProxyFactory.cpp" line="64"/>
+        <location filename="../../src/core/NetworkProxyFactory.cpp" line="70"/>
+        <location filename="../../src/core/NetworkProxyFactory.cpp" line="146"/>
         <source>Failed to load proxy auto-config (PAC): %1</source>
         <translation>Неуспјех постављања ауто-поставки проксија (ПАЦ): %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/NetworkProxyFactory.cpp" line="92"/>
+        <source>Failed to load proxy auto-config (PAC). Invalid URL: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1771,62 +1808,62 @@ Do you want to continue?</source>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="46"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="155"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="186"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="156"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="187"/>
         <source>Add Folder</source>
         <translation>Додај фасциклу</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="47"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="185"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="187"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="186"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="188"/>
         <source>Add Note</source>
         <translation>Додај биљешку</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="48"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="157"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="188"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="158"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="189"/>
         <source>Add Separator</source>
         <translation>Додај раздвајач</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="58"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="59"/>
         <source>Add note…</source>
         <translation>Додај биљешку…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="103"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="104"/>
         <source>Select Folder Name</source>
         <translation>Име фасцикле</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="103"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="104"/>
         <source>Enter folder name:</source>
         <translation>Унесите име фасцикле:</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="151"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="152"/>
         <source>Empty Trash</source>
         <translation>Испразни отпад</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="156"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="157"/>
         <source>Add Bookmark</source>
         <translation>Додај обиљеживач</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="171"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="172"/>
         <source>Open source page</source>
         <translation>Отвори изворну страницу</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="197"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="198"/>
         <source>Restore Note</source>
         <translation>Врати биљешку</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="372"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="373"/>
         <source>Notes Manager</source>
         <translation>Менаџер биљешки</translation>
     </message>
@@ -1888,22 +1925,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="109"/>
         <source>Import into folder:</source>
-        <translation type="unfinished"/>
+        <translation>Увези у фасциклу:</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="117"/>
         <source>Opera Notes</source>
-        <translation type="unfinished"/>
+        <translation>Оперине биљешке</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="122"/>
         <source>Imports notes from Opera Browser version 12 or earlier</source>
-        <translation type="unfinished"/>
+        <translation>Увоз биљешки из Опера веб прегледача, издање 12 или раније</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="132"/>
         <source>Opera notes files (notes.adr)</source>
-        <translation type="unfinished"/>
+        <translation>Фајлови Опериних биљешки (notes.adr)</translation>
     </message>
 </context>
 <context>
@@ -1924,12 +1961,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.ui" line="61"/>
         <source>Save</source>
-        <translation type="unfinished"/>
+        <translation>Сачувај</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.ui" line="68"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Одустани</translation>
     </message>
 </context>
 <context>
@@ -2000,359 +2037,458 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/PlatformIntegration.cpp" line="105"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Грешка</translation>
     </message>
     <message>
         <location filename="../../src/core/PlatformIntegration.cpp" line="105"/>
         <source>Failed to install update.</source>
-        <translation type="unfinished"/>
+        <translation>Неуспех инсталирања надоградње.</translation>
     </message>
 </context>
 <context>
     <name>Otter::PreferencesAdvancedPageWidget</name>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="27"/>
-        <source>Notifications</source>
-        <translation>Обавјештења</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="32"/>
-        <source>Address Field</source>
-        <translation>Трака адресе</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="37"/>
-        <source>Content</source>
-        <translation>Садржај</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="42"/>
-        <source>Network</source>
-        <translation>Мрежа</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="47"/>
-        <source>Security</source>
-        <translation>Безбједност</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="52"/>
-        <source>Keyboard</source>
-        <translation>Тастатура</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="57"/>
-        <source>Other</source>
-        <translation>Остало</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="78"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="55"/>
         <source>Events</source>
         <translation>Догађаји</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="118"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="95"/>
         <source>Play sound:</source>
         <translation>Пусти звук:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="133"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="110"/>
         <source>Show notification</source>
         <translation>Прикажи обавјештење</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="140"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="117"/>
         <source>Mark taskbar entry</source>
         <translation>Означи унос менаџера задатака</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="156"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="133"/>
         <source>Options</source>
         <translation>Опције</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="163"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="140"/>
         <source>Prefer native notifications</source>
         <translation>Преферирај изворна обавјештења</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="193"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="170"/>
         <source>Suggestions</source>
         <translation>Приједлози</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="202"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="179"/>
         <source>Suggest bookmarks</source>
         <translation>Предлажи обиљеживаче</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="212"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="189"/>
         <source>Suggest history</source>
         <translation>Предлажи историјат</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="222"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="199"/>
         <source>Suggest search results</source>
         <translation>Предлажи резултате претраге</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="254"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="344"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="961"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="231"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="546"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1254"/>
         <source>General</source>
         <translation>Опште</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="261"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="238"/>
         <source>Enable images</source>
         <translation>Омогући слике</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="270"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="247"/>
         <source>Enable JavaScript</source>
         <translation>Омогући јаваскрипте</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="277"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="254"/>
         <source>JavaScript Options…</source>
         <translation>Опције јаваскрипти…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="286"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="263"/>
         <source>Enable Java</source>
         <translation>Омогући јаву</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="295"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="272"/>
         <source>Plugins:</source>
         <translation>Прикључци:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="309"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="286"/>
         <source>User style sheet:</source>
         <translation>Кориснички опис стила:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="351"/>
-        <source>Send referrer information</source>
-        <translation>Шаљи заглавље пратиоца серверима</translation>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="321"/>
+        <source>MIME Types</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="360"/>
-        <source>User Agent:</source>
-        <translation>Идентификација:</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="373"/>
-        <source>Manage…</source>
-        <translation>Управљај…</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="388"/>
-        <source>Proxy</source>
-        <translation>Прокси</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="397"/>
-        <source>Mode:</source>
-        <translation>Режим:</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="411"/>
-        <source>No proxy</source>
-        <translation>без проксија</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="416"/>
-        <source>System configuration</source>
-        <translation>системске поставке</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="421"/>
-        <source>Manual configuration</source>
-        <translation>ручна поставка</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="426"/>
-        <source>Automatic configuration (PAC)</source>
-        <translation>аутоматска поставка (ПАЦ)</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="528"/>
-        <source>Port</source>
-        <translation>Порт</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="535"/>
-        <source>Protocol</source>
-        <translation>Протоколи</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="542"/>
-        <source>Servers</source>
-        <translation>Сервери</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="549"/>
-        <source>FTP</source>
-        <translation>ФТП</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="556"/>
-        <source>SOCKS5</source>
-        <translation>СОЦКС5</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="563"/>
-        <source>HTTP</source>
-        <translation>ХТТП</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="577"/>
-        <source>HTTPS</source>
-        <translation>ХТТПС</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="591"/>
-        <source>All</source>
-        <translation>Сви</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="629"/>
-        <source>Path to PAC file:</source>
-        <translation>Путања ПАЦ фајла:</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="646"/>
-        <source>Use system authentication</source>
-        <translation>Користи системску аутентификацију</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="676"/>
-        <source>SSL ciphers</source>
-        <translation>ССЛ шифрари</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="718"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="841"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="345"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="920"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1140"/>
         <source>Add</source>
         <translation>Додај</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="728"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="871"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="355"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="930"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1170"/>
         <source>Remove</source>
         <translation>Уклони</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="753"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="896"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="391"/>
+        <source>Show download dialog</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="401"/>
+        <source>Save to disk</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="444"/>
+        <source>Do not ask for folder, save directly to</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="459"/>
+        <source>Open with application</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="505"/>
+        <source>Pass web address directly to application</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="553"/>
+        <source>Send referrer information</source>
+        <translation>Шаљи заглавље пратиоца серверима</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="562"/>
+        <source>User Agent:</source>
+        <translation>Идентификација:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="575"/>
+        <source>Manage…</source>
+        <translation>Управљај…</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="590"/>
+        <source>Proxy</source>
+        <translation>Прокси</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="599"/>
+        <source>Mode:</source>
+        <translation>Режим:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="613"/>
+        <source>No proxy</source>
+        <translation>без проксија</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="618"/>
+        <source>System configuration</source>
+        <translation>системске поставке</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="623"/>
+        <source>Manual configuration</source>
+        <translation>ручна поставка</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="628"/>
+        <source>Automatic configuration (PAC)</source>
+        <translation>аутоматска поставка (ПАЦ)</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="730"/>
+        <source>Port</source>
+        <translation>Порт</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="737"/>
+        <source>Protocol</source>
+        <translation>Протоколи</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="744"/>
+        <source>Servers</source>
+        <translation>Сервери</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="751"/>
+        <source>FTP</source>
+        <translation>ФТП</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="758"/>
+        <source>SOCKS5</source>
+        <translation>СОЦКС5</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="765"/>
+        <source>HTTP</source>
+        <translation>ХТТП</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="779"/>
+        <source>HTTPS</source>
+        <translation>ХТТПС</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="793"/>
+        <source>All</source>
+        <translation>Сви</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="831"/>
+        <source>Path to PAC file:</source>
+        <translation>Путања ПАЦ фајла:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="848"/>
+        <source>Use system authentication</source>
+        <translation>Користи системску аутентификацију</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="878"/>
+        <source>SSL ciphers</source>
+        <translation>ССЛ шифрари</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="955"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1195"/>
         <source>Move Up</source>
         <translation>Помјери горе</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="779"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="922"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="981"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1221"/>
         <source>Move Down</source>
         <translation>Помјери доље</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="802"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1004"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
+        <source>Updates</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1011"/>
+        <source>Select channels from which you want to recieve updates:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1050"/>
+        <source>Check for updates every</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1060"/>
+        <source>day(s)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1069"/>
+        <source>Install updates automatically</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1101"/>
         <source>Keyboard Shortcuts</source>
         <translation>Пречице тастатуре</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="851"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1150"/>
         <source>Edit…</source>
         <translation>Уреди…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="861"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1160"/>
         <source>Clone</source>
         <translation>Клонирај</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="935"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1234"/>
         <source>Enable single key shortcuts</source>
         <translation>Једнотастерске пречице</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="977"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1263"/>
         <source>Show tray icon</source>
         <translation>Икона системске касете</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="55"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
+        <source>Notifications</source>
+        <translation>Обавјештења</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
+        <source>Address Field</source>
+        <translation>Трака адресе</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
+        <source>Content</source>
+        <translation>Садржај</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
+        <source>Downloads</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
+        <source>Network</source>
+        <translation>Мрежа</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
+        <source>Security</source>
+        <translation>Безбједност</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
+        <source>Keyboard</source>
+        <translation>Тастатура</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
+        <source>Other</source>
+        <translation>Остало</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="89"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="131"/>
         <source>Name</source>
         <translation>назив</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="55"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="89"/>
         <source>Description</source>
         <translation>опис</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="87"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="121"/>
         <source>Enabled</source>
         <translation>омогућени</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="88"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="122"/>
         <source>On demand</source>
         <translation>по захтјеву</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="89"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="123"/>
         <source>Disabled</source>
         <translation>онемогућени</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="100"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="356"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="168"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="578"/>
         <source>Default</source>
         <translation>Подразумијевана</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="107"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="208"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="362"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="472"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="476"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="502"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="533"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="559"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="653"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="834"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="175"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="309"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="584"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="700"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="704"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="730"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="761"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="787"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="881"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1105"/>
         <source>(Untitled)</source>
         <translation>(Неименована)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="220"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="263"/>
+        <source>Stable version</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="264"/>
+        <source>Beta version</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="265"/>
+        <source>Weekly development version</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="321"/>
         <source>New…</source>
         <translation>Нови…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="221"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="322"/>
         <source>Readd</source>
         <translation>Поново додај</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="307"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="415"/>
         <source>WAV files (*.wav)</source>
         <translation>ВАВ фајлови (*.wav)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="579"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="444"/>
+        <source>MIME Type Name</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="444"/>
+        <source>Select name of MIME Type:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="458"/>
+        <source>Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="458"/>
+        <source>Invalid MIME Type name.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="807"/>
         <source>Question</source>
         <translation>Питање</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="580"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="808"/>
         <source>Do you really want to remove this profile?</source>
         <translation>Желите ли заиста да уклоните овај профил?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="589"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="817"/>
         <source>Delete profile permanently</source>
         <translation>Трајно обриши профил</translation>
     </message>
@@ -2691,7 +2827,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="45"/>
         <source>Show start page</source>
-        <translation type="unfinished"/>
+        <translation>отвори почетну страницу</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="46"/>
@@ -3102,77 +3238,77 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitWebWidget</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="298"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="328"/>
         <source>Error</source>
         <translation>Грешка</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="298"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="328"/>
         <source>Failed to open file for writing.</source>
         <translation>Неуспјех отварања фајла за упис.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="318"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="348"/>
         <source>file</source>
         <translation>фајл</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="329"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="359"/>
         <source>Failed to save image: %1</source>
         <translation>Неуспјех уписа слике: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="458"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="488"/>
         <source>Print Preview</source>
         <translation>Преглед штампања</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="517"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="547"/>
         <source>JavaScript</source>
         <translation>Јаваскрипта</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="517"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="547"/>
         <source>Webpage wants to close this tab, do you want to allow to close it?</source>
         <translation>Страница хоће да затвори овај језичак, дозвољавате ли то?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="518"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="548"/>
         <source>Do not show this message again</source>
         <translation>Не приказуј више ову поруку</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="638"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="678"/>
         <source>Undo</source>
         <translation>Опозови</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="638"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="678"/>
         <source>Undo: %1</source>
         <translation>Опозови: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="643"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="683"/>
         <source>Redo</source>
         <translation>Понови</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="643"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="683"/>
         <source>Redo: %1</source>
         <translation>Понови: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1368"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1426"/>
         <source>Close</source>
         <translation>Затвори</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1667"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1725"/>
         <source>Blank Page</source>
         <translation>Празна страница</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1680"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1738"/>
         <source>(Untitled)</source>
         <translation>(Неименована)</translation>
     </message>
@@ -3193,6 +3329,19 @@ Do you want to continue?</source>
         <location filename="../../src/ui/ReloadTimeDialog.ui" line="46"/>
         <source>seconds</source>
         <translation>секунди</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::ReportDialog</name>
+    <message>
+        <location filename="../../src/ui/ReportDialog.ui" line="14"/>
+        <source>Diagnostic Report</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ReportDialog.cpp" line="42"/>
+        <source>Copy</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3385,58 +3534,58 @@ Do you want to overwrite it?</source>
 <context>
     <name>Otter::SearchWidget</name>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="94"/>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="321"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="96"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="323"/>
         <source>Search using %1</source>
         <translation>Тражи користећи %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="200"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="202"/>
         <source>Undo</source>
         <translation>Опозови</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="201"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="203"/>
         <source>Redo</source>
         <translation>Понови</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="203"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="205"/>
         <source>Cut</source>
         <translation>Исијеци</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="204"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="206"/>
         <source>Copy</source>
         <translation>Копирај</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="205"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="207"/>
         <source>Paste</source>
         <translation>Налијепи</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="206"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="208"/>
         <source>Paste and Go</source>
         <translation>Налијепи и иди</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="207"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="209"/>
         <source>Delete</source>
         <translation>Обриши</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="209"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="211"/>
         <source>Copy to Note</source>
         <translation>Копирај у биљешку</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="211"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="213"/>
         <source>Clear All</source>
         <translation>Очисти све</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="212"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="214"/>
         <source>Select All</source>
         <translation>Изабери све</translation>
     </message>
@@ -3452,13 +3601,13 @@ Do you want to overwrite it?</source>
 <context>
     <name>Otter::SessionsManager</name>
     <message>
-        <location filename="../../src/core/SessionsManager.cpp" line="214"/>
+        <location filename="../../src/core/SessionsManager.cpp" line="219"/>
         <source>Default</source>
         <translation>Подразумијевана</translation>
     </message>
     <message>
-        <location filename="../../src/core/SessionsManager.cpp" line="214"/>
-        <location filename="../../src/core/SessionsManager.cpp" line="279"/>
+        <location filename="../../src/core/SessionsManager.cpp" line="219"/>
+        <location filename="../../src/core/SessionsManager.cpp" line="284"/>
         <source>(Untitled)</source>
         <translation>(Неименована)</translation>
     </message>
@@ -3675,21 +3824,22 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="116"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Упозорење</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="116"/>
         <source>The document has been modified.
 Do you want to save your changes or discard them?</source>
-        <translation type="unfinished"/>
+        <translation>Документ је измијењен.
+Желите ли да сачувате ваше измјене или да их одбаците?</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="286"/>
         <source>Show Line Numbers</source>
-        <translation type="unfinished"/>
+        <translation>Прикажи бројеве линија</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="476"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="477"/>
         <source>Source Viewer</source>
         <translation>Прегледач изворног кôда</translation>
     </message>
@@ -3748,7 +3898,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="141"/>
         <source>Show search field</source>
-        <translation type="unfinished"/>
+        <translation>Прикажи поље за претрагу</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="148"/>
@@ -3786,7 +3936,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="357"/>
         <source>Add Tile</source>
-        <translation type="unfinished"/>
+        <translation>Додавање плочице</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="510"/>
@@ -3835,17 +3985,17 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="104"/>
         <source>Begin with home page</source>
-        <translation>Почни са домаћом страницом</translation>
+        <translation>Почни домаћом страницом</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="114"/>
         <source>Begin with start page</source>
-        <translation type="unfinished"/>
+        <translation>Почни почетном страницом</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="124"/>
         <source>Begin with blank page</source>
-        <translation>Почни са празном страницом</translation>
+        <translation>Почни празном страницом</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.cpp" line="43"/>
@@ -3887,7 +4037,7 @@ Do you want to save your changes or discard them?</source>
         <translation>(Неименована)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="962"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="963"/>
         <source>Close Tab</source>
         <translation>Затвори језичак</translation>
     </message>
@@ -3906,113 +4056,118 @@ Do you want to save your changes or discard them?</source>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="35"/>
-        <source>Visibility:</source>
-        <translation>Видљивост:</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="46"/>
-        <source>Always visible</source>
-        <translation>увијек видљива</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="51"/>
-        <source>Always hidden</source>
-        <translation>увијек скривена</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="56"/>
-        <source>Visible only when needed</source>
-        <translation>видљива само по потреби</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="64"/>
-        <source>Button style:</source>
-        <translation>Стил дугмади:</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="75"/>
-        <source>Follow style</source>
-        <translation>прати стил</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="80"/>
-        <source>Only icon</source>
-        <translation>само иконе</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="85"/>
-        <source>Only text</source>
-        <translation>само текст</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="90"/>
-        <source>Text beside icon</source>
-        <translation>текст поред икона</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="95"/>
-        <source>Text under icon</source>
-        <translation>текст испод икона</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="103"/>
-        <source>Icon size:</source>
-        <translation>Величина икона:</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="113"/>
-        <source>Auto</source>
-        <translation>аутоматска</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="116"/>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="142"/>
-        <source> px</source>
-        <translation> px</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="129"/>
-        <source>Maximum size of item:</source>
-        <translation>Макс. величина ставке:</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="139"/>
-        <source>No limit</source>
-        <translation>без ограничења</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="159"/>
         <source>Name:</source>
         <translation>Име:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="195"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="52"/>
+        <source>Visibility:</source>
+        <translation>Видљивост:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="63"/>
+        <source>Always visible</source>
+        <translation>увијек видљива</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="68"/>
+        <source>Always hidden</source>
+        <translation>увијек скривена</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="73"/>
+        <source>Visible only when needed</source>
+        <translation>видљива само по потреби</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="81"/>
+        <source>Button style:</source>
+        <translation>Стил дугмади:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="92"/>
+        <source>Follow style</source>
+        <translation>прати стил</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="97"/>
+        <source>Only icon</source>
+        <translation>само иконе</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="102"/>
+        <source>Only text</source>
+        <translation>само текст</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="107"/>
+        <source>Text beside icon</source>
+        <translation>текст поред икона</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="112"/>
+        <source>Text under icon</source>
+        <translation>текст испод икона</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="120"/>
+        <source>Icon size:</source>
+        <translation>Величина икона:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="130"/>
+        <source>Auto</source>
+        <translation>аутоматска</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="133"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="159"/>
+        <source> px</source>
+        <translation> px</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="146"/>
+        <source>Maximum size of item:</source>
+        <translation>Макс. величина ставке:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="156"/>
+        <source>No limit</source>
+        <translation>без ограничења</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="169"/>
+        <source>Folder:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="208"/>
         <source>Actions</source>
         <translation>Радње</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="231"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="244"/>
         <source>Add</source>
         <translation>Додај</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="241"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="254"/>
         <source>Edit…</source>
         <translation>Уреди…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="250"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="263"/>
         <source>Current entries:</source>
         <translation>Тренутни уноси:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="358"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="371"/>
         <source>Available entries:</source>
         <translation>Доступни уноси:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="368"/>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="378"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="381"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="391"/>
         <source>Filter…</source>
         <translation>Филтер…</translation>
     </message>
@@ -4022,73 +4177,73 @@ Do you want to save your changes or discard them?</source>
         <translation>Прилагођена трака</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="212"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="220"/>
         <source>--- separator ---</source>
         <translation>--- раздвајач ---</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="216"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="224"/>
         <source>--- spacer ---</source>
         <translation>--- размак ---</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="220"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="228"/>
         <source>Address Field</source>
         <translation>Трака адресе</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="224"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="232"/>
         <source>List of Closed Windows and Tabs</source>
         <translation>Списак затворених прозора и језичака</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="228"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="236"/>
         <source>Menu Bar</source>
         <translation>Трака менија</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="232"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="240"/>
         <source>Menu Button</source>
         <translation>Дугме менија</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="236"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="244"/>
         <source>Sidebar Panel Chooser</source>
         <translation>Бирач бочног панела</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="240"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="248"/>
         <source>Search Field</source>
         <translation>Поље за претрагу</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="244"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="252"/>
         <source>Status Message Field</source>
         <translation>Поље поруке стања</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="248"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="256"/>
         <source>Tab Bar</source>
         <translation>Трака језичака</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="252"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="260"/>
         <source>Zoom Slider</source>
         <translation>Клизач увеличања</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="260"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="268"/>
         <source>(Untitled)</source>
         <translation>(Неименован)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="265"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="273"/>
         <source>Invalid Bookmark</source>
         <translation>Неисправан обиљеживач</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="274"/>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="286"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="282"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="294"/>
         <source>Invalid Entry</source>
         <translation>Неисправан унос</translation>
     </message>
@@ -4186,7 +4341,7 @@ Do you want to save your changes or discard them?</source>
     <name>Otter::Transfer</name>
     <message>
         <location filename="../../src/core/Transfer.cpp" line="263"/>
-        <location filename="../../src/core/Transfer.cpp" line="299"/>
+        <location filename="../../src/core/Transfer.cpp" line="771"/>
         <source>Question</source>
         <translation>Питање</translation>
     </message>
@@ -4198,7 +4353,12 @@ Do you want to overwite it?</source>
 Желите ли да га пребришете?</translation>
     </message>
     <message>
-        <location filename="../../src/core/Transfer.cpp" line="299"/>
+        <location filename="../../src/core/Transfer.cpp" line="600"/>
+        <source>file</source>
+        <translation>фајл</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/Transfer.cpp" line="771"/>
         <source>File with the same name already exists.
 Do you want to overwrite it?
 
@@ -4208,82 +4368,67 @@ Do you want to overwrite it?
 
 %1</translation>
     </message>
-    <message>
-        <location filename="../../src/core/Transfer.cpp" line="607"/>
-        <source>file</source>
-        <translation>фајл</translation>
-    </message>
 </context>
 <context>
     <name>Otter::TransferDialog</name>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="14"/>
         <source>Opening unknown file</source>
-        <translation type="unfinished"/>
+        <translation>Отварање непознатог фајла</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="22"/>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>Име:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="29"/>
         <source>Type:</source>
-        <translation type="unfinished"/>
+        <translation>Тип:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="36"/>
         <source>Size:</source>
-        <translation type="unfinished"/>
+        <translation>Величина:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="43"/>
         <source>From:</source>
-        <translation type="unfinished"/>
+        <translation>Од:</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="50"/>
         <source>Open with:</source>
-        <translation type="unfinished"/>
+        <translation>Отвори помоћу:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.ui" line="107"/>
+        <location filename="../../src/ui/TransferDialog.ui" line="104"/>
         <source>Remember choice for this file type</source>
-        <translation type="unfinished"/>
+        <translation>Запамти избор за овај тип фајлова</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="41"/>
+        <location filename="../../src/ui/TransferDialog.cpp" line="43"/>
         <source>unknown file</source>
-        <translation type="unfinished"/>
+        <translation>непознат фајл</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="63"/>
-        <source>Default Application</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="69"/>
-        <source>Unknown</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="79"/>
         <source>Opening %1</source>
-        <translation type="unfinished"/>
+        <translation>Отварам %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="152"/>
+        <location filename="../../src/ui/TransferDialog.cpp" line="175"/>
         <source>unknown</source>
-        <translation type="unfinished"/>
+        <translation>непознато</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="156"/>
+        <location filename="../../src/ui/TransferDialog.cpp" line="179"/>
         <source>%1 (download completed)</source>
-        <translation type="unfinished"/>
+        <translation>%1 (преузимање завршено)</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/TransferDialog.cpp" line="162"/>
-        <source>%1 (%n% downloaded)</source>
+        <location filename="../../src/ui/TransferDialog.cpp" line="185"/>
+        <source>%1 (%2% downloaded)</source>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
@@ -4321,14 +4466,14 @@ Do you want to overwrite it?
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="196"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="402"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="436"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="401"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="435"/>
         <source>Stop</source>
         <translation>Заустави</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="206"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="403"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="402"/>
         <source>Redownload</source>
         <translation>Поново преузми</translation>
     </message>
@@ -4368,19 +4513,19 @@ Do you want to overwrite it?
         <translation>завршен</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="157"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="158"/>
         <source>Warning</source>
         <translation>Упозорење</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="157"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="158"/>
         <source>This transfer is still running.
 Do you really want to remove it?</source>
         <translation>Пренос је још у току.
 Желите ли заиста да га уклоните?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="244"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="243"/>
         <source>&lt;div style=&quot;white-space:pre;&quot;&gt;Source: %1
 Target: %2
 Size: %3
@@ -4393,55 +4538,55 @@ Progress: %5&lt;/div&gt;</source>
 Напредак: %5&lt;/div&gt;</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="244"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="243"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="449"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="450"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="451"/>
-        <source>%1 (%n B)</source>
-        <translation><numerusform>%1 (%n B)</numerusform><numerusform>%1 (%n B)</numerusform><numerusform>%1 (%n B)</numerusform></translation>
+        <source>%1 (%2 B)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="379"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="378"/>
         <source>Open</source>
         <translation>Отвори</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="385"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="384"/>
         <source>Open With</source>
         <translation>Отвори помоћу</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="389"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="388"/>
         <source>Unknown</source>
         <translation>Непозната</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="400"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="399"/>
         <source>Open Folder</source>
         <translation>Отвори фасциклу</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="402"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="431"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="401"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="430"/>
         <source>Resume</source>
         <translation>Настави</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="405"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="404"/>
         <source>Copy Transfer Information</source>
         <translation>Копирај податке о преносу</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="407"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="406"/>
         <source>Remove</source>
         <translation>Уклони</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="421"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="420"/>
         <source>Clear Finished Transfers</source>
         <translation>Уклони завршене преносе</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="549"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="548"/>
         <source>Transfers Manager</source>
         <translation>Менаџер преноса</translation>
     </message>
@@ -4456,35 +4601,35 @@ Progress: %5&lt;/div&gt;</source>
 %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="268"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="273"/>
         <source>%1 files (*.%2)</source>
         <translation>%1 фајлови (*.%2)</translation>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="271"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="276"/>
         <source>All files (*)</source>
         <translation>Сви фајлови (*)</translation>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="273"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="278"/>
         <source>Save File</source>
         <translation>Упис фајла</translation>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="292"/>
-        <location filename="../../src/core/TransfersManager.cpp" line="301"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="297"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="306"/>
         <source>Warning</source>
         <translation>Упозорење</translation>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="292"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="297"/>
         <source>Target path is already used by another transfer.
 Select another one.</source>
         <translation>Одредишну путању већ користи други пренос.
 Одредите нову.</translation>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="301"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="306"/>
         <source>Target path is not writable.
 Select another one.</source>
         <translation>Одредишна путања није уписива.
@@ -4515,78 +4660,79 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="14"/>
         <source>Check for Updates</source>
-        <translation type="unfinished"/>
+        <translation>Тражим надоградње</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="20"/>
         <source>Checking for update…</source>
-        <translation type="unfinished"/>
+        <translation>Тражим надоградњу…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="51"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="50"/>
         <source>Checking for updates…</source>
-        <translation type="unfinished"/>
+        <translation>Тражим надоградње…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="96"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="95"/>
         <source>There are no new updates.</source>
-        <translation type="unfinished"/>
+        <translation>Нема нових надоградњи.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="102"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="101"/>
         <source>Available updates:</source>
-        <translation type="unfinished"/>
+        <translation>Доступне надоградње:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="106"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="105"/>
         <source>Details…</source>
-        <translation type="unfinished"/>
+        <translation>Детаљи…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="109"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="108"/>
         <source>Download</source>
-        <translation type="unfinished"/>
+        <translation>Преузми</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="122"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="121"/>
         <source>Version %1 from %2 channel</source>
-        <translation type="unfinished"/>
+        <translation>Издање %1 са канала %2</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="132"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="131"/>
         <source>Some of the updates does not contains packages for your platform. Try to check for updates later or visit details page for more info.</source>
-        <translation type="unfinished"/>
+        <translation>Неке надоградње не садрже пакете за вашу платформу. Потражите надоградње касније или посјетите страницу детаља за више података.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="178"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="177"/>
         <source>Downloading:</source>
-        <translation type="unfinished"/>
+        <translation>Преузимам:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="192"/>
+        <source>Download finished!</source>
+        <translation>Преузимање завршено!</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="193"/>
-        <source>Download finished!</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="194"/>
         <source>Install</source>
-        <translation type="unfinished"/>
+        <translation>Инсталирај</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="196"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="195"/>
         <source>New version of Otter Browser is ready to install.
 Click Install button to restart browser and install the update or close this dialog to install the update during next browser restart.</source>
-        <translation type="unfinished"/>
+        <translation>Ново издање Отер прегледача је спремно за инсталацију.
+Кликните на дугме Инсталирај за поновно покретање и инсталацију надоградње или затворите овај дијалог за инсталацију током сљедећег покретања.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="218"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="217"/>
         <source>Download failed!</source>
-        <translation type="unfinished"/>
+        <translation>Преузимање није успјело!</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="220"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="219"/>
         <source>Check Error Console for more information.</source>
-        <translation type="unfinished"/>
+        <translation>Погледајте конзолу грешака за више података.</translation>
     </message>
 </context>
 <context>
@@ -4625,57 +4771,57 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>Otter::WebContentsWidget</name>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="415"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="413"/>
         <source>Open all pop-ups</source>
         <translation>отвори све</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="416"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="414"/>
         <source>Open pop-ups in background</source>
         <translation>отвори све у позадини</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="417"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="415"/>
         <source>Block all pop-ups</source>
         <translation>блокирај све</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="421"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="419"/>
         <source>Enable Images</source>
         <translation>Омогући слике</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="426"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="424"/>
         <source>Enable JavaScript</source>
         <translation>Омогући јаваскрипте</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="431"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="429"/>
         <source>Enable Java</source>
         <translation>Омогући јаву</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="436"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="434"/>
         <source>Enable Plugins</source>
         <translation>Омогући прикључке</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="443"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="441"/>
         <source>Enable Cookies</source>
         <translation>Омогући колачиће</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="447"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="445"/>
         <source>Enable Referrer</source>
         <translation>Омогући заглавље пратиоца</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="451"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="449"/>
         <source>Enable Proxy</source>
         <translation>Омогући прокси</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="456"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="454"/>
         <source>Reset Options</source>
         <translation>Ресетуј опције</translation>
     </message>
@@ -4683,82 +4829,82 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>Otter::WebWidget</name>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="250"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="298"/>
         <source>Default Application</source>
-        <translation type="unfinished"/>
+        <translation>Подразумевани програм</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="256"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="304"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Непознат</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="342"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="390"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>Име: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="342"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="390"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Адреса: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="593"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="641"/>
         <source>No search engines defined</source>
-        <translation type="unfinished"/>
+        <translation>Нема дефинисаних мотора претраге</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="736"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="784"/>
         <source>Open Image in New Tab (Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>Отвори слику у новом језичку (неименована)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="736"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="784"/>
         <source>Open Image in New Tab (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Отвори слику у новом језичку (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="742"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="790"/>
         <source>Open Image in New Background Tab (Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>Отвори слику у језичку у позадини (неименована)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="742"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="790"/>
         <source>Open Image in New Background Tab (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Отвори слику у језичку у позадини (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1034"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1082"/>
         <source>30 Minutes</source>
         <translation>30 минута</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1035"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1083"/>
         <source>1 Hour</source>
         <translation>1 сат</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1036"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1084"/>
         <source>2 Hours</source>
         <translation>2 сата</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1037"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1085"/>
         <source>6 Hours</source>
         <translation>6 сати</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1038"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1086"/>
         <source>Never</source>
         <translation>Никад</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1039"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1087"/>
         <source>Custom…</source>
         <translation>Прилагоди…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1041"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1089"/>
         <source>Page Default</source>
         <translation>Подразумевано</translation>
     </message>
@@ -5014,114 +5160,134 @@ Click Install button to restart browser and install the update or close this dia
         <translation>Шаљи заглавље пратиоца серверима</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="55"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="972"/>
+        <source>Content Blocking</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="63"/>
         <source>Auto Detect</source>
         <translation>Аутоматско</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="69"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="77"/>
         <source>Enabled</source>
         <translation>омогућени</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="70"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="78"/>
         <source>On demand</source>
         <translation>по захтјеву</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="71"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="79"/>
         <source>Disabled</source>
         <translation>онемогућени</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="73"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="81"/>
         <source>Ask</source>
         <translation>питај</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="74"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="81"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="90"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="82"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="89"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="98"/>
         <source>Always</source>
         <translation>увијек</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="75"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="84"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="92"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="100"/>
         <source>Never</source>
         <translation>никад</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="77"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="85"/>
         <source>Inform websites that I do not want to be tracked</source>
         <translation>обавијести сајтове да не желим да ме прате</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="78"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="86"/>
         <source>Inform websites that I allow tracking</source>
         <translation>обавијести сајтове да допуштам да ме прате</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="79"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="87"/>
         <source>Do not inform websites about my preference</source>
         <translation>не обавјештавај сајтове о мојој поставци</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="82"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="91"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="90"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="99"/>
         <source>Only existing</source>
         <translation>само постојеће</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="91"/>
         <source>Only read existing</source>
         <translation>само читај постојеће</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="86"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="94"/>
         <source>Expires</source>
         <translation>не истекну</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="87"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="95"/>
         <source>Current session is closed</source>
         <translation>текућа сесија не оконча</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="88"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="96"/>
         <source>Always ask</source>
         <translation>Увијек питај</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="95"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
         <source>Domain</source>
         <translation>домен</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="95"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
         <source>Path</source>
         <translation>путања</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="95"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
         <source>Value</source>
         <translation>вриједност</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="95"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
         <source>Expiration date</source>
         <translation>истиче</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="115"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="123"/>
         <source>Default</source>
         <translation>подразумијевана</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="122"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="130"/>
         <source>(Untitled)</source>
         <translation>(неименована)</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="339"/>
+        <source>Title</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="339"/>
+        <source>Update Interval</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="339"/>
+        <source>Last Update</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5156,8 +5322,8 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message numerus="yes">
         <location filename="../../src/core/WindowsManager.cpp" line="236"/>
-        <source>You are about to open %n bookmarks.</source>
-        <translation><numerusform>Отворићете %n обиљеживач.</numerusform><numerusform>Отворићете %n обиљеживача.</numerusform><numerusform>Отворићете %n обиљеживача.</numerusform></translation>
+        <source>You are about to open %n bookmark(s).</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="237"/>
@@ -5170,9 +5336,9 @@ Click Install button to restart browser and install the update or close this dia
         <translation>Не приказуј више ову поруку</translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="809"/>
-        <location filename="../../src/core/WindowsManager.cpp" line="862"/>
-        <location filename="../../src/core/WindowsManager.cpp" line="986"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="816"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="869"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="993"/>
         <source>Empty</source>
         <translation>Празна</translation>
     </message>
@@ -5310,7 +5476,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="259"/>
         <source>Frame</source>
-        <translation type="unfinished"/>
+        <translation>Оквир</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="263"/>
@@ -5521,12 +5687,12 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/core/ActionsManager.cpp" line="308"/>
         <location filename="../../src/core/ActionsManager.cpp" line="399"/>
         <source>Open with…</source>
-        <translation type="unfinished"/>
+        <translation>Отвори помоћу…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="299"/>
         <source>Open link with external application</source>
-        <translation type="unfinished"/>
+        <translation>Отвори везу вањском апликацијом</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="300"/>
@@ -5535,7 +5701,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="301"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="673"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="721"/>
         <source>Bookmark Link…</source>
         <translation>Обиљежи везу…</translation>
     </message>
@@ -5572,7 +5738,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="308"/>
         <source>Open frame with external application</source>
-        <translation type="unfinished"/>
+        <translation>Отвори оквир вањском апликацијом</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="309"/>
@@ -5599,13 +5765,13 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="312"/>
         <source>Open Image In New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Отвори слику у новом језичку</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="313"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="742"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="790"/>
         <source>Open Image in New Background Tab</source>
-        <translation type="unfinished"/>
+        <translation>Отвори слику у језичку у позадини</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="314"/>
@@ -5654,13 +5820,13 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="323"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="805"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="853"/>
         <source>Play</source>
         <translation>Пусти</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="324"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="812"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="860"/>
         <source>Mute</source>
         <translation>Искључи звук</translation>
     </message>
@@ -5831,7 +5997,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="359"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="592"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="640"/>
         <source>Search</source>
         <translation>Тражи</translation>
     </message>
@@ -5933,12 +6099,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="379"/>
         <source>Go to Previously Used Tab</source>
-        <translation type="unfinished"/>
+        <translation>Иди на најскорији језичак</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="380"/>
         <source>Go to Least Recently Used Tab</source>
-        <translation type="unfinished"/>
+        <translation>Иди на најмање коришћени језичак</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="381"/>
@@ -5957,7 +6123,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="384"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="472"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="520"/>
         <source>Add Bookmark…</source>
         <translation>Додај обиљеживач…</translation>
     </message>
@@ -6034,7 +6200,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="399"/>
         <source>Open current page with external application</source>
-        <translation type="unfinished"/>
+        <translation>Отвори текућу страницу вањском апликацијом</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="400"/>
@@ -6156,20 +6322,25 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="423"/>
         <source>Check for Updates…</source>
-        <translation type="unfinished"/>
+        <translation>Потражи надоградње…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="424"/>
+        <source>Diagnostic Report…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="425"/>
         <source>About Otter…</source>
         <translation>О Отеру…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="425"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="426"/>
         <source>About Qt…</source>
         <translation>О Куту…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="426"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="427"/>
         <source>Exit</source>
         <translation>Изађи</translation>
     </message>
@@ -6194,12 +6365,12 @@ Click Install button to restart browser and install the update or close this dia
         <translation>Трака стања</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="300"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="302"/>
         <source>Remove Bookmark</source>
         <translation>Уклони обиљеживач</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="338"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="339"/>
         <source>Copy address of source page</source>
         <translation>Копирај адресу изворне странице</translation>
     </message>
@@ -6214,47 +6385,47 @@ Click Install button to restart browser and install the update or close this dia
         <translation>Прикажи прозоре</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="472"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="520"/>
         <source>Edit Bookmark…</source>
         <translation>Уреди обиљеживач…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="673"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="721"/>
         <source>Edit Link Bookmark…</source>
         <translation>Уреди везу обиљеживача…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="736"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="784"/>
         <source>Open Image in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Отвори слику у новом језичку</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="781"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="829"/>
         <source>Save Video…</source>
         <translation>Сачувај видео…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="781"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="829"/>
         <source>Save Audio…</source>
         <translation>Сачувај звук…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="787"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="835"/>
         <source>Copy Video Link to Clipboard</source>
         <translation>Копирај везу видеа на клипборд</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="787"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="835"/>
         <source>Copy Audio Link to Clipboard</source>
         <translation>Копирај везу звука на клипборд</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="805"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="853"/>
         <source>Pause</source>
         <translation>Паузирај</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="812"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="860"/>
         <source>Unmute</source>
         <translation>Укључи звук</translation>
     </message>
@@ -6267,39 +6438,44 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>main</name>
     <message>
-        <location filename="../../src/core/Application.cpp" line="103"/>
+        <location filename="../../src/core/Application.cpp" line="105"/>
         <source>URL to open</source>
         <translation>УРЛ за отварање</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="104"/>
+        <location filename="../../src/core/Application.cpp" line="106"/>
         <source>Uses &lt;path&gt; as cache directory</source>
         <translation>Користи &lt;path&gt; за директоријум кеша</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="105"/>
+        <location filename="../../src/core/Application.cpp" line="107"/>
         <source>Uses &lt;path&gt; as profile directory</source>
         <translation>Користи &lt;path&gt; за директоријум профила</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="106"/>
+        <location filename="../../src/core/Application.cpp" line="108"/>
         <source>Restores session &lt;session&gt; if it exists</source>
         <translation>Враћа сесију &lt;session&gt; ако постоји</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="107"/>
+        <location filename="../../src/core/Application.cpp" line="109"/>
         <source>Starts private session</source>
         <translation>Покреће приватну сесију</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="108"/>
+        <location filename="../../src/core/Application.cpp" line="110"/>
         <source>Forces session chooser dialog</source>
         <translation>Присиљава дијалог избора сесије</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="109"/>
+        <location filename="../../src/core/Application.cpp" line="111"/>
         <source>Sets profile and cache paths to directories inside the same directory as that of application binary</source>
         <translation>Поставља путање профила и кеша на исти директоријум у ком је извршна</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/Application.cpp" line="112"/>
+        <source>Prints out diagnostic report and exits application</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="60"/>
@@ -6341,7 +6517,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/core/PlatformIntegration.cpp" line="103"/>
         <source>Failed to install update
 Updater: %1
- Script: %2</source>
+Script: %2</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6353,26 +6529,32 @@ Updater: %1
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="45"/>
         <source>Unable to check for updates. Invalid URL: %1</source>
-        <translation type="unfinished"/>
+        <translation>Не могу да потражим надоградње. Неисправан УРЛ: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="66"/>
         <source>Unable to check for updates: %1</source>
-        <translation type="unfinished"/>
+        <translation>Не могу да потражим надоградње: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="99"/>
+        <location filename="../../src/core/UpdateChecker.cpp" line="97"/>
         <source>Unable to parse version number: %1</source>
+        <translation>Не могу да рашчланим број издања: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/Updater.cpp" line="84"/>
+        <source>Downloaded update script is not valid: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/Updater.cpp" line="90"/>
+        <location filename="../../src/core/Updater.cpp" line="104"/>
         <source>Unable to download update: %1
 Error: %2</source>
-        <translation type="unfinished"/>
+        <translation>Не могу да преузмем надоградњу: %1
+Грешка: %2</translation>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="124"/>
+        <location filename="../../src/main.cpp" line="125"/>
         <source>Default</source>
         <translation>Подразумијевана</translation>
     </message>

@@ -28,13 +28,13 @@
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="63"/>
-        <source>Is secure:</source>
+        <source>Secure:</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="70"/>
-        <source>Is HTTP only:</source>
-        <translation>Лише для HTTP:</translation>
+        <source>Is HttpOnly:</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="47"/>
@@ -147,83 +147,83 @@
 <context>
     <name>Otter::AddressWidget</name>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="94"/>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="116"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="95"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="117"/>
         <source>Enter address or search…</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="251"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="252"/>
         <source>Undo</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="252"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="253"/>
         <source>Redo</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="254"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="255"/>
         <source>Cut</source>
         <translation>Вирізати</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="255"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="256"/>
         <source>Copy</source>
         <translation>Скопіювати</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="256"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="257"/>
         <source>Paste</source>
         <translation>Вставити</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="263"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="264"/>
         <source>Delete</source>
         <translation>Видалити</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="265"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="266"/>
         <source>Copy to Note</source>
         <translation>Занотувати</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="267"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="268"/>
         <source>Clear All</source>
         <translation>Стерти все</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="268"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="269"/>
         <source>Select All</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="507"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="508"/>
         <source>Remove Bookmark</source>
         <translation>Видалити закладку</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="507"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="508"/>
         <source>Add Bookmark</source>
         <translation>Додати закладку</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="523"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="524"/>
         <source>Feed List</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="551"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="552"/>
         <source>Click to load all plugins on the page</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="910"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="932"/>
         <source>(Untitled)</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="945"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="967"/>
         <source>Remove This Icon</source>
         <translation>Видалити іконку</translation>
     </message>
@@ -231,55 +231,82 @@
 <context>
     <name>Otter::Application</name>
     <message>
-        <location filename="../../src/core/Application.cpp" line="393"/>
+        <location filename="../../src/core/Application.cpp" line="395"/>
         <source>Warning</source>
         <translation>Увага</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="393"/>
+        <location filename="../../src/core/Application.cpp" line="395"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
         <translation>Ця сесія не була коректно збережена.
 Ви дійсно бажаєте відновити цю сесію?</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="496"/>
+        <location filename="../../src/core/Application.cpp" line="498"/>
         <source>New update %1 from %2 channel is available!</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="663"/>
-        <location filename="../../src/core/Application.cpp" line="712"/>
+        <location filename="../../src/core/Application.cpp" line="774"/>
+        <location filename="../../src/core/Application.cpp" line="823"/>
         <source>Question</source>
         <translation>Питання</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/core/Application.cpp" line="664"/>
+        <location filename="../../src/core/Application.cpp" line="775"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="665"/>
-        <location filename="../../src/core/Application.cpp" line="714"/>
+        <location filename="../../src/core/Application.cpp" line="776"/>
+        <location filename="../../src/core/Application.cpp" line="825"/>
         <source>Do you want to continue?</source>
         <translation>Бажаєте продовжити?</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="669"/>
-        <location filename="../../src/core/Application.cpp" line="718"/>
+        <location filename="../../src/core/Application.cpp" line="780"/>
+        <location filename="../../src/core/Application.cpp" line="829"/>
         <source>Do not show this message again</source>
         <translation>Більше не показувати це повідомлення</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="671"/>
-        <location filename="../../src/core/Application.cpp" line="720"/>
+        <location filename="../../src/core/Application.cpp" line="782"/>
+        <location filename="../../src/core/Application.cpp" line="831"/>
         <source>Hide</source>
         <translation>Сховати</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="713"/>
+        <location filename="../../src/core/Application.cpp" line="824"/>
         <source>You are about to quit the current Otter Browser session.</source>
         <translation>Ви збираєтесь вийти з поточної сесії Otter Browser.</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::ApplicationComboBoxWidget</name>
+    <message>
+        <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="34"/>
+        <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="47"/>
+        <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="122"/>
+        <source>Default Application</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="36"/>
+        <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="48"/>
+        <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="139"/>
+        <source>Otheṛ…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="60"/>
+        <source>Select Application</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="130"/>
+        <source>Unknown</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -503,68 +530,68 @@ Are you sure that you want to restore this session anyway?</source>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="45"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="165"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="202"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="204"/>
         <source>Add Folder</source>
         <translation>Додати теку</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="46"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="166"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="201"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="168"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="203"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="205"/>
         <source>Add Bookmark</source>
         <translation>Додати закладку</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="47"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="204"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="169"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="206"/>
         <source>Add Separator</source>
         <translation>Додати розділювач</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="161"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="163"/>
         <source>Empty Trash</source>
         <translation>Очистити смітник</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="173"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="175"/>
         <source>Open</source>
         <translation>Відкрити</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="174"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="176"/>
         <source>Open in New Tab</source>
         <translation>Відкрити у новій вкладці</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="175"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="177"/>
         <source>Open in New Background Tab</source>
         <translation>Відкрити у фоновій вкладці</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="177"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="179"/>
         <source>Open in New Window</source>
         <translation>Відкрити у новому вікні</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="178"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="180"/>
         <source>Open in New Background Window</source>
         <translation>Відкрити у фоновому вікні</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="213"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="215"/>
         <source>Restore Bookmark</source>
         <translation>Відновити закладку</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="221"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="223"/>
         <source>Properties…</source>
         <translation>Властивості…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="326"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="328"/>
         <source>Bookmarks Manager</source>
         <translation>Менеджер закладок</translation>
     </message>
@@ -610,52 +637,55 @@ Are you sure that you want to restore this session anyway?</source>
 <context>
     <name>Otter::BookmarksModel</name>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="177"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="96"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="200"/>
         <source>Notes</source>
         <translation>Нотатки</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="177"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="99"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="200"/>
         <source>Bookmarks</source>
         <translation>Закладки</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="182"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="104"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="205"/>
         <source>Trash</source>
         <translation>Смітник</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="194"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="217"/>
         <source>Failed to open notes file: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="194"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="217"/>
         <source>Failed to open bookmarks file: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="218"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="241"/>
         <source>Failed to load notes file: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="218"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="241"/>
         <source>Failed to load bookmarks file: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="220"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="243"/>
         <source>Error</source>
         <translation>Помилка</translation>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="220"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="243"/>
         <source>Failed to load notes file.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/BookmarksModel.cpp" line="220"/>
+        <location filename="../../src/core/BookmarksModel.cpp" line="243"/>
         <source>Failed to load bookmarks file.</source>
         <translation type="unfinished"/>
     </message>
@@ -708,77 +738,77 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>Видалити</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="116"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="118"/>
         <source>Address</source>
         <translation>Адреса</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="116"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="118"/>
         <source>Type</source>
         <translation>Тип</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="116"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="118"/>
         <source>Size</source>
         <translation>Розмір</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="116"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="118"/>
         <source>Last Modified</source>
         <translation>Останні зміни</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="116"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="118"/>
         <source>Expires</source>
         <translation>Спливає</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="389"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="391"/>
         <source>Open</source>
         <translation>Відкрити</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="390"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="392"/>
         <source>Open in New Tab</source>
         <translation>Відкрити у новій вкладці</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="391"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="393"/>
         <source>Open in New Background Tab</source>
         <translation>Відкрити у фоновій вкладці</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="393"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="395"/>
         <source>Open in New Window</source>
         <translation>Відкрити у новому вікні</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="394"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="396"/>
         <source>Open in New Background Window</source>
         <translation>Відкрити у фоновому вікні</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="396"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="398"/>
         <source>Copy Link to Clipboard</source>
         <translation>Копіювати адресу посилання</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="398"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="400"/>
         <source>Remove Entry</source>
         <translation>Прибрати входження</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="403"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="405"/>
         <source>Remove All Entries from This Domain</source>
         <translation>Прибрати усі входження з цього домену</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="465"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="467"/>
         <source>Unknown</source>
         <translation>Не визначено</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="596"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="598"/>
         <source>Cache</source>
         <translation>Кеш</translation>
     </message>
@@ -859,37 +889,37 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>Пошук…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="83"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="84"/>
         <source>Name</source>
         <translation>Ім’я</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="83"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="84"/>
         <source>Type</source>
         <translation>Тип</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="83"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="84"/>
         <source>Value</source>
         <translation>Значення</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="262"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="264"/>
         <source>Copy Option Name</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="263"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="265"/>
         <source>Copy Option Value</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="265"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="267"/>
         <source>Restore Default Value</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="272"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="274"/>
         <source>Configuration Manager</source>
         <translation>Менеджер налаштувань</translation>
     </message>
@@ -1074,8 +1104,8 @@ Are you sure that you want to restore this session anyway?</source>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="180"/>
-        <source>HTTP only</source>
-        <translation>Лише HTTP</translation>
+        <source>HttpOnly</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="195"/>
@@ -1093,44 +1123,44 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>Застосувати</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="273"/>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="292"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="276"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="295"/>
         <source>Question</source>
         <translation>Питання</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="274"/>
-        <source>You are about to delete %n cookies.</source>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="277"/>
+        <source>You are about to delete %n cookie(s).</source>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="275"/>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="294"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="278"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="297"/>
         <source>Do you want to continue?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="293"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="296"/>
         <source>You are about to delete all cookies.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="314"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="317"/>
         <source>Remove Cookie</source>
         <translation>Видалити крихти</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="317"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="320"/>
         <source>Remove All Cookies from This Domain…</source>
         <translation>Видалити всі крихти цього домену…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="320"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="323"/>
         <source>Remove All Cookies…</source>
         <translation>Видалити всі крихти…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="449"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="452"/>
         <source>Cookies Manager</source>
         <translation>Менеджер крихт</translation>
     </message>
@@ -1252,58 +1282,58 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>Дата</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="246"/>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="280"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="248"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="282"/>
         <source>(Untitled)</source>
         <translation>(Без назви)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="400"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="402"/>
         <source>Open</source>
         <translation>Відкрити</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="401"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="403"/>
         <source>Open in New Tab</source>
         <translation>Відкрити у новій вкладці</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="402"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="404"/>
         <source>Open in New Background Tab</source>
         <translation>Відкрити у фоновій вкладці</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="404"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="406"/>
         <source>Open in New Window</source>
         <translation>Відкрити у новому вікні</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="405"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="407"/>
         <source>Open in New Background Window</source>
         <translation>Відкрити у фоновому вікні</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="407"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="409"/>
         <source>Add to Bookmarks…</source>
         <translation>Додати до закладок…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="408"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="410"/>
         <source>Copy Link to Clipboard</source>
         <translation>Копіювати адресу посилання</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="410"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="412"/>
         <source>Remove Entry</source>
         <translation>Прибрати входження</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="411"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="413"/>
         <source>Remove All Entries from This Domain</source>
         <translation>Прибрати усі входження з цього домену</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="444"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="446"/>
         <source>History</source>
         <translation>Історія</translation>
     </message>
@@ -1392,8 +1422,8 @@ Are you sure that you want to restore this session anyway?</source>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="95"/>
-        <source>%1 x %2 pixels @ %3 bits per pixel in %n frames</source>
-        <translation><numerusform>%1 x %2 пікселів @ %3 біти на піксель у %n фреймах</numerusform><numerusform>%1 x %2 пікселів @ %3 біти на піксель у %n фреймах</numerusform><numerusform>%1 x %2 пікселів @ %3 біти на піксель у %n фреймах</numerusform></translation>
+        <source>%1 x %2 pixels @ %3 bits per pixel in %n frame(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="99"/>
@@ -1553,37 +1583,37 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>Консоль</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="480"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="481"/>
         <source>Open File</source>
         <translation>Відкрити файл</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="740"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="748"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.</source>
         <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Браузер, що контролюється користувачем, а не навпаки.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="741"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="749"/>
         <source>Web backend: %1 %2.</source>
         <translation>Веб ядро: %1 %2.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="745"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="753"/>
         <source>SSL library version: %1.</source>
         <translation>Версія бібліотеки SSL: %1.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="749"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="757"/>
         <source>SSL library not available.</source>
         <translation>Бібліотека SSL недоступна.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="838"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="846"/>
         <source>Warning</source>
         <translation>Увага</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="838"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="846"/>
         <source>You already have this address in your bookmarks.
 Do you want to continue?</source>
         <translation>Ви вже маєте цю адресу у закладках.
@@ -1593,111 +1623,112 @@ Do you want to continue?</source>
 <context>
     <name>Otter::Menu</name>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="96"/>
+        <location filename="../../src/ui/Menu.cpp" line="98"/>
         <source>Import Opera Bookmarks…</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="97"/>
+        <location filename="../../src/ui/Menu.cpp" line="99"/>
         <source>Import HTML Bookmarks…</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="99"/>
+        <location filename="../../src/ui/Menu.cpp" line="101"/>
         <source>Import Opera Notes…</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="184"/>
+        <location filename="../../src/ui/Menu.cpp" line="186"/>
         <source>Open</source>
         <translation>Відкрити</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="185"/>
+        <location filename="../../src/ui/Menu.cpp" line="187"/>
         <source>Open in New Tab</source>
         <translation>Відкрити у новій вкладці</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="186"/>
+        <location filename="../../src/ui/Menu.cpp" line="188"/>
         <source>Open in New Background Tab</source>
         <translation>Відкрити у фоновій вкладці</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="188"/>
+        <location filename="../../src/ui/Menu.cpp" line="190"/>
         <source>Open in New Window</source>
         <translation>Відкрити у новому вікні</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="189"/>
+        <location filename="../../src/ui/Menu.cpp" line="191"/>
         <source>Open in New Background Window</source>
         <translation>Відкрити у новому фоновому вікні</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="311"/>
+        <location filename="../../src/ui/Menu.cpp" line="313"/>
         <source>Open All</source>
         <translation>Відкрити все</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="319"/>
+        <location filename="../../src/ui/Menu.cpp" line="321"/>
         <source>This Folder</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="338"/>
-        <location filename="../../src/ui/Menu.cpp" line="486"/>
-        <location filename="../../src/ui/Menu.cpp" line="501"/>
-        <location filename="../../src/ui/Menu.cpp" line="518"/>
-        <location filename="../../src/ui/Menu.cpp" line="568"/>
+        <location filename="../../src/ui/Menu.cpp" line="340"/>
+        <location filename="../../src/ui/Menu.cpp" line="488"/>
+        <location filename="../../src/ui/Menu.cpp" line="503"/>
+        <location filename="../../src/ui/Menu.cpp" line="520"/>
+        <location filename="../../src/ui/Menu.cpp" line="570"/>
+        <location filename="../../src/ui/Menu.cpp" line="624"/>
         <source>(Untitled)</source>
         <translation>(Безіменний)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="376"/>
+        <location filename="../../src/ui/Menu.cpp" line="378"/>
         <source>Auto Detect</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="431"/>
+        <location filename="../../src/ui/Menu.cpp" line="433"/>
         <source>Clear</source>
         <translation>Очистити</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="441"/>
+        <location filename="../../src/ui/Menu.cpp" line="443"/>
         <source>Window - %1</source>
         <translation>Вікно - %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/Menu.cpp" line="501"/>
+        <location filename="../../src/ui/Menu.cpp" line="503"/>
         <source>%1 (%n tab(s))</source>
         <translation><numerusform>%1 (%n вкладка)</numerusform><numerusform>%1 (%n вкладки)</numerusform><numerusform>%1 (%n вкладок)</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="530"/>
+        <location filename="../../src/ui/Menu.cpp" line="532"/>
         <source>Add New</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="531"/>
+        <location filename="../../src/ui/Menu.cpp" line="533"/>
         <source>Add Toolbar</source>
         <translation>Додати панель інструментів</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="532"/>
+        <location filename="../../src/ui/Menu.cpp" line="534"/>
         <source>Add Bookmarks Bar…</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="537"/>
+        <location filename="../../src/ui/Menu.cpp" line="539"/>
         <source>Reset to Defaults…</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="556"/>
+        <location filename="../../src/ui/Menu.cpp" line="558"/>
         <source>Default</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="578"/>
+        <location filename="../../src/ui/Menu.cpp" line="580"/>
         <source>Custom</source>
         <translation type="unfinished"/>
     </message>
@@ -1747,8 +1778,14 @@ Do you want to continue?</source>
 <context>
     <name>Otter::NetworkProxyFactory</name>
     <message>
-        <location filename="../../src/core/NetworkProxyFactory.cpp" line="64"/>
+        <location filename="../../src/core/NetworkProxyFactory.cpp" line="70"/>
+        <location filename="../../src/core/NetworkProxyFactory.cpp" line="146"/>
         <source>Failed to load proxy auto-config (PAC): %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/NetworkProxyFactory.cpp" line="92"/>
+        <source>Failed to load proxy auto-config (PAC). Invalid URL: %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1771,62 +1808,62 @@ Do you want to continue?</source>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="46"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="155"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="186"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="156"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="187"/>
         <source>Add Folder</source>
         <translation>Додати теку</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="47"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="185"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="187"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="186"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="188"/>
         <source>Add Note</source>
         <translation>Додати нотатку</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="48"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="157"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="188"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="158"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="189"/>
         <source>Add Separator</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="58"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="59"/>
         <source>Add note…</source>
         <translation>Додати нотатку…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="103"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="104"/>
         <source>Select Folder Name</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="103"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="104"/>
         <source>Enter folder name:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="151"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="152"/>
         <source>Empty Trash</source>
         <translation>Очистити смітник</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="156"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="157"/>
         <source>Add Bookmark</source>
         <translation>Додати закладку</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="171"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="172"/>
         <source>Open source page</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="197"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="198"/>
         <source>Restore Note</source>
         <translation>Відновити нотатку</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="372"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="373"/>
         <source>Notes Manager</source>
         <translation>Менеджер нотаток</translation>
     </message>
@@ -2011,348 +2048,447 @@ Do you want to continue?</source>
 <context>
     <name>Otter::PreferencesAdvancedPageWidget</name>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="27"/>
-        <source>Notifications</source>
-        <translation>Сповіщення</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="32"/>
-        <source>Address Field</source>
-        <translation>Поле адреси</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="37"/>
-        <source>Content</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="42"/>
-        <source>Network</source>
-        <translation>Мережа</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="47"/>
-        <source>Security</source>
-        <translation>Безпека</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="52"/>
-        <source>Keyboard</source>
-        <translation>Клавіатура</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="57"/>
-        <source>Other</source>
-        <translation>Інше</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="78"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="55"/>
         <source>Events</source>
         <translation>Події</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="118"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="95"/>
         <source>Play sound:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="133"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="110"/>
         <source>Show notification</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="140"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="117"/>
         <source>Mark taskbar entry</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="156"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="133"/>
         <source>Options</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="163"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="140"/>
         <source>Prefer native notifications</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="193"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="170"/>
         <source>Suggestions</source>
         <translation>Пропозиції</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="202"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="179"/>
         <source>Suggest bookmarks</source>
         <translation>Пропонувати закладки</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="212"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="189"/>
         <source>Suggest history</source>
         <translation>Пропонувати історію</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="222"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="199"/>
         <source>Suggest search results</source>
         <translation>Пропонувати результати пошуку</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="254"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="344"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="961"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="231"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="546"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1254"/>
         <source>General</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="261"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="238"/>
         <source>Enable images</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="270"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="247"/>
         <source>Enable JavaScript</source>
         <translation>Увімкнути JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="277"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="254"/>
         <source>JavaScript Options…</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="286"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="263"/>
         <source>Enable Java</source>
         <translation>Увімкнути Java</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="295"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="272"/>
         <source>Plugins:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="309"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="286"/>
         <source>User style sheet:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="351"/>
-        <source>Send referrer information</source>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="321"/>
+        <source>MIME Types</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="360"/>
-        <source>User Agent:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="373"/>
-        <source>Manage…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="388"/>
-        <source>Proxy</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="397"/>
-        <source>Mode:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="411"/>
-        <source>No proxy</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="416"/>
-        <source>System configuration</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="421"/>
-        <source>Manual configuration</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="426"/>
-        <source>Automatic configuration (PAC)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="528"/>
-        <source>Port</source>
-        <translation>Порт</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="535"/>
-        <source>Protocol</source>
-        <translation>Протокол</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="542"/>
-        <source>Servers</source>
-        <translation>Сервери</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="549"/>
-        <source>FTP</source>
-        <translation>FTP</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="556"/>
-        <source>SOCKS5</source>
-        <translation>SOCKS5</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="563"/>
-        <source>HTTP</source>
-        <translation>HTTP</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="577"/>
-        <source>HTTPS</source>
-        <translation>HTTPS</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="591"/>
-        <source>All</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="629"/>
-        <source>Path to PAC file:</source>
-        <translation>Шлях до PAC-файлу:</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="646"/>
-        <source>Use system authentication</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="676"/>
-        <source>SSL ciphers</source>
-        <translation>SSL шифри</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="718"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="841"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="345"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="920"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1140"/>
         <source>Add</source>
         <translation>Додати</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="728"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="871"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="355"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="930"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1170"/>
         <source>Remove</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="753"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="896"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="391"/>
+        <source>Show download dialog</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="401"/>
+        <source>Save to disk</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="444"/>
+        <source>Do not ask for folder, save directly to</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="459"/>
+        <source>Open with application</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="505"/>
+        <source>Pass web address directly to application</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="553"/>
+        <source>Send referrer information</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="562"/>
+        <source>User Agent:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="575"/>
+        <source>Manage…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="590"/>
+        <source>Proxy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="599"/>
+        <source>Mode:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="613"/>
+        <source>No proxy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="618"/>
+        <source>System configuration</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="623"/>
+        <source>Manual configuration</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="628"/>
+        <source>Automatic configuration (PAC)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="730"/>
+        <source>Port</source>
+        <translation>Порт</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="737"/>
+        <source>Protocol</source>
+        <translation>Протокол</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="744"/>
+        <source>Servers</source>
+        <translation>Сервери</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="751"/>
+        <source>FTP</source>
+        <translation>FTP</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="758"/>
+        <source>SOCKS5</source>
+        <translation>SOCKS5</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="765"/>
+        <source>HTTP</source>
+        <translation>HTTP</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="779"/>
+        <source>HTTPS</source>
+        <translation>HTTPS</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="793"/>
+        <source>All</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="831"/>
+        <source>Path to PAC file:</source>
+        <translation>Шлях до PAC-файлу:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="848"/>
+        <source>Use system authentication</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="878"/>
+        <source>SSL ciphers</source>
+        <translation>SSL шифри</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="955"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1195"/>
         <source>Move Up</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="779"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="922"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="981"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1221"/>
         <source>Move Down</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="802"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1004"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
+        <source>Updates</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1011"/>
+        <source>Select channels from which you want to recieve updates:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1050"/>
+        <source>Check for updates every</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1060"/>
+        <source>day(s)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1069"/>
+        <source>Install updates automatically</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1101"/>
         <source>Keyboard Shortcuts</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="851"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1150"/>
         <source>Edit…</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="861"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1160"/>
         <source>Clone</source>
         <translation>Клонувати</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="935"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1234"/>
         <source>Enable single key shortcuts</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="977"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1263"/>
         <source>Show tray icon</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="55"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
+        <source>Notifications</source>
+        <translation>Сповіщення</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
+        <source>Address Field</source>
+        <translation>Поле адреси</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
+        <source>Content</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
+        <source>Downloads</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
+        <source>Network</source>
+        <translation>Мережа</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
+        <source>Security</source>
+        <translation>Безпека</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
+        <source>Keyboard</source>
+        <translation>Клавіатура</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
+        <source>Other</source>
+        <translation>Інше</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="89"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="131"/>
         <source>Name</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="55"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="89"/>
         <source>Description</source>
         <translation>Опис</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="87"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="121"/>
         <source>Enabled</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="88"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="122"/>
         <source>On demand</source>
         <translation>На вимогу</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="89"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="123"/>
         <source>Disabled</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="100"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="356"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="168"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="578"/>
         <source>Default</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="107"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="208"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="362"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="472"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="476"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="502"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="533"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="559"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="653"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="834"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="175"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="309"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="584"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="700"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="704"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="730"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="761"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="787"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="881"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1105"/>
         <source>(Untitled)</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="220"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="263"/>
+        <source>Stable version</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="264"/>
+        <source>Beta version</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="265"/>
+        <source>Weekly development version</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="321"/>
         <source>New…</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="221"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="322"/>
         <source>Readd</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="307"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="415"/>
         <source>WAV files (*.wav)</source>
         <translation>WAV-файли (*.wav)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="579"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="444"/>
+        <source>MIME Type Name</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="444"/>
+        <source>Select name of MIME Type:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="458"/>
+        <source>Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="458"/>
+        <source>Invalid MIME Type name.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="807"/>
         <source>Question</source>
         <translation>Питання</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="580"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="808"/>
         <source>Do you really want to remove this profile?</source>
         <translation>Ви справді бажаєте видалити цей профіль?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="589"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="817"/>
         <source>Delete profile permanently</source>
         <translation type="unfinished"/>
     </message>
@@ -3102,77 +3238,77 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitWebWidget</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="298"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="328"/>
         <source>Error</source>
         <translation>Помилка</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="298"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="328"/>
         <source>Failed to open file for writing.</source>
         <translation>Не вдалося відкрити файл для запису.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="318"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="348"/>
         <source>file</source>
         <translation>файл</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="329"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="359"/>
         <source>Failed to save image: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="458"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="488"/>
         <source>Print Preview</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="517"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="547"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="517"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="547"/>
         <source>Webpage wants to close this tab, do you want to allow to close it?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="518"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="548"/>
         <source>Do not show this message again</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="638"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="678"/>
         <source>Undo</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="638"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="678"/>
         <source>Undo: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="643"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="683"/>
         <source>Redo</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="643"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="683"/>
         <source>Redo: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1368"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1426"/>
         <source>Close</source>
         <translation>Закрити</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1667"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1725"/>
         <source>Blank Page</source>
         <translation>Чиста сторінка</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1680"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1738"/>
         <source>(Untitled)</source>
         <translation>(Без назви)</translation>
     </message>
@@ -3193,6 +3329,19 @@ Do you want to continue?</source>
         <location filename="../../src/ui/ReloadTimeDialog.ui" line="46"/>
         <source>seconds</source>
         <translation>секунд</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::ReportDialog</name>
+    <message>
+        <location filename="../../src/ui/ReportDialog.ui" line="14"/>
+        <source>Diagnostic Report</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ReportDialog.cpp" line="42"/>
+        <source>Copy</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3385,58 +3534,58 @@ Do you want to overwrite it?</source>
 <context>
     <name>Otter::SearchWidget</name>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="94"/>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="321"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="96"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="323"/>
         <source>Search using %1</source>
         <translation>Пошук за допомогою %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="200"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="202"/>
         <source>Undo</source>
         <translation>Скасувати</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="201"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="203"/>
         <source>Redo</source>
         <translation>Повторити</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="203"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="205"/>
         <source>Cut</source>
         <translation>Вирізати</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="204"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="206"/>
         <source>Copy</source>
         <translation>Скопіювати</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="205"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="207"/>
         <source>Paste</source>
         <translation>Вставити</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="206"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="208"/>
         <source>Paste and Go</source>
         <translation>Вставити та перейти</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="207"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="209"/>
         <source>Delete</source>
         <translation>Видалити</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="209"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="211"/>
         <source>Copy to Note</source>
         <translation>Занотувати</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="211"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="213"/>
         <source>Clear All</source>
         <translation>Стерти все</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="212"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="214"/>
         <source>Select All</source>
         <translation type="unfinished"/>
     </message>
@@ -3452,13 +3601,13 @@ Do you want to overwrite it?</source>
 <context>
     <name>Otter::SessionsManager</name>
     <message>
-        <location filename="../../src/core/SessionsManager.cpp" line="214"/>
+        <location filename="../../src/core/SessionsManager.cpp" line="219"/>
         <source>Default</source>
         <translation>За замовчуванням</translation>
     </message>
     <message>
-        <location filename="../../src/core/SessionsManager.cpp" line="214"/>
-        <location filename="../../src/core/SessionsManager.cpp" line="279"/>
+        <location filename="../../src/core/SessionsManager.cpp" line="219"/>
+        <location filename="../../src/core/SessionsManager.cpp" line="284"/>
         <source>(Untitled)</source>
         <translation>(Без назви)</translation>
     </message>
@@ -3689,7 +3838,7 @@ Do you want to save your changes or discard them?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="476"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="477"/>
         <source>Source Viewer</source>
         <translation type="unfinished"/>
     </message>
@@ -3887,7 +4036,7 @@ Do you want to save your changes or discard them?</source>
         <translation>(Без назви)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="962"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="963"/>
         <source>Close Tab</source>
         <translation>Закрити вкладку</translation>
     </message>
@@ -3906,113 +4055,118 @@ Do you want to save your changes or discard them?</source>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="35"/>
-        <source>Visibility:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="46"/>
-        <source>Always visible</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="51"/>
-        <source>Always hidden</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="56"/>
-        <source>Visible only when needed</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="64"/>
-        <source>Button style:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="75"/>
-        <source>Follow style</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="80"/>
-        <source>Only icon</source>
-        <translation>Лише іконки</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="85"/>
-        <source>Only text</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="90"/>
-        <source>Text beside icon</source>
-        <translation>Текст поруч з іконками</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="95"/>
-        <source>Text under icon</source>
-        <translation>Текст під іконками</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="103"/>
-        <source>Icon size:</source>
-        <translation>Розмір іконок:</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="113"/>
-        <source>Auto</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="116"/>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="142"/>
-        <source> px</source>
-        <translation> px</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="129"/>
-        <source>Maximum size of item:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="139"/>
-        <source>No limit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="159"/>
         <source>Name:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="195"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="52"/>
+        <source>Visibility:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="63"/>
+        <source>Always visible</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="68"/>
+        <source>Always hidden</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="73"/>
+        <source>Visible only when needed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="81"/>
+        <source>Button style:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="92"/>
+        <source>Follow style</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="97"/>
+        <source>Only icon</source>
+        <translation>Лише іконки</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="102"/>
+        <source>Only text</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="107"/>
+        <source>Text beside icon</source>
+        <translation>Текст поруч з іконками</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="112"/>
+        <source>Text under icon</source>
+        <translation>Текст під іконками</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="120"/>
+        <source>Icon size:</source>
+        <translation>Розмір іконок:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="130"/>
+        <source>Auto</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="133"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="159"/>
+        <source> px</source>
+        <translation> px</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="146"/>
+        <source>Maximum size of item:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="156"/>
+        <source>No limit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="169"/>
+        <source>Folder:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="208"/>
         <source>Actions</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="231"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="244"/>
         <source>Add</source>
         <translation>Додати</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="241"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="254"/>
         <source>Edit…</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="250"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="263"/>
         <source>Current entries:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="358"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="371"/>
         <source>Available entries:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="368"/>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="378"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="381"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="391"/>
         <source>Filter…</source>
         <translation type="unfinished"/>
     </message>
@@ -4022,73 +4176,73 @@ Do you want to save your changes or discard them?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="212"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="220"/>
         <source>--- separator ---</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="216"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="224"/>
         <source>--- spacer ---</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="220"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="228"/>
         <source>Address Field</source>
         <translation>Поле адреси</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="224"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="232"/>
         <source>List of Closed Windows and Tabs</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="228"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="236"/>
         <source>Menu Bar</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="232"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="240"/>
         <source>Menu Button</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="236"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="244"/>
         <source>Sidebar Panel Chooser</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="240"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="248"/>
         <source>Search Field</source>
         <translation>Поле пошуку</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="244"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="252"/>
         <source>Status Message Field</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="248"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="256"/>
         <source>Tab Bar</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="252"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="260"/>
         <source>Zoom Slider</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="260"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="268"/>
         <source>(Untitled)</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="265"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="273"/>
         <source>Invalid Bookmark</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="274"/>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="286"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="282"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="294"/>
         <source>Invalid Entry</source>
         <translation type="unfinished"/>
     </message>
@@ -4186,7 +4340,7 @@ Do you want to save your changes or discard them?</source>
     <name>Otter::Transfer</name>
     <message>
         <location filename="../../src/core/Transfer.cpp" line="263"/>
-        <location filename="../../src/core/Transfer.cpp" line="299"/>
+        <location filename="../../src/core/Transfer.cpp" line="771"/>
         <source>Question</source>
         <translation>Питання</translation>
     </message>
@@ -4197,17 +4351,17 @@ Do you want to overwite it?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/Transfer.cpp" line="299"/>
+        <location filename="../../src/core/Transfer.cpp" line="600"/>
+        <source>file</source>
+        <translation>файл</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/Transfer.cpp" line="771"/>
         <source>File with the same name already exists.
 Do you want to overwrite it?
 
 %1</source>
         <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/core/Transfer.cpp" line="607"/>
-        <source>file</source>
-        <translation>файл</translation>
     </message>
 </context>
 <context>
@@ -4243,43 +4397,33 @@ Do you want to overwrite it?
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.ui" line="107"/>
+        <location filename="../../src/ui/TransferDialog.ui" line="104"/>
         <source>Remember choice for this file type</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="41"/>
+        <location filename="../../src/ui/TransferDialog.cpp" line="43"/>
         <source>unknown file</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="63"/>
-        <source>Default Application</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="69"/>
-        <source>Unknown</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="79"/>
         <source>Opening %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="152"/>
+        <location filename="../../src/ui/TransferDialog.cpp" line="175"/>
         <source>unknown</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="156"/>
+        <location filename="../../src/ui/TransferDialog.cpp" line="179"/>
         <source>%1 (download completed)</source>
         <translation type="unfinished"/>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/TransferDialog.cpp" line="162"/>
-        <source>%1 (%n% downloaded)</source>
+        <location filename="../../src/ui/TransferDialog.cpp" line="185"/>
+        <source>%1 (%2% downloaded)</source>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
@@ -4317,14 +4461,14 @@ Do you want to overwrite it?
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="196"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="402"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="436"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="401"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="435"/>
         <source>Stop</source>
         <translation>Стоп</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="206"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="403"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="402"/>
         <source>Redownload</source>
         <translation>Перезавантажити</translation>
     </message>
@@ -4364,19 +4508,19 @@ Do you want to overwrite it?
         <translation>Закінчено</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="157"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="158"/>
         <source>Warning</source>
         <translation>Увага</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="157"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="158"/>
         <source>This transfer is still running.
 Do you really want to remove it?</source>
         <translation>Воно досі завантажується.
 Ви дійсно бажаєте видалити?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="244"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="243"/>
         <source>&lt;div style=&quot;white-space:pre;&quot;&gt;Source: %1
 Target: %2
 Size: %3
@@ -4385,55 +4529,55 @@ Progress: %5&lt;/div&gt;</source>
         <translation type="unfinished"/>
     </message>
     <message numerus="yes">
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="244"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="243"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="449"/>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="450"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="451"/>
-        <source>%1 (%n B)</source>
-        <translation><numerusform>%1 (%n B)</numerusform><numerusform>%1 (%n B)</numerusform><numerusform>%1 (%n B)</numerusform></translation>
+        <source>%1 (%2 B)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="379"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="378"/>
         <source>Open</source>
         <translation>Відкрити</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="385"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="384"/>
         <source>Open With</source>
         <translation>Відкрити за допомогою</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="389"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="388"/>
         <source>Unknown</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="400"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="399"/>
         <source>Open Folder</source>
         <translation>Відкрити теку</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="402"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="431"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="401"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="430"/>
         <source>Resume</source>
         <translation>Продовжити</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="405"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="404"/>
         <source>Copy Transfer Information</source>
         <translation>Копіювати інформацію про передачу</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="407"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="406"/>
         <source>Remove</source>
         <translation>Видалити</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="421"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="420"/>
         <source>Clear Finished Transfers</source>
         <translation>Стерти завершені передачі</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="549"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="548"/>
         <source>Transfers Manager</source>
         <translation>Менеджер передач</translation>
     </message>
@@ -4447,35 +4591,35 @@ Progress: %5&lt;/div&gt;</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="268"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="273"/>
         <source>%1 files (*.%2)</source>
         <translation>%1-файли (*.%2)</translation>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="271"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="276"/>
         <source>All files (*)</source>
         <translation>Всі файли (*)</translation>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="273"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="278"/>
         <source>Save File</source>
         <translation>Зберегти файл</translation>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="292"/>
-        <location filename="../../src/core/TransfersManager.cpp" line="301"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="297"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="306"/>
         <source>Warning</source>
         <translation>Увага</translation>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="292"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="297"/>
         <source>Target path is already used by another transfer.
 Select another one.</source>
         <translation>Цільове місце вже використовується іншою передачою.
 Оберіть інше.</translation>
     </message>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="301"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="306"/>
         <source>Target path is not writable.
 Select another one.</source>
         <translation>Цільове місце не доступне для запису.
@@ -4514,68 +4658,68 @@ Select another one.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="51"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="50"/>
         <source>Checking for updates…</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="96"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="95"/>
         <source>There are no new updates.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="102"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="101"/>
         <source>Available updates:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="106"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="105"/>
         <source>Details…</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="109"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="108"/>
         <source>Download</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="122"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="121"/>
         <source>Version %1 from %2 channel</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="132"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="131"/>
         <source>Some of the updates does not contains packages for your platform. Try to check for updates later or visit details page for more info.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="178"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="177"/>
         <source>Downloading:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="193"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="192"/>
         <source>Download finished!</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="194"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="193"/>
         <source>Install</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="196"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="195"/>
         <source>New version of Otter Browser is ready to install.
 Click Install button to restart browser and install the update or close this dialog to install the update during next browser restart.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="218"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="217"/>
         <source>Download failed!</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="220"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="219"/>
         <source>Check Error Console for more information.</source>
         <translation type="unfinished"/>
     </message>
@@ -4616,57 +4760,57 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>Otter::WebContentsWidget</name>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="415"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="413"/>
         <source>Open all pop-ups</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="416"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="414"/>
         <source>Open pop-ups in background</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="417"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="415"/>
         <source>Block all pop-ups</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="421"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="419"/>
         <source>Enable Images</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="426"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="424"/>
         <source>Enable JavaScript</source>
         <translation>Увімкнути JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="431"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="429"/>
         <source>Enable Java</source>
         <translation>Увімкнути Java</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="436"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="434"/>
         <source>Enable Plugins</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="443"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="441"/>
         <source>Enable Cookies</source>
         <translation>Використовувати крихти</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="447"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="445"/>
         <source>Enable Referrer</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="451"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="449"/>
         <source>Enable Proxy</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="456"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="454"/>
         <source>Reset Options</source>
         <translation type="unfinished"/>
     </message>
@@ -4674,82 +4818,82 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>Otter::WebWidget</name>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="250"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="298"/>
         <source>Default Application</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="256"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="304"/>
         <source>Unknown</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="342"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="390"/>
         <source>Title: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="342"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="390"/>
         <source>Address: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="593"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="641"/>
         <source>No search engines defined</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="736"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="784"/>
         <source>Open Image in New Tab (Untitled)</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="736"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="784"/>
         <source>Open Image in New Tab (%1)</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="742"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="790"/>
         <source>Open Image in New Background Tab (Untitled)</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="742"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="790"/>
         <source>Open Image in New Background Tab (%1)</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1034"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1082"/>
         <source>30 Minutes</source>
         <translation>30 хвилин</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1035"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1083"/>
         <source>1 Hour</source>
         <translation>1 година</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1036"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1084"/>
         <source>2 Hours</source>
         <translation>2 години</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1037"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1085"/>
         <source>6 Hours</source>
         <translation>6 годин</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1038"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1086"/>
         <source>Never</source>
         <translation>Ніколи</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1039"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1087"/>
         <source>Custom…</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1041"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1089"/>
         <source>Page Default</source>
         <translation type="unfinished"/>
     </message>
@@ -5005,113 +5149,133 @@ Click Install button to restart browser and install the update or close this dia
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="55"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="972"/>
+        <source>Content Blocking</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="63"/>
         <source>Auto Detect</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="69"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="77"/>
         <source>Enabled</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="70"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="78"/>
         <source>On demand</source>
         <translation>На вимогу</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="71"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="79"/>
         <source>Disabled</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="73"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="81"/>
         <source>Ask</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="74"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="81"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="90"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="82"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="89"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="98"/>
         <source>Always</source>
         <translation>Завжди</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="75"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="84"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="92"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="100"/>
         <source>Never</source>
         <translation>Ніколи</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="77"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="85"/>
         <source>Inform websites that I do not want to be tracked</source>
         <translation>Інформувати сайти, щоб не стежили за мною.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="78"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="86"/>
         <source>Inform websites that I allow tracking</source>
         <translation>Інформувати сайти, що я дозволяю за собою стежити</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="79"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="87"/>
         <source>Do not inform websites about my preference</source>
         <translation>Не інформувати сайти про мої налаштування</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="82"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="91"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="90"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="99"/>
         <source>Only existing</source>
         <translation>Лише існуючі</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="91"/>
         <source>Only read existing</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="86"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="94"/>
         <source>Expires</source>
         <translation>Спливає</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="87"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="95"/>
         <source>Current session is closed</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="88"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="96"/>
         <source>Always ask</source>
         <translation>Завжди питати</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="95"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
         <source>Domain</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="95"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
         <source>Path</source>
         <translation>Шлях</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="95"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
         <source>Value</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="95"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
         <source>Expiration date</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="115"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="123"/>
         <source>Default</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="122"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="130"/>
         <source>(Untitled)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="339"/>
+        <source>Title</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="339"/>
+        <source>Update Interval</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="339"/>
+        <source>Last Update</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5147,8 +5311,8 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message numerus="yes">
         <location filename="../../src/core/WindowsManager.cpp" line="236"/>
-        <source>You are about to open %n bookmarks.</source>
-        <translation><numerusform>Ви збираєтесь відкрити %n закладку.</numerusform><numerusform>Ви збираєтесь відкрити %n закладок.</numerusform><numerusform>Ви збираєтесь відкрити %n закладки.</numerusform></translation>
+        <source>You are about to open %n bookmark(s).</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="237"/>
@@ -5161,9 +5325,9 @@ Click Install button to restart browser and install the update or close this dia
         <translation>Більше не показувати це повідомлення</translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="809"/>
-        <location filename="../../src/core/WindowsManager.cpp" line="862"/>
-        <location filename="../../src/core/WindowsManager.cpp" line="986"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="816"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="869"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="993"/>
         <source>Empty</source>
         <translation>Пусто</translation>
     </message>
@@ -5526,7 +5690,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="301"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="673"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="721"/>
         <source>Bookmark Link…</source>
         <translation type="unfinished"/>
     </message>
@@ -5594,7 +5758,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="313"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="742"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="790"/>
         <source>Open Image in New Background Tab</source>
         <translation type="unfinished"/>
     </message>
@@ -5645,13 +5809,13 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="323"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="805"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="853"/>
         <source>Play</source>
         <translation>Грати</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="324"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="812"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="860"/>
         <source>Mute</source>
         <translation>Вимкнути звук</translation>
     </message>
@@ -5822,7 +5986,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="359"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="592"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="640"/>
         <source>Search</source>
         <translation>Пошук</translation>
     </message>
@@ -5948,7 +6112,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="384"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="472"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="520"/>
         <source>Add Bookmark…</source>
         <translation>Додати закладку…</translation>
     </message>
@@ -6151,16 +6315,21 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="424"/>
+        <source>Diagnostic Report…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="425"/>
         <source>About Otter…</source>
         <translation>Про Otter…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="425"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="426"/>
         <source>About Qt…</source>
         <translation>Про Qt…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="426"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="427"/>
         <source>Exit</source>
         <translation>Вийти</translation>
     </message>
@@ -6185,12 +6354,12 @@ Click Install button to restart browser and install the update or close this dia
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="300"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="302"/>
         <source>Remove Bookmark</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="338"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="339"/>
         <source>Copy address of source page</source>
         <translation type="unfinished"/>
     </message>
@@ -6205,47 +6374,47 @@ Click Install button to restart browser and install the update or close this dia
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="472"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="520"/>
         <source>Edit Bookmark…</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="673"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="721"/>
         <source>Edit Link Bookmark…</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="736"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="784"/>
         <source>Open Image in New Tab</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="781"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="829"/>
         <source>Save Video…</source>
         <translation>Зберегти відео…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="781"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="829"/>
         <source>Save Audio…</source>
         <translation>Зберегти звук…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="787"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="835"/>
         <source>Copy Video Link to Clipboard</source>
         <translation>Скопіювати посилання на відео</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="787"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="835"/>
         <source>Copy Audio Link to Clipboard</source>
         <translation>Скопіювати посилання на аудіо</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="805"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="853"/>
         <source>Pause</source>
         <translation>Пауза</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="812"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="860"/>
         <source>Unmute</source>
         <translation type="unfinished"/>
     </message>
@@ -6258,39 +6427,44 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>main</name>
     <message>
-        <location filename="../../src/core/Application.cpp" line="103"/>
+        <location filename="../../src/core/Application.cpp" line="105"/>
         <source>URL to open</source>
         <translation>Відкрити URL</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="104"/>
+        <location filename="../../src/core/Application.cpp" line="106"/>
         <source>Uses &lt;path&gt; as cache directory</source>
         <translation>Використати &lt;path&gt; як каталог кешу</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="105"/>
+        <location filename="../../src/core/Application.cpp" line="107"/>
         <source>Uses &lt;path&gt; as profile directory</source>
         <translation>Використати &lt;path&gt; як каталог профайлів</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="106"/>
+        <location filename="../../src/core/Application.cpp" line="108"/>
         <source>Restores session &lt;session&gt; if it exists</source>
         <translation>Відновити сесію &lt;session&gt; якщо вона існує</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="107"/>
+        <location filename="../../src/core/Application.cpp" line="109"/>
         <source>Starts private session</source>
         <translation>Починати приватну сесію</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="108"/>
+        <location filename="../../src/core/Application.cpp" line="110"/>
         <source>Forces session chooser dialog</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="109"/>
+        <location filename="../../src/core/Application.cpp" line="111"/>
         <source>Sets profile and cache paths to directories inside the same directory as that of application binary</source>
         <translation>Встановити шлях до директорій кешу та профайлів усередині каталогу програми</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/Application.cpp" line="112"/>
+        <source>Prints out diagnostic report and exits application</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="60"/>
@@ -6332,7 +6506,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/core/PlatformIntegration.cpp" line="103"/>
         <source>Failed to install update
 Updater: %1
- Script: %2</source>
+Script: %2</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6352,18 +6526,23 @@ Updater: %1
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="99"/>
+        <location filename="../../src/core/UpdateChecker.cpp" line="97"/>
         <source>Unable to parse version number: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/Updater.cpp" line="90"/>
+        <location filename="../../src/core/Updater.cpp" line="84"/>
+        <source>Downloaded update script is not valid: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/Updater.cpp" line="104"/>
         <source>Unable to download update: %1
 Error: %2</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="124"/>
+        <location filename="../../src/main.cpp" line="125"/>
         <source>Default</source>
         <translation>За замовчуванням</translation>
     </message>
