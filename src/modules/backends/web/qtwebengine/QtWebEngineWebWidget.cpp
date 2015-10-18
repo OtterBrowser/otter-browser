@@ -252,6 +252,16 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			}
 
 			return;
+		case ActionsManager::PurgeTabHistoryAction:
+///TODO
+		case ActionsManager::ClearTabHistoryAction:
+			setUrl(QUrl(QLatin1String("about:blank")));
+
+			m_page->history()->clear();
+
+			updateNavigationActions();
+
+			return;
 		case ActionsManager::OpenLinkAction:
 			{
 				QMouseEvent mousePressEvent(QEvent::MouseButtonPress, QPointF(getClickPosition()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);

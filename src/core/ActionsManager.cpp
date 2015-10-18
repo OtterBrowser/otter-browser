@@ -131,6 +131,8 @@ bool Action::isLocal(int identifier)
 	{
 		case ActionsManager::SaveAction:
 		case ActionsManager::CloneTabAction:
+		case ActionsManager::ClearTabHistoryAction:
+		case ActionsManager::PurgeTabHistoryAction:
 		case ActionsManager::OpenLinkAction:
 		case ActionsManager::OpenLinkInCurrentTabAction:
 		case ActionsManager::OpenLinkInNewTabAction:
@@ -273,6 +275,8 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(MinimizeTabAction, QT_TRANSLATE_NOOP("actions", "Minimize"), QT_TRANSLATE_NOOP("actions", "Minimize Tab"));
 	registerAction(RestoreTabAction, QT_TRANSLATE_NOOP("actions", "Restore"), QT_TRANSLATE_NOOP("actions", "Restore Tab"));
 	registerAction(AlwaysOnTopTabAction, QT_TRANSLATE_NOOP("actions", "Stay on Top"), QString(), QIcon(), true, true);
+	registerAction(ClearTabHistoryAction, QT_TRANSLATE_NOOP("actions", "Clear Tab History"));
+	registerAction(PurgeTabHistoryAction, QT_TRANSLATE_NOOP("actions", "Purge Tab History"));
 	registerAction(CloseTabAction, QT_TRANSLATE_NOOP("actions", "Close Tab"), QString(), Utils::getIcon(QLatin1String("tab-close")), false);
 	registerAction(CloseOtherTabsAction, QT_TRANSLATE_NOOP("actions", "Close Other Tabs"), QString(), Utils::getIcon(QLatin1String("tab-close-other")));
 	registerAction(ClosePrivateTabsAction, QT_TRANSLATE_NOOP("actions", "Close All Private Tabs"), QT_TRANSLATE_NOOP("actions", "Close All Private Tabs in Current Window"), QIcon(), false);

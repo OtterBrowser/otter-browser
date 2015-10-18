@@ -88,6 +88,8 @@ public:
 		MinimizeTabAction,
 		RestoreTabAction,
 		AlwaysOnTopTabAction,
+		ClearTabHistoryAction,
+		PurgeTabHistoryAction,
 		CloseTabAction,
 		CloseOtherTabsAction,
 		ClosePrivateTabsAction,

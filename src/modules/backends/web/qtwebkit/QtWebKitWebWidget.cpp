@@ -773,6 +773,25 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			}
 
 			return;
+		case ActionsManager::PurgeTabHistoryAction:
+			for (int i = 0; i < m_page->history()->count(); ++i)
+			{
+				const qint64 identifier = m_page->history()->itemAt(i).userData().toList().value(IdentifierEntryData).toLongLong();
+
+				if (identifier > 0)
+				{
+					HistoryManager::removeEntry(identifier);
+				}
+			}
+
+		case ActionsManager::ClearTabHistoryAction:
+			setUrl(QUrl(QLatin1String("about:blank")));
+
+			m_page->history()->clear();
+
+			updateNavigationActions();
+
+			return;
 		case ActionsManager::OpenLinkAction:
 			{
 				QMouseEvent mousePressEvent(QEvent::MouseButtonPress, QPointF(getClickPosition()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
