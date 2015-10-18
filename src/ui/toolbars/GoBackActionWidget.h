@@ -33,6 +33,7 @@ public:
 	explicit GoBackActionWidget(Window *window, QWidget *parent = NULL);
 
 protected:
+	void contextMenuEvent(QContextMenuEvent *event);
 	bool event(QEvent *event);
 
 protected slots:

@@ -19,6 +19,7 @@
 
 #include "GoForwardActionWidget.h"
 #include "../ContentsWidget.h"
+#include "../ToolBarWidget.h"
 #include "../Window.h"
 #include "../../core/HistoryManager.h"
 
@@ -33,9 +34,30 @@ GoForwardActionWidget::GoForwardActionWidget(Window *window, QWidget *parent) : 
 {
 	setMenu(new QMenu(this));
 	setPopupMode(QToolButton::DelayedPopup);
+	setContextMenuPolicy(Qt::DefaultContextMenu);
 
 	connect(menu(), SIGNAL(aboutToShow()), this, SLOT(updateMenu()));
 	connect(menu(), SIGNAL(triggered(QAction*)), this, SLOT(goToHistoryIndex(QAction*)));
+}
+
+void GoForwardActionWidget::contextMenuEvent(QContextMenuEvent *event)
+{
+	event->accept();
+
+	Window *window = getWindow();
+	QMenu menu(this);
+	menu.addAction(window ? window->getContentsWidget()->getAction(ActionsManager::ClearTabHistoryAction) : ActionsManager::getAction(ActionsManager::ClearTabHistoryAction, this));
+	menu.addAction(window ? window->getContentsWidget()->getAction(ActionsManager::PurgeTabHistoryAction) : ActionsManager::getAction(ActionsManager::PurgeTabHistoryAction, this));
+
+	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parentWidget());
+
+	if (toolBar)
+	{
+		menu.addSeparator();
+		menu.addActions(ToolBarWidget::createCustomizationMenu(toolBar->getIdentifier(), QList<QAction*>(), &menu)->actions());
+	}
+
+	menu.exec(event->globalPos());
 }
 
 void GoForwardActionWidget::goToHistoryIndex(QAction *action)
