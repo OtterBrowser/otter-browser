@@ -756,7 +756,7 @@ void QtWebKitWebWidget::removeHistoryIndex(int index, bool purge)
 	{
 		const qint64 identifier = m_page->history()->itemAt(index).userData().toList().value(IdentifierEntryData).toLongLong();
 
-		if (identifier > 0 && purge)
+		if (identifier > 0)
 		{
 			HistoryManager::removeEntry(identifier);
 		}

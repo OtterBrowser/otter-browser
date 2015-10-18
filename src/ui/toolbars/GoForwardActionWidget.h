@@ -32,6 +32,8 @@ class GoForwardActionWidget : public ActionWidget
 public:
 	explicit GoForwardActionWidget(Window *window, QWidget *parent = NULL);
 
+	bool eventFilter(QObject *object, QEvent *event);
+
 protected:
 	void contextMenuEvent(QContextMenuEvent *event);
 	bool event(QEvent *event);

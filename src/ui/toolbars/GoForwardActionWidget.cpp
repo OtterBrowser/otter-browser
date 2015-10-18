@@ -36,6 +36,8 @@ GoForwardActionWidget::GoForwardActionWidget(Window *window, QWidget *parent) : 
 	setPopupMode(QToolButton::DelayedPopup);
 	setContextMenuPolicy(Qt::DefaultContextMenu);
 
+	menu()->installEventFilter(this);
+
 	connect(menu(), SIGNAL(aboutToShow()), this, SLOT(updateMenu()));
 	connect(menu(), SIGNAL(triggered(QAction*)), this, SLOT(goToHistoryIndex(QAction*)));
 }
@@ -119,6 +121,28 @@ bool GoForwardActionWidget::event(QEvent *event)
 	}
 
 	return ActionWidget::event(event);
+}
+
+bool GoForwardActionWidget::eventFilter(QObject *object, QEvent *event)
+{
+	if (event->type() == QEvent::KeyPress)
+	{
+		QKeyEvent *keyEvent = dynamic_cast<QKeyEvent*>(event);
+
+		if (keyEvent && keyEvent->key() == Qt::Key_Delete && getWindow())
+		{
+			QAction *action = menu()->activeAction();
+
+			if (action && action->data().type() == QVariant::Int)
+			{
+				menu()->close();
+
+				getWindow()->getContentsWidget()->removeHistoryIndex(action->data().toInt(), keyEvent->modifiers().testFlag(Qt::ShiftModifier));
+			}
+		}
+	}
+
+	QObject::eventFilter(object, event);
 }
 
 }
