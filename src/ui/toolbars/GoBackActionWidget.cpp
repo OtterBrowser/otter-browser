@@ -125,7 +125,37 @@ bool GoBackActionWidget::event(QEvent *event)
 
 bool GoBackActionWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (event->type() == QEvent::KeyPress)
+	if (event->type() == QEvent::ContextMenu)
+	{
+		QContextMenuEvent *contextMenuEvent = dynamic_cast<QContextMenuEvent*>(event);
+
+		if (contextMenuEvent)
+		{
+			QAction *action = menu()->activeAction();
+
+			if (action && action->data().type() == QVariant::Int)
+			{
+				QMenu contextMenu(menu());
+				QAction *removeEntryAction = contextMenu.addAction(tr("Remove Entry"), NULL, NULL, QKeySequence(Qt::Key_Delete));
+				QAction *purgeEntryAction = contextMenu.addAction(tr("Purge Entry"), NULL, NULL, QKeySequence(Qt::ShiftModifier | Qt::Key_Delete));
+				QAction *selectedAction = contextMenu.exec(contextMenuEvent->globalPos());
+
+				if (selectedAction == removeEntryAction)
+				{
+					menu()->close();
+
+					getWindow()->getContentsWidget()->removeHistoryIndex(action->data().toInt());
+				}
+				else if (selectedAction == purgeEntryAction)
+				{
+					menu()->close();
+
+					getWindow()->getContentsWidget()->removeHistoryIndex(action->data().toInt(), true);
+				}
+			}
+		}
+	}
+	else if (event->type() == QEvent::KeyPress)
 	{
 		QKeyEvent *keyEvent = dynamic_cast<QKeyEvent*>(event);
 
