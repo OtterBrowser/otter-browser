@@ -91,7 +91,7 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 
 		QRect geometry = m_webWidget->getProgressBarGeometry();
 
-		if (m_webWidget->isLoading() && geometry.width() > (width() / 2))
+		if (m_webWidget->isLoading())
 		{
 			if (!isVisible())
 			{
