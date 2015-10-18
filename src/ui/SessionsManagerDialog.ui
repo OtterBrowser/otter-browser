@@ -108,7 +108,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QCheckBox" name="reuseCheckBox">
+    <widget class="QCheckBox" name="openInExistingWindowCheckBox">
      <property name="text">
       <string>Open session in current window</string>
      </property>

@@ -33,6 +33,7 @@ SessionsManagerDialog::SessionsManagerDialog(QWidget *parent) : Dialog(parent),
 	m_ui(new Ui::SessionsManagerDialog)
 {
 	m_ui->setupUi(this);
+	m_ui->openInExistingWindowCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Sessions/OpenInExistingWindow")).toBool());
 
 	const QStringList sessions = SessionsManager::getSessions();
 	QMultiHash<QString, SessionInformation> information;
@@ -97,7 +98,7 @@ void SessionsManagerDialog::openSession()
 
 	if (session.clean || QMessageBox::warning(this, tr("Warning"), tr("This session was not saved correctly.\nAre you sure that you want to restore this session anyway?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
 	{
-		SessionsManager::restoreSession(session, (m_ui->reuseCheckBox->isChecked() ? qobject_cast<MainWindow*>(parentWidget()) : NULL));
+		SessionsManager::restoreSession(session, (m_ui->openInExistingWindowCheckBox->isChecked() ? SessionsManager::getActiveWindow() : NULL));
 
 		close();
 	}

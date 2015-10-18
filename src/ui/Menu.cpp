@@ -727,7 +727,7 @@ void Menu::openSession(QAction *action)
 {
 	if (!action->data().isNull())
 	{
-		SessionsManager::restoreSession(SessionsManager::getSession(action->data().toString()));
+		SessionsManager::restoreSession(SessionsManager::getSession(action->data().toString()), (SettingsManager::getValue(QLatin1String("Sessions/OpenInExistingWindow")).toBool() ? SessionsManager::getActiveWindow() : NULL));
 	}
 }
 
