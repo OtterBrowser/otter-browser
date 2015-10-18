@@ -20,7 +20,7 @@
 #ifndef OTTER_STARTPAGEPREFERENCESDIALOG_H
 #define OTTER_STARTPAGEPREFERENCESDIALOG_H
 
-#include <QDialog>
+#include "../../../ui/Dialog.h"
 
 namespace Otter
 {
@@ -30,7 +30,7 @@ namespace Ui
 	class StartPagePreferencesDialog;
 }
 
-class StartPagePreferencesDialog : public QDialog
+class StartPagePreferencesDialog : public Dialog
 {
 	Q_OBJECT
 

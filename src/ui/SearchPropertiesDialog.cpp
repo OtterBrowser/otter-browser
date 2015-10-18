@@ -30,7 +30,7 @@
 namespace Otter
 {
 
-SearchPropertiesDialog::SearchPropertiesDialog(const SearchInformation &engine, const QStringList &keywords, bool isDefault, QWidget *parent) : QDialog(parent),
+SearchPropertiesDialog::SearchPropertiesDialog(const SearchInformation &engine, const QStringList &keywords, bool isDefault, QWidget *parent) : Dialog(parent),
 	m_currentLineEdit(NULL),
 	m_identifier(engine.identifier),
 	m_keywords(keywords),
@@ -62,8 +62,6 @@ SearchPropertiesDialog::SearchPropertiesDialog(const SearchInformation &engine, 
 	m_ui->suggestionsPostMethodCheckBox->setChecked(engine.suggestionsUrl.method == QLatin1String("post"));
 	m_ui->suggestionsEnctypeComboBox->setCurrentText(engine.suggestionsUrl.enctype);
 
-	adjustSize();
-
 	connect(m_ui->iconButton, SIGNAL(clicked()), this, SLOT(selectIcon()));
 }
 
@@ -79,8 +77,6 @@ void SearchPropertiesDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-
-		adjustSize();
 	}
 }
 

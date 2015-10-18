@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-UserAgentsManagerDialog::UserAgentsManagerDialog(QList<UserAgentInformation> userAgents, QWidget *parent) : QDialog(parent),
+UserAgentsManagerDialog::UserAgentsManagerDialog(QList<UserAgentInformation> userAgents, QWidget *parent) : Dialog(parent),
 	m_ui(new Ui::UserAgentsManagerDialog)
 {
 	m_ui->setupUi(this);
@@ -55,8 +55,6 @@ UserAgentsManagerDialog::UserAgentsManagerDialog(QList<UserAgentInformation> use
 	m_ui->userAgentsView->setModel(model);
 	m_ui->userAgentsView->header()->setSectionResizeMode(1, QHeaderView::Stretch);
 
-	adjustSize();
-
 	connect(m_ui->userAgentsView, SIGNAL(canMoveDownChanged(bool)), m_ui->moveDownButton, SLOT(setEnabled(bool)));
 	connect(m_ui->userAgentsView, SIGNAL(canMoveUpChanged(bool)), m_ui->moveUpButton, SLOT(setEnabled(bool)));
 	connect(m_ui->userAgentsView, SIGNAL(needsActionsUpdate()), this, SLOT(updateUserAgentActions()));
@@ -78,8 +76,6 @@ void UserAgentsManagerDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-
-		adjustSize();
 	}
 }
 

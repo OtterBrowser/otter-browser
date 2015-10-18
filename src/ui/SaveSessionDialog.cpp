@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -29,15 +29,13 @@
 namespace Otter
 {
 
-SaveSessionDialog::SaveSessionDialog(QWidget *parent) : QDialog(parent),
+SaveSessionDialog::SaveSessionDialog(QWidget *parent) : Dialog(parent),
 	m_ui(new Ui::SaveSessionDialog)
 {
 	m_ui->setupUi(this);
 	m_ui->titleLineEdit->setText(SessionsManager::getSession(SessionsManager::getCurrentSession()).title);
 	m_ui->identifierLineEdit->setText(SessionsManager::getCurrentSession());
 	m_ui->identifierLineEdit->setValidator(new QRegularExpressionValidator(QRegularExpression(QLatin1String("[a-z0-9\\-_]+")), this));
-
-	adjustSize();
 
 	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(saveSession()));
 	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
@@ -55,8 +53,6 @@ void SaveSessionDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-
-		adjustSize();
 	}
 }
 

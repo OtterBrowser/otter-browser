@@ -38,7 +38,7 @@
 namespace Otter
 {
 
-WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<QNetworkCookie> &cookies, QWidget *parent) : QDialog(parent),
+WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<QNetworkCookie> &cookies, QWidget *parent) : Dialog(parent),
 	m_updateOverride(true),
 	m_ui(new Ui::WebsitePreferencesDialog)
 {
@@ -175,8 +175,6 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 		connect(comboBoxes.at(i), SIGNAL(currentIndexChanged(int)), this, SLOT(valueChanged()));
 	}
 
-	adjustSize();
-
 	connect(m_ui->userStyleSheetFilePathWidget, SIGNAL(pathChanged()), this, SLOT(valueChanged()));
 	connect(ContentBlockingManager::getInstance(), SIGNAL(profileModified(QString)), this, SLOT(updateContentBlockingProfile(QString)));
 	connect(m_ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
@@ -194,8 +192,6 @@ void WebsitePreferencesDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-
-		adjustSize();
 	}
 }
 

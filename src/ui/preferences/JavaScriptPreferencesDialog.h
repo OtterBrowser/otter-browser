@@ -21,7 +21,7 @@
 #ifndef OTTER_JAVASCRIPTPREFERENCESDIALOG_H
 #define OTTER_JAVASCRIPTPREFERENCESDIALOG_H
 
-#include <QtWidgets/QDialog>
+#include "../Dialog.h"
 
 namespace Otter
 {
@@ -31,7 +31,7 @@ namespace Ui
 	class JavaScriptPreferencesDialog;
 }
 
-class JavaScriptPreferencesDialog : public QDialog
+class JavaScriptPreferencesDialog : public Dialog
 {
 	Q_OBJECT
 

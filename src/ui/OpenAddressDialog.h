@@ -20,9 +20,8 @@
 #ifndef OTTER_OPENADDRESSDIALOG_H
 #define OTTER_OPENADDRESSDIALOG_H
 
+#include "Dialog.h"
 #include "../core/WindowsManager.h"
-
-#include <QtWidgets/QDialog>
 
 namespace Otter
 {
@@ -35,7 +34,7 @@ namespace Ui
 class AddressWidget;
 class InputInterpreter;
 
-class OpenAddressDialog : public QDialog
+class OpenAddressDialog : public Dialog
 {
 	Q_OBJECT
 

@@ -20,7 +20,8 @@
 #ifndef OTTER_SEARCHPROPERTIESDIALOG_H
 #define OTTER_SEARCHPROPERTIESDIALOG_H
 
-#include <QtWidgets/QDialog>
+#include "Dialog.h"
+
 #include <QtWidgets/QLineEdit>
 
 namespace Otter
@@ -33,7 +34,7 @@ namespace Ui
 
 struct SearchInformation;
 
-class SearchPropertiesDialog : public QDialog
+class SearchPropertiesDialog : public Dialog
 {
 	Q_OBJECT
 

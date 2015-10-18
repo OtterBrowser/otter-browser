@@ -17,43 +17,30 @@
 *
 **************************************************************************/
 
-#include "BookmarksBarDialog.h"
-#include "../core/BookmarksModel.h"
-#include "../core/ToolBarsManager.h"
+#ifndef OTTER_DIALOG_H
+#define OTTER_DIALOG_H
 
-#include "ui_BookmarksBarDialog.h"
+#include <QtWidgets/QDialog>
 
 namespace Otter
 {
 
-BookmarksBarDialog::BookmarksBarDialog(QWidget *parent) : Dialog(parent),
-	m_ui(new Ui::BookmarksBarDialog)
+class Dialog : public QDialog
 {
-	m_ui->setupUi(this);
-}
+	Q_OBJECT
 
-BookmarksBarDialog::~BookmarksBarDialog()
-{
-	delete m_ui;
-}
+public:
+	explicit Dialog(QWidget *parent = NULL);
 
-void BookmarksBarDialog::changeEvent(QEvent *event)
-{
-	QDialog::changeEvent(event);
+protected:
+	void showEvent(QShowEvent *event);
+	void resizeEvent(QResizeEvent *event);
+	QString normalizeDialogName(QString name);
 
-	if (event->type() == QEvent::LanguageChange)
-	{
-		m_ui->retranslateUi(this);
-	}
-}
-
-ToolBarDefinition BookmarksBarDialog::getDefinition() const
-{
-	ToolBarDefinition definition;
-	definition.title = m_ui->titleLineEdit->text();
-	definition.bookmarksPath = QLatin1Char('#') + QString::number(m_ui->folderComboBox->getCurrentFolder()->data(BookmarksModel::IdentifierRole).toULongLong());
-
-	return definition;
-}
+private:
+	bool m_wasRestored;
+};
 
 }
+
+#endif

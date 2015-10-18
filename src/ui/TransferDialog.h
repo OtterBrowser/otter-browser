@@ -20,8 +20,9 @@
 #ifndef OTTER_TRANSFERDIALOG_H
 #define OTTER_TRANSFERDIALOG_H
 
+#include "Dialog.h"
+
 #include <QtCore/QPointer>
-#include <QtWidgets/QDialog>
 #include <QtWidgets/QPushButton>
 
 namespace Otter
@@ -34,7 +35,7 @@ namespace Ui
 
 class Transfer;
 
-class TransferDialog : public QDialog
+class TransferDialog : public Dialog
 {
 	Q_OBJECT
 

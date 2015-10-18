@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 namespace Otter
 {
 
-ReloadTimeDialog::ReloadTimeDialog(int time, QWidget *parent) : QDialog(parent),
+ReloadTimeDialog::ReloadTimeDialog(int time, QWidget *parent) : Dialog(parent),
 	m_ui(new Ui::ReloadTimeDialog)
 {
 	m_ui->setupUi(this);
@@ -33,8 +33,6 @@ ReloadTimeDialog::ReloadTimeDialog(int time, QWidget *parent) : QDialog(parent),
 
 	m_ui->minutesSpinBox->setValue(minutes);
 	m_ui->secondsSpinBox->setValue(time - (minutes * 60));
-
-	adjustSize();
 }
 
 ReloadTimeDialog::~ReloadTimeDialog()
@@ -49,8 +47,6 @@ void ReloadTimeDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-
-		adjustSize();
 	}
 }
 

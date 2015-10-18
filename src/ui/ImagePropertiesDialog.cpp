@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QVariantMap &properties, QIODevice *device, QWidget *parent) : QDialog(parent),
+ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QVariantMap &properties, QIODevice *device, QWidget *parent) : Dialog(parent),
 	m_ui(new Ui::ImagePropertiesDialog)
 {
 	m_ui->setupUi(this);
@@ -121,7 +121,6 @@ ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QVariantMap 
 	}
 
 	setMinimumWidth(400);
-	adjustSize();
 }
 
 ImagePropertiesDialog::~ImagePropertiesDialog()
@@ -136,8 +135,6 @@ void ImagePropertiesDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-
-		adjustSize();
 	}
 }
 

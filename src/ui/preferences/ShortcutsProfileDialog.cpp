@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-ShortcutsProfileDialog::ShortcutsProfileDialog(const QString &profile, const QHash<QString, ShortcutsProfile> &profiles, QWidget *parent) : QDialog(parent),
+ShortcutsProfileDialog::ShortcutsProfileDialog(const QString &profile, const QHash<QString, ShortcutsProfile> &profiles, QWidget *parent) : Dialog(parent),
 	m_profile(profile),
 	m_isModified(profiles[profile].isModified),
 	m_ui(new Ui::ShortcutsProfileDialog)
@@ -73,8 +73,6 @@ ShortcutsProfileDialog::ShortcutsProfileDialog(const QString &profile, const QHa
 	m_ui->versionLineEdit->setText(profiles[profile].version);
 	m_ui->authorLineEdit->setText(profiles[profile].author);
 
-	adjustSize();
-
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->actionsViewWidget, SLOT(setFilter(QString)));
 	connect(m_ui->actionsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActionsActions()));
 	connect(m_ui->shortcutsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateShortcutsActions()));
@@ -94,8 +92,6 @@ void ShortcutsProfileDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-
-		adjustSize();
 	}
 }
 

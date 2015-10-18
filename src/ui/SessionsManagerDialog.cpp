@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-SessionsManagerDialog::SessionsManagerDialog(QWidget *parent) : QDialog(parent),
+SessionsManagerDialog::SessionsManagerDialog(QWidget *parent) : Dialog(parent),
 	m_ui(new Ui::SessionsManagerDialog)
 {
 	m_ui->setupUi(this);
@@ -69,8 +69,6 @@ SessionsManagerDialog::SessionsManagerDialog(QWidget *parent) : QDialog(parent),
 		m_ui->sessionsWidget->setItem(i, 2, new QTableWidgetItem(QStringLiteral("%1 (%2)").arg(sorted.at(i).windows.count()).arg(windows)));
 	}
 
-	adjustSize();
-
 	connect(m_ui->openButton, SIGNAL(clicked()), this, SLOT(openSession()));
 	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(deleteSession()));
 	connect(m_ui->sessionsWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentChanged(int)));
@@ -90,8 +88,6 @@ void SessionsManagerDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-
-		adjustSize();
 	}
 }
 

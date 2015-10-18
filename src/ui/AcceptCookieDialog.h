@@ -21,9 +21,9 @@
 #define OTTER_ACCEPTCOOKIEDIALOG_H
 
 #include "../core/CookieJar.h"
+#include "../ui/Dialog.h"
 
 #include <QtWidgets/QAbstractButton>
-#include <QtWidgets/QDialog>
 
 namespace Otter
 {
@@ -33,7 +33,7 @@ namespace Ui
 	class AcceptCookieDialog;
 }
 
-class AcceptCookieDialog : public QDialog
+class AcceptCookieDialog : public Dialog
 {
 	Q_OBJECT
 

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
 namespace Otter
 {
 
-OpenBookmarkDialog::OpenBookmarkDialog(QWidget *parent) : QDialog(parent),
+OpenBookmarkDialog::OpenBookmarkDialog(QWidget *parent) : Dialog(parent),
 	m_completer(NULL),
 	m_ui(new Ui::OpenBookmarkDialog)
 {
@@ -36,8 +36,6 @@ OpenBookmarkDialog::OpenBookmarkDialog(QWidget *parent) : QDialog(parent),
 	m_completer->setCaseSensitivity(Qt::CaseSensitive);
 	m_completer->setCompletionMode(QCompleter::InlineCompletion);
 	m_completer->setFilterMode(Qt::MatchStartsWith);
-
-	adjustSize();
 
 	connect(this, SIGNAL(accepted()), this, SLOT(openBookmark()));
 	connect(m_ui->lineEdit, SIGNAL(textEdited(QString)), this, SLOT(setCompletion(QString)));
@@ -55,8 +53,6 @@ void OpenBookmarkDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-
-		adjustSize();
 	}
 }
 

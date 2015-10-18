@@ -21,7 +21,8 @@
 #ifndef OTTER_ACCEPTLANGUAGEDIALOG_H
 #define OTTER_ACCEPTLANGUAGEDIALOG_H
 
-#include <QtWidgets/QDialog>
+#include "../Dialog.h"
+
 #include <QtGui/QStandardItemModel>
 
 namespace Otter
@@ -32,7 +33,7 @@ namespace Ui
 	class AcceptLanguageDialog;
 }
 
-class AcceptLanguageDialog : public QDialog
+class AcceptLanguageDialog : public Dialog
 {
 	Q_OBJECT
 

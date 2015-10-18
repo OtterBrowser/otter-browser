@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -29,7 +30,7 @@
 namespace Otter
 {
 
-ImportDialog::ImportDialog(Importer *importer, QWidget *parent) : QDialog(parent),
+ImportDialog::ImportDialog(Importer *importer, QWidget *parent) : Dialog(parent),
 	m_importer(importer),
 	m_ui(new Ui::ImportDialog)
 {
@@ -47,7 +48,6 @@ ImportDialog::ImportDialog(Importer *importer, QWidget *parent) : QDialog(parent
 	}
 
 	setWindowTitle(m_importer->getTitle());
-	adjustSize();
 
 	connect(m_ui->importPathWidget, SIGNAL(pathChanged()), this, SLOT(setPath()));
 	connect(this, SIGNAL(accepted()), this, SLOT(import()));
@@ -65,8 +65,6 @@ void ImportDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-
-		adjustSize();
 	}
 }
 

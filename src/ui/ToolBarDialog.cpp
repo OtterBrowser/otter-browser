@@ -31,7 +31,7 @@
 namespace Otter
 {
 
-ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : QDialog(parent),
+ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 	m_definition(ToolBarsManager::getToolBarDefinition(identifier)),
 	m_ui(new Ui::ToolBarDialog)
 {
@@ -145,8 +145,6 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : QDialog(parent),
 	m_ui->addEntryButton->setMenu(bookmarksMenu);
 	m_ui->addEntryButton->setEnabled(BookmarksManager::getModel()->getRootItem()->rowCount() > 0);
 
-	adjustSize();
-
 	connect(bookmarksMenu, SIGNAL(triggered(QAction*)), this, SLOT(addBookmark(QAction*)));
 	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(addEntry()));
 	connect(m_ui->removeButton, SIGNAL(clicked()), m_ui->currentEntriesItemView, SLOT(removeRow()));
@@ -173,8 +171,6 @@ void ToolBarDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-
-		adjustSize();
 	}
 }
 

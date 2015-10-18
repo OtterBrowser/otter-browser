@@ -22,9 +22,10 @@
 #ifndef OTTER_WEBSITEPREFERENCESDIALOG_H
 #define OTTER_WEBSITEPREFERENCESDIALOG_H
 
+#include "Dialog.h"
+
 #include <QtNetwork/QNetworkCookie>
 #include <QtWidgets/QAbstractButton>
-#include <QtWidgets/QDialog>
 
 namespace Otter
 {
@@ -34,12 +35,12 @@ namespace Ui
 	class WebsitePreferencesDialog;
 }
 
-class WebsitePreferencesDialog : public QDialog
+class WebsitePreferencesDialog : public Dialog
 {
 	Q_OBJECT
 
 public:
-	explicit WebsitePreferencesDialog(const QUrl &url, const QList<QNetworkCookie> &cookies, QWidget *parent = 0);
+	explicit WebsitePreferencesDialog(const QUrl &url, const QList<QNetworkCookie> &cookies, QWidget *parent = NULL);
 	~WebsitePreferencesDialog();
 
 protected:

@@ -31,7 +31,7 @@
 namespace Otter
 {
 
-TransferDialog::TransferDialog(Transfer *transfer, QWidget *parent) : QDialog(parent),
+TransferDialog::TransferDialog(Transfer *transfer, QWidget *parent) : Dialog(parent),
 	m_transfer(transfer),
 	m_ui(new Ui::TransferDialog)
 {
@@ -61,7 +61,6 @@ TransferDialog::TransferDialog(Transfer *transfer, QWidget *parent) : QDialog(pa
 
 	setProgress(m_transfer->getBytesReceived(), m_transfer->getBytesTotal());
 	setWindowTitle(tr("Opening %1").arg(fileName));
-	adjustSize();
 
 	connect(transfer, SIGNAL(progressChanged(qint64,qint64)), this, SLOT(setProgress(qint64,qint64)));
 	connect(m_ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
@@ -76,14 +75,9 @@ void TransferDialog::changeEvent(QEvent *event)
 {
 	QWidget::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() ==  QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
-
-			break;
-		default:
-			break;
+		m_ui->retranslateUi(this);
 	}
 }
 

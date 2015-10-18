@@ -20,7 +20,7 @@
 #ifndef OTTER_BOOKMARKSBARDIALOG_H
 #define OTTER_BOOKMARKSBARDIALOG_H
 
-#include <QtWidgets/QDialog>
+#include "Dialog.h"
 
 namespace Otter
 {
@@ -32,7 +32,7 @@ namespace Ui
 
 struct ToolBarDefinition;
 
-class BookmarksBarDialog : public QDialog
+class BookmarksBarDialog : public Dialog
 {
 	Q_OBJECT
 

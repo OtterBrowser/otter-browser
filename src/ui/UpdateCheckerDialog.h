@@ -21,10 +21,10 @@
 #ifndef OTTER_UPDATECHECKERDIALOG_H
 #define OTTER_UPDATECHECKERDIALOG_H
 
+#include "Dialog.h"
 #include "../core/UpdateChecker.h"
 
 #include <QtWidgets/QAbstractButton>
-#include <QtWidgets/QDialog>
 
 namespace Otter
 {
@@ -34,7 +34,7 @@ namespace Ui
 	class UpdateCheckerDialog;
 }
 
-class UpdateCheckerDialog : public QDialog
+class UpdateCheckerDialog : public Dialog
 {
 	Q_OBJECT
 

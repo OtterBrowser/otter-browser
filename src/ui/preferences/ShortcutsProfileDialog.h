@@ -20,8 +20,9 @@
 #ifndef OTTER_SHORTCUTSPROFILEDIALOG_H
 #define OTTER_SHORTCUTSPROFILEDIALOG_H
 
+#include "../Dialog.h"
+
 #include <QtCore/QModelIndex>
-#include <QtWidgets/QDialog>
 
 namespace Otter
 {
@@ -44,7 +45,7 @@ struct ShortcutsProfile
 	ShortcutsProfile() : isModified(false) {}
 };
 
-class ShortcutsProfileDialog : public QDialog
+class ShortcutsProfileDialog : public Dialog
 {
 	Q_OBJECT
 

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 namespace Otter
 {
 
-ClearHistoryDialog::ClearHistoryDialog(const QStringList &clearSettings, bool configureMode, QWidget *parent) : QDialog(parent),
+ClearHistoryDialog::ClearHistoryDialog(const QStringList &clearSettings, bool configureMode, QWidget *parent) : Dialog(parent),
 	m_configureMode(configureMode),
 	m_ui(new Ui::ClearHistoryDialog)
 {
@@ -64,8 +64,6 @@ ClearHistoryDialog::ClearHistoryDialog(const QStringList &clearSettings, bool co
 	m_ui->clearCachesCheckBox->setChecked(settings.contains(QLatin1String("caches")));
 	m_ui->clearStorageCheckBox->setChecked(settings.contains(QLatin1String("storage")));
 	m_ui->clearPasswordsCheckBox->setChecked(settings.contains(QLatin1String("passwords")));
-
-	adjustSize();
 }
 
 ClearHistoryDialog::~ClearHistoryDialog()
@@ -80,8 +78,6 @@ void ClearHistoryDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-
-		adjustSize();
 	}
 }
 

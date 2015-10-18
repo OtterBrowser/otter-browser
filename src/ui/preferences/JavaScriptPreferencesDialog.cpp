@@ -25,7 +25,7 @@
 namespace Otter
 {
 
-JavaScriptPreferencesDialog::JavaScriptPreferencesDialog(const QVariantMap &options, QWidget *parent) : QDialog(parent),
+JavaScriptPreferencesDialog::JavaScriptPreferencesDialog(const QVariantMap &options, QWidget *parent) : Dialog(parent),
 	m_ui(new Ui::JavaScriptPreferencesDialog)
 {
 	m_ui->setupUi(this);
@@ -41,8 +41,6 @@ JavaScriptPreferencesDialog::JavaScriptPreferencesDialog(const QVariantMap &opti
 	const int canCloseWindowsIndex = m_ui->canCloseWindowsComboBox->findData(options.value(QLatin1String("Browser/JavaScriptCanCloseWindows")).toString());
 
 	m_ui->canCloseWindowsComboBox->setCurrentIndex((canCloseWindowsIndex < 0) ? 0 : canCloseWindowsIndex);
-
-	adjustSize();
 
 	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
 	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
@@ -60,8 +58,6 @@ void JavaScriptPreferencesDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-
-		adjustSize();
 	}
 }
 

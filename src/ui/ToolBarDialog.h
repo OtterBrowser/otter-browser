@@ -20,10 +20,10 @@
 #ifndef OTTER_TOOLBARDIALOG_H
 #define OTTER_TOOLBARDIALOG_H
 
-#include <QtWidgets/QDialog>
-#include <QtGui/QStandardItemModel>
-
+#include "Dialog.h"
 #include "../core/ToolBarsManager.h"
+
+#include <QtGui/QStandardItemModel>
 
 namespace Otter
 {
@@ -33,7 +33,7 @@ namespace Ui
 	class ToolBarDialog;
 }
 
-class ToolBarDialog : public QDialog
+class ToolBarDialog : public Dialog
 {
 	Q_OBJECT
 

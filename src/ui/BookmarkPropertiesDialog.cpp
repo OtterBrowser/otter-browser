@@ -31,7 +31,7 @@
 namespace Otter
 {
 
-BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, BookmarkMode mode, QWidget *parent) : QDialog(parent),
+BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, BookmarkMode mode, QWidget *parent) : Dialog(parent),
 	m_bookmark(bookmark),
 	m_model(new QStandardItemModel(this)),
 	m_ui(new Ui::BookmarkPropertiesDialog)
@@ -92,8 +92,6 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, Book
 		m_ui->keywordLineEdit->setEnabled(false);
 	}
 
-	adjustSize();
-
 	connect(m_ui->newFolderButton, SIGNAL(clicked()), m_ui->folderComboBox, SLOT(createFolder()));
 	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(saveBookmark()));
 	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
@@ -111,8 +109,6 @@ void BookmarkPropertiesDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-
-		adjustSize();
 	}
 }
 

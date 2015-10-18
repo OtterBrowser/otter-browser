@@ -27,7 +27,7 @@
 namespace Otter
 {
 
-AcceptCookieDialog::AcceptCookieDialog(const QNetworkCookie &cookie, CookieJar::CookieOperation operation, CookieJar *cookieJar, QWidget *parent) : QDialog(parent),
+AcceptCookieDialog::AcceptCookieDialog(const QNetworkCookie &cookie, CookieJar::CookieOperation operation, CookieJar *cookieJar, QWidget *parent) : Dialog(parent),
 	m_cookieJar(cookieJar),
 	m_cookie(cookie),
 	m_operation(operation),
@@ -70,8 +70,6 @@ AcceptCookieDialog::AcceptCookieDialog(const QNetworkCookie &cookie, CookieJar::
 
 	m_ui->buttonBox->addButton(tr("Discard"), QDialogButtonBox::RejectRole);
 
-	adjustSize();
-
 	connect(m_ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
 }
 
@@ -87,8 +85,6 @@ void AcceptCookieDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-
-		adjustSize();
 	}
 }
 

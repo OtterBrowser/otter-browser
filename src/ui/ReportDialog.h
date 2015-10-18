@@ -20,7 +20,7 @@
 #ifndef OTTER_REPORTDIALOG_H
 #define OTTER_REPORTDIALOG_H
 
-#include <QtWidgets/QDialog>
+#include "Dialog.h"
 
 namespace Otter
 {
@@ -30,7 +30,7 @@ namespace Ui
 	class ReportDialog;
 }
 
-class ReportDialog : public QDialog
+class ReportDialog : public Dialog
 {
 	Q_OBJECT
 

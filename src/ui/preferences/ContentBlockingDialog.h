@@ -21,7 +21,7 @@
 #ifndef OTTER_CONTENTBLOCKINGDIALOG_H
 #define OTTER_CONTENTBLOCKINGDIALOG_H
 
-#include <QtWidgets/QDialog>
+#include "../Dialog.h"
 
 namespace Otter
 {
@@ -31,7 +31,7 @@ namespace Ui
 	class ContentBlockingDialog;
 }
 
-class ContentBlockingDialog : public QDialog
+class ContentBlockingDialog : public Dialog
 {
 	Q_OBJECT
 

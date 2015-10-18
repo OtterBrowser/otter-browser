@@ -21,10 +21,10 @@
 #define OTTER_BOOKMARKPROPERTIESDIALOG_H
 
 #include "../core/BookmarksManager.h"
+#include "Dialog.h"
 
 #include <QtGui/QStandardItem>
 #include <QtGui/QStandardItemModel>
-#include <QtWidgets/QDialog>
 
 namespace Otter
 {
@@ -36,7 +36,7 @@ namespace Ui
 
 class BookmarksItem;
 
-class BookmarkPropertiesDialog : public QDialog
+class BookmarkPropertiesDialog : public Dialog
 {
 	Q_OBJECT
 

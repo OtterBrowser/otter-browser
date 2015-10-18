@@ -35,7 +35,7 @@
 namespace Otter
 {
 
-PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *parent) : QDialog(parent),
+PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *parent) : Dialog(parent),
 	m_ui(new Ui::PreferencesDialog)
 {
 	m_ui->setupUi(this);
@@ -66,8 +66,6 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 	m_ui->tabWidget->setCurrentIndex(tab);
 	m_ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(false);
 
-	adjustSize();
-
 	connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
 	connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), SIGNAL(clicked()), this, SLOT(save()));
 	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(save()));
@@ -87,8 +85,6 @@ void PreferencesDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-
-		adjustSize();
 	}
 }
 

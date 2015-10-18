@@ -30,7 +30,7 @@
 namespace Otter
 {
 
-AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *parent) : QDialog(parent),
+AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *parent) : Dialog(parent),
 	m_ui(new Ui::AcceptLanguageDialog)
 {
 	m_ui->setupUi(this);
@@ -78,8 +78,6 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 	m_ui->moveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
 	m_ui->languagesComboBox->installEventFilter(this);
 
-	adjustSize();
-
 	connect(m_ui->moveDownButton, SIGNAL(clicked()), m_ui->languagesViewWidget, SLOT(moveDownRow()));
 	connect(m_ui->moveUpButton, SIGNAL(clicked()), m_ui->languagesViewWidget, SLOT(moveUpRow()));
 	connect(m_ui->removeButton, SIGNAL(clicked()), m_ui->languagesViewWidget, SLOT(removeRow()));
@@ -101,8 +99,6 @@ void AcceptLanguageDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-
-		adjustSize();
 	}
 }
 

@@ -21,7 +21,7 @@
 #ifndef OTTER_PREFERENCESDIALOG_H
 #define OTTER_PREFERENCESDIALOG_H
 
-#include <QtWidgets/QDialog>
+#include "Dialog.h"
 
 namespace Otter
 {
@@ -31,7 +31,7 @@ namespace Ui
 	class PreferencesDialog;
 }
 
-class PreferencesDialog : public QDialog
+class PreferencesDialog : public Dialog
 {
 	Q_OBJECT
 

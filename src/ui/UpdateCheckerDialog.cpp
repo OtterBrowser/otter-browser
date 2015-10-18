@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-UpdateCheckerDialog::UpdateCheckerDialog(QWidget *parent, const QList<UpdateInformation> &availableUpdates) : QDialog(parent),
+UpdateCheckerDialog::UpdateCheckerDialog(QWidget *parent, const QList<UpdateInformation> &availableUpdates) : Dialog(parent),
 	m_ui(new Ui::UpdateCheckerDialog)
 {
 	m_ui->setupUi(this);
@@ -71,8 +71,6 @@ void UpdateCheckerDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-
-		adjustSize();
 	}
 }
 

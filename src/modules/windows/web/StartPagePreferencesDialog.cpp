@@ -27,7 +27,7 @@
 namespace Otter
 {
 
-StartPagePreferencesDialog::StartPagePreferencesDialog(QWidget *parent) : QDialog(parent),
+StartPagePreferencesDialog::StartPagePreferencesDialog(QWidget *parent) : Dialog(parent),
 	m_ui(new Ui::StartPagePreferencesDialog)
 {
 	m_ui->setupUi(this);
@@ -51,8 +51,6 @@ StartPagePreferencesDialog::StartPagePreferencesDialog(QWidget *parent) : QDialo
 	m_ui->showSearchFieldCheckBox->setChecked(SettingsManager::getValue(QLatin1String("StartPage/ShowSearchField")).toBool());
 	m_ui->showAddTileCheckBox->setChecked(SettingsManager::getValue(QLatin1String("StartPage/ShowAddTile")).toBool());
 
-	adjustSize();
-
 	connect(this, SIGNAL(accepted()), this, SLOT(save()));
 	connect(m_ui->customBackgroundCheckBox, SIGNAL(toggled(bool)), m_ui->backgroundWidget, SLOT(setEnabled(bool)));
 	connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), SIGNAL(clicked()), this, SLOT(save()));
@@ -70,8 +68,6 @@ void StartPagePreferencesDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-
-		adjustSize();
 	}
 }
 

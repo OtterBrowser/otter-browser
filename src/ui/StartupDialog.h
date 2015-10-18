@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,8 +20,9 @@
 #ifndef OTTER_STARTUPDIALOG_H
 #define OTTER_STARTUPDIALOG_H
 
+#include "Dialog.h"
+
 #include <QtGui/QStandardItemModel>
-#include <QtWidgets/QDialog>
 
 namespace Otter
 {
@@ -33,7 +34,7 @@ namespace Ui
 
 struct SessionInformation;
 
-class StartupDialog : public QDialog
+class StartupDialog : public Dialog
 {
 	Q_OBJECT
 

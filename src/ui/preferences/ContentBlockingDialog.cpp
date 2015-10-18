@@ -35,7 +35,7 @@
 namespace Otter
 {
 
-ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : QDialog(parent),
+ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 	m_ui(new Ui::ContentBlockingDialog)
 {
 	m_ui->setupUi(this);
@@ -74,8 +74,6 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : QDialog(parent),
 	m_ui->profilesViewWidget->setItemDelegate(new OptionDelegate(true, this));
 	m_ui->profilesViewWidget->setItemDelegateForColumn(1, new ContentBlockingIntervalDelegate(this));
 
-	adjustSize();
-
 	connect(ContentBlockingManager::getInstance(), SIGNAL(profileModified(QString)), this, SLOT(profileModified(QString)));
 	connect(m_ui->profilesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
 	connect(m_ui->updateButton, SIGNAL(clicked(bool)), this, SLOT(updateProfile()));
@@ -95,8 +93,6 @@ void ContentBlockingDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-
-		adjustSize();
 	}
 }
 
