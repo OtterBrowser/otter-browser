@@ -113,6 +113,7 @@ private:
 	QSplitter *m_splitter;
 	Window *m_currentWindow;
 	QString m_currentBookmark;
+	QString m_windowTitle;
 	QVector<Action*> m_standardActions;
 	QVector<QPair<int, QVector<QShortcut*> > > m_actionShortcuts;
 	Qt::WindowStates m_previousState;
