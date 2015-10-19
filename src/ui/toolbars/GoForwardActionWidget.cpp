@@ -172,7 +172,7 @@ bool GoForwardActionWidget::eventFilter(QObject *object, QEvent *event)
 		}
 	}
 
-	QObject::eventFilter(object, event);
+	return QObject::eventFilter(object, event);
 }
 
 }
