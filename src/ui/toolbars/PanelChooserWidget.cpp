@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,16 +22,20 @@
 #include "../SidebarWidget.h"
 #include "../../core/SettingsManager.h"
 
+#include <QtWidgets/QMenu>
+
 namespace Otter
 {
 
-PanelChooserWidget::PanelChooserWidget(QWidget *parent) : QToolButton(parent)
+PanelChooserWidget::PanelChooserWidget(QWidget *parent) : ToolButtonWidget(parent)
 {
 	setMenu(new QMenu(this));
 	setPopupMode(QToolButton::InstantPopup);
+	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	optionChanged(QLatin1String("Sidebar/CurrentPanel"), SettingsManager::getValue(QLatin1String("Sidebar/CurrentPanel")));
 
-	connect(menu(), SIGNAL(aboutToShow()), this, SLOT(showMenu()));
+	connect(menu(), SIGNAL(aboutToShow()), this, SLOT(menuAboutToShow()));
+	connect(menu(), SIGNAL(triggered(QAction*)), this, SLOT(selectPanel(QAction*)));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
 
@@ -38,14 +43,9 @@ void PanelChooserWidget::changeEvent(QEvent *event)
 {
 	QToolButton::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() ==  QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			setText(SidebarWidget::getPanelTitle(SettingsManager::getValue(QLatin1String("Sidebar/CurrentPanel")).toString()));
-
-			break;
-		default:
-			break;
+		setText(SidebarWidget::getPanelTitle(SettingsManager::getValue(QLatin1String("Sidebar/CurrentPanel")).toString()));
 	}
 }
 
@@ -57,19 +57,7 @@ void PanelChooserWidget::optionChanged(const QString &option, const QVariant &va
 	}
 }
 
-void PanelChooserWidget::selectPanel()
-{
-	QAction *action = qobject_cast<QAction*>(sender());
-
-	if (!action)
-	{
-		return;
-	}
-
-	SettingsManager::setValue(QLatin1String("Sidebar/CurrentPanel"), action->data());
-}
-
-void PanelChooserWidget::showMenu()
+void PanelChooserWidget::menuAboutToShow()
 {
 	menu()->clear();
 
@@ -77,13 +65,18 @@ void PanelChooserWidget::showMenu()
 
 	for (int i = 0; i < panels.count(); ++i)
 	{
-		QAction *action = new QAction(SidebarWidget::getPanelTitle(panels[i]), this);
-		action->setData(panels[i]);
-
-		menu()->addAction(action);
-
-		connect(action, SIGNAL(triggered()), this, SLOT(selectPanel()));
+		menu()->addAction(SidebarWidget::getPanelTitle(panels[i]))->setData(panels[i]);
 	}
+}
+
+void PanelChooserWidget::selectPanel(QAction *action)
+{
+	SettingsManager::setValue(QLatin1String("Sidebar/CurrentPanel"), action->data());
+}
+
+QSize PanelChooserWidget::minimumSizeHint() const
+{
+	return QSize(0, 0);
 }
 
 }
