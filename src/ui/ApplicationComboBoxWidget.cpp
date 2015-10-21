@@ -45,7 +45,7 @@ void ApplicationComboBoxWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		setItemData(0, tr("Default Application"), Qt::DisplayRole);
-		setItemData((count() - 1), tr("Otheṛ…"), Qt::DisplayRole);
+		setItemData((count() - 1), tr("Other…"), Qt::DisplayRole);
 	}
 }
 
@@ -136,7 +136,7 @@ void ApplicationComboBoxWidget::setMimeType(const QMimeType &mimeType)
 		insertSeparator(count() + 1);
 	}
 
-	addItem(tr("Otheṛ…"));
+	addItem(tr("Other…"));
 
 	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
 }
