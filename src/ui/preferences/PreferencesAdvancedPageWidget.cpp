@@ -55,7 +55,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	QStandardItemModel *navigationModel = new QStandardItemModel(this);
 	QStringList navigationTitles;
-	navigationTitles << tr("Notifications") << tr("Address Field") << tr("Content") << tr("Downloads") << QString() << tr("Network") << tr("Security") << tr("Updates") << QString() << tr("Keyboard") << QString() << tr("Other");
+	navigationTitles << tr("Browsing") << tr("Notifications") << tr("Appearance") << tr("Content") << QString() << tr("Downloads") << tr("Programs") << QString() << tr("History") << tr("Network") << tr("Security") << tr("Updates") << QString() << tr("Keyboard") << tr("Mouse");
 
 	int navigationIndex = 0;
 
@@ -72,6 +72,11 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 		{
 			item->setData(navigationIndex, Qt::UserRole);
 
+			if (i == 6 || i == 8 || i == 14)
+			{
+				item->setEnabled(false);
+			}
+
 			++navigationIndex;
 		}
 
@@ -82,6 +87,8 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->advancedViewWidget->setItemDelegate(new ItemDelegate(m_ui->advancedViewWidget));
 	m_ui->advancedViewWidget->selectionModel()->select(navigationModel->index(0, 0), QItemSelectionModel::Select);
 	m_ui->advancedViewWidget->setMinimumWidth(qMax(100, m_ui->advancedViewWidget->sizeHint().width()));
+
+	m_ui->suggestBookmarksCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/SuggestBookmarks")).toBool());
 
 	m_ui->notificationsPlaySoundButton->setIcon(Utils::getIcon(QLatin1String("media-playback-start")));
 
@@ -111,7 +118,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->notificationsItemView->setModel(notificationsModel);
 	m_ui->preferNativeNotificationsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Interface/UseNativeNotifications")).toBool());
 
-	m_ui->suggestBookmarksCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/SuggestBookmarks")).toBool());
+	m_ui->enableTrayIconCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableTrayIcon")).toBool());
 
 	m_ui->enableImagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableImages")).toBool());
 	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJavaScript")).toBool());
@@ -334,8 +341,6 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->keyboardAddButton->setMenu(addKeyboardProfileMenu);
 	m_ui->keyboardEnableSingleKeyShortcutsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableSingleKeyShortcuts")).toBool());
-
-	m_ui->enableTrayIconCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableTrayIcon")).toBool());
 
 	updateReaddKeyboardProfileMenu();
 
@@ -668,7 +673,7 @@ void PreferencesAdvancedPageWidget::proxyModeChanged(int index)
 void PreferencesAdvancedPageWidget::addProxyException()
 {
 	m_ui->proxyExceptionsListView->insertRow();
-	
+
 	editProxyException();
 }
 
@@ -982,6 +987,8 @@ void PreferencesAdvancedPageWidget::save()
 
 	m_filesToRemove.clear();
 
+	SettingsManager::setValue(QLatin1String("AddressField/SuggestBookmarks"), m_ui->suggestBookmarksCheckBox->isChecked());
+
 	QSettings notificationsSettings(SessionsManager::getWritableDataPath(QLatin1String("notifications.ini")), QSettings::IniFormat);
 	notificationsSettings.setIniCodec("UTF-8");
 	notificationsSettings.clear();
@@ -1005,7 +1012,7 @@ void PreferencesAdvancedPageWidget::save()
 
 	SettingsManager::setValue(QLatin1String("Interface/UseNativeNotifications"), m_ui->preferNativeNotificationsCheckBox->isChecked());
 
-	SettingsManager::setValue(QLatin1String("AddressField/SuggestBookmarks"), m_ui->suggestBookmarksCheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("Browser/EnableTrayIcon"), m_ui->enableTrayIconCheckBox->isChecked());
 
 	SettingsManager::setValue(QLatin1String("Browser/EnableImages"), m_ui->enableImagesCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("Browser/EnableJavaScript"), m_ui->enableJavaScriptCheckBox->isChecked());
@@ -1211,8 +1218,6 @@ void PreferencesAdvancedPageWidget::save()
 
 	SettingsManager::setValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder"), shortcutsProfiles);
 	SettingsManager::setValue(QLatin1String("Browser/EnableSingleKeyShortcuts"), m_ui->keyboardEnableSingleKeyShortcutsCheckBox->isChecked());
-
-	SettingsManager::setValue(QLatin1String("Browser/EnableTrayIcon"), m_ui->enableTrayIconCheckBox->isChecked());
 
 	if (!m_javaScriptOptions.isEmpty())
 	{
