@@ -310,29 +310,29 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->keyboardMoveDownButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
 	m_ui->keyboardMoveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
 
-	QStandardItemModel *shortcutsProfilesModel = new QStandardItemModel(this);
-	const QStringList shortcutsProfiles = SettingsManager::getValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder")).toStringList();
+	QStandardItemModel *keyboardProfilesModel = new QStandardItemModel(this);
+	const QStringList keyboardProfiles = SettingsManager::getValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder")).toStringList();
 
-	for (int i = 0; i < shortcutsProfiles.count(); ++i)
+	for (int i = 0; i < keyboardProfiles.count(); ++i)
 	{
-		const ShortcutsProfile profile = loadKeyboardProfile(shortcutsProfiles.at(i), true);
+		const ShortcutsProfile profile = loadKeyboardProfile(keyboardProfiles.at(i), true);
 
 		if (profile.identifier.isEmpty())
 		{
 			continue;
 		}
 
-		m_shortcutsProfiles[shortcutsProfiles.at(i)] = profile;
+		m_keyboardProfiles[keyboardProfiles.at(i)] = profile;
 
 		QStandardItem *item = new QStandardItem(profile.title.isEmpty() ? tr("(Untitled)") : profile.title);
 		item->setToolTip(profile.description);
 		item->setData(profile.identifier, Qt::UserRole);
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
-		shortcutsProfilesModel->appendRow(item);
+		keyboardProfilesModel->appendRow(item);
 	}
 
-	m_ui->keyboardViewWidget->setModel(shortcutsProfilesModel);
+	m_ui->keyboardViewWidget->setModel(keyboardProfilesModel);
 	m_ui->keyboardViewWidget->setItemDelegate(new OptionDelegate(true, this));
 
 	QMenu *addKeyboardProfileMenu = new QMenu(m_ui->keyboardAddButton);
@@ -757,7 +757,7 @@ void PreferencesAdvancedPageWidget::addKeyboardProfile()
 	ShortcutsProfile profile;
 	profile.title = tr("(Untitled)");
 
-	m_shortcutsProfiles[identifier] = profile;
+	m_keyboardProfiles[identifier] = profile;
 
 	QStandardItem *item = new QStandardItem(tr("(Untitled)"));
 	item->setData(identifier, Qt::UserRole);
@@ -783,7 +783,7 @@ void PreferencesAdvancedPageWidget::readdKeyboardProfile(QAction *action)
 		return;
 	}
 
-	m_shortcutsProfiles[identifier] = profile;
+	m_keyboardProfiles[identifier] = profile;
 
 	QStandardItem *item = new QStandardItem(profile.title.isEmpty() ? tr("(Untitled)") : profile.title);
 	item->setToolTip(profile.description);
@@ -802,22 +802,22 @@ void PreferencesAdvancedPageWidget::editKeyboardProfile()
 	const QModelIndex index = m_ui->keyboardViewWidget->currentIndex();
 	const QString identifier = index.data(Qt::UserRole).toString();
 
-	if (identifier.isEmpty() || !m_shortcutsProfiles.contains(identifier))
+	if (identifier.isEmpty() || !m_keyboardProfiles.contains(identifier))
 	{
 		return;
 	}
 
-	ShortcutsProfileDialog dialog(identifier, m_shortcutsProfiles, this);
+	ShortcutsProfileDialog dialog(identifier, m_keyboardProfiles, this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
 		return;
 	}
 
-	m_shortcutsProfiles[identifier] = dialog.getProfile();
+	m_keyboardProfiles[identifier] = dialog.getProfile();
 
-	m_ui->keyboardViewWidget->setData(index, (m_shortcutsProfiles[identifier].title.isEmpty() ? tr("(Untitled)") : m_shortcutsProfiles[identifier].title), Qt::DisplayRole);
-	m_ui->keyboardViewWidget->setData(index, m_shortcutsProfiles[identifier].description, Qt::ToolTipRole);
+	m_ui->keyboardViewWidget->setData(index, (m_keyboardProfiles[identifier].title.isEmpty() ? tr("(Untitled)") : m_keyboardProfiles[identifier].title), Qt::DisplayRole);
+	m_ui->keyboardViewWidget->setData(index, m_keyboardProfiles[identifier].description, Qt::ToolTipRole);
 
 	emit settingsModified();
 }
@@ -826,7 +826,7 @@ void PreferencesAdvancedPageWidget::cloneKeyboardProfile()
 {
 	const QString identifier = m_ui->keyboardViewWidget->currentIndex().data(Qt::UserRole).toString();
 
-	if (identifier.isEmpty() || !m_shortcutsProfiles.contains(identifier))
+	if (identifier.isEmpty() || !m_keyboardProfiles.contains(identifier))
 	{
 		return;
 	}
@@ -838,12 +838,12 @@ void PreferencesAdvancedPageWidget::cloneKeyboardProfile()
 		return;
 	}
 
-	m_shortcutsProfiles[newIdentifier] = m_shortcutsProfiles[identifier];
-	m_shortcutsProfiles[newIdentifier].identifier = newIdentifier;
-	m_shortcutsProfiles[newIdentifier].isModified = true;
+	m_keyboardProfiles[newIdentifier] = m_keyboardProfiles[identifier];
+	m_keyboardProfiles[newIdentifier].identifier = newIdentifier;
+	m_keyboardProfiles[newIdentifier].isModified = true;
 
-	QStandardItem *item = new QStandardItem(m_shortcutsProfiles[newIdentifier].title.isEmpty() ? tr("(Untitled)") : m_shortcutsProfiles[newIdentifier].title);
-	item->setToolTip(m_shortcutsProfiles[newIdentifier].description);
+	QStandardItem *item = new QStandardItem(m_keyboardProfiles[newIdentifier].title.isEmpty() ? tr("(Untitled)") : m_keyboardProfiles[newIdentifier].title);
+	item->setToolTip(m_keyboardProfiles[newIdentifier].description);
 	item->setData(newIdentifier, Qt::UserRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
@@ -856,7 +856,7 @@ void PreferencesAdvancedPageWidget::removeKeyboardProfile()
 {
 	const QString identifier = m_ui->keyboardViewWidget->currentIndex().data(Qt::UserRole).toString();
 
-	if (identifier.isEmpty() || !m_shortcutsProfiles.contains(identifier))
+	if (identifier.isEmpty() || !m_keyboardProfiles.contains(identifier))
 	{
 		return;
 	}
@@ -882,7 +882,7 @@ void PreferencesAdvancedPageWidget::removeKeyboardProfile()
 			m_filesToRemove.append(path);
 		}
 
-		m_shortcutsProfiles.remove(identifier);
+		m_keyboardProfiles.remove(identifier);
 
 		m_ui->keyboardViewWidget->removeRow();
 
@@ -918,7 +918,7 @@ void PreferencesAdvancedPageWidget::updateReaddKeyboardProfileMenu()
 	{
 		const QString identifier = allShortcutsProfiles.at(i).baseName();
 
-		if (!m_shortcutsProfiles.contains(identifier) && !availableIdentifiers.contains(identifier))
+		if (!m_keyboardProfiles.contains(identifier) && !availableIdentifiers.contains(identifier))
 		{
 			const ShortcutsProfile profile = loadKeyboardProfile(identifier, false);
 
@@ -1159,16 +1159,16 @@ void PreferencesAdvancedPageWidget::save()
 
 	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("keyboard")));
 
-	QHash<QString, ShortcutsProfile>::iterator shortcutsProfilesIterator;
+	QHash<QString, ShortcutsProfile>::iterator keyboardProfilesIterator;
 
-	for (shortcutsProfilesIterator = m_shortcutsProfiles.begin(); shortcutsProfilesIterator != m_shortcutsProfiles.end(); ++shortcutsProfilesIterator)
+	for (keyboardProfilesIterator = m_keyboardProfiles.begin(); keyboardProfilesIterator != m_keyboardProfiles.end(); ++keyboardProfilesIterator)
 	{
-		if (!shortcutsProfilesIterator.value().isModified)
+		if (!keyboardProfilesIterator.value().isModified)
 		{
 			continue;
 		}
 
-		QFile file(SessionsManager::getWritableDataPath(QLatin1String("keyboard/") + shortcutsProfilesIterator.key() + QLatin1String(".ini")));
+		QFile file(SessionsManager::getWritableDataPath(QLatin1String("keyboard/") + keyboardProfilesIterator.key() + QLatin1String(".ini")));
 
 		if (!file.open(QIODevice::WriteOnly))
 		{
@@ -1177,15 +1177,15 @@ void PreferencesAdvancedPageWidget::save()
 
 		QTextStream stream(&file);
 		stream.setCodec("UTF-8");
-		stream << QLatin1String("; Title: ") << (shortcutsProfilesIterator.value().title.isEmpty() ? tr("(Untitled)") : shortcutsProfilesIterator.value().title) << QLatin1Char('\n');
-		stream << QLatin1String("; Description: ") << shortcutsProfilesIterator.value().description << QLatin1Char('\n');
+		stream << QLatin1String("; Title: ") << (keyboardProfilesIterator.value().title.isEmpty() ? tr("(Untitled)") : keyboardProfilesIterator.value().title) << QLatin1Char('\n');
+		stream << QLatin1String("; Description: ") << keyboardProfilesIterator.value().description << QLatin1Char('\n');
 		stream << QLatin1String("; Type: keyboard-profile\n");
-		stream << QLatin1String("; Author: ") << shortcutsProfilesIterator.value().author << QLatin1Char('\n');
-		stream << QLatin1String("; Version: ") << shortcutsProfilesIterator.value().version << QLatin1String("\n\n");
+		stream << QLatin1String("; Author: ") << keyboardProfilesIterator.value().author << QLatin1Char('\n');
+		stream << QLatin1String("; Version: ") << keyboardProfilesIterator.value().version << QLatin1String("\n\n");
 
 		QHash<int, QVector<QKeySequence> >::iterator shortcutsIterator;
 
-		for (shortcutsIterator = shortcutsProfilesIterator.value().shortcuts.begin(); shortcutsIterator != shortcutsProfilesIterator.value().shortcuts.end(); ++shortcutsIterator)
+		for (shortcutsIterator = keyboardProfilesIterator.value().shortcuts.begin(); shortcutsIterator != keyboardProfilesIterator.value().shortcuts.end(); ++shortcutsIterator)
 		{
 			if (!shortcutsIterator.value().isEmpty())
 			{
@@ -1204,7 +1204,7 @@ void PreferencesAdvancedPageWidget::save()
 		file.close();
 	}
 
-	QStringList shortcutsProfiles;
+	QStringList keyboardProfiles;
 
 	for (int i = 0; i < m_ui->keyboardViewWidget->getRowCount(); ++i)
 	{
@@ -1212,11 +1212,11 @@ void PreferencesAdvancedPageWidget::save()
 
 		if (!identifier.isEmpty())
 		{
-			shortcutsProfiles.append(identifier);
+			keyboardProfiles.append(identifier);
 		}
 	}
 
-	SettingsManager::setValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder"), shortcutsProfiles);
+	SettingsManager::setValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder"), keyboardProfiles);
 	SettingsManager::setValue(QLatin1String("Browser/EnableSingleKeyShortcuts"), m_ui->keyboardEnableSingleKeyShortcutsCheckBox->isChecked());
 
 	if (!m_javaScriptOptions.isEmpty())

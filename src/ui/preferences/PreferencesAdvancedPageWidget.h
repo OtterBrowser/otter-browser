@@ -82,7 +82,7 @@ protected slots:
 private:
 	QStringList m_filesToRemove;
 	QVariantMap m_javaScriptOptions;
-	QHash<QString, ShortcutsProfile> m_shortcutsProfiles;
+	QHash<QString, ShortcutsProfile> m_keyboardProfiles;
 	bool m_userAgentsModified;
 	Ui::PreferencesAdvancedPageWidget *m_ui;
 
