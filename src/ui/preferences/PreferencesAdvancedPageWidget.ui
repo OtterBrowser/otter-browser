@@ -93,7 +93,7 @@
       </layout>
      </widget>
      <widget class="QWidget" name="notificationsPage">
-      <layout class="QVBoxLayout" name="notificationsLayout">
+      <layout class="QVBoxLayout" name="notificationsLayout" stretch="0,0,0,0,0,1">
        <item>
         <widget class="QLabel" name="notificationsEventsHeader">
          <property name="font">
@@ -198,9 +198,52 @@
       </layout>
      </widget>
      <widget class="QWidget" name="appearancePage">
-      <layout class="QVBoxLayout" name="appearanceLayout">
+      <layout class="QVBoxLayout" name="appearanceLayout" stretch="0,0,0,0,1">
        <item>
-        <widget class="QLabel" name="otherGeneralHeader">
+        <widget class="QLabel" name="appearranceStyleHader">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Style</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QFormLayout" name="appearranceStyleLayout">
+         <item row="0" column="0">
+          <widget class="QLabel" name="appearranceWidgetStyleLabel">
+           <property name="text">
+            <string>Widget style:</string>
+           </property>
+           <property name="buddy">
+            <cstring>appearranceWidgetStyleComboBox</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="appearranceStyleSheetLabel">
+           <property name="text">
+            <string>Style sheet:</string>
+           </property>
+           <property name="buddy">
+            <cstring>appearranceStyleSheetFilePathWidget</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="Otter::FilePathWidget" name="appearranceStyleSheetFilePathWidget" native="true"/>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="appearranceWidgetStyleComboBox"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QLabel" name="appearranceOtherHeader">
          <property name="font">
           <font>
            <weight>75</weight>
@@ -224,12 +267,12 @@
         </layout>
        </item>
        <item>
-        <spacer name="otherVerticalSpacer"/>
+        <spacer name="appearranceVerticalSpacer"/>
        </item>
       </layout>
      </widget>
      <widget class="QWidget" name="contentPage">
-      <layout class="QVBoxLayout" name="contentPageLayout">
+      <layout class="QVBoxLayout" name="contentPageLayout" stretch="0,0,0,0,0,0,1">
        <item>
         <widget class="QLabel" name="contentGeneralHeader">
          <property name="font">
@@ -309,7 +352,7 @@
       </layout>
      </widget>
      <widget class="QWidget" name="downloadsPage">
-      <layout class="QVBoxLayout" name="downloadsLayout">
+      <layout class="QVBoxLayout" name="downloadsLayout" stretch="0,0,0,1">
        <item>
         <widget class="QLabel" name="downloadsMimeTypesHeader">
          <property name="font">
@@ -1054,7 +1097,7 @@
       </layout>
      </widget>
      <widget class="QWidget" name="updatesPage">
-      <layout class="QVBoxLayout" name="updatesPageVerticalLayout">
+      <layout class="QVBoxLayout" name="updatesPageVerticalLayout" stretch="0,0,0,0,1">
        <item>
         <widget class="QLabel" name="updatesHeader">
          <property name="font">

@@ -66,6 +66,7 @@
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QStyleFactory>
 
 namespace Otter
 {
@@ -307,6 +308,22 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		connect(updateChecker, SIGNAL(finished(QList<UpdateInformation>)), this, SLOT(updateCheckFinished(QList<UpdateInformation>)));
 
 		LongTermTimer::runTimer((interval * SECONDS_IN_DAY), this, SLOT(periodicUpdateCheck()));
+	}
+
+	setStyle(SettingsManager::getValue(QLatin1String("Interface/WidgetStyle")).toString());
+
+	const QString styleSheet = SettingsManager::getValue(QLatin1String("Interface/StyleSheet")).toString();
+
+	if (!styleSheet.isEmpty())
+	{
+		QFile file(styleSheet);
+
+		if (file.open(QIODevice::ReadOnly))
+		{
+			setStyleSheet(file.readAll());
+
+			file.close();
+		}
 	}
 
 	connect(this, SIGNAL(aboutToQuit()), this, SLOT(clearHistory()));

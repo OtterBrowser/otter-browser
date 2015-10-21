@@ -25,6 +25,7 @@
 #include "../OptionDelegate.h"
 #include "../UserAgentsManagerDialog.h"
 #include "../../core/ActionsManager.h"
+#include "../../core/Application.h"
 #include "../../core/NetworkManagerFactory.h"
 #include "../../core/NotificationsManager.h"
 #include "../../core/SessionsManager.h"
@@ -43,6 +44,7 @@
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
+#include <QtWidgets/QStyleFactory>
 
 namespace Otter
 {
@@ -118,6 +120,17 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->notificationsItemView->setModel(notificationsModel);
 	m_ui->preferNativeNotificationsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Interface/UseNativeNotifications")).toBool());
 
+	const QStringList widgetStyles = QStyleFactory::keys();
+
+	m_ui->appearranceWidgetStyleComboBox->addItem(tr("System Style"));
+
+	for (int i = 0; i < widgetStyles.count(); ++i)
+	{
+		m_ui->appearranceWidgetStyleComboBox->addItem(widgetStyles.at(i));
+	}
+
+	m_ui->appearranceWidgetStyleComboBox->setCurrentIndex(qMax(0, m_ui->appearranceWidgetStyleComboBox->findData(SettingsManager::getValue(QLatin1String("Interface/WidgetStyle")).toString(), Qt::DisplayRole)));
+	m_ui->appearranceStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Interface/StyleSheet")).toString());
 	m_ui->enableTrayIconCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableTrayIcon")).toBool());
 
 	m_ui->enableImagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableImages")).toBool());
@@ -1012,7 +1025,33 @@ void PreferencesAdvancedPageWidget::save()
 
 	SettingsManager::setValue(QLatin1String("Interface/UseNativeNotifications"), m_ui->preferNativeNotificationsCheckBox->isChecked());
 
+	const QString widgetStyle = ((m_ui->appearranceWidgetStyleComboBox->currentIndex() == 0) ? QString() : m_ui->appearranceWidgetStyleComboBox->currentText());
+
+	SettingsManager::setValue(QLatin1String("Interface/WidgetStyle"), widgetStyle);
+	SettingsManager::setValue(QLatin1String("Interface/StyleSheet"), m_ui->appearranceStyleSheetFilePathWidget->getPath());
 	SettingsManager::setValue(QLatin1String("Browser/EnableTrayIcon"), m_ui->enableTrayIconCheckBox->isChecked());
+
+	Application::setStyle(widgetStyle);
+
+	if (m_ui->appearranceStyleSheetFilePathWidget->getPath().isEmpty())
+	{
+		Application::getInstance()->setStyleSheet(QString());
+	}
+	else
+	{
+		QFile file(m_ui->appearranceStyleSheetFilePathWidget->getPath());
+
+		if (file.open(QIODevice::ReadOnly))
+		{
+			Application::getInstance()->setStyleSheet(file.readAll());
+
+			file.close();
+		}
+		else
+		{
+			Application::getInstance()->setStyleSheet(QString());
+		}
+	}
 
 	SettingsManager::setValue(QLatin1String("Browser/EnableImages"), m_ui->enableImagesCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("Browser/EnableJavaScript"), m_ui->enableJavaScriptCheckBox->isChecked());
