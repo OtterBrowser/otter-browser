@@ -1614,15 +1614,6 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 			return handleMouseDoubleClickEvent(mouseEvent, false);
 		}
 	}
-	else if (event->type() == QEvent::Wheel)
-	{
-		QWheelEvent *wheelEvent = static_cast<QWheelEvent*>(event);
-
-		if (wheelEvent)
-		{
-			return handleWheelEvent(wheelEvent, true);
-		}
-	}
 	else if (event->type() == QEvent::ShortcutOverride)
 	{
 		QEventLoop eventLoop;
