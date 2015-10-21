@@ -76,7 +76,6 @@ protected:
 	void keyReleaseEvent(QKeyEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
-	void wheelEvent(QWheelEvent *event);
 	void startToolBarDragging();
 	void endToolBarDragging();
 	void moveToolBar(ToolBarWidget *toolBar, Qt::ToolBarArea area);

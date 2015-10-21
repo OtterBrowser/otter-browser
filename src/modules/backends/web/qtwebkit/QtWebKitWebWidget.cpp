@@ -28,6 +28,7 @@
 #include "../../../../core/Console.h"
 #include "../../../../core/CookieJar.h"
 #include "../../../../core/ContentBlockingManager.h"
+#include "../../../../core/GesturesManager.h"
 #include "../../../../core/HistoryManager.h"
 #include "../../../../core/NetworkCache.h"
 #include "../../../../core/NetworkManager.h"
@@ -1176,28 +1177,25 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			return;
 		case ActionsManager::ContextMenuAction:
 			{
-				if (getContextMenuReason() != QContextMenuEvent::Mouse)
+				const QWebElement element = m_page->mainFrame()->findFirstElement(QLatin1String(":focus"));
+
+				if (element.isNull())
 				{
-					const QWebElement element = m_page->mainFrame()->findFirstElement(QLatin1String(":focus"));
+					setClickPosition(m_webView->mapFromGlobal(QCursor::pos()));
+				}
+				else
+				{
+					QPoint clickPosition = element.geometry().center();
+					QWebFrame *frame = element.webFrame();
 
-					if (element.isNull())
+					while (frame)
 					{
-						setClickPosition(m_webView->mapFromGlobal(QCursor::pos()));
+						clickPosition -= frame->scrollPosition();
+
+						frame = frame->parentFrame();
 					}
-					else
-					{
-						QPoint clickPosition = element.geometry().center();
-						QWebFrame *frame = element.webFrame();
 
-						while (frame)
-						{
-							clickPosition -= frame->scrollPosition();
-
-							frame = frame->parentFrame();
-						}
-
-						setClickPosition(clickPosition);
-					}
+					setClickPosition(clickPosition);
 				}
 
 				showContextMenu(getClickPosition());
@@ -2229,13 +2227,58 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_webView)
 	{
-		if (event->type() == QEvent::ContextMenu)
-		{
-			QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
+		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
-			if (contextMenuEvent)
+		if (event->type() == QEvent::MouseButtonPress && mouseEvent && mouseEvent->button() == Qt::LeftButton && SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), getUrl()).toString() == QLatin1String("onDemand"))
+		{
+			QWidget *widget = childAt(mouseEvent->pos());
+			const QWebHitTestResult hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
+			const QString tagName = hitResult.element().tagName().toLower();
+
+			if (widget && widget->metaObject()->className() == QLatin1String("Otter::QtWebKitPluginWidget") && (tagName == QLatin1String("object") || tagName == QLatin1String("embed")))
 			{
-				handleContextMenuEvent(contextMenuEvent, false);
+				m_pluginToken = QUuid::createUuid().toString();
+
+				hitResult.element().setAttribute(QLatin1String("data-otter-browser"), m_pluginToken);
+
+				QWebElement element = hitResult.element().clone();
+
+				hitResult.element().replace(element);
+
+				element.removeAttribute(QLatin1String("data-otter-browser"));
+
+				Action *loadPluginsAction = getExistingAction(ActionsManager::LoadPluginsAction);
+
+				if (loadPluginsAction)
+				{
+					loadPluginsAction->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
+				}
+
+				return true;
+			}
+		}
+
+		if (mouseEvent && (mouseEvent->type() == QEvent::MouseButtonPress || mouseEvent->type() == QEvent::MouseButtonDblClick || mouseEvent->type() == QEvent::Wheel))
+		{
+			setClickPosition(mouseEvent->pos());
+			updateHitTestResult(mouseEvent->pos());
+
+			GesturesManager::GesturesContext context = GesturesManager::GenericGesturesContext;
+
+			if (getCurrentHitTestResult().linkUrl.isValid())
+			{
+				context = GesturesManager::LinkGesturesContext;
+			}
+			else if (getCurrentHitTestResult().tagName == QLatin1String("textarea") || getCurrentHitTestResult().tagName == QLatin1String("input"))
+			{
+				context = GesturesManager::EditableGesturesContext;
+			}
+
+			bool gestureStarted = GesturesManager::startGesture(object, event, context);
+
+			if (gestureStarted)
+			{
+				return true;
 			}
 		}
 		else if (event->type() == QEvent::Move || event->type() == QEvent::Resize)
@@ -2253,76 +2296,11 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 			return true;
 		}
-		else if (event->type() == QEvent::MouseButtonPress)
-		{
-			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
-
-			if (mouseEvent)
-			{
-				return handleMousePressEvent(mouseEvent, true, m_webView);
-			}
-		}
-		else if (event->type() == QEvent::MouseButtonRelease)
-		{
-			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
-
-			if (mouseEvent)
-			{
-				if (mouseEvent->button() == Qt::LeftButton && SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), getUrl()).toString() == QLatin1String("onDemand"))
-				{
-					QWidget *widget = childAt(mouseEvent->pos());
-					const QWebHitTestResult hitResult = m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos());
-					const QString tagName = hitResult.element().tagName().toLower();
-
-					if (widget && widget->metaObject()->className() == QLatin1String("Otter::QtWebKitPluginWidget") && (tagName == QLatin1String("object") || tagName == QLatin1String("embed")))
-					{
-						m_pluginToken = QUuid::createUuid().toString();
-
-						hitResult.element().setAttribute(QLatin1String("data-otter-browser"), m_pluginToken);
-
-						QWebElement element = hitResult.element().clone();
-
-						hitResult.element().replace(element);
-
-						element.removeAttribute(QLatin1String("data-otter-browser"));
-
-						Action *loadPluginsAction = getExistingAction(ActionsManager::LoadPluginsAction);
-
-						if (loadPluginsAction)
-						{
-							loadPluginsAction->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
-						}
-
-						return true;
-					}
-				}
-
-				return handleMouseReleaseEvent(mouseEvent, true, m_webView);
-			}
-		}
-		else if (event->type() == QEvent::MouseButtonDblClick)
-		{
-			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
-
-			if (mouseEvent)
-			{
-				return handleMouseDoubleClickEvent(mouseEvent, false);
-			}
-		}
 		else if (event->type() == QEvent::MouseMove)
 		{
 			event->ignore();
 
 			return QObject::eventFilter(object, event);
-		}
-		else if (event->type() == QEvent::Wheel)
-		{
-			QWheelEvent *wheelEvent = static_cast<QWheelEvent*>(event);
-
-			if (wheelEvent)
-			{
-				return handleWheelEvent(wheelEvent, true);
-			}
 		}
 		else if (event->type() == QEvent::ShortcutOverride)
 		{

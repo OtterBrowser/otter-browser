@@ -76,7 +76,7 @@ public:
 	void startGesture(int x, int y);
 	void addPosition(int x, int y);
 	int registerGesture(const ActionList &actions);
-	int endGesture(int x, int y);
+	int endGesture();
 	int recognizeGesture();
 
 private:

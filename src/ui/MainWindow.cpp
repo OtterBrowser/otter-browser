@@ -318,26 +318,6 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 	QMainWindow::mouseReleaseEvent(event);
 }
 
-void MainWindow::wheelEvent(QWheelEvent *event)
-{
-	if (event->buttons() == Qt::RightButton)
-	{
-		if (!m_tabSwitcher)
-		{
-			m_tabSwitcher = new TabSwitcherWidget(m_windowsManager, this);
-		}
-
-		m_tabSwitcher->raise();
-		m_tabSwitcher->resize(size());
-		m_tabSwitcher->show(TabSwitcherWidget::WheelReason);
-		m_tabSwitcher->selectTab(event->delta() < 0);
-	}
-	else
-	{
-		QMainWindow::wheelEvent(event);
-	}
-}
-
 void MainWindow::optionChanged(const QString &option, const QVariant &value)
 {
 	if (option == QLatin1String("Network/WorkOffline"))

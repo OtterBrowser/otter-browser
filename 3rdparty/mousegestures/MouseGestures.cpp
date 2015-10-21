@@ -100,6 +100,13 @@ void Recognizer::startGesture(int x, int y)
 
 void Recognizer::addPosition(int x, int y)
 {
+	if (d->positions.empty())
+	{
+		d->positions.push_back(Position(x, y));
+
+		return;
+	}
+
 	const int dx = (x - d->positions.back().x);
 	const int dy = (y - d->positions.back().y);
 
@@ -116,13 +123,8 @@ int Recognizer::registerGesture(const ActionList &actions)
 	return (static_cast<int>(d->gestures.size()) - 1);
 }
 
-int Recognizer::endGesture(int x, int y)
+int Recognizer::endGesture()
 {
-	if (x != d->positions.back().x || y != d->positions.back().y)
-	{
-		d->positions.push_back(Position(x, y));
-	}
-
 	int gesture = -1;
 
 	if (d->positions.size() > 1)

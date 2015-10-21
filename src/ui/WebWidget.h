@@ -143,7 +143,6 @@ public:
 	virtual bool handleMousePressEvent(QMouseEvent *event, bool canPropagate = true, QObject *sender = NULL);
 	virtual bool handleMouseReleaseEvent(QMouseEvent *event, bool canPropagate = true, QObject *sender = NULL);
 	virtual bool handleMouseDoubleClickEvent(QMouseEvent *event, bool canPropagate = true, QObject *sender = NULL);
-	virtual bool handleWheelEvent(QWheelEvent *event, bool canPropagate = true, QObject *sender = NULL);
 	bool hasOption(const QString &key) const;
 	virtual bool hasSelection() const;
 	virtual bool isLoading() const = 0;

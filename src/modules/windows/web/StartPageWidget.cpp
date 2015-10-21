@@ -231,13 +231,6 @@ void StartPageWidget::mouseReleaseEvent(QMouseEvent *event)
 
 void StartPageWidget::wheelEvent(QWheelEvent *event)
 {
-	WebWidget *webWidget = qobject_cast<WebWidget*>(parentWidget());
-
-	if (webWidget)
-	{
-		webWidget->handleWheelEvent(event, false, this);
-	}
-
 	if (event->buttons() == Qt::NoButton && event->modifiers() == Qt::NoModifier)
 	{
 		QScrollArea::wheelEvent(event);

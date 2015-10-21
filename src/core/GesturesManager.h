@@ -23,17 +23,11 @@
 #include <QtCore/QObject>
 #include <QtGui/QMouseEvent>
 
+#include "../core/Utils.h"
 #include "../../3rdparty/mousegestures/MouseGestures.h"
 
 namespace Otter
 {
-
-struct MouseGesture
-{
-	MouseGestures::ActionList mouseActions;
-	int action;
-	int identifier;
-};
 
 class GesturesManager : public QObject
 {
@@ -43,28 +37,66 @@ public:
 	enum GesturesContext
 	{
 		GenericGesturesContext = 0,
-		LinkGesturesContext
+		LinkGesturesContext,
+		EditableGesturesContext
 	};
 
 	static void createInstance(QObject *parent = NULL);
 	static void loadProfiles();
-	static void startGesture(GesturesContext context, QObject *object, QMouseEvent *event);
-	static bool endGesture(QObject *object, QMouseEvent *event);
 	static GesturesManager* getInstance();
+	static bool startGesture(QObject *object, QEvent *event, GesturesContext context = GenericGesturesContext);
 
 protected:
+	struct GestureStep
+	{
+		QEvent::Type type;
+		Qt::MouseButton button;
+		Qt::KeyboardModifiers modifiers;
+		MouseGestures::MouseAction direction;
+
+		GestureStep();
+		GestureStep(QEvent::Type type, MouseGestures::MouseAction direction, Qt::KeyboardModifiers modifiers = Qt::NoModifier);
+		GestureStep(QEvent::Type type, Qt::MouseButton button, Qt::KeyboardModifiers modifiers = Qt::NoModifier);
+		explicit GestureStep(const QInputEvent *event);
+
+		bool operator ==(const GestureStep &other);
+		bool operator !=(const GestureStep &other);
+	};
+
+	struct MouseGesture
+	{
+		QList<GestureStep> steps;
+		int action;
+		int identifier;
+	};
+
 	explicit GesturesManager(QObject *parent);
 
+	static GestureStep deserializeStep(const QString &string);
+	static QList<GestureStep> recognizeMoveStep(QInputEvent *event);
+	static int matchGesture();
+	static int moveLength();
+	static int gesturesDifference(QList<GestureStep> defined);
+	static bool callAction(int gestureIndex);
 	bool eventFilter(QObject *object, QEvent *event);
 
 protected slots:
 	void optionChanged(const QString &option);
+	void endGesture();
 
 private:
 	static GesturesManager *m_instance;
 	static MouseGestures::Recognizer *m_recognizer;
+	static QPointer<QObject> m_trackedObject;
+	static QPoint m_lastClick;
+	static QPoint m_lastPosition;
 	static QHash<GesturesContext, QVector<MouseGesture> > m_gestures;
+	static QHash<GesturesContext, QList<QList<GestureStep> > > m_nativeGestures;
+	static QList<GestureStep> m_steps;
+	static QList<QInputEvent*> m_events;
 	static GesturesContext m_context;
+	static bool m_isReleasing;
+	static bool m_afterScroll;
 };
 
 }

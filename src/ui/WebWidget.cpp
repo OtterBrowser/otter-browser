@@ -26,7 +26,6 @@
 #include "TransferDialog.h"
 #include "../core/ActionsManager.h"
 #include "../core/BookmarksManager.h"
-#include "../core/GesturesManager.h"
 #include "../core/HandlersManager.h"
 #include "../core/NotesManager.h"
 #include "../core/SearchesManager.h"
@@ -1364,6 +1363,8 @@ bool WebWidget::handleContextMenuEvent(QContextMenuEvent *event, bool canPropaga
 
 bool WebWidget::handleMousePressEvent(QMouseEvent *event, bool canPropagate, QObject *sender)
 {
+	Q_UNUSED(sender)
+
 	if (event->button() == Qt::BackButton)
 	{
 		triggerAction(ActionsManager::GoBackAction);
@@ -1429,20 +1430,10 @@ bool WebWidget::handleMousePressEvent(QMouseEvent *event, bool canPropagate, QOb
 			triggerAction(ActionsManager::GoForwardAction);
 
 			event->ignore();
-		}
-		else
-		{
-			event->accept();
 
-			if (m_hitResult.linkUrl.isValid())
-			{
-				m_clickPosition = event->pos();
-			}
-
-			GesturesManager::startGesture((m_hitResult.linkUrl.isValid() ? GesturesManager::LinkGesturesContext : GesturesManager::GenericGesturesContext), sender, event);
+			return true;
 		}
 
-		return true;
 	}
 
 	if (canPropagate)
@@ -1475,29 +1466,26 @@ bool WebWidget::handleMouseReleaseEvent(QMouseEvent *event, bool canPropagate, Q
 		{
 			m_ignoreContextMenu = false;
 
-			if (!GesturesManager::endGesture(sender, event))
+			if (m_ignoreContextMenuNextTime)
 			{
-				if (m_ignoreContextMenuNextTime)
-				{
-					m_ignoreContextMenuNextTime = false;
+				m_ignoreContextMenuNextTime = false;
 
-					event->ignore();
+				event->ignore();
 
-					return false;
-				}
+				return false;
+			}
 
-				ContentsWidget *contentsWidget = qobject_cast<ContentsWidget*>(parentWidget());
+			ContentsWidget *contentsWidget = qobject_cast<ContentsWidget*>(parentWidget());
 
-				m_clickPosition = event->pos();
+			m_clickPosition = event->pos();
 
-				if (contentsWidget)
-				{
-					contentsWidget->triggerAction(ActionsManager::ContextMenuAction);
-				}
-				else
-				{
-					showContextMenu(event->pos());
-				}
+			if (contentsWidget)
+			{
+				contentsWidget->triggerAction(ActionsManager::ContextMenuAction);
+			}
+			else
+			{
+				showContextMenu(event->pos());
 			}
 		}
 
@@ -1531,36 +1519,6 @@ bool WebWidget::handleMouseDoubleClickEvent(QMouseEvent *event, bool canPropagat
 	if (canPropagate)
 	{
 		mouseDoubleClickEvent(event);
-	}
-
-	return false;
-}
-
-bool WebWidget::handleWheelEvent(QWheelEvent *event, bool canPropagate, QObject *sender)
-{
-	Q_UNUSED(sender)
-
-	if (event->buttons() == Qt::RightButton)
-	{
-		m_ignoreContextMenuNextTime = true;
-
-		event->ignore();
-
-		return false;
-	}
-
-	if (event->modifiers().testFlag(Qt::ControlModifier))
-	{
-		setZoom(getZoom() + (event->delta() / 16));
-
-		event->accept();
-
-		return true;
-	}
-
-	if (canPropagate)
-	{
-		wheelEvent(event);
 	}
 
 	return false;
