@@ -119,7 +119,7 @@ void NetworkProxyFactory::optionChanged(const QString &option)
 			}
 		}
 
-		m_proxyExceptions = SettingsManager::getValue(QLatin1String("Proxy/Exceptions")).toString().remove(QLatin1Char(' ')).split(QLatin1Char(','), QString::SkipEmptyParts);
+		m_proxyExceptions = SettingsManager::getValue(QLatin1String("Proxy/Exceptions")).toStringList();
 	}
 	else if (option == QLatin1String("Network/ProxyMode"))
 	{

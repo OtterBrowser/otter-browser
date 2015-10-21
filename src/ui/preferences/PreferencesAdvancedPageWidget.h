@@ -61,6 +61,10 @@ protected slots:
 	void updateDownloadsMode();
 	void manageUserAgents();
 	void proxyModeChanged(int index);
+	void updateProxyExceptionsActions();
+	void addProxyException();
+	void removeProxyException();
+	void editProxyException();
 	void addCipher(QAction *action);
 	void removeCipher();
 	void updateCiphersActions();

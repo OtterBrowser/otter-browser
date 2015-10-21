@@ -178,6 +178,17 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->userAgentComboBox->setCurrentIndex(m_ui->userAgentComboBox->findData(SettingsManager::getValue(QLatin1String("Network/UserAgent")).toString()));
 
+	QStandardItemModel *proxyExceptionsModel = new QStandardItemModel(this);
+	const QStringList currentProxyExceptions = SettingsManager::getValue(QLatin1String("Proxy/Exceptions")).toStringList();
+
+	for (int i = 0; i < currentProxyExceptions.count(); ++i)
+	{
+		proxyExceptionsModel->appendRow(new QStandardItem(currentProxyExceptions.at(i)));
+	}
+
+	m_ui->proxyExceptionsListView->setModel(proxyExceptionsModel);
+	m_ui->proxyExceptionsListView->setItemDelegate(new OptionDelegate(true, this));
+
 	const QString proxyString = SettingsManager::getValue(QLatin1String("Network/ProxyMode")).toString();
 	int proxyIndex = 0;
 
@@ -340,6 +351,10 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	connect(m_ui->downloadsButtonGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(updateDownloadsMode()));
 	connect(m_ui->userAgentButton, SIGNAL(clicked()), this, SLOT(manageUserAgents()));
 	connect(m_ui->proxyModeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(proxyModeChanged(int)));
+	connect(m_ui->proxyExceptionsListView, SIGNAL(needsActionsUpdate()), this, SLOT(updateProxyExceptionsActions()));
+	connect(m_ui->addProxyExceptionButton, SIGNAL(clicked()), this, SLOT(addProxyException()));
+	connect(m_ui->editProxyExceptionButton, SIGNAL(clicked()), this, SLOT(editProxyException()));
+	connect(m_ui->removeProxyExceptionButton, SIGNAL(clicked()), this, SLOT(removeProxyException()));
 	connect(m_ui->ciphersViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->ciphersMoveDownButton, SLOT(setEnabled(bool)));
 	connect(m_ui->ciphersViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->ciphersMoveUpButton, SLOT(setEnabled(bool)));
 	connect(m_ui->ciphersViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateCiphersActions()));
@@ -597,6 +612,7 @@ void PreferencesAdvancedPageWidget::proxyModeChanged(int index)
 		m_ui->allProxyCheckBox->setEnabled(true);
 		m_ui->allProxyServersLineEdit->setEnabled(true);
 		m_ui->allProxyPortSpinBox->setEnabled(true);
+		m_ui->proxyExceptionsWidget->setEnabled(true);
 
 		if (!m_ui->allProxyCheckBox->isChecked())
 		{
@@ -613,6 +629,8 @@ void PreferencesAdvancedPageWidget::proxyModeChanged(int index)
 			m_ui->socksProxyServersLineEdit->setEnabled(true);
 			m_ui->socksProxyPortSpinBox->setEnabled(true);
 		}
+
+		updateProxyExceptionsActions();
 	}
 	else
 	{
@@ -622,6 +640,7 @@ void PreferencesAdvancedPageWidget::proxyModeChanged(int index)
 		m_ui->httpsProxyCheckBox->setChecked(false);
 		m_ui->ftpProxyCheckBox->setChecked(false);
 		m_ui->socksProxyCheckBox->setChecked(false);
+		m_ui->proxyExceptionsWidget->setEnabled(false);
 	}
 
 	if (index == 3)
@@ -644,6 +663,38 @@ void PreferencesAdvancedPageWidget::proxyModeChanged(int index)
 	{
 		m_ui->proxySystemAuthentication->setEnabled(true);
 	}
+}
+
+void PreferencesAdvancedPageWidget::addProxyException()
+{
+	m_ui->proxyExceptionsListView->insertRow();
+	
+	editProxyException();
+}
+
+void PreferencesAdvancedPageWidget::editProxyException()
+{
+	m_ui->proxyExceptionsListView->edit(m_ui->proxyExceptionsListView->getIndex(m_ui->proxyExceptionsListView->getCurrentRow()));
+
+	emit settingsModified();
+}
+
+void PreferencesAdvancedPageWidget::removeProxyException()
+{
+	m_ui->proxyExceptionsListView->removeRow();
+	m_ui->proxyExceptionsListView->setFocus();
+
+	updateProxyExceptionsActions();
+
+	emit settingsModified();
+}
+
+void PreferencesAdvancedPageWidget::updateProxyExceptionsActions()
+{
+	const bool isEditable = (m_ui->proxyExceptionsListView->getCurrentRow() >= 0);
+
+	m_ui->editProxyExceptionButton->setEnabled(isEditable);
+	m_ui->removeProxyExceptionButton->setEnabled(isEditable);
 }
 
 void PreferencesAdvancedPageWidget::addCipher(QAction *action)
@@ -685,6 +736,8 @@ void PreferencesAdvancedPageWidget::updateUpdateChannelsActions()
 {
 	m_ui->intervalSpinBox->setEnabled(!getSelectedUpdateChannels().isEmpty());
 	m_ui->autoInstallCheckBox->setEnabled(!getSelectedUpdateChannels().isEmpty());
+
+	emit settingsModified();
 }
 
 void PreferencesAdvancedPageWidget::addKeyboardProfile()
@@ -1048,6 +1101,21 @@ void PreferencesAdvancedPageWidget::save()
 	SettingsManager::setValue(QLatin1String("Proxy/SocksPort"), m_ui->socksProxyPortSpinBox->value());
 	SettingsManager::setValue(QLatin1String("Proxy/AutomaticConfigurationPath"), m_ui->automaticProxyConfigurationFilePathWidget->getPath());
 	SettingsManager::setValue(QLatin1String("Proxy/UseSystemAuthentication"), m_ui->proxySystemAuthentication->isChecked());
+
+	QStandardItemModel *proxyListModel = m_ui->proxyExceptionsListView->getModel();
+	QStringList proxyExceptions;
+
+	for (int i = 0; i < proxyListModel->rowCount(); ++i)
+	{
+		const QString value = proxyListModel->item(i)->text();
+
+		if (!value.isEmpty())
+		{
+			proxyExceptions.append(value);
+		}
+	}
+
+	SettingsManager::setValue(QLatin1String("Proxy/Exceptions"), proxyExceptions);
 
 	if (m_userAgentsModified)
 	{

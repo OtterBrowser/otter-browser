@@ -533,7 +533,7 @@
       </layout>
      </widget>
      <widget class="QWidget" name="networkPage">
-      <layout class="QVBoxLayout" name="networkPageLayout" stretch="0,0,0,0,0,0,0,1">
+      <layout class="QVBoxLayout" name="networkPageLayout" stretch="0,0,0,0,0,0,0,0,0">
        <item>
         <widget class="QLabel" name="advancedGeneralHeader">
          <property name="font">
@@ -850,6 +850,90 @@
         </widget>
        </item>
        <item>
+        <widget class="QWidget" name="proxyExceptionsWidget" native="true">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <layout class="QVBoxLayout" name="proxyExceptionslLayout">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="proxyExceptionsLabel">
+            <property name="text">
+             <string>Do not use proxy for:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="proxyExceptionsHorizontalLayout">
+            <item>
+             <widget class="Otter::ItemViewWidget" name="proxyExceptionsListView">
+              <property name="headerHidden">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="proxyExceptionsVerticalLayout" stretch="0,0,0,1">
+              <item>
+               <widget class="QPushButton" name="addProxyExceptionButton">
+                <property name="text">
+                 <string>Add</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="editProxyExceptionButton">
+                <property name="text">
+                 <string>Edit</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="removeProxyExceptionButton">
+                <property name="text">
+                 <string>Remove</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="proxyExceptionsSpacer">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QLabel" name="proxyExceptionsExampleLabel">
+            <property name="text">
+             <string>Example: domain.com, localhost, 127.0.0.1, 192.168.1.0/24</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <spacer name="networkPageSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -1008,7 +1092,7 @@
        <item>
         <widget class="QLabel" name="updatesDescriptionLabel">
          <property name="text">
-          <string>Select channels from which you want to recieve updates:</string>
+          <string>Select channels from which you want to receive updates:</string>
          </property>
         </widget>
        </item>
