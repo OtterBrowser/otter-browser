@@ -126,7 +126,7 @@ void UpdateCheckerDialog::updateCheckFinished(const QList<UpdateInformation> &av
 
 		if (isPackageMissing)
 		{
-			QLabel *packageWarning = new QLabel(tr("Some of the updates does not contains packages for your platform. Try to check for updates later or visit details page for more info."), this);
+			QLabel *packageWarning = new QLabel(tr("Some of the updates do not contain packages for your platform. Try to check for updates later or visit details page for more info."), this);
 			packageWarning->setWordWrap(true);
 
 			m_ui->gridLayout->addWidget(packageWarning, m_ui->gridLayout->rowCount(), 0, m_ui->gridLayout->columnCount(), 0);
