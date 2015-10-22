@@ -847,6 +847,11 @@ void WebContentsWidget::setOption(const QString &key, const QVariant &value)
 	m_webWidget->setOption(key, value);
 }
 
+void WebContentsWidget::setOptions(const QVariantHash &options)
+{
+	m_webWidget->setOptions(options);
+}
+
 void WebContentsWidget::setHistory(const WindowHistoryInformation &history)
 {
 	if (history.entries.count() == 1 && QUrl(history.entries.at(0).url).scheme() == QLatin1String("view-source"))
@@ -969,6 +974,11 @@ QList<LinkUrl> WebContentsWidget::getFeeds() const
 QList<LinkUrl> WebContentsWidget::getSearchEngines() const
 {
 	return m_webWidget->getSearchEngines();
+}
+
+QVariantHash WebContentsWidget::getOptions() const
+{
+	return m_webWidget->getOptions();
 }
 
 int WebContentsWidget::getZoom() const

@@ -326,7 +326,7 @@ void Window::setSession(const SessionWindow &session)
 {
 	m_session = session;
 
-	setSearchEngine(session.searchEngine);
+	setSearchEngine(session.overrides.value(QLatin1String("Search/DefaultSearchEngine"), QString()).toString());
 	setPinned(session.isPinned);
 
 	if (SettingsManager::getValue(QLatin1String("Browser/DelayRestoringOfBackgroundTabs")).toBool())
@@ -383,7 +383,7 @@ void Window::setUrl(const QUrl &url, bool typed)
 
 	if (url.scheme() == QLatin1String("about"))
 	{
-		if (m_session.index < 0 && !Utils::isUrlEmpty(getUrl()) && SessionsManager::hasUrl(url, true))
+		if (m_session.historyIndex < 0 && !Utils::isUrlEmpty(getUrl()) && SessionsManager::hasUrl(url, true))
 		{
 			emit urlChanged(url, true);
 
@@ -425,7 +425,7 @@ void Window::setUrl(const QUrl &url, bool typed)
 		}
 	}
 
-	const bool isRestoring = (!m_contentsWidget && m_session.index >= 0);
+	const bool isRestoring = (!m_contentsWidget && m_session.historyIndex >= 0);
 
 	if (!newWidget && (!m_contentsWidget || m_contentsWidget->getType() != QLatin1String("web")))
 	{
@@ -514,30 +514,20 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	layout()->addWidget(m_contentsWidget);
 
-	if (m_session.index >= 0)
+	if (m_session.historyIndex >= 0)
 	{
-		if (!m_session.userAgent.isEmpty() && m_contentsWidget->getType() == QLatin1String("web"))
+		if (m_contentsWidget->getType() == QLatin1String("web"))
 		{
 			WebContentsWidget *webWidget = qobject_cast<WebContentsWidget*>(m_contentsWidget);
 
 			if (webWidget)
 			{
-				webWidget->getWebWidget()->setOption(QLatin1String("Network/UserAgent"), m_session.userAgent);
-			}
-		}
-
-		if (m_session.reloadTime != -1 && m_contentsWidget->getType() == QLatin1String("web"))
-		{
-			WebContentsWidget *webWidget = qobject_cast<WebContentsWidget*>(m_contentsWidget);
-
-			if (webWidget)
-			{
-				webWidget->setOption(QLatin1String("Content/PageReloadTime"), m_session.reloadTime);
+				webWidget->setOptions(m_session.overrides);
 			}
 		}
 
 		WindowHistoryInformation history;
-		history.index = m_session.index;
+		history.index = m_session.historyIndex;
 		history.entries = m_session.history;
 
 		m_contentsWidget->setHistory(history);
@@ -661,11 +651,6 @@ SessionWindow Window::getSession() const
 	if (m_contentsWidget)
 	{
 		const WindowHistoryInformation history = m_contentsWidget->getHistory();
-		session.searchEngine = getSearchEngine();
-		session.history = history.entries;
-		session.group = 0;
-		session.index = history.index;
-		session.isPinned = isPinned();
 
 		if (m_contentsWidget->getType() == QLatin1String("web"))
 		{
@@ -673,17 +658,15 @@ SessionWindow Window::getSession() const
 
 			if (webWidget)
 			{
-				if (webWidget->getWebWidget()->hasOption(QLatin1String("Content/PageReloadTime")))
-				{
-					session.reloadTime = webWidget->getOption(QLatin1String("Content/PageReloadTime")).toInt();
-				}
-
-				if (webWidget->getWebWidget()->hasOption(QLatin1String("Network/UserAgent")))
-				{
-					session.userAgent = webWidget->getWebWidget()->getOption(QLatin1String("Network/UserAgent")).toString();
-				}
+				session.overrides = webWidget->getOptions();
 			}
 		}
+
+		session.overrides[QLatin1String("Search/DefaultSearchEngine")] = getSearchEngine();
+		session.history = history.entries;
+		session.parentGroup = 0;
+		session.historyIndex = history.index;
+		session.isPinned = isPinned();
 	}
 	else
 	{

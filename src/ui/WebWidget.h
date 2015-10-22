@@ -116,6 +116,7 @@ public:
 	virtual void search(const QString &query, const QString &engine);
 	virtual void print(QPrinter *printer) = 0;
 	void showDialog(ContentsDialog *dialog, bool lockEventLoop = true);
+	virtual void setOptions(const QVariantHash &options);
 	virtual WebWidget* clone(bool cloneHistory = true, bool isPrivate = false) = 0;
 	virtual Action* getAction(int identifier);
 	WebBackend* getBackend();
@@ -177,7 +178,6 @@ protected:
 	void updateHitTestResult(const QPoint &position);
 	void setAlternateStyleSheets(const QStringList &styleSheets);
 	void setClickPosition(const QPoint &position);
-	virtual void setOptions(const QVariantHash &options);
 	Action* getExistingAction(int identifier);
 	QString suggestSaveFileName() const;
 	HitTestResult getCurrentHitTestResult() const;

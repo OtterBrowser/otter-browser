@@ -56,24 +56,22 @@ struct WindowHistoryInformation
 
 struct SessionWindow
 {
-	QString searchEngine;
-	QString userAgent;
 	QRect geometry;
+	QVariantHash overrides;
 	QList<WindowHistoryEntry> history;
 	WindowState state;
-	int group;
-	int index;
-	int reloadTime;
+	int parentGroup;
+	int historyIndex;
 	bool isAlwaysOnTop;
 	bool isPinned;
 
-	SessionWindow() : state((SettingsManager::getValue(QLatin1String("Interface/NewTabOpeningAction")).toString() == QLatin1String("maximizeTab")) ? MaximizedWindowState : NormalWindowState), group(0), index(-1), reloadTime(-1), isAlwaysOnTop(false), isPinned(false) {}
+	SessionWindow() : state((SettingsManager::getValue(QLatin1String("Interface/NewTabOpeningAction")).toString() == QLatin1String("maximizeTab")) ? MaximizedWindowState : NormalWindowState), parentGroup(0), historyIndex(-1), isAlwaysOnTop(false), isPinned(false) {}
 
 	QString getUrl() const
 	{
-		if (index >= 0 && index < history.count())
+		if (historyIndex >= 0 && historyIndex < history.count())
 		{
-			return history.at(index).url;
+			return history.at(historyIndex).url;
 		}
 
 		return QString();
@@ -81,9 +79,9 @@ struct SessionWindow
 
 	QString getTitle() const
 	{
-		if (index >= 0 && index < history.count())
+		if (historyIndex >= 0 && historyIndex < history.count())
 		{
-			return (history.at(index).title.isEmpty() ? QCoreApplication::translate("main", "(Untitled)") : history.at(index).title);
+			return (history.at(historyIndex).title.isEmpty() ? QCoreApplication::translate("main", "(Untitled)") : history.at(historyIndex).title);
 		}
 
 		return QCoreApplication::translate("main", "(Untitled)");
@@ -91,9 +89,9 @@ struct SessionWindow
 
 	int getZoom() const
 	{
-		if (index >= 0 && index < history.count())
+		if (historyIndex >= 0 && historyIndex < history.count())
 		{
-			return history.at(index).zoom;
+			return history.at(historyIndex).zoom;
 		}
 
 		return SettingsManager::getValue(QLatin1String("Content/DefaultZoom")).toInt();

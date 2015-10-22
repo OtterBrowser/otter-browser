@@ -61,6 +61,7 @@ public:
 
 	void search(const QString &search, const QString &query);
 	void print(QPrinter *printer);
+	void setOptions(const QVariantHash &options);
 	void setParent(Window *window);
 	WebContentsWidget* clone(bool cloneHistory = true);
 	Action* getAction(int identifier);
@@ -75,6 +76,7 @@ public:
 	WindowHistoryInformation getHistory() const;
 	QList<LinkUrl> getFeeds() const;
 	QList<LinkUrl> getSearchEngines() const;
+	QVariantHash getOptions() const;
 	int getZoom() const;
 	bool canClone() const;
 	bool canZoom() const;

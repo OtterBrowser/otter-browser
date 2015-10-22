@@ -115,7 +115,7 @@ int main(int argc, char *argv[])
 
 		SessionWindow tab;
 		tab.history.append(entry);
-		tab.index = 0;
+		tab.historyIndex = 0;
 
 		SessionMainWindow window;
 		window.windows.append(tab);

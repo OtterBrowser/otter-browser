@@ -233,18 +233,33 @@ SessionInformation SessionsManager::getSession(const QString &path)
 		for (int j = 1; j <= tabs; ++j)
 		{
 			const QString state = sessionData.value(QStringLiteral("%1/%2/Properties/state").arg(i).arg(j), QString()).toString();
+			const QString searchEngine = sessionData.value(QStringLiteral("%1/%2/Properties/searchEngine").arg(i).arg(j), QString()).toString();
+			const QString userAgent = sessionData.value(QStringLiteral("%1/%2/Properties/userAgent").arg(i).arg(j), QString()).toString();
 			const QStringList geometry = sessionData.value(QStringLiteral("%1/%2/Properties/geometry").arg(i).arg(j), QString()).toString().split(QLatin1Char(','));
 			const int history = sessionData.value(QStringLiteral("%1/%2/Properties/history").arg(i).arg(j), 0).toInt();
+			const int reloadTime = (sessionData.value(QStringLiteral("%1/%2/Properties/reloadTime").arg(i).arg(j), -1).toInt());
 			SessionWindow sessionWindow;
-			sessionWindow.searchEngine = sessionData.value(QStringLiteral("%1/%2/Properties/searchEngine").arg(i).arg(j), QString()).toString();
-			sessionWindow.userAgent = sessionData.value(QStringLiteral("%1/%2/Properties/userAgent").arg(i).arg(j), QString()).toString();
 			sessionWindow.geometry = ((geometry.count() == 4) ? QRect(geometry.at(0).toInt(), geometry.at(1).toInt(), geometry.at(2).toInt(), geometry.at(3).toInt()) : QRect());
 			sessionWindow.state = ((state == QLatin1String("maximized")) ? MaximizedWindowState : ((state == QLatin1String("minimized")) ? MinimizedWindowState : NormalWindowState));
-			sessionWindow.group = sessionData.value(QStringLiteral("%1/%2/Properties/group").arg(i).arg(j), 0).toInt();
-			sessionWindow.index = (sessionData.value(QStringLiteral("%1/%2/Properties/index").arg(i).arg(j), 1).toInt() - 1);
-			sessionWindow.reloadTime = (sessionData.value(QStringLiteral("%1/%2/Properties/reloadTime").arg(i).arg(j), -1).toInt());
+			sessionWindow.parentGroup = sessionData.value(QStringLiteral("%1/%2/Properties/group").arg(i).arg(j), 0).toInt();
+			sessionWindow.historyIndex = (sessionData.value(QStringLiteral("%1/%2/Properties/index").arg(i).arg(j), 1).toInt() - 1);
 			sessionWindow.isAlwaysOnTop = sessionData.value(QStringLiteral("%1/%2/Properties/alwaysOnTop").arg(i).arg(j), false).toBool();
 			sessionWindow.isPinned = sessionData.value(QStringLiteral("%1/%2/Properties/pinned").arg(i).arg(j), false).toBool();
+
+			if (!searchEngine.isEmpty())
+			{
+				sessionWindow.overrides[QLatin1String("Search/DefaultSearchEngine")] = searchEngine;
+			}
+
+			if (!userAgent.isEmpty())
+			{
+				sessionWindow.overrides[QLatin1String("Network/UserAgent")] = userAgent;
+			}
+
+			if (reloadTime >= 0)
+			{
+				sessionWindow.overrides[QLatin1String("Content/PageReloadTime")] = reloadTime;
+			}
 
 			for (int k = 1; k <= history; ++k)
 			{
@@ -440,19 +455,19 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 				stream << Utils::formatConfigurationEntry(QLatin1String("state"), ((sessionEntry.windows.at(j).state == MaximizedWindowState) ? QLatin1String("maximized") : QLatin1String("minimized")));
 			}
 
-			if (sessionEntry.windows.at(j).searchEngine != defaultSearchEngine)
+			if (sessionEntry.windows.at(j).overrides.value(QLatin1String("Search/DefaultSearchEngine"), QString()).toString() != defaultSearchEngine)
 			{
-				stream << Utils::formatConfigurationEntry(QLatin1String("searchEngine"), sessionEntry.windows.at(j).searchEngine);
+				stream << Utils::formatConfigurationEntry(QLatin1String("searchEngine"), sessionEntry.windows.at(j).overrides[QLatin1String("Search/DefaultSearchEngine")].toString());
 			}
 
-			if (sessionEntry.windows.at(j).userAgent != defaultUserAgent)
+			if (sessionEntry.windows.at(j).overrides.value(QLatin1String("Network/UserAgent"), QString()).toString() != defaultUserAgent)
 			{
-				stream << Utils::formatConfigurationEntry(QLatin1String("userAgent"), sessionEntry.windows.at(j).userAgent, true);
+				stream << Utils::formatConfigurationEntry(QLatin1String("userAgent"), sessionEntry.windows.at(j).overrides[QLatin1String("Network/UserAgent")].toString(), true);
 			}
 
-			if (sessionEntry.windows.at(j).reloadTime != -1)
+			if (sessionEntry.windows.at(j).overrides.value(QLatin1String("Content/PageReloadTime"), -1).toInt() != -1)
 			{
-				stream << Utils::formatConfigurationEntry(QLatin1String("reloadTime"), QString::number(sessionEntry.windows.at(j).reloadTime));
+				stream << Utils::formatConfigurationEntry(QLatin1String("reloadTime"), QString::number(sessionEntry.windows.at(j).overrides[QLatin1String("Content/PageReloadTime")].toInt()));
 			}
 
 			if (sessionEntry.windows.at(j).isAlwaysOnTop)
@@ -466,7 +481,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 			}
 
 			stream << QLatin1String("history=") << sessionEntry.windows.at(j).history.count() << QLatin1Char('\n');
-			stream << QLatin1String("index=") << (sessionEntry.windows.at(j).index + 1) << QLatin1String("\n\n");
+			stream << QLatin1String("index=") << (sessionEntry.windows.at(j).historyIndex + 1) << QLatin1String("\n\n");
 
 			for (int k = 0; k < sessionEntry.windows.at(j).history.count(); ++k)
 			{

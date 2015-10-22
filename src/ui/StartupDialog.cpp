@@ -188,7 +188,7 @@ SessionInformation StartupDialog::getSession() const
 
 		SessionWindow tab;
 		tab.history.append(entry);
-		tab.index = 0;
+		tab.historyIndex = 0;
 
 		SessionMainWindow window;
 		window.windows.append(tab);
