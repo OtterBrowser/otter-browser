@@ -2274,7 +2274,12 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				context = GesturesManager::EditableGesturesContext;
 			}
 
-			bool gestureStarted = GesturesManager::startGesture(object, event, context);
+			bool gestureStarted = false;
+
+			if (!mouseEvent || !isScrollBar(mouseEvent->pos()))
+			{
+				gestureStarted = GesturesManager::startGesture(object, event, context);
+			}
 
 			if (gestureStarted)
 			{
