@@ -33,7 +33,7 @@ ApplicationComboBoxWidget::ApplicationComboBoxWidget(QWidget *parent) : QComboBo
 {
 	addItem(tr("Default Application"));
 	insertSeparator(1);
-	addItem(tr("Otheṛ…"));
+	addItem(tr("Other…"));
 
 	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(indexChanged(int)));
 }

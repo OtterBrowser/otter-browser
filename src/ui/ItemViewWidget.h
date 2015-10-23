@@ -32,14 +32,22 @@ class ItemViewWidget : public QTreeView
 	Q_OBJECT
 
 public:
+	enum ViewMode
+	{
+		ListViewMode = 0,
+		TreeViewMode = 1
+	};
+
 	explicit ItemViewWidget(QWidget *parent = NULL);
 
 	void setData(const QModelIndex &index, const QVariant &value, int role);
 	void setModel(QAbstractItemModel *model);
+	void setViewMode(ViewMode mode);
 	QStandardItemModel* getModel();
 	QStandardItem* getItem(int row, int column = 0) const;
 	QModelIndex getIndex(int row, int column = 0) const;
 	QSize sizeHint() const;
+	ViewMode getViewMode() const;
 	int getCurrentRow() const;
 	int getPreviousRow() const;
 	int getRowCount() const;
@@ -69,8 +77,11 @@ private:
 	QStandardItemModel *m_model;
 	QModelIndex m_currentIndex;
 	QModelIndex m_previousIndex;
+	ViewMode m_viewMode;
 	int m_dropRow;
 	bool m_isModified;
+
+	static int m_treeIndentation;
 
 signals:
 	void canMoveUpChanged(bool available);

@@ -27,11 +27,16 @@
 namespace Otter
 {
 
+int ItemViewWidget::m_treeIndentation = 0;
+
 ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 	m_model(NULL),
+	m_viewMode(ListViewMode),
 	m_dropRow(-1),
 	m_isModified(false)
 {
+	m_treeIndentation = indentation();
+
 	optionChanged(QLatin1String("Interface/ShowScrollBars"), SettingsManager::getValue(QLatin1String("Interface/ShowScrollBars")));
 	setIndentation(0);
 	setAllColumnsShowFocus(true);
@@ -238,6 +243,13 @@ void ItemViewWidget::setModel(QAbstractItemModel *model)
 	connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SIGNAL(modified()));
 }
 
+void ItemViewWidget::setViewMode(ItemViewWidget::ViewMode mode)
+{
+	m_viewMode = mode;
+
+	setIndentation((mode == TreeViewMode) ? m_treeIndentation : 0);
+}
+
 QStandardItemModel* ItemViewWidget::getModel()
 {
 	return m_model;
@@ -263,6 +275,11 @@ QSize ItemViewWidget::sizeHint() const
 	}
 
 	return size;
+}
+
+ItemViewWidget::ViewMode ItemViewWidget::getViewMode() const
+{
+	return m_viewMode;
 }
 
 int ItemViewWidget::getCurrentRow() const
