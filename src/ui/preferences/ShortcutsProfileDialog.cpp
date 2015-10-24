@@ -73,7 +73,7 @@ ShortcutsProfileDialog::ShortcutsProfileDialog(const QString &profile, const QHa
 	m_ui->versionLineEdit->setText(profiles[profile].version);
 	m_ui->authorLineEdit->setText(profiles[profile].author);
 
-	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->actionsViewWidget, SLOT(setFilter(QString)));
+	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->actionsViewWidget, SLOT(setFilterString(QString)));
 	connect(m_ui->actionsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActionsActions()));
 	connect(m_ui->shortcutsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateShortcutsActions()));
 	connect(m_ui->addShortcutButton, SIGNAL(clicked()), this, SLOT(addShortcut()));

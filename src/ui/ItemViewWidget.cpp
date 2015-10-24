@@ -33,6 +33,7 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 	m_model(NULL),
 	m_viewMode(ListViewMode),
 	m_dropRow(-1),
+	m_canGatherExpanded(false),
 	m_isModified(false)
 {
 	m_treeIndentation = indentation();
@@ -40,6 +41,8 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 	optionChanged(QLatin1String("Interface/ShowScrollBars"), SettingsManager::getValue(QLatin1String("Interface/ShowScrollBars")));
 	setIndentation(0);
 	setAllColumnsShowFocus(true);
+
+	m_filterRoles.insert(Qt::DisplayRole);
 
 	viewport()->setAcceptDrops(true);
 }
@@ -183,34 +186,30 @@ void ItemViewWidget::updateDropSelection()
 	m_dropRow = -1;
 }
 
-void ItemViewWidget::setFilter(const QString filter)
+void ItemViewWidget::setFilterString(const QString filter)
 {
 	if (!m_model)
 	{
 		return;
 	}
 
-	for (int i = 0; i < m_model->rowCount(); ++i)
+	if (filter != m_filterString)
 	{
-		bool found = filter.isEmpty();
+		m_canGatherExpanded = m_filterString.isEmpty();
+		m_filterString = filter;
 
-		if (!found)
+		applyFilter(m_model->invisibleRootItem());
+
+		if (m_filterString.isEmpty())
 		{
-			for (int j = 0; j < m_model->columnCount(); ++j)
-			{
-				QStandardItem *item = m_model->item(i, j);
-
-				if (item && item->text().contains(filter, Qt::CaseInsensitive))
-				{
-					found = true;
-
-					break;
-				}
-			}
+			m_expandedBranches.clear();
 		}
-
-		setRowHidden(i, m_model->invisibleRootItem()->index(), !found);
 	}
+}
+
+void ItemViewWidget::setFilterRoles(const QSet<int> &roles)
+{
+	m_filterRoles = roles;
 }
 
 void ItemViewWidget::setData(const QModelIndex &index, const QVariant &value, int role)
@@ -305,6 +304,68 @@ int ItemViewWidget::getColumnCount() const
 bool ItemViewWidget::canMoveUp() const
 {
 	return (currentIndex().row() > 0 && m_model->rowCount() > 1);
+}
+
+bool ItemViewWidget::applyFilter(QStandardItem *item)
+{
+	bool hasFound = m_filterString.isEmpty();
+	const bool isFolder = !item->flags().testFlag(Qt::ItemNeverHasChildren);
+
+	if (isFolder)
+	{
+		if (m_canGatherExpanded && isExpanded(item->index()))
+		{
+			m_expandedBranches.insert(item);
+		}
+
+		for (int i = 0; i < item->rowCount(); ++i)
+		{
+			QStandardItem *child = item->child(i, 0);
+
+			if (child && applyFilter(child))
+			{
+				hasFound = true;
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < item->parent()->columnCount(); ++i)
+		{
+			QStandardItem *child = item->parent()->child(item->row(), i);
+
+			if (!child)
+			{
+				continue;
+			}
+
+			QSet<int>::iterator iterator;
+
+			for (iterator = m_filterRoles.begin(); iterator != m_filterRoles.end(); ++iterator)
+			{
+				if (child->data(*iterator).toString().contains(m_filterString, Qt::CaseInsensitive))
+				{
+					hasFound = true;
+
+					break;
+				}
+			}
+
+			if (hasFound)
+			{
+				break;
+			}
+		}
+	}
+
+	setRowHidden(item->row(), item->index().parent(), !hasFound);
+
+	if (isFolder)
+	{
+		setExpanded(item->index(), ((hasFound && !m_filterString.isEmpty()) || (m_filterString.isEmpty() && m_expandedBranches.contains(item))));
+	}
+
+	return hasFound;
 }
 
 bool ItemViewWidget::canMoveDown() const

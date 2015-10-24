@@ -62,11 +62,13 @@ public slots:
 	void removeRow();
 	void moveUpRow();
 	void moveDownRow();
-	void setFilter(const QString filter = QString());
+	void setFilterString(const QString filter = QString());
+	void setFilterRoles(const QSet<int> &roles);
 
 protected:
 	void dropEvent(QDropEvent *event);
 	void moveRow(bool up);
+	bool applyFilter(QStandardItem *item);
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
@@ -75,10 +77,14 @@ protected slots:
 
 private:
 	QStandardItemModel *m_model;
+	QString m_filterString;
 	QModelIndex m_currentIndex;
 	QModelIndex m_previousIndex;
+	QSet<QStandardItem*> m_expandedBranches;
+	QSet<int> m_filterRoles;
 	ViewMode m_viewMode;
 	int m_dropRow;
+	bool m_canGatherExpanded;
 	bool m_isModified;
 
 	static int m_treeIndentation;
