@@ -47,12 +47,16 @@ NotesContentsWidget::NotesContentsWidget(Window *window) : ContentsWidget(window
 	addMenu->addAction(tr("Add Note"), this, SLOT(addNote()));
 	addMenu->addAction(tr("Add Separator"), this, SLOT(addSeparator()));
 
+	QSet<int> filterRoles;
+	filterRoles << BookmarksModel::UrlRole << BookmarksModel::TitleRole << BookmarksModel::DescriptionRole << BookmarksModel::KeywordRole;
+
 	m_ui->addButton->setMenu(addMenu);
-	m_ui->notesView->setModel(NotesManager::getModel());
-	m_ui->notesView->setItemDelegate(new ItemDelegate(this));
-	m_ui->notesView->setExpanded(NotesManager::getModel()->getRootItem()->index(), true);
-	m_ui->notesView->viewport()->installEventFilter(this);
-	m_ui->notesView->viewport()->setMouseTracking(true);
+	m_ui->notesViewWidget->setModel(NotesManager::getModel());
+	m_ui->notesViewWidget->setItemDelegate(new ItemDelegate(this));
+	m_ui->notesViewWidget->setExpanded(NotesManager::getModel()->getRootItem()->index(), true);
+	m_ui->notesViewWidget->setFilterRoles(filterRoles);
+	m_ui->notesViewWidget->viewport()->installEventFilter(this);
+	m_ui->notesViewWidget->viewport()->setMouseTracking(true);
 	m_ui->filterLineEdit->installEventFilter(this);
 
 #if QT_VERSION >= 0x050300
@@ -68,10 +72,10 @@ NotesContentsWidget::NotesContentsWidget(Window *window) : ContentsWidget(window
 	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(removeNote()));
 	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(addNote()));
 	connect(m_ui->textEdit, SIGNAL(textChanged()), this, SLOT(updateText()));
-	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterNotes(QString)));
-	connect(m_ui->notesView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openUrl(QModelIndex)));
-	connect(m_ui->notesView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
-	connect(m_ui->notesView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
+	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->notesViewWidget, SLOT(setFilterString(QString)));
+	connect(m_ui->notesViewWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openUrl(QModelIndex)));
+	connect(m_ui->notesViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
+	connect(m_ui->notesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
 }
 
 NotesContentsWidget::~NotesContentsWidget()
@@ -83,20 +87,15 @@ void NotesContentsWidget::changeEvent(QEvent *event)
 {
 	QWidget::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
-
-			break;
-		default:
-			break;
+		m_ui->retranslateUi(this);
 	}
 }
 
 void NotesContentsWidget::addNote()
 {
-	NotesManager::addNote(BookmarksModel::UrlBookmark, QUrl(), QString(), findFolder(m_ui->notesView->currentIndex()));
+	NotesManager::addNote(BookmarksModel::UrlBookmark, QUrl(), QString(), findFolder(m_ui->notesViewWidget->currentIndex()));
 }
 
 void NotesContentsWidget::addFolder()
@@ -105,28 +104,28 @@ void NotesContentsWidget::addFolder()
 
 	if (!title.isEmpty())
 	{
-		NotesManager::addNote(BookmarksModel::FolderBookmark, QUrl(), title, findFolder(m_ui->notesView->currentIndex()));
+		NotesManager::addNote(BookmarksModel::FolderBookmark, QUrl(), title, findFolder(m_ui->notesViewWidget->currentIndex()));
 	}
 }
 
 void NotesContentsWidget::addSeparator()
 {
-	NotesManager::addNote(BookmarksModel::SeparatorBookmark, QUrl(), QString(), findFolder(m_ui->notesView->currentIndex()));
+	NotesManager::addNote(BookmarksModel::SeparatorBookmark, QUrl(), QString(), findFolder(m_ui->notesViewWidget->currentIndex()));
 }
 
 void NotesContentsWidget::removeNote()
 {
-	NotesManager::getModel()->trashBookmark(NotesManager::getModel()->bookmarkFromIndex(m_ui->notesView->currentIndex()));
+	NotesManager::getModel()->trashBookmark(NotesManager::getModel()->bookmarkFromIndex(m_ui->notesViewWidget->currentIndex()));
 }
 
 void NotesContentsWidget::restoreNote()
 {
-	NotesManager::getModel()->restoreBookmark(NotesManager::getModel()->bookmarkFromIndex(m_ui->notesView->currentIndex()));
+	NotesManager::getModel()->restoreBookmark(NotesManager::getModel()->bookmarkFromIndex(m_ui->notesViewWidget->currentIndex()));
 }
 
 void NotesContentsWidget::openUrl(const QModelIndex &index)
 {
-	BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(NotesManager::getModel()->itemFromIndex(index.isValid() ? index : m_ui->notesView->currentIndex()));
+	BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(NotesManager::getModel()->itemFromIndex(index.isValid() ? index : m_ui->notesViewWidget->currentIndex()));
 	WindowsManager *manager = SessionsManager::getWindowsManager();
 
 	if (bookmark && bookmark->data(BookmarksModel::UrlRole).toUrl().isValid() && manager)
@@ -137,7 +136,7 @@ void NotesContentsWidget::openUrl(const QModelIndex &index)
 
 void NotesContentsWidget::showContextMenu(const QPoint &point)
 {
-	const QModelIndex index = m_ui->notesView->indexAt(point);
+	const QModelIndex index = m_ui->notesViewWidget->indexAt(point);
 	const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt());
 	QMenu menu(this);
 
@@ -204,7 +203,7 @@ void NotesContentsWidget::showContextMenu(const QPoint &point)
 		}
 	}
 
-	menu.exec(m_ui->notesView->mapToGlobal(point));
+	menu.exec(m_ui->notesViewWidget->mapToGlobal(point));
 }
 
 void NotesContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
@@ -214,9 +213,9 @@ void NotesContentsWidget::triggerAction(int identifier, const QVariantMap &param
 	switch (identifier)
 	{
 		case ActionsManager::CopyLinkToClipboardAction:
-			if (static_cast<BookmarksModel::BookmarkType>(m_ui->notesView->currentIndex().data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
+			if (static_cast<BookmarksModel::BookmarkType>(m_ui->notesViewWidget->currentIndex().data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
 			{
-				QGuiApplication::clipboard()->setText(m_ui->notesView->currentIndex().data(BookmarksModel::UrlRole).toString());
+				QGuiApplication::clipboard()->setText(m_ui->notesViewWidget->currentIndex().data(BookmarksModel::UrlRole).toString());
 			}
 
 			break;
@@ -226,16 +225,16 @@ void NotesContentsWidget::triggerAction(int identifier, const QVariantMap &param
 
 			break;
 		case ActionsManager::CopyAction:
-			if (static_cast<BookmarksModel::BookmarkType>(m_ui->notesView->currentIndex().data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
+			if (static_cast<BookmarksModel::BookmarkType>(m_ui->notesViewWidget->currentIndex().data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
 			{
-				QGuiApplication::clipboard()->setText(m_ui->notesView->currentIndex().data(BookmarksModel::DescriptionRole).toString());
+				QGuiApplication::clipboard()->setText(m_ui->notesViewWidget->currentIndex().data(BookmarksModel::DescriptionRole).toString());
 			}
 
 			break;
 		case ActionsManager::PasteAction:
 			if (!QGuiApplication::clipboard()->text().isEmpty())
 			{
-				BookmarksItem *bookmark = NotesManager::addNote(BookmarksModel::UrlBookmark, QUrl(), QString(), findFolder(m_ui->notesView->currentIndex()));
+				BookmarksItem *bookmark = NotesManager::addNote(BookmarksModel::UrlBookmark, QUrl(), QString(), findFolder(m_ui->notesViewWidget->currentIndex()));
 				bookmark->setData(QGuiApplication::clipboard()->text(), BookmarksModel::DescriptionRole);
 			}
 
@@ -251,7 +250,7 @@ void NotesContentsWidget::triggerAction(int identifier, const QVariantMap &param
 
 			break;
 		case ActionsManager::ActivateContentAction:
-			m_ui->notesView->setFocus();
+			m_ui->notesViewWidget->setFocus();
 
 			break;
 		default:
@@ -261,8 +260,8 @@ void NotesContentsWidget::triggerAction(int identifier, const QVariantMap &param
 
 void NotesContentsWidget::updateActions(bool updateText)
 {
-	const bool hasSelecion = !m_ui->notesView->selectionModel()->selectedIndexes().isEmpty();
-	const QModelIndex index = (m_ui->notesView->selectionModel()->hasSelection() ? m_ui->notesView->selectionModel()->currentIndex() : QModelIndex());
+	const bool hasSelecion = !m_ui->notesViewWidget->selectionModel()->selectedIndexes().isEmpty();
+	const QModelIndex index = (m_ui->notesViewWidget->selectionModel()->hasSelection() ? m_ui->notesViewWidget->selectionModel()->currentIndex() : QModelIndex());
 	const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt());
 
 	m_ui->deleteButton->setEnabled(hasSelecion && type != BookmarksModel::RootBookmark && type != BookmarksModel::TrashBookmark);
@@ -289,30 +288,30 @@ void NotesContentsWidget::updateActions(bool updateText)
 
 void NotesContentsWidget::updateText()
 {
-	const QModelIndex index = (m_ui->notesView->selectionModel()->hasSelection() ? m_ui->notesView->selectionModel()->currentIndex() : QModelIndex());
+	const QModelIndex index = (m_ui->notesViewWidget->selectionModel()->hasSelection() ? m_ui->notesViewWidget->selectionModel()->currentIndex() : QModelIndex());
 
 	if (index.isValid() && static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
 	{
-		m_ui->notesView->model()->setData(index, m_ui->textEdit->toPlainText(), BookmarksModel::DescriptionRole);
+		m_ui->notesViewWidget->model()->setData(index, m_ui->textEdit->toPlainText(), BookmarksModel::DescriptionRole);
 	}
 	else
 	{
-		disconnect(m_ui->notesView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
+		disconnect(m_ui->notesViewWidget->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
 
 		BookmarksItem *bookmark = NotesManager::addNote(BookmarksModel::UrlBookmark, QUrl(), QString(), findFolder(index));
 		bookmark->setData(m_ui->textEdit->toPlainText(), BookmarksModel::DescriptionRole);
 
-		m_ui->notesView->setCurrentIndex(bookmark->index());
+		m_ui->notesViewWidget->setCurrentIndex(bookmark->index());
 
 		updateActions(false);
 
-		connect(m_ui->notesView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
+		connect(m_ui->notesViewWidget->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
 	}
 }
 
 void NotesContentsWidget::print(QPrinter *printer)
 {
-	m_ui->notesView->render(printer);
+	m_ui->notesViewWidget->render(printer);
 }
 
 Action* NotesContentsWidget::getAction(int identifier)
@@ -388,58 +387,16 @@ QIcon NotesContentsWidget::getIcon() const
 	return Utils::getIcon(QLatin1String("notes"), false);
 }
 
-bool NotesContentsWidget::filterNotes(const QString &filter, QStandardItem *branch)
-{
-	if (!branch)
-	{
-		if (sender())
-		{
-			branch = NotesManager::getModel()->invisibleRootItem();
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	bool found = filter.isEmpty();
-
-	for (int i = 0; i < branch->rowCount(); ++i)
-	{
-		QStandardItem *item = branch->child(i, 0);
-
-		if (item && filterNotes(filter, item))
-		{
-			found = true;
-		}
-	}
-
-	if (!found)
-	{
-		const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(branch->data(BookmarksModel::TypeRole).toInt());
-
-		if ((type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark) && (branch->data(BookmarksModel::UrlRole).toString().contains(filter, Qt::CaseInsensitive) || branch->data(BookmarksModel::DescriptionRole).toString().contains(filter, Qt::CaseInsensitive) || branch->data(BookmarksModel::KeywordRole).toString().contains(filter, Qt::CaseInsensitive)))
-		{
-			found = true;
-		}
-	}
-
-	m_ui->notesView->setRowHidden(branch->row(), branch->index().parent(), !found);
-	m_ui->notesView->setExpanded(branch->index(), (found && !filter.isEmpty()));
-
-	return found;
-}
-
 bool NotesContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == m_ui->notesView->viewport() && event->type() == QEvent::MouseButtonRelease)
+	if (object == m_ui->notesViewWidget->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 		WindowsManager *manager = SessionsManager::getWindowsManager();
 
 		if (mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
 		{
-			BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(NotesManager::getModel()->itemFromIndex(m_ui->notesView->indexAt(mouseEvent->pos())));
+			BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(NotesManager::getModel()->itemFromIndex(m_ui->notesViewWidget->indexAt(mouseEvent->pos())));
 
 			if (bookmark)
 			{
@@ -449,18 +406,18 @@ bool NotesContentsWidget::eventFilter(QObject *object, QEvent *event)
 			}
 		}
 	}
-	else if (object == m_ui->notesView->viewport() && event->type() == QEvent::ToolTip)
+	else if (object == m_ui->notesViewWidget->viewport() && event->type() == QEvent::ToolTip)
 	{
 		QHelpEvent *helpEvent = static_cast<QHelpEvent*>(event);
 
 		if (helpEvent)
 		{
-			const QModelIndex index = m_ui->notesView->indexAt(helpEvent->pos());
+			const QModelIndex index = m_ui->notesViewWidget->indexAt(helpEvent->pos());
 			BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(NotesManager::getModel()->itemFromIndex(index));
 
 			if (bookmark)
 			{
-				QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(bookmark->toolTip(), Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_ui->notesView).width() / 2)), m_ui->notesView, m_ui->notesView->visualRect(index));
+				QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(bookmark->toolTip(), Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_ui->notesViewWidget).width() / 2)), m_ui->notesViewWidget, m_ui->notesViewWidget->visualRect(index));
 			}
 
 			return true;

@@ -68,7 +68,6 @@ protected slots:
 	void showContextMenu(const QPoint &point);
 	void updateActions(bool updateText = true);
 	void updateText();
-	bool filterNotes(const QString &filter, QStandardItem *branch = NULL);
 
 private:
 	QHash<int, Action*> m_actions;

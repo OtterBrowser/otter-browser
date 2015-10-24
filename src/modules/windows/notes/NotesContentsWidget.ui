@@ -41,7 +41,7 @@
      <property name="childrenCollapsible">
       <bool>false</bool>
      </property>
-     <widget class="QTreeView" name="notesView">
+     <widget class="Otter::ItemViewWidget" name="notesViewWidget">
       <property name="contextMenuPolicy">
        <enum>Qt::CustomContextMenu</enum>
       </property>
@@ -130,9 +130,16 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Otter::ItemViewWidget</class>
+   <extends>QTreeView</extends>
+   <header>src/ui/ItemViewWidget.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>filterLineEdit</tabstop>
-  <tabstop>notesView</tabstop>
+  <tabstop>notesViewWidget</tabstop>
  </tabstops>
  <resources/>
  <connections/>

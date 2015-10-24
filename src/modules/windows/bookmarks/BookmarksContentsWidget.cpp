@@ -54,7 +54,7 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 	m_ui->bookmarksViewWidget->setModel(BookmarksManager::getModel());
 	m_ui->bookmarksViewWidget->setItemDelegate(new ItemDelegate(this));
 	m_ui->bookmarksViewWidget->setExpanded(BookmarksManager::getModel()->getRootItem()->index(), true);
-	m_ui->bookmarksViewWidget->	setFilterRoles(filterRoles);
+	m_ui->bookmarksViewWidget->setFilterRoles(filterRoles);
 	m_ui->bookmarksViewWidget->installEventFilter(this);
 	m_ui->bookmarksViewWidget->viewport()->installEventFilter(this);
 	m_ui->bookmarksViewWidget->viewport()->setMouseTracking(true);
