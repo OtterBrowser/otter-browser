@@ -46,13 +46,18 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 	addMenu->addAction(tr("Add Bookmark"), this, SLOT(addBookmark()));
 	addMenu->addAction(tr("Add Separator"), this, SLOT(addSeparator()));
 
+	QSet<int> filterRoles;
+	filterRoles << BookmarksModel::UrlRole << BookmarksModel::TitleRole << BookmarksModel::DescriptionRole << BookmarksModel::KeywordRole;
+
 	m_ui->addButton->setMenu(addMenu);
-	m_ui->bookmarksView->setModel(BookmarksManager::getModel());
-	m_ui->bookmarksView->setItemDelegate(new ItemDelegate(this));
-	m_ui->bookmarksView->setExpanded(BookmarksManager::getModel()->getRootItem()->index(), true);
-	m_ui->bookmarksView->installEventFilter(this);
-	m_ui->bookmarksView->viewport()->installEventFilter(this);
-	m_ui->bookmarksView->viewport()->setMouseTracking(true);
+	m_ui->bookmarksViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->bookmarksViewWidget->setModel(BookmarksManager::getModel());
+	m_ui->bookmarksViewWidget->setItemDelegate(new ItemDelegate(this));
+	m_ui->bookmarksViewWidget->setExpanded(BookmarksManager::getModel()->getRootItem()->index(), true);
+	m_ui->bookmarksViewWidget->	setFilterRoles(filterRoles);
+	m_ui->bookmarksViewWidget->installEventFilter(this);
+	m_ui->bookmarksViewWidget->viewport()->installEventFilter(this);
+	m_ui->bookmarksViewWidget->viewport()->setMouseTracking(true);
 	m_ui->filterLineEdit->installEventFilter(this);
 
 	if (!window)
@@ -64,10 +69,10 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 	connect(m_ui->propertiesButton, SIGNAL(clicked()), this, SLOT(bookmarkProperties()));
 	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(removeBookmark()));
 	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(addBookmark()));
-	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterBookmarks(QString)));
-	connect(m_ui->bookmarksView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openBookmark(QModelIndex)));
-	connect(m_ui->bookmarksView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
-	connect(m_ui->bookmarksView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
+	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->bookmarksViewWidget, SLOT(setFilterString(QString)));
+	connect(m_ui->bookmarksViewWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openBookmark(QModelIndex)));
+	connect(m_ui->bookmarksViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
+	connect(m_ui->bookmarksViewWidget->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
 }
 
 BookmarksContentsWidget::~BookmarksContentsWidget()
@@ -92,7 +97,7 @@ void BookmarksContentsWidget::changeEvent(QEvent *event)
 
 void BookmarksContentsWidget::addBookmark()
 {
-	BookmarksItem *bookmark = BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, QUrl(), QString(), findFolder(m_ui->bookmarksView->currentIndex()));
+	BookmarksItem *bookmark = BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, QUrl(), QString(), findFolder(m_ui->bookmarksViewWidget->currentIndex()));
 	BookmarkPropertiesDialog dialog(bookmark, BookmarkPropertiesDialog::AddBookmarkMode, this);
 
 	if (dialog.exec() == QDialog::Rejected)
@@ -103,7 +108,7 @@ void BookmarksContentsWidget::addBookmark()
 
 void BookmarksContentsWidget::addFolder()
 {
-	BookmarksItem *bookmark = BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, QUrl(), QString(), findFolder(m_ui->bookmarksView->currentIndex()));
+	BookmarksItem *bookmark = BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, QUrl(), QString(), findFolder(m_ui->bookmarksViewWidget->currentIndex()));
 	BookmarkPropertiesDialog dialog(bookmark, BookmarkPropertiesDialog::AddBookmarkMode, this);
 
 	if (dialog.exec() == QDialog::Rejected)
@@ -114,22 +119,22 @@ void BookmarksContentsWidget::addFolder()
 
 void BookmarksContentsWidget::addSeparator()
 {
-	BookmarksManager::addBookmark(BookmarksModel::SeparatorBookmark, QUrl(), QString(), findFolder(m_ui->bookmarksView->currentIndex()));
+	BookmarksManager::addBookmark(BookmarksModel::SeparatorBookmark, QUrl(), QString(), findFolder(m_ui->bookmarksViewWidget->currentIndex()));
 }
 
 void BookmarksContentsWidget::removeBookmark()
 {
-	BookmarksManager::getModel()->trashBookmark(BookmarksManager::getModel()->bookmarkFromIndex(m_ui->bookmarksView->currentIndex()));
+	BookmarksManager::getModel()->trashBookmark(BookmarksManager::getModel()->bookmarkFromIndex(m_ui->bookmarksViewWidget->currentIndex()));
 }
 
 void BookmarksContentsWidget::restoreBookmark()
 {
-	BookmarksManager::getModel()->restoreBookmark(BookmarksManager::getModel()->bookmarkFromIndex(m_ui->bookmarksView->currentIndex()));
+	BookmarksManager::getModel()->restoreBookmark(BookmarksManager::getModel()->bookmarkFromIndex(m_ui->bookmarksViewWidget->currentIndex()));
 }
 
 void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 {
-	BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(index.isValid() ? index : m_ui->bookmarksView->currentIndex()));
+	BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(index.isValid() ? index : m_ui->bookmarksViewWidget->currentIndex()));
 	WindowsManager *manager = SessionsManager::getWindowsManager();
 
 	if (bookmark && manager)
@@ -142,7 +147,7 @@ void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 
 void BookmarksContentsWidget::bookmarkProperties()
 {
-	BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(m_ui->bookmarksView->currentIndex()));
+	BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(m_ui->bookmarksViewWidget->currentIndex()));
 
 	if (bookmark)
 	{
@@ -154,7 +159,7 @@ void BookmarksContentsWidget::bookmarkProperties()
 
 void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 {
-	const QModelIndex index = m_ui->bookmarksView->indexAt(point);
+	const QModelIndex index = m_ui->bookmarksViewWidget->indexAt(point);
 	const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt());
 	QMenu menu(this);
 
@@ -224,7 +229,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 		}
 	}
 
-	menu.exec(m_ui->bookmarksView->mapToGlobal(point));
+	menu.exec(m_ui->bookmarksViewWidget->mapToGlobal(point));
 }
 
 void BookmarksContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
@@ -238,9 +243,9 @@ void BookmarksContentsWidget::triggerAction(int identifier, const QVariantMap &p
 
 			break;
 		case ActionsManager::CopyLinkToClipboardAction:
-			if (static_cast<BookmarksModel::BookmarkType>(m_ui->bookmarksView->currentIndex().data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
+			if (static_cast<BookmarksModel::BookmarkType>(m_ui->bookmarksViewWidget->currentIndex().data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
 			{
-				QGuiApplication::clipboard()->setText(m_ui->bookmarksView->currentIndex().data(BookmarksModel::UrlRole).toString());
+				QGuiApplication::clipboard()->setText(m_ui->bookmarksViewWidget->currentIndex().data(BookmarksModel::UrlRole).toString());
 			}
 
 			break;
@@ -251,7 +256,7 @@ void BookmarksContentsWidget::triggerAction(int identifier, const QVariantMap &p
 
 			break;
 		case ActionsManager::ActivateContentAction:
-			m_ui->bookmarksView->setFocus();
+			m_ui->bookmarksViewWidget->setFocus();
 
 			break;
 		default:
@@ -261,8 +266,8 @@ void BookmarksContentsWidget::triggerAction(int identifier, const QVariantMap &p
 
 void BookmarksContentsWidget::updateActions()
 {
-	const bool hasSelecion = !m_ui->bookmarksView->selectionModel()->selectedIndexes().isEmpty();
-	const QModelIndex index = (m_ui->bookmarksView->selectionModel()->hasSelection() ? m_ui->bookmarksView->selectionModel()->currentIndex() : QModelIndex());
+	const bool hasSelecion = !m_ui->bookmarksViewWidget->selectionModel()->selectedIndexes().isEmpty();
+	const QModelIndex index = (m_ui->bookmarksViewWidget->selectionModel()->hasSelection() ? m_ui->bookmarksViewWidget->selectionModel()->currentIndex() : QModelIndex());
 	const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt());
 
 	m_ui->addressLabelWidget->setText(index.data(BookmarksModel::UrlRole).toString());
@@ -280,7 +285,7 @@ void BookmarksContentsWidget::updateActions()
 
 void BookmarksContentsWidget::print(QPrinter *printer)
 {
-	m_ui->bookmarksView->render(printer);
+	m_ui->bookmarksViewWidget->render(printer);
 }
 
 Action* BookmarksContentsWidget::getAction(int identifier)
@@ -343,51 +348,9 @@ QIcon BookmarksContentsWidget::getIcon() const
 	return Utils::getIcon(QLatin1String("bookmarks"), false);
 }
 
-bool BookmarksContentsWidget::filterBookmarks(const QString &filter, QStandardItem *branch)
-{
-	if (!branch)
-	{
-		if (sender())
-		{
-			branch = BookmarksManager::getModel()->invisibleRootItem();
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	bool found = filter.isEmpty();
-
-	for (int i = 0; i < branch->rowCount(); ++i)
-	{
-		QStandardItem *item = branch->child(i, 0);
-
-		if (item && filterBookmarks(filter, item))
-		{
-			found = true;
-		}
-	}
-
-	if (!found)
-	{
-		const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(branch->data(BookmarksModel::TypeRole).toInt());
-
-		if ((type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark) && (branch->data(BookmarksModel::UrlRole).toString().contains(filter, Qt::CaseInsensitive) || branch->data(BookmarksModel::TitleRole).toString().contains(filter, Qt::CaseInsensitive) || branch->data(BookmarksModel::DescriptionRole).toString().contains(filter, Qt::CaseInsensitive) || branch->data(BookmarksModel::KeywordRole).toString().contains(filter, Qt::CaseInsensitive)))
-		{
-			found = true;
-		}
-	}
-
-	m_ui->bookmarksView->setRowHidden(branch->row(), branch->index().parent(), !found);
-	m_ui->bookmarksView->setExpanded(branch->index(), (found && !filter.isEmpty()));
-
-	return found;
-}
-
 bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == m_ui->bookmarksView && event->type() == QEvent::KeyPress)
+	if (object == m_ui->bookmarksViewWidget && event->type() == QEvent::KeyPress)
 	{
 		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
 
@@ -405,14 +368,14 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 			return true;
 		}
 	}
-	else if (object == m_ui->bookmarksView->viewport() && event->type() == QEvent::MouseButtonRelease)
+	else if (object == m_ui->bookmarksViewWidget->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 		WindowsManager *manager = SessionsManager::getWindowsManager();
 
 		if (mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
 		{
-			BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(m_ui->bookmarksView->indexAt(mouseEvent->pos())));
+			BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(m_ui->bookmarksViewWidget->indexAt(mouseEvent->pos())));
 
 			if (bookmark)
 			{
@@ -422,18 +385,18 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 			}
 		}
 	}
-	else if (object == m_ui->bookmarksView->viewport() && event->type() == QEvent::ToolTip)
+	else if (object == m_ui->bookmarksViewWidget->viewport() && event->type() == QEvent::ToolTip)
 	{
 		QHelpEvent *helpEvent = static_cast<QHelpEvent*>(event);
 
 		if (helpEvent)
 		{
-			const QModelIndex index = m_ui->bookmarksView->indexAt(helpEvent->pos());
+			const QModelIndex index = m_ui->bookmarksViewWidget->indexAt(helpEvent->pos());
 			BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(index));
 
 			if (bookmark)
 			{
-				QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(bookmark->toolTip(), Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_ui->bookmarksView).width() / 2)), m_ui->bookmarksView, m_ui->bookmarksView->visualRect(index));
+				QToolTip::showText(helpEvent->globalPos(), QFontMetrics(QToolTip::font()).elidedText(bookmark->toolTip(), Qt::ElideRight, (QApplication::desktop()->screenGeometry(m_ui->bookmarksViewWidget).width() / 2)), m_ui->bookmarksViewWidget, m_ui->bookmarksViewWidget->visualRect(index));
 			}
 
 			return true;

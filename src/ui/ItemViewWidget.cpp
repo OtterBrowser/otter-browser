@@ -49,11 +49,11 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 
 void ItemViewWidget::dropEvent(QDropEvent *event)
 {
-	QDropEvent modifiedEvent(QPointF((visualRect(m_model->index(0, 0)).x() + 1), event->posF().y()), Qt::MoveAction, event->mimeData(), event->mouseButtons(), event->keyboardModifiers(), event->type());
+	QDropEvent mutableEvent(QPointF((visualRect(m_model->index(0, 0)).x() + 1), event->posF().y()), Qt::MoveAction, event->mimeData(), event->mouseButtons(), event->keyboardModifiers(), event->type());
 
-	QTreeView::dropEvent(&modifiedEvent);
+	QTreeView::dropEvent(&mutableEvent);
 
-	if (modifiedEvent.isAccepted())
+	if (mutableEvent.isAccepted())
 	{
 		event->accept();
 

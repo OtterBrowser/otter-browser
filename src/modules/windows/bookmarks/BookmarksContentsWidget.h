@@ -68,7 +68,6 @@ protected slots:
 	void bookmarkProperties();
 	void showContextMenu(const QPoint &point);
 	void updateActions();
-	bool filterBookmarks(const QString &filter, QStandardItem *branch = NULL);
 
 private:
 	QHash<int, Action*> m_actions;

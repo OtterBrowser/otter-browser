@@ -715,6 +715,11 @@ BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, quint64 identifier
 	setData(bookmark->index(), url, UrlRole);
 	setData(bookmark->index(), title, TitleRole);
 
+	if (type != RootBookmark && type != TrashBookmark && type != FolderBookmark)
+	{
+		bookmark->setFlags(bookmark->flags() | Qt::ItemNeverHasChildren);
+	}
+
 	if (type != SeparatorBookmark && type != TrashBookmark && type != UnknownBookmark)
 	{
 		if (identifier == 0 || m_identifiers.contains(identifier))

@@ -34,7 +34,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QTreeView" name="bookmarksView">
+    <widget class="Otter::ItemViewWidget" name="bookmarksViewWidget">
      <property name="contextMenuPolicy">
       <enum>Qt::CustomContextMenu</enum>
      </property>
@@ -178,10 +178,15 @@
    <header>src/ui/TextLabelWidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>Otter::ItemViewWidget</class>
+   <extends>QTreeView</extends>
+   <header>src/ui/ItemViewWidget.h</header>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>filterLineEdit</tabstop>
-  <tabstop>bookmarksView</tabstop>
+  <tabstop>bookmarksViewWidget</tabstop>
   <tabstop>propertiesButton</tabstop>
   <tabstop>deleteButton</tabstop>
   <tabstop>addButton</tabstop>
