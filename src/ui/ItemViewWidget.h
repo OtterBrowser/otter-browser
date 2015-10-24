@@ -75,6 +75,7 @@ protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void notifySelectionChanged();
 	void updateDropSelection();
+	void updateFilter();
 
 private:
 	QStandardItemModel *m_model;

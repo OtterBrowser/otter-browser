@@ -208,6 +208,11 @@ void ItemViewWidget::updateDropSelection()
 	m_dropRow = -1;
 }
 
+void ItemViewWidget::updateFilter()
+{
+	applyFilter(m_model->invisibleRootItem());
+}
+
 void ItemViewWidget::setFilterString(const QString filter)
 {
 	if (!m_model)
@@ -217,6 +222,13 @@ void ItemViewWidget::setFilterString(const QString filter)
 
 	if (filter != m_filterString)
 	{
+		if (m_filterString.isEmpty())
+		{
+			connect(m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(updateFilter()));
+			connect(m_model, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(updateFilter()));
+			connect(m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateFilter()));
+		}
+
 		m_canGatherExpanded = m_filterString.isEmpty();
 		m_filterString = filter;
 
@@ -225,6 +237,10 @@ void ItemViewWidget::setFilterString(const QString filter)
 		if (m_filterString.isEmpty())
 		{
 			m_expandedBranches.clear();
+
+			disconnect(m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(updateFilter()));
+			disconnect(m_model, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(updateFilter()));
+			disconnect(m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateFilter()));
 		}
 	}
 }
