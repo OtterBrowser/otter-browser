@@ -34,7 +34,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QTreeView" name="cacheView">
+    <widget class="Otter::ItemViewWidget" name="cacheViewWidget">
      <property name="contextMenuPolicy">
       <enum>Qt::CustomContextMenu</enum>
      </property>
@@ -238,10 +238,15 @@
    <header>src/ui/TextLabelWidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>Otter::ItemViewWidget</class>
+   <extends>QTreeView</extends>
+   <header>src/ui/ItemViewWidget.h</header>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>filterLineEdit</tabstop>
-  <tabstop>cacheView</tabstop>
+  <tabstop>cacheViewWidget</tabstop>
   <tabstop>deleteButton</tabstop>
  </tabstops>
  <resources/>

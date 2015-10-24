@@ -44,8 +44,9 @@ CacheContentsWidget::CacheContentsWidget(Window *window) : ContentsWidget(window
 {
 	m_ui->setupUi(this);
 	m_ui->previewLabel->hide();
-	m_ui->cacheView->installEventFilter(this);
-	m_ui->cacheView->viewport()->installEventFilter(this);
+	m_ui->cacheViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->cacheViewWidget->installEventFilter(this);
+	m_ui->cacheViewWidget->viewport()->installEventFilter(this);
 	m_ui->filterLineEdit->installEventFilter(this);
 
 	if (!window)
@@ -55,9 +56,9 @@ CacheContentsWidget::CacheContentsWidget(Window *window) : ContentsWidget(window
 
 	QTimer::singleShot(100, this, SLOT(populateCache()));
 
-	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterCache(QString)));
-	connect(m_ui->cacheView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openEntry(QModelIndex)));
-	connect(m_ui->cacheView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
+	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->cacheViewWidget, SLOT(setFilterString(QString)));
+	connect(m_ui->cacheViewWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openEntry(QModelIndex)));
+	connect(m_ui->cacheViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(removeDomainEntriesOrEntry()));
 }
 
@@ -70,20 +71,15 @@ void CacheContentsWidget::changeEvent(QEvent *event)
 {
 	QWidget::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
-
-			break;
-		default:
-			break;
+		m_ui->retranslateUi(this);
 	}
 }
 
 void CacheContentsWidget::print(QPrinter *printer)
 {
-	m_ui->cacheView->render(printer);
+	m_ui->cacheViewWidget->render(printer);
 }
 
 void CacheContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
@@ -103,7 +99,7 @@ void CacheContentsWidget::triggerAction(int identifier, const QVariantMap &param
 
 			break;
 		case ActionsManager::ActivateContentAction:
-			m_ui->cacheView->setFocus();
+			m_ui->cacheViewWidget->setFocus();
 
 			break;
 		default:
@@ -129,10 +125,14 @@ void CacheContentsWidget::populateCache()
 
 	m_model->sort(0);
 
-	m_ui->cacheView->setModel(m_model);
-	m_ui->cacheView->setItemDelegate(new ItemDelegate(this));
-	m_ui->cacheView->header()->setTextElideMode(Qt::ElideRight);
-	m_ui->cacheView->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+	QSet<int> filterRoles;
+	filterRoles << Qt::DisplayRole << Qt::UserRole;
+
+	m_ui->cacheViewWidget->setModel(m_model);
+	m_ui->cacheViewWidget->setItemDelegate(new ItemDelegate(this));
+	m_ui->cacheViewWidget->header()->setTextElideMode(Qt::ElideRight);
+	m_ui->cacheViewWidget->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+	m_ui->cacheViewWidget->setFilterRoles(filterRoles);
 
 	m_isLoading = false;
 
@@ -142,44 +142,7 @@ void CacheContentsWidget::populateCache()
 	connect(cache, SIGNAL(entryAdded(QUrl)), this, SLOT(addEntry(QUrl)));
 	connect(cache, SIGNAL(entryRemoved(QUrl)), this, SLOT(removeEntry(QUrl)));
 	connect(m_model, SIGNAL(modelReset()), this, SLOT(updateActions()));
-	connect(m_ui->cacheView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
-}
-
-void CacheContentsWidget::filterCache(const QString &filter)
-{
-	for (int i = 0; i < m_model->rowCount(); ++i)
-	{
-		QStandardItem *domainItem = m_model->item(i, 0);
-
-		if (!domainItem)
-		{
-			continue;
-		}
-
-		bool found = (filter.isEmpty() && domainItem->rowCount() > 0);
-
-		for (int j = 0; j < domainItem->rowCount(); ++j)
-		{
-			QStandardItem *entryItem = domainItem->child(j, 0);
-
-			if (!entryItem)
-			{
-				continue;
-			}
-
-			const bool match = (filter.isEmpty() || entryItem->data(Qt::UserRole).toString().contains(filter, Qt::CaseInsensitive) || domainItem->child(j, 1)->text().contains(filter, Qt::CaseInsensitive));
-
-			if (match)
-			{
-				found = true;
-			}
-
-			m_ui->cacheView->setRowHidden(j, domainItem->index(), !match);
-		}
-
-		m_ui->cacheView->setRowHidden(i, m_model->invisibleRootItem()->index(), !found);
-		m_ui->cacheView->setExpanded(domainItem->index(), !filter.isEmpty());
-	}
+	connect(m_ui->cacheViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
 }
 
 void CacheContentsWidget::clearEntries()
@@ -242,7 +205,12 @@ void CacheContentsWidget::addEntry(const QUrl &entry)
 	entryItems.append(new QStandardItem(metaData.lastModified().toString()));
 	entryItems.append(new QStandardItem(metaData.expirationDate().toString()));
 	entryItems[0]->setData(entry, Qt::UserRole);
+	entryItems[0]->setFlags(entryItems[0]->flags() | Qt::ItemNeverHasChildren);
+	entryItems[1]->setFlags(entryItems[1]->flags() | Qt::ItemNeverHasChildren);
 	entryItems[2]->setData((device ? device->size() : 0), Qt::UserRole);
+	entryItems[2]->setFlags(entryItems[2]->flags() | Qt::ItemNeverHasChildren);
+	entryItems[3]->setFlags(entryItems[3]->flags() | Qt::ItemNeverHasChildren);
+	entryItems[4]->setFlags(entryItems[4]->flags() | Qt::ItemNeverHasChildren);
 
 	QStandardItem *sizeItem = m_model->item(domainItem->row(), 2);
 
@@ -263,11 +231,6 @@ void CacheContentsWidget::addEntry(const QUrl &entry)
 	if (sender())
 	{
 		domainItem->sortChildren(0, Qt::DescendingOrder);
-	}
-
-	if (!m_ui->filterLineEdit->text().isEmpty())
-	{
-		filterCache(m_ui->filterLineEdit->text());
 	}
 }
 
@@ -306,7 +269,7 @@ void CacheContentsWidget::removeEntry(const QUrl &entry)
 
 void CacheContentsWidget::removeEntry()
 {
-	const QUrl entry = getEntry(m_ui->cacheView->currentIndex());
+	const QUrl entry = getEntry(m_ui->cacheViewWidget->currentIndex());
 
 	if (entry.isValid())
 	{
@@ -316,7 +279,7 @@ void CacheContentsWidget::removeEntry()
 
 void CacheContentsWidget::removeDomainEntries()
 {
-	const QModelIndex index = m_ui->cacheView->currentIndex();
+	const QModelIndex index = m_ui->cacheViewWidget->currentIndex();
 	QStandardItem *domainItem = ((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? findDomain(index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString()) : findEntry(getEntry(index)));
 
 	if (!domainItem)
@@ -339,7 +302,7 @@ void CacheContentsWidget::removeDomainEntries()
 
 void CacheContentsWidget::removeDomainEntriesOrEntry()
 {
-	const QUrl entry = getEntry(m_ui->cacheView->currentIndex());
+	const QUrl entry = getEntry(m_ui->cacheViewWidget->currentIndex());
 
 	if (entry.isValid())
 	{
@@ -353,7 +316,7 @@ void CacheContentsWidget::removeDomainEntriesOrEntry()
 
 void CacheContentsWidget::openEntry(const QModelIndex &index)
 {
-	const QModelIndex entryIndex = (index.isValid() ? index : m_ui->cacheView->currentIndex());
+	const QModelIndex entryIndex = (index.isValid() ? index : m_ui->cacheViewWidget->currentIndex());
 
 	if (!entryIndex.isValid() || entryIndex.parent() == m_model->invisibleRootItem()->index())
 	{
@@ -372,7 +335,7 @@ void CacheContentsWidget::openEntry(const QModelIndex &index)
 
 void CacheContentsWidget::copyEntryLink()
 {
-	QStandardItem *entryItem = findEntry(getEntry(m_ui->cacheView->currentIndex()));
+	QStandardItem *entryItem = findEntry(getEntry(m_ui->cacheViewWidget->currentIndex()));
 
 	if (entryItem)
 	{
@@ -382,7 +345,7 @@ void CacheContentsWidget::copyEntryLink()
 
 void CacheContentsWidget::showContextMenu(const QPoint &point)
 {
-	const QModelIndex index = m_ui->cacheView->indexAt(point);
+	const QModelIndex index = m_ui->cacheViewWidget->indexAt(point);
 	const QUrl entry = getEntry(index);
 	QMenu menu(this);
 
@@ -407,12 +370,12 @@ void CacheContentsWidget::showContextMenu(const QPoint &point)
 	}
 
 	menu.addAction(ActionsManager::getAction(ActionsManager::ClearHistoryAction, this));
-	menu.exec(m_ui->cacheView->mapToGlobal(point));
+	menu.exec(m_ui->cacheViewWidget->mapToGlobal(point));
 }
 
 void CacheContentsWidget::updateActions()
 {
-	const QModelIndex index = (m_ui->cacheView->selectionModel()->hasSelection() ? m_ui->cacheView->selectionModel()->currentIndex() : QModelIndex());
+	const QModelIndex index = (m_ui->cacheViewWidget->selectionModel()->hasSelection() ? m_ui->cacheViewWidget->selectionModel()->currentIndex() : QModelIndex());
 	const QUrl entry = getEntry(index);
 	const QString domain = ((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString() : entry.host());
 
@@ -625,7 +588,7 @@ bool CacheContentsWidget::isLoading() const
 
 bool CacheContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == m_ui->cacheView && event->type() == QEvent::KeyPress)
+	if (object == m_ui->cacheViewWidget && event->type() == QEvent::KeyPress)
 	{
 		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
 
@@ -643,13 +606,13 @@ bool CacheContentsWidget::eventFilter(QObject *object, QEvent *event)
 			return true;
 		}
 	}
-	else if (object == m_ui->cacheView->viewport() && event->type() == QEvent::MouseButtonRelease)
+	else if (object == m_ui->cacheViewWidget->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
 		if (mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
 		{
-			const QModelIndex entryIndex = m_ui->cacheView->currentIndex();
+			const QModelIndex entryIndex = m_ui->cacheViewWidget->currentIndex();
 
 			if (!entryIndex.isValid() || entryIndex.parent() == m_model->invisibleRootItem()->index())
 			{

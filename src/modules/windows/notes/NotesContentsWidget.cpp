@@ -51,6 +51,7 @@ NotesContentsWidget::NotesContentsWidget(Window *window) : ContentsWidget(window
 	filterRoles << BookmarksModel::UrlRole << BookmarksModel::TitleRole << BookmarksModel::DescriptionRole << BookmarksModel::KeywordRole;
 
 	m_ui->addButton->setMenu(addMenu);
+	m_ui->notesViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->notesViewWidget->setModel(NotesManager::getModel());
 	m_ui->notesViewWidget->setItemDelegate(new ItemDelegate(this));
 	m_ui->notesViewWidget->setExpanded(NotesManager::getModel()->getRootItem()->index(), true);
