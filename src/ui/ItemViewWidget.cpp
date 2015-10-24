@@ -32,6 +32,7 @@ int ItemViewWidget::m_treeIndentation = 0;
 ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 	m_model(NULL),
 	m_viewMode(ListViewMode),
+	m_dragRow(-1),
 	m_dropRow(-1),
 	m_canGatherExpanded(false),
 	m_isModified(false)
@@ -49,27 +50,48 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 
 void ItemViewWidget::dropEvent(QDropEvent *event)
 {
+	if (m_viewMode == TreeViewMode)
+	{
+		QTreeView::dropEvent(event);
+
+		return;
+	}
+
 	QDropEvent mutableEvent(QPointF((visualRect(m_model->index(0, 0)).x() + 1), event->posF().y()), Qt::MoveAction, event->mimeData(), event->mouseButtons(), event->keyboardModifiers(), event->type());
 
 	QTreeView::dropEvent(&mutableEvent);
 
-	if (mutableEvent.isAccepted())
+	if (!mutableEvent.isAccepted())
 	{
-		event->accept();
-
-		m_dropRow = indexAt(event->pos()).row();
-
-		if (dropIndicatorPosition() == QAbstractItemView::BelowItem)
-		{
-			++m_dropRow;
-		}
-
-		m_isModified = true;
-
-		emit modified();
-
-		QTimer::singleShot(50, this, SLOT(updateDropSelection()));
+		return;
 	}
+
+	event->accept();
+
+	m_dropRow = indexAt(event->pos()).row();
+
+	if (m_dragRow <= m_dropRow)
+	{
+		--m_dropRow;
+	}
+
+	if (dropIndicatorPosition() == QAbstractItemView::BelowItem)
+	{
+		++m_dropRow;
+	}
+
+	m_isModified = true;
+
+	emit modified();
+
+	QTimer::singleShot(50, this, SLOT(updateDropSelection()));
+}
+
+void ItemViewWidget::startDrag(Qt::DropActions supportedActions)
+{
+	m_dragRow = currentIndex().row();
+
+	QTreeView::startDrag(supportedActions);
 }
 
 void ItemViewWidget::optionChanged(const QString &option, const QVariant &value)

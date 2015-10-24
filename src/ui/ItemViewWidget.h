@@ -67,6 +67,7 @@ public slots:
 
 protected:
 	void dropEvent(QDropEvent *event);
+	void startDrag(Qt::DropActions supportedActions);
 	void moveRow(bool up);
 	bool applyFilter(QStandardItem *item);
 
@@ -83,6 +84,7 @@ private:
 	QSet<QStandardItem*> m_expandedBranches;
 	QSet<int> m_filterRoles;
 	ViewMode m_viewMode;
+	int m_dragRow;
 	int m_dropRow;
 	bool m_canGatherExpanded;
 	bool m_isModified;
