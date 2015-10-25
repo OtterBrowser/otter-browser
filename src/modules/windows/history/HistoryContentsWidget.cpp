@@ -54,28 +54,29 @@ HistoryContentsWidget::HistoryContentsWidget(Window *window) : ContentsWidget(wi
 	m_model->setHorizontalHeaderLabels(labels);
 	m_model->setSortRole(Qt::DisplayRole);
 
-	m_ui->historyView->setModel(m_model);
-	m_ui->historyView->setItemDelegate(new ItemDelegate(this));
-	m_ui->historyView->header()->setTextElideMode(Qt::ElideRight);
-	m_ui->historyView->header()->setSectionResizeMode(0, QHeaderView::Stretch);
-	m_ui->historyView->installEventFilter(this);
-	m_ui->historyView->viewport()->installEventFilter(this);
+	m_ui->historyViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->historyViewWidget->setModel(m_model);
+	m_ui->historyViewWidget->setItemDelegate(new ItemDelegate(this));
+	m_ui->historyViewWidget->header()->setTextElideMode(Qt::ElideRight);
+	m_ui->historyViewWidget->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+	m_ui->historyViewWidget->installEventFilter(this);
+	m_ui->historyViewWidget->viewport()->installEventFilter(this);
 	m_ui->filterLineEdit->installEventFilter(this);
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		m_ui->historyView->setRowHidden(i, m_model->invisibleRootItem()->index(), true);
+		m_ui->historyViewWidget->setRowHidden(i, m_model->invisibleRootItem()->index(), true);
 	}
 
 	const QString expandBranches = SettingsManager::getValue(QLatin1String("History/ExpandBranches")).toString();
 
 	if (expandBranches == QLatin1String("first"))
 	{
-		m_ui->historyView->expand(m_model->index(0, 0));
+		m_ui->historyViewWidget->expand(m_model->index(0, 0));
 	}
 	else if (expandBranches == QLatin1String("all"))
 	{
-		m_ui->historyView->expandAll();
+		m_ui->historyViewWidget->expandAll();
 	}
 
 	QTimer::singleShot(100, this, SLOT(populateEntries()));
@@ -85,9 +86,9 @@ HistoryContentsWidget::HistoryContentsWidget(Window *window) : ContentsWidget(wi
 	connect(HistoryManager::getInstance(), SIGNAL(entryUpdated(qint64)), this, SLOT(updateEntry(qint64)));
 	connect(HistoryManager::getInstance(), SIGNAL(entryRemoved(qint64)), this, SLOT(removeEntry(qint64)));
 	connect(HistoryManager::getInstance(), SIGNAL(dayChanged()), this, SLOT(populateEntries()));
-	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterHistory(QString)));
-	connect(m_ui->historyView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openEntry(QModelIndex)));
-	connect(m_ui->historyView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
+	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->historyViewWidget, SLOT(setFilterString(QString)));
+	connect(m_ui->historyViewWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openEntry(QModelIndex)));
+	connect(m_ui->historyViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 }
 
 HistoryContentsWidget::~HistoryContentsWidget()
@@ -99,14 +100,9 @@ void HistoryContentsWidget::changeEvent(QEvent *event)
 {
 	QWidget::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
-
-			break;
-		default:
-			break;
+		m_ui->retranslateUi(this);
 	}
 }
 
@@ -123,7 +119,7 @@ void HistoryContentsWidget::triggerAction(int identifier, const QVariantMap &par
 
 			break;
 		case ActionsManager::ActivateContentAction:
-			m_ui->historyView->setFocus();
+			m_ui->historyViewWidget->setFocus();
 
 			break;
 		default:
@@ -133,44 +129,7 @@ void HistoryContentsWidget::triggerAction(int identifier, const QVariantMap &par
 
 void HistoryContentsWidget::print(QPrinter *printer)
 {
-	m_ui->historyView->render(printer);
-}
-
-void HistoryContentsWidget::filterHistory(const QString &filter)
-{
-	for (int i = 0; i < m_model->rowCount(); ++i)
-	{
-		QStandardItem *groupItem = m_model->item(i, 0);
-
-		if (!groupItem)
-		{
-			continue;
-		}
-
-		bool found = (filter.isEmpty() && groupItem->rowCount() > 0);
-
-		for (int j = 0; j < groupItem->rowCount(); ++j)
-		{
-			QStandardItem *entryItem = groupItem->child(j, 0);
-
-			if (!entryItem)
-			{
-				continue;
-			}
-
-			const bool match = (filter.isEmpty() || entryItem->text().contains(filter, Qt::CaseInsensitive) || groupItem->child(j, 1)->text().contains(filter, Qt::CaseInsensitive));
-
-			if (match)
-			{
-				found = true;
-			}
-
-			m_ui->historyView->setRowHidden(j, groupItem->index(), !match);
-		}
-
-		m_ui->historyView->setRowHidden(i, m_model->invisibleRootItem()->index(), !found);
-		m_ui->historyView->setExpanded(groupItem->index(), !filter.isEmpty());
-	}
+	m_ui->historyViewWidget->render(printer);
 }
 
 void HistoryContentsWidget::populateEntries()
@@ -248,19 +207,17 @@ void HistoryContentsWidget::addEntry(const HistoryEntry &entry)
 	entryItems.append(new QStandardItem(entry.title.isEmpty() ? tr("(Untitled)") : entry.title));
 	entryItems.append(new QStandardItem(entry.time.toString()));
 	entryItems[0]->setData(entry.identifier, Qt::UserRole);
+	entryItems[0]->setFlags(entryItems[0]->flags() | Qt::ItemNeverHasChildren);
+	entryItems[1]->setFlags(entryItems[1]->flags() | Qt::ItemNeverHasChildren);
+	entryItems[2]->setFlags(entryItems[2]->flags() | Qt::ItemNeverHasChildren);
 
 	groupItem->appendRow(entryItems);
 
-	m_ui->historyView->setRowHidden(groupItem->row(), groupItem->index().parent(), false);
+	m_ui->historyViewWidget->setRowHidden(groupItem->row(), groupItem->index().parent(), false);
 
 	if (sender())
 	{
 		groupItem->sortChildren(2, Qt::DescendingOrder);
-	}
-
-	if (!m_ui->filterLineEdit->text().isEmpty())
-	{
-		filterHistory(m_ui->filterLineEdit->text());
 	}
 }
 
@@ -281,11 +238,6 @@ void HistoryContentsWidget::updateEntry(qint64 entry)
 	entryItem->setText(historyEntry.url.toString());
 	entryItem->parent()->child(entryItem->row(), 1)->setText(historyEntry.title.isEmpty() ? tr("(Untitled)") : historyEntry.title);
 	entryItem->parent()->child(entryItem->row(), 2)->setText(historyEntry.time.toString());
-
-	if (!m_ui->filterLineEdit->text().isEmpty())
-	{
-		filterHistory(m_ui->filterLineEdit->text());
-	}
 }
 
 void HistoryContentsWidget::removeEntry(qint64 entry)
@@ -302,7 +254,7 @@ void HistoryContentsWidget::removeEntry(qint64 entry)
 
 			if (groupItem->rowCount() == 0)
 			{
-				m_ui->historyView->setRowHidden(groupItem->row(), m_model->invisibleRootItem()->index(), true);
+				m_ui->historyViewWidget->setRowHidden(groupItem->row(), m_model->invisibleRootItem()->index(), true);
 			}
 		}
 	}
@@ -310,7 +262,7 @@ void HistoryContentsWidget::removeEntry(qint64 entry)
 
 void HistoryContentsWidget::removeEntry()
 {
-	const qint64 entry = getEntry(m_ui->historyView->currentIndex());
+	const qint64 entry = getEntry(m_ui->historyViewWidget->currentIndex());
 
 	if (entry >= 0)
 	{
@@ -320,7 +272,7 @@ void HistoryContentsWidget::removeEntry()
 
 void HistoryContentsWidget::removeDomainEntries()
 {
-	QStandardItem *domainItem = findEntry(getEntry(m_ui->historyView->currentIndex()));
+	QStandardItem *domainItem = findEntry(getEntry(m_ui->historyViewWidget->currentIndex()));
 
 	if (!domainItem)
 	{
@@ -355,7 +307,7 @@ void HistoryContentsWidget::removeDomainEntries()
 
 void HistoryContentsWidget::openEntry(const QModelIndex &index)
 {
-	const QModelIndex entryIndex = (index.isValid() ? index : m_ui->historyView->currentIndex());
+	const QModelIndex entryIndex = (index.isValid() ? index : m_ui->historyViewWidget->currentIndex());
 
 	if (!entryIndex.isValid() || entryIndex.parent() == m_model->invisibleRootItem()->index())
 	{
@@ -374,17 +326,17 @@ void HistoryContentsWidget::openEntry(const QModelIndex &index)
 
 void HistoryContentsWidget::bookmarkEntry()
 {
-	QStandardItem *entryItem = findEntry(getEntry(m_ui->historyView->currentIndex()));
+	QStandardItem *entryItem = findEntry(getEntry(m_ui->historyViewWidget->currentIndex()));
 
 	if (entryItem)
 	{
-		emit requestedAddBookmark(QUrl(entryItem->text()), m_ui->historyView->currentIndex().sibling(m_ui->historyView->currentIndex().row(), 1).data(Qt::DisplayRole).toString(), QString());
+		emit requestedAddBookmark(QUrl(entryItem->text()), m_ui->historyViewWidget->currentIndex().sibling(m_ui->historyViewWidget->currentIndex().row(), 1).data(Qt::DisplayRole).toString(), QString());
 	}
 }
 
 void HistoryContentsWidget::copyEntryLink()
 {
-	QStandardItem *entryItem = findEntry(getEntry(m_ui->historyView->currentIndex()));
+	QStandardItem *entryItem = findEntry(getEntry(m_ui->historyViewWidget->currentIndex()));
 
 	if (entryItem)
 	{
@@ -394,7 +346,7 @@ void HistoryContentsWidget::copyEntryLink()
 
 void HistoryContentsWidget::showContextMenu(const QPoint &point)
 {
-	const qint64 entry = getEntry(m_ui->historyView->indexAt(point));
+	const qint64 entry = getEntry(m_ui->historyViewWidget->indexAt(point));
 	QMenu menu(this);
 
 	if (entry >= 0)
@@ -415,7 +367,7 @@ void HistoryContentsWidget::showContextMenu(const QPoint &point)
 	}
 
 	menu.addAction(ActionsManager::getAction(ActionsManager::ClearHistoryAction, this));
-	menu.exec(m_ui->historyView->mapToGlobal(point));
+	menu.exec(m_ui->historyViewWidget->mapToGlobal(point));
 }
 
 QStandardItem* HistoryContentsWidget::findEntry(qint64 entry)
@@ -473,7 +425,7 @@ bool HistoryContentsWidget::isLoading() const
 
 bool HistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == m_ui->historyView && event->type() == QEvent::KeyPress)
+	if (object == m_ui->historyViewWidget && event->type() == QEvent::KeyPress)
 	{
 		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
 
@@ -491,13 +443,13 @@ bool HistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
 			return true;
 		}
 	}
-	else if (object == m_ui->historyView->viewport() && event->type() == QEvent::MouseButtonRelease)
+	else if (object == m_ui->historyViewWidget->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
 		if (mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
 		{
-			const QModelIndex entryIndex = m_ui->historyView->currentIndex();
+			const QModelIndex entryIndex = m_ui->historyViewWidget->currentIndex();
 
 			if (!entryIndex.isValid() || entryIndex.parent() == m_model->invisibleRootItem()->index())
 			{

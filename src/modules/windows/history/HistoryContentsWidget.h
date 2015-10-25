@@ -61,7 +61,6 @@ protected:
 	qint64 getEntry(const QModelIndex &index) const;
 
 protected slots:
-	void filterHistory(const QString &filter);
 	void populateEntries();
 	void addEntry(qint64 entry);
 	void addEntry(const HistoryEntry &entry);
