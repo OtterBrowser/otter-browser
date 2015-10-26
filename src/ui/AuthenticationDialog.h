@@ -43,6 +43,9 @@ public:
 
 	void setButtonsVisible(bool visible);
 
+public slots:
+	void authenticated(QAuthenticator *authenticator, bool wasAccepted);
+
 protected:
 	void changeEvent(QEvent *event);
 

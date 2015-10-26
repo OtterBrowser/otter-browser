@@ -22,6 +22,7 @@
 #define OTTER_NETWORKMANAGERFACTORY_H
 
 #include <QtCore/QObject>
+#include <QtNetwork/QAuthenticator>
 #include <QtNetwork/QNetworkCookieJar>
 #include <QtNetwork/QNetworkDiskCache>
 #include <QtNetwork/QSslCipher>
@@ -59,6 +60,7 @@ public:
 	static void clearCookies(int period = 0);
 	static void clearCache(int period = 0);
 	static void loadUserAgents();
+	static void notifyAuthenticated(QAuthenticator *authenticator, bool wasAccepted);
 	static NetworkManagerFactory* getInstance();
 	static NetworkManager* getNetworkManager();
 	static NetworkCache* getCache();
@@ -93,6 +95,9 @@ private:
 	static bool m_isWorkingOffline;
 	static bool m_isInitialized;
 	static bool m_isUsingSystemProxyAuthentication;
+
+signals:
+	void authenticated(QAuthenticator *authenticator, bool wasAccepted);
 
 friend class NetworkManager;
 };

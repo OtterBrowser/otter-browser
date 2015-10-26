@@ -200,6 +200,11 @@ void NetworkManagerFactory::loadUserAgents()
 	m_userAgents = userAgents;
 }
 
+void NetworkManagerFactory::notifyAuthenticated(QAuthenticator *authenticator, bool wasAccepted)
+{
+	emit m_instance->authenticated(authenticator, wasAccepted);
+}
+
 NetworkManagerFactory* NetworkManagerFactory::getInstance()
 {
 	return m_instance;

@@ -49,10 +49,12 @@ protected:
 
 protected slots:
 	void clicked(QAbstractButton *button);
+	void finished(int result);
 
 private:
 	QBoxLayout *m_contentsLayout;
 	QWidget *m_headerWidget;
+	QWidget *m_payload;
 	QLabel *m_closeLabel;
 	QScrollArea *m_scrollArea;
 	QCheckBox *m_checkBox;

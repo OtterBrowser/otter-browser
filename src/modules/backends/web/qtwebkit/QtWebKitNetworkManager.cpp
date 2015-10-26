@@ -113,8 +113,11 @@ void QtWebKitNetworkManager::handleAuthenticationRequired(QNetworkReply *reply, 
 
 	connect(&dialog, SIGNAL(accepted()), authenticationDialog, SLOT(accept()));
 	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
+	connect(NetworkManagerFactory::getInstance(), SIGNAL(authenticated(QAuthenticator*,bool)), authenticationDialog, SLOT(authenticated(QAuthenticator*,bool)));
 
 	m_widget->showDialog(&dialog);
+
+	NetworkManagerFactory::notifyAuthenticated(authenticator, dialog.isAccepted());
 }
 
 void QtWebKitNetworkManager::handleProxyAuthenticationRequired(const QNetworkProxy &proxy, QAuthenticator *authenticator)
@@ -135,8 +138,11 @@ void QtWebKitNetworkManager::handleProxyAuthenticationRequired(const QNetworkPro
 
 	connect(&dialog, SIGNAL(accepted()), authenticationDialog, SLOT(accept()));
 	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
+	connect(NetworkManagerFactory::getInstance(), SIGNAL(authenticated(QAuthenticator*,bool)), authenticationDialog, SLOT(authenticated(QAuthenticator*,bool)));
 
 	m_widget->showDialog(&dialog);
+
+	NetworkManagerFactory::notifyAuthenticated(authenticator, dialog.isAccepted());
 }
 
 void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors)

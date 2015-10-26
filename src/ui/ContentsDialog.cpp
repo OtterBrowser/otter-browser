@@ -24,12 +24,16 @@
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QScrollBar>
 
+
+#include <QDebug>
+
 namespace Otter
 {
 
 ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QString &text, const QString &details, QDialogButtonBox::StandardButtons buttons, QWidget *payload, QWidget *parent) : QFrame(parent),
 	m_contentsLayout(new QBoxLayout(QBoxLayout::TopToBottom)),
 	m_headerWidget(new QWidget(this)),
+	m_payload(payload),
 	m_closeLabel(new QLabel(m_headerWidget)),
 	m_scrollArea(NULL),
 	m_checkBox(NULL),
@@ -126,14 +130,13 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 
 			scrollLayout->addWidget(payload);
 
-			if (payload->inherits("QDialog"))
-			{
-				QDialog *dialog = qobject_cast<QDialog*>(payload);
+			QDialog *dialog = qobject_cast<QDialog*>(payload);
 
-				if (dialog)
-				{
-					connect(this, SIGNAL(rejected()), dialog, SLOT(reject()));
-				}
+			if (dialog)
+			{
+				connect(this, SIGNAL(accepted()), dialog, SLOT(accept()));
+				connect(this, SIGNAL(rejected()), dialog, SLOT(reject()));
+				connect(dialog, SIGNAL(finished(int)), this, SLOT(finished(int)));
 			}
 		}
 
@@ -222,6 +225,13 @@ void ContentsDialog::clicked(QAbstractButton *button)
 				break;
 		}
 	}
+
+	close();
+}
+
+void ContentsDialog::finished(int result)
+{
+	m_isAccepted = (result == QDialog::Accepted);
 
 	close();
 }

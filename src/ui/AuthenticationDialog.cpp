@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "AuthenticationDialog.h"
+#include "../core/NetworkManagerFactory.h"
 
 #include "ui_AuthenticationDialog.h"
 
@@ -56,6 +57,24 @@ void AuthenticationDialog::setup()
 {
 	m_authenticator->setUser(m_ui->userLineEdit->text());
 	m_authenticator->setPassword(m_ui->passwordLineEdit->text());
+}
+
+void AuthenticationDialog::authenticated(QAuthenticator *authenticator, bool wasAccepted)
+{
+	if (*authenticator == *m_authenticator)
+	{
+		disconnect(NetworkManagerFactory::getInstance(), SIGNAL(authenticated(QAuthenticator*,bool)), this, SLOT(authenticated(QAuthenticator*,bool)));
+		disconnect(this, SIGNAL(accepted()), this, SLOT(setup()));
+
+		if (wasAccepted)
+		{
+			accept();
+		}
+		else
+		{
+			reject();
+		}
+	}
 }
 
 void AuthenticationDialog::setButtonsVisible(bool visible)
