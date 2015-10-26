@@ -267,7 +267,10 @@ void ItemViewWidget::setModel(QAbstractItemModel *model)
 		return;
 	}
 
-	model->setParent(this);
+	if (!model->parent())
+	{
+		model->setParent(this);
+	}
 
 	if (model->inherits(QStringLiteral("QStandardItemModel").toLatin1()))
 	{
