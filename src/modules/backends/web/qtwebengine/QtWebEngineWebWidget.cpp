@@ -524,16 +524,18 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				properties[QLatin1String("longDescription")] = m_hitResult.longDescription;
 
 				ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
-				ImagePropertiesDialog *imagePropertiesDialog = new ImagePropertiesDialog(m_hitResult.imageUrl, properties, NULL, this);
-				imagePropertiesDialog->setButtonsVisible(false);
 
 				if (parent)
 				{
-					ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this);
+					ImagePropertiesDialog *imagePropertiesDialog = new ImagePropertiesDialog(m_hitResult.imageUrl, properties, NULL, this);
+					imagePropertiesDialog->setButtonsVisible(false);
 
-					connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
+					ContentsDialog *dialog = new ContentsDialog(Utils::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this);
 
-					showDialog(&dialog);
+					connect(this, SIGNAL(aboutToReload()), dialog, SLOT(close()));
+					connect(imagePropertiesDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
+
+					showDialog(dialog, false);
 				}
 			}
 			else

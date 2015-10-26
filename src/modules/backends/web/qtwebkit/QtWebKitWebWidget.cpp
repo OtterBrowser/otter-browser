@@ -1083,16 +1083,18 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				}
 
 				ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
-				ImagePropertiesDialog *imagePropertiesDialog = new ImagePropertiesDialog(getCurrentHitTestResult().imageUrl, properties, (m_networkManager->cache() ? m_networkManager->cache()->data(getCurrentHitTestResult().imageUrl) : NULL), this);
-				imagePropertiesDialog->setButtonsVisible(false);
 
 				if (parent)
 				{
-					ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this);
+					ImagePropertiesDialog *imagePropertiesDialog = new ImagePropertiesDialog(getCurrentHitTestResult().imageUrl, properties, (m_networkManager->cache() ? m_networkManager->cache()->data(getCurrentHitTestResult().imageUrl) : NULL), this);
+					imagePropertiesDialog->setButtonsVisible(false);
 
-					connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
+					ContentsDialog *dialog = new ContentsDialog(Utils::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this);
 
-					showDialog(&dialog);
+					connect(this, SIGNAL(aboutToReload()), dialog, SLOT(close()));
+					connect(imagePropertiesDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
+
+					showDialog(dialog, false);
 				}
 			}
 
