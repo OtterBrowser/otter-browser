@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "QtWebKitWebWidget.h"
+#include "QtWebKitInspector.h"
 #include "QtWebKitNetworkManager.h"
 #include "QtWebKitPluginFactory.h"
 #include "QtWebKitPluginWidget.h"
@@ -71,11 +72,9 @@ namespace Otter
 
 QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebKitNetworkManager *networkManager, ContentsWidget *parent) : WebWidget(isPrivate, backend, parent),
 	m_webView(new QWebView(this)),
-	m_inspectorView(NULL),
 	m_page(NULL),
 	m_pluginFactory(new QtWebKitPluginFactory(this)),
 	m_inspector(NULL),
-	m_inspectorCloseButton(NULL),
 	m_networkManager(networkManager),
 	m_splitter(new QSplitter(Qt::Vertical, this)),
 	m_transfersTimer(0),
@@ -199,11 +198,6 @@ void QtWebKitWebWidget::focusInEvent(QFocusEvent *event)
 	WebWidget::focusInEvent(event);
 
 	m_webView->setFocus();
-
-	if (m_inspector && m_inspector->isVisible())
-	{
-		m_inspectorCloseButton->raise();
-	}
 }
 
 void QtWebKitWebWidget::search(const QString &query, const QString &engine)
@@ -1452,43 +1446,13 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::InspectPageAction:
 			if (!m_inspector)
 			{
-				m_inspector = new QWebInspector(this);
+				m_inspector = new QtWebKitInspector(this);
 				m_inspector->setPage(m_webView->page());
-				m_inspector->setContextMenuPolicy(Qt::NoContextMenu);
-				m_inspector->setMinimumHeight(200);
-				m_inspector->installEventFilter(this);
 
 				m_splitter->addWidget(m_inspector);
-
-				m_inspectorView = m_inspector->findChild<QWebView*>();
-
-				if (m_inspectorView)
-				{
-					m_inspectorView->installEventFilter(this);
-				}
-
-				m_inspectorCloseButton = new QToolButton(m_inspector);
-				m_inspectorCloseButton->setAutoFillBackground(false);
-				m_inspectorCloseButton->setAutoRaise(true);
-				m_inspectorCloseButton->setIcon(Utils::getIcon(QLatin1String("window-close")));
-				m_inspectorCloseButton->setToolTip(tr("Close"));
-
-				connect(m_inspectorCloseButton, SIGNAL(clicked()), this, SLOT(hideInspector()));
 			}
 
 			m_inspector->setVisible(parameters.value(QLatin1String("isChecked")).toBool());
-
-			if (parameters.value(QLatin1String("isChecked")).toBool())
-			{
-				m_inspectorCloseButton->setFixedSize(16, 16);
-				m_inspectorCloseButton->show();
-				m_inspectorCloseButton->raise();
-				m_inspectorCloseButton->move(QPoint((m_inspector->width() - 19), 3));
-			}
-			else
-			{
-				m_inspectorCloseButton->hide();
-			}
 
 			getAction(ActionsManager::InspectPageAction)->setChecked(parameters.value(QLatin1String("isChecked")).toBool());
 
@@ -2339,14 +2303,6 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				return true;
 			}
 		}
-	}
-	else if (object == m_inspector && (event->type() == QEvent::Move || event->type() == QEvent::Resize) && m_inspectorCloseButton)
-	{
-		m_inspectorCloseButton->move(QPoint((m_inspector->width() - 19), 3));
-	}
-	else if (object == m_inspectorView && event->type() == QEvent::ContextMenu)
-	{
-		return true;
 	}
 
 	return QObject::eventFilter(object, event);

@@ -36,6 +36,7 @@ namespace Otter
 {
 
 class ContentsDialog;
+class QtWebKitInspector;
 class QtWebKitNetworkManager;
 class QtWebKitWebBackend;
 class QtWebKitPage;
@@ -146,11 +147,9 @@ protected slots:
 
 private:
 	QWebView *m_webView;
-	QWebView *m_inspectorView;
 	QtWebKitPage *m_page;
 	QtWebKitPluginFactory *m_pluginFactory;
-	QWebInspector *m_inspector;
-	QToolButton *m_inspectorCloseButton;
+	QtWebKitInspector *m_inspector;
 	QtWebKitNetworkManager *m_networkManager;
 	QSplitter *m_splitter;
 	QString m_pluginToken;

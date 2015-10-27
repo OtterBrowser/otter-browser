@@ -191,6 +191,7 @@ SOURCES += src/main.cpp \
     src/ui/toolbars/StatusMessageWidget.cpp \
     src/ui/toolbars/ZoomWidget.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitHistoryInterface.cpp \
+    src/modules/backends/web/qtwebkit/QtWebKitInspector.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitPage.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitPluginFactory.cpp \
@@ -342,6 +343,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/toolbars/StatusMessageWidget.h \
     src/ui/toolbars/ZoomWidget.h \
     src/modules/backends/web/qtwebkit/QtWebKitHistoryInterface.h \
+    src/modules/backends/web/qtwebkit/QtWebKitInspector.h \
     src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.h \
     src/modules/backends/web/qtwebkit/QtWebKitPage.h \
     src/modules/backends/web/qtwebkit/QtWebKitPluginFactory.h \
