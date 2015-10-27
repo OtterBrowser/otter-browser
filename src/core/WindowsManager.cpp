@@ -45,7 +45,16 @@ WindowsManager::WindowsManager(bool isPrivate, MainWindow *parent) : QObject(par
 
 void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
+	Window *window = NULL;
+
+	if (parameters.contains(QLatin1String("window")))
+	{
+		window = getWindowByIdentifier(parameters[QLatin1String("window")].toULongLong());
+	}
+	else
+	{
+		window = m_mainWindow->getWorkspace()->getActiveWindow();
+	}
 
 	switch (identifier)
 	{
@@ -58,116 +67,63 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 
 			break;
 		case ActionsManager::CloneTabAction:
+			if (window && window->canClone())
 			{
-				Window *window = NULL;
-
-				if (parameters.contains(QLatin1String("window")))
-				{
-					window = getWindowByIdentifier(parameters[QLatin1String("window")].toULongLong());
-				}
-				else
-				{
-					window = getWindowByIndex(m_mainWindow->getTabBar()->currentIndex());
-				}
-
-				if (window && window->canClone())
-				{
-					addWindow(window->clone(true, m_mainWindow->getWorkspace()));
-				}
+				addWindow(window->clone(true, m_mainWindow->getWorkspace()));
 			}
 
 			break;
 		case ActionsManager::PinTabAction:
+			if (window)
 			{
-				Window *window = NULL;
-
-				if (parameters.contains(QLatin1String("window")))
-				{
-					window = getWindowByIdentifier(parameters[QLatin1String("window")].toULongLong());
-				}
-				else
-				{
-					window = getWindowByIndex(m_mainWindow->getTabBar()->currentIndex());
-				}
-
-				if (window)
-				{
-					window->setPinned(!window->isPinned());
-				}
+				window->setPinned(!window->isPinned());
 			}
 
 			break;
 		case ActionsManager::DetachTabAction:
-			if (m_mainWindow->getTabBar()->count() > 1)
+			if (window && m_mainWindow->getTabBar()->count() > 1)
 			{
-				Window *window = NULL;
+				MainWindow *mainWindow = Application::getInstance()->createWindow(window->isPrivate(), true);
 
-				if (parameters.contains(QLatin1String("window")))
+				if (mainWindow)
 				{
-					window = getWindowByIdentifier(parameters[QLatin1String("window")].toULongLong());
-				}
-				else
-				{
-					window = getWindowByIndex(m_mainWindow->getTabBar()->currentIndex());
-				}
+					window->getContentsWidget()->setParent(NULL);
 
-				if (window)
-				{
-					MainWindow *mainWindow = Application::getInstance()->createWindow(window->isPrivate(), true);
+					mainWindow->getWindowsManager()->openWindow(window->getContentsWidget());
+					mainWindow->getWindowsManager()->closeOther();
 
-					if (mainWindow)
+					m_mainWindow->getTabBar()->removeTab(getWindowIndex(window->getIdentifier()));
+
+					Action *closePrivateTabsAction = m_mainWindow->getAction(ActionsManager::ClosePrivateTabsAction);
+
+					if (closePrivateTabsAction->isEnabled() && getWindowCount(true) == 0)
 					{
-						window->getContentsWidget()->setParent(NULL);
-
-						mainWindow->getWindowsManager()->openWindow(window->getContentsWidget());
-						mainWindow->getWindowsManager()->closeOther();
-
-						m_mainWindow->getTabBar()->removeTab(getWindowIndex(window->getIdentifier()));
-
-						Action *closePrivateTabsAction = m_mainWindow->getAction(ActionsManager::ClosePrivateTabsAction);
-
-						if (closePrivateTabsAction->isEnabled() && getWindowCount(true) == 0)
-						{
-							closePrivateTabsAction->setEnabled(false);
-						}
-
-						m_windows.remove(window->getIdentifier());
-
-						emit windowRemoved(window->getIdentifier());
+						closePrivateTabsAction->setEnabled(false);
 					}
+
+					m_windows.remove(window->getIdentifier());
+
+					emit windowRemoved(window->getIdentifier());
 				}
 			}
 
 			break;
 		case ActionsManager::CloseTabAction:
-			if (parameters.contains(QLatin1String("window")))
+			if (window)
 			{
-				Window *window = getWindowByIdentifier(parameters[QLatin1String("window")].toULongLong());
-
-				if (window)
-				{
-					close(getWindowIndex(window->getIdentifier()));
-				}
-			}
-			else
-			{
-				close(m_mainWindow->getTabBar()->currentIndex());
+				close(getWindowIndex(window->getIdentifier()));
 			}
 
 			break;
 		case ActionsManager::CloseOtherTabsAction:
-			if (parameters.contains(QLatin1String("window")))
+			if (window)
 			{
-				const int index = getWindowIndex(parameters[QLatin1String("window")].toULongLong());
+				const int index = getWindowIndex(window->getIdentifier());
 
 				if (index >= 0)
 				{
 					closeOther(index);
 				}
-			}
-			else
-			{
-				closeOther(m_mainWindow->getTabBar()->currentIndex());
 			}
 
 			break;
