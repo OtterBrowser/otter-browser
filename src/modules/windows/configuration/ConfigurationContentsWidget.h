@@ -61,7 +61,6 @@ protected slots:
 	void copyOptionName();
 	void copyOptionValue();
 	void restoreDefaults();
-	void filterConfiguration(const QString &filter);
 	void showContextMenu(const QPoint &point);
 
 private:
