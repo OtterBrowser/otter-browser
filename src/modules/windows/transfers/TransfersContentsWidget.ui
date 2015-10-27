@@ -48,7 +48,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QTableView" name="transfersView">
+    <widget class="Otter::ItemViewWidget" name="transfersViewWidget">
      <property name="contextMenuPolicy">
       <enum>Qt::CustomContextMenu</enum>
      </property>
@@ -67,21 +67,6 @@
      <property name="selectionBehavior">
       <enum>QAbstractItemView::SelectRows</enum>
      </property>
-     <property name="showGrid">
-      <bool>false</bool>
-     </property>
-     <property name="wordWrap">
-      <bool>false</bool>
-     </property>
-     <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>150</number>
-     </attribute>
-     <attribute name="horizontalHeaderHighlightSections">
-      <bool>false</bool>
-     </attribute>
-     <attribute name="verticalHeaderVisible">
-      <bool>false</bool>
-     </attribute>
     </widget>
    </item>
    <item>
@@ -229,6 +214,11 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>Otter::ItemViewWidget</class>
+   <extends>QTreeView</extends>
+   <header>src/ui/ItemViewWidget.h</header>
+  </customwidget>
+  <customwidget>
    <class>Otter::TextLabelWidget</class>
    <extends>QWidget</extends>
    <header>src/ui/TextLabelWidget.h</header>
@@ -237,7 +227,7 @@
  </customwidgets>
  <tabstops>
   <tabstop>downloadLineEdit</tabstop>
-  <tabstop>transfersView</tabstop>
+  <tabstop>transfersViewWidget</tabstop>
  </tabstops>
  <resources/>
  <connections/>
