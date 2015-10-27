@@ -34,7 +34,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QTreeView" name="cookiesView">
+    <widget class="Otter::ItemViewWidget" name="cookiesViewWidget">
      <property name="contextMenuPolicy">
       <enum>Qt::CustomContextMenu</enum>
      </property>
@@ -236,9 +236,16 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Otter::ItemViewWidget</class>
+   <extends>QTreeView</extends>
+   <header>src/ui/ItemViewWidget.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>filterLineEdit</tabstop>
-  <tabstop>cookiesView</tabstop>
+  <tabstop>cookiesViewWidget</tabstop>
   <tabstop>domainLineEdit</tabstop>
   <tabstop>nameLineEdit</tabstop>
   <tabstop>valueLineEdit</tabstop>

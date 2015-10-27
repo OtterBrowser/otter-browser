@@ -40,7 +40,7 @@ CookiesContentsWidget::CookiesContentsWidget(Window *window) : ContentsWidget(wi
 	m_ui(new Ui::CookiesContentsWidget)
 {
 	m_ui->setupUi(this);
-	m_ui->cookiesView->installEventFilter(this);
+	m_ui->cookiesViewWidget->installEventFilter(this);
 	m_ui->filterLineEdit->installEventFilter(this);
 
 	if (!window)
@@ -51,7 +51,7 @@ CookiesContentsWidget::CookiesContentsWidget(Window *window) : ContentsWidget(wi
 	QTimer::singleShot(100, this, SLOT(populateCookies()));
 
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterCookies(QString)));
-	connect(m_ui->cookiesView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
+	connect(m_ui->cookiesViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(removeCookies()));
 }
 
@@ -64,14 +64,9 @@ void CookiesContentsWidget::changeEvent(QEvent *event)
 {
 	QWidget::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
-
-			break;
-		default:
-			break;
+		m_ui->retranslateUi(this);
 	}
 }
 
@@ -88,7 +83,8 @@ void CookiesContentsWidget::populateCookies()
 
 	m_model->sort(0);
 
-	m_ui->cookiesView->setModel(m_model);
+	m_ui->cookiesViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->cookiesViewWidget->setModel(m_model);
 
 	m_isLoading = false;
 
@@ -97,7 +93,7 @@ void CookiesContentsWidget::populateCookies()
 	connect(cookieJar, SIGNAL(cookieAdded(QNetworkCookie)), this, SLOT(addCookie(QNetworkCookie)));
 	connect(cookieJar, SIGNAL(cookieRemoved(QNetworkCookie)), this, SLOT(removeCookie(QNetworkCookie)));
 	connect(m_model, SIGNAL(modelReset()), this, SLOT(updateActions()));
-	connect(m_ui->cookiesView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
+	connect(m_ui->cookiesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
 }
 
 void CookiesContentsWidget::addCookie(const QNetworkCookie &cookie)
@@ -132,6 +128,7 @@ void CookiesContentsWidget::addCookie(const QNetworkCookie &cookie)
 	cookieItem->setData(cookie.path(), Qt::UserRole);
 	cookieItem->setData(cookie.domain(), (Qt::UserRole + 1));
 	cookieItem->setToolTip(cookie.name());
+	cookieItem->setFlags(cookieItem->flags() | Qt::ItemNeverHasChildren);
 
 	domainItem->appendRow(cookieItem);
 	domainItem->setText(QStringLiteral("%1 (%2)").arg(domain).arg(domainItem->rowCount()));
@@ -150,7 +147,7 @@ void CookiesContentsWidget::removeCookie(const QNetworkCookie &cookie)
 		{
 			if (domainItem->child(j, 0)->text() == cookie.name() && domainItem->child(j, 0)->data(Qt::UserRole).toString() == cookie.path())
 			{
-				point = m_ui->cookiesView->visualRect(domainItem->child(j, 0)->index()).center();
+				point = m_ui->cookiesViewWidget->visualRect(domainItem->child(j, 0)->index()).center();
 
 				domainItem->removeRow(j);
 
@@ -169,17 +166,17 @@ void CookiesContentsWidget::removeCookie(const QNetworkCookie &cookie)
 
 		if (!point.isNull())
 		{
-			const QModelIndex index = m_ui->cookiesView->indexAt(point);
+			const QModelIndex index = m_ui->cookiesViewWidget->indexAt(point);
 
-			m_ui->cookiesView->setCurrentIndex(index);
-			m_ui->cookiesView->selectionModel()->select(index, QItemSelectionModel::Select);
+			m_ui->cookiesViewWidget->setCurrentIndex(index);
+			m_ui->cookiesViewWidget->selectionModel()->select(index, QItemSelectionModel::Select);
 		}
 	}
 }
 
 void CookiesContentsWidget::removeCookies()
 {
-	const QModelIndexList indexes = m_ui->cookiesView->selectionModel()->selectedIndexes();
+	const QModelIndexList indexes = m_ui->cookiesViewWidget->selectionModel()->selectedIndexes();
 
 	if (indexes.isEmpty())
 	{
@@ -234,7 +231,7 @@ void CookiesContentsWidget::removeCookies()
 
 void CookiesContentsWidget::removeDomainCookies()
 {
-	const QModelIndexList indexes = m_ui->cookiesView->selectionModel()->selectedIndexes();
+	const QModelIndexList indexes = m_ui->cookiesViewWidget->selectionModel()->selectedIndexes();
 
 	if (indexes.isEmpty())
 	{
@@ -307,7 +304,7 @@ void CookiesContentsWidget::removeAllCookies()
 
 void CookiesContentsWidget::showContextMenu(const QPoint &point)
 {
-	const QModelIndex index = m_ui->cookiesView->indexAt(point);
+	const QModelIndex index = m_ui->cookiesViewWidget->indexAt(point);
 	QMenu menu(this);
 
 	if (index.isValid())
@@ -320,15 +317,15 @@ void CookiesContentsWidget::showContextMenu(const QPoint &point)
 		menu.addAction(tr("Remove All Cookies from This Domain…"), this, SLOT(removeDomainCookies()));
 	}
 
-	menu.addAction(tr("Remove All Cookies…"), this, SLOT(removeAllCookies()))->setEnabled(m_ui->cookiesView->model()->rowCount() > 0);
+	menu.addAction(tr("Remove All Cookies…"), this, SLOT(removeAllCookies()))->setEnabled(m_ui->cookiesViewWidget->model()->rowCount() > 0);
 	menu.addSeparator();
 	menu.addAction(ActionsManager::getAction(ActionsManager::ClearHistoryAction, this));
-	menu.exec(m_ui->cookiesView->mapToGlobal(point));
+	menu.exec(m_ui->cookiesViewWidget->mapToGlobal(point));
 }
 
 void CookiesContentsWidget::print(QPrinter *printer)
 {
-	m_ui->cookiesView->render(printer);
+	m_ui->cookiesViewWidget->render(printer);
 }
 
 void CookiesContentsWidget::triggerAction(int identifier, const QVariantMap &parameters)
@@ -338,7 +335,7 @@ void CookiesContentsWidget::triggerAction(int identifier, const QVariantMap &par
 	switch (identifier)
 	{
 		case ActionsManager::SelectAllAction:
-			m_ui->cookiesView->selectAll();
+			m_ui->cookiesViewWidget->selectAll();
 
 			break;
 		case ActionsManager::DeleteAction:
@@ -352,7 +349,7 @@ void CookiesContentsWidget::triggerAction(int identifier, const QVariantMap &par
 
 			break;
 		case ActionsManager::ActivateContentAction:
-			m_ui->cookiesView->setFocus();
+			m_ui->cookiesViewWidget->setFocus();
 
 			break;
 		default:
@@ -362,7 +359,7 @@ void CookiesContentsWidget::triggerAction(int identifier, const QVariantMap &par
 
 void CookiesContentsWidget::updateActions()
 {
-	const QModelIndexList indexes = m_ui->cookiesView->selectionModel()->selectedIndexes();
+	const QModelIndexList indexes = m_ui->cookiesViewWidget->selectionModel()->selectedIndexes();
 
 	m_ui->deleteButton->setEnabled(!indexes.isEmpty());
 
@@ -409,7 +406,7 @@ void CookiesContentsWidget::filterCookies(const QString &filter)
 {
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		m_ui->cookiesView->setRowHidden(i, m_model->invisibleRootItem()->index(), (!filter.isEmpty() && !m_model->item(i, 0)->data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive)));
+		m_ui->cookiesViewWidget->setRowHidden(i, m_model->invisibleRootItem()->index(), (!filter.isEmpty() && !m_model->item(i, 0)->data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive)));
 	}
 }
 
@@ -483,7 +480,7 @@ bool CookiesContentsWidget::isLoading() const
 
 bool CookiesContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == m_ui->cookiesView && event->type() == QEvent::KeyPress)
+	if (object == m_ui->cookiesViewWidget && event->type() == QEvent::KeyPress)
 	{
 		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
 
