@@ -156,7 +156,7 @@ void GesturesManager::createInstance(QObject *parent)
 
 void GesturesManager::optionChanged(const QString &option)
 {
-	if (option == QLatin1String("Browser/GesturesProfilesOrder"))
+	if (option == QLatin1String("Browser/EnableMouseGestures") || option == QLatin1String("Browser/GesturesProfilesOrder"))
 	{
 		loadProfiles();
 	}
@@ -167,6 +167,7 @@ void GesturesManager::loadProfiles()
 	m_gestures.clear();
 
 	const QStringList gestureProfiles = SettingsManager::getValue(QLatin1String("Browser/GesturesProfilesOrder")).toStringList();
+	const bool enableMoves = SettingsManager::getValue(QLatin1String("Browser/EnableMouseGestures")).toBool();
 
 	for (int i = 0; i < gestureProfiles.count(); ++i)
 	{
@@ -201,13 +202,19 @@ void GesturesManager::loadProfiles()
 				}
 
 				QList<GestureStep> steps;
+				bool hasMove = false;
 
 				for (int l = 0; l < rawMouseActions.count(); ++l)
 				{
 					steps.push_back(deserializeStep(rawMouseActions.at(l)));
+
+					if (steps.last().type == QEvent::MouseMove)
+					{
+						hasMove = true;
+					}
 				}
 
-				if (!steps.empty())
+				if (!steps.empty() && !(!enableMoves && hasMove))
 				{
 					MouseGesture definition;
 					definition.action = action;
