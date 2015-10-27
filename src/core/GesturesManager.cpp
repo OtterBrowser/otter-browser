@@ -24,6 +24,7 @@
 
 #include <QtCore/QRegularExpression>
 #include <QtCore/QSettings>
+#include <QtWidgets/QApplication>
 
 #include <limits>
 
@@ -649,27 +650,21 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 
 				m_recognizer->addPosition(mouseEvent->pos().x(), mouseEvent->pos().y());
 
-				if (moveLength() > 5 && m_gestures.contains(m_context))
+				if (moveLength() >= QApplication::startDragDistance() && m_gestures.contains(m_context))
 				{
-					bool hasMoveAction = false;
-					QList<GestureStep> steps = m_steps;
-					steps.append(GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction, mouseEvent->modifiers()));
+					m_steps.append(GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction, mouseEvent->modifiers()));
 
-					for (int i=0; i<m_gestures[m_context].count(); ++i)
-					{
-						if (m_gestures[m_context][i].steps == steps)
-						{
-							hasMoveAction = true;
+					int matching = matchGesture();
 
-							break;
-						}
-					}
-
-					if (hasMoveAction)
+					if (matching != UNKNOWN_GESTURE)
 					{
 						m_steps.append(recognizeMoveStep(mouseEvent));
 
-						callAction(matchGesture());
+						callAction(matching);
+					}
+					else
+					{
+						m_steps.pop_back();
 					}
 				}
 			}
