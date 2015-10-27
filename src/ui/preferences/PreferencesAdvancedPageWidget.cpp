@@ -478,7 +478,7 @@ void PreferencesAdvancedPageWidget::addDownloadsMimeType()
 
 	if (!mimeType.isEmpty())
 	{
-		if (QRegularExpression("^[a-zA-Z]+/[a-zA-Z0-9\\.\\+\\-_]+$").match(mimeType).hasMatch())
+		if (QRegularExpression("^[a-zA-Z\\-]+/[a-zA-Z0-9\\.\\+\\-_]+$").match(mimeType).hasMatch())
 		{
 			QStandardItem *item = new QStandardItem(mimeType);
 			item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
