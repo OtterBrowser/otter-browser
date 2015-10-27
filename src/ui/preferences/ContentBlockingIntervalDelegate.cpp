@@ -68,4 +68,12 @@ QWidget* ContentBlockingIntervalDelegate::createEditor(QWidget *parent, const QS
 	return spinBox;
 }
 
+QSize ContentBlockingIntervalDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	QSize size = index.data(Qt::SizeHintRole).toSize();
+	size.setHeight(option.fontMetrics.height() * 1.25);
+
+	return size;
+}
+
 }

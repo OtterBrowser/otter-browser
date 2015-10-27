@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -58,6 +58,14 @@ QWidget* OptionDelegate::createEditor(QWidget *parent, const QStyleOptionViewIte
 	connect(widget, SIGNAL(commitData(QWidget*)), this, SIGNAL(commitData(QWidget*)));
 
 	return widget;
+}
+
+QSize OptionDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	QSize size = index.data(Qt::SizeHintRole).toSize();
+	size.setHeight(option.fontMetrics.height() * 1.25);
+
+	return size;
 }
 
 }
