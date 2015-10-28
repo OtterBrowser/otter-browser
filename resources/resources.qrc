@@ -27,7 +27,6 @@
         <file>cursors/scroll-vertical.png</file>
         <file>files/error.html</file>
         <file>files/listing.html</file>
-        <file>gestures/default.ini</file>
         <file>icons/application-exit.png</file>
         <file>icons/application-rss+xml.png</file>
         <file>icons/arrow-down.png</file>
@@ -132,6 +131,7 @@
         <file>menu/menuBar.json</file>
         <file>menu/menuButton.json</file>
         <file>menu/webWidget.json</file>
+        <file>mouse/default.ini</file>
         <file>other/handlers.ini</file>
         <file>other/notifications.ini</file>
         <file>other/syntaxHighlighting.json</file>

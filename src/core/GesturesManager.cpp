@@ -156,7 +156,7 @@ void GesturesManager::createInstance(QObject *parent)
 
 void GesturesManager::optionChanged(const QString &option)
 {
-	if (option == QLatin1String("Browser/EnableMouseGestures") || option == QLatin1String("Browser/GesturesProfilesOrder"))
+	if (option == QLatin1String("Browser/EnableMouseGestures") || option == QLatin1String("Browser/MouseProfilesOrder"))
 	{
 		loadProfiles();
 	}
@@ -166,12 +166,12 @@ void GesturesManager::loadProfiles()
 {
 	m_gestures.clear();
 
-	const QStringList gestureProfiles = SettingsManager::getValue(QLatin1String("Browser/GesturesProfilesOrder")).toStringList();
+	const QStringList gestureProfiles = SettingsManager::getValue(QLatin1String("Browser/MouseProfilesOrder")).toStringList();
 	const bool enableMoves = SettingsManager::getValue(QLatin1String("Browser/EnableMouseGestures")).toBool();
 
 	for (int i = 0; i < gestureProfiles.count(); ++i)
 	{
-		QSettings profile(SessionsManager::getReadableDataPath(QLatin1String("gestures/") + gestureProfiles.at(i) + QLatin1String(".ini")), QSettings::IniFormat);
+		QSettings profile(SessionsManager::getReadableDataPath(QLatin1String("mouse/") + gestureProfiles.at(i) + QLatin1String(".ini")), QSettings::IniFormat);
 		const QStringList contexts = profile.childGroups();
 
 		for (int j = 0; j < contexts.count(); ++j)
