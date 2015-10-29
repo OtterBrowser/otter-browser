@@ -20,6 +20,7 @@
 
 #include "PreferencesAdvancedPageWidget.h"
 #include "JavaScriptPreferencesDialog.h"
+#include "MouseProfileDialog.h"
 #include "ShortcutsProfileDialog.h"
 #include "../ItemDelegate.h"
 #include "../OptionDelegate.h"
@@ -74,7 +75,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 		{
 			item->setData(navigationIndex, Qt::UserRole);
 
-			if (i == 6 || i == 8 || i == 14)
+			if (i == 6 || i == 8)
 			{
 				item->setEnabled(false);
 			}
@@ -357,6 +358,43 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	updateReaddKeyboardProfileMenu();
 
+	m_ui->mouseMoveDownButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
+	m_ui->mouseMoveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
+
+	QStandardItemModel *mouseProfilesModel = new QStandardItemModel(this);
+	const QStringList mouseProfiles = SettingsManager::getValue(QLatin1String("Browser/MouseProfilesOrder")).toStringList();
+
+	for (int i = 0; i < mouseProfiles.count(); ++i)
+	{
+		const MouseProfile profile = loadMouseProfile(mouseProfiles.at(i), true);
+
+		if (profile.identifier.isEmpty())
+		{
+			continue;
+		}
+
+		m_mouseProfiles[mouseProfiles.at(i)] = profile;
+
+		QStandardItem *item = new QStandardItem(profile.title.isEmpty() ? tr("(Untitled)") : profile.title);
+		item->setToolTip(profile.description);
+		item->setData(profile.identifier, Qt::UserRole);
+		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+
+		mouseProfilesModel->appendRow(item);
+	}
+
+	m_ui->mouseViewWidget->setModel(mouseProfilesModel);
+	m_ui->mouseViewWidget->setItemDelegate(new OptionDelegate(true, this));
+
+	QMenu *addMouseProfileMenu = new QMenu(m_ui->mouseAddButton);
+	addMouseProfileMenu->addAction(tr("New…"));
+	addMouseProfileMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->mouseAddButton));
+
+	m_ui->mouseAddButton->setMenu(addMouseProfileMenu);
+	m_ui->mouseEnableGesturesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableMouseGestures")).toBool());
+
+	updateReaddMouseProfileMenu();
+
 	connect(m_ui->advancedViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(changeCurrentPage()));
 	connect(m_ui->notificationsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateNotificationsActions()));
 	connect(m_ui->notificationsPlaySoundButton, SIGNAL(clicked()), this, SLOT(playNotificationSound()));
@@ -393,6 +431,17 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	connect(m_ui->keyboardRemoveButton, SIGNAL(clicked()), this, SLOT(removeKeyboardProfile()));
 	connect(m_ui->keyboardMoveDownButton, SIGNAL(clicked()), m_ui->keyboardViewWidget, SLOT(moveDownRow()));
 	connect(m_ui->keyboardMoveUpButton, SIGNAL(clicked()), m_ui->keyboardViewWidget, SLOT(moveUpRow()));
+	connect(m_ui->mouseViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->mouseMoveDownButton, SLOT(setEnabled(bool)));
+	connect(m_ui->mouseViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->mouseMoveUpButton, SLOT(setEnabled(bool)));
+	connect(m_ui->mouseViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateMouseProfileActions()));
+	connect(m_ui->mouseViewWidget, SIGNAL(modified()), this, SIGNAL(settingsModified()));
+	connect(m_ui->mouseAddButton->menu()->actions().at(0), SIGNAL(triggered()), this, SLOT(addMouseProfile()));
+	connect(m_ui->mouseAddButton->menu()->actions().at(1)->menu(), SIGNAL(triggered(QAction*)), this, SLOT(readdMouseProfile(QAction*)));
+	connect(m_ui->mouseEditButton, SIGNAL(clicked()), this, SLOT(editMouseProfile()));
+	connect(m_ui->mouseCloneButton, SIGNAL(clicked()), this, SLOT(cloneMouseProfile()));
+	connect(m_ui->mouseRemoveButton, SIGNAL(clicked()), this, SLOT(removeMouseProfile()));
+	connect(m_ui->mouseMoveDownButton, SIGNAL(clicked()), m_ui->mouseViewWidget, SLOT(moveDownRow()));
+	connect(m_ui->mouseMoveUpButton, SIGNAL(clicked()), m_ui->mouseViewWidget, SLOT(moveUpRow()));
 }
 
 PreferencesAdvancedPageWidget::~PreferencesAdvancedPageWidget()
@@ -953,6 +1002,201 @@ void PreferencesAdvancedPageWidget::updateReaddKeyboardProfileMenu()
 	}
 }
 
+void PreferencesAdvancedPageWidget::addMouseProfile()
+{
+	const QString identifier = createProfileIdentifier(m_ui->mouseViewWidget);
+
+	if (identifier.isEmpty())
+	{
+		return;
+	}
+
+	MouseProfile profile;
+	profile.title = tr("(Untitled)");
+
+	m_mouseProfiles[identifier] = profile;
+
+	QStandardItem *item = new QStandardItem(tr("(Untitled)"));
+	item->setData(identifier, Qt::UserRole);
+	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+
+	m_ui->mouseViewWidget->insertRow(item);
+
+	emit settingsModified();
+}
+
+void PreferencesAdvancedPageWidget::readdMouseProfile(QAction *action)
+{
+	if (!action || action->data().isNull())
+	{
+		return;
+	}
+
+	const QString identifier = action->data().toString();
+	const MouseProfile profile = loadMouseProfile(identifier, true);
+
+	if (profile.identifier.isEmpty())
+	{
+		return;
+	}
+
+	m_mouseProfiles[identifier] = profile;
+
+	QStandardItem *item = new QStandardItem(profile.title.isEmpty() ? tr("(Untitled)") : profile.title);
+	item->setToolTip(profile.description);
+	item->setData(profile.identifier, Qt::UserRole);
+	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+
+	m_ui->mouseViewWidget->insertRow(item);
+
+	updateReaddMouseProfileMenu();
+
+	emit settingsModified();
+}
+
+void PreferencesAdvancedPageWidget::editMouseProfile()
+{
+	const QModelIndex index = m_ui->mouseViewWidget->currentIndex();
+	const QString identifier = index.data(Qt::UserRole).toString();
+
+	if (identifier.isEmpty() || !m_mouseProfiles.contains(identifier))
+	{
+		return;
+	}
+
+	MouseProfileDialog dialog(identifier, m_mouseProfiles, this);
+
+	if (dialog.exec() == QDialog::Rejected)
+	{
+		return;
+	}
+
+	m_mouseProfiles[identifier] = dialog.getProfile();
+
+	m_ui->mouseViewWidget->setData(index, (m_mouseProfiles[identifier].title.isEmpty() ? tr("(Untitled)") : m_mouseProfiles[identifier].title), Qt::DisplayRole);
+	m_ui->mouseViewWidget->setData(index, m_mouseProfiles[identifier].description, Qt::ToolTipRole);
+
+	emit settingsModified();
+}
+
+void PreferencesAdvancedPageWidget::cloneMouseProfile()
+{
+	const QString identifier = m_ui->mouseViewWidget->currentIndex().data(Qt::UserRole).toString();
+
+	if (identifier.isEmpty() || !m_mouseProfiles.contains(identifier))
+	{
+		return;
+	}
+
+	const QString newIdentifier = createProfileIdentifier(m_ui->mouseViewWidget, identifier);
+
+	if (newIdentifier.isEmpty())
+	{
+		return;
+	}
+
+	m_mouseProfiles[newIdentifier] = m_mouseProfiles[identifier];
+	m_mouseProfiles[newIdentifier].identifier = newIdentifier;
+	m_mouseProfiles[newIdentifier].isModified = true;
+
+	QStandardItem *item = new QStandardItem(m_mouseProfiles[newIdentifier].title.isEmpty() ? tr("(Untitled)") : m_mouseProfiles[newIdentifier].title);
+	item->setToolTip(m_mouseProfiles[newIdentifier].description);
+	item->setData(newIdentifier, Qt::UserRole);
+	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+
+	m_ui->mouseViewWidget->insertRow(item);
+
+	emit settingsModified();
+}
+
+void PreferencesAdvancedPageWidget::removeMouseProfile()
+{
+	const QString identifier = m_ui->mouseViewWidget->currentIndex().data(Qt::UserRole).toString();
+
+	if (identifier.isEmpty() || !m_mouseProfiles.contains(identifier))
+	{
+		return;
+	}
+
+	QMessageBox messageBox;
+	messageBox.setWindowTitle(tr("Question"));
+	messageBox.setText(tr("Do you really want to remove this profile?"));
+	messageBox.setIcon(QMessageBox::Question);
+	messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+	messageBox.setDefaultButton(QMessageBox::Cancel);
+
+	const QString path = SessionsManager::getWritableDataPath(QLatin1String("mouse/") + identifier + QLatin1String(".ini"));
+
+	if (QFile::exists(path))
+	{
+		messageBox.setCheckBox(new QCheckBox(tr("Delete profile permanently")));
+	}
+
+	if (messageBox.exec() == QMessageBox::Yes)
+	{
+		if (messageBox.checkBox() && messageBox.checkBox()->isChecked())
+		{
+			m_filesToRemove.append(path);
+		}
+
+		m_mouseProfiles.remove(identifier);
+
+		m_ui->mouseViewWidget->removeRow();
+
+		updateReaddMouseProfileMenu();
+
+		emit settingsModified();
+	}
+}
+
+void PreferencesAdvancedPageWidget::updateMouseProfileActions()
+{
+	const int currentRow = m_ui->mouseViewWidget->getCurrentRow();
+	const bool isSelected = (currentRow >= 0 && currentRow < m_ui->mouseViewWidget->getRowCount());
+
+	m_ui->mouseEditButton->setEnabled(isSelected);
+	m_ui->mouseCloneButton->setEnabled(isSelected);
+	m_ui->mouseRemoveButton->setEnabled(isSelected);
+}
+
+void PreferencesAdvancedPageWidget::updateReaddMouseProfileMenu()
+{
+	if (!m_ui->mouseAddButton->menu())
+	{
+		return;
+	}
+
+	QStringList availableIdentifiers;
+	QList<MouseProfile> availableMouseProfiles;
+	QList<QFileInfo> allMouseProfiles = QDir(SessionsManager::getReadableDataPath(QLatin1String("mouse"))).entryInfoList(QDir::Files);
+	allMouseProfiles.append(QDir(SessionsManager::getReadableDataPath(QLatin1String("mouse"), true)).entryInfoList(QDir::Files));
+
+	for (int i = 0; i < allMouseProfiles.count(); ++i)
+	{
+		const QString identifier = allMouseProfiles.at(i).baseName();
+
+		if (!m_mouseProfiles.contains(identifier) && !availableIdentifiers.contains(identifier))
+		{
+			const MouseProfile profile = loadMouseProfile(identifier, false);
+
+			if (!profile.identifier.isEmpty())
+			{
+				availableIdentifiers.append(identifier);
+
+				availableMouseProfiles.append(profile);
+			}
+		}
+	}
+
+	m_ui->mouseAddButton->menu()->actions().at(1)->menu()->clear();
+	m_ui->mouseAddButton->menu()->actions().at(1)->menu()->setEnabled(!availableMouseProfiles.isEmpty());
+
+	for (int i = 0; i < availableMouseProfiles.count(); ++i)
+	{
+		m_ui->mouseAddButton->menu()->actions().at(1)->menu()->addAction((availableMouseProfiles.at(i).title.isEmpty() ? tr("(Untitled)") : availableMouseProfiles.at(i).title))->setData(availableMouseProfiles.at(i).identifier);
+	}
+}
+
 void PreferencesAdvancedPageWidget::updateJavaScriptOptions()
 {
 	const bool isSet = !m_javaScriptOptions.isEmpty();
@@ -1207,20 +1451,19 @@ void PreferencesAdvancedPageWidget::save()
 			continue;
 		}
 
-		QFile file(SessionsManager::getWritableDataPath(QLatin1String("keyboard/") + keyboardProfilesIterator.key() + QLatin1String(".ini")));
+		Settings settings(SessionsManager::getWritableDataPath(QLatin1String("keyboard/") + keyboardProfilesIterator.key() + QLatin1String(".ini")));
+		settings.clear();
 
-		if (!file.open(QIODevice::WriteOnly))
-		{
-			continue;
-		}
-
-		QTextStream stream(&file);
+		QString comment;
+		QTextStream stream(&comment);
 		stream.setCodec("UTF-8");
-		stream << QLatin1String("; Title: ") << (keyboardProfilesIterator.value().title.isEmpty() ? tr("(Untitled)") : keyboardProfilesIterator.value().title) << QLatin1Char('\n');
-		stream << QLatin1String("; Description: ") << keyboardProfilesIterator.value().description << QLatin1Char('\n');
-		stream << QLatin1String("; Type: keyboard-profile\n");
-		stream << QLatin1String("; Author: ") << keyboardProfilesIterator.value().author << QLatin1Char('\n');
-		stream << QLatin1String("; Version: ") << keyboardProfilesIterator.value().version << QLatin1String("\n\n");
+		stream << QLatin1String("Title: ") << (keyboardProfilesIterator.value().title.isEmpty() ? tr("(Untitled)") : keyboardProfilesIterator.value().title) << QLatin1Char('\n');
+		stream << QLatin1String("Description: ") << keyboardProfilesIterator.value().description << QLatin1Char('\n');
+		stream << QLatin1String("Type: keyboard-profile\n");
+		stream << QLatin1String("Author: ") << keyboardProfilesIterator.value().author << QLatin1Char('\n');
+		stream << QLatin1String("Version: ") << keyboardProfilesIterator.value().version;
+
+		settings.setComment(comment);
 
 		QHash<int, QVector<QKeySequence> >::iterator shortcutsIterator;
 
@@ -1235,12 +1478,13 @@ void PreferencesAdvancedPageWidget::save()
 					shortcuts.append(shortcutsIterator.value().at(i).toString());
 				}
 
-				stream << QLatin1Char('[') << ActionsManager::getActionName(shortcutsIterator.key()) << QLatin1String("]\n");
-				stream << QLatin1String("shortcuts=") << shortcuts.join(QLatin1Char(' ')) << QLatin1String("\n\n");
+				settings.beginGroup(ActionsManager::getActionName(shortcutsIterator.key()));
+				settings.setValue(QLatin1String("shortcuts"), shortcuts.join(QLatin1Char(' ')));
+				settings.endGroup();
 			}
 		}
 
-		file.close();
+		settings.save();
 	}
 
 	QStringList keyboardProfiles;
@@ -1257,6 +1501,65 @@ void PreferencesAdvancedPageWidget::save()
 
 	SettingsManager::setValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder"), keyboardProfiles);
 	SettingsManager::setValue(QLatin1String("Browser/EnableSingleKeyShortcuts"), m_ui->keyboardEnableSingleKeyShortcutsCheckBox->isChecked());
+
+	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("mouse")));
+
+	QHash<QString, MouseProfile>::iterator mouseProfilesIterator;
+
+	for (mouseProfilesIterator = m_mouseProfiles.begin(); mouseProfilesIterator != m_mouseProfiles.end(); ++mouseProfilesIterator)
+	{
+		if (!mouseProfilesIterator.value().isModified)
+		{
+			continue;
+		}
+
+		Settings settings(SessionsManager::getWritableDataPath(QLatin1String("mouse/") + mouseProfilesIterator.key() + QLatin1String(".ini")));
+		settings.clear();
+
+		QString comment;
+		QTextStream stream(&comment);
+		stream.setCodec("UTF-8");
+		stream << QLatin1String("Title: ") << (mouseProfilesIterator.value().title.isEmpty() ? tr("(Untitled)") : mouseProfilesIterator.value().title) << QLatin1Char('\n');
+		stream << QLatin1String("Description: ") << mouseProfilesIterator.value().description << QLatin1Char('\n');
+		stream << QLatin1String("Type: mouse-profile\n");
+		stream << QLatin1String("Author: ") << mouseProfilesIterator.value().author << QLatin1Char('\n');
+		stream << QLatin1String("Version: ") << mouseProfilesIterator.value().version;
+
+		settings.setComment(comment);
+
+		QHash<QString, QHash<QString, int> >::iterator contextsIterator;
+
+		for (contextsIterator = mouseProfilesIterator.value().gestures.begin(); contextsIterator != mouseProfilesIterator.value().gestures.end(); ++contextsIterator)
+		{
+			settings.beginGroup(contextsIterator.key());
+
+			QHash<QString, int>::iterator gesturesIterator;
+
+			for (gesturesIterator = contextsIterator.value().begin(); gesturesIterator != contextsIterator.value().end(); ++gesturesIterator)
+			{
+				settings.setValue(gesturesIterator.key(), ActionsManager::getActionName(gesturesIterator.value()));
+			}
+
+			settings.endGroup();
+		}
+
+		settings.save();
+	}
+
+	QStringList mouseProfiles;
+
+	for (int i = 0; i < m_ui->mouseViewWidget->getRowCount(); ++i)
+	{
+		const QString identifier = m_ui->mouseViewWidget->getIndex(i, 0).data(Qt::UserRole).toString();
+
+		if (!identifier.isEmpty())
+		{
+			mouseProfiles.append(identifier);
+		}
+	}
+
+	SettingsManager::setValue(QLatin1String("Browser/MouseProfilesOrder"), mouseProfiles);
+	SettingsManager::setValue(QLatin1String("Browser/EnableMouseGestures"), m_ui->mouseEnableGesturesCheckBox->isChecked());
 
 	if (!m_javaScriptOptions.isEmpty())
 	{
@@ -1308,29 +1611,15 @@ QStringList PreferencesAdvancedPageWidget::getSelectedUpdateChannels() const
 
 ShortcutsProfile PreferencesAdvancedPageWidget::loadKeyboardProfile(const QString &identifier, bool loadShortcuts) const
 {
-	const QString path = SessionsManager::getReadableDataPath(QLatin1String("keyboard/") + identifier + QLatin1String(".ini"));
-	QFile file(path);
-
-	if (!file.open(QIODevice::ReadOnly))
-	{
-		return ShortcutsProfile();
-	}
-
-	const QRegularExpression expression(QLatin1String(";\\s*"));
+	Settings settings(SessionsManager::getReadableDataPath(QLatin1String("keyboard/") + identifier + QLatin1String(".ini")));
+	const QStringList comments = settings.getComment().split(QLatin1Char('\n'));
 	ShortcutsProfile profile;
 	profile.identifier = identifier;
 
-	while (!file.atEnd())
+	for (int i = 0; i < comments.count(); ++i)
 	{
-		const QString line = QString(file.readLine()).trimmed();
-
-		if (!line.startsWith(QLatin1Char(';')))
-		{
-			break;
-		}
-
-		const QString key = line.section(QLatin1Char(':'), 0, 0).remove(expression);
-		const QString value = line.section(QLatin1Char(':'), 1).trimmed();
+		const QString key = comments.at(i).section(QLatin1Char(':'), 0, 0).trimmed();
+		const QString value = comments.at(i).section(QLatin1Char(':'), 1).trimmed();
 
 		if (key == QLatin1String("Title"))
 		{
@@ -1350,17 +1639,12 @@ ShortcutsProfile PreferencesAdvancedPageWidget::loadKeyboardProfile(const QStrin
 		}
 	}
 
-	file.close();
-
 	if (!loadShortcuts)
 	{
 		return profile;
 	}
 
-	QSettings settings(path, QSettings::IniFormat);
-	settings.setIniCodec("UTF-8");
-
-	const QStringList actions = settings.childGroups();
+	const QStringList actions = settings.getGroups();
 
 	for (int i = 0; i < actions.count(); ++i)
 	{
@@ -1373,7 +1657,7 @@ ShortcutsProfile PreferencesAdvancedPageWidget::loadKeyboardProfile(const QStrin
 
 		settings.beginGroup(actions.at(i));
 
-		const QStringList rawShortcuts = settings.value(QLatin1String("shortcuts")).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
+		const QStringList rawShortcuts = settings.getValue(QLatin1String("shortcuts")).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
 		QVector<QKeySequence> shortcuts;
 		shortcuts.reserve(rawShortcuts.count());
 
@@ -1391,6 +1675,70 @@ ShortcutsProfile PreferencesAdvancedPageWidget::loadKeyboardProfile(const QStrin
 		{
 			profile.shortcuts[action] = shortcuts;
 		}
+
+		settings.endGroup();
+	}
+
+	return profile;
+}
+
+MouseProfile PreferencesAdvancedPageWidget::loadMouseProfile(const QString &identifier, bool loadGestures) const
+{
+	Settings settings(SessionsManager::getReadableDataPath(QLatin1String("mouse/") + identifier + QLatin1String(".ini")));
+	const QStringList comments = settings.getComment().split(QLatin1Char('\n'));
+	MouseProfile profile;
+	profile.identifier = identifier;
+
+	for (int i = 0; i < comments.count(); ++i)
+	{
+		const QString key = comments.at(i).section(QLatin1Char(':'), 0, 0).trimmed();
+		const QString value = comments.at(i).section(QLatin1Char(':'), 1).trimmed();
+
+		if (key == QLatin1String("Title"))
+		{
+			profile.title = value;
+		}
+		else if (key == QLatin1String("Description"))
+		{
+			profile.description = value;
+		}
+		else if (key == QLatin1String("Author"))
+		{
+			profile.author = value;
+		}
+		else if (key == QLatin1String("Version"))
+		{
+			profile.version = value;
+		}
+	}
+
+	if (!loadGestures)
+	{
+		return profile;
+	}
+
+	const QStringList contexts = settings.getGroups();
+
+	for (int i = 0; i < contexts.count(); ++i)
+	{
+		settings.beginGroup(contexts.at(i));
+
+		QHash<QString, int> rawGestures;
+		const QStringList gestures = settings.getKeys();
+
+		for (int j = 0; j < gestures.count(); ++j)
+		{
+			const int action = ActionsManager::getActionIdentifier(settings.getValue(gestures.at(j)).toString());
+
+			if (action < 0)
+			{
+				continue;
+			}
+
+			rawGestures[gestures.at(j)] = action;
+		}
+
+		profile.gestures[contexts.at(i)] = rawGestures;
 
 		settings.endGroup();
 	}

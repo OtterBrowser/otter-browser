@@ -180,6 +180,7 @@ set(otter_src
 	src/ui/preferences/ContentBlockingIntervalDelegate.cpp
 	src/ui/preferences/JavaScriptPreferencesDialog.cpp
 	src/ui/preferences/KeyboardShortcutDelegate.cpp
+	src/ui/preferences/MouseProfileDialog.cpp
 	src/ui/preferences/PreferencesAdvancedPageWidget.cpp
 	src/ui/preferences/PreferencesContentPageWidget.cpp
 	src/ui/preferences/PreferencesGeneralPageWidget.cpp
@@ -263,6 +264,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/preferences/AcceptLanguageDialog.ui
 	src/ui/preferences/ContentBlockingDialog.ui
 	src/ui/preferences/JavaScriptPreferencesDialog.ui
+	src/ui/preferences/MouseProfileDialog.ui
 	src/ui/preferences/PreferencesAdvancedPageWidget.ui
 	src/ui/preferences/PreferencesContentPageWidget.ui
 	src/ui/preferences/PreferencesGeneralPageWidget.ui

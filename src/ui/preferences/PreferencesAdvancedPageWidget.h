@@ -32,6 +32,7 @@ namespace Ui
 	class PreferencesAdvancedPageWidget;
 }
 
+struct MouseProfile;
 struct ShortcutsProfile;
 class ItemViewWidget;
 
@@ -46,9 +47,11 @@ public:
 protected:
 	void changeEvent(QEvent *event);
 	void updateReaddKeyboardProfileMenu();
+	void updateReaddMouseProfileMenu();
 	QString createProfileIdentifier(ItemViewWidget *view, const QString &base = QString()) const;
 	QStringList getSelectedUpdateChannels() const;
 	ShortcutsProfile loadKeyboardProfile(const QString &identifier, bool loadShortcuts) const;
+	MouseProfile loadMouseProfile(const QString &identifier, bool loadGestures) const;
 
 protected slots:
 	void playNotificationSound();
@@ -75,6 +78,12 @@ protected slots:
 	void cloneKeyboardProfile();
 	void removeKeyboardProfile();
 	void updateKeyboardProfileActions();
+	void addMouseProfile();
+	void readdMouseProfile(QAction *action);
+	void editMouseProfile();
+	void cloneMouseProfile();
+	void removeMouseProfile();
+	void updateMouseProfileActions();
 	void updateJavaScriptOptions();
 	void changeCurrentPage();
 	void save();
@@ -83,6 +92,7 @@ private:
 	QStringList m_filesToRemove;
 	QVariantMap m_javaScriptOptions;
 	QHash<QString, ShortcutsProfile> m_keyboardProfiles;
+	QHash<QString, MouseProfile> m_mouseProfiles;
 	bool m_userAgentsModified;
 	Ui::PreferencesAdvancedPageWidget *m_ui;
 
