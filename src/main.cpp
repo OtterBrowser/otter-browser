@@ -77,11 +77,11 @@ int main(int argc, char *argv[])
 	const QString startupBehavior = SettingsManager::getValue(QLatin1String("Browser/StartupBehavior")).toString();
 	const bool isPrivate = application.getCommandLineParser()->isSet(QLatin1String("privatesession"));
 
-	if (!application.getCommandLineParser()->value(QLatin1String("session")).isEmpty() && SessionsManager::getSession(session).clean)
+	if (!application.getCommandLineParser()->value(QLatin1String("session")).isEmpty() && SessionsManager::getSession(session).isClean)
 	{
 		SessionsManager::restoreSession(SessionsManager::getSession(session), NULL, isPrivate);
 	}
-	else if (startupBehavior == QLatin1String("showDialog") || application.getCommandLineParser()->isSet(QLatin1String("sessionchooser")) || !SessionsManager::getSession(session).clean)
+	else if (startupBehavior == QLatin1String("showDialog") || application.getCommandLineParser()->isSet(QLatin1String("sessionchooser")) || !SessionsManager::getSession(session).isClean)
 	{
 		StartupDialog dialog(session);
 

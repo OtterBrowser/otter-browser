@@ -34,7 +34,8 @@ namespace Otter
 
 SessionsManager* SessionsManager::m_instance = NULL;
 QPointer<MainWindow> SessionsManager::m_activeWindow = NULL;
-QString SessionsManager::m_session;
+QString SessionsManager::m_sessionPath;
+QString SessionsManager::m_sessionTitle;
 QString SessionsManager::m_cachePath;
 QString SessionsManager::m_profilePath;
 QList<MainWindow*> SessionsManager::m_windows;
@@ -120,7 +121,7 @@ void SessionsManager::storeClosedWindow(MainWindow *window)
 
 void SessionsManager::markSessionModified()
 {
-	if (!m_isPrivate && !m_isDirty && m_session == QLatin1String("default"))
+	if (!m_isPrivate && !m_isDirty && m_sessionPath == QLatin1String("default"))
 	{
 		m_isDirty = true;
 
@@ -155,7 +156,7 @@ MainWindow* SessionsManager::getActiveWindow()
 
 QString SessionsManager::getCurrentSession()
 {
-	return m_session;
+	return m_sessionPath;
 }
 
 QString SessionsManager::getCachePath()
@@ -180,7 +181,7 @@ QString SessionsManager::getWritableDataPath(const QString &path)
 	return QDir::toNativeSeparators(m_profilePath + QDir::separator() + path);
 }
 
-QString SessionsManager::getSessionPath(const QString &path, bool bound)
+QString SessionsManager::getSessionPath(const QString &path, bool isBound)
 {
 	QString cleanPath = path;
 
@@ -195,7 +196,7 @@ QString SessionsManager::getSessionPath(const QString &path, bool bound)
 			cleanPath += QLatin1String(".ini");
 		}
 
-		if (bound)
+		if (isBound)
 		{
 			cleanPath = cleanPath.replace(QLatin1Char('/'), QString()).replace(QLatin1Char('\\'), QString());
 		}
@@ -218,7 +219,7 @@ SessionInformation SessionsManager::getSession(const QString &path)
 	session.path = path;
 	session.title = sessionData.value(QLatin1String("Session/title"), ((path == QLatin1String("default")) ? tr("Default") : tr("(Untitled)"))).toString();
 	session.index = (sessionData.value(QLatin1String("Session/index"), 1).toInt() - 1);
-	session.clean = sessionData.value(QLatin1String("Session/clean"), true).toBool();
+	session.isClean = sessionData.value(QLatin1String("Session/clean"), true).toBool();
 
 	const int windows = sessionData.value(QLatin1String("Session/windows"), 0).toInt();
 	const int defaultZoom = SettingsManager::getValue(QLatin1String("Content/DefaultZoom")).toInt();
@@ -311,9 +312,9 @@ QStringList SessionsManager::getSessions()
 		entries[i] = QFileInfo(entries.at(i)).completeBaseName();
 	}
 
-	if (!m_session.isEmpty() && !entries.contains(m_session))
+	if (!m_sessionPath.isEmpty() && !entries.contains(m_sessionPath))
 	{
-		entries.append(m_session);
+		entries.append(m_sessionPath);
 	}
 
 	if (!entries.contains(QLatin1String("default")))
@@ -346,17 +347,18 @@ bool SessionsManager::restoreSession(const SessionInformation &session, MainWind
 {
 	if (session.windows.isEmpty())
 	{
-		if (m_session.isEmpty() && session.path == QLatin1String("default"))
+		if (m_sessionPath.isEmpty() && session.path == QLatin1String("default"))
 		{
-			m_session = QLatin1String("default");
+			m_sessionPath = QLatin1String("default");
 		}
 
 		return false;
 	}
 
-	if (m_session.isEmpty())
+	if (m_sessionPath.isEmpty())
 	{
-		m_session = session.path;
+		m_sessionPath = session.path;
+		m_sessionTitle = session.title;
 	}
 
 	for (int i = 0; i < session.windows.count(); ++i)
@@ -374,7 +376,7 @@ bool SessionsManager::restoreSession(const SessionInformation &session, MainWind
 	return true;
 }
 
-bool SessionsManager::saveSession(const QString &path, const QString &title, MainWindow *window, bool clean)
+bool SessionsManager::saveSession(const QString &path, const QString &title, MainWindow *window, bool isClean)
 {
 	if (m_isPrivate && path.isEmpty())
 	{
@@ -399,18 +401,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 
 	QDir().mkpath(m_profilePath + QLatin1String("/sessions/"));
 
-	const QString sessionPath = getSessionPath(path);
-	QString sessionTitle = title;
-
-	if (title.isEmpty())
-	{
-		QSettings sessionData(sessionPath, QSettings::IniFormat);
-		sessionData.setIniCodec("UTF-8");
-
-		sessionTitle = sessionData.value(QLatin1String("Session/title")).toString();
-	}
-
-	QSaveFile file(sessionPath);
+	QSaveFile file(getSessionPath(path));
 
 	if (!file.open(QIODevice::WriteOnly))
 	{
@@ -422,9 +413,9 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 	QTextStream stream(&file);
 	stream.setCodec("UTF-8");
 	stream << QLatin1String("[Session]\n");
-	stream << Utils::formatConfigurationEntry(QLatin1String("title"), sessionTitle, true);
+	stream << Utils::formatConfigurationEntry(QLatin1String("title"), (title.isEmpty() ? m_sessionTitle : title), true);
 
-	if (!clean)
+	if (!isClean)
 	{
 		stream << QLatin1String("clean=false\n");
 	}
@@ -507,11 +498,6 @@ bool SessionsManager::deleteSession(const QString &path)
 	}
 
 	return false;
-}
-
-bool SessionsManager::moveSession(const QString &from, const QString &to)
-{
-	return QFile::rename(getSessionPath(from), getSessionPath(to));
 }
 
 bool SessionsManager::isLastWindow()

@@ -113,9 +113,9 @@ struct SessionInformation
 	QString title;
 	QList<SessionMainWindow> windows;
 	int index;
-	bool clean;
+	bool isClean;
 
-	SessionInformation() : index(-1), clean(true) {}
+	SessionInformation() : index(-1), isClean(true) {}
 };
 
 class MainWindow;
@@ -141,16 +141,15 @@ public:
 	static QString getProfilePath();
 	static QString getReadableDataPath(const QString &path, bool forceBundled = false);
 	static QString getWritableDataPath(const QString &path);
-	static QString getSessionPath(const QString &path, bool bound = false);
+	static QString getSessionPath(const QString &path, bool isBound = false);
 	static SessionInformation getSession(const QString &path);
 	static QStringList getClosedWindows();
 	static QStringList getSessions();
 	static QList<MainWindow*> getWindows();
 	static bool restoreClosedWindow(int index = -1);
 	static bool restoreSession(const SessionInformation &session, MainWindow *window = NULL, bool isPrivate = false);
-	static bool saveSession(const QString &path = QString(), const QString &title = QString(), MainWindow *window = NULL, bool clean = true);
+	static bool saveSession(const QString &path = QString(), const QString &title = QString(), MainWindow *window = NULL, bool isClean = true);
 	static bool deleteSession(const QString &path = QString());
-	static bool moveSession(const QString &from, const QString &to);
 	static bool isLastWindow();
 	static bool isPrivate();
 	static bool hasUrl(const QUrl &url, bool activate = false);
@@ -166,7 +165,8 @@ private:
 
 	static SessionsManager *m_instance;
 	static QPointer<MainWindow> m_activeWindow;
-	static QString m_session;
+	static QString m_sessionPath;
+	static QString m_sessionTitle;
 	static QString m_cachePath;
 	static QString m_profilePath;
 	static QList<MainWindow*> m_windows;

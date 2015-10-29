@@ -96,7 +96,7 @@ void SessionsManagerDialog::openSession()
 {
 	const SessionInformation session = SessionsManager::getSession(m_ui->sessionsWidget->item(m_ui->sessionsWidget->currentRow(), 1)->data(Qt::DisplayRole).toString());
 
-	if (session.clean || QMessageBox::warning(this, tr("Warning"), tr("This session was not saved correctly.\nAre you sure that you want to restore this session anyway?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
+	if (session.isClean || QMessageBox::warning(this, tr("Warning"), tr("This session was not saved correctly.\nAre you sure that you want to restore this session anyway?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
 	{
 		SessionsManager::restoreSession(session, (m_ui->openInExistingWindowCheckBox->isChecked() ? SessionsManager::getActiveWindow() : NULL));
 

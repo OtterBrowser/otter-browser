@@ -409,7 +409,7 @@ void Application::newConnection()
 	{
 		const SessionInformation sessionData = SessionsManager::getSession(session);
 
-		if (sessionData.clean || QMessageBox::warning(NULL, tr("Warning"), tr("This session was not saved correctly.\nAre you sure that you want to restore this session anyway?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
+		if (sessionData.isClean || QMessageBox::warning(NULL, tr("Warning"), tr("This session was not saved correctly.\nAre you sure that you want to restore this session anyway?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
 		{
 			for (int i = 0; i < sessionData.windows.count(); ++i)
 			{
