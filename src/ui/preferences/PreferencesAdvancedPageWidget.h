@@ -33,7 +33,7 @@ namespace Ui
 }
 
 struct MouseProfile;
-struct ShortcutsProfile;
+struct KeyboardProfile;
 class ItemViewWidget;
 
 class PreferencesAdvancedPageWidget : public QWidget
@@ -50,7 +50,7 @@ protected:
 	void updateReaddMouseProfileMenu();
 	QString createProfileIdentifier(ItemViewWidget *view, const QString &base = QString()) const;
 	QStringList getSelectedUpdateChannels() const;
-	ShortcutsProfile loadKeyboardProfile(const QString &identifier, bool loadShortcuts) const;
+	KeyboardProfile loadKeyboardProfile(const QString &identifier, bool loadShortcuts) const;
 	MouseProfile loadMouseProfile(const QString &identifier, bool loadGestures) const;
 
 protected slots:
@@ -91,7 +91,7 @@ protected slots:
 private:
 	QStringList m_filesToRemove;
 	QVariantMap m_javaScriptOptions;
-	QHash<QString, ShortcutsProfile> m_keyboardProfiles;
+	QHash<QString, KeyboardProfile> m_keyboardProfiles;
 	QHash<QString, MouseProfile> m_mouseProfiles;
 	bool m_userAgentsModified;
 	Ui::PreferencesAdvancedPageWidget *m_ui;

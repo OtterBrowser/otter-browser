@@ -17,8 +17,8 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_SHORTCUTSPROFILEDIALOG_H
-#define OTTER_SHORTCUTSPROFILEDIALOG_H
+#ifndef OTTER_KEYBOARDPROFILEDIALOG_H
+#define OTTER_KEYBOARDPROFILEDIALOG_H
 
 #include "../Dialog.h"
 
@@ -29,10 +29,10 @@ namespace Otter
 
 namespace Ui
 {
-	class ShortcutsProfileDialog;
+	class KeyboardProfileDialog;
 }
 
-struct ShortcutsProfile
+struct KeyboardProfile
 {
 	QString identifier;
 	QString title;
@@ -42,18 +42,18 @@ struct ShortcutsProfile
 	QHash<int, QVector<QKeySequence> > shortcuts;
 	bool isModified;
 
-	ShortcutsProfile() : isModified(false) {}
+	KeyboardProfile() : isModified(false) {}
 };
 
-class ShortcutsProfileDialog : public Dialog
+class KeyboardProfileDialog : public Dialog
 {
 	Q_OBJECT
 
 public:
-	explicit ShortcutsProfileDialog(const QString &profile, const QHash<QString, ShortcutsProfile> &profiles, QWidget *parent = NULL);
-	~ShortcutsProfileDialog();
+	explicit KeyboardProfileDialog(const QString &profile, const QHash<QString, KeyboardProfile> &profiles, QWidget *parent = NULL);
+	~KeyboardProfileDialog();
 
-	ShortcutsProfile getProfile() const;
+	KeyboardProfile getProfile() const;
 
 protected:
 	void changeEvent(QEvent *event);
@@ -69,7 +69,7 @@ private:
 	QString m_profile;
 	QModelIndex m_currentAction;
 	bool m_isModified;
-	Ui::ShortcutsProfileDialog *m_ui;
+	Ui::KeyboardProfileDialog *m_ui;
 };
 
 }

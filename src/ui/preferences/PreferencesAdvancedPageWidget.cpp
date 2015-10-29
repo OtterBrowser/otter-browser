@@ -20,8 +20,8 @@
 
 #include "PreferencesAdvancedPageWidget.h"
 #include "JavaScriptPreferencesDialog.h"
+#include "KeyboardProfileDialog.h"
 #include "MouseProfileDialog.h"
-#include "ShortcutsProfileDialog.h"
 #include "../ItemDelegate.h"
 #include "../OptionDelegate.h"
 #include "../UserAgentsManagerDialog.h"
@@ -329,7 +329,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	for (int i = 0; i < keyboardProfiles.count(); ++i)
 	{
-		const ShortcutsProfile profile = loadKeyboardProfile(keyboardProfiles.at(i), true);
+		const KeyboardProfile profile = loadKeyboardProfile(keyboardProfiles.at(i), true);
 
 		if (profile.identifier.isEmpty())
 		{
@@ -816,7 +816,7 @@ void PreferencesAdvancedPageWidget::addKeyboardProfile()
 		return;
 	}
 
-	ShortcutsProfile profile;
+	KeyboardProfile profile;
 	profile.title = tr("(Untitled)");
 
 	m_keyboardProfiles[identifier] = profile;
@@ -838,7 +838,7 @@ void PreferencesAdvancedPageWidget::readdKeyboardProfile(QAction *action)
 	}
 
 	const QString identifier = action->data().toString();
-	const ShortcutsProfile profile = loadKeyboardProfile(identifier, true);
+	const KeyboardProfile profile = loadKeyboardProfile(identifier, true);
 
 	if (profile.identifier.isEmpty())
 	{
@@ -869,7 +869,7 @@ void PreferencesAdvancedPageWidget::editKeyboardProfile()
 		return;
 	}
 
-	ShortcutsProfileDialog dialog(identifier, m_keyboardProfiles, this);
+	KeyboardProfileDialog dialog(identifier, m_keyboardProfiles, this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
@@ -972,7 +972,7 @@ void PreferencesAdvancedPageWidget::updateReaddKeyboardProfileMenu()
 	}
 
 	QStringList availableIdentifiers;
-	QList<ShortcutsProfile> availableShortcutsProfiles;
+	QList<KeyboardProfile> availableShortcutsProfiles;
 	QList<QFileInfo> allShortcutsProfiles = QDir(SessionsManager::getReadableDataPath(QLatin1String("keyboard"))).entryInfoList(QDir::Files);
 	allShortcutsProfiles.append(QDir(SessionsManager::getReadableDataPath(QLatin1String("keyboard"), true)).entryInfoList(QDir::Files));
 
@@ -982,7 +982,7 @@ void PreferencesAdvancedPageWidget::updateReaddKeyboardProfileMenu()
 
 		if (!m_keyboardProfiles.contains(identifier) && !availableIdentifiers.contains(identifier))
 		{
-			const ShortcutsProfile profile = loadKeyboardProfile(identifier, false);
+			const KeyboardProfile profile = loadKeyboardProfile(identifier, false);
 
 			if (!profile.identifier.isEmpty())
 			{
@@ -1442,7 +1442,7 @@ void PreferencesAdvancedPageWidget::save()
 
 	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("keyboard")));
 
-	QHash<QString, ShortcutsProfile>::iterator keyboardProfilesIterator;
+	QHash<QString, KeyboardProfile>::iterator keyboardProfilesIterator;
 
 	for (keyboardProfilesIterator = m_keyboardProfiles.begin(); keyboardProfilesIterator != m_keyboardProfiles.end(); ++keyboardProfilesIterator)
 	{
@@ -1609,11 +1609,11 @@ QStringList PreferencesAdvancedPageWidget::getSelectedUpdateChannels() const
 	return updateChannels;
 }
 
-ShortcutsProfile PreferencesAdvancedPageWidget::loadKeyboardProfile(const QString &identifier, bool loadShortcuts) const
+KeyboardProfile PreferencesAdvancedPageWidget::loadKeyboardProfile(const QString &identifier, bool loadShortcuts) const
 {
 	Settings settings(SessionsManager::getReadableDataPath(QLatin1String("keyboard/") + identifier + QLatin1String(".ini")));
 	const QStringList comments = settings.getComment().split(QLatin1Char('\n'));
-	ShortcutsProfile profile;
+	KeyboardProfile profile;
 	profile.identifier = identifier;
 
 	for (int i = 0; i < comments.count(); ++i)

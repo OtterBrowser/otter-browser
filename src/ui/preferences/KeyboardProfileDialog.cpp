@@ -17,21 +17,21 @@
 *
 **************************************************************************/
 
-#include "ShortcutsProfileDialog.h"
+#include "KeyboardProfileDialog.h"
 #include "KeyboardShortcutDelegate.h"
 #include "../../core/ActionsManager.h"
 
-#include "ui_ShortcutsProfileDialog.h"
+#include "ui_KeyboardProfileDialog.h"
 
 #include <QtWidgets/QInputDialog>
 
 namespace Otter
 {
 
-ShortcutsProfileDialog::ShortcutsProfileDialog(const QString &profile, const QHash<QString, ShortcutsProfile> &profiles, QWidget *parent) : Dialog(parent),
+KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash<QString, KeyboardProfile> &profiles, QWidget *parent) : Dialog(parent),
 	m_profile(profile),
 	m_isModified(profiles[profile].isModified),
-	m_ui(new Ui::ShortcutsProfileDialog)
+	m_ui(new Ui::KeyboardProfileDialog)
 {
 	m_ui->setupUi(this);
 
@@ -80,12 +80,12 @@ ShortcutsProfileDialog::ShortcutsProfileDialog(const QString &profile, const QHa
 	connect(m_ui->removeShortcutButton, SIGNAL(clicked()), this, SLOT(removeShortcut()));
 }
 
-ShortcutsProfileDialog::~ShortcutsProfileDialog()
+KeyboardProfileDialog::~KeyboardProfileDialog()
 {
 	delete m_ui;
 }
 
-void ShortcutsProfileDialog::changeEvent(QEvent *event)
+void KeyboardProfileDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
@@ -95,7 +95,7 @@ void ShortcutsProfileDialog::changeEvent(QEvent *event)
 	}
 }
 
-void ShortcutsProfileDialog::addShortcut()
+void KeyboardProfileDialog::addShortcut()
 {
 	QList<QStandardItem*> items;
 	items.append(new QStandardItem(QString()));
@@ -106,7 +106,7 @@ void ShortcutsProfileDialog::addShortcut()
 	m_isModified = true;
 }
 
-void ShortcutsProfileDialog::removeShortcut()
+void KeyboardProfileDialog::removeShortcut()
 {
 	m_ui->shortcutsViewWidget->removeRow();
 
@@ -115,7 +115,7 @@ void ShortcutsProfileDialog::removeShortcut()
 	m_isModified = true;
 }
 
-void ShortcutsProfileDialog::updateActionsActions()
+void KeyboardProfileDialog::updateActionsActions()
 {
 	disconnect(m_ui->shortcutsViewWidget->getModel(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(saveShortcuts()));
 
@@ -159,12 +159,12 @@ void ShortcutsProfileDialog::updateActionsActions()
 	connect(m_ui->shortcutsViewWidget->getModel(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(saveShortcuts()));
 }
 
-void ShortcutsProfileDialog::updateShortcutsActions()
+void KeyboardProfileDialog::updateShortcutsActions()
 {
 	m_ui->removeShortcutButton->setEnabled(m_ui->shortcutsViewWidget->getCurrentRow() >= 0);
 }
 
-void ShortcutsProfileDialog::saveShortcuts()
+void KeyboardProfileDialog::saveShortcuts()
 {
 	if (!m_currentAction.isValid())
 	{
@@ -186,9 +186,9 @@ void ShortcutsProfileDialog::saveShortcuts()
 	m_ui->actionsViewWidget->setData(m_currentAction, shortcuts.join(QLatin1Char(' ')), (Qt::UserRole + 1));
 }
 
-ShortcutsProfile ShortcutsProfileDialog::getProfile() const
+KeyboardProfile KeyboardProfileDialog::getProfile() const
 {
-	ShortcutsProfile profile;
+	KeyboardProfile profile;
 	profile.title = m_ui->titleLineEdit->text();
 	profile.description = m_ui->descriptionLineEdit->text();
 	profile.version = m_ui->versionLineEdit->text();
