@@ -202,6 +202,8 @@ void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
 			}
 			else
 			{
+				button->deleteLater();
+
 				continue;
 			}
 
