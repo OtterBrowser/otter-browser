@@ -73,6 +73,7 @@ protected:
 
 	explicit GesturesManager(QObject *parent);
 
+	static void releaseObject();
 	static GestureStep deserializeStep(const QString &string);
 	static QList<GestureStep> recognizeMoveStep(QInputEvent *event);
 	static int matchGesture();

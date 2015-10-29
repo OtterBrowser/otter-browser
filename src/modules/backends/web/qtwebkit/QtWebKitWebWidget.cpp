@@ -2224,10 +2224,13 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			}
 		}
 
-		if (mouseEvent && (mouseEvent->type() == QEvent::MouseButtonPress || mouseEvent->type() == QEvent::MouseButtonDblClick || mouseEvent->type() == QEvent::Wheel))
+		if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel)
 		{
-			setClickPosition(mouseEvent->pos());
-			updateHitTestResult(mouseEvent->pos());
+			if (mouseEvent)
+			{
+				setClickPosition(mouseEvent->pos());
+				updateHitTestResult(mouseEvent->pos());
+			}
 
 			GesturesManager::GesturesContext context = GesturesManager::GenericGesturesContext;
 
