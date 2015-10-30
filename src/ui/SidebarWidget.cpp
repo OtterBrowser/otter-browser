@@ -326,6 +326,7 @@ void SidebarWidget::selectPanel(const QString &identifier)
 		return;
 	}
 
+	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
 	ContentsWidget *widget = NULL;
 
 	if (m_panels.contains(identifier) && m_panels[identifier])
@@ -362,23 +363,18 @@ void SidebarWidget::selectPanel(const QString &identifier)
 	}
 	else if (identifier.startsWith(QLatin1String("web:")))
 	{
-		WebContentsWidget *webWidget = new WebContentsWidget(true, NULL, NULL);
+		WebContentsWidget *webWidget = new WebContentsWidget((mainWindow ? mainWindow->getWindowsManager()->isPrivate() : true), NULL, NULL);
 		webWidget->setUrl(identifier.section(QLatin1Char(':'), 1, -1), false);
 
 		widget = webWidget;
 	}
 
-	if (widget)
+	if (widget && mainWindow)
 	{
-		MainWindow *window = MainWindow::findMainWindow(parent());
-
-		if (window)
-		{
-			connect(widget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), window->getWindowsManager(), SLOT(open(QUrl,OpenHints)));
-			connect(widget, SIGNAL(requestedSearch(QString,QString,OpenHints)), window->getWindowsManager(), SLOT(search(QString,QString,OpenHints)));
-			connect(widget, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), window->getWindowsManager(), SIGNAL(requestedAddBookmark(QUrl,QString,QString)));
-			connect(widget, SIGNAL(requestedNewWindow(ContentsWidget*,OpenHints)), window->getWindowsManager(), SLOT(openWindow(ContentsWidget*,OpenHints)));
-		}
+		connect(widget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), mainWindow->getWindowsManager(), SLOT(open(QUrl,OpenHints)));
+		connect(widget, SIGNAL(requestedSearch(QString,QString,OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,OpenHints)));
+		connect(widget, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), mainWindow->getWindowsManager(), SIGNAL(requestedAddBookmark(QUrl,QString,QString)));
+		connect(widget, SIGNAL(requestedNewWindow(ContentsWidget*,OpenHints)), mainWindow->getWindowsManager(), SLOT(openWindow(ContentsWidget*,OpenHints)));
 	}
 
 	if (m_panels.contains(m_currentPanel) && m_panels[m_currentPanel])
