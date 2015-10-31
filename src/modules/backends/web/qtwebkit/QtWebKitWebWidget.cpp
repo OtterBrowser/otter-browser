@@ -2242,10 +2242,11 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			{
 				context = GesturesManager::LinkGesturesContext;
 			}
-			else if (getCurrentHitTestResult().tagName == QLatin1String("textarea") || getCurrentHitTestResult().tagName == QLatin1String("input"))
-			{
-				context = GesturesManager::EditableGesturesContext;
-			}
+///FIXME
+//			else if (getCurrentHitTestResult().flags.testFlag(IsContentEditableTest))
+//			{
+//				context = GesturesManager::EditableGesturesContext;
+//			}
 
 			bool gestureStarted = false;
 
