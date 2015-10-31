@@ -162,9 +162,6 @@ private:
 	QNetworkAccessManager::Operation m_formRequestOperation;
 	int m_transfersTimer;
 	bool m_canLoadPlugins;
-	bool m_ignoreContextMenu;
-	bool m_ignoreContextMenuNextTime;
-	bool m_isUsingRockerNavigation;
 	bool m_isLoading;
 	bool m_isTyped;
 	bool m_isNavigating;

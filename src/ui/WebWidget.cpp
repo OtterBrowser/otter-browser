@@ -57,7 +57,6 @@ WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent
 	m_pageApplicationsMenu(NULL),
 	m_reloadTimeMenu(NULL),
 	m_quickSearchMenu(NULL),
-	m_contextMenuReason(QContextMenuEvent::Other),
 	m_reloadTimer(0),
 	m_ignoreContextMenu(false),
 	m_ignoreContextMenuNextTime(false),
@@ -426,8 +425,6 @@ void WebWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 
 void WebWidget::showContextMenu(const QPoint &position)
 {
-	m_contextMenuReason = QContextMenuEvent::Other;
-
 	const bool hasSelection = (this->hasSelection() && !getSelectedText().trimmed().isEmpty());
 
 	if (m_ignoreContextMenu || (position.isNull() && (!hasSelection || m_clickPosition.isNull())))
@@ -1331,11 +1328,6 @@ WebWidget::HitTestResult WebWidget::getHitTestResult(const QPoint &position)
 	return HitTestResult();
 }
 
-QContextMenuEvent::Reason WebWidget::getContextMenuReason() const
-{
-	return m_contextMenuReason;
-}
-
 int WebWidget::getAmountOfNotLoadedPlugins() const
 {
 	return 0;
@@ -1345,12 +1337,14 @@ bool WebWidget::handleContextMenuEvent(QContextMenuEvent *event, bool canPropaga
 {
 	Q_UNUSED(sender)
 
-	m_contextMenuReason = event->reason();
 	m_ignoreContextMenu = (event->reason() == QContextMenuEvent::Mouse);
 
-	if (event->reason() == QContextMenuEvent::Keyboard)
+	if (event->reason() != QContextMenuEvent::Mouse)
 	{
-		triggerAction(ActionsManager::ContextMenuAction);
+		QVariantMap parameters;
+		parameters[QLatin1String("context")] = event->reason();
+
+		triggerAction(ActionsManager::ContextMenuAction, parameters);
 	}
 
 	if (canPropagate)
@@ -1481,6 +1475,9 @@ bool WebWidget::handleMouseReleaseEvent(QMouseEvent *event, bool canPropagate, Q
 
 			if (contentsWidget)
 			{
+				QVariantMap parameters;
+				parameters[QLatin1String("context")] = QContextMenuEvent::Mouse;
+
 				contentsWidget->triggerAction(ActionsManager::ContextMenuAction);
 			}
 			else

@@ -79,9 +79,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	m_splitter(new QSplitter(Qt::Vertical, this)),
 	m_transfersTimer(0),
 	m_canLoadPlugins(false),
-	m_ignoreContextMenu(false),
-	m_ignoreContextMenuNextTime(false),
-	m_isUsingRockerNavigation(false),
 	m_isLoading(false),
 	m_isTyped(false),
 	m_isNavigating(false)
@@ -1173,25 +1170,32 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			return;
 		case ActionsManager::ContextMenuAction:
 			{
-				const QWebElement element = m_page->mainFrame()->findFirstElement(QLatin1String(":focus"));
-
-				if (element.isNull())
+				if (parameters.contains(QLatin1String("context")) && parameters["context"].toInt() == QContextMenuEvent::Keyboard)
 				{
-					setClickPosition(m_webView->mapFromGlobal(QCursor::pos()));
+					const QWebElement element = m_page->mainFrame()->findFirstElement(QLatin1String(":focus"));
+
+					if (element.isNull())
+					{
+						setClickPosition(m_webView->mapFromGlobal(QCursor::pos()));
+					}
+					else
+					{
+						QPoint clickPosition = element.geometry().center();
+						QWebFrame *frame = element.webFrame();
+
+						while (frame)
+						{
+							clickPosition -= frame->scrollPosition();
+
+							frame = frame->parentFrame();
+						}
+
+						setClickPosition(clickPosition);
+					}
 				}
 				else
 				{
-					QPoint clickPosition = element.geometry().center();
-					QWebFrame *frame = element.webFrame();
-
-					while (frame)
-					{
-						clickPosition -= frame->scrollPosition();
-
-						frame = frame->parentFrame();
-					}
-
-					setClickPosition(clickPosition);
+					setClickPosition(m_webView->mapFromGlobal(QCursor::pos()));
 				}
 
 				showContextMenu(getClickPosition());
@@ -2255,6 +2259,24 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				return true;
 			}
 		}
+		else if (event->type() == QEvent::MouseMove)
+		{
+			event->ignore();
+
+			return QObject::eventFilter(object, event);
+		}
+		else if (event->type() == QEvent::ContextMenu)
+		{
+			QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
+
+			if (contextMenuEvent && contextMenuEvent->reason() != QContextMenuEvent::Mouse)
+			{
+				QVariantMap parameters;
+				parameters[QLatin1String("context")] = contextMenuEvent->reason();
+
+				triggerAction(ActionsManager::ContextMenuAction, parameters);
+			}
+		}
 		else if (event->type() == QEvent::Move || event->type() == QEvent::Resize)
 		{
 			emit progressBarGeometryChanged();
@@ -2269,12 +2291,6 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			}
 
 			return true;
-		}
-		else if (event->type() == QEvent::MouseMove)
-		{
-			event->ignore();
-
-			return QObject::eventFilter(object, event);
 		}
 		else if (event->type() == QEvent::ShortcutOverride)
 		{

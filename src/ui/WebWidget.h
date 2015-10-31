@@ -225,7 +225,6 @@ private:
 	QHash<int, Action*> m_actions;
 	QVariantHash m_options;
 	HitTestResult m_hitResult;
-	QContextMenuEvent::Reason m_contextMenuReason;
 	int m_reloadTimer;
 	bool m_ignoreContextMenu;
 	bool m_ignoreContextMenuNextTime;
