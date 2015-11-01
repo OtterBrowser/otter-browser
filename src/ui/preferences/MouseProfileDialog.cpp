@@ -37,7 +37,7 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 	labels << tr("Context and Steps") << tr("Action");
 
 	QList<QPair<QString, QString> > contexts;
-	contexts << qMakePair(QLatin1String("Generic"), tr("Generic")) << qMakePair(QLatin1String("Link"), tr("Link")) << qMakePair(QLatin1String("Tab"), tr("Tab Handle"));
+	contexts << qMakePair(QLatin1String("Generic"), tr("Generic")) << qMakePair(QLatin1String("Link"), tr("Link")) << qMakePair(QLatin1String("TabHandle"), tr("Tab Handle")) << qMakePair(QLatin1String("ActiveTabHandle"), tr("Tab Handle of Active Tab"));
 
 	for (int i = 0; i < contexts.count(); ++i)
 	{

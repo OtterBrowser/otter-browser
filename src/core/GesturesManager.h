@@ -39,7 +39,9 @@ public:
 	{
 		GenericGesturesContext = 0,
 		LinkGesturesContext,
-		EditableGesturesContext
+		EditableGesturesContext,
+		TabHandleContext,
+		ActiveTabHandleContext
 	};
 
 	static void createInstance(QObject *parent = NULL);

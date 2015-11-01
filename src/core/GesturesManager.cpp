@@ -195,9 +195,17 @@ void GesturesManager::loadProfiles()
 			{
 				context = LinkGesturesContext;
 			}
-			else if (contexts.at(j) == QLatin1String("Editable"))
+			else if (contexts.at(j) == QLatin1String("EditableContent"))
 			{
 				context = EditableGesturesContext;
+			}
+			else if (contexts.at(j) == QLatin1String("TabHandle"))
+			{
+				context = TabHandleContext;
+			}
+			else if (contexts.at(j) == QLatin1String("ActiveTabHandle"))
+			{
+				context = ActiveTabHandleContext;
 			}
 
 			profile.beginGroup(contexts.at(j));
