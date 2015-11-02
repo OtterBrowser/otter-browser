@@ -116,6 +116,7 @@ MouseGestures::Recognizer* GesturesManager::m_recognizer = NULL;
 QPointer<QObject> GesturesManager::m_trackedObject = NULL;
 QPoint GesturesManager::m_lastClick;
 QPoint GesturesManager::m_lastPosition;
+QVariantMap GesturesManager::m_paramaters;
 QHash<GesturesManager::GesturesContext, QVector<GesturesManager::MouseGesture> > GesturesManager::m_gestures;
 QHash<GesturesManager::GesturesContext, QList<QList<GesturesManager::GestureStep> > > GesturesManager::m_nativeGestures;
 QList<QInputEvent*> GesturesManager::m_events;
@@ -533,14 +534,16 @@ int GesturesManager::gesturesDifference(QList<GestureStep> defined)
 	return difference;
 }
 
-bool GesturesManager::startGesture(QObject *object, QEvent *event, GesturesContext context)
+bool GesturesManager::startGesture(QObject *object, QEvent *event, GesturesContext context, const QVariantMap &parameters)
 {
 	QInputEvent *inputEvent = static_cast<QInputEvent*>(event);
 
-	if (!m_gestures.contains(context) || !object || !inputEvent)
+	if (!object || !inputEvent || !m_gestures.contains(context))
 	{
 		return false;
 	}
+
+	m_paramaters = parameters;
 
 	if (!m_trackedObject)
 	{
@@ -566,7 +569,7 @@ bool GesturesManager::startGesture(QObject *object, QEvent *event, GesturesConte
 	return true;
 }
 
-bool GesturesManager::callAction(int gestureIndex)
+bool GesturesManager::triggerAction(int gestureIndex)
 {
 	if (gestureIndex == UNKNOWN_GESTURE)
 	{
@@ -586,7 +589,7 @@ bool GesturesManager::callAction(int gestureIndex)
 	}
 	else
 	{
-		ActionsManager::triggerAction(m_gestures[m_context][gestureIndex].action, m_trackedObject);
+		ActionsManager::triggerAction(m_gestures[m_context][gestureIndex].action, m_trackedObject, m_paramaters);
 	}
 
 	if (m_trackedObject)
@@ -612,115 +615,105 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 		case QEvent::MouseButtonPress:
 		case QEvent::MouseButtonRelease:
 		case QEvent::MouseButtonDblClick:
+			m_events.append(new QMouseEvent(event->type(), mouseEvent->localPos(), mouseEvent->windowPos(), mouseEvent->screenPos(), mouseEvent->button(), mouseEvent->buttons(), mouseEvent->modifiers()));
+
+			if (m_afterScroll && event->type() == QEvent::MouseButtonRelease)
 			{
-				m_events.append(new QMouseEvent(event->type(), mouseEvent->localPos(), mouseEvent->windowPos(), mouseEvent->screenPos(), mouseEvent->button(), mouseEvent->buttons(), mouseEvent->modifiers()));
+				break;
+			}
 
-				if (m_afterScroll && event->type() == QEvent::MouseButtonRelease)
+			m_lastPosition = mouseEvent->pos();
+			m_lastClick = mouseEvent->pos();
+
+			m_steps.append(recognizeMoveStep(mouseEvent));
+			m_steps.append(GestureStep(mouseEvent));
+
+			if (m_isReleasing && event->type() == QEvent::MouseButtonRelease)
+			{
+				for (int i = (m_steps.count() - 1); i >= 0; --i)
 				{
-					break;
-				}
-
-				m_lastPosition = mouseEvent->pos();
-				m_lastClick = mouseEvent->pos();
-
-				m_steps.append(recognizeMoveStep(mouseEvent));
-				m_steps.append(GestureStep(mouseEvent));
-
-				if (m_isReleasing && event->type() == QEvent::MouseButtonRelease)
-				{
-					for (int i = (m_steps.count() - 1); i >= 0; --i)
+					if (m_steps[i].button == mouseEvent->button())
 					{
-						if (m_steps[i].button == mouseEvent->button())
-						{
-							m_steps.removeAt(i);
-						}
+						m_steps.removeAt(i);
 					}
 				}
-				else
-				{
-					m_isReleasing = false;
-				}
-
-				if (m_recognizer)
-				{
-					delete m_recognizer;
-
-					m_recognizer = NULL;
-				}
-
-				bool wasCalled = callAction(matchGesture());
-
-				if (wasCalled)
-				{
-					m_isReleasing = true;
-				}
-
-				m_afterScroll = false;
 			}
+			else
+			{
+				m_isReleasing = false;
+			}
+
+			if (m_recognizer)
+			{
+				delete m_recognizer;
+
+				m_recognizer = NULL;
+			}
+
+			if (triggerAction(matchGesture()))
+			{
+				m_isReleasing = true;
+			}
+
+			m_afterScroll = false;
 
 			break;
 		case QEvent::MouseMove:
+			m_events.push_back(new QMouseEvent(event->type(), mouseEvent->localPos(), mouseEvent->windowPos(), mouseEvent->screenPos(), mouseEvent->button(), mouseEvent->buttons(), mouseEvent->modifiers()));
+
+			m_afterScroll = false;
+
+			if (!m_recognizer)
 			{
-				m_events.push_back(new QMouseEvent(event->type(), mouseEvent->localPos(), mouseEvent->windowPos(), mouseEvent->screenPos(), mouseEvent->button(), mouseEvent->buttons(), mouseEvent->modifiers()));
+				m_recognizer = new MouseGestures::Recognizer();
+				m_recognizer->startGesture(m_lastClick.x(), m_lastClick.y());
+			}
 
-				m_afterScroll = false;
+			m_lastPosition = mouseEvent->pos();
 
-				if (!m_recognizer)
+			m_recognizer->addPosition(mouseEvent->pos().x(), mouseEvent->pos().y());
+
+			if (moveLength() >= QApplication::startDragDistance() && m_gestures.contains(m_context))
+			{
+				m_steps.append(GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction, mouseEvent->modifiers()));
+
+				int matching = matchGesture();
+
+				if (matching != UNKNOWN_GESTURE)
 				{
-					m_recognizer = new MouseGestures::Recognizer();
-					m_recognizer->startGesture(m_lastClick.x(), m_lastClick.y());
+					m_steps.append(recognizeMoveStep(mouseEvent));
+
+					triggerAction(matching);
 				}
-
-				m_lastPosition = mouseEvent->pos();
-
-				m_recognizer->addPosition(mouseEvent->pos().x(), mouseEvent->pos().y());
-
-				if (moveLength() >= QApplication::startDragDistance() && m_gestures.contains(m_context))
+				else
 				{
-					m_steps.append(GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction, mouseEvent->modifiers()));
-
-					int matching = matchGesture();
-
-					if (matching != UNKNOWN_GESTURE)
-					{
-						m_steps.append(recognizeMoveStep(mouseEvent));
-
-						callAction(matching);
-					}
-					else
-					{
-						m_steps.pop_back();
-					}
+					m_steps.pop_back();
 				}
 			}
 
 			break;
 		case QEvent::Wheel:
+			m_events.push_back(new QWheelEvent(wheelEvent->pos(), wheelEvent->globalPos(), wheelEvent->pixelDelta(), wheelEvent->angleDelta(), wheelEvent->delta(), wheelEvent->orientation(), wheelEvent->buttons(), wheelEvent->modifiers()));
+			m_steps.append(recognizeMoveStep(wheelEvent));
+			m_steps.append(GestureStep(wheelEvent));
+
+			m_lastClick = wheelEvent->pos();
+
+			if (m_recognizer)
 			{
-				m_events.push_back(new QWheelEvent(wheelEvent->pos(), wheelEvent->globalPos(), wheelEvent->pixelDelta(), wheelEvent->angleDelta(), wheelEvent->delta(), wheelEvent->orientation(), wheelEvent->buttons(), wheelEvent->modifiers()));
-				m_steps.append(recognizeMoveStep(wheelEvent));
-				m_steps.append(GestureStep(wheelEvent));
+				delete m_recognizer;
 
-				m_lastClick = wheelEvent->pos();
+				m_recognizer = NULL;
+			}
 
-				if (m_recognizer)
+			if (triggerAction(matchGesture()))
+			{
+				while (m_steps.count() && m_steps[m_steps.count() - 1].type == QEvent::Wheel)
 				{
-					delete m_recognizer;
-
-					m_recognizer = NULL;
+					m_steps.removeAt(m_steps.count() - 1);
 				}
 
-				bool wasCalled = callAction(matchGesture());
-
-				if (wasCalled)
-				{
-					while (m_steps.count() && m_steps[m_steps.count() - 1].type == QEvent::Wheel)
-					{
-						m_steps.removeAt(m_steps.count() - 1);
-					}
-
-					m_afterScroll = true;
-				}
+				m_afterScroll = true;
 			}
 
 			break;

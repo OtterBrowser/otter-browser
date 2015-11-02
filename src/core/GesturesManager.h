@@ -47,7 +47,7 @@ public:
 	static void createInstance(QObject *parent = NULL);
 	static void loadProfiles();
 	static GesturesManager* getInstance();
-	static bool startGesture(QObject *object, QEvent *event, GesturesContext context = GenericGesturesContext);
+	static bool startGesture(QObject *object, QEvent *event, GesturesContext context = GenericGesturesContext, const QVariantMap &parameters = QVariantMap());
 
 protected:
 	struct GestureStep
@@ -81,7 +81,7 @@ protected:
 	static int matchGesture();
 	static int moveLength();
 	static int gesturesDifference(QList<GestureStep> defined);
-	static bool callAction(int gestureIndex);
+	static bool triggerAction(int gestureIndex);
 	bool eventFilter(QObject *object, QEvent *event);
 
 protected slots:
@@ -94,6 +94,7 @@ private:
 	static QPointer<QObject> m_trackedObject;
 	static QPoint m_lastClick;
 	static QPoint m_lastPosition;
+	static QVariantMap m_paramaters;
 	static QHash<GesturesContext, QVector<MouseGesture> > m_gestures;
 	static QHash<GesturesContext, QList<QList<GestureStep> > > m_nativeGestures;
 	static QList<GestureStep> m_steps;
