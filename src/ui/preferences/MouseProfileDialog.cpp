@@ -32,9 +32,12 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 {
 	m_ui->setupUi(this);
 
-	QStandardItemModel *model = new QStandardItemModel(this);
-	QStringList labels;
-	labels << tr("Context and Steps") << tr("Action");
+	QStandardItemModel *gesturesModel = new QStandardItemModel(this);
+	QStringList gestureLabels;
+	gestureLabels << tr("Context and Steps") << tr("Action");
+
+	QStringList stepLabels;
+	stepLabels << tr("Step");
 
 	QList<QPair<QString, QString> > contexts;
 	contexts << qMakePair(QLatin1String("Generic"), tr("Generic")) << qMakePair(QLatin1String("Link"), tr("Link")) << qMakePair(QLatin1String("TabHandle"), tr("Tab Handle")) << qMakePair(QLatin1String("ActiveTabHandle"), tr("Tab Handle of Active Tab"));
@@ -62,15 +65,18 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 			}
 		}
 
-		model->appendRow(item);
+		gesturesModel->appendRow(item);
 	}
 
-	model->setHorizontalHeaderLabels(labels);
-	model->sort(0);
+	gesturesModel->setHorizontalHeaderLabels(gestureLabels);
+	gesturesModel->sort(0);
+
+	QStandardItemModel *stepsModel = new QStandardItemModel(this);
+	stepsModel->setHorizontalHeaderLabels(stepLabels);
 
 	m_ui->gesturesViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
-	m_ui->gesturesViewWidget->setModel(model);
-	m_ui->stepsViewWidget->setModel(new QStandardItemModel(this));
+	m_ui->gesturesViewWidget->setModel(gesturesModel);
+	m_ui->stepsViewWidget->setModel(stepsModel);
 	m_ui->titleLineEdit->setText(profiles[profile].title);
 	m_ui->descriptionLineEdit->setText(profiles[profile].description);
 	m_ui->versionLineEdit->setText(profiles[profile].version);
@@ -112,7 +118,25 @@ void MouseProfileDialog::removeGesture()
 
 void MouseProfileDialog::updateGesturesActions()
 {
+	m_ui->stepsViewWidget->getModel()->removeRows(0, m_ui->stepsViewWidget->getModel()->rowCount());
+
+	QStandardItem *item = m_ui->gesturesViewWidget->getModel()->itemFromIndex(m_ui->gesturesViewWidget->currentIndex().sibling(m_ui->gesturesViewWidget->currentIndex().row(), 0));
+	const bool isGesture = (item && item->flags().testFlag(Qt::ItemNeverHasChildren));
+
 ///TODO
+
+	if (isGesture)
+	{
+		const QStringList steps = item->text().split(QLatin1String(", "));
+
+		for (int i = 0; i < steps.count(); ++i)
+		{
+			QStandardItem *item = new QStandardItem(steps.at(i));
+			item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
+
+			m_ui->stepsViewWidget->getModel()->appendRow(item);
+		}
+	}
 }
 
 void MouseProfileDialog::addStep()

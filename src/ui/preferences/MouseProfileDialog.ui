@@ -120,19 +120,7 @@
             </sizepolicy>
            </property>
            <property name="editTriggers">
-            <set>QAbstractItemView::CurrentChanged|QAbstractItemView::SelectedClicked</set>
-           </property>
-           <property name="dragEnabled">
-            <bool>true</bool>
-           </property>
-           <property name="dragDropOverwriteMode">
-            <bool>false</bool>
-           </property>
-           <property name="dragDropMode">
-            <enum>QAbstractItemView::InternalMove</enum>
-           </property>
-           <property name="defaultDropAction">
-            <enum>Qt::MoveAction</enum>
+            <set>QAbstractItemView::NoEditTriggers</set>
            </property>
            <property name="alternatingRowColors">
             <bool>true</bool>
