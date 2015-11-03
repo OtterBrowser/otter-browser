@@ -128,18 +128,18 @@
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="69"/>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="134"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="130"/>
         <source>Any other</source>
         <translation>Muu</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="70"/>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="138"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="134"/>
         <source>System language (%1 - %2)</source>
         <translation>Süsteemi keel (%1 - %2)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="146"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="142"/>
         <source>Custom</source>
         <translation>Vahetatud</translation>
     </message>
@@ -231,53 +231,53 @@
 <context>
     <name>Otter::Application</name>
     <message>
-        <location filename="../../src/core/Application.cpp" line="395"/>
+        <location filename="../../src/core/Application.cpp" line="412"/>
         <source>Warning</source>
         <translation>Hoiatus</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="395"/>
+        <location filename="../../src/core/Application.cpp" line="412"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
         <translation>See sessioon ei salvestunud korrektselt.
 Kas tahad tõesti sessiooni taastada?</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="498"/>
+        <location filename="../../src/core/Application.cpp" line="515"/>
         <source>New update %1 from %2 channel is available!</source>
         <translation>Saadavl on uus väljalase %1 allikast %2 !</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="774"/>
-        <location filename="../../src/core/Application.cpp" line="823"/>
+        <location filename="../../src/core/Application.cpp" line="791"/>
+        <location filename="../../src/core/Application.cpp" line="840"/>
         <source>Question</source>
         <translation>Küsimus</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/core/Application.cpp" line="775"/>
+        <location filename="../../src/core/Application.cpp" line="792"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
         <translation><numerusform>Tahad väljuda, aga %n faili on alla laadimas.</numerusform><numerusform>Tahad väljuda, aga %n faili on alla laadimas.</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="776"/>
-        <location filename="../../src/core/Application.cpp" line="825"/>
+        <location filename="../../src/core/Application.cpp" line="793"/>
+        <location filename="../../src/core/Application.cpp" line="842"/>
         <source>Do you want to continue?</source>
         <translation>Kas jätkad?</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="780"/>
-        <location filename="../../src/core/Application.cpp" line="829"/>
+        <location filename="../../src/core/Application.cpp" line="797"/>
+        <location filename="../../src/core/Application.cpp" line="846"/>
         <source>Do not show this message again</source>
         <translation>Ära seda sõnumit enam näita</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="782"/>
-        <location filename="../../src/core/Application.cpp" line="831"/>
+        <location filename="../../src/core/Application.cpp" line="799"/>
+        <location filename="../../src/core/Application.cpp" line="848"/>
         <source>Hide</source>
         <translation>Peida</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="824"/>
+        <location filename="../../src/core/Application.cpp" line="841"/>
         <source>You are about to quit the current Otter Browser session.</source>
         <translation>Lahkud praegusest Otteri sessioonist</translation>
     </message>
@@ -295,7 +295,7 @@ Kas tahad tõesti sessiooni taastada?</translation>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="36"/>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="48"/>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="139"/>
-        <source>Otheṛ…</source>
+        <source>Other…</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -412,12 +412,12 @@ Kas tahad tõesti sessiooni taastada?</translation>
         <translation>Vaata järge</translation>
     </message>
     <message>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="132"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="128"/>
         <source>Error</source>
         <translation>Viga</translation>
     </message>
     <message>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="132"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="128"/>
         <source>Bookmark with this keyword already exists.</source>
         <translation>Selle aliasega järg on juba olemas.</translation>
     </message>
@@ -738,77 +738,77 @@ Kas tahad tõesti sessiooni taastada?</translation>
         <translation>Kustuta</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="118"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="114"/>
         <source>Address</source>
         <translation>Aadress</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="118"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="114"/>
         <source>Type</source>
         <translation>Liik</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="118"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="114"/>
         <source>Size</source>
         <translation>Suurus</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="118"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="114"/>
         <source>Last Modified</source>
         <translation>Muudetud</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="118"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="114"/>
         <source>Expires</source>
         <translation>Aegub</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="391"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="354"/>
         <source>Open</source>
         <translation>Ava</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="392"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="355"/>
         <source>Open in New Tab</source>
         <translation>Ava uuel kaardil</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="393"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="356"/>
         <source>Open in New Background Tab</source>
         <translation>Ava taustakaardil</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="395"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="358"/>
         <source>Open in New Window</source>
         <translation>Ava uues aknas</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="396"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="359"/>
         <source>Open in New Background Window</source>
         <translation>Ava uues taustaaknas</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="398"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="361"/>
         <source>Copy Link to Clipboard</source>
         <translation>Kopeeri lingi URL</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="400"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="363"/>
         <source>Remove Entry</source>
         <translation>Kustuta sissekanne</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="405"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="368"/>
         <source>Remove All Entries from This Domain</source>
         <translation>Kustuta kõik sissekanded sellelt domeenilt</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="467"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="430"/>
         <source>Unknown</source>
         <translation>Tundmatu</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="598"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="561"/>
         <source>Cache</source>
         <translation>Puhverandmed</translation>
     </message>
@@ -889,37 +889,37 @@ Kas tahad tõesti sessiooni taastada?</translation>
         <translation>Otsi…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="84"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="87"/>
         <source>Name</source>
         <translation>Nimi</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="84"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="87"/>
         <source>Type</source>
         <translation>Liik</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="84"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="87"/>
         <source>Value</source>
         <translation>Väärtus</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="264"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="230"/>
         <source>Copy Option Name</source>
         <translation>Kopeeri seadistuse nimi</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="265"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="231"/>
         <source>Copy Option Value</source>
         <translation>Kopeeri seadistuse väärtus</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="267"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="233"/>
         <source>Restore Default Value</source>
         <translation>Taasta algseadistus</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="274"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="240"/>
         <source>Configuration Manager</source>
         <translation>Seadistushaldur</translation>
     </message>
@@ -1059,7 +1059,7 @@ Kas tahad tõesti sessiooni taastada?</translation>
 <context>
     <name>Otter::ContentsDialog</name>
     <message>
-        <location filename="../../src/ui/ContentsDialog.cpp" line="70"/>
+        <location filename="../../src/ui/ContentsDialog.cpp" line="74"/>
         <source>Close</source>
         <translation>Sulge</translation>
     </message>
@@ -1123,44 +1123,44 @@ Kas tahad tõesti sessiooni taastada?</translation>
         <translation>Rakenda</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="276"/>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="295"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="273"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="292"/>
         <source>Question</source>
         <translation>Küsimus</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="277"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="274"/>
         <source>You are about to delete %n cookie(s).</source>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="278"/>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="297"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="275"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="294"/>
         <source>Do you want to continue?</source>
         <translation>Kas jätkad?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="296"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="293"/>
         <source>You are about to delete all cookies.</source>
         <translation>Kustutad kõik küpsised.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="317"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="314"/>
         <source>Remove Cookie</source>
         <translation>Kustuta küpsis</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="320"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="317"/>
         <source>Remove All Cookies from This Domain…</source>
         <translation>Kustuta kõik küpsised sellelt domeenilt…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="323"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="320"/>
         <source>Remove All Cookies…</source>
         <translation>Kustuta kõik küpsised…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="452"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="449"/>
         <source>Cookies Manager</source>
         <translation>Küpsisehaldur</translation>
     </message>
@@ -1209,19 +1209,39 @@ Kas tahad tõesti sessiooni taastada?</translation>
 <context>
     <name>Otter::GoBackActionWidget</name>
     <message>
-        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="63"/>
         <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="87"/>
+        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="111"/>
         <source>(Untitled)</source>
         <translation>(pealkirjata)</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="139"/>
+        <source>Remove Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="140"/>
+        <source>Purge Entry</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>Otter::GoForwardActionWidget</name>
     <message>
-        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="63"/>
         <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="87"/>
+        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="111"/>
         <source>(Untitled)</source>
         <translation>(pealkirjata)</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="139"/>
+        <source>Remove Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="140"/>
+        <source>Purge Entry</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1282,58 +1302,58 @@ Kas tahad tõesti sessiooni taastada?</translation>
         <translation>Kuupäev</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="248"/>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="282"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="207"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="239"/>
         <source>(Untitled)</source>
         <translation>(pealkirjata)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="402"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="354"/>
         <source>Open</source>
         <translation>Ava</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="403"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="355"/>
         <source>Open in New Tab</source>
         <translation>Ava uuel kaardil</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="404"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="356"/>
         <source>Open in New Background Tab</source>
         <translation>Ava taustakaardil</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="406"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="358"/>
         <source>Open in New Window</source>
         <translation>Ava uues aknas</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="407"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="359"/>
         <source>Open in New Background Window</source>
         <translation>Ava uues taustaaknas</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="409"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="361"/>
         <source>Add to Bookmarks…</source>
         <translation>Lisa järgedesse…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="410"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="362"/>
         <source>Copy Link to Clipboard</source>
         <translation>Kopeeri lingi URL</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="412"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="364"/>
         <source>Remove Entry</source>
         <translation>Kustuta sissekanne</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="413"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="365"/>
         <source>Remove All Entries from This Domain</source>
         <translation>Kustuta kõik sissekanded sellelt domeenilt</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="446"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="398"/>
         <source>History</source>
         <translation>Ajalugu</translation>
     </message>
@@ -1445,18 +1465,18 @@ Kas tahad tõesti sessiooni taastada?</translation>
         <translation>Allikas:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="96"/>
-        <location filename="../../src/ui/ImportDialog.cpp" line="113"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="94"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="111"/>
         <source>Error</source>
         <translation>Viga</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="96"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="94"/>
         <source>Unable to import selected type.</source>
         <translation>Ei suuda valitud faili importida.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="113"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="111"/>
         <source>Failed to open file for reading.</source>
         <translation>Ei suuda faili lugeda.</translation>
     </message>
@@ -1517,6 +1537,69 @@ Kas tahad tõesti sessiooni taastada?</translation>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="39"/>
         <source>Never</source>
         <translation>Mitte kunagi</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::KeyboardProfileDialog</name>
+    <message>
+        <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="14"/>
+        <source>Profile Configuration</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="24"/>
+        <source>Actions</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="30"/>
+        <source>Search…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="91"/>
+        <source>Add</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="101"/>
+        <source>Remove</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="129"/>
+        <source>Information</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="135"/>
+        <source>Title:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="145"/>
+        <source>Description:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="155"/>
+        <source>Version:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="165"/>
+        <source>Author:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="41"/>
+        <source>Action</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="125"/>
+        <source>Shortcut</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1583,37 +1666,37 @@ Kas tahad tõesti sessiooni taastada?</translation>
         <translation>Konsool</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="481"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="461"/>
         <source>Open File</source>
         <translation>Ava fail</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="748"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="728"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.</source>
         <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Veebisirvija, mis on kasutaja käsutuses, mitte vastupidi.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="749"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="729"/>
         <source>Web backend: %1 %2.</source>
         <translation>Veebi renderdaja: %1 %2.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="753"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="733"/>
         <source>SSL library version: %1.</source>
         <translation>SSL versioon: %1.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="757"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="737"/>
         <source>SSL library not available.</source>
         <translation>SSL pole saadaval.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="846"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="826"/>
         <source>Warning</source>
         <translation>Hoiatus</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="846"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="826"/>
         <source>You already have this address in your bookmarks.
 Do you want to continue?</source>
         <translation>See aadress on juba järgedes.
@@ -1742,6 +1825,86 @@ Kas jätkad?</translation>
     </message>
 </context>
 <context>
+    <name>Otter::MouseProfileDialog</name>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="14"/>
+        <source>Profile Configuration</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="24"/>
+        <source>Actions</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="30"/>
+        <source>Search…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="78"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="156"/>
+        <source>Add</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="88"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="166"/>
+        <source>Remove</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="194"/>
+        <source>Information</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="200"/>
+        <source>Title:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="210"/>
+        <source>Description:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="220"/>
+        <source>Version:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="230"/>
+        <source>Author:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="37"/>
+        <source>Context and Steps</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="37"/>
+        <source>Action</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="40"/>
+        <source>Generic</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="40"/>
+        <source>Link</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="40"/>
+        <source>Tab Handle</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>Otter::NetworkManager</name>
     <message>
         <location filename="../../src/core/NetworkManager.cpp" line="127"/>
@@ -1765,12 +1928,12 @@ Kas jätkad?</translation>
 <context>
     <name>Otter::NetworkManagerFactory</name>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="269"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="274"/>
         <source>Custom</source>
         <translation>Vahetatud</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="284"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="289"/>
         <source>Default</source>
         <translation>Algseadistus</translation>
     </message>
@@ -1828,7 +1991,7 @@ Kas jätkad?</translation>
         <translation>Lisa eraldusjoon</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="59"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="64"/>
         <source>Add note…</source>
         <translation>Lisa märge...</translation>
     </message>
@@ -2049,446 +2212,531 @@ Kas jätkad?</translation>
     <name>Otter::PreferencesAdvancedPageWidget</name>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="55"/>
-        <source>Events</source>
-        <translation>Sündmused</translation>
+        <source>Address Field Suggestions</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="95"/>
-        <source>Play sound:</source>
-        <translation>Mängi heli:</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="110"/>
-        <source>Show notification</source>
-        <translation>Näita märguannet</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="117"/>
-        <source>Mark taskbar entry</source>
-        <translation>Märgista tegumiriba</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="133"/>
-        <source>Options</source>
-        <translation>Valikud</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="140"/>
-        <source>Prefer native notifications</source>
-        <translation>Eelista kohaliku kujundusega märguandeid</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="170"/>
-        <source>Suggestions</source>
-        <translation>Soovitused</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="179"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="64"/>
         <source>Suggest bookmarks</source>
         <translation>Soovita järgesid</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="189"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="74"/>
         <source>Suggest history</source>
         <translation>Soovita ajalugu</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="199"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="84"/>
         <source>Suggest search results</source>
         <translation>Soovita päringuid</translation>
     </message>
     <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="116"/>
+        <source>Events</source>
+        <translation>Sündmused</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="156"/>
+        <source>Play sound:</source>
+        <translation>Mängi heli:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="171"/>
+        <source>Show notification</source>
+        <translation>Näita märguannet</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="178"/>
+        <source>Mark taskbar entry</source>
+        <translation>Märgista tegumiriba</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="194"/>
+        <source>Options</source>
+        <translation>Valikud</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="201"/>
+        <source>Prefer native notifications</source>
+        <translation>Eelista kohaliku kujundusega märguandeid</translation>
+    </message>
+    <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="231"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="546"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1254"/>
-        <source>General</source>
-        <translation>Üldine</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="238"/>
-        <source>Enable images</source>
-        <translation>Luba pildid</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="247"/>
-        <source>Enable JavaScript</source>
-        <translation>Luba JavaScript</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="254"/>
-        <source>JavaScript Options…</source>
-        <translation>JavaScripti valikud…</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="263"/>
-        <source>Enable Java</source>
-        <translation>Luba Java</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="272"/>
-        <source>Plugins:</source>
-        <translation>Pluginad:</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="286"/>
-        <source>User style sheet:</source>
-        <translation>Kasutaja CSS:</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="321"/>
-        <source>MIME Types</source>
+        <source>Style</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="345"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="920"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1140"/>
-        <source>Add</source>
-        <translation>Lisa</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="355"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="930"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1170"/>
-        <source>Remove</source>
-        <translation>Kustuta</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="391"/>
-        <source>Show download dialog</source>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="240"/>
+        <source>Widget style:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="401"/>
-        <source>Save to disk</source>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="250"/>
+        <source>Style sheet:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="444"/>
-        <source>Do not ask for folder, save directly to</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="459"/>
-        <source>Open with application</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="505"/>
-        <source>Pass web address directly to application</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="553"/>
-        <source>Send referrer information</source>
-        <translation>Saada viitaja info</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="562"/>
-        <source>User Agent:</source>
-        <translation>Identifikaator:</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="575"/>
-        <source>Manage…</source>
-        <translation>Halda…</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="590"/>
-        <source>Proxy</source>
-        <translation>Proksi</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="599"/>
-        <source>Mode:</source>
-        <translation>Laad:</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="613"/>
-        <source>No proxy</source>
-        <translation>Ilma proksita</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="618"/>
-        <source>System configuration</source>
-        <translation>Süsteemi seadistus</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="623"/>
-        <source>Manual configuration</source>
-        <translation>Käsitsi seadistus</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="628"/>
-        <source>Automatic configuration (PAC)</source>
-        <translation>Automaatseadistus (PAC)</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="730"/>
-        <source>Port</source>
-        <translation>Port</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="737"/>
-        <source>Protocol</source>
-        <translation>Protokoll</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="744"/>
-        <source>Servers</source>
-        <translation>Serverid</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="751"/>
-        <source>FTP</source>
-        <translation>FTP</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="758"/>
-        <source>SOCKS5</source>
-        <translation>SOCKS5</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="765"/>
-        <source>HTTP</source>
-        <translation>HTTP</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="779"/>
-        <source>HTTPS</source>
-        <translation>HTTPS</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="793"/>
-        <source>All</source>
-        <translation>Kõik</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="831"/>
-        <source>Path to PAC file:</source>
-        <translation>PAC faili asukoht:</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="848"/>
-        <source>Use system authentication</source>
-        <translation>Kasuta süsteemi tuvastust</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="878"/>
-        <source>SSL ciphers</source>
-        <translation>SSL sihvrid</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="955"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1195"/>
-        <source>Move Up</source>
-        <translation>Ülespoole</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="981"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1221"/>
-        <source>Move Down</source>
-        <translation>Allapoole</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1004"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
-        <source>Updates</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1011"/>
-        <source>Select channels from which you want to recieve updates:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1050"/>
-        <source>Check for updates every</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1060"/>
-        <source>day(s)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1069"/>
-        <source>Install updates automatically</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1101"/>
-        <source>Keyboard Shortcuts</source>
-        <translation>Kiirklahvid</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1150"/>
-        <source>Edit…</source>
-        <translation>Muuda…</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1160"/>
-        <source>Clone</source>
-        <translation>Klooni</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1234"/>
-        <source>Enable single key shortcuts</source>
-        <translation>Võimalda ühe vajutusega kiirklahvid</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1263"/>
-        <source>Show tray icon</source>
-        <translation>Näita teavitusalaikooni</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
-        <source>Notifications</source>
-        <translation>Märguanded</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
-        <source>Address Field</source>
-        <translation>Aadressiväli</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
-        <source>Content</source>
-        <translation>Sisu</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
-        <source>Downloads</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
-        <source>Network</source>
-        <translation>Võrk</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
-        <source>Security</source>
-        <translation>Turvalisus</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
-        <source>Keyboard</source>
-        <translation>Klahvistik</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="58"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="274"/>
         <source>Other</source>
         <translation>Muu</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="89"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="131"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="283"/>
+        <source>Show tray icon</source>
+        <translation>Näita teavitusalaikooni</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="315"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="638"/>
+        <source>General</source>
+        <translation>Üldine</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="322"/>
+        <source>Enable images</source>
+        <translation>Luba pildid</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="331"/>
+        <source>Enable JavaScript</source>
+        <translation>Luba JavaScript</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="338"/>
+        <source>JavaScript Options…</source>
+        <translation>JavaScripti valikud…</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="347"/>
+        <source>Enable Java</source>
+        <translation>Luba Java</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="356"/>
+        <source>Plugins:</source>
+        <translation>Pluginad:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="370"/>
+        <source>User style sheet:</source>
+        <translation>Kasutaja CSS:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="405"/>
+        <source>MIME Types</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="429"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="983"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1096"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1316"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1469"/>
+        <source>Add</source>
+        <translation>Lisa</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="439"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="997"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1106"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1346"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1499"/>
+        <source>Remove</source>
+        <translation>Kustuta</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="481"/>
+        <source>Show download dialog</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="491"/>
+        <source>Save to disk</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="534"/>
+        <source>Do not ask for folder, save directly to</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="549"/>
+        <source>Open with application</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="595"/>
+        <source>Pass web address directly to application</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="645"/>
+        <source>Send referrer information</source>
+        <translation>Saada viitaja info</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="654"/>
+        <source>User Agent:</source>
+        <translation>Identifikaator:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="667"/>
+        <source>Manage…</source>
+        <translation>Halda…</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="682"/>
+        <source>Proxy</source>
+        <translation>Proksi</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="691"/>
+        <source>Mode:</source>
+        <translation>Laad:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="705"/>
+        <source>No proxy</source>
+        <translation>Ilma proksita</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="710"/>
+        <source>System configuration</source>
+        <translation>Süsteemi seadistus</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="715"/>
+        <source>Manual configuration</source>
+        <translation>Käsitsi seadistus</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="720"/>
+        <source>Automatic configuration (PAC)</source>
+        <translation>Automaatseadistus (PAC)</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="822"/>
+        <source>Port</source>
+        <translation>Port</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="829"/>
+        <source>Protocol</source>
+        <translation>Protokoll</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="836"/>
+        <source>Servers</source>
+        <translation>Serverid</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="843"/>
+        <source>FTP</source>
+        <translation>FTP</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="850"/>
+        <source>SOCKS5</source>
+        <translation>SOCKS5</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="857"/>
+        <source>HTTP</source>
+        <translation>HTTP</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="871"/>
+        <source>HTTPS</source>
+        <translation>HTTPS</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="885"/>
+        <source>All</source>
+        <translation>Kõik</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="923"/>
+        <source>Path to PAC file:</source>
+        <translation>PAC faili asukoht:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="940"/>
+        <source>Use system authentication</source>
+        <translation>Kasuta süsteemi tuvastust</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="965"/>
+        <source>Do not use proxy for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="990"/>
+        <source>Edit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1021"/>
+        <source>Example: domain.com, localhost, 127.0.0.1, 192.168.1.0/24</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1054"/>
+        <source>SSL ciphers</source>
+        <translation>SSL sihvrid</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1131"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1371"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1524"/>
+        <source>Move Up</source>
+        <translation>Ülespoole</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1157"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1397"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1550"/>
+        <source>Move Down</source>
+        <translation>Allapoole</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1180"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="61"/>
+        <source>Updates</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1187"/>
+        <source>Select channels from which you want to receive updates:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1226"/>
+        <source>Check for updates every</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1236"/>
+        <source>day(s)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1245"/>
+        <source>Install updates automatically</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1277"/>
+        <source>Keyboard Shortcuts</source>
+        <translation>Kiirklahvid</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1326"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1479"/>
+        <source>Edit…</source>
+        <translation>Muuda…</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1336"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1489"/>
+        <source>Clone</source>
+        <translation>Klooni</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1410"/>
+        <source>Enable single key shortcuts</source>
+        <translation>Võimalda ühe vajutusega kiirklahvid</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1430"/>
+        <source>Mouse Actions and Gestures</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1563"/>
+        <source>Enable mouse gestures</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="61"/>
+        <source>Browsing</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="61"/>
+        <source>Notifications</source>
+        <translation>Märguanded</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="61"/>
+        <source>Appearance</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="61"/>
+        <source>Content</source>
+        <translation>Sisu</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="61"/>
+        <source>Downloads</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="61"/>
+        <source>Programs</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="61"/>
+        <source>History</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="61"/>
+        <source>Network</source>
+        <translation>Võrk</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="61"/>
+        <source>Security</source>
+        <translation>Turvalisus</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="61"/>
+        <source>Keyboard</source>
+        <translation>Klahvistik</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="61"/>
+        <source>Mouse</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="99"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="152"/>
         <source>Name</source>
         <translation>Nimi</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="89"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="99"/>
         <source>Description</source>
         <translation>Kirjeldus</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="121"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="126"/>
+        <source>System Style</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="142"/>
         <source>Enabled</source>
         <translation>Lubatud</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="122"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="143"/>
         <source>On demand</source>
         <translation>Vajaduse korral</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="123"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="144"/>
         <source>Disabled</source>
         <translation>Keelatud</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="168"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="578"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="189"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="660"/>
         <source>Default</source>
         <translation>Algseadistus</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="175"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="309"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="584"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="700"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="704"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="730"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="761"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="787"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="196"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="341"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="378"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="666"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="820"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="824"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="850"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="881"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1105"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="907"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1001"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1015"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1019"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1045"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1076"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1102"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1196"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1460"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1522"/>
         <source>(Untitled)</source>
         <translation>(pealkirjata)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="263"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="295"/>
         <source>Stable version</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="264"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="296"/>
         <source>Beta version</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="265"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="297"/>
         <source>Weekly development version</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="321"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="353"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="390"/>
         <source>New…</source>
         <translation>Uus…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="322"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="354"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="391"/>
         <source>Readd</source>
         <translation>Lisa uuesti</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="415"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="497"/>
         <source>WAV files (*.wav)</source>
         <translation>WAV failid (*.wav)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="444"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="526"/>
         <source>MIME Type Name</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="444"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="526"/>
         <source>Select name of MIME Type:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="458"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="540"/>
         <source>Error</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="458"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="540"/>
         <source>Invalid MIME Type name.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="807"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="927"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1122"/>
         <source>Question</source>
         <translation>Küsimus</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="808"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="928"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1123"/>
         <source>Do you really want to remove this profile?</source>
         <translation>Kas tahad kindlasti seda profiili eemaldada?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="817"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="937"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1132"/>
         <source>Delete profile permanently</source>
         <translation>Eemalda profiil jäädavalt</translation>
     </message>
@@ -3109,40 +3357,48 @@ Kas jätkad?</translation>
     </message>
 </context>
 <context>
+    <name>Otter::QtWebKitInspector</name>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitInspector.cpp" line="36"/>
+        <source>Close</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>Otter::QtWebKitNetworkManager</name>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="107"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="129"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="132"/>
         <source>Waiting for authentication…</source>
         <translation>Ootab tuvastust...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="180"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="186"/>
         <source>Warning</source>
         <translation>Hoiatus</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="180"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="186"/>
         <source>SSL errors occured, do you want to continue?</source>
         <translation>Tekkis SSL-viga. Kas jätkad?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="184"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="190"/>
         <source>Do not show this message again</source>
         <translation>Ära seda sõnumit enam näita</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="269"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="275"/>
         <source>Receiving data from %1…</source>
         <translation>Võtab datat %1-lt…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="311"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="317"/>
         <source>Completed request to %1</source>
         <translation>Teostati päring %1-le</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="508"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="514"/>
         <source>Sending request to %1…</source>
         <translation>Saadab päringut %1-le...</translation>
     </message>
@@ -3238,77 +3494,72 @@ Kas jätkad?</translation>
 <context>
     <name>Otter::QtWebKitWebWidget</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="328"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="323"/>
         <source>Error</source>
         <translation>Viga</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="328"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="323"/>
         <source>Failed to open file for writing.</source>
         <translation>Ei suuda faili kirjutada.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="348"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="343"/>
         <source>file</source>
         <translation>fail</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="359"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="354"/>
         <source>Failed to save image: %1</source>
         <translation>Ei suutnud pilti salvestada: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="488"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="483"/>
         <source>Print Preview</source>
         <translation>Printimise eelvaade</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="547"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="542"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="547"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="542"/>
         <source>Webpage wants to close this tab, do you want to allow to close it?</source>
         <translation>Sait tahab seda kaarti sulgeda. Kas lubad?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="548"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="543"/>
         <source>Do not show this message again</source>
         <translation>Ära seda sõnumit enam näita</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="678"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="673"/>
         <source>Undo</source>
         <translation>Võta tagasi</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="678"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="673"/>
         <source>Undo: %1</source>
         <translation>Võta tagasi: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="683"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="678"/>
         <source>Redo</source>
         <translation>Tee uuesti</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="683"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="678"/>
         <source>Redo: %1</source>
         <translation>Tee uuesti: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1426"/>
-        <source>Close</source>
-        <translation>Sulge</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1725"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1737"/>
         <source>Blank Page</source>
         <translation>Tühi leht</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1738"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1750"/>
         <source>(Untitled)</source>
         <translation>(pealkirjata)</translation>
     </message>
@@ -3339,7 +3590,7 @@ Kas jätkad?</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/ReportDialog.cpp" line="42"/>
+        <location filename="../../src/ui/ReportDialog.cpp" line="40"/>
         <source>Copy</source>
         <translation type="unfinished"/>
     </message>
@@ -3367,24 +3618,24 @@ Kas jätkad?</translation>
         <translation>Salvesta ainult praegune aken</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SaveSessionDialog.cpp" line="72"/>
+        <location filename="../../src/ui/SaveSessionDialog.cpp" line="68"/>
         <source>Question</source>
         <translation>Küsimus</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SaveSessionDialog.cpp" line="72"/>
+        <location filename="../../src/ui/SaveSessionDialog.cpp" line="68"/>
         <source>Session with specified indentifier already exists.
 Do you want to overwrite it?</source>
         <translation>Selle tunnusega sessioon on juba olemas.
 Kas tahad üle kirjutada?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SaveSessionDialog.cpp" line="85"/>
+        <location filename="../../src/ui/SaveSessionDialog.cpp" line="81"/>
         <source>Error</source>
         <translation>Viga</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SaveSessionDialog.cpp" line="85"/>
+        <location filename="../../src/ui/SaveSessionDialog.cpp" line="81"/>
         <source>Failed to save session.</source>
         <translation>Ei suutnud sessiooni salvestada.</translation>
     </message>
@@ -3506,27 +3757,27 @@ Kas tahad üle kirjutada?</translation>
         <translation>Soovituste päring</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="97"/>
+        <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="93"/>
         <source>Select Icon</source>
         <translation>Vali ikoon</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="97"/>
+        <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="93"/>
         <source>Images (*.png *.jpg *.bmp *.gif *.ico)</source>
         <translation>Pildid (*.png *.jpg *.bmp *.gif *.ico)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="145"/>
+        <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="141"/>
         <source>Placeholders</source>
         <translation>Kohaelemendid</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="146"/>
+        <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="142"/>
         <source>Search Terms</source>
         <translation>Otsisõnad</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="147"/>
+        <location filename="../../src/ui/SearchPropertiesDialog.cpp" line="143"/>
         <source>Language</source>
         <translation>Keel</translation>
     </message>
@@ -3601,13 +3852,13 @@ Kas tahad üle kirjutada?</translation>
 <context>
     <name>Otter::SessionsManager</name>
     <message>
-        <location filename="../../src/core/SessionsManager.cpp" line="219"/>
+        <location filename="../../src/core/SessionsManager.cpp" line="220"/>
         <source>Default</source>
         <translation>Algseadistus</translation>
     </message>
     <message>
-        <location filename="../../src/core/SessionsManager.cpp" line="219"/>
-        <location filename="../../src/core/SessionsManager.cpp" line="284"/>
+        <location filename="../../src/core/SessionsManager.cpp" line="220"/>
+        <location filename="../../src/core/SessionsManager.cpp" line="300"/>
         <source>(Untitled)</source>
         <translation>(pealkirjata)</translation>
     </message>
@@ -3650,156 +3901,93 @@ Kas tahad üle kirjutada?</translation>
         <translation>Ava sessioon praeguses aknas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="44"/>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="67"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="45"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="68"/>
         <source>(Untitled)</source>
         <translation>(pealkirjata)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="102"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="99"/>
         <source>Warning</source>
         <translation>Hoiatus</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="102"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="99"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
         <translation>See sessioon ei salvestunud korralikult.
 Kas tahad kindlasti sessiooni taastada?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="119"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="116"/>
         <source>Confirm</source>
         <translation>Kinnitus</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="119"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="116"/>
         <source>Are you sure that you want to delete session %1?</source>
         <translation>Kas tahad tõesti sessiooni %1 kustutada?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="127"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="124"/>
         <source>Error</source>
         <translation>Viga</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="127"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="124"/>
         <source>Failed to delete session.</source>
         <translation>Ei suutnud sessiooni kustutada.</translation>
     </message>
 </context>
 <context>
-    <name>Otter::ShortcutsProfileDialog</name>
-    <message>
-        <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="14"/>
-        <source>Profile Configuration</source>
-        <translation>Profiili seadistus</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="24"/>
-        <source>Actions</source>
-        <translation>Käsud</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="30"/>
-        <source>Search…</source>
-        <translation>Otsi…</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="91"/>
-        <source>Add</source>
-        <translation>Lisa</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="101"/>
-        <source>Remove</source>
-        <translation>Kustuta</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="129"/>
-        <source>Information</source>
-        <translation>Teave</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="135"/>
-        <source>Title:</source>
-        <translation>Pealkiri:</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="145"/>
-        <source>Description:</source>
-        <translation>Kirjeldus:</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="155"/>
-        <source>Version:</source>
-        <translation>Versioon:</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/ShortcutsProfileDialog.ui" line="165"/>
-        <source>Author:</source>
-        <translation>Autor:</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="41"/>
-        <source>Action</source>
-        <translation>Käsk</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/ShortcutsProfileDialog.cpp" line="129"/>
-        <source>Shortcut</source>
-        <translation>Kiirklahv</translation>
-    </message>
-</context>
-<context>
     <name>Otter::SidebarWidget</name>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="216"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="218"/>
         <source>Add Web Panel…</source>
         <translation>Lisa veebipaneel…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="277"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="279"/>
         <source>Add web panel</source>
         <translation>Lisa veebipaneel</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="277"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="279"/>
         <source>Input address of web page to be shown in panel:</source>
         <translation>Aadress paneelis näitamiseks:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="431"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="433"/>
         <source>Bookmarks</source>
         <translation>Järjekogu</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="436"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="438"/>
         <source>Cache</source>
         <translation>Puhver</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="441"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="443"/>
         <source>Cookies</source>
         <translation>Küpsised</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="446"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="448"/>
         <source>Configuration</source>
         <translation>Seadistus</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="451"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="453"/>
         <source>History</source>
         <translation>Ajalugu</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="456"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="458"/>
         <source>Notes</source>
         <translation>Märkmed</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="461"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="463"/>
         <source>Transfers</source>
         <translation>Allalaadimised</translation>
     </message>
@@ -3834,12 +4022,12 @@ Do you want to save your changes or discard them?</source>
 Kas salvestad muudatused või mitte?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="286"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="292"/>
         <source>Show Line Numbers</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="477"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="483"/>
         <source>Source Viewer</source>
         <translation>Lähtekood</translation>
     </message>
@@ -3934,37 +4122,37 @@ Kas salvestad muudatused või mitte?</translation>
 <context>
     <name>Otter::StartPageWidget</name>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="357"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="350"/>
         <source>Add Tile</source>
         <translation>Lisa ruut</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="510"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="503"/>
         <source>Open</source>
         <translation>Ava</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="512"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="505"/>
         <source>Edit…</source>
         <translation>Muuda…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="516"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="509"/>
         <source>Reload</source>
         <translation>Lae uuesti</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="520"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="513"/>
         <source>Delete</source>
         <translation>Kustuta</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="524"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="517"/>
         <source>Configure…</source>
         <translation>Seadista...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="525"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="518"/>
         <source>Add Tile…</source>
         <translation>Lisa ruut...</translation>
     </message>
@@ -4004,12 +4192,12 @@ Kas salvestad muudatused või mitte?</translation>
         <translation>(pealkirjata)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/StartupDialog.cpp" line="96"/>
+        <location filename="../../src/ui/StartupDialog.cpp" line="93"/>
         <source>Window %1</source>
         <translation>Aken - %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/StartupDialog.cpp" line="200"/>
+        <location filename="../../src/ui/StartupDialog.cpp" line="197"/>
         <source>Default</source>
         <translation>Algseadistus</translation>
     </message>
@@ -4017,27 +4205,27 @@ Kas salvestad muudatused või mitte?</translation>
 <context>
     <name>Otter::TabBarWidget</name>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="163"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="169"/>
         <source>Arrange</source>
         <translation>Korrasta</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="173"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="193"/>
         <source>Switch tabs using the mouse wheel</source>
         <translation>Vaheta kaarte hiire rattaga</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="190"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="213"/>
         <source>Customize</source>
         <translation>Seadista</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="477"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="514"/>
         <source>(Untitled)</source>
         <translation>(pealkirjata)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="963"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="973"/>
         <source>Close Tab</source>
         <translation>Sulge kaart</translation>
     </message>
@@ -4177,73 +4365,73 @@ Kas salvestad muudatused või mitte?</translation>
         <translation>Isetehtud tööriistariba</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="220"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="216"/>
         <source>--- separator ---</source>
         <translation>--- eraldusjoon ---</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="224"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="220"/>
         <source>--- spacer ---</source>
         <translation>--- vahe ---</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="228"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="224"/>
         <source>Address Field</source>
         <translation>Aadressiväli</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="232"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="228"/>
         <source>List of Closed Windows and Tabs</source>
         <translation>Suletud aknad</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="236"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="232"/>
         <source>Menu Bar</source>
         <translation>Menüüriba</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="240"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="236"/>
         <source>Menu Button</source>
         <translation>Menüünupp</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="244"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="240"/>
         <source>Sidebar Panel Chooser</source>
         <translation>Paneelilüliti</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="248"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="244"/>
         <source>Search Field</source>
         <translation>Otsinguväli</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="252"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="248"/>
         <source>Status Message Field</source>
         <translation>Olekuteadete väli</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="256"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="252"/>
         <source>Tab Bar</source>
         <translation>Kaartideriba</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="260"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="256"/>
         <source>Zoom Slider</source>
         <translation>Suurendusriiv</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="268"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="264"/>
         <source>(Untitled)</source>
         <translation>(pealkirjata)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="273"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="269"/>
         <source>Invalid Bookmark</source>
         <translation>Kõlbmatu järg</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="282"/>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="294"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="278"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="290"/>
         <source>Invalid Entry</source>
         <translation>Kõlbmatu element</translation>
     </message>
@@ -4417,17 +4605,17 @@ Kas kirjutad üle?
         <translation>Avan %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="175"/>
+        <location filename="../../src/ui/TransferDialog.cpp" line="169"/>
         <source>unknown</source>
         <translation>tundmatu</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="179"/>
+        <location filename="../../src/ui/TransferDialog.cpp" line="173"/>
         <source>%1 (download completed)</source>
         <translation>%1 (allalaadimine lõppenud)</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/TransferDialog.cpp" line="185"/>
+        <location filename="../../src/ui/TransferDialog.cpp" line="179"/>
         <source>%1 (%2% downloaded)</source>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
@@ -4440,40 +4628,40 @@ Kas kirjutad üle?
         <translation>Kiirallalaadimine…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="126"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="111"/>
         <source>Source:</source>
         <translation>Allikas:</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="136"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="121"/>
         <source>Target:</source>
         <translation>Sihtkoht:</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="146"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="131"/>
         <source>Size:</source>
         <translation>Suurus:</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="156"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="141"/>
         <source>Downloaded:</source>
         <translation>Alla laetud:</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="163"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="148"/>
         <source>Progress:</source>
         <translation>Edenemine:</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="196"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="401"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="435"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="181"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="398"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="432"/>
         <source>Stop</source>
         <translation>Peata</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="206"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="402"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="191"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="399"/>
         <source>Redownload</source>
         <translation>Lae uuesti alla</translation>
     </message>
@@ -4513,19 +4701,19 @@ Kas kirjutad üle?
         <translation>Lõpetatud</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="158"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="155"/>
         <source>Warning</source>
         <translation>Hoiatus</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="158"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="155"/>
         <source>This transfer is still running.
 Do you really want to remove it?</source>
         <translation>See allalaadimine on pooleli.
 Kas tahad kindlasti seda kustutada?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="243"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="240"/>
         <source>&lt;div style=&quot;white-space:pre;&quot;&gt;Source: %1
 Target: %2
 Size: %3
@@ -4538,55 +4726,55 @@ Tõmmatud: %4
 Kiirus: %5&lt;/div&gt;</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="243"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="449"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="450"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="240"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="446"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="447"/>
         <source>%1 (%2 B)</source>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="378"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="375"/>
         <source>Open</source>
         <translation>Ava</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="384"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="381"/>
         <source>Open With</source>
         <translation>Ava programmis</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="388"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="385"/>
         <source>Unknown</source>
         <translation>Teadmata</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="399"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="396"/>
         <source>Open Folder</source>
         <translation>Ava kaust</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="401"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="430"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="398"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="427"/>
         <source>Resume</source>
         <translation>Jätka</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="404"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="401"/>
         <source>Copy Transfer Information</source>
         <translation>Kopeeri allalaadimise andmed</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="406"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="403"/>
         <source>Remove</source>
         <translation>Eemalda</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="420"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="417"/>
         <source>Clear Finished Transfers</source>
         <translation>Puhasta lõpetatud allalaadimised nimekirjast</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="548"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="545"/>
         <source>Transfers Manager</source>
         <translation>Allalaadimiste haldur</translation>
     </message>
@@ -4673,64 +4861,64 @@ Vali muu koht.</translation>
         <translation>Uuenduste kontroll…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="95"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="93"/>
         <source>There are no new updates.</source>
         <translation>Uuendusi pole.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="101"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="99"/>
         <source>Available updates:</source>
         <translation>Saadaolev uuendus:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="105"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="103"/>
         <source>Details…</source>
         <translation>Üksikasjad…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="108"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="106"/>
         <source>Download</source>
         <translation>Lae alla</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="121"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="119"/>
         <source>Version %1 from %2 channel</source>
         <translation>Väljaanne %1 allikast %2 </translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="131"/>
-        <source>Some of the updates does not contains packages for your platform. Try to check for updates later or visit details page for more info.</source>
-        <translation>Uus väljaanne pole veel pakendatud sinu süsteemile sobivalt. Kontrolli uuendusi hiljem või külasta kodulehte üksikasjalikuma teabe saamiseks.</translation>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="129"/>
+        <source>Some of the updates do not contain packages for your platform. Try to check for updates later or visit details page for more info.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="177"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="175"/>
         <source>Downloading:</source>
         <translation>Laeb alla:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="192"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="190"/>
         <source>Download finished!</source>
         <translation>Allalaadimine lõppenud!</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="193"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="191"/>
         <source>Install</source>
         <translation>Paigalda</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="195"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="193"/>
         <source>New version of Otter Browser is ready to install.
 Click Install button to restart browser and install the update or close this dialog to install the update during next browser restart.</source>
         <translation>Otter brauseri uus väljaanne on paigaldamiseks valmis.
 Kui vajutad Paigalda, siis brauser taaskäivitatakse ja uuendus paigaldatakse. Kui vajutad Sulge, paigaldatakse uuendus järgmisel käivitamisel.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="217"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="215"/>
         <source>Download failed!</source>
         <translation>Allalaadimine ebaõnnestus!</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="219"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="217"/>
         <source>Check Error Console for more information.</source>
         <translation>Vaata veakonsooli lisateabe saamiseks.</translation>
     </message>
@@ -4771,57 +4959,57 @@ Kui vajutad Paigalda, siis brauser taaskäivitatakse ja uuendus paigaldatakse. K
 <context>
     <name>Otter::WebContentsWidget</name>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="413"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="418"/>
         <source>Open all pop-ups</source>
         <translation>Luba kõik hüpikaknad</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="414"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="419"/>
         <source>Open pop-ups in background</source>
         <translation>Ava hüpikaknad taustal</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="415"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="420"/>
         <source>Block all pop-ups</source>
         <translation>Blokeeri kõik hüpikaknad</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="419"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="424"/>
         <source>Enable Images</source>
         <translation>Luba pildid</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="424"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="429"/>
         <source>Enable JavaScript</source>
         <translation>Luba JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="429"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="434"/>
         <source>Enable Java</source>
         <translation>Luba Java</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="434"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="439"/>
         <source>Enable Plugins</source>
         <translation>Luba pluginad</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="441"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="446"/>
         <source>Enable Cookies</source>
         <translation>Luba küpsised</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="445"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="450"/>
         <source>Enable Referrer</source>
         <translation>Luba viitaja</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="449"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="454"/>
         <source>Enable Proxy</source>
         <translation>Luba proksi</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="454"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="459"/>
         <source>Reset Options</source>
         <translation>Taasta valikud</translation>
     </message>
@@ -4829,82 +5017,82 @@ Kui vajutad Paigalda, siis brauser taaskäivitatakse ja uuendus paigaldatakse. K
 <context>
     <name>Otter::WebWidget</name>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="298"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="297"/>
         <source>Default Application</source>
         <translation>Süsteemi põhibrauser</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="304"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="303"/>
         <source>Unknown</source>
         <translation>Teadmata</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="390"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="389"/>
         <source>Title: %1</source>
         <translation>Pealkiri: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="390"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="389"/>
         <source>Address: %1</source>
         <translation>Aadress: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="641"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="640"/>
         <source>No search engines defined</source>
         <translation>Ühtegi otsimootorit pole määratud</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="784"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="783"/>
         <source>Open Image in New Tab (Untitled)</source>
         <translation>Ava pilt uuel kaardil (pealkirjata)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="784"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="783"/>
         <source>Open Image in New Tab (%1)</source>
         <translation>Ava pilt uuel kaardil (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="790"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="789"/>
         <source>Open Image in New Background Tab (Untitled)</source>
         <translation>Ava pilt taustakaardil (pealkirjata)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="790"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="789"/>
         <source>Open Image in New Background Tab (%1)</source>
         <translation>Ava pilt taustakaardil (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1082"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1081"/>
         <source>30 Minutes</source>
         <translation>30 minutit</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1083"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1082"/>
         <source>1 Hour</source>
         <translation>1 tund</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1084"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1083"/>
         <source>2 Hours</source>
         <translation>2 tundi</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1085"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1084"/>
         <source>6 Hours</source>
         <translation>6 tundi</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1086"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1085"/>
         <source>Never</source>
         <translation>Mitte kunagi</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1087"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1086"/>
         <source>Custom…</source>
         <translation>Vahetatud…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1089"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1088"/>
         <source>Page Default</source>
         <translation>Lehe algseadistus</translation>
     </message>
@@ -5275,17 +5463,17 @@ Kui vajutad Paigalda, siis brauser taaskäivitatakse ja uuendus paigaldatakse. K
         <translation>(pealkirjata)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="339"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="335"/>
         <source>Title</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="339"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="335"/>
         <source>Update Interval</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="339"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="335"/>
         <source>Last Update</source>
         <translation type="unfinished"/>
     </message>
@@ -5316,29 +5504,29 @@ Kui vajutad Paigalda, siis brauser taaskäivitatakse ja uuendus paigaldatakse. K
 <context>
     <name>Otter::WindowsManager</name>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="235"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="278"/>
         <source>Question</source>
         <translation>Küsimus</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/core/WindowsManager.cpp" line="236"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="279"/>
         <source>You are about to open %n bookmark(s).</source>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="237"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="280"/>
         <source>Do you want to continue?</source>
         <translation>Kas jätkad?</translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="241"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="284"/>
         <source>Do not show this message again</source>
         <translation>Ära seda sõnumit enam näita</translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="816"/>
-        <location filename="../../src/core/WindowsManager.cpp" line="869"/>
-        <location filename="../../src/core/WindowsManager.cpp" line="993"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="806"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="859"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="983"/>
         <source>Empty</source>
         <translation>Tühi</translation>
     </message>
@@ -5370,7 +5558,7 @@ Kui vajutad Paigalda, siis brauser taaskäivitatakse ja uuendus paigaldatakse. K
 <context>
     <name>Otter::WorkspaceWidget</name>
     <message>
-        <location filename="../../src/ui/WorkspaceWidget.cpp" line="515"/>
+        <location filename="../../src/ui/WorkspaceWidget.cpp" line="517"/>
         <source>Arrange</source>
         <translation>Korrasta</translation>
     </message>
@@ -5387,960 +5575,970 @@ Kui vajutad Paigalda, siis brauser taaskäivitatakse ja uuendus paigaldatakse. K
 <context>
     <name>actions</name>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="242"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="244"/>
         <source>File</source>
         <translation>Fail</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="243"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="245"/>
         <source>Sessions</source>
         <translation>Sessioonid</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="244"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="246"/>
         <source>Import and Export</source>
         <translation>Import ja eksport</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="245"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="247"/>
         <source>Edit</source>
         <translation>Muuda</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="246"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="248"/>
         <source>View</source>
         <translation>Vaata</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="247"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="249"/>
         <source>Toolbars</source>
         <translation>Tööriistaribad</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="248"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="250"/>
         <source>User Agent</source>
         <translation>Identifikaator</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="249"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="251"/>
         <source>Character Encoding</source>
         <translation>Kodeering</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="250"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="252"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="45"/>
         <source>History</source>
         <translation>Ajalugu</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="251"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="253"/>
         <source>Closed Windows</source>
         <translation>Suletud aknad</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="252"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="254"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="43"/>
         <source>Bookmarks</source>
         <translation>Järjekogu</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="253"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="255"/>
         <source>Tools</source>
         <translation>Tööriistad</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="254"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="256"/>
         <source>Help</source>
         <translation>Abi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="255"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="257"/>
         <source>Tabs and Windows</source>
         <translation>Kaardid ja aknad</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="256"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="258"/>
         <source>Page</source>
         <translation>Leht</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="257"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="259"/>
         <source>Print</source>
         <translation>Prindi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="258"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="260"/>
         <source>Settings</source>
         <translation>Valikud</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="259"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="261"/>
         <source>Frame</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="263"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="265"/>
         <source>New Tab</source>
         <translation>Uus kaart</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="264"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="266"/>
         <source>New Private Tab</source>
         <translation>Uus privaatkaart</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="265"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="267"/>
         <source>New Window</source>
         <translation>Uus aken</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="266"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="268"/>
         <source>New Private Window</source>
         <translation>Uus privaataken</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="267"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="269"/>
         <source>Open…</source>
         <translation>Ava…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="268"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="270"/>
         <source>Save…</source>
         <translation>Salvesta…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="269"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="271"/>
         <source>Clone Tab</source>
         <translation>Klooni kaart</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="270"/>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="125"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="272"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="136"/>
         <source>Pin Tab</source>
         <translation>Riputa kaart</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="271"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="273"/>
         <source>Detach Tab</source>
         <translation>Lahuta kaart</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="272"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="274"/>
         <source>Maximize</source>
         <translation>Suurenda</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="272"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="274"/>
         <source>Maximize Tab</source>
         <translation>Suurenda kaart</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="273"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="275"/>
         <source>Minimize</source>
         <translation>Vähenda</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="273"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="275"/>
         <source>Minimize Tab</source>
         <translation>Vähenda kaart</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="274"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="276"/>
         <source>Restore</source>
         <translation>Taasta</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="274"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="276"/>
         <source>Restore Tab</source>
         <translation>Taasta kaart</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="275"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="277"/>
         <source>Stay on Top</source>
         <translation>Kõige pealmine</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="276"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="278"/>
+        <source>Clear Tab History</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="279"/>
+        <source>Purge Tab History</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="280"/>
         <source>Close Tab</source>
         <translation>Sulge kaart</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="277"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="281"/>
         <source>Close Other Tabs</source>
         <translation>Sulge teised kaardid</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="278"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="282"/>
         <source>Close All Private Tabs</source>
         <translation>Sulge kõik privaatkaardid</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="278"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="282"/>
         <source>Close All Private Tabs in Current Window</source>
         <translation>Sulge kõik privaatkaardid siin aknas</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="279"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="283"/>
         <source>Close Private Tabs and Windows</source>
         <translation>Sulge kõik privaatkaardid ja -aknad</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="280"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="284"/>
         <source>Reopen Previously Closed Tab</source>
         <translation>Ava viimati suletud kaart</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="281"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="285"/>
         <source>Maximize All</source>
         <translation>Suurenda kõik</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="282"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="286"/>
         <source>Minimize All</source>
         <translation>Vähenda kõik</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="283"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="287"/>
         <source>Restore All</source>
         <translation>Taasta kõik</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="284"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="288"/>
         <source>Cascade</source>
         <translation>Kaskaadi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="285"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="289"/>
         <source>Tile</source>
         <translation>Paani</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="286"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="290"/>
         <source>Close Window</source>
         <translation>Sulge aken</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="287"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="291"/>
         <source>Manage Sessions…</source>
         <translation>Halda sessioone…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="288"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="292"/>
         <source>Save Current Session…</source>
         <translation>Salvesta praegune sessioon</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="289"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="305"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="293"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="309"/>
         <source>Open</source>
         <translation>Ava</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="290"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="294"/>
         <source>Open in This Tab</source>
         <translation>Ava selles kaardis</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="291"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="306"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="295"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="310"/>
         <source>Open in New Tab</source>
         <translation>Ava uuel kaardil</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="292"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="307"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="296"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="311"/>
         <source>Open in New Background Tab</source>
         <translation>Ava taustakaardil</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="293"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="297"/>
         <source>Open in New Window</source>
         <translation>Ava uues aknas</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="294"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="298"/>
         <source>Open in New Background Window</source>
         <translation>Ava uues taustaaknas</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="295"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="299"/>
         <source>Open in New Private Tab</source>
         <translation>Ava uuel privaatkaardil</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="296"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="300"/>
         <source>Open in New Private Background Tab</source>
         <translation>Ava uuel taustaprivaatkaardil</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="297"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="301"/>
         <source>Open in New Private Window</source>
         <translation>Ava uues privaataknas</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="298"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="302"/>
         <source>Open in New Private Background Window</source>
         <translation>Ava uues taustaprivaataknas</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="299"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="308"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="399"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="303"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="312"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="403"/>
         <source>Open with…</source>
         <translation>Ava programmis</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="299"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="303"/>
         <source>Open link with external application</source>
         <translation>Ava link välimises rakenduses</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="300"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="304"/>
         <source>Copy Link to Clipboard</source>
         <translation>Kopeeri lingi URL</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="301"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="721"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="305"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="720"/>
         <source>Bookmark Link…</source>
         <translation>Salvesta URL järgedesse…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="302"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="306"/>
         <source>Save Link Target As…</source>
         <translation>Salvesta fail kui…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="303"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="307"/>
         <source>Save to Downloads</source>
         <translation>Salvesta allalaadimiste kausta</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="304"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="308"/>
         <source>Go to This Address</source>
         <translation>Mine aadressile</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="305"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="309"/>
         <source>Open Frame in This Tab</source>
         <translation>Ava freim selles kaardis</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="306"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="310"/>
         <source>Open Frame in New Tab</source>
         <translation>Ava freim uuel kaardil</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="307"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="311"/>
         <source>Open Frame in New Background Tab</source>
         <translation>Ava freim taustakaardil</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="308"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="312"/>
         <source>Open frame with external application</source>
         <translation>Ava freim välimises rakenduses</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="309"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="313"/>
         <source>Copy Frame Link to Clipboard</source>
         <translation>Kopeeri freimi URL</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="310"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="335"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="336"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="314"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="339"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="340"/>
         <source>Reload</source>
         <translation>Lae uuesti</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="310"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="314"/>
         <source>Reload Frame</source>
         <translation>Lae freim uuesti</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="311"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="315"/>
         <source>View Frame Source</source>
         <translation>Vaata freimi lähtekoodi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="312"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="316"/>
         <source>Open Image In New Tab</source>
         <translation>Ava pilt uuel kaardil</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="313"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="790"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="317"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="789"/>
         <source>Open Image in New Background Tab</source>
         <translation>Ava pilt taustakaardil</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="314"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="318"/>
         <source>Save Image…</source>
         <translation>Salvesta pilt…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="315"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="319"/>
         <source>Copy Image to Clipboard</source>
         <translation>Kopeeri pilt</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="316"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="320"/>
         <source>Copy Image Link to Clipboard</source>
         <translation>Kopeeri pildi URL</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="317"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="321"/>
         <source>Reload Image</source>
         <translation>Lae pilt uuesti</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="318"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="322"/>
         <source>Image Properties…</source>
         <translation>Pildi omadused…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="319"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="323"/>
         <source>Save Media…</source>
         <translation>Salvesta meedia…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="320"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="324"/>
         <source>Copy Media Link to Clipboard</source>
         <translation>Kopeeri meedia URL</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="321"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="325"/>
         <source>Show Controls</source>
         <translation>Näita juhtriistu</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="322"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="326"/>
         <source>Looping</source>
         <translation>Korda</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="323"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="853"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="327"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="852"/>
         <source>Play</source>
         <translation>Mängi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="324"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="860"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="328"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="859"/>
         <source>Mute</source>
         <translation>Vaigista</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="325"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="329"/>
         <source>Go</source>
         <translation>Mine</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="326"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="330"/>
         <source>Back</source>
         <translation>Tagasi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="327"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="331"/>
         <source>Forward</source>
         <translation>Edasi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="328"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="332"/>
         <source>Go to Page or Search</source>
         <translation>Aadress või otsing</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="329"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="333"/>
         <source>Go to Home Page</source>
         <translation>Koduaadressile</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="330"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="334"/>
         <source>Go to Parent Directory</source>
         <translation>Mine kausta võrra ülespoole</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="331"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="335"/>
         <source>Rewind</source>
         <translation>Hüpe tagasi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="332"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="336"/>
         <source>Fast Forward</source>
         <translation>Hüpe edasi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="333"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="337"/>
         <source>Stop</source>
         <translation>Peata</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="334"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="338"/>
         <source>Stop Scheduled Page Reload</source>
         <translation>Peata ajastatud laadimine</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="336"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="340"/>
         <source>Reload or Stop</source>
         <translation>Lae uuesti või peata</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="337"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="341"/>
         <source>Reload and Bypass Cache</source>
         <translation>Lae uuesti veebist</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="338"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="342"/>
         <source>Reload All Tabs</source>
         <translation>Lae kõik kaardid</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="339"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="343"/>
         <source>Reload Every</source>
         <translation>Lae uuesti iga</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="340"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="344"/>
         <source>Show Context Menu</source>
         <translation>Näita kohamenüüd</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="341"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="345"/>
         <source>Undo</source>
         <translation>Võta tagasi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="342"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="346"/>
         <source>Redo</source>
         <translation>Tee uuesti</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="343"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="347"/>
         <source>Cut</source>
         <translation>Lõika</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="344"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="348"/>
         <source>Copy</source>
         <translation>Kopeeri</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="345"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="349"/>
         <source>Copy as Plain Text</source>
         <translation>Kopeeri lihttekst</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="346"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="350"/>
         <source>Copy Address</source>
         <translation>Kopeeri aadress</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="347"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="351"/>
         <source>Copy to Note</source>
         <translation>Kopeeri märkmeks</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="348"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="352"/>
         <source>Paste</source>
         <translation>Aseta</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="349"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="353"/>
         <source>Paste and Go</source>
         <translation>Kleebi ja mine</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="350"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="354"/>
         <source>Insert Note</source>
         <translation>Sisesta märge</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="351"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="355"/>
         <source>Delete</source>
         <translation>Kustuta</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="352"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="356"/>
         <source>Select All</source>
         <translation>Vali kõik</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="353"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="357"/>
         <source>Clear All</source>
         <translation>Puhasta kõik</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="354"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="358"/>
         <source>Check Spelling</source>
         <translation>Õigekirjakontroll</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="355"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="359"/>
         <source>Find…</source>
         <translation>Otsi…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="356"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="360"/>
         <source>Find Next</source>
         <translation>Leia järgmine</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="357"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="361"/>
         <source>Find Previous</source>
         <translation>Leia eelmine</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="358"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="362"/>
         <source>Quick Find</source>
         <translation>Kiirotsing</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="359"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="640"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="363"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="639"/>
         <source>Search</source>
         <translation>Otsi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="360"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="364"/>
         <source>Search Using</source>
         <translation>Otsi kasutades</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="361"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="365"/>
         <source>Create Search…</source>
         <translation>Loo otsing…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="362"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="366"/>
         <source>Zoom In</source>
         <translation>Suuremaks</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="363"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="367"/>
         <source>Zoom Out</source>
         <translation>Väiksemaks</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="364"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="368"/>
         <source>Zoom Original</source>
         <translation>Algsuurendus</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="365"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="369"/>
         <source>Go to Start of the Page</source>
         <translation>Lehe algusse</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="366"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="370"/>
         <source>Go to the End of the Page</source>
         <translation>Lehe lõppu</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="367"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="371"/>
         <source>Page Up</source>
         <translation>Näidu võrra ülespoole</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="368"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="372"/>
         <source>Page Down</source>
         <translation>Näidu võrra allapoole</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="369"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="373"/>
         <source>Page Left</source>
         <translation>Leht vasakule</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="370"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="374"/>
         <source>Page Right</source>
         <translation>Leht paremale</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="371"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="375"/>
         <source>Enter Drag Scroll Mode</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="372"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="376"/>
         <source>Enter Move Scroll Mode</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="373"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="377"/>
         <source>Exit Scroll Mode</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="374"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="378"/>
         <source>Print…</source>
         <translation>Prindi…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="375"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="379"/>
         <source>Print Preview</source>
         <translation>Printimise eelvaade</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="376"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="380"/>
         <source>Activate Address Field</source>
         <translation>Käivita aadressiväli</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="377"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="381"/>
         <source>Activate Search Field</source>
         <translation>Käivita aadressiväli</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="378"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="382"/>
         <source>Activate Content</source>
         <translation>Leht fookusesse</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="379"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="383"/>
         <source>Go to Previously Used Tab</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="380"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="384"/>
         <source>Go to Least Recently Used Tab</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="381"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="385"/>
         <source>Go to Tab on Left</source>
         <translation>Liigu vasakule kaardile</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="382"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="386"/>
         <source>Go to Tab on Right</source>
         <translation>Liigu paremale kaardile</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="383"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="387"/>
         <source>Manage Bookmarks</source>
         <translation>Järjehaldur</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="384"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="520"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="388"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="519"/>
         <source>Add Bookmark…</source>
         <translation>Lisa järg…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="385"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="389"/>
         <source>Quick Bookmark Access</source>
         <translation>Järje kiirkäivitus</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="386"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="390"/>
         <source>Block pop-ups</source>
         <translation>Hüpikaknad</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="387"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="391"/>
         <source>Load Images</source>
         <translation>Lae pilte</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="388"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="392"/>
         <source>Cookies</source>
         <translation>Küpsised</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="389"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="393"/>
         <source>Cookies Policy</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="390"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="394"/>
         <source>Third-party Cookies Policy</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="391"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="395"/>
         <source>Plugins</source>
         <translation>Pluginad</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="392"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="396"/>
         <source>Load Plugins</source>
         <translation>Lae pluginad</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="393"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="397"/>
         <source>Enable JavaScript</source>
         <translation>Luba JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="394"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="398"/>
         <source>Enable Java</source>
         <translation>Luba Java</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="395"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="399"/>
         <source>Enable Referrer</source>
         <translation>Luba viitaja</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="396"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="400"/>
         <source>Proxy</source>
         <translation>Proksi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="397"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="401"/>
         <source>Enable Proxy</source>
         <translation>Luba proksi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="398"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="402"/>
         <source>View Source</source>
         <translation>Vaata lähtekoodi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="399"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="403"/>
         <source>Open current page with external application</source>
         <translation>Ava käeslev leht välimises rakenduses</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="400"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="404"/>
         <source>Validate</source>
         <translation>Valideeri</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="401"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="405"/>
         <source>Inspect Page</source>
         <translation>Uuri lehte</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="402"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="406"/>
         <source>Inspect Element…</source>
         <translation>Uuri elementi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="403"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="407"/>
         <source>Work Offline</source>
         <translation>Tööta võrguühenduseta</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="404"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="408"/>
         <source>Full Screen</source>
         <translation>Täisekraan</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="405"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="409"/>
         <source>Show Tab Switcher</source>
         <translation>Näita kaardivahetusvidinat</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="406"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="410"/>
         <source>Show Menubar</source>
         <translation>Näita menüüriba</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="407"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="411"/>
         <source>Show Tabbar</source>
         <translation>Näita kaartideriba</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="408"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="412"/>
         <source>Show Sidebar</source>
         <translation>Näita paneeli</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="409"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="413"/>
         <source>Show Error Console</source>
         <translation>Näita veakonsooli</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="410"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="414"/>
         <source>Lock Toolbars</source>
         <translation>Lukusta tööriistaribad</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="411"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="415"/>
         <source>Open Panel as Tab</source>
         <translation>Ava paneel kaardina</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="412"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="416"/>
         <source>Close Panel</source>
         <translation>Sulge paneel</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="413"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="417"/>
         <source>Content Blocking…</source>
         <translation>Blokeeri sisu</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="414"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="418"/>
         <source>View History</source>
         <translation>Vaata ajalugu</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="415"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="419"/>
         <source>Clear History…</source>
         <translation>Kustuta ajalugu</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="416"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="420"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="46"/>
         <source>Notes</source>
         <translation>Märkmed</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="417"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="421"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="44"/>
         <source>Transfers</source>
         <translation>Allalaadimised</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="418"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="422"/>
         <source>Preferences…</source>
         <translation>Eelistused</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="419"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="423"/>
         <source>Website Preferences…</source>
         <translation>Saidi eelistused</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="420"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="424"/>
         <source>Quick Preferences</source>
         <translation>Kiireelistused</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="421"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="425"/>
         <source>Reset Options</source>
         <translation>Taasta valikud</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="422"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="426"/>
         <source>Switch Application Language…</source>
         <translation>Vaheta rakenduse keelt</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="423"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="427"/>
         <source>Check for Updates…</source>
         <translation>Uuenduste kontroll…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="424"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="428"/>
         <source>Diagnostic Report…</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="425"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="429"/>
         <source>About Otter…</source>
         <translation>Otteri kohta</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="426"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="430"/>
         <source>About Qt…</source>
         <translation>Qt kohta</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="427"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="431"/>
         <source>Exit</source>
         <translation>Välju</translation>
     </message>
@@ -6375,7 +6573,7 @@ Kui vajutad Paigalda, siis brauser taaskäivitatakse ja uuendus paigaldatakse. K
         <translation>Kopeeri allika URL</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="125"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="136"/>
         <source>Unpin Tab</source>
         <translation>Vabasta kaart</translation>
     </message>
@@ -6385,52 +6583,52 @@ Kui vajutad Paigalda, siis brauser taaskäivitatakse ja uuendus paigaldatakse. K
         <translation>Näita aknaid</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="520"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="519"/>
         <source>Edit Bookmark…</source>
         <translation>Muuda järge</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="721"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="720"/>
         <source>Edit Link Bookmark…</source>
         <translation>Muuda lingi järge</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="784"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="783"/>
         <source>Open Image in New Tab</source>
         <translation>Ava pilt uuel kaardil</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="829"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="828"/>
         <source>Save Video…</source>
         <translation>Salvesta video</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="829"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="828"/>
         <source>Save Audio…</source>
         <translation>Salvesta audio</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="835"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="834"/>
         <source>Copy Video Link to Clipboard</source>
         <translation>Kopeeri video URL</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="835"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="834"/>
         <source>Copy Audio Link to Clipboard</source>
         <translation>Kopeeri audio URL</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="853"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="852"/>
         <source>Pause</source>
         <translation>Paus</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="860"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="859"/>
         <source>Unmute</source>
         <translation>Hääl</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WorkspaceWidget.cpp" line="504"/>
+        <location filename="../../src/ui/WorkspaceWidget.cpp" line="506"/>
         <source>Close</source>
         <translation type="unfinished"/>
     </message>
@@ -6438,42 +6636,42 @@ Kui vajutad Paigalda, siis brauser taaskäivitatakse ja uuendus paigaldatakse. K
 <context>
     <name>main</name>
     <message>
-        <location filename="../../src/core/Application.cpp" line="105"/>
+        <location filename="../../src/core/Application.cpp" line="106"/>
         <source>URL to open</source>
         <translation>Ava URL</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="106"/>
+        <location filename="../../src/core/Application.cpp" line="107"/>
         <source>Uses &lt;path&gt; as cache directory</source>
         <translation>Kasutab &lt;asukohta&gt; puhvri jaoks</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="107"/>
+        <location filename="../../src/core/Application.cpp" line="108"/>
         <source>Uses &lt;path&gt; as profile directory</source>
         <translation>Kasutab &lt;asukohta&gt; profiili jaoks</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="108"/>
+        <location filename="../../src/core/Application.cpp" line="109"/>
         <source>Restores session &lt;session&gt; if it exists</source>
         <translation>Taasta sessioon &lt;session&gt; kui see on olemas</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="109"/>
+        <location filename="../../src/core/Application.cpp" line="110"/>
         <source>Starts private session</source>
         <translation>Alusta privaatsessiooni</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="110"/>
+        <location filename="../../src/core/Application.cpp" line="111"/>
         <source>Forces session chooser dialog</source>
         <translation>Määrab sessioonivalikudialoogi</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="111"/>
+        <location filename="../../src/core/Application.cpp" line="112"/>
         <source>Sets profile and cache paths to directories inside the same directory as that of application binary</source>
         <translation>Paneb profiili ja vahemälu samasse kausta, kus rakenduse binaarfail asub</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="112"/>
+        <location filename="../../src/core/Application.cpp" line="113"/>
         <source>Prints out diagnostic report and exits application</source>
         <translation type="unfinished"/>
     </message>
@@ -6521,8 +6719,8 @@ Script: %2</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/SessionsManager.h" line="86"/>
-        <location filename="../../src/core/SessionsManager.h" line="89"/>
+        <location filename="../../src/core/SessionsManager.h" line="84"/>
+        <location filename="../../src/core/SessionsManager.h" line="87"/>
         <source>(Untitled)</source>
         <translation>(pealkirjata)</translation>
     </message>
@@ -6558,7 +6756,7 @@ Error: %2</source>
         <translation>Algseadistus</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="460"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="466"/>
         <source>Blocked request</source>
         <translation type="unfinished"/>
     </message>
