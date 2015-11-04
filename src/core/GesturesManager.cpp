@@ -479,12 +479,12 @@ int GesturesManager::matchGesture()
 
 			if (difference == 0)
 			{
-				return j;
+				return m_gestures[contexts[i]][j].action;
 			}
 
 			if (difference < lowestDifference)
 			{
-				bestGesture = j;
+				bestGesture = m_gestures[contexts[i]][j].action;
 				lowestDifference = difference;
 			}
 		}
@@ -569,16 +569,16 @@ bool GesturesManager::startGesture(QObject *object, QEvent *event, GesturesConte
 	return true;
 }
 
-bool GesturesManager::triggerAction(int gestureIndex)
+bool GesturesManager::triggerAction(int gestureIdentifier)
 {
-	if (gestureIndex == UNKNOWN_GESTURE)
+	if (gestureIdentifier == UNKNOWN_GESTURE)
 	{
 		return false;
 	}
 
 	m_trackedObject->removeEventFilter(m_instance);
 
-	if (gestureIndex == NATIVE_GESTURE)
+	if (gestureIdentifier == NATIVE_GESTURE)
 	{
 		for (int i = 0; i < m_events.count(); ++i)
 		{
@@ -589,7 +589,7 @@ bool GesturesManager::triggerAction(int gestureIndex)
 	}
 	else
 	{
-		ActionsManager::triggerAction(m_gestures[m_context][gestureIndex].action, m_trackedObject, m_paramaters);
+		ActionsManager::triggerAction(gestureIdentifier, m_trackedObject, m_paramaters);
 	}
 
 	if (m_trackedObject)

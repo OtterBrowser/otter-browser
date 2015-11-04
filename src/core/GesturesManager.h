@@ -81,7 +81,7 @@ protected:
 	static int matchGesture();
 	static int moveLength();
 	static int gesturesDifference(QList<GestureStep> defined);
-	static bool triggerAction(int gestureIndex);
+	static bool triggerAction(int gestureIdentifier);
 	bool eventFilter(QObject *object, QEvent *event);
 
 protected slots:
