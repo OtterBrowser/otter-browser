@@ -371,9 +371,11 @@ bool ItemViewWidget::applyFilter(QStandardItem *item)
 	}
 	else
 	{
-		for (int i = 0; i < item->parent()->columnCount(); ++i)
+		const int columnCount = (item->parent() ? item->parent()->columnCount() : m_model->columnCount());
+
+		for (int i = 0; i < columnCount; ++i)
 		{
-			QStandardItem *child = item->parent()->child(item->row(), i);
+			QStandardItem *child = m_model->itemFromIndex(item->index().sibling(item->row(), i));
 
 			if (!child)
 			{
