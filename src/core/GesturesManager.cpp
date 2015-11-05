@@ -121,7 +121,7 @@ QHash<GesturesManager::GesturesContext, QVector<GesturesManager::MouseGesture> >
 QHash<GesturesManager::GesturesContext, QList<QList<GesturesManager::GestureStep> > > GesturesManager::m_nativeGestures;
 QList<QInputEvent*> GesturesManager::m_events;
 QList<GesturesManager::GestureStep> GesturesManager::m_steps;
-GesturesManager::GesturesContext GesturesManager::m_context = GesturesManager::GenericGesturesContext;
+QList<GesturesManager::GesturesContext> GesturesManager::m_contexts;
 bool GesturesManager::m_isReleasing = false;
 bool GesturesManager::m_afterScroll = false;
 
@@ -391,29 +391,33 @@ QList<GesturesManager::GestureStep> GesturesManager::recognizeMoveStep(QInputEve
 {
 	QList<GestureStep> result;
 
-	if (!m_recognizer || !m_gestures.contains(m_context))
+	if (!m_recognizer)
 	{
 		return result;
 	}
 
 	QHash<int, MouseGestures::ActionList> possibleMoves;
 
-	for (int i = 0; i < m_gestures[m_context].count(); ++i)
+	for (int i = 0; i < m_contexts.count(); ++i)
 	{
-		QList<GestureStep> &steps = m_gestures[m_context][i].steps;
-
-		if (steps.count() > m_steps.count() && steps[m_steps.count()].type == QEvent::MouseMove && steps.mid(0, m_steps.count()) == m_steps)
+		for (int j = 0; j < m_gestures[m_contexts[i]].count(); ++j)
 		{
-			MouseGestures::ActionList moves;
+			QList<GestureStep> &steps = m_gestures[m_contexts[i]][j].steps;
 
-			for (int j = m_steps.count(); j < steps.count() && steps[j].type == QEvent::MouseMove; ++j)
+			if (steps.count() > m_steps.count() && steps[m_steps.count()].type == QEvent::MouseMove && steps.mid(0, m_steps.count()) == m_steps)
 			{
-				moves.push_back(steps[j].direction);
-			}
 
-			if (!moves.empty())
-			{
-				possibleMoves.insert(m_recognizer->registerGesture(moves), moves);
+				MouseGestures::ActionList moves;
+
+				for (int j = m_steps.count(); j < steps.count() && steps[j].type == QEvent::MouseMove; ++j)
+				{
+					moves.push_back(steps[j].direction);
+				}
+
+				if (!moves.empty())
+				{
+					possibleMoves.insert(m_recognizer->registerGesture(moves), moves);
+				}
 			}
 		}
 	}
@@ -447,19 +451,12 @@ int GesturesManager::matchGesture()
 	int bestGesture = 0;
 	int lowestDifference = std::numeric_limits<int>::max();
 	int difference = 0;
-	QList<GesturesContext> contexts;
-	contexts << m_context;
 
-	if (m_context != GenericGesturesContext)
+	for (int i = 0; i < m_contexts.count(); ++i)
 	{
-		contexts << GenericGesturesContext;
-	}
-
-	for (int i = 0; i < contexts.count(); ++i)
-	{
-		for (int j = 0; j < m_nativeGestures[contexts[i]].count(); ++j)
+		for (int j = 0; j < m_nativeGestures[m_contexts[i]].count(); ++j)
 		{
-			difference = gesturesDifference(m_nativeGestures[contexts[i]][j]);
+			difference = gesturesDifference(m_nativeGestures[m_contexts[i]][j]);
 
 			if (difference == 0)
 			{
@@ -473,18 +470,18 @@ int GesturesManager::matchGesture()
 			}
 		}
 
-		for (int j = 0; j < m_gestures[contexts[i]].count(); ++j)
+		for (int j = 0; j < m_gestures[m_contexts[i]].count(); ++j)
 		{
-			difference = gesturesDifference(m_gestures[contexts[i]][j].steps);
+			difference = gesturesDifference(m_gestures[m_contexts[i]][j].steps);
 
 			if (difference == 0)
 			{
-				return m_gestures[contexts[i]][j].action;
+				return m_gestures[m_contexts[i]][j].action;
 			}
 
 			if (difference < lowestDifference)
 			{
-				bestGesture = m_gestures[contexts[i]][j].action;
+				bestGesture = m_gestures[m_contexts[i]][j].action;
 				lowestDifference = difference;
 			}
 		}
@@ -534,11 +531,11 @@ int GesturesManager::gesturesDifference(QList<GestureStep> defined)
 	return difference;
 }
 
-bool GesturesManager::startGesture(QObject *object, QEvent *event, GesturesContext context, const QVariantMap &parameters)
+bool GesturesManager::startGesture(QObject *object, QEvent *event, QList<GesturesContext> contexts, const QVariantMap &parameters)
 {
 	QInputEvent *inputEvent = static_cast<QInputEvent*>(event);
 
-	if (!object || !inputEvent || !m_gestures.contains(context))
+	if (!object || !inputEvent || m_gestures.keys().toSet().intersect(contexts.toSet()).isEmpty())
 	{
 		return false;
 	}
@@ -547,7 +544,7 @@ bool GesturesManager::startGesture(QObject *object, QEvent *event, GesturesConte
 
 	if (!m_trackedObject)
 	{
-		m_context = context;
+		m_contexts = contexts;
 		m_isReleasing = false;
 		m_afterScroll = false;
 	}
@@ -673,7 +670,7 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 
 			m_recognizer->addPosition(mouseEvent->pos().x(), mouseEvent->pos().y());
 
-			if (moveLength() >= QApplication::startDragDistance() && m_gestures.contains(m_context))
+			if (moveLength() >= QApplication::startDragDistance())
 			{
 				m_steps.append(GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction, mouseEvent->modifiers()));
 

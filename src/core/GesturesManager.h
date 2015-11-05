@@ -47,7 +47,7 @@ public:
 	static void createInstance(QObject *parent = NULL);
 	static void loadProfiles();
 	static GesturesManager* getInstance();
-	static bool startGesture(QObject *object, QEvent *event, GesturesContext context = GenericGesturesContext, const QVariantMap &parameters = QVariantMap());
+	static bool startGesture(QObject *object, QEvent *event, QList<GesturesContext> contexts = (QList<GesturesContext>() << GenericGesturesContext), const QVariantMap &parameters = QVariantMap());
 
 protected:
 	struct GestureStep
@@ -99,7 +99,7 @@ private:
 	static QHash<GesturesContext, QList<QList<GestureStep> > > m_nativeGestures;
 	static QList<GestureStep> m_steps;
 	static QList<QInputEvent*> m_events;
-	static GesturesContext m_context;
+	static QList<GesturesContext> m_contexts;
 	static bool m_isReleasing;
 	static bool m_afterScroll;
 };

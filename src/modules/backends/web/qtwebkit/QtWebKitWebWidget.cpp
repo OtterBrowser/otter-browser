@@ -2236,19 +2236,21 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 				updateHitTestResult(mouseEvent->pos());
 			}
 
-			GesturesManager::GesturesContext context = GesturesManager::GenericGesturesContext;
+			QList<GesturesManager::GesturesContext> contexts;
 
 			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
-				context = GesturesManager::LinkGesturesContext;
+				contexts << GesturesManager::LinkGesturesContext;
 			}
 ///FIXME
 //			else if (getCurrentHitTestResult().flags.testFlag(IsContentEditableTest))
 //			{
-//				context = GesturesManager::EditableGesturesContext;
+//				contexts << GesturesManager::EditableGesturesContext;
 //			}
 
-			if ((!mouseEvent || !isScrollBar(mouseEvent->pos())) && GesturesManager::startGesture(object, event, context))
+			contexts << GesturesManager::GenericGesturesContext;
+
+			if ((!mouseEvent || !isScrollBar(mouseEvent->pos())) && GesturesManager::startGesture(object, event, contexts))
 			{
 				return true;
 			}
