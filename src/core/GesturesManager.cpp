@@ -434,7 +434,7 @@ QList<GesturesManager::GestureStep> GesturesManager::recognizeMoveStep(QInputEve
 		result.push_back(GestureStep(QEvent::MouseMove, *iterator, event->modifiers()));
 	}
 
-	if (result.empty() && moveLength() > 5)
+	if (result.empty() && moveLength() >= QApplication::startDragDistance())
 	{
 		result.append(GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction, event->modifiers()));
 	}
