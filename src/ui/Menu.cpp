@@ -719,7 +719,7 @@ void Menu::openImporter(QAction *action)
 {
 	if (action)
 	{
-		ImportDialog::createDialog(action->data().toString(), this);
+		ImportDialog::createDialog(action->data().toString(), MainWindow::findMainWindow(this));
 	}
 }
 
