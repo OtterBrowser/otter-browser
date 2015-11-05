@@ -34,15 +34,6 @@ class OperaNotesImporter : public Importer
 	Q_OBJECT
 
 public:
-	enum OperaNoteEntry
-	{
-		NoEntry = 0,
-		NoteEntry = 1,
-		FolderStartEntry = 2,
-		FolderEndEntry = 3,
-		SeparatorEntry = 4
-	};
-
 	explicit OperaNotesImporter(QObject *parent = NULL);
 	~OperaNotesImporter();
 
@@ -52,19 +43,26 @@ public:
 	QString getDescription() const;
 	QString getVersion() const;
 	QString getFileFilter() const;
-	QString getSuggestedPath() const;
+	QString getSuggestedPath(const QString &path = QString()) const;
 	QString getBrowser() const;
 	QUrl getHomePage() const;
 	QIcon getIcon() const;
 	ImportType getType() const;
 
 public slots:
-	bool import();
-	bool setPath(const QString &path);
+	bool import(const QString &path);
 
 protected:
+	enum OperaNoteEntry
+	{
+		NoEntry = 0,
+		NoteEntry = 1,
+		FolderStartEntry = 2,
+		FolderEndEntry = 3,
+		SeparatorEntry = 4
+	};
+
 	void goToParent();
-	void handleOptions();
 	void setCurrentFolder(BookmarksItem *folder);
 	void setImportFolder(BookmarksItem *folder);
 
@@ -72,7 +70,6 @@ private:
 	BookmarksComboBoxWidget *m_folderComboBox;
 	BookmarksItem *m_currentFolder;
 	BookmarksItem *m_importFolder;
-	QFile *m_file;
 	QWidget *m_optionsWidget;
 };
 

@@ -31,8 +31,7 @@ namespace Otter
 {
 
 HtmlBookmarksImporter::HtmlBookmarksImporter(QObject *parent) : BookmarksImporter(parent),
-	m_optionsWidget(NULL),
-	m_file(NULL)
+	m_optionsWidget(NULL)
 {
 }
 
@@ -41,37 +40,6 @@ HtmlBookmarksImporter::~HtmlBookmarksImporter()
 	if (m_optionsWidget)
 	{
 		m_optionsWidget->deleteLater();
-	}
-}
-
-void HtmlBookmarksImporter::handleOptions()
-{
-	if (!m_optionsWidget)
-	{
-		setImportFolder(BookmarksManager::getModel()->getRootItem());
-
-		return;
-	}
-
-	if (m_optionsWidget->hasToRemoveExisting())
-	{
-		removeAllBookmarks();
-
-		if (m_optionsWidget->isImportingIntoSubfolder())
-		{
-			BookmarksItem *folder = BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, QUrl(), m_optionsWidget->getSubfolderName());
-
-			setImportFolder(folder);
-		}
-		else
-		{
-			setImportFolder(BookmarksManager::getModel()->getRootItem());
-		}
-	}
-	else
-	{
-		setAllowDuplicates(m_optionsWidget->allowDuplicates());
-		setImportFolder(m_optionsWidget->getTargetFolder());
 	}
 }
 
@@ -185,9 +153,14 @@ QString HtmlBookmarksImporter::getFileFilter() const
 	return tr("HTML files (*.htm *.html)");
 }
 
-QString HtmlBookmarksImporter::getSuggestedPath() const
+QString HtmlBookmarksImporter::getSuggestedPath(const QString &path) const
 {
-	return QString();
+	if (!path.isEmpty() && QFileInfo(path).isDir())
+	{
+		return QDir(path).filePath(QLatin1String("bookmarks.html"));
+	}
+
+	return path;
 }
 
 QString HtmlBookmarksImporter::getBrowser() const
@@ -205,37 +178,39 @@ QIcon HtmlBookmarksImporter::getIcon() const
 	return QIcon();
 }
 
-bool HtmlBookmarksImporter::import()
+bool HtmlBookmarksImporter::import(const QString &path)
 {
+	QFile file(getSuggestedPath(path));
+
+	if (!file.open(QFile::ReadOnly))
+	{
+		return false;
+	}
+
+	if (m_optionsWidget)
+	{
+		if (m_optionsWidget->hasToRemoveExisting())
+		{
+			removeAllBookmarks();
+
+			if (m_optionsWidget->isImportingIntoSubfolder())
+			{
+				setImportFolder(BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, QUrl(), m_optionsWidget->getSubfolderName()));
+			}
+		}
+		else
+		{
+			setAllowDuplicates(m_optionsWidget->allowDuplicates());
+			setImportFolder(m_optionsWidget->getTargetFolder());
+		}
+	}
+
 	QWebPage page;
-
-	handleOptions();
-
-	page.mainFrame()->setHtml(m_file->readAll());
+	page.mainFrame()->setHtml(file.readAll());
 
 	processElement(page.mainFrame()->documentElement());
 
 	return true;
-}
-
-bool HtmlBookmarksImporter::setPath(const QString &path)
-{
-	QString fileName = path;
-
-	if (QFileInfo(path).isDir())
-	{
-		fileName = QDir(path).filePath(QLatin1String("bookmarks.html"));
-	}
-
-	if (m_file)
-	{
-		m_file->close();
-		m_file->deleteLater();
-	}
-
-	m_file = new QFile(fileName, this);
-
-	return m_file->open(QIODevice::ReadOnly);
 }
 
 }

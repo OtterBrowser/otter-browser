@@ -29,6 +29,7 @@ BookmarksImporter::BookmarksImporter(QObject *parent): Importer(parent),
 	m_importFolder(NULL),
 	m_allowDuplicates(true)
 {
+	setImportFolder(BookmarksManager::getModel()->getRootItem());
 }
 
 void BookmarksImporter::goToParent()

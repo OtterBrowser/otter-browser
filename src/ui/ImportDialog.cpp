@@ -102,13 +102,9 @@ void ImportDialog::setPath()
 
 void ImportDialog::import()
 {
-	if (m_importer->setPath(m_path))
+	if (!m_importer->import(m_path))
 	{
-		m_importer->import();
-	}
-	else
-	{
-		QMessageBox::critical(this, tr("Error"), tr("Failed to open file for reading."));
+		QMessageBox::critical(this, tr("Error"), tr("Failed to import selected type."));
 	}
 }
 

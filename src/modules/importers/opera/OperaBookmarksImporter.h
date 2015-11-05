@@ -34,6 +34,23 @@ class OperaBookmarksImporter : public BookmarksImporter
 	Q_OBJECT
 
 public:
+	explicit OperaBookmarksImporter(QObject *parent = NULL);
+	~OperaBookmarksImporter();
+
+	QWidget* getOptionsWidget();
+	QString getTitle() const;
+	QString getDescription() const;
+	QString getVersion() const;
+	QString getFileFilter() const;
+	QString getSuggestedPath(const QString &path = QString()) const;
+	QString getBrowser() const;
+	QUrl getHomePage() const;
+	QIcon getIcon() const;
+
+public slots:
+	bool import(const QString &path);
+
+protected:
 	enum OperaBookmarkEntry
 	{
 		NoEntry = 0,
@@ -43,29 +60,8 @@ public:
 		SeparatorEntry = 4
 	};
 
-	explicit OperaBookmarksImporter(QObject *parent = NULL);
-	~OperaBookmarksImporter();
-
-	QWidget* getOptionsWidget();
-	QString getTitle() const;
-	QString getDescription() const;
-	QString getVersion() const;
-	QString getFileFilter() const;
-	QString getSuggestedPath() const;
-	QString getBrowser() const;
-	QUrl getHomePage() const;
-	QIcon getIcon() const;
-
-public slots:
-	bool import();
-	bool setPath(const QString &path);
-
-protected:
-	void handleOptions();
-
 private:
 	BookmarksImporterWidget *m_optionsWidget;
-	QFile *m_file;
 };
 
 }

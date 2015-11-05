@@ -50,14 +50,13 @@ public:
 
 	virtual QWidget* getOptionsWidget() = 0;
 	virtual QString getFileFilter() const = 0;
-	virtual QString getSuggestedPath() const = 0;
+	virtual QString getSuggestedPath(const QString &path = QString()) const = 0;
 	virtual QString getBrowser() const = 0;
 	QUrl getUpdateUrl() const;
 	virtual ImportType getType() const = 0;
 
 public slots:
-	virtual bool import() = 0;
-	virtual bool setPath(const QString &path) = 0;
+	virtual bool import(const QString &path) = 0;
 
 signals:
 	void importProgress(int amount, int total, ImportType type);

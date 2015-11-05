@@ -29,8 +29,7 @@ namespace Otter
 {
 
 OperaBookmarksImporter::OperaBookmarksImporter(QObject *parent): BookmarksImporter(parent),
-	m_optionsWidget(NULL),
-	m_file(NULL)
+	m_optionsWidget(NULL)
 {
 }
 
@@ -39,37 +38,6 @@ OperaBookmarksImporter::~OperaBookmarksImporter()
 	if (m_optionsWidget)
 	{
 		m_optionsWidget->deleteLater();
-	}
-}
-
-void OperaBookmarksImporter::handleOptions()
-{
-	if (!m_optionsWidget)
-	{
-		setImportFolder(BookmarksManager::getModel()->getRootItem());
-
-		return;
-	}
-
-	if (m_optionsWidget->hasToRemoveExisting())
-	{
-		removeAllBookmarks();
-
-		if (m_optionsWidget->isImportingIntoSubfolder())
-		{
-			BookmarksItem *folder = BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, QUrl(), m_optionsWidget->getSubfolderName(), BookmarksManager::getModel()->getRootItem());
-
-			setImportFolder(folder);
-		}
-		else
-		{
-			setImportFolder(BookmarksManager::getModel()->getRootItem());
-		}
-	}
-	else
-	{
-		setAllowDuplicates(m_optionsWidget->allowDuplicates());
-		setImportFolder(m_optionsWidget->getTargetFolder());
 	}
 }
 
@@ -103,9 +71,14 @@ QString OperaBookmarksImporter::getFileFilter() const
 	return tr("Opera bookmarks files (bookmarks.adr)");
 }
 
-QString OperaBookmarksImporter::getSuggestedPath() const
+QString OperaBookmarksImporter::getSuggestedPath(const QString &path) const
 {
-	return QString();
+	if (!path.isEmpty() && QFileInfo(path).isDir())
+	{
+		return QDir(path).filePath(QLatin1String("bookmarks.adr"));
+	}
+
+	return path;
 }
 
 QString OperaBookmarksImporter::getBrowser() const
@@ -123,9 +96,16 @@ QIcon OperaBookmarksImporter::getIcon() const
 	return QIcon();
 }
 
-bool OperaBookmarksImporter::import()
+bool OperaBookmarksImporter::import(const QString &path)
 {
-	QTextStream stream(m_file);
+	QFile file(getSuggestedPath(path));
+
+	if (!file.open(QFile::ReadOnly))
+	{
+		return false;
+	}
+
+	QTextStream stream(&file);
 	stream.setCodec("UTF-8");
 
 	QString line = stream.readLine();
@@ -135,11 +115,31 @@ bool OperaBookmarksImporter::import()
 		return false;
 	}
 
+	if (m_optionsWidget)
+	{
+		if (m_optionsWidget->hasToRemoveExisting())
+		{
+			removeAllBookmarks();
+
+			if (m_optionsWidget->isImportingIntoSubfolder())
+			{
+				setImportFolder(BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, QUrl(), m_optionsWidget->getSubfolderName(), BookmarksManager::getModel()->getRootItem()));
+			}
+			else
+			{
+				setImportFolder(BookmarksManager::getModel()->getRootItem());
+			}
+		}
+		else
+		{
+			setAllowDuplicates(m_optionsWidget->allowDuplicates());
+			setImportFolder(m_optionsWidget->getTargetFolder());
+		}
+	}
+
 	BookmarksItem *bookmark = NULL;
 	OperaBookmarkEntry type = NoEntry;
 	bool isHeader = true;
-
-	handleOptions();
 
 	while (!stream.atEnd())
 	{
@@ -231,26 +231,6 @@ bool OperaBookmarksImporter::import()
 	}
 
 	return true;
-}
-
-bool OperaBookmarksImporter::setPath(const QString &path)
-{
-	QString fileName = path;
-
-	if (QFileInfo(path).isDir())
-	{
-		fileName = QDir(path).filePath(QLatin1String("bookmarks.adr"));
-	}
-
-	if (m_file)
-	{
-		m_file->close();
-		m_file->deleteLater();
-	}
-
-	m_file = new QFile(fileName, this);
-
-	return m_file->open(QIODevice::ReadOnly);
 }
 
 }

@@ -43,22 +43,19 @@ public:
 	QString getDescription() const;
 	QString getVersion() const;
 	QString getFileFilter() const;
-	QString getSuggestedPath() const;
+	QString getSuggestedPath(const QString &path = QString()) const;
 	QString getBrowser() const;
 	QUrl getHomePage() const;
 	QIcon getIcon() const;
 
 public slots:
-	bool import();
-	bool setPath(const QString &path);
+	bool import(const QString &path);
 
 protected:
-	void handleOptions();
 	void processElement(const QWebElement &element);
 
 private:
 	BookmarksImporterWidget *m_optionsWidget;
-	QFile *m_file;
 };
 
 }

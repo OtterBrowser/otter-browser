@@ -33,9 +33,9 @@ OperaNotesImporter::OperaNotesImporter(QObject *parent): Importer(parent),
 	m_folderComboBox(NULL),
 	m_currentFolder(NULL),
 	m_importFolder(NULL),
-	m_file(NULL),
 	m_optionsWidget(NULL)
 {
+	setImportFolder(NotesManager::getModel()->getRootItem());
 }
 
 OperaNotesImporter::~OperaNotesImporter()
@@ -62,18 +62,6 @@ void OperaNotesImporter::goToParent()
 	{
 		m_currentFolder = NotesManager::getModel()->getRootItem();
 	}
-}
-
-void OperaNotesImporter::handleOptions()
-{
-	if (!m_optionsWidget)
-	{
-		setImportFolder(NotesManager::getModel()->getRootItem());
-
-		return;
-	}
-
-	setImportFolder(m_folderComboBox->getCurrentFolder());
 }
 
 void OperaNotesImporter::setCurrentFolder(BookmarksItem *folder)
@@ -132,9 +120,14 @@ QString OperaNotesImporter::getFileFilter() const
 	return tr("Opera notes files (notes.adr)");
 }
 
-QString OperaNotesImporter::getSuggestedPath() const
+QString OperaNotesImporter::getSuggestedPath(const QString &path) const
 {
-	return QString();
+	if (!path.isEmpty() && QFileInfo(path).isDir())
+	{
+		return QDir(path).filePath(QLatin1String("notes.adr"));
+	}
+
+	return path;
 }
 
 QString OperaNotesImporter::getBrowser() const
@@ -157,9 +150,16 @@ ImportType OperaNotesImporter::getType() const
 	return NotesImport;
 }
 
-bool OperaNotesImporter::import()
+bool OperaNotesImporter::import(const QString &path)
 {
-	QTextStream stream(m_file);
+	QFile file(getSuggestedPath(path));
+
+	if (!file.open(QFile::ReadOnly))
+	{
+		return false;
+	}
+
+	QTextStream stream(&file);
 	stream.setCodec("UTF-8");
 
 	QString line = stream.readLine();
@@ -169,11 +169,14 @@ bool OperaNotesImporter::import()
 		return false;
 	}
 
+	if (m_optionsWidget)
+	{
+		setImportFolder(m_folderComboBox->getCurrentFolder());
+	}
+
 	BookmarksItem *note = NULL;
 	OperaNoteEntry type = NoEntry;
 	bool isHeader = true;
-
-	handleOptions();
 
 	while (!stream.atEnd())
 	{
@@ -240,26 +243,6 @@ bool OperaNotesImporter::import()
 	}
 
 	return true;
-}
-
-bool OperaNotesImporter::setPath(const QString &path)
-{
-	QString fileName = path;
-
-	if (QFileInfo(path).isDir())
-	{
-		fileName = QDir(path).filePath(QLatin1String("notes.adr"));
-	}
-
-	if (m_file)
-	{
-		m_file->close();
-		m_file->deleteLater();
-	}
-
-	m_file = new QFile(fileName, this);
-
-	return m_file->open(QIODevice::ReadOnly);
 }
 
 }
