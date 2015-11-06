@@ -275,8 +275,8 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(MinimizeTabAction, QT_TRANSLATE_NOOP("actions", "Minimize"), QT_TRANSLATE_NOOP("actions", "Minimize Tab"));
 	registerAction(RestoreTabAction, QT_TRANSLATE_NOOP("actions", "Restore"), QT_TRANSLATE_NOOP("actions", "Restore Tab"));
 	registerAction(AlwaysOnTopTabAction, QT_TRANSLATE_NOOP("actions", "Stay on Top"), QString(), QIcon(), true, true);
-	registerAction(ClearTabHistoryAction, QT_TRANSLATE_NOOP("actions", "Clear Tab History"));
-	registerAction(PurgeTabHistoryAction, QT_TRANSLATE_NOOP("actions", "Purge Tab History"));
+	registerAction(ClearTabHistoryAction, QT_TRANSLATE_NOOP("actions", "Clear Tab History"), QT_TRANSLATE_NOOP("actions", "Remove Local Tab History"));
+	registerAction(PurgeTabHistoryAction, QT_TRANSLATE_NOOP("actions", "Purge Tab History"), QT_TRANSLATE_NOOP("actions", "Remove Local and Global Tab History"));
 	registerAction(CloseTabAction, QT_TRANSLATE_NOOP("actions", "Close Tab"), QString(), Utils::getIcon(QLatin1String("tab-close")), false);
 	registerAction(CloseOtherTabsAction, QT_TRANSLATE_NOOP("actions", "Close Other Tabs"), QString(), Utils::getIcon(QLatin1String("tab-close-other")));
 	registerAction(ClosePrivateTabsAction, QT_TRANSLATE_NOOP("actions", "Close All Private Tabs"), QT_TRANSLATE_NOOP("actions", "Close All Private Tabs in Current Window"), QIcon(), false);
@@ -300,7 +300,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(OpenLinkInNewPrivateTabBackgroundAction, QT_TRANSLATE_NOOP("actions", "Open in New Private Background Tab"));
 	registerAction(OpenLinkInNewPrivateWindowAction, QT_TRANSLATE_NOOP("actions", "Open in New Private Window"));
 	registerAction(OpenLinkInNewPrivateWindowBackgroundAction, QT_TRANSLATE_NOOP("actions", "Open in New Private Background Window"));
-	registerAction(OpenLinkInApplicationAction, QT_TRANSLATE_NOOP("actions", "Open with…"), QT_TRANSLATE_NOOP("actions", "Open link with external application"));
+	registerAction(OpenLinkInApplicationAction, QT_TRANSLATE_NOOP("actions", "Open with…"), QT_TRANSLATE_NOOP("actions", "Open Link with External Application"));
 	registerAction(CopyLinkToClipboardAction, QT_TRANSLATE_NOOP("actions", "Copy Link to Clipboard"));
 	registerAction(BookmarkLinkAction, QT_TRANSLATE_NOOP("actions", "Bookmark Link…"), QString(), Utils::getIcon(QLatin1String("bookmark-new")));
 	registerAction(SaveLinkToDiskAction, QT_TRANSLATE_NOOP("actions", "Save Link Target As…"));
@@ -309,7 +309,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(OpenFrameInCurrentTabAction, QT_TRANSLATE_NOOP("actions", "Open"), QT_TRANSLATE_NOOP("actions", "Open Frame in This Tab"));
 	registerAction(OpenFrameInNewTabAction, QT_TRANSLATE_NOOP("actions", "Open in New Tab"), QT_TRANSLATE_NOOP("actions", "Open Frame in New Tab"));
 	registerAction(OpenFrameInNewTabBackgroundAction, QT_TRANSLATE_NOOP("actions", "Open in New Background Tab"), QT_TRANSLATE_NOOP("actions", "Open Frame in New Background Tab"));
-	registerAction(OpenFrameInApplicationAction, QT_TRANSLATE_NOOP("actions", "Open with…"), QT_TRANSLATE_NOOP("actions", "Open frame with external application"));
+	registerAction(OpenFrameInApplicationAction, QT_TRANSLATE_NOOP("actions", "Open with…"), QT_TRANSLATE_NOOP("actions", "Open Frame with External Application"));
 	registerAction(CopyFrameLinkToClipboardAction, QT_TRANSLATE_NOOP("actions", "Copy Frame Link to Clipboard"));
 	registerAction(ReloadFrameAction, QT_TRANSLATE_NOOP("actions", "Reload"), QT_TRANSLATE_NOOP("actions", "Reload Frame"));
 	registerAction(ViewFrameSourceAction, QT_TRANSLATE_NOOP("actions", "View Frame Source"));
@@ -400,7 +400,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(ProxyMenuAction, QT_TRANSLATE_NOOP("actions", "Proxy"));
 	registerAction(EnableProxyAction, QT_TRANSLATE_NOOP("actions", "Enable Proxy"), QString(), QIcon(), true, true, true);
 	registerAction(ViewSourceAction, QT_TRANSLATE_NOOP("actions", "View Source"), QString(), QIcon(), false, false, false);
-	registerAction(OpenPageInApplicationAction, QT_TRANSLATE_NOOP("actions", "Open with…"), QT_TRANSLATE_NOOP("actions", "Open current page with external application"));
+	registerAction(OpenPageInApplicationAction, QT_TRANSLATE_NOOP("actions", "Open with…"), QT_TRANSLATE_NOOP("actions", "Open Current Page with External Application"));
 	registerAction(ValidateAction, QT_TRANSLATE_NOOP("actions", "Validate"));
 	registerAction(InspectPageAction, QT_TRANSLATE_NOOP("actions", "Inspect Page"), QString(), QIcon(), true, true, false);
 	registerAction(InspectElementAction, QT_TRANSLATE_NOOP("actions", "Inspect Element…"));
