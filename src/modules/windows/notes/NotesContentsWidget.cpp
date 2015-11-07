@@ -291,23 +291,23 @@ void NotesContentsWidget::updateText()
 {
 	const QModelIndex index = (m_ui->notesViewWidget->selectionModel()->hasSelection() ? m_ui->notesViewWidget->selectionModel()->currentIndex() : QModelIndex());
 
+	disconnect(m_ui->notesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
+
 	if (index.isValid() && static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
 	{
 		m_ui->notesViewWidget->model()->setData(index, m_ui->textEdit->toPlainText(), BookmarksModel::DescriptionRole);
 	}
 	else
 	{
-		disconnect(m_ui->notesViewWidget->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
-
 		BookmarksItem *bookmark = NotesManager::addNote(BookmarksModel::UrlBookmark, QUrl(), QString(), findFolder(index));
 		bookmark->setData(m_ui->textEdit->toPlainText(), BookmarksModel::DescriptionRole);
 
 		m_ui->notesViewWidget->setCurrentIndex(bookmark->index());
 
 		updateActions(false);
-
-		connect(m_ui->notesViewWidget->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateActions()));
 	}
+
+	connect(m_ui->notesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
 }
 
 void NotesContentsWidget::print(QPrinter *printer)
