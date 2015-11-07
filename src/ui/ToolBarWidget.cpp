@@ -577,7 +577,7 @@ QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QList<QAction*> ac
 
 	QAction *removeAction = toolBarMenu->addAction(Utils::getIcon(QLatin1String("list-remove")), tr("Remove…"), ToolBarsManager::getInstance(), SLOT(removeToolBar()));
 	removeAction->setData(identifier);
-	removeAction->setEnabled(!definition.isDefault);
+	removeAction->setEnabled(definition.identifier >= ToolBarsManager::OtherToolBar);
 
 	menu->addMenu(new Menu(Menu::ToolBarsMenuRole, menu))->setText(tr("Toolbars"));
 
