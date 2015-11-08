@@ -100,11 +100,11 @@ protected:
 
 protected slots:
 	void addWindow(Window *window, WindowsManager::OpenHints hints = DefaultOpen, int index = -1, const QRect &geometry = QRect(), WindowState state = NormalWindowState, bool isAlwaysOnTop = false);
-	void openWindow(ContentsWidget *widget, WindowsManager::OpenHints hints = DefaultOpen);
 	void removeStoredUrl(const QString &url);
 	void handleWindowClose(Window *window);
 	void setTitle(const QString &title);
 	void setStatusMessage(const QString &message);
+	Window* openWindow(ContentsWidget *widget, WindowsManager::OpenHints hints = DefaultOpen);
 
 private:
 	MainWindow *m_mainWindow;
