@@ -91,11 +91,11 @@ private:
 	int m_layerTimer;
 
 signals:
-	void requestedOpenUrl(QUrl url, OpenHints hints);
+	void requestedOpenUrl(QUrl url, WindowsManager::OpenHints hints);
 	void requestedAddBookmark(QUrl url, QString title, QString description);
 	void requestedEditBookmark(QUrl url);
-	void requestedNewWindow(ContentsWidget *widget, OpenHints hints);
-	void requestedSearch(QString query, QString search, OpenHints hints);
+	void requestedNewWindow(ContentsWidget *widget, WindowsManager::OpenHints hints);
+	void requestedSearch(QString query, QString search, WindowsManager::OpenHints hints);
 	void requestedGeometryChange(const QRect &geometry);
 	void webWidgetChanged();
 	void canZoomChanged(bool can);

@@ -426,11 +426,11 @@ void MainWindow::openUrl(const QString &text)
 	{
 		InputInterpreter *interpreter = new InputInterpreter(this);
 
-		connect(interpreter, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), m_windowsManager, SLOT(open(BookmarksItem*,OpenHints)));
-		connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), m_windowsManager, SLOT(open(QUrl,OpenHints)));
-		connect(interpreter, SIGNAL(requestedSearch(QString,QString,OpenHints)), m_windowsManager, SLOT(search(QString,QString,OpenHints)));
+		connect(interpreter, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), m_windowsManager, SLOT(open(BookmarksItem*,WindowsManager::OpenHints)));
+		connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), m_windowsManager, SLOT(open(QUrl,WindowsManager::OpenHints)));
+		connect(interpreter, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), m_windowsManager, SLOT(search(QString,QString,WindowsManager::OpenHints)));
 
-		interpreter->interpret(text, ((!m_workspace->getActiveWindow() || Utils::isUrlEmpty(m_workspace->getActiveWindow()->getUrl())) ? CurrentTabOpen : NewTabOpen));
+		interpreter->interpret(text, ((!m_workspace->getActiveWindow() || Utils::isUrlEmpty(m_workspace->getActiveWindow()->getUrl())) ? WindowsManager::CurrentTabOpen : WindowsManager::NewTabOpen));
 	}
 }
 
@@ -524,9 +524,9 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			{
 				OpenAddressDialog dialog(this);
 
-				connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,OpenHints)), m_windowsManager, SLOT(open(QUrl,OpenHints)));
-				connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), m_windowsManager, SLOT(open(BookmarksItem*,OpenHints)));
-				connect(&dialog, SIGNAL(requestedSearch(QString,QString,OpenHints)), m_windowsManager, SLOT(search(QString,QString,OpenHints)));
+				connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,WindowsManager::OpenHints)), m_windowsManager, SLOT(open(QUrl,WindowsManager::OpenHints)));
+				connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), m_windowsManager, SLOT(open(BookmarksItem*,WindowsManager::OpenHints)));
+				connect(&dialog, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), m_windowsManager, SLOT(search(QString,QString,WindowsManager::OpenHints)));
 
 				dialog.exec();
 			}
@@ -538,7 +538,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 				if (!homePage.isEmpty())
 				{
-					m_windowsManager->open(QUrl(homePage), CurrentTabOpen);
+					m_windowsManager->open(QUrl(homePage), WindowsManager::CurrentTabOpen);
 				}
 			}
 
@@ -620,7 +620,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::OpenPanelAction:
 			if (m_sidebar && m_sidebar->getCurrentPanel())
 			{
-				m_windowsManager->open(m_sidebar->getCurrentPanel()->getUrl(), NewTabOpen);
+				m_windowsManager->open(m_sidebar->getCurrentPanel()->getUrl(), WindowsManager::NewTabOpen);
 			}
 
 			break;
@@ -906,7 +906,7 @@ void MainWindow::transferStarted()
 
 		if (!SessionsManager::hasUrl(url, false))
 		{
-			m_windowsManager->open(url, NewBackgroundTabOpen);
+			m_windowsManager->open(url, (WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen));
 		}
 	}
 	else if (action == QLatin1String("openPanel"))

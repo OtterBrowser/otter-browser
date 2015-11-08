@@ -512,7 +512,7 @@ void SearchWidget::setWindow(Window *window)
 	{
 		m_window->detachSearchWidget(this);
 
-		disconnect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), m_window.data(), SIGNAL(requestedSearch(QString,QString,OpenHints)));
+		disconnect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), m_window.data(), SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
 		disconnect(this, SIGNAL(searchEngineChanged(QString)), m_window.data(), SLOT(setSearchEngine(QString)));
 		disconnect(m_window.data(), SIGNAL(searchEngineChanged(QString)), this, SLOT(setSearchEngine(QString)));
 		disconnect(m_window.data(), SIGNAL(destroyed(QObject*)), this, SLOT(setWindow()));
@@ -526,14 +526,14 @@ void SearchWidget::setWindow(Window *window)
 	{
 		if (mainWindow)
 		{
-			disconnect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,OpenHints)));
+			disconnect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,WindowsManager::OpenHints)));
 		}
 
 		window->attachSearchWidget(this);
 
 		setSearchEngine(window->getSearchEngine());
 
-		connect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), window, SIGNAL(requestedSearch(QString,QString,OpenHints)));
+		connect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), window, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
 		connect(this, SIGNAL(searchEngineChanged(QString)), window, SLOT(setSearchEngine(QString)));
 		connect(window, SIGNAL(searchEngineChanged(QString)), this, SLOT(setSearchEngine(QString)));
 		connect(window, SIGNAL(destroyed(QObject*)), this, SLOT(setWindow()));
@@ -542,7 +542,7 @@ void SearchWidget::setWindow(Window *window)
 	{
 		if (mainWindow)
 		{
-			connect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,OpenHints)));
+			connect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,WindowsManager::OpenHints)));
 		}
 
 		setSearchEngine();

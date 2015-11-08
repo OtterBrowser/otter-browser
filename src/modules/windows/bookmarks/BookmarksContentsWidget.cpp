@@ -136,7 +136,7 @@ void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 	{
 		QAction *action = qobject_cast<QAction*>(sender());
 
-		manager->open(bookmark, (action ? static_cast<OpenHints>(action->data().toInt()) : DefaultOpen));
+		manager->open(bookmark, (action ? static_cast<WindowsManager::OpenHints>(action->data().toInt()) : WindowsManager::DefaultOpen));
 	}
 }
 
@@ -173,11 +173,11 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 		const bool isInTrash = BookmarksManager::getModel()->bookmarkFromIndex(index)->isInTrash();
 
 		menu.addAction(Utils::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
-		menu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setData(NewTabOpen);
-		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openBookmark()))->setData(NewBackgroundTabOpen);
+		menu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setData(WindowsManager::NewTabOpen);
+		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openBookmark()))->setData(static_cast<int>(WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen));
 		menu.addSeparator();
-		menu.addAction(tr("Open in New Window"), this, SLOT(openBookmark()))->setData(NewWindowOpen);
-		menu.addAction(tr("Open in New Background Window"), this, SLOT(openBookmark()))->setData(NewBackgroundWindowOpen);
+		menu.addAction(tr("Open in New Window"), this, SLOT(openBookmark()))->setData(WindowsManager::NewWindowOpen);
+		menu.addAction(tr("Open in New Background Window"), this, SLOT(openBookmark()))->setData(static_cast<int>(WindowsManager::NewWindowOpen | WindowsManager::BackgroundOpen));
 
 		if (type == BookmarksModel::SeparatorBookmark || (type == BookmarksModel::FolderBookmark && index.child(0, 0).data(BookmarksModel::TypeRole).toInt() == 0))
 		{
@@ -374,7 +374,7 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (bookmark)
 			{
-				manager->open(bookmark, WindowsManager::calculateOpenHints(mouseEvent->modifiers(), mouseEvent->button(), NewTabOpen));
+				manager->open(bookmark, WindowsManager::calculateOpenHints(mouseEvent->modifiers(), mouseEvent->button(), WindowsManager::NewTabOpen));
 
 				return true;
 			}

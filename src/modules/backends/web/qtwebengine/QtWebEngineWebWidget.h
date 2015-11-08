@@ -78,7 +78,7 @@ protected:
 
 	void timerEvent(QTimerEvent *event);
 	void focusInEvent(QFocusEvent *event);
-	void openUrl(const QUrl &url, OpenHints hints = DefaultOpen);
+	void openUrl(const QUrl &url, WindowsManager::OpenHints hints = WindowsManager::DefaultOpen);
 	void pasteText(const QString &text);
 	void handleCreateSearch(const QVariant &result);
 	void handleEditingCheck(const QVariant &result);

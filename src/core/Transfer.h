@@ -127,8 +127,8 @@ signals:
 	void stopped();
 };
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(Transfer::TransferOptions)
-
 }
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::Transfer::TransferOptions)
 
 #endif

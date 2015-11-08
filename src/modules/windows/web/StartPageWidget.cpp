@@ -349,7 +349,7 @@ void StartPageWidget::addTile()
 	OpenAddressDialog dialog(this);
 	dialog.setWindowTitle(tr("Add Tile"));
 
-	connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,OpenHints)), this, SLOT(addTile(QUrl)));
+	connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,WindowsManager::OpenHints)), this, SLOT(addTile(QUrl)));
 
 	m_ignoreEnter = true;
 

@@ -325,9 +325,9 @@ void WebWidget::quickSearch(QAction *action)
 		setOption(QLatin1String("Search/DefaultQuickSearchEngine"), engine.identifier);
 	}
 
-	const OpenHints hints = WindowsManager::calculateOpenHints();
+	const WindowsManager::OpenHints hints = WindowsManager::calculateOpenHints();
 
-	if (hints == CurrentTabOpen)
+	if (hints == WindowsManager::CurrentTabOpen)
 	{
 		search(getSelectedText(), engine.identifier);
 	}
@@ -362,9 +362,9 @@ void WebWidget::clearOptions()
 	m_options.clear();
 }
 
-void WebWidget::openUrl(const QUrl &url, OpenHints hints)
+void WebWidget::openUrl(const QUrl &url, WindowsManager::OpenHints hints)
 {
-	WebWidget *widget = clone(false, (hints & PrivateOpen));
+	WebWidget *widget = clone(false, hints.testFlag(WindowsManager::PrivateOpen));
 	widget->setRequestedUrl(url, false);
 
 	emit requestedNewWindow(widget, hints);
@@ -1397,7 +1397,7 @@ bool WebWidget::handleMousePressEvent(QMouseEvent *event, bool canPropagate, QOb
 				return false;
 			}
 
-			openUrl(m_hitResult.linkUrl, WindowsManager::calculateOpenHints(event->modifiers(), event->button(), CurrentTabOpen));
+			openUrl(m_hitResult.linkUrl, WindowsManager::calculateOpenHints(event->modifiers(), event->button(), WindowsManager::CurrentTabOpen));
 
 			event->ignore();
 

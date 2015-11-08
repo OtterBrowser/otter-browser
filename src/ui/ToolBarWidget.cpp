@@ -104,7 +104,7 @@ void ToolBarDragAreaWidget::mouseMoveEvent(QMouseEvent *event)
 
 	QDrag *drag = new QDrag(this);
 	drag->setMimeData(mimeData);
-	drag->exec(Qt::CopyAction | Qt::MoveAction);
+	drag->exec(Qt::MoveAction);
 }
 
 void ToolBarDragAreaWidget::mouseReleaseEvent(QMouseEvent *event)

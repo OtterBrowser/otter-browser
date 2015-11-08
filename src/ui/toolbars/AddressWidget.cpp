@@ -242,7 +242,7 @@ void AddressWidget::keyPressEvent(QKeyEvent *event)
 
 	if (!m_isUsingSimpleMode && (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return))
 	{
-		handleUserInput(lineEdit()->text().trimmed(), WindowsManager::calculateOpenHints(event->modifiers(), Qt::LeftButton, CurrentTabOpen));
+		handleUserInput(lineEdit()->text().trimmed(), WindowsManager::calculateOpenHints(event->modifiers(), Qt::LeftButton, WindowsManager::CurrentTabOpen));
 	}
 }
 
@@ -464,15 +464,15 @@ void AddressWidget::clearSelectAllOnRelease()
 	}
 }
 
-void AddressWidget::handleUserInput(const QString &text, OpenHints hints)
+void AddressWidget::handleUserInput(const QString &text, WindowsManager::OpenHints hints)
 {
 	if (!text.isEmpty())
 	{
 		InputInterpreter *interpreter = new InputInterpreter(this);
 
-		connect(interpreter, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
-		connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)));
-		connect(interpreter, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
+		connect(interpreter, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)));
+		connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)));
+		connect(interpreter, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
 
 		interpreter->interpret(text, hints);
 	}
@@ -692,9 +692,9 @@ void AddressWidget::setWindow(Window *window)
 	{
 		m_window->detachAddressWidget(this);
 
-		disconnect(this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), m_window.data(), SLOT(handleOpenUrlRequest(QUrl,OpenHints)));
-		disconnect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), m_window.data(), SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
-		disconnect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), m_window.data(), SLOT(handleSearchRequest(QString,QString,OpenHints)));
+		disconnect(this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), m_window.data(), SLOT(handleOpenUrlRequest(QUrl,WindowsManager::OpenHints)));
+		disconnect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), m_window.data(), SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)));
+		disconnect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), m_window.data(), SLOT(handleSearchRequest(QString,QString,WindowsManager::OpenHints)));
 		disconnect(m_window.data(), SIGNAL(loadingStateChanged(WindowLoadingState)), this, SLOT(updateFeeds()));
 		disconnect(m_window.data(), SIGNAL(urlChanged(QUrl,bool)), this, SLOT(setUrl(QUrl,bool)));
 		disconnect(m_window.data(), SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
@@ -712,9 +712,9 @@ void AddressWidget::setWindow(Window *window)
 	{
 		if (mainWindow)
 		{
-			disconnect(this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), mainWindow->getWindowsManager(), SLOT(open(QUrl,OpenHints)));
-			disconnect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), mainWindow->getWindowsManager(), SLOT(open(BookmarksItem*,OpenHints)));
-			disconnect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,OpenHints)));
+			disconnect(this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(open(QUrl,WindowsManager::OpenHints)));
+			disconnect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(open(BookmarksItem*,WindowsManager::OpenHints)));
+			disconnect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,WindowsManager::OpenHints)));
 		}
 
 		window->attachAddressWidget(this);
@@ -724,9 +724,9 @@ void AddressWidget::setWindow(Window *window)
 			connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
 		}
 
-		connect(this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), window, SLOT(handleOpenUrlRequest(QUrl,OpenHints)));
-		connect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), window, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
-		connect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), window, SLOT(handleSearchRequest(QString,QString,OpenHints)));
+		connect(this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), window, SLOT(handleOpenUrlRequest(QUrl,WindowsManager::OpenHints)));
+		connect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), window, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)));
+		connect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), window, SLOT(handleSearchRequest(QString,QString,WindowsManager::OpenHints)));
 		connect(window, SIGNAL(loadingStateChanged(WindowLoadingState)), this, SLOT(updateFeeds()));
 		connect(window, SIGNAL(urlChanged(QUrl,bool)), this, SLOT(setUrl(QUrl,bool)));
 
@@ -744,9 +744,9 @@ void AddressWidget::setWindow(Window *window)
 	}
 	else if (mainWindow && !m_isUsingSimpleMode)
 	{
-		connect(this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), mainWindow->getWindowsManager(), SLOT(open(QUrl,OpenHints)));
-		connect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), mainWindow->getWindowsManager(), SLOT(open(BookmarksItem*,OpenHints)));
-		connect(this, SIGNAL(requestedSearch(QString,QString,OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,OpenHints)));
+		connect(this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(open(QUrl,WindowsManager::OpenHints)));
+		connect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(open(BookmarksItem*,WindowsManager::OpenHints)));
+		connect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,WindowsManager::OpenHints)));
 	}
 
 	setIcon(window ? window->getIcon() : QIcon());
@@ -770,7 +770,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			if (dropAction == QLatin1String("pasteAndGo"))
 			{
-				handleUserInput(dropEvent->mimeData()->text(), WindowsManager::calculateOpenHints(dropEvent->keyboardModifiers(), Qt::LeftButton, CurrentTabOpen));
+				handleUserInput(dropEvent->mimeData()->text(), WindowsManager::calculateOpenHints(dropEvent->keyboardModifiers(), Qt::LeftButton, WindowsManager::CurrentTabOpen));
 			}
 			else if (dropAction == QLatin1String("replace"))
 			{

@@ -298,63 +298,63 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::OpenLinkInCurrentTabAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl, CurrentTabOpen);
+				openUrl(m_hitResult.linkUrl, WindowsManager::CurrentTabOpen);
 			}
 
 			return;
 		case ActionsManager::OpenLinkInNewTabAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, NewTabOpen));
+				openUrl(m_hitResult.linkUrl, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, WindowsManager::NewTabOpen));
 			}
 
 			return;
 		case ActionsManager::OpenLinkInNewTabBackgroundAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl, NewBackgroundTabOpen);
+				openUrl(m_hitResult.linkUrl, (WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen));
 			}
 
 			return;
 		case ActionsManager::OpenLinkInNewWindowAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, NewWindowOpen));
+				openUrl(m_hitResult.linkUrl, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, WindowsManager::NewWindowOpen));
 			}
 
 			return;
 		case ActionsManager::OpenLinkInNewWindowBackgroundAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl, NewBackgroundWindowOpen);
+				openUrl(m_hitResult.linkUrl, (WindowsManager::NewWindowOpen | WindowsManager::BackgroundOpen));
 			}
 
 			return;
 		case ActionsManager::OpenLinkInNewPrivateTabAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl, NewPrivateTabOpen);
+				openUrl(m_hitResult.linkUrl, (WindowsManager::NewTabOpen | WindowsManager::PrivateOpen));
 			}
 
 			return;
 		case ActionsManager::OpenLinkInNewPrivateTabBackgroundAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl, NewPrivateBackgroundTabOpen);
+				openUrl(m_hitResult.linkUrl, (WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen | WindowsManager::PrivateOpen));
 			}
 
 			return;
 		case ActionsManager::OpenLinkInNewPrivateWindowAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl, NewPrivateWindowOpen);
+				openUrl(m_hitResult.linkUrl, (WindowsManager::NewWindowOpen | WindowsManager::PrivateOpen));
 			}
 
 			return;
 		case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl, NewPrivateBackgroundWindowOpen);
+				openUrl(m_hitResult.linkUrl, (WindowsManager::NewWindowOpen | WindowsManager::BackgroundOpen | WindowsManager::PrivateOpen));
 			}
 
 			return;
@@ -397,14 +397,14 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::OpenFrameInNewTabAction:
 			if (m_hitResult.frameUrl.isValid())
 			{
-				openUrl(m_hitResult.frameUrl, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, NewTabOpen));
+				openUrl(m_hitResult.frameUrl, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, WindowsManager::NewTabOpen));
 			}
 
 			return;
 		case ActionsManager::OpenFrameInNewTabBackgroundAction:
 			if (m_hitResult.frameUrl.isValid())
 			{
-				openUrl(m_hitResult.frameUrl, NewBackgroundTabOpen);
+				openUrl(m_hitResult.frameUrl, (WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen));
 			}
 
 			return;
@@ -445,21 +445,21 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				connect(reply, SIGNAL(finished()), this, SLOT(viewSourceReplyFinished()));
 				connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(viewSourceReplyFinished(QNetworkReply::NetworkError)));
 
-				emit requestedNewWindow(sourceViewer, DefaultOpen);
+				emit requestedNewWindow(sourceViewer, WindowsManager::DefaultOpen);
 			}
 
 			return;
 		case ActionsManager::OpenImageInNewTabAction:
 			if (!m_hitResult.imageUrl.isEmpty())
 			{
-				openUrl(m_hitResult.imageUrl, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, NewTabOpen));
+				openUrl(m_hitResult.imageUrl, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, WindowsManager::NewTabOpen));
 			}
 
 			return;
 		case ActionsManager::OpenImageInNewTabBackgroundAction:
 			if (!m_hitResult.imageUrl.isEmpty())
 			{
-				openUrl(m_hitResult.imageUrl, NewBackgroundTabOpen);
+				openUrl(m_hitResult.imageUrl, (WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen));
 			}
 
 			return;
@@ -761,7 +761,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				connect(reply, SIGNAL(finished()), this, SLOT(viewSourceReplyFinished()));
 				connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(viewSourceReplyFinished(QNetworkReply::NetworkError)));
 
-				emit requestedNewWindow(sourceViewer, DefaultOpen);
+				emit requestedNewWindow(sourceViewer, WindowsManager::DefaultOpen);
 			}
 
 			return;
@@ -784,7 +784,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 	bounceAction(identifier, parameters);
 }
 
-void QtWebEngineWebWidget::openUrl(const QUrl &url, OpenHints hints)
+void QtWebEngineWebWidget::openUrl(const QUrl &url, WindowsManager::OpenHints hints)
 {
 	WebWidget *widget = clone(false);
 	widget->setRequestedUrl(url);

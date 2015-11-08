@@ -184,11 +184,11 @@ void Menu::contextMenuEvent(QContextMenuEvent *event)
 
 			QMenu contextMenu(this);
 			contextMenu.addAction(Utils::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
-			contextMenu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setData(NewTabOpen);
-			contextMenu.addAction(tr("Open in New Background Tab"), this, SLOT(openBookmark()))->setData(NewBackgroundTabOpen);
+			contextMenu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setData(WindowsManager::NewTabOpen);
+			contextMenu.addAction(tr("Open in New Background Tab"), this, SLOT(openBookmark()))->setData(static_cast<int>(WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen));
 			contextMenu.addSeparator();
-			contextMenu.addAction(tr("Open in New Window"), this, SLOT(openBookmark()))->setData(NewWindowOpen);
-			contextMenu.addAction(tr("Open in New Background Window"), this, SLOT(openBookmark()))->setData(NewBackgroundWindowOpen);
+			contextMenu.addAction(tr("Open in New Window"), this, SLOT(openBookmark()))->setData(WindowsManager::NewWindowOpen);
+			contextMenu.addAction(tr("Open in New Background Window"), this, SLOT(openBookmark()))->setData(static_cast<int>(WindowsManager::NewWindowOpen | WindowsManager::BackgroundOpen));
 			contextMenu.exec(event->globalPos());
 
 			return;
@@ -707,9 +707,9 @@ void Menu::openBookmark()
 
 	if (mainWindow)
 	{
-		const OpenHints hints = (action ? static_cast<OpenHints>(action->data().toInt()) : DefaultOpen);
+		const WindowsManager::OpenHints hints = (action ? static_cast<WindowsManager::OpenHints>(action->data().toInt()) : WindowsManager::DefaultOpen);
 
-		mainWindow->getWindowsManager()->open(m_bookmark, ((hints == DefaultOpen) ? WindowsManager::calculateOpenHints() : hints));
+		mainWindow->getWindowsManager()->open(m_bookmark, ((hints == WindowsManager::DefaultOpen) ? WindowsManager::calculateOpenHints() : hints));
 	}
 
 	m_bookmark = NULL;

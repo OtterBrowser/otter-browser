@@ -329,7 +329,7 @@ void CacheContentsWidget::openEntry(const QModelIndex &index)
 	{
 		QAction *action = qobject_cast<QAction*>(sender());
 
-		emit requestedOpenUrl(url, (action ? static_cast<OpenHints>(action->data().toInt()) : DefaultOpen));
+		emit requestedOpenUrl(url, (action ? static_cast<WindowsManager::OpenHints>(action->data().toInt()) : WindowsManager::DefaultOpen));
 	}
 }
 
@@ -352,11 +352,11 @@ void CacheContentsWidget::showContextMenu(const QPoint &point)
 	if (entry.isValid())
 	{
 		menu.addAction(Utils::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openEntry()));
-		menu.addAction(tr("Open in New Tab"), this, SLOT(openEntry()))->setData(NewTabOpen);
-		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openEntry()))->setData(NewBackgroundTabOpen);
+		menu.addAction(tr("Open in New Tab"), this, SLOT(openEntry()))->setData(WindowsManager::NewTabOpen);
+		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openEntry()))->setData(static_cast<int>(WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen));
 		menu.addSeparator();
-		menu.addAction(tr("Open in New Window"), this, SLOT(openEntry()))->setData(NewWindowOpen);
-		menu.addAction(tr("Open in New Background Window"), this, SLOT(openEntry()))->setData(NewBackgroundWindowOpen);
+		menu.addAction(tr("Open in New Window"), this, SLOT(openEntry()))->setData(WindowsManager::NewWindowOpen);
+		menu.addAction(tr("Open in New Background Window"), this, SLOT(openEntry()))->setData(static_cast<int>(WindowsManager::NewWindowOpen | WindowsManager::BackgroundOpen));
 		menu.addSeparator();
 		menu.addAction(tr("Copy Link to Clipboard"), this, SLOT(copyEntryLink()));
 		menu.addSeparator();
@@ -623,7 +623,7 @@ bool CacheContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (url.isValid())
 			{
-				emit requestedOpenUrl(url, WindowsManager::calculateOpenHints(mouseEvent->modifiers(), mouseEvent->button(), NewTabOpen));
+				emit requestedOpenUrl(url, WindowsManager::calculateOpenHints(mouseEvent->modifiers(), mouseEvent->button(), WindowsManager::NewTabOpen));
 
 				return true;
 			}

@@ -66,11 +66,11 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 
 		if (window)
 		{
-			OpenHints hints = WindowsManager::calculateOpenHints(event->modifiers(), event->button(), NewTabOpen);
+			WindowsManager::OpenHints hints = WindowsManager::calculateOpenHints(event->modifiers(), event->button(), WindowsManager::NewTabOpen);
 
 			if (m_identifier == ActionsManager::NewTabPrivateAction)
 			{
-				hints |= PrivateOpen;
+				hints |= WindowsManager::PrivateOpen;
 			}
 
 			window->getWindowsManager()->open(QUrl(), hints);

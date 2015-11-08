@@ -127,9 +127,9 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 				dialog.setText(QLatin1String("? "));
 			}
 
-			connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,OpenHints)), this, SLOT(handleOpenUrlRequest(QUrl,OpenHints)));
-			connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
-			connect(&dialog, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(handleSearchRequest(QString,QString,OpenHints)));
+			connect(&dialog, SIGNAL(requestedLoadUrl(QUrl,WindowsManager::OpenHints)), this, SLOT(handleOpenUrlRequest(QUrl,WindowsManager::OpenHints)));
+			connect(&dialog, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)));
+			connect(&dialog, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), this, SLOT(handleSearchRequest(QString,QString,WindowsManager::OpenHints)));
 
 			dialog.exec();
 		}
@@ -262,9 +262,9 @@ void Window::handleIconChanged(const QIcon &icon)
 	}
 }
 
-void Window::handleOpenUrlRequest(const QUrl &url, OpenHints hints)
+void Window::handleOpenUrlRequest(const QUrl &url, WindowsManager::OpenHints hints)
 {
-	if (getType() == QLatin1String("web") && (hints == DefaultOpen || hints == CurrentTabOpen))
+	if (getType() == QLatin1String("web") && (hints == WindowsManager::DefaultOpen || hints == WindowsManager::CurrentTabOpen))
 	{
 		setUrl(url);
 
@@ -273,15 +273,15 @@ void Window::handleOpenUrlRequest(const QUrl &url, OpenHints hints)
 
 	if (isPrivate())
 	{
-		hints |= PrivateOpen;
+		hints |= WindowsManager::PrivateOpen;
 	}
 
 	emit requestedOpenUrl(url, hints);
 }
 
-void Window::handleSearchRequest(const QString &query, const QString &engine, OpenHints hints)
+void Window::handleSearchRequest(const QString &query, const QString &engine, WindowsManager::OpenHints hints)
 {
-	if ((getType() == QLatin1String("web") && Utils::isUrlEmpty(getUrl())) || (hints == DefaultOpen || hints == CurrentTabOpen))
+	if ((getType() == QLatin1String("web") && Utils::isUrlEmpty(getUrl())) || (hints == WindowsManager::DefaultOpen || hints == WindowsManager::CurrentTabOpen))
 	{
 		search(query, engine);
 	}
@@ -558,9 +558,9 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	connect(m_contentsWidget, SIGNAL(webWidgetChanged()), this, SLOT(updateNavigationBar()));
 	connect(m_contentsWidget, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString,QString)));
 	connect(m_contentsWidget, SIGNAL(requestedEditBookmark(QUrl)), this, SIGNAL(requestedEditBookmark(QUrl)));
-	connect(m_contentsWidget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)));
-	connect(m_contentsWidget, SIGNAL(requestedNewWindow(ContentsWidget*,OpenHints)), this, SIGNAL(requestedNewWindow(ContentsWidget*,OpenHints)));
-	connect(m_contentsWidget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
+	connect(m_contentsWidget, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)));
+	connect(m_contentsWidget, SIGNAL(requestedNewWindow(ContentsWidget*,WindowsManager::OpenHints)), this, SIGNAL(requestedNewWindow(ContentsWidget*,WindowsManager::OpenHints)));
+	connect(m_contentsWidget, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
 	connect(m_contentsWidget, SIGNAL(requestedGeometryChange(QRect)), this, SLOT(handleGeometryChangeRequest(QRect)));
 	connect(m_contentsWidget, SIGNAL(statusMessageChanged(QString)), this, SIGNAL(statusMessageChanged(QString)));
 	connect(m_contentsWidget, SIGNAL(titleChanged(QString)), this, SIGNAL(titleChanged(QString)));

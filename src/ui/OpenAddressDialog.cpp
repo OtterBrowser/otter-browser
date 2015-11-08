@@ -84,12 +84,12 @@ void OpenAddressDialog::handleUserInput()
 	{
 		m_inputInterpreter = new InputInterpreter(this);
 
-		connect(m_inputInterpreter, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)));
-		connect(m_inputInterpreter, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SIGNAL(requestedLoadUrl(QUrl,OpenHints)));
-		connect(m_inputInterpreter, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
+		connect(m_inputInterpreter, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)));
+		connect(m_inputInterpreter, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), this, SIGNAL(requestedLoadUrl(QUrl,WindowsManager::OpenHints)));
+		connect(m_inputInterpreter, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
 		connect(m_inputInterpreter, SIGNAL(destroyed()), this, SLOT(accept()));
 
-		m_inputInterpreter->interpret(m_addressWidget->lineEdit()->text(), WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, CurrentTabOpen));
+		m_inputInterpreter->interpret(m_addressWidget->lineEdit()->text(), WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, WindowsManager::CurrentTabOpen));
 	}
 }
 

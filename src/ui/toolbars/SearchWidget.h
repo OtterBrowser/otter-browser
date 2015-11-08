@@ -91,7 +91,7 @@ private:
 
 signals:
 	void searchEngineChanged(const QString &engine);
-	void requestedSearch(const QString &query, const QString &engine, OpenHints hints);
+	void requestedSearch(const QString &query, const QString &engine, WindowsManager::OpenHints hints);
 };
 
 }

@@ -63,7 +63,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 
 			break;
 		case ActionsManager::NewTabPrivateAction:
-			open(QUrl(), NewPrivateTabOpen);
+			open(QUrl(), (NewTabOpen | PrivateOpen));
 
 			break;
 		case ActionsManager::CloneTabAction:
@@ -578,12 +578,12 @@ void WindowsManager::addWindow(Window *window, OpenHints hints, int index, const
 
 	connect(m_mainWindow, SIGNAL(controlsHiddenChanged(bool)), window, SLOT(setControlsHidden(bool)));
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
-	connect(window, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(open(QUrl,OpenHints)));
-	connect(window, SIGNAL(requestedOpenBookmark(BookmarksItem*,OpenHints)), this, SLOT(open(BookmarksItem*,OpenHints)));
-	connect(window, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SLOT(search(QString,QString,OpenHints)));
+	connect(window, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), this, SLOT(open(QUrl,WindowsManager::OpenHints)));
+	connect(window, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), this, SLOT(open(BookmarksItem*,WindowsManager::OpenHints)));
+	connect(window, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), this, SLOT(search(QString,QString,WindowsManager::OpenHints)));
 	connect(window, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString,QString)));
 	connect(window, SIGNAL(requestedEditBookmark(QUrl)), this, SIGNAL(requestedEditBookmark(QUrl)));
-	connect(window, SIGNAL(requestedNewWindow(ContentsWidget*,OpenHints)), this, SLOT(openWindow(ContentsWidget*,OpenHints)));
+	connect(window, SIGNAL(requestedNewWindow(ContentsWidget*,WindowsManager::OpenHints)), this, SLOT(openWindow(ContentsWidget*,WindowsManager::OpenHints)));
 	connect(window, SIGNAL(requestedCloseWindow(Window*)), this, SLOT(handleWindowClose(Window*)));
 
 	emit windowAdded(window->getIdentifier());
@@ -893,7 +893,7 @@ QList<ClosedWindow> WindowsManager::getClosedWindows() const
 	return m_closedWindows;
 }
 
-OpenHints WindowsManager::calculateOpenHints(Qt::KeyboardModifiers modifiers, Qt::MouseButton button, OpenHints hints)
+WindowsManager::OpenHints WindowsManager::calculateOpenHints(Qt::KeyboardModifiers modifiers, Qt::MouseButton button, OpenHints hints)
 {
 	const bool useNewTab = (!hints.testFlag(NewWindowOpen) && SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool());
 
@@ -904,12 +904,12 @@ OpenHints WindowsManager::calculateOpenHints(Qt::KeyboardModifiers modifiers, Qt
 
 	if (button == Qt::MiddleButton && modifiers.testFlag(Qt::AltModifier))
 	{
-		return (useNewTab ? NewBackgroundTabEndOpen : NewBackgroundWindowEndOpen);
+		return (useNewTab ? (NewTabOpen | EndOpen | BackgroundOpen) : (NewWindowOpen | EndOpen | BackgroundOpen));
 	}
 
 	if (modifiers.testFlag(Qt::ControlModifier) || button == Qt::MiddleButton)
 	{
-		return (useNewTab ? NewBackgroundTabOpen : NewBackgroundWindowOpen);
+		return (useNewTab ? (NewTabOpen | BackgroundOpen) : (NewWindowOpen | BackgroundOpen));
 	}
 
 	if (modifiers.testFlag(Qt::ShiftModifier))

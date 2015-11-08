@@ -328,8 +328,8 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				{
 					InputInterpreter *interpreter = new InputInterpreter(this);
 
-					connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)));
-					connect(interpreter, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
+					connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)));
+					connect(interpreter, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
 
 					interpreter->interpret(text, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers()), true);
 				}
@@ -341,10 +341,10 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 			{
 				InputInterpreter *interpreter = new InputInterpreter(this);
 
-				connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,OpenHints)));
-				connect(interpreter, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
+				connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)));
+				connect(interpreter, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
 
-				interpreter->interpret(QGuiApplication::clipboard()->text().trimmed(), (SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool() ? NewTabOpen : CurrentTabOpen), true);
+				interpreter->interpret(QGuiApplication::clipboard()->text().trimmed(), (SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool() ? WindowsManager::NewTabOpen : WindowsManager::CurrentTabOpen), true);
 			}
 
 			break;
@@ -641,17 +641,17 @@ void WebContentsWidget::notifyPermissionChanged(WebWidget::PermissionPolicies po
 	}
 }
 
-void WebContentsWidget::notifyRequestedOpenUrl(const QUrl &url, OpenHints hints)
+void WebContentsWidget::notifyRequestedOpenUrl(const QUrl &url, WindowsManager::OpenHints hints)
 {
 	if (isPrivate())
 	{
-		hints |= PrivateOpen;
+		hints |= WindowsManager::PrivateOpen;
 	}
 
 	emit requestedOpenUrl(url, hints);
 }
 
-void WebContentsWidget::notifyRequestedNewWindow(WebWidget *widget, OpenHints hints)
+void WebContentsWidget::notifyRequestedNewWindow(WebWidget *widget, WindowsManager::OpenHints hints)
 {
 	emit requestedNewWindow(new WebContentsWidget(isPrivate(), widget, NULL), hints);
 }
@@ -812,9 +812,9 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(m_webWidget, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString,QString)));
 	connect(m_webWidget, SIGNAL(requestedEditBookmark(QUrl)), this, SIGNAL(requestedEditBookmark(QUrl)));
-	connect(m_webWidget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), this, SLOT(notifyRequestedOpenUrl(QUrl,OpenHints)));
-	connect(m_webWidget, SIGNAL(requestedNewWindow(WebWidget*,OpenHints)), this, SLOT(notifyRequestedNewWindow(WebWidget*,OpenHints)));
-	connect(m_webWidget, SIGNAL(requestedSearch(QString,QString,OpenHints)), this, SIGNAL(requestedSearch(QString,QString,OpenHints)));
+	connect(m_webWidget, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), this, SLOT(notifyRequestedOpenUrl(QUrl,WindowsManager::OpenHints)));
+	connect(m_webWidget, SIGNAL(requestedNewWindow(WebWidget*,WindowsManager::OpenHints)), this, SLOT(notifyRequestedNewWindow(WebWidget*,WindowsManager::OpenHints)));
+	connect(m_webWidget, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
 	connect(m_webWidget, SIGNAL(requestedPermission(QString,QUrl,bool)), this, SLOT(handlePermissionRequest(QString,QUrl,bool)));
 	connect(m_webWidget, SIGNAL(requestedGeometryChange(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
 	connect(m_webWidget, SIGNAL(statusMessageChanged(QString)), this, SIGNAL(statusMessageChanged(QString)));

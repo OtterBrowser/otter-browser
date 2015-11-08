@@ -401,7 +401,7 @@ bool NotesContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (bookmark)
 			{
-				manager->open(bookmark, WindowsManager::calculateOpenHints(mouseEvent->modifiers(), mouseEvent->button(), NewTabOpen));
+				manager->open(bookmark, WindowsManager::calculateOpenHints(mouseEvent->modifiers(), mouseEvent->button(), WindowsManager::NewTabOpen));
 
 				return true;
 			}

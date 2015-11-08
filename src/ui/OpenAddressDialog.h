@@ -57,9 +57,9 @@ private:
 	Ui::OpenAddressDialog *m_ui;
 
 signals:
-	void requestedLoadUrl(QUrl url, OpenHints hints);
-	void requestedOpenBookmark(BookmarksItem *bookmark, OpenHints hints);
-	void requestedSearch(QString query, QString engine, OpenHints hints);
+	void requestedLoadUrl(QUrl url, WindowsManager::OpenHints hints);
+	void requestedOpenBookmark(BookmarksItem *bookmark, WindowsManager::OpenHints hints);
+	void requestedSearch(QString query, QString engine, WindowsManager::OpenHints hints);
 };
 
 }

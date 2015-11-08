@@ -170,7 +170,7 @@ protected:
 
 	void timerEvent(QTimerEvent *event);
 	void bounceAction(int identifier, QVariantMap parameters);
-	void openUrl(const QUrl &url, OpenHints hints);
+	void openUrl(const QUrl &url, WindowsManager::OpenHints hints);
 	virtual void pasteText(const QString &text) = 0;
 	void startReloadTimer();
 	void startTransfer(Transfer *transfer);
@@ -233,11 +233,11 @@ private:
 signals:
 	void aboutToReload();
 	void requestedCloseWindow();
-	void requestedOpenUrl(QUrl url, OpenHints hints);
+	void requestedOpenUrl(QUrl url, WindowsManager::OpenHints hints);
 	void requestedAddBookmark(QUrl url, QString title, QString description);
 	void requestedEditBookmark(QUrl url);
-	void requestedNewWindow(WebWidget *widget, OpenHints hints);
-	void requestedSearch(QString query, QString search, OpenHints hints);
+	void requestedNewWindow(WebWidget *widget, WindowsManager::OpenHints hints);
+	void requestedSearch(QString query, QString search, WindowsManager::OpenHints hints);
 	void requestedPermission(QString option, QUrl url, bool cancel);
 	void requestedGeometryChange(const QRect &geometry);
 	void progressBarGeometryChanged();

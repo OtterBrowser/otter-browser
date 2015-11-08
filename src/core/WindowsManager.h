@@ -28,27 +28,6 @@
 namespace Otter
 {
 
-enum OpenHint
-{
-	DefaultOpen = 0,
-	PrivateOpen = 1,
-	CurrentTabOpen = 2,
-	NewTabOpen = 4,
-	NewWindowOpen = 8,
-	BackgroundOpen = 16,
-	EndOpen = 32,
-	NewBackgroundTabOpen = (NewTabOpen | BackgroundOpen),
-	NewBackgroundTabEndOpen = (NewTabOpen | EndOpen | BackgroundOpen),
-	NewBackgroundWindowOpen = (NewWindowOpen | BackgroundOpen),
-	NewBackgroundWindowEndOpen = (NewWindowOpen | EndOpen | BackgroundOpen),
-	NewPrivateTabOpen = (NewTabOpen | PrivateOpen),
-	NewPrivateBackgroundTabOpen = (NewBackgroundTabOpen | PrivateOpen),
-	NewPrivateWindowOpen = (NewWindowOpen | PrivateOpen),
-	NewPrivateBackgroundWindowOpen = (NewBackgroundWindowOpen | PrivateOpen)
-};
-
-Q_DECLARE_FLAGS(OpenHints, OpenHint)
-
 struct ClosedWindow
 {
 	SessionWindow window;
@@ -68,6 +47,19 @@ class WindowsManager : public QObject
 	Q_OBJECT
 
 public:
+	enum OpenHint
+	{
+		DefaultOpen = 0,
+		PrivateOpen = 1,
+		CurrentTabOpen = 2,
+		NewTabOpen = 4,
+		NewWindowOpen = 8,
+		BackgroundOpen = 16,
+		EndOpen = 32
+	};
+
+	Q_DECLARE_FLAGS(OpenHints, OpenHint)
+
 	explicit WindowsManager(bool isPrivate, MainWindow *parent);
 
 	Action* getAction(int identifier);
@@ -78,7 +70,7 @@ public:
 	QUrl getUrl() const;
 	SessionMainWindow getSession() const;
 	QList<ClosedWindow> getClosedWindows() const;
-	static OpenHints calculateOpenHints(Qt::KeyboardModifiers modifiers = Qt::NoModifier, Qt::MouseButton button = Qt::LeftButton, OpenHints hints = DefaultOpen);
+	static WindowsManager::OpenHints calculateOpenHints(Qt::KeyboardModifiers modifiers = Qt::NoModifier, Qt::MouseButton button = Qt::LeftButton, OpenHints hints = DefaultOpen);
 	int getWindowCount(bool onlyPrivate = false) const;
 	int getWindowIndex(quint64 identifier) const;
 	int getZoom() const;
@@ -88,9 +80,9 @@ public:
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
-	void open(const QUrl &url = QUrl(), OpenHints hints = DefaultOpen);
-	void open(BookmarksItem *bookmark, OpenHints hints = DefaultOpen);
-	void search(const QString &query, const QString &engine, OpenHints hints = DefaultOpen);
+	void open(const QUrl &url = QUrl(), WindowsManager::OpenHints hints = DefaultOpen);
+	void open(BookmarksItem *bookmark, WindowsManager::OpenHints hints = DefaultOpen);
+	void search(const QString &query, const QString &engine, WindowsManager::OpenHints hints = DefaultOpen);
 	void close(int index);
 	void closeAll();
 	void restore(int index = 0);
@@ -102,13 +94,13 @@ public slots:
 	void setZoom(int zoom);
 
 protected:
-	void openTab(const QUrl &url, OpenHints hints = DefaultOpen);
+	void openTab(const QUrl &url, WindowsManager::OpenHints hints = DefaultOpen);
 	void closeOther(int index = -1);
 	bool event(QEvent *event);
 
 protected slots:
-	void addWindow(Window *window, OpenHints hints = DefaultOpen, int index = -1, const QRect &geometry = QRect(), WindowState state = NormalWindowState, bool isAlwaysOnTop = false);
-	void openWindow(ContentsWidget *widget, OpenHints hints = DefaultOpen);
+	void addWindow(Window *window, WindowsManager::OpenHints hints = DefaultOpen, int index = -1, const QRect &geometry = QRect(), WindowState state = NormalWindowState, bool isAlwaysOnTop = false);
+	void openWindow(ContentsWidget *widget, WindowsManager::OpenHints hints = DefaultOpen);
 	void removeStoredUrl(const QString &url);
 	void handleWindowClose(Window *window);
 	void setTitle(const QString &title);
@@ -135,5 +127,7 @@ signals:
 };
 
 }
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::WindowsManager::OpenHints)
 
 #endif

@@ -72,7 +72,7 @@ private:
 	bool m_isViewingMedia;
 
 signals:
-	void requestedNewWindow(WebWidget *widget, OpenHints hints);
+	void requestedNewWindow(WebWidget *widget, WindowsManager::OpenHints hints);
 	void aboutToNavigate(QWebFrame *frame, QWebPage::NavigationType navigationType);
 	void viewingMediaChanged(bool viewingMedia);
 

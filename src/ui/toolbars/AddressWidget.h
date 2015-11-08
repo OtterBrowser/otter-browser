@@ -42,7 +42,7 @@ public:
 
 	void showPopup();
 	void hidePopup();
-	void handleUserInput(const QString &text, OpenHints hints = CurrentTabOpen);
+	void handleUserInput(const QString &text, WindowsManager::OpenHints hints = WindowsManager::CurrentTabOpen);
 	QString getText() const;
 	QUrl getUrl() const;
 	bool eventFilter(QObject *object, QEvent *event);
@@ -90,7 +90,7 @@ private:
 	QPoint m_dragStartPosition;
 	QRect m_historyDropdownArrowRectangle;
 	QRect m_securityBadgeRectangle;
-	OpenHints m_hints;
+	WindowsManager::OpenHints m_hints;
 	int m_removeModelTimer;
 	bool m_isHistoryDropdownEnabled;
 	bool m_isUsingSimpleMode;
@@ -98,9 +98,9 @@ private:
 	bool m_wasPopupVisible;
 
 signals:
-	void requestedOpenBookmark(BookmarksItem *bookmark, OpenHints hints);
-	void requestedOpenUrl(QUrl url, OpenHints hints);
-	void requestedSearch(QString query, QString engine, OpenHints hints);
+	void requestedOpenBookmark(BookmarksItem *bookmark, WindowsManager::OpenHints hints);
+	void requestedOpenUrl(QUrl url, WindowsManager::OpenHints hints);
+	void requestedSearch(QString query, QString engine, WindowsManager::OpenHints hints);
 };
 
 }
