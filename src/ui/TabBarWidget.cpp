@@ -466,6 +466,13 @@ void TabBarWidget::removeTab(int index)
 
 	QTabBar::removeTab(index);
 
+	if (window && window->isPinned())
+	{
+		isPinnedChanged();
+		updateGeometry();
+		adjustSize();
+	}
+
 	if (underMouse() && tabAt(mapFromGlobal(QCursor::pos())) < 0)
 	{
 		m_tabSize = 0;
