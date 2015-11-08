@@ -438,11 +438,11 @@ void TabBarWidget::addTab(int index, Window *window)
 
 	connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(updateTabs()));
 	connect(window, SIGNAL(loadingStateChanged(WindowLoadingState)), this, SLOT(updateTabs()));
-	connect(window, SIGNAL(isPinnedChanged(bool)), this, SLOT(updatePinnedTabsAmount()));
+	connect(window, SIGNAL(isPinnedChanged(bool)), this, SLOT(isPinnedChanged()));
 
 	if (window->isPinned())
 	{
-		updatePinnedTabsAmount();
+		isPinnedChanged(window);
 	}
 
 	updateTabs(index);
@@ -683,7 +683,7 @@ void TabBarWidget::currentTabChanged(int index)
 	}
 }
 
-void TabBarWidget::updatePinnedTabsAmount()
+void TabBarWidget::isPinnedChanged(Window *window)
 {
 	int amount = 0;
 
@@ -696,6 +696,34 @@ void TabBarWidget::updatePinnedTabsAmount()
 	}
 
 	m_pinnedTabsAmount = amount;
+
+	if (!window)
+	{
+		window = qobject_cast<Window*>(sender());
+	}
+
+	if (window)
+	{
+		int index = -1;
+
+		for (int i = 0; i < count(); ++i)
+		{
+			if (tabData(i).toULongLong() == window->getIdentifier())
+			{
+				index = i;
+
+				break;
+			}
+		}
+
+		if (index >= 0)
+		{
+			moveTab(index, (window->isPinned() ? qMax(0, (m_pinnedTabsAmount - 1)) : m_pinnedTabsAmount));
+			updateButtons();
+			updateGeometry();
+			adjustSize();
+		}
+	}
 
 	updateTabs();
 }
@@ -842,29 +870,6 @@ void TabBarWidget::setShape(QTabBar::Shape shape)
 	QTabBar::setShape(shape);
 
 	QTimer::singleShot(100, this, SLOT(updateTabs()));
-}
-
-void TabBarWidget::setTabProperty(int index, const QString &key, const QVariant &value)
-{
-	if (index < 0 || index >= count())
-	{
-		return;
-	}
-
-	Window *window = getWindow(index);
-
-	if (window)
-	{
-		window->setProperty(key.toLatin1(), value);
-	}
-
-	if (key == QLatin1String("isPinned"))
-	{
-		updatePinnedTabsAmount();
-		moveTab(index, (value.toBool() ? 0 : getPinnedTabsAmount()));
-		updateButtons();
-		updateGeometry();
-	}
 }
 
 Window* TabBarWidget::getWindow(int index) const

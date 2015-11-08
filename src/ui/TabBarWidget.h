@@ -51,7 +51,6 @@ public slots:
 	void setCycle(bool enable);
 	void setArea(Qt::ToolBarArea area);
 	void setShape(QTabBar::Shape shape);
-	void setTabProperty(int index, const QString &key, const QVariant &value);
 
 protected:
 	void timerEvent(QTimerEvent *event);
@@ -74,7 +73,7 @@ protected:
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void currentTabChanged(int index);
-	void updatePinnedTabsAmount();
+	void isPinnedChanged(Window *window = NULL);
 	void updateButtons();
 	void updateTabs(int index = -1);
 
