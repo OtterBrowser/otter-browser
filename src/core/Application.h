@@ -69,6 +69,7 @@ public slots:
 	void setHidden(bool hidden);
 
 protected slots:
+	void optionChanged(const QString &option, const QVariant &value);
 	void updateCheckFinished(const QList<UpdateInformation> &availableUpdates);
 	void newConnection();
 	void clearHistory();

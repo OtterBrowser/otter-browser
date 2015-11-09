@@ -326,6 +326,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		}
 	}
 
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(this, SIGNAL(aboutToQuit()), this, SLOT(clearHistory()));
 }
 
@@ -334,6 +335,22 @@ Application::~Application()
 	for (int i = 0; i < m_windows.size(); ++i)
 	{
 		m_windows.at(i)->deleteLater();
+	}
+}
+
+void Application::optionChanged(const QString &option, const QVariant &value)
+{
+	if (option == QLatin1String("Browser/EnableTrayIcon"))
+	{
+		if (!m_trayIcon && value.toBool())
+		{
+			m_trayIcon = new TrayIcon(this);
+		}
+		else if (m_trayIcon && !value.toBool())
+		{
+			m_trayIcon->deleteLater();
+			m_trayIcon = NULL;
+		}
 	}
 }
 
