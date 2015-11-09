@@ -584,6 +584,15 @@ bool GesturesManager::triggerAction(int gestureIdentifier)
 
 		m_instance->endGesture();
 	}
+	else if (gestureIdentifier == ActionsManager::ContextMenuAction)
+	{
+		if (m_trackedObject)
+		{
+			QContextMenuEvent event(QContextMenuEvent::Other, m_lastPosition);
+
+			QCoreApplication::sendEvent(m_trackedObject, &event);
+		}
+	}
 	else
 	{
 		ActionsManager::triggerAction(gestureIdentifier, m_trackedObject, m_paramaters);
