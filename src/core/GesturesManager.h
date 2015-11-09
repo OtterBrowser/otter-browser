@@ -79,7 +79,7 @@ protected:
 	static GestureStep deserializeStep(const QString &string);
 	static QList<GestureStep> recognizeMoveStep(QInputEvent *event);
 	static int matchGesture();
-	static int moveLength();
+	static int getLastMoveDistance(bool measureFinished = false);
 	static int gesturesDifference(QList<GestureStep> defined);
 	static bool triggerAction(int gestureIdentifier);
 	bool eventFilter(QObject *object, QEvent *event);

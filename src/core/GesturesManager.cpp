@@ -438,7 +438,7 @@ QList<GesturesManager::GestureStep> GesturesManager::recognizeMoveStep(QInputEve
 		result.push_back(GestureStep(QEvent::MouseMove, *iterator, event->modifiers()));
 	}
 
-	if (result.empty() && moveLength() >= QApplication::startDragDistance())
+	if (result.empty() && getLastMoveDistance(true) >= QApplication::startDragDistance())
 	{
 		result.append(GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction, event->modifiers()));
 	}
@@ -490,18 +490,34 @@ int GesturesManager::matchGesture()
 	return ((lowestDifference < std::numeric_limits<int>::max()) ? bestGesture : UNKNOWN_GESTURE);
 }
 
-int GesturesManager::moveLength()
+int GesturesManager::getLastMoveDistance(bool measureFinished)
 {
 	int result = 0;
+	int index = m_events.count() - 1;
 
-	if (m_events.empty() || m_events.last()->type() != QEvent::MouseMove)
+	if (!measureFinished && (index < 0 || m_events[index]->type() != QEvent::MouseMove))
 	{
 		return result;
 	}
 
-	for (int i = m_events.count() - 2; i >= 0 && m_events[i]->type() == QEvent::MouseMove; --i)
+	while (index >= 0 && m_events[index]->type() != QEvent::MouseMove)
 	{
-		result += (static_cast<QMouseEvent*>(m_events[i])->pos() - static_cast<QMouseEvent*>(m_events[i+1])->pos()).manhattanLength();
+		--index;
+	}
+
+	for (; index > 0 && m_events[index - 1]->type() == QEvent::MouseMove; --index)
+	{
+		QMouseEvent *current = static_cast<QMouseEvent*>(m_events[index]);
+		QMouseEvent *previous = static_cast<QMouseEvent*>(m_events[index - 1]);
+
+		if (current && previous)
+		{
+			result += (previous->pos() - current->pos()).manhattanLength();
+		}
+		else
+		{
+			break;
+		}
 	}
 
 	return result;
@@ -679,7 +695,7 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 
 			m_recognizer->addPosition(mouseEvent->pos().x(), mouseEvent->pos().y());
 
-			if (moveLength() >= QApplication::startDragDistance())
+			if (getLastMoveDistance() >= QApplication::startDragDistance())
 			{
 				m_steps.append(GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction, mouseEvent->modifiers()));
 
