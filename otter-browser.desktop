@@ -73,6 +73,7 @@ GenericName[tr_TR]=İnternet Tarayıcısı
 GenericName[uk_UA]=Веб-браузер
 GenericName[zh_CN.GB2312]=网页浏览器
 GenericName[zh_TW]=網頁瀏覽器
+Comment=Browse the Web
 Icon=otter-browser
 Type=Application
 Categories=Network;WebBrowser;
