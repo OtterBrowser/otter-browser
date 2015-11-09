@@ -34,6 +34,7 @@ public:
 
 protected:
 	void paintEvent(QPaintEvent *event);
+	bool event(QEvent *event);
 
 protected slots:
 	void setMaximumButtonSize(int size);

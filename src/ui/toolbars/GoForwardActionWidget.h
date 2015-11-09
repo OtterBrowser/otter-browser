@@ -35,7 +35,6 @@ public:
 	bool eventFilter(QObject *object, QEvent *event);
 
 protected:
-	void contextMenuEvent(QContextMenuEvent *event);
 	bool event(QEvent *event);
 
 protected slots:

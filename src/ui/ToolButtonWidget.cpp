@@ -71,4 +71,14 @@ void ToolButtonWidget::setMaximumButtonSize(int size)
 	}
 }
 
+bool ToolButtonWidget::event(QEvent *event)
+{
+	if (event->type() == QEvent::ContextMenu && contextMenuPolicy() == Qt::NoContextMenu)
+	{
+		return false;
+	}
+
+	return QToolButton::event(event);
+}
+
 }

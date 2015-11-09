@@ -42,26 +42,6 @@ GoForwardActionWidget::GoForwardActionWidget(Window *window, QWidget *parent) : 
 	connect(menu(), SIGNAL(triggered(QAction*)), this, SLOT(goToHistoryIndex(QAction*)));
 }
 
-void GoForwardActionWidget::contextMenuEvent(QContextMenuEvent *event)
-{
-	event->accept();
-
-	Window *window = getWindow();
-	QMenu menu(this);
-	menu.addAction(window ? window->getContentsWidget()->getAction(ActionsManager::ClearTabHistoryAction) : ActionsManager::getAction(ActionsManager::ClearTabHistoryAction, this));
-	menu.addAction(window ? window->getContentsWidget()->getAction(ActionsManager::PurgeTabHistoryAction) : ActionsManager::getAction(ActionsManager::PurgeTabHistoryAction, this));
-
-	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parentWidget());
-
-	if (toolBar)
-	{
-		menu.addSeparator();
-		menu.addActions(ToolBarWidget::createCustomizationMenu(toolBar->getIdentifier(), QList<QAction*>(), &menu)->actions());
-	}
-
-	menu.exec(event->globalPos());
-}
-
 void GoForwardActionWidget::goToHistoryIndex(QAction *action)
 {
 	if (getWindow() && action && action->data().type() == QVariant::Int)
@@ -92,6 +72,35 @@ void GoForwardActionWidget::updateMenu()
 
 bool GoForwardActionWidget::event(QEvent *event)
 {
+	if (event->type() == QEvent::ContextMenu)
+	{
+		QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
+
+		if (contextMenuEvent)
+		{
+			event->accept();
+
+			Window *window = getWindow();
+			QMenu menu(this);
+			menu.addAction(window ? window->getContentsWidget()->getAction(ActionsManager::ClearTabHistoryAction) : ActionsManager::getAction(ActionsManager::ClearTabHistoryAction, this));
+			menu.addAction(window ? window->getContentsWidget()->getAction(ActionsManager::PurgeTabHistoryAction) : ActionsManager::getAction(ActionsManager::PurgeTabHistoryAction, this));
+
+			ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parentWidget());
+
+			if (toolBar)
+			{
+				menu.addSeparator();
+				menu.addActions(ToolBarWidget::createCustomizationMenu(toolBar->getIdentifier(), QList<QAction*>(), &menu)->actions());
+			}
+
+			menu.exec(contextMenuEvent->globalPos());
+
+			return true;
+		}
+
+		return false;
+	}
+
 	if (event->type() == QEvent::ToolTip)
 	{
 		QHelpEvent *helpEvent = dynamic_cast<QHelpEvent*>(event);
