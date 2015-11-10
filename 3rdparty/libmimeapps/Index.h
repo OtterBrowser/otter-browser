@@ -48,6 +48,8 @@ class Index
 public:
 	Index();
 	explicit Index(const std::string &language);
+	~Index();
+
 	std::vector<DesktopEntry> appsForMime(const std::string &type) const;
 
 protected:
@@ -72,6 +74,7 @@ protected:
 	void addToType(const std::string &type, DesktopEntry *entry);
 	void removeApplication(const std::string &entryId);
 	void removeFromType(const std::string &type, const std::string &entryId);
+	void removeUnused();
 	static std::list<std::string> resolveVariable(const std::string &name);
 	static std::vector<lookupDirectory> initDirectoryPatterns();
 

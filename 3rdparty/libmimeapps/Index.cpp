@@ -49,6 +49,17 @@ Index::Index(const std::string &language):
 {
 	findDirectories();
 	createBase();
+	removeUnused();
+}
+
+Index::~Index()
+{
+	std::map<std::string, DesktopEntry*>::iterator application;
+
+	for (application = knownApplications_.begin(); application != knownApplications_.end(); ++application)
+	{
+		delete application->second;
+	}
 }
 
 std::vector<DesktopEntry> Index::appsForMime(const std::string &type) const
@@ -183,6 +194,10 @@ void Index::processDesktopFile(const std::string &baseDirectory, const std::stri
 	{
 		addApplication(entry);
 	}
+	else
+	{
+		delete entry;
+	}
 }
 
 void Index::addApplication(DesktopEntry *entry)
@@ -229,6 +244,21 @@ void Index::removeFromType(const std::string &type, const std::string &entryId)
 			{
 				++it;
 			}
+		}
+	}
+}
+
+void Index::removeUnused()
+{
+	std::map<std::string, DesktopEntry*>::iterator application;
+
+	for (application = knownApplications_.begin(); application != knownApplications_.end(); ++application)
+	{
+		if (application->second->types().empty())
+		{
+			delete application->second;
+
+			knownApplications_.erase(application);
 		}
 	}
 }
