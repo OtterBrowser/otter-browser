@@ -551,7 +551,7 @@ bool GesturesManager::startGesture(QObject *object, QEvent *event, QList<Gesture
 {
 	QInputEvent *inputEvent = static_cast<QInputEvent*>(event);
 
-	if (!object || !inputEvent || m_gestures.keys().toSet().intersect(contexts.toSet()).isEmpty())
+	if (!object || !inputEvent || m_gestures.keys().toSet().intersect(contexts.toSet()).isEmpty() || m_events.contains(inputEvent))
 	{
 		return false;
 	}
