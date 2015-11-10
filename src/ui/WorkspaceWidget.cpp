@@ -653,9 +653,17 @@ void WorkspaceWidget::setActiveWindow(Window *window, bool force)
 			{
 				subWindow = qobject_cast<MdiWindow*>(window->parentWidget());
 
-				if (subWindow && subWindow->isMinimized())
+				if (subWindow)
 				{
-					subWindow->restoreState();
+					if (subWindow->isMinimized())
+					{
+						subWindow->restoreState();
+					}
+
+					if (!m_activeWindow)
+					{
+						subWindow->raise();
+					}
 				}
 			}
 
