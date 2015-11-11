@@ -20,6 +20,7 @@
 
 #include "GesturesManager.h"
 #include "SessionsManager.h"
+#include "Settings.h"
 #include "SettingsManager.h"
 #include "../ui/MainWindow.h"
 
@@ -180,19 +181,27 @@ void GesturesManager::loadProfiles()
 {
 	m_gestures.clear();
 
+	MouseGesture contextMenuGestureDefinition;
+	contextMenuGestureDefinition.steps << GestureStep(QEvent::MouseButtonPress, Qt::RightButton) << GestureStep(QEvent::MouseButtonRelease, Qt::RightButton);
+	contextMenuGestureDefinition.action = ActionsManager::ContextMenuAction;
+
 	const QStringList gestureProfiles = SettingsManager::getValue(QLatin1String("Browser/MouseProfilesOrder")).toStringList();
 	const bool enableMoves = SettingsManager::getValue(QLatin1String("Browser/EnableMouseGestures")).toBool();
 
 	for (int i = 0; i < gestureProfiles.count(); ++i)
 	{
-		QSettings profile(SessionsManager::getReadableDataPath(QLatin1String("mouse/") + gestureProfiles.at(i) + QLatin1String(".ini")), QSettings::IniFormat);
-		const QStringList contexts = profile.childGroups();
+		Settings profile(SessionsManager::getReadableDataPath(QLatin1String("mouse/") + gestureProfiles.at(i) + QLatin1String(".ini")));
+		const QStringList contexts = profile.getGroups();
 
 		for (int j = 0; j < contexts.count(); ++j)
 		{
-			GesturesContext context = GenericGesturesContext;
+			GesturesContext context = UnknownGesturesContext;
 
-			if (contexts.at(j) == QLatin1String("Link"))
+			if (contexts.at(j) == QLatin1String("Generic"))
+			{
+				context = GenericGesturesContext;
+			}
+			else if (contexts.at(j) == QLatin1String("Link"))
 			{
 				context = LinkGesturesContext;
 			}
@@ -202,21 +211,34 @@ void GesturesManager::loadProfiles()
 			}
 			else if (contexts.at(j) == QLatin1String("TabHandle"))
 			{
-				context = TabHandleContext;
+				context = TabHandleGesturesContext;
 			}
 			else if (contexts.at(j) == QLatin1String("ActiveTabHandle"))
 			{
-				context = ActiveTabHandleContext;
+				context = ActiveTabHandleGesturesContext;
 			}
+			else if (contexts.at(j) == QLatin1String("NoTabHandle"))
+			{
+				context = NoTabHandleGesturesContext;
+			}
+			else
+			{
+				profile.endGroup();
+
+				continue;
+			}
+
+			m_gestures[context] = QVector<MouseGesture>();
+			m_gestures[context].append(contextMenuGestureDefinition);
 
 			profile.beginGroup(contexts.at(j));
 
-			const QStringList gestures = profile.allKeys();
+			const QStringList gestures = profile.getKeys();
 
 			for (int k = 0; k < gestures.count(); ++k)
 			{
 				const QStringList rawMouseActions = gestures.at(k).split(QLatin1Char(','));
-				const int action = ActionsManager::getActionIdentifier(profile.value(gestures.at(k), QString()).toString());
+				const int action = ActionsManager::getActionIdentifier(profile.getValue(gestures.at(k), QString()).toString());
 
 				if (action < 0 || rawMouseActions.isEmpty())
 				{
@@ -239,14 +261,9 @@ void GesturesManager::loadProfiles()
 				if (!steps.empty() && !(!enableMoves && hasMove))
 				{
 					MouseGesture definition;
-					definition.action = action;
 					definition.steps = steps;
+					definition.action = action;
 					definition.identifier = 0;
-
-					if (!m_gestures.contains(context))
-					{
-						m_gestures[context] = QVector<MouseGesture>();
-					}
 
 					m_gestures[context].append(definition);
 				}

@@ -35,6 +35,7 @@
 #include "toolbars/StatusMessageWidget.h"
 #include "toolbars/ZoomWidget.h"
 #include "../core/BookmarksManager.h"
+#include "../core/GesturesManager.h"
 #include "../core/Utils.h"
 #include "../core/WindowsManager.h"
 
@@ -201,14 +202,6 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	menu.exec(event->globalPos());
 
 	cycleAction->deleteLater();
-}
-
-void ToolBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
-{
-	if (event->button() == Qt::LeftButton && m_identifier == ToolBarsManager::TabBar)
-	{
-		ActionsManager::triggerAction((event->modifiers().testFlag(Qt::ShiftModifier) ? ActionsManager::NewTabPrivateAction : ActionsManager::NewTabAction), this);
-	}
 }
 
 void ToolBarWidget::startToolBarDragging()
@@ -615,6 +608,14 @@ bool ToolBarWidget::event(QEvent *event)
 		layout()->setContentsMargins(0, 0, 0, 0);
 
 		return result;
+	}
+
+	if (m_identifier == ToolBarsManager::TabBar && (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel))
+	{
+		QList<GesturesManager::GesturesContext> contexts;
+		contexts << GesturesManager::NoTabHandleGesturesContext;
+
+		GesturesManager::startGesture(this, event, contexts);
 	}
 
 	return QToolBar::event(event);

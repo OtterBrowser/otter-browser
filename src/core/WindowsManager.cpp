@@ -181,6 +181,13 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 			}
 
 			break;
+		case ActionsManager::ActivateTabAction:
+			if (window)
+			{
+				setActiveWindowByIdentifier(window->getIdentifier());
+			}
+
+			break;
 		case ActionsManager::ActivateTabOnLeftAction:
 			m_mainWindow->getTabBar()->activateTabOnLeft();
 

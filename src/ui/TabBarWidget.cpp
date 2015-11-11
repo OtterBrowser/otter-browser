@@ -25,6 +25,7 @@
 #include "ToolBarWidget.h"
 #include "Window.h"
 #include "../core/ActionsManager.h"
+#include "../core/GesturesManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
 
@@ -107,6 +108,11 @@ void TabBarWidget::timerEvent(QTimerEvent *event)
 
 void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 {
+	if (event->reason() == QContextMenuEvent::Mouse)
+	{
+		return;
+	}
+
 	m_clickedTab = tabAt(event->pos());
 
 	hidePreview();
@@ -230,64 +236,9 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 void TabBarWidget::mousePressEvent(QMouseEvent *event)
 {
-	if (event->button() == Qt::LeftButton && event->modifiers().testFlag(Qt::ShiftModifier))
-	{
-		Window *window = getWindow(tabAt(event->pos()));
-
-		if (window)
-		{
-			QVariantMap parameters;
-			parameters[QLatin1String("window")] = window->getIdentifier();
-
-			ActionsManager::triggerAction(ActionsManager::CloseTabAction, this, parameters);
-
-			return;
-		}
-	}
-
 	QTabBar::mousePressEvent(event);
 
-	if (event->button() == Qt::MiddleButton)
-	{
-		const int tab = tabAt(event->pos());
-
-		if (tab < 0)
-		{
-			ActionsManager::triggerAction(ActionsManager::NewTabAction, this);
-		}
-		else if (SettingsManager::getValue(QLatin1String("TabBar/CloseOnMiddleClick")).toBool())
-		{
-			Window *window = getWindow(tab);
-
-			if (window)
-			{
-				QVariantMap parameters;
-				parameters[QLatin1String("window")] = window->getIdentifier();
-
-				ActionsManager::triggerAction(ActionsManager::CloseTabAction, this, parameters);
-			}
-		}
-	}
-
 	hidePreview();
-}
-
-void TabBarWidget::mouseDoubleClickEvent(QMouseEvent *event)
-{
-	if (event->button() != Qt::LeftButton || !SettingsManager::getValue(QLatin1String("TabBar/CloseOnDoubleClick")).toBool())
-	{
-		return;
-	}
-
-	Window *window = getWindow(tabAt(event->pos()));
-
-	if (window)
-	{
-		QVariantMap parameters;
-		parameters[QLatin1String("window")] = window->getIdentifier();
-
-		ActionsManager::triggerAction(ActionsManager::CloseTabAction, this, parameters);
-	}
 }
 
 void TabBarWidget::mouseMoveEvent(QMouseEvent *event)
@@ -962,6 +913,63 @@ QSize TabBarWidget::sizeHint() const
 int TabBarWidget::getPinnedTabsAmount() const
 {
 	return m_pinnedTabsAmount;
+}
+
+bool TabBarWidget::event(QEvent *event)
+{
+	if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel)
+	{
+		QVariantMap parameters;
+		int tab = -1;
+
+		if (event->type() == QEvent::Wheel)
+		{
+			QWheelEvent *wheelEvent = dynamic_cast<QWheelEvent*>(event);
+
+			if (wheelEvent)
+			{
+				tab = tabAt(wheelEvent->pos());
+			}
+		}
+		else
+		{
+			QMouseEvent *mouseEvent = dynamic_cast<QMouseEvent*>(event);
+
+			if (mouseEvent)
+			{
+				tab = tabAt(mouseEvent->pos());
+			}
+		}
+
+		if (tab >= 0)
+		{
+			Window *window = getWindow(tab);
+
+			if (window)
+			{
+				parameters[QLatin1String("window")] = window->getIdentifier();
+			}
+		}
+
+		QList<GesturesManager::GesturesContext> contexts;
+
+		if (tab < 0)
+		{
+			contexts << GesturesManager::NoTabHandleGesturesContext;
+		}
+		else if (tab == currentIndex())
+		{
+			contexts << GesturesManager::ActiveTabHandleGesturesContext << GesturesManager::TabHandleGesturesContext;
+		}
+		else
+		{
+			contexts << GesturesManager::TabHandleGesturesContext;
+		}
+
+		GesturesManager::startGesture(this, event, contexts, parameters);
+	}
+
+	return QTabBar::event(event);
 }
 
 bool TabBarWidget::eventFilter(QObject *object, QEvent *event)

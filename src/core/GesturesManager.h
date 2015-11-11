@@ -37,11 +37,13 @@ class GesturesManager : public QObject
 public:
 	enum GesturesContext
 	{
-		GenericGesturesContext = 0,
+		UnknownGesturesContext = 0,
+		GenericGesturesContext,
 		LinkGesturesContext,
 		EditableGesturesContext,
-		TabHandleContext,
-		ActiveTabHandleContext
+		TabHandleGesturesContext,
+		ActiveTabHandleGesturesContext,
+		NoTabHandleGesturesContext
 	};
 
 	static void createInstance(QObject *parent = NULL);
@@ -71,6 +73,8 @@ protected:
 		QList<GestureStep> steps;
 		int action;
 		int identifier;
+
+		MouseGesture() : action(0), identifier(0) {}
 	};
 
 	explicit GesturesManager(QObject *parent);

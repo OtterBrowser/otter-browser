@@ -69,7 +69,6 @@ public:
 protected:
 	void paintEvent(QPaintEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
-	void mouseDoubleClickEvent(QMouseEvent *event);
 	void startToolBarDragging();
 	void endToolBarDragging();
 	QWidget* createWidget(const ToolBarActionDefinition &definition);

@@ -56,7 +56,6 @@ protected:
 	void timerEvent(QTimerEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
 	void mousePressEvent(QMouseEvent *event);
-	void mouseDoubleClickEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
 	void enterEvent(QEvent *event);
 	void leaveEvent(QEvent *event);
@@ -69,6 +68,7 @@ protected:
 	void showPreview(int index);
 	void hidePreview();
 	QSize tabSizeHint(int index) const;
+	bool event(QEvent *event);
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);

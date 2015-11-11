@@ -195,6 +195,7 @@ public:
 		ActivateContentAction,
 		ActivatePreviouslyUsedTabAction,
 		ActivateLeastRecentlyUsedTabAction,
+		ActivateTabAction,
 		ActivateTabOnLeftAction,
 		ActivateTabOnRightAction,
 		BookmarksAction,
