@@ -150,8 +150,12 @@ void GesturesManager::createInstance(QObject *parent)
 		link.append(QList<GestureStep>() << GestureStep(QEvent::MouseButtonPress, Qt::LeftButton) << GestureStep(QEvent::MouseButtonRelease, Qt::LeftButton));
 		link.append(QList<GestureStep>() << GestureStep(QEvent::MouseButtonPress, Qt::LeftButton) << GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction));
 
+		QList<QList<GestureStep> > tabHandle;
+		tabHandle.append(QList<GestureStep>() << GestureStep(QEvent::MouseButtonPress, Qt::LeftButton) << GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction));
+
 		m_nativeGestures[GesturesManager::GenericGesturesContext] = generic;
 		m_nativeGestures[GesturesManager::LinkGesturesContext] = link;
+		m_nativeGestures[GesturesManager::TabHandleGesturesContext] = tabHandle;
 
 		m_instance = new GesturesManager(parent);
 	}
