@@ -662,6 +662,16 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 		case QEvent::MouseButtonPress:
 		case QEvent::MouseButtonRelease:
 		case QEvent::MouseButtonDblClick:
+			if (mouseEvent && !m_events.isEmpty() && m_events.last()->type() == event->type())
+			{
+				QMouseEvent *previousMouseEvent = static_cast<QMouseEvent*>(m_events.last());
+
+				if (previousMouseEvent && previousMouseEvent->button() == mouseEvent->button() && previousMouseEvent->modifiers() == mouseEvent->modifiers())
+				{
+					break;
+				}
+			}
+
 			m_events.append(new QMouseEvent(event->type(), mouseEvent->localPos(), mouseEvent->windowPos(), mouseEvent->screenPos(), mouseEvent->button(), mouseEvent->buttons(), mouseEvent->modifiers()));
 
 			if (m_afterScroll && event->type() == QEvent::MouseButtonRelease)
