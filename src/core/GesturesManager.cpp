@@ -185,6 +185,14 @@ void GesturesManager::loadProfiles()
 	contextMenuGestureDefinition.steps << GestureStep(QEvent::MouseButtonPress, Qt::RightButton) << GestureStep(QEvent::MouseButtonRelease, Qt::RightButton);
 	contextMenuGestureDefinition.action = ActionsManager::ContextMenuAction;
 
+	for (int i = (GenericGesturesContext + 1); i < OtherGesturesContext; ++i)
+	{
+		GesturesContext context = static_cast<GesturesContext>(i);
+
+		m_gestures[context] = QVector<MouseGesture>();
+		m_gestures[context].append(contextMenuGestureDefinition);
+	}
+
 	const QStringList gestureProfiles = SettingsManager::getValue(QLatin1String("Browser/MouseProfilesOrder")).toStringList();
 	const bool enableMoves = SettingsManager::getValue(QLatin1String("Browser/EnableMouseGestures")).toBool();
 
@@ -228,9 +236,6 @@ void GesturesManager::loadProfiles()
 				continue;
 			}
 
-			m_gestures[context] = QVector<MouseGesture>();
-			m_gestures[context].append(contextMenuGestureDefinition);
-
 			profile.beginGroup(contexts.at(j));
 
 			const QStringList gestures = profile.getKeys();
@@ -263,7 +268,6 @@ void GesturesManager::loadProfiles()
 					MouseGesture definition;
 					definition.steps = steps;
 					definition.action = action;
-					definition.identifier = 0;
 
 					m_gestures[context].append(definition);
 				}

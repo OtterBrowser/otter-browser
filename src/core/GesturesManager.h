@@ -43,7 +43,8 @@ public:
 		EditableGesturesContext,
 		TabHandleGesturesContext,
 		ActiveTabHandleGesturesContext,
-		NoTabHandleGesturesContext
+		NoTabHandleGesturesContext,
+		OtherGesturesContext
 	};
 
 	static void createInstance(QObject *parent = NULL);
@@ -72,9 +73,8 @@ protected:
 	{
 		QList<GestureStep> steps;
 		int action;
-		int identifier;
 
-		MouseGesture() : action(0), identifier(0) {}
+		MouseGesture() : action(0) {}
 	};
 
 	explicit GesturesManager(QObject *parent);
