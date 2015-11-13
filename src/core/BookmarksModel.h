@@ -86,7 +86,7 @@ public:
 	void trashBookmark(BookmarksItem *bookmark);
 	void restoreBookmark(BookmarksItem *bookmark);
 	void removeBookmark(BookmarksItem *bookmark);
-	BookmarksItem* addBookmark(BookmarkType type, quint64 identifier = 0, const QUrl &url = QUrl(), const QString &title = QString(), BookmarksItem *parent = NULL);
+	BookmarksItem* addBookmark(BookmarkType type, quint64 identifier = 0, const QUrl &url = QUrl(), const QString &title = QString(), BookmarksItem *parent = NULL, int index = -1);
 	BookmarksItem* bookmarkFromIndex(const QModelIndex &index) const;
 	BookmarksItem* getBookmark(const QString &keyword) const;
 	BookmarksItem* getBookmark(quint64 identifier) const;

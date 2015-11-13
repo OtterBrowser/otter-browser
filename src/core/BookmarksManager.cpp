@@ -131,14 +131,14 @@ BookmarksModel* BookmarksManager::getModel()
 	return m_model;
 }
 
-BookmarksItem* BookmarksManager::addBookmark(BookmarksModel::BookmarkType type, const QUrl &url, const QString &title, BookmarksItem *parent)
+BookmarksItem* BookmarksManager::addBookmark(BookmarksModel::BookmarkType type, const QUrl &url, const QString &title, BookmarksItem *parent, int index)
 {
 	if (!m_model)
 	{
 		getModel();
 	}
 
-	return m_model->addBookmark(type, 0, url, title, parent);
+	return m_model->addBookmark(type, 0, url, title, parent, index);
 }
 
 BookmarksItem* BookmarksManager::getBookmark(const QString &keyword)

@@ -693,17 +693,17 @@ void BookmarksModel::emptyTrash()
 	emit modelModified();
 }
 
-BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, quint64 identifier, const QUrl &url, const QString &title, BookmarksItem *parent)
+BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, quint64 identifier, const QUrl &url, const QString &title, BookmarksItem *parent, int index)
 {
 	BookmarksItem *bookmark = new BookmarksItem();
 
 	if (parent)
 	{
-		parent->appendRow(bookmark);
+		parent->insertRow(((index < 0) ? parent->rowCount() : index), bookmark);
 	}
 	else
 	{
-		getRootItem()->appendRow(bookmark);
+		getRootItem()->insertRow(((index < 0) ? getRootItem()->rowCount() : index), bookmark);
 	}
 
 	if (type == UrlBookmark || type == SeparatorBookmark)
