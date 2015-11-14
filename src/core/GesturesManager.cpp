@@ -140,8 +140,6 @@ void GesturesManager::createInstance(QObject *parent)
 	if (!m_instance)
 	{
 		QList<QList<GestureStep> > generic;
-		generic.append(QList<GestureStep>() << GestureStep(QEvent::Wheel, MouseGestures::MoveUpMouseAction));
-		generic.append(QList<GestureStep>() << GestureStep(QEvent::Wheel, MouseGestures::MoveDownMouseAction));
 		generic.append(QList<GestureStep>() << GestureStep(QEvent::MouseButtonDblClick, Qt::LeftButton));
 		generic.append(QList<GestureStep>() << GestureStep(QEvent::MouseButtonPress, Qt::LeftButton) << GestureStep(QEvent::MouseButtonRelease, Qt::LeftButton));
 		generic.append(QList<GestureStep>() << GestureStep(QEvent::MouseButtonPress, Qt::LeftButton) << GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction));
@@ -595,8 +593,6 @@ bool GesturesManager::startGesture(QObject *object, QEvent *event, QList<Gesture
 
 	m_trackedObject = object;
 
-	m_instance->eventFilter(m_trackedObject, event);
-
 	if (m_trackedObject)
 	{
 		m_trackedObject->installEventFilter(m_instance);
@@ -604,7 +600,7 @@ bool GesturesManager::startGesture(QObject *object, QEvent *event, QList<Gesture
 		connect(m_trackedObject, SIGNAL(destroyed(QObject*)), m_instance, SLOT(endGesture()));
 	}
 
-	return true;
+	return m_instance->eventFilter(m_trackedObject, event);
 }
 
 bool GesturesManager::triggerAction(int gestureIdentifier)
@@ -620,7 +616,7 @@ bool GesturesManager::triggerAction(int gestureIdentifier)
 	{
 		for (int i = 0; i < m_events.count(); ++i)
 		{
-			m_trackedObject->event(m_events[i]);
+			QCoreApplication::sendEvent(m_trackedObject, m_events[i]);
 		}
 
 		m_instance->endGesture();
@@ -656,6 +652,8 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 	{
 		return QObject::eventFilter(object, event);
 	}
+
+	int gesture = UNKNOWN_GESTURE;
 
 	switch (event->type())
 	{
@@ -707,7 +705,9 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 				m_recognizer = NULL;
 			}
 
-			if (triggerAction(matchGesture()))
+			gesture = matchGesture();
+
+			if (triggerAction(gesture))
 			{
 				m_isReleasing = true;
 			}
@@ -734,13 +734,13 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 			{
 				m_steps.append(GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction, mouseEvent->modifiers()));
 
-				int matching = matchGesture();
+				gesture = matchGesture();
 
-				if (matching != UNKNOWN_GESTURE)
+				if (gesture != UNKNOWN_GESTURE)
 				{
 					m_steps.append(recognizeMoveStep(mouseEvent));
 
-					triggerAction(matching);
+					triggerAction(gesture);
 				}
 				else
 				{
@@ -750,6 +750,7 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 
 			break;
 		case QEvent::Wheel:
+
 			m_events.push_back(new QWheelEvent(wheelEvent->pos(), wheelEvent->globalPos(), wheelEvent->pixelDelta(), wheelEvent->angleDelta(), wheelEvent->delta(), wheelEvent->orientation(), wheelEvent->buttons(), wheelEvent->modifiers()));
 			m_steps.append(recognizeMoveStep(wheelEvent));
 			m_steps.append(GestureStep(wheelEvent));
@@ -763,15 +764,16 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 				m_recognizer = NULL;
 			}
 
-			if (triggerAction(matchGesture()))
-			{
-				while (m_steps.count() && m_steps[m_steps.count() - 1].type == QEvent::Wheel)
-				{
-					m_steps.removeAt(m_steps.count() - 1);
-				}
+			gesture = matchGesture();
 
-				m_afterScroll = true;
+			triggerAction(gesture);
+
+			while (m_steps.count() && m_steps[m_steps.count() - 1].type == QEvent::Wheel)
+			{
+				m_steps.removeAt(m_steps.count() - 1);
 			}
+
+			m_afterScroll = true;
 
 			break;
 		default:
@@ -783,7 +785,7 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 		endGesture();
 	}
 
-	return true;
+	return (!m_steps.isEmpty() || gesture != UNKNOWN_GESTURE);
 }
 
 }
