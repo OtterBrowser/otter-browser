@@ -610,7 +610,7 @@ bool ToolBarWidget::event(QEvent *event)
 		return result;
 	}
 
-	if (m_identifier == ToolBarsManager::TabBar && (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel))
+	if (m_identifier == ToolBarsManager::TabBar && (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel) && !GesturesManager::isTracking())
 	{
 		QList<GesturesManager::GesturesContext> contexts;
 		contexts << GesturesManager::NoTabHandleGesturesContext;

@@ -643,6 +643,11 @@ bool GesturesManager::triggerAction(int gestureIdentifier)
 	return true;
 }
 
+bool GesturesManager::isTracking()
+{
+	return (m_trackedObject != NULL);
+}
+
 bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 {
 	QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);

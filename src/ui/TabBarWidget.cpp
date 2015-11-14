@@ -110,6 +110,8 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 {
 	if (event->reason() == QContextMenuEvent::Mouse)
 	{
+		event->accept();
+
 		return;
 	}
 

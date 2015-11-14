@@ -51,6 +51,7 @@ public:
 	static void loadProfiles();
 	static GesturesManager* getInstance();
 	static bool startGesture(QObject *object, QEvent *event, QList<GesturesContext> contexts = (QList<GesturesContext>() << GenericGesturesContext), const QVariantMap &parameters = QVariantMap());
+	static bool isTracking();
 
 protected:
 	struct GestureStep
