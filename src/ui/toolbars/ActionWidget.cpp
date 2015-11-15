@@ -62,19 +62,17 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 {
 	if ((m_identifier == ActionsManager::NewTabAction || m_identifier == ActionsManager::NewTabPrivateAction) && event->button() != Qt::RightButton)
 	{
-		MainWindow *window = MainWindow::findMainWindow(this);
+		WindowsManager::OpenHints hints = WindowsManager::calculateOpenHints(event->modifiers(), event->button(), WindowsManager::NewTabOpen);
 
-		if (window)
+		if (m_identifier == ActionsManager::NewTabPrivateAction)
 		{
-			WindowsManager::OpenHints hints = WindowsManager::calculateOpenHints(event->modifiers(), event->button(), WindowsManager::NewTabOpen);
-
-			if (m_identifier == ActionsManager::NewTabPrivateAction)
-			{
-				hints |= WindowsManager::PrivateOpen;
-			}
-
-			window->getWindowsManager()->open(QUrl(), hints);
+			hints |= WindowsManager::PrivateOpen;
 		}
+
+		QVariantMap parameters;
+		parameters[QLatin1String("hints")] = static_cast<int>(hints);
+
+		ActionsManager::triggerAction(ActionsManager::OpenUrlAction, this, parameters);
 
 		QAction *action = defaultAction();
 

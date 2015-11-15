@@ -20,7 +20,7 @@
 
 #include "UpdateCheckerDialog.h"
 #include "../core/Updater.h"
-#include "../core/WindowsManager.h"
+#include "../core/ActionsManager.h"
 
 #include "ui_UpdateCheckerDialog.h"
 
@@ -140,16 +140,14 @@ void UpdateCheckerDialog::showDetails()
 
 	if (button)
 	{
-		const QUrl detailsUrl = button->property("detailsUrl").toUrl();
+		const QUrl url = button->property("detailsUrl").toUrl();
 
-		if (detailsUrl.isValid() && !SessionsManager::hasUrl(detailsUrl, true))
+		if (url.isValid() && !SessionsManager::hasUrl(url, true))
 		{
-			WindowsManager *manager = SessionsManager::getWindowsManager();
+			QVariantMap parameters;
+			parameters[QLatin1String("url")] = url;
 
-			if (manager)
-			{
-				manager->open(detailsUrl);
-			}
+			ActionsManager::triggerAction(ActionsManager::OpenUrlAction, this, parameters);
 
 			close();
 		}

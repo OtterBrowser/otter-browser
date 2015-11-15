@@ -24,8 +24,8 @@
 #include "preferences/PreferencesGeneralPageWidget.h"
 #include "preferences/PreferencesPrivacyPageWidget.h"
 #include "preferences/PreferencesSearchPageWidget.h"
+#include "../core/ActionsManager.h"
 #include "../core/SessionsManager.h"
-#include "../core/WindowsManager.h"
 
 #include "ui_PreferencesDialog.h"
 
@@ -190,12 +190,10 @@ void PreferencesDialog::openConfigurationManager()
 
 	if (!SessionsManager::hasUrl(url, true))
 	{
-		WindowsManager *manager = SessionsManager::getWindowsManager();
+		QVariantMap parameters;
+		parameters[QLatin1String("url")] = url;
 
-		if (manager)
-		{
-			manager->open(url);
-		}
+		ActionsManager::triggerAction(ActionsManager::OpenUrlAction, this, parameters);
 	}
 }
 
