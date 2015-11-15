@@ -408,14 +408,6 @@ void QtWebKitWebWidget::restoreState(QWebFrame *frame)
 	}
 }
 
-void QtWebKitWebWidget::hideInspector()
-{
-	QVariantMap parameters;
-	parameters[QLatin1String("isChecked")] = false;
-
-	triggerAction(ActionsManager::InspectPageAction, parameters);
-}
-
 void QtWebKitWebWidget::linkHovered(const QString &link)
 {
 	setStatusMessage(link, true);
@@ -815,11 +807,12 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			return;
 		case ActionsManager::OpenLinkAction:
 			{
-				QMouseEvent mousePressEvent(QEvent::MouseButtonPress, QPointF(getClickPosition()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
-				QMouseEvent mouseReleaseEvent(QEvent::MouseButtonRelease, QPointF(getClickPosition()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+				m_webView->page()->settings()->setAttribute(QWebSettings::JavascriptCanOpenWindows, true);
 
-				QCoreApplication::sendEvent(m_webView, &mousePressEvent);
-				QCoreApplication::sendEvent(m_webView, &mouseReleaseEvent);
+				const QWebHitTestResult nativeResult = m_webView->page()->mainFrame()->hitTestContent(getClickPosition());
+				nativeResult.element().evaluateJavaScript(QLatin1String("var event = document.createEvent('MouseEvents'); event.initEvent('click', true, true); this.dispatchEvent(event)"));
+
+				m_webView->page()->settings()->setAttribute(QWebSettings::JavascriptCanOpenWindows, getOption(QLatin1String("Browser/JavaScriptCanOpenWindows"), getUrl()).toBool());
 
 				setClickPosition(QPoint());
 			}
