@@ -290,6 +290,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(CloseWindowAction, QT_TRANSLATE_NOOP("actions", "Close Window"));
 	registerAction(SessionsAction, QT_TRANSLATE_NOOP("actions", "Manage Sessions…"));
 	registerAction(SaveSessionAction, QT_TRANSLATE_NOOP("actions", "Save Current Session…"));
+	registerAction(OpenUrlAction, QT_TRANSLATE_NOOP("actions", "Open URL"));
 	registerAction(OpenLinkAction, QT_TRANSLATE_NOOP("actions", "Open"), QString(), Utils::getIcon(QLatin1String("document-open")));
 	registerAction(OpenLinkInCurrentTabAction, QT_TRANSLATE_NOOP("actions", "Open in This Tab"));
 	registerAction(OpenLinkInNewTabAction, QT_TRANSLATE_NOOP("actions", "Open in New Tab"));

@@ -145,6 +145,25 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 			}
 
 			break;
+		case ActionsManager::OpenUrlAction:
+			{
+				QUrl url;
+				OpenHints hints = DefaultOpen;
+
+				if (parameters.contains(QLatin1String("url")))
+				{
+					url = ((parameters[QLatin1String("url")].type() == QVariant::Url) ? parameters[QLatin1String("url")].toUrl() : QUrl::fromUserInput(parameters[QLatin1String("url")].toString()));
+				}
+
+				if (parameters.contains(QLatin1String("hints")))
+				{
+					hints = static_cast<OpenHints>(parameters[QLatin1String("hints")].toInt());
+				}
+
+				open(url, hints);
+			}
+
+			break;
 		case ActionsManager::ReopenTabAction:
 			restore();
 

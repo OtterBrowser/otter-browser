@@ -103,6 +103,7 @@ public:
 		CloseWindowAction,
 		SessionsAction,
 		SaveSessionAction,
+		OpenUrlAction,
 		OpenLinkAction,
 		OpenLinkInCurrentTabAction,
 		OpenLinkInNewTabAction,
