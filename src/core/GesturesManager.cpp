@@ -148,11 +148,15 @@ void GesturesManager::createInstance(QObject *parent)
 		link.append(QList<GestureStep>() << GestureStep(QEvent::MouseButtonPress, Qt::LeftButton) << GestureStep(QEvent::MouseButtonRelease, Qt::LeftButton));
 		link.append(QList<GestureStep>() << GestureStep(QEvent::MouseButtonPress, Qt::LeftButton) << GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction));
 
+		QList<QList<GestureStep> > contentEditable;
+		contentEditable.append(QList<GestureStep>() << GestureStep(QEvent::MouseButtonPress, Qt::MiddleButton));
+
 		QList<QList<GestureStep> > tabHandle;
 		tabHandle.append(QList<GestureStep>() << GestureStep(QEvent::MouseButtonPress, Qt::LeftButton) << GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction));
 
 		m_nativeGestures[GesturesManager::GenericGesturesContext] = generic;
 		m_nativeGestures[GesturesManager::LinkGesturesContext] = link;
+		m_nativeGestures[GesturesManager::ContentEditableGesturesContext] = contentEditable;
 		m_nativeGestures[GesturesManager::TabHandleGesturesContext] = tabHandle;
 
 		m_instance = new GesturesManager(parent);
@@ -215,9 +219,9 @@ void GesturesManager::loadProfiles()
 			{
 				context = LinkGesturesContext;
 			}
-			else if (contexts.at(j) == QLatin1String("EditableContent"))
+			else if (contexts.at(j) == QLatin1String("ContentEditable"))
 			{
-				context = EditableGesturesContext;
+				context = ContentEditableGesturesContext;
 			}
 			else if (contexts.at(j) == QLatin1String("TabHandle"))
 			{

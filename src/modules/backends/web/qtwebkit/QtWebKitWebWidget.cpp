@@ -2231,15 +2231,15 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 			QList<GesturesManager::GesturesContext> contexts;
 
+			if (getCurrentHitTestResult().flags.testFlag(IsContentEditableTest))
+			{
+				contexts << GesturesManager::ContentEditableGesturesContext;
+			}
+
 			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
 				contexts << GesturesManager::LinkGesturesContext;
 			}
-///FIXME
-//			else if (getCurrentHitTestResult().flags.testFlag(IsContentEditableTest))
-//			{
-//				contexts << GesturesManager::EditableGesturesContext;
-//			}
 
 			contexts << GesturesManager::GenericGesturesContext;
 

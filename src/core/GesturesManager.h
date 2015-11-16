@@ -40,7 +40,7 @@ public:
 		UnknownGesturesContext = 0,
 		GenericGesturesContext,
 		LinkGesturesContext,
-		EditableGesturesContext,
+		ContentEditableGesturesContext,
 		TabHandleGesturesContext,
 		ActiveTabHandleGesturesContext,
 		NoTabHandleGesturesContext,
