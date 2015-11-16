@@ -187,7 +187,7 @@ void GesturesManager::loadProfiles()
 	contextMenuGestureDefinition.steps << GestureStep(QEvent::MouseButtonPress, Qt::RightButton) << GestureStep(QEvent::MouseButtonRelease, Qt::RightButton);
 	contextMenuGestureDefinition.action = ActionsManager::ContextMenuAction;
 
-	for (int i = (GenericGesturesContext + 1); i < OtherGesturesContext; ++i)
+	for (int i = (UnknownGesturesContext + 1); i < OtherGesturesContext; ++i)
 	{
 		GesturesContext context = static_cast<GesturesContext>(i);
 
