@@ -77,7 +77,7 @@ if (element)
 	{
 		var type = (element.type ? element.type.toLowerCase() : '');
 
-		if (type == '' || result.tagName == 'textarea' || type == 'text' || type == 'search')
+		if (type == '' || result.tagName == 'textarea' || type == 'text' || type == 'password' || type == 'search')
 		{
 			if (!element.hasAttribute('readonly') && !element.hasAttribute('disabled'))
 			{
@@ -95,7 +95,7 @@ if (element)
 		result.flags |= 1;
 	}
 
-	var isForm = (result.tagName == 'textarea' || result.tagName == 'select' || ((result.tagName == 'input'|| result.tagName == 'button') && element.type && (element.type.toLowerCase() == 'text' || element.type.toLowerCase() == 'search')));
+	var isForm = (result.tagName == 'textarea' || result.tagName == 'select' || ((result.tagName == 'input'|| result.tagName == 'button') && element.type && (element.type.toLowerCase() == 'text' || element.type.toLowerCase() == 'password' || element.type.toLowerCase() == 'search')));
 	var isSubmit = ((result.tagName == 'input'|| result.tagName == 'button') && element.type && (element.type.toLowerCase() == 'submit' || element.type.toLowerCase() == 'image'));
 
 	while (element && ((isForm && !(result.flags & 4)) || (isSubmit && result.formUrl == '') || result.linkUrl == '' || result.title == ''))

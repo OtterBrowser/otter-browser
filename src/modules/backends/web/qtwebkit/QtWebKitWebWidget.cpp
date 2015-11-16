@@ -1967,7 +1967,7 @@ WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &posit
 	{
 		const QString type = nativeResult.element().attribute(QLatin1String("type")).toLower();
 
-		if (type.isEmpty() || result.tagName == QLatin1String("textarea") || type == QLatin1String("text") || type == QLatin1String("search"))
+		if (type.isEmpty() || result.tagName == QLatin1String("textarea") || type == QLatin1String("text") || type == QLatin1String("password") || type == QLatin1String("search"))
 		{
 			if (!nativeResult.element().hasAttribute(QLatin1String("disabled")) && !nativeResult.element().hasAttribute(QLatin1String("readonly")))
 			{
