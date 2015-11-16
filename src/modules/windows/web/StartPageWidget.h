@@ -61,6 +61,7 @@ class StartPageWidget : public QScrollArea
 public:
 	explicit StartPageWidget(Otter::Window *window, QWidget *parent = NULL);
 
+	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void scrollContents(const QPoint &delta);
 	bool eventFilter(QObject *object, QEvent *event);
 

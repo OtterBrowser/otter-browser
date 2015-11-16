@@ -23,6 +23,7 @@
 #include "TileDelegate.h"
 #include "WebContentsWidget.h"
 #include "../../../core/BookmarksModel.h"
+#include "../../../core/GesturesManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/Utils.h"
 #include "../../../ui/BookmarkPropertiesDialog.h"
@@ -31,6 +32,7 @@
 #include "../../../ui/OpenAddressDialog.h"
 #include "../../../ui/toolbars/SearchWidget.h"
 
+#include <QtGui/QGuiApplication>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPainter>
 #include <QtGui/QPixmapCache>
@@ -175,6 +177,7 @@ StartPageWidget::StartPageWidget(Window *window, QWidget *parent) : QScrollArea(
 	m_listView->viewport()->setMouseTracking(true);
 	m_listView->viewport()->installEventFilter(this);
 
+	installEventFilter(this);
 	setWidget(m_contentsWidget);
 	setWidgetResizable(true);
 	setAlignment(Qt::AlignHCenter);
@@ -201,7 +204,7 @@ void StartPageWidget::resizeEvent(QResizeEvent *event)
 
 void StartPageWidget::contextMenuEvent(QContextMenuEvent *event)
 {
-	if (event->reason() == QContextMenuEvent::Keyboard)
+	if (event->reason() != QContextMenuEvent::Mouse)
 	{
 		event->accept();
 
@@ -329,6 +332,71 @@ void StartPageWidget::optionChanged(const QString &option, const QVariant &value
 			layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), 1, 2);
 			layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), 2, 1);
 		}
+	}
+}
+
+void StartPageWidget::triggerAction(int identifier, const QVariantMap &parameters)
+{
+	if (parameters.contains(QLatin1String("isBounced")))
+	{
+		return;
+	}
+
+	WindowsManager::OpenHints hints;
+
+	switch (identifier)
+	{
+		case ActionsManager::OpenLinkAction:
+		case ActionsManager::OpenLinkInCurrentTabAction:
+			hints = WindowsManager::CurrentTabOpen;
+
+			break;
+		case ActionsManager::OpenLinkInNewTabAction:
+			hints = WindowsManager::NewTabOpen;
+
+			break;
+		case ActionsManager::OpenLinkInNewTabBackgroundAction:
+			hints = (WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen);
+
+			break;
+		case ActionsManager::OpenLinkInNewWindowAction:
+			hints = WindowsManager::NewWindowOpen;
+
+			break;
+		case ActionsManager::OpenLinkInNewWindowBackgroundAction:
+			hints = (WindowsManager::NewWindowOpen | WindowsManager::BackgroundOpen);
+
+			break;
+		case ActionsManager::OpenLinkInNewPrivateTabAction:
+			hints = (WindowsManager::NewTabOpen | WindowsManager::PrivateOpen);
+
+			break;
+		case ActionsManager::OpenLinkInNewPrivateTabBackgroundAction:
+			hints = (WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen | WindowsManager::PrivateOpen);
+
+			break;
+		case ActionsManager::OpenLinkInNewPrivateWindowAction:
+			hints = (WindowsManager::NewWindowOpen | WindowsManager::PrivateOpen);
+
+			break;
+		case ActionsManager::OpenLinkInNewPrivateWindowBackgroundAction:
+			hints = (WindowsManager::NewWindowOpen | WindowsManager::BackgroundOpen | WindowsManager::PrivateOpen);
+
+			break;
+		case ActionsManager::ContextMenuAction:
+			showContextMenu();
+
+			return;
+		default:
+			return;
+	}
+
+	const QUrl url = m_currentIndex.data(BookmarksModel::UrlRole).toUrl();
+	MainWindow *mainWindow = MainWindow::findMainWindow(this);
+
+	if (url.isValid() && mainWindow)
+	{
+		mainWindow->getWindowsManager()->open(url, hints);
 	}
 }
 
@@ -535,6 +603,42 @@ int StartPageWidget::getTilesPerRow() const
 
 bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 {
+	if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel)
+	{
+		if (event->type() == QEvent::Wheel)
+		{
+			QWheelEvent *wheelEvent = static_cast<QWheelEvent*>(event);
+
+			if (wheelEvent)
+			{
+				m_currentIndex = m_listView->indexAt(m_listView->mapFromGlobal(wheelEvent->globalPos()));
+			}
+		}
+		else
+		{
+			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+			if (mouseEvent)
+			{
+				m_currentIndex = m_listView->indexAt(m_listView->mapFromGlobal(mouseEvent->globalPos()));
+			}
+		}
+
+		QList<GesturesManager::GesturesContext> contexts;
+
+		if (m_currentIndex.isValid())
+		{
+			contexts << GesturesManager::LinkGesturesContext;
+		}
+
+		contexts << GesturesManager::GenericGesturesContext;
+
+		if (GesturesManager::startGesture(object, event, contexts))
+		{
+			return true;
+		}
+	}
+
 	if (event->type() == QEvent::KeyRelease && object == m_listView)
 	{
 		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
@@ -602,29 +706,6 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 			}
 		}
 	}
-	else if (event->type() == QEvent::MouseButtonPress && object == m_listView->viewport())
-	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
-
-		if (mouseEvent)
-		{
-			m_currentIndex = m_listView->indexAt(mouseEvent->pos());
-
-			if (mouseEvent->button() == Qt::MiddleButton && m_currentIndex.isValid())
-			{
-				mouseEvent->accept();
-
-				return false;
-			}
-
-			if (mouseEvent->button() != Qt::LeftButton)
-			{
-				mouseEvent->ignore();
-
-				return true;
-			}
-		}
-	}
 	else if (event->type() == QEvent::MouseButtonRelease && object == m_listView->viewport())
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
@@ -676,7 +757,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 				if (url.isValid())
 				{
-					if ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton)
+					if ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier))
 					{
 						MainWindow *mainWindow = MainWindow::findMainWindow(this);
 
@@ -685,7 +766,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 							mainWindow->getWindowsManager()->open(url, WindowsManager::calculateOpenHints(mouseEvent->modifiers(), mouseEvent->button()));
 						}
 					}
-					else if (parentWidget() && parentWidget()->parentWidget())
+					else if (parentWidget() && parentWidget()->parentWidget() && mouseEvent->button() != Qt::MiddleButton)
 					{
 						WebContentsWidget *contentsWidget = qobject_cast<WebContentsWidget*>(parentWidget()->parentWidget());
 

@@ -759,7 +759,6 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 
 			break;
 		case QEvent::Wheel:
-
 			m_events.push_back(new QWheelEvent(wheelEvent->pos(), wheelEvent->globalPos(), wheelEvent->pixelDelta(), wheelEvent->angleDelta(), wheelEvent->delta(), wheelEvent->orientation(), wheelEvent->buttons(), wheelEvent->modifiers()));
 			m_steps.append(recognizeMoveStep(wheelEvent));
 			m_steps.append(GestureStep(wheelEvent));
