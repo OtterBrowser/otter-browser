@@ -388,6 +388,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(ActivateTabOnRightAction, QT_TRANSLATE_NOOP("actions", "Go to Tab on Right"));
 	registerAction(BookmarksAction, QT_TRANSLATE_NOOP("actions", "Manage Bookmarks"), QString(), Utils::getIcon(QLatin1String("bookmarks-organize")));
 	registerAction(AddBookmarkAction, QT_TRANSLATE_NOOP("actions", "Add Bookmark…"), QString(), Utils::getIcon(QLatin1String("bookmark-new")));
+	registerAction(OpenBookmarkAction, QT_TRANSLATE_NOOP("actions", "Open Bookmark"));
 	registerAction(QuickBookmarkAccessAction, QT_TRANSLATE_NOOP("actions", "Quick Bookmark Access"));
 	registerAction(PopupsPolicyAction, QT_TRANSLATE_NOOP("actions", "Block pop-ups"));
 	registerAction(ImagesPolicyAction, QT_TRANSLATE_NOOP("actions", "Load Images"));

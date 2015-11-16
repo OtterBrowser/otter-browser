@@ -215,6 +215,19 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 			m_mainWindow->getTabBar()->activateTabOnRight();
 
 			break;
+		case ActionsManager::OpenBookmarkAction:
+			{
+				OpenHints hints = DefaultOpen;
+
+				if (parameters.contains(QLatin1String("hints")))
+				{
+					hints = static_cast<OpenHints>(parameters[QLatin1String("hints")].toInt());
+				}
+
+				open(BookmarksManager::getBookmark(parameters.value(QLatin1String("bookmark")).toULongLong()), hints);
+			}
+
+			break;
 		default:
 			if (identifier == ActionsManager::PasteAndGoAction && (!window || window->getType() != QLatin1String("web")))
 			{
