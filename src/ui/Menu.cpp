@@ -795,9 +795,9 @@ void Menu::setToolBarVisibility(bool visible)
 	}
 }
 
-Action* Menu::addAction(int identifier, bool isGlobal)
+Action* Menu::addAction(int identifier, bool useGlobal)
 {
-	Action *action = (isGlobal ? ActionsManager::getAction(identifier, this) : new Action(identifier, this));
+	Action *action = (useGlobal ? ActionsManager::getAction(identifier, this) : new Action(identifier, this));
 
 	QMenu::addAction(action);
 
