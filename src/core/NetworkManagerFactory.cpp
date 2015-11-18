@@ -147,14 +147,15 @@ void NetworkManagerFactory::optionChanged(const QString &option, const QVariant 
 		}
 
 		const QStringList selectedCiphers = value.toStringList();
-		const QList<QSslCipher> supportedCiphers = QSslSocket::supportedCiphers();
 		QList<QSslCipher> ciphers;
 
-		for (int i = 0; i < supportedCiphers.count(); ++i)
+		for (int i = 0; i < selectedCiphers.count(); ++i)
 		{
-			if (selectedCiphers.contains(supportedCiphers.at(i).name()))
+			const QSslCipher cipher(selectedCiphers.at(i));
+
+			if (!cipher.isNull())
 			{
-				ciphers.append(supportedCiphers.at(i));
+				ciphers.append(cipher);
 			}
 		}
 
