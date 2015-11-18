@@ -264,7 +264,7 @@ void Window::handleIconChanged(const QIcon &icon)
 
 void Window::handleOpenUrlRequest(const QUrl &url, WindowsManager::OpenHints hints)
 {
-	if (getType() == QLatin1String("web") && (hints == WindowsManager::DefaultOpen || hints == WindowsManager::CurrentTabOpen))
+	if (hints == WindowsManager::DefaultOpen || hints == WindowsManager::CurrentTabOpen)
 	{
 		setUrl(url);
 
@@ -496,20 +496,12 @@ void Window::setContentsWidget(ContentsWidget *widget)
 		return;
 	}
 
-	if (m_contentsWidget->getType() == QLatin1String("web") && !m_navigationBar)
+	if (!m_navigationBar)
 	{
 		m_navigationBar = new ToolBarWidget(ToolBarsManager::NavigationBar, this, this);
 		m_navigationBar->setVisible(!m_areControlsHidden && ToolBarsManager::getToolBarDefinition(ToolBarsManager::NavigationBar).visibility != AlwaysHiddenToolBar);
 
 		layout()->addWidget(m_navigationBar);
-	}
-	else if (m_contentsWidget->getType() != QLatin1String("web") && m_navigationBar)
-	{
-		m_navigationBar->deleteLater();
-
-		layout()->removeWidget(m_navigationBar);
-
-		m_navigationBar = NULL;
 	}
 
 	layout()->addWidget(m_contentsWidget);
