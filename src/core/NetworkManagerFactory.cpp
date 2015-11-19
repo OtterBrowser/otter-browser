@@ -151,7 +151,7 @@ void NetworkManagerFactory::optionChanged(const QString &option, const QVariant 
 
 		for (int i = 0; i < selectedCiphers.count(); ++i)
 		{
-			const QSslCipher cipher(selectedCiphers.at(i));
+			const QSslCipher cipher(selectedCiphers.at(i), QSsl::SecureProtocols);
 
 			if (!cipher.isNull())
 			{
