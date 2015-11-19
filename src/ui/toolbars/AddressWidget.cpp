@@ -183,6 +183,13 @@ void AddressWidget::paintEvent(QPaintEvent *event)
 
 	painter.setPen(QPen(linePalette.mid().color(), 1));
 	painter.drawLine(rectangle.right(), rectangle.top(), rectangle.right(), rectangle.bottom());
+
+	const QString scheme = getUrl().scheme();
+
+	if (scheme != QLatin1String("about") && scheme != QLatin1String("file"))
+	{
+		Utils::getIcon(QLatin1String("badge-web"), false).paint(&painter, rectangle.adjusted(4, 4, -4, -4));
+	}
 }
 
 void AddressWidget::resizeEvent(QResizeEvent *event)
