@@ -60,6 +60,19 @@ public:
 
 	Q_DECLARE_FLAGS(OpenHints, OpenHint)
 
+	enum ContentState
+	{
+		UnknownContentState = 0,
+		ApplicationContentState = 1,
+		LocalContentState = 2,
+		RemoteContentState = 4,
+		SecureContentState = 8,
+		PartiallySecureContentState = 16,
+		FraudContentState = 32
+	};
+
+	Q_DECLARE_FLAGS(ContentStates, ContentState)
+
 	explicit WindowsManager(bool isPrivate, MainWindow *parent);
 
 	Action* getAction(int identifier);
@@ -129,5 +142,6 @@ signals:
 }
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::WindowsManager::OpenHints)
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::WindowsManager::ContentStates)
 
 #endif

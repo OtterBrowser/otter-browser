@@ -27,15 +27,6 @@
 namespace Otter
 {
 
-enum SecurityLevel
-{
-	UnknownSecurityLevel = 0,
-	LocalSecurityLevel = 1,
-	SecureSecurityLevel = 2,
-	InsecureSecurityLevel = 4,
-	FraudSecurityLevel = 8
-};
-
 class ContentsDialog;
 
 class ContentsWidget : public QWidget
