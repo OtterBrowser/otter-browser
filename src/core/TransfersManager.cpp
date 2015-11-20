@@ -70,7 +70,7 @@ void TransfersManager::scheduleSave()
 
 void TransfersManager::addTransfer(Transfer *transfer)
 {
-	m_transfers.prepend(transfer);
+	m_transfers.append(transfer);
 
 	transfer->setUpdateInterval(500);
 
