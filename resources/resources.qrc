@@ -35,6 +35,10 @@
         <file>icons/arrow-up.png</file>
         <file>icons/audio-volume-medium.png</file>
         <file>icons/audio-volume-muted.png</file>
+        <file>icons/badge-local.png</file>
+        <file>icons/badge-secure.png</file>
+        <file>icons/badge-trusted.png</file>
+        <file>icons/badge-unknown.png</file>
         <file>icons/badge-web.png</file>
         <file>icons/bookmark-new.png</file>
         <file>icons/bookmarks-organize.png</file>
@@ -55,6 +59,7 @@
         <file>icons/document-print-preview.png</file>
         <file>icons/document-print.png</file>
         <file>icons/document-save.png</file>
+        <file>icons/download.png</file>
         <file>icons/edit-clear-history.png</file>
         <file>icons/edit-clear.png</file>
         <file>icons/edit-copy.png</file>

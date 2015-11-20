@@ -66,8 +66,8 @@ public:
 		ApplicationContentState = 1,
 		LocalContentState = 2,
 		RemoteContentState = 4,
-		SecureContentState = 8,
-		PartiallySecureContentState = 16,
+		TrustedContentState = 8,
+		SecureContentState = 16,
 		FraudContentState = 32
 	};
 
