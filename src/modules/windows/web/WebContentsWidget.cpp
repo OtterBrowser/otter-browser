@@ -1001,6 +1001,11 @@ QVariantHash WebContentsWidget::getOptions() const
 	return m_webWidget->getOptions();
 }
 
+WindowsManager::ContentStates WebContentsWidget::getContentState() const
+{
+	return m_webWidget->getContentState();
+}
+
 int WebContentsWidget::getZoom() const
 {
 	return m_webWidget->getZoom();

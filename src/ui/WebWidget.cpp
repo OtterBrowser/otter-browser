@@ -1316,6 +1316,23 @@ QHash<QByteArray, QByteArray> WebWidget::getHeaders() const
 	return QHash<QByteArray, QByteArray>();
 }
 
+WindowsManager::ContentStates WebWidget::getContentState() const
+{
+	const QUrl url = getUrl();
+
+	if (url.isEmpty() || url.scheme() == QLatin1String("about"))
+	{
+		return WindowsManager::ApplicationContentState;
+	}
+
+	if (url.scheme() == QLatin1String("file"))
+	{
+		return WindowsManager::LocalContentState;
+	}
+
+	return WindowsManager::RemoteContentState;
+}
+
 WebWidget::HitTestResult WebWidget::getCurrentHitTestResult() const
 {
 	return m_hitResult;

@@ -77,6 +77,7 @@ public:
 	QList<LinkUrl> getFeeds() const;
 	QList<LinkUrl> getSearchEngines() const;
 	QVariantHash getOptions() const;
+	WindowsManager::ContentStates getContentState() const;
 	int getZoom() const;
 	bool canClone() const;
 	bool canZoom() const;

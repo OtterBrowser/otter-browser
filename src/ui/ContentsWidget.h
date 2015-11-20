@@ -50,6 +50,7 @@ public:
 	virtual WindowHistoryInformation getHistory() const;
 	virtual QList<LinkUrl> getFeeds() const;
 	virtual QList<LinkUrl> getSearchEngines() const;
+	virtual WindowsManager::ContentStates getContentState() const;
 	virtual int getZoom() const;
 	virtual bool canClone() const;
 	virtual bool canZoom() const;

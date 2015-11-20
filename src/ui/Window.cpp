@@ -704,6 +704,11 @@ WindowLoadingState Window::getLoadingState() const
 	return (m_contentsWidget ? (m_contentsWidget->isLoading() ? LoadingState : LoadedState) : DelayedState);
 }
 
+WindowsManager::ContentStates Window::getContentState() const
+{
+	return (m_contentsWidget ? m_contentsWidget->getContentState() : WindowsManager::UnknownContentState);
+}
+
 quint64 Window::getIdentifier() const
 {
 	return m_identifier;

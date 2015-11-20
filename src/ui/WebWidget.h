@@ -139,6 +139,7 @@ public:
 	QVariantHash getOptions() const;
 	virtual QVariantHash getStatistics() const;
 	virtual QHash<QByteArray, QByteArray> getHeaders() const;
+	virtual WindowsManager::ContentStates getContentState() const;
 	virtual int getZoom() const = 0;
 	virtual bool handleContextMenuEvent(QContextMenuEvent *event, bool canPropagate = true, QObject *sender = NULL);
 	virtual bool handleMousePressEvent(QMouseEvent *event, bool canPropagate = true, QObject *sender = NULL);

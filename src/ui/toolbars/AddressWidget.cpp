@@ -162,7 +162,37 @@ void AddressWidget::paintEvent(QPaintEvent *event)
 		return;
 	}
 
+	const WindowsManager::ContentStates state = (m_window ? m_window->getContentState() : WindowsManager::UnknownContentState);
+	QString badgeIcon = QLatin1String("unknown");
 	QColor badgeColor = QColor(245, 245, 245);
+
+	if (state.testFlag(WindowsManager::FraudContentState))
+	{
+		badgeIcon = QLatin1String("badge-fraud");
+		badgeColor = QColor(233, 111, 125);
+	}
+	else if (state.testFlag(WindowsManager::TrustedContentState))
+	{
+		badgeIcon = QLatin1String("badge-trusted");
+		badgeColor = QColor(173, 232, 153);
+	}
+	else if (state.testFlag(WindowsManager::SecureContentState))
+	{
+		badgeIcon = QLatin1String("badge-secure");
+		badgeColor = QColor(245, 222, 160);
+	}
+	else if (state.testFlag(WindowsManager::RemoteContentState))
+	{
+		badgeIcon = QLatin1String("badge-remote");
+	}
+	else if (state.testFlag(WindowsManager::LocalContentState))
+	{
+		badgeIcon = QLatin1String("badge-local");
+	}
+	else if (state.testFlag(WindowsManager::ApplicationContentState))
+	{
+		badgeIcon = QLatin1String("otter-browser");
+	}
 
 	panel.palette.setColor(QPalette::Base, badgeColor);
 	panel.state = QStyle::State_Active;
@@ -184,11 +214,9 @@ void AddressWidget::paintEvent(QPaintEvent *event)
 	painter.setPen(QPen(linePalette.mid().color(), 1));
 	painter.drawLine(rectangle.right(), rectangle.top(), rectangle.right(), rectangle.bottom());
 
-	const QString scheme = getUrl().scheme();
-
-	if (scheme != QLatin1String("about") && scheme != QLatin1String("file"))
+	if (!badgeIcon.isEmpty())
 	{
-		Utils::getIcon(QLatin1String("badge-web"), false).paint(&painter, rectangle.adjusted(4, 4, -4, -4));
+		Utils::getIcon(badgeIcon, false).paint(&painter, rectangle.adjusted(4, 4, -4, -4));
 	}
 }
 
@@ -759,6 +787,7 @@ void AddressWidget::setWindow(Window *window)
 	setIcon(window ? window->getIcon() : QIcon());
 	setUrl(window ? window->getUrl() : QUrl());
 	updateLoadPlugins();
+	update();
 }
 
 QUrl AddressWidget::getUrl() const

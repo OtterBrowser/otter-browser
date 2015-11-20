@@ -294,6 +294,11 @@ QList<LinkUrl> ContentsWidget::getSearchEngines() const
 	return QList<LinkUrl>();
 }
 
+WindowsManager::ContentStates ContentsWidget::getContentState() const
+{
+	return WindowsManager::ApplicationContentState;
+}
+
 int ContentsWidget::getZoom() const
 {
 	return 100;

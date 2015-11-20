@@ -88,6 +88,7 @@ public:
 	SessionWindow getSession() const;
 	QSize sizeHint() const;
 	WindowLoadingState getLoadingState() const;
+	WindowsManager::ContentStates getContentState() const;
 	quint64 getIdentifier() const;
 	bool canClone() const;
 	bool isAboutToClose() const;
