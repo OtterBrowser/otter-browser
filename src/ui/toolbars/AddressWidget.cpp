@@ -606,11 +606,11 @@ void AddressWidget::updateLineEdit()
 
 void AddressWidget::updateIcons()
 {
-	QMargins margins;
+	QMargins margins(5, 0, 5, 0);
 
 	if (!m_isUsingSimpleMode)
 	{
-		margins.setLeft(30);
+		margins.setLeft(margins.left() + 30);
 	}
 
 	if (m_urlIconLabel)
