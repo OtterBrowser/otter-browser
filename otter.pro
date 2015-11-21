@@ -426,42 +426,42 @@ RESOURCES += resources/resources.qrc \
     src/modules/backends/web/qtwebkit/QtWebKitResources.qrc
 
 TRANSLATIONS += resources/translations/otter-browser_bg.ts \
-    resources/translations/otter-browser_cs_CZ.ts \
+    resources/translations/otter-browser_cs.ts \
     resources/translations/otter-browser_da.ts \
-    resources/translations/otter-browser_de_DE.ts \
+    resources/translations/otter-browser_de.ts \
     resources/translations/otter-browser_el.ts \
     resources/translations/otter-browser_en_CA.ts \
     resources/translations/otter-browser_en_GB.ts \
     resources/translations/otter-browser_en_US.ts \
-    resources/translations/otter-browser_es_ES.ts \
+    resources/translations/otter-browser_es.ts \
     resources/translations/otter-browser_es_MX.ts \
     resources/translations/otter-browser_et.ts \
     resources/translations/otter-browser_fi.ts \
-    resources/translations/otter-browser_fr_FR.ts \
-    resources/translations/otter-browser_hr_HR.ts \
+    resources/translations/otter-browser_fr.ts \
+    resources/translations/otter-browser_hr.ts \
     resources/translations/otter-browser_hu.ts \
-    resources/translations/otter-browser_id_ID.ts \
-    resources/translations/otter-browser_it_IT.ts \
-    resources/translations/otter-browser_ja_JP.ts \
+    resources/translations/otter-browser_id.ts \
+    resources/translations/otter-browser_it.ts \
+    resources/translations/otter-browser_ja.ts \
     resources/translations/otter-browser_jbo.ts \
-    resources/translations/otter-browser_ka_GE.ts \
+    resources/translations/otter-browser_ka.ts \
     resources/translations/otter-browser_lt.ts \
-    resources/translations/otter-browser_nb_NO.ts \
+    resources/translations/otter-browser_nb.ts \
     resources/translations/otter-browser_nl.ts \
-    resources/translations/otter-browser_pl_PL.ts \
+    resources/translations/otter-browser_pl.ts \
+    resources/translations/otter-browser_pt.ts \
     resources/translations/otter-browser_pt_BR.ts \
-    resources/translations/otter-browser_pt_PT.ts \
     resources/translations/otter-browser_ro.ts \
-    resources/translations/otter-browser_ru_RU.ts \
+    resources/translations/otter-browser_ru.ts \
     resources/translations/otter-browser_sk.ts \
-    resources/translations/otter-browser_sl_SI.ts \
+    resources/translations/otter-browser_sl.ts \
     resources/translations/otter-browser_sr.ts \
     resources/translations/otter-browser_sr@Ijekavian.ts \
     resources/translations/otter-browser_sr@ijekavianlatin.ts \
     resources/translations/otter-browser_sr@latin.ts \
     resources/translations/otter-browser_sv.ts \
-    resources/translations/otter-browser_tr_TR.ts \
-    resources/translations/otter-browser_uk_UA.ts \
+    resources/translations/otter-browser_tr.ts \
+    resources/translations/otter-browser_uk.ts \
     resources/translations/otter-browser_zh_CN.ts \
     resources/translations/otter-browser_zh_TW.ts
 
