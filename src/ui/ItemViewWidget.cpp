@@ -46,6 +46,8 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 	m_filterRoles.insert(Qt::DisplayRole);
 
 	viewport()->setAcceptDrops(true);
+
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
 
 void ItemViewWidget::dropEvent(QDropEvent *event)
