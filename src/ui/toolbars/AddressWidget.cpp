@@ -606,7 +606,7 @@ void AddressWidget::updateLineEdit()
 
 void AddressWidget::updateIcons()
 {
-	QMargins margins(5, 0, 5, 0);
+	QMargins margins(5, 0, 0, 0);
 
 	if (!m_isUsingSimpleMode)
 	{
@@ -645,6 +645,8 @@ void AddressWidget::updateIcons()
 
 		m_loadPluginsLabel->move((width() - margins.right()), ((height() - m_loadPluginsLabel->height()) / 2));
 	}
+
+	margins.setRight(margins.right() + 3);
 
 	lineEdit()->setTextMargins(margins);
 }
