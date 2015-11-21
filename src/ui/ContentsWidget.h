@@ -95,8 +95,9 @@ signals:
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url);
 	void iconChanged(const QIcon &icon);
-	void loadingChanged(bool loading);
+	void contentStateChanged(WindowsManager::ContentStates state);
 	void zoomChanged(int zoom);
+	void loadingChanged(bool loading);
 };
 
 }

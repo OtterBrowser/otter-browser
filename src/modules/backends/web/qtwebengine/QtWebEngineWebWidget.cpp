@@ -196,6 +196,7 @@ void QtWebEngineWebWidget::pageLoadFinished()
 	updateNavigationActions();
 	startReloadTimer();
 
+	emit contentStateChanged(getContentState());
 	emit loadingChanged(false);
 }
 

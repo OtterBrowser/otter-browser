@@ -242,14 +242,15 @@ signals:
 	void requestedPermission(QString option, QUrl url, bool cancel);
 	void requestedGeometryChange(const QRect &geometry);
 	void progressBarGeometryChanged();
+	void loadMessageChanged(QString message);
 	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url);
 	void iconChanged(const QIcon &icon);
-	void loadingChanged(bool loading);
+	void contentStateChanged(WindowsManager::ContentStates state);
 	void zoomChanged(int zoom);
 	void loadProgress(int progress);
-	void loadMessageChanged(QString message);
+	void loadingChanged(bool loading);
 	void loadStatusChanged(int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);
 };
 

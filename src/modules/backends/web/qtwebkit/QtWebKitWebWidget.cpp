@@ -289,6 +289,7 @@ void QtWebKitWebWidget::pageLoadFinished()
 	handleHistory();
 	startReloadTimer();
 
+	emit contentStateChanged(getContentState());
 	emit loadingChanged(false);
 }
 

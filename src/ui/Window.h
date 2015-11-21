@@ -150,6 +150,7 @@ signals:
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url, bool force = false);
 	void iconChanged(const QIcon &icon);
+	void contentStateChanged(WindowsManager::ContentStates state);
 	void loadingStateChanged(WindowLoadingState loading);
 	void zoomChanged(int zoom);
 	void isPinnedChanged(bool pinned);
