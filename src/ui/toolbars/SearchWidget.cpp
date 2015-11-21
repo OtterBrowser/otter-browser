@@ -147,8 +147,8 @@ void SearchWidget::resizeEvent(QResizeEvent *event)
 	m_searchButtonRectangle.setLeft(rectangle.right() - rectangle.height());
 	m_searchButtonRectangle = m_searchButtonRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
 
-	lineEdit()->resize((rectangle.width() - m_selectButtonIconRectangle.width() - m_selectButtonArrowRectangle.width() - m_searchButtonRectangle.width()), rectangle.height());
-	lineEdit()->move(m_selectButtonArrowRectangle.topRight());
+	lineEdit()->resize((rectangle.width() - m_selectButtonIconRectangle.width() - m_selectButtonArrowRectangle.width() - m_searchButtonRectangle.width() - 10), rectangle.height());
+	lineEdit()->move(m_selectButtonArrowRectangle.topRight() + QPoint(3, 0));
 
 	m_lineEditRectangle = lineEdit()->geometry();
 }
