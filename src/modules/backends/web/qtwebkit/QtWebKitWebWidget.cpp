@@ -150,6 +150,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(m_webView, SIGNAL(urlChanged(QUrl)), this, SLOT(notifyUrlChanged(QUrl)));
 	connect(m_webView, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
 	connect(m_networkManager, SIGNAL(messageChanged(QString)), this, SIGNAL(loadMessageChanged(QString)));
+	connect(m_networkManager, SIGNAL(contentStateChanged(WindowsManager::ContentStates)), this, SLOT(notifyContentStateChanged()));
 	connect(m_networkManager, SIGNAL(statusChanged(int,int,qint64,qint64,qint64)), this, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)));
 	connect(m_networkManager, SIGNAL(documentLoadProgressChanged(int)), this, SIGNAL(loadProgress(int)));
 	connect(m_splitter, SIGNAL(splitterMoved(int,int)), this, SIGNAL(progressBarGeometryChanged()));
@@ -255,12 +256,19 @@ void QtWebKitWebWidget::navigating(QWebFrame *frame, QWebPage::NavigationType ty
 			handleHistory();
 		}
 
+		m_networkManager->resetStatistics();
+
 		m_isNavigating = true;
 	}
 }
 
 void QtWebKitWebWidget::pageLoadStarted()
 {
+	if (m_isLoading)
+	{
+		return;
+	}
+
 	m_canLoadPlugins = (getOption(QLatin1String("Browser/EnablePlugins"), getUrl()).toString() == QLatin1String("enabled"));
 	m_isLoading = true;
 	m_thumbnail = QPixmap();
@@ -275,15 +283,13 @@ void QtWebKitWebWidget::pageLoadStarted()
 
 void QtWebKitWebWidget::pageLoadFinished()
 {
-	if (!m_isLoading)
+	if (!m_isLoading || m_networkManager->isLoading())
 	{
 		return;
 	}
 
 	m_isLoading = false;
 	m_thumbnail = QPixmap();
-
-	m_networkManager->resetStatistics();
 
 	updateNavigationActions();
 	handleHistory();
@@ -656,6 +662,13 @@ void QtWebKitWebWidget::notifyPermissionRequested(QWebFrame *frame, QWebPage::Fe
 			}
 		}
 	}
+}
+
+void QtWebKitWebWidget::notifyContentStateChanged()
+{
+	pageLoadFinished();
+
+	emit contentStateChanged(getContentState());
 }
 
 void QtWebKitWebWidget::updateUndoText(const QString &text)
@@ -1600,8 +1613,6 @@ void QtWebKitWebWidget::setUrl(const QUrl &url, bool typed)
 
 	updateOptions(targetUrl);
 
-	m_networkManager->resetStatistics();
-
 	m_webView->load(targetUrl);
 
 	notifyTitleChanged();
@@ -2091,6 +2102,23 @@ QHash<QByteArray, QByteArray> QtWebKitWebWidget::getHeaders() const
 QVariantHash QtWebKitWebWidget::getStatistics() const
 {
 	return m_networkManager->getStatistics();
+}
+
+WindowsManager::ContentStates QtWebKitWebWidget::getContentState() const
+{
+	const QUrl url = getUrl();
+
+	if (url.isEmpty() || url.scheme() == QLatin1String("about"))
+	{
+		return WindowsManager::ApplicationContentState;
+	}
+
+	if (url.scheme() == QLatin1String("file"))
+	{
+		return WindowsManager::LocalContentState;
+	}
+
+	return (m_networkManager->getContentState() | WindowsManager::RemoteContentState);
 }
 
 QVector<int> QtWebKitWebWidget::getContentBlockingProfiles() const

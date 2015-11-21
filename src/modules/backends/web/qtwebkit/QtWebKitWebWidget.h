@@ -69,6 +69,7 @@ public:
 	QVector<int> getContentBlockingProfiles() const;
 	QHash<QByteArray, QByteArray> getHeaders() const;
 	QVariantHash getStatistics() const;
+	WindowsManager::ContentStates getContentState() const;
 	int getZoom() const;
 	bool hasSelection() const;
 	bool isLoading() const;
@@ -140,6 +141,7 @@ protected slots:
 	void notifyUrlChanged(const QUrl &url);
 	void notifyIconChanged();
 	void notifyPermissionRequested(QWebFrame *frame, QWebPage::Feature feature, bool cancel);
+	void notifyContentStateChanged();
 	void updateUndoText(const QString &text);
 	void updateRedoText(const QString &text);
 	void updateOptions(const QUrl &url);

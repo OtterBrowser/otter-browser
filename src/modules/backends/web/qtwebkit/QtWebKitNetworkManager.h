@@ -22,6 +22,7 @@
 
 #include "../../../../core/NetworkManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
+#include "../../../../core/WindowsManager.h"
 
 #include <QtCore/QPointer>
 #include <QtNetwork/QNetworkRequest>
@@ -43,6 +44,8 @@ public:
 	CookieJar* getCookieJar();
 	QHash<QByteArray, QByteArray> getHeaders() const;
 	QVariantHash getStatistics() const;
+	WindowsManager::ContentStates getContentState() const;
+	bool isLoading() const;
 
 protected:
 	void timerEvent(QTimerEvent *event);
@@ -72,12 +75,15 @@ private:
 	QString m_userAgent;
 	QUrl m_formRequestUrl;
 	QList<QNetworkReply*> m_transfers;
+	QList<QSslError> m_sslErrors;
 	QHash<QNetworkReply*, QPair<qint64, bool> > m_replies;
 	QHash<QString, int> m_blockedRequests;
+	WindowsManager::ContentStates m_contentState;
 	qint64 m_speed;
 	qint64 m_bytesReceivedDifference;
 	qint64 m_bytesReceived;
 	qint64 m_bytesTotal;
+	int m_isSecure;
 	int m_finishedRequests;
 	int m_startedRequests;
 	int m_updateTimer;
@@ -88,6 +94,7 @@ private:
 
 signals:
 	void messageChanged(const QString &message = QString());
+	void contentStateChanged(WindowsManager::ContentStates state);
 	void documentLoadProgressChanged(int progress);
 	void statusChanged(int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);
 

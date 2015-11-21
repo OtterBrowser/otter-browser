@@ -50,6 +50,7 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, CookieJarProxy *c
 	m_cookieJar(NULL),
 	m_cookieJarProxy(cookieJarProxy),
 	m_baseReply(NULL),
+	m_contentState(WindowsManager::UnknownContentState),
 	m_speed(0),
 	m_bytesReceivedDifference(0),
 	m_bytesReceived(0),
@@ -58,7 +59,8 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, CookieJarProxy *c
 	m_startedRequests(0),
 	m_updateTimer(0),
 	m_doNotTrackPolicy(NetworkManagerFactory::SkipTrackPolicy),
-	m_canSendReferrer(true)
+	m_canSendReferrer(true),
+	m_isSecure(0)
 {
 	NetworkManagerFactory::initialize();
 
@@ -154,6 +156,8 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 		return;
 	}
 
+	m_sslErrors.append(errors);
+
 	QStringList ignoredErrors = m_widget->getOption(QLatin1String("Security/IgnoreSslErrors"), m_widget->getUrl()).toStringList();
 	QStringList messages;
 	QList<QSslError> errorsToIgnore;
@@ -221,15 +225,20 @@ void QtWebKitNetworkManager::resetStatistics()
 	updateStatus();
 
 	m_updateTimer = 0;
+	m_sslErrors.clear();
 	m_replies.clear();
 	m_blockedRequests.clear();
 	m_baseReply = NULL;
 	m_speed = 0;
+	m_contentState = WindowsManager::UnknownContentState;
 	m_bytesReceivedDifference = 0;
 	m_bytesReceived = 0;
 	m_bytesTotal = 0;
 	m_finishedRequests = 0;
 	m_startedRequests = 0;
+	m_isSecure = 0;
+
+	emit contentStateChanged(m_contentState);
 }
 
 void QtWebKitNetworkManager::registerTransfer(QNetworkReply *reply)
@@ -308,6 +317,13 @@ void QtWebKitNetworkManager::requestFinished(QNetworkReply *reply)
 		m_updateTimer = 0;
 
 		updateStatus();
+
+		if ((m_isSecure == 1 || (m_isSecure == 0 && m_contentState.testFlag(WindowsManager::SecureContentState))) && m_sslErrors.isEmpty())
+		{
+			m_contentState = WindowsManager::SecureContentState;
+		}
+
+		emit contentStateChanged(m_contentState);
 	}
 
 	++m_finishedRequests;
@@ -520,6 +536,20 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 		m_baseReply = reply;
 	}
 
+	if (m_isSecure >= 0)
+	{
+		const QString scheme = reply->url().scheme();
+
+		if (scheme == QLatin1String("https"))
+		{
+			m_isSecure = 1;
+		}
+		else if (scheme == QLatin1String("http"))
+		{
+			m_isSecure = -1;
+		}
+	}
+
 	m_replies[reply] = qMakePair(0, false);
 
 	connect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
@@ -564,6 +594,16 @@ QVariantHash QtWebKitNetworkManager::getStatistics() const
 	statistics[QLatin1String("speed")] = m_speed;
 
 	return statistics;
+}
+
+WindowsManager::ContentStates QtWebKitNetworkManager::getContentState() const
+{
+	return m_contentState;
+}
+
+bool QtWebKitNetworkManager::isLoading() const
+{
+	return !m_replies.isEmpty();
 }
 
 }
