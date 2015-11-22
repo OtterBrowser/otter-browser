@@ -459,7 +459,7 @@ TRANSLATIONS += resources/translations/otter-browser_bg.ts \
     resources/translations/otter-browser_sk.ts \
     resources/translations/otter-browser_sl.ts \
     resources/translations/otter-browser_sr.ts \
-    resources/translations/otter-browser_sr@Ijekavian.ts \
+    resources/translations/otter-browser_sr@ijekavian.ts \
     resources/translations/otter-browser_sr@ijekavianlatin.ts \
     resources/translations/otter-browser_sr@latin.ts \
     resources/translations/otter-browser_sv.ts \
