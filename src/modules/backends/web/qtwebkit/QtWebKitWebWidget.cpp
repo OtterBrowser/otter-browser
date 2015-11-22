@@ -1871,6 +1871,11 @@ QRect QtWebKitWebWidget::getProgressBarGeometry() const
 	return geometry;
 }
 
+WebWidget::SslInformation QtWebKitWebWidget::getSslInformation() const
+{
+	return m_networkManager->getSslInformation();
+}
+
 WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 {
 	QVariantList data = m_webView->history()->currentItem().userData().toList();

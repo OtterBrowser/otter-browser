@@ -25,6 +25,9 @@
 #include "Window.h"
 
 #include <QtGui/QHelpEvent>
+#include <QtNetwork/QSslCertificate>
+#include <QtNetwork/QSslCipher>
+#include <QtNetwork/QSslError>
 #include <QtPrintSupport/QPrinter>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QUndoStack>
@@ -113,6 +116,13 @@ public:
 		}
 	};
 
+	struct SslInformation
+	{
+		QSslCertificate certificate;
+		QSslCipher cipher;
+		QList<QPair<QUrl, QSslError> > errors;
+	};
+
 	virtual void search(const QString &query, const QString &engine);
 	virtual void print(QPrinter *printer) = 0;
 	void showDialog(ContentsDialog *dialog, bool lockEventLoop = true);
@@ -131,6 +141,7 @@ public:
 	QPoint getClickPosition() const;
 	virtual QPoint getScrollPosition() const = 0;
 	virtual QRect getProgressBarGeometry() const = 0;
+	virtual SslInformation getSslInformation() const;
 	virtual WindowHistoryInformation getHistory() const = 0;
 	virtual HitTestResult getHitTestResult(const QPoint &position);
 	QStringList getAlternateStyleSheets() const;

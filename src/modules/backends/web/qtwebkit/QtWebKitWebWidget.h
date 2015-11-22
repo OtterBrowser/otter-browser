@@ -62,6 +62,7 @@ public:
 	QPixmap getThumbnail();
 	QPoint getScrollPosition() const;
 	QRect getProgressBarGeometry() const;
+	WebWidget::SslInformation getSslInformation() const;
 	WindowHistoryInformation getHistory() const;
 	HitTestResult getHitTestResult(const QPoint &position);
 	QList<LinkUrl> getFeeds() const;

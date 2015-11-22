@@ -20,7 +20,6 @@
 **************************************************************************/
 
 #include "QtWebKitNetworkManager.h"
-#include "QtWebKitWebWidget.h"
 #include "../../../../core/AddonsManager.h"
 #include "../../../../core/ContentBlockingManager.h"
 #include "../../../../core/Console.h"
@@ -156,8 +155,6 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 		return;
 	}
 
-	m_sslErrors.append(errors);
-
 	QStringList ignoredErrors = m_widget->getOption(QLatin1String("Security/IgnoreSslErrors"), m_widget->getUrl()).toStringList();
 	QStringList messages;
 	QList<QSslError> errorsToIgnore;
@@ -166,6 +163,8 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 	{
 		if (errors.at(i).error() != QSslError::NoError)
 		{
+			m_sslInformation.errors.append(qMakePair(reply->url(), errors.at(i)));
+
 			if (ignoredErrors.contains(errors.at(i).certificate().digest().toBase64()))
 			{
 				errorsToIgnore.append(errors.at(i));
@@ -224,8 +223,8 @@ void QtWebKitNetworkManager::resetStatistics()
 	killTimer(m_updateTimer);
 	updateStatus();
 
+	m_sslInformation = WebWidget::SslInformation();
 	m_updateTimer = 0;
-	m_sslErrors.clear();
 	m_replies.clear();
 	m_blockedRequests.clear();
 	m_baseReply = NULL;
@@ -307,6 +306,20 @@ void QtWebKitNetworkManager::requestFinished(QNetworkReply *reply)
 {
 	if (reply)
 	{
+		if (reply == m_baseReply)
+		{
+			if (reply->sslConfiguration().isNull())
+			{
+				m_sslInformation.certificate = QSslCertificate();
+				m_sslInformation.cipher = QSslCipher();
+			}
+			else
+			{
+				m_sslInformation.certificate = reply->sslConfiguration().peerCertificate();
+				m_sslInformation.cipher = reply->sslConfiguration().sessionCipher();
+			}
+		}
+
 		m_replies.remove(reply);
 	}
 
@@ -318,7 +331,7 @@ void QtWebKitNetworkManager::requestFinished(QNetworkReply *reply)
 
 		updateStatus();
 
-		if ((m_isSecure == 1 || (m_isSecure == 0 && m_contentState.testFlag(WindowsManager::SecureContentState))) && m_sslErrors.isEmpty())
+		if ((m_isSecure == 1 || (m_isSecure == 0 && m_contentState.testFlag(WindowsManager::SecureContentState))) && m_sslInformation.errors.isEmpty())
 		{
 			m_contentState = WindowsManager::SecureContentState;
 		}
@@ -565,6 +578,11 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 CookieJar* QtWebKitNetworkManager::getCookieJar()
 {
 	return m_cookieJar;
+}
+
+WebWidget::SslInformation QtWebKitNetworkManager::getSslInformation() const
+{
+	return m_sslInformation;
 }
 
 QHash<QByteArray, QByteArray> QtWebKitNetworkManager::getHeaders() const

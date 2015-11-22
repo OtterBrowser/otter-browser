@@ -20,6 +20,7 @@
 #ifndef OTTER_QTWEBKITNETWORKMANAGER_H
 #define OTTER_QTWEBKITNETWORKMANAGER_H
 
+#include "QtWebKitWebWidget.h"
 #include "../../../../core/NetworkManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/WindowsManager.h"
@@ -42,6 +43,7 @@ public:
 	explicit QtWebKitNetworkManager(bool isPrivate, CookieJarProxy *cookieJarProxy, QtWebKitWebWidget *parent);
 
 	CookieJar* getCookieJar();
+	WebWidget::SslInformation getSslInformation() const;
 	QHash<QByteArray, QByteArray> getHeaders() const;
 	QVariantHash getStatistics() const;
 	WindowsManager::ContentStates getContentState() const;
@@ -74,8 +76,8 @@ private:
 	QString m_acceptLanguage;
 	QString m_userAgent;
 	QUrl m_formRequestUrl;
+	WebWidget::SslInformation m_sslInformation;
 	QList<QNetworkReply*> m_transfers;
-	QList<QSslError> m_sslErrors;
 	QHash<QNetworkReply*, QPair<qint64, bool> > m_replies;
 	QHash<QString, int> m_blockedRequests;
 	WindowsManager::ContentStates m_contentState;

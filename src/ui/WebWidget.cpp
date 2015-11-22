@@ -1286,6 +1286,11 @@ QPoint WebWidget::getClickPosition() const
 	return m_clickPosition;
 }
 
+WebWidget::SslInformation WebWidget::getSslInformation() const
+{
+	return SslInformation();
+}
+
 QStringList WebWidget::getAlternateStyleSheets() const
 {
 	return m_alternateStyleSheets;
