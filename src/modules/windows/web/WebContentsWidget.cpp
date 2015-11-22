@@ -25,9 +25,12 @@
 #include "../../../core/AddonsManager.h"
 #include "../../../core/InputInterpreter.h"
 #include "../../../core/SettingsManager.h"
+#include "../../../core/Utils.h"
 #include "../../../core/WebBackend.h"
+#include "../../../ui/ContentsDialog.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/SourceViewerWebWidget.h"
+#include "../../../ui/WebsiteInformationDialog.h"
 
 #include <QtGui/QClipboard>
 #include <QtGui/QGuiApplication>
@@ -400,6 +403,30 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 			}
 
 			break;
+		case ActionsManager::ZoomInAction:
+			setZoom(qMin((getZoom() + 10), 10000));
+
+			break;
+		case ActionsManager::ZoomOutAction:
+			setZoom(qMax((getZoom() - 10), 10));
+
+			break;
+		case ActionsManager::ZoomOriginalAction:
+			setZoom(100);
+
+			break;
+		case ActionsManager::StartDragScrollAction:
+			setScrollMode(DragScroll);
+
+			break;
+		case ActionsManager::StartMoveScrollAction:
+			setScrollMode(MoveScroll);
+
+			break;
+		case ActionsManager::EndScrollAction:
+			setScrollMode(NoScroll);
+
+			break;
 		case ActionsManager::QuickPreferencesAction:
 			{
 				if (m_isTabPreferencesMenuVisible)
@@ -478,28 +505,15 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 			}
 
 			break;
-		case ActionsManager::ZoomInAction:
-			setZoom(qMin((getZoom() + 10), 10000));
+		case ActionsManager::WebsiteInformationAction:
+			{
+				WebsiteInformationDialog *websiteInformationDialog = new WebsiteInformationDialog(m_webWidget, this);
+				ContentsDialog *dialog = new ContentsDialog(Utils::getIcon(QLatin1String("dialog-information")), websiteInformationDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, websiteInformationDialog, this);
 
-			break;
-		case ActionsManager::ZoomOutAction:
-			setZoom(qMax((getZoom() - 10), 10));
+				connect(websiteInformationDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
 
-			break;
-		case ActionsManager::ZoomOriginalAction:
-			setZoom(100);
-
-			break;
-		case ActionsManager::StartDragScrollAction:
-			setScrollMode(DragScroll);
-
-			break;
-		case ActionsManager::StartMoveScrollAction:
-			setScrollMode(MoveScroll);
-
-			break;
-		case ActionsManager::EndScrollAction:
-			setScrollMode(NoScroll);
+				showDialog(dialog, false);
+			}
 
 			break;
 		default:

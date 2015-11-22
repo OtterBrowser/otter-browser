@@ -164,6 +164,7 @@ SOURCES += src/main.cpp \
     src/ui/TrayIcon.cpp \
     src/ui/UpdateCheckerDialog.cpp \
     src/ui/UserAgentsManagerDialog.cpp \
+    src/ui/WebsiteInformationDialog.cpp \
     src/ui/WebsitePreferencesDialog.cpp \
     src/ui/WebWidget.cpp \
     src/ui/Window.cpp \
@@ -317,6 +318,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/TrayIcon.h \
     src/ui/UpdateCheckerDialog.h \
     src/ui/UserAgentsManagerDialog.h \
+    src/ui/WebsiteInformationDialog.h \
     src/ui/WebsitePreferencesDialog.h \
     src/ui/WebWidget.h \
     src/ui/Window.h \
@@ -399,6 +401,7 @@ FORMS += src/ui/AcceptCookieDialog.ui \
     src/ui/TransferDialog.ui \
     src/ui/UpdateCheckerDialog.ui \
     src/ui/UserAgentsManagerDialog.ui \
+    src/ui/WebsiteInformationDialog.ui \
     src/ui/WebsitePreferencesDialog.ui \
     src/ui/preferences/AcceptLanguageDialog.ui \
     src/ui/preferences/ContentBlockingDialog.ui \
