@@ -239,6 +239,7 @@ public:
 		WebsitePreferencesAction,
 		QuickPreferencesAction,
 		ResetQuickPreferencesAction,
+		WebsiteInformationAction,
 		SwitchApplicationLanguageAction,
 		CheckForUpdatesAction,
 		DiagnosticReportAction,

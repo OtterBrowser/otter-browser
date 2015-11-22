@@ -45,6 +45,7 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QStyleOptionFrame>
+#include <QtWidgets/QToolTip>
 
 namespace Otter
 {
@@ -849,6 +850,15 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (mouseEvent)
 		{
+			if (m_securityBadgeRectangle.contains(mouseEvent->pos()) && m_window)
+			{
+				m_window->triggerAction(ActionsManager::WebsiteInformationAction);
+
+				event->accept();
+
+				return true;
+			}
+
 			if (m_shouldSelectAllOnRelease && mouseEvent->button() == Qt::LeftButton)
 			{
 				disconnect(lineEdit(), SIGNAL(selectionChanged()), this, SLOT(clearSelectAllOnRelease()));
@@ -915,6 +925,17 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 					lineEdit()->setCursor(Qt::IBeamCursor);
 				}
 			}
+		}
+	}
+	else if (object == lineEdit() && event->type() == QEvent::ToolTip)
+	{
+		QHelpEvent *helpEvent = static_cast<QHelpEvent*>(event);
+
+		if (helpEvent && m_securityBadgeRectangle.contains(helpEvent->pos()))
+		{
+			QToolTip::showText(helpEvent->globalPos(), tr("Show Website Information"));
+
+			return true;
 		}
 	}
 	else if (object == m_bookmarkLabel && m_bookmarkLabel && m_window && event->type() == QEvent::MouseButtonPress)

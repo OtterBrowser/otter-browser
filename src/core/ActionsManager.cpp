@@ -230,6 +230,7 @@ bool Action::isLocal(int identifier)
 		case ActionsManager::WebsitePreferencesAction:
 		case ActionsManager::QuickPreferencesAction:
 		case ActionsManager::ResetQuickPreferencesAction:
+		case ActionsManager::WebsiteInformationAction:
 			return true;
 		default:
 			break;
@@ -426,6 +427,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(WebsitePreferencesAction, QT_TRANSLATE_NOOP("actions", "Website Preferences…"));
 	registerAction(QuickPreferencesAction, QT_TRANSLATE_NOOP("actions", "Quick Preferences"));
 	registerAction(ResetQuickPreferencesAction, QT_TRANSLATE_NOOP("actions", "Reset Options"));
+	registerAction(WebsiteInformationAction, QT_TRANSLATE_NOOP("actions", "Website Information…"));
 	registerAction(SwitchApplicationLanguageAction, QT_TRANSLATE_NOOP("actions", "Switch Application Language…"), QString(), Utils::getIcon(QLatin1String("preferences-desktop-locale")));
 	registerAction(CheckForUpdatesAction, QT_TRANSLATE_NOOP("actions", "Check for Updates…"));
 	registerAction(DiagnosticReportAction, QT_TRANSLATE_NOOP("actions", "Diagnostic Report…"));
