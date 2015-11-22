@@ -82,7 +82,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 	m_ui->titleLabelWidget->setText(widget->getTitle());
 ///FIXME
 	m_ui->encodingLabelWidget->setText(tr("unknown"));
-	m_ui->sizeLabelWidget->setText(Utils::formatUnit(statistics.value(QLatin1String("bytesTotal")).toLongLong()));
+	m_ui->sizeLabelWidget->setText(Utils::formatUnit(statistics.value(QLatin1String("bytesTotal")).toLongLong(), false, 1, true));
 	m_ui->elementsLabelWidget->setText((statistics.value(QLatin1String("requestsBlocked")).toInt() > 0) ? tr("%1 (%n blocked)", "", statistics.value(QLatin1String("requestsBlocked")).toInt()).arg(statistics.value(QLatin1String("requestsStarted")).toInt()) : QString::number(statistics.value(QLatin1String("requestsStarted")).toInt()));
 	m_ui->downloadDateLabelWidget->setText(Utils::formatDateTime(statistics.value(QLatin1String("dateDownloaded")).toDateTime()));
 

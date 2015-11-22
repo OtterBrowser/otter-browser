@@ -45,7 +45,7 @@ QString createIdentifier(const QString &base, const QStringList &exclude, bool t
 QString elideText(const QString &text, QWidget *widget = NULL, int width = -1);
 QString formatConfigurationEntry(const QLatin1String &key, const QString &value, bool quote = false);
 QString formatTime(int value);
-QString formatUnit(qint64 value, bool isSpeed = false, int precision = 1);
+QString formatUnit(qint64 value, bool isSpeed = false, int precision = 1, bool appendRaw = false);
 QString formatDateTime(const QDateTime &dateTime, const QString &format = QString());
 QIcon getIcon(const QString &name, bool fromTheme = true);
 QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType);
