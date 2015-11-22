@@ -223,6 +223,7 @@ void QtWebKitNetworkManager::resetStatistics()
 	killTimer(m_updateTimer);
 	updateStatus();
 
+	m_dateDownloaded = QDateTime();
 	m_sslInformation = WebWidget::SslInformation();
 	m_updateTimer = 0;
 	m_replies.clear();
@@ -327,6 +328,7 @@ void QtWebKitNetworkManager::requestFinished(QNetworkReply *reply)
 	{
 		killTimer(m_updateTimer);
 
+		m_dateDownloaded = QDateTime::currentDateTime();
 		m_updateTimer = 0;
 
 		updateStatus();
@@ -605,10 +607,12 @@ QHash<QByteArray, QByteArray> QtWebKitNetworkManager::getHeaders() const
 QVariantHash QtWebKitNetworkManager::getStatistics() const
 {
 	QVariantHash statistics;
-	statistics[QLatin1String("finishedRequests")] = m_finishedRequests;
-	statistics[QLatin1String("startedRequests")] = m_startedRequests;
+	statistics[QLatin1String("dateDownloaded")] = m_dateDownloaded;
 	statistics[QLatin1String("bytesReceived")] = m_bytesReceived;
 	statistics[QLatin1String("bytesTotal")] = m_bytesTotal;
+	statistics[QLatin1String("requestsBlocked")] = m_blockedRequests.count();
+	statistics[QLatin1String("requestsFinished")] = m_finishedRequests;
+	statistics[QLatin1String("requestsStarted")] = m_startedRequests;
 	statistics[QLatin1String("speed")] = m_speed;
 
 	return statistics;

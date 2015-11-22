@@ -52,11 +52,96 @@
      <property name="usesScrollButtons">
       <bool>false</bool>
      </property>
-     <widget class="QWidget" name="connectionTab">
+     <widget class="QWidget" name="generalTab">
       <attribute name="title">
-       <string>Connection</string>
+       <string>General</string>
       </attribute>
-      <layout class="QFormLayout" name="formLayout">
+      <layout class="QFormLayout" name="generalLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="informationHeaderLabel">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Information</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="addressLabel">
+         <property name="text">
+          <string>Address:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="encodingLabel">
+         <property name="text">
+          <string>Encoding:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="sizeLabel">
+         <property name="text">
+          <string>Size:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="elementsLabel">
+         <property name="text">
+          <string>Elements:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="downloadDateLabel">
+         <property name="text">
+          <string>Download date:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="Otter::TextLabelWidget" name="addressLabelWidget" native="true"/>
+       </item>
+       <item row="3" column="1">
+        <widget class="Otter::TextLabelWidget" name="encodingLabelWidget" native="true"/>
+       </item>
+       <item row="4" column="1">
+        <widget class="Otter::TextLabelWidget" name="sizeLabelWidget" native="true"/>
+       </item>
+       <item row="5" column="1">
+        <widget class="Otter::TextLabelWidget" name="elementsLabelWidget" native="true"/>
+       </item>
+       <item row="6" column="1">
+        <widget class="Otter::TextLabelWidget" name="downloadDateLabelWidget" native="true"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="titleLabel">
+         <property name="text">
+          <string>Title:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="Otter::TextLabelWidget" name="titleLabelWidget" native="true"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="permissionsTab">
+      <attribute name="title">
+       <string>Permissions</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="securityTab">
+      <attribute name="title">
+       <string>Security</string>
+      </attribute>
+      <layout class="QFormLayout" name="securityLayout">
        <item row="0" column="0">
         <widget class="QLabel" name="certificateHeaderLabel">
          <property name="font">
@@ -105,7 +190,7 @@
         </widget>
        </item>
        <item row="5" column="0">
-        <widget class="QLabel" name="cipherProtcolLabel">
+        <widget class="QLabel" name="cipherProtocolLabel">
          <property name="text">
           <string>Protocol:</string>
          </property>
@@ -169,7 +254,7 @@
         <widget class="Otter::TextLabelWidget" name="certificateExpirationDateLabelWidget" native="true"/>
        </item>
        <item row="5" column="1">
-        <widget class="Otter::TextLabelWidget" name="cipherProtcolLabelWidget" native="true"/>
+        <widget class="Otter::TextLabelWidget" name="cipherProtocolLabelWidget" native="true"/>
        </item>
        <item row="6" column="1">
         <widget class="Otter::TextLabelWidget" name="cipherAuthenticationMethodLabelWidget" native="true"/>
@@ -181,11 +266,6 @@
         <widget class="Otter::TextLabelWidget" name="cipherKeyExchangeMethodLabelWidget" native="true"/>
        </item>
       </layout>
-     </widget>
-     <widget class="QWidget" name="permissionsTab">
-      <attribute name="title">
-       <string>Permissions</string>
-      </attribute>
      </widget>
     </widget>
    </item>

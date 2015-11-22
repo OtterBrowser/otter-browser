@@ -32,6 +32,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 	m_ui->setupUi(this);
 	m_ui->tabWidget->setTabEnabled(1, false);
 
+	const QVariantHash statistics = widget->getStatistics();
 	const WindowsManager::ContentStates state = widget->getContentState();
 	QString host = widget->getUrl().host();
 
@@ -77,17 +78,24 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 	}
 
 	m_ui->hostLabel->setText(host);
+	m_ui->addressLabelWidget->setText(widget->getUrl().toString());
+	m_ui->titleLabelWidget->setText(widget->getTitle());
+///FIXME
+	m_ui->encodingLabelWidget->setText(tr("unknown"));
+	m_ui->sizeLabelWidget->setText(Utils::formatUnit(statistics.value(QLatin1String("bytesTotal")).toLongLong()));
+	m_ui->elementsLabelWidget->setText((statistics.value(QLatin1String("requestsBlocked")).toInt() > 0) ? tr("%1 (%n blocked)", "", statistics.value(QLatin1String("requestsBlocked")).toInt()).arg(statistics.value(QLatin1String("requestsStarted")).toInt()) : QString::number(statistics.value(QLatin1String("requestsStarted")).toInt()));
+	m_ui->downloadDateLabelWidget->setText(Utils::formatDateTime(statistics.value(QLatin1String("dateDownloaded")).toDateTime()));
 
 	if (m_sslInformation.certificate.isNull())
 	{
-		m_ui->tabWidget->hide();
+		m_ui->tabWidget->setTabEnabled(2, false);
 	}
 	else
 	{
 		m_ui->certificateNameLabelWidget->setText(m_sslInformation.certificate.subjectInfo(QSslCertificate::CommonName).join(QLatin1String(", ")));
 		m_ui->certificateEffectiveDateLabelWidget->setText(Utils::formatDateTime(m_sslInformation.certificate.effectiveDate()));
 		m_ui->certificateExpirationDateLabelWidget->setText(Utils::formatDateTime(m_sslInformation.certificate.expiryDate()));
-		m_ui->cipherProtcolLabelWidget->setText(m_sslInformation.cipher.protocolString());
+		m_ui->cipherProtocolLabelWidget->setText(m_sslInformation.cipher.protocolString());
 		m_ui->cipherAuthenticationMethodLabelWidget->setText(m_sslInformation.cipher.authenticationMethod());
 		m_ui->cipherEncryptionMethodLabelWidget->setText(m_sslInformation.cipher.encryptionMethod());
 		m_ui->cipherKeyExchangeMethodLabelWidget->setText(m_sslInformation.cipher.keyExchangeMethod());

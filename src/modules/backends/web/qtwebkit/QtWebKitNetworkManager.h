@@ -76,6 +76,7 @@ private:
 	QString m_acceptLanguage;
 	QString m_userAgent;
 	QUrl m_formRequestUrl;
+	QDateTime m_dateDownloaded;
 	WebWidget::SslInformation m_sslInformation;
 	QList<QNetworkReply*> m_transfers;
 	QHash<QNetworkReply*, QPair<qint64, bool> > m_replies;
