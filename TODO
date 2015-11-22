@@ -1,21 +1,24 @@
 Release schedule of planned features (not a full list), note that specific features may be delayed or added earlier than planned, given dates are tentative.
 
-0.9.08 - beta 8 (2015-??-??):
+0.9.08 - beta 8 (2015-12-01):
 - address field suggestions
 - passwords manager
-- helper for mouse gestures
-- user scripts
 
-0.9.09 - beta 9 (2015-??-??):
+0.9.09 - beta 9 (2016-??-??):
+- helper for mouse gestures
+- spell checking
+- exceptions for third party cookies
+
+0.9.10 - beta 10 (2016-??-??):
 - feeds reader (as module)
+- user scripts
 - support for tab thumbnails embedded in tab bar
 - tabs grouping (stacking and panorama mode)
 
-1.0.01 - first stable release (2015-??-??):
+1.0.01 - first stable release (2016-??-??):
 - fine-tune UI (sizes, margins and other details)
 
 Later:
-- spell checking
 - shared contacts database
 - mail client (as module)
 - form auto completion
