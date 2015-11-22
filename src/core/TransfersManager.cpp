@@ -294,7 +294,7 @@ QString TransfersManager::getSavePath(const QString &fileName, QString path, boo
 		{
 			path = QString();
 
-			if (QMessageBox::warning(SessionsManager::getActiveWindow(), tr("Warning"), tr("Target path is already used by another transfer.\nSelect another one."), (QMessageBox::Ok | QMessageBox::Cancel)) == QMessageBox::Cancel)
+			if (QMessageBox::warning(SessionsManager::getActiveWindow(), tr("Warning"), tr("This path is already used by different download, pick another one."), (QMessageBox::Ok | QMessageBox::Cancel)) == QMessageBox::Cancel)
 			{
 				break;
 			}
