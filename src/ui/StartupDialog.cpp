@@ -133,7 +133,7 @@ SessionInformation StartupDialog::getSession() const
 		{
 			QStandardItem *windowItem = m_windowsModel->item(i, 0);
 
-			if (!windowItem || (windowItem->flags() & Qt::ItemIsUserCheckable && windowItem->data(Qt::CheckStateRole).toInt() == Qt::Unchecked))
+			if (!windowItem || (windowItem->flags().testFlag(Qt::ItemIsUserCheckable) && windowItem->data(Qt::CheckStateRole).toInt() == Qt::Unchecked))
 			{
 				continue;
 			}

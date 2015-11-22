@@ -268,11 +268,11 @@ void WindowsManager::open(const QUrl &url, OpenHints hints)
 		hints |= PrivateOpen;
 	}
 
-	if (hints & NewWindowOpen)
+	if (hints.testFlag(NewWindowOpen))
 	{
-		emit requestedNewWindow((hints & PrivateOpen), (hints & BackgroundOpen), url);
+		emit requestedNewWindow(hints.testFlag(PrivateOpen), hints.testFlag(BackgroundOpen), url);
 	}
-	else if ((hints & CurrentTabOpen) && window && window->getType() == QLatin1String("web"))
+	else if (hints.testFlag(CurrentTabOpen) && window && window->getType() == QLatin1String("web"))
 	{
 		if (window->isPrivate() == hints.testFlag(PrivateOpen))
 		{
@@ -345,7 +345,7 @@ void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints)
 
 				for (int i = 1; i < urls.count(); ++i)
 				{
-					open(urls.at(i), ((hints == DefaultOpen || (hints & CurrentTabOpen)) ? NewTabOpen : hints));
+					open(urls.at(i), ((hints == DefaultOpen || hints.testFlag(CurrentTabOpen)) ? NewTabOpen : hints));
 				}
 			}
 
@@ -357,7 +357,7 @@ void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints)
 
 void WindowsManager::openTab(const QUrl &url, OpenHints hints)
 {
-	Window *window = new Window(hints & PrivateOpen);
+	Window *window = new Window(hints.testFlag(PrivateOpen));
 
 	addWindow(window, hints);
 
@@ -378,7 +378,7 @@ void WindowsManager::search(const QString &query, const QString &engine, OpenHin
 		hints = CurrentTabOpen;
 	}
 
-	if (window && (hints & CurrentTabOpen) && window->getType() == QLatin1String("web"))
+	if (window && hints.testFlag(CurrentTabOpen) && window->getType() == QLatin1String("web"))
 	{
 		window->search(query, engine);
 
@@ -571,7 +571,7 @@ void WindowsManager::addWindow(Window *window, OpenHints hints, int index, const
 
 	if (index < 0)
 	{
-		index = ((!(hints & EndOpen) && SettingsManager::getValue(QLatin1String("TabBar/OpenNextToActive")).toBool()) ? (m_mainWindow->getTabBar()->currentIndex() + 1) : m_mainWindow->getTabBar()->count());
+		index = ((!hints.testFlag(EndOpen) && SettingsManager::getValue(QLatin1String("TabBar/OpenNextToActive")).toBool()) ? (m_mainWindow->getTabBar()->currentIndex() + 1) : m_mainWindow->getTabBar()->count());
 	}
 
 	if (!window->isPinned())
@@ -599,7 +599,7 @@ void WindowsManager::addWindow(Window *window, OpenHints hints, int index, const
 		m_mainWindow->getAction(ActionsManager::CloseTabAction)->setEnabled(true);
 	}
 
-	if (!(hints & BackgroundOpen) || m_mainWindow->getTabBar()->count() < 2)
+	if (!hints.testFlag(BackgroundOpen) || m_mainWindow->getTabBar()->count() < 2)
 	{
 		m_mainWindow->getTabBar()->setCurrentIndex(index);
 

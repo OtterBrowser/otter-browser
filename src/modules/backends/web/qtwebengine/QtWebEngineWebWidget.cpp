@@ -1538,12 +1538,12 @@ bool QtWebEngineWebWidget::findInPage(const QString &text, FindFlags flags)
 {
 	QWebEnginePage::FindFlags nativeFlags = 0;
 
-	if (flags & BackwardFind)
+	if (flags.testFlag(BackwardFind))
 	{
 		nativeFlags |= QWebEnginePage::FindBackward;
 	}
 
-	if (flags & CaseSensitiveFind)
+	if (flags.testFlag(CaseSensitiveFind))
 	{
 		nativeFlags |= QWebEnginePage::FindCaseSensitively;
 	}

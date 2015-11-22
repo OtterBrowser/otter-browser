@@ -281,7 +281,7 @@ void TabBarWidget::wheelEvent(QWheelEvent *event)
 {
 	QWidget::wheelEvent(event);
 
-	if (!(event->modifiers() & Qt::ControlModifier) && SettingsManager::getValue(QLatin1String("TabBar/RequireModifierToSwitchTabOnScroll")).toBool())
+	if (!(event->modifiers().testFlag(Qt::ControlModifier)) && SettingsManager::getValue(QLatin1String("TabBar/RequireModifierToSwitchTabOnScroll")).toBool())
 	{
 		return;
 	}

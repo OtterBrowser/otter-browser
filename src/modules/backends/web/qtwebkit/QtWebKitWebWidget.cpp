@@ -2201,17 +2201,17 @@ bool QtWebKitWebWidget::findInPage(const QString &text, FindFlags flags)
 	QWebPage::FindFlags nativeFlags = QWebPage::FindWrapsAroundDocument;
 #endif
 
-	if (flags & BackwardFind)
+	if (flags.testFlag(BackwardFind))
 	{
 		nativeFlags |= QWebPage::FindBackward;
 	}
 
-	if (flags & CaseSensitiveFind)
+	if (flags.testFlag(CaseSensitiveFind))
 	{
 		nativeFlags |= QWebPage::FindCaseSensitively;
 	}
 
-	if (flags & HighlightAllFind || text.isEmpty())
+	if (flags.testFlag(HighlightAllFind) || text.isEmpty())
 	{
 		m_webView->findText(QString(), QWebPage::HighlightAllOccurrences);
 		m_webView->findText(text, (nativeFlags | QWebPage::HighlightAllOccurrences));

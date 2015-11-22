@@ -212,7 +212,7 @@ void ConsoleWidget::filterMessages(const QString &filter)
 
 		if (item)
 		{
-			m_ui->consoleView->setRowHidden(i, m_ui->consoleView->rootIndex(), (!(item->flags() & Qt::ItemIsEnabled) || (!filter.isEmpty() && !(item->data(Qt::UserRole + 2).toString().contains(filter, Qt::CaseInsensitive) || (item->child(0, 0) && item->child(0, 0)->text().contains(filter, Qt::CaseInsensitive))))));
+			m_ui->consoleView->setRowHidden(i, m_ui->consoleView->rootIndex(), (!item->flags().testFlag(Qt::ItemIsEnabled) || (!filter.isEmpty() && !(item->data(Qt::UserRole + 2).toString().contains(filter, Qt::CaseInsensitive) || (item->child(0, 0) && item->child(0, 0)->text().contains(filter, Qt::CaseInsensitive))))));
 		}
 	}
 }

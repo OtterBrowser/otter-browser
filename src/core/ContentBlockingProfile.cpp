@@ -293,85 +293,85 @@ void ContentBlockingProfile::resolveRuleOptions(ContentBlockingRule *rule, const
 	isBlocked = ((blockedDomains) ? resolveDomainExceptions(m_baseUrlHost, rule->blockedDomains) : isBlocked);
 	isBlocked = ((allowedDomains) ? !resolveDomainExceptions(m_baseUrlHost, rule->allowedDomains) : isBlocked);
 
-	if (rule->ruleOption & ThirdPartyOption)
+	if (rule->ruleOption.testFlag(ThirdPartyOption))
 	{
 		if (m_baseUrlHost.isEmpty() || m_requestSubdomainList.contains(m_baseUrlHost))
 		{
-			isBlocked = (rule->exceptionRuleOption & ThirdPartyOption);
+			isBlocked = rule->exceptionRuleOption.testFlag(ThirdPartyOption);
 		}
 		else if (!blockedDomains && !allowedDomains)
 		{
-			isBlocked = !(rule->exceptionRuleOption & ThirdPartyOption);
+			isBlocked = !rule->exceptionRuleOption.testFlag(ThirdPartyOption);
 		}
 	}
 
-	if (rule->ruleOption & ImageOption)
+	if (rule->ruleOption.testFlag(ImageOption))
 	{
 		if (requestHeader.contains(QByteArray("image/")) || m_requestUrl.endsWith(QLatin1String(".png")) || m_requestUrl.endsWith(QLatin1String(".jpg")) || m_requestUrl.endsWith(QLatin1String(".gif")))
 		{
-			isBlocked = (isBlocked ? !(rule->exceptionRuleOption & ImageOption) : isBlocked);
+			isBlocked = (isBlocked ? !rule->exceptionRuleOption.testFlag(ImageOption) : isBlocked);
 		}
 		else
 		{
-			isBlocked = (isBlocked ? (rule->exceptionRuleOption & ImageOption) : isBlocked);
+			isBlocked = (isBlocked ? rule->exceptionRuleOption.testFlag(ImageOption) : isBlocked);
 		}
 	}
 
-	if (rule->ruleOption & ScriptOption)
+	if (rule->ruleOption.testFlag(ScriptOption))
 	{
 		if (requestHeader.contains(QByteArray("script/")) || m_requestUrl.endsWith(QLatin1String(".js")))
 		{
-			isBlocked = (isBlocked ? !(rule->exceptionRuleOption & ScriptOption) : isBlocked);
+			isBlocked = (isBlocked ? !rule->exceptionRuleOption.testFlag(ScriptOption) : isBlocked);
 		}
 		else
 		{
-			isBlocked = (isBlocked ? (rule->exceptionRuleOption & ScriptOption) : isBlocked);
+			isBlocked = (isBlocked ? rule->exceptionRuleOption.testFlag(ScriptOption) : isBlocked);
 		}
 	}
 
-	if (rule->ruleOption & StyleSheetOption)
+	if (rule->ruleOption.testFlag(StyleSheetOption))
 	{
 		if (requestHeader.contains(QByteArray("text/css")) || m_requestUrl.endsWith(QLatin1String(".css")))
 		{
-			isBlocked = (isBlocked ? !(rule->exceptionRuleOption & StyleSheetOption) : isBlocked);
+			isBlocked = (isBlocked ? !rule->exceptionRuleOption.testFlag(StyleSheetOption) : isBlocked);
 		}
 		else
 		{
-			isBlocked = (isBlocked ? (rule->exceptionRuleOption & StyleSheetOption) : isBlocked);
+			isBlocked = (isBlocked ? rule->exceptionRuleOption.testFlag(StyleSheetOption) : isBlocked);
 		}
 	}
 
-	if (rule->ruleOption & ObjectOption)
+	if (rule->ruleOption.testFlag(ObjectOption))
 	{
 		if (requestHeader.contains(QByteArray("object")))
 		{
-			isBlocked = (isBlocked ? !(rule->exceptionRuleOption & ObjectOption) : isBlocked);
+			isBlocked = (isBlocked ? !rule->exceptionRuleOption.testFlag(ObjectOption) : isBlocked);
 		}
 		else
 		{
-			isBlocked = (isBlocked ? (rule->exceptionRuleOption & ObjectOption) : isBlocked);
+			isBlocked = (isBlocked ? rule->exceptionRuleOption.testFlag(ObjectOption) : isBlocked);
 		}
 	}
 
-	if (rule->ruleOption & SubDocumentOption)
+	if (rule->ruleOption.testFlag(SubDocumentOption))
 	{
 		// TODO
 	}
 
-	if (rule->ruleOption & ObjectSubRequestOption)
+	if (rule->ruleOption.testFlag(ObjectSubRequestOption))
 	{
 		// TODO
 	}
 
-	if (rule->ruleOption & XmlHttpRequestOption)
+	if (rule->ruleOption.testFlag(XmlHttpRequestOption))
 	{
 		if (request.rawHeader(QByteArray("X-Requested-With")) == QByteArray("XMLHttpRequest"))
 		{
-			isBlocked = (isBlocked ? !(rule->exceptionRuleOption & XmlHttpRequestOption) : isBlocked);
+			isBlocked = (isBlocked ? !rule->exceptionRuleOption.testFlag(XmlHttpRequestOption) : isBlocked);
 		}
 		else
 		{
-			isBlocked = (isBlocked ? (rule->exceptionRuleOption & XmlHttpRequestOption) : isBlocked);
+			isBlocked = (isBlocked ? rule->exceptionRuleOption.testFlag(XmlHttpRequestOption) : isBlocked);
 		}
 	}
 }
