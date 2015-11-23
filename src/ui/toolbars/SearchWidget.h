@@ -30,6 +30,7 @@
 namespace Otter
 {
 
+class LineEditWidget;
 class SearchSuggester;
 class Window;
 
@@ -42,7 +43,6 @@ public:
 
 	void hidePopup();
 	QString getCurrentSearchEngine() const;
-	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
 	void activate(Qt::FocusReason reason);
@@ -65,15 +65,13 @@ protected slots:
 	void currentIndexChanged(int index);
 	void queryChanged(const QString &query);
 	void sendRequest(const QString &query = QString());
-	void copyToNote();
-	void deleteText();
 	void pasteAndGo();
 	void storeCurrentSearchEngine();
 	void restoreCurrentSearchEngine();
-	void clearSelectAllOnRelease();
 
 private:
 	QPointer<Window> m_window;
+	LineEditWidget *m_lineEdit;
 	QCompleter *m_completer;
 	SearchSuggester *m_suggester;
 	QString m_query;

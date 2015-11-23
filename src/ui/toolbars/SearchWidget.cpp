@@ -19,32 +19,30 @@
 **************************************************************************/
 
 #include "SearchWidget.h"
+#include "../LineEditWidget.h"
 #include "../MainWindow.h"
 #include "../PreferencesDialog.h"
 #include "../SearchDelegate.h"
 #include "../ToolBarWidget.h"
 #include "../Window.h"
-#include "../../core/NotesManager.h"
 #include "../../core/SearchesManager.h"
 #include "../../core/SearchSuggester.h"
 #include "../../core/SessionsManager.h"
 #include "../../core/SettingsManager.h"
 #include "../../core/Utils.h"
 
-#include <QtCore/QMimeData>
-#include <QtCore/QTimer>
 #include <QtGui/QClipboard>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPainter>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QAbstractItemView>
-#include <QtWidgets/QLineEdit>
 
 namespace Otter
 {
 
 SearchWidget::SearchWidget(Window *window, QWidget *parent) : QComboBox(parent),
 	m_window(NULL),
+	m_lineEdit(new LineEditWidget(this)),
 	m_completer(new QCompleter(this)),
 	m_suggester(NULL),
 	m_lastValidIndex(0),
@@ -58,17 +56,18 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : QComboBox(parent),
 	m_completer->setCompletionRole(Qt::DisplayRole);
 
 	setEditable(true);
+	setLineEdit(m_lineEdit);
 	setMinimumWidth(100);
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 	setItemDelegate(new SearchDelegate(this));
 	setModel(SearchesManager::getSearchEnginesModel());
 	setInsertPolicy(QComboBox::NoInsert);
+	optionChanged(QLatin1String("AddressField/DropAction"), SettingsManager::getValue(QLatin1String("AddressField/DropAction")));
+	optionChanged(QLatin1String("AddressField/SelectAllOnFocus"), SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")));
 	optionChanged(QLatin1String("Search/SearchEnginesSuggestions"), SettingsManager::getValue(QLatin1String("Search/SearchEnginesSuggestions")));
 
-	lineEdit()->setCompleter(m_completer);
-	lineEdit()->setDragEnabled(true);
-	lineEdit()->setStyleSheet(QLatin1String("QLineEdit {background:transparent;}"));
-	lineEdit()->installEventFilter(this);
+	m_lineEdit->setCompleter(m_completer);
+	m_lineEdit->setStyleSheet(QLatin1String("QLineEdit {background:transparent;}"));
 
 	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
 
@@ -81,7 +80,8 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : QComboBox(parent),
 	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModelModified()), this, SLOT(restoreCurrentSearchEngine()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentIndexChanged(int)));
-	connect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
+	connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
+	connect(m_lineEdit, SIGNAL(textDropped(QString)), this, SLOT(sendRequest(QString)));
 	connect(m_completer, SIGNAL(activated(QString)), this, SLOT(sendRequest(QString)));
 
 	setWindow(window);
@@ -93,7 +93,7 @@ void SearchWidget::changeEvent(QEvent *event)
 
 	if (event->type() == QEvent::LanguageChange && itemData(currentIndex(), Qt::AccessibleDescriptionRole).toString().isEmpty())
 	{
-		lineEdit()->setPlaceholderText(tr("Search using %1").arg(currentData(Qt::UserRole).toString()));
+		m_lineEdit->setPlaceholderText(tr("Search using %1").arg(currentData(Qt::UserRole).toString()));
 	}
 }
 
@@ -103,7 +103,7 @@ void SearchWidget::paintEvent(QPaintEvent *event)
 
 	QPainter painter(this);
 	QStyleOptionFrame panel;
-	panel.initFrom(lineEdit());
+	panel.initFrom(m_lineEdit);
 	panel.rect = rect();
 	panel.palette = palette();
 	panel.lineWidth = 1;
@@ -129,7 +129,7 @@ void SearchWidget::resizeEvent(QResizeEvent *event)
 	QComboBox::resizeEvent(event);
 
 	QStyleOptionFrame panel;
-	panel.initFrom(lineEdit());
+	panel.initFrom(m_lineEdit);
 	panel.rect = rect();
 	panel.lineWidth = 1;
 
@@ -147,24 +147,24 @@ void SearchWidget::resizeEvent(QResizeEvent *event)
 	m_searchButtonRectangle.setLeft(rectangle.right() - rectangle.height());
 	m_searchButtonRectangle = m_searchButtonRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
 
-	lineEdit()->resize((rectangle.width() - m_selectButtonIconRectangle.width() - m_selectButtonArrowRectangle.width() - m_searchButtonRectangle.width() - 10), rectangle.height());
-	lineEdit()->move(m_selectButtonArrowRectangle.topRight() + QPoint(3, 0));
+	m_lineEdit->resize((rectangle.width() - m_selectButtonIconRectangle.width() - m_selectButtonArrowRectangle.width() - m_searchButtonRectangle.width() - 10), rectangle.height());
+	m_lineEdit->move(m_selectButtonArrowRectangle.topRight() + QPoint(3, 0));
 
-	m_lineEditRectangle = lineEdit()->geometry();
+	m_lineEditRectangle = m_lineEdit->geometry();
 }
 
 void SearchWidget::focusInEvent(QFocusEvent *event)
 {
 	QComboBox::focusInEvent(event);
 
-	activate(event->reason());
+	m_lineEdit->activate(event->reason());
 }
 
 void SearchWidget::keyPressEvent(QKeyEvent *event)
 {
 	if ((event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) && !(m_completer->popup() && m_completer->popup()->isVisible()))
 	{
-		const QString input = lineEdit()->text().trimmed();
+		const QString input = m_lineEdit->text().trimmed();
 
 		if (!input.isEmpty())
 		{
@@ -179,7 +179,7 @@ void SearchWidget::keyPressEvent(QKeyEvent *event)
 
 	if (event->key() == Qt::Key_Down || event->key() == Qt::Key_Up)
 	{
-		disconnect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
+		disconnect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
 
 		m_isIgnoringActivation = true;
 	}
@@ -190,28 +190,28 @@ void SearchWidget::keyPressEvent(QKeyEvent *event)
 	{
 		m_isIgnoringActivation = false;
 
-		lineEdit()->setText(m_query);
+		m_lineEdit->setText(m_query);
 
-		connect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
+		connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
 	}
 }
 
 void SearchWidget::contextMenuEvent(QContextMenuEvent *event)
 {
 	QMenu menu(this);
-	menu.addAction(tr("Undo"), lineEdit(), SLOT(undo()), QKeySequence(QKeySequence::Undo))->setEnabled(lineEdit()->isUndoAvailable());
-	menu.addAction(tr("Redo"), lineEdit(), SLOT(redo()), QKeySequence(QKeySequence::Redo))->setEnabled(lineEdit()->isRedoAvailable());
+	menu.addAction(tr("Undo"), m_lineEdit, SLOT(undo()), QKeySequence(QKeySequence::Undo))->setEnabled(m_lineEdit->isUndoAvailable());
+	menu.addAction(tr("Redo"), m_lineEdit, SLOT(redo()), QKeySequence(QKeySequence::Redo))->setEnabled(m_lineEdit->isRedoAvailable());
 	menu.addSeparator();
-	menu.addAction(tr("Cut"), lineEdit(), SLOT(cut()), QKeySequence(QKeySequence::Cut))->setEnabled(lineEdit()->hasSelectedText());
-	menu.addAction(tr("Copy"), lineEdit(), SLOT(copy()), QKeySequence(QKeySequence::Copy))->setEnabled(lineEdit()->hasSelectedText());
-	menu.addAction(tr("Paste"), lineEdit(), SLOT(paste()), QKeySequence(QKeySequence::Paste))->setEnabled(!QApplication::clipboard()->text().isEmpty());
+	menu.addAction(tr("Cut"), m_lineEdit, SLOT(cut()), QKeySequence(QKeySequence::Cut))->setEnabled(m_lineEdit->hasSelectedText());
+	menu.addAction(tr("Copy"), m_lineEdit, SLOT(copy()), QKeySequence(QKeySequence::Copy))->setEnabled(m_lineEdit->hasSelectedText());
+	menu.addAction(tr("Paste"), m_lineEdit, SLOT(paste()), QKeySequence(QKeySequence::Paste))->setEnabled(!QApplication::clipboard()->text().isEmpty());
 	menu.addAction(tr("Paste and Go"), this, SLOT(pasteAndGo()))->setEnabled(!QApplication::clipboard()->text().isEmpty());
-	menu.addAction(tr("Delete"), this, SLOT(deleteText()), QKeySequence(QKeySequence::Delete))->setEnabled(lineEdit()->hasSelectedText());
+	menu.addAction(tr("Delete"), m_lineEdit, SLOT(deleteText()), QKeySequence(QKeySequence::Delete))->setEnabled(m_lineEdit->hasSelectedText());
 	menu.addSeparator();
-	menu.addAction(tr("Copy to Note"), this, SLOT(copyToNote()))->setEnabled(!lineEdit()->text().isEmpty());
+	menu.addAction(tr("Copy to Note"), this, SLOT(copyToNote()))->setEnabled(!m_lineEdit->text().isEmpty());
 	menu.addSeparator();
-	menu.addAction(tr("Clear All"), lineEdit(), SLOT(clear()))->setEnabled(!lineEdit()->text().isEmpty());
-	menu.addAction(tr("Select All"), lineEdit(), SLOT(selectAll()))->setEnabled(!lineEdit()->text().isEmpty());
+	menu.addAction(tr("Clear All"), m_lineEdit, SLOT(clear()))->setEnabled(!m_lineEdit->text().isEmpty());
+	menu.addAction(tr("Select All"), m_lineEdit, SLOT(selectAll()))->setEnabled(!m_lineEdit->text().isEmpty());
 
 	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parentWidget());
 
@@ -258,7 +258,7 @@ void SearchWidget::mouseReleaseEvent(QMouseEvent *event)
 
 void SearchWidget::wheelEvent(QWheelEvent *event)
 {
-	disconnect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
+	disconnect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
 
 	m_isIgnoringActivation = true;
 
@@ -266,9 +266,9 @@ void SearchWidget::wheelEvent(QWheelEvent *event)
 
 	m_isIgnoringActivation = false;
 
-	lineEdit()->setText(m_query);
+	m_lineEdit->setText(m_query);
 
-	connect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
+	connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
 }
 
 void SearchWidget::hidePopup()
@@ -285,7 +285,28 @@ void SearchWidget::hidePopup()
 
 void SearchWidget::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == QLatin1String("Search/SearchEnginesSuggestions"))
+	if (option == QLatin1String("AddressField/DropAction"))
+	{
+		const QString dropAction = value.toString();
+
+		if (dropAction == QLatin1String("pasteAndGo"))
+		{
+			m_lineEdit->setDropMode(LineEditWidget::IgnoreDropMode);
+		}
+		else if (dropAction == QLatin1String("replace"))
+		{
+			m_lineEdit->setDropMode(LineEditWidget::ReplaceDropMode);
+		}
+		else
+		{
+			m_lineEdit->setDropMode(LineEditWidget::PasteDropMode);
+		}
+	}
+	else if (option == QLatin1String("AddressField/SelectAllOnFocus"))
+	{
+		m_lineEdit->setSelectAllOnFocus(value.toBool());
+	}
+	else if (option == QLatin1String("Search/SearchEnginesSuggestions"))
 	{
 		if (value.toBool() && !m_suggester)
 		{
@@ -293,7 +314,7 @@ void SearchWidget::optionChanged(const QString &option, const QVariant &value)
 
 			m_completer->setModel(m_suggester->getModel());
 
-			connect(lineEdit(), SIGNAL(textEdited(QString)), m_suggester, SLOT(setQuery(QString)));
+			connect(m_lineEdit, SIGNAL(textEdited(QString)), m_suggester, SLOT(setQuery(QString)));
 		}
 		else if (!value.toBool() && m_suggester)
 		{
@@ -320,8 +341,8 @@ void SearchWidget::currentIndexChanged(int index)
 
 		emit searchEngineChanged(currentData(Qt::UserRole + 1).toString());
 
-		lineEdit()->setPlaceholderText(tr("Search using %1").arg(itemData(index, Qt::UserRole).toString()));
-		lineEdit()->setText(m_query);
+		m_lineEdit->setPlaceholderText(tr("Search using %1").arg(itemData(index, Qt::UserRole).toString()));
+		m_lineEdit->setText(m_query);
 
 		if (m_suggester)
 		{
@@ -342,7 +363,7 @@ void SearchWidget::currentIndexChanged(int index)
 
 		if (query != itemText(index))
 		{
-			lineEdit()->setText(query);
+			m_lineEdit->setText(query);
 		}
 
 		if (itemData(index, Qt::AccessibleDescriptionRole).toString() == QLatin1String("configure"))
@@ -352,7 +373,7 @@ void SearchWidget::currentIndexChanged(int index)
 		}
 	}
 
-	lineEdit()->setGeometry(m_lineEditRectangle);
+	m_lineEdit->setGeometry(m_lineEditRectangle);
 }
 
 void SearchWidget::queryChanged(const QString &query)
@@ -380,24 +401,9 @@ void SearchWidget::sendRequest(const QString &query)
 	}
 }
 
-void SearchWidget::copyToNote()
-{
-	const QString note(lineEdit()->hasSelectedText() ? lineEdit()->selectedText() : lineEdit()->text());
-
-	if (!note.isEmpty())
-	{
-		NotesManager::addNote(BookmarksModel::UrlBookmark, QUrl(), note);
-	}
-}
-
-void SearchWidget::deleteText()
-{
-	lineEdit()->del();
-}
-
 void SearchWidget::pasteAndGo()
 {
-	lineEdit()->paste();
+	m_lineEdit->paste();
 
 	sendRequest();
 }
@@ -409,7 +415,7 @@ void SearchWidget::storeCurrentSearchEngine()
 	hidePopup();
 
 	disconnect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentIndexChanged(int)));
-	disconnect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
+	disconnect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
 }
 
 void SearchWidget::restoreCurrentSearchEngine()
@@ -421,54 +427,11 @@ void SearchWidget::restoreCurrentSearchEngine()
 		m_storedSearchEngine = QString();
 	}
 
-	lineEdit()->setText(m_query);
-	lineEdit()->setGeometry(m_lineEditRectangle);
+	m_lineEdit->setText(m_query);
+	m_lineEdit->setGeometry(m_lineEditRectangle);
 
 	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentIndexChanged(int)));
-	connect(lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
-}
-
-void SearchWidget::clearSelectAllOnRelease()
-{
-	if (m_shouldSelectAllOnRelease && lineEdit()->hasSelectedText())
-	{
-		disconnect(lineEdit(), SIGNAL(selectionChanged()), this, SLOT(clearSelectAllOnRelease()));
-
-		m_shouldSelectAllOnRelease = false;
-	}
-}
-
-void SearchWidget::activate(Qt::FocusReason reason)
-{
-	if (!hasFocus() && isEnabled() && focusPolicy() != Qt::NoFocus)
-	{
-		setFocus(reason);
-
-		return;
-	}
-
-	if (!lineEdit()->text().trimmed().isEmpty())
-	{
-		const bool selectAllOnFocus = SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool();
-
-		if (selectAllOnFocus && reason == Qt::MouseFocusReason)
-		{
-			m_shouldSelectAllOnRelease = true;
-
-			connect(lineEdit(), SIGNAL(selectionChanged()), this, SLOT(clearSelectAllOnRelease()));
-
-			return;
-		}
-
-		if (selectAllOnFocus && (reason == Qt::ShortcutFocusReason || reason == Qt::TabFocusReason || reason == Qt::BacktabFocusReason))
-		{
-			QTimer::singleShot(0, lineEdit(), SLOT(selectAll()));
-		}
-		else if (reason != Qt::PopupFocusReason)
-		{
-			lineEdit()->deselect();
-		}
-	}
+	connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
 }
 
 void SearchWidget::setSearchEngine(const QString &engine)
@@ -480,7 +443,7 @@ void SearchWidget::setSearchEngine(const QString &engine)
 		hidePopup();
 		setEnabled(false);
 
-		lineEdit()->setPlaceholderText(QString());
+		m_lineEdit->setPlaceholderText(QString());
 
 		return;
 	}
@@ -502,6 +465,11 @@ void SearchWidget::setSearchEngine(const QString &engine)
 	{
 		m_suggester->setEngine(getCurrentSearchEngine());
 	}
+}
+
+void SearchWidget::activate(Qt::FocusReason reason)
+{
+	m_lineEdit->activate(reason);
 }
 
 void SearchWidget::setWindow(Window *window)
@@ -552,46 +520,6 @@ void SearchWidget::setWindow(Window *window)
 QString SearchWidget::getCurrentSearchEngine() const
 {
 	return currentData(Qt::UserRole + 1).toString();
-}
-
-bool SearchWidget::eventFilter(QObject *object, QEvent *event)
-{
-	if (object == lineEdit() && event->type() == QEvent::Drop)
-	{
-		QDropEvent *dropEvent = static_cast<QDropEvent*>(event);
-		const QString dropAction = SettingsManager::getValue(QLatin1String("AddressField/DropAction")).toString();
-
-		if (dropEvent && dropAction != QLatin1String("paste"))
-		{
-			if (dropAction == QLatin1String("pasteAndGo"))
-			{
-				sendRequest(dropEvent->mimeData()->text());
-			}
-			else if (dropAction == QLatin1String("replace"))
-			{
-				lineEdit()->setText(dropEvent->mimeData()->text());
-			}
-
-			event->accept();
-
-			return true;
-		}
-	}
-	else if (object == lineEdit() && event->type() == QEvent::MouseButtonRelease && m_shouldSelectAllOnRelease)
-	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
-
-		if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
-		{
-			disconnect(lineEdit(), SIGNAL(selectionChanged()), this, SLOT(clearSelectAllOnRelease()));
-
-			lineEdit()->selectAll();
-
-			m_shouldSelectAllOnRelease = false;
-		}
-	}
-
-	return QObject::eventFilter(object, event);
 }
 
 }

@@ -41,7 +41,7 @@ public:
 
 	void activate(Qt::FocusReason reason);
 	void setDropMode(DropMode mode);
-	void setSelectAllOnFcus(bool select);
+	void setSelectAllOnFocus(bool select);
 
 public slots:
 	void copyToNote();

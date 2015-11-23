@@ -157,7 +157,7 @@ void LineEditWidget::setDropMode(LineEditWidget::DropMode mode)
 	m_dropMode = mode;
 }
 
-void LineEditWidget::setSelectAllOnFcus(bool select)
+void LineEditWidget::setSelectAllOnFocus(bool select)
 {
 	if (m_shouldSelectAllOnFocus && !select)
 	{
