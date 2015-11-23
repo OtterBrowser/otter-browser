@@ -34,7 +34,7 @@ public:
 	{
 		PasteDropMode = 0,
 		ReplaceDropMode,
-		IgnoreDropMode
+		ReplaceAndNotifyDropMode
 	};
 
 	explicit LineEditWidget(QWidget *parent = NULL);

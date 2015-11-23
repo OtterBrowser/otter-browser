@@ -80,15 +80,16 @@ void LineEditWidget::dropEvent(QDropEvent *event)
 			insert(event->mimeData()->text());
 		}
 	}
-	else if (m_dropMode == IgnoreDropMode)
-	{
-		emit textDropped(event->mimeData()->text());
-	}
-	else if (m_dropMode == ReplaceDropMode)
+	else if (m_dropMode == ReplaceDropMode || m_dropMode == ReplaceAndNotifyDropMode)
 	{
 		selectAll();
 		del();
 		insert(event->mimeData()->text());
+
+		if (m_dropMode == ReplaceAndNotifyDropMode)
+		{
+			emit textDropped(event->mimeData()->text());
+		}
 	}
 	else
 	{

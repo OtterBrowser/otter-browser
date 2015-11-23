@@ -291,7 +291,7 @@ void SearchWidget::optionChanged(const QString &option, const QVariant &value)
 
 		if (dropAction == QLatin1String("pasteAndGo"))
 		{
-			m_lineEdit->setDropMode(LineEditWidget::IgnoreDropMode);
+			m_lineEdit->setDropMode(LineEditWidget::ReplaceAndNotifyDropMode);
 		}
 		else if (dropAction == QLatin1String("replace"))
 		{
