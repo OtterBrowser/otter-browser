@@ -255,13 +255,6 @@ void MarginWidget::mousePressEvent(QMouseEvent *event)
 	}
 }
 
-void MarginWidget::mouseReleaseEvent(QMouseEvent *event)
-{
-	m_lastClickedLine = -1;
-
-	QWidget::mouseReleaseEvent(event);
-}
-
 void MarginWidget::mouseMoveEvent(QMouseEvent *event)
 {
 	QTextCursor textCursor = m_sourceViewer->cursorForPosition(QPoint(1, event->y()));
@@ -275,6 +268,13 @@ void MarginWidget::mouseMoveEvent(QMouseEvent *event)
 	textCursor.movePosition(((currentLine > m_lastClickedLine) ? QTextCursor::Up : QTextCursor::Down), QTextCursor::KeepAnchor, qAbs(m_lastClickedLine - currentLine));
 
 	m_sourceViewer->setTextCursor(textCursor);
+}
+
+void MarginWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+	m_lastClickedLine = -1;
+
+	QWidget::mouseReleaseEvent(event);
 }
 
 void MarginWidget::updateNumbers(const QRect &rectangle, int offset)
