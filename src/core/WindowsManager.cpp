@@ -956,12 +956,12 @@ WindowsManager::OpenHints WindowsManager::calculateOpenHints(Qt::KeyboardModifie
 
 	if (button == Qt::MiddleButton && modifiers.testFlag(Qt::AltModifier))
 	{
-		return (useNewTab ? (NewTabOpen | EndOpen | BackgroundOpen) : (NewWindowOpen | EndOpen | BackgroundOpen));
+		return ((useNewTab ? NewTabOpen : NewWindowOpen) | BackgroundOpen | EndOpen);
 	}
 
 	if (modifiers.testFlag(Qt::ControlModifier) || button == Qt::MiddleButton)
 	{
-		return (useNewTab ? (NewTabOpen | BackgroundOpen) : (NewWindowOpen | BackgroundOpen));
+		return ((useNewTab ? NewTabOpen : NewWindowOpen) | BackgroundOpen);
 	}
 
 	if (modifiers.testFlag(Qt::ShiftModifier))
