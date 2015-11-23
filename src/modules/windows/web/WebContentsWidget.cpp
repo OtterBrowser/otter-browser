@@ -49,6 +49,7 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	m_startPageWidget(NULL),
 	m_searchBarWidget(NULL),
 	m_progressBarWidget(NULL),
+	m_websiteInformationDialog(NULL),
 	m_scrollMode(NoScroll),
 	m_quickFindTimer(0),
 	m_scrollTimer(0),
@@ -506,11 +507,19 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::WebsiteInformationAction:
+			if (m_websiteInformationDialog)
 			{
-				WebsiteInformationDialog *websiteInformationDialog = new WebsiteInformationDialog(m_webWidget, this);
-				ContentsDialog *dialog = new ContentsDialog(Utils::getIcon(QLatin1String("dialog-information")), websiteInformationDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, websiteInformationDialog, this);
+				m_websiteInformationDialog->close();
+				m_websiteInformationDialog->deleteLater();
+				m_websiteInformationDialog = NULL;
+			}
+			else
+			{
+				m_websiteInformationDialog = new WebsiteInformationDialog(m_webWidget, this);
 
-				connect(websiteInformationDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
+				ContentsDialog *dialog = new ContentsDialog(Utils::getIcon(QLatin1String("dialog-information")), m_websiteInformationDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, m_websiteInformationDialog, this);
+
+				connect(m_websiteInformationDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
 
 				showDialog(dialog, false);
 			}

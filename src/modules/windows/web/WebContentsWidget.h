@@ -32,6 +32,7 @@ class PermissionBarWidget;
 class ProgressBarWidget;
 class SearchBarWidget;
 class StartPageWidget;
+class WebsiteInformationDialog;
 class WebWidget;
 
 class WebContentsWidget : public ContentsWidget
@@ -124,6 +125,7 @@ private:
 	StartPageWidget *m_startPageWidget;
 	SearchBarWidget *m_searchBarWidget;
 	ProgressBarWidget *m_progressBarWidget;
+	WebsiteInformationDialog *m_websiteInformationDialog;
 	QString m_quickFindQuery;
 	QPoint m_beginCursorPosition;
 	QPoint m_lastCursorPosition;
