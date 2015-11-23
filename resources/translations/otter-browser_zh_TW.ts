@@ -147,83 +147,88 @@
 <context>
     <name>Otter::AddressWidget</name>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="95"/>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="117"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="96"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="118"/>
         <source>Enter address or search…</source>
         <translation>輸入網址或搜尋…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="252"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="288"/>
         <source>Undo</source>
         <translation>復原</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="253"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="289"/>
         <source>Redo</source>
         <translation>重做</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="255"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="291"/>
         <source>Cut</source>
         <translation>剪下</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="256"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="292"/>
         <source>Copy</source>
         <translation>複製</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="257"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="293"/>
         <source>Paste</source>
         <translation>貼上</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="264"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="300"/>
         <source>Delete</source>
         <translation>刪除</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="266"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="302"/>
         <source>Copy to Note</source>
         <translation>複製到筆記</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="268"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="304"/>
         <source>Clear All</source>
         <translation>清除所有</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="269"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="305"/>
         <source>Select All</source>
         <translation>選取所有</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="508"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="544"/>
         <source>Remove Bookmark</source>
         <translation>移除書籤</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="508"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="544"/>
         <source>Add Bookmark</source>
         <translation>新增書籤</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="524"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="560"/>
         <source>Feed List</source>
         <translation>Feed 列表</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="552"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="588"/>
         <source>Click to load all plugins on the page</source>
         <translation>點擊以載入所有在頁面上的外掛程式</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="932"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="936"/>
+        <source>Show Website Information</source>
+        <translation>顯示網頁資訊</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="993"/>
         <source>(Untitled)</source>
         <translation>（未命名）</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="967"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1028"/>
         <source>Remove This Icon</source>
         <translation>移除這個圖示</translation>
     </message>
@@ -231,53 +236,53 @@
 <context>
     <name>Otter::Application</name>
     <message>
-        <location filename="../../src/core/Application.cpp" line="412"/>
+        <location filename="../../src/core/Application.cpp" line="429"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="412"/>
+        <location filename="../../src/core/Application.cpp" line="429"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
         <translation>這個工作階段並未正確地儲存。
 您確定您無論如何都想要恢復此工作階段嗎？</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="515"/>
+        <location filename="../../src/core/Application.cpp" line="532"/>
         <source>New update %1 from %2 channel is available!</source>
         <translation>自 %2 頻道而來的 %1 新更新已經可用！</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="791"/>
-        <location filename="../../src/core/Application.cpp" line="840"/>
+        <location filename="../../src/core/Application.cpp" line="808"/>
+        <location filename="../../src/core/Application.cpp" line="857"/>
         <source>Question</source>
         <translation>問題</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/core/Application.cpp" line="792"/>
+        <location filename="../../src/core/Application.cpp" line="809"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
         <translation><numerusform>您將要在 %n 個檔案仍在下載時結束。</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="793"/>
-        <location filename="../../src/core/Application.cpp" line="842"/>
+        <location filename="../../src/core/Application.cpp" line="810"/>
+        <location filename="../../src/core/Application.cpp" line="859"/>
         <source>Do you want to continue?</source>
         <translation>您想要繼續嗎？</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="797"/>
-        <location filename="../../src/core/Application.cpp" line="846"/>
+        <location filename="../../src/core/Application.cpp" line="814"/>
+        <location filename="../../src/core/Application.cpp" line="863"/>
         <source>Do not show this message again</source>
         <translation>不要再次顯示此訊息</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="799"/>
-        <location filename="../../src/core/Application.cpp" line="848"/>
+        <location filename="../../src/core/Application.cpp" line="816"/>
+        <location filename="../../src/core/Application.cpp" line="865"/>
         <source>Hide</source>
         <translation>隱藏</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="841"/>
+        <location filename="../../src/core/Application.cpp" line="858"/>
         <source>You are about to quit the current Otter Browser session.</source>
         <translation>您將要結束目前的 Otter 瀏覽器工作階段。</translation>
     </message>
@@ -1209,18 +1214,18 @@ Are you sure that you want to restore this session anyway?</source>
 <context>
     <name>Otter::GoBackActionWidget</name>
     <message>
-        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="87"/>
-        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="111"/>
+        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="67"/>
+        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="120"/>
         <source>(Untitled)</source>
         <translation>（未命名）</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="139"/>
+        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="148"/>
         <source>Remove Entry</source>
         <translation>移除項目</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="140"/>
+        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="149"/>
         <source>Purge Entry</source>
         <translation>清除項目</translation>
     </message>
@@ -1228,18 +1233,18 @@ Are you sure that you want to restore this session anyway?</source>
 <context>
     <name>Otter::GoForwardActionWidget</name>
     <message>
-        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="87"/>
-        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="111"/>
+        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="67"/>
+        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="120"/>
         <source>(Untitled)</source>
         <translation>（未命名）</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="139"/>
+        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="148"/>
         <source>Remove Entry</source>
         <translation>移除項目</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="140"/>
+        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="149"/>
         <source>Purge Entry</source>
         <translation>清除項目</translation>
     </message>
@@ -1361,17 +1366,17 @@ Are you sure that you want to restore this session anyway?</source>
 <context>
     <name>Otter::HtmlBookmarksImporter</name>
     <message>
-        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="170"/>
+        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="138"/>
         <source>HTML Bookmarks</source>
         <translation>HTML 書籤</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="175"/>
+        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="143"/>
         <source>Imports bookmarks from HTML file (Netscape format).</source>
         <translation>從 HTML 檔案（Netscape 格式）匯入書籤</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="185"/>
+        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="153"/>
         <source>HTML files (*.htm *.html)</source>
         <translation>HTML 檔案 (*.htm *.html)</translation>
     </message>
@@ -1466,7 +1471,7 @@ Are you sure that you want to restore this session anyway?</source>
     </message>
     <message>
         <location filename="../../src/ui/ImportDialog.cpp" line="94"/>
-        <location filename="../../src/ui/ImportDialog.cpp" line="111"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="107"/>
         <source>Error</source>
         <translation>錯誤</translation>
     </message>
@@ -1476,9 +1481,9 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>無法匯入已選取的類型。</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="111"/>
-        <source>Failed to open file for reading.</source>
-        <translation>開啟供讀取的檔案失敗。</translation>
+        <location filename="../../src/ui/ImportDialog.cpp" line="107"/>
+        <source>Failed to import selected type.</source>
+        <translation>匯入選定的類型失敗。</translation>
     </message>
 </context>
 <context>
@@ -1843,38 +1848,38 @@ Do you want to continue?</source>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="78"/>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="156"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="144"/>
         <source>Add</source>
         <translation>新增</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="88"/>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="166"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="154"/>
         <source>Remove</source>
         <translation>移除</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="194"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="182"/>
         <source>Information</source>
         <translation>資訊</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="200"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="188"/>
         <source>Title:</source>
         <translation>標題：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="210"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="198"/>
         <source>Description:</source>
         <translation>描述：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="220"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="208"/>
         <source>Version:</source>
         <translation>版本：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="230"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="218"/>
         <source>Author:</source>
         <translation>作者：</translation>
     </message>
@@ -1890,18 +1895,28 @@ Do you want to continue?</source>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="40"/>
+        <source>Step</source>
+        <translation>步驟</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="43"/>
         <source>Generic</source>
         <translation>通用</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="40"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="43"/>
         <source>Link</source>
         <translation>連結</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="40"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="43"/>
         <source>Tab Handle</source>
         <translation>處理分頁</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="43"/>
+        <source>Tab Handle of Active Tab</source>
+        <translation>活躍分頁的分頁處理</translation>
     </message>
 </context>
 <context>
@@ -1928,12 +1943,12 @@ Do you want to continue?</source>
 <context>
     <name>Otter::NetworkManagerFactory</name>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="274"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="275"/>
         <source>Custom</source>
         <translation>自訂</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="289"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="290"/>
         <source>Default</source>
         <translation>預設</translation>
     </message>
@@ -2068,17 +2083,17 @@ Do you want to continue?</source>
 <context>
     <name>Otter::OperaBookmarksImporter</name>
     <message>
-        <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="88"/>
+        <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="56"/>
         <source>Opera Bookmarks</source>
         <translation>Opera 書籤</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="93"/>
+        <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="61"/>
         <source>Imports bookmarks from Opera Browser version 12 or earlier</source>
         <translation>從 Opera 瀏覽器 12 版或更早匯入書籤</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="103"/>
+        <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="71"/>
         <source>Opera bookmarks files (bookmarks.adr)</source>
         <translation>Opera 書籤檔案 (bookmarks.adr)</translation>
     </message>
@@ -2086,22 +2101,22 @@ Do you want to continue?</source>
 <context>
     <name>Otter::OperaNotesImporter</name>
     <message>
-        <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="109"/>
+        <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="97"/>
         <source>Import into folder:</source>
         <translation>匯入到資料夾：</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="117"/>
+        <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="105"/>
         <source>Opera Notes</source>
         <translation>Opera 筆記</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="122"/>
+        <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="110"/>
         <source>Imports notes from Opera Browser version 12 or earlier</source>
         <translation>從 Opera 瀏覽器 12 版或更舊版本匯入筆記</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="132"/>
+        <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="120"/>
         <source>Opera notes files (notes.adr)</source>
         <translation>Opera 筆記檔案 (notes.adr)</translation>
     </message>
@@ -3367,38 +3382,38 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitNetworkManager</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="107"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="132"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="108"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="133"/>
         <source>Waiting for authentication…</source>
         <translation>等待認證...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="186"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="189"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="186"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="189"/>
         <source>SSL errors occured, do you want to continue?</source>
         <translation>遇到 SSL 錯誤，您想要繼續嗎？</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="190"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="193"/>
         <source>Do not show this message again</source>
         <translation>不要再次顯示此訊息</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="275"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="284"/>
         <source>Receiving data from %1…</source>
         <translation>正在從 %1 接收資料...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="317"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="348"/>
         <source>Completed request to %1</source>
         <translation>到 %1 的請求已完成</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="514"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="545"/>
         <source>Sending request to %1…</source>
         <translation>正在送出請求到 %1...</translation>
     </message>
@@ -3494,72 +3509,72 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitWebWidget</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="323"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="327"/>
         <source>Error</source>
         <translation>錯誤</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="323"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="327"/>
         <source>Failed to open file for writing.</source>
         <translation>開啟供寫入的檔案失敗。</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="343"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="347"/>
         <source>file</source>
         <translation>檔案</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="354"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="358"/>
         <source>Failed to save image: %1</source>
         <translation>儲存圖片失敗：%1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="483"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="479"/>
         <source>Print Preview</source>
         <translation>預覽列印</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="542"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="538"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="542"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="538"/>
         <source>Webpage wants to close this tab, do you want to allow to close it?</source>
         <translation>網頁想要關閉這個分頁，您想要允許關閉它嗎？</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="543"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="539"/>
         <source>Do not show this message again</source>
         <translation>不要再次顯示此訊息</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="673"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="676"/>
         <source>Undo</source>
         <translation>復原</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="673"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="676"/>
         <source>Undo: %1</source>
         <translation>復原：%1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="678"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="681"/>
         <source>Redo</source>
         <translation>重做</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="678"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="681"/>
         <source>Redo: %1</source>
         <translation>重做：%1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1737"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1746"/>
         <source>Blank Page</source>
         <translation>空白頁</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1750"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1759"/>
         <source>(Untitled)</source>
         <translation>（未命名）</translation>
     </message>
@@ -3957,37 +3972,37 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>輸入網址以在面板中顯示：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="433"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="429"/>
         <source>Bookmarks</source>
         <translation>書籤</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="438"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="434"/>
         <source>Cache</source>
         <translation>快取</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="443"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="439"/>
         <source>Cookies</source>
         <translation>Cookies</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="448"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="444"/>
         <source>Configuration</source>
         <translation>設定</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="453"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="449"/>
         <source>History</source>
         <translation>歷史</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="458"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="454"/>
         <source>Notes</source>
         <translation>筆記</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="463"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="459"/>
         <source>Transfers</source>
         <translation>轉送</translation>
     </message>
@@ -4122,37 +4137,37 @@ Do you want to save your changes or discard them?</source>
 <context>
     <name>Otter::StartPageWidget</name>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="350"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="418"/>
         <source>Add Tile</source>
         <translation>新增瓷磚</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="503"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="571"/>
         <source>Open</source>
         <translation>開啟</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="505"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="573"/>
         <source>Edit…</source>
         <translation>編輯…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="509"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="577"/>
         <source>Reload</source>
         <translation>重新載入</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="513"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="581"/>
         <source>Delete</source>
         <translation>刪除</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="517"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="585"/>
         <source>Configure…</source>
         <translation>設定…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="518"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="586"/>
         <source>Add Tile…</source>
         <translation>新增瓷磚…</translation>
     </message>
@@ -4205,27 +4220,27 @@ Do you want to save your changes or discard them?</source>
 <context>
     <name>Otter::TabBarWidget</name>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="169"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="177"/>
         <source>Arrange</source>
         <translation>安排</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="193"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="201"/>
         <source>Switch tabs using the mouse wheel</source>
         <translation>使用滑鼠滾輪切換分頁</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="213"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="221"/>
         <source>Customize</source>
         <translation>自訂</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="514"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="474"/>
         <source>(Untitled)</source>
         <translation>（無標題）</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="973"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="995"/>
         <source>Close Tab</source>
         <translation>關閉分頁</translation>
     </message>
@@ -4439,7 +4454,7 @@ Do you want to save your changes or discard them?</source>
 <context>
     <name>Otter::ToolBarDragAreaWidget</name>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="53"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="54"/>
         <source>Drag to move toolbar</source>
         <translation>拖曳以移動工具列</translation>
     </message>
@@ -4447,47 +4462,47 @@ Do you want to save your changes or discard them?</source>
 <context>
     <name>Otter::ToolBarWidget</name>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="173"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="174"/>
         <source>Switch tabs using the mouse wheel</source>
         <translation>使用滑鼠滾輪切換分頁</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="190"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="191"/>
         <source>Arrange</source>
         <translation>安排</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="460"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="453"/>
         <source>Closed Tabs</source>
         <translation>已關閉的分頁</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="556"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="549"/>
         <source>Customize</source>
         <translation>自訂</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="558"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="551"/>
         <source>(Untitled)</source>
         <translation>（無標題）</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="559"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="552"/>
         <source>Configure…</source>
         <translation>設定…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="561"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="554"/>
         <source>Reset to Defaults…</source>
         <translation>重設為預設值…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="578"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="571"/>
         <source>Remove…</source>
         <translation>移除…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="582"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="575"/>
         <source>Toolbars</source>
         <translation>工具列</translation>
     </message>
@@ -4614,10 +4629,10 @@ Do you want to overwrite it?
         <source>%1 (download completed)</source>
         <translation>%1（已下載完成）</translation>
     </message>
-    <message numerus="yes">
+    <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="179"/>
         <source>%1 (%2% downloaded)</source>
-        <translation><numerusform>%1（%2% 已下載）</numerusform></translation>
+        <translation>%1（%2% 已下載）</translation>
     </message>
 </context>
 <context>
@@ -4725,13 +4740,6 @@ Progress: %5&lt;/div&gt;</source>
 已下載：%4
 進度：%5&lt;/div&gt;</translation>
     </message>
-    <message numerus="yes">
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="240"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="446"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="447"/>
-        <source>%1 (%2 B)</source>
-        <translation><numerusform>%1 (%2 B)</numerusform></translation>
-    </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="375"/>
         <source>Open</source>
@@ -4811,10 +4819,8 @@ Progress: %5&lt;/div&gt;</source>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="297"/>
-        <source>Target path is already used by another transfer.
-Select another one.</source>
-        <translation>目標路徑已被其他傳輸所使用。
-選取另一個。</translation>
+        <source>This path is already used by different download, pick another one.</source>
+        <translation>這個路徑已經被不同的下載所使用，選取另外一個。</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="306"/>
@@ -4891,34 +4897,34 @@ Select another one.</source>
         <translation>有些更新不包含您的平臺上的軟體包。請稍後再檢查更新或是造訪詳細資訊頁面以取得更多資訊。</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="175"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="173"/>
         <source>Downloading:</source>
         <translation>正在下載：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="190"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="188"/>
         <source>Download finished!</source>
         <translation>下載已結束！</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="191"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="189"/>
         <source>Install</source>
         <translation>安裝</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="193"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="191"/>
         <source>New version of Otter Browser is ready to install.
 Click Install button to restart browser and install the update or close this dialog to install the update during next browser restart.</source>
         <translation>新版本的 Otter Browser 已經準備好安裝了。
 按下安裝按鈕以重新啟動瀏覽器並安裝更新，或是關閉這個對話框以在下一次瀏覽器重新啟動時安裝更新，</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="215"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="213"/>
         <source>Download failed!</source>
         <translation>下載失敗！</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="217"/>
+        <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="215"/>
         <source>Check Error Console for more information.</source>
         <translation>檢查錯誤主控臺以取得更詳細的資訊。</translation>
     </message>
@@ -4959,57 +4965,57 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>Otter::WebContentsWidget</name>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="418"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="445"/>
         <source>Open all pop-ups</source>
         <translation>開啟所有彈出式視窗</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="419"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="446"/>
         <source>Open pop-ups in background</source>
         <translation>在背景分頁中開啟彈出式視窗</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="420"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="447"/>
         <source>Block all pop-ups</source>
         <translation>阻擋所有彈出式視窗</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="424"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="451"/>
         <source>Enable Images</source>
         <translation>啟用圖片</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="429"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="456"/>
         <source>Enable JavaScript</source>
         <translation>啟用 JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="434"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="461"/>
         <source>Enable Java</source>
         <translation>啟用 Java</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="439"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="466"/>
         <source>Enable Plugins</source>
         <translation>啟用外掛程式</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="446"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="473"/>
         <source>Enable Cookies</source>
         <translation>啟用 Cookies</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="450"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="477"/>
         <source>Enable Referrer</source>
         <translation>啟用 Referrer</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="454"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="481"/>
         <source>Enable Proxy</source>
         <translation>啟用 Proxy</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="459"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="486"/>
         <source>Reset Options</source>
         <translation>重置選項</translation>
     </message>
@@ -5017,84 +5023,238 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>Otter::WebWidget</name>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="297"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="296"/>
         <source>Default Application</source>
         <translation>預設應用程式</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="303"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="302"/>
         <source>Unknown</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="389"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="388"/>
         <source>Title: %1</source>
         <translation>標題：%1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="389"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="388"/>
         <source>Address: %1</source>
         <translation>網址：%1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="640"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="637"/>
         <source>No search engines defined</source>
         <translation>無已定義的搜尋引擎</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="783"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="780"/>
         <source>Open Image in New Tab (Untitled)</source>
         <translation>在新分頁開啟圖片（未命名）</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="783"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="780"/>
         <source>Open Image in New Tab (%1)</source>
         <translation>在新分頁開啟圖片（%1）</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="789"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="786"/>
         <source>Open Image in New Background Tab (Untitled)</source>
         <translation>在新背景分頁開啟圖片（未命名）</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="789"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="786"/>
         <source>Open Image in New Background Tab (%1)</source>
         <translation>在新背景分頁開啟圖片（%1）</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1081"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1078"/>
         <source>30 Minutes</source>
         <translation>30分鐘</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1082"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1079"/>
         <source>1 Hour</source>
         <translation>1小時</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1083"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1080"/>
         <source>2 Hours</source>
         <translation>2小時</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1084"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1081"/>
         <source>6 Hours</source>
         <translation>6小時</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1085"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1082"/>
         <source>Never</source>
         <translation>從不</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1086"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1083"/>
         <source>Custom…</source>
         <translation>自訂…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1088"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1085"/>
         <source>Page Default</source>
         <translation>頁面預設值</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::WebsiteInformationDialog</name>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="57"/>
+        <source>General</source>
+        <translation>一般</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="69"/>
+        <source>Information</source>
+        <translation>資訊</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="76"/>
+        <source>Address:</source>
+        <translation>地址：</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="83"/>
+        <source>Encoding:</source>
+        <translation>編碼：</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="90"/>
+        <source>Size:</source>
+        <translation>大小：</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="97"/>
+        <source>Elements:</source>
+        <translation>元素：</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="104"/>
+        <source>Download date:</source>
+        <translation>下載日期：</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="126"/>
+        <source>Title:</source>
+        <translation>標題：</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="137"/>
+        <source>Permissions</source>
+        <translation>權限</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="142"/>
+        <source>Security</source>
+        <translation>安全</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="154"/>
+        <source>Certificate</source>
+        <translation>憑證</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="161"/>
+        <source>Name:</source>
+        <translation>名稱：</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="168"/>
+        <source>Expiration date:</source>
+        <translation>到期日：</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="175"/>
+        <source>Effective date:</source>
+        <translation>有效日期：</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="188"/>
+        <source>Cipher</source>
+        <translation>密文</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="195"/>
+        <source>Protocol:</source>
+        <translation>協定：</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="202"/>
+        <source>Authentication method:</source>
+        <translation>授權方法：</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="209"/>
+        <source>Key exchange method:</source>
+        <translation>金鑰交換方法：</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="216"/>
+        <source>Encryption method:</source>
+        <translation>加密方法：</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="241"/>
+        <source>Details…</source>
+        <translation>詳細資訊…</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="41"/>
+        <source>(unknown)</source>
+        <translation>（未知）</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="46"/>
+        <source>This website was marked as fraud.</source>
+        <translation>這個網頁曾被標記為詐騙網站。</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="51"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="56"/>
+        <source>Your connection with this website is private.</source>
+        <translation>您在此網頁的連線是私密的。</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="61"/>
+        <source>Your connection with this website is not private.</source>
+        <translation>您在此網頁的連線並非私密。</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="66"/>
+        <source>You are viewing content from your local filesystem.</source>
+        <translation>您正在從您的本機檔案系統中檢視內容。</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="71"/>
+        <source>You are viewing safe page from Otter Browser.</source>
+        <translation>您正在從 Otter 瀏覽器中檢視安全頁面。</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="76"/>
+        <source>No information.</source>
+        <translation>沒有資訊。</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="84"/>
+        <source>unknown</source>
+        <translation>未知</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="86"/>
+        <source>%1 (%n blocked)</source>
+        <translation><numerusform>%1（%n% 已阻擋）</numerusform></translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="104"/>
+        <source>Information for %1</source>
+        <translation>%1 的資訊</translation>
     </message>
 </context>
 <context>
@@ -5504,29 +5664,29 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>Otter::WindowsManager</name>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="278"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="323"/>
         <source>Question</source>
         <translation>問題</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/core/WindowsManager.cpp" line="279"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="324"/>
         <source>You are about to open %n bookmark(s).</source>
         <translation><numerusform>您將要開啟 %n 個書籤。</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="280"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="325"/>
         <source>Do you want to continue?</source>
         <translation>您想要繼續嗎？</translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="284"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="329"/>
         <source>Do not show this message again</source>
         <translation>不要再次顯示此訊息</translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="806"/>
-        <location filename="../../src/core/WindowsManager.cpp" line="859"/>
-        <location filename="../../src/core/WindowsManager.cpp" line="983"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="828"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="911"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="1035"/>
         <source>Empty</source>
         <translation>清空</translation>
     </message>
@@ -5575,970 +5735,1000 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>actions</name>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="244"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="245"/>
         <source>File</source>
         <translation>檔案</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="245"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="246"/>
         <source>Sessions</source>
         <translation>工作階段</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="246"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="247"/>
         <source>Import and Export</source>
         <translation>匯入與匯出</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="247"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="248"/>
         <source>Edit</source>
         <translation>編輯</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="248"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="249"/>
         <source>View</source>
         <translation>檢視</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="249"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="250"/>
         <source>Toolbars</source>
         <translation>工具列</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="250"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="251"/>
         <source>User Agent</source>
         <translation>使用者代理</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="251"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="252"/>
         <source>Character Encoding</source>
         <translation>字元編碼</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="252"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="253"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="45"/>
         <source>History</source>
         <translation>歷史</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="253"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="254"/>
         <source>Closed Windows</source>
         <translation>已關閉的視窗</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="254"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="255"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="43"/>
         <source>Bookmarks</source>
         <translation>書籤</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="255"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="256"/>
         <source>Tools</source>
         <translation>工具</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="256"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="257"/>
         <source>Help</source>
         <translation>說明</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="257"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="258"/>
         <source>Tabs and Windows</source>
         <translation>分頁與視窗</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="258"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="259"/>
         <source>Page</source>
         <translation>頁面</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="259"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="260"/>
         <source>Print</source>
         <translation>列印</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="260"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="261"/>
         <source>Settings</source>
         <translation>設定值</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="261"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="262"/>
         <source>Frame</source>
         <translation>畫面</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="265"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="266"/>
         <source>New Tab</source>
         <translation>新分頁</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="266"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="267"/>
         <source>New Private Tab</source>
         <translation>新隱私分頁</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="267"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="268"/>
         <source>New Window</source>
         <translation>新視窗</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="268"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="269"/>
         <source>New Private Window</source>
         <translation>新隱私視窗</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="269"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="270"/>
         <source>Open…</source>
         <translation>開啟…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="270"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="271"/>
         <source>Save…</source>
         <translation>儲存…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="271"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="272"/>
         <source>Clone Tab</source>
         <translation>複製分頁</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="272"/>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="136"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="273"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="144"/>
         <source>Pin Tab</source>
         <translation>釘選分頁</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="273"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="274"/>
         <source>Detach Tab</source>
         <translation>分離分頁</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="274"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="275"/>
         <source>Maximize</source>
         <translation>最大化</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="274"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="275"/>
         <source>Maximize Tab</source>
         <translation>最大化分頁</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="275"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="276"/>
         <source>Minimize</source>
         <translation>最小化</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="275"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="276"/>
         <source>Minimize Tab</source>
         <translation>最小化分頁</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="276"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="277"/>
         <source>Restore</source>
         <translation>回復</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="276"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="277"/>
         <source>Restore Tab</source>
         <translation>回復分頁</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="277"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="278"/>
         <source>Stay on Top</source>
         <translation>保持在頂部</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="278"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="279"/>
         <source>Clear Tab History</source>
         <translation>清除分頁歷史</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="279"/>
+        <source>Remove Local Tab History</source>
+        <translation>移除本地頁面歷史</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="280"/>
         <source>Purge Tab History</source>
         <translation>將分頁歷史清除乾淨</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="280"/>
+        <source>Remove Local and Global Tab History</source>
+        <translation>移除本地及全域頁面歷史</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="281"/>
         <source>Close Tab</source>
         <translation>關閉分頁</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="281"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="282"/>
         <source>Close Other Tabs</source>
         <translation>關閉其他分頁</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="282"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="283"/>
         <source>Close All Private Tabs</source>
         <translation>關閉所有隱私分頁</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="282"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="283"/>
         <source>Close All Private Tabs in Current Window</source>
         <translation>關閉所有在目前視窗中的隱私分頁</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="283"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="284"/>
         <source>Close Private Tabs and Windows</source>
         <translation>關閉隱私分頁與視窗</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="284"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="285"/>
         <source>Reopen Previously Closed Tab</source>
         <translation>重新開啟先前關閉的分頁</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="285"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="286"/>
         <source>Maximize All</source>
         <translation>最大化所有</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="286"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="287"/>
         <source>Minimize All</source>
         <translation>最小化所有</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="287"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="288"/>
         <source>Restore All</source>
         <translation>回復所有</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="288"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="289"/>
         <source>Cascade</source>
         <translation>串聯</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="289"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="290"/>
         <source>Tile</source>
         <translation>平鋪</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="290"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="291"/>
         <source>Close Window</source>
         <translation>關閉分頁</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="291"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="292"/>
         <source>Manage Sessions…</source>
         <translation>管理工作階段…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="292"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="293"/>
         <source>Save Current Session…</source>
         <translation>儲存目前的工作階段…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="293"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="309"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="294"/>
+        <source>Open URL</source>
+        <translation>開啟 URL</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="295"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="311"/>
         <source>Open</source>
         <translation>開啟</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="294"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="296"/>
         <source>Open in This Tab</source>
         <translation>在此分頁中開啟</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="295"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="310"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="297"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="312"/>
         <source>Open in New Tab</source>
         <translation>在新分頁中開啟</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="296"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="311"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="298"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="313"/>
         <source>Open in New Background Tab</source>
         <translation>在新的背景分頁中開啟</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="297"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="299"/>
         <source>Open in New Window</source>
         <translation>在新視窗中開啟</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="298"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="300"/>
         <source>Open in New Background Window</source>
         <translation>在新的背景視窗中開啟</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="299"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="301"/>
         <source>Open in New Private Tab</source>
         <translation>在新隱私分頁中開啟</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="300"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="302"/>
         <source>Open in New Private Background Tab</source>
         <translation>在新的背景隱私分頁中開啟</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="301"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="303"/>
         <source>Open in New Private Window</source>
         <translation>在新隱私視窗中開啟</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="302"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="304"/>
         <source>Open in New Private Background Window</source>
         <translation>在新的背景隱私視窗中開啟</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="303"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="312"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="403"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="305"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="314"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="407"/>
         <source>Open with…</source>
         <translation>開啟以…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="303"/>
-        <source>Open link with external application</source>
+        <location filename="../../src/core/ActionsManager.cpp" line="305"/>
+        <source>Open Link with External Application</source>
         <translation>以外部應用程式開啟連結</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="304"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="306"/>
         <source>Copy Link to Clipboard</source>
         <translation>複製連結到剪貼簿</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="305"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="720"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="307"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="717"/>
         <source>Bookmark Link…</source>
         <translation>書籤連結…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="306"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="308"/>
         <source>Save Link Target As…</source>
         <translation>連結另存新檔…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="307"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="309"/>
         <source>Save to Downloads</source>
         <translation>儲存到下載</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="308"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="310"/>
         <source>Go to This Address</source>
         <translation>到這個網址</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="309"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="311"/>
         <source>Open Frame in This Tab</source>
         <translation>在此分頁中開啟框架</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="310"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="312"/>
         <source>Open Frame in New Tab</source>
         <translation>在新分頁中開啟框架</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="311"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="313"/>
         <source>Open Frame in New Background Tab</source>
         <translation>在新的背景分頁中開啟框架</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="312"/>
-        <source>Open frame with external application</source>
+        <location filename="../../src/core/ActionsManager.cpp" line="314"/>
+        <source>Open Frame with External Application</source>
         <translation>以外部應用程式開啟框架</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="313"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="315"/>
         <source>Copy Frame Link to Clipboard</source>
         <translation>複製框架連結到剪貼簿</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="314"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="339"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="340"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="316"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="341"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="342"/>
         <source>Reload</source>
         <translation>重新載入</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="314"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="316"/>
         <source>Reload Frame</source>
         <translation>重新載入框架</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="315"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="317"/>
         <source>View Frame Source</source>
         <translation>檢視框架原始碼</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="316"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="318"/>
         <source>Open Image In New Tab</source>
         <translation>在新分頁開啟圖片</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="317"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="789"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="319"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="786"/>
         <source>Open Image in New Background Tab</source>
         <translation>在新背景分頁開啟圖片</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="318"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="320"/>
         <source>Save Image…</source>
         <translation>儲存圖片…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="319"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="321"/>
         <source>Copy Image to Clipboard</source>
         <translation>複製圖片到剪貼簿</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="320"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="322"/>
         <source>Copy Image Link to Clipboard</source>
         <translation>複製圖片連結到剪貼簿</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="321"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="323"/>
         <source>Reload Image</source>
         <translation>重新載入圖片</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="322"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="324"/>
         <source>Image Properties…</source>
         <translation>圖片屬性…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="323"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="325"/>
         <source>Save Media…</source>
         <translation>儲存媒體…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="324"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="326"/>
         <source>Copy Media Link to Clipboard</source>
         <translation>複製媒體連結到剪貼簿</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="325"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="327"/>
         <source>Show Controls</source>
         <translation>顯示控制</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="326"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="328"/>
         <source>Looping</source>
         <translation>迴圈</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="327"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="852"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="329"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="849"/>
         <source>Play</source>
         <translation>播放</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="328"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="859"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="330"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="856"/>
         <source>Mute</source>
         <translation>靜音</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="329"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="331"/>
         <source>Go</source>
         <translation>到</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="330"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="332"/>
         <source>Back</source>
         <translation>上一頁</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="331"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="333"/>
         <source>Forward</source>
         <translation>下一頁</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="332"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="334"/>
         <source>Go to Page or Search</source>
         <translation>到頁面或搜尋</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="333"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="335"/>
         <source>Go to Home Page</source>
         <translation>到首頁</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="334"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="336"/>
         <source>Go to Parent Directory</source>
         <translation>到上層目錄</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="335"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="337"/>
         <source>Rewind</source>
         <translation>倒帶</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="336"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="338"/>
         <source>Fast Forward</source>
         <translation>快轉</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="337"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="339"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="338"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="340"/>
         <source>Stop Scheduled Page Reload</source>
         <translation>停止排定的分頁重新載入</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="340"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="342"/>
         <source>Reload or Stop</source>
         <translation>重新載入或停止</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="341"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="343"/>
         <source>Reload and Bypass Cache</source>
         <translation>重新載入且忽略快取</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="342"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="344"/>
         <source>Reload All Tabs</source>
         <translation>重新載入所有分頁</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="343"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="345"/>
         <source>Reload Every</source>
         <translation>重新載入每一個</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="344"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="346"/>
         <source>Show Context Menu</source>
         <translation>顯示右鍵選單</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="345"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="347"/>
         <source>Undo</source>
         <translation>復原</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="346"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="348"/>
         <source>Redo</source>
         <translation>重做</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="347"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="349"/>
         <source>Cut</source>
         <translation>剪下</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="348"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="350"/>
         <source>Copy</source>
         <translation>複製</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="349"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="351"/>
         <source>Copy as Plain Text</source>
         <translation>複製為純文字</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="350"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="352"/>
         <source>Copy Address</source>
         <translation>複製網址</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="351"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="353"/>
         <source>Copy to Note</source>
         <translation>複製到筆記</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="352"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="354"/>
         <source>Paste</source>
         <translation>貼上</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="353"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="355"/>
         <source>Paste and Go</source>
         <translation>貼上並瀏覽</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="354"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="356"/>
         <source>Insert Note</source>
         <translation>插入筆記</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="355"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="357"/>
         <source>Delete</source>
         <translation>刪除</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="356"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="358"/>
         <source>Select All</source>
         <translation>選取所有</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="357"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="359"/>
         <source>Clear All</source>
         <translation>清除所有</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="358"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="360"/>
         <source>Check Spelling</source>
         <translation>正在檢查拼字</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="359"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="361"/>
         <source>Find…</source>
         <translation>尋找…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="360"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="362"/>
         <source>Find Next</source>
         <translation>尋找下一個</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="361"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="363"/>
         <source>Find Previous</source>
         <translation>尋找上一個</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="362"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="364"/>
         <source>Quick Find</source>
         <translation>快速尋找</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="363"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="639"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="365"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="636"/>
         <source>Search</source>
         <translation>搜尋</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="364"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="366"/>
         <source>Search Using</source>
         <translation>搜尋使用</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="365"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="367"/>
         <source>Create Search…</source>
         <translation>建立搜尋…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="366"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="368"/>
         <source>Zoom In</source>
         <translation>放大</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="367"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="369"/>
         <source>Zoom Out</source>
         <translation>縮小</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="368"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="370"/>
         <source>Zoom Original</source>
         <translation>縮放回原大小</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="369"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="371"/>
         <source>Go to Start of the Page</source>
         <translation>到頁首</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="370"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="372"/>
         <source>Go to the End of the Page</source>
         <translation>到頁尾</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="371"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="373"/>
         <source>Page Up</source>
         <translation>頁面向上捲動</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="372"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="374"/>
         <source>Page Down</source>
         <translation>頁面向下捲動</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="373"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="375"/>
         <source>Page Left</source>
         <translation>頁面向左捲動</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="374"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="376"/>
         <source>Page Right</source>
         <translation>頁面向右捲動</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="375"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="377"/>
         <source>Enter Drag Scroll Mode</source>
         <translation>進入拖曳捲軸模式</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="376"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="378"/>
         <source>Enter Move Scroll Mode</source>
         <translation>進入移動捲軸模式</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="377"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="379"/>
         <source>Exit Scroll Mode</source>
         <translation>離開捲軸模式</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="378"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="380"/>
         <source>Print…</source>
         <translation>列印…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="379"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="381"/>
         <source>Print Preview</source>
         <translation>預覽列印</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="380"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="382"/>
         <source>Activate Address Field</source>
         <translation>啟動網址列</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="381"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="383"/>
         <source>Activate Search Field</source>
         <translation>啟動搜尋欄</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="382"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="384"/>
         <source>Activate Content</source>
         <translation>啟動內容</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="383"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="385"/>
         <source>Go to Previously Used Tab</source>
         <translation>到前一個使用的分頁</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="384"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="386"/>
         <source>Go to Least Recently Used Tab</source>
         <translation>到最少使用的最近分頁</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="385"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="387"/>
+        <source>Activate Tab</source>
+        <translation>啟用分頁</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="388"/>
         <source>Go to Tab on Left</source>
         <translation>到左方分頁</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="386"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="389"/>
         <source>Go to Tab on Right</source>
         <translation>到右方分頁</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="387"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="390"/>
         <source>Manage Bookmarks</source>
         <translation>管理書籤</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="388"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="519"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="391"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="516"/>
         <source>Add Bookmark…</source>
         <translation>新增書籤…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="389"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="392"/>
+        <source>Open Bookmark</source>
+        <translation>開啟書籤</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="393"/>
         <source>Quick Bookmark Access</source>
         <translation>快速存取書籤</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="390"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="394"/>
         <source>Block pop-ups</source>
         <translation>阻擋彈出式視窗</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="391"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="395"/>
         <source>Load Images</source>
         <translation>載入圖片</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="392"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="396"/>
         <source>Cookies</source>
         <translation>Cookies</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="393"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="397"/>
         <source>Cookies Policy</source>
         <translation>Cookies 政策</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="394"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="398"/>
         <source>Third-party Cookies Policy</source>
         <translation>第三方 Cookies 政策</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="395"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="399"/>
         <source>Plugins</source>
         <translation>外掛程式</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="396"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="400"/>
         <source>Load Plugins</source>
         <translation>載入外掛程式</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="397"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="401"/>
         <source>Enable JavaScript</source>
         <translation>啟用 JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="398"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="402"/>
         <source>Enable Java</source>
         <translation>啟用 Java</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="399"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="403"/>
         <source>Enable Referrer</source>
         <translation>啟用 Referrer</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="400"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="404"/>
         <source>Proxy</source>
         <translation>代理伺服器</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="401"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="405"/>
         <source>Enable Proxy</source>
         <translation>啟用 Proxy</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="402"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="406"/>
         <source>View Source</source>
         <translation>檢視原始碼</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="403"/>
-        <source>Open current page with external application</source>
+        <location filename="../../src/core/ActionsManager.cpp" line="407"/>
+        <source>Open Current Page with External Application</source>
         <translation>以外部應用程式開啟目前頁面</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="404"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="408"/>
         <source>Validate</source>
         <translation>驗證</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="405"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="409"/>
         <source>Inspect Page</source>
         <translation>檢查頁面</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="406"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="410"/>
         <source>Inspect Element…</source>
         <translation>檢查元素…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="407"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="411"/>
         <source>Work Offline</source>
         <translation>離線工作</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="408"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="412"/>
         <source>Full Screen</source>
         <translation>全螢幕</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="409"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="413"/>
         <source>Show Tab Switcher</source>
         <translation>顯示分頁切換器</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="410"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="414"/>
         <source>Show Menubar</source>
         <translation>顯示選單列</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="411"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="415"/>
         <source>Show Tabbar</source>
         <translation>顯示分頁列</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="412"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="416"/>
         <source>Show Sidebar</source>
         <translation>顯示側邊欄</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="413"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="417"/>
         <source>Show Error Console</source>
         <translation>顯示錯誤主控臺</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="414"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="418"/>
         <source>Lock Toolbars</source>
         <translation>鎖定工具列</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="415"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="419"/>
         <source>Open Panel as Tab</source>
         <translation>將面板開啟為分頁</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="416"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="420"/>
         <source>Close Panel</source>
         <translation>關閉面板</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="417"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="421"/>
         <source>Content Blocking…</source>
         <translation>內容阻擋…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="418"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="422"/>
         <source>View History</source>
         <translation>檢視歷史</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="419"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="423"/>
         <source>Clear History…</source>
         <translation>清除歷史…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="420"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="424"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="46"/>
         <source>Notes</source>
         <translation>筆記</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="421"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="425"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="44"/>
         <source>Transfers</source>
         <translation>轉送</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="422"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="426"/>
         <source>Preferences…</source>
         <translation>偏好設定…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="423"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="427"/>
         <source>Website Preferences…</source>
         <translation>網頁偏好設定…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="424"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="428"/>
         <source>Quick Preferences</source>
         <translation>快速偏好設定</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="425"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="429"/>
         <source>Reset Options</source>
         <translation>重置選項</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="426"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="430"/>
+        <source>Website Information…</source>
+        <translation>網頁資訊…</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="431"/>
         <source>Switch Application Language…</source>
         <translation>切換應用程式語言…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="427"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="432"/>
         <source>Check for Updates…</source>
         <translation>檢查更新…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="428"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="433"/>
         <source>Diagnostic Report…</source>
         <translation>診斷報告…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="429"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="434"/>
         <source>About Otter…</source>
         <translation>關於 Otter…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="430"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="435"/>
         <source>About Qt…</source>
         <translation>關於 Qt…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="431"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="436"/>
         <source>Exit</source>
         <translation>結束</translation>
     </message>
@@ -6573,7 +6763,7 @@ Click Install button to restart browser and install the update or close this dia
         <translation>複製來源頁面的網址</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="136"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="144"/>
         <source>Unpin Tab</source>
         <translation>解除釘選分頁</translation>
     </message>
@@ -6583,47 +6773,47 @@ Click Install button to restart browser and install the update or close this dia
         <translation>顯示視窗</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="519"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="516"/>
         <source>Edit Bookmark…</source>
         <translation>編輯書籤…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="720"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="717"/>
         <source>Edit Link Bookmark…</source>
         <translation>編輯書籤連結…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="783"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="780"/>
         <source>Open Image in New Tab</source>
         <translation>在新分頁開啟圖片</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="828"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="825"/>
         <source>Save Video…</source>
         <translation>儲存視訊…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="828"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="825"/>
         <source>Save Audio…</source>
         <translation>儲存音訊…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="834"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="831"/>
         <source>Copy Video Link to Clipboard</source>
         <translation>複製視訊連結到剪貼簿</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="834"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="831"/>
         <source>Copy Audio Link to Clipboard</source>
         <translation>複製音訊連結到剪貼簿</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="852"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="849"/>
         <source>Pause</source>
         <translation>暫停</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="859"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="856"/>
         <source>Unmute</source>
         <translation>解除靜音</translation>
     </message>
@@ -6759,7 +6949,7 @@ Error: %2</source>
         <translation>預設值</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="466"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="497"/>
         <source>Blocked request</source>
         <translation>請求封鎖</translation>
     </message>
