@@ -137,6 +137,7 @@ set(otter_src
 	src/ui/ImportDialog.cpp
 	src/ui/ItemDelegate.cpp
 	src/ui/ItemViewWidget.cpp
+	src/ui/LineEditWidget.cpp
 	src/ui/LocaleDialog.cpp
 	src/ui/MainWindow.cpp
 	src/ui/Menu.cpp

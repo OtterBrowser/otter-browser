@@ -130,6 +130,7 @@ SOURCES += src/main.cpp \
     src/ui/ImportDialog.cpp \
     src/ui/ItemDelegate.cpp \
     src/ui/ItemViewWidget.cpp \
+    src/ui/LineEditWidget.cpp \
     src/ui/LocaleDialog.cpp \
     src/ui/MainWindow.cpp \
     src/ui/Menu.cpp \
@@ -284,6 +285,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/ImportDialog.h \
     src/ui/ItemDelegate.h \
     src/ui/ItemViewWidget.h \
+    src/ui/LineEditWidget.h \
     src/ui/LocaleDialog.h \
     src/ui/MainWindow.h \
     src/ui/Menu.h \
