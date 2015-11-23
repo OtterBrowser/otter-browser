@@ -84,7 +84,6 @@ private:
 	int m_lastValidIndex;
 	bool m_isIgnoringActivation;
 	bool m_isPopupUpdated;
-	bool m_shouldSelectAllOnRelease;
 	bool m_wasPopupVisible;
 
 signals:

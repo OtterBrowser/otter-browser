@@ -31,6 +31,7 @@
 namespace Otter
 {
 
+class LineEditWidget;
 class Window;
 
 class AddressWidget : public QComboBox
@@ -42,13 +43,13 @@ public:
 
 	void showPopup();
 	void hidePopup();
-	void handleUserInput(const QString &text, WindowsManager::OpenHints hints = WindowsManager::CurrentTabOpen);
 	QString getText() const;
 	QUrl getUrl() const;
 	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
 	void activate(Qt::FocusReason reason);
+	void handleUserInput(const QString &text, WindowsManager::OpenHints hints = WindowsManager::DefaultOpen);
 	void setText(const QString &text);
 	void setUrl(const QUrl &url, bool force = false);
 	void setWindow(Window *window = NULL);
@@ -67,10 +68,7 @@ protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void openFeed(QAction *action);
 	void openUrl(const QString &url);
-	void copyToNote();
-	void deleteText();
 	void removeIcon();
-	void clearSelectAllOnRelease();
 	void updateBookmark();
 	void updateFeeds();
 	void updateLoadPlugins();
@@ -81,6 +79,7 @@ protected slots:
 
 private:
 	QPointer<Window> m_window;
+	LineEditWidget *m_lineEdit;
 	QCompleter *m_completer;
 	QLabel *m_bookmarkLabel;
 	QLabel *m_feedsLabel;
@@ -94,7 +93,6 @@ private:
 	int m_removeModelTimer;
 	bool m_isHistoryDropdownEnabled;
 	bool m_isUsingSimpleMode;
-	bool m_shouldSelectAllOnRelease;
 	bool m_wasPopupVisible;
 
 signals:

@@ -113,7 +113,7 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 			}
 			else if (identifier == ActionsManager::GoAction)
 			{
-				m_addressWidgets.at(0)->handleUserInput(m_addressWidgets.at(0)->getText());
+				m_addressWidgets.at(0)->handleUserInput(m_addressWidgets.at(0)->getText(), WindowsManager::CurrentTabOpen);
 
 				return;
 			}

@@ -48,7 +48,6 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : QComboBox(parent),
 	m_lastValidIndex(0),
 	m_isIgnoringActivation(false),
 	m_isPopupUpdated(false),
-	m_shouldSelectAllOnRelease(false),
 	m_wasPopupVisible(false)
 {
 	m_completer->setCaseSensitivity(Qt::CaseInsensitive);
