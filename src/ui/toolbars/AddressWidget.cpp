@@ -79,13 +79,13 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 	setMinimumWidth(100);
 	setItemDelegate(new AddressDelegate(this));
 	setInsertPolicy(QComboBox::NoInsert);
+	setMouseTracking(true);
 	setWindow(window);
 	optionChanged(QLatin1String("AddressField/DropAction"), SettingsManager::getValue(QLatin1String("AddressField/DropAction")));
 	optionChanged(QLatin1String("AddressField/SelectAllOnFocus"), SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")));
 
 	m_lineEdit->setCompleter(m_completer);
 	m_lineEdit->setStyleSheet(QLatin1String("QLineEdit {background:transparent;}"));
-	m_lineEdit->setMouseTracking(true);
 	m_lineEdit->installEventFilter(this);
 
 	if (toolBar)
@@ -316,6 +316,67 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 	menu.exec(event->globalPos());
 }
 
+void AddressWidget::mousePressEvent(QMouseEvent *event)
+{
+	if (event->button() == Qt::LeftButton && m_securityBadgeRectangle.contains(event->pos()))
+	{
+		m_dragStartPosition = event->pos();
+	}
+	else
+	{
+		m_dragStartPosition = QPoint();
+	}
+
+	m_wasPopupVisible = (m_popupHideTime.isValid() && m_popupHideTime.msecsTo(QTime::currentTime()) < 100);
+
+	QComboBox::mousePressEvent(event);
+}
+
+void AddressWidget::mouseMoveEvent(QMouseEvent *event)
+{
+	if ((!m_isUsingSimpleMode && m_securityBadgeRectangle.contains(event->pos())) || ((m_isHistoryDropdownEnabled || m_isUsingSimpleMode) && m_historyDropdownArrowRectangle.contains(event->pos())))
+	{
+		setCursor(Qt::ArrowCursor);
+	}
+	else
+	{
+		setCursor(Qt::IBeamCursor);
+	}
+
+	if (!startDrag(event))
+	{
+		QComboBox::mouseMoveEvent(event);
+	}
+}
+
+void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+	if (m_securityBadgeRectangle.contains(event->pos()) && m_window)
+	{
+		m_window->triggerAction(ActionsManager::WebsiteInformationAction);
+
+		event->accept();
+
+		return;
+	}
+
+	if (m_historyDropdownArrowRectangle.contains(event->pos()))
+	{
+		m_popupHideTime = QTime();
+
+		if (m_wasPopupVisible)
+		{
+			hidePopup();
+		}
+		else
+		{
+			showPopup();
+		}
+	}
+
+	QComboBox::mouseReleaseEvent(event);
+}
+
 void AddressWidget::wheelEvent(QWheelEvent *event)
 {
 	event->ignore();
@@ -431,6 +492,7 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 			m_urlIconLabel->setAutoFillBackground(false);
 			m_urlIconLabel->setFixedSize(16, 16);
 			m_urlIconLabel->setPixmap((m_window ? m_window->getIcon() : Utils::getIcon(QLatin1String("tab"))).pixmap(m_urlIconLabel->size()));
+			m_urlIconLabel->setCursor(Qt::ArrowCursor);
 			m_urlIconLabel->setFocusPolicy(Qt::NoFocus);
 			m_urlIconLabel->installEventFilter(this);
 
@@ -555,6 +617,7 @@ void AddressWidget::updateFeeds()
 		m_feedsLabel->setPixmap(Utils::getIcon(QLatin1String("application-rss+xml")).pixmap(m_feedsLabel->size()));
 		m_feedsLabel->setCursor(Qt::ArrowCursor);
 		m_feedsLabel->setToolTip(tr("Feed List"));
+		m_feedsLabel->setCursor(Qt::ArrowCursor);
 		m_feedsLabel->setFocusPolicy(Qt::NoFocus);
 		m_feedsLabel->installEventFilter(this);
 
@@ -583,6 +646,7 @@ void AddressWidget::updateLoadPlugins()
 		m_loadPluginsLabel->setPixmap(Utils::getIcon(QLatin1String("preferences-plugin")).pixmap(m_loadPluginsLabel->size()));
 		m_loadPluginsLabel->setCursor(Qt::ArrowCursor);
 		m_loadPluginsLabel->setToolTip(tr("Click to load all plugins on the page"));
+		m_loadPluginsLabel->setCursor(Qt::ArrowCursor);
 		m_loadPluginsLabel->setFocusPolicy(Qt::NoFocus);
 		m_loadPluginsLabel->installEventFilter(this);
 
@@ -599,7 +663,7 @@ void AddressWidget::updateLoadPlugins()
 
 void AddressWidget::updateLineEdit()
 {
-	m_lineEdit->setGeometry(QRect(0, 0, width(), height()));
+	m_lineEdit->setGeometry(m_lineEditRectangle);
 }
 
 void AddressWidget::updateIcons()
@@ -646,7 +710,10 @@ void AddressWidget::updateIcons()
 
 	margins.setRight(margins.right() + 3);
 
-	m_lineEdit->setTextMargins(margins);
+	m_lineEdit->resize((width() - margins.left() - margins.right()), height());
+	m_lineEdit->move(QPoint(margins.left(), 0));
+
+	m_lineEditRectangle = m_lineEdit->geometry();
 }
 
 void AddressWidget::activate(Qt::FocusReason reason)
@@ -774,104 +841,31 @@ QUrl AddressWidget::getUrl() const
 	return (m_window ? m_window->getUrl() : QUrl(QLatin1String("about:blank")));
 }
 
-bool AddressWidget::eventFilter(QObject *object, QEvent *event)
+bool AddressWidget::startDrag(QMouseEvent *event)
 {
-	if ((object == m_lineEdit || object == m_urlIconLabel) && event->type() == QEvent::MouseButtonPress)
+	if (!event->buttons().testFlag(Qt::LeftButton) || m_dragStartPosition.isNull() || (event->pos() - m_dragStartPosition).manhattanLength() < QApplication::startDragDistance())
 	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
-
-		if (mouseEvent)
-		{
-			if (mouseEvent->button() == Qt::LeftButton && m_securityBadgeRectangle.contains(mouseEvent->pos()))
-			{
-				m_dragStartPosition = mouseEvent->pos();
-			}
-			else
-			{
-				m_dragStartPosition = QPoint();
-			}
-		}
-
-		if (object == m_lineEdit)
-		{
-			m_wasPopupVisible = (m_popupHideTime.isValid() && m_popupHideTime.msecsTo(QTime::currentTime()) < 100);
-		}
+		return false;
 	}
-	else if (object == m_lineEdit && event->type() == QEvent::MouseButtonRelease)
-	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
-		if (mouseEvent)
-		{
-			if (m_securityBadgeRectangle.contains(mouseEvent->pos()) && m_window)
-			{
-				m_window->triggerAction(ActionsManager::WebsiteInformationAction);
+	QList<QUrl> urls;
+	urls << getUrl();
 
-				event->accept();
+	QDrag *drag = new QDrag(this);
+	QMimeData *mimeData = new QMimeData();
+	mimeData->setText(getUrl().toString());
+	mimeData->setUrls(urls);
 
-				return true;
-			}
+	drag->setMimeData(mimeData);
+	drag->setPixmap((m_window ? m_window->getIcon() : Utils::getIcon(QLatin1String("tab"))).pixmap(16, 16));
+	drag->exec(Qt::CopyAction);
 
-			if (m_historyDropdownArrowRectangle.contains(mouseEvent->pos()))
-			{
-				m_popupHideTime = QTime();
+	return true;
+}
 
-				if (m_wasPopupVisible)
-				{
-					hidePopup();
-				}
-				else
-				{
-					showPopup();
-				}
-			}
-			else if (mouseEvent->button() == Qt::MiddleButton && m_lineEdit->text().isEmpty() && !QApplication::clipboard()->text().isEmpty() && SettingsManager::getValue(QLatin1String("AddressField/PasteAndGoOnMiddleClick")).toBool())
-			{
-				handleUserInput(QApplication::clipboard()->text().trimmed(), WindowsManager::CurrentTabOpen);
-
-				event->accept();
-
-				return true;
-			}
-		}
-	}
-	else if ((object == m_lineEdit || object == m_urlIconLabel) && event->type() == QEvent::MouseMove)
-	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
-
-		if (mouseEvent)
-		{
-			if (mouseEvent->buttons().testFlag(Qt::LeftButton) && !m_dragStartPosition.isNull() && (mouseEvent->pos() - m_dragStartPosition).manhattanLength() >= QApplication::startDragDistance())
-			{
-				QList<QUrl> urls;
-				urls << getUrl();
-
-				QDrag *drag = new QDrag(this);
-				QMimeData *mimeData = new QMimeData();
-				mimeData->setText(getUrl().toString());
-				mimeData->setUrls(urls);
-
-				drag->setMimeData(mimeData);
-				drag->setPixmap((m_window ? m_window->getIcon() : Utils::getIcon(QLatin1String("tab"))).pixmap(16, 16));
-				drag->exec(Qt::CopyAction);
-
-				return true;
-			}
-
-			if (object == m_lineEdit)
-			{
-				if ((!m_isUsingSimpleMode && m_securityBadgeRectangle.contains(mouseEvent->pos())) || ((m_isHistoryDropdownEnabled || m_isUsingSimpleMode) && m_historyDropdownArrowRectangle.contains(mouseEvent->pos())))
-				{
-					m_lineEdit->setCursor(Qt::ArrowCursor);
-				}
-				else
-				{
-					m_lineEdit->setCursor(Qt::IBeamCursor);
-				}
-			}
-		}
-	}
-	else if (object == m_lineEdit && event->type() == QEvent::ToolTip)
+bool AddressWidget::event(QEvent *event)
+{
+	if (event->type() == QEvent::ToolTip)
 	{
 		QHelpEvent *helpEvent = static_cast<QHelpEvent*>(event);
 
@@ -879,6 +873,51 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			QToolTip::showText(helpEvent->globalPos(), tr("Show Website Information"));
 
+			return true;
+		}
+	}
+
+	return QComboBox::event(event);
+}
+
+bool AddressWidget::eventFilter(QObject *object, QEvent *event)
+{
+	 if (object == m_lineEdit && event->type() == QEvent::MouseButtonRelease)
+	{
+		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+		if (mouseEvent && mouseEvent->button() == Qt::MiddleButton && m_lineEdit->text().isEmpty() && !QApplication::clipboard()->text().isEmpty() && SettingsManager::getValue(QLatin1String("AddressField/PasteAndGoOnMiddleClick")).toBool())
+		{
+			handleUserInput(QApplication::clipboard()->text().trimmed(), WindowsManager::CurrentTabOpen);
+
+			event->accept();
+
+			return true;
+		}
+	}
+	else if (object == m_urlIconLabel && m_urlIconLabel && event->type() == QEvent::MouseButtonPress)
+	{
+		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+		if (mouseEvent->button() == Qt::LeftButton && m_securityBadgeRectangle.contains(mouseEvent->pos()))
+		{
+			m_dragStartPosition = mouseEvent->pos();
+		}
+		else
+		{
+			m_dragStartPosition = QPoint();
+		}
+
+		mouseEvent->accept();
+
+		return true;
+	}
+	else if (object == m_urlIconLabel && m_urlIconLabel && event->type() == QEvent::MouseMove)
+	{
+		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+		if (mouseEvent && startDrag(mouseEvent))
+		{
 			return true;
 		}
 	}
@@ -915,8 +954,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 			return true;
 		}
 	}
-
-	if (object == m_feedsLabel && m_feedsLabel && m_window && event->type() == QEvent::MouseButtonPress)
+	else if (object == m_feedsLabel && m_feedsLabel && m_window && event->type() == QEvent::MouseButtonPress)
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
@@ -947,8 +985,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 			return true;
 		}
 	}
-
-	if (object == m_loadPluginsLabel && m_loadPluginsLabel && m_window && event->type() == QEvent::MouseButtonPress)
+	else if (object == m_loadPluginsLabel && m_loadPluginsLabel && m_window && event->type() == QEvent::MouseButtonPress)
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
@@ -961,8 +998,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 			return true;
 		}
 	}
-
-	if (object != m_lineEdit && event->type() == QEvent::ContextMenu)
+	else if (object != m_lineEdit && event->type() == QEvent::ContextMenu)
 	{
 		QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
 

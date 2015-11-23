@@ -45,6 +45,7 @@ public:
 	void hidePopup();
 	QString getText() const;
 	QUrl getUrl() const;
+	bool event(QEvent *event);
 	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
@@ -62,7 +63,11 @@ protected:
 	void focusInEvent(QFocusEvent *event);
 	void keyPressEvent(QKeyEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
+	void mousePressEvent(QMouseEvent *event);
+	void mouseMoveEvent(QMouseEvent *event);
+	void mouseReleaseEvent(QMouseEvent *event);
 	void wheelEvent(QWheelEvent *event);
+	bool startDrag(QMouseEvent *event);
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
@@ -87,6 +92,7 @@ private:
 	QLabel *m_urlIconLabel;
 	QTime m_popupHideTime;
 	QPoint m_dragStartPosition;
+	QRect m_lineEditRectangle;
 	QRect m_historyDropdownArrowRectangle;
 	QRect m_securityBadgeRectangle;
 	WindowsManager::OpenHints m_hints;
