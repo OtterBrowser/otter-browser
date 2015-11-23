@@ -453,15 +453,10 @@ void PreferencesAdvancedPageWidget::changeEvent(QEvent *event)
 {
 	QWidget::changeEvent(event);
 
-	switch (event->type())
+	if (event->type() == QEvent::LanguageChange)
 	{
-		case QEvent::LanguageChange:
-			m_ui->retranslateUi(this);
-			m_ui->advancedViewWidget->setMinimumWidth(qMax(100, m_ui->advancedViewWidget->sizeHint().width()));
-
-			break;
-		default:
-			break;
+		m_ui->retranslateUi(this);
+		m_ui->advancedViewWidget->setMinimumWidth(qMax(100, m_ui->advancedViewWidget->sizeHint().width()));
 	}
 }
 
