@@ -821,7 +821,7 @@ void MainWindow::triggerAction(bool checked)
 
 void MainWindow::addBookmark(const QUrl &url, const QString &title, const QString &description, bool warn)
 {
-	const QUrl bookmarkUrl = (url.isValid() ? url.adjusted(QUrl::RemovePassword) : m_windowsManager->getUrl().adjusted(QUrl::RemovePassword));
+	const QUrl bookmarkUrl = (url.isValid() ? url : m_windowsManager->getUrl()).adjusted(QUrl::RemovePassword);
 
 	if (bookmarkUrl.isEmpty() || (warn && BookmarksManager::hasBookmark(bookmarkUrl) && QMessageBox::warning(this, tr("Warning"), tr("You already have this address in your bookmarks.\nDo you want to continue?"), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Cancel))
 	{
