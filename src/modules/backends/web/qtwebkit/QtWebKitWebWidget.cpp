@@ -2288,6 +2288,10 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 			return QObject::eventFilter(object, event);
 		}
+		else if (event->type() == QEvent::MouseButtonRelease && mouseEvent && mouseEvent->button() == Qt::MiddleButton && !getCurrentHitTestResult().flags.testFlag(IsContentEditableTest))
+		{
+			return true;
+		}
 		else if (event->type() == QEvent::ContextMenu)
 		{
 			QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
