@@ -54,12 +54,12 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, CookieJarProxy *c
 	m_bytesReceivedDifference(0),
 	m_bytesReceived(0),
 	m_bytesTotal(0),
+	m_isSecure(0),
 	m_finishedRequests(0),
 	m_startedRequests(0),
 	m_updateTimer(0),
 	m_doNotTrackPolicy(NetworkManagerFactory::SkipTrackPolicy),
-	m_canSendReferrer(true),
-	m_isSecure(0)
+	m_canSendReferrer(true)
 {
 	NetworkManagerFactory::initialize();
 
