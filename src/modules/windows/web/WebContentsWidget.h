@@ -120,12 +120,12 @@ protected slots:
 	void setLoading(bool loading);
 
 private:
+	QPointer<WebsiteInformationDialog> m_websiteInformationDialog;
 	QVBoxLayout *m_layout;
 	WebWidget *m_webWidget;
 	StartPageWidget *m_startPageWidget;
 	SearchBarWidget *m_searchBarWidget;
 	ProgressBarWidget *m_progressBarWidget;
-	WebsiteInformationDialog *m_websiteInformationDialog;
 	QString m_quickFindQuery;
 	QPoint m_beginCursorPosition;
 	QPoint m_lastCursorPosition;

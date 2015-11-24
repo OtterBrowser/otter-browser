@@ -44,12 +44,12 @@ QString WebContentsWidget::m_sharedQuickFindQuery = NULL;
 QMap<int, QPixmap> WebContentsWidget::m_scrollCursors;
 
 WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *window) : ContentsWidget(window),
+	m_websiteInformationDialog(NULL),
 	m_layout(new QVBoxLayout(this)),
 	m_webWidget(NULL),
 	m_startPageWidget(NULL),
 	m_searchBarWidget(NULL),
 	m_progressBarWidget(NULL),
-	m_websiteInformationDialog(NULL),
 	m_scrollMode(NoScroll),
 	m_quickFindTimer(0),
 	m_scrollTimer(0),
