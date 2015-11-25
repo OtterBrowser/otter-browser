@@ -212,26 +212,6 @@ void StartPageWidget::contextMenuEvent(QContextMenuEvent *event)
 	}
 }
 
-void StartPageWidget::mousePressEvent(QMouseEvent *event)
-{
-	WebWidget *webWidget = qobject_cast<WebWidget*>(parentWidget());
-
-	if (webWidget)
-	{
-		webWidget->handleMousePressEvent(event, false, this);
-	}
-}
-
-void StartPageWidget::mouseReleaseEvent(QMouseEvent *event)
-{
-	WebWidget *webWidget = qobject_cast<WebWidget*>(parentWidget());
-
-	if (webWidget)
-	{
-		webWidget->handleMouseReleaseEvent(event, false, this);
-	}
-}
-
 void StartPageWidget::wheelEvent(QWheelEvent *event)
 {
 	if (event->buttons() == Qt::NoButton && event->modifiers() == Qt::NoModifier)

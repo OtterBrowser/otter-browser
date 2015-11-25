@@ -1566,15 +1566,6 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 			m_childWidget = qobject_cast<QWidget*>(childEvent->child());
 		}
 	}
-	else if (event->type() == QEvent::ContextMenu)
-	{
-		QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
-
-		if (contextMenuEvent)
-		{
-			handleContextMenuEvent(contextMenuEvent, false);
-		}
-	}
 	else if (object == m_webView && (event->type() == QEvent::Move || event->type() == QEvent::Resize))
 	{
 		emit progressBarGeometryChanged();
@@ -1589,33 +1580,6 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 		}
 
 		return true;
-	}
-	else if (event->type() == QEvent::MouseButtonPress)
-	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
-
-		if (mouseEvent)
-		{
-			return handleMousePressEvent(mouseEvent, true, m_childWidget);
-		}
-	}
-	else if (event->type() == QEvent::MouseButtonRelease)
-	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
-
-		if (mouseEvent)
-		{
-			return handleMouseReleaseEvent(mouseEvent, true, m_childWidget);
-		}
-	}
-	else if (event->type() == QEvent::MouseButtonDblClick)
-	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
-
-		if (mouseEvent)
-		{
-			return handleMouseDoubleClickEvent(mouseEvent, false);
-		}
 	}
 	else if (event->type() == QEvent::ShortcutOverride)
 	{

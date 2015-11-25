@@ -152,10 +152,6 @@ public:
 	virtual QHash<QByteArray, QByteArray> getHeaders() const;
 	virtual WindowsManager::ContentStates getContentState() const;
 	virtual int getZoom() const = 0;
-	virtual bool handleContextMenuEvent(QContextMenuEvent *event, bool canPropagate = true, QObject *sender = NULL);
-	virtual bool handleMousePressEvent(QMouseEvent *event, bool canPropagate = true, QObject *sender = NULL);
-	virtual bool handleMouseReleaseEvent(QMouseEvent *event, bool canPropagate = true, QObject *sender = NULL);
-	virtual bool handleMouseDoubleClickEvent(QMouseEvent *event, bool canPropagate = true, QObject *sender = NULL);
 	bool hasOption(const QString &key) const;
 	virtual bool hasSelection() const;
 	virtual bool isLoading() const = 0;
@@ -238,9 +234,6 @@ private:
 	QVariantHash m_options;
 	HitTestResult m_hitResult;
 	int m_reloadTimer;
-	bool m_ignoreContextMenu;
-	bool m_ignoreContextMenuNextTime;
-	bool m_isUsingRockerNavigation;
 
 signals:
 	void aboutToReload();

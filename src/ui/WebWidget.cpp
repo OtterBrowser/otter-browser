@@ -57,10 +57,7 @@ WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent
 	m_pageApplicationsMenu(NULL),
 	m_reloadTimeMenu(NULL),
 	m_quickSearchMenu(NULL),
-	m_reloadTimer(0),
-	m_ignoreContextMenu(false),
-	m_ignoreContextMenuNextTime(false),
-	m_isUsingRockerNavigation(false)
+	m_reloadTimer(0)
 {
 	Q_UNUSED(isPrivate)
 
@@ -427,7 +424,7 @@ void WebWidget::showContextMenu(const QPoint &position)
 {
 	const bool hasSelection = (this->hasSelection() && !getSelectedText().trimmed().isEmpty());
 
-	if (m_ignoreContextMenu || (position.isNull() && (!hasSelection || m_clickPosition.isNull())))
+	if (position.isNull() && (!hasSelection || m_clickPosition.isNull()))
 	{
 		return;
 	}
@@ -1353,194 +1350,6 @@ WebWidget::HitTestResult WebWidget::getHitTestResult(const QPoint &position)
 int WebWidget::getAmountOfNotLoadedPlugins() const
 {
 	return 0;
-}
-
-bool WebWidget::handleContextMenuEvent(QContextMenuEvent *event, bool canPropagate, QObject *sender)
-{
-	Q_UNUSED(sender)
-
-	m_ignoreContextMenu = (event->reason() == QContextMenuEvent::Mouse);
-
-	if (event->reason() != QContextMenuEvent::Mouse)
-	{
-		QVariantMap parameters;
-		parameters[QLatin1String("context")] = event->reason();
-
-		triggerAction(ActionsManager::ContextMenuAction, parameters);
-	}
-
-	if (canPropagate)
-	{
-		WebWidget::contextMenuEvent(event);
-	}
-
-	return false;
-}
-
-bool WebWidget::handleMousePressEvent(QMouseEvent *event, bool canPropagate, QObject *sender)
-{
-	Q_UNUSED(sender)
-
-	if (event->button() == Qt::BackButton)
-	{
-		triggerAction(ActionsManager::GoBackAction);
-
-		event->accept();
-
-		return true;
-	}
-
-	if (event->button() == Qt::ForwardButton)
-	{
-		triggerAction(ActionsManager::GoForwardAction);
-
-		event->accept();
-
-		return true;
-	}
-
-	if ((event->button() == Qt::LeftButton || event->button() == Qt::MiddleButton) && !isScrollBar(event->pos()))
-	{
-		if (event->button() == Qt::LeftButton && event->buttons().testFlag(Qt::RightButton))
-		{
-			m_isUsingRockerNavigation = true;
-
-			triggerAction(ActionsManager::GoBackAction);
-
-			return true;
-		}
-
-		updateHitTestResult(event->pos());
-
-		if (m_hitResult.linkUrl.isValid())
-		{
-			if (event->button() == Qt::LeftButton && event->modifiers() == Qt::NoModifier)
-			{
-				return false;
-			}
-
-			openUrl(m_hitResult.linkUrl, WindowsManager::calculateOpenHints(event->modifiers(), event->button(), WindowsManager::CurrentTabOpen));
-
-			event->ignore();
-
-			return true;
-		}
-
-		if (event->button() == Qt::MiddleButton)
-		{
-			if (!m_hitResult.linkUrl.isValid() && m_hitResult .tagName != QLatin1String("textarea") && m_hitResult .tagName != QLatin1String("input"))
-			{
-				//TODO improve forwarding
-				ActionsManager::triggerAction(ActionsManager::StartMoveScrollAction, this);
-
-				return true;
-			}
-		}
-	}
-	else if (event->button() == Qt::RightButton)
-	{
-		updateHitTestResult(event->pos());
-
-		if (event->buttons().testFlag(Qt::LeftButton))
-		{
-			triggerAction(ActionsManager::GoForwardAction);
-
-			event->ignore();
-
-			return true;
-		}
-
-	}
-
-	if (canPropagate)
-	{
-		mousePressEvent(event);
-	}
-
-	return false;
-}
-
-bool WebWidget::handleMouseReleaseEvent(QMouseEvent *event, bool canPropagate, QObject *sender)
-{
-	if (event->button() == Qt::RightButton && !event->buttons().testFlag(Qt::LeftButton))
-	{
-		if (m_isUsingRockerNavigation)
-		{
-			m_isUsingRockerNavigation = false;
-			m_ignoreContextMenuNextTime = true;
-
-			if (sender)
-			{
-				QMouseEvent mousePressEvent(QEvent::MouseButtonPress, QPointF(event->pos()), Qt::RightButton, Qt::RightButton, Qt::NoModifier);
-				QMouseEvent mouseReleaseEvent(QEvent::MouseButtonRelease, QPointF(event->pos()), Qt::RightButton, Qt::RightButton, Qt::NoModifier);
-
-				QCoreApplication::sendEvent(sender, &mousePressEvent);
-				QCoreApplication::sendEvent(sender, &mouseReleaseEvent);
-			}
-		}
-		else
-		{
-			m_ignoreContextMenu = false;
-
-			if (m_ignoreContextMenuNextTime)
-			{
-				m_ignoreContextMenuNextTime = false;
-
-				event->ignore();
-
-				return false;
-			}
-
-			ContentsWidget *contentsWidget = qobject_cast<ContentsWidget*>(parentWidget());
-
-			m_clickPosition = event->pos();
-
-			if (contentsWidget)
-			{
-				QVariantMap parameters;
-				parameters[QLatin1String("context")] = QContextMenuEvent::Mouse;
-
-				contentsWidget->triggerAction(ActionsManager::ContextMenuAction);
-			}
-			else
-			{
-				showContextMenu(event->pos());
-			}
-		}
-
-		return true;
-	}
-
-	if (canPropagate)
-	{
-		mouseReleaseEvent(event);
-	}
-
-	return false;
-}
-
-bool WebWidget::handleMouseDoubleClickEvent(QMouseEvent *event, bool canPropagate, QObject *sender)
-{
-	Q_UNUSED(sender)
-
-	if (SettingsManager::getValue(QLatin1String("Browser/ShowSelectionContextMenuOnDoubleClick")).toBool() && event->button() == Qt::LeftButton)
-	{
-		updateHitTestResult(event->pos());
-
-		if (!m_hitResult.flags.testFlag(IsContentEditableTest) && m_hitResult.tagName != QLatin1String("textarea") && m_hitResult.tagName!= QLatin1String("select") && m_hitResult.tagName != QLatin1String("input"))
-		{
-			m_clickPosition = event->pos();
-
-			QTimer::singleShot(250, this, SLOT(showContextMenu()));
-		}
-	}
-
-	if (canPropagate)
-	{
-		mouseDoubleClickEvent(event);
-	}
-
-	return false;
 }
 
 bool WebWidget::canGoBack() const

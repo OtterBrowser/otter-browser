@@ -2281,6 +2281,18 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			{
 				return true;
 			}
+
+			if (event->type() == QEvent::MouseButtonDblClick && mouseEvent->button() == Qt::LeftButton && SettingsManager::getValue(QLatin1String("Browser/ShowSelectionContextMenuOnDoubleClick")).toBool())
+			{
+				const WebWidget::HitTestResult hitResult = getHitTestResult(mouseEvent->pos());
+
+				if (!hitResult.flags.testFlag(IsContentEditableTest) && hitResult.tagName != QLatin1String("textarea") && hitResult.tagName!= QLatin1String("select") && hitResult.tagName != QLatin1String("input"))
+				{
+					setClickPosition(mouseEvent->pos());
+
+					QTimer::singleShot(250, this, SLOT(showContextMenu()));
+				}
+			}
 		}
 		else if (event->type() == QEvent::MouseMove)
 		{
