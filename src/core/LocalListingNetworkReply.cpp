@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -73,9 +74,27 @@ LocalListingNetworkReply::LocalListingNetworkReply(QObject *parent, const QNetwo
 		const QMimeType mimeType = database.mimeTypeForFile(entries.at(i).canonicalFilePath());
 		QByteArray byteArray;
 		QBuffer buffer(&byteArray);
+
 		QIcon::fromTheme(mimeType.iconName(), Utils::getIcon(entries.at(i).isDir() ? QLatin1String("inode-directory") : QLatin1String("unknown"))).pixmap(16, 16).save(&buffer, "PNG");
 
-		variables[QLatin1String("body")].append(QStringLiteral("<tr>\n<td><a href=\"file:///%1\"><img src=\"data:image/png;base64,%2\" alt=\"\"> %3</a></td>\n<td>%4</td>\n<td>%5</td>\n<td>%6</td>\n</tr>\n").arg(entries.at(i).filePath().remove(expression)).arg(QString(byteArray.toBase64())).arg(entries.at(i).fileName()).arg(mimeType.comment()).arg(entries.at(i).isDir() ? QString() : Utils::formatUnit(entries.at(i).size(), false, 2)).arg(QLocale().toString(entries.at(i).lastModified())));
+		QHash<QString, QString> entryVariables;
+		entryVariables[QLatin1String("url")] = entries.at(i).filePath().remove(expression);
+		entryVariables[QLatin1String("icon")] = QString(byteArray.toBase64());
+		entryVariables[QLatin1String("mimeType")] = mimeType.name();
+		entryVariables[QLatin1String("name")] = entries.at(i).fileName();
+		entryVariables[QLatin1String("comment")] = mimeType.comment();
+		entryVariables[QLatin1String("size")] = (entries.at(i).isDir() ? QString() : Utils::formatUnit(entries.at(i).size(), false, 2));
+		entryVariables[QLatin1String("lastModified")] = QLocale().toString(entries.at(i).lastModified());
+
+		QString html = QLatin1String("<tr>\n<td><a href=\"file:///{url}\"><img src=\"data:image/png;base64,{icon}\" alt=\"{mimeType}\"> {name}</a></td>\n<td>{comment}</td>\n<td>{size}</td>\n<td>{lastModified}</td>\n</tr>\n");
+		QHash<QString, QString>::iterator iterator;
+
+		for (iterator = entryVariables.begin(); iterator != entryVariables.end(); ++iterator)
+		{
+			html.replace(QStringLiteral("{%1}").arg(iterator.key()), iterator.value());
+		}
+
+		variables[QLatin1String("body")].append(html);
 	}
 
 	QString html = stream.readAll();
