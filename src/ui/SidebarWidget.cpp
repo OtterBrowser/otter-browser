@@ -371,10 +371,10 @@ void SidebarWidget::selectPanel(const QString &identifier)
 
 	if (widget && mainWindow)
 	{
-		connect(widget, SIGNAL(requestedOpenUrl(QUrl,OpenHints)), mainWindow->getWindowsManager(), SLOT(open(QUrl,OpenHints)));
-		connect(widget, SIGNAL(requestedSearch(QString,QString,OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,OpenHints)));
+		connect(widget, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(open(QUrl,WindowsManager::OpenHints)));
+		connect(widget, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,WindowsManager::OpenHints)));
 		connect(widget, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), mainWindow->getWindowsManager(), SIGNAL(requestedAddBookmark(QUrl,QString,QString)));
-		connect(widget, SIGNAL(requestedNewWindow(ContentsWidget*,OpenHints)), mainWindow->getWindowsManager(), SLOT(openWindow(ContentsWidget*,OpenHints)));
+		connect(widget, SIGNAL(requestedNewWindow(ContentsWidget*,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(openWindow(ContentsWidget*,WindowsManager::OpenHints)));
 	}
 
 	if (m_panels.contains(m_currentPanel) && m_panels[m_currentPanel])
