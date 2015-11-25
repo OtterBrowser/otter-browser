@@ -554,7 +554,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			}
 
 			break;
-		case ActionsManager::AddBookmarkAction:
+		case ActionsManager::BookmarkPageAction:
 			addBookmark(QUrl(), QString(), QString(), true);
 
 			break;

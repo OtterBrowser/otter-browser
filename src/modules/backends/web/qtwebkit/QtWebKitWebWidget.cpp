@@ -1383,7 +1383,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			}
 
 			return;
-		case ActionsManager::AddBookmarkAction:
+		case ActionsManager::BookmarkPageAction:
 			{
 				const QUrl url = getUrl();
 

@@ -200,7 +200,7 @@ public:
 		ActivateTabOnLeftAction,
 		ActivateTabOnRightAction,
 		BookmarksAction,
-		AddBookmarkAction,
+		BookmarkPageAction,
 		OpenBookmarkAction,
 		QuickBookmarkAccessAction,
 		PopupsPolicyAction,

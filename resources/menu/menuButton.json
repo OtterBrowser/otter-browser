@@ -100,7 +100,7 @@
 			"title": "Bookmarks",
 			"actions":
 			[
-				"AddBookmark",
+				"BookmarkPage",
 				"Bookmarks",
 				"separator"
 			]

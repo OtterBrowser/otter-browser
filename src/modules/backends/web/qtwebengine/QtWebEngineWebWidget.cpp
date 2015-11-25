@@ -725,7 +725,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			}
 
 			return;
-		case ActionsManager::AddBookmarkAction:
+		case ActionsManager::BookmarkPageAction:
 			{
 				const QUrl url = getUrl();
 

@@ -511,9 +511,9 @@ void WebWidget::updateQuickSearch()
 
 void WebWidget::updatePageActions(const QUrl &url)
 {
-	if (m_actions.contains(ActionsManager::AddBookmarkAction))
+	if (m_actions.contains(ActionsManager::BookmarkPageAction))
 	{
-		m_actions[ActionsManager::AddBookmarkAction]->setOverrideText(BookmarksManager::hasBookmark(url) ? QT_TRANSLATE_NOOP("actions", "Edit Bookmark…") : QT_TRANSLATE_NOOP("actions", "Add Bookmark…"));
+		m_actions[ActionsManager::BookmarkPageAction]->setOverrideText(BookmarksManager::hasBookmark(url) ? QT_TRANSLATE_NOOP("actions", "Edit Bookmark…") : QT_TRANSLATE_NOOP("actions", "Add Bookmark…"));
 	}
 
 	if (m_actions.contains(ActionsManager::WebsitePreferencesAction))
@@ -1030,7 +1030,7 @@ Action* WebWidget::getAction(int identifier)
 			action->setEnabled(false);
 
 			break;
-		case ActionsManager::AddBookmarkAction:
+		case ActionsManager::BookmarkPageAction:
 		case ActionsManager::WebsitePreferencesAction:
 			updatePageActions(getUrl());
 

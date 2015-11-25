@@ -209,7 +209,7 @@ bool Action::isLocal(int identifier)
 		case ActionsManager::StartMoveScrollAction:
 		case ActionsManager::EndScrollAction:
 		case ActionsManager::ActivateContentAction:
-		case ActionsManager::AddBookmarkAction:
+		case ActionsManager::BookmarkPageAction:
 		case ActionsManager::QuickBookmarkAccessAction:
 		case ActionsManager::PopupsPolicyAction:
 		case ActionsManager::ImagesPolicyAction:
@@ -388,7 +388,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(ActivateTabOnLeftAction, QT_TRANSLATE_NOOP("actions", "Go to Tab on Left"));
 	registerAction(ActivateTabOnRightAction, QT_TRANSLATE_NOOP("actions", "Go to Tab on Right"));
 	registerAction(BookmarksAction, QT_TRANSLATE_NOOP("actions", "Manage Bookmarks"), QString(), Utils::getIcon(QLatin1String("bookmarks-organize")));
-	registerAction(AddBookmarkAction, QT_TRANSLATE_NOOP("actions", "Add Bookmark…"), QString(), Utils::getIcon(QLatin1String("bookmark-new")));
+	registerAction(BookmarkPageAction, QT_TRANSLATE_NOOP("actions", "Bookmark Page…"), QString(), Utils::getIcon(QLatin1String("bookmark-new")));
 	registerAction(OpenBookmarkAction, QT_TRANSLATE_NOOP("actions", "Open Bookmark"));
 	registerAction(QuickBookmarkAccessAction, QT_TRANSLATE_NOOP("actions", "Quick Bookmark Access"));
 	registerAction(PopupsPolicyAction, QT_TRANSLATE_NOOP("actions", "Block pop-ups"));
