@@ -106,6 +106,37 @@ void TabBarWidget::timerEvent(QTimerEvent *event)
 	}
 }
 
+void TabBarWidget::resizeEvent(QResizeEvent *event)
+{
+	QTabBar::resizeEvent(event);
+
+	QTimer::singleShot(100, this, SLOT(updateTabs()));
+}
+
+void TabBarWidget::enterEvent(QEvent *event)
+{
+	QTabBar::enterEvent(event);
+
+	m_previewTimer = startTimer(250);
+}
+
+void TabBarWidget::leaveEvent(QEvent *event)
+{
+	QTabBar::leaveEvent(event);
+
+	hidePreview();
+
+	m_tabSize = 0;
+	m_hoveredTab = -1;
+
+	QStatusTipEvent statusTipEvent((QString()));
+
+	QApplication::sendEvent(this, &statusTipEvent);
+
+	updateGeometry();
+	adjustSize();
+}
+
 void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 {
 	if (event->reason() == QContextMenuEvent::Mouse)
@@ -253,30 +284,6 @@ void TabBarWidget::mouseMoveEvent(QMouseEvent *event)
 	}
 }
 
-void TabBarWidget::enterEvent(QEvent *event)
-{
-	QTabBar::enterEvent(event);
-
-	m_previewTimer = startTimer(250);
-}
-
-void TabBarWidget::leaveEvent(QEvent *event)
-{
-	QTabBar::leaveEvent(event);
-
-	hidePreview();
-
-	m_tabSize = 0;
-	m_hoveredTab = -1;
-
-	QStatusTipEvent statusTipEvent((QString()));
-
-	QApplication::sendEvent(this, &statusTipEvent);
-
-	updateGeometry();
-	adjustSize();
-}
-
 void TabBarWidget::wheelEvent(QWheelEvent *event)
 {
 	QWidget::wheelEvent(event);
@@ -294,13 +301,6 @@ void TabBarWidget::wheelEvent(QWheelEvent *event)
 	{
 		activateTabOnRight();
 	}
-}
-
-void TabBarWidget::resizeEvent(QResizeEvent *event)
-{
-	QTabBar::resizeEvent(event);
-
-	QTimer::singleShot(100, this, SLOT(updateTabs()));
 }
 
 void TabBarWidget::tabLayoutChange()

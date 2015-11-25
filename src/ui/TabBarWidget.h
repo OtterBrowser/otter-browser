@@ -54,13 +54,13 @@ public slots:
 
 protected:
 	void timerEvent(QTimerEvent *event);
+	void resizeEvent(QResizeEvent *event);
+	void enterEvent(QEvent *event);
+	void leaveEvent(QEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
 	void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
-	void enterEvent(QEvent *event);
-	void leaveEvent(QEvent *event);
 	void wheelEvent(QWheelEvent *event);
-	void resizeEvent(QResizeEvent *event);
 	void tabLayoutChange();
 	void tabInserted(int index);
 	void tabRemoved(int index);
