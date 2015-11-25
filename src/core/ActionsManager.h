@@ -201,6 +201,7 @@ public:
 		ActivateTabOnRightAction,
 		BookmarksAction,
 		BookmarkPageAction,
+		BookmarkAllOpenPagesAction,
 		OpenBookmarkAction,
 		QuickBookmarkAccessAction,
 		PopupsPolicyAction,

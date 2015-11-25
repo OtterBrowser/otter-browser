@@ -36,7 +36,6 @@ LocalListingNetworkReply::LocalListingNetworkReply(QObject *parent, const QNetwo
 	m_offset(0)
 {
 	setRequest(request);
-
 	open(QIODevice::ReadOnly | QIODevice::Unbuffered);
 
 	QFile file(QLatin1String(":/files/listing.html"));

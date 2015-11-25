@@ -215,6 +215,18 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 			m_mainWindow->getTabBar()->activateTabOnRight();
 
 			break;
+		case ActionsManager::BookmarkAllOpenPagesAction:
+			for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
+			{
+				Window *window = getWindowByIndex(i);
+
+				if (window && !Utils::isUrlEmpty(window->getUrl()))
+				{
+					BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, window->getUrl(), window->getTitle());
+				}
+			}
+
+			break;
 		case ActionsManager::OpenBookmarkAction:
 			{
 				OpenHints hints = DefaultOpen;

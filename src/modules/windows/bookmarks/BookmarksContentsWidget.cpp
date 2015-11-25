@@ -23,6 +23,7 @@
 #include "../../../core/Utils.h"
 #include "../../../ui/BookmarkPropertiesDialog.h"
 #include "../../../ui/ItemDelegate.h"
+#include "../../../ui/MainWindow.h"
 
 #include "ui_BookmarksContentsWidget.h"
 
@@ -187,14 +188,18 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 			}
 		}
 
-		if (type != BookmarksModel::RootBookmark)
-		{
-			Action *copyLinkAction = getAction(ActionsManager::CopyLinkToClipboardAction);
-			copyLinkAction->setEnabled(type == BookmarksModel::UrlBookmark);
+		MainWindow *mainWindow = MainWindow::findMainWindow(this);
+		Action *bookmarkAllOpenPagesAction = new Action(ActionsManager::BookmarkAllOpenPagesAction, this);
+		bookmarkAllOpenPagesAction->setEnabled(mainWindow && mainWindow->getWindowsManager()->getWindowCount() > 0);
 
-			menu.addSeparator();
-			menu.addAction(copyLinkAction);
-		}
+		Action *copyLinkAction = new Action(ActionsManager::CopyLinkToClipboardAction, this);
+		copyLinkAction->setEnabled(type == BookmarksModel::UrlBookmark);
+
+		menu.addSeparator();
+		menu.addAction(ActionsManager::getAction(ActionsManager::BookmarkPageAction, this));
+		menu.addAction(bookmarkAllOpenPagesAction);
+		menu.addSeparator();
+		menu.addAction(copyLinkAction);
 
 		if (!isInTrash)
 		{
@@ -222,6 +227,9 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 			menu.addSeparator();
 			menu.addAction(tr("Properties…"), this, SLOT(bookmarkProperties()));
 		}
+
+		connect(bookmarkAllOpenPagesAction, SIGNAL(triggered(bool)), this, SLOT(triggerAction()));
+		connect(copyLinkAction, SIGNAL(triggered(bool)), this, SLOT(triggerAction()));
 	}
 
 	menu.exec(m_ui->bookmarksViewWidget->mapToGlobal(point));
@@ -252,6 +260,25 @@ void BookmarksContentsWidget::triggerAction(int identifier, const QVariantMap &p
 			break;
 		case ActionsManager::ActivateContentAction:
 			m_ui->bookmarksViewWidget->setFocus();
+
+			break;
+		case ActionsManager::BookmarkAllOpenPagesAction:
+			{
+				MainWindow *mainWindow = MainWindow::findMainWindow(this);
+
+				if (mainWindow)
+				{
+					for (int i = 0; i < mainWindow->getWindowsManager()->getWindowCount(); ++i)
+					{
+						Window *window = mainWindow->getWindowsManager()->getWindowByIndex(i);
+
+						if (window && !Utils::isUrlEmpty(window->getUrl()))
+						{
+							BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, window->getUrl(), window->getTitle(), findFolder(m_ui->bookmarksViewWidget->currentIndex()));
+						}
+					}
+				}
+			}
 
 			break;
 		default:
@@ -290,7 +317,7 @@ Action* BookmarksContentsWidget::getAction(int identifier)
 		return m_actions[identifier];
 	}
 
-	if (identifier != ActionsManager::CopyLinkToClipboardAction && identifier != ActionsManager::DeleteAction)
+	if (identifier != ActionsManager::DeleteAction)
 	{
 		return NULL;
 	}
