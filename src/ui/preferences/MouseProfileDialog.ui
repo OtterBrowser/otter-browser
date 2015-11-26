@@ -39,7 +39,7 @@
          <item>
           <widget class="Otter::ItemViewWidget" name="gesturesViewWidget">
            <property name="editTriggers">
-            <set>QAbstractItemView::CurrentChanged|QAbstractItemView::SelectedClicked</set>
+            <set>QAbstractItemView::NoEditTriggers</set>
            </property>
            <property name="dragEnabled">
             <bool>true</bool>

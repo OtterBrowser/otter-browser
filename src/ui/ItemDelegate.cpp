@@ -32,7 +32,7 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 {
 	drawBackground(painter, option, index);
 
-	if (index.data(Qt::AccessibleDescriptionRole).toString() == "separator")
+	if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("separator"))
 	{
 		QStyleOptionFrame frameOption;
 		frameOption.palette = option.palette;

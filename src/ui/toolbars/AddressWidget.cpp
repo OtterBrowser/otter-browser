@@ -347,7 +347,7 @@ void AddressWidget::mousePressEvent(QMouseEvent *event)
 
 	m_wasPopupVisible = (m_popupHideTime.isValid() && m_popupHideTime.msecsTo(QTime::currentTime()) < 100);
 
-	QComboBox::mousePressEvent(event);
+	QWidget::mousePressEvent(event);
 }
 
 void AddressWidget::mouseMoveEvent(QMouseEvent *event)
@@ -392,7 +392,7 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 		}
 	}
 
-	QComboBox::mouseReleaseEvent(event);
+	QWidget::mouseReleaseEvent(event);
 }
 
 void AddressWidget::wheelEvent(QWheelEvent *event)

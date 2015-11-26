@@ -113,6 +113,7 @@ SOURCES += src/main.cpp \
     src/core/WebBackend.cpp \
     src/core/WindowsManager.cpp \
     src/ui/AcceptCookieDialog.cpp \
+    src/ui/ActionComboBoxWidget.cpp \
     src/ui/AddressDelegate.cpp \
     src/ui/ApplicationComboBoxWidget.cpp \
     src/ui/AuthenticationDialog.cpp \
@@ -268,6 +269,7 @@ HEADERS += src/core/ActionsManager.h \
     src/core/WebBackend.h \
     src/core/WindowsManager.h \
     src/ui/AcceptCookieDialog.h \
+    src/ui/ActionComboBoxWidget.h \
     src/ui/AddressDelegate.h \
     src/ui/ApplicationComboBoxWidget.h \
     src/ui/AuthenticationDialog.h \

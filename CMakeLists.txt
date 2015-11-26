@@ -120,6 +120,7 @@ set(otter_src
 	src/core/WebBackend.cpp
 	src/core/WindowsManager.cpp
 	src/ui/AcceptCookieDialog.cpp
+	src/ui/ActionComboBoxWidget.cpp
 	src/ui/AddressDelegate.cpp
 	src/ui/ApplicationComboBoxWidget.cpp
 	src/ui/AuthenticationDialog.cpp
