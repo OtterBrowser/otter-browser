@@ -23,7 +23,6 @@ body
 	font-family:sans-serif;
 	background:#EEE;
 }
-
 h1
 {
 	margin:5px 0;
@@ -58,14 +57,20 @@ tr:nth-child(even) td
 <table>
 <thead>
 <tr>
-<th>{header_name}</th>
-<th>{header_type}</th>
-<th>{header_size}</th>
-<th>{header_date}</th>
+<th>{headerName}</th>
+<th>{headerType}</th>
+<th>{headerSize}</th>
+<th>{headerDate}</th>
 </tr>
 </thead>
 <tbody>
-{body}</tbody>
+<!--entry:begin--><tr>
+<td><a href="{url}"><img src="{icon}" alt="{mimeType}"> {name}</a></td>
+<td>{comment}</td>
+<td>{size}</td>
+<td>{lastModified}</td>
+</tr>
+<!--entry:end--></tbody>
 </table>
 </body>
 </html>
