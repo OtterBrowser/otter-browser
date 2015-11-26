@@ -415,7 +415,7 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 			return false;
 		}
 
-		QFile file(QLatin1String(":/files/error.html"));
+		QFile file(SessionsManager::getReadableDataPath(QLatin1String("files/error.html")));
 		file.open(QIODevice::ReadOnly | QIODevice::Text);
 
 		QTextStream stream(&file);
