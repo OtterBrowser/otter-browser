@@ -59,9 +59,10 @@ protected:
 protected slots:
 	void addGesture();
 	void removeGesture();
-	void updateGesturesActions();
+	void saveGesture();
 	void addStep();
 	void removeStep();
+	void updateGesturesActions();
 	void updateStepsActions();
 
 private:

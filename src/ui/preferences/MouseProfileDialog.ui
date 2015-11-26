@@ -120,7 +120,7 @@
             </sizepolicy>
            </property>
            <property name="editTriggers">
-            <set>QAbstractItemView::NoEditTriggers</set>
+            <set>QAbstractItemView::CurrentChanged</set>
            </property>
            <property name="alternatingRowColors">
             <bool>true</bool>

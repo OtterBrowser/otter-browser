@@ -116,22 +116,90 @@ void MouseProfileDialog::changeEvent(QEvent *event)
 
 void MouseProfileDialog::addGesture()
 {
-///TODO
+	QStandardItem *item = m_ui->gesturesViewWidget->getModel()->itemFromIndex(m_ui->gesturesViewWidget->currentIndex().sibling(m_ui->gesturesViewWidget->currentIndex().row(), 0));
+
+	if (item && item->flags().testFlag(Qt::ItemNeverHasChildren))
+	{
+		item = item->parent();
+	}
+
+	if (item)
+	{
+		QList<QStandardItem*> items;
+		items.append(new QStandardItem());
+		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+		items.append(new QStandardItem(tr("Select Action")));
+		items[1]->setData(-1, Qt::UserRole);
+		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren | Qt::ItemIsEditable);
+
+		item->appendRow(items);
+
+		m_ui->gesturesViewWidget->setCurrentIndex(items[0]->index());
+
+		m_isModified = true;
+	}
 }
 
 void MouseProfileDialog::removeGesture()
 {
-///TODO
+	QStandardItem *item = m_ui->gesturesViewWidget->getModel()->itemFromIndex(m_ui->gesturesViewWidget->currentIndex().sibling(m_ui->gesturesViewWidget->currentIndex().row(), 0));
+
+	if (item && item->flags().testFlag(Qt::ItemNeverHasChildren))
+	{
+		item->parent()->removeRow(item->row());
+
+		m_isModified = true;
+	}
+}
+
+void MouseProfileDialog::saveGesture()
+{
+	QStringList steps;
+
+	for (int i = 0; i < m_ui->stepsViewWidget->getRowCount(); ++i)
+	{
+		const QString step(m_ui->stepsViewWidget->getIndex(i, 0).data().toString());
+
+		if (!step.isEmpty())
+		{
+			steps.append(step);
+		}
+	}
+
+	const QModelIndex index = m_ui->gesturesViewWidget->currentIndex();
+
+	m_ui->gesturesViewWidget->setData(index.sibling(index.row(), 0), steps.join(QLatin1String(", ")), Qt::DisplayRole);
+
+	m_isModified = true;
+}
+
+void MouseProfileDialog::addStep()
+{
+	m_ui->stepsViewWidget->insertRow();
+
+	m_isModified = true;
+}
+
+void MouseProfileDialog::removeStep()
+{
+	m_ui->stepsViewWidget->removeRow();
+
+	saveGesture();
+
+	m_isModified = true;
 }
 
 void MouseProfileDialog::updateGesturesActions()
 {
+	disconnect(m_ui->stepsViewWidget->getModel(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(saveGesture()));
+
 	m_ui->stepsViewWidget->getModel()->removeRows(0, m_ui->stepsViewWidget->getModel()->rowCount());
 
 	QStandardItem *item = m_ui->gesturesViewWidget->getModel()->itemFromIndex(m_ui->gesturesViewWidget->currentIndex().sibling(m_ui->gesturesViewWidget->currentIndex().row(), 0));
 	const bool isGesture = (item && item->flags().testFlag(Qt::ItemNeverHasChildren));
 
-///TODO
+	m_ui->addGestureButton->setEnabled(item);
+	m_ui->removeGestureButton->setEnabled(isGesture);
 
 	if (isGesture)
 	{
@@ -145,21 +213,21 @@ void MouseProfileDialog::updateGesturesActions()
 			m_ui->stepsViewWidget->getModel()->appendRow(item);
 		}
 	}
-}
 
-void MouseProfileDialog::addStep()
-{
-///TODO
-}
+	updateStepsActions();
 
-void MouseProfileDialog::removeStep()
-{
-///TODO
+	connect(m_ui->stepsViewWidget->getModel(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(saveGesture()));
 }
 
 void MouseProfileDialog::updateStepsActions()
 {
-///TODO
+	QStandardItem *item = m_ui->gesturesViewWidget->getModel()->itemFromIndex(m_ui->gesturesViewWidget->currentIndex().sibling(m_ui->gesturesViewWidget->currentIndex().row(), 0));
+	const bool isGesture = (item && item->flags().testFlag(Qt::ItemNeverHasChildren));
+
+	item = m_ui->stepsViewWidget->getModel()->itemFromIndex(m_ui->stepsViewWidget->currentIndex().sibling(m_ui->stepsViewWidget->currentIndex().row(), 0));
+
+	m_ui->addStepButton->setEnabled(isGesture);
+	m_ui->removeStepButton->setEnabled(isGesture && item);
 }
 
 MouseProfile MouseProfileDialog::getProfile() const
