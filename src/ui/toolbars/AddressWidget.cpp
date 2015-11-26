@@ -286,24 +286,42 @@ void AddressWidget::keyPressEvent(QKeyEvent *event)
 void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 {
 	QMenu menu(this);
-	menu.addAction(tr("Undo"), m_lineEdit, SLOT(undo()), QKeySequence(QKeySequence::Undo))->setEnabled(m_lineEdit->isUndoAvailable());
-	menu.addAction(tr("Redo"), m_lineEdit, SLOT(redo()), QKeySequence(QKeySequence::Redo))->setEnabled(m_lineEdit->isRedoAvailable());
-	menu.addSeparator();
-	menu.addAction(tr("Cut"), m_lineEdit, SLOT(cut()), QKeySequence(QKeySequence::Cut))->setEnabled(m_lineEdit->hasSelectedText());
-	menu.addAction(tr("Copy"), m_lineEdit, SLOT(copy()), QKeySequence(QKeySequence::Copy))->setEnabled(m_lineEdit->hasSelectedText());
-	menu.addAction(tr("Paste"), m_lineEdit, SLOT(paste()), QKeySequence(QKeySequence::Paste))->setEnabled(!QApplication::clipboard()->text().isEmpty());
 
-	if (!m_isUsingSimpleMode)
+	if (m_securityBadgeRectangle.contains(event->pos()))
 	{
-		menu.addAction(ActionsManager::getAction(ActionsManager::PasteAndGoAction, this));
-	}
+		if (m_window)
+		{
+			menu.addAction(m_window->getContentsWidget()->getAction(ActionsManager::WebsiteInformationAction));
+		}
+		else
+		{
+			Action *websiteInformationAction = new Action(ActionsManager::WebsiteInformationAction);
+			websiteInformationAction->setEnabled(false);
 
-	menu.addAction(tr("Delete"), this, SLOT(deleteText()), QKeySequence(QKeySequence::Delete))->setEnabled(m_lineEdit->hasSelectedText());
-	menu.addSeparator();
-	menu.addAction(tr("Copy to Note"), this, SLOT(copyToNote()))->setEnabled(!m_lineEdit->text().isEmpty());
-	menu.addSeparator();
-	menu.addAction(tr("Clear All"), m_lineEdit, SLOT(clear()))->setEnabled(!m_lineEdit->text().isEmpty());
-	menu.addAction(tr("Select All"), m_lineEdit, SLOT(selectAll()))->setEnabled(!m_lineEdit->text().isEmpty());
+			menu.addAction(websiteInformationAction);
+		}
+	}
+	else
+	{
+		menu.addAction(tr("Undo"), m_lineEdit, SLOT(undo()), QKeySequence(QKeySequence::Undo))->setEnabled(m_lineEdit->isUndoAvailable());
+		menu.addAction(tr("Redo"), m_lineEdit, SLOT(redo()), QKeySequence(QKeySequence::Redo))->setEnabled(m_lineEdit->isRedoAvailable());
+		menu.addSeparator();
+		menu.addAction(tr("Cut"), m_lineEdit, SLOT(cut()), QKeySequence(QKeySequence::Cut))->setEnabled(m_lineEdit->hasSelectedText());
+		menu.addAction(tr("Copy"), m_lineEdit, SLOT(copy()), QKeySequence(QKeySequence::Copy))->setEnabled(m_lineEdit->hasSelectedText());
+		menu.addAction(tr("Paste"), m_lineEdit, SLOT(paste()), QKeySequence(QKeySequence::Paste))->setEnabled(!QApplication::clipboard()->text().isEmpty());
+
+		if (!m_isUsingSimpleMode)
+		{
+			menu.addAction(ActionsManager::getAction(ActionsManager::PasteAndGoAction, this));
+		}
+
+		menu.addAction(tr("Delete"), this, SLOT(deleteText()), QKeySequence(QKeySequence::Delete))->setEnabled(m_lineEdit->hasSelectedText());
+		menu.addSeparator();
+		menu.addAction(tr("Copy to Note"), this, SLOT(copyToNote()))->setEnabled(!m_lineEdit->text().isEmpty());
+		menu.addSeparator();
+		menu.addAction(tr("Clear All"), m_lineEdit, SLOT(clear()))->setEnabled(!m_lineEdit->text().isEmpty());
+		menu.addAction(tr("Select All"), m_lineEdit, SLOT(selectAll()))->setEnabled(!m_lineEdit->text().isEmpty());
+	}
 
 	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parentWidget());
 
