@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "MouseProfileDialog.h"
+#include "ActionDelegate.h"
 #include "../../core/ActionsManager.h"
 
 #include "ui_MouseProfileDialog.h"
@@ -31,6 +32,7 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 	m_ui(new Ui::MouseProfileDialog)
 {
 	m_ui->setupUi(this);
+	m_ui->gesturesViewWidget->setItemDelegateForColumn(1, new ActionDelegate(this));
 
 	QStandardItemModel *gesturesModel = new QStandardItemModel(this);
 	QStringList gestureLabels;
@@ -59,13 +61,19 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 				items.append(new QStandardItem(QString(iterator.key()).replace(QLatin1Char(','), QLatin1String(", "))));
 				items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 				items.append(new QStandardItem(action.icon, QCoreApplication::translate("actions", (action.description.isEmpty() ? action.text : action.description).toUtf8().constData())));
-				items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+				items[1]->setData(action.identifier, Qt::UserRole);
+				items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren | Qt::ItemIsEditable);
 
 				item->appendRow(items);
 			}
 		}
 
-		gesturesModel->appendRow(item);
+		QList<QStandardItem*> items;
+		items.append(item);
+		items.append(new QStandardItem());
+		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+
+		gesturesModel->appendRow(items);
 	}
 
 	gesturesModel->setHorizontalHeaderLabels(gestureLabels);

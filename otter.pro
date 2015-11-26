@@ -172,6 +172,7 @@ SOURCES += src/main.cpp \
     src/ui/Window.cpp \
     src/ui/WorkspaceWidget.cpp \
     src/ui/preferences/AcceptLanguageDialog.cpp \
+    src/ui/preferences/ActionDelegate.cpp \
     src/ui/preferences/ContentBlockingDialog.cpp \
     src/ui/preferences/ContentBlockingIntervalDelegate.cpp \
     src/ui/preferences/JavaScriptPreferencesDialog.cpp \
@@ -328,6 +329,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/Window.h \
     src/ui/WorkspaceWidget.h \
     src/ui/preferences/AcceptLanguageDialog.h \
+    src/ui/preferences/ActionDelegate.h \
     src/ui/preferences/ContentBlockingDialog.h \
     src/ui/preferences/ContentBlockingIntervalDelegate.h \
     src/ui/preferences/JavaScriptPreferencesDialog.h \
