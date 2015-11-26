@@ -239,7 +239,36 @@ MouseProfile MouseProfileDialog::getProfile() const
 	profile.author = m_ui->authorLineEdit->text();
 	profile.isModified = m_isModified;
 
-///TODO
+	for (int i = 0; i < m_ui->gesturesViewWidget->getModel()->rowCount(); ++i)
+	{
+		QStandardItem *contextItem = m_ui->gesturesViewWidget->getModel()->item(i, 0);
+
+		if (contextItem && contextItem->rowCount() > 0)
+		{
+			QHash<QString, int> gestures;
+
+			for (int j = 0; j < contextItem->rowCount(); ++j)
+			{
+				if (!contextItem->child(j, 0) || !contextItem->child(j, 1))
+				{
+					continue;
+				}
+
+				const QStringList steps = contextItem->child(j, 0)->data(Qt::DisplayRole).toString().split(QLatin1String(", "), QString::SkipEmptyParts);
+				const int action = contextItem->child(j, 1)->data(Qt::UserRole).toInt();
+
+				if (!steps.isEmpty() && action >= 0)
+				{
+					gestures[steps.join(QLatin1Char(','))] = action;
+				}
+			}
+
+			if (gestures.count() > 0)
+			{
+				profile.gestures[contextItem->data(Qt::UserRole).toString()] = gestures;
+			}
+		}
+	}
 
 	return profile;
 }
