@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -437,15 +438,43 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				m_isTabPreferencesMenuVisible = true;
 
+				QMenu menu;
+
+				QAction *openAllAction = menu.addAction(tr("Open All Pop-Ups"));
+				openAllAction->setCheckable(true);
+				openAllAction->setData(QLatin1String("openAll"));
+
+				QAction *openAllBackgroundAction = menu.addAction(tr("Open Pop-Ups in Background"));
+				openAllBackgroundAction->setCheckable(true);
+				openAllBackgroundAction->setData(QLatin1String("openAllBackground"));
+
+				QAction *blockAllAction = menu.addAction(tr("Block All Pop-Ups"));
+				blockAllAction->setCheckable(true);
+				blockAllAction->setData(QLatin1String("blockAll"));
+
+				QAction *askAction = menu.addAction(tr("Ask What to Do"));
+				askAction->setCheckable(true);
+				askAction->setData(QLatin1String("ask"));
+
 				QActionGroup popupsGroup(this);
 				popupsGroup.setExclusive(true);
 				popupsGroup.setEnabled(false);
+				popupsGroup.addAction(openAllAction);
+				popupsGroup.addAction(openAllBackgroundAction);
+				popupsGroup.addAction(blockAllAction);
+				popupsGroup.addAction(askAction);
 
-				QMenu menu;
+				const QString popupsPolicy = m_webWidget->getOption(QLatin1String("Content/PopupsPolicy")).toString();
 
-				popupsGroup.addAction(menu.addAction(tr("Open all pop-ups")));
-				popupsGroup.addAction(menu.addAction(tr("Open pop-ups in background")));
-				popupsGroup.addAction(menu.addAction(tr("Block all pop-ups")));
+				for (int i = 0; i < popupsGroup.actions().count(); ++i)
+				{
+					if (popupsPolicy == popupsGroup.actions().at(i)->data().toString())
+					{
+						popupsGroup.actions().at(i)->setChecked(true);
+
+						break;
+					}
+				}
 
 				menu.addSeparator();
 
@@ -495,6 +524,10 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 					if (triggeredAction->data().toString() == QLatin1String("Browser/EnablePlugins"))
 					{
 						m_webWidget->setOption(QLatin1String("Browser/EnablePlugins"), (triggeredAction->isChecked() ? QLatin1String("enabled") : QLatin1String("disabled")));
+					}
+					else if (popupsGroup.actions().contains(triggeredAction))
+					{
+						m_webWidget->setOption(QLatin1String("Content/PopupsPolicy"), triggeredAction->data());
 					}
 					else
 					{

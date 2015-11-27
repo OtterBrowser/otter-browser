@@ -1,6 +1,5 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -18,42 +17,46 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_PREFERENCESCONTENTPAGEWIDGET_H
-#define OTTER_PREFERENCESCONTENTPAGEWIDGET_H
+#ifndef OTTER_POPUPSBARWIDGET_H
+#define OTTER_POPUPSBARWIDGET_H
 
-#include <QtWidgets/QWidget>
+#include "../../../ui/WebWidget.h"
 
 namespace Otter
 {
 
 namespace Ui
 {
-	class PreferencesContentPageWidget;
+	class PopupsBarWidget;
 }
 
-class PreferencesContentPageWidget : public QWidget
+class PopupsBarWidget : public QWidget
 {
 	Q_OBJECT
 
 public:
-	explicit PreferencesContentPageWidget(QWidget *parent = NULL);
-	~PreferencesContentPageWidget();
+	explicit PopupsBarWidget(const QUrl &parentUrl, QWidget *parent = NULL);
+	~PopupsBarWidget();
+
+	void addPopup(const QUrl &url);
 
 protected:
 	void changeEvent(QEvent *event);
 
 protected slots:
-	void currentFontChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
-	void fontChanged(QWidget *editor);
-	void currentColorChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
-	void colorChanged(QWidget *editor);
-	void save();
+	void optionChanged(const QString &option);
+	void openUrl(QAction *action);
+	void setPolicy(QAction *action);
 
 private:
-	Ui::PreferencesContentPageWidget *m_ui;
+	QMenu *m_popupsMenu;
+	QActionGroup *m_popupsGroup;
+	QUrl m_parentUrl;
+	Ui::PopupsBarWidget *m_ui;
 
 signals:
-	void settingsModified();
+	void requestedClose();
+	void requestedNewWindow(const QUrl &url, WindowsManager::OpenHints hints);
 };
 
 }
