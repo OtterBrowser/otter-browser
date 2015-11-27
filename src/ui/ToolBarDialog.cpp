@@ -118,7 +118,7 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 	{
 		QStandardItem *item = new QStandardItem(definitions.at(i).icon, QCoreApplication::translate("actions", (definitions.at(i).description.isEmpty() ? definitions.at(i).text : definitions.at(i).description).toUtf8().constData()));
 		item->setData(ActionsManager::getActionName(definitions.at(i).identifier) + QLatin1String("Action"), Qt::UserRole);
-		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 
 		availableEntriesModel->appendRow(item);
 	}
@@ -209,7 +209,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier)
 {
 	QStandardItem *item = new QStandardItem();
 	item->setData(identifier, Qt::UserRole);
-	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
 	if (identifier == QLatin1String("separator"))
 	{
