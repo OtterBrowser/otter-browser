@@ -195,6 +195,7 @@ SOURCES += src/main.cpp \
     src/ui/toolbars/SearchWidget.cpp \
     src/ui/toolbars/StatusMessageWidget.cpp \
     src/ui/toolbars/ZoomWidget.cpp \
+    src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitHistoryInterface.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitInspector.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp \
@@ -203,6 +204,8 @@ SOURCES += src/main.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitPluginWidget.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp \
     src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp \
+    src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp \
+    src/modules/backends/web/qtwebkit/3rdparty/qtftp/qurlinfo.cpp \
     src/modules/importers/html/HtmlBookmarksImporter.cpp \
     src/modules/importers/opera/OperaBookmarksImporter.cpp \
     src/modules/importers/opera/OperaNotesImporter.cpp \
@@ -353,6 +356,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/toolbars/SearchWidget.h \
     src/ui/toolbars/StatusMessageWidget.h \
     src/ui/toolbars/ZoomWidget.h \
+    src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.h \
     src/modules/backends/web/qtwebkit/QtWebKitHistoryInterface.h \
     src/modules/backends/web/qtwebkit/QtWebKitInspector.h \
     src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.h \

@@ -202,6 +202,7 @@ set(otter_src
 	src/ui/toolbars/SearchWidget.cpp
 	src/ui/toolbars/StatusMessageWidget.cpp
 	src/ui/toolbars/ZoomWidget.cpp
+	src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitHistoryInterface.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitInspector.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp
@@ -210,6 +211,8 @@ set(otter_src
 	src/modules/backends/web/qtwebkit/QtWebKitPluginWidget.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp
+	src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp
+	src/modules/backends/web/qtwebkit/3rdparty/qtftp/qurlinfo.cpp
 	src/modules/importers/html/HtmlBookmarksImporter.cpp
 	src/modules/importers/opera/OperaBookmarksImporter.cpp
 	src/modules/importers/opera/OperaNotesImporter.cpp

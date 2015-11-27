@@ -20,6 +20,7 @@
 **************************************************************************/
 
 #include "QtWebKitNetworkManager.h"
+#include "QtWebKitFtpListingNetworkReply.h"
 #include "../../../../core/AddonsManager.h"
 #include "../../../../core/ContentBlockingManager.h"
 #include "../../../../core/Console.h"
@@ -523,11 +524,6 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 	++m_startedRequests;
 
-	if (operation == GetOperation && request.url().isLocalFile() && QFileInfo(request.url().toLocalFile()).isDir())
-	{
-		return new LocalListingNetworkReply(this, request);
-	}
-
 	QNetworkRequest mutableRequest(request);
 
 	if (!m_canSendReferrer)
@@ -554,7 +550,20 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 	emit messageChanged(tr("Sending request to %1…").arg(host));
 
-	QNetworkReply *reply = QNetworkAccessManager::createRequest(operation, mutableRequest, outgoingData);
+	QNetworkReply *reply = NULL;
+
+	if (operation == GetOperation && request.url().isLocalFile() && QFileInfo(request.url().toLocalFile()).isDir())
+	{
+		reply = new LocalListingNetworkReply(this, request);
+	}
+	else if (operation == GetOperation && request.url().scheme() == QLatin1String("ftp"))
+	{
+		reply = new QtWebKitFtpListingNetworkReply(request, this);
+	}
+	else
+	{
+		reply = QNetworkAccessManager::createRequest(operation, mutableRequest, outgoingData);
+	}
 
 	if (!m_baseReply)
 	{
