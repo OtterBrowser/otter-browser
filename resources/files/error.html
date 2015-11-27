@@ -18,23 +18,36 @@ body
 {
 	max-width:1000px;
 	margin:auto;
+	padding:20px 30px;
 	border:10px solid #EEE;
 	border-radius:10px;
 	font-family:sans-serif;
 	background:#EEE;
 }
-h1
-{
-	margin:5px 0;
-}
 a
 {
 	text-decoration:none;
+}
+h1
+{
+	margin:0 0 10px 0;
+}
+p, li
+{
+	margin:15px 0;
+}
+ul
+{
+	margin:0 0 0 20px;
 }
 </style>
 </head>
 <body>
 <h1>{title}</h1>
-<h2>{description}</h2>
+<p>{introduction}</p>
+<p>{description}</p>
+<ul>
+<!--hint:begin--><li>{hint}</li>
+<!--hint:end--></ul>
 </body>
 </html>

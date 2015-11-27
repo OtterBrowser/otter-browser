@@ -23,7 +23,9 @@
 #include "PlatformIntegration.h"
 
 #include <QtCore/QCoreApplication>
+#include <QtCore/QFile>
 #include <QtCore/QRegularExpression>
+#include <QtCore/QTextStream>
 #include <QtCore/QTime>
 #include <QtCore/QtMath>
 #include <QtGui/QDesktopServices>
@@ -99,6 +101,46 @@ QString createIdentifier(const QString &base, const QStringList &exclude, bool t
 	}
 
 	return identifier + QLatin1Char('_') + QString::number(number);
+}
+
+QString createErrorPage(const QUrl &url, const QString &errorNumber, const QString &errorString)
+{
+	QFile file(SessionsManager::getReadableDataPath(QLatin1String("files/error.html")));
+	file.open(QIODevice::ReadOnly | QIODevice::Text);
+
+	QTextStream stream(&file);
+	stream.setCodec("UTF-8");
+
+	QHash<QString, QString> variables;
+	variables[QLatin1String("dir")] = (QGuiApplication::isLeftToRight() ? QLatin1String("ltr") : QLatin1String("rtl"));
+	variables[QLatin1String("title")] = QCoreApplication::translate("utils", "Error %1").arg(errorNumber);
+	variables[QLatin1String("description")] = errorString;
+	variables[QLatin1String("introduction")] = QCoreApplication::translate("utils", "You tried to access the address <a href=\"%1\">%1</a>, which is currently unavailable. Please make sure that the web address (URL) is correctly spelled and punctuated, then try reloading the page.").arg(url.toString());
+
+	QString mainTemplate = stream.readAll();
+	QRegularExpression hintExpression(QLatin1String("<!--hint:begin-->(.*)<!--hint:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
+	const QString hintTemplate = hintExpression.match(mainTemplate).captured(1);
+	QString hintsHtml;
+	QStringList hints;
+	hints << QCoreApplication::translate("utils", "Make sure your internet connection is active and check whether other applications that rely on the same connection are working.")
+	<< QCoreApplication::translate("utils", "Check that the setup of any internet security software is correct and does not interfere with ordinary web browsing.")
+	<< QCoreApplication::translate("utils", "Try pressing the F12 key on your keyboard and disabling proxy servers, unless you know that you are required to use a proxy to connect to the internet, and then reload the page.");
+
+	for (int i = 0; i < hints.count(); ++i)
+	{
+		hintsHtml.append(QString(hintTemplate).replace(QLatin1String("{hint}"), hints.at(i)));
+	}
+
+	QHash<QString, QString>::iterator iterator;
+
+	for (iterator = variables.begin(); iterator != variables.end(); ++iterator)
+	{
+		mainTemplate.replace(QStringLiteral("{%1}").arg(iterator.key()), iterator.value());
+	}
+
+	mainTemplate.replace(hintExpression, hintsHtml);
+
+	return mainTemplate;
 }
 
 QString elideText(const QString &text, QWidget *widget, int width)

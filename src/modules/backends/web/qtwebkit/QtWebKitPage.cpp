@@ -29,7 +29,6 @@
 #include "../../../../ui/ContentsDialog.h"
 
 #include <QtCore/QFile>
-#include <QtCore/QTextStream>
 #include <QtGui/QDesktopServices>
 #include <QtGui/QGuiApplication>
 #include <QtGui/QWheelEvent>
@@ -415,27 +414,8 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 			return false;
 		}
 
-		QFile file(SessionsManager::getReadableDataPath(QLatin1String("files/error.html")));
-		file.open(QIODevice::ReadOnly | QIODevice::Text);
-
-		QTextStream stream(&file);
-		stream.setCodec("UTF-8");
-
-		QHash<QString, QString> variables;
-		variables[QLatin1String("title")] = tr("Error %1").arg(errorOption->error);
-		variables[QLatin1String("description")] = errorOption->errorString;
-		variables[QLatin1String("dir")] = (QGuiApplication::isLeftToRight() ? QLatin1String("ltr") : QLatin1String("rtl"));
-
-		QString html = stream.readAll();
-		QHash<QString, QString>::iterator iterator;
-
-		for (iterator = variables.begin(); iterator != variables.end(); ++iterator)
-		{
-			html.replace(QStringLiteral("{%1}").arg(iterator.key()), iterator.value());
-		}
-
 		errorOutput->baseUrl = errorOption->url;
-		errorOutput->content = html.toUtf8();
+		errorOutput->content = Utils::createErrorPage(errorOption->url, QString::number(errorOption->error), errorOption->errorString).toUtf8();
 
 		QString domain;
 
