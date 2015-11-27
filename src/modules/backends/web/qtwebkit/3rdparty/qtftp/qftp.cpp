@@ -154,7 +154,7 @@ class QFtpPI : public QObject
     Q_OBJECT
 
 public:
-    QFtpPI(QObject *parent = 0);
+    explicit QFtpPI(QObject *parent = 0);
 
     void connectToHost(const QString &host, quint16 port);
 
@@ -1259,8 +1259,8 @@ class QFtpPrivate
     Q_DECLARE_PUBLIC(QFtp)
 public:
 
-    inline QFtpPrivate(QFtp *owner) : close_waitForStateChange(false), state(QFtp::Unconnected),
-        transferMode(QFtp::Passive), error(QFtp::NoError), q_ptr(owner)
+    inline explicit QFtpPrivate(QFtp *owner) : close_waitForStateChange(false), state(QFtp::Unconnected),
+        transferMode(QFtp::Passive), error(QFtp::NoError), port(0), proxyPort(0), q_ptr(owner)
     { }
 
     ~QFtpPrivate() { while (!pending.isEmpty()) delete pending.takeFirst(); }

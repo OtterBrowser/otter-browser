@@ -438,13 +438,15 @@ QUrlInfo::~QUrlInfo()
 
 QUrlInfo &QUrlInfo::operator=(const QUrlInfo &ui)
 {
-    if (ui.d) {
-        if (!d)
-            d= new QUrlInfoPrivate;
-        *d = *ui.d;
-    } else {
-        delete d;
-        d = 0;
+    if (this != &ui) {
+        if (ui.d) {
+            if (!d)
+                d= new QUrlInfoPrivate;
+            *d = *ui.d;
+        } else {
+            delete d;
+            d = 0;
+        }
     }
     return *this;
 }
