@@ -255,6 +255,7 @@ public:
 	static void triggerAction(int identifier, QObject *parent, const QVariantMap &parameters = QVariantMap());
 	static ActionsManager* getInstance();
 	static Action* getAction(int identifier, QObject *parent);
+	static QString getReport();
 	static QString getActionName(int identifier);
 	static QVector<ActionDefinition> getActionDefinitions();
 	static ActionDefinition getActionDefinition(int identifier);

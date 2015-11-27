@@ -27,6 +27,7 @@
 #include <QtCore/QMetaEnum>
 #include <QtCore/QRegularExpression>
 #include <QtCore/QSettings>
+#include <QtCore/QTextStream>
 
 namespace Otter
 {
@@ -436,8 +437,6 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(AboutQtAction, QT_TRANSLATE_NOOP("actions", "About Qt…"), QString(), Utils::getIcon(QLatin1String("qt"), false));
 	registerAction(ExitAction, QT_TRANSLATE_NOOP("actions", "Exit"), QString(), Utils::getIcon(QLatin1String("application-exit")));
 
-	m_reloadTimer = startTimer(250);
-
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 }
 
@@ -446,6 +445,8 @@ void ActionsManager::createInstance(QObject *parent)
 	if (!m_instance)
 	{
 		m_instance = new ActionsManager(parent);
+
+		loadProfiles();
 	}
 }
 
@@ -457,7 +458,7 @@ void ActionsManager::timerEvent(QTimerEvent *event)
 
 		m_reloadTimer = 0;
 
-		ActionsManager::loadProfiles();
+		loadProfiles();
 	}
 }
 
@@ -544,6 +545,39 @@ Action* ActionsManager::getAction(int identifier, QObject *parent)
 	MainWindow *window = MainWindow::findMainWindow(parent);
 
 	return (window ? window->getAction(identifier) : NULL);
+}
+
+QString ActionsManager::getReport()
+{
+	QString report;
+	QTextStream stream(&report);
+	stream.setFieldAlignment(QTextStream::AlignLeft);
+	stream << QLatin1String("Keyboard Shortcuts:\n");
+
+	for (int i = 0; i < m_definitions.count(); ++i)
+	{
+		if (m_definitions.at(i).shortcuts.isEmpty())
+		{
+			continue;
+		}
+
+		stream << QLatin1Char('\t');
+		stream.setFieldWidth(30);
+		stream << getActionName(m_definitions.at(i).identifier);
+		stream.setFieldWidth(20);
+
+		for (int j = 0; j < m_definitions.at(i).shortcuts.count(); ++j)
+		{
+			stream << m_definitions.at(i).shortcuts.at(j).toString(QKeySequence::PortableText);
+		}
+
+		stream.setFieldWidth(0);
+		stream << QLatin1Char('\n');
+	}
+
+	stream << QLatin1Char('\n');
+
+	return report;
 }
 
 QString ActionsManager::getActionName(int identifier)

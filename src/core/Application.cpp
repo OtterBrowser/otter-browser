@@ -666,6 +666,8 @@ QCommandLineParser* Application::getCommandLineParser()
 
 QString Application::createReport()
 {
+	ActionsManager::createInstance(getInstance());
+
 	QString report;
 	QTextStream stream(&report);
 	stream.setFieldAlignment(QTextStream::AlignLeft);
@@ -769,6 +771,7 @@ QString Application::createReport()
 	stream.setFieldWidth(0);
 	stream << QLatin1String("\n\n");
 	stream << SettingsManager::getReport();
+	stream << ActionsManager::getReport();
 
 	return report.remove(QRegularExpression(QLatin1String(" +$"), QRegularExpression::MultilineOption));
 }
