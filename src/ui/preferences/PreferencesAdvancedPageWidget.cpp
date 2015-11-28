@@ -423,6 +423,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	connect(m_ui->keyboardViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->keyboardMoveDownButton, SLOT(setEnabled(bool)));
 	connect(m_ui->keyboardViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->keyboardMoveUpButton, SLOT(setEnabled(bool)));
 	connect(m_ui->keyboardViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateKeyboardProfileActions()));
+	connect(m_ui->keyboardViewWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(editKeyboardProfile()));
 	connect(m_ui->keyboardViewWidget, SIGNAL(modified()), this, SIGNAL(settingsModified()));
 	connect(m_ui->keyboardAddButton->menu()->actions().at(0), SIGNAL(triggered()), this, SLOT(addKeyboardProfile()));
 	connect(m_ui->keyboardAddButton->menu()->actions().at(1)->menu(), SIGNAL(triggered(QAction*)), this, SLOT(readdKeyboardProfile(QAction*)));
@@ -434,6 +435,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	connect(m_ui->mouseViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->mouseMoveDownButton, SLOT(setEnabled(bool)));
 	connect(m_ui->mouseViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->mouseMoveUpButton, SLOT(setEnabled(bool)));
 	connect(m_ui->mouseViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateMouseProfileActions()));
+	connect(m_ui->mouseViewWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(editMouseProfile()));
 	connect(m_ui->mouseViewWidget, SIGNAL(modified()), this, SIGNAL(settingsModified()));
 	connect(m_ui->mouseAddButton->menu()->actions().at(0), SIGNAL(triggered()), this, SLOT(addMouseProfile()));
 	connect(m_ui->mouseAddButton->menu()->actions().at(1)->menu(), SIGNAL(triggered(QAction*)), this, SLOT(readdMouseProfile(QAction*)));
@@ -861,6 +863,11 @@ void PreferencesAdvancedPageWidget::editKeyboardProfile()
 
 	if (identifier.isEmpty() || !m_keyboardProfiles.contains(identifier))
 	{
+		if (!index.isValid())
+		{
+			addKeyboardProfile();
+		}
+
 		return;
 	}
 
@@ -1056,6 +1063,11 @@ void PreferencesAdvancedPageWidget::editMouseProfile()
 
 	if (identifier.isEmpty() || !m_mouseProfiles.contains(identifier))
 	{
+		if (!index.isValid())
+		{
+			addMouseProfile();
+		}
+
 		return;
 	}
 
