@@ -12,21 +12,29 @@
 html
 {
 	padding:30px;
-	background:#CCC;
+	color:#012956;
+	background:#EDF7FC linear-gradient(to bottom, #D4EEF9 0%, #EDF7FC 100%) top repeat-x;
+	cursor:default;
 }
 body
 {
 	max-width:1000px;
 	margin:auto;
 	padding:20px 30px;
-	border:10px solid #EEE;
-	border-radius:10px;
+	border:1px solid #94C6FF;
+	border-radius:15px;
 	font-family:sans-serif;
-	background:#EEE;
+	background:#FFF linear-gradient(to bottom, #FAFAFA 0%, #FCFCFC 53%, #FFF 100%) top repeat-x;
+	box-shadow:0 0 15px 15px rgba(211, 238, 251, 0.5);
 }
 a
 {
 	text-decoration:none;
+	color:#0082D9;
+}
+a:hover
+{
+	opacity:0.7;
 }
 h1
 {
@@ -36,19 +44,28 @@ table
 {
 	width:100%;
 	margin:20px auto 0;
+	border-collapse:collapse;
+}
+table a
+{
+	color:#0071BC;
 }
 td, th
 {
-	padding:2px;
-	border-radius:5px;
+	padding:6px 8px;
+	text-align:left;
 }
-th
+tr td:first-child
 {
-	background:#DDD;
+	border-radius:6px 0 0 6px;
 }
-tr:nth-child(even) td
+tr td:last-child
 {
-	background:rgba(220, 220, 220, 0.5);
+	border-radius:0 6px 6px 0;
+}
+tbody tr:nth-child(odd)
+{
+	background:rgba(225, 225, 225, 0.5);
 }
 </style>
 </head>
