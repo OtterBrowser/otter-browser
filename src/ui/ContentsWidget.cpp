@@ -272,7 +272,7 @@ QPixmap ContentsWidget::getThumbnail() const
 WindowHistoryInformation ContentsWidget::getHistory() const
 {
 	WindowHistoryEntry entry;
-	entry.url = getUrl().toString();
+	entry.url = getUrl().toString(QUrl::RemovePassword);
 	entry.title = getTitle();
 	entry.position = QPoint(0, 0);
 	entry.zoom = 100;

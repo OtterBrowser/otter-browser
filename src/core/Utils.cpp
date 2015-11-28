@@ -115,7 +115,7 @@ QString createErrorPage(const QUrl &url, const QString &errorNumber, const QStri
 	variables[QLatin1String("dir")] = (QGuiApplication::isLeftToRight() ? QLatin1String("ltr") : QLatin1String("rtl"));
 	variables[QLatin1String("title")] = QCoreApplication::translate("utils", "Error %1").arg(errorNumber);
 	variables[QLatin1String("description")] = errorString;
-	variables[QLatin1String("introduction")] = QCoreApplication::translate("utils", "You tried to access the address <a href=\"%1\">%1</a>, which is currently unavailable. Please make sure that the web address (URL) is correctly spelled and punctuated, then try reloading the page.").arg(url.toString());
+	variables[QLatin1String("introduction")] = QCoreApplication::translate("utils", "You tried to access the address <a href=\"%1\">%1</a>, which is currently unavailable. Please make sure that the web address (URL) is correctly spelled and punctuated, then try reloading the page.").arg(url.toDisplayString());
 
 	QString mainTemplate = stream.readAll();
 	QRegularExpression hintExpression(QLatin1String("<!--hint:begin-->(.*)<!--hint:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));

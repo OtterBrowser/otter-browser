@@ -30,7 +30,7 @@ PermissionBarWidget::PermissionBarWidget(const QString &option, const QUrl &url,
 	m_url(url),
 	m_ui(new Ui::PermissionBarWidget)
 {
-	const QString domain = url.toString(QUrl::RemoveUserInfo | QUrl::RemovePath | QUrl::PreferLocalFile | QUrl::StripTrailingSlash);
+	const QString domain = url.host();
 
 	m_ui->setupUi(this);
 
