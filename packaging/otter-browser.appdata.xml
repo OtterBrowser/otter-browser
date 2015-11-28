@@ -11,6 +11,10 @@
       Otter Browser aims to recreate the best aspects of the classic Opera (12.x) UI using Qt5.
     </p>
   </description>
+  <kudos>
+    <kudo>HiDpiIcon</kudo>
+    <kudo>ModernToolkit</kudo>
+  </kudos>
   <screenshots>
     <screenshot type="default">http://p.im9.eu/1497.jpg</screenshot>
     <screenshot>http://p.im9.eu/826.jpg</screenshot>
