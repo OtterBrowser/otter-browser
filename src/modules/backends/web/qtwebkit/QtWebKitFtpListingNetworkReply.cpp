@@ -108,11 +108,13 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 
 				while (true)
 				{
+					const bool isRoot = (url.path() == QLatin1String("/"));
+
 					url = url.adjusted(QUrl::StripTrailingSlash);
 
-					navigation.prepend(QString("<a href=\"%1\">%2</a>").arg(url.url()).arg(url.fileName() + "/"));
+					navigation.prepend(QStringLiteral("<a href=\"%1\">%2</a>").arg(url.url()).arg(isRoot ? url.toString() : url.fileName() + QLatin1Char('/')));
 
-					if (url.path() == QLatin1String("/"))
+					if (isRoot)
 					{
 						break;
 					}
