@@ -696,50 +696,60 @@ void TabBarWidget::updateButtons()
 
 	for (int i = 0; i < count(); ++i)
 	{
-		QLabel *label = qobject_cast<QLabel*>(tabButton(i, m_closeButtonPosition));
+		const bool isCurrent = (i == currentIndex());
 
-		if (label)
+		QLabel *closeLabel = qobject_cast<QLabel*>(tabButton(i, m_closeButtonPosition));
+		QLabel *iconLabel = qobject_cast<QLabel*>(tabButton(i, m_iconButtonPosition));
+
+		if (iconLabel)
 		{
-			const bool isPinned = getTabProperty(i, QLatin1String("isPinned"), false).toBool();
-			const bool wasPinned = label->property("isPinned").toBool();
-
-			if (!label->buddy())
-			{
-				Window *window = getWindow(i);
-
-				if (window)
-				{
-					label->setBuddy(window);
-				}
-			}
-
-			if (isPinned != wasPinned || !label->pixmap())
-			{
-				label->setProperty("isPinned", isPinned);
-
-				if (isPinned)
-				{
-					label->setPixmap(Utils::getIcon(QLatin1String("object-locked")).pixmap(16, 16));
-				}
-				else
-				{
-					QStyleOption option;
-					option.rect = QRect(0, 0, 16, 16);
-
-					QPixmap pixmap(QSize(16, 16) * devicePixelRatio());
-					pixmap.setDevicePixelRatio(devicePixelRatio());
-					pixmap.fill(Qt::transparent);
-
-					QPainter painter(&pixmap);
-
-					style()->drawPrimitive(QStyle::PE_IndicatorTabClose, &option, &painter, this);
-
-					label->setPixmap(pixmap);
-				}
-			}
-
-			label->setVisible((!isNarrow || (i == currentIndex())) && (isVertical || !isPinned));
+			iconLabel->setVisible(!isNarrow || !(isCurrent && closeLabel));
 		}
+
+		if (!closeLabel)
+		{
+			continue;
+		}
+
+		const bool isPinned = getTabProperty(i, QLatin1String("isPinned"), false).toBool();
+		const bool wasPinned = closeLabel->property("isPinned").toBool();
+
+		if (!closeLabel->buddy())
+		{
+			Window *window = getWindow(i);
+
+			if (window)
+			{
+				closeLabel->setBuddy(window);
+			}
+		}
+
+		if (isPinned != wasPinned || !closeLabel->pixmap())
+		{
+			closeLabel->setProperty("isPinned", isPinned);
+
+			if (isPinned)
+			{
+				closeLabel->setPixmap(Utils::getIcon(QLatin1String("object-locked")).pixmap(16, 16));
+			}
+			else
+			{
+				QStyleOption option;
+				option.rect = QRect(0, 0, 16, 16);
+
+				QPixmap pixmap(QSize(16, 16) * devicePixelRatio());
+				pixmap.setDevicePixelRatio(devicePixelRatio());
+				pixmap.fill(Qt::transparent);
+
+				QPainter painter(&pixmap);
+
+				style()->drawPrimitive(QStyle::PE_IndicatorTabClose, &option, &painter, this);
+
+				closeLabel->setPixmap(pixmap);
+			}
+		}
+
+		closeLabel->setVisible((!isNarrow || isCurrent) && (isVertical || !isPinned));
 	}
 }
 
