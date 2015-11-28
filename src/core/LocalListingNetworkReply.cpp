@@ -62,7 +62,7 @@ LocalListingNetworkReply::LocalListingNetworkReply(QObject *parent, const QNetwo
 
 	do
 	{
-		navigation.prepend(QStringLiteral("<a href=\"file:///%1\">%2</a>%3").arg(directory.canonicalPath().remove(urlExpression)).arg(directory.dirName().isEmpty() ? QString('/') : directory.dirName()).arg(directory.dirName().isEmpty() ? QString() : QString('/')));
+		navigation.prepend(QStringLiteral("<a href=\"file:///%1\">%2</a>").arg(directory.canonicalPath().remove(urlExpression)).arg((directory.isRoot() ? QLatin1String("file://") : QString()) + directory.dirName() + QString('/')));
 	}
 	while (directory.cdUp());
 
