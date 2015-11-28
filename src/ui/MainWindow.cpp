@@ -569,7 +569,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 			break;
 		case ActionsManager::WorkOfflineAction:
-			SettingsManager::setValue(QLatin1String("Network/WorkOffline"), parameters);
+			SettingsManager::setValue(QLatin1String("Network/WorkOffline"), parameters.value(QLatin1String("isChecked")).toBool());
 
 			break;
 		case ActionsManager::FullScreenAction:
