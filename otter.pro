@@ -365,6 +365,8 @@ HEADERS += src/core/ActionsManager.h \
     src/modules/backends/web/qtwebkit/QtWebKitPluginWidget.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebBackend.h \
     src/modules/backends/web/qtwebkit/QtWebKitWebWidget.h \
+    src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.h \
+    src/modules/backends/web/qtwebkit/3rdparty/qtftp/qurlinfo.h \
     src/modules/importers/html/HtmlBookmarksImporter.h \
     src/modules/importers/opera/OperaBookmarksImporter.h \
     src/modules/importers/opera/OperaNotesImporter.h \
