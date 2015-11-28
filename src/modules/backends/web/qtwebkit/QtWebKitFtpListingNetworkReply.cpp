@@ -106,6 +106,11 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 				QList<QUrlInfo> entries;
 				entries << m_directories << m_files;
 
+				if (url.path().isEmpty())
+				{
+					url.setPath(QLatin1String("/"));
+				}
+
 				while (true)
 				{
 					const bool isRoot = (url.path() == QLatin1String("/"));
