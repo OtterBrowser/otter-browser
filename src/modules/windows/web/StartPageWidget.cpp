@@ -462,7 +462,8 @@ void StartPageWidget::editTile()
 
 	if (bookmark)
 	{
-		BookmarkPropertiesDialog(bookmark, (bookmark->isInTrash() ? BookmarkPropertiesDialog::ViewBookmarkMode : BookmarkPropertiesDialog::EditBookmarkMode), this).exec();
+		BookmarkPropertiesDialog dialog(bookmark, this);
+		dialog.exec();
 
 		m_model->reloadModel();
 	}

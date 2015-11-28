@@ -87,7 +87,8 @@ void ImportDialog::createDialog(const QString &importerName, QWidget *parent)
 
 	if (importer)
 	{
-		ImportDialog(importer, parent).exec();
+		ImportDialog dialog(importer, parent);
+		dialog.exec();
 	}
 	else
 	{

@@ -20,11 +20,8 @@
 #ifndef OTTER_BOOKMARKPROPERTIESDIALOG_H
 #define OTTER_BOOKMARKPROPERTIESDIALOG_H
 
-#include "../core/BookmarksManager.h"
 #include "Dialog.h"
-
-#include <QtGui/QStandardItem>
-#include <QtGui/QStandardItemModel>
+#include "../core/BookmarksManager.h"
 
 namespace Otter
 {
@@ -41,14 +38,8 @@ class BookmarkPropertiesDialog : public Dialog
 	Q_OBJECT
 
 public:
-	enum BookmarkMode
-	{
-		AddBookmarkMode = 0,
-		EditBookmarkMode = 1,
-		ViewBookmarkMode = 2
-	};
-
-	explicit BookmarkPropertiesDialog(BookmarksItem *bookmark, BookmarkMode mode = EditBookmarkMode, QWidget *parent = NULL);
+	explicit BookmarkPropertiesDialog(BookmarksItem *bookmark, QWidget *parent = NULL);
+	BookmarkPropertiesDialog(const QUrl &url, const QString &title, const QString &description = QString(), BookmarksItem *folder = NULL, int index = -1, bool isUrl = true, QWidget *parent = NULL);
 	~BookmarkPropertiesDialog();
 
 protected:
@@ -59,7 +50,7 @@ protected slots:
 
 private:
 	BookmarksItem *m_bookmark;
-	QStandardItemModel *m_model;
+	int m_index;
 	Ui::BookmarkPropertiesDialog *m_ui;
 };
 

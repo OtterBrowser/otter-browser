@@ -31,15 +31,15 @@
 namespace Otter
 {
 
-BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, BookmarkMode mode, QWidget *parent) : Dialog(parent),
+BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, QWidget *parent) : Dialog(parent),
 	m_bookmark(bookmark),
-	m_model(new QStandardItemModel(this)),
+	m_index(-1),
 	m_ui(new Ui::BookmarkPropertiesDialog)
 {
 	const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt());
 
 	m_ui->setupUi(this);
-	m_ui->folderComboBox->setCurrentFolder((bookmark->parent() && mode != AddBookmarkMode) ? dynamic_cast<BookmarksItem*>(bookmark->parent()) : BookmarksManager::getLastUsedFolder());
+	m_ui->folderComboBox->setCurrentFolder(dynamic_cast<BookmarksItem*>(bookmark->parent()));
 	m_ui->titleLineEdit->setText(m_bookmark->data(BookmarksModel::TitleRole).toString());
 	m_ui->addressLineEdit->setText(m_bookmark->data(BookmarksModel::UrlRole).toString());
 	m_ui->addressLineEdit->setVisible(type == BookmarksModel::UrlBookmark);
@@ -62,35 +62,50 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, Book
 		m_ui->lastVisitLabelWidget->hide();
 	}
 
-	if (mode == EditBookmarkMode)
-	{
-		setWindowTitle(tr("Edit Bookmark"));
-	}
-	else if (mode == AddBookmarkMode)
-	{
-		setWindowTitle(tr("Add Bookmark"));
-
-		m_ui->visitsLabel->hide();
-		m_ui->visitsLabelWidget->hide();
-		m_ui->lastVisitLabel->hide();
-		m_ui->lastVisitLabelWidget->hide();
-		m_ui->addedLabel->hide();
-		m_ui->addedLabelWidget->hide();
-		m_ui->modifiedLabel->hide();
-		m_ui->modifiedLabelWidget->hide();
-	}
-	else
+	if (bookmark->isInTrash())
 	{
 		setWindowTitle(tr("View Bookmark"));
 
-		m_ui->folderComboBox->setEnabled(false);
-		m_ui->newFolderButton->setEnabled(false);
-		m_ui->titleLineEdit->setEnabled(false);
-		m_ui->addressLineEdit->setEnabled(false);
-		m_ui->addressLabel->setEnabled(false);
-		m_ui->descriptionTextEdit->setEnabled(false);
-		m_ui->keywordLineEdit->setEnabled(false);
+		m_ui->folderLabel->hide();
+		m_ui->folderComboBox->hide();
+		m_ui->newFolderButton->hide();
+		m_ui->titleLineEdit->setReadOnly(true);
+		m_ui->addressLineEdit->setReadOnly(true);
+		m_ui->descriptionTextEdit->setReadOnly(true);
+		m_ui->keywordLineEdit->setReadOnly(true);
 	}
+	else
+	{
+		setWindowTitle(tr("Edit Bookmark"));
+	}
+
+	connect(m_ui->newFolderButton, SIGNAL(clicked()), m_ui->folderComboBox, SLOT(createFolder()));
+	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(saveBookmark()));
+	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(close()));
+}
+
+BookmarkPropertiesDialog::BookmarkPropertiesDialog(const QUrl &url, const QString &title, const QString &description, BookmarksItem *folder, int index, bool isUrl, QWidget *parent) : Dialog(parent),
+	m_bookmark(NULL),
+	m_index(index),
+	m_ui(new Ui::BookmarkPropertiesDialog)
+{
+	m_ui->setupUi(this);
+	m_ui->folderComboBox->setCurrentFolder(folder ? folder : BookmarksManager::getLastUsedFolder());
+	m_ui->titleLineEdit->setText(title);
+	m_ui->addressLineEdit->setText(url.toString());
+	m_ui->addressLineEdit->setVisible(isUrl);
+	m_ui->addressLabel->setVisible(isUrl);
+	m_ui->descriptionTextEdit->setPlainText(description);
+	m_ui->visitsLabel->hide();
+	m_ui->visitsLabelWidget->hide();
+	m_ui->lastVisitLabel->hide();
+	m_ui->lastVisitLabelWidget->hide();
+	m_ui->addedLabel->hide();
+	m_ui->addedLabelWidget->hide();
+	m_ui->modifiedLabel->hide();
+	m_ui->modifiedLabelWidget->hide();
+
+	setWindowTitle(tr("Add Bookmark"));
 
 	connect(m_ui->newFolderButton, SIGNAL(clicked()), m_ui->folderComboBox, SLOT(createFolder()));
 	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(saveBookmark()));
@@ -121,6 +136,13 @@ void BookmarkPropertiesDialog::saveBookmark()
 
 	if (m_ui->folderComboBox->isEnabled())
 	{
+		if (!m_bookmark)
+		{
+			const bool isUrl = m_ui->addressLineEdit->isVisible();
+
+			m_bookmark = BookmarksManager::addBookmark((isUrl ? BookmarksModel::UrlBookmark : BookmarksModel::FolderBookmark), (isUrl ? QUrl(m_ui->addressLineEdit->text()) : QUrl()), m_ui->titleLineEdit->text(), m_ui->folderComboBox->getCurrentFolder(), m_index);
+		}
+
 		const QString keyword = m_ui->keywordLineEdit->text();
 
 		if (m_bookmark->data(BookmarksModel::KeywordRole).toString() != keyword && BookmarksManager::getBookmark(keyword))

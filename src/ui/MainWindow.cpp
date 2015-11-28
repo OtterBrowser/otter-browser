@@ -828,15 +828,8 @@ void MainWindow::addBookmark(const QUrl &url, const QString &title, const QStrin
 		return;
 	}
 
-	BookmarksItem *bookmark = BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, bookmarkUrl, (url.isValid() ? title : m_windowsManager->getTitle()));
-	bookmark->setData(description, BookmarksModel::DescriptionRole);
-
-	BookmarkPropertiesDialog dialog(bookmark, BookmarkPropertiesDialog::AddBookmarkMode, this);
-
-	if (dialog.exec() == QDialog::Rejected)
-	{
-		bookmark->remove();
-	}
+	BookmarkPropertiesDialog dialog(bookmarkUrl, (url.isValid() ? title : m_windowsManager->getTitle()), description, NULL, -1, true, this);
+	dialog.exec();
 }
 
 void MainWindow::editBookmark(const QUrl &url)
@@ -845,7 +838,7 @@ void MainWindow::editBookmark(const QUrl &url)
 
 	if (!bookmarks.isEmpty())
 	{
-		BookmarkPropertiesDialog dialog(bookmarks.at(0), BookmarkPropertiesDialog::EditBookmarkMode, this);
+		BookmarkPropertiesDialog dialog(bookmarks.at(0), this);
 		dialog.exec();
 	}
 }

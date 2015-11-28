@@ -927,6 +927,23 @@ bool BookmarksModel::moveBookmark(BookmarksItem *bookmark, BookmarksItem *newPar
 	}
 
 	BookmarksItem *previousParent = dynamic_cast<BookmarksItem*>(bookmark->parent());
+
+	if (!previousParent)
+	{
+		if (newRow < 0)
+		{
+			newParent->appendRow(bookmark);
+		}
+		else
+		{
+			newParent->insertRow(newRow, bookmark);
+		}
+
+		emit modelModified();
+
+		return true;
+	}
+
 	const int previousRow = bookmark->row();
 
 	if (newRow < 0)

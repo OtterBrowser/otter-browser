@@ -93,29 +93,26 @@ void BookmarksContentsWidget::changeEvent(QEvent *event)
 
 void BookmarksContentsWidget::addBookmark()
 {
-	BookmarksItem *bookmark = BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, QUrl(), QString(), findFolder(m_ui->bookmarksViewWidget->currentIndex()), (m_ui->bookmarksViewWidget->currentIndex().row() + 1));
-	BookmarkPropertiesDialog dialog(bookmark, BookmarkPropertiesDialog::AddBookmarkMode, this);
-
-	if (dialog.exec() == QDialog::Rejected)
-	{
-		bookmark->remove();
-	}
+	const QModelIndex index = m_ui->bookmarksViewWidget->currentIndex();
+	BookmarksItem *folder = findFolder(index);
+	BookmarkPropertiesDialog dialog(QUrl(), QString(), QString(), folder, ((folder && folder->index() == index) ? -1 : (index.row() + 1)), true, this);
+	dialog.exec();
 }
 
 void BookmarksContentsWidget::addFolder()
 {
-	BookmarksItem *bookmark = BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, QUrl(), QString(), findFolder(m_ui->bookmarksViewWidget->currentIndex()), (m_ui->bookmarksViewWidget->currentIndex().row() + 1));
-	BookmarkPropertiesDialog dialog(bookmark, BookmarkPropertiesDialog::AddBookmarkMode, this);
-
-	if (dialog.exec() == QDialog::Rejected)
-	{
-		bookmark->remove();
-	}
+	const QModelIndex index = m_ui->bookmarksViewWidget->currentIndex();
+	BookmarksItem *folder = findFolder(index);
+	BookmarkPropertiesDialog dialog(QUrl(), QString(), QString(), folder, ((folder && folder->index() == index) ? -1 : (index.row() + 1)), false, this);
+	dialog.exec();
 }
 
 void BookmarksContentsWidget::addSeparator()
 {
-	BookmarksManager::addBookmark(BookmarksModel::SeparatorBookmark, QUrl(), QString(), findFolder(m_ui->bookmarksViewWidget->currentIndex()), (m_ui->bookmarksViewWidget->currentIndex().row() + 1));
+	const QModelIndex index = m_ui->bookmarksViewWidget->currentIndex();
+	BookmarksItem *folder = findFolder(index);
+
+	BookmarksManager::addBookmark(BookmarksModel::SeparatorBookmark, QUrl(), QString(), folder, ((folder && folder->index() == index) ? -1 : (index.row() + 1)));
 }
 
 void BookmarksContentsWidget::removeBookmark()
@@ -147,7 +144,8 @@ void BookmarksContentsWidget::bookmarkProperties()
 
 	if (bookmark)
 	{
-		BookmarkPropertiesDialog(bookmark, (bookmark->isInTrash() ? BookmarkPropertiesDialog::ViewBookmarkMode : BookmarkPropertiesDialog::EditBookmarkMode), this).exec();
+		BookmarkPropertiesDialog dialog(bookmark, this);
+		dialog.exec();
 
 		updateActions();
 	}
