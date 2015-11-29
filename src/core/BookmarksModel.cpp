@@ -970,11 +970,6 @@ QList<BookmarksItem*> BookmarksModel::getBookmarks(const QUrl &url) const
 	return QList<BookmarksItem*>();
 }
 
-QList<QUrl> BookmarksModel::getUrls() const
-{
-	return m_urls.keys();
-}
-
 BookmarksModel::FormatMode BookmarksModel::getFormatMode() const
 {
 	return m_mode;

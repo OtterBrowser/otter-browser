@@ -107,7 +107,6 @@ public:
 	QList<BookmarkMatch> findBookmarks(const QString &prefix) const;
 	QList<BookmarksItem*> findUrls(const QUrl &url, QStandardItem *branch = NULL) const;
 	QList<BookmarksItem*> getBookmarks(const QUrl &url) const;
-	QList<QUrl> getUrls() const;
 	FormatMode getFormatMode() const;
 	bool moveBookmark(BookmarksItem *bookmark, BookmarksItem *newParent, int newRow = -1);
 	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);

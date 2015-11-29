@@ -194,16 +194,6 @@ QList<BookmarksModel::BookmarkMatch> BookmarksManager::findBookmarks(const QStri
 	return m_model->findBookmarks(prefix);
 }
 
-QList<QUrl> BookmarksManager::getUrls()
-{
-	if (!m_model)
-	{
-		getModel();
-	}
-
-	return m_model->getUrls();
-}
-
 bool BookmarksManager::hasBookmark(const QUrl &url)
 {
 	if (!m_model)
