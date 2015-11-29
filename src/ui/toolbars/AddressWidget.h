@@ -31,6 +31,7 @@
 namespace Otter
 {
 
+class AddressCompletionModel;
 class LineEditWidget;
 class Window;
 
@@ -79,12 +80,12 @@ protected slots:
 	void updateLoadPlugins();
 	void updateLineEdit();
 	void updateIcons();
-	void setCompletion(const QString &text);
 	void setIcon(const QIcon &icon);
 
 private:
 	QPointer<Window> m_window;
 	LineEditWidget *m_lineEdit;
+	AddressCompletionModel *m_completionModel;
 	QCompleter *m_completer;
 	QLabel *m_bookmarkLabel;
 	QLabel *m_feedsLabel;

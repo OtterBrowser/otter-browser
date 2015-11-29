@@ -18,7 +18,9 @@
 **************************************************************************/
 
 #include "AddressCompletionModel.h"
+#include "AddonsManager.h"
 #include "BookmarksManager.h"
+#include "HistoryManager.h"
 #include "SettingsManager.h"
 
 #include <QtCore/QCoreApplication>
@@ -26,15 +28,10 @@
 namespace Otter
 {
 
-AddressCompletionModel* AddressCompletionModel::m_instance = NULL;
-
 AddressCompletionModel::AddressCompletionModel(QObject *parent) : QAbstractListModel(parent),
+	m_types(UnknownCompletionType),
 	m_updateTimer(0)
 {
-	m_updateTimer = startTimer(250);
-
-	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(updateCompletion()));
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 }
 
 void AddressCompletionModel::timerEvent(QTimerEvent *event)
@@ -45,49 +42,133 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 
 		m_updateTimer = 0;
 
-		QList<QUrl> urls;
-		urls << QUrl(QLatin1String("about:bookmarks")) << QUrl(QLatin1String("about:cache")) << QUrl(QLatin1String("about:config")) << QUrl(QLatin1String("about:cookies")) << QUrl(QLatin1String("about:history")) << QUrl(QLatin1String("about:notes")) << QUrl(QLatin1String("about:transfers"));
-		urls << BookmarksManager::getUrls();
+		QList<CompletionEntry> completions;
 
+		if (m_types.testFlag(SearchSuggestionsCompletionType))
+		{
+			CompletionEntry completionEntry(QUrl(), m_defaultSearchEngine.title, QString(), m_defaultSearchEngine.icon, SearchSuggestionType);
+			completionEntry.text = m_filter;
+
+			completions.append(completionEntry);
+		}
+
+		if (m_types.testFlag(BookmarksCompletionType))
+		{
+			const QList<BookmarksModel::BookmarkMatch> bookmarks = BookmarksManager::findBookmarks(m_filter);
+
+			for (int i = 0; i < bookmarks.count(); ++i)
+			{
+				CompletionEntry completionEntry(bookmarks.at(i).bookmark->data(BookmarksModel::UrlRole).toUrl(), bookmarks.at(i).bookmark->data(BookmarksModel::TitleRole).toString(), bookmarks.at(i).match, bookmarks.at(i).bookmark->data(Qt::DecorationRole).value<QIcon>(), BookmarkType);
+				completionEntry.text = bookmarks.at(i).bookmark->data(BookmarksModel::TitleRole).toString();
+				completionEntry.keyword = bookmarks.at(i).bookmark->data(BookmarksModel::KeywordRole).toString();
+
+				if (completionEntry.keyword.startsWith(m_filter))
+				{
+					completionEntry.match = completionEntry.keyword;
+				}
+
+				completions.append(completionEntry);
+			}
+		}
+
+		if (m_types.testFlag(HistoryCompletionType))
+		{
+			const QList<HistoryModel::HistoryEntryMatch> entries = HistoryManager::findEntries(m_filter);
+
+			for (int i = 0; i < entries.count(); ++i)
+			{
+				CompletionEntry completionEntry(entries.at(i).entry->data(HistoryModel::UrlRole).toUrl(), entries.at(i).entry->data(HistoryModel::TitleRole).toString(), entries.at(i).match, entries.at(i).entry->data(Qt::DecorationRole).value<QIcon>(), (entries.at(i).entry->data(HistoryModel::TypedInRole).toBool() ? TypedInHistoryType : HistoryType));
+				completionEntry.text = entries.at(i).entry->data(HistoryModel::TitleRole).toString();
+
+				completions.append(completionEntry);
+			}
+		}
+
+		if (m_types.testFlag(SpecialPageCompletionType))
+		{
+			const QStringList specialPages = AddonsManager::getSpecialPages();
+
+			for (int i = 0; i < specialPages.count(); ++i)
+			{
+				const AddonsManager::SpecialPageInformation information = AddonsManager::getSpecialPage(specialPages.at(i));
+
+				if (information.url.toString().startsWith(m_filter))
+				{
+					completions.append(CompletionEntry(information.url, information.getTitle(), QString(), information.icon, SpecialPageType));
+				}
+			}
+		}
+
+		m_completions = completions;
+
+		endResetModel();
+
+		emit completionReady(m_filter);
+	}
+}
+
+void AddressCompletionModel::setFilter(const QString &filter)
+{
+	if (m_filter.isEmpty() && !filter.isEmpty())
+	{
+		m_types = UnknownCompletionType;
+
+		if (SettingsManager::getValue(QLatin1String("AddressField/SuggestBookmarks")).toBool())
+		{
+			m_types |= BookmarksCompletionType;
+		}
+
+		if (SettingsManager::getValue(QLatin1String("AddressField/SuggestHistory")).toBool())
+		{
+			m_types |= HistoryCompletionType;
+		}
+
+		if (SettingsManager::getValue(QLatin1String("AddressField/SuggestSearch")).toBool())
+		{
+			m_types |= SearchSuggestionsCompletionType;
+
+			m_defaultSearchEngine = SearchesManager::getSearchEngine();
+		}
+
+		if (SettingsManager::getValue(QLatin1String("AddressField/SuggestSpecialPages")).toBool())
+		{
+			m_types |= SpecialPageCompletionType;
+		}
+	}
+
+	m_filter = filter;
+
+	if (m_filter.isEmpty())
+	{
 		beginResetModel();
 
-		m_urls = urls;
+		m_completions.clear();
 
 		endResetModel();
 	}
-}
-
-void AddressCompletionModel::optionChanged(const QString &option)
-{
-	if (option.contains(QLatin1String("AddressField/Suggest")))
+	else if (m_updateTimer == 0)
 	{
-		updateCompletion();
+		m_updateTimer = startTimer(50);
 	}
-}
-
-void AddressCompletionModel::updateCompletion()
-{
-	if (m_updateTimer == 0)
-	{
-		m_updateTimer = startTimer(250);
-	}
-}
-
-AddressCompletionModel* AddressCompletionModel::getInstance()
-{
-	if (!m_instance)
-	{
-		m_instance = new AddressCompletionModel(QCoreApplication::instance());
-	}
-
-	return m_instance;
 }
 
 QVariant AddressCompletionModel::data(const QModelIndex &index, int role) const
 {
-	if (role == Qt::DisplayRole && index.column() == 0 && index.row() >= 0 && index.row() < m_urls.count())
+	if (index.column() == 0 && index.row() >= 0 && index.row() < m_completions.count())
 	{
-		return m_urls.at(index.row());
+		switch (role)
+		{
+			case UrlRole:
+				return m_completions.at(index.row()).url;
+			case TitleRole:
+				return m_completions.at(index.row()).title;
+			case KeywordRole:
+				return m_completions.at(index.row()).keyword;
+			case MatchRole:
+				return (m_completions.at(index.row()).match.isEmpty() ? m_completions.at(index.row()).url.toString() : m_completions.at(index.row()).match);
+		}
+
+		return (m_completions.at(index.row()).text.isEmpty() ? m_completions.at(index.row()).url.toDisplayString(QUrl::RemoveScheme) : m_completions.at(index.row()).text);
 	}
 
 	return QVariant();
@@ -104,7 +185,7 @@ QVariant AddressCompletionModel::headerData(int section, Qt::Orientation orienta
 
 int AddressCompletionModel::rowCount(const QModelIndex &index) const
 {
-	return (index.isValid() ? 0 : m_urls.count());
+	return (index.isValid() ? 0 : m_completions.count());
 }
 
 }

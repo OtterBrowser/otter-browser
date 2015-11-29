@@ -67,9 +67,6 @@
          </item>
          <item>
           <widget class="QCheckBox" name="suggestHistoryCheckBox">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
            <property name="text">
             <string>Suggest history</string>
            </property>

@@ -51,7 +51,8 @@ namespace Otter
 AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent),
 	m_window(NULL),
 	m_lineEdit(new LineEditWidget(this)),
-	m_completer(new QCompleter(AddressCompletionModel::getInstance(), this)),
+	m_completionModel(new AddressCompletionModel(this)),
+	m_completer(new QCompleter(m_completionModel, this)),
 	m_bookmarkLabel(NULL),
 	m_feedsLabel(NULL),
 	m_loadPluginsLabel(NULL),
@@ -70,7 +71,8 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 
 	m_completer->setCaseSensitivity(Qt::CaseInsensitive);
 	m_completer->setCompletionMode(QCompleter::InlineCompletion);
-	m_completer->setCompletionRole(Qt::DisplayRole);
+	m_completer->setCompletionRole(AddressCompletionModel::MatchRole);
+	m_completer->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
 	m_completer->setFilterMode(Qt::MatchStartsWith);
 
 	setEditable(true);
@@ -104,8 +106,9 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 	}
 
 	connect(this, SIGNAL(activated(QString)), this, SLOT(openUrl(QString)));
-	connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(setCompletion(QString)));
 	connect(m_lineEdit, SIGNAL(textDropped(QString)), this, SLOT(handleUserInput(QString)));
+	connect(m_lineEdit, SIGNAL(textEdited(QString)), m_completionModel, SLOT(setFilter(QString)));
+	connect(m_completionModel, SIGNAL(completionReady(QString)), m_completer, SLOT(setCompletionPrefix(QString)));
 	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(updateBookmark()));
 	connect(HistoryManager::getInstance(), SIGNAL(typedHistoryModelModified()), this, SLOT(updateLineEdit()));
 }
@@ -737,11 +740,6 @@ void AddressWidget::updateIcons()
 void AddressWidget::activate(Qt::FocusReason reason)
 {
 	m_lineEdit->activate(reason);
-}
-
-void AddressWidget::setCompletion(const QString &text)
-{
-	m_completer->setCompletionPrefix(text);
 }
 
 void AddressWidget::setIcon(const QIcon &icon)

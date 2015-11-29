@@ -20,6 +20,8 @@
 #ifndef OTTER_ADDRESSCOMPLETIONMODEL_H
 #define OTTER_ADDRESSCOMPLETIONMODEL_H
 
+#include "../core/SearchesManager.h"
+
 #include <QtCore/QAbstractListModel>
 #include <QtCore/QUrl>
 
@@ -31,25 +33,69 @@ class AddressCompletionModel : public QAbstractListModel
 	Q_OBJECT
 
 public:
-	static AddressCompletionModel* getInstance();
+	enum CompletionType
+	{
+		UnknownCompletionType = 0,
+		BookmarksCompletionType = 1,
+		HistoryCompletionType = 2,
+		SearchSuggestionsCompletionType = 4,
+		SpecialPageCompletionType = 4,
+	};
+
+	Q_DECLARE_FLAGS(CompletionTypes, CompletionType)
+
+	enum EntryType
+	{
+		UnknownType = 0,
+		BookmarkType,
+		HistoryType,
+		TypedInHistoryType,
+		SearchSuggestionType,
+		SpecialPageType,
+	};
+
+	enum EntryRole
+	{
+		UrlRole = Qt::UserRole,
+		TitleRole = (Qt::UserRole + 1),
+		MatchRole = (Qt::UserRole + 2),
+		KeywordRole = (Qt::UserRole + 3)
+	};
+
+	struct CompletionEntry
+	{
+		QString text;
+		QString title;
+		QString match;
+		QString keyword;
+		QUrl url;
+		QIcon icon;
+		EntryType type;
+
+		CompletionEntry(const QUrl &urlValue, const QString &titleValue, const QString &matchValue, const QIcon &iconValue, EntryType typeValue) : title(titleValue), match(matchValue), url(urlValue), icon(iconValue), type(typeValue) {}
+	};
+
+	explicit AddressCompletionModel(QObject *parent = NULL);
+
 	QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 	QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 	int rowCount(const QModelIndex &index = QModelIndex()) const;
 
-protected:
-	explicit AddressCompletionModel(QObject *parent = NULL);
+public slots:
+	void setFilter(const QString &filter = QString());
 
+protected:
 	void timerEvent(QTimerEvent *event);
 
-protected slots:
-	void optionChanged(const QString &option);
-	void updateCompletion();
-
 private:
-	QList<QUrl> m_urls;
+	QList<CompletionEntry> m_completions;
+	QString m_filter;
+	SearchInformation m_defaultSearchEngine;
+	AddressCompletionModel::CompletionTypes m_types;
 	int m_updateTimer;
 
-	static AddressCompletionModel *m_instance;
+signals:
+	void completionReady(const QString &filter);
 };
 
 }
