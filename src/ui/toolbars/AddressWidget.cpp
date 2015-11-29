@@ -256,7 +256,11 @@ void AddressWidget::keyPressEvent(QKeyEvent *event)
 {
 	QComboBox::keyPressEvent(event);
 
-	if (m_window && event->key() == Qt::Key_Escape)
+	if (event->key() == Qt::Key_Down && !view()->isVisible())
+	{
+		showPopup();
+	}
+	else if (m_window && event->key() == Qt::Key_Escape)
 	{
 		const QUrl url = m_window->getUrl();
 
@@ -274,8 +278,7 @@ void AddressWidget::keyPressEvent(QKeyEvent *event)
 			m_window->setFocus();
 		}
 	}
-
-	if (!m_isUsingSimpleMode && (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return))
+	else if (!m_isUsingSimpleMode && (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return))
 	{
 		handleUserInput(m_lineEdit->text().trimmed(), WindowsManager::calculateOpenHints(event->modifiers(), Qt::LeftButton, WindowsManager::CurrentTabOpen));
 	}
