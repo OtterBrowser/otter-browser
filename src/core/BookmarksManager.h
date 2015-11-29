@@ -44,6 +44,7 @@ public:
 	static BookmarksItem* getBookmark(quint64 identifier);
 	static BookmarksItem* getLastUsedFolder();
 	static QStringList getKeywords();
+	static QList<BookmarksModel::BookmarkMatch> findBookmarks(const QString &prefix);
 	static QList<QUrl> getUrls();
 	static bool hasBookmark(const QUrl &url);
 	static bool hasKeyword(const QString &keyword);

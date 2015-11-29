@@ -866,16 +866,77 @@ QStringList BookmarksModel::getKeywords() const
 	return m_keywords.keys();
 }
 
-QList<BookmarksItem*> BookmarksModel::getBookmarks(const QUrl &url) const
+QList<BookmarksModel::BookmarkMatch> BookmarksModel::findBookmarks(const QString &prefix) const
 {
-	const QUrl adjustedUrl = adjustUrl(url);
+	QList<BookmarksItem*> matchedBookmarks;
+	QList<BookmarksModel::BookmarkMatch> allMatches;
+	QList<BookmarksModel::BookmarkMatch> currentMatches;
+	QMultiMap<QDateTime, BookmarksModel::BookmarkMatch> matchesMap;
+	QHash<QString, BookmarksItem*>::const_iterator keywordsIterator;
 
-	if (m_urls.contains(adjustedUrl))
+	for (keywordsIterator = m_keywords.constBegin(); keywordsIterator != m_keywords.constEnd(); ++keywordsIterator)
 	{
-		return m_urls[adjustedUrl];
+		if (keywordsIterator.key().startsWith(prefix, Qt::CaseInsensitive))
+		{
+			BookmarksModel::BookmarkMatch match;
+			match.bookmark = keywordsIterator.value();
+			match.match = keywordsIterator.key();
+
+			matchesMap.insert(match.bookmark->data(TimeVisitedRole).toDateTime(), match);
+
+			matchedBookmarks.append(match.bookmark);
+		}
 	}
 
-	return QList<BookmarksItem*>();
+	currentMatches = matchesMap.values();
+
+	matchesMap.clear();
+
+	for (int i = (currentMatches.count() - 1); i >= 0; --i)
+	{
+		allMatches.append(currentMatches.at(i));
+	}
+
+	QHash<QUrl, QList<BookmarksItem*> >::const_iterator urlsIterator;
+
+	for (urlsIterator = m_urls.constBegin(); urlsIterator != m_urls.constEnd(); ++urlsIterator)
+	{
+		if (urlsIterator.value().isEmpty())
+		{
+			continue;
+		}
+
+		BookmarksModel::BookmarkMatch match;
+
+		if (urlsIterator.key().toString().startsWith(prefix, Qt::CaseInsensitive))
+		{
+			match.bookmark = urlsIterator.value().first();
+			match.match = urlsIterator.key().toString();
+		}
+		else if (urlsIterator.key().toString(QUrl::RemoveScheme).mid(2).startsWith(prefix, Qt::CaseInsensitive))
+		{
+			match.bookmark = urlsIterator.value().first();
+			match.match = urlsIterator.key().toString(QUrl::RemoveScheme).mid(2);
+		}
+
+		if (match.bookmark && !matchedBookmarks.contains(match.bookmark))
+		{
+			matchesMap.insert(match.bookmark->data(TimeVisitedRole).toDateTime(), match);
+
+			matchedBookmarks.append(match.bookmark);
+		}
+	}
+
+	currentMatches = matchesMap.values();
+
+	matchesMap.clear();
+
+	for (int i = (currentMatches.count() - 1); i >= 0; --i)
+	{
+		allMatches.append(currentMatches.at(i));
+	}
+
+	return allMatches;
 }
 
 QList<BookmarksItem*> BookmarksModel::findUrls(const QUrl &url, QStandardItem *branch) const
@@ -907,6 +968,18 @@ QList<BookmarksItem*> BookmarksModel::findUrls(const QUrl &url, QStandardItem *b
 	}
 
 	return items;
+}
+
+QList<BookmarksItem*> BookmarksModel::getBookmarks(const QUrl &url) const
+{
+	const QUrl adjustedUrl = adjustUrl(url);
+
+	if (m_urls.contains(adjustedUrl))
+	{
+		return m_urls[adjustedUrl];
+	}
+
+	return QList<BookmarksItem*>();
 }
 
 QList<QUrl> BookmarksModel::getUrls() const

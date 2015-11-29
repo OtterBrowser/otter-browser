@@ -183,6 +183,16 @@ QStringList BookmarksManager::getKeywords()
 	return m_model->getKeywords();
 }
 
+QList<BookmarksModel::BookmarkMatch> BookmarksManager::findBookmarks(const QString &prefix)
+{
+	if (!m_model)
+	{
+		getModel();
+	}
+
+	return m_model->findBookmarks(prefix);
+}
+
 QList<QUrl> BookmarksManager::getUrls()
 {
 	if (!m_model)

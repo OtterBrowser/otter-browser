@@ -81,6 +81,14 @@ public:
 		NotesMode = 1
 	};
 
+	struct BookmarkMatch
+	{
+		BookmarksItem *bookmark;
+		QString match;
+
+		BookmarkMatch () : bookmark(NULL) {}
+	};
+
 	explicit BookmarksModel(const QString &path, FormatMode mode, QObject *parent = NULL);
 
 	void trashBookmark(BookmarksItem *bookmark);
@@ -97,8 +105,9 @@ public:
 	static QUrl adjustUrl(QUrl url);
 	QStringList mimeTypes() const;
 	QStringList getKeywords() const;
-	QList<BookmarksItem*> getBookmarks(const QUrl &url) const;
+	QList<BookmarkMatch> findBookmarks(const QString &prefix) const;
 	QList<BookmarksItem*> findUrls(const QUrl &url, QStandardItem *branch = NULL) const;
+	QList<BookmarksItem*> getBookmarks(const QUrl &url) const;
 	QList<QUrl> getUrls() const;
 	FormatMode getFormatMode() const;
 	bool moveBookmark(BookmarksItem *bookmark, BookmarksItem *newParent, int newRow = -1);
