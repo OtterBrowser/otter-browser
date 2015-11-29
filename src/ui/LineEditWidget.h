@@ -46,8 +46,10 @@ public:
 public slots:
 	void copyToNote();
 	void deleteText();
+	void setCompletion(const QString &completion);
 
 protected:
+	void keyPressEvent(QKeyEvent *event);
 	void mousePressEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
 	void dropEvent(QDropEvent *event);
@@ -56,8 +58,10 @@ protected slots:
 	void clearSelectAllOnRelease();
 
 private:
+	QString m_completion;
 	DropMode m_dropMode;
 	int m_selectionStart;
+	bool m_shouldIgnoreCompletion;
 	bool m_shouldSelectAllOnFocus;
 	bool m_shouldSelectAllOnRelease;
 

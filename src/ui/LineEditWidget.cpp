@@ -30,10 +30,26 @@ namespace Otter
 LineEditWidget::LineEditWidget(QWidget *parent) : QLineEdit(parent),
 	m_dropMode(PasteDropMode),
 	m_selectionStart(-1),
+	m_shouldIgnoreCompletion(false),
 	m_shouldSelectAllOnFocus(false),
 	m_shouldSelectAllOnRelease(false)
 {
 	setDragEnabled(true);
+}
+
+void LineEditWidget::keyPressEvent(QKeyEvent *event)
+{
+	if (event->key() == Qt::Key_Backspace && !m_completion.isEmpty())
+	{
+		m_shouldIgnoreCompletion = true;
+
+		if (hasSelectedText())
+		{
+			backspace();
+		}
+	}
+
+	QLineEdit::keyPressEvent(event);
 }
 
 void LineEditWidget::mousePressEvent(QMouseEvent *event)
@@ -151,6 +167,27 @@ void LineEditWidget::copyToNote()
 void LineEditWidget::deleteText()
 {
 	del();
+}
+
+void LineEditWidget::setCompletion(const QString &completion)
+{
+	m_completion = completion;
+
+	if (m_shouldIgnoreCompletion)
+	{
+		m_shouldIgnoreCompletion = false;
+
+		return;
+	}
+
+	QString currentText = text().mid(selectionStart());
+
+	if (m_completion != currentText)
+	{
+		setText(m_completion);
+		setCursorPosition(currentText.length());
+		setSelection(currentText.length(), (m_completion.length() - currentText.length()));
+	}
 }
 
 void LineEditWidget::setDropMode(LineEditWidget::DropMode mode)
