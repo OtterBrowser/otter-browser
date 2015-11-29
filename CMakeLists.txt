@@ -92,6 +92,7 @@ set(otter_src
 	src/core/GesturesManager.cpp
 	src/core/HandlersManager.cpp
 	src/core/HistoryManager.cpp
+	src/core/HistoryModel.cpp
 	src/core/Importer.cpp
 	src/core/InputInterpreter.cpp
 	src/core/LocalListingNetworkReply.cpp
