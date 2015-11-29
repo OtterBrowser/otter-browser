@@ -1181,9 +1181,4 @@ bool BookmarksModel::hasKeyword(const QString &keyword) const
 	return m_keywords.contains(keyword);
 }
 
-bool BookmarksModel::hasUrl(const QUrl &url) const
-{
-	return m_urls.contains(adjustUrl(url));
-}
-
 }

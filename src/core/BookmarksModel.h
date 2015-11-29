@@ -116,7 +116,6 @@ public:
 	bool setData(const QModelIndex &index, const QVariant &value, int role);
 	bool hasBookmark(const QUrl &url) const;
 	bool hasKeyword(const QString &keyword) const;
-	bool hasUrl(const QUrl &url) const;
 
 public slots:
 	void emptyTrash();

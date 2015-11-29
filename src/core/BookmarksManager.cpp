@@ -210,7 +210,7 @@ bool BookmarksManager::hasBookmark(const QUrl &url)
 		getModel();
 	}
 
-	return m_model->hasUrl(url);
+	return m_model->hasBookmark(url);
 }
 
 bool BookmarksManager::hasKeyword(const QString &keyword)
