@@ -641,7 +641,7 @@ void BookmarksModel::removeBookmarkUrl(BookmarksItem *bookmark)
 	}
 	else if (!bookmark->data(UrlRole).toUrl().isEmpty())
 	{
-		const QUrl url = adjustUrl(bookmark->data(UrlRole).toUrl());
+		const QUrl url = Utils::normalizeUrl(bookmark->data(UrlRole).toUrl());
 
 		if (m_urls.contains(url))
 		{
@@ -671,7 +671,7 @@ void BookmarksModel::readdBookmarkUrl(BookmarksItem *bookmark)
 	}
 	else if (!bookmark->data(UrlRole).toUrl().isEmpty())
 	{
-		const QUrl url = adjustUrl(bookmark->data(UrlRole).toUrl());
+		const QUrl url = Utils::normalizeUrl(bookmark->data(UrlRole).toUrl());
 
 		if (!m_urls.contains(url))
 		{
@@ -844,18 +844,6 @@ QMimeData* BookmarksModel::mimeData(const QModelIndexList &indexes) const
 	return mimeData;
 }
 
-QUrl BookmarksModel::adjustUrl(QUrl url)
-{
-	url = url.adjusted(QUrl::RemoveFragment | QUrl::NormalizePathSegments | QUrl::StripTrailingSlash);
-
-	if (url.path() == QLatin1String("/"))
-	{
-		url.setPath(QString());
-	}
-
-	return url;
-}
-
 QStringList BookmarksModel::mimeTypes() const
 {
 	return QStringList(QLatin1String("text/uri-list"));
@@ -972,7 +960,7 @@ QList<BookmarksItem*> BookmarksModel::findUrls(const QUrl &url, QStandardItem *b
 
 QList<BookmarksItem*> BookmarksModel::getBookmarks(const QUrl &url) const
 {
-	const QUrl adjustedUrl = adjustUrl(url);
+	const QUrl adjustedUrl = Utils::normalizeUrl(url);
 
 	if (m_urls.contains(adjustedUrl))
 	{
@@ -1103,8 +1091,8 @@ bool BookmarksModel::setData(const QModelIndex &index, const QVariant &value, in
 
 	if (role == UrlRole && value.toUrl() != index.data(UrlRole).toUrl())
 	{
-		const QUrl oldUrl = adjustUrl(index.data(UrlRole).toUrl());
-		const QUrl newUrl = adjustUrl(value.toUrl());
+		const QUrl oldUrl = Utils::normalizeUrl(index.data(UrlRole).toUrl());
+		const QUrl newUrl = Utils::normalizeUrl(value.toUrl());
 
 		if (!oldUrl.isEmpty() && m_urls.contains(oldUrl))
 		{
@@ -1173,7 +1161,7 @@ bool BookmarksModel::setData(const QModelIndex &index, const QVariant &value, in
 
 bool BookmarksModel::hasBookmark(const QUrl &url) const
 {
-	return m_urls.contains(adjustUrl(url));
+	return m_urls.contains(Utils::normalizeUrl(url));
 }
 
 bool BookmarksModel::hasKeyword(const QString &keyword) const

@@ -102,7 +102,6 @@ public:
 	BookmarksItem* getTrashItem() const;
 	BookmarksItem* getItem(const QString &path) const;
 	QMimeData* mimeData(const QModelIndexList &indexes) const;
-	static QUrl adjustUrl(QUrl url);
 	QStringList mimeTypes() const;
 	QStringList getKeywords() const;
 	QList<BookmarkMatch> findBookmarks(const QString &prefix) const;

@@ -216,6 +216,18 @@ QString formatUnit(qint64 value, bool isSpeed, int precision, bool appendRaw)
 	return QCoreApplication::translate("utils", (isSpeed ? "%1 B/s" : "%1 B")).arg(value);
 }
 
+QUrl normalizeUrl(QUrl url)
+{
+	url = url.adjusted(QUrl::RemoveFragment | QUrl::NormalizePathSegments | QUrl::StripTrailingSlash);
+
+	if (url.path() == QLatin1String("/"))
+	{
+		url.setPath(QString());
+	}
+
+	return url;
+}
+
 QIcon getIcon(const QString &name, bool fromTheme)
 {
 	if (fromTheme && QIcon::hasThemeIcon(name))

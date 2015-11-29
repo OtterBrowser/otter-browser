@@ -20,6 +20,7 @@
 
 #include "BookmarksManager.h"
 #include "SessionsManager.h"
+#include "Utils.h"
 
 #include <QtCore/QDateTime>
 
@@ -73,7 +74,7 @@ void BookmarksManager::updateVisits(const QUrl &url)
 		getModel();
 	}
 
-	const QUrl adjustedUrl = BookmarksModel::adjustUrl(url);
+	const QUrl adjustedUrl = Utils::normalizeUrl(url);
 
 	if (m_model->hasBookmark(adjustedUrl))
 	{
@@ -94,7 +95,7 @@ void BookmarksManager::removeBookmark(const QUrl &url)
 		getModel();
 	}
 
-	const QUrl adjustedUrl = BookmarksModel::adjustUrl(url);
+	const QUrl adjustedUrl = Utils::normalizeUrl(url);
 
 	if (!hasBookmark(adjustedUrl))
 	{
