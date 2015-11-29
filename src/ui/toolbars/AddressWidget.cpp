@@ -52,7 +52,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 	m_window(NULL),
 	m_lineEdit(new LineEditWidget(this)),
 	m_completionModel(new AddressCompletionModel(this)),
-	m_completer(new QCompleter(m_completionModel, this)),
+	m_completionView(NULL),
 	m_bookmarkLabel(NULL),
 	m_feedsLabel(NULL),
 	m_loadPluginsLabel(NULL),
@@ -69,24 +69,17 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 		m_isUsingSimpleMode = true;
 	}
 
-	m_completer->setCaseSensitivity(Qt::CaseInsensitive);
-	m_completer->setCompletionMode(QCompleter::InlineCompletion);
-	m_completer->setCompletionRole(AddressCompletionModel::MatchRole);
-	m_completer->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
-	m_completer->setFilterMode(Qt::MatchStartsWith);
-
 	setEditable(true);
 	setLineEdit(m_lineEdit);
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	setMinimumWidth(100);
-	setItemDelegate(new AddressDelegate(this));
+	setItemDelegate(new AddressDelegate(true, this));
 	setInsertPolicy(QComboBox::NoInsert);
 	setMouseTracking(true);
 	setWindow(window);
 	optionChanged(QLatin1String("AddressField/DropAction"), SettingsManager::getValue(QLatin1String("AddressField/DropAction")));
 	optionChanged(QLatin1String("AddressField/SelectAllOnFocus"), SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")));
 
-	m_lineEdit->setCompleter(m_completer);
 	m_lineEdit->setStyleSheet(QLatin1String("QLineEdit {background:transparent;}"));
 	m_lineEdit->installEventFilter(this);
 
@@ -108,7 +101,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 	connect(this, SIGNAL(activated(QString)), this, SLOT(openUrl(QString)));
 	connect(m_lineEdit, SIGNAL(textDropped(QString)), this, SLOT(handleUserInput(QString)));
 	connect(m_lineEdit, SIGNAL(textEdited(QString)), m_completionModel, SLOT(setFilter(QString)));
-	connect(m_completionModel, SIGNAL(completionReady(QString)), m_completer, SLOT(setCompletionPrefix(QString)));
+	connect(m_completionModel, SIGNAL(completionReady(QString)), this, SLOT(setCompletion(QString)));
 	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(updateBookmark()));
 	connect(HistoryManager::getInstance(), SIGNAL(typedHistoryModelModified()), this, SLOT(updateLineEdit()));
 }
@@ -570,6 +563,34 @@ void AddressWidget::openUrl(const QString &url)
 	updateLineEdit();
 }
 
+void AddressWidget::openUrl(const QModelIndex &index)
+{
+	if (m_completionView)
+	{
+		m_completionView->hide();
+		m_completionView->deleteLater();
+		m_completionView = NULL;
+	}
+
+	if (!index.isValid())
+	{
+		return;
+	}
+
+	if (static_cast<AddressCompletionModel::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) == AddressCompletionModel::SearchSuggestionType)
+	{
+		emit requestedSearch(index.data(AddressCompletionModel::TitleRole).toString(), QString(), WindowsManager::CurrentTabOpen);
+	}
+	else
+	{
+		const QString url(index.data(AddressCompletionModel::UrlRole).toUrl().toString());
+
+		setUrl(url);
+		handleUserInput(url, WindowsManager::CurrentTabOpen);
+		updateLineEdit();
+	}
+}
+
 void AddressWidget::removeIcon()
 {
 	QAction *action = qobject_cast<QAction*>(sender());
@@ -737,6 +758,62 @@ void AddressWidget::updateIcons()
 	m_lineEditRectangle = m_lineEdit->geometry();
 }
 
+void AddressWidget::setCompletion(const QString &filter)
+{
+	if (filter.isEmpty() || m_completionModel->rowCount() == 0)
+	{
+		if (m_completionView)
+		{
+			m_completionView->hide();
+			m_completionView->deleteLater();
+			m_completionView = NULL;
+		}
+
+		m_lineEdit->setCompletion(QString());
+		m_lineEdit->setFocus();
+
+		return;
+	}
+
+	if (!m_completionView)
+	{
+		m_completionView = new QListView();
+		m_completionView->setWindowFlags(Qt::Popup);
+		m_completionView->setFocusPolicy(Qt::NoFocus);
+		m_completionView->setFocusProxy(m_lineEdit);
+		m_completionView->setModel(m_completionModel);
+		m_completionView->setItemDelegate(new AddressDelegate(true, this));
+		m_completionView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+		m_completionView->viewport()->setAttribute(Qt::WA_Hover);
+		m_completionView->viewport()->setMouseTracking(true);
+		m_completionView->setFixedWidth(width());
+		m_completionView->installEventFilter(this);
+		m_completionView->viewport()->installEventFilter(this);
+
+		connect(m_completionView, SIGNAL(clicked(QModelIndex)), this, SLOT(openUrl(QModelIndex)));
+
+		m_completionView->move(mapToGlobal(contentsRect().bottomLeft()));
+		m_completionView->show();
+	}
+
+	m_completionView->setFixedHeight((qMin(m_completionModel->rowCount(), 10) * m_completionView->sizeHintForRow(0)) + 3);
+	m_completionView->setCurrentIndex(m_completionModel->index(0, 0));
+
+	QString matchedText;
+
+	for (int i = 0; i < m_completionModel->rowCount(); ++i)
+	{
+		matchedText = m_completionModel->index(i).data(AddressCompletionModel::MatchRole).toString();
+
+		if (!matchedText.isEmpty())
+		{
+			m_lineEdit->setCompletion(matchedText);
+
+			break;
+		}
+	}
+}
+
 void AddressWidget::activate(Qt::FocusReason reason)
 {
 	m_lineEdit->activate(reason);
@@ -898,7 +975,7 @@ bool AddressWidget::event(QEvent *event)
 
 bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 {
-	 if (object == m_lineEdit && event->type() == QEvent::MouseButtonRelease)
+	if (object == m_lineEdit && event->type() == QEvent::MouseButtonRelease)
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
@@ -1025,6 +1102,106 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 
 			return true;
 		}
+	}
+	else if (object == m_completionView && event->type() == QEvent::KeyPress)
+	{
+		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+		if (keyEvent)
+		{
+			m_lineEdit->event(event);
+
+			if (event->isAccepted())
+			{
+				if (!m_lineEdit->hasFocus())
+				{
+					m_completionView->hide();
+					m_completionView->deleteLater();
+					m_completionView = NULL;
+				}
+
+				return true;
+			}
+
+			switch (keyEvent->key())
+			{
+				case Qt::Key_End:
+				case Qt::Key_Home:
+				case Qt::Key_Up:
+					if (keyEvent->key() == Qt::Key_Up && m_completionView->currentIndex().row() == 0 && m_completionModel->rowCount() > 1)
+					{
+						m_completionView->setCurrentIndex(m_completionModel->index(m_completionModel->rowCount() - 1));
+
+						return true;
+					}
+				case Qt::Key_Down:
+					if (keyEvent->key() == Qt::Key_Down && m_completionView->currentIndex().row() == (m_completionModel->rowCount() - 1) && m_completionModel->rowCount() > 1)
+					{
+						m_completionView->setCurrentIndex(m_completionModel->index(0));
+
+						return true;
+					}
+				case Qt::Key_PageUp:
+				case Qt::Key_PageDown:
+					return false;
+				case Qt::Key_Return:
+				case Qt::Key_Enter:
+				case Qt::Key_Tab:
+					if (m_completionView->currentIndex().isValid())
+					{
+						openUrl(m_completionView->currentIndex());
+
+						return true;
+					}
+				case Qt::Key_Backtab:
+				case Qt::Key_Escape:
+				case Qt::Key_F4:
+					if (keyEvent->key() == Qt::Key_F4 && !keyEvent->modifiers().testFlag(Qt::AltModifier))
+					{
+						break;
+					}
+
+					m_completionView->hide();
+					m_completionView->deleteLater();
+					m_completionView = NULL;
+
+					m_lineEdit->setFocus();
+
+					break;
+				default:
+					break;
+			}
+
+			return true;
+		}
+	}
+	else if (object == m_completionView && event->type() == QEvent::MouseButtonPress && !m_completionView->viewport()->underMouse())
+	{
+		m_completionView->hide();
+		m_completionView->deleteLater();
+		m_completionView = NULL;
+
+		m_lineEdit->setFocus();
+
+		return true;
+	}
+	else if (m_completionView && object == m_completionView->viewport() && event->type() == QEvent::MouseMove)// && m_completionView->viewport()->underMouse())
+	{
+		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+		if (mouseEvent)
+		{
+			const QModelIndex index = m_completionView->indexAt(mouseEvent->pos());
+
+			if (index.isValid())
+			{
+				m_completionView->setCurrentIndex(index);
+			}
+		}
+	}
+	else if (object == m_completionView && (event->type() == QEvent::InputMethod || event->type() == QEvent::ShortcutOverride))
+	{
+		QApplication::sendEvent(m_lineEdit, event);
 	}
 
 	return QObject::eventFilter(object, event);

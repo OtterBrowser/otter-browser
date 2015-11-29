@@ -25,8 +25,8 @@
 #include <QtCore/QTime>
 #include <QtCore/QUrl>
 #include <QtWidgets/QComboBox>
-#include <QtWidgets/QCompleter>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QListView>
 
 namespace Otter
 {
@@ -74,19 +74,21 @@ protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void openFeed(QAction *action);
 	void openUrl(const QString &url);
+	void openUrl(const QModelIndex &index);
 	void removeIcon();
 	void updateBookmark();
 	void updateFeeds();
 	void updateLoadPlugins();
 	void updateLineEdit();
 	void updateIcons();
+	void setCompletion(const QString &filter);
 	void setIcon(const QIcon &icon);
 
 private:
 	QPointer<Window> m_window;
 	LineEditWidget *m_lineEdit;
 	AddressCompletionModel *m_completionModel;
-	QCompleter *m_completer;
+	QListView *m_completionView;
 	QLabel *m_bookmarkLabel;
 	QLabel *m_feedsLabel;
 	QLabel *m_loadPluginsLabel;

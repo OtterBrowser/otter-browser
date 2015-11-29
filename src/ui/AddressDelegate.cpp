@@ -18,11 +18,13 @@
 **************************************************************************/
 
 #include "AddressDelegate.h"
+#include "../core/Utils.h"
 
 namespace Otter
 {
 
-AddressDelegate::AddressDelegate(QObject *parent) : QItemDelegate(parent)
+AddressDelegate::AddressDelegate(bool isAddressField, QObject *parent) : QItemDelegate(parent),
+	m_isAddressField(isAddressField)
 {
 }
 
@@ -30,20 +32,48 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 {
 	drawBackground(painter, option, index);
 
-	QRect titleReactangle = option.rect;
+	QRect titleRectangle = option.rect;
+	titleRectangle.setLeft(m_isAddressField ? 33 : (option.rect.height() + 1));
 
-	if (!index.data(Qt::DecorationRole).value<QIcon>().isNull())
+	QRect decorationRectangle = option.rect;
+	decorationRectangle.setRight(titleRectangle.left());
+	decorationRectangle = decorationRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
+
+	QIcon icon(index.data(Qt::DecorationRole).value<QIcon>());
+
+	if (icon.isNull())
 	{
-		QRect decorationRectangle = option.rect;
-		decorationRectangle.setRight(option.rect.height());
-		decorationRectangle = decorationRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
-
-		index.data(Qt::DecorationRole).value<QIcon>().paint(painter, decorationRectangle, option.decorationAlignment);
+		icon = Utils::getIcon(QLatin1String("tab"));
 	}
 
-	titleReactangle.setLeft(option.rect.height());
+	icon.paint(painter, decorationRectangle, option.decorationAlignment);
 
-	drawDisplay(painter, option, titleReactangle, index.data(Qt::DisplayRole).toString());
+	const QString url(index.data(Qt::DisplayRole).toString());
+
+	if (m_isAddressField)
+	{
+		QStyleOptionViewItem mutableOption(option);
+
+		mutableOption.palette.setColor(QPalette::Text, option.palette.color(QPalette::Link));
+
+		drawDisplay(painter, mutableOption, titleRectangle, url);
+
+		if (!index.data(Qt::UserRole + 1).isNull())
+		{
+			const int urlLength = option.fontMetrics.width(url + QLatin1Char(' '));
+
+			if (urlLength < titleRectangle.width())
+			{
+				titleRectangle.setLeft(titleRectangle.left() + urlLength);
+
+				drawDisplay(painter, option, titleRectangle, QLatin1String("- ") + index.data(Qt::UserRole + 1).toString());
+			}
+		}
+	}
+	else
+	{
+		drawDisplay(painter, option, titleRectangle, url);
+	}
 }
 
 QSize AddressDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const

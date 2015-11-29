@@ -28,10 +28,13 @@ namespace Otter
 class AddressDelegate : public QItemDelegate
 {
 public:
-	explicit AddressDelegate(QObject *parent = NULL);
+	explicit AddressDelegate(bool isAddressField, QObject *parent = NULL);
 
 	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+
+private:
+	bool m_isAddressField;
 };
 
 }

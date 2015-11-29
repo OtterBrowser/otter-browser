@@ -22,6 +22,7 @@
 #include "BookmarksManager.h"
 #include "HistoryManager.h"
 #include "SettingsManager.h"
+#include "Utils.h"
 
 #include <QtCore/QCoreApplication>
 
@@ -42,11 +43,16 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 
 		m_updateTimer = 0;
 
+		if (m_filter.isEmpty())
+		{
+			return;
+		}
+
 		QList<CompletionEntry> completions;
 
 		if (m_types.testFlag(SearchSuggestionsCompletionType))
 		{
-			CompletionEntry completionEntry(QUrl(), m_defaultSearchEngine.title, QString(), m_defaultSearchEngine.icon, SearchSuggestionType);
+			CompletionEntry completionEntry(QUrl(), m_defaultSearchEngine.title, QString(), Utils::getIcon(QLatin1String("edit-find")), SearchSuggestionType);
 			completionEntry.text = m_filter;
 
 			completions.append(completionEntry);
@@ -59,7 +65,6 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 			for (int i = 0; i < bookmarks.count(); ++i)
 			{
 				CompletionEntry completionEntry(bookmarks.at(i).bookmark->data(BookmarksModel::UrlRole).toUrl(), bookmarks.at(i).bookmark->data(BookmarksModel::TitleRole).toString(), bookmarks.at(i).match, bookmarks.at(i).bookmark->data(Qt::DecorationRole).value<QIcon>(), BookmarkType);
-				completionEntry.text = bookmarks.at(i).bookmark->data(BookmarksModel::TitleRole).toString();
 				completionEntry.keyword = bookmarks.at(i).bookmark->data(BookmarksModel::KeywordRole).toString();
 
 				if (completionEntry.keyword.startsWith(m_filter))
@@ -77,10 +82,7 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 
 			for (int i = 0; i < entries.count(); ++i)
 			{
-				CompletionEntry completionEntry(entries.at(i).entry->data(HistoryModel::UrlRole).toUrl(), entries.at(i).entry->data(HistoryModel::TitleRole).toString(), entries.at(i).match, entries.at(i).entry->data(Qt::DecorationRole).value<QIcon>(), (entries.at(i).entry->data(HistoryModel::TypedInRole).toBool() ? TypedInHistoryType : HistoryType));
-				completionEntry.text = entries.at(i).entry->data(HistoryModel::TitleRole).toString();
-
-				completions.append(completionEntry);
+				completions.append(CompletionEntry(entries.at(i).entry->data(HistoryModel::UrlRole).toUrl(), entries.at(i).entry->data(HistoryModel::TitleRole).toString(), entries.at(i).match, entries.at(i).entry->data(Qt::DecorationRole).value<QIcon>(), (entries.at(i).entry->data(HistoryModel::TypedInRole).toBool() ? TypedInHistoryType : HistoryType)));
 			}
 		}
 
@@ -98,6 +100,8 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 				}
 			}
 		}
+
+		beginResetModel();
 
 		m_completions = completions;
 
@@ -140,11 +144,20 @@ void AddressCompletionModel::setFilter(const QString &filter)
 
 	if (m_filter.isEmpty())
 	{
+		if (m_updateTimer != 0)
+		{
+			killTimer(m_updateTimer);
+
+			m_updateTimer = 0;
+		}
+
 		beginResetModel();
 
 		m_completions.clear();
 
 		endResetModel();
+
+		emit completionReady(QString());
 	}
 	else if (m_updateTimer == 0)
 	{
@@ -158,6 +171,10 @@ QVariant AddressCompletionModel::data(const QModelIndex &index, int role) const
 	{
 		switch (role)
 		{
+			case Qt::DecorationRole:
+				return m_completions.at(index.row()).icon;
+			case TextRole:
+				return (m_completions.at(index.row()).text.isEmpty() ? m_completions.at(index.row()).url.toString() : m_completions.at(index.row()).text);
 			case UrlRole:
 				return m_completions.at(index.row()).url;
 			case TitleRole:
@@ -166,9 +183,9 @@ QVariant AddressCompletionModel::data(const QModelIndex &index, int role) const
 				return m_completions.at(index.row()).keyword;
 			case MatchRole:
 				return (m_completions.at(index.row()).match.isEmpty() ? m_completions.at(index.row()).url.toString() : m_completions.at(index.row()).match);
+			case TypeRole:
+				return static_cast<int>(m_completions.at(index.row()).type);
 		}
-
-		return (m_completions.at(index.row()).text.isEmpty() ? m_completions.at(index.row()).url.toDisplayString(QUrl::RemoveScheme) : m_completions.at(index.row()).text);
 	}
 
 	return QVariant();

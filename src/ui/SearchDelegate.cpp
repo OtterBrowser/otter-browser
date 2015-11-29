@@ -47,7 +47,7 @@ void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 
 	const bool configureEntry = (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("configure"));
 	const int shortcutWidth = ((!configureEntry && option.rect.width() > 150) ? 40 : 0);
-	QRect titleReactangle = option.rect;
+	QRect titleRectangle = option.rect;
 
 	if (!index.data(Qt::DecorationRole).value<QIcon>().isNull())
 	{
@@ -58,14 +58,14 @@ void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 		index.data(Qt::DecorationRole).value<QIcon>().paint(painter, decorationRectangle, option.decorationAlignment);
 	}
 
-	titleReactangle.setLeft(option.rect.height());
+	titleRectangle.setLeft(option.rect.height());
 
 	if (shortcutWidth > 0)
 	{
-		titleReactangle.setRight(titleReactangle.right() - (shortcutWidth + 5));
+		titleRectangle.setRight(titleRectangle.right() - (shortcutWidth + 5));
 	}
 
-	drawDisplay(painter, option, titleReactangle, index.data(configureEntry ? Qt::DisplayRole : Qt::UserRole).toString());
+	drawDisplay(painter, option, titleRectangle, index.data(configureEntry ? Qt::DisplayRole : Qt::UserRole).toString());
 
 	if (shortcutWidth > 0)
 	{
