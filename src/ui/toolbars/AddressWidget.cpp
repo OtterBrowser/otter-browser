@@ -57,6 +57,8 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 	m_feedsLabel(NULL),
 	m_loadPluginsLabel(NULL),
 	m_urlIconLabel(NULL),
+	m_completionModes(NoCompletionMode),
+	m_hints(WindowsManager::DefaultOpen),
 	m_removeModelTimer(0),
 	m_isHistoryDropdownEnabled(SettingsManager::getValue(QLatin1String("AddressField/EnableHistoryDropdown")).toBool()),
 	m_isUsingSimpleMode(false),
@@ -77,6 +79,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 	setInsertPolicy(QComboBox::NoInsert);
 	setMouseTracking(true);
 	setWindow(window);
+	optionChanged(QLatin1String("AddressField/CompletionMode"), SettingsManager::getValue(QLatin1String("AddressField/CompletionMode")));
 	optionChanged(QLatin1String("AddressField/DropAction"), SettingsManager::getValue(QLatin1String("AddressField/DropAction")));
 	optionChanged(QLatin1String("AddressField/SelectAllOnFocus"), SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")));
 
@@ -100,7 +103,6 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 
 	connect(this, SIGNAL(activated(QString)), this, SLOT(openUrl(QString)));
 	connect(m_lineEdit, SIGNAL(textDropped(QString)), this, SLOT(handleUserInput(QString)));
-	connect(m_lineEdit, SIGNAL(textEdited(QString)), m_completionModel, SLOT(setFilter(QString)));
 	connect(m_completionModel, SIGNAL(completionReady(QString)), this, SLOT(setCompletion(QString)));
 	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(updateBookmark()));
 	connect(HistoryManager::getInstance(), SIGNAL(typedHistoryModelModified()), this, SLOT(updateLineEdit()));
@@ -436,7 +438,31 @@ void AddressWidget::hidePopup()
 
 void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == QLatin1String("AddressField/DropAction"))
+	if (option == QLatin1String("AddressField/CompletionMode"))
+	{
+		const QString completionMode = value.toString();
+
+		if (completionMode == QLatin1String("inlineAndPopup"))
+		{
+			m_completionModes = (InlineCompletionMode | PopupCompletionMode);
+		}
+		else if (completionMode == QLatin1String("inline"))
+		{
+			m_completionModes = InlineCompletionMode;
+		}
+		else if (completionMode == QLatin1String("popup"))
+		{
+			m_completionModes = PopupCompletionMode;
+		}
+
+		disconnect(m_lineEdit, SIGNAL(textEdited(QString)), m_completionModel, SLOT(setFilter(QString)));
+
+		if (m_completionModes != NoCompletionMode)
+		{
+			connect(m_lineEdit, SIGNAL(textEdited(QString)), m_completionModel, SLOT(setFilter(QString)));
+		}
+	}
+	else if (option == QLatin1String("AddressField/DropAction"))
 	{
 		const QString dropAction = value.toString();
 
@@ -775,41 +801,47 @@ void AddressWidget::setCompletion(const QString &filter)
 		return;
 	}
 
-	if (!m_completionView)
+	if (m_completionModes.testFlag(PopupCompletionMode))
 	{
-		m_completionView = new QListView();
-		m_completionView->setWindowFlags(Qt::Popup);
-		m_completionView->setFocusPolicy(Qt::NoFocus);
-		m_completionView->setFocusProxy(m_lineEdit);
-		m_completionView->setModel(m_completionModel);
-		m_completionView->setItemDelegate(new AddressDelegate(true, this));
-		m_completionView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-		m_completionView->viewport()->setAttribute(Qt::WA_Hover);
-		m_completionView->viewport()->setMouseTracking(true);
-		m_completionView->setFixedWidth(width());
-		m_completionView->installEventFilter(this);
-		m_completionView->viewport()->installEventFilter(this);
+		if (!m_completionView)
+		{
+			m_completionView = new QListView();
+			m_completionView->setWindowFlags(Qt::Popup);
+			m_completionView->setFocusPolicy(Qt::NoFocus);
+			m_completionView->setFocusProxy(m_lineEdit);
+			m_completionView->setModel(m_completionModel);
+			m_completionView->setItemDelegate(new AddressDelegate(true, this));
+			m_completionView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+			m_completionView->viewport()->setAttribute(Qt::WA_Hover);
+			m_completionView->viewport()->setMouseTracking(true);
+			m_completionView->setFixedWidth(width());
+			m_completionView->installEventFilter(this);
+			m_completionView->viewport()->installEventFilter(this);
 
-		connect(m_completionView, SIGNAL(clicked(QModelIndex)), this, SLOT(openUrl(QModelIndex)));
+			connect(m_completionView, SIGNAL(clicked(QModelIndex)), this, SLOT(openUrl(QModelIndex)));
 
-		m_completionView->move(mapToGlobal(contentsRect().bottomLeft()));
-		m_completionView->show();
+			m_completionView->move(mapToGlobal(contentsRect().bottomLeft()));
+			m_completionView->show();
+		}
+
+		m_completionView->setFixedHeight((qMin(m_completionModel->rowCount(), 10) * m_completionView->sizeHintForRow(0)) + 3);
+		m_completionView->setCurrentIndex(m_completionModel->index(0, 0));
 	}
 
-	m_completionView->setFixedHeight((qMin(m_completionModel->rowCount(), 10) * m_completionView->sizeHintForRow(0)) + 3);
-	m_completionView->setCurrentIndex(m_completionModel->index(0, 0));
-
-	QString matchedText;
-
-	for (int i = 0; i < m_completionModel->rowCount(); ++i)
+	if (m_completionModes.testFlag(InlineCompletionMode))
 	{
-		matchedText = m_completionModel->index(i).data(AddressCompletionModel::MatchRole).toString();
+		QString matchedText;
 
-		if (!matchedText.isEmpty())
+		for (int i = 0; i < m_completionModel->rowCount(); ++i)
 		{
-			m_lineEdit->setCompletion(matchedText);
+			matchedText = m_completionModel->index(i).data(AddressCompletionModel::MatchRole).toString();
 
-			break;
+			if (!matchedText.isEmpty())
+			{
+				m_lineEdit->setCompletion(matchedText);
+
+				break;
+			}
 		}
 	}
 }

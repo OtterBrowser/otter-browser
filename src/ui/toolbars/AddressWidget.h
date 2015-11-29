@@ -40,6 +40,15 @@ class AddressWidget : public QComboBox
 	Q_OBJECT
 
 public:
+	enum CompletionMode
+	{
+		NoCompletionMode = 0,
+		InlineCompletionMode = 1,
+		PopupCompletionMode = 2
+	};
+
+	Q_DECLARE_FLAGS(CompletionModes, CompletionMode)
+
 	explicit AddressWidget(Window *window, QWidget *parent = NULL);
 
 	void showPopup();
@@ -98,6 +107,7 @@ private:
 	QRect m_lineEditRectangle;
 	QRect m_historyDropdownArrowRectangle;
 	QRect m_securityBadgeRectangle;
+	AddressWidget::CompletionModes m_completionModes;
 	WindowsManager::OpenHints m_hints;
 	int m_removeModelTimer;
 	bool m_isHistoryDropdownEnabled;
@@ -111,5 +121,7 @@ signals:
 };
 
 }
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::AddressWidget::CompletionModes)
 
 #endif
