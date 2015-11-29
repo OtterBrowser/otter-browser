@@ -35,6 +35,7 @@ namespace Otter
 {
 
 HistoryManager* HistoryManager::m_instance = NULL;
+HistoryModel* HistoryManager::m_model = NULL;
 QStandardItemModel* HistoryManager::m_typedHistoryModel = NULL;
 bool HistoryManager::m_isEnabled = false;
 bool HistoryManager::m_isStoringFavicons = true;
@@ -135,7 +136,7 @@ void HistoryManager::removeOldEntries(const QDateTime &date)
 		}
 	}
 
-	QList<qint64> entries;
+	QList<quint64> entries;
 	QSqlQuery query(QSqlDatabase::database(QLatin1String("browsingHistory")));
 	query.prepare(QLatin1String("SELECT \"visits\".\"id\" FROM \"visits\" WHERE \"visits\".\"time\" <= ?;"));
 	query.bindValue(0, timestamp);
@@ -143,7 +144,7 @@ void HistoryManager::removeOldEntries(const QDateTime &date)
 
 	while (query.next())
 	{
-		entries.append(query.record().field("id").value().toLongLong());
+		entries.append(query.record().field(QLatin1String("id")).value().toULongLong());
 	}
 
 	removeEntries(entries);
@@ -167,12 +168,30 @@ void HistoryManager::clearHistory(int period)
 	{
 		if (period > 0)
 		{
+			if (m_model)
+			{
+				QSqlQuery query(QSqlDatabase::database(QLatin1String("browsingHistory")));
+				query.prepare(QLatin1String("SELECT \"visits\".\"id\" FROM \"visits\" WHERE \"visits\".\"time\" >= ?;"));
+				query.bindValue(0, (QDateTime::currentDateTime().toTime_t() - (period * 3600)));
+				query.exec();
+
+				while (query.next())
+				{
+					m_model->removeEntry(query.record().field(QLatin1String("id")).value().toULongLong());
+				}
+			}
+
 			database.exec(QStringLiteral("DELETE FROM \"visits\" WHERE \"time\" >= %1;").arg(QDateTime::currentDateTime().toTime_t() - (period * 3600)));
 
 			m_instance->scheduleCleanup();
 		}
 		else
 		{
+			if (m_model)
+			{
+				m_model->clear();
+			}
+
 			database.exec(QLatin1String("DELETE FROM \"visits\";"));
 			database.exec(QLatin1String("DELETE FROM \"locations\";"));
 			database.exec(QLatin1String("DELETE FROM \"hosts\";"));
@@ -238,16 +257,18 @@ void HistoryManager::updateTypedHistoryModel()
 
 	m_typedHistoryModel->clear();
 
-	const QList<HistoryEntry> entries = getEntries(true);
-
-	for (int i = 0; i < entries.count(); ++i)
+	if (!m_model)
 	{
-		if (m_typedHistoryModel->findItems(entries.at(i).url.toString()).isEmpty())
-		{
-			QStandardItem *item = new QStandardItem(entries.at(i).icon, entries.at(i).url.toString());
-			item->setData(entries.at(i).time, Qt::UserRole);
+		getModel();
+	}
 
-			m_typedHistoryModel->appendRow(item);
+	for (int i = 0; i < m_model->rowCount(); ++i)
+	{
+		QStandardItem *item = m_model->item(i, 0);
+
+		if (item && item->data(HistoryModel::TypedInRole).toBool())
+		{
+			m_typedHistoryModel->appendRow(new QStandardItem(item->icon(), item->data(HistoryModel::UrlRole).toUrl().toDisplayString()));
 		}
 	}
 
@@ -257,6 +278,39 @@ void HistoryManager::updateTypedHistoryModel()
 HistoryManager* HistoryManager::getInstance()
 {
 	return m_instance;
+}
+
+HistoryModel* HistoryManager::getModel()
+{
+	if (!m_model)
+	{
+		m_model = new HistoryModel(m_instance);
+
+		QSqlQuery query(QSqlDatabase::database(QLatin1String("browsingHistory")));
+		query.prepare(QLatin1String("SELECT \"visits\".\"id\", \"visits\".\"title\", \"locations\".\"scheme\", \"locations\".\"path\", \"hosts\".\"host\", \"icons\".\"icon\", \"visits\".\"time\", \"visits\".\"typed\" FROM \"visits\" LEFT JOIN \"locations\" ON \"visits\".\"location\" = \"locations\".\"id\" LEFT JOIN \"hosts\" ON \"locations\".\"host\" = \"hosts\".\"id\" LEFT JOIN \"icons\" ON \"visits\".\"icon\" = \"icons\".\"id\" ORDER BY \"visits\".\"time\" DESC;"));
+		query.exec();
+
+		while (query.next())
+		{
+			const QSqlRecord record = query.record();
+
+			if (record.isEmpty())
+			{
+				continue;
+			}
+
+			QPixmap pixmap;
+			pixmap.loadFromData(record.field(QLatin1String("icon")).value().toByteArray());
+
+			QUrl url(record.field(QLatin1String("path")).value().toString());
+			url.setHost(record.field(QLatin1String("host")).value().toString());
+			url.setScheme(record.field(QLatin1String("scheme")).value().toString());
+
+			m_model->addEntry(url, record.field(QLatin1String("title")).value().toString(), QIcon(pixmap), record.field(QLatin1String("typed")).value().toBool(), QDateTime::fromTime_t(record.field(QLatin1String("time")).value().toInt(), Qt::LocalTime), record.field(QLatin1String("id")).value().toULongLong());
+		}
+	}
+
+	return m_model;
 }
 
 QStandardItemModel* HistoryManager::getTypedHistoryModel()
@@ -346,72 +400,27 @@ QIcon HistoryManager::getIcon(const QUrl &url)
 	return Utils::getIcon(QLatin1String("text-html"));
 }
 
-HistoryEntry HistoryManager::getEntry(const QSqlRecord &record)
+HistoryEntryItem* HistoryManager::getEntry(quint64 identifier)
 {
-	if (record.isEmpty())
+	if (!m_model)
 	{
-		return HistoryEntry();
+		getModel();
 	}
 
-	QPixmap pixmap;
-	pixmap.loadFromData(record.field(QLatin1String("icon")).value().toByteArray());
-
-	HistoryEntry historyEntry;
-	historyEntry.url = QUrl(record.field(QLatin1String("path")).value().toString());
-	historyEntry.url.setHost(record.field(QLatin1String("host")).value().toString());
-	historyEntry.url.setScheme(record.field(QLatin1String("scheme")).value().toString());
-	historyEntry.title = record.field(QLatin1String("title")).value().toString();
-	historyEntry.time = QDateTime::fromTime_t(record.field(QLatin1String("time")).value().toInt(), Qt::LocalTime);
-	historyEntry.icon = QIcon(pixmap);
-	historyEntry.identifier = record.field(QLatin1String("id")).value().toLongLong();
-	historyEntry.visits = record.field(QLatin1String("visits")).value().toInt();
-	historyEntry.typed = record.field(QLatin1String("typed")).value().toBool();
-
-	return historyEntry;
+	return m_model->getEntry(identifier);
 }
 
-HistoryEntry HistoryManager::getEntry(qint64 entry)
+QList<HistoryModel::HistoryEntryMatch> HistoryManager::findEntries(const QString &prefix)
 {
-	if (!m_isEnabled)
+	if (!m_model)
 	{
-		return HistoryEntry();
+		getModel();
 	}
 
-	QSqlQuery query(QSqlDatabase::database(QLatin1String("browsingHistory")));
-	query.prepare(QLatin1String("SELECT \"visits\".\"id\", \"visits\".\"title\", \"locations\".\"scheme\", \"locations\".\"path\", \"hosts\".\"host\", \"icons\".\"icon\", \"visits\".\"time\", \"visits\".\"typed\" FROM \"visits\" LEFT JOIN \"locations\" ON \"visits\".\"location\" = \"locations\".\"id\" LEFT JOIN \"hosts\" ON \"locations\".\"host\" = \"hosts\".\"id\" LEFT JOIN \"icons\" ON \"visits\".\"icon\" = \"icons\".\"id\" WHERE \"visits\".\"id\" = ?;"));
-	query.bindValue(0, entry);
-	query.exec();
-
-	if (query.first())
-	{
-		return getEntry(query.record());
-	}
-
-	return HistoryEntry();
+	return m_model->findEntries(prefix);
 }
 
-QList<HistoryEntry> HistoryManager::getEntries(bool typed)
-{
-	QList<HistoryEntry> entries;
-
-	if (!m_isEnabled)
-	{
-		return entries;
-	}
-
-	QSqlQuery query(QSqlDatabase::database(QLatin1String("browsingHistory")));
-	query.prepare(QLatin1String("SELECT \"visits\".\"id\", \"visits\".\"title\", \"locations\".\"scheme\", \"locations\".\"path\", \"hosts\".\"host\", \"icons\".\"icon\", \"visits\".\"time\", \"visits\".\"typed\" FROM \"visits\" LEFT JOIN \"locations\" ON \"visits\".\"location\" = \"locations\".\"id\" LEFT JOIN \"hosts\" ON \"locations\".\"host\" = \"hosts\".\"id\" LEFT JOIN \"icons\" ON \"visits\".\"icon\" = \"icons\".\"id\"") + (typed ? QLatin1String(" WHERE \"visits\".\"typed\" = 1") : QString()) + QLatin1String(" ORDER BY \"visits\".\"time\" DESC;"));
-	query.exec();
-
-	while (query.next())
-	{
-		entries.append(getEntry(query.record()));
-	}
-
-	return entries;
-}
-
-qint64 HistoryManager::getRecord(const QLatin1String &table, const QVariantHash &values, bool canCreate)
+quint64 HistoryManager::getRecord(const QLatin1String &table, const QVariantHash &values, bool canCreate)
 {
 	const QStringList keys = values.keys();
 	QStringList placeholders;
@@ -433,7 +442,7 @@ qint64 HistoryManager::getRecord(const QLatin1String &table, const QVariantHash 
 
 	if (selectQuery.first())
 	{
-		return selectQuery.record().field(QLatin1String("id")).value().toLongLong();
+		return selectQuery.record().field(QLatin1String("id")).value().toULongLong();
 	}
 
 	if (!canCreate)
@@ -454,7 +463,7 @@ qint64 HistoryManager::getRecord(const QLatin1String &table, const QVariantHash 
 	return insertQuery.lastInsertId().toULongLong();
 }
 
-qint64 HistoryManager::getLocation(const QUrl &url, bool canCreate)
+quint64 HistoryManager::getLocation(const QUrl &url, bool canCreate)
 {
 	QVariantHash hostsRecord;
 	hostsRecord[QLatin1String("host")] = url.host();
@@ -471,7 +480,7 @@ qint64 HistoryManager::getLocation(const QUrl &url, bool canCreate)
 	return getRecord(QLatin1String("locations"), locationsRecord, canCreate);
 }
 
-qint64 HistoryManager::getIcon(const QIcon &icon, bool canCreate)
+quint64 HistoryManager::getIcon(const QIcon &icon, bool canCreate)
 {
 	if (!m_isStoringFavicons)
 	{
@@ -490,45 +499,51 @@ qint64 HistoryManager::getIcon(const QIcon &icon, bool canCreate)
 	return getRecord(QLatin1String("icons"), record, canCreate);
 }
 
-qint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QIcon &icon, bool typed)
+qint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QIcon &icon, bool isTypedIn)
 {
 	if (!m_isEnabled || !url.isValid() || !SettingsManager::getValue(QLatin1String("History/RememberBrowsing"), url).toBool())
 	{
 		return -1;
 	}
 
+	const QDateTime date(QDateTime::currentDateTime());
 	QSqlQuery query(QSqlDatabase::database(QLatin1String("browsingHistory")));
 	query.prepare(QLatin1String("INSERT INTO \"visits\" (\"location\", \"icon\", \"title\", \"time\", \"typed\") VALUES(?, ?, ?, ?, ?);"));
 	query.bindValue(0, getLocation(url));
 	query.bindValue(1, getIcon(icon));
 	query.bindValue(2, title);
-	query.bindValue(3, QDateTime::currentDateTime().toTime_t());
-	query.bindValue(4, typed);
+	query.bindValue(3, date.toTime_t());
+	query.bindValue(4, isTypedIn);
 	query.exec();
 
 	if (!query.lastInsertId().isNull())
 	{
-		const qint64 entry = query.lastInsertId().toLongLong();
+		const quint64 identifier = query.lastInsertId().toULongLong();
 
-		if (typed)
+		if (m_model)
+		{
+			m_model->addEntry(url, title, icon, isTypedIn, date, identifier);
+		}
+
+		if (isTypedIn)
 		{
 			m_instance->updateTypedHistoryModel();
 		}
 
-		emit m_instance->entryAdded(entry);
+		emit m_instance->entryAdded(identifier);
 
-		return entry;
+		return identifier;
 	}
 
 	return -1;
 }
 
-bool HistoryManager::hasUrl(const QUrl &url)
+bool HistoryManager::hasEntry(const QUrl &url)
 {
 	return (m_isEnabled && getLocation(url, false) >= 0);
 }
 
-bool HistoryManager::updateEntry(qint64 entry, const QUrl &url, const QString &title, const QIcon &icon)
+bool HistoryManager::updateEntry(quint64 identifier, const QUrl &url, const QString &title, const QIcon &icon)
 {
 	if (!m_isEnabled || !url.isValid())
 	{
@@ -537,7 +552,7 @@ bool HistoryManager::updateEntry(qint64 entry, const QUrl &url, const QString &t
 
 	if (!SettingsManager::getValue(QLatin1String("History/RememberBrowsing"), url).toBool())
 	{
-		removeEntry(entry);
+		removeEntry(identifier);
 
 		return false;
 	}
@@ -547,22 +562,34 @@ bool HistoryManager::updateEntry(qint64 entry, const QUrl &url, const QString &t
 	query.bindValue(0, getLocation(url));
 	query.bindValue(1, getIcon(icon));
 	query.bindValue(2, title);
-	query.bindValue(3, entry);
+	query.bindValue(3, identifier);
 	query.exec();
 
 	const bool success = (query.numRowsAffected() > 0);
 
 	if (success)
 	{
+		if (m_model)
+		{
+			HistoryEntryItem *item = m_model->getEntry(identifier);
+
+			if (item)
+			{
+				item->setData(url, HistoryModel::UrlRole);
+				item->setData(title, HistoryModel::TitleRole);
+				item->setIcon(icon);
+			}
+		}
+
 		m_instance->scheduleCleanup();
 
-		emit m_instance->entryUpdated(entry);
+		emit m_instance->entryUpdated(identifier);
 	}
 
 	return success;
 }
 
-bool HistoryManager::removeEntry(qint64 entry)
+bool HistoryManager::removeEntry(quint64 identifier)
 {
 	if (!m_isEnabled)
 	{
@@ -571,22 +598,27 @@ bool HistoryManager::removeEntry(qint64 entry)
 
 	QSqlQuery query(QSqlDatabase::database(QLatin1String("browsingHistory")));
 	query.prepare(QLatin1String("DELETE FROM \"visits\" WHERE \"id\" = ?;"));
-	query.bindValue(0, entry);
+	query.bindValue(0, identifier);
 	query.exec();
 
 	const bool success = (query.numRowsAffected() > 0);
 
 	if (success)
 	{
+		if (m_model)
+		{
+			m_model->removeEntry(identifier);
+		}
+
 		m_instance->scheduleCleanup();
 
-		emit m_instance->entryRemoved(entry);
+		emit m_instance->entryRemoved(identifier);
 	}
 
 	return success;
 }
 
-bool HistoryManager::removeEntries(const QList<qint64> &entries)
+bool HistoryManager::removeEntries(const QList<quint64> &identifiers)
 {
 	if (!m_isEnabled)
 	{
@@ -595,11 +627,11 @@ bool HistoryManager::removeEntries(const QList<qint64> &entries)
 
 	QStringList list;
 
-	for (int i = 0; i < entries.count(); ++i)
+	for (int i = 0; i < identifiers.count(); ++i)
 	{
-		if (entries.at(i) >= 0)
+		if (identifiers.at(i) >= 0)
 		{
-			list.append(QString::number(entries.at(i)));
+			list.append(QString::number(identifiers.at(i)));
 		}
 	}
 
@@ -618,9 +650,14 @@ bool HistoryManager::removeEntries(const QList<qint64> &entries)
 	{
 		m_instance->scheduleCleanup();
 
-		for (int i = 0; i < entries.count(); ++i)
+		for (int i = 0; i < identifiers.count(); ++i)
 		{
-			emit m_instance->entryRemoved(entries.at(i));
+			if (m_model)
+			{
+				m_model->removeEntry(identifiers.at(i));
+			}
+
+			emit m_instance->entryRemoved(identifiers.at(i));
 		}
 	}
 

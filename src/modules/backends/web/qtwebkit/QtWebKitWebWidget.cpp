@@ -496,7 +496,7 @@ void QtWebKitWebWidget::handleHistory()
 	}
 
 	const QUrl url = getUrl();
-	const qint64 identifier = m_page->history()->currentItem().userData().toList().value(IdentifierEntryData).toLongLong();
+	const quint64 identifier = m_page->history()->currentItem().userData().toList().value(IdentifierEntryData).toULongLong();
 
 	if (identifier == 0)
 	{
@@ -752,7 +752,7 @@ void QtWebKitWebWidget::removeHistoryIndex(int index, bool purge)
 {
 	if (purge)
 	{
-		const qint64 identifier = m_page->history()->itemAt(index).userData().toList().value(IdentifierEntryData).toLongLong();
+		const quint64 identifier = m_page->history()->itemAt(index).userData().toList().value(IdentifierEntryData).toULongLong();
 
 		if (identifier > 0)
 		{
@@ -803,7 +803,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::PurgeTabHistoryAction:
 			for (int i = 0; i < m_page->history()->count(); ++i)
 			{
-				const qint64 identifier = m_page->history()->itemAt(i).userData().toList().value(IdentifierEntryData).toLongLong();
+				const quint64 identifier = m_page->history()->itemAt(i).userData().toList().value(IdentifierEntryData).toULongLong();
 
 				if (identifier > 0)
 				{

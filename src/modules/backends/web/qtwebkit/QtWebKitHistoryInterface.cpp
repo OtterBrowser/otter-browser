@@ -34,7 +34,7 @@ void QtWebKitHistoryInterface::addHistoryEntry(const QString &url)
 
 bool QtWebKitHistoryInterface::historyContains(const QString &url) const
 {
-	return HistoryManager::hasUrl(url);
+	return HistoryManager::hasEntry(url);
 }
 
 }

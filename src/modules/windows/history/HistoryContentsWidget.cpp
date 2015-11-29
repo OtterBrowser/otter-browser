@@ -19,7 +19,6 @@
 
 #include "HistoryContentsWidget.h"
 #include "../../../core/ActionsManager.h"
-#include "../../../core/HistoryManager.h"
 #include "../../../core/Utils.h"
 #include "../../../ui/ItemDelegate.h"
 
@@ -82,9 +81,9 @@ HistoryContentsWidget::HistoryContentsWidget(Window *window) : ContentsWidget(wi
 	QTimer::singleShot(100, this, SLOT(populateEntries()));
 
 	connect(HistoryManager::getInstance(), SIGNAL(cleared()), this, SLOT(populateEntries()));
-	connect(HistoryManager::getInstance(), SIGNAL(entryAdded(qint64)), this, SLOT(addEntry(qint64)));
-	connect(HistoryManager::getInstance(), SIGNAL(entryUpdated(qint64)), this, SLOT(updateEntry(qint64)));
-	connect(HistoryManager::getInstance(), SIGNAL(entryRemoved(qint64)), this, SLOT(removeEntry(qint64)));
+	connect(HistoryManager::getInstance(), SIGNAL(entryAdded(quint64)), this, SLOT(addEntry(quint64)));
+	connect(HistoryManager::getInstance(), SIGNAL(entryUpdated(quint64)), this, SLOT(updateEntry(quint64)));
+	connect(HistoryManager::getInstance(), SIGNAL(entryRemoved(quint64)), this, SLOT(removeEntry(quint64)));
 	connect(HistoryManager::getInstance(), SIGNAL(dayChanged()), this, SLOT(populateEntries()));
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->historyViewWidget, SLOT(setFilterString(QString)));
 	connect(m_ui->historyViewWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openEntry(QModelIndex)));
@@ -149,11 +148,11 @@ void HistoryContentsWidget::populateEntries()
 		}
 	}
 
-	const QList<HistoryEntry> entries = HistoryManager::getEntries();
+	HistoryModel *model = HistoryManager::getModel();
 
-	for (int i = 0; i < entries.count(); ++i)
+	for (int i = 0; i < model->rowCount(); ++i)
 	{
-		addEntry(entries.at(i));
+		addEntry(dynamic_cast<HistoryEntryItem*>(model->item(i, 0)));
 	}
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
@@ -171,14 +170,14 @@ void HistoryContentsWidget::populateEntries()
 	emit loadingChanged(false);
 }
 
-void HistoryContentsWidget::addEntry(qint64 entry)
+void HistoryContentsWidget::addEntry(quint64 identifier)
 {
-	addEntry(HistoryManager::getEntry(entry));
+	addEntry(HistoryManager::getEntry(identifier));
 }
 
-void HistoryContentsWidget::addEntry(const HistoryEntry &entry)
+void HistoryContentsWidget::addEntry(HistoryEntryItem *entry)
 {
-	if (entry.identifier < 0)
+	if (!entry)
 	{
 		return;
 	}
@@ -189,7 +188,7 @@ void HistoryContentsWidget::addEntry(const HistoryEntry &entry)
 	{
 		groupItem = m_model->item(i, 0);
 
-		if (groupItem && (entry.time.date() >= groupItem->data(Qt::UserRole).toDate() || !groupItem->data(Qt::UserRole).toDate().isValid()))
+		if (groupItem && (entry->data(HistoryModel::TimeVisitedRole).toDateTime().date() >= groupItem->data(Qt::UserRole).toDate() || !groupItem->data(Qt::UserRole).toDate().isValid()))
 		{
 			break;
 		}
@@ -203,10 +202,10 @@ void HistoryContentsWidget::addEntry(const HistoryEntry &entry)
 	}
 
 	QList<QStandardItem*> entryItems;
-	entryItems.append(new QStandardItem((entry.icon.isNull() ? Utils::getIcon(QLatin1String("text-html")) : entry.icon), entry.url.toString().replace(QLatin1String("%23"), QString(QLatin1Char('#')))));
-	entryItems.append(new QStandardItem(entry.title.isEmpty() ? tr("(Untitled)") : entry.title));
-	entryItems.append(new QStandardItem(entry.time.toString()));
-	entryItems[0]->setData(entry.identifier, Qt::UserRole);
+	entryItems.append(new QStandardItem((entry->icon().isNull() ? Utils::getIcon(QLatin1String("text-html")) : entry->icon()), entry->data(HistoryModel::UrlRole).toUrl().toDisplayString().replace(QLatin1String("%23"), QString(QLatin1Char('#')))));
+	entryItems.append(new QStandardItem(entry->data(HistoryModel::TitleRole).isNull() ? tr("(Untitled)") : entry->data(HistoryModel::TitleRole).toString()));
+	entryItems.append(new QStandardItem(entry->data(HistoryModel::TimeVisitedRole).toDateTime().toString()));
+	entryItems[0]->setData(entry->data(HistoryModel::IdentifierRole).toULongLong(), Qt::UserRole);
 	entryItems[0]->setFlags(entryItems[0]->flags() | Qt::ItemNeverHasChildren);
 	entryItems[1]->setFlags(entryItems[1]->flags() | Qt::ItemNeverHasChildren);
 	entryItems[2]->setFlags(entryItems[2]->flags() | Qt::ItemNeverHasChildren);
@@ -221,28 +220,31 @@ void HistoryContentsWidget::addEntry(const HistoryEntry &entry)
 	}
 }
 
-void HistoryContentsWidget::updateEntry(qint64 entry)
+void HistoryContentsWidget::updateEntry(quint64 identifier)
 {
-	QStandardItem *entryItem = findEntry(entry);
+	QStandardItem *entryItem = findEntry(identifier);
 
 	if (!entryItem)
 	{
-		addEntry(entry);
+		addEntry(identifier);
 
 		return;
 	}
 
-	HistoryEntry historyEntry = HistoryManager::getEntry(entry);
+	HistoryEntryItem *historyItem = HistoryManager::getEntry(identifier);
 
-	entryItem->setIcon(historyEntry.icon.isNull() ? Utils::getIcon(QLatin1String("text-html")) : historyEntry.icon);
-	entryItem->setText(historyEntry.url.toString());
-	entryItem->parent()->child(entryItem->row(), 1)->setText(historyEntry.title.isEmpty() ? tr("(Untitled)") : historyEntry.title);
-	entryItem->parent()->child(entryItem->row(), 2)->setText(historyEntry.time.toString());
+	if (historyItem)
+	{
+		entryItem->setIcon(historyItem->icon().isNull() ? Utils::getIcon(QLatin1String("text-html")) : historyItem->icon());
+		entryItem->setText(historyItem->data(HistoryModel::UrlRole).toUrl().toDisplayString());
+		entryItem->parent()->child(entryItem->row(), 1)->setText(historyItem->data(HistoryModel::TitleRole).isNull() ? tr("(Untitled)") : historyItem->data(HistoryModel::TitleRole).toString());
+		entryItem->parent()->child(entryItem->row(), 2)->setText(historyItem->data(HistoryModel::TimeVisitedRole).toDateTime().date().toString());
+	}
 }
 
-void HistoryContentsWidget::removeEntry(qint64 entry)
+void HistoryContentsWidget::removeEntry(quint64 identifier)
 {
-	QStandardItem *entryItem = findEntry(entry);
+	QStandardItem *entryItem = findEntry(identifier);
 
 	if (entryItem)
 	{
@@ -262,7 +264,7 @@ void HistoryContentsWidget::removeEntry(qint64 entry)
 
 void HistoryContentsWidget::removeEntry()
 {
-	const qint64 entry = getEntry(m_ui->historyViewWidget->currentIndex());
+	const quint64 entry = getEntry(m_ui->historyViewWidget->currentIndex());
 
 	if (entry >= 0)
 	{
@@ -280,7 +282,7 @@ void HistoryContentsWidget::removeDomainEntries()
 	}
 
 	const QString host = QUrl(domainItem->text()).host();
-	QList<qint64> entries;
+	QList<quint64> entries;
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
@@ -297,7 +299,7 @@ void HistoryContentsWidget::removeDomainEntries()
 
 			if (entryItem && host == QUrl(entryItem->text()).host())
 			{
-				entries.append(entryItem->data(Qt::UserRole).toLongLong());
+				entries.append(entryItem->data(Qt::UserRole).toULongLong());
 			}
 		}
 	}
@@ -346,7 +348,7 @@ void HistoryContentsWidget::copyEntryLink()
 
 void HistoryContentsWidget::showContextMenu(const QPoint &point)
 {
-	const qint64 entry = getEntry(m_ui->historyViewWidget->indexAt(point));
+	const quint64 entry = getEntry(m_ui->historyViewWidget->indexAt(point));
 	QMenu menu(this);
 
 	if (entry >= 0)
@@ -370,7 +372,7 @@ void HistoryContentsWidget::showContextMenu(const QPoint &point)
 	menu.exec(m_ui->historyViewWidget->mapToGlobal(point));
 }
 
-QStandardItem* HistoryContentsWidget::findEntry(qint64 entry)
+QStandardItem* HistoryContentsWidget::findEntry(quint64 identifier)
 {
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
@@ -382,7 +384,7 @@ QStandardItem* HistoryContentsWidget::findEntry(qint64 entry)
 			{
 				QStandardItem *entryItem = groupItem->child(j, 0);
 
-				if (entryItem && entry == entryItem->data(Qt::UserRole).toLongLong())
+				if (entryItem && identifier == entryItem->data(Qt::UserRole).toULongLong())
 				{
 					return entryItem;
 				}
@@ -413,9 +415,9 @@ QIcon HistoryContentsWidget::getIcon() const
 	return Utils::getIcon(QLatin1String("view-history"), false);
 }
 
-qint64 HistoryContentsWidget::getEntry(const QModelIndex &index) const
+quint64 HistoryContentsWidget::getEntry(const QModelIndex &index) const
 {
-	return ((index.isValid() && index.parent().isValid() && index.parent().parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::UserRole).toLongLong() : -1);
+	return ((index.isValid() && index.parent().isValid() && index.parent().parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::UserRole).toULongLong() : -1);
 }
 
 bool HistoryContentsWidget::isLoading() const

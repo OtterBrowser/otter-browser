@@ -20,6 +20,7 @@
 #ifndef OTTER_HISTORYCONTENTSWIDGET_H
 #define OTTER_HISTORYCONTENTSWIDGET_H
 
+#include "../../../core/HistoryManager.h"
 #include "../../../ui/ContentsWidget.h"
 
 #include <QtGui/QStandardItemModel>
@@ -31,8 +32,6 @@ namespace Ui
 {
 	class HistoryContentsWidget;
 }
-
-struct HistoryEntry;
 
 class Window;
 
@@ -57,15 +56,15 @@ public slots:
 
 protected:
 	void changeEvent(QEvent *event);
-	QStandardItem* findEntry(qint64 entry);
-	qint64 getEntry(const QModelIndex &index) const;
+	QStandardItem* findEntry(quint64 identifier);
+	quint64 getEntry(const QModelIndex &index) const;
 
 protected slots:
 	void populateEntries();
-	void addEntry(qint64 entry);
-	void addEntry(const HistoryEntry &entry);
-	void updateEntry(qint64 entry);
-	void removeEntry(qint64 entry);
+	void addEntry(quint64 identifier);
+	void addEntry(HistoryEntryItem *entry);
+	void updateEntry(quint64 identifier);
+	void removeEntry(quint64 identifier);
 	void removeEntry();
 	void removeDomainEntries();
 	void openEntry(const QModelIndex &index = QModelIndex());

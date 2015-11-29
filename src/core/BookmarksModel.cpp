@@ -727,7 +727,7 @@ BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, quint64 identifier
 			identifier = (m_identifiers.isEmpty() ? 1 : (m_identifiers.keys().last() + 1));
 		}
 
-		bookmark->setData(identifier, IdentifierRole);
+		setData(bookmark->index(), identifier, IdentifierRole);
 
 		m_identifiers[identifier] = bookmark;
 	}
