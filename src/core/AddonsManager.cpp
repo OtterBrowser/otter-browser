@@ -19,6 +19,7 @@
 
 #include "AddonsManager.h"
 #include "SettingsManager.h"
+#include "Utils.h"
 #include "WebBackend.h"
 #ifdef OTTER_ENABLE_QTWEBENGINE
 #include "../modules/backends/web/qtwebengine/QtWebEngineWebBackend.h"
@@ -30,6 +31,7 @@ namespace Otter
 
 AddonsManager *AddonsManager::m_instance = NULL;
 QHash<QString, WebBackend*> AddonsManager::m_webBackends;
+QHash<QString, AddonsManager::SpecialPageInformation> AddonsManager::m_specialPages;
 
 AddonsManager::AddonsManager(QObject *parent) : QObject(parent)
 {
@@ -37,6 +39,15 @@ AddonsManager::AddonsManager(QObject *parent) : QObject(parent)
 	registerWebBackend(new QtWebEngineWebBackend(this), QLatin1String("qtwebengine"));
 #endif
 	registerWebBackend(new QtWebKitWebBackend(this), QLatin1String("qtwebkit"));
+
+	registerSpecialPage(SpecialPageInformation(tr("Bookmarks Manager"), QString(), QUrl(QLatin1String("about:bookmarks")), Utils::getIcon(QLatin1String("bookmarks"), false)), QLatin1String("bookmarks"));
+	registerSpecialPage(SpecialPageInformation(tr("Cache Manager"), QString(), QUrl(QLatin1String("about:cache")), Utils::getIcon(QLatin1String("cache"), false)), QLatin1String("cache"));
+	registerSpecialPage(SpecialPageInformation(tr("Configuration Manager"), QString(), QUrl(QLatin1String("about:config")), Utils::getIcon(QLatin1String("config"), false)), QLatin1String("configuration"));
+	registerSpecialPage(SpecialPageInformation(tr("Cookies Manager"), QString(), QUrl(QLatin1String("about:cookies")), Utils::getIcon(QLatin1String("cookies"), false)), QLatin1String("cookies"));
+	registerSpecialPage(SpecialPageInformation(tr("History Manager"), QString(), QUrl(QLatin1String("about:history")), Utils::getIcon(QLatin1String("history"), false)), QLatin1String("history"));
+	registerSpecialPage(SpecialPageInformation(tr("Notes Manager"), QString(), QUrl(QLatin1String("about:notes")), Utils::getIcon(QLatin1String("notes"), false)), QLatin1String("notes"));
+	registerSpecialPage(SpecialPageInformation(tr("Transfers Manager"), QString(), QUrl(QLatin1String("about:transfers")), Utils::getIcon(QLatin1String("transfers"), false)), QLatin1String("transfers"));
+
 }
 
 void AddonsManager::createInstance(QObject *parent)
@@ -52,9 +63,19 @@ void AddonsManager::registerWebBackend(WebBackend *backend, const QString &name)
 	m_webBackends[name] = backend;
 }
 
+void AddonsManager::registerSpecialPage(const AddonsManager::SpecialPageInformation &information, const QString &name)
+{
+	m_specialPages[name] = information;
+}
+
 QStringList AddonsManager::getWebBackends()
 {
 	return m_webBackends.keys();
+}
+
+QStringList AddonsManager::getSpecialPages()
+{
+	return m_specialPages.keys();
 }
 
 WebBackend* AddonsManager::getWebBackend(const QString &name)
@@ -77,6 +98,16 @@ WebBackend* AddonsManager::getWebBackend(const QString &name)
 	}
 
 	return NULL;
+}
+
+AddonsManager::SpecialPageInformation AddonsManager::getSpecialPage(const QString &name)
+{
+	if (m_specialPages.contains(name))
+	{
+		return m_specialPages[name];
+	}
+
+	return SpecialPageInformation();
 }
 
 }

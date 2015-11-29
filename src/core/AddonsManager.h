@@ -20,7 +20,9 @@
 #ifndef OTTER_ADDONSMANAGER_H
 #define OTTER_ADDONSMANAGER_H
 
-#include <QtCore/QObject>
+#include <QtCore/QCoreApplication>
+#include <QtCore/QUrl>
+#include <QtGui/QIcon>
 
 namespace Otter
 {
@@ -32,10 +34,35 @@ class AddonsManager : public QObject
 	Q_OBJECT
 
 public:
+	struct SpecialPageInformation
+	{
+		QString title;
+		QString description;
+		QUrl url;
+		QIcon icon;
+
+		SpecialPageInformation() {}
+
+		SpecialPageInformation(const QString &valueTitle, const QString &valueDescription, const QUrl &valueUrl, const QIcon &valueIcon) : title(valueTitle), description(valueDescription), url(valueUrl), icon(valueIcon) {}
+
+		QString getTitle() const
+		{
+			return QCoreApplication::translate("addons", title.toUtf8().constData());
+		}
+
+		QString getDescription() const
+		{
+			return QCoreApplication::translate("addons", description.toUtf8().constData());
+		}
+	};
+
 	static void createInstance(QObject *parent = NULL);
 	static void registerWebBackend(WebBackend *backend, const QString &name);
-	static WebBackend* getWebBackend(const QString &backend = QString());
+	static void registerSpecialPage(const SpecialPageInformation &information, const QString &name);
+	static WebBackend* getWebBackend(const QString &name = QString());
+	static SpecialPageInformation getSpecialPage(const QString &name);
 	static QStringList getWebBackends();
+	static QStringList getSpecialPages();
 
 protected:
 	explicit AddonsManager(QObject *parent = NULL);
@@ -43,6 +70,7 @@ protected:
 private:
 	static AddonsManager *m_instance;
 	static QHash<QString, WebBackend*> m_webBackends;
+	static QHash<QString, SpecialPageInformation> m_specialPages;
 };
 
 }
