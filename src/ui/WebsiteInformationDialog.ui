@@ -184,7 +184,7 @@
        <item row="2" column="0">
         <widget class="QLabel" name="thirdPartyCookiesLabel">
          <property name="text">
-          <string>Set third party cookies:</string>
+          <string>Set third-party cookies:</string>
          </property>
         </widget>
        </item>
