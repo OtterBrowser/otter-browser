@@ -104,7 +104,7 @@ GesturesManager::GestureStep::GestureStep(const QInputEvent *event) : type(event
 
 bool GesturesManager::GestureStep::operator ==(const GestureStep &other)
 {
-	return (type == other.type) && (button == other.button) && (direction == other.direction) && (modifiers == other.modifiers);
+	return (type == other.type) && (button == other.button) && (direction == other.direction) && (modifiers == other.modifiers || type == QEvent::MouseMove);
 }
 
 bool GesturesManager::GestureStep::operator !=(const GestureStep &other)
@@ -561,14 +561,42 @@ int GesturesManager::gesturesDifference(QList<GestureStep> defined)
 
 	for (int j = 0; j < defined.count(); ++j)
 	{
+		int stepDifference = 0;
+
 		if (j == (defined.count() - 1) && defined[j].type == QEvent::MouseButtonPress && m_steps[j].type == QEvent::MouseButtonDblClick && defined[j].button == m_steps[j].button && defined[j].modifiers == m_steps[j].modifiers)
 		{
-			difference += 100;
+			stepDifference += 100;
 		}
-		else if (defined[j] != m_steps[j])
+
+		if (m_steps[j].type == defined[j].type && (defined[j].type == QEvent::MouseButtonPress || defined[j].type == QEvent::MouseButtonRelease || defined[j].type == QEvent::MouseButtonDblClick) && m_steps[j].button == defined[j].button && (m_steps[j].modifiers | defined[j].modifiers) == m_steps[j].modifiers)
+		{
+			if (m_steps[j].modifiers.testFlag(Qt::ControlModifier) && !defined[j].modifiers.testFlag(Qt::ControlModifier))
+			{
+				stepDifference += 8;
+			}
+
+			if (m_steps[j].modifiers.testFlag(Qt::ShiftModifier) && !defined[j].modifiers.testFlag(Qt::ShiftModifier))
+			{
+				stepDifference += 4;
+			}
+
+			if (m_steps[j].modifiers.testFlag(Qt::AltModifier) && !defined[j].modifiers.testFlag(Qt::AltModifier))
+			{
+				stepDifference += 2;
+			}
+
+			if (m_steps[j].modifiers.testFlag(Qt::MetaModifier) && !defined[j].modifiers.testFlag(Qt::MetaModifier))
+			{
+				stepDifference += 1;
+			}
+		}
+
+		if (stepDifference == 0 && defined[j] != m_steps[j])
 		{
 			return std::numeric_limits<int>::max();
 		}
+
+		difference += stepDifference;
 	}
 
 	return difference;
