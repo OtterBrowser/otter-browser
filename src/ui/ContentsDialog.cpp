@@ -198,12 +198,12 @@ void ContentsDialog::adjustSize()
 	{
 		if (height() >= parentWidget()->height())
 		{
-			resize(width(), qMax(100, parentWidget()->height() - 100));
+			resize(width(), qMax(100, parentWidget()->height() - 20));
 		}
 
 		if (width() >= parentWidget()->width())
 		{
-			resize(qMax(100, parentWidget()->width() - 100), height());
+			resize(qMax(100, parentWidget()->width() - 20), height());
 		}
 	}
 }
