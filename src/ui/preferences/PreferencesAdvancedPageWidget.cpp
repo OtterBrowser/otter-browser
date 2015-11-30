@@ -254,24 +254,39 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->ciphersAddButton->setMenu(new QMenu(m_ui->ciphersAddButton));
 
+#if QT_VERSION >= 0x050300
 	if (QSslSocket::supportsSsl())
 	{
 		QStandardItemModel *ciphersModel = new QStandardItemModel(this);
 		const bool useDefaultCiphers = (SettingsManager::getValue(QLatin1String("Security/Ciphers")).toString() == QLatin1String("default"));
 		const QStringList selectedCiphers = (useDefaultCiphers ? QStringList() : SettingsManager::getValue(QLatin1String("Security/Ciphers")).toStringList());
+
+		for (int i = 0; i < selectedCiphers.count(); ++i)
+		{
+			const QSslCipher cipher(selectedCiphers.at(i));
+
+			if (!cipher.isNull())
+			{
+				QStandardItem *item = new QStandardItem(cipher.name());
+				item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+
+				ciphersModel->appendRow(item);
+			}
+		}
+
 		const QList<QSslCipher> defaultCiphers = NetworkManagerFactory::getDefaultCiphers();
 		const QList<QSslCipher> supportedCiphers = QSslSocket::supportedCiphers();
 
 		for (int i = 0; i < supportedCiphers.count(); ++i)
 		{
-			if ((useDefaultCiphers && defaultCiphers.contains(supportedCiphers.at(i))) || (!useDefaultCiphers && (selectedCiphers.isEmpty() || selectedCiphers.contains(supportedCiphers.at(i).name()))))
+			if (useDefaultCiphers && defaultCiphers.contains(supportedCiphers.at(i)))
 			{
 				QStandardItem *item = new QStandardItem(supportedCiphers.at(i).name());
 				item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
 				ciphersModel->appendRow(item);
 			}
-			else
+			else if (!selectedCiphers.contains(supportedCiphers.at(i).name()))
 			{
 				m_ui->ciphersAddButton->menu()->addAction(supportedCiphers.at(i).name());
 			}
@@ -283,8 +298,11 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	}
 	else
 	{
+#endif
 		m_ui->ciphersViewWidget->setEnabled(false);
+#if QT_VERSION >= 0x050300
 	}
+#endif
 
 	m_ui->ciphersMoveDownButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
 	m_ui->ciphersMoveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
