@@ -139,10 +139,12 @@ void NetworkManagerFactory::optionChanged(const QString &option, const QVariant 
 	}
 	else if (option == QLatin1String("Security/Ciphers"))
 	{
+#if QT_VERSION >= 0x050300
 		if (value.toString() == QLatin1String("default"))
 		{
+#endif
 			QSslSocket::setDefaultCiphers(m_defaultCiphers);
-
+#if QT_VERSION >= 0x050300
 			return;
 		}
 
@@ -151,7 +153,7 @@ void NetworkManagerFactory::optionChanged(const QString &option, const QVariant 
 
 		for (int i = 0; i < selectedCiphers.count(); ++i)
 		{
-			const QSslCipher cipher(selectedCiphers.at(i), QSsl::SecureProtocols);
+			const QSslCipher cipher(selectedCiphers.at(i));
 
 			if (!cipher.isNull())
 			{
@@ -160,6 +162,7 @@ void NetworkManagerFactory::optionChanged(const QString &option, const QVariant 
 		}
 
 		QSslSocket::setDefaultCiphers(ciphers);
+#endif
 	}
 }
 
