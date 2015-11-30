@@ -145,90 +145,141 @@
     </message>
 </context>
 <context>
+    <name>Otter::ActionComboBoxWidget</name>
+    <message>
+        <location filename="../../src/ui/ActionComboBoxWidget.cpp" line="88"/>
+        <source>Select Action</source>
+        <translation>Selecionar Ação</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ActionComboBoxWidget.cpp" line="133"/>
+        <source>Search…</source>
+        <translation>Procurar...</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::AddonsManager</name>
+    <message>
+        <location filename="../../src/core/AddonsManager.cpp" line="43"/>
+        <source>Bookmarks Manager</source>
+        <translation>Gerenciador dos Favoritos</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/AddonsManager.cpp" line="44"/>
+        <source>Cache Manager</source>
+        <translation>Gerenciador do Cache</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/AddonsManager.cpp" line="45"/>
+        <source>Configuration Manager</source>
+        <translation>Gerenciador das Configurações</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/AddonsManager.cpp" line="46"/>
+        <source>Cookies Manager</source>
+        <translation>Gerenciador dos Cookies</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/AddonsManager.cpp" line="47"/>
+        <source>History Manager</source>
+        <translation>Gerenciador do Histórico</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/AddonsManager.cpp" line="48"/>
+        <source>Notes Manager</source>
+        <translation>Gerenciador das Anotações</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/AddonsManager.cpp" line="49"/>
+        <source>Transfers Manager</source>
+        <translation>Gerenciador das Transferências</translation>
+    </message>
+</context>
+<context>
     <name>Otter::AddressWidget</name>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="96"/>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="118"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="94"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="117"/>
         <source>Enter address or search…</source>
         <translation>Inserir endereço ou procurar...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="288"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="307"/>
         <source>Undo</source>
         <translation>Desfazer</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="289"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="308"/>
         <source>Redo</source>
         <translation>Refazer</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="291"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="310"/>
         <source>Cut</source>
         <translation>Cortar</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="292"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="311"/>
         <source>Copy</source>
         <translation>Copiar</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="293"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="312"/>
         <source>Paste</source>
         <translation>Colar</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="300"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="319"/>
         <source>Delete</source>
         <translation>Apagar</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="302"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="321"/>
         <source>Copy to Note</source>
         <translation>Copiar pra Nota</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="304"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="323"/>
         <source>Clear All</source>
         <translation>Limpar Tudo</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="305"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="324"/>
         <source>Select All</source>
         <translation>Selecionar Tudo</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="544"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="674"/>
         <source>Remove Bookmark</source>
         <translation>Remover Favorito</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="544"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="674"/>
         <source>Add Bookmark</source>
         <translation>Adicionar Favorito</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="560"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="690"/>
         <source>Feed List</source>
         <translation>Lista de Feeds</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="588"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="719"/>
         <source>Click to load all plugins on the page</source>
         <translation>Clique pra carregar todos os plugins na página</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="936"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1008"/>
         <source>Show Website Information</source>
         <translation>Mostrar a Informação do Site da Web</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="993"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1104"/>
         <source>(Untitled)</source>
         <translation>(Sem Título)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1028"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1137"/>
         <source>Remove This Icon</source>
         <translation>Remover Este Ícone</translation>
     </message>
@@ -252,36 +303,36 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>Nova atualização %1 do canal %2 está disponível!</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="808"/>
-        <location filename="../../src/core/Application.cpp" line="857"/>
+        <location filename="../../src/core/Application.cpp" line="811"/>
+        <location filename="../../src/core/Application.cpp" line="860"/>
         <source>Question</source>
         <translation>Pergunta</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/core/Application.cpp" line="809"/>
+        <location filename="../../src/core/Application.cpp" line="812"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
         <translation><numerusform>Você está pra sair enquanto %n arquivos ainda estão sendo baixados.</numerusform><numerusform>Você está pra sair enquanto %n arquivos ainda estão sendo baixados.</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="810"/>
-        <location filename="../../src/core/Application.cpp" line="859"/>
+        <location filename="../../src/core/Application.cpp" line="813"/>
+        <location filename="../../src/core/Application.cpp" line="862"/>
         <source>Do you want to continue?</source>
         <translation>Você quer continuar?</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="814"/>
-        <location filename="../../src/core/Application.cpp" line="863"/>
+        <location filename="../../src/core/Application.cpp" line="817"/>
+        <location filename="../../src/core/Application.cpp" line="866"/>
         <source>Do not show this message again</source>
         <translation>Não mostrar esta mensagem de novo</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="816"/>
-        <location filename="../../src/core/Application.cpp" line="865"/>
+        <location filename="../../src/core/Application.cpp" line="819"/>
+        <location filename="../../src/core/Application.cpp" line="868"/>
         <source>Hide</source>
         <translation>Esconder</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="858"/>
+        <location filename="../../src/core/Application.cpp" line="861"/>
         <source>You are about to quit the current Otter Browser session.</source>
         <translation>Você está pra sair da sessão atual do Otter Browser</translation>
     </message>
@@ -402,26 +453,26 @@ Are you sure that you want to restore this session anyway?</source>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="67"/>
-        <source>Edit Bookmark</source>
-        <translation>Editar Favorito</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="71"/>
-        <source>Add Bookmark</source>
-        <translation>Adicionar Favorito</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="84"/>
         <source>View Bookmark</source>
         <translation>Visualizar Favoritos</translation>
     </message>
     <message>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="128"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="79"/>
+        <source>Edit Bookmark</source>
+        <translation>Editar Favorito</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="108"/>
+        <source>Add Bookmark</source>
+        <translation>Adicionar Favorito</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="150"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
     <message>
-        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="128"/>
+        <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="150"/>
         <source>Bookmark with this keyword already exists.</source>
         <translation>Um favorito com esta palavra-chave já existe.</translation>
     </message>
@@ -533,69 +584,69 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>Adicionar</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="45"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="204"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="46"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="166"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="207"/>
         <source>Add Folder</source>
         <translation>Adicionar Pasta</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="46"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="168"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="203"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="205"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="47"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="206"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="208"/>
         <source>Add Bookmark</source>
         <translation>Adicionar Favorito</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="47"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="169"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="206"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="48"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="168"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="209"/>
         <source>Add Separator</source>
         <translation>Adicionar Separador</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="163"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="162"/>
         <source>Empty Trash</source>
         <translation>Esvaziar o Lixo</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="175"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="174"/>
         <source>Open</source>
         <translation>Abrir</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="176"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="175"/>
         <source>Open in New Tab</source>
         <translation>Abrir numa Nova Aba</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="177"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="176"/>
         <source>Open in New Background Tab</source>
         <translation>Abrir numa Nova Aba em 2º Plano</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="179"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="178"/>
         <source>Open in New Window</source>
         <translation>Abrir numa Nova Janela</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="180"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="179"/>
         <source>Open in New Background Window</source>
         <translation>Abrir numa Nova Janela em 2º Plano</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="215"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="218"/>
         <source>Restore Bookmark</source>
         <translation>Restaurar Favorito</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="223"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="226"/>
         <source>Properties…</source>
         <translation>Propriedades...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="328"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="353"/>
         <source>Bookmarks Manager</source>
         <translation>Gerenciador dos Favoritos</translation>
     </message>
@@ -815,6 +866,256 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="561"/>
         <source>Cache</source>
         <translation>Cache</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::CertificateDialog</name>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.ui" line="17"/>
+        <source>Certificate chain:</source>
+        <translation>Elo do certificado:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.ui" line="34"/>
+        <source>Certificate fields:</source>
+        <translation>Campos do certificado:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.ui" line="51"/>
+        <source>Field value:</source>
+        <translation>Valor de campo:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="42"/>
+        <source>Export…</source>
+        <translation>Exportar...</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="46"/>
+        <source>Invalid Certificate</source>
+        <translation>Certificado Inválido</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="51"/>
+        <source>View Certificate for %1</source>
+        <translation>Visualizar Certificado para %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="60"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="443"/>
+        <source>Unknown</source>
+        <translation>Desconhecido</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="112"/>
+        <source>Select File</source>
+        <translation>Selecionar Arquivo</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="112"/>
+        <source>DER encoded X509 certificates (*.der);;PEM encoded X509 certificates (*.pem);;Text files (*.txt)</source>
+        <translation>DER codificou os certificados X509 (*.der);;PEM codificou os certificados X509 (*.pem);;Arquivos de texto (*.txt)</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="120"/>
+        <source>Error</source>
+        <translation>Erro</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="120"/>
+        <source>Failed to open file for writing.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="177"/>
+        <source>Authority Key Identifier</source>
+        <translation>Identificador Chave da Autoridade</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="181"/>
+        <source>Subject Key Identifier</source>
+        <translation>Identificador Chave do Assunto</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="185"/>
+        <source>Key Usage</source>
+        <translation>Uso da Chave</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="189"/>
+        <source>Certificate Policies</source>
+        <translation>Normas do Certificado</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="193"/>
+        <source>Policy Mappings</source>
+        <translation>Mapeamentos das Normas</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="197"/>
+        <source>Subject Alternative Name</source>
+        <translation>Nome Alternativo do Assunto</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="201"/>
+        <source>Issuer Alternative Name</source>
+        <translation>Nome Alternativo do Emissor</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="205"/>
+        <source>Subject Directory Attributes</source>
+        <translation>Atributos do Diretório do Assunto</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="209"/>
+        <source>Basic Constraints</source>
+        <translation>Restrições Básicas</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="213"/>
+        <source>Name Constraints</source>
+        <translation>Restrições de Nomes</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="217"/>
+        <source>Policy Constraints</source>
+        <translation>Restrições das Normas</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="221"/>
+        <source>Extended Key Usage</source>
+        <translation>Uso Extendido da Chave</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="225"/>
+        <source>CRL Distribution Points</source>
+        <translation>Pontos de Distribuição do CRL</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="229"/>
+        <source>Inhibit Any Policy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="233"/>
+        <source>Delta CRL Distribution Point</source>
+        <translation>Ponto de Distribuição do CRL Delta</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="237"/>
+        <source>Authority Information Access</source>
+        <translation>Acesso da Informação da Autoridade</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="241"/>
+        <source>Subject Information Access</source>
+        <translation>Acesso da Informação do Assunto</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="323"/>
+        <source>Modulus:
+%1
+
+Exponent: %2</source>
+        <translation>Módulo:
+%1
+
+Exponente: %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="336"/>
+        <source>Critical</source>
+        <translation>Crítico</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="336"/>
+        <source>Not Critical</source>
+        <translation>Não Crítico</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="337"/>
+        <source>OID: %1</source>
+        <translation>OID: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="341"/>
+        <source>Value:</source>
+        <translation>Valor:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="395"/>
+        <source>Version</source>
+        <translation>Versão</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="399"/>
+        <source>Serial Number</source>
+        <translation>Número de Série</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="403"/>
+        <source>Certificate Signature Algorithm</source>
+        <translation>Algorítmo da Assinatura do Certificado</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="407"/>
+        <source>Issuer</source>
+        <translation>Emissor</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="411"/>
+        <source>Validity</source>
+        <translation>Validade</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="415"/>
+        <source>Not Before</source>
+        <translation>Não Antes</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="419"/>
+        <source>Not After</source>
+        <translation>Não Depois</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="423"/>
+        <source>Subject</source>
+        <translation>Assunto</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="427"/>
+        <source>Subject Public Key</source>
+        <translation>Chave Pública do Assunto</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="431"/>
+        <source>Algorithm</source>
+        <translation>Algorítmo</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="435"/>
+        <source>Public Key</source>
+        <translation>Chave Pública</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="439"/>
+        <source>Extensions</source>
+        <translation>Extensões</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="447"/>
+        <source>Fingerprint</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="451"/>
+        <source>SHA-1 Fingerprint</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="455"/>
+        <source>SHA-256 Fingerprint</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1256,108 +1557,108 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>Procurar...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="44"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Today</source>
         <translation>Hoje</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="44"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Yesterday</source>
         <translation>Ontem</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="44"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Earlier This Week</source>
         <translation>Mais Cedo Esta Semana</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="44"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Previous Week</source>
         <translation>Na Semana Anterior</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="44"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Earlier This Month</source>
         <translation>Mais Cedo Este Mês</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="44"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Earlier This Year</source>
         <translation>Mais Cedo Este Ano</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="44"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
         <source>Older</source>
         <translation>Mais Velho</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="52"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
         <source>Address</source>
         <translation>Endereço</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="52"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
         <source>Title</source>
         <translation>Título</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="52"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
         <source>Date</source>
         <translation>Data</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="207"/>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="239"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="206"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="240"/>
         <source>(Untitled)</source>
         <translation>(Sem Título)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="354"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="356"/>
         <source>Open</source>
         <translation>Abrir</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="355"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="357"/>
         <source>Open in New Tab</source>
         <translation>Abrir numa Nova Aba</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="356"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="358"/>
         <source>Open in New Background Tab</source>
         <translation>Abrir numa Nova Aba em 2º Plano</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="358"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="360"/>
         <source>Open in New Window</source>
         <translation>Abrir numa Nova Janela</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="359"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="361"/>
         <source>Open in New Background Window</source>
         <translation>Abrir numa Nova Janela em 2º Plano</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="361"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="363"/>
         <source>Add to Bookmarks…</source>
         <translation>Adicionar aos Favoritos...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="362"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="364"/>
         <source>Copy Link to Clipboard</source>
         <translation>Copiar o Link pra Área de Transferência</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="364"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="366"/>
         <source>Remove Entry</source>
         <translation>Remover a Entrada</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="365"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="367"/>
         <source>Remove All Entries from This Domain</source>
         <translation>Remover Todas as Entradas deste Domínio</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="398"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="400"/>
         <source>History</source>
         <translation>Histórico</translation>
     </message>
@@ -1469,18 +1770,18 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>Código Fonte:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="94"/>
-        <location filename="../../src/ui/ImportDialog.cpp" line="107"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="95"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="108"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="94"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="95"/>
         <source>Unable to import selected type.</source>
         <translation>Incapaz de importar o tipo selecionado</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="107"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="108"/>
         <source>Failed to import selected type.</source>
         <translation>Falhou em importar o tipo selecionado.</translation>
     </message>
@@ -1609,27 +1910,27 @@ Are you sure that you want to restore this session anyway?</source>
 <context>
     <name>Otter::LocalListingNetworkReply</name>
     <message>
-        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="61"/>
+        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="72"/>
         <source>Directory Contents</source>
         <translation>Conteúdos do Diretório</translation>
     </message>
     <message>
-        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="64"/>
+        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="75"/>
         <source>Name</source>
         <translation>Nome</translation>
     </message>
     <message>
-        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="65"/>
+        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="76"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
     <message>
-        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="66"/>
+        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="77"/>
         <source>Size</source>
         <translation>Tamanho</translation>
     </message>
     <message>
-        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="67"/>
+        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="78"/>
         <source>Date</source>
         <translation>Data</translation>
     </message>
@@ -1883,39 +2184,54 @@ Você quer continuar?</translation>
         <translation>Autor:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="37"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="39"/>
         <source>Context and Steps</source>
         <translation>Contexto e Passos</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="37"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="39"/>
         <source>Action</source>
         <translation>Ação</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="40"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="42"/>
         <source>Step</source>
         <translation>Passo</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="43"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
         <source>Generic</source>
         <translation>Genérico</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="43"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
         <source>Link</source>
         <translation>Link</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="43"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
+        <source>Editable Content</source>
+        <translation>Conteúdo Editável</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
         <source>Tab Handle</source>
         <translation>Gerenciamento das Abas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="43"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
         <source>Tab Handle of Active Tab</source>
         <translation>Manejamento da Aba Ativa</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
+        <source>Empty Area of Tab Bar</source>
+        <translation>Área Vazia da Barra das Abas</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="131"/>
+        <source>Select Action</source>
+        <translation>Selecionar Ação</translation>
     </message>
 </context>
 <context>
@@ -1942,12 +2258,12 @@ Você quer continuar?</translation>
 <context>
     <name>Otter::NetworkManagerFactory</name>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="275"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="278"/>
         <source>Custom</source>
         <translation>Personalizado</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="290"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="293"/>
         <source>Default</source>
         <translation>Padrão</translation>
     </message>
@@ -2223,6 +2539,54 @@ Você quer continuar?</translation>
     </message>
 </context>
 <context>
+    <name>Otter::PopupsBarWidget</name>
+    <message>
+        <location filename="../../src/modules/windows/web/PopupsBarWidget.ui" line="61"/>
+        <source>Details</source>
+        <translation>Detalhes</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/PopupsBarWidget.ui" line="71"/>
+        <source>Close</source>
+        <translation>Fechar</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="44"/>
+        <source>Open All Pop-Ups from This Website</source>
+        <translation>Abrir Todos os Pop-Ups Deste Site da Web</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="48"/>
+        <source>Open Pop-Ups from This Website in Background</source>
+        <translation>Abrir os Pop-Ups Deste Site da Web em 2º Plano</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="52"/>
+        <source>Block All Pop-Ups from This Website</source>
+        <translation>Bloquear Todos os Pop-Ups Deste Site da Web</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="56"/>
+        <source>Always Ask What to Do for This Website</source>
+        <translation>Sempre Perguntar O Que Fazer Pra Este Site da Web</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="68"/>
+        <source>Blocked pop-ups</source>
+        <translation>Pop-ups bloqueados</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="69"/>
+        <source>Open all</source>
+        <translation>Abrir tudo</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="118"/>
+        <source>%1 wants to open %n pop-up window(s).</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+</context>
+<context>
     <name>Otter::PreferencesAdvancedPageWidget</name>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="55"/>
@@ -2235,338 +2599,338 @@ Você quer continuar?</translation>
         <translation>Sugerir favoritos</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="74"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="71"/>
         <source>Suggest history</source>
         <translation>Sugerir histórico</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="84"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="81"/>
         <source>Suggest search results</source>
         <translation>Sugerir resultados de busca</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="116"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="113"/>
         <source>Events</source>
         <translation>Eventos</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="156"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="153"/>
         <source>Play sound:</source>
         <translation>Reproduzir som:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="171"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="168"/>
         <source>Show notification</source>
         <translation>Mostrar notificação</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="178"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="175"/>
         <source>Mark taskbar entry</source>
         <translation>Marcar a entrada da barra de tarefas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="194"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="191"/>
         <source>Options</source>
         <translation>Opções</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="201"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="198"/>
         <source>Prefer native notifications</source>
         <translation>Preferir notificações nativas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="231"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="228"/>
         <source>Style</source>
         <translation>Estilo</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="240"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="237"/>
         <source>Widget style:</source>
         <translation>Estilo do widget:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="250"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="247"/>
         <source>Style sheet:</source>
         <translation>Folha de estilo:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="274"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="271"/>
         <source>Other</source>
         <translation>Outro</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="283"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="280"/>
         <source>Show tray icon</source>
         <translation>Mostrar o ícone do tray</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="315"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="638"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="312"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="635"/>
         <source>General</source>
         <translation>Geral</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="322"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="319"/>
         <source>Enable images</source>
         <translation>Ativar imagens</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="331"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="328"/>
         <source>Enable JavaScript</source>
         <translation>Ativar JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="338"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="335"/>
         <source>JavaScript Options…</source>
         <translation>Opções do JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="347"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="344"/>
         <source>Enable Java</source>
         <translation>Ativar Java</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="356"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="353"/>
         <source>Plugins:</source>
         <translation>Plugins:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="370"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="367"/>
         <source>User style sheet:</source>
         <translation>Folha de estilo do usuário:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="405"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="402"/>
         <source>MIME Types</source>
         <translation>Tipos de MIME</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="429"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="983"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1096"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1316"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1469"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="426"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="980"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1093"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1313"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1466"/>
         <source>Add</source>
         <translation>Adicionar</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="439"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="997"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1106"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1346"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1499"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="436"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="994"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1103"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1343"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1496"/>
         <source>Remove</source>
         <translation>Remover</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="481"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="478"/>
         <source>Show download dialog</source>
         <translation>Mostrar o diálogo de download</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="491"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="488"/>
         <source>Save to disk</source>
         <translation>Salvar no disco</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="534"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="531"/>
         <source>Do not ask for folder, save directly to</source>
         <translation>Não perguntar por pasta, salvar diretamente em</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="549"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="546"/>
         <source>Open with application</source>
         <translation>Abrir com aplicativo</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="595"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="592"/>
         <source>Pass web address directly to application</source>
         <translation>Passar o endereço da web diretamente pro aplicativo</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="645"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="642"/>
         <source>Send referrer information</source>
         <translation>Enviar informação de referência</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="654"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="651"/>
         <source>User Agent:</source>
         <translation>Agente Usuário:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="667"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="664"/>
         <source>Manage…</source>
         <translation>Gerenciar...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="682"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="679"/>
         <source>Proxy</source>
         <translation>Proxy</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="691"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="688"/>
         <source>Mode:</source>
         <translation>Modo:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="705"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="702"/>
         <source>No proxy</source>
         <translation>Sem proxy</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="710"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="707"/>
         <source>System configuration</source>
         <translation>Configuração do sistema</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="715"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="712"/>
         <source>Manual configuration</source>
         <translation>Configuração manual</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="720"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="717"/>
         <source>Automatic configuration (PAC)</source>
         <translation>Configuração automática (PAC)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="822"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="819"/>
         <source>Port</source>
         <translation>Porta</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="829"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="826"/>
         <source>Protocol</source>
         <translation>Protocolo</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="836"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="833"/>
         <source>Servers</source>
         <translation>Servidores</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="843"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="840"/>
         <source>FTP</source>
         <translation>FTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="850"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="847"/>
         <source>SOCKS5</source>
         <translation>SOCKS5</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="857"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="854"/>
         <source>HTTP</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="871"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="868"/>
         <source>HTTPS</source>
         <translation>HTTPS</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="885"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="882"/>
         <source>All</source>
         <translation>Todos</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="923"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="920"/>
         <source>Path to PAC file:</source>
         <translation>Caminho pro arquivo PAC:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="940"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="937"/>
         <source>Use system authentication</source>
         <translation>Usar a autenticação do sistema</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="965"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="962"/>
         <source>Do not use proxy for:</source>
         <translation>Não usar proxy para:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="990"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="987"/>
         <source>Edit</source>
         <translation>Editar</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1021"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1018"/>
         <source>Example: domain.com, localhost, 127.0.0.1, 192.168.1.0/24</source>
         <translation>Exemplo: domain.com, localhost, 127.0.0.1, 192.168.1.0/24</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1054"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1051"/>
         <source>SSL ciphers</source>
         <translation>Cifras do SSL</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1131"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1371"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1524"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1128"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1368"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1521"/>
         <source>Move Up</source>
         <translation>Mover pra Cima</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1157"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1397"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1550"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1154"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1394"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1547"/>
         <source>Move Down</source>
         <translation>Mover pra Baixo</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1180"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1177"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="61"/>
         <source>Updates</source>
         <translation>Atualizações</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1187"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1184"/>
         <source>Select channels from which you want to receive updates:</source>
         <translation>Selecionar canais dos quais você quer receber atualizações:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1226"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1223"/>
         <source>Check for updates every</source>
         <translation>Procurar atualizações a cada</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1236"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1233"/>
         <source>day(s)</source>
         <translation>dia(s)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1245"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1242"/>
         <source>Install updates automatically</source>
         <translation>Instalar atualizações automaticamente</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1277"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1274"/>
         <source>Keyboard Shortcuts</source>
         <translation>Atalhos do Teclado</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1326"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1479"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1323"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1476"/>
         <source>Edit…</source>
         <translation>Editar...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1336"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1489"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1333"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1486"/>
         <source>Clone</source>
         <translation>Clonar</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1410"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1407"/>
         <source>Enable single key shortcuts</source>
         <translation>Ativar atalhos de tecla única</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1430"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1427"/>
         <source>Mouse Actions and Gestures</source>
         <translation>Ações e Gestos do Mouse</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1563"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1560"/>
         <source>Enable mouse gestures</source>
         <translation>Ativar gestos do mouse</translation>
     </message>
@@ -2626,131 +2990,131 @@ Você quer continuar?</translation>
         <translation>Mouse</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="99"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="152"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="100"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="153"/>
         <source>Name</source>
         <translation>Nome</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="99"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="100"/>
         <source>Description</source>
         <translation>Descrição</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="126"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="127"/>
         <source>System Style</source>
         <translation>Estilo do Sistema</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="142"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="143"/>
         <source>Enabled</source>
         <translation>Ativado</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="143"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="144"/>
         <source>On demand</source>
         <translation>Sob Demanda</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="144"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="145"/>
         <source>Disabled</source>
         <translation>Desativado</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="189"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="660"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="190"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="676"/>
         <source>Default</source>
         <translation>Padrão</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="196"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="341"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="378"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="666"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="820"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="824"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="850"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="881"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="907"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1001"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1015"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1019"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1045"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1076"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="197"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="360"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="397"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="682"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="836"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="840"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="866"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="902"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="928"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1022"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1036"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1040"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1066"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1102"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1196"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1460"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1522"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1128"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1222"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1487"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1549"/>
         <source>(Untitled)</source>
         <translation>(Sem Título)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="295"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="314"/>
         <source>Stable version</source>
         <translation>Versão estável</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="296"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="315"/>
         <source>Beta version</source>
         <translation>Versão beta</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="297"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="316"/>
         <source>Weekly development version</source>
         <translation>Versão de desenvolvimento semanal</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="353"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="390"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="372"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="409"/>
         <source>New…</source>
         <translation>Novo...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="354"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="391"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="373"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="410"/>
         <source>Readd</source>
         <translation>Re-adicionar</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="497"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="513"/>
         <source>WAV files (*.wav)</source>
         <translation>Arquivos WAV (*.wav)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="526"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="542"/>
         <source>MIME Type Name</source>
         <translation>Nome do Tipo de MIME</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="526"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="542"/>
         <source>Select name of MIME Type:</source>
         <translation>Selecionar nome do Tipo de MIME:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="540"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="556"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="540"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="556"/>
         <source>Invalid MIME Type name.</source>
         <translation>Nome do Tipo de MIME inválido.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="927"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1122"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="948"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1148"/>
         <source>Question</source>
         <translation>Pergunta</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="928"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1123"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="949"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1149"/>
         <source>Do you really want to remove this profile?</source>
         <translation>Você realmente quer remover este perfil?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="937"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1132"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="958"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1158"/>
         <source>Delete profile permanently</source>
         <translation>Apagar o perfil permanentemente</translation>
     </message>
@@ -2768,150 +3132,155 @@ Você quer continuar?</translation>
         <translation>Pop-ups:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="52"/>
-        <source>Block all pop-ups</source>
-        <translation>Bloquear todos os pop-ups</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="57"/>
-        <source>Open all pop-ups</source>
-        <translation>Abrir todos os pop-ups</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="62"/>
-        <source>Open all pop-ups in background</source>
-        <translation>Abrir todos os pop-ups em 2º plano</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="78"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="63"/>
         <source>Zoom</source>
         <translation>Zoom</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="90"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="75"/>
         <source>Default zoom:</source>
         <translation>Zoom padrão:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="100"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="85"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="118"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="103"/>
         <source>Zoom text only</source>
         <translation>Só fazer zoom no texto</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="131"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="116"/>
         <source>Fonts</source>
         <translation>Fontes</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="172"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="157"/>
         <source>Style</source>
         <translation>Estilo</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="177"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="162"/>
         <source>Font</source>
         <translation>Fonte</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="182"/>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="321"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="167"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="306"/>
         <source>Preview</source>
         <translation>Pré-Visualização</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="192"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="177"/>
         <source>Default proportional font size:</source>
         <translation>Tamanho padrão proporcional da fonte:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="202"/>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="228"/>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="257"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="187"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="213"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="242"/>
         <source> px</source>
         <translation> px</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="218"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="203"/>
         <source>Default fixed-width font size:</source>
         <translation>Tamanho padrão da fonte de largura ampla:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="244"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="229"/>
         <source>Minimum font size:</source>
         <translation>Tamanho mínimo da fonte:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="254"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="239"/>
         <source>None</source>
         <translation>Nenhum</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="278"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="263"/>
         <source>Colors</source>
         <translation>Cores</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="316"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="301"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="36"/>
+        <source>Ask</source>
+        <translation>Perguntar</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="37"/>
+        <source>Block all</source>
+        <translation>Bloquear todos</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="38"/>
+        <source>Open all</source>
+        <translation>Abrir tudo</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="39"/>
+        <source>Open all in background</source>
+        <translation>Abrir tudo em 2º plano</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="54"/>
         <source>Standard font</source>
         <translation>Fonte padrão</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="54"/>
         <source>Fixed-width font</source>
         <translation>Fonte de largura ampla</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="54"/>
         <source>Serif font</source>
         <translation>Fonte serif</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="54"/>
         <source>Sans-serif font</source>
         <translation>Fonte sans-serif</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="54"/>
         <source>Cursive font</source>
         <translation>Fonte cursiva</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="54"/>
         <source>Fantasy font</source>
         <translation>Fonte fantasia</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="59"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="68"/>
         <source>The quick brown fox jumps over the lazy dog</source>
         <translation>A raposa marrom rápida pula sobre o cão preguiçoso</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="71"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="80"/>
         <source>Background Color</source>
         <translation>Cor do 2º Plano</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="71"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="80"/>
         <source>Text Color</source>
         <translation>Cor do Texto</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="71"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="80"/>
         <source>Link Color</source>
         <translation>Cor do Link</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="71"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="80"/>
         <source>Visited Link Color</source>
         <translation>Cor do Link Visitado</translation>
     </message>
@@ -3316,27 +3685,27 @@ Você quer continuar?</translation>
         <translation>Re-adicionar</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="152"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="147"/>
         <source>New Search Engine</source>
         <translation>Nova Engine de Busca</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="286"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="281"/>
         <source>Question</source>
         <translation>Pergunta</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="287"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="282"/>
         <source>Do you really want to remove this search engine?</source>
         <translation>Você realmente quer remover esta engine de busca?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="296"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="291"/>
         <source>Delete search engine permanently</source>
         <translation>Apagar a engine de busca permanentemente</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="366"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="361"/>
         <source>(Untitled)</source>
         <translation>(Sem Título)</translation>
     </message>
@@ -3371,6 +3740,39 @@ Você quer continuar?</translation>
     </message>
 </context>
 <context>
+    <name>Otter::QtWebKitFtpListingNetworkReply</name>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="67"/>
+        <source>Unknown command</source>
+        <translation>Comando desconhecido</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="133"/>
+        <source>Directory Contents</source>
+        <translation>Conteúdos do Diretório</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="136"/>
+        <source>Name</source>
+        <translation>Nome</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="137"/>
+        <source>Type</source>
+        <translation>Tipo</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="138"/>
+        <source>Size</source>
+        <translation>Tamanho</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="139"/>
+        <source>Date</source>
+        <translation>Data</translation>
+    </message>
+</context>
+<context>
     <name>Otter::QtWebKitInspector</name>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitInspector.cpp" line="36"/>
@@ -3381,38 +3783,38 @@ Você quer continuar?</translation>
 <context>
     <name>Otter::QtWebKitNetworkManager</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="108"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="133"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="109"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="134"/>
         <source>Waiting for authentication…</source>
         <translation>Esperando pela autenticação...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="189"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="190"/>
         <source>Warning</source>
         <translation>Aviso</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="189"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="190"/>
         <source>SSL errors occured, do you want to continue?</source>
         <translation>Ocorreram erros com o SSL, você quer continuar?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="193"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="194"/>
         <source>Do not show this message again</source>
         <translation>Não mostrar esta mensagem de novo</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="284"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="289"/>
         <source>Receiving data from %1…</source>
         <translation>Recebendo dados de %1...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="348"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="358"/>
         <source>Completed request to %1</source>
         <translation>Pedido completado de %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="545"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="551"/>
         <source>Sending request to %1…</source>
         <translation>Enviando pedido para %1...</translation>
     </message>
@@ -3420,66 +3822,61 @@ Você quer continuar?</translation>
 <context>
     <name>Otter::QtWebKitPage</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="186"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="324"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="361"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="185"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="323"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="360"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="187"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="325"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="362"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="186"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="324"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="361"/>
         <source>Disable JavaScript popups</source>
         <translation>Desativar popups do JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="274"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="287"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="467"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="286"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="447"/>
         <source>Question</source>
         <translation>Pergunta</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="274"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="288"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="287"/>
         <source>Are you sure that you want to send form data again?</source>
         <translation>Você tem certeza que você quer enviar os dados do formulário de novo?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="274"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="289"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="288"/>
         <source>Do you want to resend data?</source>
         <translation>Você quer re-enviar os dados?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="275"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="293"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="274"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="292"/>
         <source>Do not show this message again</source>
         <translation>Não mostrar esta mensagem de novo</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="403"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="402"/>
         <source>Open File</source>
         <translation>Abrir Arquivo</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="425"/>
-        <source>Error %1</source>
-        <translation>Erro %1</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="455"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="435"/>
         <source>%1 error #%2: %3</source>
         <translation>%1 erro #%2: %3</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="467"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="447"/>
         <source>The script on this page appears to have a problem.</source>
         <translation>O script nesta página aparenta ter um problema.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="467"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="447"/>
         <source>Do you want to stop the script?</source>
         <translation>Você quer parar o script?</translation>
     </message>
@@ -3799,58 +4196,58 @@ Você quer sobrescrevê-la?</translation>
 <context>
     <name>Otter::SearchWidget</name>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="96"/>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="323"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="95"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="343"/>
         <source>Search using %1</source>
         <translation>Procurar usando %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="202"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="201"/>
         <source>Undo</source>
         <translation>Desfazer</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="203"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="202"/>
         <source>Redo</source>
         <translation>Refazer</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="205"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="204"/>
         <source>Cut</source>
         <translation>Cortar</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="206"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="205"/>
         <source>Copy</source>
         <translation>Copiar</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="207"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="206"/>
         <source>Paste</source>
         <translation>Colar</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="208"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="207"/>
         <source>Paste and Go</source>
         <translation>Colar e Ir</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="209"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="208"/>
         <source>Delete</source>
         <translation>Apagar</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="211"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="210"/>
         <source>Copy to Note</source>
         <translation>Copiar pra Nota</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="213"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="212"/>
         <source>Clear All</source>
         <translation>Limpar Tudo</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="214"/>
+        <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="213"/>
         <source>Select All</source>
         <translation>Selecionar Tudo</translation>
     </message>
@@ -4136,37 +4533,37 @@ Você quer salvar suas mudanças ou descartá-las?</translation>
 <context>
     <name>Otter::StartPageWidget</name>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="418"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="398"/>
         <source>Add Tile</source>
         <translation>Adicionar Título</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="571"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="552"/>
         <source>Open</source>
         <translation>Abrir</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="573"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="554"/>
         <source>Edit…</source>
         <translation>Editar...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="577"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="558"/>
         <source>Reload</source>
         <translation>Recarregar</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="581"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="562"/>
         <source>Delete</source>
         <translation>Apagar</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="585"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="566"/>
         <source>Configure…</source>
         <translation>Configurar...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="586"/>
+        <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="567"/>
         <source>Add Tile…</source>
         <translation>Adicionar Ladrilho...</translation>
     </message>
@@ -4219,17 +4616,17 @@ Você quer salvar suas mudanças ou descartá-las?</translation>
 <context>
     <name>Otter::TabBarWidget</name>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="177"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="208"/>
         <source>Arrange</source>
         <translation>Organizar</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="201"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="232"/>
         <source>Switch tabs using the mouse wheel</source>
         <translation>Trocar abas usando a roda do mouse</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="221"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="252"/>
         <source>Customize</source>
         <translation>Personalizar</translation>
     </message>
@@ -4239,7 +4636,7 @@ Você quer salvar suas mudanças ou descartá-las?</translation>
         <translation>(Sem Título)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="995"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="1005"/>
         <source>Close Tab</source>
         <translation>Fechar Aba</translation>
     </message>
@@ -4964,57 +5361,62 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
 <context>
     <name>Otter::WebContentsWidget</name>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="445"/>
-        <source>Open all pop-ups</source>
-        <translation>Abrir todos os pop-ups</translation>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="444"/>
+        <source>Open All Pop-Ups</source>
+        <translation>Abrir Todos os Pop-Ups</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="446"/>
-        <source>Open pop-ups in background</source>
-        <translation>Abrir os pop-ups em 2º plano</translation>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="448"/>
+        <source>Open Pop-Ups in Background</source>
+        <translation>Abrir os Pop-Ups em 2º Plano</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="447"/>
-        <source>Block all pop-ups</source>
-        <translation>Bloquear todos os pop-ups</translation>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="452"/>
+        <source>Block All Pop-Ups</source>
+        <translation>Bloquear Todos os Pop-Ups</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="451"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="456"/>
+        <source>Ask What to Do</source>
+        <translation>Perguntar O Que Fazer</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="482"/>
         <source>Enable Images</source>
         <translation>Ativar Imagens</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="456"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="487"/>
         <source>Enable JavaScript</source>
         <translation>Ativar JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="461"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="492"/>
         <source>Enable Java</source>
         <translation>Ativar Java</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="466"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="497"/>
         <source>Enable Plugins</source>
         <translation>Ativar Plugins</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="473"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="504"/>
         <source>Enable Cookies</source>
         <translation>Ativar Cookies</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="477"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="508"/>
         <source>Enable Referrer</source>
         <translation>Ativar Referência</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="481"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="512"/>
         <source>Enable Proxy</source>
         <translation>Ativar Proxy</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="486"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="517"/>
         <source>Reset Options</source>
         <translation>Resetar Opções</translation>
     </message>
@@ -5022,82 +5424,82 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
 <context>
     <name>Otter::WebWidget</name>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="296"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="293"/>
         <source>Default Application</source>
         <translation>Aplicativo Padrão</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="302"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="299"/>
         <source>Unknown</source>
         <translation>Desconhecido</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="388"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="385"/>
         <source>Title: %1</source>
         <translation>Título: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="388"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="385"/>
         <source>Address: %1</source>
         <translation>Endereço: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="637"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="634"/>
         <source>No search engines defined</source>
         <translation>Nenhuma engine de busca definida</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="780"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="777"/>
         <source>Open Image in New Tab (Untitled)</source>
         <translation>Abrir Imagem numa Nova Aba (Sem Título)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="780"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="777"/>
         <source>Open Image in New Tab (%1)</source>
         <translation>Abrir Imagem numa Nova Aba (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="786"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="783"/>
         <source>Open Image in New Background Tab (Untitled)</source>
         <translation>Abrir Imagem numa Nova Aba em 2º Plano (Sem Título)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="786"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="783"/>
         <source>Open Image in New Background Tab (%1)</source>
         <translation>Abrir Imagem numa Nova Aba em 2º Plano (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1078"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1075"/>
         <source>30 Minutes</source>
         <translation>30 Minutos</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1079"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1076"/>
         <source>1 Hour</source>
         <translation>1 Hora</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1080"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1077"/>
         <source>2 Hours</source>
         <translation>2 Horas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1081"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1078"/>
         <source>6 Hours</source>
         <translation>6 Horas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1082"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1079"/>
         <source>Never</source>
         <translation>Nunca</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1083"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1080"/>
         <source>Custom…</source>
         <translation>Personalizar...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1085"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1082"/>
         <source>Page Default</source>
         <translation>Padrão da Página</translation>
     </message>
@@ -5150,59 +5552,115 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
         <translation>Permissões</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="142"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="149"/>
+        <source>Preferences</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="171"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="297"/>
+        <source>Details…</source>
+        <translation>Detalhes...</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="180"/>
+        <source>Set cookies:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="187"/>
+        <source>Set third-party cookies:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="194"/>
+        <source>Show notifications:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="201"/>
+        <source>Access your location:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="208"/>
+        <source>Load plugins:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="215"/>
+        <source>Load images:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="222"/>
+        <source>Use JavaScript:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="250"/>
+        <source>Show pop-up windows:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="261"/>
         <source>Security</source>
         <translation>Segurança</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="154"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="275"/>
         <source>Certificate</source>
         <translation>Certificado</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="161"/>
-        <source>Name:</source>
-        <translation>Nome:</translation>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="306"/>
+        <source>Issued to:</source>
+        <translation>Emitido pra:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="168"/>
-        <source>Expiration date:</source>
-        <translation>Data de expiração:</translation>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="313"/>
+        <source>Issued by:</source>
+        <translation>Emitido por:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="175"/>
-        <source>Effective date:</source>
-        <translation>Data efetiva:</translation>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="320"/>
+        <source>Issued on:</source>
+        <translation>Emitido em:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="188"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="327"/>
+        <source>Expires on:</source>
+        <translation>Expira em:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="340"/>
         <source>Cipher</source>
         <translation>Cifra</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="195"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="347"/>
         <source>Protocol:</source>
         <translation>Protocolo:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="202"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="354"/>
         <source>Authentication method:</source>
         <translation>Método de autenticação:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="209"/>
-        <source>Key exchange method:</source>
-        <translation>Método de troca de chave:</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="216"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="361"/>
         <source>Encryption method:</source>
         <translation>Método de encriptação:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="241"/>
-        <source>Details…</source>
-        <translation>Detalhes...</translation>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="368"/>
+        <source>Key exchange method:</source>
+        <translation>Método de troca de chave:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="407"/>
+        <source>SSL Errors</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="41"/>
@@ -5251,7 +5709,73 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
         <translation><numerusform>%1 (%n bloqueado)</numerusform><numerusform>%1 (%n bloqueados)</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="104"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="93"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="112"/>
+        <source>Only existing</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="97"/>
+        <source>Only read existing</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="101"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="116"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="131"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="138"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="139"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="149"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="164"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="183"/>
+        <source>Never</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="105"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="120"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="127"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="138"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="139"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="145"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="160"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="175"/>
+        <source>Always</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="135"/>
+        <source>On demand</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="153"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="168"/>
+        <source>Always Ask</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="179"/>
+        <source>Always (open in backgound)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="187"/>
+        <source>Ask</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="216"/>
+        <source>Error Message</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="216"/>
+        <source>URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="235"/>
         <source>Information for %1</source>
         <translation>Informação para %1</translation>
     </message>
@@ -5275,239 +5799,224 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="53"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="292"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="525"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="668"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="277"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="510"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="653"/>
         <source>Override</source>
         <translation>Sobrescrever</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="84"/>
-        <source>Block all pop-ups</source>
-        <translation>Bloquear todos os pop-ups</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="89"/>
-        <source>Open all pop-ups</source>
-        <translation>Abrir todos os pop-ups</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="94"/>
-        <source>Open all pop-ups in background</source>
-        <translation>Abrir todos os pop-ups em 2º plano</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="112"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="97"/>
         <source>Encoding:</source>
         <translation>Codificação:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="122"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="107"/>
         <source>User style sheet:</source>
         <translation>Folha de estilo do usuário:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="129"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="114"/>
         <source>Plugins:</source>
         <translation>Plugins:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="139"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="124"/>
         <source>Pop-ups:</source>
         <translation>Pop-ups:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="163"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="148"/>
         <source>Enable images</source>
         <translation>Ativar imagens</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="177"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="162"/>
         <source>Enable Java</source>
         <translation>Ativar Java</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="211"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="196"/>
         <source>Privacy</source>
         <translation>Privacidade</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="235"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="220"/>
         <source>Keep until:</source>
         <translation>Manter até:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="278"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="263"/>
         <source>Remember browsing history</source>
         <translation>Lembrar o histórico da navegação</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="299"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="284"/>
         <source>Enable cookies</source>
         <translation>Ativar Cookies</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="324"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="309"/>
         <source>Accept cookies:</source>
         <translation>Aceitar cookies:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="333"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="318"/>
         <source>Do Not Track:</source>
         <translation>Não Rastrear:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="373"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="358"/>
         <source>Add…</source>
         <translation>Adicionar...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="383"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="368"/>
         <source>Edit…</source>
         <translation>Editar...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="393"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="378"/>
         <source>Delete</source>
         <translation>Apagar</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="435"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="420"/>
         <source>Accept third-party cookies:</source>
         <translation>Aceitar os cookies de third-parties:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="474"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="459"/>
         <source>Scripting</source>
         <translation>Scripting</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="487"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="472"/>
         <source>Enable JavaScript</source>
         <translation>Ativar JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="504"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="489"/>
         <source>Allow script to hide address bar</source>
         <translation>Permitir ao script esconder a barra de endereço</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="511"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="496"/>
         <source>Allow moving and resizing of windows</source>
         <translation>Permitir o mover e redimensionar de janelas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="532"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="517"/>
         <source>Allow changing of status field</source>
         <translation>Permitir a mudança do campo de status</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="569"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="554"/>
         <source>Allow access to clipboard</source>
         <translation>Permitir o acesso a área de transferência</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="583"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="568"/>
         <source>Allow to disable context menu</source>
         <translation>Permitir desativar o menu de contexto</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="597"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="582"/>
         <source>Allow to open windows</source>
         <translation>Permitir abrir as janelas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="627"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="612"/>
         <source>Allow to close windows:</source>
         <translation>Permitir fechar as janelas:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="638"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="623"/>
         <source>Network</source>
         <translation>Rede</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="651"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="636"/>
         <source>User Agent:</source>
         <translation>Agente Usuário</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="691"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="676"/>
         <source>Proxy mode:</source>
         <translation>Modo proxy:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="718"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="703"/>
         <source>No proxy</source>
         <translation>Sem proxy</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="723"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="708"/>
         <source>System configuration</source>
         <translation>Configuração do sistema</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="728"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="713"/>
         <source>Manual configuration</source>
         <translation>Configuração manual</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="733"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="718"/>
         <source>Automatic configuration (PAC)</source>
         <translation>Configuração automática (PAC)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="846"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="831"/>
         <source>Port</source>
         <translation>Porta</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="853"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="838"/>
         <source>Servers</source>
         <translation>Servidores</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="860"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="845"/>
         <source>FTP</source>
         <translation>FTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="867"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="852"/>
         <source>SOCKS5</source>
         <translation>SOCKS5</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="874"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="859"/>
         <source>HTTP</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="888"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="873"/>
         <source>HTTPS</source>
         <translation>HTTPS</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="902"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="887"/>
         <source>All</source>
         <translation>Todos</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="919"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="904"/>
         <source>Protocol</source>
         <translation>Protocolo</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="947"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="932"/>
         <source>Path to PAC file:</source>
         <translation>Caminho pro arquivo PAC:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="964"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="949"/>
         <source>Send referrer information</source>
         <translation>Enviar informação de referência</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="972"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="957"/>
         <source>Content Blocking</source>
         <translation>Bloqueio de Conteúdo</translation>
     </message>
@@ -5518,121 +6027,137 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="77"/>
-        <source>Enabled</source>
-        <translation>Ativado</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="78"/>
-        <source>On demand</source>
-        <translation>Sob Demanda</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="79"/>
-        <source>Disabled</source>
-        <translation>Desativado</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="81"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="86"/>
         <source>Ask</source>
         <translation>Perguntar</translation>
     </message>
     <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="78"/>
+        <source>Block all</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="79"/>
+        <source>Open all</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="80"/>
+        <source>Open all in background</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="82"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="89"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="98"/>
+        <source>Enabled</source>
+        <translation>Ativado</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
+        <source>On demand</source>
+        <translation>Sob Demanda</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="84"/>
+        <source>Disabled</source>
+        <translation>Desativado</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="87"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="94"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
         <source>Always</source>
         <translation>Sempre</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="92"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="100"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="88"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="97"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="105"/>
         <source>Never</source>
         <translation>Nunca</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="85"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="90"/>
         <source>Inform websites that I do not want to be tracked</source>
         <translation>Informar os sites da web que eu não quero ser rastreado</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="86"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="91"/>
         <source>Inform websites that I allow tracking</source>
         <translation>Informar os sites da web que eu permito o rastreamento</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="87"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="92"/>
         <source>Do not inform websites about my preference</source>
         <translation>Não informar os sites da web sobre a minha preferência</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="90"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="99"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="95"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="104"/>
         <source>Only existing</source>
         <translation>Só os existentes</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="91"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="96"/>
         <source>Only read existing</source>
         <translation>Só ler os existentes</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="94"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="99"/>
         <source>Expires</source>
         <translation>Expirar</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="95"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="100"/>
         <source>Current session is closed</source>
         <translation>A sessão atual está fechada</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="96"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="101"/>
         <source>Always ask</source>
         <translation>Sempre perguntar</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="108"/>
         <source>Domain</source>
         <translation>Domínio</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="108"/>
         <source>Path</source>
         <translation>Caminho</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="108"/>
         <source>Value</source>
         <translation>Valor</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="108"/>
         <source>Expiration date</source>
         <translation>Data de expiração</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="123"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="128"/>
         <source>Default</source>
         <translation>Padrão</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="130"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="135"/>
         <source>(Untitled)</source>
         <translation>(Sem Título)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="335"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="340"/>
         <source>Title</source>
         <translation>Título</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="335"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="340"/>
         <source>Update Interval</source>
         <translation>Intervalo das Atualizações</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="335"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="340"/>
         <source>Last Update</source>
         <translation>Última Atualização</translation>
     </message>
@@ -5663,29 +6188,29 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
 <context>
     <name>Otter::WindowsManager</name>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="323"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="335"/>
         <source>Question</source>
         <translation>Pergunta</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/core/WindowsManager.cpp" line="324"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="336"/>
         <source>You are about to open %n bookmark(s).</source>
         <translation><numerusform>Você está pra abrir %n favorito(s).</numerusform><numerusform>Você está pra abrir %n favorito(s).</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="325"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="337"/>
         <source>Do you want to continue?</source>
         <translation>Você quer continuar?</translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="329"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="341"/>
         <source>Do not show this message again</source>
         <translation>Não mostrar esta mensagem de novo</translation>
     </message>
     <message>
-        <location filename="../../src/core/WindowsManager.cpp" line="828"/>
-        <location filename="../../src/core/WindowsManager.cpp" line="911"/>
-        <location filename="../../src/core/WindowsManager.cpp" line="1035"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="840"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="923"/>
+        <location filename="../../src/core/WindowsManager.cpp" line="1047"/>
         <source>Empty</source>
         <translation>Vazio</translation>
     </message>
@@ -5732,1002 +6257,1117 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
     </message>
 </context>
 <context>
+    <name>QFtp</name>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="844"/>
+        <source>Not connected</source>
+        <translation>Não conectado</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="912"/>
+        <source>Host %1 not found</source>
+        <translation>O host %1 não foi achado</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="916"/>
+        <source>Connection refused to host %1</source>
+        <translation>Conexão recusada com o host %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="920"/>
+        <source>Connection timed out to host %1</source>
+        <translation>O tempo da conexão com o host %1 se esgotou</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="1024"/>
+        <source>Connected to host %1</source>
+        <translation>Conectado com o host %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="1243"/>
+        <source>Connection refused for data connection</source>
+        <translation>Conexão recusada pela conexão dos dados</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="1417"/>
+        <source>Unknown error</source>
+        <translation>Erro desconhecido</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2317"/>
+        <source>Connecting to host failed:
+%1</source>
+        <translation>Falhou em conectar com o host:
+%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2321"/>
+        <source>Login failed:
+%1</source>
+        <translation>O login falhou:
+%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2325"/>
+        <source>Listing directory failed:
+%1</source>
+        <translation>A listagem dos diretórios falhou:
+%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2329"/>
+        <source>Changing directory failed:
+%1</source>
+        <translation>A mudança de diretório falhou:
+%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2333"/>
+        <source>Downloading file failed:
+%1</source>
+        <translation>Falhou em baixar o arquivo:
+%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2337"/>
+        <source>Uploading file failed:
+%1</source>
+        <translation>Falhou em enviar o arquivo:
+%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2341"/>
+        <source>Removing file failed:
+%1</source>
+        <translation>Falhou em remover o arquivo:
+%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2345"/>
+        <source>Creating directory failed:
+%1</source>
+        <translation>Falhou em criar o diretório:
+%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2349"/>
+        <source>Removing directory failed:
+%1</source>
+        <translation>A remoção do diretório falhou:
+%1</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2377"/>
+        <source>Connection closed</source>
+        <translation>Conexão fechada</translation>
+    </message>
+</context>
+<context>
     <name>actions</name>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="245"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="247"/>
         <source>File</source>
         <translation>Arquivo</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="246"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="248"/>
         <source>Sessions</source>
         <translation>Sessões</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="247"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="249"/>
         <source>Import and Export</source>
         <translation>Importar e Exportar</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="248"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="250"/>
         <source>Edit</source>
         <translation>Editar</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="249"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="251"/>
         <source>View</source>
         <translation>Visualizar</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="250"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="252"/>
         <source>Toolbars</source>
         <translation>Barras de Ferramentas</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="251"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="253"/>
         <source>User Agent</source>
         <translation>Agente Usuário</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="252"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="254"/>
         <source>Character Encoding</source>
         <translation>Codificação dos Caracteres</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="253"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="255"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="45"/>
         <source>History</source>
         <translation>Histórico</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="254"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="256"/>
         <source>Closed Windows</source>
         <translation>Janelas Fechadas</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="255"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="257"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="43"/>
         <source>Bookmarks</source>
         <translation>Favoritos</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="256"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="258"/>
         <source>Tools</source>
         <translation>Ferramentas</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="257"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="259"/>
         <source>Help</source>
         <translation>Ajuda</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="258"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="260"/>
         <source>Tabs and Windows</source>
         <translation>Abas e Janelas</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="259"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="261"/>
         <source>Page</source>
         <translation>Página</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="260"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="262"/>
         <source>Print</source>
         <translation>Imprimir</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="261"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="263"/>
         <source>Settings</source>
         <translation>Configurações</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="262"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="264"/>
         <source>Frame</source>
         <translation>Frame</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="266"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="268"/>
         <source>New Tab</source>
         <translation>Nova Aba</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="267"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="269"/>
         <source>New Private Tab</source>
         <translation>Nova Aba Particular</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="268"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="270"/>
         <source>New Window</source>
         <translation>Nova Janela</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="269"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="271"/>
         <source>New Private Window</source>
         <translation>Nova Janela Particular</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="270"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="272"/>
         <source>Open…</source>
         <translation>Abrir...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="271"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="273"/>
         <source>Save…</source>
         <translation>Salvar...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="272"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="274"/>
         <source>Clone Tab</source>
         <translation>Aba Clonada</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="273"/>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="144"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="275"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="175"/>
         <source>Pin Tab</source>
         <translation>Pregar a Aba</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="274"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="276"/>
         <source>Detach Tab</source>
         <translation>Separar Aba</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="275"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="277"/>
         <source>Maximize</source>
         <translation>Maximizar</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="275"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="277"/>
         <source>Maximize Tab</source>
         <translation>Maximizar Aba</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="276"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="278"/>
         <source>Minimize</source>
         <translation>Minimizar</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="276"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="278"/>
         <source>Minimize Tab</source>
         <translation>Minimizar Aba</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="277"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="279"/>
         <source>Restore</source>
         <translation>Restaurar</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="277"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="279"/>
         <source>Restore Tab</source>
         <translation>Restaurar Aba</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="278"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="280"/>
         <source>Stay on Top</source>
         <translation>Ficar no Topo</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="279"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="281"/>
         <source>Clear Tab History</source>
         <translation>Limpar Histórico das Abas</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="279"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="281"/>
         <source>Remove Local Tab History</source>
         <translation>Remover Histórico das Abas Locais</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="280"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="282"/>
         <source>Purge Tab History</source>
         <translation>Limpar Histórico das Abas</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="280"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="282"/>
         <source>Remove Local and Global Tab History</source>
         <translation>Remover Histórico das Abas Locais e Globais</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="281"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="283"/>
         <source>Close Tab</source>
         <translation>Fechar Aba</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="282"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="284"/>
         <source>Close Other Tabs</source>
         <translation>Fechar as Outras Abas</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="283"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="285"/>
         <source>Close All Private Tabs</source>
         <translation>Fechar Todas as Abas Privadas</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="283"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="285"/>
         <source>Close All Private Tabs in Current Window</source>
         <translation>Fechar Todas as Abas Privadas na Janela Atual</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="284"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="286"/>
         <source>Close Private Tabs and Windows</source>
         <translation>Fechar as Abas e Janelas Privadas </translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="285"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="287"/>
         <source>Reopen Previously Closed Tab</source>
         <translation>Re-abrir a Aba Fechada Anteriormente</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="286"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="288"/>
         <source>Maximize All</source>
         <translation>Maximizar Tudo</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="287"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="289"/>
         <source>Minimize All</source>
         <translation>Minimizar Tudo</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="288"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="290"/>
         <source>Restore All</source>
         <translation>Restaurar Tudo</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="289"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="291"/>
         <source>Cascade</source>
         <translation>Cascata</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="290"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="292"/>
         <source>Tile</source>
         <translation>Lado a Lado</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="291"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="293"/>
         <source>Close Window</source>
         <translation>Fechar Janela</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="292"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="294"/>
         <source>Manage Sessions…</source>
         <translation>Gerenciar Sessões...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="293"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="295"/>
         <source>Save Current Session…</source>
         <translation>Salvar a Sessão Atual...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="294"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="296"/>
         <source>Open URL</source>
         <translation>Abrir URL</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="295"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="311"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="297"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="313"/>
         <source>Open</source>
         <translation>Abrir</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="296"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="298"/>
         <source>Open in This Tab</source>
         <translation>Abrir Nesta Aba</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="297"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="312"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="299"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="314"/>
         <source>Open in New Tab</source>
         <translation>Abrir numa Nova Aba</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="298"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="313"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="300"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="315"/>
         <source>Open in New Background Tab</source>
         <translation>Abrir numa Nova Aba em 2º Plano</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="299"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="301"/>
         <source>Open in New Window</source>
         <translation>Abrir numa Nova Janela</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="300"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="302"/>
         <source>Open in New Background Window</source>
         <translation>Abrir numa Nova Janela em 2º Plano</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="301"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="303"/>
         <source>Open in New Private Tab</source>
         <translation>Abrir numa Nova Aba Privada</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="302"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="304"/>
         <source>Open in New Private Background Tab</source>
         <translation>Abrir numa Nova Aba Privada em 2º Plano</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="303"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="305"/>
         <source>Open in New Private Window</source>
         <translation>Abrir numa Nova Janela Privada</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="304"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="306"/>
         <source>Open in New Private Background Window</source>
         <translation>Abrir numa Nova Janela Privada em 2º Plano</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="305"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="314"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="407"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="307"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="316"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="410"/>
         <source>Open with…</source>
         <translation>Abrir com...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="305"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="307"/>
         <source>Open Link with External Application</source>
         <translation>Abrir Link com Aplicativo Externo</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="306"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="308"/>
         <source>Copy Link to Clipboard</source>
         <translation>Copiar o Link pra Área de Transferência</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="307"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="717"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="309"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="714"/>
         <source>Bookmark Link…</source>
         <translation>Link do Favorito...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="308"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="310"/>
         <source>Save Link Target As…</source>
         <translation>Salvar o Link Alvo Como...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="309"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="311"/>
         <source>Save to Downloads</source>
         <translation>Salvar em Downloads</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="310"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="312"/>
         <source>Go to This Address</source>
         <translation>Ir pra Este Endereço</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="311"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="313"/>
         <source>Open Frame in This Tab</source>
         <translation>Abrir o Frame Nesta Aba</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="312"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="314"/>
         <source>Open Frame in New Tab</source>
         <translation>Abrir o Frame numa Nova Aba</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="313"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="315"/>
         <source>Open Frame in New Background Tab</source>
         <translation>Abrir o Frame numa Nova Aba em 2º Plano</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="314"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="316"/>
         <source>Open Frame with External Application</source>
         <translation>Abrir Frame com Aplicativo Externo</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="315"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="317"/>
         <source>Copy Frame Link to Clipboard</source>
         <translation>Copiar o Link do Frame pra Área de Transferência</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="316"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="341"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="342"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="318"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="343"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="344"/>
         <source>Reload</source>
         <translation>Recarregar</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="316"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="318"/>
         <source>Reload Frame</source>
         <translation>Recarregar o Frame</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="317"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="319"/>
         <source>View Frame Source</source>
         <translation>Visualizar a Fonte do Frame</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="318"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="320"/>
         <source>Open Image In New Tab</source>
         <translation>Abrir Imagem numa Nova Aba</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="319"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="786"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="321"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="783"/>
         <source>Open Image in New Background Tab</source>
         <translation>Abrir Imagem numa Nova Aba em 2º Plano</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="320"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="322"/>
         <source>Save Image…</source>
         <translation>Salvar Imagem...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="321"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="323"/>
         <source>Copy Image to Clipboard</source>
         <translation>Copiar Imagem pra Área de Transferência</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="322"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="324"/>
         <source>Copy Image Link to Clipboard</source>
         <translation>Copiar o Link da Imagem pra Área de Transferência</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="323"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="325"/>
         <source>Reload Image</source>
         <translation>Recarregar Imagem</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="324"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="326"/>
         <source>Image Properties…</source>
         <translation>Propriedades da Imagem...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="325"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="327"/>
         <source>Save Media…</source>
         <translation>Salvar Mídia...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="326"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="328"/>
         <source>Copy Media Link to Clipboard</source>
         <translation>Copiar o Link da Mídia pra Área de Transferência</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="327"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="329"/>
         <source>Show Controls</source>
         <translation>Mostrar os Controles</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="328"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="330"/>
         <source>Looping</source>
         <translation>Looping</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="329"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="849"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="331"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="846"/>
         <source>Play</source>
         <translation>Reproduzir</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="330"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="856"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="332"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="853"/>
         <source>Mute</source>
         <translation>Mudo</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="331"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="333"/>
         <source>Go</source>
         <translation>Ir</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="332"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="334"/>
         <source>Back</source>
         <translation>Voltar</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="333"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="335"/>
         <source>Forward</source>
         <translation>Pra Frente</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="334"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="336"/>
         <source>Go to Page or Search</source>
         <translation>Ir pra Página ou Procurar</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="335"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="337"/>
         <source>Go to Home Page</source>
         <translation>Ir pra Página Inicial</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="336"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="338"/>
         <source>Go to Parent Directory</source>
         <translation>Ir pro Diretório Pai</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="337"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="339"/>
         <source>Rewind</source>
         <translation>Retroceder</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="338"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="340"/>
         <source>Fast Forward</source>
         <translation>Avançar Rápido</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="339"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="341"/>
         <source>Stop</source>
         <translation>Parar</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="340"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="342"/>
         <source>Stop Scheduled Page Reload</source>
         <translation>Parar o Recarregamento Agendado da Página</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="342"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="344"/>
         <source>Reload or Stop</source>
         <translation>Recarregar ou Parar</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="343"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="345"/>
         <source>Reload and Bypass Cache</source>
         <translation>Recarregar e Desviar do Cache</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="344"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="346"/>
         <source>Reload All Tabs</source>
         <translation>Recarregar Todas as Abas</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="345"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="347"/>
         <source>Reload Every</source>
         <translation>Recarregar a Cada</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="346"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="348"/>
         <source>Show Context Menu</source>
         <translation>Mostrar o Menu de Contexto</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="347"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="349"/>
         <source>Undo</source>
         <translation>Desfazer</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="348"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="350"/>
         <source>Redo</source>
         <translation>Refazer</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="349"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="351"/>
         <source>Cut</source>
         <translation>Cortar</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="350"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="352"/>
         <source>Copy</source>
         <translation>Copiar</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="351"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="353"/>
         <source>Copy as Plain Text</source>
         <translation>Copiar como Texto Simples</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="352"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="354"/>
         <source>Copy Address</source>
         <translation>Copiar Endereço</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="353"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="355"/>
         <source>Copy to Note</source>
         <translation>Copiar pra Nota</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="354"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="356"/>
         <source>Paste</source>
         <translation>Colar</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="355"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="357"/>
         <source>Paste and Go</source>
         <translation>Colar e Ir</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="356"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="358"/>
         <source>Insert Note</source>
         <translation>Inserir Nota</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="357"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="359"/>
         <source>Delete</source>
         <translation>Apagar</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="358"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="360"/>
         <source>Select All</source>
         <translation>Selecionar Tudo</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="359"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="361"/>
         <source>Clear All</source>
         <translation>Limpar Tudo</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="360"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="362"/>
         <source>Check Spelling</source>
         <translation>Verificar a Ortografia</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="361"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="363"/>
         <source>Find…</source>
         <translation>Achar...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="362"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="364"/>
         <source>Find Next</source>
         <translation>Achar o Próximo</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="363"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="365"/>
         <source>Find Previous</source>
         <translation>Achar o Anterior</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="364"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="366"/>
         <source>Quick Find</source>
         <translation>Busca Rápida</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="365"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="636"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="367"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="633"/>
         <source>Search</source>
         <translation>Busca</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="366"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="368"/>
         <source>Search Using</source>
         <translation>Procurar Usando</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="367"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="369"/>
         <source>Create Search…</source>
         <translation>Criar Busca...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="368"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="370"/>
         <source>Zoom In</source>
         <translation>Aumentar o Zoom</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="369"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="371"/>
         <source>Zoom Out</source>
         <translation>Diminuir o Zoom</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="370"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="372"/>
         <source>Zoom Original</source>
         <translation>Zoom Original</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="371"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="373"/>
         <source>Go to Start of the Page</source>
         <translation>Ir pro Início da Página</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="372"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="374"/>
         <source>Go to the End of the Page</source>
         <translation>Ir pro Fim da Página</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="373"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="375"/>
         <source>Page Up</source>
         <translation>Topo da Página</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="374"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="376"/>
         <source>Page Down</source>
         <translation>Rodapé da Página</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="375"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="377"/>
         <source>Page Left</source>
         <translation>Esquerda da Página</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="376"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="378"/>
         <source>Page Right</source>
         <translation>Direita da Página</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="377"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="379"/>
         <source>Enter Drag Scroll Mode</source>
         <translation>Inserir o Modo Arrastar e Rolar</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="378"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="380"/>
         <source>Enter Move Scroll Mode</source>
         <translation>Inserir o Modo Mover e Rolar</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="379"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="381"/>
         <source>Exit Scroll Mode</source>
         <translation>Sair do Modo Rolar</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="380"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="382"/>
         <source>Print…</source>
         <translation>Imprimir...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="381"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="383"/>
         <source>Print Preview</source>
         <translation>Pré-Visualização da Impressão</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="382"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="384"/>
         <source>Activate Address Field</source>
         <translation>Ativar o Campo do Endereço</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="383"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="385"/>
         <source>Activate Search Field</source>
         <translation>Ativar Campo de Busca</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="384"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="386"/>
         <source>Activate Content</source>
         <translation>Ativar Conteúdo</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="385"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="387"/>
         <source>Go to Previously Used Tab</source>
         <translation>Ir pra Aba Usada Anteriormente</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="386"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="388"/>
         <source>Go to Least Recently Used Tab</source>
         <translation>Ir pra Aba Menos Usada Recentemente</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="387"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="389"/>
         <source>Activate Tab</source>
         <translation>Ativar Aba</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="388"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="390"/>
         <source>Go to Tab on Left</source>
         <translation>Ir pra Aba a Esquerda</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="389"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="391"/>
         <source>Go to Tab on Right</source>
         <translation>Ir pra Aba a Direita</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="390"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="392"/>
         <source>Manage Bookmarks</source>
         <translation>Gerenciar Favoritos</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="391"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="516"/>
-        <source>Add Bookmark…</source>
-        <translation>Adicionar Favorito...</translation>
+        <location filename="../../src/core/ActionsManager.cpp" line="393"/>
+        <source>Bookmark Page…</source>
+        <translation>Página dos Favoritos...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="392"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="394"/>
+        <source>Bookmark All Open Pages</source>
+        <translation>Pôr nos Favoritos Todas as Páginas Abertas</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="395"/>
         <source>Open Bookmark</source>
         <translation>Abrir Favorito</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="393"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="396"/>
         <source>Quick Bookmark Access</source>
         <translation>Acesso Rápido aos Favoritos</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="394"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="397"/>
         <source>Block pop-ups</source>
         <translation>Bloquear pop-ups</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="395"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="398"/>
         <source>Load Images</source>
         <translation>Carregar Imagens</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="396"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="399"/>
         <source>Cookies</source>
         <translation>Cookies</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="397"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="400"/>
         <source>Cookies Policy</source>
         <translation>Norma dos Cookies</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="398"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="401"/>
         <source>Third-party Cookies Policy</source>
         <translation>Norma dos Cookies de Terceiros</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="399"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="402"/>
         <source>Plugins</source>
         <translation>Plugins</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="400"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="403"/>
         <source>Load Plugins</source>
         <translation>Carregar Plugins</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="401"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="404"/>
         <source>Enable JavaScript</source>
         <translation>Ativar JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="402"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="405"/>
         <source>Enable Java</source>
         <translation>Ativar Java</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="403"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="406"/>
         <source>Enable Referrer</source>
         <translation>Ativar Referência</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="404"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="407"/>
         <source>Proxy</source>
         <translation>Proxy</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="405"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="408"/>
         <source>Enable Proxy</source>
         <translation>Ativar Proxy</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="406"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="409"/>
         <source>View Source</source>
         <translation>Visualizar Código Fonte</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="407"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="410"/>
         <source>Open Current Page with External Application</source>
         <translation>Abrir Página Atual com Aplicativo Externo</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="408"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="411"/>
         <source>Validate</source>
         <translation>Validar</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="409"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="412"/>
         <source>Inspect Page</source>
         <translation>Inspecionar a Página</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="410"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="413"/>
         <source>Inspect Element…</source>
         <translation>Inspecionar Elemento...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="411"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="414"/>
         <source>Work Offline</source>
         <translation>Trabalhar Offline</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="412"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="415"/>
         <source>Full Screen</source>
         <translation>Tela Cheia</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="413"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="416"/>
         <source>Show Tab Switcher</source>
         <translation>Mostrar o Trocador de Abas</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="414"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="417"/>
         <source>Show Menubar</source>
         <translation>Mostrar a Barra do Menu</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="415"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="418"/>
         <source>Show Tabbar</source>
         <translation>Mostrar a Barra das Abas</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="416"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="419"/>
         <source>Show Sidebar</source>
         <translation>Mostrar a Barra Lateral</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="417"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="420"/>
         <source>Show Error Console</source>
         <translation>Mostrar o Console dos Erros</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="418"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="421"/>
         <source>Lock Toolbars</source>
         <translation>Trancar as Barras de Ferramentas</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="419"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="422"/>
         <source>Open Panel as Tab</source>
         <translation>Abrir Painel como Aba</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="420"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="423"/>
         <source>Close Panel</source>
         <translation>Fechar Painel</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="421"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="424"/>
         <source>Content Blocking…</source>
         <translation>Bloqueio de Conteúdo...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="422"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="425"/>
         <source>View History</source>
         <translation>Visualizar Histórico</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="423"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="426"/>
         <source>Clear History…</source>
         <translation>Limpar Histórico...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="424"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="427"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="46"/>
         <source>Notes</source>
         <translation>Anotações</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="425"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="428"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="44"/>
         <source>Transfers</source>
         <translation>Transferências</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="426"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="429"/>
         <source>Preferences…</source>
         <translation>Preferências...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="427"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="430"/>
         <source>Website Preferences…</source>
         <translation>Preferências do Site da Web...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="428"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="431"/>
         <source>Quick Preferences</source>
         <translation>Preferências Rápidas</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="429"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="432"/>
         <source>Reset Options</source>
         <translation>Resetar Opções</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="430"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="433"/>
         <source>Website Information…</source>
         <translation>Informação do Site da Web...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="431"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="434"/>
+        <source>Website Certificate Information…</source>
+        <translation>Informação do Certificado do Site da Web...</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="435"/>
         <source>Switch Application Language…</source>
         <translation>Trocar o Idioma da Aplicativo...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="432"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="436"/>
         <source>Check for Updates…</source>
         <translation>Procurar Atualizações...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="433"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="437"/>
         <source>Diagnostic Report…</source>
         <translation>Relatório de Diagnóstico...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="434"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="438"/>
         <source>About Otter…</source>
         <translation>Sobre o Otter...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="435"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="439"/>
         <source>About Qt…</source>
         <translation>Sobre o Qt...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="436"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="440"/>
         <source>Exit</source>
         <translation>Sair</translation>
     </message>
@@ -6752,7 +7392,7 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
         <translation>Barra de Status</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="302"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="327"/>
         <source>Remove Bookmark</source>
         <translation>Remover Favorito</translation>
     </message>
@@ -6762,7 +7402,7 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
         <translation>Copiar o endereço da página fonte</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="144"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="175"/>
         <source>Unpin Tab</source>
         <translation>Desanexar a Aba</translation>
     </message>
@@ -6772,47 +7412,52 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
         <translation>Mostrar as Janelas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="516"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="513"/>
         <source>Edit Bookmark…</source>
         <translation>Editar Favorito...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="717"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="513"/>
+        <source>Add Bookmark…</source>
+        <translation>Adicionar Favorito...</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebWidget.cpp" line="714"/>
         <source>Edit Link Bookmark…</source>
         <translation>Editar o Link do Favorito...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="780"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="777"/>
         <source>Open Image in New Tab</source>
         <translation>Abrir Imagem numa Nova Aba</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="825"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="822"/>
         <source>Save Video…</source>
         <translation>Salvar Vídeo...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="825"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="822"/>
         <source>Save Audio…</source>
         <translation>Salvar Áudio...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="831"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="828"/>
         <source>Copy Video Link to Clipboard</source>
         <translation>Copiar o Link do Vídeo pra Área de Transferência</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="831"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="828"/>
         <source>Copy Audio Link to Clipboard</source>
         <translation>Copiar o Link do Áudio pra Área de Transferência</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="849"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="846"/>
         <source>Pause</source>
         <translation>Pausar</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="856"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="853"/>
         <source>Unmute</source>
         <translation>Áudio Ligado</translation>
     </message>
@@ -6948,7 +7593,7 @@ Erro: %2</translation>
         <translation>Padrão</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="497"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="508"/>
         <source>Blocked request</source>
         <translation>Pedido bloqueado</translation>
     </message>
@@ -6984,6 +7629,34 @@ Erro: %2</translation>
         <location filename="../../src/core/NotificationsManager.cpp" line="89"/>
         <source>Update is available to be downloaded</source>
         <translation>A atualização está disponível pra ser baixada</translation>
+    </message>
+</context>
+<context>
+    <name>utils</name>
+    <message>
+        <location filename="../../src/core/Utils.cpp" line="145"/>
+        <source>Error %1</source>
+        <translation>Erro %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/Utils.cpp" line="147"/>
+        <source>You tried to access the address &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, which is currently unavailable. Please make sure that the web address (URL) is correctly spelled and punctuated, then try reloading the page.</source>
+        <translation>Você tentou acessar o endereço &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, o qual está atualmente indisponível. Por favor tenha certeza que o endereço da web (URL) está soletrado e pontuado corretamente, então tente recarregar a página.</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/Utils.cpp" line="154"/>
+        <source>Make sure your internet connection is active and check whether other applications that rely on the same connection are working.</source>
+        <translation>Tenha certeza que sua conexão com a internet está ativa e verifique se outras aplicações que confiam na mesma conexão estão funcionando.</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/Utils.cpp" line="155"/>
+        <source>Check that the setup of any internet security software is correct and does not interfere with ordinary web browsing.</source>
+        <translation>Verifique se a configuração de qualquer software de segurança da internet está correta e que não interfira com a navegação ordinária da web.</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/Utils.cpp" line="156"/>
+        <source>Try pressing the F12 key on your keyboard and disabling proxy servers, unless you know that you are required to use a proxy to connect to the internet, and then reload the page.</source>
+        <translation>Tente pressionar a tecla F12 no seu teclado e desative os servidores proxy, a menos que você saiba que é requerido a você usar um proxy pra conectar com a internet, e então recarregue a página.</translation>
     </message>
 </context>
 </TS>
