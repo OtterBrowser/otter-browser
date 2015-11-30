@@ -117,7 +117,7 @@ void CertificateDialog::exportCertificate()
 
 		if (!file.open(QIODevice::WriteOnly))
 		{
-			QMessageBox::critical(this, tr("Error"), tr("Filed to open file for writing."), QMessageBox::Close);
+			QMessageBox::critical(this, tr("Error"), tr("Failed to open file for writing."), QMessageBox::Close);
 
 			return;
 		}
@@ -226,7 +226,7 @@ void CertificateDialog::selectCertificate(const QModelIndex &index)
 		}
 		else if (title == QLatin1String("inhibitAnyPolicy"))
 		{
-			title = tr("Inhibit anyPolicy");
+			title = tr("Inhibit Any Policy");
 		}
 		else if (title == QLatin1String("freshestCRL"))
 		{
@@ -444,15 +444,15 @@ QStandardItem* CertificateDialog::createField(CertificateDialog::CertificateFiel
 
 			break;
 		case DigestField:
-			title = tr("Digest");
+			title = tr("Fingerprint");
 
 			break;
 		case DigestSha1Field:
-			title = tr("SHA-1 Digest");
+			title = tr("SHA-1 Fingerprint");
 
 			break;
 		case DigestSha256Field:
-			title = tr("SHA-256 Digest");
+			title = tr("SHA-256 Fingerprint");
 
 			break;
 		default:
