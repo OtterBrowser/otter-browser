@@ -136,6 +136,125 @@
       <attribute name="title">
        <string>Permissions</string>
       </attribute>
+      <layout class="QFormLayout" name="permissionsLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="preferencesHeaderLabel">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Preferences</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <layout class="QHBoxLayout" name="preferencesLayout">
+         <item>
+          <spacer name="preferencesSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="preferencesDetailsButton">
+           <property name="text">
+            <string>Details…</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="cookiesLabel">
+         <property name="text">
+          <string>Set cookies:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="thirdPartyCookiesLabel">
+         <property name="text">
+          <string>Set third party cookies:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="notificationsLabel">
+         <property name="text">
+          <string>Show notifications:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="geolocationLabel">
+         <property name="text">
+          <string>Access your location:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="pluginsLabel">
+         <property name="text">
+          <string>Load plugins:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="imagesLabel">
+         <property name="text">
+          <string>Load images:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="javascriptLabel">
+         <property name="text">
+          <string>Use JavaScript:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="cookiesValueLabel"/>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="thirdPartyCookiesValueLabel"/>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="pluginsValueLabel"/>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLabel" name="imagesValueLabel"/>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLabel" name="javascriptValueLabel"/>
+       </item>
+       <item row="6" column="1">
+        <widget class="QLabel" name="geolocationValueLabel"/>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLabel" name="notificationsValueLabel"/>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="popupsLabel">
+         <property name="text">
+          <string>Show pop-up windows:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QLabel" name="popupsValueLabel"/>
+       </item>
+      </layout>
      </widget>
      <widget class="QWidget" name="securityTab">
       <attribute name="title">
@@ -160,7 +279,7 @@
          <item row="0" column="1">
           <layout class="QHBoxLayout" name="certificateLayout">
            <item>
-            <spacer name="horizontalSpacer">
+            <spacer name="certificateSpacer">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
@@ -277,7 +396,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QLabel" name="sslErrorsLabel">
+        <widget class="QLabel" name="sslErrorsHeaderLabel">
          <property name="font">
           <font>
            <weight>75</weight>
@@ -306,6 +425,13 @@
      </widget>
     </widget>
    </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Close</set>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -322,5 +448,22 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>Otter::WebsiteInformationDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>199</x>
+     <y>477</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>249</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

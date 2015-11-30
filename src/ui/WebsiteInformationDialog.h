@@ -43,6 +43,7 @@ protected:
 	void changeEvent(QEvent *event);
 
 protected slots:
+	void showPreferences();
 	void showCertificate();
 
 private:

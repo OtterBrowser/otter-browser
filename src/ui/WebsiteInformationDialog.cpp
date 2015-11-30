@@ -31,7 +31,6 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 	m_ui(new Ui::WebsiteInformationDialog)
 {
 	m_ui->setupUi(this);
-	m_ui->tabWidget->setTabEnabled(1, false);
 
 	const QVariantHash statistics = widget->getStatistics();
 	const WindowsManager::ContentStates state = widget->getContentState();
@@ -87,6 +86,107 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 	m_ui->elementsLabelWidget->setText((statistics.value(QLatin1String("requestsBlocked")).toInt() > 0) ? tr("%1 (%n blocked)", "", statistics.value(QLatin1String("requestsBlocked")).toInt()).arg(statistics.value(QLatin1String("requestsStarted")).toInt()) : QString::number(statistics.value(QLatin1String("requestsStarted")).toInt()));
 	m_ui->downloadDateLabelWidget->setText(Utils::formatDateTime(statistics.value(QLatin1String("dateDownloaded")).toDateTime()));
 
+	const QString cookiesPolicy = widget->getOption(QLatin1String("Network/CookiesPolicy")).toString();
+
+	if (cookiesPolicy == QLatin1String("acceptExisting"))
+	{
+		m_ui->cookiesValueLabel->setText(tr("Only existing"));
+	}
+	else if (cookiesPolicy == QLatin1String("readOnly"))
+	{
+		m_ui->cookiesValueLabel->setText(tr("Only read existing"));
+	}
+	else if (cookiesPolicy == QLatin1String("ignore"))
+	{
+		m_ui->cookiesValueLabel->setText(tr("Never"));
+	}
+	else
+	{
+		m_ui->cookiesValueLabel->setText(tr("Always"));
+	}
+
+	const QString thirdPartyCookiesPolicy = widget->getOption(QLatin1String("Network/ThirdPartyCookiesPolicy")).toString();
+
+	if (thirdPartyCookiesPolicy == QLatin1String("acceptExisting"))
+	{
+		m_ui->thirdPartyCookiesValueLabel->setText(tr("Only existing"));
+	}
+	else if (thirdPartyCookiesPolicy == QLatin1String("ignore"))
+	{
+		m_ui->thirdPartyCookiesValueLabel->setText(tr("Never"));
+	}
+	else
+	{
+		m_ui->thirdPartyCookiesValueLabel->setText(tr("Always"));
+	}
+
+	const QString pluginsPolicy = widget->getOption(QLatin1String("Browser/EnablePlugins")).toString();
+
+	if (pluginsPolicy == QLatin1String("enabled"))
+	{
+		m_ui->pluginsValueLabel->setText(tr("Always"));
+	}
+	else if (pluginsPolicy == QLatin1String("disabled"))
+	{
+		m_ui->pluginsValueLabel->setText(tr("Never"));
+	}
+	else
+	{
+		m_ui->pluginsValueLabel->setText(tr("On demand"));
+	}
+
+	m_ui->imagesValueLabel->setText(widget->getOption(QLatin1String("Browser/EnableImages")).toBool() ? tr("Always") : tr("Never"));
+	m_ui->javascriptValueLabel->setText(widget->getOption(QLatin1String("Browser/EnableJavaScript")).toBool() ? tr("Always") : tr("Never"));
+
+	const QString geolocationPolicy = widget->getOption(QLatin1String("Browser/EnableGeolocation")).toString();
+
+	if (geolocationPolicy == QLatin1String("enabled"))
+	{
+		m_ui->geolocationValueLabel->setText(tr("Always"));
+	}
+	else if (geolocationPolicy == QLatin1String("disabled"))
+	{
+		m_ui->geolocationValueLabel->setText(tr("Never"));
+	}
+	else
+	{
+		m_ui->geolocationValueLabel->setText(tr("Always Ask"));
+	}
+
+	const QString notificationsPolicy = widget->getOption(QLatin1String("Browser/EnableNotifications")).toString();
+
+	if (notificationsPolicy == QLatin1String("enabled"))
+	{
+		m_ui->notificationsValueLabel->setText(tr("Always"));
+	}
+	else if (notificationsPolicy == QLatin1String("disabled"))
+	{
+		m_ui->notificationsValueLabel->setText(tr("Never"));
+	}
+	else
+	{
+		m_ui->notificationsValueLabel->setText(tr("Always Ask"));
+	}
+
+	const QString popupsPolicy = widget->getOption(QLatin1String("Content/PopupsPolicy")).toString();
+
+	if (popupsPolicy == QLatin1String("openAll"))
+	{
+		m_ui->popupsValueLabel->setText(tr("Always"));
+	}
+	else if (popupsPolicy == QLatin1String("openAllBackground"))
+	{
+		m_ui->popupsValueLabel->setText(tr("Always (open in backgound)"));
+	}
+	else if (popupsPolicy == QLatin1String("blockAll"))
+	{
+		m_ui->popupsValueLabel->setText(tr("Never"));
+	}
+	else
+	{
+		m_ui->popupsValueLabel->setText(tr("Ask"));
+	}
+
 	if (m_sslInformation.certificates.isEmpty())
 	{
 		m_ui->tabWidget->setTabEnabled(2, false);
@@ -107,7 +207,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 
 	if (m_sslInformation.errors.isEmpty())
 	{
-		m_ui->sslErrorsLabel->hide();
+		m_ui->sslErrorsHeaderLabel->hide();
 		m_ui->sslErrorsViewWidget->hide();
 	}
 	else
@@ -134,6 +234,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 
 	setWindowTitle(tr("Information for %1").arg(host));
 
+	connect(m_ui->preferencesDetailsButton, SIGNAL(clicked(bool)), this, SLOT(showPreferences()));
 	connect(m_ui->certificateDetailsButton, SIGNAL(clicked(bool)), this, SLOT(showCertificate()));
 }
 
@@ -150,6 +251,11 @@ void WebsiteInformationDialog::changeEvent(QEvent *event)
 	{
 		m_ui->retranslateUi(this);
 	}
+}
+
+void WebsiteInformationDialog::showPreferences()
+{
+	ActionsManager::triggerAction(ActionsManager::WebsitePreferencesAction, this);
 }
 
 void WebsiteInformationDialog::showCertificate()
