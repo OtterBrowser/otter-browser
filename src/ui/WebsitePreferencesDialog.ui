@@ -79,21 +79,6 @@
          <property name="enabled">
           <bool>false</bool>
          </property>
-         <item>
-          <property name="text">
-           <string>Block all pop-ups</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Open all pop-ups</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Open all pop-ups in background</string>
-          </property>
-         </item>
         </widget>
        </item>
        <item row="4" column="0" alignment="Qt::AlignHCenter">

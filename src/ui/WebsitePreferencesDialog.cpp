@@ -74,6 +74,11 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 		m_ui->encodingComboBox->addItem(codec->name(), textCodecs.at(i));
 	}
 
+	m_ui->popupsComboBox->addItem(tr("Ask"), QLatin1String("ask"));
+	m_ui->popupsComboBox->addItem(tr("Block all"), QLatin1String("blockAll"));
+	m_ui->popupsComboBox->addItem(tr("Open all"), QLatin1String("openAll"));
+	m_ui->popupsComboBox->addItem(tr("Open all in background"), QLatin1String("openAllBackground"));
+
 	m_ui->pluginsComboBox->addItem(tr("Enabled"), QLatin1String("enabled"));
 	m_ui->pluginsComboBox->addItem(tr("On demand"), QLatin1String("onDemand"));
 	m_ui->pluginsComboBox->addItem(tr("Disabled"), QLatin1String("disabled"));
