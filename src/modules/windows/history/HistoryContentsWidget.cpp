@@ -266,7 +266,7 @@ void HistoryContentsWidget::removeEntry()
 {
 	const quint64 entry = getEntry(m_ui->historyViewWidget->currentIndex());
 
-	if (entry >= 0)
+	if (entry > 0)
 	{
 		HistoryManager::removeEntry(entry);
 	}
@@ -351,7 +351,7 @@ void HistoryContentsWidget::showContextMenu(const QPoint &point)
 	const quint64 entry = getEntry(m_ui->historyViewWidget->indexAt(point));
 	QMenu menu(this);
 
-	if (entry >= 0)
+	if (entry > 0)
 	{
 		menu.addAction(Utils::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openEntry()));
 		menu.addAction(tr("Open in New Tab"), this, SLOT(openEntry()))->setData(WindowsManager::NewTabOpen);
