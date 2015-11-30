@@ -95,9 +95,10 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 	{
 		const QSslCertificate certificate = m_sslInformation.certificates.first();
 
-		m_ui->certificateNameLabelWidget->setText(certificate.subjectInfo(QSslCertificate::CommonName).join(QLatin1String(", ")));
-		m_ui->certificateEffectiveDateLabelWidget->setText(Utils::formatDateTime(certificate.effectiveDate()));
-		m_ui->certificateExpirationDateLabelWidget->setText(Utils::formatDateTime(certificate.expiryDate()));
+		m_ui->certificateIssuedToLabelWidget->setText(certificate.subjectInfo(QSslCertificate::CommonName).join(QLatin1String(", ")));
+		m_ui->certificateIssuedByLabelWidget->setText(certificate.issuerInfo(QSslCertificate::CommonName).join(QLatin1String(", ")));
+		m_ui->certificateIssuedOnLabelWidget->setText(Utils::formatDateTime(certificate.effectiveDate()));
+		m_ui->certificateExpiresOnLabelWidget->setText(Utils::formatDateTime(certificate.expiryDate()));
 		m_ui->cipherProtocolLabelWidget->setText(m_sslInformation.cipher.protocolString());
 		m_ui->cipherAuthenticationMethodLabelWidget->setText(m_sslInformation.cipher.authenticationMethod());
 		m_ui->cipherEncryptionMethodLabelWidget->setText(m_sslInformation.cipher.encryptionMethod());

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>346</width>
-    <height>338</height>
+    <width>400</width>
+    <height>400</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -156,27 +156,27 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QLabel" name="certificateNameLabel">
+        <widget class="QLabel" name="certificateIissuedToLabel">
          <property name="text">
-          <string>Name:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="certificateExpirationDateLabel">
-         <property name="text">
-          <string>Expiration date:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="certificateEffectiveDateLabel">
-         <property name="text">
-          <string>Effective date:</string>
+          <string>Issued to:</string>
          </property>
         </widget>
        </item>
        <item row="4" column="0">
+        <widget class="QLabel" name="certificateExpiresOnLabel">
+         <property name="text">
+          <string>Expires on:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="certificateIssuedOnLabel">
+         <property name="text">
+          <string>Issued on:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
         <widget class="QLabel" name="cipherHeaderLabel">
          <property name="font">
           <font>
@@ -189,28 +189,28 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
+       <item row="6" column="0">
         <widget class="QLabel" name="cipherProtocolLabel">
          <property name="text">
           <string>Protocol:</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
+       <item row="7" column="0">
         <widget class="QLabel" name="cipherAuthenticationMethodLabel">
          <property name="text">
           <string>Authentication method:</string>
          </property>
         </widget>
        </item>
-       <item row="8" column="0">
+       <item row="9" column="0">
         <widget class="QLabel" name="cipherKeyExchangeMethodLabel">
          <property name="text">
           <string>Key exchange method:</string>
          </property>
         </widget>
        </item>
-       <item row="7" column="0">
+       <item row="8" column="0">
         <widget class="QLabel" name="cipherEncryptionMethodLabel">
          <property name="text">
           <string>Encryption method:</string>
@@ -242,25 +242,35 @@
         </layout>
        </item>
        <item row="1" column="1">
-        <widget class="Otter::TextLabelWidget" name="certificateNameLabelWidget" native="true"/>
-       </item>
-       <item row="2" column="1">
-        <widget class="Otter::TextLabelWidget" name="certificateEffectiveDateLabelWidget" native="true"/>
+        <widget class="Otter::TextLabelWidget" name="certificateIssuedToLabelWidget" native="true"/>
        </item>
        <item row="3" column="1">
-        <widget class="Otter::TextLabelWidget" name="certificateExpirationDateLabelWidget" native="true"/>
+        <widget class="Otter::TextLabelWidget" name="certificateIssuedOnLabelWidget" native="true"/>
        </item>
-       <item row="5" column="1">
-        <widget class="Otter::TextLabelWidget" name="cipherProtocolLabelWidget" native="true"/>
+       <item row="4" column="1">
+        <widget class="Otter::TextLabelWidget" name="certificateExpiresOnLabelWidget" native="true"/>
        </item>
        <item row="6" column="1">
-        <widget class="Otter::TextLabelWidget" name="cipherAuthenticationMethodLabelWidget" native="true"/>
+        <widget class="Otter::TextLabelWidget" name="cipherProtocolLabelWidget" native="true"/>
        </item>
        <item row="7" column="1">
-        <widget class="Otter::TextLabelWidget" name="cipherEncryptionMethodLabelWidget" native="true"/>
+        <widget class="Otter::TextLabelWidget" name="cipherAuthenticationMethodLabelWidget" native="true"/>
        </item>
        <item row="8" column="1">
+        <widget class="Otter::TextLabelWidget" name="cipherEncryptionMethodLabelWidget" native="true"/>
+       </item>
+       <item row="9" column="1">
         <widget class="Otter::TextLabelWidget" name="cipherKeyExchangeMethodLabelWidget" native="true"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="certificateIssuedByLabel">
+         <property name="text">
+          <string>Issued by:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="Otter::TextLabelWidget" name="certificateIssuedByLabelWidget" native="true"/>
        </item>
       </layout>
      </widget>
