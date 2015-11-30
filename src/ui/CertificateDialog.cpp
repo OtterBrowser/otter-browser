@@ -24,11 +24,11 @@
 #include <QtCore/QFile>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QTextStream>
-#include <QtGui/QPushButton>
 #include <QtNetwork/QSslCertificateExtension>
 #include <QtNetwork/QSslKey>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
+#include <QtWidgets/QPushButton>
 
 namespace Otter
 {
@@ -108,7 +108,7 @@ void CertificateDialog::exportCertificate()
 	}
 
 	QString filter;
-	const QString fileName = QFileDialog::getSaveFileName(this, tr("Select File"), QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), tr("DER Encoded X509 Certificates (*.der);;PEM Encoded X509 Certificates (*.pem);;Text files (*.txt)"), &filter);
+	const QString fileName = QFileDialog::getSaveFileName(this, tr("Select File"), QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), tr("DER encoded X509 certificates (*.der);;PEM encoded X509 certificates (*.pem);;Text files (*.txt)"), &filter);
 
 	if (!fileName.isEmpty())
 	{
