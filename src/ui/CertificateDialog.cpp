@@ -121,8 +121,79 @@ void CertificateDialog::selectCertificate(const QModelIndex &index)
 
 	for (int i = 0; i < certificate.extensions().count(); ++i)
 	{
+		QString title = certificate.extensions().at(i).name();
+
+		if (title == QLatin1String("authorityKeyIdentifier"))
+		{
+			title = tr("Authority Key Identifier");
+		}
+		else if (title == QLatin1String("subjectKeyIdentifier"))
+		{
+			title = tr("Subject Key Identifier");
+		}
+		else if (title == QLatin1String("keyUsage"))
+		{
+			title = tr("Key Usage");
+		}
+		else if (title == QLatin1String("certificatePolicies"))
+		{
+			title = tr("Certificate Policies");
+		}
+		else if (title == QLatin1String("policyMappings"))
+		{
+			title = tr("Policy Mappings");
+		}
+		else if (title == QLatin1String("subjectAltName"))
+		{
+			title = tr("Subject Alternative Name");
+		}
+		else if (title == QLatin1String("issuerAltName"))
+		{
+			title = tr("Issuer Alternative Name");
+		}
+		else if (title == QLatin1String("subjectDirectoryAttributes"))
+		{
+			title = tr("Subject Directory Attributes");
+		}
+		else if (title == QLatin1String("basicConstraints"))
+		{
+			title = tr("Basic Constraints");
+		}
+		else if (title == QLatin1String("nameConstraints"))
+		{
+			title = tr("Name Constraints");
+		}
+		else if (title == QLatin1String("policyConstraints"))
+		{
+			title = tr("Policy Constraints");
+		}
+		else if (title == QLatin1String("extendedKeyUsage"))
+		{
+			title = tr("Extended Key Usage");
+		}
+		else if (title == QLatin1String("crlDistributionPoints"))
+		{
+			title = tr("CRL Distribution Points");
+		}
+		else if (title == QLatin1String("inhibitAnyPolicy"))
+		{
+			title = tr("Inhibit anyPolicy");
+		}
+		else if (title == QLatin1String("freshestCRL"))
+		{
+			title = tr("Delta CRL Distribution Point");
+		}
+		else if (title == QLatin1String("authorityInfoAccess"))
+		{
+			title = tr("Authority Information Access");
+		}
+		else if (title == QLatin1String("subjectInfoAccess"))
+		{
+			title = tr("Subject Information Access");
+		}
+
 		QMap<int, QVariant> data;
-		data[Qt::DisplayRole] = certificate.extensions().at(i).name();
+		data[Qt::DisplayRole] = title;
 		data[Qt::UserRole + 1] = i;
 
 		createField(ExtensionField, extensionsItem, data);
@@ -247,6 +318,11 @@ void CertificateDialog::selectField(const QModelIndex &index)
 		default:
 			break;
 	}
+
+	QTextCursor cursor(m_ui->valueTextEdit->textCursor());
+	cursor.setPosition(0);
+
+	m_ui->valueTextEdit->setTextCursor(cursor);
 }
 
 QStandardItem* CertificateDialog::createField(CertificateDialog::CertificateField field, QStandardItem *parent, const QMap<int, QVariant> &data)
