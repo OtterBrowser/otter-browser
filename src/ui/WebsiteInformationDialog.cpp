@@ -86,15 +86,17 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 	m_ui->elementsLabelWidget->setText((statistics.value(QLatin1String("requestsBlocked")).toInt() > 0) ? tr("%1 (%n blocked)", "", statistics.value(QLatin1String("requestsBlocked")).toInt()).arg(statistics.value(QLatin1String("requestsStarted")).toInt()) : QString::number(statistics.value(QLatin1String("requestsStarted")).toInt()));
 	m_ui->downloadDateLabelWidget->setText(Utils::formatDateTime(statistics.value(QLatin1String("dateDownloaded")).toDateTime()));
 
-	if (m_sslInformation.certificate.isNull())
+	if (m_sslInformation.certificates.isEmpty())
 	{
 		m_ui->tabWidget->setTabEnabled(2, false);
 	}
 	else
 	{
-		m_ui->certificateNameLabelWidget->setText(m_sslInformation.certificate.subjectInfo(QSslCertificate::CommonName).join(QLatin1String(", ")));
-		m_ui->certificateEffectiveDateLabelWidget->setText(Utils::formatDateTime(m_sslInformation.certificate.effectiveDate()));
-		m_ui->certificateExpirationDateLabelWidget->setText(Utils::formatDateTime(m_sslInformation.certificate.expiryDate()));
+		const QSslCertificate certificate = m_sslInformation.certificates.first();
+
+		m_ui->certificateNameLabelWidget->setText(certificate.subjectInfo(QSslCertificate::CommonName).join(QLatin1String(", ")));
+		m_ui->certificateEffectiveDateLabelWidget->setText(Utils::formatDateTime(certificate.effectiveDate()));
+		m_ui->certificateExpirationDateLabelWidget->setText(Utils::formatDateTime(certificate.expiryDate()));
 		m_ui->cipherProtocolLabelWidget->setText(m_sslInformation.cipher.protocolString());
 		m_ui->cipherAuthenticationMethodLabelWidget->setText(m_sslInformation.cipher.authenticationMethod());
 		m_ui->cipherEncryptionMethodLabelWidget->setText(m_sslInformation.cipher.encryptionMethod());

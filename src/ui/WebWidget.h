@@ -118,8 +118,8 @@ public:
 
 	struct SslInformation
 	{
-		QSslCertificate certificate;
 		QSslCipher cipher;
+		QList<QSslCertificate> certificates;
 		QList<QPair<QUrl, QSslError> > errors;
 	};
 

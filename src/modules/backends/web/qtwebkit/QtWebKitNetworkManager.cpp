@@ -317,12 +317,12 @@ void QtWebKitNetworkManager::requestFinished(QNetworkReply *reply)
 		{
 			if (reply->sslConfiguration().isNull())
 			{
-				m_sslInformation.certificate = QSslCertificate();
+				m_sslInformation.certificates = QList<QSslCertificate>();
 				m_sslInformation.cipher = QSslCipher();
 			}
 			else
 			{
-				m_sslInformation.certificate = reply->sslConfiguration().peerCertificate();
+				m_sslInformation.certificates = reply->sslConfiguration().peerCertificateChain();
 				m_sslInformation.cipher = reply->sslConfiguration().sessionCipher();
 			}
 		}
