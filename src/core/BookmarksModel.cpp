@@ -889,26 +889,19 @@ QList<BookmarksModel::BookmarkMatch> BookmarksModel::findBookmarks(const QString
 
 	for (urlsIterator = m_urls.constBegin(); urlsIterator != m_urls.constEnd(); ++urlsIterator)
 	{
-		if (urlsIterator.value().isEmpty())
+		if (urlsIterator.value().isEmpty() || matchedBookmarks.contains(urlsIterator.value().first()))
 		{
 			continue;
 		}
 
-		BookmarksModel::BookmarkMatch match;
+		const QString result = Utils::matchUrl(urlsIterator.key(), prefix);
 
-		if (urlsIterator.key().toString().startsWith(prefix, Qt::CaseInsensitive))
+		if (!result.isEmpty())
 		{
+			BookmarkMatch match;
 			match.bookmark = urlsIterator.value().first();
-			match.match = urlsIterator.key().toString();
-		}
-		else if (urlsIterator.key().toString(QUrl::RemoveScheme).mid(2).startsWith(prefix, Qt::CaseInsensitive))
-		{
-			match.bookmark = urlsIterator.value().first();
-			match.match = urlsIterator.key().toString(QUrl::RemoveScheme).mid(2);
-		}
+			match.match = result;
 
-		if (match.bookmark && !matchedBookmarks.contains(match.bookmark))
-		{
 			matchesMap.insert(match.bookmark->data(TimeVisitedRole).toDateTime(), match);
 
 			matchedBookmarks.append(match.bookmark);

@@ -57,6 +57,35 @@ void runApplication(const QString &command, const QUrl &url)
 	}
 }
 
+QString matchUrl(const QUrl &url, const QString &prefix)
+{
+	QString match = url.toString();
+
+	if (match.startsWith(prefix, Qt::CaseInsensitive))
+	{
+		return match;
+	}
+
+	match = url.toString(QUrl::RemoveScheme).mid(2);
+
+	if (match.startsWith(prefix, Qt::CaseInsensitive))
+	{
+		return match;
+	}
+
+	if (match.startsWith(QLatin1String("www.")) && url.host().count(QLatin1Char('.')) > 1)
+	{
+		match = match.mid(4);
+
+		if (match.startsWith(prefix, Qt::CaseInsensitive))
+		{
+			return match;
+		}
+	}
+
+	return QString();
+}
+
 QString createIdentifier(const QString &base, const QStringList &exclude, bool toLowerCase)
 {
 	QString identifier;

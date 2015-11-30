@@ -41,6 +41,7 @@ namespace Utils
 {
 
 void runApplication(const QString &command, const QUrl &url = QUrl());
+QString matchUrl(const QUrl &url, const QString &prefix);
 QString createIdentifier(const QString &base, const QStringList &exclude, bool toLowerCase = true);
 QString createErrorPage(const QUrl &url, const QString &errorNumber, const QString &errorString);
 QString elideText(const QString &text, QWidget *widget = NULL, int width = -1);

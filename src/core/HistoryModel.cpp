@@ -112,26 +112,19 @@ QList<HistoryModel::HistoryEntryMatch> HistoryModel::findEntries(const QString &
 
 	for (urlsIterator = m_urls.constBegin(); urlsIterator != m_urls.constEnd(); ++urlsIterator)
 	{
-		if (urlsIterator.value().isEmpty())
+		if (urlsIterator.value().isEmpty() || matchedEntries.contains(urlsIterator.value().first()))
 		{
 			continue;
 		}
 
-		HistoryModel::HistoryEntryMatch match;
+		const QString result = Utils::matchUrl(urlsIterator.key(), prefix);
 
-		if (urlsIterator.key().toString().startsWith(prefix, Qt::CaseInsensitive))
+		if (!result.isEmpty())
 		{
+			HistoryEntryMatch match;
 			match.entry = urlsIterator.value().first();
-			match.match = urlsIterator.key().toString();
-		}
-		else if (urlsIterator.key().toString(QUrl::RemoveScheme).mid(2).startsWith(prefix, Qt::CaseInsensitive))
-		{
-			match.entry = urlsIterator.value().first();
-			match.match = urlsIterator.key().toString(QUrl::RemoveScheme).mid(2);
-		}
+			match.match = result;
 
-		if (match.entry && !matchedEntries.contains(match.entry))
-		{
 			matchesMap.insert(match.entry->data(TimeVisitedRole).toDateTime(), match);
 
 			matchedEntries.append(match.entry);
