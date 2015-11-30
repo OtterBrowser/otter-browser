@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>400</height>
+    <height>500</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -141,136 +141,166 @@
       <attribute name="title">
        <string>Security</string>
       </attribute>
-      <layout class="QFormLayout" name="securityLayout">
-       <item row="0" column="0">
-        <widget class="QLabel" name="certificateHeaderLabel">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>Certificate</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="certificateIissuedToLabel">
-         <property name="text">
-          <string>Issued to:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="certificateExpiresOnLabel">
-         <property name="text">
-          <string>Expires on:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="certificateIssuedOnLabel">
-         <property name="text">
-          <string>Issued on:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="cipherHeaderLabel">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>Cipher</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="cipherProtocolLabel">
-         <property name="text">
-          <string>Protocol:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="cipherAuthenticationMethodLabel">
-         <property name="text">
-          <string>Authentication method:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="0">
-        <widget class="QLabel" name="cipherKeyExchangeMethodLabel">
-         <property name="text">
-          <string>Key exchange method:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0">
-        <widget class="QLabel" name="cipherEncryptionMethodLabel">
-         <property name="text">
-          <string>Encryption method:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <layout class="QHBoxLayout" name="certificateLayout">
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+      <layout class="QVBoxLayout" name="securityLayout">
+       <item>
+        <layout class="QFormLayout" name="formLayout">
+         <item row="0" column="0">
+          <widget class="QLabel" name="certificateHeaderLabel">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
            </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="certificateDetailsButton">
            <property name="text">
-            <string>Details…</string>
+            <string>Certificate</string>
            </property>
           </widget>
          </item>
+         <item row="0" column="1">
+          <layout class="QHBoxLayout" name="certificateLayout">
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="certificateDetailsButton">
+             <property name="text">
+              <string>Details…</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="certificateIissuedToLabel">
+           <property name="text">
+            <string>Issued to:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="certificateIssuedByLabel">
+           <property name="text">
+            <string>Issued by:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="certificateIssuedOnLabel">
+           <property name="text">
+            <string>Issued on:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="certificateExpiresOnLabel">
+           <property name="text">
+            <string>Expires on:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0">
+          <widget class="QLabel" name="cipherHeaderLabel">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Cipher</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0">
+          <widget class="QLabel" name="cipherProtocolLabel">
+           <property name="text">
+            <string>Protocol:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="0">
+          <widget class="QLabel" name="cipherAuthenticationMethodLabel">
+           <property name="text">
+            <string>Authentication method:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="8" column="0">
+          <widget class="QLabel" name="cipherEncryptionMethodLabel">
+           <property name="text">
+            <string>Encryption method:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="0">
+          <widget class="QLabel" name="cipherKeyExchangeMethodLabel">
+           <property name="text">
+            <string>Key exchange method:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="Otter::TextLabelWidget" name="certificateIssuedByLabelWidget" native="true"/>
+         </item>
+         <item row="1" column="1">
+          <widget class="Otter::TextLabelWidget" name="certificateIssuedToLabelWidget" native="true"/>
+         </item>
+         <item row="3" column="1">
+          <widget class="Otter::TextLabelWidget" name="certificateIssuedOnLabelWidget" native="true"/>
+         </item>
+         <item row="4" column="1">
+          <widget class="Otter::TextLabelWidget" name="certificateExpiresOnLabelWidget" native="true"/>
+         </item>
+         <item row="6" column="1">
+          <widget class="Otter::TextLabelWidget" name="cipherProtocolLabelWidget" native="true"/>
+         </item>
+         <item row="7" column="1">
+          <widget class="Otter::TextLabelWidget" name="cipherAuthenticationMethodLabelWidget" native="true"/>
+         </item>
+         <item row="8" column="1">
+          <widget class="Otter::TextLabelWidget" name="cipherEncryptionMethodLabelWidget" native="true"/>
+         </item>
+         <item row="9" column="1">
+          <widget class="Otter::TextLabelWidget" name="cipherKeyExchangeMethodLabelWidget" native="true"/>
+         </item>
         </layout>
        </item>
-       <item row="1" column="1">
-        <widget class="Otter::TextLabelWidget" name="certificateIssuedToLabelWidget" native="true"/>
-       </item>
-       <item row="3" column="1">
-        <widget class="Otter::TextLabelWidget" name="certificateIssuedOnLabelWidget" native="true"/>
-       </item>
-       <item row="4" column="1">
-        <widget class="Otter::TextLabelWidget" name="certificateExpiresOnLabelWidget" native="true"/>
-       </item>
-       <item row="6" column="1">
-        <widget class="Otter::TextLabelWidget" name="cipherProtocolLabelWidget" native="true"/>
-       </item>
-       <item row="7" column="1">
-        <widget class="Otter::TextLabelWidget" name="cipherAuthenticationMethodLabelWidget" native="true"/>
-       </item>
-       <item row="8" column="1">
-        <widget class="Otter::TextLabelWidget" name="cipherEncryptionMethodLabelWidget" native="true"/>
-       </item>
-       <item row="9" column="1">
-        <widget class="Otter::TextLabelWidget" name="cipherKeyExchangeMethodLabelWidget" native="true"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="certificateIssuedByLabel">
+       <item>
+        <widget class="QLabel" name="sslErrorsLabel">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="text">
-          <string>Issued by:</string>
+          <string>SSL Errors</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
-        <widget class="Otter::TextLabelWidget" name="certificateIssuedByLabelWidget" native="true"/>
+       <item>
+        <widget class="Otter::ItemViewWidget" name="sslErrorsViewWidget">
+         <property name="mouseTracking">
+          <bool>true</bool>
+         </property>
+         <property name="editTriggers">
+          <set>QAbstractItemView::NoEditTriggers</set>
+         </property>
+         <attribute name="headerDefaultSectionSize">
+          <number>200</number>
+         </attribute>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -279,6 +309,11 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>Otter::ItemViewWidget</class>
+   <extends>QTreeView</extends>
+   <header>src/ui/ItemViewWidget.h</header>
+  </customwidget>
   <customwidget>
    <class>Otter::TextLabelWidget</class>
    <extends>QWidget</extends>

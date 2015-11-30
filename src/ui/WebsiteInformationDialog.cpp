@@ -105,6 +105,33 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		m_ui->cipherKeyExchangeMethodLabelWidget->setText(m_sslInformation.cipher.keyExchangeMethod());
 	}
 
+	if (m_sslInformation.errors.isEmpty())
+	{
+		m_ui->sslErrorsLabel->hide();
+		m_ui->sslErrorsViewWidget->hide();
+	}
+	else
+	{
+		QStringList sslErrorsLabels;
+		sslErrorsLabels << tr("Error Message") << tr("URL");
+
+		QStandardItemModel *sslErrorsModel = new QStandardItemModel(this);
+		sslErrorsModel->setHorizontalHeaderLabels(sslErrorsLabels);
+
+		for (int i = 0; i < m_sslInformation.errors.count(); ++i)
+		{
+			QList<QStandardItem*> items;
+			items.append(new QStandardItem(m_sslInformation.errors.at(i).second.errorString()));
+			items[0]->setToolTip(items[0]->text());
+			items.append(new QStandardItem(m_sslInformation.errors.at(i).first.toDisplayString()));
+			items[1]->setToolTip(items[1]->text());
+
+			sslErrorsModel->appendRow(items);
+		}
+
+		m_ui->sslErrorsViewWidget->setModel(sslErrorsModel);
+	}
+
 	setWindowTitle(tr("Information for %1").arg(host));
 
 	connect(m_ui->certificateDetailsButton, SIGNAL(clicked(bool)), this, SLOT(showCertificate()));
