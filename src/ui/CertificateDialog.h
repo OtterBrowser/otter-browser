@@ -68,8 +68,8 @@ protected:
 
 protected slots:
 	void exportCertificate();
-	void selectCertificate(const QModelIndex &index);
-	void selectField(const QModelIndex &index);
+	void updateCertificate();
+	void updateValue();
 
 private:
 	QList<QSslCertificate> m_certificates;

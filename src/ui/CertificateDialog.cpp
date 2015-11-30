@@ -77,10 +77,10 @@ CertificateDialog::CertificateDialog(QList<QSslCertificate> certificates, QWidge
 	m_ui->detailsItemView->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->detailsItemView->setModel(new QStandardItemModel(this));
 
-	selectCertificate(chainModel->index(0, 0));
+	updateCertificate();
 
-	connect(m_ui->chainItemView, SIGNAL(clicked(QModelIndex)), this, SLOT(selectCertificate(QModelIndex)));
-	connect(m_ui->detailsItemView, SIGNAL(clicked(QModelIndex)), this, SLOT(selectField(QModelIndex)));
+	connect(m_ui->chainItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateCertificate()));
+	connect(m_ui->detailsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateValue()));
 	connect(m_ui->buttonBox->button(QDialogButtonBox::Save), SIGNAL(clicked(bool)), this, SLOT(exportCertificate()));
 }
 
@@ -140,9 +140,9 @@ void CertificateDialog::exportCertificate()
 	}
 }
 
-void CertificateDialog::selectCertificate(const QModelIndex &index)
+void CertificateDialog::updateCertificate()
 {
-	const QSslCertificate certificate = m_certificates.value(index.data(Qt::UserRole).toInt());
+	const QSslCertificate certificate = m_certificates.value(m_ui->chainItemView->currentIndex().data(Qt::UserRole).toInt());
 
 	m_ui->detailsItemView->getModel()->clear();
 
@@ -257,10 +257,10 @@ void CertificateDialog::selectCertificate(const QModelIndex &index)
 	m_ui->valueTextEdit->clear();
 }
 
-void CertificateDialog::selectField(const QModelIndex &index)
+void CertificateDialog::updateValue()
 {
 	const QSslCertificate certificate = m_certificates.value(m_ui->chainItemView->currentIndex().data(Qt::UserRole).toInt());
-	const CertificateField field = static_cast<CertificateField>(index.data(Qt::UserRole).toInt());
+	const CertificateField field = static_cast<CertificateField>(m_ui->detailsItemView->currentIndex().data(Qt::UserRole).toInt());
 
 	m_ui->valueTextEdit->clear();
 
@@ -331,7 +331,7 @@ void CertificateDialog::selectField(const QModelIndex &index)
 			break;
 		case ExtensionField:
 			{
-				const QSslCertificateExtension extension = certificate.extensions().value(index.data(Qt::UserRole + 1).toInt());
+				const QSslCertificateExtension extension = certificate.extensions().value(m_ui->detailsItemView->currentIndex().data(Qt::UserRole + 1).toInt());
 
 				m_ui->valueTextEdit->setPlainText(extension.isCritical() ? tr("Critical") : tr("Not Critical"));
 				m_ui->valueTextEdit->appendPlainText(tr("OID: %1").arg(extension.oid()));
