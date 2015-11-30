@@ -540,7 +540,7 @@ qint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QIc
 
 bool HistoryManager::hasEntry(const QUrl &url)
 {
-	return (m_isEnabled && getLocation(url, false) >= 0);
+	return (m_isEnabled && getLocation(url, false) > 0);
 }
 
 bool HistoryManager::updateEntry(quint64 identifier, const QUrl &url, const QString &title, const QIcon &icon)
@@ -629,7 +629,7 @@ bool HistoryManager::removeEntries(const QList<quint64> &identifiers)
 
 	for (int i = 0; i < identifiers.count(); ++i)
 	{
-		if (identifiers.at(i) >= 0)
+		if (identifiers.at(i) > 0)
 		{
 			list.append(QString::number(identifiers.at(i)));
 		}
