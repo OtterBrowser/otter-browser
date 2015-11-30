@@ -822,6 +822,7 @@ void AddressWidget::setCompletion(const QString &filter)
 			m_completionView->viewport()->installEventFilter(this);
 
 			connect(m_completionView, SIGNAL(clicked(QModelIndex)), this, SLOT(openUrl(QModelIndex)));
+			connect(m_completionView, SIGNAL(entered(QModelIndex)), this, SLOT(setText(QModelIndex)));
 
 			m_completionView->move(mapToGlobal(contentsRect().bottomLeft()));
 			m_completionView->show();
@@ -865,6 +866,11 @@ void AddressWidget::setIcon(const QIcon &icon)
 void AddressWidget::setText(const QString &text)
 {
 	m_lineEdit->setText(text);
+}
+
+void AddressWidget::setText(const QModelIndex &index)
+{
+	m_lineEdit->setText(index.data(AddressCompletionModel::TextRole).toString());
 }
 
 void AddressWidget::setUrl(const QUrl &url, bool force)
@@ -1163,16 +1169,24 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 				case Qt::Key_End:
 				case Qt::Key_Home:
 				case Qt::Key_Up:
-					if (keyEvent->key() == Qt::Key_Up && m_completionView->currentIndex().row() == 0 && m_completionModel->rowCount() > 1)
+					if (keyEvent->key() == Qt::Key_Up && m_completionModel->rowCount() > 1)
 					{
-						m_completionView->setCurrentIndex(m_completionModel->index(m_completionModel->rowCount() - 1));
+						const QModelIndex index((m_completionView->currentIndex().row() == 0) ? m_completionModel->index(m_completionModel->rowCount() - 1) : m_completionModel->index(m_completionView->currentIndex().row() - 1));
+
+						m_completionView->setCurrentIndex(index);
+
+						setText(index);
 
 						return true;
 					}
 				case Qt::Key_Down:
-					if (keyEvent->key() == Qt::Key_Down && m_completionView->currentIndex().row() == (m_completionModel->rowCount() - 1) && m_completionModel->rowCount() > 1)
+					if (keyEvent->key() == Qt::Key_Down && m_completionModel->rowCount() > 1)
 					{
-						m_completionView->setCurrentIndex(m_completionModel->index(0));
+						const QModelIndex index((m_completionView->currentIndex().row() == (m_completionModel->rowCount() - 1)) ? m_completionModel->index(0) : m_completionModel->index(m_completionView->currentIndex().row() + 1));
+
+						m_completionView->setCurrentIndex(index);
+
+						setText(index);
 
 						return true;
 					}
@@ -1181,13 +1195,8 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 					return false;
 				case Qt::Key_Return:
 				case Qt::Key_Enter:
+					openUrl(m_lineEdit->text());
 				case Qt::Key_Tab:
-					if (m_completionView->currentIndex().isValid())
-					{
-						openUrl(m_completionView->currentIndex());
-
-						return true;
-					}
 				case Qt::Key_Backtab:
 				case Qt::Key_Escape:
 				case Qt::Key_F4:

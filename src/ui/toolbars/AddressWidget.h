@@ -92,6 +92,7 @@ protected slots:
 	void updateIcons();
 	void setCompletion(const QString &filter);
 	void setIcon(const QIcon &icon);
+	void setText(const QModelIndex &index);
 
 private:
 	QPointer<Window> m_window;
