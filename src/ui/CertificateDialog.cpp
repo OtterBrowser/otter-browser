@@ -22,6 +22,7 @@
 #include "ui_CertificateDialog.h"
 
 #include <QtCore/QFile>
+#include <QtCore/QRegularExpression>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QTextStream>
 #include <QtNetwork/QSslCertificateExtension>
@@ -147,7 +148,7 @@ void CertificateDialog::selectCertificate(const QModelIndex &index)
 
 	createField(VersionField);
 	createField(SerialNumberField);
-	createField(SignatureAlgorithmField)->setEnabled(false);
+	createField(SignatureAlgorithmField);
 	createField(IssuerField);
 
 	QStandardItem *validityItem = createField(ValidityField);
@@ -159,10 +160,9 @@ void CertificateDialog::selectCertificate(const QModelIndex &index)
 
 	QStandardItem *publicKeyItem = createField(PublicKeyField);
 	publicKeyItem->setFlags(Qt::ItemIsEnabled);
-	publicKeyItem->setEnabled(false);
 
-	createField(PublicKeyAlgorithmField, publicKeyItem)->setEnabled(false);
-	createField(PublicKeyValueField, publicKeyItem)->setEnabled(false);
+	createField(PublicKeyAlgorithmField, publicKeyItem);
+	createField(PublicKeyValueField, publicKeyItem);
 
 	QStandardItem *extensionsItem = createField(ExtensionsField);
 	extensionsItem->setFlags(Qt::ItemIsEnabled);
@@ -267,7 +267,7 @@ void CertificateDialog::selectField(const QModelIndex &index)
 	switch (field)
 	{
 		case ValidityField:
-		case PublicKeyValueField:
+		case PublicKeyField:
 		case ExtensionsField:
 		case DigestField:
 			break;
@@ -276,11 +276,12 @@ void CertificateDialog::selectField(const QModelIndex &index)
 
 			break;
 		case SerialNumberField:
-			m_ui->valueTextEdit->setPlainText(QString(certificate.serialNumber()).toUpper());
+			m_ui->valueTextEdit->setPlainText(formatHex(QString(certificate.serialNumber()), QLatin1Char(':')));
 
 			break;
 		case SignatureAlgorithmField:
-///FIXME
+			m_ui->valueTextEdit->setPlainText(QRegularExpression(QLatin1String("Signature Algorithm:(.+)")).match(certificate.toText()).captured(1).trimmed());
+
 			break;
 		case IssuerField:
 			{
@@ -312,11 +313,21 @@ void CertificateDialog::selectField(const QModelIndex &index)
 			}
 
 			break;
-		case PublicKeyField:
-///FIXME
+		case PublicKeyValueField:
+			{
+				const QRegularExpression expression(QLatin1String("Public-Key:[.\\s\\S]+Modulus:([.\\s\\S]+)Exponent:(.+)"), QRegularExpression::MultilineOption);
+				const QRegularExpressionMatch match = expression.match(certificate.toText());
+
+				if (match.hasMatch())
+				{
+					m_ui->valueTextEdit->setPlainText(tr("Modulus:\n%1\n\nExponent: %2").arg(formatHex(match.captured(1).trimmed().mid(3))).arg(match.captured(2).trimmed()));
+				}
+			}
+
 			break;
 		case PublicKeyAlgorithmField:
-///FIXME
+			m_ui->valueTextEdit->setPlainText(QRegularExpression(QLatin1String("Public Key Algorithm:(.+)")).match(certificate.toText()).captured(1).trimmed());
+
 			break;
 		case ExtensionField:
 			{
@@ -357,11 +368,11 @@ void CertificateDialog::selectField(const QModelIndex &index)
 
 			break;
 		case DigestSha1Field:
-			m_ui->valueTextEdit->setPlainText(QString(certificate.digest(QCryptographicHash::Sha1).toHex()).toUpper());
+			m_ui->valueTextEdit->setPlainText(formatHex(QString(certificate.digest(QCryptographicHash::Sha1).toHex())));
 
 			break;
 		case DigestSha256Field:
-			m_ui->valueTextEdit->setPlainText(QString(certificate.digest(QCryptographicHash::Sha256).toHex()).toUpper());
+			m_ui->valueTextEdit->setPlainText(formatHex(QString(certificate.digest(QCryptographicHash::Sha256).toHex())));
 
 			break;
 		default:
@@ -468,6 +479,43 @@ QStandardItem* CertificateDialog::createField(CertificateDialog::CertificateFiel
 	}
 
 	return item;
+}
+
+QString CertificateDialog::formatHex(const QString &source, const QChar &separator)
+{
+	QString result;
+	int characterCount = 0;
+	int pairCount = 0;
+
+	for (int i = 0; i < source.length(); ++i)
+	{
+		if (source.at(i).isLetterOrNumber())
+		{
+			result.append(source.at(i));
+
+			++characterCount;
+
+			if (characterCount == 2)
+			{
+				++pairCount;
+
+				if (pairCount == 16)
+				{
+					result.append(QLatin1Char('\n'));
+
+					pairCount = 0;
+				}
+				else
+				{
+					result.append(separator);
+				}
+
+				characterCount = 0;
+			}
+		}
+	}
+
+	return result.trimmed().toUpper();
 }
 
 }

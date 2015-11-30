@@ -64,6 +64,7 @@ public:
 protected:
 	void changeEvent(QEvent *event);
 	QStandardItem* createField(CertificateField field, QStandardItem *parent = NULL, const QMap<int, QVariant> &data = QMap<int, QVariant>());
+	QString formatHex(const QString &source, const QChar &separator = QLatin1Char(' '));
 
 protected slots:
 	void exportCertificate();
