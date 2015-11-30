@@ -122,6 +122,7 @@ SOURCES += src/main.cpp \
     src/ui/BookmarksBarDialog.cpp \
     src/ui/BookmarksComboBoxWidget.cpp \
     src/ui/BookmarksImporterWidget.cpp \
+    src/ui/CertificateDialog.cpp \
     src/ui/ClearHistoryDialog.cpp \
     src/ui/ConsoleWidget.cpp \
     src/ui/ContentsDialog.cpp \
@@ -284,6 +285,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/BookmarksBarDialog.h \
     src/ui/BookmarksComboBoxWidget.h \
     src/ui/BookmarksImporterWidget.h \
+    src/ui/CertificateDialog.h \
     src/ui/ClearHistoryDialog.h \
     src/ui/ConsoleWidget.h \
     src/ui/ContentsDialog.h \
@@ -397,6 +399,7 @@ FORMS += src/ui/AcceptCookieDialog.ui \
     src/ui/BookmarkPropertiesDialog.ui \
     src/ui/BookmarksBarDialog.ui \
     src/ui/BookmarksImporterWidget.ui \
+    src/ui/CertificateDialog.ui \
     src/ui/ClearHistoryDialog.ui \
     src/ui/ConsoleWidget.ui \
     src/ui/ImagePropertiesDialog.ui \

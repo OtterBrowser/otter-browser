@@ -234,9 +234,6 @@
          </item>
          <item>
           <widget class="QPushButton" name="certificateDetailsButton">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
            <property name="text">
             <string>Details…</string>
            </property>

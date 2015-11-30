@@ -129,6 +129,7 @@ set(otter_src
 	src/ui/BookmarksBarDialog.cpp
 	src/ui/BookmarksComboBoxWidget.cpp
 	src/ui/BookmarksImporterWidget.cpp
+	src/ui/CertificateDialog.cpp
 	src/ui/ClearHistoryDialog.cpp
 	src/ui/ConsoleWidget.cpp
 	src/ui/ContentsDialog.cpp
@@ -249,6 +250,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/BookmarkPropertiesDialog.ui
 	src/ui/BookmarksBarDialog.ui
 	src/ui/BookmarksImporterWidget.ui
+	src/ui/CertificateDialog.ui
 	src/ui/ClearHistoryDialog.ui
 	src/ui/ConsoleWidget.ui
 	src/ui/ImagePropertiesDialog.ui

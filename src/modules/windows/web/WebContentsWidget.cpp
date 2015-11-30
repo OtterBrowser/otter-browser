@@ -28,6 +28,7 @@
 #include "../../../core/SettingsManager.h"
 #include "../../../core/Utils.h"
 #include "../../../core/WebBackend.h"
+#include "../../../ui/CertificateDialog.h"
 #include "../../../ui/ContentsDialog.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/SourceViewerWebWidget.h"
@@ -555,6 +556,15 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				connect(m_websiteInformationDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
 
 				showDialog(dialog, false);
+			}
+
+			break;
+		case ActionsManager::WebsiteCertificateInformationAction:
+			if (!m_webWidget->getSslInformation().certificates.isEmpty())
+			{
+				CertificateDialog *dialog = new CertificateDialog(m_webWidget->getSslInformation().certificates);
+				dialog->setAttribute(Qt::WA_DeleteOnClose);
+				dialog->show();
 			}
 
 			break;

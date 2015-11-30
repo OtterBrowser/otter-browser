@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "WebsiteInformationDialog.h"
+#include "CertificateDialog.h"
 #include "../core/Utils.h"
 
 #include "ui_WebsiteInformationDialog.h"
@@ -104,6 +105,8 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 	}
 
 	setWindowTitle(tr("Information for %1").arg(host));
+
+	connect(m_ui->certificateDetailsButton, SIGNAL(clicked(bool)), this, SLOT(showCertificate()));
 }
 
 WebsiteInformationDialog::~WebsiteInformationDialog()
@@ -119,6 +122,13 @@ void WebsiteInformationDialog::changeEvent(QEvent *event)
 	{
 		m_ui->retranslateUi(this);
 	}
+}
+
+void WebsiteInformationDialog::showCertificate()
+{
+	CertificateDialog *dialog = new CertificateDialog(m_sslInformation.certificates);
+	dialog->setAttribute(Qt::WA_DeleteOnClose);
+	dialog->show();
 }
 
 }

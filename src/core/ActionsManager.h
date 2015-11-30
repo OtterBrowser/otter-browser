@@ -241,6 +241,7 @@ public:
 		QuickPreferencesAction,
 		ResetQuickPreferencesAction,
 		WebsiteInformationAction,
+		WebsiteCertificateInformationAction,
 		SwitchApplicationLanguageAction,
 		CheckForUpdatesAction,
 		DiagnosticReportAction,

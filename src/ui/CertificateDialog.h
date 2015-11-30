@@ -17,37 +17,61 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_WEBSITEINFORMATIONDIALOG_H
-#define OTTER_WEBSITEINFORMATIONDIALOG_H
+#ifndef OTTER_CERTIFICATEDIALOG_H
+#define OTTER_CERTIFICATEDIALOG_H
 
 #include "Dialog.h"
-#include "WebWidget.h"
+
+#include <QtGui/QStandardItem>
+#include <QtNetwork/QSslCertificate>
 
 namespace Otter
 {
 
 namespace Ui
 {
-	class WebsiteInformationDialog;
+	class CertificateDialog;
 }
 
-class WebsiteInformationDialog : public Dialog
+class CertificateDialog : public Dialog
 {
 	Q_OBJECT
 
 public:
-	explicit WebsiteInformationDialog(WebWidget *widget, QWidget *parent = NULL);
-	~WebsiteInformationDialog();
+	enum CertificateField
+	{
+		VersionField = 0,
+		SerialNumberField,
+		SignatureAlgorithmField,
+		IssuerField,
+		ValidityField,
+		ValidityNotBeforeField,
+		ValidityNotAfterField,
+		SubjectField,
+		PublicKeyField,
+		PublicKeyAlgorithmField,
+		PublicKeyValueField,
+		ExtensionsField,
+		ExtensionField,
+		DigestField,
+		DigestSha1Field,
+		DigestSha256Field
+	};
+
+	explicit CertificateDialog(QList<QSslCertificate> certificates, QWidget *parent = NULL);
+	~CertificateDialog();
 
 protected:
 	void changeEvent(QEvent *event);
+	QStandardItem* createField(CertificateField field, QStandardItem *parent = NULL, const QMap<int, QVariant> &data = QMap<int, QVariant>());
 
 protected slots:
-	void showCertificate();
+	void selectCertificate(const QModelIndex &index);
+	void selectField(const QModelIndex &index);
 
 private:
-	WebWidget::SslInformation m_sslInformation;
-	Ui::WebsiteInformationDialog *m_ui;
+	QList<QSslCertificate> m_certificates;
+	Ui::CertificateDialog *m_ui;
 };
 
 }
