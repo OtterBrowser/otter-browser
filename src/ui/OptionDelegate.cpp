@@ -23,8 +23,8 @@
 namespace Otter
 {
 
-OptionDelegate::OptionDelegate(bool simple, QObject *parent) : QItemDelegate(parent),
-	m_simple(simple)
+OptionDelegate::OptionDelegate(bool isSimple, QObject *parent) : QItemDelegate(parent),
+	m_isSimple(isSimple)
 {
 }
 
@@ -38,7 +38,7 @@ void OptionDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionVie
 
 void OptionDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-	if (m_simple)
+	if (m_isSimple)
 	{
 		OptionWidget *widget = qobject_cast<OptionWidget*>(editor);
 
@@ -53,7 +53,7 @@ QWidget* OptionDelegate::createEditor(QWidget *parent, const QStyleOptionViewIte
 {
 	Q_UNUSED(option)
 
-	OptionWidget *widget = new OptionWidget(m_simple, index.data(Qt::UserRole).toString(), index.data(Qt::UserRole + 1).toString(), index.data(Qt::EditRole), index.data(Qt::UserRole + 2).toStringList(), index, parent);
+	OptionWidget *widget = new OptionWidget(m_isSimple, index.data(Qt::UserRole).toString(), index.data(Qt::UserRole + 1).toString(), index.data(Qt::EditRole), index.data(Qt::UserRole + 2).toStringList(), index, parent);
 
 	connect(widget, SIGNAL(commitData(QWidget*)), this, SIGNAL(commitData(QWidget*)));
 

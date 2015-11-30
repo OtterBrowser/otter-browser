@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-OptionWidget::OptionWidget(bool simple, const QString &option, const QString &type, const QVariant &value, const QStringList &choices, const QModelIndex &index, QWidget *parent) : QWidget(parent),
+OptionWidget::OptionWidget(bool isSimple, const QString &option, const QString &type, const QVariant &value, const QStringList &choices, const QModelIndex &index, QWidget *parent) : QWidget(parent),
 	m_widget(NULL),
 	m_colorButton(NULL),
 	m_comboBox(NULL),
@@ -117,7 +117,7 @@ OptionWidget::OptionWidget(bool simple, const QString &option, const QString &ty
 	layout->setMargin(0);
 	layout->addWidget(m_widget);
 
-	if (!simple)
+	if (!isSimple)
 	{
 		m_resetButton = new QPushButton(tr("Defaults"), this);
 		m_resetButton->setEnabled(currentValue != SettingsManager::getDefaultValue(option));

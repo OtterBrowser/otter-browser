@@ -29,7 +29,7 @@ namespace Otter
 class OptionDelegate : public QItemDelegate
 {
 public:
-	explicit OptionDelegate(bool simple, QObject *parent);
+	explicit OptionDelegate(bool isSimple, QObject *parent);
 
 	void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
@@ -37,7 +37,7 @@ public:
 	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
 private:
-	bool m_simple;
+	bool m_isSimple;
 };
 
 }
