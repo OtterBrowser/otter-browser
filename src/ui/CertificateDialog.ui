@@ -10,7 +10,7 @@
     <height>400</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,2,0,3,0,1">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,2,0,3,0,1,0">
    <item>
     <widget class="QLabel" name="chainLabel">
      <property name="text">
@@ -56,6 +56,16 @@
     <widget class="QPlainTextEdit" name="valueTextEdit">
      <property name="readOnly">
       <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Save</set>
      </property>
     </widget>
    </item>

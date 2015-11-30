@@ -66,6 +66,7 @@ protected:
 	QStandardItem* createField(CertificateField field, QStandardItem *parent = NULL, const QMap<int, QVariant> &data = QMap<int, QVariant>());
 
 protected slots:
+	void exportCertificate();
 	void selectCertificate(const QModelIndex &index);
 	void selectField(const QModelIndex &index);
 

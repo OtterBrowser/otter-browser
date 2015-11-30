@@ -21,8 +21,14 @@
 
 #include "ui_CertificateDialog.h"
 
+#include <QtCore/QFile>
+#include <QtCore/QStandardPaths>
+#include <QtCore/QTextStream>
+#include <QtGui/QPushButton>
 #include <QtNetwork/QSslCertificateExtension>
 #include <QtNetwork/QSslKey>
+#include <QtWidgets/QFileDialog>
+#include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
@@ -32,6 +38,7 @@ CertificateDialog::CertificateDialog(QList<QSslCertificate> certificates, QWidge
 	m_ui(new Ui::CertificateDialog)
 {
 	m_ui->setupUi(this);
+	m_ui->buttonBox->button(QDialogButtonBox::Save)->setText(tr("Export…"));
 
 	if (certificates.isEmpty())
 	{
@@ -73,6 +80,7 @@ CertificateDialog::CertificateDialog(QList<QSslCertificate> certificates, QWidge
 
 	connect(m_ui->chainItemView, SIGNAL(clicked(QModelIndex)), this, SLOT(selectCertificate(QModelIndex)));
 	connect(m_ui->detailsItemView, SIGNAL(clicked(QModelIndex)), this, SLOT(selectField(QModelIndex)));
+	connect(m_ui->buttonBox->button(QDialogButtonBox::Save), SIGNAL(clicked(bool)), this, SLOT(exportCertificate()));
 }
 
 CertificateDialog::~CertificateDialog()
@@ -87,6 +95,47 @@ void CertificateDialog::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+	}
+}
+
+void CertificateDialog::exportCertificate()
+{
+	const QSslCertificate certificate = m_certificates.value(m_ui->chainItemView->currentIndex().data(Qt::UserRole).toInt());
+
+	if (certificate.isNull())
+	{
+		return;
+	}
+
+	QString filter;
+	const QString fileName = QFileDialog::getSaveFileName(this, tr("Select File"), QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), tr("DER Encoded X509 Certificates (*.der);;PEM Encoded X509 Certificates (*.pem);;Text files (*.txt)"), &filter);
+
+	if (!fileName.isEmpty())
+	{
+		QFile file(fileName);
+
+		if (!file.open(QIODevice::WriteOnly))
+		{
+			QMessageBox::critical(this, tr("Error"), tr("Filed to open file for writing."), QMessageBox::Close);
+
+			return;
+		}
+
+		if (filter.contains(QLatin1String(".der")))
+		{
+			file.write(certificate.toDer());
+		}
+		else if (filter.contains(QLatin1String(".pem")))
+		{
+			file.write(certificate.toPem());
+		}
+		else
+		{
+			QTextStream stream(&file);
+			stream << certificate.toText();
+		}
+
+		file.close();
 	}
 }
 
@@ -270,41 +319,41 @@ void CertificateDialog::selectField(const QModelIndex &index)
 ///FIXME
 			break;
 		case ExtensionField:
-		{
-			const QSslCertificateExtension extension = certificate.extensions().value(index.data(Qt::UserRole + 1).toInt());
-
-			m_ui->valueTextEdit->setPlainText(extension.isCritical() ? tr("Critical") : tr("Not Critical"));
-			m_ui->valueTextEdit->appendPlainText(tr("OID: %1").arg(extension.oid()));
-
-			if (!extension.value().isNull())
 			{
-				m_ui->valueTextEdit->appendPlainText(tr("Value:"));
+				const QSslCertificateExtension extension = certificate.extensions().value(index.data(Qt::UserRole + 1).toInt());
 
-				if (extension.value().type() == QVariant::List)
+				m_ui->valueTextEdit->setPlainText(extension.isCritical() ? tr("Critical") : tr("Not Critical"));
+				m_ui->valueTextEdit->appendPlainText(tr("OID: %1").arg(extension.oid()));
+
+				if (!extension.value().isNull())
 				{
-					const QVariantList list = extension.value().toList();
+					m_ui->valueTextEdit->appendPlainText(tr("Value:"));
 
-					for (int i = 0; i < list.count(); ++i)
+					if (extension.value().type() == QVariant::List)
 					{
-						m_ui->valueTextEdit->appendPlainText(list.at(i).toString());
-					}
-				}
-				else if (extension.value().type() == QVariant::Map)
-				{
-					const QVariantMap map = extension.value().toMap();
-					QVariantMap::const_iterator iterator;
+						const QVariantList list = extension.value().toList();
 
-					for (iterator = map.constBegin(); iterator != map.constEnd(); ++iterator)
-					{
-						m_ui->valueTextEdit->appendPlainText(QStringLiteral("%1 = %2").arg(iterator.key()).arg(iterator.value().toString()));
+						for (int i = 0; i < list.count(); ++i)
+						{
+							m_ui->valueTextEdit->appendPlainText(list.at(i).toString());
+						}
 					}
-				}
-				else
-				{
-					m_ui->valueTextEdit->appendPlainText(extension.value().toString());
+					else if (extension.value().type() == QVariant::Map)
+					{
+						const QVariantMap map = extension.value().toMap();
+						QVariantMap::const_iterator iterator;
+
+						for (iterator = map.constBegin(); iterator != map.constEnd(); ++iterator)
+						{
+							m_ui->valueTextEdit->appendPlainText(QStringLiteral("%1 = %2").arg(iterator.key()).arg(iterator.value().toString()));
+						}
+					}
+					else
+					{
+						m_ui->valueTextEdit->appendPlainText(extension.value().toString());
+					}
 				}
 			}
-		}
 
 			break;
 		case DigestSha1Field:
