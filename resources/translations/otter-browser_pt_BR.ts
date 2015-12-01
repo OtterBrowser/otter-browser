@@ -924,7 +924,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="120"/>
         <source>Failed to open file for writing.</source>
-        <translation type="unfinished"/>
+        <translation>Falhou em abrir o arquivo para a gravação</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="177"/>
@@ -994,7 +994,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="229"/>
         <source>Inhibit Any Policy</source>
-        <translation type="unfinished"/>
+        <translation>Inibir Qualquer Norma</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="233"/>
@@ -1105,17 +1105,17 @@ Exponente: %2</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="447"/>
         <source>Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>Impressão Digital</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="451"/>
         <source>SHA-1 Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>Impressão Digital do SHA-1</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="455"/>
         <source>SHA-256 Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>Impressão Digital do SHA-256</translation>
     </message>
 </context>
 <context>
@@ -2053,7 +2053,7 @@ Você quer continuar?</translation>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="313"/>
         <source>Open All</source>
-        <translation>Abrir Tudo</translation>
+        <translation>Abrir Todos</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="321"/>
@@ -2572,18 +2572,18 @@ Você quer continuar?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="68"/>
-        <source>Blocked pop-ups</source>
-        <translation>Pop-ups bloqueados</translation>
+        <source>Blocked Pop-ups</source>
+        <translation>Pop-ups Bloqueados</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="69"/>
-        <source>Open all</source>
-        <translation>Abrir tudo</translation>
+        <source>Open All</source>
+        <translation>Abrir Todos</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="118"/>
         <source>%1 wants to open %n pop-up window(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 quer abrir %n janela(s) de pop-up.</numerusform><numerusform>%1 quer abrir %n janela(s) de pop-up.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3127,85 +3127,85 @@ Você quer continuar?</translation>
         <translation>Bloqueio</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="38"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="35"/>
         <source>Pop-ups:</source>
         <translation>Pop-ups:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="57"/>
         <source>Zoom</source>
         <translation>Zoom</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="75"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="69"/>
         <source>Default zoom:</source>
         <translation>Zoom padrão:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="85"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="79"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="103"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="97"/>
         <source>Zoom text only</source>
         <translation>Só fazer zoom no texto</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="116"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="110"/>
         <source>Fonts</source>
         <translation>Fontes</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="157"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="151"/>
         <source>Style</source>
         <translation>Estilo</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="162"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="156"/>
         <source>Font</source>
         <translation>Fonte</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="167"/>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="306"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="161"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="300"/>
         <source>Preview</source>
         <translation>Pré-Visualização</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="177"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="171"/>
         <source>Default proportional font size:</source>
         <translation>Tamanho padrão proporcional da fonte:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="187"/>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="213"/>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="242"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="181"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="207"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="236"/>
         <source> px</source>
         <translation> px</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="203"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="197"/>
         <source>Default fixed-width font size:</source>
         <translation>Tamanho padrão da fonte de largura ampla:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="229"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="223"/>
         <source>Minimum font size:</source>
         <translation>Tamanho mínimo da fonte:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="239"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="233"/>
         <source>None</source>
         <translation>Nenhum</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="263"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="257"/>
         <source>Colors</source>
         <translation>Cores</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="301"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="295"/>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
@@ -3222,7 +3222,7 @@ Você quer continuar?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="38"/>
         <source>Open all</source>
-        <translation>Abrir tudo</translation>
+        <translation>Abrir todos</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="39"/>
@@ -3822,61 +3822,61 @@ Você quer continuar?</translation>
 <context>
     <name>Otter::QtWebKitPage</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="185"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="323"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="360"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="213"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="384"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="421"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="186"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="324"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="361"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="214"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="385"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="422"/>
         <source>Disable JavaScript popups</source>
         <translation>Desativar popups do JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="286"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="447"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="334"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="347"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="508"/>
         <source>Question</source>
         <translation>Pergunta</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="287"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="334"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="348"/>
         <source>Are you sure that you want to send form data again?</source>
         <translation>Você tem certeza que você quer enviar os dados do formulário de novo?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="288"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="334"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="349"/>
         <source>Do you want to resend data?</source>
         <translation>Você quer re-enviar os dados?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="274"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="292"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="335"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="353"/>
         <source>Do not show this message again</source>
         <translation>Não mostrar esta mensagem de novo</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="402"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="463"/>
         <source>Open File</source>
         <translation>Abrir Arquivo</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="435"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="496"/>
         <source>%1 error #%2: %3</source>
         <translation>%1 erro #%2: %3</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="447"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="508"/>
         <source>The script on this page appears to have a problem.</source>
         <translation>O script nesta página aparenta ter um problema.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="447"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="508"/>
         <source>Do you want to stop the script?</source>
         <translation>Você quer parar o script?</translation>
     </message>
@@ -3905,72 +3905,72 @@ Você quer continuar?</translation>
 <context>
     <name>Otter::QtWebKitWebWidget</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="327"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="332"/>
         <source>Error</source>
         <translation>Erro</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="327"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="332"/>
         <source>Failed to open file for writing.</source>
         <translation>Falhou em abrir o arquivo para a gravação</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="347"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="352"/>
         <source>file</source>
         <translation>arquivo</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="358"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="363"/>
         <source>Failed to save image: %1</source>
         <translation>Falhou em salvar a imagem: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="479"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="484"/>
         <source>Print Preview</source>
         <translation>Pré-Visualização da Impressão</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="538"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="543"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="538"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="543"/>
         <source>Webpage wants to close this tab, do you want to allow to close it?</source>
         <translation>A página da web quer fechar esta aba, você quer permiti-la que a feche?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="539"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="544"/>
         <source>Do not show this message again</source>
         <translation>Não mostrar esta mensagem de novo</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="676"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="681"/>
         <source>Undo</source>
         <translation>Desfazer</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="676"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="681"/>
         <source>Undo: %1</source>
         <translation>Desfazer: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="681"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="686"/>
         <source>Redo</source>
         <translation>Refazer</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="681"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="686"/>
         <source>Redo: %1</source>
         <translation>Refazer: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1746"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1751"/>
         <source>Blank Page</source>
         <translation>Página em Branco</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1759"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1764"/>
         <source>(Untitled)</source>
         <translation>(Sem Título)</translation>
     </message>
@@ -5361,62 +5361,62 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
 <context>
     <name>Otter::WebContentsWidget</name>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="444"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="446"/>
         <source>Open All Pop-Ups</source>
         <translation>Abrir Todos os Pop-Ups</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="448"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="450"/>
         <source>Open Pop-Ups in Background</source>
         <translation>Abrir os Pop-Ups em 2º Plano</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="452"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="454"/>
         <source>Block All Pop-Ups</source>
         <translation>Bloquear Todos os Pop-Ups</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="456"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="458"/>
         <source>Ask What to Do</source>
         <translation>Perguntar O Que Fazer</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="482"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="483"/>
         <source>Enable Images</source>
         <translation>Ativar Imagens</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="487"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="488"/>
         <source>Enable JavaScript</source>
         <translation>Ativar JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="492"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="493"/>
         <source>Enable Java</source>
         <translation>Ativar Java</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="497"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="498"/>
         <source>Enable Plugins</source>
         <translation>Ativar Plugins</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="504"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="505"/>
         <source>Enable Cookies</source>
         <translation>Ativar Cookies</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="508"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="509"/>
         <source>Enable Referrer</source>
         <translation>Ativar Referência</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="512"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="513"/>
         <source>Enable Proxy</source>
         <translation>Ativar Proxy</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="517"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="518"/>
         <source>Reset Options</source>
         <translation>Resetar Opções</translation>
     </message>
@@ -5424,82 +5424,82 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
 <context>
     <name>Otter::WebWidget</name>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="293"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="294"/>
         <source>Default Application</source>
         <translation>Aplicativo Padrão</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="299"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="300"/>
         <source>Unknown</source>
         <translation>Desconhecido</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="385"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="386"/>
         <source>Title: %1</source>
         <translation>Título: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="385"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="386"/>
         <source>Address: %1</source>
         <translation>Endereço: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="634"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="635"/>
         <source>No search engines defined</source>
         <translation>Nenhuma engine de busca definida</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="777"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="778"/>
         <source>Open Image in New Tab (Untitled)</source>
         <translation>Abrir Imagem numa Nova Aba (Sem Título)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="777"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="778"/>
         <source>Open Image in New Tab (%1)</source>
         <translation>Abrir Imagem numa Nova Aba (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="783"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="784"/>
         <source>Open Image in New Background Tab (Untitled)</source>
         <translation>Abrir Imagem numa Nova Aba em 2º Plano (Sem Título)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="783"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="784"/>
         <source>Open Image in New Background Tab (%1)</source>
         <translation>Abrir Imagem numa Nova Aba em 2º Plano (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1075"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1076"/>
         <source>30 Minutes</source>
         <translation>30 Minutos</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1076"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1077"/>
         <source>1 Hour</source>
         <translation>1 Hora</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1077"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1078"/>
         <source>2 Hours</source>
         <translation>2 Horas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1078"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1079"/>
         <source>6 Hours</source>
         <translation>6 Horas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1079"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1080"/>
         <source>Never</source>
         <translation>Nunca</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1080"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1081"/>
         <source>Custom…</source>
         <translation>Personalizar...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1082"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1083"/>
         <source>Page Default</source>
         <translation>Padrão da Página</translation>
     </message>
@@ -5554,7 +5554,7 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="149"/>
         <source>Preferences</source>
-        <translation type="unfinished"/>
+        <translation>Preferências</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="171"/>
@@ -5565,42 +5565,42 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="180"/>
         <source>Set cookies:</source>
-        <translation type="unfinished"/>
+        <translation>Definir cookies:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="187"/>
         <source>Set third-party cookies:</source>
-        <translation type="unfinished"/>
+        <translation>Definir os cookies de terceiros:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="194"/>
         <source>Show notifications:</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar notificações:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="201"/>
         <source>Access your location:</source>
-        <translation type="unfinished"/>
+        <translation>Acessar seu local:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="208"/>
         <source>Load plugins:</source>
-        <translation type="unfinished"/>
+        <translation>Carregar plugins:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="215"/>
         <source>Load images:</source>
-        <translation type="unfinished"/>
+        <translation>Carregar imagens:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="222"/>
         <source>Use JavaScript:</source>
-        <translation type="unfinished"/>
+        <translation>Usar JavaScript:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="250"/>
         <source>Show pop-up windows:</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar as janelas dos pop-ups:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="261"/>
@@ -5660,7 +5660,7 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="407"/>
         <source>SSL Errors</source>
-        <translation type="unfinished"/>
+        <translation>Erros do SSL</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="41"/>
@@ -5712,12 +5712,12 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="93"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="112"/>
         <source>Only existing</source>
-        <translation type="unfinished"/>
+        <translation>Só os existentes</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="97"/>
         <source>Only read existing</source>
-        <translation type="unfinished"/>
+        <translation>Só ler os existentes</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="101"/>
@@ -5729,7 +5729,7 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="164"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="183"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Nunca</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="105"/>
@@ -5741,38 +5741,38 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="160"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="175"/>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>Sempre</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="135"/>
         <source>On demand</source>
-        <translation type="unfinished"/>
+        <translation>Sob Demanda</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="153"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="168"/>
         <source>Always Ask</source>
-        <translation type="unfinished"/>
+        <translation>Sempre Perguntar</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="179"/>
         <source>Always (open in backgound)</source>
-        <translation type="unfinished"/>
+        <translation>Sempre (abrir em 2º plano)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="187"/>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>Perguntar</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="216"/>
         <source>Error Message</source>
-        <translation type="unfinished"/>
+        <translation>Mensagem de Erro</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="216"/>
         <source>URL</source>
-        <translation type="unfinished"/>
+        <translation>URL</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="235"/>
@@ -5799,224 +5799,224 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="53"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="277"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="510"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="653"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="268"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="501"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="644"/>
         <source>Override</source>
         <translation>Sobrescrever</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="97"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="91"/>
         <source>Encoding:</source>
         <translation>Codificação:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="107"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="101"/>
         <source>User style sheet:</source>
         <translation>Folha de estilo do usuário:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="114"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="108"/>
         <source>Plugins:</source>
         <translation>Plugins:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="124"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="115"/>
         <source>Pop-ups:</source>
         <translation>Pop-ups:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="148"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="139"/>
         <source>Enable images</source>
         <translation>Ativar imagens</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="162"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="153"/>
         <source>Enable Java</source>
         <translation>Ativar Java</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="196"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="187"/>
         <source>Privacy</source>
         <translation>Privacidade</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="220"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="211"/>
         <source>Keep until:</source>
         <translation>Manter até:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="263"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="254"/>
         <source>Remember browsing history</source>
         <translation>Lembrar o histórico da navegação</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="284"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="275"/>
         <source>Enable cookies</source>
         <translation>Ativar Cookies</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="309"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="300"/>
         <source>Accept cookies:</source>
         <translation>Aceitar cookies:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="318"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="309"/>
         <source>Do Not Track:</source>
         <translation>Não Rastrear:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="358"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="349"/>
         <source>Add…</source>
         <translation>Adicionar...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="368"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="359"/>
         <source>Edit…</source>
         <translation>Editar...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="378"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="369"/>
         <source>Delete</source>
         <translation>Apagar</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="420"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="411"/>
         <source>Accept third-party cookies:</source>
         <translation>Aceitar os cookies de third-parties:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="459"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="450"/>
         <source>Scripting</source>
         <translation>Scripting</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="472"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="463"/>
         <source>Enable JavaScript</source>
         <translation>Ativar JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="489"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="480"/>
         <source>Allow script to hide address bar</source>
         <translation>Permitir ao script esconder a barra de endereço</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="496"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="487"/>
         <source>Allow moving and resizing of windows</source>
         <translation>Permitir o mover e redimensionar de janelas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="517"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="508"/>
         <source>Allow changing of status field</source>
         <translation>Permitir a mudança do campo de status</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="554"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="545"/>
         <source>Allow access to clipboard</source>
         <translation>Permitir o acesso a área de transferência</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="568"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="559"/>
         <source>Allow to disable context menu</source>
         <translation>Permitir desativar o menu de contexto</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="582"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="573"/>
         <source>Allow to open windows</source>
         <translation>Permitir abrir as janelas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="612"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="603"/>
         <source>Allow to close windows:</source>
         <translation>Permitir fechar as janelas:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="623"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="614"/>
         <source>Network</source>
         <translation>Rede</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="636"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="627"/>
         <source>User Agent:</source>
         <translation>Agente Usuário</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="676"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="667"/>
         <source>Proxy mode:</source>
         <translation>Modo proxy:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="703"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="694"/>
         <source>No proxy</source>
         <translation>Sem proxy</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="708"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="699"/>
         <source>System configuration</source>
         <translation>Configuração do sistema</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="713"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="704"/>
         <source>Manual configuration</source>
         <translation>Configuração manual</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="718"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="709"/>
         <source>Automatic configuration (PAC)</source>
         <translation>Configuração automática (PAC)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="831"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="822"/>
         <source>Port</source>
         <translation>Porta</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="838"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="829"/>
         <source>Servers</source>
         <translation>Servidores</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="845"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="836"/>
         <source>FTP</source>
         <translation>FTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="852"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="843"/>
         <source>SOCKS5</source>
         <translation>SOCKS5</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="859"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="850"/>
         <source>HTTP</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="873"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="864"/>
         <source>HTTPS</source>
         <translation>HTTPS</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="887"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="878"/>
         <source>All</source>
         <translation>Todos</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="904"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="895"/>
         <source>Protocol</source>
         <translation>Protocolo</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="932"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="923"/>
         <source>Path to PAC file:</source>
         <translation>Caminho pro arquivo PAC:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="949"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="940"/>
         <source>Send referrer information</source>
         <translation>Enviar informação de referência</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="957"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="948"/>
         <source>Content Blocking</source>
         <translation>Bloqueio de Conteúdo</translation>
     </message>
@@ -6034,17 +6034,17 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="78"/>
         <source>Block all</source>
-        <translation type="unfinished"/>
+        <translation>Bloquear todos</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="79"/>
         <source>Open all</source>
-        <translation type="unfinished"/>
+        <translation>Abrir todos</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="80"/>
         <source>Open all in background</source>
-        <translation type="unfinished"/>
+        <translation>Abrir tudo em 2º plano</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="82"/>
@@ -6147,17 +6147,17 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
         <translation>(Sem Título)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="340"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="347"/>
         <source>Title</source>
         <translation>Título</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="340"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="347"/>
         <source>Update Interval</source>
         <translation>Intervalo das Atualizações</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="340"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="347"/>
         <source>Last Update</source>
         <translation>Última Atualização</translation>
     </message>
@@ -6704,7 +6704,7 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="309"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="714"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="715"/>
         <source>Bookmark Link…</source>
         <translation>Link do Favorito...</translation>
     </message>
@@ -6772,7 +6772,7 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="321"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="783"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="784"/>
         <source>Open Image in New Background Tab</source>
         <translation>Abrir Imagem numa Nova Aba em 2º Plano</translation>
     </message>
@@ -6823,13 +6823,13 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="331"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="846"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="847"/>
         <source>Play</source>
         <translation>Reproduzir</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="332"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="853"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="854"/>
         <source>Mute</source>
         <translation>Mudo</translation>
     </message>
@@ -7000,7 +7000,7 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="367"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="633"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="634"/>
         <source>Search</source>
         <translation>Busca</translation>
     </message>
@@ -7412,52 +7412,52 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
         <translation>Mostrar as Janelas</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="513"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="514"/>
         <source>Edit Bookmark…</source>
         <translation>Editar Favorito...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="513"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="514"/>
         <source>Add Bookmark…</source>
         <translation>Adicionar Favorito...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="714"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="715"/>
         <source>Edit Link Bookmark…</source>
         <translation>Editar o Link do Favorito...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="777"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="778"/>
         <source>Open Image in New Tab</source>
         <translation>Abrir Imagem numa Nova Aba</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="822"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="823"/>
         <source>Save Video…</source>
         <translation>Salvar Vídeo...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="822"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="823"/>
         <source>Save Audio…</source>
         <translation>Salvar Áudio...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="828"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="829"/>
         <source>Copy Video Link to Clipboard</source>
         <translation>Copiar o Link do Vídeo pra Área de Transferência</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="828"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="829"/>
         <source>Copy Audio Link to Clipboard</source>
         <translation>Copiar o Link do Áudio pra Área de Transferência</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="846"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="847"/>
         <source>Pause</source>
         <translation>Pausar</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="853"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="854"/>
         <source>Unmute</source>
         <translation>Áudio Ligado</translation>
     </message>

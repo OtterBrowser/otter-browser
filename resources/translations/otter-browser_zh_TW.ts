@@ -879,12 +879,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.ui" line="34"/>
         <source>Certificate fields:</source>
-        <translation>憑證區：</translation>
+        <translation>憑證欄位：</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.ui" line="51"/>
         <source>Field value:</source>
-        <translation>區段值：</translation>
+        <translation>欄位值：</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="42"/>
@@ -925,7 +925,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="120"/>
         <source>Failed to open file for writing.</source>
-        <translation type="unfinished"/>
+        <translation>開啟供寫入的檔案失敗。</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="177"/>
@@ -935,7 +935,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="181"/>
         <source>Subject Key Identifier</source>
-        <translation>支配金鑰識別</translation>
+        <translation>主體金鑰識別</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="185"/>
@@ -955,62 +955,62 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="197"/>
         <source>Subject Alternative Name</source>
-        <translation>支配備用名稱</translation>
+        <translation>主體備用名稱</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="201"/>
         <source>Issuer Alternative Name</source>
-        <translation>發行者備用名稱</translation>
+        <translation>簽發者備用名稱</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="205"/>
         <source>Subject Directory Attributes</source>
-        <translation>支配目錄屬性</translation>
+        <translation>主體目錄屬性</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="209"/>
         <source>Basic Constraints</source>
-        <translation type="unfinished"/>
+        <translation>基礎限制</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="213"/>
         <source>Name Constraints</source>
-        <translation type="unfinished"/>
+        <translation>名稱限制</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="217"/>
         <source>Policy Constraints</source>
-        <translation type="unfinished"/>
+        <translation>政策限制</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="221"/>
         <source>Extended Key Usage</source>
-        <translation type="unfinished"/>
+        <translation>延伸金鑰使用方法</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="225"/>
         <source>CRL Distribution Points</source>
-        <translation type="unfinished"/>
+        <translation>CRL 散佈點</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="229"/>
         <source>Inhibit Any Policy</source>
-        <translation type="unfinished"/>
+        <translation>禁止任何政策</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="233"/>
         <source>Delta CRL Distribution Point</source>
-        <translation type="unfinished"/>
+        <translation>差異 CRL 散佈點</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="237"/>
         <source>Authority Information Access</source>
-        <translation type="unfinished"/>
+        <translation>機構資訊存取</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="241"/>
         <source>Subject Information Access</source>
-        <translation type="unfinished"/>
+        <translation>主體資訊存取</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="323"/>
@@ -1018,102 +1018,105 @@ Are you sure that you want to restore this session anyway?</source>
 %1
 
 Exponent: %2</source>
-        <translation type="unfinished"/>
+        <translation>模數：
+%1
+
+指數：%2</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="336"/>
         <source>Critical</source>
-        <translation type="unfinished"/>
+        <translation>必要</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="336"/>
         <source>Not Critical</source>
-        <translation type="unfinished"/>
+        <translation>非必要</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="337"/>
         <source>OID: %1</source>
-        <translation type="unfinished"/>
+        <translation>OID：%1</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="341"/>
         <source>Value:</source>
-        <translation type="unfinished"/>
+        <translation>值：</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="395"/>
         <source>Version</source>
-        <translation type="unfinished"/>
+        <translation>版本</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="399"/>
         <source>Serial Number</source>
-        <translation type="unfinished"/>
+        <translation>序列號</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="403"/>
         <source>Certificate Signature Algorithm</source>
-        <translation type="unfinished"/>
+        <translation>憑證簽章演算法</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="407"/>
         <source>Issuer</source>
-        <translation type="unfinished"/>
+        <translation>簽發者</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="411"/>
         <source>Validity</source>
-        <translation type="unfinished"/>
+        <translation>有效性</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="415"/>
         <source>Not Before</source>
-        <translation type="unfinished"/>
+        <translation>不早於</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="419"/>
         <source>Not After</source>
-        <translation type="unfinished"/>
+        <translation>不晚於</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="423"/>
         <source>Subject</source>
-        <translation type="unfinished"/>
+        <translation>主體</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="427"/>
         <source>Subject Public Key</source>
-        <translation type="unfinished"/>
+        <translation>主體公開金鑰</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="431"/>
         <source>Algorithm</source>
-        <translation type="unfinished"/>
+        <translation>演算法</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="435"/>
         <source>Public Key</source>
-        <translation type="unfinished"/>
+        <translation>公開金鑰</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="439"/>
         <source>Extensions</source>
-        <translation type="unfinished"/>
+        <translation>延伸</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="447"/>
         <source>Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>指紋</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="451"/>
         <source>SHA-1 Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>SHA-1 指紋</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="455"/>
         <source>SHA-256 Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>SHA-256 指紋</translation>
     </message>
 </context>
 <context>
@@ -2570,18 +2573,18 @@ Do you want to continue?</source>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="68"/>
-        <source>Blocked pop-ups</source>
-        <translation>已阻擋彈出式視窗</translation>
+        <source>Blocked Pop-ups</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="69"/>
-        <source>Open all</source>
-        <translation>開啟所有</translation>
+        <source>Open All</source>
+        <translation type="unfinished"/>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="118"/>
         <source>%1 wants to open %n pop-up window(s).</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1 想要開啟 %n 個彈出式視窗。</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3125,85 +3128,85 @@ Do you want to continue?</source>
         <translation>阻擋</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="38"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="35"/>
         <source>Pop-ups:</source>
         <translation>彈出式視窗：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="57"/>
         <source>Zoom</source>
         <translation>縮放</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="75"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="69"/>
         <source>Default zoom:</source>
         <translation>預設縮放：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="85"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="79"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="103"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="97"/>
         <source>Zoom text only</source>
         <translation>只縮放文字</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="116"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="110"/>
         <source>Fonts</source>
         <translation>字型</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="157"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="151"/>
         <source>Style</source>
         <translation>風格</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="162"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="156"/>
         <source>Font</source>
         <translation>字型</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="167"/>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="306"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="161"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="300"/>
         <source>Preview</source>
         <translation>預覽</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="177"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="171"/>
         <source>Default proportional font size:</source>
         <translation>預設比例字型大小：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="187"/>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="213"/>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="242"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="181"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="207"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="236"/>
         <source> px</source>
         <translation>像素</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="203"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="197"/>
         <source>Default fixed-width font size:</source>
         <translation>預設固定寬度字型大小：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="229"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="223"/>
         <source>Minimum font size:</source>
         <translation>最小字型大小：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="239"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="233"/>
         <source>None</source>
         <translation>無</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="263"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="257"/>
         <source>Colors</source>
         <translation>顏色</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="301"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="295"/>
         <source>Type</source>
         <translation>類型</translation>
     </message>
@@ -3820,61 +3823,61 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitPage</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="185"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="323"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="360"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="213"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="384"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="421"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="186"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="324"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="361"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="214"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="385"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="422"/>
         <source>Disable JavaScript popups</source>
         <translation>停用 JavaScript 彈出視窗</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="286"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="447"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="334"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="347"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="508"/>
         <source>Question</source>
         <translation>問題</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="287"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="334"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="348"/>
         <source>Are you sure that you want to send form data again?</source>
         <translation>您確定您想要再度送出表單資料？</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="288"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="334"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="349"/>
         <source>Do you want to resend data?</source>
         <translation>您想要重新寄送資料嗎？</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="274"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="292"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="335"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="353"/>
         <source>Do not show this message again</source>
         <translation>不要再次顯示此訊息</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="402"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="463"/>
         <source>Open File</source>
         <translation>開啟檔案</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="435"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="496"/>
         <source>%1 error #%2: %3</source>
         <translation>%1 錯誤 #%2： %3</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="447"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="508"/>
         <source>The script on this page appears to have a problem.</source>
         <translation>在此頁面上的指令稿看來有點問題。</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="447"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="508"/>
         <source>Do you want to stop the script?</source>
         <translation>您想要停止這個指令稿嗎？</translation>
     </message>
@@ -3903,72 +3906,72 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitWebWidget</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="327"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="332"/>
         <source>Error</source>
         <translation>錯誤</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="327"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="332"/>
         <source>Failed to open file for writing.</source>
         <translation>開啟供寫入的檔案失敗。</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="347"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="352"/>
         <source>file</source>
         <translation>檔案</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="358"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="363"/>
         <source>Failed to save image: %1</source>
         <translation>儲存圖片失敗：%1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="479"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="484"/>
         <source>Print Preview</source>
         <translation>預覽列印</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="538"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="543"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="538"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="543"/>
         <source>Webpage wants to close this tab, do you want to allow to close it?</source>
         <translation>網頁想要關閉這個分頁，您想要允許關閉它嗎？</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="539"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="544"/>
         <source>Do not show this message again</source>
         <translation>不要再次顯示此訊息</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="676"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="681"/>
         <source>Undo</source>
         <translation>復原</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="676"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="681"/>
         <source>Undo: %1</source>
         <translation>復原：%1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="681"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="686"/>
         <source>Redo</source>
         <translation>重做</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="681"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="686"/>
         <source>Redo: %1</source>
         <translation>重做：%1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1746"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1751"/>
         <source>Blank Page</source>
         <translation>空白頁</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1759"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1764"/>
         <source>(Untitled)</source>
         <translation>（未命名）</translation>
     </message>
@@ -5359,62 +5362,62 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>Otter::WebContentsWidget</name>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="444"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="446"/>
         <source>Open All Pop-Ups</source>
         <translation>開啟所有彈出式視窗</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="448"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="450"/>
         <source>Open Pop-Ups in Background</source>
         <translation>在背景分頁中開啟彈出式視窗</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="452"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="454"/>
         <source>Block All Pop-Ups</source>
         <translation>阻擋所有彈出式視窗</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="456"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="458"/>
         <source>Ask What to Do</source>
         <translation>詢問要怎麼做</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="482"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="483"/>
         <source>Enable Images</source>
         <translation>啟用圖片</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="487"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="488"/>
         <source>Enable JavaScript</source>
         <translation>啟用 JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="492"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="493"/>
         <source>Enable Java</source>
         <translation>啟用 Java</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="497"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="498"/>
         <source>Enable Plugins</source>
         <translation>啟用外掛程式</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="504"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="505"/>
         <source>Enable Cookies</source>
         <translation>啟用 Cookies</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="508"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="509"/>
         <source>Enable Referrer</source>
         <translation>啟用 Referrer</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="512"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="513"/>
         <source>Enable Proxy</source>
         <translation>啟用 Proxy</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="517"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="518"/>
         <source>Reset Options</source>
         <translation>重置選項</translation>
     </message>
@@ -5422,82 +5425,82 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>Otter::WebWidget</name>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="293"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="294"/>
         <source>Default Application</source>
         <translation>預設應用程式</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="299"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="300"/>
         <source>Unknown</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="385"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="386"/>
         <source>Title: %1</source>
         <translation>標題：%1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="385"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="386"/>
         <source>Address: %1</source>
         <translation>網址：%1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="634"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="635"/>
         <source>No search engines defined</source>
         <translation>無已定義的搜尋引擎</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="777"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="778"/>
         <source>Open Image in New Tab (Untitled)</source>
         <translation>在新分頁開啟圖片（未命名）</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="777"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="778"/>
         <source>Open Image in New Tab (%1)</source>
         <translation>在新分頁開啟圖片（%1）</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="783"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="784"/>
         <source>Open Image in New Background Tab (Untitled)</source>
         <translation>在新背景分頁開啟圖片（未命名）</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="783"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="784"/>
         <source>Open Image in New Background Tab (%1)</source>
         <translation>在新背景分頁開啟圖片（%1）</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1075"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1076"/>
         <source>30 Minutes</source>
         <translation>30分鐘</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1076"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1077"/>
         <source>1 Hour</source>
         <translation>1小時</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1077"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1078"/>
         <source>2 Hours</source>
         <translation>2小時</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1078"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1079"/>
         <source>6 Hours</source>
         <translation>6小時</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1079"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1080"/>
         <source>Never</source>
         <translation>從不</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1080"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1081"/>
         <source>Custom…</source>
         <translation>自訂…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1082"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1083"/>
         <source>Page Default</source>
         <translation>頁面預設值</translation>
     </message>
@@ -5552,7 +5555,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="149"/>
         <source>Preferences</source>
-        <translation type="unfinished"/>
+        <translation>偏好設定</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="171"/>
@@ -5563,42 +5566,42 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="180"/>
         <source>Set cookies:</source>
-        <translation type="unfinished"/>
+        <translation>設定 cookies：</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="187"/>
         <source>Set third-party cookies:</source>
-        <translation type="unfinished"/>
+        <translation>設定第三方 cookies：</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="194"/>
         <source>Show notifications:</source>
-        <translation type="unfinished"/>
+        <translation>顯示通知：</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="201"/>
         <source>Access your location:</source>
-        <translation type="unfinished"/>
+        <translation>存取您的位置：</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="208"/>
         <source>Load plugins:</source>
-        <translation type="unfinished"/>
+        <translation>載入外掛程式：</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="215"/>
         <source>Load images:</source>
-        <translation type="unfinished"/>
+        <translation>載入圖片：</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="222"/>
         <source>Use JavaScript:</source>
-        <translation type="unfinished"/>
+        <translation>使用 JavaScript：</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="250"/>
         <source>Show pop-up windows:</source>
-        <translation type="unfinished"/>
+        <translation>顯示彈出式視窗：</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="261"/>
@@ -5613,22 +5616,22 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="306"/>
         <source>Issued to:</source>
-        <translation type="unfinished"/>
+        <translation>發佈於：</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="313"/>
         <source>Issued by:</source>
-        <translation type="unfinished"/>
+        <translation>發佈由：</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="320"/>
         <source>Issued on:</source>
-        <translation type="unfinished"/>
+        <translation>發佈在：</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="327"/>
         <source>Expires on:</source>
-        <translation type="unfinished"/>
+        <translation>到期於：</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="340"/>
@@ -5658,7 +5661,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="407"/>
         <source>SSL Errors</source>
-        <translation type="unfinished"/>
+        <translation>SSL 錯誤</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="41"/>
@@ -5710,12 +5713,12 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="93"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="112"/>
         <source>Only existing</source>
-        <translation type="unfinished"/>
+        <translation>只有已存在的</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="97"/>
         <source>Only read existing</source>
-        <translation type="unfinished"/>
+        <translation>只讀取已存在的</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="101"/>
@@ -5727,7 +5730,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="164"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="183"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>從不</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="105"/>
@@ -5739,38 +5742,38 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="160"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="175"/>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>總是</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="135"/>
         <source>On demand</source>
-        <translation type="unfinished"/>
+        <translation>一經要求</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="153"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="168"/>
         <source>Always Ask</source>
-        <translation type="unfinished"/>
+        <translation>總是詢問</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="179"/>
         <source>Always (open in backgound)</source>
-        <translation type="unfinished"/>
+        <translation>總是（在背景分頁開啟）</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="187"/>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>詢問</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="216"/>
         <source>Error Message</source>
-        <translation type="unfinished"/>
+        <translation>錯誤訊息</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="216"/>
         <source>URL</source>
-        <translation type="unfinished"/>
+        <translation>URL</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="235"/>
@@ -5797,224 +5800,224 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="53"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="277"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="510"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="653"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="268"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="501"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="644"/>
         <source>Override</source>
         <translation>覆寫</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="97"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="91"/>
         <source>Encoding:</source>
         <translation>編碼：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="107"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="101"/>
         <source>User style sheet:</source>
         <translation>使用者樣式表：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="114"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="108"/>
         <source>Plugins:</source>
         <translation>外掛程式：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="124"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="115"/>
         <source>Pop-ups:</source>
         <translation>彈出式視窗：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="148"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="139"/>
         <source>Enable images</source>
         <translation>啟用圖片</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="162"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="153"/>
         <source>Enable Java</source>
         <translation>啟用 Java</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="196"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="187"/>
         <source>Privacy</source>
         <translation>隱私</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="220"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="211"/>
         <source>Keep until:</source>
         <translation>保留到：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="263"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="254"/>
         <source>Remember browsing history</source>
         <translation>記住瀏覽器歷史</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="284"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="275"/>
         <source>Enable cookies</source>
         <translation>啟用 cookies</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="309"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="300"/>
         <source>Accept cookies:</source>
         <translation>接受 cookies：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="318"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="309"/>
         <source>Do Not Track:</source>
         <translation>不要追蹤：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="358"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="349"/>
         <source>Add…</source>
         <translation>新增…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="368"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="359"/>
         <source>Edit…</source>
         <translation>編輯…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="378"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="369"/>
         <source>Delete</source>
         <translation>刪除</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="420"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="411"/>
         <source>Accept third-party cookies:</source>
         <translation>接受第三方 cookies：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="459"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="450"/>
         <source>Scripting</source>
         <translation>指令碼</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="472"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="463"/>
         <source>Enable JavaScript</source>
         <translation>啟用 JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="489"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="480"/>
         <source>Allow script to hide address bar</source>
         <translation>允許指令碼隱藏網址列</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="496"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="487"/>
         <source>Allow moving and resizing of windows</source>
         <translation>允許移動及調整視窗大小</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="517"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="508"/>
         <source>Allow changing of status field</source>
         <translation>允許變更狀態欄</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="554"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="545"/>
         <source>Allow access to clipboard</source>
         <translation>允許存取剪貼簿</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="568"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="559"/>
         <source>Allow to disable context menu</source>
         <translation>允許停用右鍵選單</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="582"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="573"/>
         <source>Allow to open windows</source>
         <translation>允許開啟視窗</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="612"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="603"/>
         <source>Allow to close windows:</source>
         <translation>允許關閉視窗：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="623"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="614"/>
         <source>Network</source>
         <translation>網路</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="636"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="627"/>
         <source>User Agent:</source>
         <translation>使用者代理：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="676"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="667"/>
         <source>Proxy mode:</source>
         <translation>代理伺服器模式：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="703"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="694"/>
         <source>No proxy</source>
         <translation>無代理伺服器</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="708"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="699"/>
         <source>System configuration</source>
         <translation>系統設定</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="713"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="704"/>
         <source>Manual configuration</source>
         <translation>手動設定</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="718"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="709"/>
         <source>Automatic configuration (PAC)</source>
         <translation>自動設定(PAC)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="831"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="822"/>
         <source>Port</source>
         <translation>埠</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="838"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="829"/>
         <source>Servers</source>
         <translation>伺服器</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="845"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="836"/>
         <source>FTP</source>
         <translation>FTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="852"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="843"/>
         <source>SOCKS5</source>
         <translation>SOCKS5</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="859"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="850"/>
         <source>HTTP</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="873"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="864"/>
         <source>HTTPS</source>
         <translation>HTTPS</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="887"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="878"/>
         <source>All</source>
         <translation>所有</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="904"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="895"/>
         <source>Protocol</source>
         <translation>協定</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="932"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="923"/>
         <source>Path to PAC file:</source>
         <translation>到 PAC 檔案的路徑：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="949"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="940"/>
         <source>Send referrer information</source>
         <translation>傳送 referrer 資訊</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="957"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="948"/>
         <source>Content Blocking</source>
         <translation>內容阻擋</translation>
     </message>
@@ -6032,17 +6035,17 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="78"/>
         <source>Block all</source>
-        <translation type="unfinished"/>
+        <translation>阻擋所有</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="79"/>
         <source>Open all</source>
-        <translation type="unfinished"/>
+        <translation>開啟所有</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="80"/>
         <source>Open all in background</source>
-        <translation type="unfinished"/>
+        <translation>在背景分頁開啟所有</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="82"/>
@@ -6145,17 +6148,17 @@ Click Install button to restart browser and install the update or close this dia
         <translation>（無標題）</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="340"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="347"/>
         <source>Title</source>
         <translation>標題</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="340"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="347"/>
         <source>Update Interval</source>
         <translation>更新間隔</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="340"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="347"/>
         <source>Last Update</source>
         <translation>最後更新</translation>
     </message>
@@ -6702,7 +6705,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="309"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="714"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="715"/>
         <source>Bookmark Link…</source>
         <translation>書籤連結…</translation>
     </message>
@@ -6770,7 +6773,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="321"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="783"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="784"/>
         <source>Open Image in New Background Tab</source>
         <translation>在新背景分頁開啟圖片</translation>
     </message>
@@ -6821,13 +6824,13 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="331"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="846"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="847"/>
         <source>Play</source>
         <translation>播放</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="332"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="853"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="854"/>
         <source>Mute</source>
         <translation>靜音</translation>
     </message>
@@ -6998,7 +7001,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="367"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="633"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="634"/>
         <source>Search</source>
         <translation>搜尋</translation>
     </message>
@@ -7337,7 +7340,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="434"/>
         <source>Website Certificate Information…</source>
-        <translation type="unfinished"/>
+        <translation>網頁憑證資訊…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="435"/>
@@ -7410,52 +7413,52 @@ Click Install button to restart browser and install the update or close this dia
         <translation>顯示視窗</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="513"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="514"/>
         <source>Edit Bookmark…</source>
         <translation>編輯書籤…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="513"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="514"/>
         <source>Add Bookmark…</source>
         <translation>新增書籤…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="714"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="715"/>
         <source>Edit Link Bookmark…</source>
         <translation>編輯書籤連結…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="777"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="778"/>
         <source>Open Image in New Tab</source>
         <translation>在新分頁開啟圖片</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="822"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="823"/>
         <source>Save Video…</source>
         <translation>儲存視訊…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="822"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="823"/>
         <source>Save Audio…</source>
         <translation>儲存音訊…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="828"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="829"/>
         <source>Copy Video Link to Clipboard</source>
         <translation>複製視訊連結到剪貼簿</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="828"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="829"/>
         <source>Copy Audio Link to Clipboard</source>
         <translation>複製音訊連結到剪貼簿</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="846"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="847"/>
         <source>Pause</source>
         <translation>暫停</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="853"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="854"/>
         <source>Unmute</source>
         <translation>解除靜音</translation>
     </message>

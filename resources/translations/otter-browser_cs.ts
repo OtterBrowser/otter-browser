@@ -162,37 +162,37 @@
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="43"/>
         <source>Bookmarks Manager</source>
-        <translation type="unfinished"/>
+        <translation>Správce záložek</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="44"/>
         <source>Cache Manager</source>
-        <translation type="unfinished"/>
+        <translation>Správce vyrovnávací paměti</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="45"/>
         <source>Configuration Manager</source>
-        <translation type="unfinished"/>
+        <translation>Správce nastavení</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="46"/>
         <source>Cookies Manager</source>
-        <translation type="unfinished"/>
+        <translation>Správce koláčků</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="47"/>
         <source>History Manager</source>
-        <translation type="unfinished"/>
+        <translation>Správce historie</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="48"/>
         <source>Notes Manager</source>
-        <translation type="unfinished"/>
+        <translation>Správce poznámek</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="49"/>
         <source>Transfers Manager</source>
-        <translation type="unfinished"/>
+        <translation>Správce přenosů</translation>
     </message>
 </context>
 <context>
@@ -874,143 +874,143 @@ Jste si jistý, že přesto chcete toto sezení obnovit?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.ui" line="17"/>
         <source>Certificate chain:</source>
-        <translation type="unfinished"/>
+        <translation>Název certifikátu:</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.ui" line="34"/>
         <source>Certificate fields:</source>
-        <translation type="unfinished"/>
+        <translation>Pole certifikátu:</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.ui" line="51"/>
         <source>Field value:</source>
-        <translation type="unfinished"/>
+        <translation>Hodnota pole:</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="42"/>
         <source>Export…</source>
-        <translation type="unfinished"/>
+        <translation>Vyvést...</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="46"/>
         <source>Invalid Certificate</source>
-        <translation type="unfinished"/>
+        <translation>Neplatný certifikát</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="51"/>
         <source>View Certificate for %1</source>
-        <translation type="unfinished"/>
+        <translation>Zobrazit certifikát pro %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="60"/>
         <location filename="../../src/ui/CertificateDialog.cpp" line="443"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Neznámý</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="112"/>
         <source>Select File</source>
-        <translation type="unfinished"/>
+        <translation>Vybrat soubor</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="112"/>
         <source>DER encoded X509 certificates (*.der);;PEM encoded X509 certificates (*.pem);;Text files (*.txt)</source>
-        <translation type="unfinished"/>
+        <translation>Certifikáty X509 šifrované DER (*.der);;certifikáty X509 šifrované PEM (*.pem);;Textové soubory (*.txt)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="120"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Chyba</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="120"/>
         <source>Failed to open file for writing.</source>
-        <translation type="unfinished"/>
+        <translation>Nepodařilo se otevřít soubor pro zápis.</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="177"/>
         <source>Authority Key Identifier</source>
-        <translation type="unfinished"/>
+        <translation>Identifikátor klíče autority</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="181"/>
         <source>Subject Key Identifier</source>
-        <translation type="unfinished"/>
+        <translation>Identifikátor klíče osoby</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="185"/>
         <source>Key Usage</source>
-        <translation type="unfinished"/>
+        <translation>Použití klíče</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="189"/>
         <source>Certificate Policies</source>
-        <translation type="unfinished"/>
+        <translation>Pravidla certifikátu</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="193"/>
         <source>Policy Mappings</source>
-        <translation type="unfinished"/>
+        <translation>Přiřazení pravidel</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="197"/>
         <source>Subject Alternative Name</source>
-        <translation type="unfinished"/>
+        <translation>Náhradní jméno osoby</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="201"/>
         <source>Issuer Alternative Name</source>
-        <translation type="unfinished"/>
+        <translation>Náhradní název certifikační autority</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="205"/>
         <source>Subject Directory Attributes</source>
-        <translation type="unfinished"/>
+        <translation>Volitelné vlastnosti osoby</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="209"/>
         <source>Basic Constraints</source>
-        <translation type="unfinished"/>
+        <translation>Základní pravidla</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="213"/>
         <source>Name Constraints</source>
-        <translation type="unfinished"/>
+        <translation>Pravidla pro název</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="217"/>
         <source>Policy Constraints</source>
-        <translation type="unfinished"/>
+        <translation>Vynucení pravidel</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="221"/>
         <source>Extended Key Usage</source>
-        <translation type="unfinished"/>
+        <translation>Rozšířené použití klíče</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="225"/>
         <source>CRL Distribution Points</source>
-        <translation type="unfinished"/>
+        <translation>Body distribuce CRL</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="229"/>
         <source>Inhibit Any Policy</source>
-        <translation type="unfinished"/>
+        <translation>Potlačit všechna pravidla</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="233"/>
         <source>Delta CRL Distribution Point</source>
-        <translation type="unfinished"/>
+        <translation>Bod distribuce Delta CRL</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="237"/>
         <source>Authority Information Access</source>
-        <translation type="unfinished"/>
+        <translation>Přístup k informacím o autoritě</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="241"/>
         <source>Subject Information Access</source>
-        <translation type="unfinished"/>
+        <translation>Přístup k informacím o osobě</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="323"/>
@@ -1018,102 +1018,105 @@ Jste si jistý, že přesto chcete toto sezení obnovit?</translation>
 %1
 
 Exponent: %2</source>
-        <translation type="unfinished"/>
+        <translation>Modul:
+%1
+
+Exponenciální: %2</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="336"/>
         <source>Critical</source>
-        <translation type="unfinished"/>
+        <translation>Kritický</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="336"/>
         <source>Not Critical</source>
-        <translation type="unfinished"/>
+        <translation>Nekritický</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="337"/>
         <source>OID: %1</source>
-        <translation type="unfinished"/>
+        <translation>Identifikátor objektu (OID): %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="341"/>
         <source>Value:</source>
-        <translation type="unfinished"/>
+        <translation>Hodnota:</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="395"/>
         <source>Version</source>
-        <translation type="unfinished"/>
+        <translation>Verze</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="399"/>
         <source>Serial Number</source>
-        <translation type="unfinished"/>
+        <translation>Sériové číslo</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="403"/>
         <source>Certificate Signature Algorithm</source>
-        <translation type="unfinished"/>
+        <translation>Algoritmus podpisu certifikátu</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="407"/>
         <source>Issuer</source>
-        <translation type="unfinished"/>
+        <translation>Podpisová autorita</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="411"/>
         <source>Validity</source>
-        <translation type="unfinished"/>
+        <translation>Platnost</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="415"/>
         <source>Not Before</source>
-        <translation type="unfinished"/>
+        <translation>Ne před</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="419"/>
         <source>Not After</source>
-        <translation type="unfinished"/>
+        <translation>Ne po</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="423"/>
         <source>Subject</source>
-        <translation type="unfinished"/>
+        <translation>Osoba</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="427"/>
         <source>Subject Public Key</source>
-        <translation type="unfinished"/>
+        <translation>Veřejný klíč osoby</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="431"/>
         <source>Algorithm</source>
-        <translation type="unfinished"/>
+        <translation>Algoritmus</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="435"/>
         <source>Public Key</source>
-        <translation type="unfinished"/>
+        <translation>Veřejný klíč</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="439"/>
         <source>Extensions</source>
-        <translation type="unfinished"/>
+        <translation>Rozšíření</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="447"/>
         <source>Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>Pečeť</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="451"/>
         <source>SHA-1 Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>Pečeť SHA-1</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="455"/>
         <source>SHA-256 Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>Pečeť SHA-256</translation>
     </message>
 </context>
 <context>
@@ -2570,18 +2573,18 @@ Chcete pokračovat?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="68"/>
-        <source>Blocked pop-ups</source>
-        <translation>Blokovaná vyskakovací okna</translation>
+        <source>Blocked Pop-ups</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="69"/>
-        <source>Open all</source>
-        <translation>Otevřít vše</translation>
+        <source>Open All</source>
+        <translation type="unfinished"/>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="118"/>
         <source>%1 wants to open %n pop-up window(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 chce otevřít %n vyskakovacích okno.</numerusform><numerusform>%1 chce otevřít %n vyskakovací okna.</numerusform><numerusform>%1 chce otevřít %n vyskakovacích oken.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3125,85 +3128,85 @@ Chcete pokračovat?</translation>
         <translation>Blokování</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="38"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="35"/>
         <source>Pop-ups:</source>
         <translation>Vyskakování:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="57"/>
         <source>Zoom</source>
         <translation>Zvětšení</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="75"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="69"/>
         <source>Default zoom:</source>
         <translation>Výchozí zvětšení:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="85"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="79"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="103"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="97"/>
         <source>Zoom text only</source>
         <translation>Zvětšit pouze text</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="116"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="110"/>
         <source>Fonts</source>
         <translation>Písma</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="157"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="151"/>
         <source>Style</source>
         <translation>Styl</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="162"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="156"/>
         <source>Font</source>
         <translation>Písmo</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="167"/>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="306"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="161"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="300"/>
         <source>Preview</source>
         <translation>Náhled</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="177"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="171"/>
         <source>Default proportional font size:</source>
         <translation>Výchozí poměrná velikost písma:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="187"/>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="213"/>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="242"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="181"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="207"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="236"/>
         <source> px</source>
         <translation> obrazových bodů</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="203"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="197"/>
         <source>Default fixed-width font size:</source>
         <translation>Výchozí pevná velikost šířky písma:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="229"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="223"/>
         <source>Minimum font size:</source>
         <translation>Nejmenší velikost písma:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="239"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="233"/>
         <source>None</source>
         <translation>Žádná</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="263"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="257"/>
         <source>Colors</source>
         <translation>Barvy</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="301"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="295"/>
         <source>Type</source>
         <translation>Typ</translation>
     </message>
@@ -3820,61 +3823,61 @@ Chcete pokračovat?</translation>
 <context>
     <name>Otter::QtWebKitPage</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="185"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="323"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="360"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="213"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="384"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="421"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="186"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="324"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="361"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="214"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="385"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="422"/>
         <source>Disable JavaScript popups</source>
         <translation>Zakázat vyskakovací okna JavaScriptu</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="286"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="447"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="334"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="347"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="508"/>
         <source>Question</source>
         <translation>Otázka</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="287"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="334"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="348"/>
         <source>Are you sure that you want to send form data again?</source>
         <translation>Jste si jistý, že chcete poslat data formuláře znovu?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="288"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="334"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="349"/>
         <source>Do you want to resend data?</source>
         <translation>Chcete data poslat znovu?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="274"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="292"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="335"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="353"/>
         <source>Do not show this message again</source>
         <translation>Neukazovat tuto zprávu znovu</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="402"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="463"/>
         <source>Open File</source>
         <translation>Otevřít soubor</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="435"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="496"/>
         <source>%1 error #%2: %3</source>
         <translation>%1 chyba #%2: %3</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="447"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="508"/>
         <source>The script on this page appears to have a problem.</source>
         <translation>Zdá se, že skript na této stránce potkaly potíže.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="447"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="508"/>
         <source>Do you want to stop the script?</source>
         <translation>Chcete skript zastavit?</translation>
     </message>
@@ -3903,72 +3906,72 @@ Chcete pokračovat?</translation>
 <context>
     <name>Otter::QtWebKitWebWidget</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="327"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="332"/>
         <source>Error</source>
         <translation>Chyba</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="327"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="332"/>
         <source>Failed to open file for writing.</source>
         <translation>Nepodařilo se otevřít soubor pro zápis.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="347"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="352"/>
         <source>file</source>
         <translation>Soubor</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="358"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="363"/>
         <source>Failed to save image: %1</source>
         <translation>Nepodařilo se uložit obrázek: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="479"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="484"/>
         <source>Print Preview</source>
         <translation>Náhled tisku</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="538"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="543"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="538"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="543"/>
         <source>Webpage wants to close this tab, do you want to allow to close it?</source>
         <translation>Stránka chce tento list zavřít. Chcete jí povolit jeho zavření?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="539"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="544"/>
         <source>Do not show this message again</source>
         <translation>Neukazovat tuto zprávu znovu</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="676"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="681"/>
         <source>Undo</source>
         <translation>Zpět</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="676"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="681"/>
         <source>Undo: %1</source>
         <translation>Zpět: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="681"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="686"/>
         <source>Redo</source>
         <translation>Znovu</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="681"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="686"/>
         <source>Redo: %1</source>
         <translation>Znovu: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1746"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1751"/>
         <source>Blank Page</source>
         <translation>Prázdná stránka</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1759"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1764"/>
         <source>(Untitled)</source>
         <translation>(Bez názvu)</translation>
     </message>
@@ -5359,62 +5362,62 @@ Klepněte na tlačítko Nainstalovat pro opětovné spuštění prohlížeče a 
 <context>
     <name>Otter::WebContentsWidget</name>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="444"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="446"/>
         <source>Open All Pop-Ups</source>
         <translation>Otevřít všechna vyskakovací okna</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="448"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="450"/>
         <source>Open Pop-Ups in Background</source>
         <translation>Otevřít vyskakovací okna na pozadí</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="452"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="454"/>
         <source>Block All Pop-Ups</source>
         <translation>Blokovat všechna vyskakovací okna</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="456"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="458"/>
         <source>Ask What to Do</source>
         <translation>Zeptat se, co se má dělat</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="482"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="483"/>
         <source>Enable Images</source>
         <translation>Povolit obrázky</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="487"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="488"/>
         <source>Enable JavaScript</source>
         <translation>Povolit JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="492"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="493"/>
         <source>Enable Java</source>
         <translation>Povolit Javu</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="497"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="498"/>
         <source>Enable Plugins</source>
         <translation>Povolit přídavné moduly</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="504"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="505"/>
         <source>Enable Cookies</source>
         <translation>Povolit koláčky</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="508"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="509"/>
         <source>Enable Referrer</source>
         <translation>Povolit odkazování</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="512"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="513"/>
         <source>Enable Proxy</source>
         <translation>Povolit proxy</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="517"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="518"/>
         <source>Reset Options</source>
         <translation>Nastavit volby na výchozí hodnoty</translation>
     </message>
@@ -5422,82 +5425,82 @@ Klepněte na tlačítko Nainstalovat pro opětovné spuštění prohlížeče a 
 <context>
     <name>Otter::WebWidget</name>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="293"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="294"/>
         <source>Default Application</source>
         <translation>Výchozí program</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="299"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="300"/>
         <source>Unknown</source>
         <translation>Neznámý</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="385"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="386"/>
         <source>Title: %1</source>
         <translation>Název: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="385"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="386"/>
         <source>Address: %1</source>
         <translation>Adresa: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="634"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="635"/>
         <source>No search engines defined</source>
         <translation>Nestanoven žádný vyhledávač</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="777"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="778"/>
         <source>Open Image in New Tab (Untitled)</source>
         <translation>Otevřít obrázek v novém listu (bez názvu)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="777"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="778"/>
         <source>Open Image in New Tab (%1)</source>
         <translation>Otevřít obrázek v novém listu (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="783"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="784"/>
         <source>Open Image in New Background Tab (Untitled)</source>
         <translation>Otevřít obrázek v novém listu na pozadí (bez názvu)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="783"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="784"/>
         <source>Open Image in New Background Tab (%1)</source>
         <translation>Otevřít obrázek v novém listu na pozadí (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1075"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1076"/>
         <source>30 Minutes</source>
         <translation>30 minut</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1076"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1077"/>
         <source>1 Hour</source>
         <translation>1 hodina</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1077"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1078"/>
         <source>2 Hours</source>
         <translation>2 hodiny</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1078"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1079"/>
         <source>6 Hours</source>
         <translation>6 hodin</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1079"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1080"/>
         <source>Never</source>
         <translation>Nikdy</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1080"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1081"/>
         <source>Custom…</source>
         <translation>Vlastní…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1082"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1083"/>
         <source>Page Default</source>
         <translation>Výchozí pro stránku</translation>
     </message>
@@ -5552,7 +5555,7 @@ Klepněte na tlačítko Nainstalovat pro opětovné spuštění prohlížeče a 
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="149"/>
         <source>Preferences</source>
-        <translation type="unfinished"/>
+        <translation>Nastavení</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="171"/>
@@ -5563,42 +5566,42 @@ Klepněte na tlačítko Nainstalovat pro opětovné spuštění prohlížeče a 
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="180"/>
         <source>Set cookies:</source>
-        <translation type="unfinished"/>
+        <translation>Nastavit koláčky:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="187"/>
         <source>Set third-party cookies:</source>
-        <translation type="unfinished"/>
+        <translation>Nastavit koláčky třetích stran:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="194"/>
         <source>Show notifications:</source>
-        <translation type="unfinished"/>
+        <translation>Ukázat oznámení:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="201"/>
         <source>Access your location:</source>
-        <translation type="unfinished"/>
+        <translation>Přistoupit k vaší poloze:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="208"/>
         <source>Load plugins:</source>
-        <translation type="unfinished"/>
+        <translation>Nahrát přídavné moduly:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="215"/>
         <source>Load images:</source>
-        <translation type="unfinished"/>
+        <translation>Nahrát obrázky:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="222"/>
         <source>Use JavaScript:</source>
-        <translation type="unfinished"/>
+        <translation>Použít JavaScript:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="250"/>
         <source>Show pop-up windows:</source>
-        <translation type="unfinished"/>
+        <translation>Ukázat vyskakovací okna:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="261"/>
@@ -5613,22 +5616,22 @@ Klepněte na tlačítko Nainstalovat pro opětovné spuštění prohlížeče a 
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="306"/>
         <source>Issued to:</source>
-        <translation type="unfinished"/>
+        <translation>Doručeno:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="313"/>
         <source>Issued by:</source>
-        <translation type="unfinished"/>
+        <translation>Doručeno od:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="320"/>
         <source>Issued on:</source>
-        <translation type="unfinished"/>
+        <translation>Doručeno:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="327"/>
         <source>Expires on:</source>
-        <translation type="unfinished"/>
+        <translation>Vyprší:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="340"/>
@@ -5658,7 +5661,7 @@ Klepněte na tlačítko Nainstalovat pro opětovné spuštění prohlížeče a 
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="407"/>
         <source>SSL Errors</source>
-        <translation type="unfinished"/>
+        <translation>Chyby SSL</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="41"/>
@@ -5710,12 +5713,12 @@ Klepněte na tlačítko Nainstalovat pro opětovné spuštění prohlížeče a 
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="93"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="112"/>
         <source>Only existing</source>
-        <translation type="unfinished"/>
+        <translation>Pouze existující</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="97"/>
         <source>Only read existing</source>
-        <translation type="unfinished"/>
+        <translation>Číst pouze existující</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="101"/>
@@ -5727,7 +5730,7 @@ Klepněte na tlačítko Nainstalovat pro opětovné spuštění prohlížeče a 
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="164"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="183"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Nikdy</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="105"/>
@@ -5739,38 +5742,38 @@ Klepněte na tlačítko Nainstalovat pro opětovné spuštění prohlížeče a 
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="160"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="175"/>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>Vždy</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="135"/>
         <source>On demand</source>
-        <translation type="unfinished"/>
+        <translation>Na požádání</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="153"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="168"/>
         <source>Always Ask</source>
-        <translation type="unfinished"/>
+        <translation>Vždy se zeptat</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="179"/>
         <source>Always (open in backgound)</source>
-        <translation type="unfinished"/>
+        <translation>Vždy (otevřít na pozadí)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="187"/>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>Zeptat se</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="216"/>
         <source>Error Message</source>
-        <translation type="unfinished"/>
+        <translation>Zpráva o chybě</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="216"/>
         <source>URL</source>
-        <translation type="unfinished"/>
+        <translation>Adresa (URL)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="235"/>
@@ -5797,224 +5800,224 @@ Klepněte na tlačítko Nainstalovat pro opětovné spuštění prohlížeče a 
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="53"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="277"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="510"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="653"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="268"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="501"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="644"/>
         <source>Override</source>
         <translation>Zrušit</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="97"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="91"/>
         <source>Encoding:</source>
         <translation>Kódování:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="107"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="101"/>
         <source>User style sheet:</source>
         <translation>Použít stylový list:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="114"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="108"/>
         <source>Plugins:</source>
         <translation>Přídavné moduly:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="124"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="115"/>
         <source>Pop-ups:</source>
         <translation>Vyskakování:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="148"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="139"/>
         <source>Enable images</source>
         <translation>Povolit obrázky</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="162"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="153"/>
         <source>Enable Java</source>
         <translation>Povolit Javu</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="196"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="187"/>
         <source>Privacy</source>
         <translation>Soukromí</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="220"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="211"/>
         <source>Keep until:</source>
         <translation>Zachovat až do:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="263"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="254"/>
         <source>Remember browsing history</source>
         <translation>Pamatovat si historii procházení stránek</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="284"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="275"/>
         <source>Enable cookies</source>
         <translation>Povolit koláčky</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="309"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="300"/>
         <source>Accept cookies:</source>
         <translation>Přijmout koláčky:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="318"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="309"/>
         <source>Do Not Track:</source>
         <translation>Nesledovat:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="358"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="349"/>
         <source>Add…</source>
         <translation>Přidat…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="368"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="359"/>
         <source>Edit…</source>
         <translation>Upravit…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="378"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="369"/>
         <source>Delete</source>
         <translation>Smazat</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="420"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="411"/>
         <source>Accept third-party cookies:</source>
         <translation>Přijmout koláčky třetích stran:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="459"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="450"/>
         <source>Scripting</source>
         <translation>Skriptování</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="472"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="463"/>
         <source>Enable JavaScript</source>
         <translation>Povolit JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="489"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="480"/>
         <source>Allow script to hide address bar</source>
         <translation>Povolit skript na skrývání adresního řádku</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="496"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="487"/>
         <source>Allow moving and resizing of windows</source>
         <translation>Povolit přesun a změnu velikosti oken</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="517"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="508"/>
         <source>Allow changing of status field</source>
         <translation>Povolit změnu stavového řádku</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="554"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="545"/>
         <source>Allow access to clipboard</source>
         <translation>Povolit přístup do schránky</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="568"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="559"/>
         <source>Allow to disable context menu</source>
         <translation>Povolit zákaz související nabídky</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="582"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="573"/>
         <source>Allow to open windows</source>
         <translation>Povolit otevření oken</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="612"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="603"/>
         <source>Allow to close windows:</source>
         <translation>Povolit zavření oken:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="623"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="614"/>
         <source>Network</source>
         <translation>Síť</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="636"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="627"/>
         <source>User Agent:</source>
         <translation>Uživatelský agent:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="676"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="667"/>
         <source>Proxy mode:</source>
         <translation>Režim proxy:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="703"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="694"/>
         <source>No proxy</source>
         <translation>Žádná proxy</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="708"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="699"/>
         <source>System configuration</source>
         <translation>Systémové nastavení</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="713"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="704"/>
         <source>Manual configuration</source>
         <translation>Ruční nastavení</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="718"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="709"/>
         <source>Automatic configuration (PAC)</source>
         <translation>Automatické nastavení (PAC)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="831"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="822"/>
         <source>Port</source>
         <translation>Přípojka (port)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="838"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="829"/>
         <source>Servers</source>
         <translation>Servery</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="845"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="836"/>
         <source>FTP</source>
         <translation>FTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="852"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="843"/>
         <source>SOCKS5</source>
         <translation>SOCKS5</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="859"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="850"/>
         <source>HTTP</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="873"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="864"/>
         <source>HTTPS</source>
         <translation>HTTPS</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="887"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="878"/>
         <source>All</source>
         <translation>Vše</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="904"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="895"/>
         <source>Protocol</source>
         <translation>Protokol</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="932"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="923"/>
         <source>Path to PAC file:</source>
         <translation>Cesta k souboru PAC:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="949"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="940"/>
         <source>Send referrer information</source>
         <translation>Poslat informace o odkazování</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="957"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="948"/>
         <source>Content Blocking</source>
         <translation>Blokování obsahu</translation>
     </message>
@@ -6032,17 +6035,17 @@ Klepněte na tlačítko Nainstalovat pro opětovné spuštění prohlížeče a 
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="78"/>
         <source>Block all</source>
-        <translation type="unfinished"/>
+        <translation>Blokovat vše</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="79"/>
         <source>Open all</source>
-        <translation type="unfinished"/>
+        <translation>Otevřít vše</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="80"/>
         <source>Open all in background</source>
-        <translation type="unfinished"/>
+        <translation>Otevřít vše na pozadí</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="82"/>
@@ -6145,17 +6148,17 @@ Klepněte na tlačítko Nainstalovat pro opětovné spuštění prohlížeče a 
         <translation>(Bez názvu)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="340"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="347"/>
         <source>Title</source>
         <translation>Název</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="340"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="347"/>
         <source>Update Interval</source>
         <translation>Interval aktualizace</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="340"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="347"/>
         <source>Last Update</source>
         <translation>Poslední aktualizace</translation>
     </message>
@@ -6702,7 +6705,7 @@ Klepněte na tlačítko Nainstalovat pro opětovné spuštění prohlížeče a 
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="309"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="714"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="715"/>
         <source>Bookmark Link…</source>
         <translation>Přidat odkaz do záložek…</translation>
     </message>
@@ -6770,7 +6773,7 @@ Klepněte na tlačítko Nainstalovat pro opětovné spuštění prohlížeče a 
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="321"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="783"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="784"/>
         <source>Open Image in New Background Tab</source>
         <translation>Otevřít obrázek v novém listu na pozadí</translation>
     </message>
@@ -6821,13 +6824,13 @@ Klepněte na tlačítko Nainstalovat pro opětovné spuštění prohlížeče a 
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="331"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="846"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="847"/>
         <source>Play</source>
         <translation>Přehrát</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="332"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="853"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="854"/>
         <source>Mute</source>
         <translation>Ztlumit</translation>
     </message>
@@ -6998,7 +7001,7 @@ Klepněte na tlačítko Nainstalovat pro opětovné spuštění prohlížeče a 
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="367"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="633"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="634"/>
         <source>Search</source>
         <translation>Hledat</translation>
     </message>
@@ -7337,7 +7340,7 @@ Klepněte na tlačítko Nainstalovat pro opětovné spuštění prohlížeče a 
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="434"/>
         <source>Website Certificate Information…</source>
-        <translation type="unfinished"/>
+        <translation>Stránka s informacemi o certifikátu...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="435"/>
@@ -7410,52 +7413,52 @@ Klepněte na tlačítko Nainstalovat pro opětovné spuštění prohlížeče a 
         <translation>Ukázat okna</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="513"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="514"/>
         <source>Edit Bookmark…</source>
         <translation>Upravit záložku…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="513"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="514"/>
         <source>Add Bookmark…</source>
         <translation>Přidat záložku…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="714"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="715"/>
         <source>Edit Link Bookmark…</source>
         <translation>Upravit odkaz na záložku…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="777"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="778"/>
         <source>Open Image in New Tab</source>
         <translation>Otevřít obrázek v novém listu</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="822"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="823"/>
         <source>Save Video…</source>
         <translation>Uložit obrazový záznam…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="822"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="823"/>
         <source>Save Audio…</source>
         <translation>Uložit zvukový záznam…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="828"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="829"/>
         <source>Copy Video Link to Clipboard</source>
         <translation>Kopírovat odkaz na obrazový záznam do schránky</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="828"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="829"/>
         <source>Copy Audio Link to Clipboard</source>
         <translation>Kopírovat odkaz na zvukový záznam do schránky</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="846"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="847"/>
         <source>Pause</source>
         <translation>Pozastavit</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="853"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="854"/>
         <source>Unmute</source>
         <translation>Zrušit ztlumení</translation>
     </message>

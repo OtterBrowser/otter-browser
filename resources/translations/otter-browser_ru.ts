@@ -2569,12 +2569,12 @@ Do you want to continue?</source>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="68"/>
-        <source>Blocked pop-ups</source>
+        <source>Blocked Pop-ups</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="69"/>
-        <source>Open all</source>
+        <source>Open All</source>
         <translation type="unfinished"/>
     </message>
     <message numerus="yes">
@@ -3124,85 +3124,85 @@ Do you want to continue?</source>
         <translation>Блокируемое содержимое</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="38"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="35"/>
         <source>Pop-ups:</source>
         <translation>Всплывающие окна:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="57"/>
         <source>Zoom</source>
         <translation>Масштаб</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="75"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="69"/>
         <source>Default zoom:</source>
         <translation>Масштаб по умолчанию:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="85"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="79"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="103"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="97"/>
         <source>Zoom text only</source>
         <translation>Масштабировать только текст</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="116"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="110"/>
         <source>Fonts</source>
         <translation>Шрифты</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="157"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="151"/>
         <source>Style</source>
         <translation>Стиль</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="162"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="156"/>
         <source>Font</source>
         <translation>Шрифт</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="167"/>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="306"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="161"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="300"/>
         <source>Preview</source>
         <translation>Предпросмотр</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="177"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="171"/>
         <source>Default proportional font size:</source>
         <translation>Размер обычного шрифта:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="187"/>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="213"/>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="242"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="181"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="207"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="236"/>
         <source> px</source>
         <translation>px</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="203"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="197"/>
         <source>Default fixed-width font size:</source>
         <translation>Размер моноширинного шрифта:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="229"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="223"/>
         <source>Minimum font size:</source>
         <translation>Минимальный размер шрифта:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="239"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="233"/>
         <source>None</source>
         <translation>Не задан</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="263"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="257"/>
         <source>Colors</source>
         <translation>Цвета</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="301"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="295"/>
         <source>Type</source>
         <translation>Тип</translation>
     </message>
@@ -3819,61 +3819,61 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitPage</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="185"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="323"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="360"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="213"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="384"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="421"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="186"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="324"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="361"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="214"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="385"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="422"/>
         <source>Disable JavaScript popups</source>
         <translation>Отключить всплывающие окна JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="286"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="447"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="334"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="347"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="508"/>
         <source>Question</source>
         <translation>Вопрос</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="287"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="334"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="348"/>
         <source>Are you sure that you want to send form data again?</source>
         <translation>Вы уверены, что вы хотите отправить данные формы заново?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="273"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="288"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="334"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="349"/>
         <source>Do you want to resend data?</source>
         <translation>Вы уверены, что вы хотите отправить данные заново?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="274"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="292"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="335"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="353"/>
         <source>Do not show this message again</source>
         <translation>Больше не показывать это сообщение</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="402"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="463"/>
         <source>Open File</source>
         <translation>Открыть файл</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="435"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="496"/>
         <source>%1 error #%2: %3</source>
         <translation>%1 ошибка #%2: %3</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="447"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="508"/>
         <source>The script on this page appears to have a problem.</source>
         <translation>Скрипт на этой странице вызвал проблему.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="447"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="508"/>
         <source>Do you want to stop the script?</source>
         <translation>Вы хотите остановить скрипт?</translation>
     </message>
@@ -3902,72 +3902,72 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitWebWidget</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="327"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="332"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="327"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="332"/>
         <source>Failed to open file for writing.</source>
         <translation>Не удалось открыть файл для записи.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="347"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="352"/>
         <source>file</source>
         <translation>файл</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="358"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="363"/>
         <source>Failed to save image: %1</source>
         <translation>Не удалось сохранить изображение: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="479"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="484"/>
         <source>Print Preview</source>
         <translation>Предпросмотр печати</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="538"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="543"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="538"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="543"/>
         <source>Webpage wants to close this tab, do you want to allow to close it?</source>
         <translation>Веб-страница хочет закрыть эту вкладку,  закрыть?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="539"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="544"/>
         <source>Do not show this message again</source>
         <translation>Больше не показывать это сообщение</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="676"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="681"/>
         <source>Undo</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="676"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="681"/>
         <source>Undo: %1</source>
         <translation>Отменить: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="681"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="686"/>
         <source>Redo</source>
         <translation>Вернуть</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="681"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="686"/>
         <source>Redo: %1</source>
         <translation>Вернуть: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1746"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1751"/>
         <source>Blank Page</source>
         <translation>Пустая страница</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1759"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1764"/>
         <source>(Untitled)</source>
         <translation>(Пустая страница)</translation>
     </message>
@@ -5358,62 +5358,62 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>Otter::WebContentsWidget</name>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="444"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="446"/>
         <source>Open All Pop-Ups</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="448"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="450"/>
         <source>Open Pop-Ups in Background</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="452"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="454"/>
         <source>Block All Pop-Ups</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="456"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="458"/>
         <source>Ask What to Do</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="482"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="483"/>
         <source>Enable Images</source>
         <translation>Включить загрузку изображений</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="487"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="488"/>
         <source>Enable JavaScript</source>
         <translation>Включить JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="492"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="493"/>
         <source>Enable Java</source>
         <translation>Включить Java</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="497"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="498"/>
         <source>Enable Plugins</source>
         <translation>Включить плагины</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="504"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="505"/>
         <source>Enable Cookies</source>
         <translation>Включить cookies</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="508"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="509"/>
         <source>Enable Referrer</source>
         <translation>Отправлять данные о ссылающейся странице</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="512"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="513"/>
         <source>Enable Proxy</source>
         <translation>Включить прокси-серверы</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="517"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="518"/>
         <source>Reset Options</source>
         <translation>Сбросить настройки</translation>
     </message>
@@ -5421,82 +5421,82 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>Otter::WebWidget</name>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="293"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="294"/>
         <source>Default Application</source>
         <translation>Приложение по умолчанию</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="299"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="300"/>
         <source>Unknown</source>
         <translation>Неизвестно</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="385"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="386"/>
         <source>Title: %1</source>
         <translation>Заголовок: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="385"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="386"/>
         <source>Address: %1</source>
         <translation>Адрес: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="634"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="635"/>
         <source>No search engines defined</source>
         <translation>Службы поиска не определены</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="777"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="778"/>
         <source>Open Image in New Tab (Untitled)</source>
         <translation>Открыть изображение в новой вкладке (без названия)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="777"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="778"/>
         <source>Open Image in New Tab (%1)</source>
         <translation>Открыть изображение в новой вкладке (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="783"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="784"/>
         <source>Open Image in New Background Tab (Untitled)</source>
         <translation>Открыть изображение в новой фоновой вкладке (без названия)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="783"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="784"/>
         <source>Open Image in New Background Tab (%1)</source>
         <translation>Открыть изображение в новой фоновой вкладке (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1075"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1076"/>
         <source>30 Minutes</source>
         <translation>30 минут</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1076"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1077"/>
         <source>1 Hour</source>
         <translation>1 час</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1077"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1078"/>
         <source>2 Hours</source>
         <translation>2 часа</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1078"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1079"/>
         <source>6 Hours</source>
         <translation>6 часов</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1079"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1080"/>
         <source>Never</source>
         <translation>Запретить обновление</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1080"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1081"/>
         <source>Custom…</source>
         <translation>Задать интервал...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1082"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1083"/>
         <source>Page Default</source>
         <translation>Заданное страницей</translation>
     </message>
@@ -5796,224 +5796,224 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="53"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="277"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="510"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="653"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="268"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="501"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="644"/>
         <source>Override</source>
         <translation>Переопределение</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="97"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="91"/>
         <source>Encoding:</source>
         <translation>Кодировка:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="107"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="101"/>
         <source>User style sheet:</source>
         <translation>Моя таблица стилей:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="114"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="108"/>
         <source>Plugins:</source>
         <translation>Плагины:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="124"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="115"/>
         <source>Pop-ups:</source>
         <translation>Всплывающие окна:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="148"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="139"/>
         <source>Enable images</source>
         <translation>Включить загрузку изображений</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="162"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="153"/>
         <source>Enable Java</source>
         <translation>Включить Java</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="196"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="187"/>
         <source>Privacy</source>
         <translation>Безопасность</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="220"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="211"/>
         <source>Keep until:</source>
         <translation>Хранить до:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="263"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="254"/>
         <source>Remember browsing history</source>
         <translation>Запоминать историю посещений</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="284"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="275"/>
         <source>Enable cookies</source>
         <translation>Разрешить cookies</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="309"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="300"/>
         <source>Accept cookies:</source>
         <translation>Принимать cookies</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="318"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="309"/>
         <source>Do Not Track:</source>
         <translation>Не отслеживать:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="358"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="349"/>
         <source>Add…</source>
         <translation>Добавить…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="368"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="359"/>
         <source>Edit…</source>
         <translation>Изменить…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="378"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="369"/>
         <source>Delete</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="420"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="411"/>
         <source>Accept third-party cookies:</source>
         <translation>Принимать сторонние куки:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="459"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="450"/>
         <source>Scripting</source>
         <translation>Скрипты</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="472"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="463"/>
         <source>Enable JavaScript</source>
         <translation>Включить JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="489"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="480"/>
         <source>Allow script to hide address bar</source>
         <translation>Позволить скрывать панель адреса</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="496"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="487"/>
         <source>Allow moving and resizing of windows</source>
         <translation>Позволить перемещать и изменять размеры окон</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="517"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="508"/>
         <source>Allow changing of status field</source>
         <translation>Позволить изменять строку состояния</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="554"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="545"/>
         <source>Allow access to clipboard</source>
         <translation>Позволить доступ к буферу обмена</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="568"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="559"/>
         <source>Allow to disable context menu</source>
         <translation>Разрешить запрещать контекстное меню</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="582"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="573"/>
         <source>Allow to open windows</source>
         <translation>Разрешить открывать окна</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="612"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="603"/>
         <source>Allow to close windows:</source>
         <translation>Разрешить закрывать окна:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="623"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="614"/>
         <source>Network</source>
         <translation>Сеть</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="636"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="627"/>
         <source>User Agent:</source>
         <translation>Идентификация браузера:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="676"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="667"/>
         <source>Proxy mode:</source>
         <translation>Режим прокси:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="703"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="694"/>
         <source>No proxy</source>
         <translation>Не использовать прокси</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="708"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="699"/>
         <source>System configuration</source>
         <translation>Использовать настройки системы</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="713"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="704"/>
         <source>Manual configuration</source>
         <translation>Ручная настройка</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="718"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="709"/>
         <source>Automatic configuration (PAC)</source>
         <translation>Автоматическая конфигурация (PAC)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="831"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="822"/>
         <source>Port</source>
         <translation>Порт</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="838"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="829"/>
         <source>Servers</source>
         <translation>Серверы</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="845"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="836"/>
         <source>FTP</source>
         <translation>FTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="852"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="843"/>
         <source>SOCKS5</source>
         <translation>SOCKS5</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="859"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="850"/>
         <source>HTTP</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="873"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="864"/>
         <source>HTTPS</source>
         <translation>HTTPS</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="887"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="878"/>
         <source>All</source>
         <translation>Все</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="904"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="895"/>
         <source>Protocol</source>
         <translation>Протокол</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="932"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="923"/>
         <source>Path to PAC file:</source>
         <translation>Путь к PAC-файлу:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="949"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="940"/>
         <source>Send referrer information</source>
         <translation>Отправлять данные о ссылающейся странице</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="957"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="948"/>
         <source>Content Blocking</source>
         <translation>Блокируемое содержимое</translation>
     </message>
@@ -6144,17 +6144,17 @@ Click Install button to restart browser and install the update or close this dia
         <translation>(Без названия)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="340"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="347"/>
         <source>Title</source>
         <translation>Заголовок</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="340"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="347"/>
         <source>Update Interval</source>
         <translation>Интервал обновления</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="340"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="347"/>
         <source>Last Update</source>
         <translation>Последнее обновление</translation>
     </message>
@@ -6694,7 +6694,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="309"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="714"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="715"/>
         <source>Bookmark Link…</source>
         <translation>Создать закладку ссылки...</translation>
     </message>
@@ -6762,7 +6762,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="321"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="783"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="784"/>
         <source>Open Image in New Background Tab</source>
         <translation>Открыть изображение в новой фоновой вкладке</translation>
     </message>
@@ -6813,13 +6813,13 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="331"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="846"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="847"/>
         <source>Play</source>
         <translation>Воспроизвести</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="332"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="853"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="854"/>
         <source>Mute</source>
         <translation>Приглушит</translation>
     </message>
@@ -6990,7 +6990,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="367"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="633"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="634"/>
         <source>Search</source>
         <translation>Искать</translation>
     </message>
@@ -7402,52 +7402,52 @@ Click Install button to restart browser and install the update or close this dia
         <translation>Показать окна</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="513"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="514"/>
         <source>Edit Bookmark…</source>
         <translation>Изменить закладку...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="513"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="514"/>
         <source>Add Bookmark…</source>
         <translation>Создать закладку страницы...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="714"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="715"/>
         <source>Edit Link Bookmark…</source>
         <translation>Изменить ссылку закладки...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="777"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="778"/>
         <source>Open Image in New Tab</source>
         <translation>Открыть изображение в новой вкладке</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="822"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="823"/>
         <source>Save Video…</source>
         <translation>Сохранить видео...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="822"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="823"/>
         <source>Save Audio…</source>
         <translation>Сохранить аудио...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="828"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="829"/>
         <source>Copy Video Link to Clipboard</source>
         <translation>Копировать ссылку на видео</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="828"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="829"/>
         <source>Copy Audio Link to Clipboard</source>
         <translation>Копировать ссылку на аудио</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="846"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="847"/>
         <source>Pause</source>
         <translation>Пауза</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="853"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="854"/>
         <source>Unmute</source>
         <translation>Включить звук</translation>
     </message>
