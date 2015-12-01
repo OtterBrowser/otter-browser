@@ -62,7 +62,10 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 		emit readyRead();
 		emit finished();
 
-		m_ftp->close();
+		if (m_ftp->error() != QFtp::NotConnected)
+		{
+			m_ftp->close();
+		}
 
 		setError(ContentNotFoundError, tr("Unknown command"));
 
