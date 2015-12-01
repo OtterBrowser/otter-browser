@@ -45,9 +45,9 @@ PopupsBarWidget::PopupsBarWidget(const QUrl &parentUrl, QWidget *parent) : QWidg
 	openAllAction->setCheckable(true);
 	openAllAction->setData(QLatin1String("openAll"));
 
-	QAction *openAllBackgroundAction = menu->addAction(tr("Open Pop-Ups from This Website in Background"));
-	openAllBackgroundAction->setCheckable(true);
-	openAllBackgroundAction->setData(QLatin1String("openAllBackground"));
+	QAction *openAllInBackgroundAction = menu->addAction(tr("Open Pop-Ups from This Website in Background"));
+	openAllInBackgroundAction->setCheckable(true);
+	openAllInBackgroundAction->setData(QLatin1String("openAllInBackground"));
 
 	QAction *blockAllAction = menu->addAction(tr("Block All Pop-Ups from This Website"));
 	blockAllAction->setCheckable(true);
@@ -59,14 +59,14 @@ PopupsBarWidget::PopupsBarWidget(const QUrl &parentUrl, QWidget *parent) : QWidg
 
 	m_popupsGroup->setExclusive(true);
 	m_popupsGroup->addAction(openAllAction);
-	m_popupsGroup->addAction(openAllBackgroundAction);
+	m_popupsGroup->addAction(openAllInBackgroundAction);
 	m_popupsGroup->addAction(blockAllAction);
 	m_popupsGroup->addAction(askAction);
 
 	menu->addSeparator();
 
-	m_popupsMenu = menu->addMenu(tr("Blocked pop-ups"));
-	m_popupsMenu->addAction(tr("Open all"));
+	m_popupsMenu = menu->addMenu(tr("Blocked Pop-ups"));
+	m_popupsMenu->addAction(tr("Open All"));
 	m_popupsMenu->addSeparator();
 
 	optionChanged(QLatin1String("Content/PopupsPolicy"));
@@ -115,7 +115,7 @@ void PopupsBarWidget::addPopup(const QUrl &url)
 	QAction *action = m_popupsMenu->addAction(QString("%1").arg(fontMetrics().elidedText(url.url(), Qt::ElideMiddle, 256)));
 	action->setData(url.url());
 
-	m_ui->messageLabel->setText(tr("%1 wants to open %n pop-up window(s).", "", m_popupsMenu->actions().count()).arg(m_parentUrl.host()));
+	m_ui->messageLabel->setText(tr("%1 wants to open %n pop-up window(s).", "", m_popupsMenu->actions().count() - 2).arg(m_parentUrl.host()));
 }
 
 void PopupsBarWidget::openUrl(QAction *action)

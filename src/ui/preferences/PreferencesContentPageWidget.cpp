@@ -36,7 +36,7 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 	m_ui->popupsComboBox->addItem(tr("Ask"), QLatin1String("ask"));
 	m_ui->popupsComboBox->addItem(tr("Block all"), QLatin1String("blockAll"));
 	m_ui->popupsComboBox->addItem(tr("Open all"), QLatin1String("openAll"));
-	m_ui->popupsComboBox->addItem(tr("Open all in background"), QLatin1String("openAllBackground"));
+	m_ui->popupsComboBox->addItem(tr("Open all in background"), QLatin1String("openAllInBackground"));
 	m_ui->defaultZoomSpinBox->setValue(SettingsManager::getValue(QLatin1String("Content/DefaultZoom")).toInt());
 	m_ui->zoomTextOnlyCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Content/ZoomTextOnly")).toBool());
 	m_ui->proportionalFontSizeSpinBox->setValue(SettingsManager::getValue(QLatin1String("Content/DefaultFontSize")).toInt());

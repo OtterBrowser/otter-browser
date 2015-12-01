@@ -77,7 +77,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	m_ui->popupsComboBox->addItem(tr("Ask"), QLatin1String("ask"));
 	m_ui->popupsComboBox->addItem(tr("Block all"), QLatin1String("blockAll"));
 	m_ui->popupsComboBox->addItem(tr("Open all"), QLatin1String("openAll"));
-	m_ui->popupsComboBox->addItem(tr("Open all in background"), QLatin1String("openAllBackground"));
+	m_ui->popupsComboBox->addItem(tr("Open all in background"), QLatin1String("openAllInBackground"));
 
 	m_ui->pluginsComboBox->addItem(tr("Enabled"), QLatin1String("enabled"));
 	m_ui->pluginsComboBox->addItem(tr("On demand"), QLatin1String("onDemand"));
@@ -137,6 +137,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	}
 
 	m_ui->encodingOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
+	m_ui->popupsOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/PopupsPolicy")));
 	m_ui->enableImagesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/EnableImages")));
 	m_ui->enableJavaOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/EnableJava")));
 	m_ui->pluginsOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/EnablePlugins")));
@@ -210,6 +211,7 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 	{
 		case QDialogButtonBox::AcceptRole:
 			SettingsManager::setValue(QLatin1String("Content/DefaultEncoding"), (m_ui->encodingOverrideCheckBox->isChecked() ? (m_ui->encodingComboBox->currentIndex() ? m_ui->encodingComboBox->currentText() : QString()) : QVariant()), url);
+			SettingsManager::setValue(QLatin1String("Content/PopupsPolicy"), (m_ui->popupsOverrideCheckBox->isChecked() ? m_ui->popupsComboBox->currentData(Qt::UserRole).toString() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Browser/EnableImages"), (m_ui->enableImagesOverrideCheckBox->isChecked() ? m_ui->enableImagesCheckBox->isChecked() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Browser/EnableJava"), (m_ui->enableJavaOverrideCheckBox->isChecked() ? m_ui->enableJavaCheckBox->isChecked() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Browser/EnablePlugins"), (m_ui->pluginsOverrideCheckBox->isChecked() ? m_ui->pluginsComboBox->currentData(Qt::UserRole).toString() : QVariant()), url);
@@ -294,6 +296,11 @@ void WebsitePreferencesDialog::updateValues(bool checked)
 	m_updateOverride = false;
 
 	m_ui->encodingComboBox->setCurrentIndex(qMax(0, m_ui->encodingComboBox->findText(SettingsManager::getValue(QLatin1String("Content/DefaultEncoding"), (m_ui->encodingOverrideCheckBox->isChecked() ? url : QUrl())).toString())));
+
+	const int popupsPolicyIndex = m_ui->popupsComboBox->findData(SettingsManager::getValue(QLatin1String("Content/PopupsPolicy"), (m_ui->popupsOverrideCheckBox->isChecked() ? url : QUrl())).toString());
+
+	m_ui->popupsComboBox->setCurrentIndex((popupsPolicyIndex < 0) ? 0 : popupsPolicyIndex);
+
 	m_ui->enableImagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableImages"), (m_ui->enableImagesOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 	m_ui->enableJavaCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJava"), (m_ui->enableJavaOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 

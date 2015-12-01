@@ -174,7 +174,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 	{
 		m_ui->popupsValueLabel->setText(tr("Always"));
 	}
-	else if (popupsPolicy == QLatin1String("openAllBackground"))
+	else if (popupsPolicy == QLatin1String("openAllInBackground"))
 	{
 		m_ui->popupsValueLabel->setText(tr("Always (open in backgound)"));
 	}

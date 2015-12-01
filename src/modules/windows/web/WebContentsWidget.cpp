@@ -20,6 +20,7 @@
 
 #include "WebContentsWidget.h"
 #include "PermissionBarWidget.h"
+#include "PopupsBarWidget.h"
 #include "ProgressBarWidget.h"
 #include "SearchBarWidget.h"
 #include "StartPageWidget.h"
@@ -52,6 +53,7 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	m_startPageWidget(NULL),
 	m_searchBarWidget(NULL),
 	m_progressBarWidget(NULL),
+	m_popupsBarWidget(NULL),
 	m_scrollMode(NoScroll),
 	m_quickFindTimer(0),
 	m_scrollTimer(0),
@@ -445,9 +447,9 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				openAllAction->setCheckable(true);
 				openAllAction->setData(QLatin1String("openAll"));
 
-				QAction *openAllBackgroundAction = menu.addAction(tr("Open Pop-Ups in Background"));
-				openAllBackgroundAction->setCheckable(true);
-				openAllBackgroundAction->setData(QLatin1String("openAllBackground"));
+				QAction *openAllInBackgroundAction = menu.addAction(tr("Open Pop-Ups in Background"));
+				openAllInBackgroundAction->setCheckable(true);
+				openAllInBackgroundAction->setData(QLatin1String("openAllInBackground"));
 
 				QAction *blockAllAction = menu.addAction(tr("Block All Pop-Ups"));
 				blockAllAction->setCheckable(true);
@@ -459,9 +461,8 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				QActionGroup popupsGroup(this);
 				popupsGroup.setExclusive(true);
-				popupsGroup.setEnabled(false);
 				popupsGroup.addAction(openAllAction);
-				popupsGroup.addAction(openAllBackgroundAction);
+				popupsGroup.addAction(openAllInBackgroundAction);
 				popupsGroup.addAction(blockAllAction);
 				popupsGroup.addAction(askAction);
 
@@ -634,6 +635,16 @@ void WebContentsWidget::findInPage(WebWidget::FindFlags flags)
 	}
 }
 
+void WebContentsWidget::closePopupsBar()
+{
+	if (m_popupsBarWidget)
+	{
+		m_popupsBarWidget->hide();
+		m_popupsBarWidget->deleteLater();
+		m_popupsBarWidget = NULL;
+	}
+}
+
 void WebContentsWidget::scrollContents(const QPoint &delta)
 {
 	if (m_startPageWidget)
@@ -669,6 +680,23 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 		m_startPageWidget->deleteLater();
 		m_startPageWidget = NULL;
 	}
+}
+
+void WebContentsWidget::handlePopupWindowRequest(const QUrl &parentUrl, const QUrl &popupUrl)
+{
+	if (!m_popupsBarWidget)
+	{
+		m_popupsBarWidget = new PopupsBarWidget(parentUrl, this);
+
+		connect(m_popupsBarWidget, SIGNAL(requestedClose()), this, SLOT(closePopupsBar()));
+		connect(m_popupsBarWidget, SIGNAL(requestedNewWindow(QUrl,WindowsManager::OpenHints)), this, SLOT(notifyRequestedOpenUrl(QUrl,WindowsManager::OpenHints)));
+
+		m_layout->insertWidget(0, m_popupsBarWidget);
+
+		m_popupsBarWidget->show();
+	}
+
+	m_popupsBarWidget->addPopup(popupUrl);
 }
 
 void WebContentsWidget::handlePermissionRequest(const QString &option, QUrl url, bool cancel)
@@ -896,11 +924,13 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 	}
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	connect(m_webWidget, SIGNAL(aboutToNavigate()), this, SLOT(closePopupsBar()));
 	connect(m_webWidget, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString,QString)));
 	connect(m_webWidget, SIGNAL(requestedEditBookmark(QUrl)), this, SIGNAL(requestedEditBookmark(QUrl)));
 	connect(m_webWidget, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), this, SLOT(notifyRequestedOpenUrl(QUrl,WindowsManager::OpenHints)));
 	connect(m_webWidget, SIGNAL(requestedNewWindow(WebWidget*,WindowsManager::OpenHints)), this, SLOT(notifyRequestedNewWindow(WebWidget*,WindowsManager::OpenHints)));
 	connect(m_webWidget, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
+	connect(m_webWidget, SIGNAL(requestedPopupWindow(QUrl,QUrl)), this, SLOT(handlePopupWindowRequest(QUrl,QUrl)));
 	connect(m_webWidget, SIGNAL(requestedPermission(QString,QUrl,bool)), this, SLOT(handlePermissionRequest(QString,QUrl,bool)));
 	connect(m_webWidget, SIGNAL(requestedGeometryChange(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
 	connect(m_webWidget, SIGNAL(statusMessageChanged(QString)), this, SIGNAL(statusMessageChanged(QString)));

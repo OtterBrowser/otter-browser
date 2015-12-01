@@ -31,9 +31,6 @@
      </property>
      <item row="0" column="0">
       <widget class="QLabel" name="popupsLabel">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
        <property name="text">
         <string>Pop-ups:</string>
        </property>
@@ -44,9 +41,6 @@
      </item>
      <item row="0" column="1">
       <widget class="QComboBox" name="popupsComboBox">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
       </widget>
      </item>
     </layout>

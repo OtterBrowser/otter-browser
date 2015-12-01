@@ -30,6 +30,7 @@ namespace Otter
 {
 
 class PermissionBarWidget;
+class PopupsBarWidget;
 class ProgressBarWidget;
 class SearchBarWidget;
 class StartPageWidget;
@@ -112,7 +113,9 @@ protected:
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void findInPage(WebWidget::FindFlags flags = WebWidget::NoFlagsFind);
+	void closePopupsBar();
 	void handleUrlChange(const QUrl &url);
+	void handlePopupWindowRequest(const QUrl &parentUrl, const QUrl &popupUrl);
 	void handlePermissionRequest(const QString &option, QUrl url, bool cancel);
 	void notifyPermissionChanged(WebWidget::PermissionPolicies policies);
 	void notifyRequestedOpenUrl(const QUrl &url, WindowsManager::OpenHints hints);
@@ -127,6 +130,7 @@ private:
 	StartPageWidget *m_startPageWidget;
 	SearchBarWidget *m_searchBarWidget;
 	ProgressBarWidget *m_progressBarWidget;
+	PopupsBarWidget *m_popupsBarWidget;
 	QString m_quickFindQuery;
 	QPoint m_beginCursorPosition;
 	QPoint m_lastCursorPosition;
