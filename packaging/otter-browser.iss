@@ -1,5 +1,5 @@
 #define MyAppName "Otter Browser"
-#define MyAppVersion "0.9.08-dev"
+#define MyAppVersion "0.9.09-dev"
 #define MyAppURL "http://otter-browser.org/"
 #define MyAppExeName "otter-browser.exe"
 #define MyAppIdentifier "OtterBrowser"
@@ -19,7 +19,7 @@ OutputDir=Z:\otter-browser-inno\output\
 OutputBaseFilename=otter-browser-{#MyAppVersion}-setup
 Compression=lzma2/ultra64
 SolidCompression=yes
-VersionInfoVersion=0.9.08
+VersionInfoVersion=0.9.09
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"

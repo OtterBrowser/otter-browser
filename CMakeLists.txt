@@ -12,10 +12,10 @@ project(otter-browser)
 
 set(MAJOR_VERSION "0")
 set(MINOR_VERSION "9")
-set(PATCH_VERSION "08")
+set(PATCH_VERSION "09")
 set(OTTER_VERSION_MAIN ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION})
 set(OTTER_VERSION_WEEKLY " ")
-set(OTTER_VERSION_CONTEXT " beta 8")
+set(OTTER_VERSION_CONTEXT "-dev")
 
 if (EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	include(InstallRequiredSystemLibraries)
