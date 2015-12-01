@@ -39,14 +39,9 @@ LineEditWidget::LineEditWidget(QWidget *parent) : QLineEdit(parent),
 
 void LineEditWidget::keyPressEvent(QKeyEvent *event)
 {
-	if (event->key() == Qt::Key_Backspace && !m_completion.isEmpty())
+	if ((event->key() == Qt::Key_Backspace || event->key() == Qt::Key_Delete) && !m_completion.isEmpty())
 	{
 		m_shouldIgnoreCompletion = true;
-
-		if (hasSelectedText())
-		{
-			backspace();
-		}
 	}
 
 	QLineEdit::keyPressEvent(event);
