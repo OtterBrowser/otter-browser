@@ -43,7 +43,7 @@ public:
 	static QIcon getIcon(const QUrl &url);
 	static HistoryEntryItem* getEntry(quint64 identifier);
 	static QList<HistoryModel::HistoryEntryMatch> findEntries(const QString &prefix);
-	static qint64 addEntry(const QUrl &url, const QString &title, const QIcon &icon, bool isTypedIn = false);
+	static quint64 addEntry(const QUrl &url, const QString &title, const QIcon &icon, bool isTypedIn = false);
 	static bool hasEntry(const QUrl &url);
 	static bool updateEntry(quint64 identifier, const QUrl &url, const QString &title, const QIcon &icon);
 	static bool removeEntry(quint64 identifier);

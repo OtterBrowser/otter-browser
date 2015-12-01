@@ -367,15 +367,11 @@ QIcon HistoryManager::getIcon(const QUrl &url)
 		return Utils::getIcon(QLatin1String("text-html"));
 	}
 
-	qint64 location = getLocation(url, false);
+	quint64 location = getLocation(url, false);
 
 	if (location == 0)
 	{
-		QUrl mutableUrl(url);
-		mutableUrl.setPath(QString());
-		mutableUrl.setFragment(QString());
-
-		location = getLocation(mutableUrl, false);
+		location = getLocation(url.adjusted(QUrl::RemovePath | QUrl::RemoveFragment), false);
 	}
 
 	if (location > 0)
@@ -447,7 +443,7 @@ quint64 HistoryManager::getRecord(const QLatin1String &table, const QVariantHash
 
 	if (!canCreate)
 	{
-		return -1;
+		return 0;
 	}
 
 	QSqlQuery insertQuery(QSqlDatabase::database(QLatin1String("browsingHistory")));
@@ -499,11 +495,11 @@ quint64 HistoryManager::getIcon(const QIcon &icon, bool canCreate)
 	return getRecord(QLatin1String("icons"), record, canCreate);
 }
 
-qint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QIcon &icon, bool isTypedIn)
+quint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QIcon &icon, bool isTypedIn)
 {
 	if (!m_isEnabled || !url.isValid() || !SettingsManager::getValue(QLatin1String("History/RememberBrowsing"), url).toBool())
 	{
-		return -1;
+		return 0;
 	}
 
 	const QDateTime date(QDateTime::currentDateTime());
@@ -535,7 +531,7 @@ qint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QIc
 		return identifier;
 	}
 
-	return -1;
+	return 0;
 }
 
 bool HistoryManager::hasEntry(const QUrl &url)
