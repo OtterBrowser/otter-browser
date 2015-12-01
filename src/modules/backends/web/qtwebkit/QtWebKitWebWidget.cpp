@@ -2259,6 +2259,11 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			if (mouseEvent)
 			{
+				if (isScrollBar(mouseEvent->pos()))
+				{
+					return (mouseEvent->button() == Qt::MiddleButton);
+				}
+
 				setClickPosition(mouseEvent->pos());
 				updateHitTestResult(mouseEvent->pos());
 			}
@@ -2277,7 +2282,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 			contexts << GesturesManager::GenericGesturesContext;
 
-			if ((!mouseEvent || !isScrollBar(mouseEvent->pos())) && GesturesManager::startGesture(object, event, contexts))
+			if (GesturesManager::startGesture(object, event, contexts))
 			{
 				return true;
 			}
