@@ -15,7 +15,7 @@ set(MINOR_VERSION "9")
 set(PATCH_VERSION "08")
 set(OTTER_VERSION_MAIN ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION})
 set(OTTER_VERSION_WEEKLY " ")
-set(OTTER_VERSION_CONTEXT "-dev")
+set(OTTER_VERSION_CONTEXT " beta 8")
 
 if (EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	include(InstallRequiredSystemLibraries)
