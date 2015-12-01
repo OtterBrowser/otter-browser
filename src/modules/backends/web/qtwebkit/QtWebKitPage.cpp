@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -47,6 +47,7 @@ QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWi
 	m_widget(parent),
 	m_networkManager(networkManager),
 	m_ignoreJavaScriptPopups(false),
+	m_isPopup(false),
 	m_isViewingMedia(false)
 {
 	setNetworkAccessManager(m_networkManager);
@@ -62,8 +63,16 @@ QtWebKitPage::QtWebKitPage() : QWebPage(),
 	m_widget(NULL),
 	m_networkManager(NULL),
 	m_ignoreJavaScriptPopups(false),
+	m_isPopup(false),
 	m_isViewingMedia(false)
 {
+}
+
+QtWebKitPage::~QtWebKitPage()
+{
+	qDeleteAll(m_popups);
+
+	m_popups.clear();
 }
 
 void QtWebKitPage::optionChanged(const QString &option, const QVariant &value)
@@ -92,6 +101,25 @@ void QtWebKitPage::pageLoadFinished()
 			applyContentBlockingRules(ContentBlockingManager::getStyleSheetWhiteList(m_widget->getContentBlockingProfiles()).values(domainList.at(i)), false);
 		}
 	}
+}
+
+void QtWebKitPage::removePopup(const QUrl &url)
+{
+	QtWebKitPage *page = qobject_cast<QtWebKitPage*>(sender());
+
+	if (page)
+	{
+		m_popups.removeAll(page);
+
+		page->deleteLater();
+	}
+
+	emit requestedPopupWindow(mainFrame()->url(), url);
+}
+
+void QtWebKitPage::markAsPopup()
+{
+	m_isPopup = true;
 }
 
 void QtWebKitPage::applyContentBlockingRules(const QStringList &rules, bool remove)
@@ -218,6 +246,32 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 	if (type == QWebPage::WebBrowserWindow)
 	{
 		QtWebKitWebWidget *widget = NULL;
+		QString popupsPolicy = SettingsManager::getValue(QLatin1String("Content/PopupsPolicy")).toString();
+		bool isPopup = true;
+
+		if (m_widget)
+		{
+			popupsPolicy = m_widget->getOption(QLatin1String("Content/PopupsPolicy"), (m_widget ? m_widget->getRequestedUrl() : QUrl())).toString();
+			isPopup = currentFrame()->hitTestContent(m_widget->getClickPosition()).linkUrl().isEmpty();
+		}
+
+		if (isPopup)
+		{
+			if (popupsPolicy == QLatin1String("blockAll"))
+			{
+				return NULL;
+			}
+
+			if (popupsPolicy == QLatin1String("ask"))
+			{
+				QtWebKitPage *page = new QtWebKitPage();
+				page->markAsPopup();
+
+				connect(page, SIGNAL(aboutToNavigate(QUrl,QWebFrame*,QWebPage::NavigationType)), this, SLOT(removePopup(QUrl)));
+
+				return page;
+			}
+		}
 
 		if (m_widget)
 		{
@@ -229,7 +283,7 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 			widget = new QtWebKitWebWidget(settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled), NULL, NULL);
 		}
 
-		emit requestedNewWindow(widget, WindowsManager::DefaultOpen);
+		emit requestedNewWindow(widget, (popupsPolicy == QLatin1String("openAllInBackground") ? (WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen) : WindowsManager::DefaultOpen));
 
 		return widget->getPage();
 	}
@@ -244,6 +298,13 @@ QString QtWebKitPage::getDefaultUserAgent() const
 
 bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, QWebPage::NavigationType type)
 {
+	if (m_isPopup)
+	{
+		emit aboutToNavigate(request.url(), frame, type);
+
+		return false;
+	}
+
 	if (frame && request.url().scheme() == QLatin1String("javascript"))
 	{
 		frame->evaluateJavaScript(request.url().path());
@@ -303,7 +364,7 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 		}
 	}
 
-	emit aboutToNavigate(frame, type);
+	emit aboutToNavigate(request.url(), frame, type);
 
 	return true;
 }

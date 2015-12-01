@@ -128,8 +128,9 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 
 	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(updateBookmarkActions()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
-	connect(m_page, SIGNAL(aboutToNavigate(QWebFrame*,QWebPage::NavigationType)), this, SLOT(navigating(QWebFrame*,QWebPage::NavigationType)));
+	connect(m_page, SIGNAL(aboutToNavigate(QUrl,QWebFrame*,QWebPage::NavigationType)), this, SLOT(navigating(QUrl,QWebFrame*,QWebPage::NavigationType)));
 	connect(m_page, SIGNAL(requestedNewWindow(WebWidget*,WindowsManager::OpenHints)), this, SIGNAL(requestedNewWindow(WebWidget*,WindowsManager::OpenHints)));
+	connect(m_page, SIGNAL(requestedPopupWindow(QUrl,QUrl)), this, SIGNAL(requestedPopupWindow(QUrl,QUrl)));
 	connect(m_page, SIGNAL(saveFrameStateRequested(QWebFrame*,QWebHistoryItem*)), this, SLOT(saveState(QWebFrame*,QWebHistoryItem*)));
 	connect(m_page, SIGNAL(restoreFrameStateRequested(QWebFrame*)), this, SLOT(restoreState(QWebFrame*)));
 	connect(m_page, SIGNAL(downloadRequested(QNetworkRequest)), this, SLOT(downloadFile(QNetworkRequest)));
@@ -246,8 +247,10 @@ void QtWebKitWebWidget::optionChanged(const QString &option, const QVariant &val
 	}
 }
 
-void QtWebKitWebWidget::navigating(QWebFrame *frame, QWebPage::NavigationType type)
+void QtWebKitWebWidget::navigating(const QUrl &url, QWebFrame *frame, QWebPage::NavigationType type)
 {
+	Q_UNUSED(url)
+
 	if (frame == m_page->mainFrame())
 	{
 		if (type != QWebPage::NavigationTypeBackOrForward)
@@ -259,6 +262,8 @@ void QtWebKitWebWidget::navigating(QWebFrame *frame, QWebPage::NavigationType ty
 		m_networkManager->resetStatistics();
 
 		m_isNavigating = true;
+
+		emit aboutToNavigate();
 	}
 }
 
@@ -2259,11 +2264,6 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			if (mouseEvent)
 			{
-				if (isScrollBar(mouseEvent->pos()))
-				{
-					return (mouseEvent->button() == Qt::MiddleButton);
-				}
-
 				setClickPosition(mouseEvent->pos());
 				updateHitTestResult(mouseEvent->pos());
 			}
@@ -2282,7 +2282,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 			contexts << GesturesManager::GenericGesturesContext;
 
-			if (GesturesManager::startGesture(object, event, contexts))
+			if ((!mouseEvent || !isScrollBar(mouseEvent->pos())) && GesturesManager::startGesture(object, event, contexts))
 			{
 				return true;
 			}

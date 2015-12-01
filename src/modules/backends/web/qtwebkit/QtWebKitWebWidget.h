@@ -124,7 +124,7 @@ protected:
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
-	void navigating(QWebFrame *frame, QWebPage::NavigationType type);
+	void navigating(const QUrl &url, QWebFrame *frame, QWebPage::NavigationType type);
 	void pageLoadStarted();
 	void pageLoadFinished();
 	void downloadFile(const QNetworkRequest &request);

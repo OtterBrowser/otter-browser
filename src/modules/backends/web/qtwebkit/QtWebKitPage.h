@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@ class QtWebKitPage : public QWebPage
 
 public:
 	explicit QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWidget *parent);
+	~QtWebKitPage();
 
 	void triggerAction(WebAction action, bool checked = false);
 	bool event(QEvent *event);
@@ -52,6 +53,7 @@ public slots:
 protected:
 	QtWebKitPage();
 
+	void markAsPopup();
 	void applyContentBlockingRules(const QStringList &rules, bool remove);
 	void javaScriptAlert(QWebFrame *frame, const QString &message);
 	void javaScriptConsoleMessage(const QString &note, int line, const QString &source);
@@ -64,16 +66,20 @@ protected:
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void pageLoadFinished();
+	void removePopup(const QUrl &url);
 
 private:
 	QtWebKitWebWidget *m_widget;
 	QtWebKitNetworkManager *m_networkManager;
+	QList<QtWebKitPage*> m_popups;
 	bool m_ignoreJavaScriptPopups;
+	bool m_isPopup;
 	bool m_isViewingMedia;
 
 signals:
 	void requestedNewWindow(WebWidget *widget, WindowsManager::OpenHints hints);
-	void aboutToNavigate(QWebFrame *frame, QWebPage::NavigationType navigationType);
+	void requestedPopupWindow(const QUrl &parentUrl, const QUrl &popupUrl);
+	void aboutToNavigate(const QUrl &url, QWebFrame *frame, QWebPage::NavigationType navigationType);
 	void viewingMediaChanged(bool viewingMedia);
 
 friend class QtWebKitWebBackend;

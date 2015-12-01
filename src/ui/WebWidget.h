@@ -2,6 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -236,6 +237,7 @@ private:
 	int m_reloadTimer;
 
 signals:
+	void aboutToNavigate();
 	void aboutToReload();
 	void requestedCloseWindow();
 	void requestedOpenUrl(QUrl url, WindowsManager::OpenHints hints);
@@ -243,6 +245,7 @@ signals:
 	void requestedEditBookmark(QUrl url);
 	void requestedNewWindow(WebWidget *widget, WindowsManager::OpenHints hints);
 	void requestedSearch(QString query, QString search, WindowsManager::OpenHints hints);
+	void requestedPopupWindow(const QUrl &parentUrl, const QUrl &popupUrl);
 	void requestedPermission(QString option, QUrl url, bool cancel);
 	void requestedGeometryChange(const QRect &geometry);
 	void progressBarGeometryChanged();
