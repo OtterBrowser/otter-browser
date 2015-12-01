@@ -1,3 +1,21 @@
+0.9.08 (2015-12-01):
+- enhanced URL completion in address field:
+-- suggest bookmarks by URL and keyword;
+-- suggest URLs from history;
+-- suggest searching for given string using default search engine;
+-- allow to use popup with list of suggestions;
+- added new extremely flexible mouse gestures system;
+- added icons for badge in address field;
+- added FTP listing support to QtWebKit backend;
+- added SSL certificate viewer;
+- added Website Information dialog;
+- added configuration module for downloads handlers;
+- added configuration module for mouse gestures;
+- added command line option to print out diagnostic report (--report);
+- added support for configuring policy for popup windows;
+- updated style of error pages and directory listings;
+- many other fixes and improvements.
+
 0.9.07 (2015-09-01):
 - added support for customizing context menu;
 - added Opera notes import;
