@@ -232,27 +232,28 @@ void SearchWidget::mousePressEvent(QMouseEvent *event)
 
 void SearchWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-	if (m_selectButtonIconRectangle.contains(event->pos()) || m_selectButtonArrowRectangle.contains(event->pos()))
+	if (event->button() == Qt::LeftButton)
 	{
-		m_popupHideTime = QTime();
+		if (m_selectButtonIconRectangle.contains(event->pos()) || m_selectButtonArrowRectangle.contains(event->pos()))
+		{
+			m_popupHideTime = QTime();
 
-		if (m_wasPopupVisible)
-		{
-			hidePopup();
+			if (m_wasPopupVisible)
+			{
+				hidePopup();
+			}
+			else
+			{
+				showPopup();
+			}
 		}
-		else
+		else if (m_searchButtonRectangle.contains(event->pos()))
 		{
-			showPopup();
+			sendRequest();
 		}
 	}
-	else if (m_searchButtonRectangle.contains(event->pos()))
-	{
-		sendRequest();
-	}
-	else
-	{
-		QWidget::mouseReleaseEvent(event);
-	}
+
+	QWidget::mouseReleaseEvent(event);
 }
 
 void SearchWidget::wheelEvent(QWheelEvent *event)
