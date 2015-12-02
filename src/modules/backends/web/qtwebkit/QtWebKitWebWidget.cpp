@@ -45,7 +45,7 @@
 #include "../../../../ui/ContentsWidget.h"
 #include "../../../../ui/ImagePropertiesDialog.h"
 #include "../../../../ui/MainWindow.h"
-#include "../../../../ui/SearchPropertiesDialog.h"
+#include "../../../../ui/SearchEnginePropertiesDialog.h"
 #include "../../../../ui/SourceViewerWebWidget.h"
 #include "../../../../ui/WebsitePreferencesDialog.h"
 
@@ -1337,7 +1337,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					searchEngine.resultsUrl.method = ((parentElement.attribute(QLatin1String("method"), QLatin1String("get")).toLower() == QLatin1String("post")) ? QLatin1String("post") : QLatin1String("get"));
 					searchEngine.resultsUrl.parameters = parameters;
 
-					SearchPropertiesDialog dialog(searchEngine, keywords, false, this);
+					SearchEnginePropertiesDialog dialog(searchEngine, keywords, false, this);
 
 					if (dialog.exec() == QDialog::Rejected)
 					{

@@ -17,8 +17,8 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_SEARCHPROPERTIESDIALOG_H
-#define OTTER_SEARCHPROPERTIESDIALOG_H
+#ifndef OTTER_SEARCHENGINEPROPERTIESDIALOG_H
+#define OTTER_SEARCHENGINEPROPERTIESDIALOG_H
 
 #include "Dialog.h"
 #include "../core/SearchEnginesManager.h"
@@ -30,16 +30,16 @@ namespace Otter
 
 namespace Ui
 {
-	class SearchPropertiesDialog;
+	class SearchEnginePropertiesDialog;
 }
 
-class SearchPropertiesDialog : public Dialog
+class SearchEnginePropertiesDialog : public Dialog
 {
 	Q_OBJECT
 
 public:
-	explicit SearchPropertiesDialog(const SearchEnginesManager::SearchEngineDefinition &searchEngine, const QStringList &keywords, bool isDefault, QWidget *parent = NULL);
-	~SearchPropertiesDialog();
+	explicit SearchEnginePropertiesDialog(const SearchEnginesManager::SearchEngineDefinition &searchEngine, const QStringList &keywords, bool isDefault, QWidget *parent = NULL);
+	~SearchEnginePropertiesDialog();
 
 	SearchEnginesManager::SearchEngineDefinition getSearchEngine() const;
 	bool isDefault() const;
@@ -56,7 +56,7 @@ private:
 	QLineEdit *m_currentLineEdit;
 	QString m_identifier;
 	QStringList m_keywords;
-	Ui::SearchPropertiesDialog *m_ui;
+	Ui::SearchEnginePropertiesDialog *m_ui;
 };
 
 }

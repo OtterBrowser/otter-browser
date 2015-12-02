@@ -17,9 +17,9 @@
 *
 **************************************************************************/
 
-#include "SearchPropertiesDialog.h"
+#include "SearchEnginePropertiesDialog.h"
 
-#include "ui_SearchPropertiesDialog.h"
+#include "ui_SearchEnginePropertiesDialog.h"
 
 #include <QtCore/QUrlQuery>
 #include <QtGui/QContextMenuEvent>
@@ -29,11 +29,11 @@
 namespace Otter
 {
 
-SearchPropertiesDialog::SearchPropertiesDialog(const SearchEnginesManager::SearchEngineDefinition &searchEngine, const QStringList &keywords, bool isDefault, QWidget *parent) : Dialog(parent),
+SearchEnginePropertiesDialog::SearchEnginePropertiesDialog(const SearchEnginesManager::SearchEngineDefinition &searchEngine, const QStringList &keywords, bool isDefault, QWidget *parent) : Dialog(parent),
 	m_currentLineEdit(NULL),
 	m_identifier(searchEngine.identifier),
 	m_keywords(keywords),
-	m_ui(new Ui::SearchPropertiesDialog)
+	m_ui(new Ui::SearchEnginePropertiesDialog)
 {
 	m_ui->setupUi(this);
 	m_ui->iconButton->setIcon(searchEngine.icon);
@@ -64,12 +64,12 @@ SearchPropertiesDialog::SearchPropertiesDialog(const SearchEnginesManager::Searc
 	connect(m_ui->iconButton, SIGNAL(clicked()), this, SLOT(selectIcon()));
 }
 
-SearchPropertiesDialog::~SearchPropertiesDialog()
+SearchEnginePropertiesDialog::~SearchEnginePropertiesDialog()
 {
 	delete m_ui;
 }
 
-void SearchPropertiesDialog::changeEvent(QEvent *event)
+void SearchEnginePropertiesDialog::changeEvent(QEvent *event)
 {
 	QDialog::changeEvent(event);
 
@@ -79,7 +79,7 @@ void SearchPropertiesDialog::changeEvent(QEvent *event)
 	}
 }
 
-void SearchPropertiesDialog::insertPlaceholder(QAction *action)
+void SearchEnginePropertiesDialog::insertPlaceholder(QAction *action)
 {
 	if (m_currentLineEdit && !action->data().toString().isEmpty())
 	{
@@ -87,7 +87,7 @@ void SearchPropertiesDialog::insertPlaceholder(QAction *action)
 	}
 }
 
-void SearchPropertiesDialog::selectIcon()
+void SearchEnginePropertiesDialog::selectIcon()
 {
 	const QString path = QFileDialog::getOpenFileName(this, tr("Select Icon"), QString(), tr("Images (*.png *.jpg *.bmp *.gif *.ico)"));
 
@@ -97,7 +97,7 @@ void SearchPropertiesDialog::selectIcon()
 	}
 }
 
-SearchEnginesManager::SearchEngineDefinition SearchPropertiesDialog::getSearchEngine() const
+SearchEnginesManager::SearchEngineDefinition SearchEnginePropertiesDialog::getSearchEngine() const
 {
 	const QString keyword = m_ui->keywordLineEdit->text().trimmed();
 	SearchEnginesManager::SearchEngineDefinition searchEngine;
@@ -119,12 +119,12 @@ SearchEnginesManager::SearchEngineDefinition SearchPropertiesDialog::getSearchEn
 	return searchEngine;
 }
 
-bool SearchPropertiesDialog::isDefault() const
+bool SearchEnginePropertiesDialog::isDefault() const
 {
 	return m_ui->defaultSearchCheckBox->isChecked();
 }
 
-bool SearchPropertiesDialog::eventFilter(QObject *object, QEvent *event)
+bool SearchEnginePropertiesDialog::eventFilter(QObject *object, QEvent *event)
 {
 	if (event->type() == QEvent::ContextMenu)
 	{

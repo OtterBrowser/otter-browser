@@ -26,7 +26,7 @@
 #include "../../../../core/NetworkManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/NotesManager.h"
-#include "../../../../core/SearchesManager.h"
+#include "../../../../core/SearchEnginesManager.h"
 #include "../../../../core/Transfer.h"
 #include "../../../../core/TransfersManager.h"
 #include "../../../../core/Utils.h"
@@ -35,7 +35,7 @@
 #include "../../../../ui/ContentsDialog.h"
 #include "../../../../ui/ContentsWidget.h"
 #include "../../../../ui/ImagePropertiesDialog.h"
-#include "../../../../ui/SearchPropertiesDialog.h"
+#include "../../../../ui/SearchEnginePropertiesDialog.h"
 #include "../../../../ui/SourceViewerWebWidget.h"
 #include "../../../../ui/WebsitePreferencesDialog.h"
 
@@ -146,13 +146,13 @@ void QtWebEngineWebWidget::focusInEvent(QFocusEvent *event)
 	m_webView->setFocus();
 }
 
-void QtWebEngineWebWidget::search(const QString &query, const QString &engine)
+void QtWebEngineWebWidget::search(const QString &query, const QString &searchEngine)
 {
 	QNetworkRequest request;
 	QNetworkAccessManager::Operation method;
 	QByteArray body;
 
-	if (SearchesManager::setupSearchQuery(query, engine, &request, &method, &body))
+	if (SearchEnginesManager::setupSearchQuery(query, searchEngine, &request, &method, &body))
 	{
 		setRequestedUrl(request.url(), false, true);
 		updateOptions(request.url());
@@ -896,27 +896,27 @@ void QtWebEngineWebWidget::handleCreateSearch(const QVariant &result)
 	}
 
 	const QUrlQuery parameters(result.toMap().value(QLatin1String("query")).toString());
-	const QStringList identifiers = SearchesManager::getSearchEngines();
-	const QStringList keywords = SearchesManager::getSearchKeywords();
+	const QStringList identifiers = SearchEnginesManager::getSearchEngines();
+	const QStringList keywords = SearchEnginesManager::getSearchKeywords();
 	const QIcon icon = getIcon();
 	const QUrl url(result.toMap().value(QLatin1String("url")).toString());
-	SearchInformation engine;
-	engine.identifier = Utils::createIdentifier(getUrl().host(), identifiers);
-	engine.title = getTitle();
-	engine.icon = (icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : icon);
-	engine.resultsUrl.url = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
-	engine.resultsUrl.enctype = result.toMap().value(QLatin1String("enctype")).toString();
-	engine.resultsUrl.method = result.toMap().value(QLatin1String("method")).toString();
-	engine.resultsUrl.parameters = parameters;
+	SearchEnginesManager::SearchEngineDefinition searchEngine;
+	searchEngine.identifier = Utils::createIdentifier(getUrl().host(), identifiers);
+	searchEngine.title = getTitle();
+	searchEngine.icon = (icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : icon);
+	searchEngine.resultsUrl.url = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
+	searchEngine.resultsUrl.enctype = result.toMap().value(QLatin1String("enctype")).toString();
+	searchEngine.resultsUrl.method = result.toMap().value(QLatin1String("method")).toString();
+	searchEngine.resultsUrl.parameters = parameters;
 
-	SearchPropertiesDialog dialog(engine, keywords, false, this);
+	SearchEnginePropertiesDialog dialog(searchEngine, keywords, false, this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
 		return;
 	}
 
-	SearchesManager::addSearchEngine(dialog.getSearchEngine(), dialog.isDefault());
+	SearchEnginesManager::addSearchEngine(dialog.getSearchEngine(), dialog.isDefault());
 }
 
 void QtWebEngineWebWidget::handleEditingCheck(const QVariant &result)

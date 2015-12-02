@@ -22,7 +22,7 @@
 #include "SearchKeywordDelegate.h"
 #include "../OptionDelegate.h"
 #include "../SearchDelegate.h"
-#include "../SearchPropertiesDialog.h"
+#include "../SearchEnginePropertiesDialog.h"
 #include "../../core/SessionsManager.h"
 #include "../../core/SettingsManager.h"
 #include "../../core/Utils.h"
@@ -146,7 +146,7 @@ void PreferencesSearchPageWidget::addSearchEngine()
 	searchEngine.title = tr("New Search Engine");
 	searchEngine.icon = Utils::getIcon(QLatin1String("edit-find"));
 
-	SearchPropertiesDialog dialog(searchEngine, keywords, false, this);
+	SearchEnginePropertiesDialog dialog(searchEngine, keywords, false, this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
@@ -238,7 +238,7 @@ void PreferencesSearchPageWidget::editSearchEngine()
 		}
 	}
 
-	SearchPropertiesDialog dialog(m_searchEngines[identifier].second, keywords, (identifier == m_defaultSearchEngine), this);
+	SearchEnginePropertiesDialog dialog(m_searchEngines[identifier].second, keywords, (identifier == m_defaultSearchEngine), this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{

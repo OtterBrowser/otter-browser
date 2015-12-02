@@ -149,7 +149,7 @@ SOURCES += src/main.cpp \
     src/ui/ReportDialog.cpp \
     src/ui/SaveSessionDialog.cpp \
     src/ui/SearchDelegate.cpp \
-    src/ui/SearchPropertiesDialog.cpp \
+    src/ui/SearchEnginePropertiesDialog.cpp \
     src/ui/SessionsManagerDialog.cpp \
     src/ui/SidebarWidget.cpp \
     src/ui/SourceViewerWebWidget.cpp \
@@ -312,7 +312,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/ReportDialog.h \
     src/ui/SaveSessionDialog.h \
     src/ui/SearchDelegate.h \
-    src/ui/SearchPropertiesDialog.h \
+    src/ui/SearchEnginePropertiesDialog.h \
     src/ui/SessionsManagerDialog.h \
     src/ui/SidebarWidget.h \
     src/ui/SourceViewerWebWidget.h \
@@ -412,7 +412,7 @@ FORMS += src/ui/AcceptCookieDialog.ui \
     src/ui/ReloadTimeDialog.ui \
     src/ui/ReportDialog.ui \
     src/ui/SaveSessionDialog.ui \
-    src/ui/SearchPropertiesDialog.ui \
+    src/ui/SearchEnginePropertiesDialog.ui \
     src/ui/SessionsManagerDialog.ui \
     src/ui/SidebarWidget.ui \
     src/ui/StartupDialog.ui \

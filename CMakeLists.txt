@@ -156,7 +156,7 @@ set(otter_src
 	src/ui/ReportDialog.cpp
 	src/ui/SaveSessionDialog.cpp
 	src/ui/SearchDelegate.cpp
-	src/ui/SearchPropertiesDialog.cpp
+	src/ui/SearchEnginePropertiesDialog.cpp
 	src/ui/SessionsManagerDialog.cpp
 	src/ui/SidebarWidget.cpp
 	src/ui/SourceViewerWebWidget.cpp
@@ -263,7 +263,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/ReloadTimeDialog.ui
 	src/ui/ReportDialog.ui
 	src/ui/SaveSessionDialog.ui
-	src/ui/SearchPropertiesDialog.ui
+	src/ui/SearchEnginePropertiesDialog.ui
 	src/ui/SessionsManagerDialog.ui
 	src/ui/SidebarWidget.ui
 	src/ui/StartupDialog.ui
