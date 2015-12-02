@@ -370,26 +370,29 @@ void AddressWidget::mouseMoveEvent(QMouseEvent *event)
 
 void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-	if (m_securityBadgeRectangle.contains(event->pos()) && m_window)
+	if (event->button() == Qt::LeftButton)
 	{
-		m_window->triggerAction(ActionsManager::WebsiteInformationAction);
-
-		event->accept();
-
-		return;
-	}
-
-	if (m_historyDropdownArrowRectangle.contains(event->pos()))
-	{
-		m_popupHideTime = QTime();
-
-		if (m_wasPopupVisible)
+		if (m_securityBadgeRectangle.contains(event->pos()) && m_window)
 		{
-			hidePopup();
+			m_window->triggerAction(ActionsManager::WebsiteInformationAction);
+
+			event->accept();
+
+			return;
 		}
-		else
+
+		if (m_historyDropdownArrowRectangle.contains(event->pos()))
 		{
-			showPopup();
+			m_popupHideTime = QTime();
+
+			if (m_wasPopupVisible)
+			{
+				hidePopup();
+			}
+			else
+			{
+				showPopup();
+			}
 		}
 	}
 
