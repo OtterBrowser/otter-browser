@@ -376,7 +376,7 @@ void WindowsManager::openTab(const QUrl &url, OpenHints hints)
 	window->setUrl(url, false);
 }
 
-void WindowsManager::search(const QString &query, const QString &engine, OpenHints hints)
+void WindowsManager::search(const QString &query, const QString &searchEngine, OpenHints hints)
 {
 	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
 
@@ -392,7 +392,7 @@ void WindowsManager::search(const QString &query, const QString &engine, OpenHin
 
 	if (window && hints.testFlag(CurrentTabOpen) && window->getType() == QLatin1String("web"))
 	{
-		window->search(query, engine);
+		window->search(query, searchEngine);
 
 		return;
 	}
@@ -412,7 +412,7 @@ void WindowsManager::search(const QString &query, const QString &engine, OpenHin
 
 	if (window)
 	{
-		window->search(query, engine);
+		window->search(query, searchEngine);
 	}
 }
 

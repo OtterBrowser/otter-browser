@@ -117,8 +117,8 @@ private:
 
 signals:
 	void requestedOpenBookmark(BookmarksItem *bookmark, WindowsManager::OpenHints hints);
-	void requestedOpenUrl(QUrl url, WindowsManager::OpenHints hints);
-	void requestedSearch(QString query, QString engine, WindowsManager::OpenHints hints);
+	void requestedOpenUrl(const QUrl &url, WindowsManager::OpenHints hints);
+	void requestedSearch(const QString &query, const QString &searchEngine, WindowsManager::OpenHints hints);
 };
 
 }

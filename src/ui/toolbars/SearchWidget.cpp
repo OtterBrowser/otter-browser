@@ -25,7 +25,7 @@
 #include "../SearchDelegate.h"
 #include "../ToolBarWidget.h"
 #include "../Window.h"
-#include "../../core/SearchesManager.h"
+#include "../../core/SearchEnginesManager.h"
 #include "../../core/SearchSuggester.h"
 #include "../../core/SessionsManager.h"
 #include "../../core/SettingsManager.h"
@@ -59,7 +59,7 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : QComboBox(parent),
 	setMinimumWidth(100);
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 	setItemDelegate(new SearchDelegate(this));
-	setModel(SearchesManager::getSearchEnginesModel());
+	setModel(SearchEnginesManager::getSearchEnginesModel());
 	setInsertPolicy(QComboBox::NoInsert);
 	optionChanged(QLatin1String("AddressField/DropAction"), SettingsManager::getValue(QLatin1String("AddressField/DropAction")));
 	optionChanged(QLatin1String("AddressField/SelectAllOnFocus"), SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")));
@@ -75,8 +75,8 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : QComboBox(parent),
 		connect(toolBar, SIGNAL(windowChanged(Window*)), this, SLOT(setWindow(Window*)));
 	}
 
-	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(storeCurrentSearchEngine()));
-	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModelModified()), this, SLOT(restoreCurrentSearchEngine()));
+	connect(SearchEnginesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(storeCurrentSearchEngine()));
+	connect(SearchEnginesManager::getInstance(), SIGNAL(searchEnginesModelModified()), this, SLOT(restoreCurrentSearchEngine()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentIndexChanged(int)));
 	connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
@@ -346,7 +346,7 @@ void SearchWidget::currentIndexChanged(int index)
 
 		if (m_suggester)
 		{
-			m_suggester->setEngine(getCurrentSearchEngine());
+			m_suggester->setSearchEngine(getCurrentSearchEngine());
 			m_suggester->setQuery(QString());
 		}
 
@@ -434,11 +434,11 @@ void SearchWidget::restoreCurrentSearchEngine()
 	connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
 }
 
-void SearchWidget::setSearchEngine(const QString &engine)
+void SearchWidget::setSearchEngine(const QString &searchEngine)
 {
-	const QStringList engines = SearchesManager::getSearchEngines();
+	const QStringList searchEngines = SearchEnginesManager::getSearchEngines();
 
-	if (engines.isEmpty())
+	if (searchEngines.isEmpty())
 	{
 		hidePopup();
 		setEnabled(false);
@@ -448,7 +448,7 @@ void SearchWidget::setSearchEngine(const QString &engine)
 		return;
 	}
 
-	const int index = qMax(0, engines.indexOf(engine.isEmpty() ? SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString() : engine));
+	const int index = qMax(0, searchEngines.indexOf(searchEngine.isEmpty() ? SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString() : searchEngine));
 
 	if (index == currentIndex())
 	{
@@ -463,7 +463,7 @@ void SearchWidget::setSearchEngine(const QString &engine)
 
 	if (m_suggester)
 	{
-		m_suggester->setEngine(getCurrentSearchEngine());
+		m_suggester->setSearchEngine(getCurrentSearchEngine());
 	}
 }
 

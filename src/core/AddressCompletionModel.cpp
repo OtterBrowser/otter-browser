@@ -131,7 +131,7 @@ void AddressCompletionModel::setFilter(const QString &filter)
 		{
 			m_types |= SearchSuggestionsCompletionType;
 
-			m_defaultSearchEngine = SearchesManager::getSearchEngine();
+			m_defaultSearchEngine = SearchEnginesManager::getSearchEngine();
 		}
 
 		if (SettingsManager::getValue(QLatin1String("AddressField/SuggestSpecialPages")).toBool())

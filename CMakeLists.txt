@@ -106,7 +106,7 @@ set(otter_src
 	src/core/NotificationsManager.cpp
 	src/core/PasswordsManager.cpp
 	src/core/PlatformIntegration.cpp
-	src/core/SearchesManager.cpp
+	src/core/SearchEnginesManager.cpp
 	src/core/SearchSuggester.cpp
 	src/core/SessionModel.cpp
 	src/core/SessionsManager.cpp

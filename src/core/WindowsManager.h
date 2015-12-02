@@ -95,7 +95,7 @@ public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void open(const QUrl &url = QUrl(), WindowsManager::OpenHints hints = DefaultOpen);
 	void open(BookmarksItem *bookmark, WindowsManager::OpenHints hints = DefaultOpen);
-	void search(const QString &query, const QString &engine, WindowsManager::OpenHints hints = DefaultOpen);
+	void search(const QString &query, const QString &searchEngine, WindowsManager::OpenHints hints = DefaultOpen);
 	void close(int index);
 	void closeAll();
 	void restore(int index = 0);

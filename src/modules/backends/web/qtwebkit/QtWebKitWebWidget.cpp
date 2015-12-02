@@ -35,7 +35,7 @@
 #include "../../../../core/NetworkManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/NotesManager.h"
-#include "../../../../core/SearchesManager.h"
+#include "../../../../core/SearchEnginesManager.h"
 #include "../../../../core/SessionsManager.h"
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/Transfer.h"
@@ -199,13 +199,13 @@ void QtWebKitWebWidget::focusInEvent(QFocusEvent *event)
 	m_webView->setFocus();
 }
 
-void QtWebKitWebWidget::search(const QString &query, const QString &engine)
+void QtWebKitWebWidget::search(const QString &query, const QString &searchEngine)
 {
 	QNetworkRequest request;
 	QNetworkAccessManager::Operation method;
 	QByteArray body;
 
-	if (SearchesManager::setupSearchQuery(query, engine, &request, &method, &body))
+	if (SearchEnginesManager::setupSearchQuery(query, searchEngine, &request, &method, &body))
 	{
 		setRequestedUrl(request.url(), false, true);
 		updateOptions(request.url());
@@ -1324,27 +1324,27 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 						parameters.addQueryItem(inputs.at(i).attribute(QLatin1String("name")), ((inputs.at(i) == hitResult.element()) ? QLatin1String("{searchTerms}") : value));
 					}
 
-					const QStringList identifiers = SearchesManager::getSearchEngines();
-					const QStringList keywords = SearchesManager::getSearchKeywords();
+					const QStringList identifiers = SearchEnginesManager::getSearchEngines();
+					const QStringList keywords = SearchEnginesManager::getSearchKeywords();
 					const QIcon icon = m_webView->icon();
 					const QUrl url(parentElement.attribute(QLatin1String("action")));
-					SearchInformation engine;
-					engine.identifier = Utils::createIdentifier(getUrl().host(), identifiers);
-					engine.title = getTitle();
-					engine.icon = (icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : icon);
-					engine.resultsUrl.url = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
-					engine.resultsUrl.enctype = parentElement.attribute(QLatin1String("enctype"));
-					engine.resultsUrl.method = ((parentElement.attribute(QLatin1String("method"), QLatin1String("get")).toLower() == QLatin1String("post")) ? QLatin1String("post") : QLatin1String("get"));
-					engine.resultsUrl.parameters = parameters;
+					SearchEnginesManager::SearchEngineDefinition searchEngine;
+					searchEngine.identifier = Utils::createIdentifier(getUrl().host(), identifiers);
+					searchEngine.title = getTitle();
+					searchEngine.icon = (icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : icon);
+					searchEngine.resultsUrl.url = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
+					searchEngine.resultsUrl.enctype = parentElement.attribute(QLatin1String("enctype"));
+					searchEngine.resultsUrl.method = ((parentElement.attribute(QLatin1String("method"), QLatin1String("get")).toLower() == QLatin1String("post")) ? QLatin1String("post") : QLatin1String("get"));
+					searchEngine.resultsUrl.parameters = parameters;
 
-					SearchPropertiesDialog dialog(engine, keywords, false, this);
+					SearchPropertiesDialog dialog(searchEngine, keywords, false, this);
 
 					if (dialog.exec() == QDialog::Rejected)
 					{
 						return;
 					}
 
-					SearchesManager::addSearchEngine(dialog.getSearchEngine(), dialog.isDefault());
+					SearchEnginesManager::addSearchEngine(dialog.getSearchEngine(), dialog.isDefault());
 				}
 			}
 

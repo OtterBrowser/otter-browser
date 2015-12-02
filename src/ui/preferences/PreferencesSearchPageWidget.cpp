@@ -23,7 +23,6 @@
 #include "../OptionDelegate.h"
 #include "../SearchDelegate.h"
 #include "../SearchPropertiesDialog.h"
-#include "../../core/SearchesManager.h"
 #include "../../core/SessionsManager.h"
 #include "../../core/SettingsManager.h"
 #include "../../core/Utils.h"
@@ -50,25 +49,25 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 	QStandardItemModel *searchEnginesModel = new QStandardItemModel(this);
 	searchEnginesModel->setHorizontalHeaderLabels(searchEnginesLabels);
 
-	const QStringList searchEngines = SearchesManager::getSearchEngines();
+	const QStringList searchEngines = SearchEnginesManager::getSearchEngines();
 
 	for (int i = 0; i < searchEngines.count(); ++i)
 	{
-		const SearchInformation engine = SearchesManager::getSearchEngine(searchEngines.at(i));
+		const SearchEnginesManager::SearchEngineDefinition searchEngine = SearchEnginesManager::getSearchEngine(searchEngines.at(i));
 
-		if (engine.identifier.isEmpty())
+		if (searchEngine.identifier.isEmpty())
 		{
 			continue;
 		}
 
-		m_searchEngines[engine.identifier] = qMakePair(false, engine);
+		m_searchEngines[searchEngine.identifier] = qMakePair(false, searchEngine);
 
 		QList<QStandardItem*> items;
-		items.append(new QStandardItem(engine.icon, engine.title));
-		items[0]->setToolTip(engine.description);
-		items[0]->setData(engine.identifier, Qt::UserRole);
+		items.append(new QStandardItem(searchEngine.icon, searchEngine.title));
+		items[0]->setToolTip(searchEngine.description);
+		items[0]->setData(searchEngine.identifier, Qt::UserRole);
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
-		items.append(new QStandardItem(engine.keyword));
+		items.append(new QStandardItem(searchEngine.keyword));
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
 		searchEnginesModel->appendRow(items);
@@ -142,21 +141,21 @@ void PreferencesSearchPageWidget::addSearchEngine()
 		return;
 	}
 
-	SearchInformation engine;
-	engine.identifier = identifier;
-	engine.title = tr("New Search Engine");
-	engine.icon = Utils::getIcon(QLatin1String("edit-find"));
+	SearchEnginesManager::SearchEngineDefinition searchEngine;
+	searchEngine.identifier = identifier;
+	searchEngine.title = tr("New Search Engine");
+	searchEngine.icon = Utils::getIcon(QLatin1String("edit-find"));
 
-	SearchPropertiesDialog dialog(engine, keywords, false, this);
+	SearchPropertiesDialog dialog(searchEngine, keywords, false, this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
 		return;
 	}
 
-	engine = dialog.getSearchEngine();
+	searchEngine = dialog.getSearchEngine();
 
-	m_searchEngines[identifier] = qMakePair(true, engine);
+	m_searchEngines[identifier] = qMakePair(true, searchEngine);
 
 	if (dialog.isDefault())
 	{
@@ -164,11 +163,11 @@ void PreferencesSearchPageWidget::addSearchEngine()
 	}
 
 	QList<QStandardItem*> items;
-	items.append(new QStandardItem(engine.icon, engine.title));
-	items[0]->setToolTip(engine.description);
+	items.append(new QStandardItem(searchEngine.icon, searchEngine.title));
+	items[0]->setToolTip(searchEngine.description);
 	items[0]->setData(identifier, Qt::UserRole);
 	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
-	items.append(new QStandardItem(engine.keyword));
+	items.append(new QStandardItem(searchEngine.keyword));
 	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
 	m_ui->searchViewWidget->insertRow(items);
@@ -191,23 +190,23 @@ void PreferencesSearchPageWidget::readdSearchEngine(QAction *action)
 		return;
 	}
 
-	const SearchInformation engine = SearchesManager::loadSearchEngine(&file, identifier);
+	const SearchEnginesManager::SearchEngineDefinition searchEngine = SearchEnginesManager::loadSearchEngine(&file, identifier);
 
 	file.close();
 
-	if (engine.identifier.isEmpty() || m_searchEngines.contains(identifier))
+	if (searchEngine.identifier.isEmpty() || m_searchEngines.contains(identifier))
 	{
 		return;
 	}
 
-	m_searchEngines[identifier] = qMakePair(false, engine);
+	m_searchEngines[identifier] = qMakePair(false, searchEngine);
 
 	QList<QStandardItem*> items;
-	items.append(new QStandardItem(engine.icon, engine.title));
-	items[0]->setToolTip(engine.description);
+	items.append(new QStandardItem(searchEngine.icon, searchEngine.title));
+	items[0]->setToolTip(searchEngine.description);
 	items[0]->setData(identifier, Qt::UserRole);
 	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
-	items.append(new QStandardItem(engine.keyword));
+	items.append(new QStandardItem(searchEngine.keyword));
 	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
 	m_ui->searchViewWidget->insertRow(items);
@@ -246,24 +245,24 @@ void PreferencesSearchPageWidget::editSearchEngine()
 		return;
 	}
 
-	SearchInformation engine = dialog.getSearchEngine();
+	SearchEnginesManager::SearchEngineDefinition searchEngine = dialog.getSearchEngine();
 
-	if (keywords.contains(engine.keyword))
+	if (keywords.contains(searchEngine.keyword))
 	{
-		engine.keyword = QString();
+		searchEngine.keyword = QString();
 	}
 
-	m_searchEngines[identifier] = qMakePair(true, engine);
+	m_searchEngines[identifier] = qMakePair(true, searchEngine);
 
 	if (dialog.isDefault())
 	{
 		m_defaultSearchEngine = identifier;
 	}
 
-	m_ui->searchViewWidget->setData(index, engine.title, Qt::DisplayRole);
-	m_ui->searchViewWidget->setData(index, engine.description, Qt::ToolTipRole);
-	m_ui->searchViewWidget->setData(index, engine.icon, Qt::DecorationRole);
-	m_ui->searchViewWidget->setData(m_ui->searchViewWidget->getIndex(index.row(), 1), engine.keyword, Qt::DisplayRole);
+	m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::DisplayRole);
+	m_ui->searchViewWidget->setData(index, searchEngine.description, Qt::ToolTipRole);
+	m_ui->searchViewWidget->setData(index, searchEngine.icon, Qt::DecorationRole);
+	m_ui->searchViewWidget->setData(m_ui->searchViewWidget->getIndex(index.row(), 1), searchEngine.keyword, Qt::DisplayRole);
 
 	emit settingsModified();
 }
@@ -325,7 +324,7 @@ void PreferencesSearchPageWidget::updateReaddSearchMenu()
 	}
 
 	QStringList availableIdentifiers;
-	QList<SearchInformation> availableSearchEngines;
+	QList<SearchEnginesManager::SearchEngineDefinition> availableSearchEngines;
 	QList<QFileInfo> allSearchEngines = QDir(SessionsManager::getReadableDataPath(QLatin1String("searches"))).entryInfoList(QDir::Files);
 	allSearchEngines.append(QDir(SessionsManager::getReadableDataPath(QLatin1String("searches"), true)).entryInfoList(QDir::Files));
 
@@ -339,13 +338,13 @@ void PreferencesSearchPageWidget::updateReaddSearchMenu()
 
 			if (file.open(QFile::ReadOnly))
 			{
-				const SearchInformation engine = SearchesManager::loadSearchEngine(&file, identifier);
+				const SearchEnginesManager::SearchEngineDefinition searchEngine = SearchEnginesManager::loadSearchEngine(&file, identifier);
 
-				if (!engine.identifier.isEmpty())
+				if (!searchEngine.identifier.isEmpty())
 				{
 					availableIdentifiers.append(identifier);
 
-					availableSearchEngines.append(engine);
+					availableSearchEngines.append(searchEngine);
 				}
 
 				file.close();
@@ -392,19 +391,19 @@ void PreferencesSearchPageWidget::save()
 
 	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("searches")));
 
-	QHash<QString, QPair<bool, SearchInformation> >::iterator searchEnginesIterator;
+	QHash<QString, QPair<bool, SearchEnginesManager::SearchEngineDefinition> >::iterator searchEnginesIterator;
 
 	for (searchEnginesIterator = m_searchEngines.begin(); searchEnginesIterator != m_searchEngines.end(); ++searchEnginesIterator)
 	{
 		if (searchEnginesIterator.value().first)
 		{
-			SearchesManager::saveSearchEngine(searchEnginesIterator.value().second);
+			SearchEnginesManager::saveSearchEngine(searchEnginesIterator.value().second);
 		}
 	}
 
 	if (SettingsManager::getValue(QLatin1String("Search/SearchEnginesOrder")).toStringList().join(QLatin1Char(',')) == searchEnginesOrder.join(QLatin1Char(',')))
 	{
-		SearchesManager::loadSearchEngines();
+		SearchEnginesManager::loadSearchEngines();
 	}
 	else
 	{

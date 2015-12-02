@@ -20,7 +20,7 @@
 #ifndef OTTER_ADDRESSCOMPLETIONMODEL_H
 #define OTTER_ADDRESSCOMPLETIONMODEL_H
 
-#include "../core/SearchesManager.h"
+#include "../core/SearchEnginesManager.h"
 
 #include <QtCore/QAbstractListModel>
 #include <QtCore/QUrl>
@@ -92,7 +92,7 @@ protected:
 private:
 	QList<CompletionEntry> m_completions;
 	QString m_filter;
-	SearchInformation m_defaultSearchEngine;
+	SearchEnginesManager::SearchEngineDefinition m_defaultSearchEngine;
 	AddressCompletionModel::CompletionTypes m_types;
 	int m_updateTimer;
 

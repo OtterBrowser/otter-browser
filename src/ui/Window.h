@@ -98,10 +98,10 @@ public:
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void close();
-	void search(const QString &query, const QString &engine);
+	void search(const QString &query, const QString &searchEngine);
 	void markActive();
 	void setOption(const QString &key, const QVariant &value);
-	void setSearchEngine(const QString &engine);
+	void setSearchEngine(const QString &searchEngine);
 	void setUrl(const QUrl &url, bool typed = true);
 	void setControlsHidden(bool hidden);
 	void setPinned(bool pinned);
@@ -113,7 +113,7 @@ protected:
 protected slots:
 	void handleIconChanged(const QIcon &icon);
 	void handleOpenUrlRequest(const QUrl &url, WindowsManager::OpenHints hints);
-	void handleSearchRequest(const QString &query, const QString &engine, WindowsManager::OpenHints hints = WindowsManager::DefaultOpen);
+	void handleSearchRequest(const QString &query, const QString &searchEngine, WindowsManager::OpenHints hints = WindowsManager::DefaultOpen);
 	void handleGeometryChangeRequest(const QRect &geometry);
 	void notifyLoadingStateChanged(bool loading);
 	void notifyRequestedCloseWindow();
@@ -137,15 +137,15 @@ private:
 
 signals:
 	void aboutToClose();
-	void requestedOpenUrl(QUrl url, WindowsManager::OpenHints hints);
 	void requestedOpenBookmark(BookmarksItem *bookmark, WindowsManager::OpenHints hints);
-	void requestedSearch(QString query, QString engine, WindowsManager::OpenHints hints = WindowsManager::DefaultOpen);
-	void requestedAddBookmark(QUrl url, QString title, QString description);
-	void requestedEditBookmark(QUrl url);
+	void requestedOpenUrl(const QUrl &url, WindowsManager::OpenHints hints);
+	void requestedSearch(const QString &query, const QString &searchEngine, WindowsManager::OpenHints hints = WindowsManager::DefaultOpen);
+	void requestedAddBookmark(const QUrl &url, const QString &title, const QString &description);
+	void requestedEditBookmark(const QUrl &url);
 	void requestedNewWindow(ContentsWidget *widget, WindowsManager::OpenHints hints);
 	void requestedCloseWindow(Window *window);
 	void canZoomChanged(bool can);
-	void searchEngineChanged(const QString &engine);
+	void searchEngineChanged(const QString &searchEngine);
 	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url, bool force = false);

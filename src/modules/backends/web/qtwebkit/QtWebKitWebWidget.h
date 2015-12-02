@@ -50,7 +50,7 @@ class QtWebKitWebWidget : public WebWidget
 public:
 	~QtWebKitWebWidget();
 
-	void search(const QString &query, const QString &engine);
+	void search(const QString &query, const QString &searchEngine);
 	void print(QPrinter *printer);
 	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false);
 	Action* getAction(int identifier);

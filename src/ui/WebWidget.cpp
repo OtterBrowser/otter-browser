@@ -29,7 +29,7 @@
 #include "../core/BookmarksManager.h"
 #include "../core/HandlersManager.h"
 #include "../core/NotesManager.h"
-#include "../core/SearchesManager.h"
+#include "../core/SearchEnginesManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/Transfer.h"
 #include "../core/TransfersManager.h"
@@ -62,7 +62,7 @@ WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent
 {
 	Q_UNUSED(isPrivate)
 
-	connect(SearchesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(updateQuickSearch()));
+	connect(SearchEnginesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(updateQuickSearch()));
 }
 
 void WebWidget::timerEvent(QTimerEvent *event)
@@ -122,10 +122,10 @@ void WebWidget::triggerAction()
 	}
 }
 
-void WebWidget::search(const QString &query, const QString &engine)
+void WebWidget::search(const QString &query, const QString &searchEngine)
 {
 	Q_UNUSED(query)
-	Q_UNUSED(engine)
+	Q_UNUSED(searchEngine)
 }
 
 void WebWidget::startReloadTimer()
@@ -311,27 +311,27 @@ void WebWidget::openInApplicationMenuAboutToShow()
 
 void WebWidget::quickSearch(QAction *action)
 {
-	const SearchInformation engine = SearchesManager::getSearchEngine((!action || action->data().type() != QVariant::String) ? QString() : action->data().toString());
+	const SearchEnginesManager::SearchEngineDefinition searchEngine = SearchEnginesManager::getSearchEngine((!action || action->data().type() != QVariant::String) ? QString() : action->data().toString());
 
-	if (engine.identifier.isEmpty())
+	if (searchEngine.identifier.isEmpty())
 	{
 		return;
 	}
 
-	if (engine.identifier != m_options.value(QLatin1String("Search/DefaultQuickSearchEngine")).toString())
+	if (searchEngine.identifier != m_options.value(QLatin1String("Search/DefaultQuickSearchEngine")).toString())
 	{
-		setOption(QLatin1String("Search/DefaultQuickSearchEngine"), engine.identifier);
+		setOption(QLatin1String("Search/DefaultQuickSearchEngine"), searchEngine.identifier);
 	}
 
 	const WindowsManager::OpenHints hints = WindowsManager::calculateOpenHints();
 
 	if (hints == WindowsManager::CurrentTabOpen)
 	{
-		search(getSelectedText(), engine.identifier);
+		search(getSelectedText(), searchEngine.identifier);
 	}
 	else
 	{
-		emit requestedSearch(getSelectedText(), engine.identifier, hints);
+		emit requestedSearch(getSelectedText(), searchEngine.identifier, hints);
 	}
 }
 
@@ -339,17 +339,17 @@ void WebWidget::quickSearchMenuAboutToShow()
 {
 	if (m_quickSearchMenu && m_quickSearchMenu->isEmpty())
 	{
-		const QStringList engines = SearchesManager::getSearchEngines();
+		const QStringList searchEngines = SearchEnginesManager::getSearchEngines();
 
-		for (int i = 0; i < engines.count(); ++i)
+		for (int i = 0; i < searchEngines.count(); ++i)
 		{
-			const SearchInformation engine = SearchesManager::getSearchEngine(engines.at(i));
+			const SearchEnginesManager::SearchEngineDefinition searchEngine = SearchEnginesManager::getSearchEngine(searchEngines.at(i));
 
-			if (!engine.identifier.isEmpty())
+			if (!searchEngine.identifier.isEmpty())
 			{
-				QAction *action = m_quickSearchMenu->addAction(engine.icon, engine.title);
-				action->setData(engine.identifier);
-				action->setToolTip(engine.description);
+				QAction *action = m_quickSearchMenu->addAction(searchEngine.icon, searchEngine.title);
+				action->setData(searchEngine.identifier);
+				action->setToolTip(searchEngine.description);
 			}
 		}
 	}
@@ -625,19 +625,19 @@ void WebWidget::updateEditActions()
 
 	if (m_actions.contains(ActionsManager::SearchAction))
 	{
-		const SearchInformation engine = SearchesManager::getSearchEngine(getOption(QLatin1String("Search/DefaultQuickSearchEngine")).toString());
-		const bool isValid = !engine.identifier.isEmpty();
+		const SearchEnginesManager::SearchEngineDefinition searchEngine = SearchEnginesManager::getSearchEngine(getOption(QLatin1String("Search/DefaultQuickSearchEngine")).toString());
+		const bool isValid = !searchEngine.identifier.isEmpty();
 
 		m_actions[ActionsManager::SearchAction]->setEnabled(isValid);
-		m_actions[ActionsManager::SearchAction]->setData(isValid ? engine.identifier : QVariant());
-		m_actions[ActionsManager::SearchAction]->setIcon((!isValid || engine.icon.isNull()) ? Utils::getIcon(QLatin1String("edit-find")) : engine.icon);
-		m_actions[ActionsManager::SearchAction]->setOverrideText(isValid ? engine.title : QT_TRANSLATE_NOOP("actions", "Search"));
-		m_actions[ActionsManager::SearchAction]->setToolTip(isValid ? engine.description : tr("No search engines defined"));
+		m_actions[ActionsManager::SearchAction]->setData(isValid ? searchEngine.identifier : QVariant());
+		m_actions[ActionsManager::SearchAction]->setIcon((!isValid || searchEngine.icon.isNull()) ? Utils::getIcon(QLatin1String("edit-find")) : searchEngine.icon);
+		m_actions[ActionsManager::SearchAction]->setOverrideText(isValid ? searchEngine.title : QT_TRANSLATE_NOOP("actions", "Search"));
+		m_actions[ActionsManager::SearchAction]->setToolTip(isValid ? searchEngine.description : tr("No search engines defined"));
 	}
 
 	if (m_actions.contains(ActionsManager::SearchMenuAction))
 	{
-		m_actions[ActionsManager::SearchMenuAction]->setEnabled(SearchesManager::getSearchEngines().count() > 1);
+		m_actions[ActionsManager::SearchMenuAction]->setEnabled(SearchEnginesManager::getSearchEngines().count() > 1);
 	}
 
 	updateLinkActions();

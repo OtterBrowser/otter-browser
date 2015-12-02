@@ -27,13 +27,6 @@
 namespace Otter
 {
 
-struct SearchSuggestion
-{
-	QString completion;
-	QString description;
-	QString url;
-};
-
 class NetworkManager;
 
 class SearchSuggester : public QObject
@@ -41,12 +34,19 @@ class SearchSuggester : public QObject
 	Q_OBJECT
 
 public:
-	explicit SearchSuggester(const QString &engine, QObject *parent = NULL);
+	struct SearchSuggestion
+	{
+		QString completion;
+		QString description;
+		QString url;
+	};
+
+	explicit SearchSuggester(const QString &searchEngine, QObject *parent = NULL);
 
 	QStandardItemModel* getModel();
 
 public slots:
-	void setEngine(const QString &engine);
+	void setSearchEngine(const QString &searchEngine);
 	void setQuery(const QString &query);
 
 protected slots:
@@ -55,11 +55,11 @@ protected slots:
 private:
 	QNetworkReply *m_networkReply;
 	QStandardItemModel *m_model;
-	QString m_engine;
+	QString m_searchEngine;
 	QString m_query;
 
 signals:
-	void suggestionsChanged(QList<SearchSuggestion> suggestions);
+	void suggestionsChanged(const QList<SearchSuggestion> &suggestions);
 };
 
 }

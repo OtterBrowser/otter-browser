@@ -20,7 +20,7 @@
 #include "SearchSuggester.h"
 #include "NetworkManager.h"
 #include "NetworkManagerFactory.h"
-#include "SearchesManager.h"
+#include "SearchEnginesManager.h"
 
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
@@ -29,18 +29,18 @@
 namespace Otter
 {
 
-SearchSuggester::SearchSuggester(const QString &engine, QObject *parent) : QObject(parent),
+SearchSuggester::SearchSuggester(const QString &searchEngine, QObject *parent) : QObject(parent),
 	m_networkReply(NULL),
 	m_model(NULL),
-	m_engine(engine)
+	m_searchEngine(searchEngine)
 {
 }
 
-void SearchSuggester::setEngine(const QString &engine)
+void SearchSuggester::setSearchEngine(const QString &searchEngine)
 {
 	const QString query = m_query;
 
-	m_engine = engine;
+	m_searchEngine = searchEngine;
 	m_query = QString();
 
 	setQuery(query);
@@ -59,9 +59,9 @@ void SearchSuggester::setQuery(const QString &query)
 			m_networkReply = NULL;
 		}
 
-		const SearchInformation engine = SearchesManager::getSearchEngine(m_engine);
+		const SearchEnginesManager::SearchEngineDefinition searchEngine = SearchEnginesManager::getSearchEngine(m_searchEngine);
 
-		if (engine.identifier.isEmpty() || engine.suggestionsUrl.url.isEmpty())
+		if (searchEngine.identifier.isEmpty() || searchEngine.suggestionsUrl.url.isEmpty())
 		{
 			return;
 		}
@@ -72,7 +72,7 @@ void SearchSuggester::setQuery(const QString &query)
 		QNetworkAccessManager::Operation method;
 		QByteArray body;
 
-		SearchesManager::setupQuery(query, engine.suggestionsUrl, &request, &method, &body);
+		SearchEnginesManager::setupQuery(query, searchEngine.suggestionsUrl, &request, &method, &body);
 
 		if (method == QNetworkAccessManager::PostOperation)
 		{

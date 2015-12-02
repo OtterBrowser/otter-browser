@@ -21,6 +21,7 @@
 #define OTTER_SEARCHPROPERTIESDIALOG_H
 
 #include "Dialog.h"
+#include "../core/SearchEnginesManager.h"
 
 #include <QtWidgets/QLineEdit>
 
@@ -32,17 +33,15 @@ namespace Ui
 	class SearchPropertiesDialog;
 }
 
-struct SearchInformation;
-
 class SearchPropertiesDialog : public Dialog
 {
 	Q_OBJECT
 
 public:
-	explicit SearchPropertiesDialog(const SearchInformation &engine, const QStringList &keywords, bool isDefault, QWidget *parent = NULL);
+	explicit SearchPropertiesDialog(const SearchEnginesManager::SearchEngineDefinition &searchEngine, const QStringList &keywords, bool isDefault, QWidget *parent = NULL);
 	~SearchPropertiesDialog();
 
-	SearchInformation getSearchEngine() const;
+	SearchEnginesManager::SearchEngineDefinition getSearchEngine() const;
 	bool isDefault() const;
 	bool eventFilter(QObject *object, QEvent *event);
 

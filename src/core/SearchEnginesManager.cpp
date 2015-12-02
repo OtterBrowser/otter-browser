@@ -17,7 +17,7 @@
 *
 **************************************************************************/
 
-#include "SearchesManager.h"
+#include "SearchEnginesManager.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "Utils.h"
@@ -32,26 +32,26 @@
 namespace Otter
 {
 
-SearchesManager* SearchesManager::m_instance = NULL;
-QStandardItemModel* SearchesManager::m_searchEnginesModel = NULL;
-QStringList SearchesManager::m_searchEnginesOrder;
-QStringList SearchesManager::m_searchKeywords;
-QHash<QString, SearchInformation> SearchesManager::m_searchEngines;
-bool SearchesManager::m_isInitialized = false;
+SearchEnginesManager* SearchEnginesManager::m_instance = NULL;
+QStandardItemModel* SearchEnginesManager::m_searchEnginesModel = NULL;
+QStringList SearchEnginesManager::m_searchEnginesOrder;
+QStringList SearchEnginesManager::m_searchKeywords;
+QHash<QString, SearchEnginesManager::SearchEngineDefinition> SearchEnginesManager::m_searchEngines;
+bool SearchEnginesManager::m_isInitialized = false;
 
-SearchesManager::SearchesManager(QObject *parent) : QObject(parent)
+SearchEnginesManager::SearchEnginesManager(QObject *parent) : QObject(parent)
 {
 }
 
-void SearchesManager::createInstance(QObject *parent)
+void SearchEnginesManager::createInstance(QObject *parent)
 {
 	if (!m_instance)
 	{
-		m_instance = new SearchesManager(parent);
+		m_instance = new SearchEnginesManager(parent);
 	}
 }
 
-void SearchesManager::initialize()
+void SearchEnginesManager::initialize()
 {
 	if (!m_isInitialized)
 	{
@@ -63,7 +63,7 @@ void SearchesManager::initialize()
 	}
 }
 
-void SearchesManager::optionChanged(const QString &key)
+void SearchEnginesManager::optionChanged(const QString &key)
 {
 	if (key == QLatin1String("Search/SearchEnginesOrder"))
 	{
@@ -71,7 +71,7 @@ void SearchesManager::optionChanged(const QString &key)
 	}
 }
 
-void SearchesManager::loadSearchEngines()
+void SearchEnginesManager::loadSearchEngines()
 {
 	m_searchEngines.clear();
 	m_searchKeywords.clear();
@@ -91,17 +91,17 @@ void SearchesManager::loadSearchEngines()
 			continue;
 		}
 
-		const SearchInformation engine = loadSearchEngine(&file, searchEnginesOrder.at(i));
+		const SearchEngineDefinition searchEngine = loadSearchEngine(&file, searchEnginesOrder.at(i));
 
 		file.close();
 
-		if (engine.identifier.isEmpty())
+		if (searchEngine.identifier.isEmpty())
 		{
 			m_searchEnginesOrder.removeAll(searchEnginesOrder.at(i));
 		}
 		else
 		{
-			m_searchEngines[searchEnginesOrder.at(i)] = engine;
+			m_searchEngines[searchEnginesOrder.at(i)] = searchEngine;
 		}
 	}
 
@@ -110,16 +110,16 @@ void SearchesManager::loadSearchEngines()
 	updateSearchEnginesModel();
 }
 
-void SearchesManager::addSearchEngine(const SearchInformation &engine, bool isDefault)
+void SearchEnginesManager::addSearchEngine(const SearchEngineDefinition &searchEngine, bool isDefault)
 {
-	if (saveSearchEngine(engine))
+	if (saveSearchEngine(searchEngine))
 	{
 		if (isDefault)
 		{
-			SettingsManager::setValue(QLatin1String("Search/DefaultSearchEngine"), engine.identifier);
+			SettingsManager::setValue(QLatin1String("Search/DefaultSearchEngine"), searchEngine.identifier);
 		}
 
-		if (m_searchEnginesOrder.contains(engine.identifier))
+		if (m_searchEnginesOrder.contains(searchEngine.identifier))
 		{
 			emit m_instance->searchEnginesModified();
 
@@ -127,14 +127,14 @@ void SearchesManager::addSearchEngine(const SearchInformation &engine, bool isDe
 		}
 		else
 		{
-			m_searchEnginesOrder.append(engine.identifier);
+			m_searchEnginesOrder.append(searchEngine.identifier);
 
 			SettingsManager::setValue(QLatin1String("Search/SearchEnginesOrder"), m_searchEnginesOrder);
 		}
 	}
 }
 
-void SearchesManager::updateSearchEnginesModel()
+void SearchEnginesManager::updateSearchEnginesModel()
 {
 	if (!m_searchEnginesModel)
 	{
@@ -143,11 +143,11 @@ void SearchesManager::updateSearchEnginesModel()
 
 	m_searchEnginesModel->clear();
 
-	const QStringList engines = getSearchEngines();
+	const QStringList searchEngines = getSearchEngines();
 
-	for (int i = 0; i < engines.count(); ++i)
+	for (int i = 0; i < searchEngines.count(); ++i)
 	{
-		const SearchInformation search = getSearchEngine(engines.at(i));
+		const SearchEngineDefinition search = getSearchEngine(searchEngines.at(i));
 
 		if (!search.identifier.isEmpty())
 		{
@@ -160,7 +160,7 @@ void SearchesManager::updateSearchEnginesModel()
 		}
 	}
 
-	if (engines.count() > 0)
+	if (searchEngines.count() > 0)
 	{
 		QStandardItem *separatorItem = new QStandardItem();
 		separatorItem->setData(QLatin1String("separator"), Qt::AccessibleDescriptionRole);
@@ -176,7 +176,7 @@ void SearchesManager::updateSearchEnginesModel()
 	emit m_instance->searchEnginesModelModified();
 }
 
-void SearchesManager::setupQuery(const QString &query, const SearchUrl &searchUrl, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body)
+void SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &searchUrl, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body)
 {
 	if (searchUrl.url.isEmpty())
 	{
@@ -275,10 +275,10 @@ void SearchesManager::setupQuery(const QString &query, const SearchUrl &searchUr
 	request->setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
 }
 
-SearchInformation SearchesManager::loadSearchEngine(QIODevice *device, const QString &identifier)
+SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::loadSearchEngine(QIODevice *device, const QString &identifier)
 {
-	SearchInformation engine;
-	engine.identifier = identifier;
+	SearchEngineDefinition searchEngine;
+	searchEngine.identifier = identifier;
 
 	QXmlStreamReader reader(device->readAll());
 
@@ -296,15 +296,15 @@ SearchInformation SearchesManager::loadSearchEngine(QIODevice *device, const QSt
 				{
 					if (reader.attributes().value(QLatin1String("rel")) == QLatin1String("self"))
 					{
-						engine.selfUrl = reader.attributes().value(QLatin1String("template")).toString();
+						searchEngine.selfUrl = reader.attributes().value(QLatin1String("template")).toString();
 					}
 					else if (reader.attributes().value(QLatin1String("rel")) == QLatin1String("suggestions") || reader.attributes().value(QLatin1String("type")) == QLatin1String("application/x-suggestions+json"))
 					{
-						currentUrl = &engine.suggestionsUrl;
+						currentUrl = &searchEngine.suggestionsUrl;
 					}
 					else if (!reader.attributes().hasAttribute(QLatin1String("rel")) || reader.attributes().value(QLatin1String("rel")) == QLatin1String("results"))
 					{
-						currentUrl = &engine.resultsUrl;
+						currentUrl = &searchEngine.resultsUrl;
 					}
 					else
 					{
@@ -328,46 +328,46 @@ SearchInformation SearchesManager::loadSearchEngine(QIODevice *device, const QSt
 
 					if (!keyword.isEmpty() && !m_searchKeywords.contains(keyword))
 					{
-						engine.keyword = keyword;
+						searchEngine.keyword = keyword;
 
 						m_searchKeywords.append(keyword);
 					}
 				}
 				else if (reader.name() == QLatin1String("ShortName"))
 				{
-					engine.title = reader.readElementText();
+					searchEngine.title = reader.readElementText();
 				}
 				else if (reader.name() == QLatin1String("Description"))
 				{
-					engine.description = reader.readElementText();
+					searchEngine.description = reader.readElementText();
 				}
 				else if (reader.name() == QLatin1String("InputEncoding"))
 				{
-					engine.encoding = reader.readElementText();
+					searchEngine.encoding = reader.readElementText();
 				}
 				else if (reader.name() == QLatin1String("Image"))
 				{
 					const QString data = reader.readElementText();
 
-					engine.icon = QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8()), "png")));
+					searchEngine.icon = QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8()), "png")));
 				}
 			}
 		}
 	}
 	else
 	{
-		engine.identifier = QString();
+		searchEngine.identifier = QString();
 	}
 
-	return engine;
+	return searchEngine;
 }
 
-SearchesManager* SearchesManager::getInstance()
+SearchEnginesManager* SearchEnginesManager::getInstance()
 {
 	return m_instance;
 }
 
-QStandardItemModel* SearchesManager::getSearchEnginesModel()
+QStandardItemModel* SearchEnginesManager::getSearchEnginesModel()
 {
 	if (!m_isInitialized)
 	{
@@ -384,7 +384,7 @@ QStandardItemModel* SearchesManager::getSearchEnginesModel()
 	return m_searchEnginesModel;
 }
 
-SearchInformation SearchesManager::getSearchEngine(const QString &identifier, bool byKeyword)
+SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::getSearchEngine(const QString &identifier, bool byKeyword)
 {
 	if (!m_isInitialized)
 	{
@@ -395,7 +395,7 @@ SearchInformation SearchesManager::getSearchEngine(const QString &identifier, bo
 	{
 		if (!identifier.isEmpty())
 		{
-			QHash<QString, SearchInformation>::iterator iterator;
+			QHash<QString, SearchEngineDefinition>::iterator iterator;
 
 			for (iterator = m_searchEngines.begin(); iterator != m_searchEngines.end(); ++iterator)
 			{
@@ -406,18 +406,18 @@ SearchInformation SearchesManager::getSearchEngine(const QString &identifier, bo
 			}
 		}
 
-		return SearchInformation();
+		return SearchEngineDefinition();
 	}
 
 	if (identifier.isEmpty())
 	{
-		return m_searchEngines.value(SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString(), SearchInformation());
+		return m_searchEngines.value(SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString(), SearchEngineDefinition());
 	}
 
-	return m_searchEngines.value(identifier, SearchInformation());
+	return m_searchEngines.value(identifier, SearchEngineDefinition());
 }
 
-QStringList SearchesManager::getSearchEngines()
+QStringList SearchEnginesManager::getSearchEngines()
 {
 	if (!m_isInitialized)
 	{
@@ -427,7 +427,7 @@ QStringList SearchesManager::getSearchEngines()
 	return m_searchEnginesOrder;
 }
 
-QStringList SearchesManager::getSearchKeywords()
+QStringList SearchEnginesManager::getSearchKeywords()
 {
 	if (!m_isInitialized)
 	{
@@ -437,14 +437,14 @@ QStringList SearchesManager::getSearchKeywords()
 	return m_searchKeywords;
 }
 
-bool SearchesManager::saveSearchEngine(const SearchInformation &engine)
+bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &searchEngine)
 {
-	if (engine.identifier.isEmpty())
+	if (searchEngine.identifier.isEmpty())
 	{
 		return false;
 	}
 
-	QFile file(SessionsManager::getWritableDataPath(QLatin1String("searches/") + engine.identifier + QLatin1String(".xml")));
+	QFile file(SessionsManager::getWritableDataPath(QLatin1String("searches/") + searchEngine.identifier + QLatin1String(".xml")));
 
 	if (!file.open(QFile::WriteOnly))
 	{
@@ -457,19 +457,19 @@ bool SearchesManager::saveSearchEngine(const SearchInformation &engine)
 	writer.writeStartDocument();
 	writer.writeStartElement(QLatin1String("OpenSearchDescription"));
 	writer.writeAttribute(QLatin1String("xmlns"), QLatin1String("http://a9.com/-/spec/opensearch/1.1/"));
-	writer.writeTextElement(QLatin1String("Shortcut"), engine.keyword);
-	writer.writeTextElement(QLatin1String("ShortName"), engine.title);
-	writer.writeTextElement(QLatin1String("Description"), engine.description);
-	writer.writeTextElement(QLatin1String("InputEncoding"), engine.encoding);
+	writer.writeTextElement(QLatin1String("Shortcut"), searchEngine.keyword);
+	writer.writeTextElement(QLatin1String("ShortName"), searchEngine.title);
+	writer.writeTextElement(QLatin1String("Description"), searchEngine.description);
+	writer.writeTextElement(QLatin1String("InputEncoding"), searchEngine.encoding);
 
-	if (!engine.icon.isNull())
+	if (!searchEngine.icon.isNull())
 	{
-		const QSize size = engine.icon.availableSizes().value(0, QSize(16, 16));
+		const QSize size = searchEngine.icon.availableSizes().value(0, QSize(16, 16));
 		QByteArray data;
 		QBuffer buffer(&data);
 		buffer.open(QIODevice::WriteOnly);
 
-		engine.icon.pixmap(size).save(&buffer, "PNG");
+		searchEngine.icon.pixmap(size).save(&buffer, "PNG");
 
 		writer.writeStartElement(QLatin1String("Image"));
 		writer.writeAttribute(QLatin1String("width"), QString::number(size.width()));
@@ -479,24 +479,24 @@ bool SearchesManager::saveSearchEngine(const SearchInformation &engine)
 		writer.writeEndElement();
 	}
 
-	if (!engine.selfUrl.isEmpty())
+	if (!searchEngine.selfUrl.isEmpty())
 	{
 		writer.writeStartElement(QLatin1String("Url"));
 		writer.writeAttribute(QLatin1String("type"), QLatin1String("application/opensearchdescription+xml"));
-		writer.writeAttribute(QLatin1String("template"), engine.selfUrl);
+		writer.writeAttribute(QLatin1String("template"), searchEngine.selfUrl);
 		writer.writeEndElement();
 	}
 
-	if (!engine.resultsUrl.url.isEmpty())
+	if (!searchEngine.resultsUrl.url.isEmpty())
 	{
 		writer.writeStartElement(QLatin1String("Url"));
 		writer.writeAttribute(QLatin1String("rel"), QLatin1String("results"));
 		writer.writeAttribute(QLatin1String("type"), QLatin1String("text/html"));
-		writer.writeAttribute(QLatin1String("method"), engine.resultsUrl.method.toUpper());
-		writer.writeAttribute(QLatin1String("enctype"), engine.resultsUrl.enctype.toLower());
-		writer.writeAttribute(QLatin1String("template"), engine.resultsUrl.url);
+		writer.writeAttribute(QLatin1String("method"), searchEngine.resultsUrl.method.toUpper());
+		writer.writeAttribute(QLatin1String("enctype"), searchEngine.resultsUrl.enctype.toLower());
+		writer.writeAttribute(QLatin1String("template"), searchEngine.resultsUrl.url);
 
-		const QList<QPair<QString, QString> > parameters = engine.resultsUrl.parameters.queryItems();
+		const QList<QPair<QString, QString> > parameters = searchEngine.resultsUrl.parameters.queryItems();
 
 		for (int i = 0; i < parameters.count(); ++i)
 		{
@@ -509,16 +509,16 @@ bool SearchesManager::saveSearchEngine(const SearchInformation &engine)
 		writer.writeEndElement();
 	}
 
-	if (!engine.suggestionsUrl.url.isEmpty())
+	if (!searchEngine.suggestionsUrl.url.isEmpty())
 	{
 		writer.writeStartElement(QLatin1String("Url"));
 		writer.writeAttribute(QLatin1String("rel"), QLatin1String("suggestions"));
 		writer.writeAttribute(QLatin1String("type"), QLatin1String("application/x-suggestions+json"));
-		writer.writeAttribute(QLatin1String("method"), engine.suggestionsUrl.method.toUpper());
-		writer.writeAttribute(QLatin1String("enctype"), engine.suggestionsUrl.enctype.toLower());
-		writer.writeAttribute(QLatin1String("template"), engine.suggestionsUrl.url);
+		writer.writeAttribute(QLatin1String("method"), searchEngine.suggestionsUrl.method.toUpper());
+		writer.writeAttribute(QLatin1String("enctype"), searchEngine.suggestionsUrl.enctype.toLower());
+		writer.writeAttribute(QLatin1String("template"), searchEngine.suggestionsUrl.url);
 
-		const QList<QPair<QString, QString> > parameters = engine.suggestionsUrl.parameters.queryItems();
+		const QList<QPair<QString, QString> > parameters = searchEngine.suggestionsUrl.parameters.queryItems();
 
 		for (int i = 0; i < parameters.count(); ++i)
 		{
@@ -537,9 +537,9 @@ bool SearchesManager::saveSearchEngine(const SearchInformation &engine)
 	return true;
 }
 
-bool SearchesManager::setupSearchQuery(const QString &query, const QString &engine, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body)
+bool SearchEnginesManager::setupSearchQuery(const QString &query, const QString &searchEngine, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body)
 {
-	const SearchInformation search = getSearchEngine(engine);
+	const SearchEngineDefinition search = getSearchEngine(searchEngine);
 
 	if (search.identifier.isEmpty())
 	{

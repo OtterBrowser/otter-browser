@@ -226,7 +226,7 @@ void Window::close()
 	QTimer::singleShot(50, this, SLOT(notifyRequestedCloseWindow()));
 }
 
-void Window::search(const QString &query, const QString &engine)
+void Window::search(const QString &query, const QString &searchEngine)
 {
 	WebContentsWidget *widget = qobject_cast<WebContentsWidget*>(m_contentsWidget);
 
@@ -237,7 +237,7 @@ void Window::search(const QString &query, const QString &engine)
 		setContentsWidget(widget);
 	}
 
-	widget->search(query, engine);
+	widget->search(query, searchEngine);
 
 	emit urlChanged(getUrl(), true);
 }
@@ -279,15 +279,15 @@ void Window::handleOpenUrlRequest(const QUrl &url, WindowsManager::OpenHints hin
 	emit requestedOpenUrl(url, hints);
 }
 
-void Window::handleSearchRequest(const QString &query, const QString &engine, WindowsManager::OpenHints hints)
+void Window::handleSearchRequest(const QString &query, const QString &searchEngine, WindowsManager::OpenHints hints)
 {
 	if ((getType() == QLatin1String("web") && Utils::isUrlEmpty(getUrl())) || (hints == WindowsManager::DefaultOpen || hints == WindowsManager::CurrentTabOpen))
 	{
-		search(query, engine);
+		search(query, searchEngine);
 	}
 	else
 	{
-		emit requestedSearch(query, engine, hints);
+		emit requestedSearch(query, searchEngine, hints);
 	}
 }
 
@@ -365,16 +365,16 @@ void Window::setOption(const QString &key, const QVariant &value)
 	}
 }
 
-void Window::setSearchEngine(const QString &engine)
+void Window::setSearchEngine(const QString &searchEngine)
 {
-	if (engine == m_searchEngine)
+	if (searchEngine == m_searchEngine)
 	{
 		return;
 	}
 
-	m_searchEngine = engine;
+	m_searchEngine = searchEngine;
 
-	emit searchEngineChanged(engine);
+	emit searchEngineChanged(searchEngine);
 }
 
 void Window::setUrl(const QUrl &url, bool typed)

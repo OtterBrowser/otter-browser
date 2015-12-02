@@ -124,7 +124,7 @@ public:
 		QList<QPair<QUrl, QSslError> > errors;
 	};
 
-	virtual void search(const QString &query, const QString &engine);
+	virtual void search(const QString &query, const QString &searchEngine);
 	virtual void print(QPrinter *printer) = 0;
 	void showDialog(ContentsDialog *dialog, bool lockEventLoop = true);
 	virtual void setOptions(const QVariantHash &options);

@@ -20,7 +20,7 @@
 
 #include "InputInterpreter.h"
 #include "BookmarksManager.h"
-#include "SearchesManager.h"
+#include "SearchEnginesManager.h"
 
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
@@ -138,11 +138,11 @@ void InputInterpreter::interpret(const QString &text, WindowsManager::OpenHints 
 	}
 
 	const QString keyword = text.section(QLatin1Char(' '), 0, 0);
-	const SearchInformation engine = SearchesManager::getSearchEngine(keyword, true);
+	const SearchEnginesManager::SearchEngineDefinition searchEngine = SearchEnginesManager::getSearchEngine(keyword, true);
 
-	if (!engine.identifier.isEmpty())
+	if (!searchEngine.identifier.isEmpty())
 	{
-		emit requestedSearch(text.section(QLatin1Char(' '), 1), engine.identifier, hints);
+		emit requestedSearch(text.section(QLatin1Char(' '), 1), searchEngine.identifier, hints);
 
 		deleteLater();
 

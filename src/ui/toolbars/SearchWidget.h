@@ -47,7 +47,7 @@ public:
 public slots:
 	void activate(Qt::FocusReason reason);
 	void setWindow(Window *window = NULL);
-	void setSearchEngine(const QString &engine = QString());
+	void setSearchEngine(const QString &searchEngine = QString());
 
 protected:
 	void changeEvent(QEvent *event);
@@ -87,8 +87,8 @@ private:
 	bool m_wasPopupVisible;
 
 signals:
-	void searchEngineChanged(const QString &engine);
-	void requestedSearch(const QString &query, const QString &engine, WindowsManager::OpenHints hints);
+	void searchEngineChanged(const QString &searchEngine);
+	void requestedSearch(const QString &query, const QString &searchEngine, WindowsManager::OpenHints hints);
 };
 
 }

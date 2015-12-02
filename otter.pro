@@ -99,7 +99,7 @@ SOURCES += src/main.cpp \
     src/core/NotificationsManager.cpp \
     src/core/PasswordsManager.cpp \
     src/core/PlatformIntegration.cpp \
-    src/core/SearchesManager.cpp \
+    src/core/SearchEnginesManager.cpp \
     src/core/SearchSuggester.cpp \
     src/core/SessionModel.cpp \
     src/core/SessionsManager.cpp \
@@ -262,7 +262,7 @@ HEADERS += src/core/ActionsManager.h \
     src/core/NotificationsManager.h \
     src/core/PasswordsManager.h \
     src/core/PlatformIntegration.h \
-    src/core/SearchesManager.h \
+    src/core/SearchEnginesManager.h \
     src/core/SearchSuggester.h \
     src/core/SessionModel.h \
     src/core/SessionsManager.h \

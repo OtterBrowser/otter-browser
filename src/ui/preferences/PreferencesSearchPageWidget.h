@@ -20,6 +20,8 @@
 #ifndef OTTER_PREFERENCESSEARCHPAGEWIDGET_H
 #define OTTER_PREFERENCESSEARCHPAGEWIDGET_H
 
+#include "../../core/SearchEnginesManager.h"
+
 #include <QtWidgets/QWidget>
 
 namespace Otter
@@ -29,8 +31,6 @@ namespace Ui
 {
 	class PreferencesSearchPageWidget;
 }
-
-struct SearchInformation;
 
 class PreferencesSearchPageWidget : public QWidget
 {
@@ -55,7 +55,7 @@ protected slots:
 private:
 	QString m_defaultSearchEngine;
 	QStringList m_filesToRemove;
-	QHash<QString, QPair<bool, SearchInformation> > m_searchEngines;
+	QHash<QString, QPair<bool, SearchEnginesManager::SearchEngineDefinition> > m_searchEngines;
 	Ui::PreferencesSearchPageWidget *m_ui;
 
 signals:

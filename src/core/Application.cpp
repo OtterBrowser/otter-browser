@@ -32,7 +32,7 @@
 #include "NotificationsManager.h"
 #include "PasswordsManager.h"
 #include "PlatformIntegration.h"
-#include "SearchesManager.h"
+#include "SearchEnginesManager.h"
 #include "SettingsManager.h"
 #include "ToolBarsManager.h"
 #include "TransfersManager.h"
@@ -266,7 +266,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	PasswordsManager::createInstance(this);
 
-	SearchesManager::createInstance(this);
+	SearchEnginesManager::createInstance(this);
 
 	ToolBarsManager::createInstance(this);
 

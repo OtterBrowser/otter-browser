@@ -31,7 +31,7 @@
 #include "../../core/BookmarksManager.h"
 #include "../../core/InputInterpreter.h"
 #include "../../core/HistoryManager.h"
-#include "../../core/SearchesManager.h"
+#include "../../core/SearchEnginesManager.h"
 #include "../../core/Utils.h"
 
 #include <QtCore/QMimeData>

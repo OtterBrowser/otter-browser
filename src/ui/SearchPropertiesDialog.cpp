@@ -18,7 +18,6 @@
 **************************************************************************/
 
 #include "SearchPropertiesDialog.h"
-#include "../core/SearchesManager.h"
 
 #include "ui_SearchPropertiesDialog.h"
 
@@ -30,37 +29,37 @@
 namespace Otter
 {
 
-SearchPropertiesDialog::SearchPropertiesDialog(const SearchInformation &engine, const QStringList &keywords, bool isDefault, QWidget *parent) : Dialog(parent),
+SearchPropertiesDialog::SearchPropertiesDialog(const SearchEnginesManager::SearchEngineDefinition &searchEngine, const QStringList &keywords, bool isDefault, QWidget *parent) : Dialog(parent),
 	m_currentLineEdit(NULL),
-	m_identifier(engine.identifier),
+	m_identifier(searchEngine.identifier),
 	m_keywords(keywords),
 	m_ui(new Ui::SearchPropertiesDialog)
 {
 	m_ui->setupUi(this);
-	m_ui->iconButton->setIcon(engine.icon);
-	m_ui->titleLineEdit->setText(engine.title);
-	m_ui->descriptionLineEdit->setText(engine.description);
-	m_ui->keywordLineEdit->setText(engine.keyword);
+	m_ui->iconButton->setIcon(searchEngine.icon);
+	m_ui->titleLineEdit->setText(searchEngine.title);
+	m_ui->descriptionLineEdit->setText(searchEngine.description);
+	m_ui->keywordLineEdit->setText(searchEngine.keyword);
 	m_ui->keywordLineEdit->setValidator(new QRegularExpressionValidator(QRegularExpression((keywords.isEmpty() ? QString() : QStringLiteral("(?!\\b(%1)\\b)").arg(keywords.join('|'))) + "[a-z0-9]*"), m_ui->keywordLineEdit));
-	m_ui->encodingLineEdit->setText(engine.encoding);
+	m_ui->encodingLineEdit->setText(searchEngine.encoding);
 	m_ui->defaultSearchCheckBox->setChecked(isDefault);
 
 	connect(m_ui->resultsPostMethodCheckBox, SIGNAL(toggled(bool)), m_ui->resultsPostWidget, SLOT(setEnabled(bool)));
 	connect(m_ui->suggestionsPostMethodCheckBox, SIGNAL(toggled(bool)), m_ui->suggestionsPostWidget, SLOT(setEnabled(bool)));
 
-	m_ui->resultsAddressLineEdit->setText(engine.resultsUrl.url);
+	m_ui->resultsAddressLineEdit->setText(searchEngine.resultsUrl.url);
 	m_ui->resultsAddressLineEdit->installEventFilter(this);
-	m_ui->resultsQueryLineEdit->setText(engine.resultsUrl.parameters.toString());
+	m_ui->resultsQueryLineEdit->setText(searchEngine.resultsUrl.parameters.toString());
 	m_ui->resultsQueryLineEdit->installEventFilter(this);
-	m_ui->resultsPostMethodCheckBox->setChecked(engine.resultsUrl.method == QLatin1String("post"));
-	m_ui->resultsEnctypeComboBox->setCurrentText(engine.resultsUrl.enctype);
+	m_ui->resultsPostMethodCheckBox->setChecked(searchEngine.resultsUrl.method == QLatin1String("post"));
+	m_ui->resultsEnctypeComboBox->setCurrentText(searchEngine.resultsUrl.enctype);
 
-	m_ui->suggestionsAddressLineEdit->setText(engine.suggestionsUrl.url);
+	m_ui->suggestionsAddressLineEdit->setText(searchEngine.suggestionsUrl.url);
 	m_ui->suggestionsAddressLineEdit->installEventFilter(this);
-	m_ui->suggestionsQueryLineEdit->setText(engine.suggestionsUrl.parameters.toString());
+	m_ui->suggestionsQueryLineEdit->setText(searchEngine.suggestionsUrl.parameters.toString());
 	m_ui->suggestionsQueryLineEdit->installEventFilter(this);
-	m_ui->suggestionsPostMethodCheckBox->setChecked(engine.suggestionsUrl.method == QLatin1String("post"));
-	m_ui->suggestionsEnctypeComboBox->setCurrentText(engine.suggestionsUrl.enctype);
+	m_ui->suggestionsPostMethodCheckBox->setChecked(searchEngine.suggestionsUrl.method == QLatin1String("post"));
+	m_ui->suggestionsEnctypeComboBox->setCurrentText(searchEngine.suggestionsUrl.enctype);
 
 	connect(m_ui->iconButton, SIGNAL(clicked()), this, SLOT(selectIcon()));
 }
@@ -98,26 +97,26 @@ void SearchPropertiesDialog::selectIcon()
 	}
 }
 
-SearchInformation SearchPropertiesDialog::getSearchEngine() const
+SearchEnginesManager::SearchEngineDefinition SearchPropertiesDialog::getSearchEngine() const
 {
 	const QString keyword = m_ui->keywordLineEdit->text().trimmed();
-	SearchInformation engine;
-	engine.identifier = m_identifier;
-	engine.title = m_ui->titleLineEdit->text();
-	engine.description = m_ui->descriptionLineEdit->text();
-	engine.keyword = (m_keywords.contains(keyword) ? QString() : keyword);
-	engine.encoding = m_ui->encodingLineEdit->text();
-	engine.icon = m_ui->iconButton->icon();
-	engine.resultsUrl.url = m_ui->resultsAddressLineEdit->text();
-	engine.resultsUrl.enctype = m_ui->resultsEnctypeComboBox->currentText();
-	engine.resultsUrl.method = (m_ui->resultsPostMethodCheckBox->isChecked() ? QLatin1String("post") : QLatin1String("get"));
-	engine.resultsUrl.parameters = QUrlQuery(m_ui->resultsQueryLineEdit->text());
-	engine.suggestionsUrl.url = m_ui->suggestionsAddressLineEdit->text();
-	engine.suggestionsUrl.enctype = m_ui->suggestionsEnctypeComboBox->currentText();
-	engine.suggestionsUrl.method = (m_ui->suggestionsPostMethodCheckBox->isChecked() ? QLatin1String("post") : QLatin1String("get"));
-	engine.suggestionsUrl.parameters = QUrlQuery(m_ui->suggestionsQueryLineEdit->text());
+	SearchEnginesManager::SearchEngineDefinition searchEngine;
+	searchEngine.identifier = m_identifier;
+	searchEngine.title = m_ui->titleLineEdit->text();
+	searchEngine.description = m_ui->descriptionLineEdit->text();
+	searchEngine.keyword = (m_keywords.contains(keyword) ? QString() : keyword);
+	searchEngine.encoding = m_ui->encodingLineEdit->text();
+	searchEngine.icon = m_ui->iconButton->icon();
+	searchEngine.resultsUrl.url = m_ui->resultsAddressLineEdit->text();
+	searchEngine.resultsUrl.enctype = m_ui->resultsEnctypeComboBox->currentText();
+	searchEngine.resultsUrl.method = (m_ui->resultsPostMethodCheckBox->isChecked() ? QLatin1String("post") : QLatin1String("get"));
+	searchEngine.resultsUrl.parameters = QUrlQuery(m_ui->resultsQueryLineEdit->text());
+	searchEngine.suggestionsUrl.url = m_ui->suggestionsAddressLineEdit->text();
+	searchEngine.suggestionsUrl.enctype = m_ui->suggestionsEnctypeComboBox->currentText();
+	searchEngine.suggestionsUrl.method = (m_ui->suggestionsPostMethodCheckBox->isChecked() ? QLatin1String("post") : QLatin1String("get"));
+	searchEngine.suggestionsUrl.parameters = QUrlQuery(m_ui->suggestionsQueryLineEdit->text());
 
-	return engine;
+	return searchEngine;
 }
 
 bool SearchPropertiesDialog::isDefault() const

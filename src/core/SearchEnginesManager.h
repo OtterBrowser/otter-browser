@@ -17,8 +17,8 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_SEARCHESMANAGER_H
-#define OTTER_SEARCHESMANAGER_H
+#ifndef OTTER_SEARCHENGINESMANAGER_H
+#define OTTER_SEARCHENGINESMANAGER_H
 
 #include <QtCore/QFile>
 #include <QtCore/QUrlQuery>
@@ -29,51 +29,51 @@
 namespace Otter
 {
 
-struct SearchUrl
-{
-	QString url;
-	QString enctype;
-	QString method;
-	QUrlQuery parameters;
-
-	SearchUrl() : method(QLatin1String("get")) {}
-};
-
-struct SearchInformation
-{
-	QString identifier;
-	QString title;
-	QString description;
-	QString keyword;
-	QString encoding;
-	QString selfUrl;
-	SearchUrl resultsUrl;
-	SearchUrl suggestionsUrl;
-	QIcon icon;
-
-	SearchInformation() : encoding(QLatin1String("UTF-8")) {}
-};
-
-class SearchesManager : public QObject
+class SearchEnginesManager : public QObject
 {
 	Q_OBJECT
 
 public:
+	struct SearchUrl
+	{
+		QString url;
+		QString enctype;
+		QString method;
+		QUrlQuery parameters;
+
+		SearchUrl() : method(QLatin1String("get")) {}
+	};
+
+	struct SearchEngineDefinition
+	{
+		QString identifier;
+		QString title;
+		QString description;
+		QString keyword;
+		QString encoding;
+		QString selfUrl;
+		SearchUrl resultsUrl;
+		SearchUrl suggestionsUrl;
+		QIcon icon;
+
+		SearchEngineDefinition() : encoding(QLatin1String("UTF-8")) {}
+	};
+
 	static void createInstance(QObject *parent = NULL);
 	static void loadSearchEngines();
-	static void addSearchEngine(const SearchInformation &engine, bool isDefault = false);
+	static void addSearchEngine(const SearchEngineDefinition &searchEngine, bool isDefault = false);
 	static void setupQuery(const QString &query, const SearchUrl &searchUrl, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body);
-	static SearchInformation loadSearchEngine(QIODevice *device, const QString &identifier);
-	static SearchesManager* getInstance();
+	static SearchEngineDefinition loadSearchEngine(QIODevice *device, const QString &identifier);
+	static SearchEnginesManager* getInstance();
 	static QStandardItemModel* getSearchEnginesModel();
-	static SearchInformation getSearchEngine(const QString &identifier = QString(), bool byKeyword = false);
+	static SearchEngineDefinition getSearchEngine(const QString &identifier = QString(), bool byKeyword = false);
 	static QStringList getSearchEngines();
 	static QStringList getSearchKeywords();
-	static bool saveSearchEngine(const SearchInformation &engine);
-	static bool setupSearchQuery(const QString &query, const QString &engine, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body);
+	static bool saveSearchEngine(const SearchEngineDefinition &searchEngine);
+	static bool setupSearchQuery(const QString &query, const QString &searchEngine, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body);
 
 protected:
-	explicit SearchesManager(QObject *parent = NULL);
+	explicit SearchEnginesManager(QObject *parent = NULL);
 
 	static void initialize();
 	static void updateSearchEnginesModel();
@@ -82,11 +82,11 @@ protected slots:
 	void optionChanged(const QString &key);
 
 private:
-	static SearchesManager *m_instance;
+	static SearchEnginesManager *m_instance;
 	static QStandardItemModel *m_searchEnginesModel;
 	static QStringList m_searchEnginesOrder;
 	static QStringList m_searchKeywords;
-	static QHash<QString, SearchInformation> m_searchEngines;
+	static QHash<QString, SearchEngineDefinition> m_searchEngines;
 	static bool m_isInitialized;
 
 signals:
