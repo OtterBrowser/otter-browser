@@ -114,7 +114,9 @@ void InputInterpreter::interpret(const QString &text, WindowsManager::OpenHints 
 		}
 	}
 
-	if (QFileInfo(text).exists())
+	const QFileInfo fileInformation(text);
+
+	if (fileInformation.exists() && fileInformation.isAbsolute())
 	{
 		emit requestedOpenUrl(QUrl::fromLocalFile(QFileInfo(text).canonicalFilePath()), hints);
 
