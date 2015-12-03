@@ -296,7 +296,7 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::loadSearchEng
 				{
 					if (reader.attributes().value(QLatin1String("rel")) == QLatin1String("self"))
 					{
-						searchEngine.selfUrl = reader.attributes().value(QLatin1String("template")).toString();
+						searchEngine.selfUrl = QUrl(reader.attributes().value(QLatin1String("template")).toString());
 					}
 					else if (reader.attributes().value(QLatin1String("rel")) == QLatin1String("suggestions") || reader.attributes().value(QLatin1String("type")) == QLatin1String("application/x-suggestions+json"))
 					{
@@ -350,6 +350,10 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::loadSearchEng
 					const QString data = reader.readElementText();
 
 					searchEngine.icon = QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8()), "png")));
+				}
+				else if (reader.name() == QLatin1String("SearchForm"))
+				{
+					searchEngine.formUrl = QUrl(reader.readElementText());
 				}
 			}
 		}
@@ -483,7 +487,7 @@ bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &search
 	{
 		writer.writeStartElement(QLatin1String("Url"));
 		writer.writeAttribute(QLatin1String("type"), QLatin1String("application/opensearchdescription+xml"));
-		writer.writeAttribute(QLatin1String("template"), searchEngine.selfUrl);
+		writer.writeAttribute(QLatin1String("template"), searchEngine.selfUrl.toString());
 		writer.writeEndElement();
 	}
 

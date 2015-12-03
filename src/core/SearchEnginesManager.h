@@ -51,7 +51,8 @@ public:
 		QString description;
 		QString keyword;
 		QString encoding;
-		QString selfUrl;
+		QUrl formUrl;
+		QUrl selfUrl;
 		SearchUrl resultsUrl;
 		SearchUrl suggestionsUrl;
 		QIcon icon;
