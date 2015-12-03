@@ -230,6 +230,11 @@ QList<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMime
 		return QList<ApplicationInformation>();
 	}
 
+	if (suffix == QLatin1String("exe"))
+	{
+		return QList<ApplicationInformation>();
+	}
+
 	if (m_cleanupTimer != 0)
 	{
 		killTimer(m_cleanupTimer);
