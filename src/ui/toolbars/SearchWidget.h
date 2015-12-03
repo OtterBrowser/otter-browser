@@ -88,6 +88,7 @@ private:
 
 signals:
 	void searchEngineChanged(const QString &searchEngine);
+	void requestedOpenUrl(const QUrl &url, WindowsManager::OpenHints hints);
 	void requestedSearch(const QString &query, const QString &searchEngine, WindowsManager::OpenHints hints);
 };
 

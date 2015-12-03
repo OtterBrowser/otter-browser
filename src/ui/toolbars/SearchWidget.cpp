@@ -163,20 +163,9 @@ void SearchWidget::keyPressEvent(QKeyEvent *event)
 {
 	if ((event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) && !(m_completer->popup() && m_completer->popup()->isVisible()))
 	{
-		const QString input = m_lineEdit->text().trimmed();
-
-		if (!input.isEmpty())
-		{
-			m_query = input;
-		}
-
-		if (!m_query.isEmpty())
-		{
-			emit requestedSearch(m_query, currentData(Qt::UserRole + 1).toString(), WindowsManager::calculateOpenHints(event->modifiers()));
-		}
+		sendRequest(m_lineEdit->text().trimmed());
 	}
-
-	if (event->key() == Qt::Key_Down || event->key() == Qt::Key_Up)
+	else if (event->key() == Qt::Key_Down || event->key() == Qt::Key_Up)
 	{
 		disconnect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
 
@@ -395,9 +384,21 @@ void SearchWidget::sendRequest(const QString &query)
 		m_query = query;
 	}
 
-	if (!m_query.isEmpty() && !m_isIgnoringActivation)
+	if (!m_isIgnoringActivation)
 	{
-		emit requestedSearch(m_query, currentData(Qt::UserRole + 1).toString(), WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers()));
+		if (m_query.isEmpty())
+		{
+			const SearchEnginesManager::SearchEngineDefinition searchEngine = SearchEnginesManager::getSearchEngine(currentData(Qt::UserRole + 1).toString());
+
+			if (searchEngine.formUrl.isValid())
+			{
+				emit requestedOpenUrl(searchEngine.formUrl, WindowsManager::calculateOpenHints(QApplication::keyboardModifiers(), Qt::LeftButton, WindowsManager::DefaultOpen));
+			}
+		}
+		else
+		{
+			emit requestedSearch(m_query, currentData(Qt::UserRole + 1).toString(), WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers()));
+		}
 	}
 }
 
@@ -480,6 +481,7 @@ void SearchWidget::setWindow(Window *window)
 	{
 		m_window->detachSearchWidget(this);
 
+		disconnect(this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), m_window.data(), SLOT(handleOpenUrlRequest(QUrl,WindowsManager::OpenHints)));
 		disconnect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), m_window.data(), SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
 		disconnect(this, SIGNAL(searchEngineChanged(QString)), m_window.data(), SLOT(setSearchEngine(QString)));
 		disconnect(m_window.data(), SIGNAL(searchEngineChanged(QString)), this, SLOT(setSearchEngine(QString)));
@@ -501,6 +503,7 @@ void SearchWidget::setWindow(Window *window)
 
 		setSearchEngine(window->getSearchEngine());
 
+		connect(this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), m_window.data(), SLOT(handleOpenUrlRequest(QUrl,WindowsManager::OpenHints)));
 		connect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), window, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
 		connect(this, SIGNAL(searchEngineChanged(QString)), window, SLOT(setSearchEngine(QString)));
 		connect(window, SIGNAL(searchEngineChanged(QString)), this, SLOT(setSearchEngine(QString)));
