@@ -42,7 +42,9 @@ SearchEnginePropertiesDialog::SearchEnginePropertiesDialog(const SearchEnginesMa
 	m_ui->keywordLineEdit->setText(searchEngine.keyword);
 	m_ui->keywordLineEdit->setValidator(new QRegularExpressionValidator(QRegularExpression((keywords.isEmpty() ? QString() : QStringLiteral("(?!\\b(%1)\\b)").arg(keywords.join('|'))) + "[a-z0-9]*"), m_ui->keywordLineEdit));
 	m_ui->encodingLineEdit->setText(searchEngine.encoding);
-	m_ui->defaultSearchCheckBox->setChecked(isDefault);
+	m_ui->formAddressLineEdit->setText(searchEngine.formUrl.toString());
+	m_ui->updateAddressLineEdit->setText(searchEngine.selfUrl.toString());
+	m_ui->defaultSearchEngineCheckBox->setChecked(isDefault);
 
 	connect(m_ui->resultsPostMethodCheckBox, SIGNAL(toggled(bool)), m_ui->resultsPostWidget, SLOT(setEnabled(bool)));
 	connect(m_ui->suggestionsPostMethodCheckBox, SIGNAL(toggled(bool)), m_ui->suggestionsPostWidget, SLOT(setEnabled(bool)));
@@ -106,6 +108,8 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginePropertiesDialog::getSe
 	searchEngine.description = m_ui->descriptionLineEdit->text();
 	searchEngine.keyword = (m_keywords.contains(keyword) ? QString() : keyword);
 	searchEngine.encoding = m_ui->encodingLineEdit->text();
+	searchEngine.formUrl = QUrl(m_ui->formAddressLineEdit->text());
+	searchEngine.selfUrl = QUrl(m_ui->updateAddressLineEdit->text());
 	searchEngine.icon = m_ui->iconButton->icon();
 	searchEngine.resultsUrl.url = m_ui->resultsAddressLineEdit->text();
 	searchEngine.resultsUrl.enctype = m_ui->resultsEnctypeComboBox->currentText();
@@ -121,7 +125,7 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginePropertiesDialog::getSe
 
 bool SearchEnginePropertiesDialog::isDefault() const
 {
-	return m_ui->defaultSearchCheckBox->isChecked();
+	return m_ui->defaultSearchEngineCheckBox->isChecked();
 }
 
 bool SearchEnginePropertiesDialog::eventFilter(QObject *object, QEvent *event)

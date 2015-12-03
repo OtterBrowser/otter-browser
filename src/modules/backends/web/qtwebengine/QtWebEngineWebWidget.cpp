@@ -903,6 +903,7 @@ void QtWebEngineWebWidget::handleCreateSearch(const QVariant &result)
 	SearchEnginesManager::SearchEngineDefinition searchEngine;
 	searchEngine.identifier = Utils::createIdentifier(getUrl().host(), identifiers);
 	searchEngine.title = getTitle();
+	searchEngine.formUrl = getUrl();
 	searchEngine.icon = (icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : icon);
 	searchEngine.resultsUrl.url = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
 	searchEngine.resultsUrl.enctype = result.toMap().value(QLatin1String("enctype")).toString();

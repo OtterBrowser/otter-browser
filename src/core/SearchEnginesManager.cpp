@@ -461,6 +461,12 @@ bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &search
 	writer.writeStartDocument();
 	writer.writeStartElement(QLatin1String("OpenSearchDescription"));
 	writer.writeAttribute(QLatin1String("xmlns"), QLatin1String("http://a9.com/-/spec/opensearch/1.1/"));
+
+	if (!searchEngine.formUrl.isEmpty())
+	{
+		writer.writeAttribute(QLatin1String("xmlns:moz"), QLatin1String("http://www.mozilla.org/2006/browser/search/"));
+	}
+
 	writer.writeTextElement(QLatin1String("Shortcut"), searchEngine.keyword);
 	writer.writeTextElement(QLatin1String("ShortName"), searchEngine.title);
 	writer.writeTextElement(QLatin1String("Description"), searchEngine.description);
@@ -533,6 +539,11 @@ bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &search
 		}
 
 		writer.writeEndElement();
+	}
+
+	if (!searchEngine.formUrl.isEmpty())
+	{
+		writer.writeTextElement(QLatin1String("moz:SearchForm"), searchEngine.formUrl.toString());
 	}
 
 	writer.writeEndElement();
