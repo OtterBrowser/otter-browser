@@ -242,7 +242,7 @@ void SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &sea
 					}
 					else
 					{
-						encodedValue.append('=');
+						encodedValue.append(QLatin1Char('='));
 						encodedValue.append(hex[((character >> 4) & 0x0F)]);
 						encodedValue.append(hex[(character & 0x0F)]);
 					}

@@ -51,14 +51,14 @@ SearchEnginePropertiesDialog::SearchEnginePropertiesDialog(const SearchEnginesMa
 
 	m_ui->resultsAddressLineEdit->setText(searchEngine.resultsUrl.url);
 	m_ui->resultsAddressLineEdit->installEventFilter(this);
-	m_ui->resultsQueryLineEdit->setText(searchEngine.resultsUrl.parameters.toString());
+	m_ui->resultsQueryLineEdit->setText(searchEngine.resultsUrl.parameters.toString(QUrl::FullyDecoded));
 	m_ui->resultsQueryLineEdit->installEventFilter(this);
 	m_ui->resultsPostMethodCheckBox->setChecked(searchEngine.resultsUrl.method == QLatin1String("post"));
 	m_ui->resultsEnctypeComboBox->setCurrentText(searchEngine.resultsUrl.enctype);
 
 	m_ui->suggestionsAddressLineEdit->setText(searchEngine.suggestionsUrl.url);
 	m_ui->suggestionsAddressLineEdit->installEventFilter(this);
-	m_ui->suggestionsQueryLineEdit->setText(searchEngine.suggestionsUrl.parameters.toString());
+	m_ui->suggestionsQueryLineEdit->setText(searchEngine.suggestionsUrl.parameters.toString(QUrl::FullyDecoded));
 	m_ui->suggestionsQueryLineEdit->installEventFilter(this);
 	m_ui->suggestionsPostMethodCheckBox->setChecked(searchEngine.suggestionsUrl.method == QLatin1String("post"));
 	m_ui->suggestionsEnctypeComboBox->setCurrentText(searchEngine.suggestionsUrl.enctype);
