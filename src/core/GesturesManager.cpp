@@ -126,7 +126,8 @@ QList<GesturesManager::GesturesContext> GesturesManager::m_contexts;
 bool GesturesManager::m_isReleasing = false;
 bool GesturesManager::m_afterScroll = false;
 
-GesturesManager::GesturesManager(QObject *parent) : QObject(parent)
+GesturesManager::GesturesManager(QObject *parent) : QObject(parent),
+	m_reloadTimer(0)
 {
 	m_instance = this;
 
@@ -163,23 +164,23 @@ void GesturesManager::createInstance(QObject *parent)
 	}
 }
 
-void GesturesManager::releaseObject()
+void GesturesManager::timerEvent(QTimerEvent *event)
 {
-	if (m_trackedObject)
+	if (event->timerId() == m_reloadTimer)
 	{
-		m_trackedObject->removeEventFilter(m_instance);
+		killTimer(m_reloadTimer);
 
-		disconnect(m_trackedObject, SIGNAL(destroyed(QObject*)), m_instance, SLOT(endGesture()));
+		m_reloadTimer = 0;
+
+		loadProfiles();
 	}
-
-	m_trackedObject = NULL;
 }
 
 void GesturesManager::optionChanged(const QString &option)
 {
-	if (option == QLatin1String("Browser/EnableMouseGestures") || option == QLatin1String("Browser/MouseProfilesOrder"))
+	if ((option == QLatin1String("Browser/MouseProfilesOrder") || option == QLatin1String("Browser/EnableMouseGestures")) && m_reloadTimer == 0)
 	{
-		loadProfiles();
+		m_reloadTimer = startTimer(250);
 	}
 }
 
@@ -282,6 +283,18 @@ void GesturesManager::loadProfiles()
 			profile.endGroup();
 		}
 	}
+}
+
+void GesturesManager::releaseObject()
+{
+	if (m_trackedObject)
+	{
+		m_trackedObject->removeEventFilter(m_instance);
+
+		disconnect(m_trackedObject, SIGNAL(destroyed(QObject*)), m_instance, SLOT(endGesture()));
+	}
+
+	m_trackedObject = NULL;
 }
 
 void GesturesManager::endGesture()

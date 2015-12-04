@@ -80,6 +80,7 @@ protected:
 
 	explicit GesturesManager(QObject *parent);
 
+	void timerEvent(QTimerEvent *event);
 	static void releaseObject();
 	static GestureStep deserializeStep(const QString &string);
 	static QList<GestureStep> recognizeMoveStep(QInputEvent *event);
@@ -94,6 +95,8 @@ protected slots:
 	void endGesture();
 
 private:
+	int m_reloadTimer;
+
 	static GesturesManager *m_instance;
 	static MouseGestures::Recognizer *m_recognizer;
 	static QPointer<QObject> m_trackedObject;
