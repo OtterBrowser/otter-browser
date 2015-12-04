@@ -27,6 +27,7 @@
 #include "../UserAgentsManagerDialog.h"
 #include "../../core/ActionsManager.h"
 #include "../../core/Application.h"
+#include "../../core/GesturesManager.h"
 #include "../../core/NetworkManagerFactory.h"
 #include "../../core/NotificationsManager.h"
 #include "../../core/SessionsManager.h"
@@ -1469,6 +1470,7 @@ void PreferencesAdvancedPageWidget::save()
 
 	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("keyboard")));
 
+	bool needsKeyboardProfilesReload = false;
 	QHash<QString, KeyboardProfile>::iterator keyboardProfilesIterator;
 
 	for (keyboardProfilesIterator = m_keyboardProfiles.begin(); keyboardProfilesIterator != m_keyboardProfiles.end(); ++keyboardProfilesIterator)
@@ -1512,6 +1514,8 @@ void PreferencesAdvancedPageWidget::save()
 		}
 
 		settings.save();
+
+		needsKeyboardProfilesReload = true;
 	}
 
 	QStringList keyboardProfiles;
@@ -1526,11 +1530,17 @@ void PreferencesAdvancedPageWidget::save()
 		}
 	}
 
+	if (needsKeyboardProfilesReload && SettingsManager::getValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder")).toStringList() == keyboardProfiles && SettingsManager::getValue(QLatin1String("Browser/EnableSingleKeyShortcuts")).toBool() == m_ui->keyboardEnableSingleKeyShortcutsCheckBox->isChecked())
+	{
+		ActionsManager::loadProfiles();
+	}
+
 	SettingsManager::setValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder"), keyboardProfiles);
 	SettingsManager::setValue(QLatin1String("Browser/EnableSingleKeyShortcuts"), m_ui->keyboardEnableSingleKeyShortcutsCheckBox->isChecked());
 
 	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("mouse")));
 
+	bool needsMouseProfilesReload = false;
 	QHash<QString, MouseProfile>::iterator mouseProfilesIterator;
 
 	for (mouseProfilesIterator = m_mouseProfiles.begin(); mouseProfilesIterator != m_mouseProfiles.end(); ++mouseProfilesIterator)
@@ -1571,6 +1581,8 @@ void PreferencesAdvancedPageWidget::save()
 		}
 
 		settings.save();
+
+		needsMouseProfilesReload = true;
 	}
 
 	QStringList mouseProfiles;
@@ -1583,6 +1595,11 @@ void PreferencesAdvancedPageWidget::save()
 		{
 			mouseProfiles.append(identifier);
 		}
+	}
+
+	if (needsMouseProfilesReload && SettingsManager::getValue(QLatin1String("Browser/MouseProfilesOrder")).toStringList() == mouseProfiles && SettingsManager::getValue(QLatin1String("Browser/EnableMouseGestures")).toBool() == m_ui->mouseEnableGesturesCheckBox->isChecked())
+	{
+		GesturesManager::loadProfiles();
 	}
 
 	SettingsManager::setValue(QLatin1String("Browser/MouseProfilesOrder"), mouseProfiles);
