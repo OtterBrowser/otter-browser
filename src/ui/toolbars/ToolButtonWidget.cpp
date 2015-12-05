@@ -18,7 +18,7 @@
 **************************************************************************/
 
 #include "ToolButtonWidget.h"
-#include "ToolBarWidget.h"
+#include "../ToolBarWidget.h"
 
 #include <QtCore/QEvent>
 #include <QtWidgets/QStyleOptionToolButton>
@@ -52,6 +52,7 @@ void ToolButtonWidget::paintEvent(QPaintEvent *event)
 
 	QStylePainter painter(this);
 	QStyleOptionToolButton option;
+
 	initStyleOption(&option);
 
 	option.text = option.fontMetrics.elidedText(option.text, Qt::ElideRight, (option.rect.width() - (option.fontMetrics.width(QLatin1Char(' ')) * 2) - ((toolButtonStyle() == Qt::ToolButtonTextBesideIcon) ? iconSize().width() : 0)));

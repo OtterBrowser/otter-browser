@@ -20,7 +20,7 @@
 #ifndef OTTER_BOOKMARKWIDGET_H
 #define OTTER_BOOKMARKWIDGET_H
 
-#include "../ToolButtonWidget.h"
+#include "ToolButtonWidget.h"
 
 namespace Otter
 {

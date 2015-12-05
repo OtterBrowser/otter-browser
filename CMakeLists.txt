@@ -170,7 +170,6 @@ set(otter_src
 	src/ui/ToolBarAreaWidget.cpp
 	src/ui/ToolBarDialog.cpp
 	src/ui/ToolBarWidget.cpp
-	src/ui/ToolButtonWidget.cpp
 	src/ui/TransferDialog.cpp
 	src/ui/TrayIcon.cpp
 	src/ui/UpdateCheckerDialog.cpp
@@ -203,6 +202,7 @@ set(otter_src
 	src/ui/toolbars/PanelChooserWidget.cpp
 	src/ui/toolbars/SearchWidget.cpp
 	src/ui/toolbars/StatusMessageWidget.cpp
+	src/ui/toolbars/ToolButtonWidget.cpp
 	src/ui/toolbars/ZoomWidget.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp
 	src/modules/backends/web/qtwebkit/QtWebKitHistoryInterface.cpp

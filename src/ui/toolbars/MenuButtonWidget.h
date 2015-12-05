@@ -20,7 +20,7 @@
 #ifndef OTTER_MENUBUTTONWIDGET_H
 #define OTTER_MENUBUTTONWIDGET_H
 
-#include "../ToolButtonWidget.h"
+#include "ToolButtonWidget.h"
 
 namespace Otter
 {

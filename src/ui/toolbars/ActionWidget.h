@@ -20,7 +20,7 @@
 #ifndef OTTER_ACTIONWIDGET_H
 #define OTTER_ACTIONWIDGET_H
 
-#include "../ToolButtonWidget.h"
+#include "ToolButtonWidget.h"
 #include "../../core/ActionsManager.h"
 
 #include <QtCore/QPointer>

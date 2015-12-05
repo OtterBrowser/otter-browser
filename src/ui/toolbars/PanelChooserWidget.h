@@ -21,7 +21,7 @@
 #ifndef OTTER_PANELCHOOSERWIDGET_H
 #define OTTER_PANELCHOOSERWIDGET_H
 
-#include "../ToolButtonWidget.h"
+#include "ToolButtonWidget.h"
 
 namespace Otter
 {
