@@ -43,11 +43,13 @@ public:
 
 	void hidePopup();
 	QString getCurrentSearchEngine() const;
+	QVariantMap getOptions() const;
 
 public slots:
 	void activate(Qt::FocusReason reason);
 	void setWindow(Window *window = NULL);
 	void setSearchEngine(const QString &searchEngine = QString());
+	void setOptions(const QVariantMap &options);
 
 protected:
 	void changeEvent(QEvent *event);
@@ -77,13 +79,15 @@ private:
 	QString m_query;
 	QString m_storedSearchEngine;
 	QTime m_popupHideTime;
-	QRect m_selectButtonIconRectangle;
-	QRect m_selectButtonArrowRectangle;
+	QRect m_iconRectangle;
+	QRect m_dropdownArrowRectangle;
 	QRect m_lineEditRectangle;
 	QRect m_searchButtonRectangle;
+	QVariantMap m_options;
 	int m_lastValidIndex;
 	bool m_isIgnoringActivation;
 	bool m_isPopupUpdated;
+	bool m_isSearchEngineLocked;
 	bool m_wasPopupVisible;
 
 signals:

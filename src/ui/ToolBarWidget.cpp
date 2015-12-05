@@ -474,7 +474,10 @@ QWidget* ToolBarWidget::createWidget(const ToolBarsManager::ToolBarActionDefinit
 
 	if (definition.action == QLatin1String("SearchWidget"))
 	{
-		return new SearchWidget(m_window, this);
+		SearchWidget *searchWidget = new SearchWidget(m_window, this);
+		searchWidget->setOptions(definition.options);
+
+		return searchWidget;
 	}
 
 	if (definition.action == QLatin1String("StatusMessageWidget"))

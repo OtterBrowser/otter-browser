@@ -48,6 +48,7 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : QComboBox(parent),
 	m_lastValidIndex(0),
 	m_isIgnoringActivation(false),
 	m_isPopupUpdated(false),
+	m_isSearchEngineLocked(false),
 	m_wasPopupVisible(false)
 {
 	m_completer->setCaseSensitivity(Qt::CaseInsensitive);
@@ -111,11 +112,11 @@ void SearchWidget::paintEvent(QPaintEvent *event)
 
 	if (isEnabled())
 	{
-		painter.drawPixmap(m_selectButtonIconRectangle, currentData(Qt::DecorationRole).value<QIcon>().pixmap(m_selectButtonIconRectangle.size()));
+		painter.drawPixmap(m_iconRectangle, currentData(Qt::DecorationRole).value<QIcon>().pixmap(m_iconRectangle.size()));
 
 		QStyleOption arrow;
 		arrow.initFrom(this);
-		arrow.rect = m_selectButtonArrowRectangle;
+		arrow.rect = m_dropdownArrowRectangle;
 
 		style()->drawPrimitive(QStyle::PE_IndicatorArrowDown, &arrow, &painter, this);
 	}
@@ -134,20 +135,27 @@ void SearchWidget::resizeEvent(QResizeEvent *event)
 
 	const QRect rectangle = style()->subElementRect(QStyle::SE_LineEditContents, &panel, this);
 
-	m_selectButtonIconRectangle = rectangle;
-	m_selectButtonIconRectangle.setWidth(rectangle.height());
-	m_selectButtonIconRectangle = m_selectButtonIconRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
+	m_iconRectangle = rectangle;
+	m_iconRectangle.setWidth(rectangle.height());
+	m_iconRectangle = m_iconRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
 
-	m_selectButtonArrowRectangle = rectangle;
-	m_selectButtonArrowRectangle.setLeft(rectangle.left() + rectangle.height());
-	m_selectButtonArrowRectangle.setWidth(12);
+	if (m_isSearchEngineLocked)
+	{
+		m_dropdownArrowRectangle = QRect();
+	}
+	else
+	{
+		m_dropdownArrowRectangle = rectangle;
+		m_dropdownArrowRectangle.setLeft(rectangle.left() + rectangle.height());
+		m_dropdownArrowRectangle.setWidth(12);
+	}
 
 	m_searchButtonRectangle = rectangle;
 	m_searchButtonRectangle.setLeft(rectangle.right() - rectangle.height());
 	m_searchButtonRectangle = m_searchButtonRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
 
-	m_lineEdit->resize((rectangle.width() - m_selectButtonIconRectangle.width() - m_selectButtonArrowRectangle.width() - m_searchButtonRectangle.width() - 10), rectangle.height());
-	m_lineEdit->move(m_selectButtonArrowRectangle.topRight() + QPoint(3, 0));
+	m_lineEdit->resize((rectangle.width() - m_iconRectangle.width() - m_dropdownArrowRectangle.width() - m_searchButtonRectangle.width() - 10), rectangle.height());
+	m_lineEdit->move((m_isSearchEngineLocked ? m_iconRectangle : m_dropdownArrowRectangle).topRight() + QPoint(3, 0));
 
 	m_lineEditRectangle = m_lineEdit->geometry();
 }
@@ -167,6 +175,13 @@ void SearchWidget::keyPressEvent(QKeyEvent *event)
 	}
 	else if (event->key() == Qt::Key_Down || event->key() == Qt::Key_Up)
 	{
+		if (m_isSearchEngineLocked)
+		{
+			QWidget::keyPressEvent(event);
+
+			return;
+		}
+
 		disconnect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
 
 		m_isIgnoringActivation = true;
@@ -223,7 +238,7 @@ void SearchWidget::mouseReleaseEvent(QMouseEvent *event)
 {
 	if (event->button() == Qt::LeftButton)
 	{
-		if (m_selectButtonIconRectangle.contains(event->pos()) || m_selectButtonArrowRectangle.contains(event->pos()))
+		if (!m_isSearchEngineLocked && (m_iconRectangle.contains(event->pos()) || m_dropdownArrowRectangle.contains(event->pos())))
 		{
 			m_popupHideTime = QTime();
 
@@ -247,6 +262,13 @@ void SearchWidget::mouseReleaseEvent(QMouseEvent *event)
 
 void SearchWidget::wheelEvent(QWheelEvent *event)
 {
+	if (m_isSearchEngineLocked)
+	{
+		QWidget::wheelEvent(event);
+
+		return;
+	}
+
 	disconnect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
 
 	m_isIgnoringActivation = true;
@@ -326,9 +348,12 @@ void SearchWidget::currentIndexChanged(int index)
 	{
 		m_lastValidIndex = index;
 
-		SessionsManager::markSessionModified();
+		if (!m_isSearchEngineLocked)
+		{
+			SessionsManager::markSessionModified();
 
-		emit searchEngineChanged(currentData(Qt::UserRole + 1).toString());
+			emit searchEngineChanged(currentData(Qt::UserRole + 1).toString());
+		}
 
 		m_lineEdit->setPlaceholderText(tr("Search using %1").arg(itemData(index, Qt::UserRole).toString()));
 		m_lineEdit->setText(m_query);
@@ -435,8 +460,18 @@ void SearchWidget::restoreCurrentSearchEngine()
 	connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
 }
 
+void SearchWidget::activate(Qt::FocusReason reason)
+{
+	m_lineEdit->activate(reason);
+}
+
 void SearchWidget::setSearchEngine(const QString &searchEngine)
 {
+	if (m_isSearchEngineLocked && searchEngine != m_options.value(QLatin1String("searchEngine")).toString())
+	{
+		return;
+	}
+
 	const QStringList searchEngines = SearchEnginesManager::getSearchEngines();
 
 	if (searchEngines.isEmpty())
@@ -468,9 +503,22 @@ void SearchWidget::setSearchEngine(const QString &searchEngine)
 	}
 }
 
-void SearchWidget::activate(Qt::FocusReason reason)
+void SearchWidget::setOptions(const QVariantMap &options)
 {
-	m_lineEdit->activate(reason);
+	m_options = options;
+
+	if (m_options.contains(QLatin1String("searchEngine")))
+	{
+		m_isSearchEngineLocked = true;
+
+		setSearchEngine(m_options[QLatin1String("searchEngine")].toString());
+	}
+	else
+	{
+		m_isSearchEngineLocked = false;
+	}
+
+	resize(size());
 }
 
 void SearchWidget::setWindow(Window *window)
@@ -523,6 +571,11 @@ void SearchWidget::setWindow(Window *window)
 QString SearchWidget::getCurrentSearchEngine() const
 {
 	return currentData(Qt::UserRole + 1).toString();
+}
+
+QVariantMap SearchWidget::getOptions() const
+{
+	return m_options;
 }
 
 }
