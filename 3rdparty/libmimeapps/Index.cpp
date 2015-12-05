@@ -49,7 +49,6 @@ Index::Index(const std::string &language):
 {
 	findDirectories();
 	createBase();
-	removeUnused();
 }
 
 Index::~Index()
@@ -66,7 +65,7 @@ std::vector<DesktopEntry> Index::appsForMime(const std::string &type) const
 {
 	std::vector<DesktopEntry> result;
 
-	if (applicationsCache_.count(type) > 0)
+	if (applicationsCache_.find(type) != applicationsCache_.end())
 	{
 		std::list<DesktopEntry*> list = applicationsCache_.at(type);
 		for (std::list<DesktopEntry*>::iterator entry = list.begin(); entry != list.end(); ++entry)
@@ -116,6 +115,8 @@ void Index::createBase()
 	{
 		processDirectory(directories_.at(i), std::string());
 	}
+
+	removeUnused();
 }
 
 void Index::processDirectory(const lookupDirectory &baseDirectory, const std::string &relative)
@@ -162,7 +163,7 @@ void Index::processMimeApps(const std::string &path)
 
 		for (int j = identifiers.size()-1; j >= 0; --j)
 		{
-			if (knownApplications_.count(identifiers[j]) > 0)
+			if (knownApplications_.find(identifiers[j]) != knownApplications_.end())
 			{
 				addToType(types[i], knownApplications_.at(identifiers[j]));
 			}
@@ -214,12 +215,13 @@ void Index::addApplication(DesktopEntry *entry)
 
 void Index::addToType(const std::string &type, DesktopEntry *entry)
 {
-	if (applicationsCache_.count(type) > 0)
+	if (applicationsCache_.find(type) != applicationsCache_.end())
 	{
 		removeFromType(type, entry->identifier());
 	}
 
 	applicationsCache_[type].push_front(entry);
+	entry->types_.push_back(type);
 }
 
 void Index::removeApplication(const std::string &entryId)
@@ -232,13 +234,30 @@ void Index::removeApplication(const std::string &entryId)
 
 void Index::removeFromType(const std::string &type, const std::string &entryId)
 {
-	if (applicationsCache_.count(type) > 0)
+	if (applicationsCache_.find(type) != applicationsCache_.end())
 	{
 		for (std::list<DesktopEntry*>::iterator it = applicationsCache_.at(type).begin(); it != applicationsCache_.at(type).end();)
 		{
 			if ((*it)->identifier() == entryId)
 			{
 				applicationsCache_.at(type).erase(it++);
+			}
+			else
+			{
+				++it;
+			}
+		}
+	}
+
+	if (knownApplications_.find(entryId) != knownApplications_.end())
+	{
+		std::vector<std::string> &types = knownApplications_.at(entryId)->types_;
+
+		for (std::vector<std::string>::iterator it = types.begin(); it != types.end();)
+		{
+			if (*it == type)
+			{
+				types.erase(it);
 			}
 			else
 			{

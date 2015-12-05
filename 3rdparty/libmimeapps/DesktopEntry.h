@@ -67,6 +67,8 @@ private:
 	bool hidden_;
 	bool allowMultiple_;
 	bool allowRemote_;
+
+	friend class Index;
 };
 
 }

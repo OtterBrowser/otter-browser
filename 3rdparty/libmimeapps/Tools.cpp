@@ -175,7 +175,7 @@ std::vector<std::string> getVariableValues(const std::string &name)
 		defaultVariableValues["XDG_DATA_DIRS"] = std::string("/usr/local/share/:/usr/share/");
 		defaultVariableValues["XDG_CONFIG_DIRS"] = std::string("/etc/xdg");
 
-		if (defaultVariableValues.count(name) > 0)
+		if (defaultVariableValues.find(name) != defaultVariableValues.end())
 		{
 			value = defaultVariableValues.at(name);
 		}

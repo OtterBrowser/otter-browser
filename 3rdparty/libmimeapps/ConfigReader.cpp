@@ -54,7 +54,7 @@ ConfigReader::ConfigReader(const std::string &path)
 		{
 			group = line.substr(1, line.find(']')-1);
 
-			if (values_.count(group) < 1)
+			if (values_.find(group) == values_.end())
 			{
 				values_[group] = std::map<std::string, std::string>();
 			}
