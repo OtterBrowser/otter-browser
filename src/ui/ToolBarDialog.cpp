@@ -22,6 +22,7 @@
 #include "../core/ActionsManager.h"
 #include "../core/BookmarksManager.h"
 #include "../core/BookmarksModel.h"
+#include "../core/SearchEnginesManager.h"
 #include "../core/Utils.h"
 
 #include "ui_ToolBarDialog.h"
@@ -110,15 +111,29 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 	for (int i = 0; i < widgets.count(); ++i)
 	{
 		availableEntriesModel->appendRow(createEntry(widgets.at(i)));
+
+		if (widgets.at(i) == QLatin1String("SearchWidget"))
+		{
+			const QStringList searchEngines = SearchEnginesManager::getSearchEngines();
+
+			for (int j = 0; j < searchEngines.count(); ++j)
+			{
+				QVariantMap options;
+				options[QLatin1String("searchEngine")] = searchEngines.at(j);
+
+				availableEntriesModel->appendRow(createEntry(widgets.at(i), options));
+			}
+		}
 	}
 
-	const QVector<ActionDefinition> definitions = ActionsManager::getActionDefinitions();
+	const QVector<ActionDefinition> actions = ActionsManager::getActionDefinitions();
 
-	for (int i = 0; i < definitions.count(); ++i)
+	for (int i = 0; i < actions.count(); ++i)
 	{
-		QStandardItem *item = new QStandardItem(definitions.at(i).icon, QCoreApplication::translate("actions", (definitions.at(i).description.isEmpty() ? definitions.at(i).text : definitions.at(i).description).toUtf8().constData()));
-		item->setData(ActionsManager::getActionName(definitions.at(i).identifier) + QLatin1String("Action"), Qt::UserRole);
+		QStandardItem *item = new QStandardItem(actions.at(i).icon, QCoreApplication::translate("actions", (actions.at(i).description.isEmpty() ? actions.at(i).text : actions.at(i).description).toUtf8().constData()));
+		item->setData(ActionsManager::getActionName(actions.at(i).identifier) + QLatin1String("Action"), Qt::UserRole);
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+		item->setToolTip(item->text());
 
 		availableEntriesModel->appendRow(item);
 	}
@@ -130,10 +145,7 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 
 	for (int i = 0; i < m_definition.actions.count(); ++i)
 	{
-		QStandardItem *item = createEntry(m_definition.actions.at(i).action);
-		item->setData(m_definition.actions.at(i).options, (Qt::UserRole + 1));
-
-		currentEntriesModel->appendRow(item);
+		currentEntriesModel->appendRow(createEntry(m_definition.actions.at(i).action, m_definition.actions.at(i).options));
 	}
 
 	m_ui->currentEntriesItemView->setModel(currentEntriesModel);
@@ -205,11 +217,16 @@ void ToolBarDialog::addBookmark(QAction *action)
 	}
 }
 
-QStandardItem* ToolBarDialog::createEntry(const QString &identifier)
+QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVariantMap &options)
 {
 	QStandardItem *item = new QStandardItem();
 	item->setData(identifier, Qt::UserRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
+
+	if (!options.isEmpty())
+	{
+		item->setData(options, (Qt::UserRole + 1));
+	}
 
 	if (identifier == QLatin1String("separator"))
 	{
@@ -241,7 +258,17 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier)
 	}
 	else if (identifier == QLatin1String("SearchWidget"))
 	{
-		item->setText(tr("Search Field"));
+		if (options.contains(QLatin1String("searchEngine")))
+		{
+			const SearchEnginesManager::SearchEngineDefinition definition = SearchEnginesManager::getSearchEngine(options[QLatin1String("searchEngine")].toString());
+
+			item->setText(tr("Search Field (%1)").arg(definition.title.isEmpty() ? tr("Unknown") : definition.title));
+			item->setIcon(definition.icon);
+		}
+		else
+		{
+			item->setText(tr("Search Field"));
+		}
 	}
 	else if (identifier == QLatin1String("StatusMessageWidget"))
 	{
@@ -290,27 +317,30 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier)
 		item->setText(tr("Invalid Entry"));
 	}
 
+	item->setToolTip(item->text());
+
 	return item;
 }
 
-ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition()
+ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition() const
 {
-	m_definition.title = m_ui->titleLineEdit->text();
-	m_definition.iconSize = m_ui->iconSizeSpinBox->value();
-	m_definition.maximumButtonSize = m_ui->maximumButtonSizeSpinBox->value();
+	ToolBarsManager::ToolBarDefinition definition(m_definition);
+	definition.title = m_ui->titleLineEdit->text();
+	definition.iconSize = m_ui->iconSizeSpinBox->value();
+	definition.maximumButtonSize = m_ui->maximumButtonSizeSpinBox->value();
 
 	switch (m_ui->visibilityComboBox->currentIndex())
 	{
 		case 1:
-			m_definition.visibility = ToolBarsManager::AlwaysHiddenToolBar;
+			definition.visibility = ToolBarsManager::AlwaysHiddenToolBar;
 
 			break;
 		case 2:
-			m_definition.visibility = ToolBarsManager::AutoVisibilityToolBar;
+			definition.visibility = ToolBarsManager::AutoVisibilityToolBar;
 
 			break;
 		default:
-			m_definition.visibility = ToolBarsManager::AlwaysVisibleToolBar;
+			definition.visibility = ToolBarsManager::AlwaysVisibleToolBar;
 
 			break;
 	}
@@ -318,23 +348,23 @@ ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition()
 	switch (m_ui->buttonStyleComboBox->currentIndex())
 	{
 		case 0:
-			m_definition.buttonStyle = Qt::ToolButtonFollowStyle;
+			definition.buttonStyle = Qt::ToolButtonFollowStyle;
 
 			break;
 		case 2:
-			m_definition.buttonStyle = Qt::ToolButtonTextOnly;
+			definition.buttonStyle = Qt::ToolButtonTextOnly;
 
 			break;
 		case 3:
-			m_definition.buttonStyle = Qt::ToolButtonTextBesideIcon;
+			definition.buttonStyle = Qt::ToolButtonTextBesideIcon;
 
 			break;
 		case 4:
-			m_definition.buttonStyle = Qt::ToolButtonTextUnderIcon;
+			definition.buttonStyle = Qt::ToolButtonTextUnderIcon;
 
 			break;
 		default:
-			m_definition.buttonStyle = Qt::ToolButtonIconOnly;
+			definition.buttonStyle = Qt::ToolButtonIconOnly;
 
 			break;
 	}
@@ -345,15 +375,15 @@ ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition()
 		action.action = m_ui->currentEntriesItemView->model()->index(i, 0).data(Qt::UserRole).toString();
 		action.options = m_ui->currentEntriesItemView->model()->index(i, 0).data(Qt::UserRole + 1).toMap();
 
-		m_definition.actions.append(action);
+		definition.actions.append(action);
 	}
 
-	if (!m_definition.bookmarksPath.isEmpty())
+	if (!definition.bookmarksPath.isEmpty())
 	{
-		m_definition.bookmarksPath = QLatin1Char('#') + QString::number(m_ui->folderComboBox->getCurrentFolder()->data(BookmarksModel::IdentifierRole).toULongLong());
+		definition.bookmarksPath = QLatin1Char('#') + QString::number(m_ui->folderComboBox->getCurrentFolder()->data(BookmarksModel::IdentifierRole).toULongLong());
 	}
 
-	return m_definition;
+	return definition;
 }
 
 }

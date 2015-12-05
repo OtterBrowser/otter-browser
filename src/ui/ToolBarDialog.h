@@ -41,11 +41,11 @@ public:
 	explicit ToolBarDialog(int identifier = -1, QWidget *parent = NULL);
 	~ToolBarDialog();
 
-	ToolBarsManager::ToolBarDefinition getDefinition();
+	ToolBarsManager::ToolBarDefinition getDefinition() const;
 
 protected:
 	void changeEvent(QEvent *event);
-	QStandardItem* createEntry(const QString &identifier);
+	QStandardItem* createEntry(const QString &identifier, const QVariantMap &options = QVariantMap());
 
 protected slots:
 	void addEntry();
