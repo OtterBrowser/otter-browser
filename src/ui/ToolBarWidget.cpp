@@ -458,18 +458,25 @@ QWidget* ToolBarWidget::createWidget(const ToolBarsManager::ToolBarActionDefinit
 		closedWindowsMenuButton->setDefaultAction(closedWindowsAction);
 		closedWindowsMenuButton->setAutoRaise(true);
 		closedWindowsMenuButton->setPopupMode(QToolButton::InstantPopup);
+		closedWindowsMenuButton->setOptions(definition.options);
 
 		return closedWindowsMenuButton;
 	}
 
 	if (definition.action == QLatin1String("MenuButtonWidget"))
 	{
-		return new MenuButtonWidget(this);
+		MenuButtonWidget *menuButtonWidget = new MenuButtonWidget(this);
+		menuButtonWidget->setOptions(definition.options);
+
+		return menuButtonWidget;
 	}
 
 	if (definition.action == QLatin1String("PanelChooserWidget"))
 	{
-		return new PanelChooserWidget(this);
+		PanelChooserWidget *panelChooserWidget = new PanelChooserWidget(this);
+		panelChooserWidget->setOptions(definition.options);
+
+		return panelChooserWidget;
 	}
 
 	if (definition.action == QLatin1String("SearchWidget"))
@@ -517,7 +524,10 @@ QWidget* ToolBarWidget::createWidget(const ToolBarsManager::ToolBarActionDefinit
 
 		if (bookmark)
 		{
-			return new BookmarkWidget(bookmark, this);
+			BookmarkWidget *bookmarkWidget = new BookmarkWidget(bookmark, this);
+			bookmarkWidget->setOptions(definition.options);
+
+			return bookmarkWidget;
 		}
 	}
 
@@ -527,17 +537,24 @@ QWidget* ToolBarWidget::createWidget(const ToolBarsManager::ToolBarActionDefinit
 
 		if (identifier >= 0)
 		{
+			ActionWidget *actionWidget = NULL;
+
 			if (identifier == ActionsManager::GoBackAction)
 			{
-				return new GoBackActionWidget(m_window, this);
+				actionWidget = new GoBackActionWidget(m_window, this);
 			}
-
-			if (identifier == ActionsManager::GoForwardAction)
+			else if (identifier == ActionsManager::GoForwardAction)
 			{
-				return new GoForwardActionWidget(m_window, this);
+				actionWidget = new GoForwardActionWidget(m_window, this);
+			}
+			else
+			{
+				actionWidget = new ActionWidget(identifier, m_window, this);;
 			}
 
-			return new ActionWidget(identifier, m_window, this);
+			actionWidget->setOptions(definition.options);
+
+			return actionWidget;
 		}
 	}
 

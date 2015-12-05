@@ -20,6 +20,7 @@
 #ifndef OTTER_TOOLBUTTONWIDGET_H
 #define OTTER_TOOLBUTTONWIDGET_H
 
+#include <QtCore/QVariantMap>
 #include <QtWidgets/QToolButton>
 
 namespace Otter
@@ -32,12 +33,21 @@ class ToolButtonWidget : public QToolButton
 public:
 	explicit ToolButtonWidget(QWidget *parent = NULL);
 
+	QVariantMap getOptions() const;
+
+public slots:
+	void setOptions(const QVariantMap &options);
+
 protected:
 	void paintEvent(QPaintEvent *event);
 	bool event(QEvent *event);
 
 protected slots:
 	void setMaximumButtonSize(int size);
+
+private:
+	QVariantMap m_options;
+	bool m_isCustomized;
 };
 
 }
