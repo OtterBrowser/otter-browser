@@ -223,11 +223,6 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	item->setData(identifier, Qt::UserRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
-	if (!options.isEmpty())
-	{
-		item->setData(options, (Qt::UserRole + 1));
-	}
-
 	if (identifier == QLatin1String("separator"))
 	{
 		item->setText(tr("--- separator ---"));
@@ -315,6 +310,30 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	else
 	{
 		item->setText(tr("Invalid Entry"));
+	}
+
+	if (!options.isEmpty())
+	{
+		item->setData(options, (Qt::UserRole + 1));
+
+		if (options.contains(QLatin1String("icon")))
+		{
+			const QString data = options[QLatin1String("icon")].toString();
+
+			if (data.startsWith(QLatin1String("data:image/")))
+			{
+				item->setIcon(QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8())))));
+			}
+			else
+			{
+				item->setIcon(Utils::getIcon(data));
+			}
+		}
+
+		if (options.contains(QLatin1String("text")))
+		{
+			item->setText(options[QLatin1String("text")].toString());
+		}
 	}
 
 	item->setToolTip(item->text());
