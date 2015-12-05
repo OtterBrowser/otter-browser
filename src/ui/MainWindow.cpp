@@ -123,7 +123,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	SessionsManager::registerWindow(this);
 
 	getAction(ActionsManager::WorkOfflineAction)->setChecked(SettingsManager::getValue(QLatin1String("Network/WorkOffline")).toBool());
-	getAction(ActionsManager::ShowMenuBarAction)->setChecked(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).visibility != AlwaysHiddenToolBar);
+	getAction(ActionsManager::ShowMenuBarAction)->setChecked(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).visibility != ToolBarsManager::AlwaysHiddenToolBar);
 	getAction(ActionsManager::ShowSidebarAction)->setChecked(SettingsManager::getValue(QLatin1String("Sidebar/Visible")).toBool());
 	getAction(ActionsManager::LockToolBarsAction)->setChecked(ToolBarsManager::areToolBarsLocked());
 	getAction(ActionsManager::ExitAction)->setMenuRole(QAction::QuitRole);
@@ -131,14 +131,14 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 	getAction(ActionsManager::AboutQtAction)->setMenuRole(QAction::AboutQtRole);
 	getAction(ActionsManager::AboutApplicationAction)->setMenuRole(QAction::AboutRole);
 
-	if (ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).visibility != AlwaysHiddenToolBar)
+	if (ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).visibility != ToolBarsManager::AlwaysHiddenToolBar)
 	{
 		m_menuBar = new MenuBarWidget(this);
 
 		setMenuBar(m_menuBar);
 	}
 
-	if (ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).visibility != AlwaysHiddenToolBar)
+	if (ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).visibility != ToolBarsManager::AlwaysHiddenToolBar)
 	{
 		m_statusBar = new StatusBarWidget(this);
 
@@ -597,8 +597,8 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			break;
 		case ActionsManager::ShowMenuBarAction:
 			{
-				ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar);
-				definition.visibility = (parameters.value(QLatin1String("isChecked")).toBool() ? AlwaysVisibleToolBar : AlwaysHiddenToolBar);
+				ToolBarsManager::ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar);
+				definition.visibility = (parameters.value(QLatin1String("isChecked")).toBool() ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
 
 				ToolBarsManager::setToolBar(definition);
 			}
@@ -606,8 +606,8 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			break;
 		case ActionsManager::ShowTabBarAction:
 			{
-				ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar);
-				definition.visibility = (parameters.value(QLatin1String("isChecked")).toBool() ? AlwaysVisibleToolBar : AlwaysHiddenToolBar);
+				ToolBarsManager::ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar);
+				definition.visibility = (parameters.value(QLatin1String("isChecked")).toBool() ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
 
 				ToolBarsManager::setToolBar(definition);
 			}
@@ -847,7 +847,7 @@ void MainWindow::toolBarModified(int identifier)
 {
 	if (identifier == ToolBarsManager::MenuBar)
 	{
-		const bool showMenuBar = (ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).visibility != AlwaysHiddenToolBar);
+		const bool showMenuBar = (ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).visibility != ToolBarsManager::AlwaysHiddenToolBar);
 
 		if (m_menuBar && !showMenuBar)
 		{
@@ -867,7 +867,7 @@ void MainWindow::toolBarModified(int identifier)
 	}
 	else if (identifier == ToolBarsManager::StatusBar)
 	{
-		const bool showStatusBar = (ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).visibility != AlwaysHiddenToolBar);
+		const bool showStatusBar = (ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).visibility != ToolBarsManager::AlwaysHiddenToolBar);
 
 		if (m_statusBar && !showStatusBar)
 		{

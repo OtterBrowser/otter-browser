@@ -48,11 +48,11 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 
 	switch (m_definition.visibility)
 	{
-		case AlwaysHiddenToolBar:
+		case ToolBarsManager::AlwaysHiddenToolBar:
 			m_ui->visibilityComboBox->setCurrentIndex(1);
 
 			break;
-		case AutoVisibilityToolBar:
+		case ToolBarsManager::AutoVisibilityToolBar:
 			m_ui->visibilityComboBox->setCurrentIndex(2);
 
 			break;
@@ -293,7 +293,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier)
 	return item;
 }
 
-ToolBarDefinition ToolBarDialog::getDefinition()
+ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition()
 {
 	m_definition.title = m_ui->titleLineEdit->text();
 	m_definition.iconSize = m_ui->iconSizeSpinBox->value();
@@ -302,15 +302,15 @@ ToolBarDefinition ToolBarDialog::getDefinition()
 	switch (m_ui->visibilityComboBox->currentIndex())
 	{
 		case 1:
-			m_definition.visibility = AlwaysHiddenToolBar;
+			m_definition.visibility = ToolBarsManager::AlwaysHiddenToolBar;
 
 			break;
 		case 2:
-			m_definition.visibility = AutoVisibilityToolBar;
+			m_definition.visibility = ToolBarsManager::AutoVisibilityToolBar;
 
 			break;
 		default:
-			m_definition.visibility = AlwaysVisibleToolBar;
+			m_definition.visibility = ToolBarsManager::AlwaysVisibleToolBar;
 
 			break;
 	}
@@ -341,7 +341,7 @@ ToolBarDefinition ToolBarDialog::getDefinition()
 
 	for (int i = 0; i < m_ui->currentEntriesItemView->model()->rowCount(); ++i)
 	{
-		ToolBarActionDefinition action;
+		ToolBarsManager::ToolBarActionDefinition action;
 		action.action = m_ui->currentEntriesItemView->model()->index(i, 0).data(Qt::UserRole).toString();
 		action.options = m_ui->currentEntriesItemView->model()->index(i, 0).data(Qt::UserRole + 1).toMap();
 

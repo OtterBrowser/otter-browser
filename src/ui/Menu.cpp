@@ -513,14 +513,14 @@ void Menu::populateToolBarsMenu()
 {
 	clear();
 
-	const QVector<ToolBarDefinition> definitions = ToolBarsManager::getToolBarDefinitions();
+	const QVector<ToolBarsManager::ToolBarDefinition> definitions = ToolBarsManager::getToolBarDefinitions();
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
 		QAction *toolBarAction = QMenu::addAction(definitions.at(i).title.isEmpty() ? tr("(Untitled)") : definitions.at(i).title);
 		toolBarAction->setData(definitions.at(i).identifier);
 		toolBarAction->setCheckable(true);
-		toolBarAction->setChecked(definitions.at(i).visibility != AlwaysHiddenToolBar);
+		toolBarAction->setChecked(definitions.at(i).visibility != ToolBarsManager::AlwaysHiddenToolBar);
 
 		connect(toolBarAction, SIGNAL(toggled(bool)), this, SLOT(setToolBarVisibility(bool)));
 	}
@@ -788,8 +788,8 @@ void Menu::setToolBarVisibility(bool visible)
 
 	if (action)
 	{
-		ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(action->data().toInt());
-		definition.visibility = (visible ? AlwaysVisibleToolBar : AlwaysHiddenToolBar);
+		ToolBarsManager::ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(action->data().toInt());
+		definition.visibility = (visible ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
 
 		ToolBarsManager::setToolBar(definition);
 	}

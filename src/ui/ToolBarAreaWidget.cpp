@@ -61,7 +61,7 @@ ToolBarAreaWidget::ToolBarAreaWidget(Qt::ToolBarArea area, MainWindow *parent) :
 	setLayout(m_layout);
 	setAcceptDrops(true);
 
-	const QVector<ToolBarDefinition> toolBarDefinitions = ToolBarsManager::getToolBarDefinitions();
+	const QVector<ToolBarsManager::ToolBarDefinition> toolBarDefinitions = ToolBarsManager::getToolBarDefinitions();
 
 	for (int i = 0; i < toolBarDefinitions.count(); ++i)
 	{
@@ -222,7 +222,7 @@ void ToolBarAreaWidget::dropEvent(QDropEvent *event)
 
 	for (int i = 0; i < identifiers.count(); ++i)
 	{
-		ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(identifiers.at(i));
+		ToolBarsManager::ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(identifiers.at(i));
 		definition.location = m_area;
 		definition.row = i;
 
@@ -288,7 +288,7 @@ void ToolBarAreaWidget::controlsHiddenChanged(bool hidden)
 
 			for (int i = 0; i < toolBars.count(); ++i)
 			{
-				if (toolBars.at(i) != m_tabBarToolBar && toolBars.at(i)->getIdentifier() >= 0 && ToolBarsManager::getToolBarDefinition(toolBars.at(i)->getIdentifier()).visibility == AlwaysVisibleToolBar)
+				if (toolBars.at(i) != m_tabBarToolBar && toolBars.at(i)->getIdentifier() >= 0 && ToolBarsManager::getToolBarDefinition(toolBars.at(i)->getIdentifier()).visibility == ToolBarsManager::AlwaysVisibleToolBar)
 				{
 					toolBars.at(i)->show();
 				}
@@ -308,7 +308,7 @@ void ToolBarAreaWidget::insertToolBar(ToolBarWidget *toolBar)
 
 void ToolBarAreaWidget::toolBarAdded(int identifier)
 {
-	const ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(identifier);
+	const ToolBarsManager::ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(identifier);
 
 	if (definition.location != m_area)
 	{
@@ -342,7 +342,7 @@ void ToolBarAreaWidget::toolBarModified(int identifier)
 
 		if (toolBar && toolBar->getIdentifier() == identifier)
 		{
-			const ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(toolBar->getIdentifier());
+			const ToolBarsManager::ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(toolBar->getIdentifier());
 
 			if (toolBar->getArea() != definition.location)
 			{

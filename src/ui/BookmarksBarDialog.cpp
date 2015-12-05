@@ -19,7 +19,6 @@
 
 #include "BookmarksBarDialog.h"
 #include "../core/BookmarksModel.h"
-#include "../core/ToolBarsManager.h"
 
 #include "ui_BookmarksBarDialog.h"
 
@@ -47,9 +46,9 @@ void BookmarksBarDialog::changeEvent(QEvent *event)
 	}
 }
 
-ToolBarDefinition BookmarksBarDialog::getDefinition() const
+ToolBarsManager::ToolBarDefinition BookmarksBarDialog::getDefinition() const
 {
-	ToolBarDefinition definition;
+	ToolBarsManager::ToolBarDefinition definition;
 	definition.title = m_ui->titleLineEdit->text();
 	definition.bookmarksPath = QLatin1Char('#') + QString::number(m_ui->folderComboBox->getCurrentFolder()->data(BookmarksModel::IdentifierRole).toULongLong());
 

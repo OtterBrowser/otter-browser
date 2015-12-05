@@ -92,7 +92,7 @@ void MenuBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 void MenuBarWidget::setup()
 {
-	const ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar);
+	const ToolBarsManager::ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar);
 	QStringList actions;
 
 	for (int i = 0; i < definition.actions.count(); ++i)
@@ -153,10 +153,10 @@ void MenuBarWidget::setup()
 		setCornerWidget(NULL, Qt::TopRightCorner);
 	}
 
-	ToolBarDefinition leftDefinition(definition);
+	ToolBarsManager::ToolBarDefinition leftDefinition(definition);
 	leftDefinition.actions.clear();
 
-	ToolBarDefinition rightDefinition(definition);
+	ToolBarsManager::ToolBarDefinition rightDefinition(definition);
 	rightDefinition.actions.clear();
 
 	for (int i = 0; i < definition.actions.count(); ++i)

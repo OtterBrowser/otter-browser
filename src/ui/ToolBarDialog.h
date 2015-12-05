@@ -41,7 +41,7 @@ public:
 	explicit ToolBarDialog(int identifier = -1, QWidget *parent = NULL);
 	~ToolBarDialog();
 
-	ToolBarDefinition getDefinition();
+	ToolBarsManager::ToolBarDefinition getDefinition();
 
 protected:
 	void changeEvent(QEvent *event);
@@ -54,7 +54,7 @@ protected slots:
 	void updateActions();
 
 private:
-	ToolBarDefinition m_definition;
+	ToolBarsManager::ToolBarDefinition m_definition;
 	Ui::ToolBarDialog *m_ui;
 };
 

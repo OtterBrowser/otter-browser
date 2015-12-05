@@ -26,38 +26,6 @@
 namespace Otter
 {
 
-enum ToolBarVisibility
-{
-	AlwaysVisibleToolBar = 0,
-	AutoVisibilityToolBar = 1,
-	AlwaysHiddenToolBar = 2
-};
-
-struct ToolBarActionDefinition
-{
-	QString action;
-	QVariantMap options;
-};
-
-struct ToolBarDefinition
-{
-	QString title;
-	QString bookmarksPath;
-	QList<ToolBarActionDefinition> actions;
-	ToolBarVisibility visibility;
-	Qt::ToolBarArea location;
-	Qt::ToolButtonStyle buttonStyle;
-	int identifier;
-	int iconSize;
-	int maximumButtonSize;
-	int row;
-	bool canReset;
-	bool isDefault;
-	bool wasRemoved;
-
-	ToolBarDefinition() : visibility(AlwaysVisibleToolBar), location(Qt::NoToolBarArea), buttonStyle(Qt::ToolButtonIconOnly), identifier(-1), iconSize(-1), maximumButtonSize(-1), row(-1), canReset(false), isDefault(false), wasRemoved(false) {}
-};
-
 class ToolBarsManager : public QObject
 {
 	Q_OBJECT
@@ -72,12 +40,44 @@ public:
 		OtherToolBar
 	};
 
+	enum ToolBarVisibility
+	{
+		AlwaysVisibleToolBar = 0,
+		AutoVisibilityToolBar = 1,
+		AlwaysHiddenToolBar = 2
+	};
+
+	struct ToolBarActionDefinition
+	{
+		QString action;
+		QVariantMap options;
+	};
+
+	struct ToolBarDefinition
+	{
+		QString title;
+		QString bookmarksPath;
+		QList<ToolBarActionDefinition> actions;
+		ToolBarVisibility visibility;
+		Qt::ToolBarArea location;
+		Qt::ToolButtonStyle buttonStyle;
+		int identifier;
+		int iconSize;
+		int maximumButtonSize;
+		int row;
+		bool canReset;
+		bool isDefault;
+		bool wasRemoved;
+
+		ToolBarDefinition() : visibility(AlwaysVisibleToolBar), location(Qt::NoToolBarArea), buttonStyle(Qt::ToolButtonIconOnly), identifier(-1), iconSize(-1), maximumButtonSize(-1), row(-1), canReset(false), isDefault(false), wasRemoved(false) {}
+	};
+
 	static void createInstance(QObject *parent = NULL);
-	static void setToolBar(ToolBarDefinition definition);
+	static void setToolBar(ToolBarsManager::ToolBarDefinition definition);
 	static void setToolBarsLocked(bool locked);
 	static ToolBarsManager* getInstance();
-	static QVector<ToolBarDefinition> getToolBarDefinitions();
-	static ToolBarDefinition getToolBarDefinition(int identifier);
+	static QVector<ToolBarsManager::ToolBarDefinition> getToolBarDefinitions();
+	static ToolBarsManager::ToolBarDefinition getToolBarDefinition(int identifier);
 	static bool areToolBarsLocked();
 
 public slots:
@@ -90,7 +90,7 @@ public slots:
 
 protected:
 	void timerEvent(QTimerEvent *event);
-	static QHash<QString, ToolBarDefinition> loadToolBars(const QString &path, bool isDefault);
+	static QHash<QString, ToolBarsManager::ToolBarDefinition> loadToolBars(const QString &path, bool isDefault);
 
 protected slots:
 	void optionChanged(const QString &key, const QVariant &value);
@@ -104,7 +104,7 @@ private:
 
 	static ToolBarsManager *m_instance;
 	static QMap<int, QString> m_identifiers;
-	static QVector<ToolBarDefinition> m_definitions;
+	static QVector<ToolBarsManager::ToolBarDefinition> m_definitions;
 	static bool m_areToolBarsLocked;
 
 signals:

@@ -226,7 +226,7 @@ void ToolBarWidget::endToolBarDragging()
 
 void ToolBarWidget::reload()
 {
-	const ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(m_identifier);
+	const ToolBarsManager::ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(m_identifier);
 
 	setDefinition(definition);
 
@@ -332,7 +332,7 @@ void ToolBarWidget::notifyWindowChanged(qint64 identifier)
 
 void ToolBarWidget::updateVisibility()
 {
-	if (m_identifier == ToolBarsManager::TabBar && ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar).visibility == AutoVisibilityToolBar && m_mainWindow->getTabBar())
+	if (m_identifier == ToolBarsManager::TabBar && ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar).visibility == ToolBarsManager::AutoVisibilityToolBar && m_mainWindow->getTabBar())
 	{
 		setVisible(m_mainWindow->getTabBar()->count() > 1);
 	}
@@ -355,11 +355,11 @@ void ToolBarWidget::setToolBarLocked(bool locked)
 	}
 }
 
-void ToolBarWidget::setDefinition(const ToolBarDefinition &definition)
+void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &definition)
 {
 	TabBarWidget *tabBar = ((m_identifier == ToolBarsManager::TabBar && m_mainWindow) ? m_mainWindow->getTabBar() : NULL);
 
-	setVisible(definition.visibility != AlwaysHiddenToolBar);
+	setVisible(definition.visibility != ToolBarsManager::AlwaysHiddenToolBar);
 	setOrientation((definition.location == Qt::LeftToolBarArea || definition.location == Qt::RightToolBarArea) ? Qt::Vertical : Qt::Horizontal);
 
 	m_dragArea = NULL;
@@ -433,7 +433,7 @@ void ToolBarWidget::setDefinition(const ToolBarDefinition &definition)
 	}
 }
 
-QWidget* ToolBarWidget::createWidget(const ToolBarActionDefinition &definition)
+QWidget* ToolBarWidget::createWidget(const ToolBarsManager::ToolBarActionDefinition &definition)
 {
 	if (definition.action == QLatin1String("spacer"))
 	{
@@ -543,7 +543,7 @@ QWidget* ToolBarWidget::createWidget(const ToolBarActionDefinition &definition)
 
 QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QList<QAction*> actions, QWidget *parent)
 {
-	const ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(identifier);
+	const ToolBarsManager::ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(identifier);
 
 	QMenu *menu = new QMenu(parent);
 	menu->setTitle(tr("Customize"));

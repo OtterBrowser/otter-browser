@@ -60,7 +60,7 @@ public:
 
 	static QMenu* createCustomizationMenu(int identifier, QList<QAction*> actions = QList<QAction*>(), QWidget *parent = NULL);
 	void reload();
-	void setDefinition(const ToolBarDefinition &definition);
+	void setDefinition(const ToolBarsManager::ToolBarDefinition &definition);
 	Qt::ToolBarArea getArea() const;
 	int getIdentifier() const;
 	int getMaximumButtonSize() const;
@@ -71,7 +71,7 @@ protected:
 	void contextMenuEvent(QContextMenuEvent *event);
 	void startToolBarDragging();
 	void endToolBarDragging();
-	QWidget* createWidget(const ToolBarActionDefinition &definition);
+	QWidget* createWidget(const ToolBarsManager::ToolBarActionDefinition &definition);
 
 protected slots:
 	void toolBarModified(int identifier);

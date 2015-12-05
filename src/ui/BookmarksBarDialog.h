@@ -21,6 +21,7 @@
 #define OTTER_BOOKMARKSBARDIALOG_H
 
 #include "Dialog.h"
+#include "../core/ToolBarsManager.h"
 
 namespace Otter
 {
@@ -30,8 +31,6 @@ namespace Ui
 	class BookmarksBarDialog;
 }
 
-struct ToolBarDefinition;
-
 class BookmarksBarDialog : public Dialog
 {
 	Q_OBJECT
@@ -40,7 +39,7 @@ public:
 	explicit BookmarksBarDialog(QWidget *parent = NULL);
 	~BookmarksBarDialog();
 
-	ToolBarDefinition getDefinition() const;
+	ToolBarsManager::ToolBarDefinition getDefinition() const;
 
 protected:
 	void changeEvent(QEvent *event);

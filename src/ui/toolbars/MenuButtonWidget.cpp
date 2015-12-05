@@ -54,7 +54,7 @@ void MenuButtonWidget::toolBarModified(int identifier)
 {
 	if (identifier == ToolBarsManager::MenuBar)
 	{
-		if (ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).visibility == AlwaysVisibleToolBar)
+		if (ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).visibility == ToolBarsManager::AlwaysVisibleToolBar)
 		{
 			QToolButton::setMaximumSize(0, 0);
 		}
