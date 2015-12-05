@@ -150,9 +150,16 @@ void SearchWidget::resizeEvent(QResizeEvent *event)
 		m_dropdownArrowRectangle.setWidth(12);
 	}
 
-	m_searchButtonRectangle = rectangle;
-	m_searchButtonRectangle.setLeft(rectangle.right() - rectangle.height());
-	m_searchButtonRectangle = m_searchButtonRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
+	if (m_options.value(QLatin1String("showSearchButton"), true).toBool())
+	{
+		m_searchButtonRectangle = rectangle;
+		m_searchButtonRectangle.setLeft(rectangle.right() - rectangle.height());
+		m_searchButtonRectangle = m_searchButtonRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
+	}
+	else
+	{
+		m_searchButtonRectangle = QRect();
+	}
 
 	m_lineEdit->resize((rectangle.width() - m_iconRectangle.width() - m_dropdownArrowRectangle.width() - m_searchButtonRectangle.width() - 10), rectangle.height());
 	m_lineEdit->move((m_isSearchEngineLocked ? m_iconRectangle : m_dropdownArrowRectangle).topRight() + QPoint(3, 0));
