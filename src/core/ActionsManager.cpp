@@ -71,6 +71,11 @@ void Action::update(bool reset)
 {
 	if (m_identifier < 0)
 	{
+		if (m_isOverridingText)
+		{
+			setText(QCoreApplication::translate("actions", m_overrideText.toUtf8().constData()));
+		}
+
 		return;
 	}
 
