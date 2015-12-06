@@ -136,6 +136,7 @@ set(otter_src
 	src/ui/ContentsWidget.cpp
 	src/ui/Dialog.cpp
 	src/ui/FilePathWidget.cpp
+	src/ui/IconWidget.cpp
 	src/ui/ImagePropertiesDialog.cpp
 	src/ui/ImportDialog.cpp
 	src/ui/ItemDelegate.cpp

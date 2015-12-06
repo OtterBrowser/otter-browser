@@ -129,6 +129,7 @@ SOURCES += src/main.cpp \
     src/ui/ContentsWidget.cpp \
     src/ui/Dialog.cpp \
     src/ui/FilePathWidget.cpp \
+    src/ui/IconWidget.cpp \
     src/ui/ImagePropertiesDialog.cpp \
     src/ui/ImportDialog.cpp \
     src/ui/ItemDelegate.cpp \
@@ -292,6 +293,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/ContentsWidget.h \
     src/ui/Dialog.h \
     src/ui/FilePathWidget.h \
+    src/ui/IconWidget.h \
     src/ui/ImagePropertiesDialog.h \
     src/ui/ImportDialog.h \
     src/ui/ItemDelegate.h \
