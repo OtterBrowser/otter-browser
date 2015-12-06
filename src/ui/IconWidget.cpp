@@ -58,27 +58,35 @@ void IconWidget::clear()
 	QToolButton::setIcon(m_placeholderIcon);
 
 	menu()->actions().at(3)->setEnabled(false);
+
+	emit iconChanged(QIcon());
 }
 
 void IconWidget::selectFromFile()
 {
 	const QString path = QFileDialog::getOpenFileName(this, tr("Select Icon"), QString(), tr("Images (*.png *.jpg *.bmp *.gif *.ico)"));
 
-	if (!path.isEmpty())
+	if (path.isEmpty())
 	{
-		QByteArray data;
-		QBuffer buffer(&data);
-		buffer.open(QIODevice::WriteOnly);
-
-		QPixmap pixmap(path);
-		pixmap.save(&buffer, "PNG");
-
-		m_icon = QStringLiteral("data:image/png;base64,%1").arg(QString(data.toBase64()));
-
-		QToolButton::setIcon(QIcon(pixmap));
-
-		menu()->actions().at(3)->setEnabled(true);
+		return;
 	}
+
+	QByteArray data;
+	QBuffer buffer(&data);
+	buffer.open(QIODevice::WriteOnly);
+
+	QPixmap pixmap(path);
+	pixmap.save(&buffer, "PNG");
+
+	m_icon = QStringLiteral("data:image/png;base64,%1").arg(QString(data.toBase64()));
+
+	QIcon icon(pixmap);
+
+	QToolButton::setIcon(icon);
+
+	menu()->actions().at(3)->setEnabled(true);
+
+	emit iconChanged(icon);
 }
 
 void IconWidget::selectFromTheme()
@@ -91,27 +99,33 @@ void IconWidget::selectFromTheme()
 	}
 }
 
-void IconWidget::setIcon(const QString &icon)
+void IconWidget::setIcon(const QString &data)
 {
-	m_icon = icon;
+	m_icon = data;
 
-	if (icon.isEmpty())
+	if (data.isEmpty())
 	{
 		clear();
 
 		return;
 	}
 
-	if (icon.startsWith(QLatin1String("data:image/")))
+	QIcon icon;
+
+	if (data.startsWith(QLatin1String("data:image/")))
 	{
-		QToolButton::setIcon(QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(icon.mid(icon.indexOf(QLatin1String("base64,")) + 7).toUtf8())))));
+		icon = QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8()))));
 	}
 	else
 	{
-		QToolButton::setIcon(Utils::getIcon(icon));
+		icon = Utils::getIcon(data);
 	}
 
+	QToolButton::setIcon(icon);
+
 	menu()->actions().at(3)->setEnabled(true);
+
+	emit iconChanged(icon);
 }
 
 void IconWidget::setIcon(const QIcon &icon)
@@ -134,6 +148,8 @@ void IconWidget::setIcon(const QIcon &icon)
 	QToolButton::setIcon(icon);
 
 	menu()->actions().at(3)->setEnabled(true);
+
+	emit iconChanged(icon);
 }
 
 void IconWidget::setPlaceholderIcon(const QIcon &icon)

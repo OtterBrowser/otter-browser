@@ -32,7 +32,7 @@ class IconWidget : public QToolButton
 public:
 	explicit IconWidget(QWidget *parent = NULL);
 
-	void setIcon(const QString &icon);
+	void setIcon(const QString &data);
 	void setIcon(const QIcon &icon);
 	void setPlaceholderIcon(const QIcon &icon);
 	QString getIcon() const;
@@ -50,6 +50,9 @@ protected slots:
 private:
 	QString m_icon;
 	QIcon m_placeholderIcon;
+
+signals:
+	void iconChanged(const QIcon &icon);
 };
 
 }

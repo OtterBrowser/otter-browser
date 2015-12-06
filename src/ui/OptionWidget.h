@@ -29,6 +29,9 @@
 namespace Otter
 {
 
+class FilePathWidget;
+class IconWidget;
+
 class OptionWidget : public QWidget
 {
 	Q_OBJECT
@@ -36,6 +39,7 @@ class OptionWidget : public QWidget
 public:
 	explicit OptionWidget(bool isSimple, const QString &option, const QString &type, const QVariant &value, const QStringList &choices, const QModelIndex &index, QWidget *parent = NULL);
 
+	QString getOption() const;
 	QVariant getValue() const;
 	QModelIndex getIndex() const;
 
@@ -44,12 +48,14 @@ protected:
 
 protected slots:
 	void selectColor();
-	void modified();
+	void markModified();
 	void reset();
 	void save();
 
 private:
 	QWidget *m_widget;
+	FilePathWidget *m_filePathWidget;
+	IconWidget *m_iconWidget;
 	QPushButton *m_colorButton;
 	QComboBox *m_comboBox;
 	QFontComboBox *m_fontComboBox;

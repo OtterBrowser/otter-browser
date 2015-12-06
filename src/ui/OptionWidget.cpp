@@ -18,7 +18,8 @@
 **************************************************************************/
 
 #include "OptionWidget.h"
-#include "../core/FileSystemCompleterModel.h"
+#include "IconWidget.h"
+#include "FilePathWidget.h"
 #include "../core/SettingsManager.h"
 
 #include <QtWidgets/QColorDialog>
@@ -30,6 +31,7 @@ namespace Otter
 
 OptionWidget::OptionWidget(bool isSimple, const QString &option, const QString &type, const QVariant &value, const QStringList &choices, const QModelIndex &index, QWidget *parent) : QWidget(parent),
 	m_widget(NULL),
+	m_iconWidget(NULL),
 	m_colorButton(NULL),
 	m_comboBox(NULL),
 	m_fontComboBox(NULL),
@@ -37,6 +39,7 @@ OptionWidget::OptionWidget(bool isSimple, const QString &option, const QString &
 	m_spinBox(NULL),
 	m_resetButton(NULL),
 	m_saveButton(NULL),
+	m_filePathWidget(NULL),
 	m_option(option),
 	m_index(index)
 {
@@ -60,7 +63,22 @@ OptionWidget::OptionWidget(bool isSimple, const QString &option, const QString &
 		m_fontComboBox->setCurrentFont(QFont(currentValue.toString()));
 		m_fontComboBox->lineEdit()->selectAll();
 
-		connect(m_fontComboBox, SIGNAL(currentFontChanged(QFont)), this, SLOT(modified()));
+		connect(m_fontComboBox, SIGNAL(currentFontChanged(QFont)), this, SLOT(markModified()));
+	}
+	else if (type == QLatin1String("icon"))
+	{
+		m_widget = m_iconWidget = new IconWidget(this);
+
+		if (currentValue.type() == QVariant::String)
+		{
+			m_iconWidget->setIcon(currentValue.toString());
+		}
+		else
+		{
+			m_iconWidget->setIcon(currentValue.value<QIcon>());
+		}
+
+		connect(m_iconWidget, SIGNAL(iconChanged(QIcon)), this, SLOT(markModified()));
 	}
 	else if (type == QLatin1String("integer"))
 	{
@@ -71,7 +89,16 @@ OptionWidget::OptionWidget(bool isSimple, const QString &option, const QString &
 		m_spinBox->setValue(currentValue.toInt());
 		m_spinBox->selectAll();
 
-		connect(m_spinBox, SIGNAL(valueChanged(int)), this, SLOT(modified()));
+		connect(m_spinBox, SIGNAL(valueChanged(int)), this, SLOT(markModified()));
+	}
+	else if (type == QLatin1String("path"))
+	{
+		m_widget = m_filePathWidget = new FilePathWidget(this);
+
+		m_filePathWidget->setPath(currentValue.toString());
+		m_filePathWidget->setSelectFile(false);
+
+		connect(m_filePathWidget, SIGNAL(pathChanged()), this, SLOT(markModified()));
 	}
 	else
 	{
@@ -79,14 +106,9 @@ OptionWidget::OptionWidget(bool isSimple, const QString &option, const QString &
 		{
 			m_widget = m_lineEdit = new QLineEdit(currentValue.toString(), this);
 
-			if (type == QLatin1String("path"))
-			{
-				m_lineEdit->setCompleter(new QCompleter(new FileSystemCompleterModel(this), this));
-			}
-
 			m_lineEdit->selectAll();
 
-			connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(modified()));
+			connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(markModified()));
 		}
 		else
 		{
@@ -107,7 +129,7 @@ OptionWidget::OptionWidget(bool isSimple, const QString &option, const QString &
 
 			m_comboBox->setCurrentText(currentValue.toString());
 
-			connect(m_comboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(modified()));
+			connect(m_comboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(markModified()));
 		}
 	}
 
@@ -160,11 +182,11 @@ void OptionWidget::selectColor()
 
 		m_colorButton->setPalette(palette);
 
-		modified();
+		markModified();
 	}
 }
 
-void OptionWidget::modified()
+void OptionWidget::markModified()
 {
 	if (m_resetButton)
 	{
@@ -191,9 +213,24 @@ void OptionWidget::reset()
 	{
 		m_comboBox->setCurrentText(value.toString());
 	}
+	else if (m_filePathWidget)
+	{
+		m_filePathWidget->setPath(value.toString());
+	}
 	else if (m_fontComboBox)
 	{
 		m_fontComboBox->setCurrentFont(QFont(value.toString()));
+	}
+	else if (m_iconWidget)
+	{
+		if (value.type() == QVariant::String)
+		{
+			m_iconWidget->setIcon(value.toString());
+		}
+		else
+		{
+			m_iconWidget->setIcon(value.value<QIcon>());
+		}
 	}
 	else if (m_lineEdit)
 	{
@@ -212,25 +249,44 @@ void OptionWidget::save()
 	SettingsManager::setValue(m_option, getValue());
 }
 
+QString OptionWidget::getOption() const
+{
+	return m_option;
+}
+
 QVariant OptionWidget::getValue() const
 {
 	if (m_colorButton)
 	{
 		return m_colorButton->palette().color(QPalette::Button);
 	}
-	else if (m_comboBox)
+
+	if (m_comboBox)
 	{
 		return m_comboBox->currentText();
 	}
-	else if (m_fontComboBox)
+
+	if (m_filePathWidget)
+	{
+		return m_filePathWidget->getPath();
+	}
+
+	if (m_fontComboBox)
 	{
 		return m_fontComboBox->currentFont().family();
 	}
-	else if (m_lineEdit)
+
+	if (m_iconWidget)
+	{
+		return m_iconWidget->getIcon();
+	}
+
+	if (m_lineEdit)
 	{
 		return m_lineEdit->text();
 	}
-	else if (m_spinBox)
+
+	if (m_spinBox)
 	{
 		return m_spinBox->value();
 	}
