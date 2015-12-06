@@ -30,7 +30,7 @@
 namespace Otter
 {
 
-GoBackActionWidget::GoBackActionWidget(Window *window, QWidget *parent) : ActionWidget(ActionsManager::GoBackAction, window, parent)
+GoBackActionWidget::GoBackActionWidget(Window *window, const ToolBarsManager::ToolBarActionDefinition &definition, QWidget *parent) : ActionWidget(ActionsManager::GoBackAction, window, definition, parent)
 {
 	setMenu(new QMenu(this));
 	setPopupMode(QToolButton::DelayedPopup);

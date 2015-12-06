@@ -31,9 +31,9 @@
                 "Validate",
                 "separator",
                 {
-                    "title": "Frame",
                     "type": "menu",
                     "includeIn": "frame",
+                    "title": "Frame",
                     "actions":
                     [
                         "OpenFrameInCurrentTab",

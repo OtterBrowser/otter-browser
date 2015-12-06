@@ -30,7 +30,7 @@ class GoBackActionWidget : public ActionWidget
 	Q_OBJECT
 
 public:
-	explicit GoBackActionWidget(Window *window, QWidget *parent = NULL);
+	explicit GoBackActionWidget(Window *window, const ToolBarsManager::ToolBarActionDefinition &definition, QWidget *parent = NULL);
 
 	bool eventFilter(QObject *object, QEvent *event);
 

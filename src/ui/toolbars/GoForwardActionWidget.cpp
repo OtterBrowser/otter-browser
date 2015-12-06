@@ -30,7 +30,7 @@
 namespace Otter
 {
 
-GoForwardActionWidget::GoForwardActionWidget(Window *window, QWidget *parent) : ActionWidget(ActionsManager::GoForwardAction, window, parent)
+GoForwardActionWidget::GoForwardActionWidget(Window *window, const ToolBarsManager::ToolBarActionDefinition &definition, QWidget *parent) : ActionWidget(ActionsManager::GoForwardAction, window, definition, parent)
 {
 	setMenu(new QMenu(this));
 	setPopupMode(QToolButton::DelayedPopup);

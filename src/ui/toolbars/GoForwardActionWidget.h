@@ -30,7 +30,7 @@ class GoForwardActionWidget : public ActionWidget
 	Q_OBJECT
 
 public:
-	explicit GoForwardActionWidget(Window *window, QWidget *parent = NULL);
+	explicit GoForwardActionWidget(Window *window, const ToolBarsManager::ToolBarActionDefinition &definition, QWidget *parent = NULL);
 
 	bool eventFilter(QObject *object, QEvent *event);
 

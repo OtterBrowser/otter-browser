@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-MenuButtonWidget::MenuButtonWidget(QWidget *parent) : ToolButtonWidget(parent),
+MenuButtonWidget::MenuButtonWidget(const ToolBarsManager::ToolBarActionDefinition &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
 	m_menu(new Menu(Menu::NoMenuRole, this))
 {
 	setIcon(Utils::getIcon(QLatin1String("otter-browser"), false));

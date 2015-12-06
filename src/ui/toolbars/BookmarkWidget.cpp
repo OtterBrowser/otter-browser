@@ -30,7 +30,7 @@
 namespace Otter
 {
 
-BookmarkWidget::BookmarkWidget(BookmarksItem *bookmark, QWidget *parent) : ToolButtonWidget(parent),
+BookmarkWidget::BookmarkWidget(BookmarksItem *bookmark, const ToolBarsManager::ToolBarActionDefinition &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
 	m_bookmark(bookmark)
 {
 	updateBookmark(m_bookmark);
@@ -39,7 +39,7 @@ BookmarkWidget::BookmarkWidget(BookmarksItem *bookmark, QWidget *parent) : ToolB
 	connect(BookmarksManager::getModel(), SIGNAL(bookmarkModified(BookmarksItem*)), this, SLOT(updateBookmark(BookmarksItem*)));
 }
 
-BookmarkWidget::BookmarkWidget(const QString &path, QWidget *parent) : ToolButtonWidget(parent),
+BookmarkWidget::BookmarkWidget(const QString &path, const ToolBarsManager::ToolBarActionDefinition &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
 	m_bookmark(BookmarksManager::getModel()->getItem(path))
 {
 	updateBookmark(m_bookmark);

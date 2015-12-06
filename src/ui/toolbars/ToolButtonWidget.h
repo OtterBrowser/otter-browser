@@ -20,18 +20,22 @@
 #ifndef OTTER_TOOLBUTTONWIDGET_H
 #define OTTER_TOOLBUTTONWIDGET_H
 
+#include "../../core/ToolBarsManager.h"
+
 #include <QtCore/QVariantMap>
 #include <QtWidgets/QToolButton>
 
 namespace Otter
 {
 
+class Menu;
+
 class ToolButtonWidget : public QToolButton
 {
 	Q_OBJECT
 
 public:
-	explicit ToolButtonWidget(QWidget *parent = NULL);
+	explicit ToolButtonWidget(const ToolBarsManager::ToolBarActionDefinition &definition, QWidget *parent = NULL);
 
 	QVariantMap getOptions() const;
 
@@ -40,6 +44,7 @@ public slots:
 
 protected:
 	void paintEvent(QPaintEvent *event);
+	void addMenu(Menu *menu, const QList<ToolBarsManager::ToolBarActionDefinition> &actions);
 	bool event(QEvent *event);
 
 protected slots:

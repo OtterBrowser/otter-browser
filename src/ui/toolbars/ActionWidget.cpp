@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-ActionWidget::ActionWidget(int identifier, Window *window, QWidget *parent) : ToolButtonWidget(parent),
+ActionWidget::ActionWidget(int identifier, Window *window, const ToolBarsManager::ToolBarActionDefinition &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
 	m_window(window),
 	m_identifier(identifier)
 {

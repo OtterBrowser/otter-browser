@@ -32,8 +32,8 @@ class BookmarkWidget : public ToolButtonWidget
 	Q_OBJECT
 
 public:
-	explicit BookmarkWidget(BookmarksItem *bookmark, QWidget *parent = NULL);
-	explicit BookmarkWidget(const QString &path, QWidget *parent = NULL);
+	explicit BookmarkWidget(BookmarksItem *bookmark, const ToolBarsManager::ToolBarActionDefinition &definition, QWidget *parent = NULL);
+	explicit BookmarkWidget(const QString &path, const ToolBarsManager::ToolBarActionDefinition &definition, QWidget *parent = NULL);
 
 protected:
 	void mouseReleaseEvent(QMouseEvent *event);

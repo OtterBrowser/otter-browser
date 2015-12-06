@@ -18,7 +18,9 @@
 **************************************************************************/
 
 #include "ToolButtonWidget.h"
+#include "../Menu.h"
 #include "../ToolBarWidget.h"
+#include "../../core/ActionsManager.h"
 #include "../../core/Utils.h"
 
 #include <QtCore/QEvent>
@@ -28,11 +30,22 @@
 namespace Otter
 {
 
-ToolButtonWidget::ToolButtonWidget(QWidget *parent) : QToolButton(parent),
+ToolButtonWidget::ToolButtonWidget(const ToolBarsManager::ToolBarActionDefinition &definition, QWidget *parent) : QToolButton(parent),
 	m_isCustomized(false)
 {
 	setAutoRaise(true);
 	setContextMenuPolicy(Qt::NoContextMenu);
+	setOptions(definition.options);
+
+	if (!definition.actions.isEmpty())
+	{
+		Menu *menu = new Menu(Menu::NoMenuRole, this);
+
+		addMenu(menu, definition.actions);
+		setMenu(menu);
+		setPopupMode(QToolButton::InstantPopup);
+		setText(definition.options.value(QLatin1String("text"), tr("Menu")).toString());
+	}
 
 	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
 
@@ -73,6 +86,26 @@ void ToolButtonWidget::paintEvent(QPaintEvent *event)
 	option.text = option.fontMetrics.elidedText(option.text, Qt::ElideRight, (option.rect.width() - (option.fontMetrics.width(QLatin1Char(' ')) * 2) - ((toolButtonStyle() == Qt::ToolButtonTextBesideIcon) ? iconSize().width() : 0)));
 
 	painter.drawComplexControl(QStyle::CC_ToolButton, option);
+}
+
+void ToolButtonWidget::addMenu(Menu *menu, const QList<ToolBarsManager::ToolBarActionDefinition> &actions)
+{
+	for (int i = 0; i < actions.count(); ++i)
+	{
+		if (actions.at(i).actions.isEmpty())
+		{
+			menu->addAction(ActionsManager::getActionIdentifier(actions.at(i).action), true);
+		}
+		else
+		{
+			Menu *subMenu = new Menu();
+			Action *subMenuAction = menu->addAction(-1);
+			subMenuAction->setText(actions.at(i).options.value(QLatin1String("text"), tr("Menu")).toString());
+			subMenuAction->setMenu(subMenu);
+
+			addMenu(subMenu, actions.at(i).actions);
+		}
+	}
 }
 
 void ToolButtonWidget::setOptions(const QVariantMap &options)

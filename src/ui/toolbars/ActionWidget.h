@@ -35,7 +35,7 @@ class ActionWidget : public ToolButtonWidget
 	Q_OBJECT
 
 public:
-	explicit ActionWidget(int identifier, Window *window, QWidget *parent = NULL);
+	explicit ActionWidget(int identifier, Window *window, const ToolBarsManager::ToolBarActionDefinition &definition, QWidget *parent = NULL);
 
 	Window* getWindow() const;
 

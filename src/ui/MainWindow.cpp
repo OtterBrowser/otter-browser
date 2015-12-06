@@ -343,7 +343,7 @@ void MainWindow::optionChanged(const QString &option, const QVariant &value)
 		}
 		else if (!m_sidebarToggle && value.toBool())
 		{
-			m_sidebarToggle = new ActionWidget(ActionsManager::ShowSidebarAction, NULL, this);
+			m_sidebarToggle = new ActionWidget(ActionsManager::ShowSidebarAction, NULL, ToolBarsManager::ToolBarActionDefinition(), this);
 			m_sidebarToggle->setFixedWidth(6);
 			m_sidebarToggle->setText(QString());
 

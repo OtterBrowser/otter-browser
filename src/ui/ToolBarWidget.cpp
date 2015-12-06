@@ -317,7 +317,7 @@ void ToolBarWidget::loadBookmarks()
 			}
 			else
 			{
-				addWidget(new BookmarkWidget(bookmark, this));
+				addWidget(new BookmarkWidget(bookmark, ToolBarsManager::ToolBarActionDefinition(), this));
 			}
 		}
 	}
@@ -443,6 +443,11 @@ QWidget* ToolBarWidget::createWidget(const ToolBarsManager::ToolBarActionDefinit
 		return spacer;
 	}
 
+	if (!definition.actions.isEmpty())
+	{
+		return new ToolButtonWidget(definition, this);
+	}
+
 	if (definition.action == QLatin1String("AddressWidget"))
 	{
 		return new AddressWidget(m_window, this);
@@ -454,29 +459,22 @@ QWidget* ToolBarWidget::createWidget(const ToolBarsManager::ToolBarActionDefinit
 		closedWindowsAction->setMenu(new Menu(Menu::ClosedWindowsMenu, this));
 		closedWindowsAction->setEnabled(false);
 
-		ToolButtonWidget *closedWindowsMenuButton = new ToolButtonWidget(this);
+		ToolButtonWidget *closedWindowsMenuButton = new ToolButtonWidget(definition, this);
 		closedWindowsMenuButton->setDefaultAction(closedWindowsAction);
 		closedWindowsMenuButton->setAutoRaise(true);
 		closedWindowsMenuButton->setPopupMode(QToolButton::InstantPopup);
-		closedWindowsMenuButton->setOptions(definition.options);
 
 		return closedWindowsMenuButton;
 	}
 
 	if (definition.action == QLatin1String("MenuButtonWidget"))
 	{
-		MenuButtonWidget *menuButtonWidget = new MenuButtonWidget(this);
-		menuButtonWidget->setOptions(definition.options);
-
-		return menuButtonWidget;
+		return new MenuButtonWidget(definition, this);
 	}
 
 	if (definition.action == QLatin1String("PanelChooserWidget"))
 	{
-		PanelChooserWidget *panelChooserWidget = new PanelChooserWidget(this);
-		panelChooserWidget->setOptions(definition.options);
-
-		return panelChooserWidget;
+		return new PanelChooserWidget(definition, this);
 	}
 
 	if (definition.action == QLatin1String("SearchWidget"))
@@ -524,10 +522,7 @@ QWidget* ToolBarWidget::createWidget(const ToolBarsManager::ToolBarActionDefinit
 
 		if (bookmark)
 		{
-			BookmarkWidget *bookmarkWidget = new BookmarkWidget(bookmark, this);
-			bookmarkWidget->setOptions(definition.options);
-
-			return bookmarkWidget;
+			return new BookmarkWidget(bookmark, definition, this);
 		}
 	}
 
@@ -541,15 +536,15 @@ QWidget* ToolBarWidget::createWidget(const ToolBarsManager::ToolBarActionDefinit
 
 			if (identifier == ActionsManager::GoBackAction)
 			{
-				actionWidget = new GoBackActionWidget(m_window, this);
+				actionWidget = new GoBackActionWidget(m_window, definition, this);
 			}
 			else if (identifier == ActionsManager::GoForwardAction)
 			{
-				actionWidget = new GoForwardActionWidget(m_window, this);
+				actionWidget = new GoForwardActionWidget(m_window, definition, this);
 			}
 			else
 			{
-				actionWidget = new ActionWidget(identifier, m_window, this);;
+				actionWidget = new ActionWidget(identifier, m_window, definition, this);;
 			}
 
 			actionWidget->setOptions(definition.options);
