@@ -51,6 +51,7 @@ public:
 	{
 		QString action;
 		QVariantMap options;
+		QList<ToolBarActionDefinition> actions;
 	};
 
 	struct ToolBarDefinition
@@ -90,6 +91,8 @@ public slots:
 
 protected:
 	void timerEvent(QTimerEvent *event);
+	static QJsonValue encodeAction(const ToolBarsManager::ToolBarActionDefinition &definition);
+	static ToolBarsManager::ToolBarActionDefinition decodeAction(const QJsonValue &value);
 	static QHash<QString, ToolBarsManager::ToolBarDefinition> loadToolBars(const QString &path, bool isDefault);
 
 protected slots:

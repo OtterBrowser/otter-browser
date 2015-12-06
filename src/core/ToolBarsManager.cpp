@@ -213,27 +213,7 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 
 					for (int j = 0; j < m_definitions[i].actions.count(); ++j)
 					{
-						if (m_definitions[i].actions.at(j).options.isEmpty())
-						{
-							actions.append(QJsonValue(m_definitions[i].actions.at(j).action));
-						}
-						else
-						{
-							QJsonObject action;
-							action.insert(QLatin1String("identifier"), QJsonValue(m_definitions[i].actions.at(j).action));
-
-							QJsonObject options;
-							QVariantMap::const_iterator optionsIterator;
-
-							for (optionsIterator = m_definitions[i].actions.at(j).options.begin(); optionsIterator != m_definitions[i].actions.at(j).options.end(); ++optionsIterator)
-							{
-								options.insert(optionsIterator.key(), QJsonValue::fromVariant(optionsIterator.value()));
-							}
-
-							action.insert(QLatin1String("options"), options);
-
-							actions.append(action);
-						}
+						actions.append(encodeAction(m_definitions[i].actions.at(j)));
 					}
 
 					definition.insert(QLatin1String("actions"), actions);
@@ -453,6 +433,73 @@ ToolBarsManager* ToolBarsManager::getInstance()
 	return m_instance;
 }
 
+QJsonValue ToolBarsManager::encodeAction(const ToolBarsManager::ToolBarActionDefinition &definition)
+{
+	if (definition.actions.isEmpty() && definition.options.isEmpty())
+	{
+		return QJsonValue(definition.action);
+	}
+
+	QJsonObject action;
+	action.insert(QLatin1String("identifier"), QJsonValue(definition.action));
+
+	if (!definition.actions.isEmpty())
+	{
+		QJsonArray actions;
+
+		for (int i = 0; i < definition.actions.count(); ++i)
+		{
+			actions.append(encodeAction(definition.actions.at(i)));
+		}
+
+		action.insert(QLatin1String("actions"), actions);
+	}
+
+	if (!definition.options.isEmpty())
+	{
+		QJsonObject options;
+		QVariantMap::const_iterator optionsIterator;
+
+		for (optionsIterator = definition.options.begin(); optionsIterator != definition.options.end(); ++optionsIterator)
+		{
+			options.insert(optionsIterator.key(), QJsonValue::fromVariant(optionsIterator.value()));
+		}
+
+		action.insert(QLatin1String("options"), options);
+	}
+
+	return QJsonValue(action);
+}
+
+ToolBarsManager::ToolBarActionDefinition ToolBarsManager::decodeAction(const QJsonValue &value)
+{
+	ToolBarActionDefinition action;
+
+	if (value.isString())
+	{
+		action.action = value.toString();
+
+		return action;
+	}
+
+	const QJsonObject object = value.toObject();
+
+	action.action = object.value(QLatin1String("identifier")).toString();
+	action.options = object.value(QLatin1String("options")).toObject().toVariantMap();
+
+	if (object.contains(QLatin1String("actions")))
+	{
+		const QJsonArray actions = object.value(QLatin1String("actions")).toArray();
+
+		for (int i = 0; i < actions.count(); ++i)
+		{
+			action.actions.append(decodeAction(actions.at(i)));
+		}
+	}
+
+	return action;
+}
+
 ToolBarsManager::ToolBarDefinition ToolBarsManager::getToolBarDefinition(int identifier)
 {
 	if (m_definitions.isEmpty())
@@ -549,21 +596,7 @@ QHash<QString, ToolBarsManager::ToolBarDefinition> ToolBarsManager::loadToolBars
 
 		for (int j = 0; j < actions.count(); ++j)
 		{
-			ToolBarActionDefinition action;
-
-			if (actions.at(j).isObject())
-			{
-				const QJsonObject actionObject = actions.at(j).toObject();
-
-				action.action = actionObject.value(QLatin1String("identifier")).toString();
-				action.options = actionObject.value(QLatin1String("options")).toObject().toVariantMap();
-			}
-			else
-			{
-				action.action = actions.at(j).toString();
-			}
-
-			toolBar.actions.append(action);
+			toolBar.actions.append(decodeAction(actions.at(j)));
 		}
 
 		definitions[identifier] = toolBar;
