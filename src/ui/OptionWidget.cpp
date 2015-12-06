@@ -98,7 +98,7 @@ OptionWidget::OptionWidget(bool isSimple, const QString &option, const QString &
 		m_filePathWidget->setPath(currentValue.toString());
 		m_filePathWidget->setSelectFile(false);
 
-		connect(m_filePathWidget, SIGNAL(pathChanged()), this, SLOT(markModified()));
+		connect(m_filePathWidget, SIGNAL(pathChanged(QString)), this, SLOT(markModified()));
 	}
 	else
 	{

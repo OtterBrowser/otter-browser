@@ -503,7 +503,7 @@ void PreferencesAdvancedPageWidget::playNotificationSound()
 
 void PreferencesAdvancedPageWidget::updateNotificationsActions()
 {
-	disconnect(m_ui->notificationsPlaySoundFilePathWidget, SIGNAL(pathChanged()), this, SLOT(updateNotificationsOptions()));
+	disconnect(m_ui->notificationsPlaySoundFilePathWidget, SIGNAL(pathChanged(QString)), this, SLOT(updateNotificationsOptions()));
 	disconnect(m_ui->notificationsShowAlertCheckBox, SIGNAL(clicked()), this, SLOT(updateNotificationsOptions()));
 	disconnect(m_ui->notificationsShowNotificationCheckBox, SIGNAL(clicked()), this, SLOT(updateNotificationsOptions()));
 
@@ -515,7 +515,7 @@ void PreferencesAdvancedPageWidget::updateNotificationsActions()
 	m_ui->notificationsShowAlertCheckBox->setChecked(index.data(Qt::UserRole + 2).toBool());
 	m_ui->notificationsShowNotificationCheckBox->setChecked(index.data(Qt::UserRole + 3).toBool());
 
-	connect(m_ui->notificationsPlaySoundFilePathWidget, SIGNAL(pathChanged()), this, SLOT(updateNotificationsOptions()));
+	connect(m_ui->notificationsPlaySoundFilePathWidget, SIGNAL(pathChanged(QString)), this, SLOT(updateNotificationsOptions()));
 	connect(m_ui->notificationsShowAlertCheckBox, SIGNAL(clicked()), this, SLOT(updateNotificationsOptions()));
 	connect(m_ui->notificationsShowNotificationCheckBox, SIGNAL(clicked()), this, SLOT(updateNotificationsOptions()));
 }
@@ -573,7 +573,7 @@ void PreferencesAdvancedPageWidget::updateDownloadsActions()
 {
 	disconnect(m_ui->downloadsButtonGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(updateDownloadsOptions()));
 	disconnect(m_ui->downloadsSaveDirectlyCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateDownloadsOptions()));
-	disconnect(m_ui->downloadsFilePathWidget, SIGNAL(pathChanged()), this, SLOT(updateDownloadsOptions()));
+	disconnect(m_ui->downloadsFilePathWidget, SIGNAL(pathChanged(QString)), this, SLOT(updateDownloadsOptions()));
 	disconnect(m_ui->downloadsPassUrlCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateDownloadsOptions()));
 	disconnect(m_ui->downloadsApplicationComboBoxWidget, SIGNAL(currentIndexChanged(int)), this, SLOT(updateDownloadsOptions()));
 
@@ -602,7 +602,7 @@ void PreferencesAdvancedPageWidget::updateDownloadsActions()
 
 	connect(m_ui->downloadsButtonGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(updateDownloadsOptions()));
 	connect(m_ui->downloadsSaveDirectlyCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateDownloadsOptions()));
-	connect(m_ui->downloadsFilePathWidget, SIGNAL(pathChanged()), this, SLOT(updateDownloadsOptions()));
+	connect(m_ui->downloadsFilePathWidget, SIGNAL(pathChanged(QString)), this, SLOT(updateDownloadsOptions()));
 	connect(m_ui->downloadsPassUrlCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateDownloadsOptions()));
 	connect(m_ui->downloadsApplicationComboBoxWidget, SIGNAL(currentIndexChanged(int)), this, SLOT(updateDownloadsOptions()));
 }

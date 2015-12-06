@@ -44,7 +44,7 @@ FilePathWidget::FilePathWidget(QWidget *parent) : QWidget(parent),
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
 	connect(m_lineEdit, SIGNAL(textEdited(QString)), this, SLOT(updateCompleter()));
-	connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SIGNAL(pathChanged()));
+	connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SIGNAL(pathChanged(QString)));
 	connect(button, SIGNAL(clicked()), this, SLOT(selectPath()));
 }
 

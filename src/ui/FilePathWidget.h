@@ -52,7 +52,7 @@ private:
 	bool m_selectFile;
 
 signals:
-	void pathChanged();
+	void pathChanged(const QString &path);
 };
 
 }

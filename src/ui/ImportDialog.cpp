@@ -49,7 +49,7 @@ ImportDialog::ImportDialog(Importer *importer, QWidget *parent) : Dialog(parent)
 
 	setWindowTitle(m_importer->getTitle());
 
-	connect(m_ui->importPathWidget, SIGNAL(pathChanged()), this, SLOT(setPath()));
+	connect(m_ui->importPathWidget, SIGNAL(pathChanged(QString)), this, SLOT(setPath(QString)));
 	connect(this, SIGNAL(accepted()), this, SLOT(import()));
 }
 
@@ -96,9 +96,9 @@ void ImportDialog::createDialog(const QString &importerName, QWidget *parent)
 	}
 }
 
-void ImportDialog::setPath()
+void ImportDialog::setPath(const QString &path)
 {
-	m_path = m_ui->importPathWidget->getPath();
+	m_path = path;
 }
 
 void ImportDialog::import()

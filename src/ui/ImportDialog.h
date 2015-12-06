@@ -48,7 +48,7 @@ protected:
 
 protected slots:
 	void import();
-	void setPath();
+	void setPath(const QString &path);
 
 private:
 	Importer *m_importer;
