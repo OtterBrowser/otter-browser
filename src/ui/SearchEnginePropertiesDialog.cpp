@@ -18,12 +18,12 @@
 **************************************************************************/
 
 #include "SearchEnginePropertiesDialog.h"
+#include "../core/Utils.h"
 
 #include "ui_SearchEnginePropertiesDialog.h"
 
 #include <QtCore/QUrlQuery>
 #include <QtGui/QContextMenuEvent>
-#include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMenu>
 
 namespace Otter
@@ -37,6 +37,7 @@ SearchEnginePropertiesDialog::SearchEnginePropertiesDialog(const SearchEnginesMa
 {
 	m_ui->setupUi(this);
 	m_ui->iconButton->setIcon(searchEngine.icon);
+	m_ui->iconButton->setPlaceholderIcon(Utils::getIcon(QLatin1String("edit-find")));
 	m_ui->titleLineEdit->setText(searchEngine.title);
 	m_ui->descriptionLineEdit->setText(searchEngine.description);
 	m_ui->keywordLineEdit->setText(searchEngine.keyword);
@@ -62,8 +63,6 @@ SearchEnginePropertiesDialog::SearchEnginePropertiesDialog(const SearchEnginesMa
 	m_ui->suggestionsQueryLineEdit->installEventFilter(this);
 	m_ui->suggestionsPostMethodCheckBox->setChecked(searchEngine.suggestionsUrl.method == QLatin1String("post"));
 	m_ui->suggestionsEnctypeComboBox->setCurrentText(searchEngine.suggestionsUrl.enctype);
-
-	connect(m_ui->iconButton, SIGNAL(clicked()), this, SLOT(selectIcon()));
 }
 
 SearchEnginePropertiesDialog::~SearchEnginePropertiesDialog()
@@ -86,16 +85,6 @@ void SearchEnginePropertiesDialog::insertPlaceholder(QAction *action)
 	if (m_currentLineEdit && !action->data().toString().isEmpty())
 	{
 		m_currentLineEdit->insert(QStringLiteral("{%1}").arg(action->data().toString()));
-	}
-}
-
-void SearchEnginePropertiesDialog::selectIcon()
-{
-	const QString path = QFileDialog::getOpenFileName(this, tr("Select Icon"), QString(), tr("Images (*.png *.jpg *.bmp *.gif *.ico)"));
-
-	if (!path.isEmpty())
-	{
-		m_ui->iconButton->setIcon(QIcon(QPixmap(path)));
 	}
 }
 

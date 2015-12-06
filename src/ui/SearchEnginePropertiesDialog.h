@@ -50,7 +50,6 @@ protected:
 
 protected slots:
 	void insertPlaceholder(QAction *action);
-	void selectIcon();
 
 private:
 	QLineEdit *m_currentLineEdit;

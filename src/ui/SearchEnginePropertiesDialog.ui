@@ -32,7 +32,7 @@
         <widget class="QLineEdit" name="titleLineEdit"/>
        </item>
        <item>
-        <widget class="QToolButton" name="iconButton">
+        <widget class="Otter::IconWidget" name="iconButton">
          <property name="minimumSize">
           <size>
            <width>36</width>
@@ -47,16 +47,6 @@
          </property>
          <property name="toolTip">
           <string>Change Icon…</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../../resources/resources.qrc">
-           <normaloff>:/icons/edit-find.png</normaloff>:/icons/edit-find.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>32</width>
-           <height>32</height>
-          </size>
          </property>
         </widget>
        </item>
@@ -385,6 +375,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Otter::IconWidget</class>
+   <extends>QToolButton</extends>
+   <header>src/ui/IconWidget.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>titleLineEdit</tabstop>
   <tabstop>iconButton</tabstop>
@@ -404,9 +401,7 @@
   <tabstop>suggestionsPostMethodCheckBox</tabstop>
   <tabstop>suggestionsEnctypeComboBox</tabstop>
  </tabstops>
- <resources>
-  <include location="../../resources/resources.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>buttonBox</sender>
