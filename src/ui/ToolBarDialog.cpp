@@ -247,7 +247,7 @@ void ToolBarDialog::editEntry()
 		widgets.append(qMakePair(tr("Show search engine:"), searchEngineWidget));
 		widgets.append(qMakePair(tr("Show search button:"), new OptionWidget(QLatin1String("showSearchButton"), options.value(QLatin1String("showSearchButton"), true), OptionWidget::BooleanType, this)));
 	}
-	else if (identifier == QLatin1String("ClosedWindowsWidget") || identifier == QLatin1String("MenuButtonWidget") ||identifier == QLatin1String("PanelChooserWidget") || identifier.startsWith(QLatin1String("bookmarks:")) || identifier.endsWith(QLatin1String("Action")));
+	else if (identifier == QLatin1String("ClosedWindowsWidget") || identifier == QLatin1String("MenuButtonWidget") ||identifier == QLatin1String("PanelChooserWidget") || identifier.startsWith(QLatin1String("bookmarks:")) || identifier.endsWith(QLatin1String("Action")))
 	{
 		widgets.append(qMakePair(tr("Custom icon:"), new OptionWidget(QLatin1String("icon"), options.value(QLatin1String("icon")), OptionWidget::IconType, this)));
 		widgets.append(qMakePair(tr("Custom text:"), new OptionWidget(QLatin1String("text"), options.value(QLatin1String("text")), OptionWidget::StringType, this)));
