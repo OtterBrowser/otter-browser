@@ -37,8 +37,32 @@ class OptionWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit OptionWidget(bool isSimple, const QString &option, const QString &type, const QVariant &value, const QStringList &choices, const QModelIndex &index, QWidget *parent = NULL);
+	enum OptionType
+	{
+		UnknownType = 0,
+		BooleanType,
+		ColorType,
+		EnumerationType,
+		FontType,
+		IconType,
+		IntegerType,
+		PathType,
+		StringType
+	};
 
+	struct EnumerationChoice
+	{
+		QString text;
+		QString value;
+		QIcon icon;
+	};
+
+	explicit OptionWidget(const QString &option, const QVariant &value, OptionType type, QWidget *parent = NULL);
+
+	void setIndex(const QModelIndex &index);
+	void setChoices(const QStringList &choices);
+	void setChoices(const QList<EnumerationChoice> &choices);
+	void setControlsVisible(bool isVisible);
 	QString getOption() const;
 	QVariant getValue() const;
 	QModelIndex getIndex() const;
@@ -64,6 +88,7 @@ private:
 	QPushButton *m_resetButton;
 	QPushButton *m_saveButton;
 	QString m_option;
+	QVariant m_value;
 	QModelIndex m_index;
 
 signals:

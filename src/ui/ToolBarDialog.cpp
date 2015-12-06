@@ -19,6 +19,7 @@
 
 #include "ToolBarDialog.h"
 #include "Menu.h"
+#include "OptionWidget.h"
 #include "../core/ActionsManager.h"
 #include "../core/BookmarksManager.h"
 #include "../core/BookmarksModel.h"
@@ -168,6 +169,7 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 	connect(m_ui->currentEntriesItemView, SIGNAL(canMoveUpChanged(bool)), m_ui->moveUpButton, SLOT(setEnabled(bool)));
 	connect(m_ui->availableEntriesFilterLineEdit, SIGNAL(textChanged(QString)), m_ui->availableEntriesItemView, SLOT(setFilterString(QString)));
 	connect(m_ui->currentEntriesFilterLineEdit, SIGNAL(textChanged(QString)), m_ui->currentEntriesItemView, SLOT(setFilterString(QString)));
+	connect(m_ui->editEntryButton, SIGNAL(clicked(bool)), this, SLOT(editEntry()));
 	connect(m_ui->buttonBox->button(QDialogButtonBox::RestoreDefaults), SIGNAL(clicked()), this, SLOT(restoreDefaults()));
 }
 
@@ -195,8 +197,11 @@ void ToolBarDialog::restoreDefaults()
 
 void ToolBarDialog::updateActions()
 {
+	const QString identifier = m_ui->currentEntriesItemView->currentIndex().data(Qt::UserRole).toString();
+
 	m_ui->addButton->setEnabled(m_ui->availableEntriesItemView->currentIndex().isValid());
 	m_ui->removeButton->setEnabled(m_ui->currentEntriesItemView->currentIndex().isValid() && m_ui->currentEntriesItemView->currentIndex().data(Qt::UserRole).toString() != QLatin1String("MenuBarWidget") && m_ui->currentEntriesItemView->currentIndex().data(Qt::UserRole).toString() != QLatin1String("TabBarWidget"));
+	m_ui->editEntryButton->setEnabled(identifier == QLatin1String("ClosedWindowsWidget") || identifier == QLatin1String("MenuButtonWidget") ||identifier == QLatin1String("PanelChooserWidget") || identifier == QLatin1String("SearchWidget") || identifier.startsWith(QLatin1String("bookmarks:")) || identifier.endsWith(QLatin1String("Action")));
 }
 
 void ToolBarDialog::addEntry()
@@ -207,6 +212,97 @@ void ToolBarDialog::addEntry()
 	{
 		m_ui->currentEntriesItemView->insertRow(sourceItem->clone());
 	}
+}
+
+void ToolBarDialog::editEntry()
+{
+	const QModelIndex index = m_ui->currentEntriesItemView->currentIndex();
+	const QString identifier = index.data(Qt::UserRole).toString();
+	QVariantMap options = index.data(Qt::UserRole + 1).toMap();
+	QList<QPair<QString, OptionWidget*> > widgets;
+
+	if (identifier == QLatin1String("SearchWidget"))
+	{
+		const QStringList searchEngines = SearchEnginesManager::getSearchEngines();
+		QList<OptionWidget::EnumerationChoice> searchEngineChoices;
+		OptionWidget *searchEngineWidget = new OptionWidget(QLatin1String("searchEngine"), options.value(QLatin1String("searchEngine")), OptionWidget::EnumerationType, this);
+		OptionWidget::EnumerationChoice defaultSearchEngineChoice;
+		defaultSearchEngineChoice.text = tr("All");
+
+		searchEngineChoices.append(defaultSearchEngineChoice);
+
+		for (int i = 0; i < searchEngines.count(); ++i)
+		{
+			const SearchEnginesManager::SearchEngineDefinition searchEngine = SearchEnginesManager::getSearchEngine(searchEngines.at(i));
+			OptionWidget::EnumerationChoice searchEngineChoice;
+			searchEngineChoice.text = (searchEngine.title.isEmpty() ? tr("Unknown") : searchEngine.title);
+			searchEngineChoice.value = searchEngines.at(i);
+			searchEngineChoice.icon = searchEngine.icon;
+
+			searchEngineChoices.append(searchEngineChoice);
+		}
+
+		searchEngineWidget->setChoices(searchEngineChoices);
+
+		widgets.append(qMakePair(tr("Show search engine:"), searchEngineWidget));
+		widgets.append(qMakePair(tr("Show search button:"), new OptionWidget(QLatin1String("showSearchButton"), options.value(QLatin1String("showSearchButton"), true), OptionWidget::BooleanType, this)));
+	}
+	else if (identifier == QLatin1String("ClosedWindowsWidget") || identifier == QLatin1String("MenuButtonWidget") ||identifier == QLatin1String("PanelChooserWidget") || identifier.startsWith(QLatin1String("bookmarks:")) || identifier.endsWith(QLatin1String("Action")));
+	{
+		widgets.append(qMakePair(tr("Custom icon:"), new OptionWidget(QLatin1String("icon"), options.value(QLatin1String("icon")), OptionWidget::IconType, this)));
+		widgets.append(qMakePair(tr("Custom text:"), new OptionWidget(QLatin1String("text"), options.value(QLatin1String("text")), OptionWidget::StringType, this)));
+	}
+
+	if (widgets.isEmpty())
+	{
+		return;
+	}
+
+	QDialog dialog(this);
+	dialog.setWindowTitle(tr("Edit Entry"));
+
+	QDialogButtonBox *buttonBox = new QDialogButtonBox(&dialog);
+	buttonBox->addButton(QDialogButtonBox::Cancel);
+	buttonBox->addButton(QDialogButtonBox::Ok);
+
+	QFormLayout *formLayout = new QFormLayout();
+	QVBoxLayout *mainLayout = new QVBoxLayout(&dialog);
+	mainLayout->addLayout(formLayout);
+	mainLayout->addWidget(buttonBox);
+
+	for (int i = 0; i < widgets.count(); ++i)
+	{
+		formLayout->addRow(widgets.at(i).first, widgets.at(i).second);
+	}
+
+	connect(buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
+	connect(buttonBox, SIGNAL(rejected()), &dialog, SLOT(reject()));
+
+	if (dialog.exec() == QDialog::Rejected)
+	{
+		return;
+	}
+
+	for (int i = 0; i < widgets.count(); ++i)
+	{
+		if (widgets.at(i).second->getValue().isNull())
+		{
+			options.remove(widgets.at(i).second->getOption());
+		}
+		else
+		{
+			options[widgets.at(i).second->getOption()] = widgets.at(i).second->getValue();
+		}
+	}
+
+	QStandardItem *item = createEntry(identifier, options);
+
+	m_ui->currentEntriesItemView->setData(index, item->text(), Qt::DisplayRole);
+	m_ui->currentEntriesItemView->setData(index, item->text(), Qt::ToolTipRole);
+	m_ui->currentEntriesItemView->setData(index, item->icon(), Qt::DecorationRole);
+	m_ui->currentEntriesItemView->setData(index, options, (Qt::UserRole + 1));
+
+	delete item;
 }
 
 void ToolBarDialog::addBookmark(QAction *action)

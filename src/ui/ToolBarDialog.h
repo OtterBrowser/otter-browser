@@ -49,6 +49,7 @@ protected:
 
 protected slots:
 	void addEntry();
+	void editEntry();
 	void addBookmark(QAction *action);
 	void restoreDefaults();
 	void updateActions();

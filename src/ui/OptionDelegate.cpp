@@ -19,6 +19,7 @@
 
 #include "OptionDelegate.h"
 #include "OptionWidget.h"
+#include "../core/SettingsManager.h"
 
 namespace Otter
 {
@@ -53,7 +54,57 @@ QWidget* OptionDelegate::createEditor(QWidget *parent, const QStyleOptionViewIte
 {
 	Q_UNUSED(option)
 
-	OptionWidget *widget = new OptionWidget(m_isSimple, index.data(Qt::UserRole).toString(), index.data(Qt::UserRole + 1).toString(), index.data(Qt::EditRole), index.data(Qt::UserRole + 2).toStringList(), index, parent);
+	const QString typeString = index.data(Qt::UserRole + 1).toString();
+	OptionWidget::OptionType type = OptionWidget::UnknownType;
+
+	if (typeString == QLatin1String("bool"))
+	{
+		type = OptionWidget::BooleanType;
+	}
+	else if (typeString == QLatin1String("color"))
+	{
+		type = OptionWidget::ColorType;
+	}
+	else if (typeString == QLatin1String("enumeration"))
+	{
+		type = OptionWidget::EnumerationType;
+	}
+	else if (typeString == QLatin1String("font"))
+	{
+		type = OptionWidget::FontType;
+	}
+	else if (typeString == QLatin1String("icon"))
+	{
+		type = OptionWidget::IconType;
+	}
+	else if (typeString == QLatin1String("integer"))
+	{
+		type = OptionWidget::IntegerType;
+	}
+	else if (typeString == QLatin1String("path"))
+	{
+		type = OptionWidget::PathType;
+	}
+	else if (typeString == QLatin1String("string"))
+	{
+		type = OptionWidget::StringType;
+	}
+
+	QVariant value = index.data(Qt::EditRole);
+
+	if (value.isNull())
+	{
+		value = SettingsManager::getValue(index.data(Qt::UserRole).toString());
+	}
+
+	OptionWidget *widget = new OptionWidget(index.data(Qt::UserRole).toString(), value, type, parent);
+	widget->setIndex(index);
+	widget->setControlsVisible(!m_isSimple);
+
+	if (type == OptionWidget::EnumerationType)
+	{
+		widget->setChoices(index.data(Qt::UserRole + 2).toStringList());
+	}
 
 	connect(widget, SIGNAL(commitData(QWidget*)), this, SIGNAL(commitData(QWidget*)));
 

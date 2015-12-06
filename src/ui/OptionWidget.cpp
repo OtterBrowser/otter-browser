@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-OptionWidget::OptionWidget(bool isSimple, const QString &option, const QString &type, const QVariant &value, const QStringList &choices, const QModelIndex &index, QWidget *parent) : QWidget(parent),
+OptionWidget::OptionWidget(const QString &option, const QVariant &value, OptionType type, QWidget *parent) : QWidget(parent),
 	m_widget(NULL),
 	m_iconWidget(NULL),
 	m_colorButton(NULL),
@@ -41,96 +41,92 @@ OptionWidget::OptionWidget(bool isSimple, const QString &option, const QString &
 	m_saveButton(NULL),
 	m_filePathWidget(NULL),
 	m_option(option),
-	m_index(index)
+	m_value(value)
 {
-	const QVariant currentValue = (value.isNull() ? SettingsManager::getValue(option) : value);
-
-	if (type == QLatin1String("color"))
+	switch (type)
 	{
-		m_widget = m_colorButton = new QPushButton(this);
-
-		QPalette palette = m_colorButton->palette();
-		palette.setColor(QPalette::Button, currentValue.value<QColor>());
-
-		m_colorButton->setPalette(palette);
-
-		connect(m_colorButton, SIGNAL(clicked()), this, SLOT(selectColor()));
-	}
-	else if (type == QLatin1String("font"))
-	{
-		m_widget = m_fontComboBox = new QFontComboBox(this);
-
-		m_fontComboBox->setCurrentFont(QFont(currentValue.toString()));
-		m_fontComboBox->lineEdit()->selectAll();
-
-		connect(m_fontComboBox, SIGNAL(currentFontChanged(QFont)), this, SLOT(markModified()));
-	}
-	else if (type == QLatin1String("icon"))
-	{
-		m_widget = m_iconWidget = new IconWidget(this);
-
-		if (currentValue.type() == QVariant::String)
-		{
-			m_iconWidget->setIcon(currentValue.toString());
-		}
-		else
-		{
-			m_iconWidget->setIcon(currentValue.value<QIcon>());
-		}
-
-		connect(m_iconWidget, SIGNAL(iconChanged(QIcon)), this, SLOT(markModified()));
-	}
-	else if (type == QLatin1String("integer"))
-	{
-		m_widget = m_spinBox = new QSpinBox(this);
-
-		m_spinBox->setMinimum(-999999999);
-		m_spinBox->setMaximum(999999999);
-		m_spinBox->setValue(currentValue.toInt());
-		m_spinBox->selectAll();
-
-		connect(m_spinBox, SIGNAL(valueChanged(int)), this, SLOT(markModified()));
-	}
-	else if (type == QLatin1String("path"))
-	{
-		m_widget = m_filePathWidget = new FilePathWidget(this);
-
-		m_filePathWidget->setPath(currentValue.toString());
-		m_filePathWidget->setSelectFile(false);
-
-		connect(m_filePathWidget, SIGNAL(pathChanged(QString)), this, SLOT(markModified()));
-	}
-	else
-	{
-		if (type != QLatin1String("bool") && choices.isEmpty())
-		{
-			m_widget = m_lineEdit = new QLineEdit(currentValue.toString(), this);
-
-			m_lineEdit->selectAll();
-
-			connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(markModified()));
-		}
-		else
-		{
+		case BooleanType:
 			m_widget = m_comboBox = new QComboBox(this);
 
-			if (type == QLatin1String("bool"))
+			m_comboBox->addItem(tr("No"), QLatin1String("false"));
+			m_comboBox->addItem(tr("Yes"), QLatin1String("true"));
+			m_comboBox->setCurrentIndex(m_value.toBool() ? 1 : 0);
+
+			connect(m_comboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(markModified()));
+
+			break;
+		case ColorType:
 			{
-				m_comboBox->addItem(QLatin1String("false"));
-				m_comboBox->addItem(QLatin1String("true"));
+				m_widget = m_colorButton = new QPushButton(this);
+
+				QPalette palette = m_colorButton->palette();
+				palette.setColor(QPalette::Button, m_value.value<QColor>());
+
+				m_colorButton->setPalette(palette);
+
+				connect(m_colorButton, SIGNAL(clicked()), this, SLOT(selectColor()));
+			}
+
+			break;
+		case EnumerationType:
+			m_widget = m_comboBox = new QComboBox(this);
+
+			connect(m_comboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(markModified()));
+
+			break;
+		case FontType:
+			m_widget = m_fontComboBox = new QFontComboBox(this);
+
+			m_fontComboBox->setCurrentFont(QFont(m_value.toString()));
+			m_fontComboBox->lineEdit()->selectAll();
+
+			connect(m_fontComboBox, SIGNAL(currentFontChanged(QFont)), this, SLOT(markModified()));
+
+			break;
+		case IconType:
+			m_widget = m_iconWidget = new IconWidget(this);
+
+			if (m_value.type() == QVariant::String)
+			{
+				m_iconWidget->setIcon(m_value.toString());
 			}
 			else
 			{
-				for (int j = 0; j < choices.count(); ++j)
-				{
-					m_comboBox->addItem(choices.at(j));
-				}
+				m_iconWidget->setIcon(m_value.value<QIcon>());
 			}
 
-			m_comboBox->setCurrentText(currentValue.toString());
+			connect(m_iconWidget, SIGNAL(iconChanged(QIcon)), this, SLOT(markModified()));
 
-			connect(m_comboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(markModified()));
-		}
+			break;
+		case IntegerType:
+			m_widget = m_spinBox = new QSpinBox(this);
+
+			m_spinBox->setMinimum(-999999999);
+			m_spinBox->setMaximum(999999999);
+			m_spinBox->setValue(m_value.toInt());
+			m_spinBox->selectAll();
+
+			connect(m_spinBox, SIGNAL(valueChanged(int)), this, SLOT(markModified()));
+
+			break;
+		case PathType:
+			m_widget = m_filePathWidget = new FilePathWidget(this);
+
+			m_filePathWidget->setPath(m_value.toString());
+			m_filePathWidget->setSelectFile(false);
+
+			connect(m_filePathWidget, SIGNAL(pathChanged(QString)), this, SLOT(markModified()));
+
+			break;
+		default:
+			m_widget = m_lineEdit = new QLineEdit(m_value.toString(), this);
+
+			m_lineEdit->setClearButtonEnabled(true);
+			m_lineEdit->selectAll();
+
+			connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(markModified()));
+
+			break;
 	}
 
 	setAutoFillBackground(false);
@@ -138,20 +134,6 @@ OptionWidget::OptionWidget(bool isSimple, const QString &option, const QString &
 	QHBoxLayout *layout = new QHBoxLayout(this);
 	layout->setMargin(0);
 	layout->addWidget(m_widget);
-
-	if (!isSimple)
-	{
-		m_resetButton = new QPushButton(tr("Defaults"), this);
-		m_resetButton->setEnabled(currentValue != SettingsManager::getDefaultValue(option));
-
-		m_saveButton = new QPushButton(tr("Save"), this);
-
-		layout->addWidget(m_resetButton);
-		layout->addWidget(m_saveButton);
-
-		connect(m_resetButton, SIGNAL(clicked()), this, SLOT(reset()));
-		connect(m_saveButton, SIGNAL(clicked()), this, SLOT(save()));
-	}
 
 	setLayout(layout);
 
@@ -249,6 +231,70 @@ void OptionWidget::save()
 	SettingsManager::setValue(m_option, getValue());
 }
 
+void OptionWidget::setIndex(const QModelIndex &index)
+{
+	m_index = index;
+}
+
+void OptionWidget::setChoices(const QStringList &choices)
+{
+	if (!m_comboBox)
+	{
+		return;
+	}
+
+	m_comboBox->clear();
+
+	for (int i = 0; i < choices.count(); ++i)
+	{
+		m_comboBox->addItem(choices.at(i));
+	}
+
+	m_comboBox->setCurrentText(m_value.toString());
+}
+
+void OptionWidget::setChoices(const QList<OptionWidget::EnumerationChoice> &choices)
+{
+	if (!m_comboBox)
+	{
+		return;
+	}
+
+	m_comboBox->clear();
+
+	for (int i = 0; i < choices.count(); ++i)
+	{
+		m_comboBox->addItem(choices.at(i).icon, choices.at(i).text, choices.at(i).value);
+	}
+
+	m_comboBox->setCurrentIndex(qMax(0, m_comboBox->findData(m_value)));
+}
+
+void OptionWidget::setControlsVisible(bool isVisible)
+{
+	if (isVisible && !m_resetButton)
+	{
+		m_resetButton = new QPushButton(tr("Defaults"), this);
+		m_resetButton->setEnabled(getValue() != SettingsManager::getDefaultValue(m_option));
+
+		m_saveButton = new QPushButton(tr("Save"), this);
+
+		layout()->addWidget(m_resetButton);
+		layout()->addWidget(m_saveButton);
+
+		connect(m_resetButton, SIGNAL(clicked()), this, SLOT(reset()));
+		connect(m_saveButton, SIGNAL(clicked()), this, SLOT(save()));
+	}
+	else if (!isVisible && m_resetButton)
+	{
+		m_resetButton->deleteLater();
+		m_resetButton = NULL;
+
+		m_saveButton->deleteLater();
+		m_saveButton = NULL;
+	}
+}
+
 QString OptionWidget::getOption() const
 {
 	return m_option;
@@ -283,6 +329,11 @@ QVariant OptionWidget::getValue() const
 
 	if (m_lineEdit)
 	{
+		if (m_lineEdit->text().isEmpty())
+		{
+			return QVariant();
+		}
+
 		return m_lineEdit->text();
 	}
 

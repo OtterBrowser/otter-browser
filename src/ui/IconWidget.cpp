@@ -40,13 +40,14 @@ IconWidget::IconWidget(QWidget *parent) : QToolButton(parent)
 	setToolTip(tr("Select Icon"));
 	setPopupMode(QToolButton::InstantPopup);
 	setMinimumSize(16, 16);
+	setMaximumSize(64, 64);
 }
 
 void IconWidget::resizeEvent(QResizeEvent *event)
 {
 	QToolButton::resizeEvent(event);
 
-	const int iconSize = (width() * 0.9);
+	const int iconSize = (qMin(height(), width()) * 0.9);
 
 	setIconSize(QSize(iconSize, iconSize));
 }
