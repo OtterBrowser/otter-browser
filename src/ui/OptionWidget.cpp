@@ -31,6 +31,7 @@ namespace Otter
 
 OptionWidget::OptionWidget(const QString &option, const QVariant &value, OptionType type, QWidget *parent) : QWidget(parent),
 	m_widget(NULL),
+	m_filePathWidget(NULL),
 	m_iconWidget(NULL),
 	m_colorButton(NULL),
 	m_comboBox(NULL),
@@ -39,7 +40,6 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, OptionT
 	m_spinBox(NULL),
 	m_resetButton(NULL),
 	m_saveButton(NULL),
-	m_filePathWidget(NULL),
 	m_option(option),
 	m_value(value)
 {
