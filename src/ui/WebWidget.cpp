@@ -863,9 +863,9 @@ void WebWidget::updateBookmarkActions()
 	updateLinkActions();
 }
 
-void WebWidget::setAlternateStyleSheets(const QStringList &styleSheets)
+void WebWidget::setActiveStyleSheet(const QString &styleSheet)
 {
-	m_alternateStyleSheets = styleSheets;
+	Q_UNUSED(styleSheet)
 }
 
 void WebWidget::setClickPosition(const QPoint &position)
@@ -1254,6 +1254,11 @@ QString WebWidget::suggestSaveFileName() const
 	return fileName;
 }
 
+QString WebWidget::getActiveStyleSheet() const
+{
+	return QString();
+}
+
 QString WebWidget::getSelectedText() const
 {
 	return QString();
@@ -1289,9 +1294,9 @@ WebWidget::SslInformation WebWidget::getSslInformation() const
 	return SslInformation();
 }
 
-QStringList WebWidget::getAlternateStyleSheets() const
+QStringList WebWidget::getStyleSheets() const
 {
-	return m_alternateStyleSheets;
+	return QStringList();
 }
 
 QList<LinkUrl> WebWidget::getFeeds() const

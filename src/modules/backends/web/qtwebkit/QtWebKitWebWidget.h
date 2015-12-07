@@ -56,6 +56,7 @@ public:
 	Action* getAction(int identifier);
 	QString getDefaultCharacterEncoding() const;
 	QString getTitle() const;
+	QString getActiveStyleSheet() const;
 	QString getSelectedText() const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
@@ -65,6 +66,7 @@ public:
 	WebWidget::SslInformation getSslInformation() const;
 	WindowHistoryInformation getHistory() const;
 	HitTestResult getHitTestResult(const QPoint &position);
+	QStringList getStyleSheets() const;
 	QList<LinkUrl> getFeeds() const;
 	QList<LinkUrl> getSearchEngines() const;
 	QVector<int> getContentBlockingProfiles() const;
@@ -85,6 +87,7 @@ public slots:
 	void goToHistoryIndex(int index);
 	void removeHistoryIndex(int index, bool purge = false);
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
+	void setActiveStyleSheet(const QString &styleSheet);
 	void setPermission(const QString &key, const QUrl &url, PermissionPolicies policies);
 	void setOption(const QString &key, const QVariant &value);
 	void setScrollPosition(const QPoint &position);

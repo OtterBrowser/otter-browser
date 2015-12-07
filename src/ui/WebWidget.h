@@ -132,6 +132,7 @@ public:
 	virtual Action* getAction(int identifier);
 	WebBackend* getBackend();
 	virtual QString getTitle() const = 0;
+	virtual QString getActiveStyleSheet() const;
 	virtual QString getSelectedText() const;
 	QString getStatusMessage() const;
 	QVariant getOption(const QString &key, const QUrl &url = QUrl()) const;
@@ -145,7 +146,7 @@ public:
 	virtual SslInformation getSslInformation() const;
 	virtual WindowHistoryInformation getHistory() const = 0;
 	virtual HitTestResult getHitTestResult(const QPoint &position);
-	QStringList getAlternateStyleSheets() const;
+	virtual QStringList getStyleSheets() const;
 	virtual QList<LinkUrl> getFeeds() const;
 	virtual QList<LinkUrl> getSearchEngines() const;
 	QVariantHash getOptions() const;
@@ -166,6 +167,7 @@ public slots:
 	virtual void goToHistoryIndex(int index) = 0;
 	virtual void removeHistoryIndex(int index, bool purge = false) = 0;
 	virtual void showContextMenu(const QPoint &position = QPoint());
+	virtual void setActiveStyleSheet(const QString &styleSheet);
 	virtual void setPermission(const QString &key, const QUrl &url, PermissionPolicies policies);
 	virtual void setOption(const QString &key, const QVariant &value);
 	virtual void setScrollPosition(const QPoint &position) = 0;
@@ -185,7 +187,6 @@ protected:
 	void startTransfer(Transfer *transfer);
 	void handleToolTipEvent(QHelpEvent *event, QWidget *widget);
 	void updateHitTestResult(const QPoint &position);
-	void setAlternateStyleSheets(const QStringList &styleSheets);
 	void setClickPosition(const QPoint &position);
 	Action* getExistingAction(int identifier);
 	QString suggestSaveFileName() const;
@@ -230,7 +231,6 @@ private:
 	QString m_javaScriptStatusMessage;
 	QString m_overridingStatusMessage;
 	QPoint m_clickPosition;
-	QStringList m_alternateStyleSheets;
 	QHash<int, Action*> m_actions;
 	QVariantHash m_options;
 	HitTestResult m_hitResult;

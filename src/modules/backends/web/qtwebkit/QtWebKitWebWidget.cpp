@@ -1506,6 +1506,21 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 	bounceAction(identifier, parameters);
 }
 
+void QtWebKitWebWidget::setActiveStyleSheet(const QString &styleSheet)
+{
+	QWebElementCollection styleSheets = m_page->mainFrame()->findAllElements(QLatin1String("link[rel=\"alternate stylesheet\"]"));
+
+	for (int i = 0; i < styleSheets.count(); ++i)
+	{
+		styleSheets.at(i).evaluateJavaScript(QLatin1String("this.disabled = true"));
+
+		if (styleSheets.at(i).attribute(QLatin1String("title")) == styleSheet)
+		{
+			styleSheets.at(i).evaluateJavaScript(QLatin1String("this.disabled = false"));
+		}
+	}
+}
+
 void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 {
 	if (history.entries.count() == 0)
@@ -1766,6 +1781,11 @@ QString QtWebKitWebWidget::getTitle() const
 	}
 
 	return title;
+}
+
+QString QtWebKitWebWidget::getActiveStyleSheet() const
+{
+	return m_page->mainFrame()->findFirstElement(QLatin1String("link[rel=\"alternate stylesheet\"]:not([disabled])")).attribute(QLatin1String("title"));
 }
 
 QString QtWebKitWebWidget::getSelectedText() const
@@ -2037,6 +2057,24 @@ WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &posit
 	}
 
 	return result;
+}
+
+QStringList QtWebKitWebWidget::getStyleSheets() const
+{
+	QStringList titles;
+	const QWebElementCollection styleSheets = m_page->mainFrame()->findAllElements(QLatin1String("link[rel=\"alternate stylesheet\"]"));
+
+	for (int i = 0; i < styleSheets.count(); ++i)
+	{
+		const QString title = styleSheets.at(i).attribute(QLatin1String("title"));
+
+		if (!title.isEmpty() && !titles.contains(title))
+		{
+			titles.append(title);
+		}
+	}
+
+	return titles;
 }
 
 QList<LinkUrl> QtWebKitWebWidget::getFeeds() const
