@@ -52,6 +52,31 @@ public:
 const GUID IID_IApplicationAssociationRegistrationUI = {0x1f76a169,0xf994,0x40ac, {0x8f,0xc8,0x09,0x59,0xe8,0x87,0x47,0x10}};
 #endif
 
+#if !defined(IApplicationActivationManager)
+enum ACTIVATEOPTIONS
+{
+        AO_NONE = 0,
+        AO_DESIGNMODE = 1,
+        AO_NOERRORUI = 2,
+        AO_NOSPLASHSCREEN = 4,
+};
+
+MIDL_INTERFACE("2e941141-7f97-4756-ba1d-9decde894a3d")
+IApplicationActivationManager : public IUnknown
+{
+public:
+
+    virtual HRESULT STDMETHODCALLTYPE ActivateApplication(
+        /* [in] */ __RPC__in LPCWSTR appUserModelId,
+        /* [unique][in] */ __RPC__in_opt LPCWSTR arguments,
+        /* [in] */ ACTIVATEOPTIONS options,
+        /* [out] */ __RPC__out DWORD *processId) = 0;
+};
+
+const GUID IID_IApplicationActivationManager = {0x2e941141,0x7f97,0x4756, {0xba,0x1d,0x9d,0xec,0xde,0x89,0x4a,0x3d}};
+const CLSID CLSID_ApplicationActivationManager = {0x45BA127D,0x10A8,0x46EA, {0x8A,0xB7,0x56,0xEA,0x90,0x78,0x94,0x3C}};
+#endif
+
 enum RegistrationType
 {
 	ExtensionType = 0,

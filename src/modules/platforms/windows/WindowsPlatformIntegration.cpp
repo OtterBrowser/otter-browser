@@ -421,7 +421,27 @@ bool WindowsPlatformIntegration::setAsDefaultBrowser()
 	registry.setValue(QLatin1String("Clients/StartmenuInternet/."), m_registrationIdentifier);
 	registry.sync();
 
-	if (QSysInfo::windowsVersion() >= QSysInfo::WV_VISTA)
+	if (QSysInfo::windowsVersion() >= QSysInfo::WV_10_0)
+	{
+		DWORD pid = 0;
+		IApplicationActivationManager *activationManager = NULL;
+		HRESULT result = CoCreateInstance(CLSID_ApplicationActivationManager, NULL, CLSCTX_INPROC_SERVER, IID_IApplicationActivationManager, (LPVOID*)&activationManager);
+
+		if (result == S_OK)
+		{
+			result = activationManager->ActivateApplication(QString("windows.immersivecontrolpanel_cw5n1h2txyewy!microsoft.windows.immersivecontrolpanel").toStdWString().c_str(), QString("page=SettingsPageAppsDefaults").toStdWString().c_str(), AO_NONE, &pid);
+
+			activationManager->Release();
+
+			if (result == S_OK)
+			{
+				return true;
+			}
+		}
+
+		Console::addMessage(QCoreApplication::translate("main", "Failed to run File Associations Manager, error code: %1\n Application ID: %2").arg(result).arg(pid), Otter::OtherMessageCategory, ErrorMessageLevel);
+	}
+	else if (QSysInfo::windowsVersion() >= QSysInfo::WV_VISTA)
 	{
 		IApplicationAssociationRegistrationUI *applicationAssociationRegistrationUI = NULL;
 		HRESULT result = CoCreateInstance(CLSID_ApplicationAssociationRegistrationUI, NULL, CLSCTX_INPROC_SERVER, IID_IApplicationAssociationRegistrationUI, (LPVOID*)&applicationAssociationRegistrationUI);
