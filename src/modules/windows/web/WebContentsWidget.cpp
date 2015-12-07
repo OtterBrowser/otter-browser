@@ -969,6 +969,11 @@ void WebContentsWidget::setOptions(const QVariantHash &options)
 	m_webWidget->setOptions(options);
 }
 
+void WebContentsWidget::setActiveStyleSheet(const QString &styleSheet)
+{
+	m_webWidget->setActiveStyleSheet(styleSheet);
+}
+
 void WebContentsWidget::setHistory(const WindowHistoryInformation &history)
 {
 	if (history.entries.count() == 1 && QUrl(history.entries.at(0).url).scheme() == QLatin1String("view-source"))
@@ -1043,6 +1048,11 @@ QString WebContentsWidget::getTitle() const
 	return m_webWidget->getTitle();
 }
 
+QString WebContentsWidget::getActiveStyleSheet() const
+{
+	return m_webWidget->getActiveStyleSheet();
+}
+
 QString WebContentsWidget::getStatusMessage() const
 {
 	return m_webWidget->getStatusMessage();
@@ -1081,6 +1091,11 @@ QPixmap WebContentsWidget::getThumbnail() const
 WindowHistoryInformation WebContentsWidget::getHistory() const
 {
 	return m_webWidget->getHistory();
+}
+
+QStringList WebContentsWidget::getStyleSheets() const
+{
+	return m_webWidget->getStyleSheets();
 }
 
 QList<LinkUrl> WebContentsWidget::getFeeds() const

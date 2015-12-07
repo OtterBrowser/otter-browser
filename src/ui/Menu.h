@@ -37,16 +37,17 @@ public:
 	enum MenuRole
 	{
 		NoMenuRole = 0,
-		BookmarksMenuRole = 1,
-		BookmarkSelectorMenuRole = 2,
-		NotesMenuRole = 3,
-		CharacterEncodingMenuRole = 5,
-		ClosedWindowsMenu = 6,
-		ImportExportMenuRole = 7,
-		SessionsMenuRole = 8,
-		ToolBarsMenuRole = 9,
-		UserAgentMenuRole = 10,
-		WindowsMenuRole = 11
+		BookmarksMenuRole,
+		BookmarkSelectorMenuRole,
+		NotesMenuRole,
+		CharacterEncodingMenuRole,
+		ClosedWindowsMenu,
+		ImportExportMenuRole,
+		SessionsMenuRole,
+		StyleSheetsMenuRole,
+		ToolBarsMenuRole,
+		UserAgentMenuRole,
+		WindowsMenuRole
 	};
 
 	explicit Menu(MenuRole role = NoMenuRole, QWidget *parent = NULL);
@@ -67,6 +68,7 @@ protected slots:
 	void populateCharacterEncodingMenu();
 	void populateClosedWindowsMenu();
 	void populateSessionsMenu();
+	void populateStyleSheetsMenu();
 	void populateToolBarsMenu();
 	void populateUserAgentMenu();
 	void populateWindowsMenu();
@@ -77,6 +79,7 @@ protected slots:
 	void openImporter(QAction *action);
 	void openSession(QAction *action);
 	void selectCharacterEncoding(QAction *action);
+	void selectStyleSheet(QAction *action);
 	void selectUserAgent(QAction *action);
 	void selectWindow(QAction *action);
 	void updateClosedWindowsMenu();

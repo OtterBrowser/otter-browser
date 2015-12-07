@@ -42,12 +42,14 @@ public:
 	Window* getParent();
 	virtual QString getTitle() const = 0;
 	virtual QString getVersion() const;
+	virtual QString getActiveStyleSheet() const;
 	virtual QString getStatusMessage() const;
 	virtual QLatin1String getType() const = 0;
 	virtual QUrl getUrl() const = 0;
 	virtual QIcon getIcon() const = 0;
 	virtual QPixmap getThumbnail() const;
 	virtual WindowHistoryInformation getHistory() const;
+	virtual QStringList getStyleSheets() const;
 	virtual QList<LinkUrl> getFeeds() const;
 	virtual QList<LinkUrl> getSearchEngines() const;
 	virtual WindowsManager::ContentStates getContentState() const;
@@ -63,6 +65,7 @@ public slots:
 	virtual void goToHistoryIndex(int index);
 	virtual void removeHistoryIndex(int index, bool purge = false);
 	void showDialog(ContentsDialog *dialog, bool lockEventLoop = true);
+	virtual void setActiveStyleSheet(const QString &styleSheet);
 	virtual void setHistory(const WindowHistoryInformation &history);
 	virtual void setZoom(int zoom);
 	virtual void setUrl(const QUrl &url, bool typed = true);

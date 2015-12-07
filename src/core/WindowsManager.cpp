@@ -901,6 +901,11 @@ Window* WindowsManager::openWindow(ContentsWidget *widget, OpenHints hints)
 
 Window* WindowsManager::getWindowByIndex(int index) const
 {
+	if (index == -1)
+	{
+		index = m_mainWindow->getTabBar()->currentIndex();
+	}
+
 	return getWindowByIdentifier(m_mainWindow->getTabBar()->tabData(index).toULongLong());
 }
 

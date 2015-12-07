@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "Menu.h"
+#include "ContentsWidget.h"
 #include "ImportDialog.h"
 #include "MainWindow.h"
 #include "Window.h"
@@ -106,6 +107,11 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 		case SessionsMenuRole:
 			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateSessionsMenu()));
 			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(openSession(QAction*)));
+
+			break;
+		case StyleSheetsMenuRole:
+			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateStyleSheetsMenu()));
+			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectStyleSheet(QAction*)));
 
 			break;
 		case ToolBarsMenuRole:
@@ -509,6 +515,50 @@ void Menu::populateSessionsMenu()
 	}
 }
 
+void Menu::populateStyleSheetsMenu()
+{
+	clear();
+
+	QAction *defaultAction = QMenu::addAction(tr("Default"));
+	defaultAction->setData(-1);
+	defaultAction->setCheckable(true);
+	defaultAction->setChecked(true);
+
+	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
+
+	if (!mainWindow)
+	{
+		return;
+	}
+
+	Window *window = mainWindow->getWindowsManager()->getWindowByIndex(mainWindow->getWindowsManager()->getWindowIndex(-1));
+
+	if (!window)
+	{
+		return;
+	}
+
+	addSeparator();
+
+	const QString activeStyleSheet = window->getContentsWidget()->getActiveStyleSheet();
+	const QStringList styleSheets = window->getContentsWidget()->getStyleSheets();
+	QActionGroup *actionGroup = new QActionGroup(this);
+	actionGroup->setExclusive(true);
+	actionGroup->addAction(defaultAction);
+
+	for (int i = 0; i < styleSheets.count(); ++i)
+	{
+		QAction *action = QMenu::addAction(styleSheets.at(i));
+
+		action->setCheckable(true);
+		action->setChecked(styleSheets.at(i) == activeStyleSheet);
+
+		actionGroup->addAction(action);
+	}
+
+	defaultAction->setChecked(activeStyleSheet.isEmpty() || !styleSheets.contains(activeStyleSheet));
+}
+
 void Menu::populateToolBarsMenu()
 {
 	clear();
@@ -755,6 +805,23 @@ void Menu::selectCharacterEncoding(QAction *action)
 	mainWindow->getWindowsManager()->setOption(QLatin1String("Content/DefaultCharacterEncoding"), encoding.toLower());
 }
 
+void Menu::selectStyleSheet(QAction *action)
+{
+	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
+
+	if (!mainWindow)
+	{
+		return;
+	}
+
+	Window *window = mainWindow->getWindowsManager()->getWindowByIndex(mainWindow->getWindowsManager()->getWindowIndex(-1));
+
+	if (window && action)
+	{
+		window->getContentsWidget()->setActiveStyleSheet(action->data().isNull() ? action->text() : QString());
+	}
+}
+
 void Menu::selectUserAgent(QAction *action)
 {
 	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
@@ -834,6 +901,11 @@ Menu::MenuRole Menu::getRole(const QString &identifier)
 	if (identifier == QLatin1String("SessionsMenu"))
 	{
 		return SessionsMenuRole;
+	}
+
+	if (identifier == QLatin1String("StyleSheetsMenu"))
+	{
+		return StyleSheetsMenuRole;
 	}
 
 	if (identifier == QLatin1String("ToolBarsMenu"))

@@ -70,6 +70,7 @@ public:
 	Action* getAction(int identifier);
 	WebWidget* getWebWidget();
 	QString getTitle() const;
+	QString getActiveStyleSheet() const;
 	QString getStatusMessage() const;
 	QLatin1String getType() const;
 	QVariant getOption(const QString &key) const;
@@ -77,6 +78,7 @@ public:
 	QIcon getIcon() const;
 	QPixmap getThumbnail() const;
 	WindowHistoryInformation getHistory() const;
+	QStringList getStyleSheets() const;
 	QList<LinkUrl> getFeeds() const;
 	QList<LinkUrl> getSearchEngines() const;
 	QVariantHash getOptions() const;
@@ -93,6 +95,7 @@ public slots:
 	void removeHistoryIndex(int index, bool purge = false);
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void setOption(const QString &key, const QVariant &value);
+	void setActiveStyleSheet(const QString &styleSheet);
 	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);
 	void setUrl(const QUrl &url, bool typed = true);

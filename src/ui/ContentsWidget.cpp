@@ -209,6 +209,11 @@ void ContentsWidget::removeHistoryIndex(int index, bool purge)
 	Q_UNUSED(purge)
 }
 
+void ContentsWidget::setActiveStyleSheet(const QString &styleSheet)
+{
+	Q_UNUSED(styleSheet)
+}
+
 void ContentsWidget::setHistory(const WindowHistoryInformation &history)
 {
 	Q_UNUSED(history)
@@ -259,6 +264,11 @@ QString ContentsWidget::getVersion() const
 	return QCoreApplication::applicationVersion();
 }
 
+QString ContentsWidget::getActiveStyleSheet() const
+{
+	return QString();
+}
+
 QString ContentsWidget::getStatusMessage() const
 {
 	return QString();
@@ -282,6 +292,11 @@ WindowHistoryInformation ContentsWidget::getHistory() const
 	information.entries.append(entry);
 
 	return information;
+}
+
+QStringList ContentsWidget::getStyleSheets() const
+{
+	return QStringList();
 }
 
 QList<LinkUrl> ContentsWidget::getFeeds() const

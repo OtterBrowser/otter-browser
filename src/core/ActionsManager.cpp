@@ -256,6 +256,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "View"));
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Toolbars"));
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "User Agent"));
+	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Style"));
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Character Encoding"));
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "History"));
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Closed Windows"));
