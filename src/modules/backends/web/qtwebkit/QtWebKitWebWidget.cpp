@@ -1785,6 +1785,11 @@ QString QtWebKitWebWidget::getTitle() const
 
 QString QtWebKitWebWidget::getActiveStyleSheet() const
 {
+	if (m_page->mainFrame()->evaluateJavaScript(QLatin1String("var isDefault = true; for (var i = 0; i < document.styleSheets.length; ++i) { if (document.styleSheets[i].ownerNode.rel.indexOf('alt') >= 0) { isDefault = false; break; } } isDefault")).toBool())
+	{
+		return QString();
+	}
+
 	return m_page->mainFrame()->findFirstElement(QLatin1String("link[rel=\"alternate stylesheet\"]:not([disabled])")).attribute(QLatin1String("title"));
 }
 
