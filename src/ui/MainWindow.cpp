@@ -375,80 +375,6 @@ void MainWindow::optionChanged(const QString &option, const QVariant &value)
 	}
 }
 
-void MainWindow::startToolBarDragging()
-{
-	m_topToolBarArea->setContentsMargins(0, 4, 0, 4);
-	m_bottomToolBarArea->setContentsMargins(0, 4, 0, 4);
-	m_leftToolBarArea->setContentsMargins(4, 0, 4, 0);
-	m_rightToolBarArea->setContentsMargins(4, 0, 4, 0);
-}
-
-void MainWindow::endToolBarDragging()
-{
-	m_topToolBarArea->setContentsMargins(0, 0, 0, 0);
-	m_bottomToolBarArea->setContentsMargins(0, 0, 0, 0);
-	m_leftToolBarArea->setContentsMargins(0, 0, 0, 0);
-	m_rightToolBarArea->setContentsMargins(0, 0, 0, 0);
-}
-
-void MainWindow::moveToolBar(ToolBarWidget *toolBar, Qt::ToolBarArea area)
-{
-	switch (area)
-	{
-		case Qt::BottomToolBarArea:
-			m_bottomToolBarArea->insertToolBar(toolBar);
-
-			break;
-		case Qt::LeftToolBarArea:
-			m_leftToolBarArea->insertToolBar(toolBar);
-
-			break;
-		case Qt::RightToolBarArea:
-			m_rightToolBarArea->insertToolBar(toolBar);
-
-			break;
-		default:
-			m_topToolBarArea->insertToolBar(toolBar);
-
-			break;
-	}
-}
-
-void MainWindow::openUrl(const QString &text)
-{
-	if (text.isEmpty())
-	{
-		m_windowsManager->triggerAction(ActionsManager::NewTabAction);
-
-		return;
-	}
-	else
-	{
-		InputInterpreter *interpreter = new InputInterpreter(this);
-
-		connect(interpreter, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), m_windowsManager, SLOT(open(BookmarksItem*,WindowsManager::OpenHints)));
-		connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), m_windowsManager, SLOT(open(QUrl,WindowsManager::OpenHints)));
-		connect(interpreter, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), m_windowsManager, SLOT(search(QString,QString,WindowsManager::OpenHints)));
-
-		interpreter->interpret(text, ((!m_workspace->getActiveWindow() || Utils::isUrlEmpty(m_workspace->getActiveWindow()->getUrl())) ? WindowsManager::CurrentTabOpen : WindowsManager::NewTabOpen));
-	}
-}
-
-void MainWindow::storeWindowState()
-{
-	m_previousState = windowState();
-}
-
-void MainWindow::restoreWindowState()
-{
-	setWindowState(m_previousState);
-}
-
-void MainWindow::raiseWindow()
-{
-	setWindowState(m_previousRaisedState);
-}
-
 void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 {
 	switch (identifier)
@@ -822,6 +748,80 @@ void MainWindow::triggerAction(bool checked)
 
 		triggerAction(action->getIdentifier(), parameters);
 	}
+}
+
+void MainWindow::startToolBarDragging()
+{
+	m_topToolBarArea->setContentsMargins(0, 4, 0, 4);
+	m_bottomToolBarArea->setContentsMargins(0, 4, 0, 4);
+	m_leftToolBarArea->setContentsMargins(4, 0, 4, 0);
+	m_rightToolBarArea->setContentsMargins(4, 0, 4, 0);
+}
+
+void MainWindow::endToolBarDragging()
+{
+	m_topToolBarArea->setContentsMargins(0, 0, 0, 0);
+	m_bottomToolBarArea->setContentsMargins(0, 0, 0, 0);
+	m_leftToolBarArea->setContentsMargins(0, 0, 0, 0);
+	m_rightToolBarArea->setContentsMargins(0, 0, 0, 0);
+}
+
+void MainWindow::moveToolBar(ToolBarWidget *toolBar, Qt::ToolBarArea area)
+{
+	switch (area)
+	{
+		case Qt::BottomToolBarArea:
+			m_bottomToolBarArea->insertToolBar(toolBar);
+
+			break;
+		case Qt::LeftToolBarArea:
+			m_leftToolBarArea->insertToolBar(toolBar);
+
+			break;
+		case Qt::RightToolBarArea:
+			m_rightToolBarArea->insertToolBar(toolBar);
+
+			break;
+		default:
+			m_topToolBarArea->insertToolBar(toolBar);
+
+			break;
+	}
+}
+
+void MainWindow::openUrl(const QString &text)
+{
+	if (text.isEmpty())
+	{
+		m_windowsManager->triggerAction(ActionsManager::NewTabAction);
+
+		return;
+	}
+	else
+	{
+		InputInterpreter *interpreter = new InputInterpreter(this);
+
+		connect(interpreter, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), m_windowsManager, SLOT(open(BookmarksItem*,WindowsManager::OpenHints)));
+		connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), m_windowsManager, SLOT(open(QUrl,WindowsManager::OpenHints)));
+		connect(interpreter, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), m_windowsManager, SLOT(search(QString,QString,WindowsManager::OpenHints)));
+
+		interpreter->interpret(text, ((!m_workspace->getActiveWindow() || Utils::isUrlEmpty(m_workspace->getActiveWindow()->getUrl())) ? WindowsManager::CurrentTabOpen : WindowsManager::NewTabOpen));
+	}
+}
+
+void MainWindow::storeWindowState()
+{
+	m_previousState = windowState();
+}
+
+void MainWindow::restoreWindowState()
+{
+	setWindowState(m_previousState);
+}
+
+void MainWindow::raiseWindow()
+{
+	setWindowState(m_previousRaisedState);
 }
 
 void MainWindow::addBookmark(const QUrl &url, const QString &title, const QString &description, bool warn)
