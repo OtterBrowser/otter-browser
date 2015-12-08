@@ -54,7 +54,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 	{
 		open(ReadOnly | Unbuffered);
 
-		m_content = Utils::createErrorPage(request().url(), QString::number(m_ftp->error()), m_ftp->errorString()).toUtf8();
+		m_content = Utils::createErrorPage(request().url(), QString::number(m_ftp->replyCode()), m_ftp->errorString()).toUtf8();
 
 		setHeader(QNetworkRequest::ContentTypeHeader, QVariant(QLatin1String("text/html; charset=UTF-8")));
 		setHeader(QNetworkRequest::ContentLengthHeader, QVariant(m_content.size()));

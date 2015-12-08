@@ -128,6 +128,7 @@ public:
 
     State state() const;
 
+    int replyCode() const;
     Error error() const;
     QString errorString() const;
 
@@ -151,6 +152,7 @@ private:
 
     Q_PRIVATE_SLOT(d, void _q_startNextCommand())
     Q_PRIVATE_SLOT(d, void _q_piFinished(const QString&))
+    Q_PRIVATE_SLOT(d, void _q_piServerReplyCode(int))
     Q_PRIVATE_SLOT(d, void _q_piError(int, const QString&))
     Q_PRIVATE_SLOT(d, void _q_piConnectState(int))
     Q_PRIVATE_SLOT(d, void _q_piFtpReply(int, const QString&))

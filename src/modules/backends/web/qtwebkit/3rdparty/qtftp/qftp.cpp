@@ -176,6 +176,7 @@ public:
 signals:
     void connectState(int);
     void finished(const QString&);
+    void serverReplyCode(int);
     void error(int, const QString&);
     void rawFtpReply(int, const QString&);
 
@@ -990,6 +991,8 @@ bool QFtpPI::processReply()
 
     int replyCodeInt = 100*replyCode[0] + 10*replyCode[1] + replyCode[2];
 
+    emit serverReplyCode(replyCodeInt);
+
     // process 226 replies ("Closing Data Connection") only when the data
     // connection is really closed to avoid short reads of the DTP
     if (replyCodeInt == 226 || (replyCodeInt == 250 && currentCmd.startsWith(QLatin1String("RETR")))) {
@@ -1260,7 +1263,7 @@ class QFtpPrivate
 public:
 
     inline explicit QFtpPrivate(QFtp *owner) : close_waitForStateChange(false), state(QFtp::Unconnected),
-        transferMode(QFtp::Passive), error(QFtp::NoError), port(0), proxyPort(0), q_ptr(owner)
+        transferMode(QFtp::Passive), replyCode(0), error(QFtp::NoError), port(0), proxyPort(0), q_ptr(owner)
     { }
 
     ~QFtpPrivate() { while (!pending.isEmpty()) delete pending.takeFirst(); }
@@ -1268,6 +1271,7 @@ public:
     // private slots
     void _q_startNextCommand();
     void _q_piFinished(const QString&);
+    void _q_piServerReplyCode(int);
     void _q_piError(int, const QString&);
     void _q_piConnectState(int);
     void _q_piFtpReply(int, const QString&);
@@ -1279,6 +1283,7 @@ public:
     bool close_waitForStateChange;
     QFtp::State state;
     QFtp::TransferMode transferMode;
+    int replyCode;
     QFtp::Error error;
     QString errorString;
 
@@ -1420,6 +1425,8 @@ QFtp::QFtp(QObject *parent)
             SLOT(_q_piConnectState(int)));
     connect(&d->pi, SIGNAL(finished(QString)),
             SLOT(_q_piFinished(QString)));
+    connect(&d->pi, SIGNAL(serverReplyCode(int)),
+            SLOT(_q_piServerReplyCode(int)));
     connect(&d->pi, SIGNAL(error(int,QString)),
             SLOT(_q_piError(int,QString)));
     connect(&d->pi, SIGNAL(rawFtpReply(int,QString)),
@@ -2160,6 +2167,14 @@ QFtp::State QFtp::state() const
 }
 
 /*!
+    Returns code of the last reply.
+*/
+int QFtp::replyCode() const
+{
+    return d->replyCode;
+}
+
+/*!
     Returns the last error that occurred. This is useful to find out
     what went wrong when receiving a commandFinished() or a done()
     signal with the \c error argument set to \c true.
@@ -2288,6 +2303,13 @@ void QFtpPrivate::_q_piFinished(const QString&)
     } else {
         _q_startNextCommand();
     }
+}
+
+void QFtpPrivate::_q_piServerReplyCode(int serverReplyCode)
+{
+    Q_Q(QFtp);
+
+    replyCode = serverReplyCode;
 }
 
 /*! \internal
