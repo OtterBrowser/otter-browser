@@ -444,6 +444,11 @@ void MainWindow::restoreWindowState()
 	setWindowState(m_previousState);
 }
 
+void MainWindow::raiseWindow()
+{
+	setWindowState(m_previousRaisedState);
+}
+
 void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 {
 	switch (identifier)
@@ -1193,6 +1198,11 @@ bool MainWindow::event(QEvent *event)
 					}
 
 					emit controlsHiddenChanged(windowState().testFlag(Qt::WindowFullScreen));
+				}
+
+				if (!windowState().testFlag(Qt::WindowMinimized))
+				{
+					m_previousRaisedState = windowState();
 				}
 			}
 
