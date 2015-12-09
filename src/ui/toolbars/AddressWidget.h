@@ -85,7 +85,7 @@ protected slots:
 	void openUrl(const QString &url);
 	void openUrl(const QModelIndex &index);
 	void removeIcon();
-	void updateBookmark();
+	void updateBookmark(const QUrl &url = QUrl());
 	void updateFeeds();
 	void updateLoadPlugins();
 	void updateLineEdit();

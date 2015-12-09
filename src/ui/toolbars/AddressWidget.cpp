@@ -652,16 +652,16 @@ void AddressWidget::handleUserInput(const QString &text, WindowsManager::OpenHin
 	}
 }
 
-void AddressWidget::updateBookmark()
+void AddressWidget::updateBookmark(const QUrl &url)
 {
 	if (!m_bookmarkLabel)
 	{
 		return;
 	}
 
-	const QUrl url = getUrl();
+	const QUrl bookmarkUrl(url.isEmpty() ? getUrl() : url);
 
-	if (Utils::isUrlEmpty(url) || url.scheme() == QLatin1String("about"))
+	if (Utils::isUrlEmpty(bookmarkUrl) || bookmarkUrl.scheme() == QLatin1String("about"))
 	{
 		m_bookmarkLabel->setEnabled(false);
 		m_bookmarkLabel->setPixmap(Utils::getIcon(QLatin1String("bookmarks")).pixmap(m_bookmarkLabel->size(), QIcon::Disabled));
@@ -670,7 +670,7 @@ void AddressWidget::updateBookmark()
 		return;
 	}
 
-	const bool hasBookmark = BookmarksManager::hasBookmark(url);
+	const bool hasBookmark = BookmarksManager::hasBookmark(bookmarkUrl);
 
 	m_bookmarkLabel->setEnabled(true);
 	m_bookmarkLabel->setPixmap(Utils::getIcon(QLatin1String("bookmarks")).pixmap(m_bookmarkLabel->size(), (hasBookmark ? QIcon::Active : QIcon::Disabled)));
@@ -880,7 +880,7 @@ void AddressWidget::setUrl(const QUrl &url, bool force)
 {
 	if (!m_isUsingSimpleMode)
 	{
-		updateBookmark();
+		updateBookmark(url);
 		updateFeeds();
 	}
 
@@ -1078,7 +1078,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 					dialog.exec();
 				}
 
-				updateBookmark();
+				updateBookmark(url);
 			}
 
 			event->accept();
