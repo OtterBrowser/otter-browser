@@ -52,7 +52,6 @@ protected slots:
 private:
 	QFtp *m_ftp;
 	QByteArray m_content;
-	QUrl m_url;
 	QList<QUrlInfo> m_directories;
 	QList<QUrlInfo> m_files;
 	qint64 m_offset;

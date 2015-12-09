@@ -33,7 +33,6 @@ namespace Otter
 
 QtWebKitFtpListingNetworkReply::QtWebKitFtpListingNetworkReply(const QNetworkRequest &request, QObject *parent) : QNetworkReply(parent),
 	m_ftp(new QFtp(this)),
-	m_url(request.url()),
 	m_offset(0)
 {
 	setRequest(request);
@@ -43,7 +42,7 @@ QtWebKitFtpListingNetworkReply::QtWebKitFtpListingNetworkReply(const QNetworkReq
 	connect(m_ftp, SIGNAL(commandFinished(int, bool)), this, SLOT(processCommand(int, bool)));
 	connect(m_ftp, SIGNAL(dataTransferProgress(qint64,qint64)), this, SIGNAL(downloadProgress(qint64,qint64)));
 
-	m_ftp->connectToHost(m_url.host());
+	m_ftp->connectToHost(request.url().host());
 }
 
 void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
@@ -81,13 +80,13 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 
 			break;
 		case QFtp::Login:
-			m_ftp->list(m_url.path());
+			m_ftp->list(Utils::normalizeUrl(request().url()).path());
 
 			break;
 		case QFtp::List:
-			if (m_files.count() == 1 && m_directories.isEmpty())
+			if (m_files.count() == 1 && m_directories.isEmpty() && request().url().path().endsWith(m_files.first().name()))
 			{
-				m_ftp->get(m_url.path());
+				m_ftp->get(Utils::normalizeUrl(request().url()).path());
 			}
 			else
 			{
@@ -104,7 +103,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 
 				QString mainTemplate = stream.readAll();
 				const QString entryTemplate = entryExpression.match(mainTemplate).captured(1);
-				QUrl url(m_url);
+				QUrl url(request().url());
 				QStringList navigation;
 				QList<QUrlInfo> entries;
 				entries << m_directories << m_files;
@@ -132,7 +131,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 
 				QHash<QString, QString> icons;
 				QHash<QString, QString> variables;
-				variables[QLatin1String("title")] = m_url.toString() + (m_url.path().endsWith(QLatin1Char('/')) ? QString() : QLatin1String("/"));
+				variables[QLatin1String("title")] = request().url().toString() + (request().url().path().endsWith(QLatin1Char('/')) ? QString() : QLatin1String("/"));
 				variables[QLatin1String("description")] = tr("Directory Contents");
 				variables[QLatin1String("dir")] = (QGuiApplication::isLeftToRight() ? QLatin1String("ltr") : QLatin1String("rtl"));
 				variables[QLatin1String("navigation")] = navigation.join(QString());
@@ -143,7 +142,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 
 				for (int i = 0; i < entries.count(); ++i)
 				{
-					const QMimeType mimeType = (entries.at(i).isDir() ? database.mimeTypeForName(QLatin1String("inode-directory")) : database.mimeTypeForUrl(m_url.url() + entries.at(i).name()));
+					const QMimeType mimeType = (entries.at(i).isDir() ? database.mimeTypeForName(QLatin1String("inode-directory")) : database.mimeTypeForUrl(request().url().url() + entries.at(i).name()));
 					QString entryHtml(entryTemplate);
 
 					if (!icons.contains(mimeType.name()))
@@ -157,7 +156,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 					}
 
 					QHash<QString, QString> entryVariables;
-					entryVariables[QLatin1String("url")] = m_url.url() + (m_url.path().endsWith(QLatin1String("/")) ? QString() : QLatin1String("/")) + entries.at(i).name();
+					entryVariables[QLatin1String("url")] = Utils::normalizeUrl(request().url()).url() + QLatin1String("/") + entries.at(i).name();
 					entryVariables[QLatin1String("icon")] = QStringLiteral("data:image/png;base64,%1").arg(icons[mimeType.name()]);
 					entryVariables[QLatin1String("mimeType")] = mimeType.name();
 					entryVariables[QLatin1String("name")] = entries.at(i).name();
