@@ -21,7 +21,7 @@
 #include "../MainWindow.h"
 
 #include <QtGui/QGuiApplication>
-#include <QtGui/QStyle>
+#include <QtWidgets/QStyle>
 
 namespace Otter
 {
