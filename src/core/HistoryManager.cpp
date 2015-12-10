@@ -268,7 +268,12 @@ void HistoryManager::updateTypedHistoryModel()
 
 		if (item && item->data(HistoryModel::TypedInRole).toBool())
 		{
-			m_typedHistoryModel->appendRow(new QStandardItem(item->icon(), item->data(HistoryModel::UrlRole).toUrl().toDisplayString()));
+			const QString url(item->data(HistoryModel::UrlRole).toUrl().toDisplayString());
+
+			if (m_typedHistoryModel->findItems(url).isEmpty())
+			{
+				m_typedHistoryModel->appendRow(new QStandardItem(item->icon(), url));
+			}
 		}
 	}
 
