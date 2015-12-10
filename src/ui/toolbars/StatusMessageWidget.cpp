@@ -21,6 +21,7 @@
 #include "../MainWindow.h"
 
 #include <QtGui/QGuiApplication>
+#include <QtGui/QStyle>
 
 namespace Otter
 {
@@ -28,6 +29,7 @@ namespace Otter
 StatusMessageWidget::StatusMessageWidget(QWidget *parent) : QLabel(parent)
 {
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+	setIndent(style()->pixelMetric(QStyle::PM_ButtonMargin));
 
 	MainWindow *window = MainWindow::findMainWindow(parent);
 
