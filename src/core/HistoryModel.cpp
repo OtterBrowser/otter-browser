@@ -57,6 +57,18 @@ void HistoryModel::removeEntry(quint64 identifier)
 		return;
 	}
 
+	const QUrl url = Utils::normalizeUrl(entry->data(UrlRole).toUrl());
+
+	if (m_urls.contains(url))
+	{
+		m_urls[url].removeAll(entry);
+
+		if (m_urls[url].isEmpty())
+		{
+			m_urls.remove(url);
+		}
+	}
+
 	if (identifier > 0 && m_identifiers.contains(identifier))
 	{
 		m_identifiers.remove(identifier);
