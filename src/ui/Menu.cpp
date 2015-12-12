@@ -834,11 +834,12 @@ void Menu::selectUserAgent(QAction *action)
 
 void Menu::selectWindow(QAction *action)
 {
-	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
-
-	if (action && mainWindow)
+	if (action)
 	{
-		mainWindow->getWindowsManager()->setActiveWindowByIdentifier(action->data().toULongLong());
+		QVariantMap parameters;
+		parameters[QLatin1String("window")] = action->data().toULongLong();
+
+		ActionsManager::triggerAction(ActionsManager::ActivateTabAction, this, parameters);
 	}
 }
 
