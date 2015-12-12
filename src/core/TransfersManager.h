@@ -61,7 +61,7 @@ private:
 	static TransfersManager *m_instance;
 	static QList<Transfer*> m_transfers;
 	static QList<Transfer*> m_privateTransfers;
-	static bool m_initilized;
+	static bool m_isInitilized;
 
 signals:
 	void transferStarted(Transfer *transfer);

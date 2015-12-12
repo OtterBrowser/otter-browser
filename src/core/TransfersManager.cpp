@@ -33,7 +33,7 @@ namespace Otter
 TransfersManager* TransfersManager::m_instance = NULL;
 QList<Transfer*> TransfersManager::m_transfers;
 QList<Transfer*> TransfersManager::m_privateTransfers;
-bool TransfersManager::m_initilized = false;
+bool TransfersManager::m_isInitilized = false;
 
 TransfersManager::TransfersManager(QObject *parent) : QObject(parent),
 	m_saveTimer(0)
@@ -325,7 +325,7 @@ QString TransfersManager::getSavePath(const QString &fileName, QString path, boo
 
 QList<Transfer*> TransfersManager::getTransfers()
 {
-	if (!m_initilized)
+	if (!m_isInitilized)
 	{
 		QSettings history(SessionsManager::getWritableDataPath(QLatin1String("transfers.ini")), QSettings::IniFormat);
 		const QStringList entries = history.childGroups();
@@ -344,7 +344,7 @@ QList<Transfer*> TransfersManager::getTransfers()
 			history.endGroup();
 		}
 
-		m_initilized = true;
+		m_isInitilized = true;
 
 		connect(QCoreApplication::instance(), SIGNAL(aboutToQuit()), m_instance, SLOT(save()));
 	}
