@@ -453,20 +453,6 @@ QWidget* ToolBarWidget::createWidget(const ToolBarsManager::ToolBarActionDefinit
 		return new AddressWidget(m_window, this);
 	}
 
-	if (definition.action == QLatin1String("ClosedWindowsWidget"))
-	{
-		QAction *closedWindowsAction = new QAction(Utils::getIcon(QLatin1String("user-trash")), tr("Closed Tabs"), this);
-		closedWindowsAction->setMenu(new Menu(Menu::ClosedWindowsMenu, this));
-		closedWindowsAction->setEnabled(false);
-
-		ToolButtonWidget *closedWindowsMenuButton = new ToolButtonWidget(definition, this);
-		closedWindowsMenuButton->setDefaultAction(closedWindowsAction);
-		closedWindowsMenuButton->setAutoRaise(true);
-		closedWindowsMenuButton->setPopupMode(QToolButton::InstantPopup);
-
-		return closedWindowsMenuButton;
-	}
-
 	if (definition.action == QLatin1String("MenuButtonWidget"))
 	{
 		return new MenuButtonWidget(definition, this);
@@ -551,6 +537,11 @@ QWidget* ToolBarWidget::createWidget(const ToolBarsManager::ToolBarActionDefinit
 
 			return actionWidget;
 		}
+	}
+
+	if (definition.action.endsWith(QLatin1String("Menu")))
+	{
+		return new ToolButtonWidget(definition, this);
 	}
 
 	return NULL;

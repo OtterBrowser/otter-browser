@@ -18,7 +18,7 @@
 			"TabBarWidget",
 			"NewTabAction",
 			"spacer",
-			"ClosedWindowsWidget"
+			"ClosedWindowsMenu"
 		]
 	},
 	{

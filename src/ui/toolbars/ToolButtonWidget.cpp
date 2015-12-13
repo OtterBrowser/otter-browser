@@ -37,12 +37,24 @@ ToolButtonWidget::ToolButtonWidget(const ToolBarsManager::ToolBarActionDefinitio
 	setContextMenuPolicy(Qt::NoContextMenu);
 	setOptions(definition.options);
 
+	Menu *menu = NULL;
+
 	if (!definition.actions.isEmpty())
 	{
-		Menu *menu = new Menu(Menu::NoMenuRole, this);
+		menu = new Menu(Menu::NoMenuRole, this);
 
 		addMenu(menu, definition.actions);
 		setMenu(menu);
+	}
+	else if (definition.action.endsWith(QLatin1String("Menu")))
+	{
+		menu = new Menu(Menu::getRole(definition.action), this);
+
+		setDefaultAction(menu->menuAction());
+	}
+
+	if (menu)
+	{
 		setPopupMode(QToolButton::InstantPopup);
 		setText(definition.options.value(QLatin1String("text"), tr("Menu")).toString());
 	}
