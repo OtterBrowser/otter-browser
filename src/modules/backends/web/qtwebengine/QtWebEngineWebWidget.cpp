@@ -82,7 +82,6 @@ namespace Otter
 QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : WebWidget(isPrivate, backend, parent),
 	m_webView(new QWebEngineView(this)),
 	m_page(new QtWebEnginePage(isPrivate, this)),
-	m_childWidget(NULL),
 	m_iconReply(NULL),
 	m_scrollTimer(startTimer(1000)),
 	m_isEditing(false),
@@ -92,15 +91,6 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	m_webView->setPage(m_page);
 	m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
 	m_webView->installEventFilter(this);
-
-	const QList<QWidget*> children = m_webView->findChildren<QWidget*>();
-
-	for (int i = 0; i < children.count(); ++i)
-	{
-		children.at(i)->installEventFilter(this);
-
-		m_childWidget = children.at(i);
-	}
 
 	QVBoxLayout *layout = new QVBoxLayout(this);
 	layout->addWidget(m_webView);
@@ -1563,8 +1553,59 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 		if (childEvent->child())
 		{
 			childEvent->child()->installEventFilter(this);
+		}
+	}
+	else if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel)
+	{
+		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
-			m_childWidget = qobject_cast<QWidget*>(childEvent->child());
+		if (mouseEvent)
+		{
+			setClickPosition(mouseEvent->pos());
+			updateHitTestResult(mouseEvent->pos());
+		}
+
+		QList<GesturesManager::GesturesContext> contexts;
+
+		if (getCurrentHitTestResult().flags.testFlag(IsContentEditableTest))
+		{
+			contexts << GesturesManager::ContentEditableGesturesContext;
+		}
+
+		if (getCurrentHitTestResult().linkUrl.isValid())
+		{
+			contexts << GesturesManager::LinkGesturesContext;
+		}
+
+		contexts << GesturesManager::GenericGesturesContext;
+
+		if ((!mouseEvent || !isScrollBar(mouseEvent->pos())) && GesturesManager::startGesture(object, event, contexts))
+		{
+			return true;
+		}
+
+		if (event->type() == QEvent::MouseButtonDblClick && mouseEvent->button() == Qt::LeftButton && SettingsManager::getValue(QLatin1String("Browser/ShowSelectionContextMenuOnDoubleClick")).toBool())
+		{
+			const WebWidget::HitTestResult hitResult = getHitTestResult(mouseEvent->pos());
+
+			if (!hitResult.flags.testFlag(IsContentEditableTest) && hitResult.tagName != QLatin1String("textarea") && hitResult.tagName!= QLatin1String("select") && hitResult.tagName != QLatin1String("input"))
+			{
+				setClickPosition(mouseEvent->pos());
+
+				QTimer::singleShot(250, this, SLOT(showContextMenu()));
+			}
+		}
+	}
+	else if (object == m_webView && event->type() == QEvent::ContextMenu)
+	{
+		QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
+
+		if (contextMenuEvent && contextMenuEvent->reason() != QContextMenuEvent::Mouse)
+		{
+			QVariantMap parameters;
+			parameters[QLatin1String("context")] = contextMenuEvent->reason();
+
+			triggerAction(ActionsManager::ContextMenuAction, parameters);
 		}
 	}
 	else if (object == m_webView && (event->type() == QEvent::Move || event->type() == QEvent::Resize))

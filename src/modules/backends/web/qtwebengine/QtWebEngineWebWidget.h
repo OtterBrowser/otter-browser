@@ -119,7 +119,6 @@ protected slots:
 private:
 	QWebEngineView *m_webView;
 	QtWebEnginePage *m_page;
-	QWidget *m_childWidget;
 	QNetworkReply *m_iconReply;
 	QIcon m_icon;
 	HitTestResult m_hitResult;

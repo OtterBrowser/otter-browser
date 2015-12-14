@@ -1182,7 +1182,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			return;
 		case ActionsManager::ContextMenuAction:
 			{
-				if (parameters.contains(QLatin1String("context")) && parameters["context"].toInt() == QContextMenuEvent::Keyboard)
+				if (parameters.contains(QLatin1String("context")) && parameters[QLatin1String("context")].toInt() == QContextMenuEvent::Keyboard)
 				{
 					const QWebElement element = m_page->mainFrame()->findFirstElement(QLatin1String(":focus"));
 
