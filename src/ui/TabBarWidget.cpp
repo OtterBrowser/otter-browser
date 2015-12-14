@@ -696,14 +696,14 @@ void TabBarWidget::updateButtons()
 
 	for (int i = 0; i < count(); ++i)
 	{
-		const bool isCurrent = (i == currentIndex());
-
 		QLabel *closeLabel = qobject_cast<QLabel*>(tabButton(i, m_closeButtonPosition));
 		QLabel *iconLabel = qobject_cast<QLabel*>(tabButton(i, m_iconButtonPosition));
+		const bool isCurrent = (i == currentIndex());
+		const bool isPinned = getTabProperty(i, QLatin1String("isPinned"), false).toBool();
 
 		if (iconLabel)
 		{
-			iconLabel->setVisible(!isNarrow || !(isCurrent && closeLabel));
+			iconLabel->setVisible(isPinned || !isCurrent || !isNarrow);
 		}
 
 		if (!closeLabel)
@@ -711,7 +711,6 @@ void TabBarWidget::updateButtons()
 			continue;
 		}
 
-		const bool isPinned = getTabProperty(i, QLatin1String("isPinned"), false).toBool();
 		const bool wasPinned = closeLabel->property("isPinned").toBool();
 
 		if (!closeLabel->buddy())
@@ -749,7 +748,7 @@ void TabBarWidget::updateButtons()
 			}
 		}
 
-		closeLabel->setVisible((!isNarrow || isCurrent) && (isVertical || !isPinned));
+		closeLabel->setVisible((isPinned && isVertical) || ((isCurrent || !isNarrow) && !isPinned));
 	}
 }
 
