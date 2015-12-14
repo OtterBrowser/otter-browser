@@ -2,6 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,11 +22,36 @@
 #ifndef OTTER_ITEMVIEWWIDGET_H
 #define OTTER_ITEMVIEWWIDGET_H
 
+#include <QtGui/QContextMenuEvent>
 #include <QtGui/QStandardItemModel>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QTreeView>
 
 namespace Otter
 {
+
+class HeaderViewWidget : public QHeaderView
+{
+	Q_OBJECT
+
+public:
+	explicit HeaderViewWidget(Qt::Orientation orientation, QWidget *parent = NULL);
+
+public slots:
+	void setSorting(int column, Qt::SortOrder order);
+
+protected:
+	void showEvent(QShowEvent *event);
+	void contextMenuEvent(QContextMenuEvent *event);
+
+protected slots:
+	void toggleColumnVisibility(QAction *action);
+	void toggleColumnSort(int column);
+
+signals:
+	void sortingChanged(int column, Qt::SortOrder order);
+	void columnVisibilityChanged(int column, bool hidden);
+};
 
 class ItemViewWidget : public QTreeView
 {
@@ -48,6 +74,8 @@ public:
 	QModelIndex getIndex(int row, int column = 0) const;
 	QSize sizeHint() const;
 	ViewMode getViewMode() const;
+	Qt::SortOrder getSortOrder() const;
+	int getSortColumn() const;
 	int getCurrentRow() const;
 	int getPreviousRow() const;
 	int getRowCount() const;
@@ -66,6 +94,7 @@ public slots:
 	void setFilterRoles(const QSet<int> &roles);
 
 protected:
+	void showEvent(QShowEvent *event);
 	void dropEvent(QDropEvent *event);
 	void startDrag(Qt::DropActions supportedActions);
 	void moveRow(bool up);
@@ -73,11 +102,15 @@ protected:
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
+	void saveState();
+	void hideColumn(int column, bool hide);
 	void notifySelectionChanged();
 	void updateDropSelection();
 	void updateFilter();
+	void setSorting(int column, Qt::SortOrder order);
 
 private:
+	HeaderViewWidget *m_header;
 	QStandardItemModel *m_model;
 	QString m_filterString;
 	QModelIndex m_currentIndex;
@@ -85,10 +118,13 @@ private:
 	QSet<QStandardItem*> m_expandedBranches;
 	QSet<int> m_filterRoles;
 	ViewMode m_viewMode;
+	Qt::SortOrder m_sortOrder;
 	int m_dragRow;
 	int m_dropRow;
+	int m_sortColumn;
 	bool m_canGatherExpanded;
 	bool m_isModified;
+	bool m_isInitialized;
 
 	static int m_treeIndentation;
 
@@ -97,6 +133,7 @@ signals:
 	void canMoveDownChanged(bool available);
 	void needsActionsUpdate();
 	void modified();
+	void sortingChanged(int column, Qt::SortOrder order);
 };
 
 }
