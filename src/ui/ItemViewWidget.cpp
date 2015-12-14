@@ -181,6 +181,8 @@ void ItemViewWidget::showEvent(QShowEvent *event)
 		connect(m_header, SIGNAL(sectionMoved(int,int,int)), this, SLOT(saveState()));
 	}
 
+	m_header->setStretchLastSection(true);
+
 	m_isInitialized = true;
 
 	QTreeView::showEvent(event);
