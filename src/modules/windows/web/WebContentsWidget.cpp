@@ -888,36 +888,6 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 		connect(m_webWidget, SIGNAL(requestedCloseWindow()), window, SLOT(close()));
 	}
 
-	if (m_webWidget->getAction(ActionsManager::OpenSelectionAsLinkAction))
-	{
-		connect(m_webWidget->getAction(ActionsManager::OpenSelectionAsLinkAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
-	}
-
-	if (m_webWidget->getAction(ActionsManager::PasteAndGoAction))
-	{
-		connect(m_webWidget->getAction(ActionsManager::PasteAndGoAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
-	}
-
-	if (m_webWidget->getAction(ActionsManager::FindAction))
-	{
-		connect(m_webWidget->getAction(ActionsManager::FindAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
-	}
-
-	if (m_webWidget->getAction(ActionsManager::QuickFindAction))
-	{
-		connect(m_webWidget->getAction(ActionsManager::QuickFindAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
-	}
-
-	if (m_webWidget->getAction(ActionsManager::FindNextAction))
-	{
-		connect(m_webWidget->getAction(ActionsManager::FindNextAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
-	}
-
-	if (m_webWidget->getAction(ActionsManager::FindPreviousAction))
-	{
-		connect(m_webWidget->getAction(ActionsManager::FindPreviousAction), SIGNAL(triggered()), this, SLOT(triggerAction()));
-	}
-
 	if (m_webWidget->isLoading())
 	{
 		setLoading(true);

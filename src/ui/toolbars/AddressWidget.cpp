@@ -1232,7 +1232,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 
 		return true;
 	}
-	else if (m_completionView && object == m_completionView->viewport() && event->type() == QEvent::MouseMove)// && m_completionView->viewport()->underMouse())
+	else if (m_completionView && object == m_completionView->viewport() && event->type() == QEvent::MouseMove)
 	{
 		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
 
