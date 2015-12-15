@@ -107,7 +107,7 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 	availableEntriesModel->appendRow(createEntry(QLatin1String("spacer")));
 
 	QStringList widgets;
-	widgets << QLatin1String("ClosedWindowsMenu") << QLatin1String("AddressWidget") << QLatin1String("MenuButtonWidget") << QLatin1String("PanelChooserWidget") << QLatin1String("SearchWidget") << QLatin1String("StatusMessageWidget") << QLatin1String("ZoomWidget");
+	widgets << QLatin1String("CustomMenu") << QLatin1String("ClosedWindowsMenu") << QLatin1String("AddressWidget") << QLatin1String("MenuButtonWidget") << QLatin1String("PanelChooserWidget") << QLatin1String("SearchWidget") << QLatin1String("StatusMessageWidget") << QLatin1String("ZoomWidget");
 
 	for (int i = 0; i < widgets.count(); ++i)
 	{
@@ -141,15 +141,14 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 
 	m_ui->availableEntriesItemView->setModel(availableEntriesModel);
 	m_ui->availableEntriesItemView->viewport()->setAcceptDrops(false);
-
-	QStandardItemModel *currentEntriesModel = new QStandardItemModel(this);
+	m_ui->currentEntriesItemView->setModel(new QStandardItemModel(this));
+	m_ui->currentEntriesItemView->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->currentEntriesItemView->setRootIsDecorated(false);
 
 	for (int i = 0; i < m_definition.actions.count(); ++i)
 	{
-		currentEntriesModel->appendRow(createEntry(m_definition.actions.at(i).action, m_definition.actions.at(i).options));
+		addEntry(m_definition.actions.at(i));
 	}
-
-	m_ui->currentEntriesItemView->setModel(currentEntriesModel);
 
 	m_definition.actions.clear();
 
@@ -188,20 +187,28 @@ void ToolBarDialog::changeEvent(QEvent *event)
 	}
 }
 
-void ToolBarDialog::restoreDefaults()
+void ToolBarDialog::addEntry(const ToolBarsManager::ToolBarActionDefinition &entry, QStandardItem *parent)
 {
-	ToolBarsManager::getInstance()->resetToolBar(m_definition.identifier);
+	QStandardItem *item = createEntry(entry.action, entry.options);
 
-	reject();
-}
+	if (parent)
+	{
+		parent->appendRow(item);
+	}
+	else
+	{
+		m_ui->currentEntriesItemView->getModel()->appendRow(item);
+	}
 
-void ToolBarDialog::updateActions()
-{
-	const QString identifier = m_ui->currentEntriesItemView->currentIndex().data(Qt::UserRole).toString();
+	if (entry.action == QLatin1String("CustomMenu"))
+	{
+		for (int i = 0; i < entry.actions.count(); ++i)
+		{
+			addEntry(entry.actions.at(i), item);
+		}
 
-	m_ui->addButton->setEnabled(m_ui->availableEntriesItemView->currentIndex().isValid());
-	m_ui->removeButton->setEnabled(m_ui->currentEntriesItemView->currentIndex().isValid() && m_ui->currentEntriesItemView->currentIndex().data(Qt::UserRole).toString() != QLatin1String("MenuBarWidget") && m_ui->currentEntriesItemView->currentIndex().data(Qt::UserRole).toString() != QLatin1String("TabBarWidget"));
-	m_ui->editEntryButton->setEnabled(identifier == QLatin1String("ClosedWindowsMenu") || identifier == QLatin1String("MenuButtonWidget") ||identifier == QLatin1String("PanelChooserWidget") || identifier == QLatin1String("SearchWidget") || identifier.startsWith(QLatin1String("bookmarks:")) || identifier.endsWith(QLatin1String("Action")));
+		m_ui->currentEntriesItemView->expand(item->index());
+	}
 }
 
 void ToolBarDialog::addEntry()
@@ -210,7 +217,39 @@ void ToolBarDialog::addEntry()
 
 	if (sourceItem)
 	{
-		m_ui->currentEntriesItemView->insertRow(sourceItem->clone());
+		QStandardItem *newItem = sourceItem->clone();
+		QStandardItem *targetItem = m_ui->currentEntriesItemView->getItem(m_ui->currentEntriesItemView->currentIndex());
+
+		if (targetItem && targetItem->data(Qt::UserRole).toString() != QLatin1String("CustomMenu"))
+		{
+			targetItem = targetItem->parent();
+		}
+
+		if (targetItem && targetItem->data(Qt::UserRole).toString() == QLatin1String("CustomMenu"))
+		{
+			int row = -1;
+
+			if (targetItem->index() != m_ui->currentEntriesItemView->currentIndex())
+			{
+				row = m_ui->currentEntriesItemView->currentIndex().row();
+			}
+
+			if (row >= 0)
+			{
+				targetItem->insertRow((row + 1), newItem);
+			}
+			else
+			{
+				targetItem->appendRow(newItem);
+			}
+
+			m_ui->currentEntriesItemView->setCurrentIndex(newItem->index());
+			m_ui->currentEntriesItemView->expand(targetItem->index());
+		}
+		else
+		{
+			m_ui->currentEntriesItemView->insertRow(newItem);
+		}
 	}
 }
 
@@ -247,7 +286,7 @@ void ToolBarDialog::editEntry()
 		widgets.append(qMakePair(tr("Show search engine:"), searchEngineWidget));
 		widgets.append(qMakePair(tr("Show search button:"), new OptionWidget(QLatin1String("showSearchButton"), options.value(QLatin1String("showSearchButton"), true), OptionWidget::BooleanType, this)));
 	}
-	else if (identifier == QLatin1String("ClosedWindowsMenu") || identifier == QLatin1String("MenuButtonWidget") ||identifier == QLatin1String("PanelChooserWidget") || identifier.startsWith(QLatin1String("bookmarks:")) || identifier.endsWith(QLatin1String("Action")))
+	else if (identifier == QLatin1String("MenuButtonWidget") || identifier == QLatin1String("PanelChooserWidget") || identifier.startsWith(QLatin1String("bookmarks:")) || identifier.endsWith(QLatin1String("Action")) || identifier.endsWith(QLatin1String("Menu")))
 	{
 		widgets.append(qMakePair(tr("Custom icon:"), new OptionWidget(QLatin1String("icon"), options.value(QLatin1String("icon")), OptionWidget::IconType, this)));
 		widgets.append(qMakePair(tr("Custom text:"), new OptionWidget(QLatin1String("text"), options.value(QLatin1String("text")), OptionWidget::StringType, this)));
@@ -313,6 +352,23 @@ void ToolBarDialog::addBookmark(QAction *action)
 	}
 }
 
+void ToolBarDialog::restoreDefaults()
+{
+	ToolBarsManager::getInstance()->resetToolBar(m_definition.identifier);
+
+	reject();
+}
+
+void ToolBarDialog::updateActions()
+{
+	const QString sourceIdentifier = m_ui->availableEntriesItemView->currentIndex().data(Qt::UserRole).toString();
+	const QString targetIdentifier = m_ui->currentEntriesItemView->currentIndex().data(Qt::UserRole).toString();
+
+	m_ui->addButton->setEnabled(!sourceIdentifier.isEmpty() && (!(m_ui->currentEntriesItemView->currentIndex().data(Qt::UserRole).toString() == QLatin1String("CustomMenu") || m_ui->currentEntriesItemView->currentIndex().parent().data(Qt::UserRole).toString() == QLatin1String("CustomMenu")) || (sourceIdentifier == QLatin1String("separator") || sourceIdentifier.endsWith(QLatin1String("Action")) || sourceIdentifier.endsWith(QLatin1String("Menu")))));
+	m_ui->removeButton->setEnabled(m_ui->currentEntriesItemView->currentIndex().isValid() && targetIdentifier != QLatin1String("MenuBarWidget") && targetIdentifier != QLatin1String("TabBarWidget"));
+	m_ui->editEntryButton->setEnabled(targetIdentifier == QLatin1String("MenuButtonWidget") || targetIdentifier == QLatin1String("PanelChooserWidget") || targetIdentifier == QLatin1String("SearchWidget") || targetIdentifier.startsWith(QLatin1String("bookmarks:")) || targetIdentifier.endsWith(QLatin1String("Action")) || targetIdentifier.endsWith(QLatin1String("Menu")));
+}
+
 QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVariantMap &options)
 {
 	QStandardItem *item = new QStandardItem();
@@ -327,13 +383,20 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	{
 		item->setText(tr("--- spacer ---"));
 	}
-	else if (identifier == QLatin1String("AddressWidget"))
+	else if (identifier == QLatin1String("CustomMenu"))
 	{
-		item->setText(tr("Address Field"));
+		item->setText(tr("Arbitrary List of Actions"));
+		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
+
+		m_ui->currentEntriesItemView->setRootIsDecorated(true);
 	}
 	else if (identifier == QLatin1String("ClosedWindowsMenu"))
 	{
 		item->setText(tr("List of Closed Windows and Tabs"));
+	}
+	else if (identifier == QLatin1String("AddressWidget"))
+	{
+		item->setText(tr("Address Field"));
 	}
 	else if (identifier == QLatin1String("MenuBarWidget"))
 	{
@@ -437,6 +500,29 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	return item;
 }
 
+ToolBarsManager::ToolBarActionDefinition ToolBarDialog::getEntry(QStandardItem *item) const
+{
+	ToolBarsManager::ToolBarActionDefinition entry;
+
+	if (!item)
+	{
+		return entry;
+	}
+
+	entry.action = item->data(Qt::UserRole).toString();
+	entry.options = item->data(Qt::UserRole + 1).toMap();
+
+	if (entry.action == QLatin1String("CustomMenu"))
+	{
+		for (int i = 0; i < item->rowCount(); ++i)
+		{
+			entry.actions.append(getEntry(item->child(i, 0)));
+		}
+	}
+
+	return entry;
+}
+
 ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition() const
 {
 	ToolBarsManager::ToolBarDefinition definition(m_definition);
@@ -486,11 +572,7 @@ ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition() const
 
 	for (int i = 0; i < m_ui->currentEntriesItemView->model()->rowCount(); ++i)
 	{
-		ToolBarsManager::ToolBarActionDefinition action;
-		action.action = m_ui->currentEntriesItemView->model()->index(i, 0).data(Qt::UserRole).toString();
-		action.options = m_ui->currentEntriesItemView->model()->index(i, 0).data(Qt::UserRole + 1).toMap();
-
-		definition.actions.append(action);
+		definition.actions.append(getEntry(m_ui->currentEntriesItemView->getItem(i)));
 	}
 
 	if (!definition.bookmarksPath.isEmpty())

@@ -307,10 +307,18 @@ void ItemViewWidget::removeRow()
 	}
 
 	const int row = currentIndex().row();
+	QStandardItem *parent = m_model->itemFromIndex(currentIndex().parent());
 
 	if (row >= 0)
 	{
-		m_model->removeRow(row);
+		if (parent)
+		{
+			parent->removeRow(row);
+		}
+		else
+		{
+			m_model->removeRow(row);
+		}
 
 		m_isModified = true;
 
@@ -492,6 +500,11 @@ void ItemViewWidget::setViewMode(ItemViewWidget::ViewMode mode)
 QStandardItemModel* ItemViewWidget::getModel()
 {
 	return m_model;
+}
+
+QStandardItem* ItemViewWidget::getItem(const QModelIndex &index) const
+{
+	return(m_model ? m_model->itemFromIndex(index) : NULL);
 }
 
 QStandardItem* ItemViewWidget::getItem(int row, int column) const

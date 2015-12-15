@@ -70,6 +70,7 @@ public:
 	void setModel(QAbstractItemModel *model);
 	void setViewMode(ViewMode mode);
 	QStandardItemModel* getModel();
+	QStandardItem* getItem(const QModelIndex &index) const;
 	QStandardItem* getItem(int row, int column = 0) const;
 	QModelIndex getIndex(int row, int column = 0) const;
 	QSize sizeHint() const;

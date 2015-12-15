@@ -45,7 +45,9 @@ public:
 
 protected:
 	void changeEvent(QEvent *event);
+	void addEntry(const ToolBarsManager::ToolBarActionDefinition &entry, QStandardItem *parent = NULL);
 	QStandardItem* createEntry(const QString &identifier, const QVariantMap &options = QVariantMap());
+	ToolBarsManager::ToolBarActionDefinition getEntry(QStandardItem *item) const;
 
 protected slots:
 	void addEntry();

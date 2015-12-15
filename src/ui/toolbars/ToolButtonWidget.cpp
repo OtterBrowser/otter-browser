@@ -106,7 +106,14 @@ void ToolButtonWidget::addMenu(Menu *menu, const QList<ToolBarsManager::ToolBarA
 	{
 		if (actions.at(i).actions.isEmpty())
 		{
-			menu->addAction(ActionsManager::getActionIdentifier(actions.at(i).action), true);
+			if (actions.at(i).action.isEmpty() || actions.at(i).action == QLatin1String("separator"))
+			{
+				menu->addSeparator();
+			}
+			else
+			{
+				menu->addAction(ActionsManager::getActionIdentifier(actions.at(i).action), true);
+			}
 		}
 		else
 		{
