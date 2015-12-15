@@ -210,7 +210,7 @@
        </widget>
       </item>
       <item>
-       <layout class="QGridLayout" name="gridLayout">
+       <layout class="QGridLayout" name="gridLayout" columnstretch="2,1,2">
         <property name="spacing">
          <number>6</number>
         </property>
