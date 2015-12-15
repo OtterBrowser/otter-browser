@@ -168,7 +168,7 @@ void ItemViewWidget::showEvent(QShowEvent *event)
 
 		disconnect(m_header, SIGNAL(sectionMoved(int,int,int)), this, SLOT(saveState()));
 
-		for (int i = 0; i < columns.size(); ++i)
+		for (int i = 0; i < columns.count(); ++i)
 		{
 			setColumnHidden(columns[i].toInt(), false);
 

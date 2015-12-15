@@ -479,7 +479,7 @@ void WebWidget::showContextMenu(const QPoint &position)
 		flags.append(QLatin1String("edit"));
 	}
 
-	if (flags.isEmpty() || (flags.size() == 1 && flags.first() == QLatin1String("form")))
+	if (flags.isEmpty() || (flags.count() == 1 && flags.first() == QLatin1String("form")))
 	{
 		flags.append(QLatin1String("standard"));
 

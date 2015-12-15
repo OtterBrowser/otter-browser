@@ -353,7 +353,7 @@ QList<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMime
 
 		bool exclude = false;
 
-		for (int j = 0; j < applications.length(); ++j)
+		for (int j = 0; j < applications.count(); ++j)
 		{
 			if (applications.at(j).name == information.name)
 			{

@@ -390,7 +390,7 @@ void QtWebKitWebWidget::saveState(QWebFrame *frame, QWebHistoryItem *item)
 	{
 		QVariantList data = m_webView->history()->currentItem().userData().toList();
 
-		if (data.isEmpty() || data.length() < 3)
+		if (data.isEmpty() || data.count() < 3)
 		{
 			data.clear();
 			data.append(0);
@@ -1911,7 +1911,7 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 {
 	QVariantList data = m_webView->history()->currentItem().userData().toList();
 
-	if (data.isEmpty() || data.length() < 3)
+	if (data.isEmpty() || data.count() < 3)
 	{
 		data.clear();
 		data.append(0);

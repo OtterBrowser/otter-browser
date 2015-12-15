@@ -332,7 +332,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 Application::~Application()
 {
-	for (int i = 0; i < m_windows.size(); ++i)
+	for (int i = 0; i < m_windows.count(); ++i)
 	{
 		m_windows.at(i)->deleteLater();
 	}

@@ -250,7 +250,7 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 			}
 			else if (object.value(QLatin1String("type")).toString() == QLatin1String("include"))
 			{
-				for (int j = 0; j < menu->actions().size(); ++j)
+				for (int j = 0; j < menu->actions().count(); ++j)
 				{
 					QMenu::addAction(menu->actions().at(j));
 				}

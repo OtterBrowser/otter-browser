@@ -126,7 +126,7 @@ void CookieJar::clearCookies(int period)
 
 	const QList<QNetworkCookie> cookies = allCookies();
 
-	for (int i = 0; i < cookies.length(); ++i)
+	for (int i = 0; i < cookies.count(); ++i)
 	{
 		QNetworkCookieJar::deleteCookie(cookies.at(i));
 
@@ -155,9 +155,9 @@ void CookieJar::save()
 
 	const QList<QNetworkCookie> cookies = allCookies();
 	QDataStream stream(&file);
-	stream << quint32(cookies.length());
+	stream << quint32(cookies.count());
 
-	for (int i = 0; i < cookies.length(); ++i)
+	for (int i = 0; i < cookies.count(); ++i)
 	{
 		if (!cookies.at(i).isSessionCookie())
 		{
@@ -198,7 +198,7 @@ QList<QNetworkCookie> CookieJar::getCookies(const QString &domain) const
 		const QList<QNetworkCookie> cookies = allCookies();
 		QList<QNetworkCookie> domainCookies;
 
-		for (int i = 0; i < cookies.length(); ++i)
+		for (int i = 0; i < cookies.count(); ++i)
 		{
 			if (cookies.at(i).domain() == domain || (cookies.at(i).domain().startsWith(QLatin1Char('.')) && domain.endsWith(cookies.at(i).domain())))
 			{
