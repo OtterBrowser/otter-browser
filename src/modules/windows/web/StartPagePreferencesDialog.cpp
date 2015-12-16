@@ -41,6 +41,7 @@ StartPagePreferencesDialog::StartPagePreferencesDialog(QWidget *parent) : Dialog
 	m_ui->backgroundModeComboBox->addItem(tr("Center"), QLatin1String("center"));
 	m_ui->backgroundModeComboBox->addItem(tr("Stretch"), QLatin1String("stretch"));
 	m_ui->backgroundModeComboBox->addItem(tr("Tile"), QLatin1String("tile"));
+	m_ui->backgroundColorWidget->setColor(SettingsManager::getValue(QLatin1String("StartPage/BackgroundColor")).toString());
 
 	const int backgroundModeIndex = m_ui->backgroundModeComboBox->findData(backgroundModeString);
 
@@ -75,8 +76,9 @@ void StartPagePreferencesDialog::save()
 {
 	const QString backgroundModeString = m_ui->backgroundModeComboBox->currentData().toString();
 
-	SettingsManager::setValue(QLatin1String("StartPage/BackgroundPath"), m_ui->backgroundFilePathWidget->getPath());
+	SettingsManager::setValue(QLatin1String("StartPage/BackgroundColor"), m_ui->backgroundColorWidget->getColor().name());
 	SettingsManager::setValue(QLatin1String("StartPage/BackgroundMode"), (m_ui->customBackgroundCheckBox->isChecked() ? backgroundModeString : QLatin1String("standard")));
+	SettingsManager::setValue(QLatin1String("StartPage/BackgroundPath"), m_ui->backgroundFilePathWidget->getPath());
 	SettingsManager::setValue(QLatin1String("StartPage/TilesPerRow"), m_ui->columnsPerRowSpinBox->value());
 	SettingsManager::setValue(QLatin1String("StartPage/ZoomLevel"), m_ui->zoomLevelSpinBox->value());
 	SettingsManager::setValue(QLatin1String("StartPage/ShowSearchField"), m_ui->showSearchFieldCheckBox->isChecked());

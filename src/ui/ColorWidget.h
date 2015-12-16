@@ -32,11 +32,15 @@ class ColorWidget : public QPushButton
 public:
 	explicit ColorWidget(QWidget *parent = NULL);
 
+	void setColor(const QString &color);
 	void setColor(const QColor &color);
 	QColor getColor() const;
 
 protected slots:
 	void selectColor();
+
+private:
+	QColor m_color;
 
 signals:
 	void colorChanged(const QColor &color);

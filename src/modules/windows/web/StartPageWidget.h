@@ -50,8 +50,9 @@ protected:
 	void paintEvent(QPaintEvent *event);
 
 private:
-	QString m_backgroundPath;
-	BackgroundMode m_backgroundMode;
+	QString m_path;
+	QColor m_color;
+	BackgroundMode m_mode;
 };
 
 class StartPageWidget : public QScrollArea

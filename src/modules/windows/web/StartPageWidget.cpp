@@ -46,7 +46,7 @@ namespace Otter
 StartPageModel* StartPageWidget::m_model = NULL;
 
 StartPageContentsWidget::StartPageContentsWidget(QWidget *parent) : QWidget(parent),
-	m_backgroundMode(NoCustomBackground)
+	m_mode(NoCustomBackground)
 {
 	setAutoFillBackground(true);
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -57,92 +57,97 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 	Q_UNUSED(event)
 
 	QPainter painter(this);
-	painter.fillRect(geometry(), Qt::transparent);
+	painter.fillRect(contentsRect(), m_color);
 
-	if (m_backgroundMode != NoCustomBackground && !m_backgroundPath.isEmpty())
+	if (m_mode == NoCustomBackground || m_path.isEmpty())
 	{
-		QPixmap pixmap(m_backgroundPath);
+		return;
+	}
 
-		if (pixmap.isNull())
-		{
-			return;
-		}
+	QPixmap pixmap(m_path);
 
-		switch (m_backgroundMode)
-		{
-			case BestFitBackground:
+	if (pixmap.isNull())
+	{
+		return;
+	}
+
+	switch (m_mode)
+	{
+		case BestFitBackground:
+			{
+				const QString key = QLatin1String("start-page-best-fit-") + QString::number(width()) + QLatin1Char('-') + QString::number(height());
+				QPixmap *cachedBackground = QPixmapCache::find(key);
+
+				if (cachedBackground)
 				{
-					const QString key = QLatin1String("start-page-best-fit-") + QString::number(width()) + QLatin1Char('-') + QString::number(height());
-					QPixmap *cachedBackground = QPixmapCache::find(key);
+					painter.drawPixmap(contentsRect(), *cachedBackground, contentsRect());
+				}
+				else
+				{
+					const qreal pixmapAscpectRatio = (pixmap.width() / qreal(pixmap.height()));
+					const qreal backgroundAscpectRatio = (width() / qreal(height()));
+					QPixmap newBackground(size());
 
-					if (cachedBackground)
+					if (pixmapAscpectRatio > backgroundAscpectRatio)
 					{
-						painter.drawPixmap(contentsRect(), *cachedBackground, contentsRect());
+						newBackground = pixmap.scaled(QSize((width() / backgroundAscpectRatio), height()), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+					}
+					else if (backgroundAscpectRatio > pixmapAscpectRatio)
+					{
+						newBackground = pixmap.scaled(QSize(width(), (height() * backgroundAscpectRatio)), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 					}
 					else
 					{
-						const qreal pixmapAscpectRatio = (pixmap.width() / qreal(pixmap.height()));
-						const qreal backgroundAscpectRatio = (width() / qreal(height()));
-						QPixmap newBackground(size());
-
-						if (pixmapAscpectRatio > backgroundAscpectRatio)
-						{
-							newBackground = pixmap.scaled(QSize((width() / backgroundAscpectRatio), height()), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-						}
-						else if (backgroundAscpectRatio > pixmapAscpectRatio)
-						{
-							newBackground = pixmap.scaled(QSize(width(), (height() * backgroundAscpectRatio)), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-						}
-						else
-						{
-							newBackground = pixmap.scaled(size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-						}
-
-						painter.drawPixmap(contentsRect(), newBackground, contentsRect());
-
-						QPixmapCache::insert(key, newBackground);
+						newBackground = pixmap.scaled(size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 					}
+
+					painter.drawPixmap(contentsRect(), newBackground, contentsRect());
+
+					QPixmapCache::insert(key, newBackground);
 				}
+			}
 
-				break;
-			case CenterBackground:
-				painter.drawPixmap((contentsRect().center() - pixmap.rect().center()), pixmap);
+			break;
+		case CenterBackground:
+			painter.drawPixmap((contentsRect().center() - pixmap.rect().center()), pixmap);
 
-				break;
-			case StretchBackground:
+			break;
+		case StretchBackground:
+			{
+				const QString key = QLatin1String("start-page-stretch-") + QString::number(width()) + QLatin1Char('-') + QString::number(height());
+				QPixmap *cachedBackground = QPixmapCache::find(key);
+
+				if (cachedBackground)
 				{
-					const QString key = QLatin1String("start-page-stretch-") + QString::number(width()) + QLatin1Char('-') + QString::number(height());
-					QPixmap *cachedBackground = QPixmapCache::find(key);
-
-					if (cachedBackground)
-					{
-						painter.drawPixmap(contentsRect(), *cachedBackground, contentsRect());
-					}
-					else
-					{
-						const QPixmap newBackground = pixmap.scaled(size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-
-						painter.drawPixmap(contentsRect(), newBackground, contentsRect());
-
-						QPixmapCache::insert(key, newBackground);
-					}
+					painter.drawPixmap(contentsRect(), *cachedBackground, contentsRect());
 				}
+				else
+				{
+					const QPixmap newBackground = pixmap.scaled(size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
-				break;
-			case TileBackground:
-				painter.drawTiledPixmap(contentsRect(), pixmap);
+					painter.drawPixmap(contentsRect(), newBackground, contentsRect());
 
-				break;
-			default:
-				break;
-		}
+					QPixmapCache::insert(key, newBackground);
+				}
+			}
+
+			break;
+		case TileBackground:
+			painter.drawTiledPixmap(contentsRect(), pixmap);
+
+			break;
+		default:
+			break;
 	}
 }
 
 void StartPageContentsWidget::setBackgroundMode(StartPageContentsWidget::BackgroundMode mode)
 {
-	m_backgroundMode = mode;
-	m_backgroundPath = ((mode == NoCustomBackground) ? QString() : SettingsManager::getValue(QLatin1String("StartPage/BackgroundPath")).toString());
+	const QString color = SettingsManager::getValue(QLatin1String("StartPage/BackgroundColor")).toString();
+
+	m_path = ((mode == NoCustomBackground) ? QString() : SettingsManager::getValue(QLatin1String("StartPage/BackgroundPath")).toString());
+	m_color = (color.isEmpty() ? QColor(Qt::transparent) : QColor(color));
+	m_mode = mode;
 
 	update();
 }

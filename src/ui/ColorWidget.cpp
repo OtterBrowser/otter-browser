@@ -19,6 +19,7 @@
 
 #include "ColorWidget.h"
 
+#include <QtWidgets/QApplication>
 #include <QtWidgets/QColorDialog>
 
 namespace Otter
@@ -45,11 +46,18 @@ void ColorWidget::selectColor()
 	}
 }
 
+void ColorWidget::setColor(const QString &color)
+{
+	setColor(color.isEmpty() ? QColor() : QColor(color));
+}
+
 void ColorWidget::setColor(const QColor &color)
 {
+	m_color = color;
+
 	const QString text(color.isValid() ? color.name().toUpper() : tr("Invalid"));
 	QPalette palette = this->palette();
-	palette.setColor(QPalette::Button, color);
+	palette.setColor(QPalette::Button, (color.isValid() ? color : QApplication::palette(this).color(QPalette::Button)));
 
 	setPalette(palette);
 	setText(text);
@@ -58,7 +66,7 @@ void ColorWidget::setColor(const QColor &color)
 
 QColor ColorWidget::getColor() const
 {
-	return palette().color(QPalette::Button);
+	return m_color;
 }
 
 }
