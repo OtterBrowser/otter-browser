@@ -124,6 +124,7 @@ SOURCES += src/main.cpp \
     src/ui/BookmarksImporterWidget.cpp \
     src/ui/CertificateDialog.cpp \
     src/ui/ClearHistoryDialog.cpp \
+    src/ui/ColorWidget.cpp \
     src/ui/ConsoleWidget.cpp \
     src/ui/ContentsDialog.cpp \
     src/ui/ContentsWidget.cpp \
@@ -288,6 +289,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/BookmarksImporterWidget.h \
     src/ui/CertificateDialog.h \
     src/ui/ClearHistoryDialog.h \
+    src/ui/ColorWidget.h \
     src/ui/ConsoleWidget.h \
     src/ui/ContentsDialog.h \
     src/ui/ContentsWidget.h \

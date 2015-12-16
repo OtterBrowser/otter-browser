@@ -29,6 +29,7 @@
 namespace Otter
 {
 
+class ColorWidget;
 class FilePathWidget;
 class IconWidget;
 
@@ -71,16 +72,15 @@ protected:
 	void focusInEvent(QFocusEvent *event);
 
 protected slots:
-	void selectColor();
 	void markModified();
 	void reset();
 	void save();
 
 private:
 	QWidget *m_widget;
+	ColorWidget *m_colorWidget;
 	FilePathWidget *m_filePathWidget;
 	IconWidget *m_iconWidget;
-	QPushButton *m_colorButton;
 	QComboBox *m_comboBox;
 	QFontComboBox *m_fontComboBox;
 	QLineEdit *m_lineEdit;

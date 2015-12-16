@@ -18,11 +18,11 @@
 **************************************************************************/
 
 #include "OptionWidget.h"
+#include "ColorWidget.h"
 #include "IconWidget.h"
 #include "FilePathWidget.h"
 #include "../core/SettingsManager.h"
 
-#include <QtWidgets/QColorDialog>
 #include <QtWidgets/QCompleter>
 #include <QtWidgets/QHBoxLayout>
 
@@ -31,9 +31,9 @@ namespace Otter
 
 OptionWidget::OptionWidget(const QString &option, const QVariant &value, OptionType type, QWidget *parent) : QWidget(parent),
 	m_widget(NULL),
+	m_colorWidget(NULL),
 	m_filePathWidget(NULL),
 	m_iconWidget(NULL),
-	m_colorButton(NULL),
 	m_comboBox(NULL),
 	m_fontComboBox(NULL),
 	m_lineEdit(NULL),
@@ -57,14 +57,11 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, OptionT
 			break;
 		case ColorType:
 			{
-				m_widget = m_colorButton = new QPushButton(this);
+				m_widget = m_colorWidget = new ColorWidget(this);
 
-				QPalette palette = m_colorButton->palette();
-				palette.setColor(QPalette::Button, m_value.value<QColor>());
+				m_colorWidget->setColor(m_value.value<QColor>());
 
-				m_colorButton->setPalette(palette);
-
-				connect(m_colorButton, SIGNAL(clicked()), this, SLOT(selectColor()));
+				connect(m_colorWidget, SIGNAL(colorChanged(QColor)), this, SLOT(markModified()));
 			}
 
 			break;
@@ -152,22 +149,6 @@ void OptionWidget::focusInEvent(QFocusEvent *event)
 	}
 }
 
-void OptionWidget::selectColor()
-{
-	QColorDialog dialog(this);
-	dialog.setCurrentColor(m_colorButton->palette().color(QPalette::Button));
-
-	if (dialog.exec() == QDialog::Accepted)
-	{
-		QPalette palette = m_colorButton->palette();
-		palette.setColor(QPalette::Button, dialog.currentColor());
-
-		m_colorButton->setPalette(palette);
-
-		markModified();
-	}
-}
-
 void OptionWidget::markModified()
 {
 	if (m_resetButton)
@@ -184,12 +165,9 @@ void OptionWidget::reset()
 {
 	const QVariant value = SettingsManager::getDefaultValue(m_option);
 
-	if (m_colorButton)
+	if (m_colorWidget)
 	{
-		QPalette palette = m_colorButton->palette();
-		palette.setColor(QPalette::Button, value.value<QColor>());
-
-		m_colorButton->setPalette(palette);
+		m_colorWidget->setColor(value.value<QColor>());
 	}
 	else if (m_comboBox)
 	{
@@ -302,9 +280,9 @@ QString OptionWidget::getOption() const
 
 QVariant OptionWidget::getValue() const
 {
-	if (m_colorButton)
+	if (m_colorWidget)
 	{
-		return m_colorButton->palette().color(QPalette::Button);
+		return m_colorWidget->getColor();
 	}
 
 	if (m_comboBox)
