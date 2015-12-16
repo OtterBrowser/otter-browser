@@ -51,7 +51,7 @@ SidebarWidget::SidebarWidget(QWidget *parent) : QWidget(parent),
 
 	QToolBar *toolbar = new QToolBar(this);
 	toolbar->setIconSize(QSize(16, 16));
-	toolbar->addWidget(new PanelChooserWidget(ToolBarsManager::ToolBarActionDefinition(), this));
+	toolbar->addWidget(new PanelChooserWidget(ActionsManager::ActionEntryDefinition(), this));
 	toolbar->addAction(ActionsManager::getAction(ActionsManager::OpenPanelAction, this));
 
 	QWidget *spacer = new QWidget(toolbar);

@@ -30,7 +30,7 @@
 namespace Otter
 {
 
-ToolButtonWidget::ToolButtonWidget(const ToolBarsManager::ToolBarActionDefinition &definition, QWidget *parent) : QToolButton(parent),
+ToolButtonWidget::ToolButtonWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent) : QToolButton(parent),
 	m_isCustomized(false)
 {
 	setAutoRaise(true);
@@ -39,11 +39,11 @@ ToolButtonWidget::ToolButtonWidget(const ToolBarsManager::ToolBarActionDefinitio
 
 	Menu *menu = NULL;
 
-	if (!definition.actions.isEmpty())
+	if (!definition.entries.isEmpty())
 	{
 		menu = new Menu(Menu::NoMenuRole, this);
 
-		addMenu(menu, definition.actions);
+		addMenu(menu, definition.entries);
 		setMenu(menu);
 	}
 	else if (definition.action.endsWith(QLatin1String("Menu")))
@@ -100,29 +100,29 @@ void ToolButtonWidget::paintEvent(QPaintEvent *event)
 	painter.drawComplexControl(QStyle::CC_ToolButton, option);
 }
 
-void ToolButtonWidget::addMenu(Menu *menu, const QList<ToolBarsManager::ToolBarActionDefinition> &actions)
+void ToolButtonWidget::addMenu(Menu *menu, const QList<ActionsManager::ActionEntryDefinition> &entries)
 {
-	for (int i = 0; i < actions.count(); ++i)
+	for (int i = 0; i < entries.count(); ++i)
 	{
-		if (actions.at(i).actions.isEmpty())
+		if (entries.at(i).entries.isEmpty())
 		{
-			if (actions.at(i).action.isEmpty() || actions.at(i).action == QLatin1String("separator"))
+			if (entries.at(i).action.isEmpty() || entries.at(i).action == QLatin1String("separator"))
 			{
 				menu->addSeparator();
 			}
 			else
 			{
-				menu->addAction(ActionsManager::getActionIdentifier(actions.at(i).action), true);
+				menu->addAction(ActionsManager::getActionIdentifier(entries.at(i).action), true);
 			}
 		}
 		else
 		{
 			Menu *subMenu = new Menu();
 			Action *subMenuAction = menu->addAction(-1);
-			subMenuAction->setText(actions.at(i).options.value(QLatin1String("text"), tr("Menu")).toString());
+			subMenuAction->setText(entries.at(i).options.value(QLatin1String("text"), tr("Menu")).toString());
 			subMenuAction->setMenu(subMenu);
 
-			addMenu(subMenu, actions.at(i).actions);
+			addMenu(subMenu, entries.at(i).entries);
 		}
 	}
 }

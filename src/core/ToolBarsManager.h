@@ -20,8 +20,7 @@
 #ifndef OTTER_TOOLBARSMANAGER_H
 #define OTTER_TOOLBARSMANAGER_H
 
-#include <QtCore/QObject>
-#include <QtCore/QVariantMap>
+#include "ActionsManager.h"
 
 namespace Otter
 {
@@ -47,18 +46,11 @@ public:
 		AlwaysHiddenToolBar = 2
 	};
 
-	struct ToolBarActionDefinition
-	{
-		QString action;
-		QVariantMap options;
-		QList<ToolBarActionDefinition> actions;
-	};
-
 	struct ToolBarDefinition
 	{
 		QString title;
 		QString bookmarksPath;
-		QList<ToolBarActionDefinition> actions;
+		QList<ActionsManager::ActionEntryDefinition> entries;
 		ToolBarVisibility visibility;
 		Qt::ToolBarArea location;
 		Qt::ToolButtonStyle buttonStyle;
@@ -91,8 +83,8 @@ public slots:
 
 protected:
 	void timerEvent(QTimerEvent *event);
-	static QJsonValue encodeAction(const ToolBarsManager::ToolBarActionDefinition &definition);
-	static ToolBarsManager::ToolBarActionDefinition decodeAction(const QJsonValue &value);
+	static QJsonValue encodeEntry(const ActionsManager::ActionEntryDefinition &definition);
+	static ActionsManager::ActionEntryDefinition decodeEntry(const QJsonValue &value);
 	static QHash<QString, ToolBarsManager::ToolBarDefinition> loadToolBars(const QString &path, bool isDefault);
 
 protected slots:

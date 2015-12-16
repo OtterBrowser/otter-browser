@@ -33,7 +33,7 @@ namespace Otter
 {
 
 ActionsManager* ActionsManager::m_instance = NULL;
-QVector<ActionDefinition> ActionsManager::m_definitions;
+QVector<ActionsManager::ActionDefinition> ActionsManager::m_definitions;
 
 
 Action::Action(int identifier, QObject *parent) : QAction(parent),
@@ -79,7 +79,7 @@ void Action::update(bool reset)
 		return;
 	}
 
-	const ActionDefinition action = ActionsManager::getActionDefinition(m_identifier);
+	const ActionsManager::ActionDefinition action = ActionsManager::getActionDefinition(m_identifier);
 	QString text = QCoreApplication::translate("actions", (m_isOverridingText ? m_overrideText : action.text).toUtf8().constData());
 
 	if (!action.shortcuts.isEmpty())
@@ -602,16 +602,16 @@ QString ActionsManager::getActionName(int identifier)
 	return QString();
 }
 
-QVector<ActionDefinition> ActionsManager::getActionDefinitions()
+QVector<ActionsManager::ActionDefinition> ActionsManager::getActionDefinitions()
 {
 	return m_definitions;
 }
 
-ActionDefinition ActionsManager::getActionDefinition(int identifier)
+ActionsManager::ActionDefinition ActionsManager::getActionDefinition(int identifier)
 {
 	if (identifier < 0 || identifier >= m_definitions.count())
 	{
-		return ActionDefinition();
+		return ActionsManager::ActionDefinition();
 	}
 
 	return m_definitions[identifier];
@@ -619,7 +619,7 @@ ActionDefinition ActionsManager::getActionDefinition(int identifier)
 
 int ActionsManager::registerAction(int identifier, const QString &text, const QString &description, const QIcon &icon, bool isEnabled, bool isCheckable, bool isChecked)
 {
-	ActionDefinition action;
+	ActionsManager::ActionDefinition action;
 	action.text = text;
 	action.description = description;
 	action.icon = icon;

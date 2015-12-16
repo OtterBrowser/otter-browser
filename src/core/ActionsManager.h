@@ -22,24 +22,11 @@
 #ifndef OTTER_ACTIONSMANAGER_H
 #define OTTER_ACTIONSMANAGER_H
 
+#include <QtCore/QVariantMap>
 #include <QtWidgets/QAction>
 
 namespace Otter
 {
-
-struct ActionDefinition
-{
-	QString text;
-	QString description;
-	QIcon icon;
-	QVector<QKeySequence> shortcuts;
-	int identifier;
-	bool isCheckable;
-	bool isChecked;
-	bool isEnabled;
-
-	ActionDefinition() : identifier(-1), isCheckable(false), isChecked(false), isEnabled(true) {}
-};
 
 class Action : public QAction
 {
@@ -249,6 +236,27 @@ public:
 		AboutQtAction,
 		ExitAction,
 		OtherAction
+	};
+
+	struct ActionDefinition
+	{
+		QString text;
+		QString description;
+		QIcon icon;
+		QVector<QKeySequence> shortcuts;
+		int identifier;
+		bool isCheckable;
+		bool isChecked;
+		bool isEnabled;
+
+		ActionDefinition() : identifier(-1), isCheckable(false), isChecked(false), isEnabled(true) {}
+	};
+
+	struct ActionEntryDefinition
+	{
+		QString action;
+		QVariantMap options;
+		QList<ActionEntryDefinition> entries;
 	};
 
 	static void createInstance(QObject *parent);

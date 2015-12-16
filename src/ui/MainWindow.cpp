@@ -343,7 +343,7 @@ void MainWindow::optionChanged(const QString &option, const QVariant &value)
 		}
 		else if (!m_sidebarToggle && value.toBool())
 		{
-			m_sidebarToggle = new ActionWidget(ActionsManager::ShowSidebarAction, NULL, ToolBarsManager::ToolBarActionDefinition(), this);
+			m_sidebarToggle = new ActionWidget(ActionsManager::ShowSidebarAction, NULL, ActionsManager::ActionEntryDefinition(), this);
 			m_sidebarToggle->setFixedWidth(6);
 			m_sidebarToggle->setText(QString());
 
@@ -697,7 +697,7 @@ void MainWindow::triggerAction()
 		{
 			if (m_actionShortcuts[i].second.contains(shortcut))
 			{
-				const ActionDefinition definition = ActionsManager::getActionDefinition(m_actionShortcuts[i].first);
+				const ActionsManager::ActionDefinition definition = ActionsManager::getActionDefinition(m_actionShortcuts[i].first);
 
 				if (definition.identifier >= 0)
 				{
@@ -1003,7 +1003,7 @@ void MainWindow::updateShortcuts()
 
 	m_actionShortcuts.clear();
 
-	const QVector<ActionDefinition> definitions = ActionsManager::getActionDefinitions();
+	const QVector<ActionsManager::ActionDefinition> definitions = ActionsManager::getActionDefinitions();
 	QList<QKeySequence> standardShortcuts;
 	standardShortcuts << QKeySequence(QKeySequence::Copy) << QKeySequence(QKeySequence::Cut) << QKeySequence(QKeySequence::Delete) << QKeySequence(QKeySequence::Paste) << QKeySequence(QKeySequence::Redo) << QKeySequence(QKeySequence::SelectAll) << QKeySequence(QKeySequence::Undo);
 
@@ -1111,7 +1111,7 @@ Action* MainWindow::getAction(int identifier)
 
 	if (!m_standardActions[identifier])
 	{
-		const ActionDefinition definition = ActionsManager::getActionDefinition(identifier);
+		const ActionsManager::ActionDefinition definition = ActionsManager::getActionDefinition(identifier);
 		Action *action = new Action(identifier, this);
 
 		m_standardActions[identifier] = action;

@@ -45,7 +45,7 @@ ActionComboBoxWidget::ActionComboBoxWidget(QWidget *parent) : QComboBox(parent),
 	view()->viewport()->parentWidget()->installEventFilter(this);
 
 	QStandardItemModel *model = new QStandardItemModel(this);
-	const QVector<ActionDefinition> definitions = ActionsManager::getActionDefinitions();
+	const QVector<ActionsManager::ActionDefinition> definitions = ActionsManager::getActionDefinitions();
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{

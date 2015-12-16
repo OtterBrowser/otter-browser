@@ -127,7 +127,7 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 		}
 	}
 
-	const QVector<ActionDefinition> actions = ActionsManager::getActionDefinitions();
+	const QVector<ActionsManager::ActionDefinition> actions = ActionsManager::getActionDefinitions();
 
 	for (int i = 0; i < actions.count(); ++i)
 	{
@@ -145,12 +145,12 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 	m_ui->currentEntriesItemView->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->currentEntriesItemView->setRootIsDecorated(false);
 
-	for (int i = 0; i < m_definition.actions.count(); ++i)
+	for (int i = 0; i < m_definition.entries.count(); ++i)
 	{
-		addEntry(m_definition.actions.at(i));
+		addEntry(m_definition.entries.at(i));
 	}
 
-	m_definition.actions.clear();
+	m_definition.entries.clear();
 
 	Menu *bookmarksMenu = new Menu(Menu::BookmarkSelectorMenuRole, m_ui->addEntryButton);
 
@@ -187,7 +187,7 @@ void ToolBarDialog::changeEvent(QEvent *event)
 	}
 }
 
-void ToolBarDialog::addEntry(const ToolBarsManager::ToolBarActionDefinition &entry, QStandardItem *parent)
+void ToolBarDialog::addEntry(const ActionsManager::ActionEntryDefinition &entry, QStandardItem *parent)
 {
 	QStandardItem *item = createEntry(entry.action, entry.options);
 
@@ -202,9 +202,9 @@ void ToolBarDialog::addEntry(const ToolBarsManager::ToolBarActionDefinition &ent
 
 	if (entry.action == QLatin1String("CustomMenu"))
 	{
-		for (int i = 0; i < entry.actions.count(); ++i)
+		for (int i = 0; i < entry.entries.count(); ++i)
 		{
-			addEntry(entry.actions.at(i), item);
+			addEntry(entry.entries.at(i), item);
 		}
 
 		m_ui->currentEntriesItemView->expand(item->index());
@@ -460,7 +460,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 		}
 		else
 		{
-			const ActionDefinition definition = ActionsManager::getActionDefinition(actionIdentifier);
+			const ActionsManager::ActionDefinition definition = ActionsManager::getActionDefinition(actionIdentifier);
 
 			item->setText(QCoreApplication::translate("actions", (definition.description.isEmpty() ? definition.text : definition.description).toUtf8().constData()));
 			item->setIcon(definition.icon);
@@ -500,27 +500,27 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	return item;
 }
 
-ToolBarsManager::ToolBarActionDefinition ToolBarDialog::getEntry(QStandardItem *item) const
+ActionsManager::ActionEntryDefinition ToolBarDialog::getEntry(QStandardItem *item) const
 {
-	ToolBarsManager::ToolBarActionDefinition entry;
+	ActionsManager::ActionEntryDefinition definition;
 
 	if (!item)
 	{
-		return entry;
+		return definition;
 	}
 
-	entry.action = item->data(Qt::UserRole).toString();
-	entry.options = item->data(Qt::UserRole + 1).toMap();
+	definition.action = item->data(Qt::UserRole).toString();
+	definition.options = item->data(Qt::UserRole + 1).toMap();
 
-	if (entry.action == QLatin1String("CustomMenu"))
+	if (definition.action == QLatin1String("CustomMenu"))
 	{
 		for (int i = 0; i < item->rowCount(); ++i)
 		{
-			entry.actions.append(getEntry(item->child(i, 0)));
+			definition.entries.append(getEntry(item->child(i, 0)));
 		}
 	}
 
-	return entry;
+	return definition;
 }
 
 ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition() const
@@ -572,7 +572,7 @@ ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition() const
 
 	for (int i = 0; i < m_ui->currentEntriesItemView->model()->rowCount(); ++i)
 	{
-		definition.actions.append(getEntry(m_ui->currentEntriesItemView->getItem(i)));
+		definition.entries.append(getEntry(m_ui->currentEntriesItemView->getItem(i)));
 	}
 
 	if (!definition.bookmarksPath.isEmpty())

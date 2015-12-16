@@ -31,7 +31,7 @@ class PanelChooserWidget : public ToolButtonWidget
 	Q_OBJECT
 
 public:
-	explicit PanelChooserWidget(const ToolBarsManager::ToolBarActionDefinition &definition, QWidget *parent);
+	explicit PanelChooserWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent);
 
 	void changeEvent(QEvent *event);
 	QSize minimumSizeHint() const;

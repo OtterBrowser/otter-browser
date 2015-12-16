@@ -317,7 +317,7 @@ void ToolBarWidget::loadBookmarks()
 			}
 			else
 			{
-				addWidget(new BookmarkWidget(bookmark, ToolBarsManager::ToolBarActionDefinition(), this));
+				addWidget(new BookmarkWidget(bookmark, ActionsManager::ActionEntryDefinition(), this));
 			}
 		}
 	}
@@ -408,21 +408,21 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 		addWidget(m_dragArea);
 	}
 
-	for (int i = 0; i < definition.actions.count(); ++i)
+	for (int i = 0; i < definition.entries.count(); ++i)
 	{
-		if (definition.actions.at(i).action == QLatin1String("separator"))
+		if (definition.entries.at(i).action == QLatin1String("separator"))
 		{
 			addSeparator();
 		}
 		else
 		{
-			if (m_identifier == ToolBarsManager::TabBar && tabBar && definition.actions.at(i).action == QLatin1String("TabBarWidget"))
+			if (m_identifier == ToolBarsManager::TabBar && tabBar && definition.entries.at(i).action == QLatin1String("TabBarWidget"))
 			{
 				addWidget(tabBar);
 			}
 			else
 			{
-				QWidget *widget = createWidget(definition.actions.at(i));
+				QWidget *widget = createWidget(definition.entries.at(i));
 
 				if (widget)
 				{
@@ -433,7 +433,7 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 	}
 }
 
-QWidget* ToolBarWidget::createWidget(const ToolBarsManager::ToolBarActionDefinition &definition)
+QWidget* ToolBarWidget::createWidget(const ActionsManager::ActionEntryDefinition &definition)
 {
 	if (definition.action == QLatin1String("spacer"))
 	{
@@ -443,7 +443,7 @@ QWidget* ToolBarWidget::createWidget(const ToolBarsManager::ToolBarActionDefinit
 		return spacer;
 	}
 
-	if (!definition.actions.isEmpty())
+	if (!definition.entries.isEmpty())
 	{
 		return new ToolButtonWidget(definition, this);
 	}

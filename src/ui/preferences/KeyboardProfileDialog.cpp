@@ -36,7 +36,7 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 	m_ui->setupUi(this);
 
 	QStandardItemModel *model = new QStandardItemModel(this);
-	const QVector<ActionDefinition> definitions = ActionsManager::getActionDefinitions();
+	const QVector<ActionsManager::ActionDefinition> definitions = ActionsManager::getActionDefinitions();
 	QStringList labels;
 	labels << tr("Action");
 

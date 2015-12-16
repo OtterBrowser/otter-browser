@@ -56,7 +56,7 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 
 			for (iterator = profiles[profile].gestures[contexts.at(i).first].constBegin(); iterator != profiles[profile].gestures[contexts.at(i).first].constEnd(); ++iterator)
 			{
-				const ActionDefinition action = ActionsManager::getActionDefinition(iterator.value());
+				const ActionsManager::ActionDefinition action = ActionsManager::getActionDefinition(iterator.value());
 				QList<QStandardItem*> items;
 				items.append(new QStandardItem(QString(iterator.key()).replace(QLatin1Char(','), QLatin1String(", "))));
 				items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);

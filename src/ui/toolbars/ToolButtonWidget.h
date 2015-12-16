@@ -35,7 +35,7 @@ class ToolButtonWidget : public QToolButton
 	Q_OBJECT
 
 public:
-	explicit ToolButtonWidget(const ToolBarsManager::ToolBarActionDefinition &definition, QWidget *parent = NULL);
+	explicit ToolButtonWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = NULL);
 
 	QVariantMap getOptions() const;
 
@@ -44,7 +44,7 @@ public slots:
 
 protected:
 	void paintEvent(QPaintEvent *event);
-	void addMenu(Menu *menu, const QList<ToolBarsManager::ToolBarActionDefinition> &actions);
+	void addMenu(Menu *menu, const QList<ActionsManager::ActionEntryDefinition> &entries);
 	bool event(QEvent *event);
 
 protected slots:

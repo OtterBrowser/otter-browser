@@ -32,7 +32,7 @@ class MenuButtonWidget : public Otter::ToolButtonWidget
 	Q_OBJECT
 
 public:
-	explicit MenuButtonWidget(const ToolBarsManager::ToolBarActionDefinition &definition, QWidget *parent);
+	explicit MenuButtonWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent);
 
 protected slots:
 	void toolBarModified(int identifier);

@@ -95,9 +95,9 @@ void MenuBarWidget::setup()
 	const ToolBarsManager::ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar);
 	QStringList actions;
 
-	for (int i = 0; i < definition.actions.count(); ++i)
+	for (int i = 0; i < definition.entries.count(); ++i)
 	{
-		actions.append(definition.actions.at(i).action);
+		actions.append(definition.entries.at(i).action);
 	}
 
 	if (actions.count() == 1 && actions.at(0) == QLatin1String("MenuBarWidget"))
@@ -123,7 +123,7 @@ void MenuBarWidget::setup()
 
 	const int position = actions.indexOf(QLatin1String("MenuBarWidget"));
 	const bool needsLeftToolbar = (position != 0);
-	const bool needsRightToolbar = (position != (definition.actions.count() - 1));
+	const bool needsRightToolbar = (position != (definition.entries.count() - 1));
 
 	if (needsLeftToolbar && !m_leftToolBar)
 	{
@@ -154,22 +154,22 @@ void MenuBarWidget::setup()
 	}
 
 	ToolBarsManager::ToolBarDefinition leftDefinition(definition);
-	leftDefinition.actions.clear();
+	leftDefinition.entries.clear();
 
 	ToolBarsManager::ToolBarDefinition rightDefinition(definition);
-	rightDefinition.actions.clear();
+	rightDefinition.entries.clear();
 
-	for (int i = 0; i < definition.actions.count(); ++i)
+	for (int i = 0; i < definition.entries.count(); ++i)
 	{
 		if (i != position)
 		{
 			if (i < position)
 			{
-				leftDefinition.actions.append(definition.actions.at(i));
+				leftDefinition.entries.append(definition.entries.at(i));
 			}
 			else
 			{
-				rightDefinition.actions.append(definition.actions.at(i));
+				rightDefinition.entries.append(definition.entries.at(i));
 			}
 		}
 	}
