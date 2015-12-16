@@ -46,6 +46,7 @@ namespace Otter
 StartPageModel* StartPageWidget::m_model = NULL;
 
 StartPageContentsWidget::StartPageContentsWidget(QWidget *parent) : QWidget(parent),
+	m_color(Qt::transparent),
 	m_mode(NoCustomBackground)
 {
 	setAutoFillBackground(true);
@@ -231,7 +232,7 @@ void StartPageWidget::optionChanged(const QString &option, const QVariant &value
 	{
 		updateSize();
 	}
-	else if (option == QLatin1String("StartPage/BackgroundMode") || option == QLatin1String("StartPage/BackgroundPath"))
+	else if (option == QLatin1String("StartPage/BackgroundColor") || option == QLatin1String("StartPage/BackgroundMode") || option == QLatin1String("StartPage/BackgroundPath"))
 	{
 		const QString backgroundMode = SettingsManager::getValue(QLatin1String("StartPage/BackgroundMode")).toString();
 

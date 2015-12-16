@@ -76,7 +76,7 @@ void StartPagePreferencesDialog::save()
 {
 	const QString backgroundModeString = m_ui->backgroundModeComboBox->currentData().toString();
 
-	SettingsManager::setValue(QLatin1String("StartPage/BackgroundColor"), m_ui->backgroundColorWidget->getColor().name());
+	SettingsManager::setValue(QLatin1String("StartPage/BackgroundColor"), (m_ui->backgroundColorWidget->getColor().isValid() ? m_ui->backgroundColorWidget->getColor().name() : QString()));
 	SettingsManager::setValue(QLatin1String("StartPage/BackgroundMode"), (m_ui->customBackgroundCheckBox->isChecked() ? backgroundModeString : QLatin1String("standard")));
 	SettingsManager::setValue(QLatin1String("StartPage/BackgroundPath"), m_ui->backgroundFilePathWidget->getPath());
 	SettingsManager::setValue(QLatin1String("StartPage/TilesPerRow"), m_ui->columnsPerRowSpinBox->value());

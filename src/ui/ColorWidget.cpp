@@ -18,25 +18,44 @@
 **************************************************************************/
 
 #include "ColorWidget.h"
+#include "../core/Utils.h"
 
+#include <QtGui/QClipboard>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QColorDialog>
+#include <QtWidgets/QMenu>
 
 namespace Otter
 {
 
 ColorWidget::ColorWidget(QWidget *parent) : QPushButton(parent)
 {
+	QMenu *menu = new QMenu(this);
+	menu->addAction(tr("Select Color…"), this, SLOT(selectColor()));
+	menu->addAction(tr("Copy Color"), this, SLOT(copyColor()));
+	menu->addSeparator();
+	menu->addAction(Utils::getIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(clear()));
+
+	setMenu(menu);
 	setText(tr("Invalid"));
 	setToolTip(tr("Invalid"));
+}
 
-	connect(this, SIGNAL(clicked(bool)), this, SLOT(selectColor()));
+void ColorWidget::clear()
+{
+	setColor(QColor());
+}
+
+void ColorWidget::copyColor()
+{
+	QApplication::clipboard()->setText(m_color.name().toUpper());
 }
 
 void ColorWidget::selectColor()
 {
 	QColorDialog dialog(this);
-	dialog.setCurrentColor(palette().color(QPalette::Button));
+	dialog.setOption(QColorDialog::ShowAlphaChannel);
+	dialog.setCurrentColor(m_color);
 
 	if (dialog.exec() == QDialog::Accepted)
 	{

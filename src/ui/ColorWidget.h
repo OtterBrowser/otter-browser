@@ -37,6 +37,8 @@ public:
 	QColor getColor() const;
 
 protected slots:
+	void clear();
+	void copyColor();
 	void selectColor();
 
 private:
