@@ -26,6 +26,9 @@ namespace Otter
 
 ColorWidget::ColorWidget(QWidget *parent) : QPushButton(parent)
 {
+	setText(tr("Invalid"));
+	setToolTip(tr("Invalid"));
+
 	connect(this, SIGNAL(clicked(bool)), this, SLOT(selectColor()));
 }
 
@@ -44,10 +47,13 @@ void ColorWidget::selectColor()
 
 void ColorWidget::setColor(const QColor &color)
 {
+	const QString text(color.isValid() ? color.name().toUpper() : tr("Invalid"));
 	QPalette palette = this->palette();
 	palette.setColor(QPalette::Button, color);
 
 	setPalette(palette);
+	setText(text);
+	setToolTip(text);
 }
 
 QColor ColorWidget::getColor() const
