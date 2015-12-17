@@ -27,11 +27,19 @@ namespace Otter
 
 class QtWebKitHistoryInterface : public QWebHistoryInterface
 {
+	Q_OBJECT
+
 public:
 	explicit QtWebKitHistoryInterface(QObject *parent);
 
 	void addHistoryEntry(const QString &url);
 	bool historyContains(const QString &url) const;
+
+protected slots:
+	void clear();
+
+private:
+	QStringList m_urls;
 };
 
 }

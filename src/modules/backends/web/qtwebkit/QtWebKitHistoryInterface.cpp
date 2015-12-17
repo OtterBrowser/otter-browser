@@ -25,17 +25,32 @@ namespace Otter
 
 QtWebKitHistoryInterface::QtWebKitHistoryInterface(QObject *parent) : QWebHistoryInterface(parent)
 {
+	connect(HistoryManager::getInstance(), SIGNAL(cleared()), this, SLOT(clear()));
+}
+
+void QtWebKitHistoryInterface::clear()
+{
+	m_urls.clear();
 }
 
 void QtWebKitHistoryInterface::addHistoryEntry(const QString &url)
 {
-	Q_UNUSED(url);
+	if (m_urls.contains(url))
+	{
+		return;
+	}
+
+	m_urls.append(url);
+
+	if (m_urls.length() > 100)
+	{
+		m_urls.removeAt(0);
+	}
 }
 
 bool QtWebKitHistoryInterface::historyContains(const QString &url) const
 {
-	return HistoryManager::hasEntry(url);
+	return (m_urls.contains(url) || HistoryManager::hasEntry(url));
 }
 
 }
-
