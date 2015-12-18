@@ -20,6 +20,7 @@
 #ifndef OTTER_QTWEBKITHISTORYINTERFACE_H
 #define OTTER_QTWEBKITHISTORYINTERFACE_H
 
+#include <QtCore/QStringList>
 #include <QtWebKit/QWebHistoryInterface>
 
 namespace Otter
