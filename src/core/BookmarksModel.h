@@ -37,7 +37,6 @@ public:
 	QStandardItem* clone() const;
 	QVariant data(int role) const;
 	QList<QUrl> getUrls() const;
-	bool isInTrash() const;
 
 protected:
 	explicit BookmarksItem();
@@ -72,6 +71,7 @@ public:
 		TimeModifiedRole = (Qt::UserRole + 4),
 		TimeVisitedRole = (Qt::UserRole + 5),
 		VisitsRole = (Qt::UserRole + 6),
+		IsTrashedRole = (Qt::UserRole + 7),
 		UserRole
 	};
 
@@ -95,8 +95,8 @@ public:
 	void restoreBookmark(BookmarksItem *bookmark);
 	void removeBookmark(BookmarksItem *bookmark);
 	BookmarksItem* addBookmark(BookmarkType type, quint64 identifier = 0, const QUrl &url = QUrl(), const QString &title = QString(), BookmarksItem *parent = NULL, int index = -1);
-	BookmarksItem* bookmarkFromIndex(const QModelIndex &index) const;
 	BookmarksItem* getBookmark(const QString &keyword) const;
+	BookmarksItem* getBookmark(const QModelIndex &index) const;
 	BookmarksItem* getBookmark(quint64 identifier) const;
 	BookmarksItem* getRootItem() const;
 	BookmarksItem* getTrashItem() const;

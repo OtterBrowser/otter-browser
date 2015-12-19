@@ -216,7 +216,7 @@ void WebWidget::pasteNote(QAction *action)
 {
 	if (action && action->data().isValid())
 	{
-		BookmarksItem *note = NotesManager::getModel()->bookmarkFromIndex(action->data().toModelIndex());
+		BookmarksItem *note = NotesManager::getModel()->getBookmark(action->data().toModelIndex());
 
 		if (note)
 		{

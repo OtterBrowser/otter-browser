@@ -62,7 +62,7 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, QWid
 		m_ui->lastVisitLabelWidget->hide();
 	}
 
-	if (bookmark->isInTrash())
+	if (bookmark->data(BookmarksModel::IsTrashedRole).toBool())
 	{
 		setWindowTitle(tr("View Bookmark"));
 

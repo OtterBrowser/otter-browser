@@ -256,10 +256,10 @@ bool StartPageModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
 	{
 		if (type == BookmarksModel::FolderBookmark || type == BookmarksModel::RootBookmark || type == BookmarksModel::TrashBookmark)
 		{
-			return BookmarksManager::getModel()->moveBookmark(BookmarksManager::getModel()->getBookmark(index.data(BookmarksModel::IdentifierRole).toULongLong()), BookmarksManager::getModel()->getBookmark(parent.data(BookmarksModel::IdentifierRole).toULongLong()), row);
+			return BookmarksManager::getModel()->moveBookmark(BookmarksManager::getModel()->getBookmark(index), BookmarksManager::getModel()->getBookmark(parent), row);
 		}
 
-		return BookmarksManager::getModel()->moveBookmark(BookmarksManager::getModel()->getBookmark(index.data(BookmarksModel::IdentifierRole).toULongLong()), m_bookmark, (parent.row() + ((index.row() < parent.row()) ? 1 : 0)));
+		return BookmarksManager::getModel()->moveBookmark(BookmarksManager::getModel()->getBookmark(index), m_bookmark, (parent.row() + ((index.row() < parent.row()) ? 1 : 0)));
 	}
 
 	return false;

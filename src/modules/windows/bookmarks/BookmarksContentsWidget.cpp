@@ -117,17 +117,17 @@ void BookmarksContentsWidget::addSeparator()
 
 void BookmarksContentsWidget::removeBookmark()
 {
-	BookmarksManager::getModel()->trashBookmark(BookmarksManager::getModel()->bookmarkFromIndex(m_ui->bookmarksViewWidget->currentIndex()));
+	BookmarksManager::getModel()->trashBookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
 }
 
 void BookmarksContentsWidget::restoreBookmark()
 {
-	BookmarksManager::getModel()->restoreBookmark(BookmarksManager::getModel()->bookmarkFromIndex(m_ui->bookmarksViewWidget->currentIndex()));
+	BookmarksManager::getModel()->restoreBookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
 }
 
 void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 {
-	BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(index.isValid() ? index : m_ui->bookmarksViewWidget->currentIndex()));
+	BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(index.isValid() ? index : m_ui->bookmarksViewWidget->currentIndex());
 	WindowsManager *manager = SessionsManager::getWindowsManager();
 
 	if (bookmark && manager)
@@ -140,7 +140,7 @@ void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 
 void BookmarksContentsWidget::bookmarkProperties()
 {
-	BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(m_ui->bookmarksViewWidget->currentIndex()));
+	BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->currentIndex());
 
 	if (bookmark)
 	{
@@ -169,7 +169,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 	}
 	else
 	{
-		const bool isInTrash = BookmarksManager::getModel()->bookmarkFromIndex(index)->isInTrash();
+		const bool isInTrash = index.data(BookmarksModel::IsTrashedRole).toBool();
 
 		menu.addAction(Utils::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
 		menu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setData(WindowsManager::NewTabOpen);
@@ -336,7 +336,7 @@ Action* BookmarksContentsWidget::getAction(int identifier)
 
 BookmarksItem* BookmarksContentsWidget::findFolder(const QModelIndex &index)
 {
-	BookmarksItem *item = BookmarksManager::getModel()->bookmarkFromIndex(index);
+	BookmarksItem *item = BookmarksManager::getModel()->getBookmark(index);
 
 	if (!item || item == BookmarksManager::getModel()->getRootItem() || item == BookmarksManager::getModel()->getTrashItem())
 	{
@@ -395,7 +395,7 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
 		{
-			BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(m_ui->bookmarksViewWidget->indexAt(mouseEvent->pos())));
+			BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->indexAt(mouseEvent->pos()));
 
 			if (bookmark)
 			{
@@ -412,7 +412,7 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 		if (helpEvent)
 		{
 			const QModelIndex index = m_ui->bookmarksViewWidget->indexAt(helpEvent->pos());
-			BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(index));
+			BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(index);
 
 			if (bookmark)
 			{

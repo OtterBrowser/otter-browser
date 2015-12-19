@@ -434,7 +434,7 @@ void StartPageWidget::openTile()
 	if (type == BookmarksModel::FolderBookmark)
 	{
 		MainWindow *mainWindow = MainWindow::findMainWindow(this);
-		BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(m_currentIndex.data(BookmarksModel::IdentifierRole).toULongLong());
+		BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(m_currentIndex);
 
 		if (mainWindow && bookmark && bookmark->rowCount() > 0)
 		{
@@ -464,7 +464,7 @@ void StartPageWidget::openTile()
 
 void StartPageWidget::editTile()
 {
-	BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->getBookmark(m_currentIndex.data(BookmarksModel::IdentifierRole).toULongLong()));
+	BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(m_currentIndex);
 
 	if (bookmark)
 	{
@@ -484,7 +484,7 @@ void StartPageWidget::reloadTile()
 
 void StartPageWidget::removeTile()
 {
-	BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->getBookmark(m_currentIndex.data(BookmarksModel::IdentifierRole).toULongLong()));
+	BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(m_currentIndex);
 
 	if (bookmark)
 	{
@@ -650,7 +650,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 				if (type == BookmarksModel::FolderBookmark)
 				{
-					BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(m_currentIndex.data(BookmarksModel::IdentifierRole).toULongLong());
+					BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(m_currentIndex);
 
 					if (bookmark && bookmark->rowCount() > 0)
 					{
@@ -712,7 +712,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 				if (type == BookmarksModel::FolderBookmark)
 				{
-					BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(m_currentIndex.data(BookmarksModel::IdentifierRole).toULongLong());
+					BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(m_currentIndex);
 
 					if (bookmark && bookmark->rowCount() > 0)
 					{

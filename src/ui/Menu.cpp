@@ -168,7 +168,7 @@ void Menu::mouseReleaseEvent(QMouseEvent *event)
 
 			if (mainWindow)
 			{
-				mainWindow->getWindowsManager()->open(dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(action->data().toModelIndex())), WindowsManager::calculateOpenHints(event->modifiers(), event->button()));
+				mainWindow->getWindowsManager()->open(BookmarksManager::getModel()->getBookmark(action->data().toModelIndex()), WindowsManager::calculateOpenHints(event->modifiers(), event->button()));
 
 				return;
 			}
@@ -186,7 +186,7 @@ void Menu::contextMenuEvent(QContextMenuEvent *event)
 
 		if (action && action->isEnabled() && action->data().type() == QVariant::ModelIndex)
 		{
-			m_bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(action->data().toModelIndex()));
+			m_bookmark = BookmarksManager::getModel()->getBookmark(action->data().toModelIndex());
 
 			QMenu contextMenu(this);
 			contextMenu.addAction(Utils::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
@@ -752,7 +752,7 @@ void Menu::openBookmark()
 
 	if (action && action->data().type() == QVariant::ModelIndex)
 	{
-		m_bookmark = dynamic_cast<BookmarksItem*>(BookmarksManager::getModel()->itemFromIndex(action->data().toModelIndex()));
+		m_bookmark = BookmarksManager::getModel()->getBookmark(action->data().toModelIndex());
 	}
 
 	if (mainWindow)

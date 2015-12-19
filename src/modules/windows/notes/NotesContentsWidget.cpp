@@ -116,17 +116,17 @@ void NotesContentsWidget::addSeparator()
 
 void NotesContentsWidget::removeNote()
 {
-	NotesManager::getModel()->trashBookmark(NotesManager::getModel()->bookmarkFromIndex(m_ui->notesViewWidget->currentIndex()));
+	NotesManager::getModel()->trashBookmark(NotesManager::getModel()->getBookmark(m_ui->notesViewWidget->currentIndex()));
 }
 
 void NotesContentsWidget::restoreNote()
 {
-	NotesManager::getModel()->restoreBookmark(NotesManager::getModel()->bookmarkFromIndex(m_ui->notesViewWidget->currentIndex()));
+	NotesManager::getModel()->restoreBookmark(NotesManager::getModel()->getBookmark(m_ui->notesViewWidget->currentIndex()));
 }
 
 void NotesContentsWidget::openUrl(const QModelIndex &index)
 {
-	BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(NotesManager::getModel()->itemFromIndex(index.isValid() ? index : m_ui->notesViewWidget->currentIndex()));
+	BookmarksItem *bookmark = NotesManager::getModel()->getBookmark(index.isValid() ? index : m_ui->notesViewWidget->currentIndex());
 	WindowsManager *manager = SessionsManager::getWindowsManager();
 
 	if (bookmark && bookmark->data(BookmarksModel::UrlRole).toUrl().isValid() && manager)
@@ -159,7 +159,7 @@ void NotesContentsWidget::showContextMenu(const QPoint &point)
 	}
 	else
 	{
-		const bool isInTrash = NotesManager::getModel()->bookmarkFromIndex(index)->isInTrash();
+		const bool isInTrash = index.data(BookmarksModel::IsTrashedRole).toBool();
 
 		if (type == BookmarksModel::UrlBookmark)
 		{
@@ -356,7 +356,7 @@ Action* NotesContentsWidget::getAction(int identifier)
 
 BookmarksItem* NotesContentsWidget::findFolder(const QModelIndex &index)
 {
-	BookmarksItem *item = NotesManager::getModel()->bookmarkFromIndex(index);
+	BookmarksItem *item = NotesManager::getModel()->getBookmark(index);
 
 	if (!item || item == NotesManager::getModel()->getRootItem() || item == NotesManager::getModel()->getTrashItem())
 	{
@@ -397,7 +397,7 @@ bool NotesContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
 		{
-			BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(NotesManager::getModel()->itemFromIndex(m_ui->notesViewWidget->indexAt(mouseEvent->pos())));
+			BookmarksItem *bookmark = NotesManager::getModel()->getBookmark(m_ui->notesViewWidget->indexAt(mouseEvent->pos()));
 
 			if (bookmark)
 			{
@@ -414,7 +414,7 @@ bool NotesContentsWidget::eventFilter(QObject *object, QEvent *event)
 		if (helpEvent)
 		{
 			const QModelIndex index = m_ui->notesViewWidget->indexAt(helpEvent->pos());
-			BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(NotesManager::getModel()->itemFromIndex(index));
+			BookmarksItem *bookmark = NotesManager::getModel()->getBookmark(index);
 
 			if (bookmark)
 			{
