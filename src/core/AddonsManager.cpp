@@ -42,9 +42,9 @@ AddonsManager::AddonsManager(QObject *parent) : QObject(parent)
 
 	registerSpecialPage(SpecialPageInformation(tr("Bookmarks Manager"), QString(), QUrl(QLatin1String("about:bookmarks")), Utils::getIcon(QLatin1String("bookmarks"), false)), QLatin1String("bookmarks"));
 	registerSpecialPage(SpecialPageInformation(tr("Cache Manager"), QString(), QUrl(QLatin1String("about:cache")), Utils::getIcon(QLatin1String("cache"), false)), QLatin1String("cache"));
-	registerSpecialPage(SpecialPageInformation(tr("Configuration Manager"), QString(), QUrl(QLatin1String("about:config")), Utils::getIcon(QLatin1String("config"), false)), QLatin1String("configuration"));
+	registerSpecialPage(SpecialPageInformation(tr("Configuration Manager"), QString(), QUrl(QLatin1String("about:config")), Utils::getIcon(QLatin1String("configuration"), false)), QLatin1String("configuration"));
 	registerSpecialPage(SpecialPageInformation(tr("Cookies Manager"), QString(), QUrl(QLatin1String("about:cookies")), Utils::getIcon(QLatin1String("cookies"), false)), QLatin1String("cookies"));
-	registerSpecialPage(SpecialPageInformation(tr("History Manager"), QString(), QUrl(QLatin1String("about:history")), Utils::getIcon(QLatin1String("history"), false)), QLatin1String("history"));
+	registerSpecialPage(SpecialPageInformation(tr("History Manager"), QString(), QUrl(QLatin1String("about:history")), Utils::getIcon(QLatin1String("view-history"), false)), QLatin1String("history"));
 	registerSpecialPage(SpecialPageInformation(tr("Notes Manager"), QString(), QUrl(QLatin1String("about:notes")), Utils::getIcon(QLatin1String("notes"), false)), QLatin1String("notes"));
 	registerSpecialPage(SpecialPageInformation(tr("Transfers Manager"), QString(), QUrl(QLatin1String("about:transfers")), Utils::getIcon(QLatin1String("transfers"), false)), QLatin1String("transfers"));
 
