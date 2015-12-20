@@ -241,9 +241,12 @@ void ItemViewWidget::showEvent(QShowEvent *event)
 	Settings settings(SessionsManager::getReadableDataPath(QLatin1String("views.ini")));
 	settings.beginGroup(type);
 
-	const int order = settings.getValue(QLatin1String("order"), 0).toInt();
+	const int sortColumn = settings.getValue(QLatin1String("sortColumn"), -1).toInt();
 
-	setSort((qAbs(order) - 1), ((order > 0) ? Qt::AscendingOrder : Qt::DescendingOrder));
+	if (sortColumn >= 0)
+	{
+		setSort(sortColumn, ((settings.getValue(QLatin1String("sotOrder"), QLatin1String("ascending")).toString() == QLatin1String("ascending")) ? Qt::AscendingOrder : Qt::DescendingOrder));
+	}
 
 	const QStringList columns = settings.getValue(QLatin1String("columns")).toString().split(QLatin1Char(','), QString::SkipEmptyParts);
 
@@ -461,9 +464,9 @@ void ItemViewWidget::saveState()
 
 	QStringList columns;
 
-	for(int i = 0; i < getColumnCount(); ++i)
+	for (int i = 0; i < getColumnCount(); ++i)
 	{
-		int section = m_headerWidget->logicalIndex(i);
+		const int section = m_headerWidget->logicalIndex(i);
 
 		if (section >= 0 && !isColumnHidden(section))
 		{
@@ -472,7 +475,8 @@ void ItemViewWidget::saveState()
 	}
 
 	settings.setValue(QLatin1String("columns"), columns.join(QLatin1Char(',')));
-	settings.setValue(QLatin1String("order"), ((m_sortColumn + 1) * ((m_sortOrder == Qt::AscendingOrder) ? 1 : -1)));
+	settings.setValue(QLatin1String("sortColumn"), ((m_sortColumn >= 0) ? QVariant(m_sortColumn) : QVariant()));
+	settings.setValue(QLatin1String("sortOrder"), ((m_sortColumn >= 0) ? QVariant((m_sortOrder == Qt::AscendingOrder) ? QLatin1String("ascending") : QLatin1String("descending")) : QVariant()));
 	settings.save();
 }
 
