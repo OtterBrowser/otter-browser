@@ -32,15 +32,9 @@ namespace Otter
 
 HeaderViewWidget::HeaderViewWidget(Qt::Orientation orientation, QWidget *parent) : QHeaderView(orientation, parent)
 {
-	connect(this, SIGNAL(sectionClicked(int)), this, SLOT(toggleSort(int)));
-}
-
-void HeaderViewWidget::showEvent(QShowEvent *event)
-{
 	setSectionsMovable(true);
-	setSectionsClickable(true);
 
-	QHeaderView::showEvent(event);
+	connect(this, SIGNAL(sectionClicked(int)), this, SLOT(toggleSort(int)));
 }
 
 void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
@@ -189,7 +183,6 @@ void HeaderViewWidget::toggleSort(int column)
 
 void HeaderViewWidget::setSort(int column, Qt::SortOrder order)
 {
-	setSortIndicatorShown(true);
 	setSortIndicator(column, order);
 
 	emit sortChanged(column, order);

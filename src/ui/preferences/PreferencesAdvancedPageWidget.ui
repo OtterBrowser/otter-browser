@@ -39,7 +39,7 @@
    <item>
     <widget class="QStackedWidget" name="advancedStackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="browsingPage">
       <layout class="QVBoxLayout" name="browsingLayout" stretch="0,0,1">
@@ -122,8 +122,11 @@
          <property name="alternatingRowColors">
           <bool>true</bool>
          </property>
+         <property name="sortingEnabled">
+          <bool>true</bool>
+         </property>
          <attribute name="headerDefaultSectionSize">
-          <number>200</number>
+          <number>250</number>
          </attribute>
         </widget>
        </item>
@@ -413,8 +416,11 @@
            <property name="alternatingRowColors">
             <bool>true</bool>
            </property>
+           <property name="sortingEnabled">
+            <bool>true</bool>
+           </property>
            <attribute name="headerDefaultSectionSize">
-            <number>200</number>
+            <number>250</number>
            </attribute>
           </widget>
          </item>
@@ -1056,6 +1062,9 @@
         <layout class="QHBoxLayout" name="ciphersLayout">
          <item>
           <widget class="Otter::ItemViewWidget" name="ciphersViewWidget">
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
            <property name="dragEnabled">
             <bool>true</bool>
            </property>
