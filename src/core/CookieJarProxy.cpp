@@ -38,8 +38,10 @@ CookieJarProxy::CookieJarProxy(CookieJar *cookieJar, WebWidget *widget) : QNetwo
 {
 }
 
-void CookieJarProxy::setup(CookieJar::CookiesPolicy generalCookiesPolicy, CookieJar::CookiesPolicy thirdPartyCookiesPolicy, CookieJar::KeepMode keepMode)
+void CookieJarProxy::setup(const QStringList &thirdPartyAcceptedHosts, const QStringList &thirdPartyRejectedHosts, CookieJar::CookiesPolicy generalCookiesPolicy, CookieJar::CookiesPolicy thirdPartyCookiesPolicy, CookieJar::KeepMode keepMode)
 {
+	m_thirdPartyAcceptedHosts = thirdPartyAcceptedHosts;
+	m_thirdPartyRejectedHosts = thirdPartyRejectedHosts;
 	m_generalCookiesPolicy = generalCookiesPolicy;
 	m_thirdPartyCookiesPolicy = thirdPartyCookiesPolicy;
 	m_keepMode = keepMode;
@@ -162,14 +164,24 @@ bool CookieJarProxy::canModifyCookie(const QNetworkCookie &cookie) const
 		return false;
 	}
 
-	if (m_thirdPartyCookiesPolicy != CookieJar::AcceptAllCookies)
+	if (m_thirdPartyCookiesPolicy != CookieJar::AcceptAllCookies || !m_thirdPartyRejectedHosts.isEmpty())
 	{
-		QUrl thirdPartyUrl;
-		thirdPartyUrl.setScheme(QLatin1String("http"));
-		thirdPartyUrl.setHost(cookie.domain().startsWith(QLatin1Char('.')) ? cookie.domain().mid(1) : cookie.domain());
+		QUrl url;
+		url.setScheme(QLatin1String("http"));
+		url.setHost(cookie.domain().startsWith(QLatin1Char('.')) ? cookie.domain().mid(1) : cookie.domain());
 
-		if (!CookieJar::isDomainTheSame(m_widget->getUrl(), thirdPartyUrl))
+		if (!CookieJar::isDomainTheSame(m_widget->getUrl(), url))
 		{
+			if (m_thirdPartyRejectedHosts.contains(cookie.domain()))
+			{
+				return false;
+			}
+
+			if (m_thirdPartyAcceptedHosts.contains(cookie.domain()))
+			{
+				return true;
+			}
+
 			if (m_thirdPartyCookiesPolicy == CookieJar::IgnoreCookies)
 			{
 				return false;

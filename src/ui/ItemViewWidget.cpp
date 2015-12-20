@@ -361,18 +361,34 @@ void ItemViewWidget::insertRow(const QList<QStandardItem*> &items)
 		return;
 	}
 
-	const int row = (currentIndex().row() + 1);
-
-	if (items.count() > 0)
+	if (m_model->rowCount() > 0)
 	{
-		m_model->insertRow(row, items);
+		const int row = (currentIndex().row() + 1);
+
+		if (items.count() > 0)
+		{
+			m_model->insertRow(row, items);
+		}
+		else
+		{
+			m_model->insertRow(row);
+		}
+
+		setCurrentIndex(getIndex(row, 0));
 	}
 	else
 	{
-		m_model->insertRow(row);
-	}
+		if (items.isEmpty())
+		{
+			m_model->appendRow(new QStandardItem());
+		}
+		else
+		{
+			m_model->appendRow(items);
+		}
 
-	setCurrentIndex(getIndex(row, 0));
+		setCurrentIndex(getIndex(0, 0));
+	}
 
 	m_isModified = true;
 

@@ -468,7 +468,7 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 		keepMode = CookieJar::AskIfKeepMode;
 	}
 
-	m_cookieJarProxy->setup(generalCookiesPolicy, thirdPartyCookiesPolicy, keepMode);
+	m_cookieJarProxy->setup(SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesAcceptedHosts"), url).toStringList(), SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesRejectedHosts"), url).toStringList(), generalCookiesPolicy, thirdPartyCookiesPolicy, keepMode);
 }
 
 void QtWebKitNetworkManager::setFormRequest(const QUrl &url)

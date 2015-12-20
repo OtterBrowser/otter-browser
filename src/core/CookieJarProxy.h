@@ -22,7 +22,6 @@
 
 #include "CookieJar.h"
 
-#include <QtCore/QMutex>
 #include <QtCore/QQueue>
 
 namespace Otter
@@ -37,7 +36,7 @@ class CookieJarProxy : public QNetworkCookieJar
 public:
 	explicit CookieJarProxy(CookieJar *cookieJar, WebWidget *widget);
 
-	void setup(CookieJar::CookiesPolicy generalCookiesPolicy, CookieJar::CookiesPolicy thirdPartyCookiesPolicy, CookieJar::KeepMode keepMode);
+	void setup(const QStringList &thirdPartyAcceptedHosts, const QStringList &thirdPartyRejectedHosts, CookieJar::CookiesPolicy generalCookiesPolicy, CookieJar::CookiesPolicy thirdPartyCookiesPolicy, CookieJar::KeepMode keepMode);
 	void setWidget(WebWidget *widget);
 	CookieJarProxy* clone(WebWidget *parent = NULL);
 	CookieJar* getCookieJar();
@@ -57,7 +56,8 @@ protected slots:
 private:
 	WebWidget *m_widget;
 	CookieJar *m_cookieJar;
-	QMutex m_mutex;
+	QStringList m_thirdPartyAcceptedHosts;
+	QStringList m_thirdPartyRejectedHosts;
 	QQueue<QPair<CookieJar::CookieOperation, QNetworkCookie> > m_operations;
 	CookieJar::CookiesPolicy m_generalCookiesPolicy;
 	CookieJar::CookiesPolicy m_thirdPartyCookiesPolicy;

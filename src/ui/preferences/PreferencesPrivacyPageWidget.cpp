@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "PreferencesPrivacyPageWidget.h"
+#include "CookiesExceptionsDialog.h"
 #include "../ClearHistoryDialog.h"
 #include "../../core/SettingsManager.h"
 
@@ -27,6 +28,8 @@ namespace Otter
 {
 
 PreferencesPrivacyPageWidget::PreferencesPrivacyPageWidget(QWidget *parent) : QWidget(parent),
+	m_thirdPartyCookiesAcceptedHosts(SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesAcceptedHosts")).toStringList()),
+	m_thirdPartyCookiesRejectedHosts(SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesRejectedHosts")).toStringList()),
 	m_clearHisorySettings(SettingsManager::getValue(QLatin1String("History/ClearOnClose")).toStringList()),
 	m_ui(new Ui::PreferencesPrivacyPageWidget)
 {
@@ -73,6 +76,7 @@ PreferencesPrivacyPageWidget::PreferencesPrivacyPageWidget(QWidget *parent) : QW
 
 	connect(m_ui->privateModeCheckBox, SIGNAL(toggled(bool)), m_ui->historyWidget, SLOT(setDisabled(bool)));
 	connect(m_ui->enableCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->cookiesWidget, SLOT(setEnabled(bool)));
+	connect(m_ui->thirdPartyCookiesExceptionsButton, SIGNAL(clicked(bool)), this, SLOT(setupThirdPartyCookiesExceptions()));
 	connect(m_ui->clearHistoryCheckBox, SIGNAL(toggled(bool)), m_ui->clearHistoryButton, SLOT(setEnabled(bool)));
 	connect(m_ui->clearHistoryButton, SIGNAL(clicked()), this, SLOT(setupClearHistory()));
 }
@@ -89,6 +93,19 @@ void PreferencesPrivacyPageWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
+	}
+}
+
+void PreferencesPrivacyPageWidget::setupThirdPartyCookiesExceptions()
+{
+	CookiesExceptionsDialog dialog(m_thirdPartyCookiesAcceptedHosts, m_thirdPartyCookiesRejectedHosts, this);
+
+	if (dialog.exec() == QDialog::Accepted)
+	{
+		m_thirdPartyCookiesAcceptedHosts = dialog.getAcceptedHosts();
+		m_thirdPartyCookiesRejectedHosts = dialog.getRejectedHosts();
+
+		emit settingsModified();
 	}
 }
 
@@ -116,6 +133,8 @@ void PreferencesPrivacyPageWidget::save()
 	SettingsManager::setValue(QLatin1String("Network/CookiesPolicy"), (m_ui->enableCookiesCheckBox->isChecked() ? m_ui->cookiesPolicyComboBox->currentData().toString() : QLatin1String("ignore")));
 	SettingsManager::setValue(QLatin1String("Network/CookiesKeepMode"), m_ui->keepCookiesModeComboBox->currentData().toString());
 	SettingsManager::setValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), m_ui->thirdPartyCookiesPolicyComboBox->currentData().toString());
+	SettingsManager::setValue(QLatin1String("Network/ThirdPartyCookiesAcceptedHosts"), m_thirdPartyCookiesAcceptedHosts);
+	SettingsManager::setValue(QLatin1String("Network/ThirdPartyCookiesRejectedHosts"), m_thirdPartyCookiesRejectedHosts);
 	SettingsManager::setValue(QLatin1String("History/ClearOnClose"), (m_ui->clearHistoryCheckBox->isChecked() ? m_clearHisorySettings : QStringList()));
 }
 

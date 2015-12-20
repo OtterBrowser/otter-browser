@@ -178,6 +178,7 @@ SOURCES += src/main.cpp \
     src/ui/preferences/ActionDelegate.cpp \
     src/ui/preferences/ContentBlockingDialog.cpp \
     src/ui/preferences/ContentBlockingIntervalDelegate.cpp \
+    src/ui/preferences/CookiesExceptionsDialog.cpp \
     src/ui/preferences/JavaScriptPreferencesDialog.cpp \
     src/ui/preferences/KeyboardProfileDialog.cpp \
     src/ui/preferences/KeyboardShortcutDelegate.cpp \
@@ -343,6 +344,7 @@ HEADERS += src/core/ActionsManager.h \
     src/ui/preferences/ActionDelegate.h \
     src/ui/preferences/ContentBlockingDialog.h \
     src/ui/preferences/ContentBlockingIntervalDelegate.h \
+    src/ui/preferences/CookiesExceptionsDialog.h \
     src/ui/preferences/JavaScriptPreferencesDialog.h \
     src/ui/preferences/KeyboardProfileDialog.h \
     src/ui/preferences/KeyboardShortcutDelegate.h \
@@ -428,6 +430,7 @@ FORMS += src/ui/AcceptCookieDialog.ui \
     src/ui/WebsitePreferencesDialog.ui \
     src/ui/preferences/AcceptLanguageDialog.ui \
     src/ui/preferences/ContentBlockingDialog.ui \
+    src/ui/preferences/CookiesExceptionsDialog.ui \
     src/ui/preferences/JavaScriptPreferencesDialog.ui \
     src/ui/preferences/KeyboardProfileDialog.ui \
     src/ui/preferences/MouseProfileDialog.ui \

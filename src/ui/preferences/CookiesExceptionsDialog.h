@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,43 +17,45 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_PREFERENCESPRIVACYPAGEWIDGET_H
-#define OTTER_PREFERENCESPRIVACYPAGEWIDGET_H
+#ifndef OTTER_COOKIESEXCEPTIONSDIALOG_H
+#define OTTER_COOKIESEXCEPTIONSDIALOG_H
 
-#include <QtWidgets/QWidget>
+#include "../Dialog.h"
 
 namespace Otter
 {
 
 namespace Ui
 {
-	class PreferencesPrivacyPageWidget;
+	class CookiesExceptionsDialog;
 }
 
-class PreferencesPrivacyPageWidget : public QWidget
+class CookiesExceptionsDialog : public Dialog
 {
 	Q_OBJECT
 
 public:
-	explicit PreferencesPrivacyPageWidget(QWidget *parent = NULL);
-	~PreferencesPrivacyPageWidget();
+	explicit CookiesExceptionsDialog(const QStringList &acceptedHosts, const QStringList &rejectedHosts, QWidget *parent = NULL);
+	~CookiesExceptionsDialog();
+
+	QStringList getAcceptedHosts() const;
+	QStringList getRejectedHosts() const;
 
 protected:
 	void changeEvent(QEvent *event);
 
 protected slots:
-	void setupThirdPartyCookiesExceptions();
-	void setupClearHistory();
-	void save();
+	void addAcceptedHost();
+	void addRejectedHost();
+	void editAcceptedHost();
+	void editRejectedHost();
+	void removeAcceptedHost();
+	void removeRejectedHost();
+	void updateAcceptedHostsActions();
+	void updateRejectedHostsActions();
 
 private:
-	QStringList m_thirdPartyCookiesAcceptedHosts;
-	QStringList m_thirdPartyCookiesRejectedHosts;
-	QStringList m_clearHisorySettings;
-	Ui::PreferencesPrivacyPageWidget *m_ui;
-
-signals:
-	void settingsModified();
+	Ui::CookiesExceptionsDialog *m_ui;
 };
 
 }
