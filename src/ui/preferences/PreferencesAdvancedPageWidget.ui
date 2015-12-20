@@ -39,7 +39,7 @@
    <item>
     <widget class="QStackedWidget" name="advancedStackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="browsingPage">
       <layout class="QVBoxLayout" name="browsingLayout" stretch="0,0,1">
@@ -972,7 +972,7 @@
           <item>
            <layout class="QHBoxLayout" name="proxyExceptionsHorizontalLayout">
             <item>
-             <widget class="Otter::ItemViewWidget" name="proxyExceptionsListView">
+             <widget class="Otter::ItemViewWidget" name="proxyExceptionsItemView">
               <property name="headerHidden">
                <bool>true</bool>
               </property>

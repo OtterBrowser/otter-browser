@@ -209,8 +209,8 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 		proxyExceptionsModel->appendRow(new QStandardItem(currentProxyExceptions.at(i)));
 	}
 
-	m_ui->proxyExceptionsListView->setModel(proxyExceptionsModel);
-	m_ui->proxyExceptionsListView->setItemDelegate(new OptionDelegate(true, this));
+	m_ui->proxyExceptionsItemView->setModel(proxyExceptionsModel);
+	m_ui->proxyExceptionsItemView->setItemDelegate(new OptionDelegate(true, this));
 
 	const QString proxyString = SettingsManager::getValue(QLatin1String("Network/ProxyMode")).toString();
 	int proxyIndex = 0;
@@ -427,7 +427,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	connect(m_ui->downloadsButtonGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(updateDownloadsMode()));
 	connect(m_ui->userAgentButton, SIGNAL(clicked()), this, SLOT(manageUserAgents()));
 	connect(m_ui->proxyModeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(proxyModeChanged(int)));
-	connect(m_ui->proxyExceptionsListView, SIGNAL(needsActionsUpdate()), this, SLOT(updateProxyExceptionsActions()));
+	connect(m_ui->proxyExceptionsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateProxyExceptionsActions()));
 	connect(m_ui->addProxyExceptionButton, SIGNAL(clicked()), this, SLOT(addProxyException()));
 	connect(m_ui->editProxyExceptionButton, SIGNAL(clicked()), this, SLOT(editProxyException()));
 	connect(m_ui->removeProxyExceptionButton, SIGNAL(clicked()), this, SLOT(removeProxyException()));
@@ -751,22 +751,22 @@ void PreferencesAdvancedPageWidget::proxyModeChanged(int index)
 
 void PreferencesAdvancedPageWidget::addProxyException()
 {
-	m_ui->proxyExceptionsListView->insertRow();
+	m_ui->proxyExceptionsItemView->insertRow();
 
 	editProxyException();
 }
 
 void PreferencesAdvancedPageWidget::editProxyException()
 {
-	m_ui->proxyExceptionsListView->edit(m_ui->proxyExceptionsListView->getIndex(m_ui->proxyExceptionsListView->getCurrentRow()));
+	m_ui->proxyExceptionsItemView->edit(m_ui->proxyExceptionsItemView->getIndex(m_ui->proxyExceptionsItemView->getCurrentRow()));
 
 	emit settingsModified();
 }
 
 void PreferencesAdvancedPageWidget::removeProxyException()
 {
-	m_ui->proxyExceptionsListView->removeRow();
-	m_ui->proxyExceptionsListView->setFocus();
+	m_ui->proxyExceptionsItemView->removeRow();
+	m_ui->proxyExceptionsItemView->setFocus();
 
 	updateProxyExceptionsActions();
 
@@ -775,7 +775,7 @@ void PreferencesAdvancedPageWidget::removeProxyException()
 
 void PreferencesAdvancedPageWidget::updateProxyExceptionsActions()
 {
-	const bool isEditable = (m_ui->proxyExceptionsListView->getCurrentRow() >= 0);
+	const bool isEditable = (m_ui->proxyExceptionsItemView->getCurrentRow() >= 0);
 
 	m_ui->editProxyExceptionButton->setEnabled(isEditable);
 	m_ui->removeProxyExceptionButton->setEnabled(isEditable);
@@ -1420,7 +1420,7 @@ void PreferencesAdvancedPageWidget::save()
 	SettingsManager::setValue(QLatin1String("Proxy/AutomaticConfigurationPath"), m_ui->automaticProxyConfigurationFilePathWidget->getPath());
 	SettingsManager::setValue(QLatin1String("Proxy/UseSystemAuthentication"), m_ui->proxySystemAuthentication->isChecked());
 
-	QStandardItemModel *proxyListModel = m_ui->proxyExceptionsListView->getModel();
+	QStandardItemModel *proxyListModel = m_ui->proxyExceptionsItemView->getModel();
 	QStringList proxyExceptions;
 
 	for (int i = 0; i < proxyListModel->rowCount(); ++i)
