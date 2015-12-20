@@ -38,7 +38,7 @@ public:
 	explicit HeaderViewWidget(Qt::Orientation orientation, QWidget *parent = NULL);
 
 public slots:
-	void setSorting(int column, Qt::SortOrder order);
+	void setSort(int column, Qt::SortOrder order);
 
 protected:
 	void showEvent(QShowEvent *event);
@@ -46,10 +46,11 @@ protected:
 
 protected slots:
 	void toggleColumnVisibility(QAction *action);
-	void toggleColumnSort(int column);
+	void toggleSort(QAction *action);
+	void toggleSort(int column);
 
 signals:
-	void sortingChanged(int column, Qt::SortOrder order);
+	void sortChanged(int column, Qt::SortOrder order);
 	void columnVisibilityChanged(int column, bool hidden);
 };
 
@@ -91,6 +92,8 @@ public slots:
 	void removeRow();
 	void moveUpRow();
 	void moveDownRow();
+	void setSort(int column, Qt::SortOrder order);
+	void setColumnVisibility(int column, bool hide);
 	void setFilterString(const QString filter = QString());
 	void setFilterRoles(const QSet<int> &roles);
 
@@ -104,14 +107,12 @@ protected:
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void saveState();
-	void hideColumn(int column, bool hide);
 	void notifySelectionChanged();
 	void updateDropSelection();
 	void updateFilter();
-	void setSorting(int column, Qt::SortOrder order);
 
 private:
-	HeaderViewWidget *m_header;
+	HeaderViewWidget *m_headerWidget;
 	QStandardItemModel *m_model;
 	QString m_filterString;
 	QModelIndex m_currentIndex;
@@ -120,9 +121,9 @@ private:
 	QSet<int> m_filterRoles;
 	ViewMode m_viewMode;
 	Qt::SortOrder m_sortOrder;
+	int m_sortColumn;
 	int m_dragRow;
 	int m_dropRow;
-	int m_sortColumn;
 	bool m_canGatherExpanded;
 	bool m_isModified;
 	bool m_isInitialized;
@@ -134,7 +135,7 @@ signals:
 	void canMoveDownChanged(bool available);
 	void needsActionsUpdate();
 	void modified();
-	void sortingChanged(int column, Qt::SortOrder order);
+	void sortChanged(int column, Qt::SortOrder order);
 };
 
 }

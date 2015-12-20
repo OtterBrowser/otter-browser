@@ -32,7 +32,7 @@ namespace Otter
 
 HeaderViewWidget::HeaderViewWidget(Qt::Orientation orientation, QWidget *parent) : QHeaderView(orientation, parent)
 {
-	connect(this, SIGNAL(sectionClicked(int)), this, SLOT(toggleColumnSort(int)));
+	connect(this, SIGNAL(sectionClicked(int)), this, SLOT(toggleSort(int)));
 }
 
 void HeaderViewWidget::showEvent(QShowEvent *event)
@@ -45,43 +45,93 @@ void HeaderViewWidget::showEvent(QShowEvent *event)
 
 void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 {
-	QTreeView *view = qobject_cast<QTreeView*>(parent());
-	QMenu menu(this);
-
-	for (int i = 0; i < model()->columnCount(); ++i)
-	{
-		QAction *action = menu.addAction(model()->headerData(i, orientation()).toString());
-		action->setData(i);
-		action->setCheckable(true);
-		action->setChecked(view && !view->isColumnHidden(i));
-	}
-
-	connect(&menu, SIGNAL(triggered(QAction*)), this, SLOT(toggleColumnVisibility(QAction*)));
-
-	menu.exec(event->globalPos());
-}
-
-void HeaderViewWidget::toggleColumnSort(int column)
-{
 	ItemViewWidget *view = qobject_cast<ItemViewWidget*>(parent());
 
-	if (!view)
+	if (!view || (!view->isSortingEnabled() && model()->columnCount() < 2))
 	{
 		return;
 	}
 
-	if (view->getSortColumn() != column)
+	const int sortColumn = view->getSortColumn();
+	const int sortOrder = view->getSortOrder();
+
+	QMenu menu(this);
+	QMenu *sortMenu = menu.addMenu(tr("Sorting"));
+	sortMenu->setEnabled(view->isSortingEnabled());
+
+	if (sortMenu->isEnabled())
 	{
-		setSorting(column, Qt::AscendingOrder);
+		QAction *sortAscendingAction = sortMenu->addAction(tr("Sort Ascending"));
+		sortAscendingAction->setData(-2);
+		sortAscendingAction->setCheckable(true);
+		sortAscendingAction->setChecked(sortOrder == Qt::AscendingOrder);
+
+		QAction *sortDescendingAction = sortMenu->addAction(tr("Sort Descending"));
+		sortDescendingAction->setData(-3);
+		sortDescendingAction->setCheckable(true);
+		sortDescendingAction->setChecked(sortOrder == Qt::DescendingOrder);
+
+		sortMenu->addSeparator();
+
+		QAction *noSortAction = sortMenu->addAction(tr("No Sorting"));
+		noSortAction->setData(-1);
+		noSortAction->setCheckable(true);
+		noSortAction->setChecked(sortColumn < 0);
+
+		sortMenu->addSeparator();
 	}
-	else if (view->getSortOrder() == Qt::AscendingOrder)
+
+	QMenu *visibilityMenu = menu.addMenu(tr("Visible Columns"));
+	visibilityMenu->setEnabled(model()->columnCount() > 1);
+
+	QAction *showAllColumnsAction = NULL;
+	bool allColumnsVisible = true;
+
+	if (visibilityMenu->isEnabled())
 	{
-		setSorting(column, Qt::DescendingOrder);
+		showAllColumnsAction = visibilityMenu->addAction(tr("Show All"));
+		showAllColumnsAction->setData(-1);
+		showAllColumnsAction->setCheckable(true);
+
+		visibilityMenu->addSeparator();
 	}
-	else
+
+	for (int i = 0; i < model()->columnCount(); ++i)
 	{
-		setSorting(-1, Qt::AscendingOrder);
+		const QString title(model()->headerData(i, orientation()).toString());
+
+		if (sortMenu->isEnabled())
+		{
+			QAction *action = sortMenu->addAction(title);
+			action->setData(i);
+			action->setCheckable(true);
+			action->setChecked(i == sortColumn);
+		}
+
+		if (visibilityMenu->isEnabled())
+		{
+			QAction *action = visibilityMenu->addAction(title);
+			action->setData(i);
+			action->setCheckable(true);
+			action->setChecked(!view->isColumnHidden(i));
+
+			if (!action->isChecked())
+			{
+				allColumnsVisible = false;
+			}
+		}
 	}
+
+	if (showAllColumnsAction)
+	{
+		showAllColumnsAction->setChecked(allColumnsVisible);
+		showAllColumnsAction->setEnabled(!allColumnsVisible);
+	}
+
+	connect(sortMenu, SIGNAL(triggered(QAction*)), this, SLOT(toggleSort(QAction*)));
+	connect(visibilityMenu, SIGNAL(triggered(QAction*)), this, SLOT(toggleColumnVisibility(QAction*)));
+
+	menu.exec(event->globalPos());
 }
 
 void HeaderViewWidget::toggleColumnVisibility(QAction *action)
@@ -92,24 +142,69 @@ void HeaderViewWidget::toggleColumnVisibility(QAction *action)
 	}
 }
 
-void HeaderViewWidget::setSorting(int column, Qt::SortOrder order)
+void HeaderViewWidget::toggleSort(QAction *action)
+{
+	if (action)
+	{
+		const int value = action->data().toInt();
+
+		if (value == -2 || value == -3)
+		{
+			ItemViewWidget *view = qobject_cast<ItemViewWidget*>(parent());
+
+			if (view)
+			{
+				setSort(view->getSortColumn(), ((value == -2) ?  Qt::AscendingOrder : Qt::DescendingOrder));
+			}
+		}
+		else
+		{
+			toggleSort(value);
+		}
+	}
+}
+
+void HeaderViewWidget::toggleSort(int column)
+{
+	ItemViewWidget *view = qobject_cast<ItemViewWidget*>(parent());
+
+	if (!view)
+	{
+		return;
+	}
+
+	if (column >= 0 && view->getSortColumn() != column)
+	{
+		setSort(column, Qt::AscendingOrder);
+	}
+	else if (column >= 0 && view->getSortOrder() == Qt::AscendingOrder)
+	{
+		setSort(column, Qt::DescendingOrder);
+	}
+	else
+	{
+		setSort(-1, Qt::AscendingOrder);
+	}
+}
+
+void HeaderViewWidget::setSort(int column, Qt::SortOrder order)
 {
 	setSortIndicatorShown(true);
 	setSortIndicator(column, order);
 
-	emit sortingChanged(column, order);
+	emit sortChanged(column, order);
 }
 
 int ItemViewWidget::m_treeIndentation = 0;
 
 ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
-	m_header(new HeaderViewWidget(Qt::Horizontal, this)),
+	m_headerWidget(new HeaderViewWidget(Qt::Horizontal, this)),
 	m_model(NULL),
 	m_viewMode(ListViewMode),
 	m_sortOrder(Qt::AscendingOrder),
+	m_sortColumn(-1),
 	m_dragRow(-1),
 	m_dropRow(-1),
-	m_sortColumn(-1),
 	m_canGatherExpanded(false),
 	m_isModified(false),
 	m_isInitialized(false)
@@ -117,7 +212,7 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 	m_treeIndentation = indentation();
 
 	optionChanged(QLatin1String("Interface/ShowScrollBars"), SettingsManager::getValue(QLatin1String("Interface/ShowScrollBars")));
-	setHeader(m_header);
+	setHeader(m_headerWidget);
 	setIndentation(0);
 	setAllColumnsShowFocus(true);
 
@@ -126,10 +221,10 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 	viewport()->setAcceptDrops(true);
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
-	connect(this, SIGNAL(sortingChanged(int,Qt::SortOrder)), m_header, SLOT(setSorting(int,Qt::SortOrder)));
-	connect(m_header, SIGNAL(sortingChanged(int,Qt::SortOrder)), this, SLOT(setSorting(int,Qt::SortOrder)));
-	connect(m_header, SIGNAL(columnVisibilityChanged(int,bool)), this, SLOT(hideColumn(int,bool)));
-	connect(m_header, SIGNAL(sectionMoved(int,int,int)), this, SLOT(saveState()));
+	connect(this, SIGNAL(sortChanged(int,Qt::SortOrder)), m_headerWidget, SLOT(setSort(int,Qt::SortOrder)));
+	connect(m_headerWidget, SIGNAL(sortChanged(int,Qt::SortOrder)), this, SLOT(setSort(int,Qt::SortOrder)));
+	connect(m_headerWidget, SIGNAL(columnVisibilityChanged(int,bool)), this, SLOT(setColumnVisibility(int,bool)));
+	connect(m_headerWidget, SIGNAL(sectionMoved(int,int,int)), this, SLOT(saveState()));
 }
 
 void ItemViewWidget::showEvent(QShowEvent *event)
@@ -155,7 +250,7 @@ void ItemViewWidget::showEvent(QShowEvent *event)
 
 	const int order = settings.getValue(QLatin1String("order"), 0).toInt();
 
-	setSorting((qAbs(order) - 1), ((order > 0) ? Qt::AscendingOrder : Qt::DescendingOrder));
+	setSort((qAbs(order) - 1), ((order > 0) ? Qt::AscendingOrder : Qt::DescendingOrder));
 
 	const QStringList columns = settings.getValue(QLatin1String("columns")).toString().split(QLatin1Char(','), QString::SkipEmptyParts);
 
@@ -166,22 +261,22 @@ void ItemViewWidget::showEvent(QShowEvent *event)
 			setColumnHidden(i, true);
 		}
 
-		disconnect(m_header, SIGNAL(sectionMoved(int,int,int)), this, SLOT(saveState()));
+		disconnect(m_headerWidget, SIGNAL(sectionMoved(int,int,int)), this, SLOT(saveState()));
 
 		for (int i = 0; i < columns.count(); ++i)
 		{
 			setColumnHidden(columns[i].toInt(), false);
 
-			if (m_header)
+			if (m_headerWidget)
 			{
-				m_header->moveSection(m_header->visualIndex(columns[i].toInt()), i);
+				m_headerWidget->moveSection(m_headerWidget->visualIndex(columns[i].toInt()), i);
 			}
 		}
 
-		connect(m_header, SIGNAL(sectionMoved(int,int,int)), this, SLOT(saveState()));
+		connect(m_headerWidget, SIGNAL(sectionMoved(int,int,int)), this, SLOT(saveState()));
 	}
 
-	m_header->setStretchLastSection(true);
+	m_headerWidget->setStretchLastSection(true);
 
 	m_isInitialized = true;
 
@@ -359,7 +454,7 @@ void ItemViewWidget::saveState()
 
 	for(int i = 0; i < getColumnCount(); ++i)
 	{
-		int section = m_header->logicalIndex(i);
+		int section = m_headerWidget->logicalIndex(i);
 
 		if (section >= 0 && !isColumnHidden(section))
 		{
@@ -372,12 +467,6 @@ void ItemViewWidget::saveState()
 	settings.save();
 }
 
-void ItemViewWidget::hideColumn(int column, bool hide)
-{
-	setColumnHidden(column, hide);
-	saveState();
-}
-
 void ItemViewWidget::notifySelectionChanged()
 {
 	if (m_model)
@@ -387,8 +476,9 @@ void ItemViewWidget::notifySelectionChanged()
 
 		emit canMoveUpChanged(canMoveUp());
 		emit canMoveDownChanged(canMoveDown());
-		emit needsActionsUpdate();
 	}
+
+	emit needsActionsUpdate();
 }
 
 void ItemViewWidget::updateDropSelection()
@@ -403,7 +493,7 @@ void ItemViewWidget::updateFilter()
 	applyFilter(m_model->invisibleRootItem());
 }
 
-void ItemViewWidget::setSorting(int column, Qt::SortOrder order)
+void ItemViewWidget::setSort(int column, Qt::SortOrder order)
 {
 	if (column == m_sortColumn && order == m_sortOrder)
 	{
@@ -417,7 +507,24 @@ void ItemViewWidget::setSorting(int column, Qt::SortOrder order)
 	update();
 	saveState();
 
-	emit sortingChanged(column, order);
+	emit sortChanged(column, order);
+}
+
+void ItemViewWidget::setColumnVisibility(int column, bool hide)
+{
+	if (column < 0)
+	{
+		for (int i = 0; i < model()->columnCount(); ++i)
+		{
+			setColumnHidden(i, hide);
+		}
+	}
+	else
+	{
+		setColumnHidden(column, hide);
+	}
+
+	saveState();
 }
 
 void ItemViewWidget::setFilterString(const QString filter)
