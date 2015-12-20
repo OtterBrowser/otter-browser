@@ -18,8 +18,9 @@
 **************************************************************************/
 
 #include "OptionDelegate.h"
-#include "OptionWidget.h"
 #include "../core/SettingsManager.h"
+
+#include <QtGui/QPainter>
 
 namespace Otter
 {
@@ -27,6 +28,56 @@ namespace Otter
 OptionDelegate::OptionDelegate(bool isSimple, QObject *parent) : QItemDelegate(parent),
 	m_isSimple(isSimple)
 {
+}
+
+void OptionDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	const OptionWidget::OptionType type = getType(index);
+
+	drawBackground(painter, option, index);
+
+	switch (type)
+	{
+		case OptionWidget::BooleanType:
+			drawDisplay(painter, option, option.rect, index.data(Qt::DisplayRole).toBool() ? tr("Yes") : tr("No"));
+
+			break;
+		case OptionWidget::ColorType:
+			{
+				const QString color(index.data(Qt::DisplayRole).toString());
+
+				if (!color.isEmpty())
+				{
+					painter->fillRect(option.rect, QColor(color));
+				}
+
+				QStyleOptionViewItem mutableOption(option);
+				mutableOption.displayAlignment = Qt::AlignCenter;
+				mutableOption.palette.setColor(QPalette::Text, Qt::white);
+
+				drawDisplay(painter, mutableOption, option.rect, color);
+
+				mutableOption.palette.setColor(QPalette::Text, Qt::black);
+
+				drawDisplay(painter, mutableOption, option.rect.adjusted(-1, -1, -1, -1), color);
+
+				break;
+			}
+		case OptionWidget::FontType:
+			{
+				const QString font(index.data(Qt::DisplayRole).toString());
+				QStyleOptionViewItem mutableOption(option);
+				mutableOption.font = QFont(font);
+
+				drawDisplay(painter, mutableOption, option.rect, font);
+
+				break;
+			}
+		default:
+			drawDisplay(painter, option, option.rect, index.data(Qt::DisplayRole).toString());
+
+			break;
+	}
 }
 
 void OptionDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -54,42 +105,7 @@ QWidget* OptionDelegate::createEditor(QWidget *parent, const QStyleOptionViewIte
 {
 	Q_UNUSED(option)
 
-	const QString typeString = index.data(Qt::UserRole + 1).toString();
-	OptionWidget::OptionType type = OptionWidget::UnknownType;
-
-	if (typeString == QLatin1String("bool"))
-	{
-		type = OptionWidget::BooleanType;
-	}
-	else if (typeString == QLatin1String("color"))
-	{
-		type = OptionWidget::ColorType;
-	}
-	else if (typeString == QLatin1String("enumeration"))
-	{
-		type = OptionWidget::EnumerationType;
-	}
-	else if (typeString == QLatin1String("font"))
-	{
-		type = OptionWidget::FontType;
-	}
-	else if (typeString == QLatin1String("icon"))
-	{
-		type = OptionWidget::IconType;
-	}
-	else if (typeString == QLatin1String("integer"))
-	{
-		type = OptionWidget::IntegerType;
-	}
-	else if (typeString == QLatin1String("path"))
-	{
-		type = OptionWidget::PathType;
-	}
-	else if (typeString == QLatin1String("string"))
-	{
-		type = OptionWidget::StringType;
-	}
-
+	const OptionWidget::OptionType type = getType(index);
 	QVariant value = index.data(Qt::EditRole);
 
 	if (value.isNull())
@@ -117,6 +133,53 @@ QSize OptionDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelI
 	size.setHeight(option.fontMetrics.height() * 1.25);
 
 	return size;
+}
+
+OptionWidget::OptionType OptionDelegate::getType(const QModelIndex &index) const
+{
+	const QString typeString = index.data(Qt::UserRole + 1).toString();
+
+	if (typeString == QLatin1String("bool"))
+	{
+		return OptionWidget::BooleanType;
+	}
+
+	if (typeString == QLatin1String("color"))
+	{
+		return OptionWidget::ColorType;
+	}
+
+	if (typeString == QLatin1String("enumeration"))
+	{
+		return OptionWidget::EnumerationType;
+	}
+
+	if (typeString == QLatin1String("font"))
+	{
+		return OptionWidget::FontType;
+	}
+
+	if (typeString == QLatin1String("icon"))
+	{
+		return OptionWidget::IconType;
+	}
+
+	if (typeString == QLatin1String("integer"))
+	{
+		return OptionWidget::IntegerType;
+	}
+
+	if (typeString == QLatin1String("path"))
+	{
+		return OptionWidget::PathType;
+	}
+
+	if (typeString == QLatin1String("string"))
+	{
+		return OptionWidget::StringType;
+	}
+
+	return OptionWidget::UnknownType;
 }
 
 }
