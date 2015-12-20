@@ -720,7 +720,7 @@ BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, quint64 identifier
 		bookmark->setFlags(bookmark->flags() | Qt::ItemNeverHasChildren);
 	}
 
-	if (type != SeparatorBookmark && type != TrashBookmark && type != UnknownBookmark)
+	if (type != TrashBookmark && type != UnknownBookmark)
 	{
 		if (identifier == 0 || m_identifiers.contains(identifier))
 		{
