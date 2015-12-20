@@ -171,7 +171,7 @@ void OptionWidget::reset()
 	}
 	else if (m_comboBox)
 	{
-		m_comboBox->setCurrentText(value.toString());
+		m_comboBox->setCurrentIndex(qMax(0, m_comboBox->findData(value)));
 	}
 	else if (m_filePathWidget)
 	{
@@ -225,7 +225,7 @@ void OptionWidget::setChoices(const QStringList &choices)
 
 	for (int i = 0; i < choices.count(); ++i)
 	{
-		m_comboBox->addItem(choices.at(i));
+		m_comboBox->addItem(choices.at(i), choices.at(i));
 	}
 
 	m_comboBox->setCurrentText(m_value.toString());
@@ -287,7 +287,7 @@ QVariant OptionWidget::getValue() const
 
 	if (m_comboBox)
 	{
-		return m_comboBox->currentText();
+		return m_comboBox->currentData();
 	}
 
 	if (m_filePathWidget)
