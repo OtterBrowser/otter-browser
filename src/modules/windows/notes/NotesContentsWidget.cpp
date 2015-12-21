@@ -22,7 +22,6 @@
 #include "../../../core/NotesManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/Utils.h"
-#include "../../../ui/ItemDelegate.h"
 
 #include "ui_NotesContentsWidget.h"
 
@@ -53,7 +52,6 @@ NotesContentsWidget::NotesContentsWidget(Window *window) : ContentsWidget(window
 	m_ui->addButton->setMenu(addMenu);
 	m_ui->notesViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->notesViewWidget->setModel(NotesManager::getModel());
-	m_ui->notesViewWidget->setItemDelegate(new ItemDelegate(this));
 	m_ui->notesViewWidget->setExpanded(NotesManager::getModel()->getRootItem()->index(), true);
 	m_ui->notesViewWidget->setFilterRoles(filterRoles);
 	m_ui->notesViewWidget->viewport()->installEventFilter(this);

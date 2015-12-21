@@ -45,23 +45,29 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 		return;
 	}
 
-	QRect titleRectangle = option.rect;
-
-	if (!index.data(Qt::DecorationRole).value<QIcon>().isNull())
+	if (index.column() == 0)
 	{
-		QRect decorationRectangle = option.rect;
-		decorationRectangle.setRight(option.rect.left() + option.rect.height());
-		decorationRectangle = decorationRectangle.marginsRemoved(QMargins(1, 1, 1, 1));
+		if (!index.data(Qt::DecorationRole).value<QIcon>().isNull())
+		{
+			QRect decorationRectangle(option.rect);
+			decorationRectangle.setRight(option.rect.left() + option.rect.height());
+			decorationRectangle = decorationRectangle.marginsRemoved(QMargins(1, 1, 1, 1));
 
-		index.data(Qt::DecorationRole).value<QIcon>().paint(painter, decorationRectangle);
+			index.data(Qt::DecorationRole).value<QIcon>().paint(painter, decorationRectangle);
+		}
 
+		QRect titleRectangle(option.rect);
 		titleRectangle.setLeft(option.rect.left() + option.rect.height());
+
+		QStyleOptionViewItem titleOption(option);
+		titleOption.font = index.data(Qt::FontRole).value<QFont>();
+
+		drawDisplay(painter, titleOption, titleRectangle, index.data(Qt::DisplayRole).toString());
 	}
-
-	QStyleOptionViewItem titleOption = option;
-	titleOption.font = index.data(Qt::FontRole).value<QFont>();
-
-	drawDisplay(painter, titleOption, titleRectangle, index.data(Qt::DisplayRole).toString());
+	else
+	{
+		drawDisplay(painter, option, option.rect, index.data(Qt::DisplayRole).toString());
+	}
 }
 
 QSize ItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const

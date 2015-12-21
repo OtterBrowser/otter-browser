@@ -20,7 +20,6 @@
 #include "ConfigurationContentsWidget.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/Utils.h"
-#include "../../../ui/ItemDelegate.h"
 #include "../../../ui/OptionDelegate.h"
 
 #include "ui_ConfigurationContentsWidget.h"
@@ -94,7 +93,6 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 
 	m_ui->configurationViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->configurationViewWidget->setModel(m_model);
-	m_ui->configurationViewWidget->setItemDelegate(new ItemDelegate(this));
 	m_ui->configurationViewWidget->setItemDelegateForColumn(2, new OptionDelegate(false, this));
 	m_ui->configurationViewWidget->setFilterRoles(filterRoles);
 	m_ui->configurationViewWidget->header()->setTextElideMode(Qt::ElideRight);

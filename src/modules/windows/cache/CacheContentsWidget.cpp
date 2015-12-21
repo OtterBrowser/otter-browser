@@ -23,7 +23,6 @@
 #include "../../../core/NetworkCache.h"
 #include "../../../core/NetworkManagerFactory.h"
 #include "../../../core/Utils.h"
-#include "../../../ui/ItemDelegate.h"
 
 #include "ui_CacheContentsWidget.h"
 
@@ -129,7 +128,6 @@ void CacheContentsWidget::populateCache()
 	filterRoles << Qt::DisplayRole << Qt::UserRole;
 
 	m_ui->cacheViewWidget->setModel(m_model);
-	m_ui->cacheViewWidget->setItemDelegate(new ItemDelegate(this));
 	m_ui->cacheViewWidget->header()->setTextElideMode(Qt::ElideRight);
 	m_ui->cacheViewWidget->header()->setSectionResizeMode(0, QHeaderView::Stretch);
 	m_ui->cacheViewWidget->setFilterRoles(filterRoles);

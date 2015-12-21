@@ -20,7 +20,6 @@
 
 #include "PreferencesSearchPageWidget.h"
 #include "SearchKeywordDelegate.h"
-#include "../OptionDelegate.h"
 #include "../SearchDelegate.h"
 #include "../SearchEnginePropertiesDialog.h"
 #include "../../core/SessionsManager.h"
@@ -43,6 +42,7 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 	m_ui(new Ui::PreferencesSearchPageWidget)
 {
 	m_ui->setupUi(this);
+
 	QStringList searchEnginesLabels;
 	searchEnginesLabels << tr("Name") << tr("Keyword");
 
@@ -75,7 +75,6 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 
 	m_ui->searchViewWidget->setModel(searchEnginesModel);
 	m_ui->searchViewWidget->header()->setSectionResizeMode(0, QHeaderView::Stretch);
-	m_ui->searchViewWidget->setItemDelegateForColumn(0, new OptionDelegate(true, this));
 	m_ui->searchViewWidget->setItemDelegateForColumn(1, new SearchKeywordDelegate(this));
 	m_ui->searchSuggestionsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Search/SearchEnginesSuggestions")).toBool());
 

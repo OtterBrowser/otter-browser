@@ -20,6 +20,7 @@
 **************************************************************************/
 
 #include "ItemViewWidget.h"
+#include "ItemDelegate.h"
 #include "../core/SessionsManager.h"
 #include "../core/Settings.h"
 
@@ -206,6 +207,7 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 
 	optionChanged(QLatin1String("Interface/ShowScrollBars"), SettingsManager::getValue(QLatin1String("Interface/ShowScrollBars")));
 	setHeader(m_headerWidget);
+	setItemDelegate(new ItemDelegate(this));
 	setIndentation(0);
 	setAllColumnsShowFocus(true);
 

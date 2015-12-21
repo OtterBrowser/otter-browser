@@ -22,7 +22,6 @@
 #include "../../../core/SettingsManager.h"
 #include "../../../core/Utils.h"
 #include "../../../ui/BookmarkPropertiesDialog.h"
-#include "../../../ui/ItemDelegate.h"
 #include "../../../ui/MainWindow.h"
 
 #include "ui_BookmarksContentsWidget.h"
@@ -53,7 +52,6 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 	m_ui->addButton->setMenu(addMenu);
 	m_ui->bookmarksViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->bookmarksViewWidget->setModel(BookmarksManager::getModel());
-	m_ui->bookmarksViewWidget->setItemDelegate(new ItemDelegate(this));
 	m_ui->bookmarksViewWidget->setExpanded(BookmarksManager::getModel()->getRootItem()->index(), true);
 	m_ui->bookmarksViewWidget->setFilterRoles(filterRoles);
 	m_ui->bookmarksViewWidget->installEventFilter(this);

@@ -22,7 +22,6 @@
 #include "../../../core/ActionsManager.h"
 #include "../../../core/Transfer.h"
 #include "../../../core/Utils.h"
-#include "../../../ui/ItemDelegate.h"
 
 #include "ui_TransfersContentsWidget.h"
 
@@ -56,7 +55,6 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 	m_ui->transfersViewWidget->header()->resizeSection(0, 30);
 	m_ui->transfersViewWidget->header()->setSectionResizeMode(0, QHeaderView::Fixed);
 	m_ui->transfersViewWidget->header()->setSectionResizeMode(1, QHeaderView::Stretch);
-	m_ui->transfersViewWidget->setItemDelegate(new ItemDelegate(this));
 	m_ui->transfersViewWidget->setItemDelegateForColumn(3, new ProgressBarDelegate(this));
 	m_ui->transfersViewWidget->installEventFilter(this);
 	m_ui->stopResumeButton->setIcon(Utils::getIcon(QLatin1String("task-ongoing")));

@@ -36,7 +36,6 @@ ActionComboBoxWidget::ActionComboBoxWidget(QWidget *parent) : QComboBox(parent),
 {
 	setEditable(true);
 	setView(m_view);
-	setItemDelegate(new ItemDelegate(this));
 
 	m_view->setHeaderHidden(true);
 

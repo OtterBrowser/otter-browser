@@ -20,8 +20,6 @@
 #ifndef OTTER_ACTIONCOMBOBOXWIDGET_H
 #define OTTER_ACTIONCOMBOBOXWIDGET_H
 
-#include "ItemDelegate.h"
-
 #include <QtCore/QTime>
 #include <QtGui/QMouseEvent>
 #include <QtWidgets/QComboBox>
