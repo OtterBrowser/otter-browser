@@ -51,7 +51,6 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 	m_model->setHorizontalHeaderLabels(labels);
 
 	m_ui->transfersViewWidget->setModel(m_model);
-	m_ui->transfersViewWidget->header()->setTextElideMode(Qt::ElideRight);
 	m_ui->transfersViewWidget->header()->resizeSection(0, 30);
 	m_ui->transfersViewWidget->header()->setSectionResizeMode(0, QHeaderView::Fixed);
 	m_ui->transfersViewWidget->header()->setSectionResizeMode(1, QHeaderView::Stretch);

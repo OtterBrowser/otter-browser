@@ -128,8 +128,6 @@ void CacheContentsWidget::populateCache()
 	filterRoles << Qt::DisplayRole << Qt::UserRole;
 
 	m_ui->cacheViewWidget->setModel(m_model);
-	m_ui->cacheViewWidget->header()->setTextElideMode(Qt::ElideRight);
-	m_ui->cacheViewWidget->header()->setSectionResizeMode(0, QHeaderView::Stretch);
 	m_ui->cacheViewWidget->setFilterRoles(filterRoles);
 
 	m_isLoading = false;

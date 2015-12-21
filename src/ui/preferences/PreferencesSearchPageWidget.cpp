@@ -74,7 +74,6 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 	}
 
 	m_ui->searchViewWidget->setModel(searchEnginesModel);
-	m_ui->searchViewWidget->header()->setSectionResizeMode(0, QHeaderView::Stretch);
 	m_ui->searchViewWidget->setItemDelegateForColumn(1, new SearchKeywordDelegate(this));
 	m_ui->searchSuggestionsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Search/SearchEnginesSuggestions")).toBool());
 

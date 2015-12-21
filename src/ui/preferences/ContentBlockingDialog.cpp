@@ -69,8 +69,6 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 	}
 
 	m_ui->profilesViewWidget->setModel(model);
-	m_ui->profilesViewWidget->header()->setSectionResizeMode(0, QHeaderView::Stretch);
-	m_ui->profilesViewWidget->header()->setVisible(true);
 	m_ui->profilesViewWidget->setItemDelegate(new OptionDelegate(true, this));
 	m_ui->profilesViewWidget->setItemDelegateForColumn(1, new ContentBlockingIntervalDelegate(this));
 

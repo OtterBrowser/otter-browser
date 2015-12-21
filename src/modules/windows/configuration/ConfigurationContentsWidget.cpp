@@ -95,7 +95,6 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 	m_ui->configurationViewWidget->setModel(m_model);
 	m_ui->configurationViewWidget->setItemDelegateForColumn(2, new OptionDelegate(false, this));
 	m_ui->configurationViewWidget->setFilterRoles(filterRoles);
-	m_ui->configurationViewWidget->header()->setTextElideMode(Qt::ElideRight);
 	m_ui->filterLineEdit->installEventFilter(this);
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));

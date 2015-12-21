@@ -54,8 +54,6 @@ HistoryContentsWidget::HistoryContentsWidget(Window *window) : ContentsWidget(wi
 
 	m_ui->historyViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->historyViewWidget->setModel(m_model);
-	m_ui->historyViewWidget->header()->setTextElideMode(Qt::ElideRight);
-	m_ui->historyViewWidget->header()->setSectionResizeMode(0, QHeaderView::Stretch);
 	m_ui->historyViewWidget->installEventFilter(this);
 	m_ui->historyViewWidget->viewport()->installEventFilter(this);
 	m_ui->filterLineEdit->installEventFilter(this);

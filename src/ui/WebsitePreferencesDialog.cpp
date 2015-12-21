@@ -367,7 +367,6 @@ void WebsitePreferencesDialog::updateValues(bool checked)
 	}
 
 	m_ui->contentBlockingProfilesViewWidget->setModel(contentBlockingProfilesModel);
-	m_ui->contentBlockingProfilesViewWidget->header()->setVisible(true);
 	m_ui->contentBlockingProfilesViewWidget->setItemDelegate(new OptionDelegate(true, this));
 	m_ui->contentBlockingProfilesViewWidget->setItemDelegateForColumn(1, new ContentBlockingIntervalDelegate(this));
 
