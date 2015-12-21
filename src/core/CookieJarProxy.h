@@ -23,6 +23,7 @@
 #include "CookieJar.h"
 
 #include <QtCore/QQueue>
+#include <QtCore/QStringList>
 
 namespace Otter
 {
