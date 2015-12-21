@@ -149,6 +149,7 @@ public:
 	static bool restoreClosedWindow(int index = -1);
 	static bool restoreSession(const SessionInformation &session, MainWindow *window = NULL, bool isPrivate = false);
 	static bool saveSession(const QString &path = QString(), const QString &title = QString(), MainWindow *window = NULL, bool isClean = true);
+	static bool saveSession(const SessionInformation &session);
 	static bool deleteSession(const QString &path = QString());
 	static bool isLastWindow();
 	static bool isPrivate();

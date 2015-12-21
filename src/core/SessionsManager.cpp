@@ -383,6 +383,11 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 		return false;
 	}
 
+	SessionInformation session;
+	session.path = getSessionPath(path);
+	session.title = (title.isEmpty() ? m_sessionTitle : title);
+	session.isClean = isClean;
+
 	QList<MainWindow*> windows;
 
 	if (window)
@@ -394,14 +399,45 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 		windows = Application::getInstance()->getWindows();
 	}
 
-	if (windows.isEmpty())
+	for (int i = 0; i < windows.count(); ++i)
+	{
+		session.windows.append(windows.at(i)->getWindowsManager()->getSession());
+		session.windows.last().geometry = windows.at(i)->saveGeometry();
+	}
+
+	return saveSession(session);
+}
+
+bool SessionsManager::saveSession(const SessionInformation &session)
+{
+	QDir().mkpath(m_profilePath + QLatin1String("/sessions/"));
+
+	if (session.windows.isEmpty())
 	{
 		return false;
 	}
 
-	QDir().mkpath(m_profilePath + QLatin1String("/sessions/"));
+	QString path = session.path;
 
-	QSaveFile file(getSessionPath(path));
+	if (path.isEmpty())
+	{
+		path = m_profilePath + QLatin1String("/sessions/") + session.title + QLatin1String(".ini");
+
+		if (QFileInfo(path).exists())
+		{
+			int i = 1;
+
+			while (QFileInfo(m_profilePath + QLatin1String("/sessions/") + session.title + QString::number(i) + QLatin1String(".ini")).exists())
+			{
+				++i;
+			}
+
+			path = m_profilePath + QLatin1String("/sessions/") + session.title + QString::number(i) + QLatin1String(".ini");
+		}
+	}
+
+	QSaveFile file(path);
+
 
 	if (!file.open(QIODevice::WriteOnly))
 	{
@@ -413,22 +449,22 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 	QTextStream stream(&file);
 	stream.setCodec("UTF-8");
 	stream << QLatin1String("[Session]\n");
-	stream << Utils::formatConfigurationEntry(QLatin1String("title"), (title.isEmpty() ? m_sessionTitle : title), true);
+	stream << Utils::formatConfigurationEntry(QLatin1String("title"), session.title, true);
 
-	if (!isClean)
+	if (!session.isClean)
 	{
 		stream << QLatin1String("clean=false\n");
 	}
 
-	stream << QLatin1String("windows=") << windows.count() << QLatin1Char('\n');
+	stream << QLatin1String("windows=") << session.windows.count() << QLatin1Char('\n');
 	stream << QLatin1String("index=1\n\n");
 
-	for (int i = 0; i < windows.count(); ++i)
+	for (int i = 0; i < session.windows.count(); ++i)
 	{
-		const SessionMainWindow sessionEntry = windows.at(i)->getWindowsManager()->getSession();
+		const SessionMainWindow sessionEntry = session.windows.at(i);
 
 		stream << QStringLiteral("[%1/Properties]\n").arg(i + 1);
-		stream << Utils::formatConfigurationEntry(QLatin1String("geometry"), windows.at(i)->saveGeometry().toBase64(), true);
+		stream << Utils::formatConfigurationEntry(QLatin1String("geometry"), session.windows.at(i).geometry.toBase64(), true);
 		stream << QLatin1String("groups=0\n");
 		stream << QLatin1String("windows=") << sessionEntry.windows.count() << QLatin1Char('\n');
 		stream << QLatin1String("index=") << (sessionEntry.index + 1) << QLatin1String("\n\n");
