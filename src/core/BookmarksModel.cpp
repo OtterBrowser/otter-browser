@@ -350,12 +350,6 @@ void BookmarksModel::removeBookmark(BookmarksItem *bookmark)
 	emit modelModified();
 }
 
-void BookmarksModel::sort(int column, Qt::SortOrder order)
-{
-	Q_UNUSED(column)
-	Q_UNUSED(order)
-}
-
 void BookmarksModel::readBookmark(QXmlStreamReader *reader, BookmarksItem *parent)
 {
 	BookmarksItem *bookmark = NULL;

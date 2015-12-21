@@ -122,9 +122,6 @@
          <property name="alternatingRowColors">
           <bool>true</bool>
          </property>
-         <property name="sortingEnabled">
-          <bool>true</bool>
-         </property>
          <attribute name="headerDefaultSectionSize">
           <number>250</number>
          </attribute>
@@ -414,9 +411,6 @@
             <set>QAbstractItemView::NoEditTriggers</set>
            </property>
            <property name="alternatingRowColors">
-            <bool>true</bool>
-           </property>
-           <property name="sortingEnabled">
             <bool>true</bool>
            </property>
            <attribute name="headerDefaultSectionSize">

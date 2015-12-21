@@ -57,9 +57,6 @@
       <property name="defaultDropAction">
        <enum>Qt::CopyAction</enum>
       </property>
-      <property name="sortingEnabled">
-       <bool>true</bool>
-      </property>
       <attribute name="headerVisible">
        <bool>false</bool>
       </attribute>

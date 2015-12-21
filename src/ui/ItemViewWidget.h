@@ -41,6 +41,7 @@ public slots:
 	void setSort(int column, Qt::SortOrder order);
 
 protected:
+	void showEvent(QShowEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
 
 protected slots:

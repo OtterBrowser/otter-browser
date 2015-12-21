@@ -39,11 +39,19 @@ HeaderViewWidget::HeaderViewWidget(Qt::Orientation orientation, QWidget *parent)
 	connect(this, SIGNAL(sectionClicked(int)), this, SLOT(toggleSort(int)));
 }
 
+void HeaderViewWidget::showEvent(QShowEvent *event)
+{
+	setSectionsClickable(true);
+	setSortIndicatorShown(true);
+
+	QHeaderView::showEvent(event);
+}
+
 void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 {
 	ItemViewWidget *view = qobject_cast<ItemViewWidget*>(parent());
 
-	if (!view || (!view->isSortingEnabled() && model()->columnCount() < 2))
+	if (!view)
 	{
 		return;
 	}
@@ -53,29 +61,24 @@ void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	QMenu menu(this);
 	QMenu *sortMenu = menu.addMenu(tr("Sorting"));
-	sortMenu->setEnabled(view->isSortingEnabled());
+	QAction *sortAscendingAction = sortMenu->addAction(tr("Sort Ascending"));
+	sortAscendingAction->setData(-2);
+	sortAscendingAction->setCheckable(true);
+	sortAscendingAction->setChecked(sortOrder == Qt::AscendingOrder);
 
-	if (sortMenu->isEnabled())
-	{
-		QAction *sortAscendingAction = sortMenu->addAction(tr("Sort Ascending"));
-		sortAscendingAction->setData(-2);
-		sortAscendingAction->setCheckable(true);
-		sortAscendingAction->setChecked(sortOrder == Qt::AscendingOrder);
+	QAction *sortDescendingAction = sortMenu->addAction(tr("Sort Descending"));
+	sortDescendingAction->setData(-3);
+	sortDescendingAction->setCheckable(true);
+	sortDescendingAction->setChecked(sortOrder == Qt::DescendingOrder);
 
-		QAction *sortDescendingAction = sortMenu->addAction(tr("Sort Descending"));
-		sortDescendingAction->setData(-3);
-		sortDescendingAction->setCheckable(true);
-		sortDescendingAction->setChecked(sortOrder == Qt::DescendingOrder);
+	sortMenu->addSeparator();
 
-		sortMenu->addSeparator();
+	QAction *noSortAction = sortMenu->addAction(tr("No Sorting"));
+	noSortAction->setData(-1);
+	noSortAction->setCheckable(true);
+	noSortAction->setChecked(sortColumn < 0);
 
-		QAction *noSortAction = sortMenu->addAction(tr("No Sorting"));
-		noSortAction->setData(-1);
-		noSortAction->setCheckable(true);
-		noSortAction->setChecked(sortColumn < 0);
-
-		sortMenu->addSeparator();
-	}
+	sortMenu->addSeparator();
 
 	QMenu *visibilityMenu = menu.addMenu(tr("Visible Columns"));
 	visibilityMenu->setEnabled(model()->columnCount() > 1);
@@ -95,14 +98,10 @@ void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 	for (int i = 0; i < model()->columnCount(); ++i)
 	{
 		const QString title(model()->headerData(i, orientation()).toString());
-
-		if (sortMenu->isEnabled())
-		{
-			QAction *action = sortMenu->addAction(title);
-			action->setData(i);
-			action->setCheckable(true);
-			action->setChecked(i == sortColumn);
-		}
+		QAction *action = sortMenu->addAction(title);
+		action->setData(i);
+		action->setCheckable(true);
+		action->setChecked(i == sortColumn);
 
 		if (visibilityMenu->isEnabled())
 		{
