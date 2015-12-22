@@ -105,6 +105,7 @@ SOURCES += src/main.cpp \
     src/core/SessionsManager.cpp \
     src/core/Settings.cpp \
     src/core/SettingsManager.cpp \
+    src/core/SpellCheckManager.cpp \
     src/core/ToolBarsManager.cpp \
     src/core/Transfer.cpp \
     src/core/TransfersManager.cpp \
@@ -271,6 +272,7 @@ HEADERS += src/core/ActionsManager.h \
     src/core/SessionsManager.h \
     src/core/Settings.h \
     src/core/SettingsManager.h \
+    src/core/SpellCheckManager.h \
     src/core/ToolBarsManager.h \
     src/core/Transfer.h \
     src/core/TransfersManager.h \

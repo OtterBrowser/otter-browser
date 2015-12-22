@@ -34,6 +34,7 @@
 #include "PlatformIntegration.h"
 #include "SearchEnginesManager.h"
 #include "SettingsManager.h"
+#include "SpellCheckManager.h"
 #include "ToolBarsManager.h"
 #include "TransfersManager.h"
 #include "Utils.h"
@@ -267,6 +268,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	PasswordsManager::createInstance(this);
 
 	SearchEnginesManager::createInstance(this);
+
+	SpellCheckManager::createInstance(this);
 
 	ToolBarsManager::createInstance(this);
 
