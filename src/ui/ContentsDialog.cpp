@@ -24,9 +24,6 @@
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QScrollBar>
 
-
-#include <QDebug>
-
 namespace Otter
 {
 
