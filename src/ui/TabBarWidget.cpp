@@ -49,6 +49,8 @@ namespace Otter
 
 TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_previewWidget(NULL),
+	m_closeButtonPosition(static_cast<QTabBar::ButtonPosition>(QApplication::style()->styleHint(QStyle::SH_TabBar_CloseButtonPosition))),
+	m_iconButtonPosition(((m_closeButtonPosition == QTabBar::RightSide) ? QTabBar::LeftSide : QTabBar::RightSide)),
 	m_tabSize(0),
 	m_maximumTabSize(40),
 	m_minimumTabSize(250),
@@ -56,9 +58,9 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_clickedTab(-1),
 	m_hoveredTab(-1),
 	m_previewTimer(0),
-	m_showCloseButton(true),
-	m_showUrlIcon(true),
-	m_enablePreviews(true)
+	m_showCloseButton(SettingsManager::getValue(QLatin1String("TabBar/ShowCloseButton")).toBool()),
+	m_showUrlIcon(SettingsManager::getValue(QLatin1String("TabBar/ShowUrlIcon")).toBool()),
+	m_enablePreviews(SettingsManager::getValue(QLatin1String("TabBar/EnablePreviews")).toBool())
 {
 	qRegisterMetaType<WindowLoadingState>("WindowLoadingState");
 	setDrawBase(false);
@@ -71,13 +73,6 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	setMaximumSize(0, 0);
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	setStyle(new TabBarStyle());
-
-	m_closeButtonPosition = static_cast<QTabBar::ButtonPosition>(QApplication::style()->styleHint(QStyle::SH_TabBar_CloseButtonPosition));
-	m_iconButtonPosition = ((m_closeButtonPosition == QTabBar::RightSide) ? QTabBar::LeftSide : QTabBar::RightSide);
-
-	optionChanged(QLatin1String("TabBar/ShowCloseButton"), SettingsManager::getValue(QLatin1String("TabBar/ShowCloseButton")));
-	optionChanged(QLatin1String("TabBar/ShowUrlIcon"), SettingsManager::getValue(QLatin1String("TabBar/ShowUrlIcon")));
-	optionChanged(QLatin1String("TabBar/EnablePreviews"), SettingsManager::getValue(QLatin1String("TabBar/EnablePreviews")));
 	optionChanged(QLatin1String("TabBar/MaximumTabSize"), SettingsManager::getValue(QLatin1String("TabBar/MaximumTabSize")));
 	optionChanged(QLatin1String("TabBar/MinimumTabSize"), SettingsManager::getValue(QLatin1String("TabBar/MinimumTabSize")));
 
