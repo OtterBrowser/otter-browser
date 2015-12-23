@@ -118,8 +118,7 @@ private:
 	QVector<QPair<int, QVector<QShortcut*> > > m_actionShortcuts;
 	Qt::WindowStates m_previousState;
 	Qt::WindowStates m_previousRaisedState;
-	int m_tabSwitcherKey;
-	int m_tabSwictherTimer;
+	int m_tabSwitcherTimer;
 	Ui::MainWindow *m_ui;
 
 signals:
