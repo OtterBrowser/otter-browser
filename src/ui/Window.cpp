@@ -96,24 +96,50 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 {
 	if (parameters.contains(QLatin1String("isBounced")))
 	{
-		if (identifier == ActionsManager::ActivateSearchFieldAction && !m_searchWidgets.isEmpty() && m_searchWidgets.at(0))
+		AddressWidget *addressWidget = NULL;
+		SearchWidget *searchWidget = NULL;
+
+		if (identifier == ActionsManager::ActivateAddressFieldAction || identifier == ActionsManager::ActivateSearchFieldAction)
 		{
-			m_searchWidgets.at(0)->activate(Qt::ShortcutFocusReason);
+			for (int i = 0; i < m_addressWidgets.count(); ++i)
+			{
+				if (m_addressWidgets.at(i) && m_addressWidgets.at(i)->isVisible())
+				{
+					addressWidget = m_addressWidgets.at(i);
+
+					break;
+				}
+			}
+
+			for (int i = 0; i < m_searchWidgets.count(); ++i)
+			{
+				if (m_searchWidgets.at(i) && m_searchWidgets.at(i)->isVisible())
+				{
+					searchWidget = m_searchWidgets.at(i);
+
+					break;
+				}
+			}
 		}
-		else if (!m_addressWidgets.isEmpty() && m_addressWidgets.at(0))
+
+		if (identifier == ActionsManager::ActivateSearchFieldAction && searchWidget)
+		{
+			searchWidget->activate(Qt::ShortcutFocusReason);
+		}
+		else if (addressWidget)
 		{
 			if (identifier == ActionsManager::ActivateAddressFieldAction)
 			{
-				m_addressWidgets.at(0)->activate(Qt::ShortcutFocusReason);
+				addressWidget->activate(Qt::ShortcutFocusReason);
 			}
 			else if (identifier == ActionsManager::ActivateSearchFieldAction)
 			{
-				m_addressWidgets.at(0)->setText(QLatin1String("? "));
-				m_addressWidgets.at(0)->activate(Qt::OtherFocusReason);
+				addressWidget->setText(QLatin1String("? "));
+				addressWidget->activate(Qt::OtherFocusReason);
 			}
 			else if (identifier == ActionsManager::GoAction)
 			{
-				m_addressWidgets.at(0)->handleUserInput(m_addressWidgets.at(0)->getText(), WindowsManager::CurrentTabOpen);
+				addressWidget->handleUserInput(addressWidget->getText(), WindowsManager::CurrentTabOpen);
 
 				return;
 			}
