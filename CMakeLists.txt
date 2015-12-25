@@ -67,6 +67,8 @@ include(GNUInstallDirs)
 
 option(EnableQtwebengine "Enable QtWebEngine backend (requires Qt 5.5)" OFF)
 
+find_package(KF5Sonnet)
+
 if (EnableQtwebengine)
 	find_package(Qt5 5.5.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Script Sql WebEngine WebEngineWidgets WebKit WebKitWidgets Widgets XmlPatterns)
 else (EnableQtwebengine)
@@ -317,6 +319,17 @@ if (EnableQtwebengine)
 	)
 endif (EnableQtwebengine)
 
+if (KF5Sonnet_FOUND)
+	add_definitions(-DQT_STATICPLUGIN)
+
+	set(otter_src
+		${otter_src}
+		src/modules/backends/web/qtwebkit/qwebkitplatformplugin.h
+		src/modules/backends/web/qtwebkit/QtWebKitPlugin.cpp
+		src/modules/backends/web/qtwebkit/QtWebKitSpellChecker.cpp
+	)
+endif (KF5Sonnet_FOUND)
+
 if (WIN32)
 	add_definitions(-DUNICODE -D_UNICODE)
 
@@ -373,6 +386,10 @@ add_executable(otter-browser WIN32 MACOSX_BUNDLE
 if (EnableQtwebengine)
 	qt5_use_modules(otter-browser WebEngine WebEngineWidgets)
 endif (EnableQtwebengine)
+
+if (KF5Sonnet_FOUND)
+	target_link_libraries(otter-browser KF5::SonnetCore)
+endif (KF5Sonnet_FOUND)
 
 if (WIN32)
 	qt5_use_modules(otter-browser WinExtras)
