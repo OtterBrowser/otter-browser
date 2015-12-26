@@ -82,9 +82,11 @@ void Window::focusInEvent(QFocusEvent *event)
 {
 	QWidget::focusInEvent(event);
 
-	if (Utils::isUrlEmpty(getUrl()) && !m_contentsWidget->isLoading() && !m_addressWidgets.isEmpty() && m_addressWidgets.at(0))
+	AddressWidget *addressWidget = findAddressWidget();
+
+	if (Utils::isUrlEmpty(getUrl()) && !m_contentsWidget->isLoading() && addressWidget)
 	{
-		m_addressWidgets.at(0)->setFocus();
+		addressWidget->setFocus();
 	}
 	else if (m_contentsWidget)
 	{
@@ -101,15 +103,7 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 
 		if (identifier == ActionsManager::ActivateAddressFieldAction || identifier == ActionsManager::ActivateSearchFieldAction)
 		{
-			for (int i = 0; i < m_addressWidgets.count(); ++i)
-			{
-				if (m_addressWidgets.at(i) && m_addressWidgets.at(i)->isVisible())
-				{
-					addressWidget = m_addressWidgets.at(i);
-
-					break;
-				}
-			}
+			addressWidget = findAddressWidget();
 
 			for (int i = 0; i < m_searchWidgets.count(); ++i)
 			{
@@ -556,9 +550,11 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	}
 	else
 	{
-		if (Utils::isUrlEmpty(getUrl()) && !m_addressWidgets.isEmpty() && m_addressWidgets.at(0))
+		AddressWidget *addressWidget = findAddressWidget();
+
+		if (Utils::isUrlEmpty(getUrl()) && addressWidget)
 		{
-			m_addressWidgets.at(0)->setFocus();
+			addressWidget->setFocus();
 		}
 
 		if (m_contentsWidget->getUrl().scheme() == QLatin1String("about") || Utils::isUrlEmpty(getUrl()))
@@ -588,6 +584,19 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	connect(m_contentsWidget, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
 	connect(m_contentsWidget, SIGNAL(loadingChanged(bool)), this, SLOT(notifyLoadingStateChanged(bool)));
 	connect(m_contentsWidget, SIGNAL(canZoomChanged(bool)), this, SIGNAL(canZoomChanged(bool)));
+}
+
+AddressWidget* Window::findAddressWidget() const
+{
+	for (int i = 0; i < m_addressWidgets.count(); ++i)
+	{
+		if (m_addressWidgets.at(i) && m_addressWidgets.at(i)->isVisible())
+		{
+			return m_addressWidgets.at(i);
+		}
+	}
+
+	return NULL;
 }
 
 Window* Window::clone(bool cloneHistory, QWidget *parent)

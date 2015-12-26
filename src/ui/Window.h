@@ -109,6 +109,7 @@ public slots:
 protected:
 	void focusInEvent(QFocusEvent *event);
 	void setContentsWidget(ContentsWidget *widget);
+	AddressWidget* findAddressWidget() const;
 
 protected slots:
 	void handleIconChanged(const QIcon &icon);
