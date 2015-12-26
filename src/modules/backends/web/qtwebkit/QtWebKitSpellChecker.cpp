@@ -20,6 +20,7 @@
 **************************************************************************/
 
 #include "QtWebKitSpellChecker.h"
+#include "QtWebKitWebBackend.h"
 
 #include <QtCore/QTextBoundaryFinder>
 
@@ -27,13 +28,19 @@ namespace Otter
 {
 
 QtWebKitSpellChecker::QtWebKitSpellChecker() : QWebSpellChecker(),
-	m_speller(new Sonnet::Speller())
+	m_speller(NULL)
 {
+	setDictionary(QtWebKitWebBackend::getActiveDictionary());
+
+	connect(QtWebKitWebBackend::getInstance(), SIGNAL(activeDictionaryChanged(QString)), this, SLOT(setDictionary(QString)));
 }
 
 QtWebKitSpellChecker::~QtWebKitSpellChecker()
 {
-	delete m_speller;
+	if (m_speller)
+	{
+		delete m_speller;
+	}
 }
 
 void QtWebKitSpellChecker::toggleContinousSpellChecking()
@@ -46,7 +53,7 @@ void QtWebKitSpellChecker::toggleGrammarChecking()
 
 void QtWebKitSpellChecker::checkSpellingOfString(const QString &word, int *misspellingLocation, int *misspellingLength)
 {
-	if (misspellingLocation == NULL || misspellingLength == NULL)
+	if (!m_speller || misspellingLocation == NULL || misspellingLength == NULL)
 	{
 		return;
 	}
@@ -102,19 +109,49 @@ void QtWebKitSpellChecker::checkGrammarOfString(const QString &word, QList<QWebS
 
 void QtWebKitSpellChecker::learnWord(const QString &word)
 {
-	m_speller->addToPersonal(word);
+	if (m_speller)
+	{
+		m_speller->addToPersonal(word);
+	}
 }
 
 void QtWebKitSpellChecker::ignoreWordInSpellDocument(const QString &word)
 {
-	m_speller->addToSession(word);
+	if (m_speller)
+	{
+		m_speller->addToSession(word);
+	}
 }
 
 void QtWebKitSpellChecker::guessesForWord(const QString &word, const QString &context, QStringList &guesses)
 {
 	Q_UNUSED(context);
 
-	guesses = m_speller->suggest(word);
+	if (m_speller)
+	{
+		guesses = m_speller->suggest(word);
+	}
+}
+
+void QtWebKitSpellChecker::setDictionary(const QString &dictionary)
+{
+	if (dictionary.isEmpty() && m_speller)
+	{
+		delete m_speller;
+
+		m_speller = NULL;
+	}
+	else if (!dictionary.isEmpty())
+	{
+		if (m_speller)
+		{
+			m_speller->setLanguage(dictionary);
+		}
+		else
+		{
+			m_speller = new Sonnet::Speller(dictionary);
+		}
+	}
 }
 
 QString QtWebKitSpellChecker::autoCorrectSuggestionForMisspelledWord(const QString &word)
@@ -124,7 +161,7 @@ QString QtWebKitSpellChecker::autoCorrectSuggestionForMisspelledWord(const QStri
 
 bool QtWebKitSpellChecker::isContinousSpellCheckingEnabled() const
 {
-	return true;
+	return (m_speller != NULL);
 }
 
 bool QtWebKitSpellChecker::isGrammarCheckingEnabled()

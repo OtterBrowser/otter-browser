@@ -35,12 +35,16 @@
 namespace Otter
 {
 
+QtWebKitWebBackend* QtWebKitWebBackend::m_instance = NULL;
+QPointer<WebWidget> QtWebKitWebBackend::m_activeWidget = NULL;
 QMap<QString, QString> QtWebKitWebBackend::m_userAgentComponents;
 QMap<QString, QString> QtWebKitWebBackend::m_userAgents;
 
 QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent),
 	m_isInitialized(false)
 {
+	m_instance = this;
+
 	QtWebKitPage *page = new QtWebKitPage();
 	QRegularExpression platformExpression(QLatin1String("(\\([^\\)]+\\))"));
 
@@ -140,6 +144,13 @@ void QtWebKitWebBackend::pageLoaded(bool success)
 	page->deleteLater();
 }
 
+void QtWebKitWebBackend::setActiveWidget(WebWidget *widget)
+{
+	m_activeWidget = widget;
+
+	emit activeDictionaryChanged(getActiveDictionary());
+}
+
 WebWidget* QtWebKitWebBackend::createWidget(bool isPrivate, ContentsWidget *parent)
 {
 	if (!m_isInitialized)
@@ -171,7 +182,16 @@ WebWidget* QtWebKitWebBackend::createWidget(bool isPrivate, ContentsWidget *pare
 		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 	}
 
-	return new QtWebKitWebWidget(isPrivate, this, NULL, parent);
+	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate, this, NULL, parent);
+
+	connect(widget, SIGNAL(widgetActivated(WebWidget*)), this, SLOT(setActiveWidget(WebWidget*)));
+
+	return widget;
+}
+
+QtWebKitWebBackend* QtWebKitWebBackend::getInstance()
+{
+	return m_instance;
 }
 
 QString QtWebKitWebBackend::getTitle() const
@@ -229,6 +249,23 @@ QUrl QtWebKitWebBackend::getHomePage() const
 QIcon QtWebKitWebBackend::getIcon() const
 {
 	return QIcon();
+}
+
+QString QtWebKitWebBackend::getActiveDictionary()
+{
+	if (m_activeWidget && m_activeWidget->getOption(QLatin1String("Browser/EnableSpellCheck"), m_activeWidget->getUrl()).toBool())
+	{
+		const QString dictionary(m_activeWidget->getOption(QLatin1String("Browser/SpellCheckDictionary"), m_activeWidget->getUrl()).toString());
+
+		return (dictionary.isEmpty() ? SpellCheckManager::getDefaultDictionary() : dictionary);
+	}
+
+	return QString();
+}
+
+QList<SpellCheckManager::DictionaryInformation> QtWebKitWebBackend::getDictionaries() const
+{
+	return SpellCheckManager::getDictionaries();
 }
 
 bool QtWebKitWebBackend::requestThumbnail(const QUrl &url, const QSize &size)

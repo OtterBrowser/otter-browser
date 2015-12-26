@@ -48,6 +48,9 @@ public:
 protected:
 	static bool isValidWord(const QString &string);
 
+protected slots:
+	void setDictionary(const QString &dictionary);
+
 private:
 	Sonnet::Speller *m_speller;
 };

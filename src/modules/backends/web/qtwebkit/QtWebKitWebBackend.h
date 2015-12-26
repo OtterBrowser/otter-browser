@@ -26,6 +26,7 @@ namespace Otter
 {
 
 class QtWebKitPage;
+class QtWebKitSpellChecker;
 
 class QtWebKitWebBackend : public WebBackend
 {
@@ -42,18 +43,31 @@ public:
 	QString getUserAgent(const QString &pattern = QString()) const;
 	QUrl getHomePage() const;
 	QIcon getIcon() const;
+	QList<SpellCheckManager::DictionaryInformation> getDictionaries() const;
 	bool requestThumbnail(const QUrl &url, const QSize &size);
+
+protected:
+	static QtWebKitWebBackend* getInstance();
+	static QString getActiveDictionary();
 
 protected slots:
 	void optionChanged(const QString &option);
 	void pageLoaded(bool success);
+	void setActiveWidget(WebWidget *widget);
 
 private:
 	QHash<QtWebKitPage*, QPair<QUrl, QSize> > m_thumbnailRequests;
 	bool m_isInitialized;
 
+	static QtWebKitWebBackend* m_instance;
+	static QPointer<WebWidget> m_activeWidget;
 	static QMap<QString, QString> m_userAgentComponents;
 	static QMap<QString, QString> m_userAgents;
+
+signals:
+	void activeDictionaryChanged(const QString &dictionary);
+
+friend class QtWebKitSpellChecker;
 };
 
 }

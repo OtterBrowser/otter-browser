@@ -320,6 +320,7 @@ if (EnableQtwebengine)
 endif (EnableQtwebengine)
 
 if (KF5Sonnet_FOUND)
+	add_definitions(-DOTTER_ENABLE_SPELLCHECK)
 	add_definitions(-DQT_STATICPLUGIN)
 
 	set(otter_src

@@ -171,6 +171,9 @@ private:
 	bool m_isTyped;
 	bool m_isNavigating;
 
+signals:
+	void widgetActivated(WebWidget *widget);
+
 friend class QtWebKitNetworkManager;
 friend class QtWebKitPluginFactory;
 friend class QtWebKitWebBackend;

@@ -21,6 +21,7 @@
 #define OTTER_WEBBACKEND_H
 
 #include "Addon.h"
+#include "SpellCheckManager.h"
 
 namespace Otter
 {
@@ -39,6 +40,7 @@ public:
 	virtual QString getEngineVersion() const = 0;
 	virtual QString getUserAgent(const QString &pattern = QString()) const = 0;
 	QUrl getUpdateUrl() const;
+	virtual QList<SpellCheckManager::DictionaryInformation> getDictionaries() const;
 	virtual bool requestThumbnail(const QUrl &url, const QSize &size) = 0;
 
 signals:

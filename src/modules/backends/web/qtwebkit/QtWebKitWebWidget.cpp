@@ -197,6 +197,8 @@ void QtWebKitWebWidget::focusInEvent(QFocusEvent *event)
 	WebWidget::focusInEvent(event);
 
 	m_webView->setFocus();
+
+	emit widgetActivated(this);
 }
 
 void QtWebKitWebWidget::search(const QString &query, const QString &searchEngine)

@@ -23,10 +23,19 @@ namespace Otter
 {
 
 SpellCheckManager* SpellCheckManager::m_instance = NULL;
-QString SpellCheckManager::m_defaultDictionary;
+#ifdef OTTER_ENABLE_SPELLCHECK
+Sonnet::Speller* SpellCheckManager::m_speller = NULL;
+#endif
 
 SpellCheckManager::SpellCheckManager(QObject *parent) : QObject(parent)
 {
+}
+
+SpellCheckManager::~SpellCheckManager()
+{
+#ifdef OTTER_ENABLE_SPELLCHECK
+	delete m_speller;
+#endif
 }
 
 void SpellCheckManager::createInstance(QObject *parent)
@@ -34,16 +43,9 @@ void SpellCheckManager::createInstance(QObject *parent)
 	if (!m_instance)
 	{
 		m_instance = new SpellCheckManager(parent);
-	}
-}
-
-void SpellCheckManager::setDefaultDictionary(const QString &dictionary)
-{
-	if (dictionary != m_defaultDictionary)
-	{
-		m_defaultDictionary = dictionary;
-
-		emit m_instance->defaultDictionaryChanged(dictionary);
+#ifdef OTTER_ENABLE_SPELLCHECK
+		m_speller = new Sonnet::Speller();
+#endif
 	}
 }
 
@@ -54,14 +56,32 @@ SpellCheckManager* SpellCheckManager::getInstance()
 
 QString SpellCheckManager::getDefaultDictionary()
 {
-	return m_defaultDictionary;
+#ifdef OTTER_ENABLE_SPELLCHECK
+	return m_speller->defaultLanguage();
+#else
+	return QString();
+#endif
 }
 
-QList<SpellCheckManager::DictionaryInformation> SpellCheckManager::getDictonaries()
+QList<SpellCheckManager::DictionaryInformation> SpellCheckManager::getDictionaries()
 {
-///TODO
+	QList<DictionaryInformation> dictionaries;
 
-	return QList<DictionaryInformation>();
+#ifdef OTTER_ENABLE_SPELLCHECK
+	const QMap<QString, QString> availableDictionaries = m_speller->availableDictionaries();
+	QMap<QString, QString>::const_iterator iterator;
+
+	for (iterator = availableDictionaries.constBegin(); iterator != availableDictionaries.constEnd(); ++iterator)
+	{
+		DictionaryInformation dictionary;
+		dictionary.name = iterator.value();
+		dictionary.title = iterator.key();
+
+		dictionaries.append(dictionary);
+	}
+#endif
+
+	return dictionaries;
 }
 
 }

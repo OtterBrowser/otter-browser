@@ -31,4 +31,9 @@ QUrl WebBackend::getUpdateUrl() const
 	return QUrl();
 }
 
+QList<SpellCheckManager::DictionaryInformation> WebBackend::getDictionaries() const
+{
+	return QList<SpellCheckManager::DictionaryInformation>();
+}
+
 }
