@@ -1271,6 +1271,10 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			triggerAction(ActionsManager::DeleteAction);
 
 			return;
+		case ActionsManager::CheckSpellingAction:
+			m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position).element().evaluateJavaScript(QString("this.spellcheck = %1").arg(parameters.value(QLatin1String("isChecked")).toBool() ? QLatin1String("true") : QLatin1String("false")));
+
+			break;
 		case ActionsManager::SearchAction:
 			quickSearch(getAction(ActionsManager::SearchAction));
 
@@ -1687,6 +1691,10 @@ void QtWebKitWebWidget::setOption(const QString &key, const QVariant &value)
 	{
 		m_webView->reload();
 	}
+	else if (key == QLatin1String("Browser/SpellCheckDictionary"))
+	{
+		emit widgetActivated(this);
+	}
 }
 
 void QtWebKitWebWidget::setOptions(const QVariantHash &options)
@@ -2038,6 +2046,11 @@ WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &posit
 	if (nativeResult.isContentSelected())
 	{
 		result.flags |= IsSelectedTest;
+	}
+
+	if (nativeResult.element().evaluateJavaScript(QLatin1String("this.spellcheck")).toBool())
+	{
+		result.flags |= IsSpellCheckEnabled;
 	}
 
 	if (result.mediaUrl.isValid())

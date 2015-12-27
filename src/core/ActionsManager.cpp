@@ -366,7 +366,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(DeleteAction, QT_TRANSLATE_NOOP("actions", "Delete"), QString(), Utils::getIcon(QLatin1String("edit-delete")));
 	registerAction(SelectAllAction, QT_TRANSLATE_NOOP("actions", "Select All"), QString(), Utils::getIcon(QLatin1String("edit-select-all")));
 	registerAction(ClearAllAction, QT_TRANSLATE_NOOP("actions", "Clear All"));
-	registerAction(CheckSpellingAction, QT_TRANSLATE_NOOP("actions", "Check Spelling"), QString(), QIcon(), true, true, true);
+	registerAction(CheckSpellingAction, QT_TRANSLATE_NOOP("actions", "Check Spelling"), QString(), QIcon(), true, true);
 	registerAction(SelectDictionaryAction, QT_TRANSLATE_NOOP("actions", "Dictionaries"));
 	registerAction(FindAction, QT_TRANSLATE_NOOP("actions", "Find…"), QString(), Utils::getIcon(QLatin1String("edit-find")));
 	registerAction(FindNextAction, QT_TRANSLATE_NOOP("actions", "Find Next"));

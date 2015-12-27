@@ -72,10 +72,11 @@ public:
 		IsEmptyTest = 2,
 		IsFormTest = 4,
 		IsSelectedTest = 8,
-		MediaHasControlsTest = 16,
-		MediaIsLoopedTest = 32,
-		MediaIsMutedTest = 64,
-		MediaIsPausedTest = 128
+		IsSpellCheckEnabled = 16,
+		MediaHasControlsTest = 32,
+		MediaIsLoopedTest = 64,
+		MediaIsMutedTest = 128,
+		MediaIsPausedTest = 256
 	};
 
 	Q_DECLARE_FLAGS(HitTestFlags, HitTestFlag)
@@ -202,6 +203,8 @@ protected:
 protected slots:
 	void triggerAction();
 	void pasteNote(QAction *action);
+	void selectDictionary(QAction *action);
+	void selectDictionaryMenuAboutToShow();
 	void reloadTimeMenuAboutToShow();
 	void openInApplication(QAction *action);
 	void openInApplicationMenuAboutToShow();

@@ -31,6 +31,7 @@
 #include "../core/NotesManager.h"
 #include "../core/SearchEnginesManager.h"
 #include "../core/SettingsManager.h"
+#include "../core/SpellCheckManager.h"
 #include "../core/Transfer.h"
 #include "../core/TransfersManager.h"
 #include "../core/Utils.h"
@@ -221,6 +222,41 @@ void WebWidget::pasteNote(QAction *action)
 		if (note)
 		{
 			pasteText(note->data(BookmarksModel::DescriptionRole).toString());
+		}
+	}
+}
+
+void WebWidget::selectDictionary(QAction *action)
+{
+	if (action)
+	{
+		setOption(QLatin1String("Browser/SpellCheckDictionary"), action->data().toString());
+	}
+}
+
+void WebWidget::selectDictionaryMenuAboutToShow()
+{
+	QMenu *menu = qobject_cast<QMenu*>(sender());
+
+	if (!menu)
+	{
+		return;
+	}
+
+	QString dictionary(getOption(QLatin1String("Browser/SpellCheckDictionary"), getUrl()).toString());
+
+	if (dictionary.isEmpty())
+	{
+		dictionary = SpellCheckManager::getDefaultDictionary();
+	}
+
+	for (int i = 0; i < menu->actions().count(); ++i)
+	{
+		QAction *action = menu->actions().at(i);
+
+		if (action)
+		{
+			action->setChecked(action->data().toString() == dictionary);
 		}
 	}
 }
@@ -571,6 +607,7 @@ void WebWidget::updateNavigationActions()
 void WebWidget::updateEditActions()
 {
 	const bool canPaste = (QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText());
+	const bool canSpellCheck = (getOption(QLatin1String("Browser/EnableSpellCheck"), getUrl()).toBool() && !SpellCheckManager::getDictionaries().isEmpty());
 	const bool hasSelection = (this->hasSelection() && !getSelectedText().trimmed().isEmpty());
 
 	if (m_actions.contains(ActionsManager::CutAction))
@@ -616,6 +653,17 @@ void WebWidget::updateEditActions()
 	if (m_actions.contains(ActionsManager::SelectAllAction))
 	{
 		m_actions[ActionsManager::SelectAllAction]->setEnabled(!m_hitResult.flags.testFlag(IsEmptyTest));
+	}
+
+	if (m_actions.contains(ActionsManager::CheckSpellingAction))
+	{
+		m_actions[ActionsManager::CheckSpellingAction]->setChecked(m_hitResult.flags.testFlag(IsSpellCheckEnabled));
+		m_actions[ActionsManager::CheckSpellingAction]->setEnabled(canSpellCheck);
+	}
+
+	if (m_actions.contains(ActionsManager::SelectDictionaryAction))
+	{
+		m_actions[ActionsManager::SelectDictionaryAction]->setEnabled(canSpellCheck);
 	}
 
 	if (m_actions.contains(ActionsManager::ClearAllAction))
@@ -1024,10 +1072,6 @@ Action* WebWidget::getAction(int identifier)
 
 	switch (identifier)
 	{
-		case ActionsManager::CheckSpellingAction:
-			action->setEnabled(false);
-
-			break;
 		case ActionsManager::BookmarkPageAction:
 		case ActionsManager::WebsitePreferencesAction:
 			updatePageActions(getUrl());
@@ -1129,6 +1173,7 @@ Action* WebWidget::getAction(int identifier)
 		case ActionsManager::PasteAndGoAction:
 		case ActionsManager::DeleteAction:
 		case ActionsManager::ClearAllAction:
+		case ActionsManager::CheckSpellingAction:
 		case ActionsManager::SearchAction:
 			updateEditActions();
 
@@ -1206,6 +1251,32 @@ Action* WebWidget::getAction(int identifier)
 				action->setMenu(m_pageApplicationsMenu);
 
 				connect(m_pageApplicationsMenu, SIGNAL(aboutToShow()), this, SLOT(openInApplicationMenuAboutToShow()));
+			}
+
+			break;
+		case ActionsManager::SelectDictionaryAction:
+			{
+				const QList<SpellCheckManager::DictionaryInformation> dictionaries = SpellCheckManager::getDictionaries();
+
+				action->setEnabled(getOption(QLatin1String("Browser/EnableSpellCheck"), getUrl()).toBool() && !dictionaries.isEmpty());
+
+				QMenu *menu = new QMenu(this);
+				QActionGroup *dictionariesGroup = new QActionGroup(menu);
+				dictionariesGroup->setExclusive(true);
+
+				action->setMenu(menu);
+
+				for (int i = 0; i < dictionaries.count(); ++i)
+				{
+					QAction *action = menu->addAction(dictionaries.at(i).title);
+					action->setCheckable(true);
+					action->setData(dictionaries.at(i).name);
+
+					dictionariesGroup->addAction(action);
+				}
+
+				connect(menu, SIGNAL(aboutToShow()), this, SLOT(selectDictionaryMenuAboutToShow()));
+				connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(selectDictionary(QAction*)));
 			}
 
 			break;
