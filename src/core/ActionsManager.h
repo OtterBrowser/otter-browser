@@ -157,6 +157,7 @@ public:
 		SelectAllAction,
 		ClearAllAction,
 		CheckSpellingAction,
+		SelectDictionaryAction,
 		FindAction,
 		FindNextAction,
 		FindPreviousAction,

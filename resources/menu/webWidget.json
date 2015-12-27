@@ -84,6 +84,7 @@
                 "InspectElement",
                 "separator",
                 "CheckSpelling",
+                "SelectDictionary",
                 "separator"
             ]
         },
