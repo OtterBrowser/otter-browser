@@ -439,6 +439,16 @@ void QtWebKitWebWidget::clearPluginToken()
 	}
 }
 
+void QtWebKitWebWidget::resetSpellCheck(QWebElement element)
+{
+	QFile file(QLatin1String(":/modules/backends/web/qtwebkit/resources/resetSpellCheck.js"));
+	file.open(QFile::ReadOnly);
+
+	(element.isNull() ? element : m_page->mainFrame()->findFirstElement(QLatin1String("*:focus"))).evaluateJavaScript(file.readAll());
+
+	file.close();
+}
+
 void QtWebKitWebWidget::openRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData)
 {
 	m_formRequestUrl = url;
@@ -1272,7 +1282,12 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::CheckSpellingAction:
-			m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position).element().evaluateJavaScript(QString("this.spellcheck = %1").arg(parameters.value(QLatin1String("isChecked")).toBool() ? QLatin1String("true") : QLatin1String("false")));
+			{
+				QWebElement element(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position).element());
+				element.evaluateJavaScript(QString("this.spellcheck = %1").arg(parameters.value(QLatin1String("isChecked")).toBool() ? QLatin1String("true") : QLatin1String("false")));
+
+				resetSpellCheck(element);
+			}
 
 			break;
 		case ActionsManager::SearchAction:
@@ -1694,6 +1709,8 @@ void QtWebKitWebWidget::setOption(const QString &key, const QVariant &value)
 	else if (key == QLatin1String("Browser/SpellCheckDictionary"))
 	{
 		emit widgetActivated(this);
+
+		resetSpellCheck(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position).element());
 	}
 }
 

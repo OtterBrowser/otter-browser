@@ -108,6 +108,7 @@ protected:
 	void timerEvent(QTimerEvent *event);
 	void focusInEvent(QFocusEvent *event);
 	void clearPluginToken();
+	void resetSpellCheck(QWebElement element);
 	void openRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
 	void openFormRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
 	void pasteText(const QString &text);
