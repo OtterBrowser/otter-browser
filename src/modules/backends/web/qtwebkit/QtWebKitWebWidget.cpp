@@ -441,12 +441,15 @@ void QtWebKitWebWidget::clearPluginToken()
 
 void QtWebKitWebWidget::resetSpellCheck(QWebElement element)
 {
-	QFile file(QLatin1String(":/modules/backends/web/qtwebkit/resources/resetSpellCheck.js"));
-	file.open(QFile::ReadOnly);
+	if (element.isNull())
+	{
+		element = m_page->mainFrame()->findFirstElement(QLatin1String("*:focus"));
+	}
 
-	(element.isNull() ? element : m_page->mainFrame()->findFirstElement(QLatin1String("*:focus"))).evaluateJavaScript(file.readAll());
-
-	file.close();
+	if (!element.isNull())
+	{
+		m_page->runScript(QLatin1String("resetSpellCheck"), element);
+	}
 }
 
 void QtWebKitWebWidget::openRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData)

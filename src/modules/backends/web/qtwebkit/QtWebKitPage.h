@@ -23,6 +23,7 @@
 
 #include "../../../../core/WindowsManager.h"
 
+#include <QtWebKit/QWebElement>
 #include <QtWebKitWidgets/QWebPage>
 
 namespace Otter
@@ -41,6 +42,7 @@ public:
 	~QtWebKitPage();
 
 	void triggerAction(WebAction action, bool checked = false);
+	QVariant runScript(const QString &path, QWebElement element = QWebElement());
 	bool event(QEvent *event);
 	bool extension(Extension extension, const ExtensionOption *option = NULL, ExtensionReturn *output = NULL);
 	bool shouldInterruptJavaScript();

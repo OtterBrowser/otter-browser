@@ -192,7 +192,6 @@ protected:
 	Action* getExistingAction(int identifier);
 	QString suggestSaveFileName() const;
 	HitTestResult getCurrentHitTestResult() const;
-	QContextMenuEvent::Reason getContextMenuReason() const;
 	virtual int getAmountOfNotLoadedPlugins() const;
 	virtual bool canGoBack() const;
 	virtual bool canGoForward() const;

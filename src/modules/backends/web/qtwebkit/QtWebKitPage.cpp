@@ -163,12 +163,7 @@ void QtWebKitPage::updateStyleSheets(const QUrl &url)
 		settings()->setAttribute(QWebSettings::AutoLoadImages, true);
 		settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
 
-		QFile file(QLatin1String(":/modules/backends/web/qtwebkit/resources/imageViewer.js"));
-		file.open(QIODevice::ReadOnly);
-
-		mainFrame()->evaluateJavaScript(file.readAll());
-
-		file.close();
+		runScript(QLatin1String("imageViewer"));
 	}
 
 	if (isViewingMedia != m_isViewingMedia)
@@ -239,6 +234,18 @@ void QtWebKitPage::triggerAction(QWebPage::WebAction action, bool checked)
 	}
 
 	QWebPage::triggerAction(action, checked);
+}
+
+QVariant QtWebKitPage::runScript(const QString &path, QWebElement element)
+{
+	QFile file(QString(":/modules/backends/web/qtwebkit/resources/%1.js").arg(path));
+	file.open(QIODevice::ReadOnly);
+
+	const QVariant result = (element.isNull() ? mainFrame()->evaluateJavaScript(file.readAll()) : element.evaluateJavaScript(file.readAll()));
+
+	file.close();
+
+	return result;
 }
 
 QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
