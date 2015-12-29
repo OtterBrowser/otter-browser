@@ -100,6 +100,8 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 			QMenu::addAction(tr("Import HTML Bookmarks…"))->setData(QLatin1String("HtmlBookmarks"));
 			QMenu::addSeparator();
 			QMenu::addAction(tr("Import Opera Notes…"))->setData(QLatin1String("OperaNotes"));
+			QMenu::addSeparator();
+			QMenu::addAction(tr("Import Opera Session…"))->setData(QLatin1String("OperaSession"));
 
 			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(openImporter(QAction*)));
 
