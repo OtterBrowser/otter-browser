@@ -239,18 +239,27 @@ public:
 		OtherAction
 	};
 
+	enum ActionFlag
+	{
+		NoFlags = 0,
+		IsEnabledFlag = 1,
+		IsCheckableFlag = 2,
+		IsCheckedFlag = 4,
+		IsMenuFlag = 8
+	};
+
+	Q_DECLARE_FLAGS(ActionFlags, ActionFlag)
+
 	struct ActionDefinition
 	{
 		QString text;
 		QString description;
 		QIcon icon;
 		QVector<QKeySequence> shortcuts;
+		ActionFlags flags;
 		int identifier;
-		bool isCheckable;
-		bool isChecked;
-		bool isEnabled;
 
-		ActionDefinition() : identifier(-1), isCheckable(false), isChecked(false), isEnabled(true) {}
+		ActionDefinition() : identifier(-1), flags(IsEnabledFlag) {}
 	};
 
 	struct ActionEntryDefinition
@@ -269,7 +278,7 @@ public:
 	static QString getActionName(int identifier);
 	static QVector<ActionDefinition> getActionDefinitions();
 	static ActionDefinition getActionDefinition(int identifier);
-	static int registerAction(int identifier, const QString &text, const QString &description = QString(), const QIcon &icon = QIcon(), bool isEnabled = true, bool isCheckable = false, bool isChecked = false);
+	static int registerAction(int identifier, const QString &text, const QString &description = QString(), const QIcon &icon = QIcon(), ActionFlags flags = IsEnabledFlag);
 	static int getActionIdentifier(const QString &name);
 
 protected:
@@ -291,5 +300,7 @@ private:
 };
 
 }
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::ActionsManager::ActionFlags)
 
 #endif

@@ -91,9 +91,9 @@ void Action::update(bool reset)
 
 	if (reset)
 	{
-		setEnabled(action.isEnabled);
-		setCheckable(action.isCheckable);
-		setChecked(action.isChecked);
+		setEnabled(action.flags.testFlag(ActionsManager::IsEnabledFlag));
+		setCheckable(action.flags.testFlag(ActionsManager::IsCheckableFlag));
+		setChecked(action.flags.testFlag(ActionsManager::IsCheckedFlag));
 		setIcon(action.icon);
 	}
 }
@@ -284,12 +284,12 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(MaximizeTabAction, QT_TRANSLATE_NOOP("actions", "Maximize"), QT_TRANSLATE_NOOP("actions", "Maximize Tab"));
 	registerAction(MinimizeTabAction, QT_TRANSLATE_NOOP("actions", "Minimize"), QT_TRANSLATE_NOOP("actions", "Minimize Tab"));
 	registerAction(RestoreTabAction, QT_TRANSLATE_NOOP("actions", "Restore"), QT_TRANSLATE_NOOP("actions", "Restore Tab"));
-	registerAction(AlwaysOnTopTabAction, QT_TRANSLATE_NOOP("actions", "Stay on Top"), QString(), QIcon(), true, true);
+	registerAction(AlwaysOnTopTabAction, QT_TRANSLATE_NOOP("actions", "Stay on Top"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag));
 	registerAction(ClearTabHistoryAction, QT_TRANSLATE_NOOP("actions", "Clear Tab History"), QT_TRANSLATE_NOOP("actions", "Remove Local Tab History"));
 	registerAction(PurgeTabHistoryAction, QT_TRANSLATE_NOOP("actions", "Purge Tab History"), QT_TRANSLATE_NOOP("actions", "Remove Local and Global Tab History"));
-	registerAction(CloseTabAction, QT_TRANSLATE_NOOP("actions", "Close Tab"), QString(), Utils::getIcon(QLatin1String("tab-close")), false);
+	registerAction(CloseTabAction, QT_TRANSLATE_NOOP("actions", "Close Tab"), QString(), Utils::getIcon(QLatin1String("tab-close")), NoFlags);
 	registerAction(CloseOtherTabsAction, QT_TRANSLATE_NOOP("actions", "Close Other Tabs"), QString(), Utils::getIcon(QLatin1String("tab-close-other")));
-	registerAction(ClosePrivateTabsAction, QT_TRANSLATE_NOOP("actions", "Close All Private Tabs"), QT_TRANSLATE_NOOP("actions", "Close All Private Tabs in Current Window"), QIcon(), false);
+	registerAction(ClosePrivateTabsAction, QT_TRANSLATE_NOOP("actions", "Close All Private Tabs"), QT_TRANSLATE_NOOP("actions", "Close All Private Tabs in Current Window"), QIcon(), NoFlags);
 	registerAction(ClosePrivateTabsPanicAction, QT_TRANSLATE_NOOP("actions", "Close Private Tabs and Windows"));
 	registerAction(ReopenTabAction, QT_TRANSLATE_NOOP("actions", "Reopen Previously Closed Tab"));
 	registerAction(MaximizeAllAction, QT_TRANSLATE_NOOP("actions", "Maximize All"));
@@ -311,7 +311,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(OpenLinkInNewPrivateTabBackgroundAction, QT_TRANSLATE_NOOP("actions", "Open in New Private Background Tab"));
 	registerAction(OpenLinkInNewPrivateWindowAction, QT_TRANSLATE_NOOP("actions", "Open in New Private Window"));
 	registerAction(OpenLinkInNewPrivateWindowBackgroundAction, QT_TRANSLATE_NOOP("actions", "Open in New Private Background Window"));
-	registerAction(OpenLinkInApplicationAction, QT_TRANSLATE_NOOP("actions", "Open with…"), QT_TRANSLATE_NOOP("actions", "Open Link with External Application"));
+	registerAction(OpenLinkInApplicationAction, QT_TRANSLATE_NOOP("actions", "Open with…"), QT_TRANSLATE_NOOP("actions", "Open Link with External Application"), QIcon(), (IsEnabledFlag | IsMenuFlag));
 	registerAction(CopyLinkToClipboardAction, QT_TRANSLATE_NOOP("actions", "Copy Link to Clipboard"));
 	registerAction(BookmarkLinkAction, QT_TRANSLATE_NOOP("actions", "Bookmark Link…"), QString(), Utils::getIcon(QLatin1String("bookmark-new")));
 	registerAction(SaveLinkToDiskAction, QT_TRANSLATE_NOOP("actions", "Save Link Target As…"));
@@ -320,7 +320,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(OpenFrameInCurrentTabAction, QT_TRANSLATE_NOOP("actions", "Open"), QT_TRANSLATE_NOOP("actions", "Open Frame in This Tab"));
 	registerAction(OpenFrameInNewTabAction, QT_TRANSLATE_NOOP("actions", "Open in New Tab"), QT_TRANSLATE_NOOP("actions", "Open Frame in New Tab"));
 	registerAction(OpenFrameInNewTabBackgroundAction, QT_TRANSLATE_NOOP("actions", "Open in New Background Tab"), QT_TRANSLATE_NOOP("actions", "Open Frame in New Background Tab"));
-	registerAction(OpenFrameInApplicationAction, QT_TRANSLATE_NOOP("actions", "Open with…"), QT_TRANSLATE_NOOP("actions", "Open Frame with External Application"));
+	registerAction(OpenFrameInApplicationAction, QT_TRANSLATE_NOOP("actions", "Open with…"), QT_TRANSLATE_NOOP("actions", "Open Frame with External Application"), QIcon(), (IsEnabledFlag | IsMenuFlag));
 	registerAction(CopyFrameLinkToClipboardAction, QT_TRANSLATE_NOOP("actions", "Copy Frame Link to Clipboard"));
 	registerAction(ReloadFrameAction, QT_TRANSLATE_NOOP("actions", "Reload"), QT_TRANSLATE_NOOP("actions", "Reload Frame"));
 	registerAction(ViewFrameSourceAction, QT_TRANSLATE_NOOP("actions", "View Frame Source"));
@@ -333,13 +333,13 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(ImagePropertiesAction, QT_TRANSLATE_NOOP("actions", "Image Properties…"));
 	registerAction(SaveMediaToDiskAction, QT_TRANSLATE_NOOP("actions", "Save Media…"));
 	registerAction(CopyMediaUrlToClipboardAction, QT_TRANSLATE_NOOP("actions", "Copy Media Link to Clipboard"));
-	registerAction(MediaControlsAction, QT_TRANSLATE_NOOP("actions", "Show Controls"), QString(), QIcon(), true, true, true);
-	registerAction(MediaLoopAction, QT_TRANSLATE_NOOP("actions", "Looping"), QString(), QIcon(), true, true, false);
+	registerAction(MediaControlsAction, QT_TRANSLATE_NOOP("actions", "Show Controls"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag | IsCheckedFlag));
+	registerAction(MediaLoopAction, QT_TRANSLATE_NOOP("actions", "Looping"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag));
 	registerAction(MediaPlayPauseAction, QT_TRANSLATE_NOOP("actions", "Play"));
 	registerAction(MediaMuteAction, QT_TRANSLATE_NOOP("actions", "Mute"));
 	registerAction(GoAction, QT_TRANSLATE_NOOP("actions", "Go"), QString(), Utils::getIcon(QLatin1String("go-jump-locationbar")));
-	registerAction(GoBackAction, QT_TRANSLATE_NOOP("actions", "Back"), QString(), Utils::getIcon(QLatin1String("go-previous")));
-	registerAction(GoForwardAction, QT_TRANSLATE_NOOP("actions", "Forward"), QString(), Utils::getIcon(QLatin1String("go-next")));
+	registerAction(GoBackAction, QT_TRANSLATE_NOOP("actions", "Back"), QString(), Utils::getIcon(QLatin1String("go-previous")), (IsEnabledFlag | IsMenuFlag));
+	registerAction(GoForwardAction, QT_TRANSLATE_NOOP("actions", "Forward"), QString(), Utils::getIcon(QLatin1String("go-next")), (IsEnabledFlag | IsMenuFlag));
 	registerAction(GoToPageAction, QT_TRANSLATE_NOOP("actions", "Go to Page or Search"));
 	registerAction(GoToHomePageAction, QT_TRANSLATE_NOOP("actions", "Go to Home Page"), QString(), Utils::getIcon(QLatin1String("go-home")));
 	registerAction(GoToParentDirectoryAction, QT_TRANSLATE_NOOP("actions", "Go to Parent Directory"));
@@ -351,7 +351,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(ReloadOrStopAction, QT_TRANSLATE_NOOP("actions", "Reload"), QT_TRANSLATE_NOOP("actions", "Reload or Stop"), Utils::getIcon(QLatin1String("view-refresh")));
 	registerAction(ReloadAndBypassCacheAction, QT_TRANSLATE_NOOP("actions", "Reload and Bypass Cache"));
 	registerAction(ReloadAllAction, QT_TRANSLATE_NOOP("actions", "Reload All Tabs"), QString(), Utils::getIcon(QLatin1String("view-refresh")));
-	registerAction(ScheduleReloadAction, QT_TRANSLATE_NOOP("actions", "Reload Every"));
+	registerAction(ScheduleReloadAction, QT_TRANSLATE_NOOP("actions", "Reload Every"), QString(), QIcon(), (IsEnabledFlag | IsMenuFlag));
 	registerAction(ContextMenuAction, QT_TRANSLATE_NOOP("actions", "Show Context Menu"));
 	registerAction(UndoAction, QT_TRANSLATE_NOOP("actions", "Undo"), QString(), Utils::getIcon(QLatin1String("edit-undo")));
 	registerAction(RedoAction, QT_TRANSLATE_NOOP("actions", "Redo"), QString(), Utils::getIcon(QLatin1String("edit-redo")));
@@ -362,12 +362,12 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(CopyToNoteAction, QT_TRANSLATE_NOOP("actions", "Copy to Note"));
 	registerAction(PasteAction, QT_TRANSLATE_NOOP("actions", "Paste"), QString(), Utils::getIcon(QLatin1String("edit-paste")));
 	registerAction(PasteAndGoAction, QT_TRANSLATE_NOOP("actions", "Paste and Go"));
-	registerAction(PasteNoteAction, QT_TRANSLATE_NOOP("actions", "Insert Note"));
+	registerAction(PasteNoteAction, QT_TRANSLATE_NOOP("actions", "Insert Note"), QString(), QIcon(), (IsEnabledFlag | IsMenuFlag));
 	registerAction(DeleteAction, QT_TRANSLATE_NOOP("actions", "Delete"), QString(), Utils::getIcon(QLatin1String("edit-delete")));
 	registerAction(SelectAllAction, QT_TRANSLATE_NOOP("actions", "Select All"), QString(), Utils::getIcon(QLatin1String("edit-select-all")));
 	registerAction(ClearAllAction, QT_TRANSLATE_NOOP("actions", "Clear All"));
-	registerAction(CheckSpellingAction, QT_TRANSLATE_NOOP("actions", "Check Spelling"), QString(), QIcon(), true, true);
-	registerAction(SelectDictionaryAction, QT_TRANSLATE_NOOP("actions", "Dictionaries"));
+	registerAction(CheckSpellingAction, QT_TRANSLATE_NOOP("actions", "Check Spelling"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag));
+	registerAction(SelectDictionaryAction, QT_TRANSLATE_NOOP("actions", "Dictionaries"), QString(), QIcon(), (IsEnabledFlag | IsMenuFlag));
 	registerAction(FindAction, QT_TRANSLATE_NOOP("actions", "Find…"), QString(), Utils::getIcon(QLatin1String("edit-find")));
 	registerAction(FindNextAction, QT_TRANSLATE_NOOP("actions", "Find Next"));
 	registerAction(FindPreviousAction, QT_TRANSLATE_NOOP("actions", "Find Previous"));
@@ -409,26 +409,26 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(ThirdPartyCookiesPolicyAction, QT_TRANSLATE_NOOP("actions", "Third-party Cookies Policy"));
 	registerAction(PluginsPolicyAction, QT_TRANSLATE_NOOP("actions", "Plugins"));
 	registerAction(LoadPluginsAction, QT_TRANSLATE_NOOP("actions", "Load Plugins"), QString(), Utils::getIcon(QLatin1String("preferences-plugin")));
-	registerAction(EnableJavaScriptAction, QT_TRANSLATE_NOOP("actions", "Enable JavaScript"), QString(), QIcon(), true, true, true);
-	registerAction(EnableJavaAction, QT_TRANSLATE_NOOP("actions", "Enable Java"), QString(), QIcon(), true, true, true);
-	registerAction(EnableReferrerAction, QT_TRANSLATE_NOOP("actions", "Enable Referrer"), QString(), QIcon(), true, true, true);
+	registerAction(EnableJavaScriptAction, QT_TRANSLATE_NOOP("actions", "Enable JavaScript"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag | IsCheckedFlag));
+	registerAction(EnableJavaAction, QT_TRANSLATE_NOOP("actions", "Enable Java"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag | IsCheckedFlag));
+	registerAction(EnableReferrerAction, QT_TRANSLATE_NOOP("actions", "Enable Referrer"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag | IsCheckedFlag));
 	registerAction(ProxyMenuAction, QT_TRANSLATE_NOOP("actions", "Proxy"));
-	registerAction(EnableProxyAction, QT_TRANSLATE_NOOP("actions", "Enable Proxy"), QString(), QIcon(), true, true, true);
-	registerAction(ViewSourceAction, QT_TRANSLATE_NOOP("actions", "View Source"), QString(), QIcon(), false, false, false);
-	registerAction(OpenPageInApplicationAction, QT_TRANSLATE_NOOP("actions", "Open with…"), QT_TRANSLATE_NOOP("actions", "Open Current Page with External Application"));
+	registerAction(EnableProxyAction, QT_TRANSLATE_NOOP("actions", "Enable Proxy"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag | IsCheckedFlag));
+	registerAction(ViewSourceAction, QT_TRANSLATE_NOOP("actions", "View Source"), QString(), QIcon(), NoFlags);
+	registerAction(OpenPageInApplicationAction, QT_TRANSLATE_NOOP("actions", "Open with…"), QT_TRANSLATE_NOOP("actions", "Open Current Page with External Application"), QIcon(), (IsEnabledFlag | IsMenuFlag));
 	registerAction(ValidateAction, QT_TRANSLATE_NOOP("actions", "Validate"));
-	registerAction(InspectPageAction, QT_TRANSLATE_NOOP("actions", "Inspect Page"), QString(), QIcon(), true, true, false);
+	registerAction(InspectPageAction, QT_TRANSLATE_NOOP("actions", "Inspect Page"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag));
 	registerAction(InspectElementAction, QT_TRANSLATE_NOOP("actions", "Inspect Element…"));
-	registerAction(WorkOfflineAction, QT_TRANSLATE_NOOP("actions", "Work Offline"), QString(), QIcon(), true, true, false);
+	registerAction(WorkOfflineAction, QT_TRANSLATE_NOOP("actions", "Work Offline"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag));
 	registerAction(FullScreenAction, QT_TRANSLATE_NOOP("actions", "Full Screen"), QString(), Utils::getIcon(QLatin1String("view-fullscreen")));
 	registerAction(ShowTabSwitcherAction, QT_TRANSLATE_NOOP("actions", "Show Tab Switcher"));
-	registerAction(ShowMenuBarAction, QT_TRANSLATE_NOOP("actions", "Show Menubar"), QString(), QIcon(), true, true, true);
-	registerAction(ShowTabBarAction, QT_TRANSLATE_NOOP("actions", "Show Tabbar"), QString(), QIcon(), true, true, true);
-	registerAction(ShowSidebarAction, QT_TRANSLATE_NOOP("actions", "Show Sidebar"), QString(), QIcon(), true, true, false);
-	registerAction(ShowErrorConsoleAction, QT_TRANSLATE_NOOP("actions", "Show Error Console"), QString(), QIcon(), true, true, false);
-	registerAction(LockToolBarsAction, QT_TRANSLATE_NOOP("actions", "Lock Toolbars"), QString(), QIcon(), true, true, false);
-	registerAction(OpenPanelAction, QT_TRANSLATE_NOOP("actions", "Open Panel as Tab"), QString(), Utils::getIcon(QLatin1String("arrow-right")), true, false, false);
-	registerAction(ClosePanelAction, QT_TRANSLATE_NOOP("actions", "Close Panel"), QString(), Utils::getIcon(QLatin1String("window-close")), true, false, false);
+	registerAction(ShowMenuBarAction, QT_TRANSLATE_NOOP("actions", "Show Menubar"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag | IsCheckedFlag));
+	registerAction(ShowTabBarAction, QT_TRANSLATE_NOOP("actions", "Show Tabbar"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag | IsCheckedFlag));
+	registerAction(ShowSidebarAction, QT_TRANSLATE_NOOP("actions", "Show Sidebar"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag));
+	registerAction(ShowErrorConsoleAction, QT_TRANSLATE_NOOP("actions", "Show Error Console"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag));
+	registerAction(LockToolBarsAction, QT_TRANSLATE_NOOP("actions", "Lock Toolbars"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag));
+	registerAction(OpenPanelAction, QT_TRANSLATE_NOOP("actions", "Open Panel as Tab"), QString(), Utils::getIcon(QLatin1String("arrow-right")));
+	registerAction(ClosePanelAction, QT_TRANSLATE_NOOP("actions", "Close Panel"), QString(), Utils::getIcon(QLatin1String("window-close")));
 	registerAction(ContentBlockingAction, QT_TRANSLATE_NOOP("actions", "Content Blocking…"));
 	registerAction(HistoryAction, QT_TRANSLATE_NOOP("actions", "View History"), QString(), Utils::getIcon(QLatin1String("view-history")));
 	registerAction(ClearHistoryAction, QT_TRANSLATE_NOOP("actions", "Clear History…"), QString(), Utils::getIcon(QLatin1String("edit-clear-history")));
@@ -443,8 +443,8 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(SwitchApplicationLanguageAction, QT_TRANSLATE_NOOP("actions", "Switch Application Language…"), QString(), Utils::getIcon(QLatin1String("preferences-desktop-locale")));
 	registerAction(CheckForUpdatesAction, QT_TRANSLATE_NOOP("actions", "Check for Updates…"));
 	registerAction(DiagnosticReportAction, QT_TRANSLATE_NOOP("actions", "Diagnostic Report…"));
-	registerAction(AboutApplicationAction, QT_TRANSLATE_NOOP("actions", "About Otter…"), QString(), Utils::getIcon(QLatin1String("otter-browser"), false));
-	registerAction(AboutQtAction, QT_TRANSLATE_NOOP("actions", "About Qt…"), QString(), Utils::getIcon(QLatin1String("qt"), false));
+	registerAction(AboutApplicationAction, QT_TRANSLATE_NOOP("actions", "About Otter…"), QString(), Utils::getIcon(QLatin1String("otter-browser"), NoFlags));
+	registerAction(AboutQtAction, QT_TRANSLATE_NOOP("actions", "About Qt…"), QString(), Utils::getIcon(QLatin1String("qt"), NoFlags));
 	registerAction(ExitAction, QT_TRANSLATE_NOOP("actions", "Exit"), QString(), Utils::getIcon(QLatin1String("application-exit")));
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
@@ -619,16 +619,14 @@ ActionsManager::ActionDefinition ActionsManager::getActionDefinition(int identif
 	return m_definitions[identifier];
 }
 
-int ActionsManager::registerAction(int identifier, const QString &text, const QString &description, const QIcon &icon, bool isEnabled, bool isCheckable, bool isChecked)
+int ActionsManager::registerAction(int identifier, const QString &text, const QString &description, const QIcon &icon, ActionFlags flags)
 {
 	ActionsManager::ActionDefinition action;
 	action.text = text;
 	action.description = description;
 	action.icon = icon;
 	action.identifier = identifier;
-	action.isEnabled = isEnabled;
-	action.isCheckable = isCheckable;
-	action.isChecked = isChecked;
+	action.flags = flags;
 
 	m_definitions.append(action);
 

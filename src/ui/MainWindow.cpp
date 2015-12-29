@@ -691,7 +691,7 @@ void MainWindow::triggerAction()
 
 				if (definition.identifier >= 0)
 				{
-					if (definition.isCheckable)
+					if (definition.flags.testFlag(ActionsManager::IsCheckableFlag))
 					{
 						Action *action = getAction(m_actionShortcuts[i].first);
 
@@ -1108,7 +1108,7 @@ Action* MainWindow::getAction(int identifier)
 
 		addAction(action);
 
-		if (definition.isCheckable)
+		if (definition.flags.testFlag(ActionsManager::IsCheckableFlag))
 		{
 			connect(action, SIGNAL(toggled(bool)), this, SLOT(triggerAction(bool)));
 		}
