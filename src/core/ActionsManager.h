@@ -259,7 +259,7 @@ public:
 		ActionFlags flags;
 		int identifier;
 
-		ActionDefinition() : identifier(-1), flags(IsEnabledFlag) {}
+		ActionDefinition() : flags(IsEnabledFlag), identifier(-1) {}
 	};
 
 	struct ActionEntryDefinition
