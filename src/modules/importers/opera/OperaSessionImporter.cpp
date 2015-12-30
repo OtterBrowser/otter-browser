@@ -48,7 +48,7 @@ QString OperaSessionImporter::getDescription() const
 
 QString OperaSessionImporter::getVersion() const
 {
-	return QLatin1String("0.1");
+	return QLatin1String("0.2");
 }
 
 QString OperaSessionImporter::getFileFilter() const
@@ -155,9 +155,41 @@ bool OperaSessionImporter::import(const QString &path)
 		{
 			WindowHistoryEntry entry;
 			entry.url = originalSession.getValue(QString::number(j)).toString();
+
+			QUrl url(entry.url);
+
+			if (url.scheme() == QLatin1String("opera"))
+			{
+				url.setScheme(QLatin1String("about"));
+
+				if (url.path() == QLatin1String("speeddial"))
+				{
+					url.setPath(QLatin1String("start"));
+				}
+
+				entry.url = url.url();
+			}
+
 			entry.zoom = zoom;
 
 			window.history.append(entry);
+		}
+
+		if (historyCount == 0)
+		{
+			originalSession.beginGroup(QString::number(i));
+
+			const QString panel = originalSession.getValue(QLatin1String("panel type")).toString();
+
+			if (!panel.isEmpty())
+			{
+				WindowHistoryEntry entry;
+				entry.url = QLatin1String("about:") + panel.toLower();
+
+				window.history.append(entry);
+
+				window.historyIndex = 0;
+			}
 		}
 
 		originalSession.beginGroup(QString::number(i) + QLatin1String("history title"));
@@ -181,6 +213,13 @@ bool OperaSessionImporter::import(const QString &path)
 		}
 
 		originalSession.beginGroup(QString::number(i));
+
+		if (originalSession.getValue(QLatin1String("has speeddial in history")).toInt())
+		{
+			window.history.prepend(WindowHistoryEntry());
+
+			window.historyIndex = (window.historyIndex + 1);
+		}
 
 		const int parent = originalSession.getValue(QLatin1String("parent")).toInt();
 
