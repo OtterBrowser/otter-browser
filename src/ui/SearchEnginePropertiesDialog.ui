@@ -225,12 +225,12 @@
            <widget class="QComboBox" name="resultsEnctypeComboBox">
             <item>
              <property name="text">
-              <string>application/x-www-form-urlencoded</string>
+              <string notr="true">application/x-www-form-urlencoded</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>multipart/form-data</string>
+              <string notr="true">multipart/form-data</string>
              </property>
             </item>
            </widget>
@@ -333,12 +333,12 @@
            <widget class="QComboBox" name="suggestionsEnctypeComboBox">
             <item>
              <property name="text">
-              <string>application/x-www-form-urlencoded</string>
+              <string notr="true">application/x-www-form-urlencoded</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>multipart/form-data</string>
+              <string notr="true">multipart/form-data</string>
              </property>
             </item>
            </widget>

@@ -439,7 +439,7 @@ bool WindowsPlatformIntegration::setAsDefaultBrowser()
 			}
 		}
 
-		Console::addMessage(QCoreApplication::translate("main", "Failed to run File Associations Manager, error code: %1\n Application ID: %2").arg(result).arg(pid), Otter::OtherMessageCategory, ErrorMessageLevel);
+		Console::addMessage(QCoreApplication::translate("main", "Failed to run File Associations Manager, error code: %1\nApplication ID: %2").arg(result).arg(pid), Otter::OtherMessageCategory, ErrorMessageLevel);
 	}
 	else if (QSysInfo::windowsVersion() >= QSysInfo::WV_VISTA)
 	{
@@ -479,7 +479,7 @@ bool WindowsPlatformIntegration::registerToSystem()
 	m_propertiesRegistration.setValue(QLatin1String("DefaultIcon/."), m_applicationFilePath + QLatin1String(",1"));
 	m_propertiesRegistration.setValue(QLatin1String("EditFlags"), 2);
 	m_propertiesRegistration.setValue(QLatin1String("shell/open/ddeexec/."), QString());
-	m_propertiesRegistration.setValue(QLatin1String("shell/open/command/."), QLatin1String("\"") +  m_applicationFilePath + QLatin1String("\" \"%1\""));
+	m_propertiesRegistration.setValue(QLatin1String("shell/open/command/."), QLatin1String("\"") + m_applicationFilePath + QLatin1String("\" \"%1\""));
 	m_propertiesRegistration.sync();
 
 	QSettings capabilities(QLatin1String("HKEY_LOCAL_MACHINE\\Software\\Clients\\StartMenuInternet\\") + m_registrationIdentifier, QSettings::NativeFormat);
