@@ -260,7 +260,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 		{
 			path = SettingsManager::getValue(QLatin1String("Paths/Downloads")).toString() + QDir::separator() + fileName;
 
-			if (QFile::exists(path) && QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with that name already exists.\nDo you want to overwite it?"), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::No)
+			if (QFile::exists(path) && QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with that name already exists.\nDo you want to overwrite it?"), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::No)
 			{
 				path = QString();
 			}
