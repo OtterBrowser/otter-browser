@@ -521,7 +521,7 @@ void QtWebKitWebWidget::handleHistory()
 	if (identifier == 0)
 	{
 		QVariantList data;
-		data.append(HistoryManager::addEntry(url, getTitle(), m_webView->icon(), m_isTyped));
+		data.append(Utils::isUrlEmpty(url) ? 0 : HistoryManager::addEntry(url, getTitle(), m_webView->icon(), m_isTyped));
 		data.append(getZoom());
 		data.append(QPoint(0, 0));
 

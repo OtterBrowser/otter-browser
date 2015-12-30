@@ -373,7 +373,7 @@ void WindowsManager::openTab(const QUrl &url, OpenHints hints)
 
 	addWindow(window, hints);
 
-	window->setUrl(url, false);
+	window->setUrl(((url.isEmpty() && SettingsManager::getValue(QLatin1String("StartPage/EnableStartPage")).toBool()) ? QUrl(QLatin1String("about:start")) : url), false);
 }
 
 void WindowsManager::search(const QString &query, const QString &searchEngine, OpenHints hints)
