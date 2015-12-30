@@ -24,7 +24,8 @@
 namespace Otter
 {
 
-ItemDelegate::ItemDelegate(QObject *parent) : QItemDelegate(parent)
+ItemDelegate::ItemDelegate(bool forceIcon, QObject *parent) : QItemDelegate(parent),
+	m_forceIcon(forceIcon)
 {
 }
 
@@ -45,7 +46,7 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 		return;
 	}
 
-	if (index.column() == 0)
+	if (m_forceIcon && index.column() == 0)
 	{
 		if (!index.data(Qt::DecorationRole).value<QIcon>().isNull())
 		{

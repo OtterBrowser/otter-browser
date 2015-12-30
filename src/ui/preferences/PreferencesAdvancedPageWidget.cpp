@@ -22,6 +22,7 @@
 #include "JavaScriptPreferencesDialog.h"
 #include "KeyboardProfileDialog.h"
 #include "MouseProfileDialog.h"
+#include "../ItemDelegate.h"
 #include "../OptionDelegate.h"
 #include "../UserAgentsManagerDialog.h"
 #include "../../core/ActionsManager.h"
@@ -89,6 +90,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->advancedViewWidget->setModel(navigationModel);
 	m_ui->advancedViewWidget->selectionModel()->select(navigationModel->index(0, 0), QItemSelectionModel::Select);
 	m_ui->advancedViewWidget->setMinimumWidth(qMax(100, m_ui->advancedViewWidget->sizeHint().width()));
+	m_ui->advancedViewWidget->setItemDelegate(new ItemDelegate(false, this));
 
 	m_ui->suggestBookmarksCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/SuggestBookmarks")).toBool());
 	m_ui->suggestHistoryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/SuggestHistory")).toBool());
@@ -119,6 +121,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	}
 
 	m_ui->notificationsItemView->setModel(notificationsModel);
+	m_ui->notificationsItemView->setItemDelegate(new ItemDelegate(false, this));
 	m_ui->preferNativeNotificationsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Interface/UseNativeNotifications")).toBool());
 
 	const QStringList widgetStyles = QStyleFactory::keys();
@@ -179,6 +182,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->downloadsItemView->setModel(downloadsModel);
 	m_ui->downloadsItemView->sortByColumn(0, Qt::AscendingOrder);
+	m_ui->downloadsItemView->setItemDelegate(new OptionDelegate(true, this));
 	m_ui->downloadsFilePathWidget->setSelectFile(false);
 	m_ui->downloadsApplicationComboBoxWidget->setAlwaysShowDefaultApplication(true);
 

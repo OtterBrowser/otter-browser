@@ -28,10 +28,13 @@ namespace Otter
 class ItemDelegate : public QItemDelegate
 {
 public:
-	explicit ItemDelegate(QObject *parent = NULL);
+	explicit ItemDelegate(bool forceIcon, QObject *parent = NULL);
 
 	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+
+private:
+	bool m_forceIcon;
 };
 
 }
