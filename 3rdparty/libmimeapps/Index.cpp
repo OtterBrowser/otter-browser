@@ -257,7 +257,22 @@ void Index::removeFromType(const std::string &type, const std::string &entryId)
 		{
 			if (*it == type)
 			{
-				types.erase(it);
+				if (it == types.begin())
+				{
+					types.erase(it);
+
+					it = types.begin();
+				}
+				else
+				{
+					std::vector<std::string>::iterator temp = it;
+					--temp;
+
+					types.erase(it);
+
+					it = ++temp;
+				}
+
 			}
 			else
 			{
@@ -271,13 +286,17 @@ void Index::removeUnused()
 {
 	std::map<std::string, DesktopEntry*>::iterator application;
 
-	for (application = knownApplications_.begin(); application != knownApplications_.end(); ++application)
+	for (application = knownApplications_.begin(); application != knownApplications_.end();)
 	{
 		if (application->second->types().empty())
 		{
 			delete application->second;
 
-			knownApplications_.erase(application);
+			knownApplications_.erase(application++);
+		}
+		else
+		{
+			++application;
 		}
 	}
 }

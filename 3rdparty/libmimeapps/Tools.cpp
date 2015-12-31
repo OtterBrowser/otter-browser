@@ -78,7 +78,7 @@ std::vector<std::string> split(const std::string &str, char delim)
 
 bool match(std::string const& text, std::string const& pattern)
 {
-	return std::search(text.begin(), text.end(),  pattern.begin(), pattern.end() ) != text.end();
+	return std::search(text.begin(), text.end(), pattern.begin(), pattern.end()) != text.end();
 }
 
 std::vector<file> directoryEntries(const std::string &directory)
