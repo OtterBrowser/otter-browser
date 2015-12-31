@@ -541,8 +541,14 @@ void TabBarWidget::optionChanged(const QString &option, const QVariant &value)
 			{
 				if (showCloseButton)
 				{
+					Window *window = getWindow(i);
 					QLabel *label = new QLabel();
 					label->setFixedSize(QSize(16, 16));
+
+					if (window)
+					{
+						label->setBuddy(window);
+					}
 
 					setTabButton(i, m_closeButtonPosition, label);
 				}
