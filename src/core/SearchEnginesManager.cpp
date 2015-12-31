@@ -294,7 +294,7 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::loadSearchEng
 			{
 				if (reader.name() == QLatin1String("Url"))
 				{
-					if (reader.attributes().value(QLatin1String("rel")) == QLatin1String("self"))
+					if (reader.attributes().value(QLatin1String("rel")) == QLatin1String("self") || reader.attributes().value(QLatin1String("type")) == QLatin1String("application/opensearchdescription+xml"))
 					{
 						searchEngine.selfUrl = QUrl(reader.attributes().value(QLatin1String("template")).toString());
 					}
@@ -492,6 +492,7 @@ bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &search
 	if (!searchEngine.selfUrl.isEmpty())
 	{
 		writer.writeStartElement(QLatin1String("Url"));
+		writer.writeAttribute(QLatin1String("rel"), QLatin1String("self"));
 		writer.writeAttribute(QLatin1String("type"), QLatin1String("application/opensearchdescription+xml"));
 		writer.writeAttribute(QLatin1String("template"), searchEngine.selfUrl.toString());
 		writer.writeEndElement();
