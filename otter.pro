@@ -6,7 +6,7 @@
 
 OTTER_VERSION_MAIN = 0.9.09
 OTTER_VERSION_WEEKLY = ""
-OTTER_VERSION_CONTEXT = -dev
+OTTER_VERSION_CONTEXT = " beta 9"
 
 message("otter.pro is deprecated, use CMake instead.")
 
