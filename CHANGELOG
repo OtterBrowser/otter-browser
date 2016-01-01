@@ -1,3 +1,11 @@
+0.9.09 (2016-01-01):
+- added initial support for spell checking;
+- added support for selecting allowed and rejected domains for third-party cookies;
+- added support for customizing visible columns and their order in most of views;
+- added support for customizing text and icon of toolbar entries;
+- added support for adding arbitrary menus to toolbars;
+- some other fixes and minor improvements.
+
 0.9.08 (2015-12-01):
 - enhanced URL completion in address field:
 -- suggest bookmarks by URL and keyword;
