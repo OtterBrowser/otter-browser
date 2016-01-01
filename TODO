@@ -1,25 +1,19 @@
-Release schedule of planned features (not a full list), note that specific features may be delayed or added earlier than planned, given dates are tentative.
+List of major planned features
 
-0.9.09 - beta 9 (2016-??-??):
+Before 1.0:
 - passwords manager
-- helper for mouse gestures
-- spell checking
-- exceptions for third party cookies
-
-0.9.10 - beta 10 (2016-??-??):
-- feeds reader (as module)
 - user scripts
-- support for tab thumbnails embedded in tab bar
 - tabs grouping (stacking and panorama mode)
-
-1.0.01 - first stable release (2016-??-??):
+- support for tab thumbnails embedded in tab bar
+- feeds reader (as module)
+- helper for mouse gestures
 - fine-tune UI (sizes, margins and other details)
 
 Later:
 - shared contacts database
 - mail client (as module)
 - form auto completion
-- extensions (Firefox and Chrome APIs support)
+- extensions (Chrome APIs support)
 - Opera Link like solution
 - support for Opera skins (through custom QStyle)
 - IM client module (at least IRC, possibly libpurple based)
