@@ -2307,8 +2307,6 @@ void QFtpPrivate::_q_piFinished(const QString&)
 
 void QFtpPrivate::_q_piServerReplyCode(int serverReplyCode)
 {
-    Q_Q(QFtp);
-
     replyCode = serverReplyCode;
 }
 
