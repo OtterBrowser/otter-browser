@@ -43,6 +43,7 @@ void HeaderViewWidget::showEvent(QShowEvent *event)
 {
 	setSectionsClickable(true);
 	setSortIndicatorShown(true);
+	setSortIndicator(-1, Qt::AscendingOrder);
 
 	QHeaderView::showEvent(event);
 }
@@ -243,12 +244,7 @@ void ItemViewWidget::showEvent(QShowEvent *event)
 	Settings settings(SessionsManager::getReadableDataPath(QLatin1String("views.ini")));
 	settings.beginGroup(type);
 
-	const int sortColumn = settings.getValue(QLatin1String("sortColumn"), -1).toInt();
-
-	if (sortColumn >= 0)
-	{
-		setSort(sortColumn, ((settings.getValue(QLatin1String("sotOrder"), QLatin1String("ascending")).toString() == QLatin1String("ascending")) ? Qt::AscendingOrder : Qt::DescendingOrder));
-	}
+	setSort(settings.getValue(QLatin1String("sortColumn"), -1).toInt(), ((settings.getValue(QLatin1String("sortOrder"), QLatin1String("ascending")).toString() == QLatin1String("ascending")) ? Qt::AscendingOrder : Qt::DescendingOrder));
 
 	const QStringList columns = settings.getValue(QLatin1String("columns")).toString().split(QLatin1Char(','), QString::SkipEmptyParts);
 
