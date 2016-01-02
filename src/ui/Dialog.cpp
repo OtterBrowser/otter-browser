@@ -45,11 +45,10 @@ void Dialog::showEvent(QShowEvent *event)
 		}
 		else
 		{
+			const QString name = normalizeDialogName(objectName());
 			const QJsonObject object = QJsonDocument::fromJson(file.readAll()).object();
 
 			file.close();
-
-			const QString name = normalizeDialogName(objectName());
 
 			if (object.contains(name))
 			{
@@ -60,9 +59,9 @@ void Dialog::showEvent(QShowEvent *event)
 					resize(size.value(QLatin1String("width")).toInt(), size.value(QLatin1String("height")).toInt());
 				}
 			}
-
-			m_wasRestored = true;
 		}
+
+		m_wasRestored = true;
 	}
 
 	QDialog::showEvent(event);
