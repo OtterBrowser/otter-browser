@@ -596,7 +596,7 @@ AddressWidget* Window::findAddressWidget() const
 		}
 	}
 
-	return NULL;
+	return m_addressWidgets.value(0, NULL);
 }
 
 Window* Window::clone(bool cloneHistory, QWidget *parent)
