@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -35,10 +35,17 @@ LocaleDialog::LocaleDialog(QWidget *parent) : Dialog(parent),
 
 	for (int i = 0; i < locales.count(); ++i)
 	{
-		const QString identifier = locales.at(i).baseName().remove(QLatin1String("otter-browser_"));
-		const QLocale locale(identifier);
+		const QString name = locales.at(i).baseName().remove(QLatin1String("otter-browser_"));
+		const QLocale locale(name);
 
-		m_ui->languageComboBox->addItem(QStringLiteral("%1 (%2) [%3]").arg(locale.nativeLanguageName()).arg(locale.nativeCountryName()).arg(identifier), identifier);
+		if (locale.nativeCountryName().isEmpty() || locale.nativeLanguageName().isEmpty())
+		{
+			m_ui->languageComboBox->addItem(name, name);
+		}
+		else
+		{
+			m_ui->languageComboBox->addItem(QStringLiteral("%1 (%2) [%3]").arg(locale.nativeLanguageName()).arg(locale.nativeCountryName()).arg(name), name);
+		}
 	}
 
 	const QString currentLocale = SettingsManager::getValue(QLatin1String("Browser/Locale")).toString();
