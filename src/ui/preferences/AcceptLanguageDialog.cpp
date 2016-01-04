@@ -59,7 +59,14 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 
 		if (locale != QLocale::c())
 		{
-			allLanguages << qMakePair(QStringLiteral("%1 - %2 [%3]").arg(locale.nativeLanguageName(), locale.nativeCountryName(), locale.bcp47Name()), locale.bcp47Name());
+			if (locale.nativeCountryName().isEmpty() || locale.nativeLanguageName().isEmpty())
+			{
+				allLanguages << qMakePair(tr("Unknown [%1]").arg(locale.bcp47Name()), locale.bcp47Name());
+			}
+			else
+			{
+				allLanguages << qMakePair(QStringLiteral("%1 - %2 [%3]").arg(locale.nativeLanguageName()).arg(locale.nativeCountryName()).arg(locale.bcp47Name()), locale.bcp47Name());
+			}
 		}
 	}
 
@@ -139,6 +146,10 @@ void AcceptLanguageDialog::addLanguage(const QString &language)
 		if (locale == QLocale::c())
 		{
 			text = tr("Custom");
+		}
+		else if (locale.nativeCountryName().isEmpty() || locale.nativeLanguageName().isEmpty())
+		{
+			text = tr("Unknown");
 		}
 		else
 		{
