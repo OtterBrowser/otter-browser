@@ -20,6 +20,7 @@
 #include "OptionDelegate.h"
 #include "../core/SettingsManager.h"
 
+#include <QtCore/QCoreApplication>
 #include <QtGui/QPainter>
 
 namespace Otter
@@ -46,7 +47,7 @@ void OptionDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 	switch (type)
 	{
 		case OptionWidget::BooleanType:
-			drawDisplay(painter, option, option.rect, index.data(Qt::DisplayRole).toBool() ? tr("Yes") : tr("No"));
+			drawDisplay(painter, option, option.rect, index.data(Qt::DisplayRole).toBool() ? QCoreApplication::translate("Otter::OptionDelegate", "Yes") : QCoreApplication::translate("Otter::OptionDelegate", "No"));
 
 			break;
 		case OptionWidget::ColorType:

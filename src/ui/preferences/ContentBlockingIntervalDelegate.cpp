@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 
 #include "ContentBlockingIntervalDelegate.h"
 
+#include <QtCore/QCoreApplication>
 #include <QtWidgets/QSpinBox>
 
 namespace Otter
@@ -33,7 +34,7 @@ void ContentBlockingIntervalDelegate::paint(QPainter *painter, const QStyleOptio
 	const int updateInterval = index.data(Qt::EditRole).toInt();
 
 	drawBackground(painter, option, index);
-	drawDisplay(painter, option, option.rect, ((updateInterval > 0) ? tr("%n day(s)", "", updateInterval) : tr("Never")));
+	drawDisplay(painter, option, option.rect, ((updateInterval > 0) ? QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", "%n day(s)", "", updateInterval) : QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", "Never")));
 }
 
 void ContentBlockingIntervalDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -59,8 +60,8 @@ QWidget* ContentBlockingIntervalDelegate::createEditor(QWidget *parent, const QS
 	Q_UNUSED(option)
 
 	QSpinBox *spinBox = new QSpinBox(parent);
-	spinBox->setSuffix(tr(" day(s)"));
-	spinBox->setSpecialValueText(tr("Never"));
+	spinBox->setSuffix(QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", " day(s)"));
+	spinBox->setSpecialValueText(QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", "Never"));
 	spinBox->setMinimum(0);
 	spinBox->setMaximum(365);
 	spinBox->setValue(index.data(Qt::EditRole).toInt());
