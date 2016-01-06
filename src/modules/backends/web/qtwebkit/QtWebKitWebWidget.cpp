@@ -940,7 +940,14 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::SaveLinkToDiskAction:
-			m_webView->page()->triggerAction(QWebPage::DownloadLinkToDisk);
+			if (getCurrentHitTestResult().linkUrl.isValid())
+			{
+				downloadFile(QNetworkRequest(getCurrentHitTestResult().linkUrl));
+			}
+			else
+			{
+				m_webView->page()->triggerAction(QWebPage::DownloadLinkToDisk);
+			}
 
 			return;
 		case ActionsManager::SaveLinkToDownloadsAction:
