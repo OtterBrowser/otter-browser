@@ -510,7 +510,7 @@ QPoint SourceViewerWebWidget::getScrollPosition() const
 
 QRect SourceViewerWebWidget::getProgressBarGeometry() const
 {
-	return QRect();
+	return QRect(QPoint(0, (height() - 30)), QSize(width(), 30));
 }
 
 WindowHistoryInformation SourceViewerWebWidget::getHistory() const
