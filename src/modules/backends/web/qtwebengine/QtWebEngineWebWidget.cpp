@@ -424,7 +424,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 				QNetworkReply *reply = NetworkManagerFactory::getNetworkManager()->get(request);
 				SourceViewerWebWidget *sourceViewer = new SourceViewerWebWidget(isPrivate());
-				sourceViewer->setRequestedUrl(QUrl(QLatin1String("view-source:") + m_hitResult.frameUrl.toString()), false, true);
+				sourceViewer->setRequestedUrl(QUrl(QLatin1String("view-source:") + m_hitResult.frameUrl.toString()), false);
 
 				if (!defaultEncoding.isEmpty())
 				{
@@ -740,7 +740,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 				QNetworkReply *reply = NetworkManagerFactory::getNetworkManager()->get(request);
 				SourceViewerWebWidget *sourceViewer = new SourceViewerWebWidget(isPrivate());
-				sourceViewer->setRequestedUrl(QUrl(QLatin1String("view-source:") + getUrl().toString()), false, true);
+				sourceViewer->setRequestedUrl(QUrl(QLatin1String("view-source:") + getUrl().toString()), false);
 
 				if (!defaultEncoding.isEmpty())
 				{
