@@ -375,6 +375,11 @@ void SourceViewerWebWidget::setUrl(const QUrl &url, bool typed)
 
 void SourceViewerWebWidget::setContents(const QByteArray &contents, const QString &contentType)
 {
+	if (m_viewSourceReply)
+	{
+		triggerAction(ActionsManager::StopAction);
+	}
+
 	QTextCodec *codec = NULL;
 
 	if (hasOption(QLatin1String("Content/DefaultCharacterEncoding")))
