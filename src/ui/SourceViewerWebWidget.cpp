@@ -319,11 +319,11 @@ void SourceViewerWebWidget::setShowLineNumbers(bool show)
 
 void SourceViewerWebWidget::setOption(const QString &key, const QVariant &value)
 {
-	const QString encoding = getOption(QLatin1String("Content/DefaultCharacterEncoding")).toString();
+	const bool needsReload = (key == QLatin1String("Content/DefaultCharacterEncoding") && getOption(key).toString() != value.toString());
 
 	WebWidget::setOption(key, value);
 
-	if (key == QLatin1String("Content/DefaultCharacterEncoding") && encoding != value.toString())
+	if (needsReload)
 	{
 		triggerAction(ActionsManager::ReloadAction);
 	}
