@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -39,6 +39,7 @@ namespace Otter
 
 SourceViewerWebWidget::SourceViewerWebWidget(bool isPrivate, ContentsWidget *parent) : WebWidget(isPrivate, NULL, parent),
 	m_sourceViewer(new SourceViewerWidget(this)),
+	m_networkManager(NULL),
 	m_viewSourceReply(NULL),
 	m_isLoading(true),
 	m_isPrivate(isPrivate)
@@ -131,7 +132,12 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 				QNetworkRequest request(QUrl(getUrl().toString().mid(12)));
 				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
 
-				m_viewSourceReply = NetworkManagerFactory::getNetworkManager()->get(request);
+				if (!m_networkManager)
+				{
+					m_networkManager = new NetworkManager(m_isPrivate, this);
+				}
+
+				m_viewSourceReply = m_networkManager->get(request);
 
 				connect(m_viewSourceReply, SIGNAL(finished()), this, SLOT(viewSourceReplyFinished()));
 

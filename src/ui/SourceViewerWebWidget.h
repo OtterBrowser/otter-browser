@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@
 namespace Otter
 {
 
+class NetworkManager;
 class SourceViewerWidget;
 
 class SourceViewerWebWidget : public WebWidget
@@ -78,6 +79,7 @@ protected slots:
 
 private:
 	SourceViewerWidget *m_sourceViewer;
+	NetworkManager *m_networkManager;
 	QNetworkReply *m_viewSourceReply;
 	QUrl m_url;
 	bool m_isLoading;
