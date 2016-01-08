@@ -101,11 +101,11 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 				m_viewSourceReply->abort();
 				m_viewSourceReply->deleteLater();
 				m_viewSourceReply = NULL;
-
-				m_isLoading = false;
-
-				emit loadingChanged(false);
 			}
+
+			m_isLoading = false;
+
+			emit loadingChanged(false);
 
 			updateNavigationActions();
 
@@ -381,10 +381,7 @@ void SourceViewerWebWidget::setUrl(const QUrl &url, bool typed)
 
 void SourceViewerWebWidget::setContents(const QByteArray &contents, const QString &contentType)
 {
-	if (m_viewSourceReply)
-	{
-		triggerAction(ActionsManager::StopAction);
-	}
+	triggerAction(ActionsManager::StopAction);
 
 	QTextCodec *codec = NULL;
 
@@ -416,10 +413,6 @@ void SourceViewerWebWidget::setContents(const QByteArray &contents, const QStrin
 
 	m_sourceViewer->setPlainText(text);
 	m_sourceViewer->document()->setModified(false);
-
-	m_isLoading = false;
-
-	emit loadingChanged(false);
 }
 
 WebWidget* SourceViewerWebWidget::clone(bool cloneHistory, bool isPrivate)
