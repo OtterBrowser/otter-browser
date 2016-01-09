@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,9 @@
 #ifdef OTTER_ENABLE_QTWEBENGINE
 #include "../modules/backends/web/qtwebengine/QtWebEngineWebBackend.h"
 #endif
+#ifdef OTTER_ENABLE_QTWEBKIT
 #include "../modules/backends/web/qtwebkit/QtWebKitWebBackend.h"
+#endif
 
 namespace Otter
 {
@@ -38,7 +40,9 @@ AddonsManager::AddonsManager(QObject *parent) : QObject(parent)
 #ifdef OTTER_ENABLE_QTWEBENGINE
 	registerWebBackend(new QtWebEngineWebBackend(this), QLatin1String("qtwebengine"));
 #endif
+#ifdef OTTER_ENABLE_QTWEBKIT
 	registerWebBackend(new QtWebKitWebBackend(this), QLatin1String("qtwebkit"));
+#endif
 
 	registerSpecialPage(SpecialPageInformation(tr("Bookmarks Manager"), QString(), QUrl(QLatin1String("about:bookmarks")), Utils::getIcon(QLatin1String("bookmarks"), false)), QLatin1String("bookmarks"));
 	registerSpecialPage(SpecialPageInformation(tr("Cache Manager"), QString(), QUrl(QLatin1String("about:cache")), Utils::getIcon(QLatin1String("cache"), false)), QLatin1String("cache"));
@@ -47,7 +51,6 @@ AddonsManager::AddonsManager(QObject *parent) : QObject(parent)
 	registerSpecialPage(SpecialPageInformation(tr("History Manager"), QString(), QUrl(QLatin1String("about:history")), Utils::getIcon(QLatin1String("view-history"), false)), QLatin1String("history"));
 	registerSpecialPage(SpecialPageInformation(tr("Notes Manager"), QString(), QUrl(QLatin1String("about:notes")), Utils::getIcon(QLatin1String("notes"), false)), QLatin1String("notes"));
 	registerSpecialPage(SpecialPageInformation(tr("Transfers Manager"), QString(), QUrl(QLatin1String("about:transfers")), Utils::getIcon(QLatin1String("transfers"), false)), QLatin1String("transfers"));
-
 }
 
 void AddonsManager::createInstance(QObject *parent)

@@ -65,6 +65,8 @@ isEmpty(PREFIX): PREFIX = /usr/local
 TARGET = otter-browser
 TARGET.path = $$PREFIX/
 
+DEFINES += OTTER_ENABLE_QTWEBKIT
+
 TEMPLATE = app
 
 SOURCES += src/main.cpp \

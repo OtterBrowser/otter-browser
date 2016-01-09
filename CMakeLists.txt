@@ -66,14 +66,18 @@ set(CMAKE_AUTOMOC ON)
 include(GNUInstallDirs)
 
 option(EnableQtwebengine "Enable QtWebEngine backend (requires Qt 5.5)" OFF)
+option(EnableQtwebkit "Enable QtWebKit backend (requires Qt 5.2)" ON)
 
+find_package(Qt5 5.2.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Script Sql Widgets XmlPatterns)
 find_package(KF5Sonnet)
 
 if (EnableQtwebengine)
-	find_package(Qt5 5.5.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Script Sql WebEngine WebEngineWidgets WebKit WebKitWidgets Widgets XmlPatterns)
-else (EnableQtwebengine)
-	find_package(Qt5 5.2.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Script Sql WebKit WebKitWidgets Widgets XmlPatterns)
+	find_package(Qt5 5.5.0 REQUIRED COMPONENTS WebEngine WebEngineWidgets)
 endif (EnableQtwebengine)
+
+if (EnableQtwebkit)
+	find_package(Qt5 5.2.0 REQUIRED COMPONENTS WebKit WebKitWidgets)
+endif (EnableQtwebkit)
 
 set(otter_src
 	src/main.cpp
@@ -210,17 +214,6 @@ set(otter_src
 	src/ui/toolbars/StatusMessageWidget.cpp
 	src/ui/toolbars/ToolButtonWidget.cpp
 	src/ui/toolbars/ZoomWidget.cpp
-	src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp
-	src/modules/backends/web/qtwebkit/QtWebKitHistoryInterface.cpp
-	src/modules/backends/web/qtwebkit/QtWebKitInspector.cpp
-	src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp
-	src/modules/backends/web/qtwebkit/QtWebKitPage.cpp
-	src/modules/backends/web/qtwebkit/QtWebKitPluginFactory.cpp
-	src/modules/backends/web/qtwebkit/QtWebKitPluginWidget.cpp
-	src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp
-	src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp
-	src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp
-	src/modules/backends/web/qtwebkit/3rdparty/qtftp/qurlinfo.cpp
 	src/modules/importers/html/HtmlBookmarksImporter.cpp
 	src/modules/importers/opera/OperaBookmarksImporter.cpp
 	src/modules/importers/opera/OperaNotesImporter.cpp
@@ -248,7 +241,6 @@ set(otter_src
 
 qt5_add_resources(otter_res
 	resources/resources.qrc
-	src/modules/backends/web/qtwebkit/QtWebKitResources.qrc
 )
 
 qt5_wrap_ui(otter_ui
@@ -319,6 +311,29 @@ if (EnableQtwebengine)
 		src/modules/backends/web/qtwebengine/QtWebEngineResources.qrc
 	)
 endif (EnableQtwebengine)
+
+if (EnableQtwebkit)
+	add_definitions(-DOTTER_ENABLE_QTWEBKIT)
+
+	set(otter_src
+		${otter_src}
+		src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp
+		src/modules/backends/web/qtwebkit/QtWebKitHistoryInterface.cpp
+		src/modules/backends/web/qtwebkit/QtWebKitInspector.cpp
+		src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp
+		src/modules/backends/web/qtwebkit/QtWebKitPage.cpp
+		src/modules/backends/web/qtwebkit/QtWebKitPluginFactory.cpp
+		src/modules/backends/web/qtwebkit/QtWebKitPluginWidget.cpp
+		src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp
+		src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp
+		src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp
+		src/modules/backends/web/qtwebkit/3rdparty/qtftp/qurlinfo.cpp
+	)
+
+	qt5_add_resources(otter_res
+		src/modules/backends/web/qtwebkit/QtWebKitResources.qrc
+	)
+endif (EnableQtwebkit)
 
 if (KF5Sonnet_FOUND)
 	add_definitions(-DOTTER_ENABLE_SPELLCHECK)
