@@ -154,7 +154,7 @@ bool OperaNotesImporter::import(const QString &path)
 {
 	QFile file(getSuggestedPath(path));
 
-	if (!file.open(QFile::ReadOnly))
+	if (!file.open(QIODevice::ReadOnly))
 	{
 		return false;
 	}
@@ -241,6 +241,8 @@ bool OperaNotesImporter::import(const QString &path)
 			type = NoEntry;
 		}
 	}
+
+	file.close();
 
 	return true;
 }

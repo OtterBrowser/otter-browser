@@ -334,7 +334,7 @@ void PreferencesSearchPageWidget::updateReaddSearchMenu()
 		{
 			QFile file(allSearchEngines.at(i).absoluteFilePath());
 
-			if (file.open(QFile::ReadOnly))
+			if (file.open(QIODevice::ReadOnly))
 			{
 				const SearchEnginesManager::SearchEngineDefinition searchEngine = SearchEnginesManager::loadSearchEngine(&file, identifier);
 

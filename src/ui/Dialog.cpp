@@ -39,7 +39,7 @@ void Dialog::showEvent(QShowEvent *event)
 	{
 		QFile file(SessionsManager::getWritableDataPath(QLatin1String("dialogs.json")));
 
-		if (!file.open(QFile::ReadOnly))
+		if (!file.open(QIODevice::ReadOnly))
 		{
 			adjustSize();
 		}
@@ -79,7 +79,7 @@ void Dialog::resizeEvent(QResizeEvent *event)
 	QJsonObject object;
 	QFile file(SessionsManager::getWritableDataPath(QLatin1String("dialogs.json")));
 
-	if (file.open(QFile::ReadOnly))
+	if (file.open(QIODevice::ReadOnly))
 	{
 		object = QJsonDocument::fromJson(file.readAll()).object();
 
@@ -96,7 +96,7 @@ void Dialog::resizeEvent(QResizeEvent *event)
 
 	object.insert(name, dialog);
 
-	if (file.open(QFile::WriteOnly))
+	if (file.open(QIODevice::WriteOnly))
 	{
 		QJsonDocument document;
 		document.setObject(object);

@@ -461,7 +461,7 @@ void ContentBlockingProfile::replyFinished()
 
 	QFile file(m_information.path);
 
-	if (!file.open(QFile::ReadWrite | QFile::Truncate))
+	if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate))
 	{
 		Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile: %1").arg(file.errorString()), Otter::OtherMessageCategory, ErrorMessageLevel, m_information.path);
 

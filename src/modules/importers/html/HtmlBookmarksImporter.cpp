@@ -182,7 +182,7 @@ bool HtmlBookmarksImporter::import(const QString &path)
 {
 	QFile file(getSuggestedPath(path));
 
-	if (!file.open(QFile::ReadOnly))
+	if (!file.open(QIODevice::ReadOnly))
 	{
 		return false;
 	}
@@ -209,6 +209,8 @@ bool HtmlBookmarksImporter::import(const QString &path)
 	page.mainFrame()->setHtml(file.readAll());
 
 	processElement(page.mainFrame()->documentElement());
+
+	file.close();
 
 	return true;
 }

@@ -227,7 +227,7 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 
 			QFile file(SessionsManager::getWritableDataPath(QLatin1String("toolBars.json")));
 
-			if (file.open(QFile::WriteOnly))
+			if (file.open(QIODevice::WriteOnly))
 			{
 				file.write(document.toJson(QJsonDocument::Indented));
 				file.close();
@@ -523,12 +523,14 @@ QHash<QString, ToolBarsManager::ToolBarDefinition> ToolBarsManager::loadToolBars
 	QHash<QString, ToolBarsManager::ToolBarDefinition> definitions;
 	QFile file(path);
 
-	if (!file.open(QFile::ReadOnly))
+	if (!file.open(QIODevice::ReadOnly))
 	{
 		return definitions;
 	}
 
 	const QJsonArray toolBars = QJsonDocument::fromJson(file.readAll()).array();
+
+	file.close();
 
 	for (int i = 0; i < toolBars.count(); ++i)
 	{

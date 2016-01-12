@@ -438,7 +438,6 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 
 	QSaveFile file(path);
 
-
 	if (!file.open(QIODevice::WriteOnly))
 	{
 		return false;

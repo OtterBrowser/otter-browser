@@ -223,6 +223,7 @@ bool Settings::save(const QString &path)
 	}
 
 	QMap<QString, QVariantMap>::iterator groupsIterator;
+
 	for (groupsIterator = m_data.begin(); groupsIterator != m_data.end(); ++groupsIterator)
 	{
 		if (groupsIterator.value().isEmpty())

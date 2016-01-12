@@ -43,7 +43,7 @@ MenuBarWidget::MenuBarWidget(MainWindow *parent) : QMenuBar(parent),
 	m_rightToolBar(NULL)
 {
 	QFile file(SessionsManager::getReadableDataPath(QLatin1String("menu/menuBar.json")));
-	file.open(QFile::ReadOnly);
+	file.open(QIODevice::ReadOnly);
 
 	const QJsonArray definition = QJsonDocument::fromJson(file.readAll()).array();
 

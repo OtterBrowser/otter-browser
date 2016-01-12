@@ -38,7 +38,7 @@ SyntaxHighlighter::SyntaxHighlighter(QTextDocument *parent) : QSyntaxHighlighter
 	if (m_formats[HtmlSyntax].isEmpty())
 	{
 		QFile file(SessionsManager::getReadableDataPath(QLatin1String("syntaxHighlighting.json")));
-		file.open(QFile::ReadOnly);
+		file.open(QIODevice::ReadOnly);
 
 		const QJsonObject syntaxes = QJsonDocument::fromJson(file.readAll()).object();
 		const QMetaEnum highlightingSyntaxEnum = metaObject()->enumerator(metaObject()->indexOfEnumerator(QLatin1String("HighlightingSyntax").data()));
