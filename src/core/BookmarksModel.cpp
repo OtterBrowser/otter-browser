@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QFile>
 #include <QtCore/QMimeData>
+#include <QtCore/QSaveFile>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
@@ -212,7 +213,7 @@ BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *pa
 
 	QFile file(path);
 
-	if (!file.open(QFile::ReadOnly | QFile::Text))
+	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
 		Console::addMessage(((mode == NotesMode) ? tr("Failed to open notes file: %1") : tr("Failed to open bookmarks file: %1")).arg(file.errorString()), OtherMessageCategory, ErrorMessageLevel, path);
 
@@ -1041,9 +1042,9 @@ bool BookmarksModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
 
 bool BookmarksModel::save(const QString &path) const
 {
-	QFile file(path);
+	QSaveFile file(path);
 
-	if (!file.open(QFile::WriteOnly))
+	if (!file.open(QIODevice::WriteOnly))
 	{
 		return false;
 	}
@@ -1065,7 +1066,7 @@ bool BookmarksModel::save(const QString &path) const
 
 	writer.writeEndDocument();
 
-	return true;
+	return file.commit();
 }
 
 bool BookmarksModel::setData(const QModelIndex &index, const QVariant &value, int role)
