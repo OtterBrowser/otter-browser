@@ -2157,7 +2157,7 @@ Você quer continuar?</translation>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="104"/>
         <source>Import Opera Session…</source>
-        <translation type="unfinished"/>
+        <translation>Importar Sessão do Opera...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="194"/>
@@ -2576,17 +2576,17 @@ Você quer continuar?</translation>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="41"/>
         <source>Opera Session</source>
-        <translation type="unfinished"/>
+        <translation>Sessão do Opera</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="46"/>
         <source>Imports session from Opera Browser version 12 or earlier</source>
-        <translation type="unfinished"/>
+        <translation>Importar sessão da versão 12 ou anterior do Navegador Opera</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="56"/>
         <source>Opera session files (*.win)</source>
-        <translation type="unfinished"/>
+        <translation>Arquivos da sessão do Opera (*.win)</translation>
     </message>
 </context>
 <context>
@@ -5172,7 +5172,8 @@ Você quer salvar suas mudanças ou descartá-las?</translation>
         <location filename="../../src/core/Transfer.cpp" line="263"/>
         <source>File with that name already exists.
 Do you want to overwrite it?</source>
-        <translation type="unfinished"/>
+        <translation>Um arquivo com esse nome já existe.
+Você quer sobrescrevê-lo?</translation>
     </message>
     <message>
         <location filename="../../src/core/Transfer.cpp" line="600"/>
@@ -7209,7 +7210,7 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="370"/>
         <source>Dictionaries</source>
-        <translation type="unfinished"/>
+        <translation>Dicionários</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="371"/>
@@ -7834,7 +7835,8 @@ Erro: %2</translation>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="442"/>
         <source>Failed to run File Associations Manager, error code: %1
 Application ID: %2</source>
-        <translation type="unfinished"/>
+        <translation>Falhou em executar o Gerenciador das Associações dos Arquivos, código do erro: %1
+ID do Aplicativo: %2</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="461"/>

@@ -1376,7 +1376,7 @@ Wykładnik: %2</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="62"/>
         <source> day(s)</source>
-        <translation>dni</translation>
+        <translation> dni</translation>
     </message>
 </context>
 <context>

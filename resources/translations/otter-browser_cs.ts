@@ -2158,7 +2158,7 @@ Chcete pokračovat?</translation>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="104"/>
         <source>Import Opera Session…</source>
-        <translation type="unfinished"/>
+        <translation>Zavést sezení Opera…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="194"/>
@@ -2515,7 +2515,7 @@ Chcete pokračovat?</translation>
     <message>
         <location filename="../../src/ui/OpenAddressDialog.ui" line="20"/>
         <source>Enter a web address or choose one from the list:</source>
-        <translation>Zadat internetovou adresu nebo vybrat jednu ze seznamu:</translation>
+        <translation>Zadejte adresu nebo jednu vyberte ze seznamu:</translation>
     </message>
 </context>
 <context>
@@ -2577,17 +2577,17 @@ Chcete pokračovat?</translation>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="41"/>
         <source>Opera Session</source>
-        <translation type="unfinished"/>
+        <translation>Sezení Opera</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="46"/>
         <source>Imports session from Opera Browser version 12 or earlier</source>
-        <translation type="unfinished"/>
+        <translation>Zavede sezení z prohlížeče Opera verze 12 nebo dřívější</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="56"/>
         <source>Opera session files (*.win)</source>
-        <translation type="unfinished"/>
+        <translation>Soubory se sezeními Opera (*.win)</translation>
     </message>
 </context>
 <context>
@@ -3635,7 +3635,7 @@ Chcete pokračovat?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="45"/>
         <source>Show start page</source>
-        <translation>Ukázat začáteční stránku</translation>
+        <translation>Ukázat úvodní stránku</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="46"/>
@@ -4627,7 +4627,7 @@ Chcete uložit změny nebo je zahodit?</translation>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="14"/>
         <source>Start Page Preferences</source>
-        <translation>Nastavení začáteční stránky</translation>
+        <translation>Nastavení úvodní stránky</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="20"/>
@@ -4677,7 +4677,7 @@ Chcete uložit změny nebo je zahodit?</translation>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="161"/>
         <source>Show tile to add new entries</source>
-        <translation>Ukázat dlaždici pro přidání nových záznamů</translation>
+        <translation>Ukázat dlaždici pro přidání nových položek</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="39"/>
@@ -4764,7 +4764,7 @@ Chcete uložit změny nebo je zahodit?</translation>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="114"/>
         <source>Begin with start page</source>
-        <translation>Začít s začáteční stránkou</translation>
+        <translation>Začít s úvodní stránkou</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="124"/>
@@ -5173,7 +5173,8 @@ Chcete uložit změny nebo je zahodit?</translation>
         <location filename="../../src/core/Transfer.cpp" line="263"/>
         <source>File with that name already exists.
 Do you want to overwrite it?</source>
-        <translation type="unfinished"/>
+        <translation>Soubor s tímto názvem již existuje.
+Chcete jej přepsat?</translation>
     </message>
     <message>
         <location filename="../../src/core/Transfer.cpp" line="600"/>
@@ -7210,7 +7211,7 @@ Klepněte na tlačítko Nainstalovat pro opětovné spuštění prohlížeče a 
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="370"/>
         <source>Dictionaries</source>
-        <translation type="unfinished"/>
+        <translation>Slovníky</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="371"/>
@@ -7835,7 +7836,8 @@ Chyba: %2</translation>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="442"/>
         <source>Failed to run File Associations Manager, error code: %1
 Application ID: %2</source>
-        <translation type="unfinished"/>
+        <translation>Nepodařilo se spustit správce přiřazení souborů, kód chyby: %1
+ID programu: %2</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="461"/>
