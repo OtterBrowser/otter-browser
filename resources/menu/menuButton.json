@@ -155,6 +155,7 @@
 				"SwitchApplicationLanguage",
 				"CheckForUpdates",
 				"separator",
+				"DiagnosticReport",
 				"AboutApplication",
 				"AboutQt"
 			]
