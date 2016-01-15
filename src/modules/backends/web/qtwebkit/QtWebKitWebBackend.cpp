@@ -55,6 +55,13 @@ QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent),
 	page->deleteLater();
 }
 
+QtWebKitWebBackend::~QtWebKitWebBackend()
+{
+	qDeleteAll(m_thumbnailRequests.keys());
+
+	m_thumbnailRequests.clear();
+}
+
 void QtWebKitWebBackend::optionChanged(const QString &option)
 {
 	if (option == QLatin1String("Cache/PagesInMemoryLimit"))
