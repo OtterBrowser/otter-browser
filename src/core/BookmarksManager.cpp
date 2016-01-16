@@ -46,7 +46,7 @@ void BookmarksManager::timerEvent(QTimerEvent *event)
 
 		if (m_model)
 		{
-			m_model->save(SessionsManager::getWritableDataPath("bookmarks.xbel"));
+			m_model->save(SessionsManager::getWritableDataPath(QLatin1String("bookmarks.xbel")));
 		}
 	}
 }
