@@ -39,7 +39,7 @@ void Dialog::showEvent(QShowEvent *event)
 	{
 		QFile file(SessionsManager::getWritableDataPath(QLatin1String("dialogs.json")));
 
-		if (!file.open(QIODevice::ReadOnly))
+		if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 		{
 			adjustSize();
 		}

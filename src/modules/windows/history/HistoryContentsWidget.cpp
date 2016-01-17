@@ -144,7 +144,7 @@ void HistoryContentsWidget::populateEntries()
 		}
 	}
 
-	HistoryModel *model = HistoryManager::getModel();
+	HistoryModel *model = HistoryManager::getBrowsingHistoryModel();
 
 	for (int i = 0; i < model->rowCount(); ++i)
 	{

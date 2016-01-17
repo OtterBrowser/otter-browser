@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -61,13 +61,14 @@ public:
 		HistoryEntryMatch () : entry(NULL) {}
 	};
 
-	explicit HistoryModel(QObject *parent = NULL);
+	explicit HistoryModel(const QString &path, QObject *parent = NULL);
 
 	void removeEntry(quint64 identifier);
-	HistoryEntryItem* addEntry(const QUrl &url, const QString &title, const QIcon &icon, bool isTypedIn = false, const QDateTime &date = QDateTime::currentDateTime(), quint64 identifier = 0);
+	HistoryEntryItem* addEntry(const QUrl &url, const QString &title, const QIcon &icon, const QDateTime &date = QDateTime::currentDateTime(), quint64 identifier = 0);
 	HistoryEntryItem* getEntry(quint64 identifier) const;
 	QList<HistoryEntryMatch> findEntries(const QString &prefix) const;
 	bool hasEntry(const QUrl &url) const;
+	bool save(const QString &path) const;
 	bool setData(const QModelIndex &index, const QVariant &value, int role);
 
 private:

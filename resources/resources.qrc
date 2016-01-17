@@ -145,7 +145,6 @@
         <file>other/syntaxHighlighting.json</file>
         <file>other/toolBars.json</file>
         <file>other/userAgents.ini</file>
-        <file>schemas/browsingHistory.sql</file>
         <file>schemas/options.ini</file>
         <file>schemas/update.xsd</file>
         <file>searches/bing.xml</file>

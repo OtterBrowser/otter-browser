@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,14 @@
 **************************************************************************/
 
 #include "HistoryModel.h"
+#include "Console.h"
 #include "Utils.h"
+
+#include <QtCore/QFile>
+#include <QtCore/QJsonArray>
+#include <QtCore/QJsonDocument>
+#include <QtCore/QJsonObject>
+#include <QtCore/QSaveFile>
 
 namespace Otter
 {
@@ -44,8 +51,27 @@ void HistoryEntryItem::setItemData(const QVariant &value, int role)
 	QStandardItem::setData(value, role);
 }
 
-HistoryModel::HistoryModel(QObject *parent) : QStandardItemModel(parent)
+HistoryModel::HistoryModel(const QString &path, QObject *parent) : QStandardItemModel(parent)
 {
+	QFile file(path);
+
+	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+	{
+		Console::addMessage(tr("Failed to open history file: %1").arg(file.errorString()), OtherMessageCategory, ErrorMessageLevel, path);
+
+		return;
+	}
+
+	const QJsonArray array = QJsonDocument::fromJson(file.readAll()).array();
+
+	file.close();
+
+	for (int i = 0; i < array.count(); ++i)
+	{
+		const QJsonObject object(array.at(i).toObject());
+
+		addEntry(QUrl(object.value(QLatin1String("url")).toString()), object.value(QLatin1String("title")).toString(), QIcon(), QDateTime::fromString(object.value(QLatin1String("time")).toString(), QLatin1String("yyyy-MM-dd hh:mm:ss")));
+	}
 }
 
 void HistoryModel::removeEntry(quint64 identifier)
@@ -81,7 +107,7 @@ void HistoryModel::removeEntry(quint64 identifier)
 	emit modelModified();
 }
 
-HistoryEntryItem* HistoryModel::addEntry(const QUrl &url, const QString &title, const QIcon &icon, bool isTypedIn, const QDateTime &date, quint64 identifier)
+HistoryEntryItem* HistoryModel::addEntry(const QUrl &url, const QString &title, const QIcon &icon, const QDateTime &date, quint64 identifier)
 {
 	HistoryEntryItem *entry = new HistoryEntryItem();
 	entry->setIcon(icon);
@@ -90,7 +116,6 @@ HistoryEntryItem* HistoryModel::addEntry(const QUrl &url, const QString &title, 
 	setData(entry->index(), url, UrlRole);
 	setData(entry->index(), title, TitleRole);
 	setData(entry->index(), date, TimeVisitedRole);
-	setData(entry->index(), isTypedIn, TypedInRole);
 
 	if (identifier == 0 || m_identifiers.contains(identifier))
 	{
@@ -155,9 +180,38 @@ QList<HistoryModel::HistoryEntryMatch> HistoryModel::findEntries(const QString &
 	return allMatches;
 }
 
-bool HistoryModel::hasEntry(const QUrl &url) const
+bool HistoryModel::save(const QString &path) const
 {
-	return m_urls.contains(url);
+	QSaveFile file(path);
+
+	if (!file.open(QIODevice::WriteOnly))
+	{
+		return false;
+	}
+
+	QJsonArray array;
+
+	for (int i = 0; i < rowCount(); ++i)
+	{
+		QStandardItem *entry = item(i);
+
+		if (entry)
+		{
+			QJsonObject object;
+			object.insert(QLatin1String("url"), entry->data(UrlRole).toUrl().toString());
+			object.insert(QLatin1String("title"), entry->data(TitleRole).toString());
+			object.insert(QLatin1String("time"), entry->data(TimeVisitedRole).toDateTime().toString(QLatin1String("yyyy-MM-dd hh:mm:ss")));
+
+			array.prepend(object);
+		}
+	}
+
+	QJsonDocument document;
+	document.setArray(array);
+
+	file.write(document.toJson(QJsonDocument::Indented));
+
+	return file.commit();
 }
 
 bool HistoryModel::setData(const QModelIndex &index, const QVariant &value, int role)
@@ -210,6 +264,11 @@ bool HistoryModel::setData(const QModelIndex &index, const QVariant &value, int 
 	}
 
 	return true;
+}
+
+bool HistoryModel::hasEntry(const QUrl &url) const
+{
+	return m_urls.contains(url);
 }
 
 }
