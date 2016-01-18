@@ -100,7 +100,7 @@ void HistoryManager::scheduleSave()
 	}
 }
 
-void HistoryManager::clearHistory(int period)
+void HistoryManager::clearHistory(uint period)
 {
 	if (!m_browsingHistoryModel)
 	{
@@ -112,17 +112,12 @@ void HistoryManager::clearHistory(int period)
 		getTypedHistoryModel();
 	}
 
+	m_browsingHistoryModel->clearEntries(period);
+	m_typedHistoryModel->clearEntries(period);
+
 	if (period == 0)
 	{
-		m_browsingHistoryModel->clear();
-
-		m_typedHistoryModel->clear();
-
 		emit m_instance->cleared();
-	}
-	else
-	{
-///TODO
 	}
 
 	m_instance->scheduleSave();

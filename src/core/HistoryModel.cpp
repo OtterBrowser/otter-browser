@@ -74,6 +74,26 @@ HistoryModel::HistoryModel(const QString &path, QObject *parent) : QStandardItem
 	}
 }
 
+void HistoryModel::clearEntries(uint period)
+{
+	if (period == 0)
+	{
+		clear();
+
+		return;
+	}
+
+	for (int i = (rowCount() - 1); i >= 0; --i)
+	{
+		QStandardItem *entry = item(i);
+
+		if (entry && entry->data(TimeVisitedRole).toDateTime().secsTo(QDateTime::currentDateTime()) < (period * 3600))
+		{
+			removeEntry(entry->data(IdentifierRole).toULongLong());
+		}
+	}
+}
+
 void HistoryModel::removeEntry(quint64 identifier)
 {
 	HistoryEntryItem *entry = getEntry(identifier);

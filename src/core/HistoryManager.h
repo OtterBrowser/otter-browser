@@ -35,7 +35,7 @@ class HistoryManager : public QObject
 
 public:
 	static void createInstance(QObject *parent = NULL);
-	static void clearHistory(int period = 0);
+	static void clearHistory(uint period = 0);
 	static void removeEntry(quint64 identifier);
 	static void removeEntries(const QList<quint64> &identifiers);
 	static void updateEntry(quint64 identifier, const QUrl &url, const QString &title, const QIcon &icon);
