@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -76,10 +76,10 @@ HistoryContentsWidget::HistoryContentsWidget(Window *window) : ContentsWidget(wi
 
 	QTimer::singleShot(100, this, SLOT(populateEntries()));
 
-	connect(HistoryManager::getInstance(), SIGNAL(cleared()), this, SLOT(populateEntries()));
-	connect(HistoryManager::getInstance(), SIGNAL(entryAdded(quint64)), this, SLOT(addEntry(quint64)));
-	connect(HistoryManager::getInstance(), SIGNAL(entryUpdated(quint64)), this, SLOT(updateEntry(quint64)));
-	connect(HistoryManager::getInstance(), SIGNAL(entryRemoved(quint64)), this, SLOT(removeEntry(quint64)));
+	connect(HistoryManager::getBrowsingHistoryModel(), SIGNAL(cleared()), this, SLOT(populateEntries()));
+	connect(HistoryManager::getBrowsingHistoryModel(), SIGNAL(entryAdded(HistoryEntryItem*)), this, SLOT(addEntry(HistoryEntryItem*)));
+	connect(HistoryManager::getBrowsingHistoryModel(), SIGNAL(entryModified(HistoryEntryItem*)), this, SLOT(modifyEntry(HistoryEntryItem*)));
+	connect(HistoryManager::getBrowsingHistoryModel(), SIGNAL(entryRemoved(HistoryEntryItem*)), this, SLOT(removeEntry(HistoryEntryItem*)));
 	connect(HistoryManager::getInstance(), SIGNAL(dayChanged()), this, SLOT(populateEntries()));
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->historyViewWidget, SLOT(setFilterString(QString)));
 	connect(m_ui->historyViewWidget, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(openEntry(QModelIndex)));
@@ -166,14 +166,9 @@ void HistoryContentsWidget::populateEntries()
 	emit loadingChanged(false);
 }
 
-void HistoryContentsWidget::addEntry(quint64 identifier)
-{
-	addEntry(HistoryManager::getEntry(identifier));
-}
-
 void HistoryContentsWidget::addEntry(HistoryEntryItem *entry)
 {
-	if (!entry)
+	if (!entry || entry->data(HistoryModel::IdentifierRole).toULongLong() == 0)
 	{
 		return;
 	}
@@ -216,31 +211,36 @@ void HistoryContentsWidget::addEntry(HistoryEntryItem *entry)
 	}
 }
 
-void HistoryContentsWidget::updateEntry(quint64 identifier)
+void HistoryContentsWidget::modifyEntry(HistoryEntryItem *entry)
 {
-	QStandardItem *entryItem = findEntry(identifier);
+	if (!entry || entry->data(HistoryModel::IdentifierRole).toULongLong() == 0)
+	{
+		return;
+	}
+
+	QStandardItem *entryItem = findEntry(entry->data(HistoryModel::IdentifierRole).toULongLong());
 
 	if (!entryItem)
 	{
-		addEntry(identifier);
+		addEntry(entry);
 
 		return;
 	}
 
-	HistoryEntryItem *historyItem = HistoryManager::getEntry(identifier);
-
-	if (historyItem)
-	{
-		entryItem->setIcon(historyItem->icon().isNull() ? Utils::getIcon(QLatin1String("text-html")) : historyItem->icon());
-		entryItem->setText(historyItem->data(HistoryModel::UrlRole).toUrl().toDisplayString());
-		entryItem->parent()->child(entryItem->row(), 1)->setText(historyItem->data(HistoryModel::TitleRole).isNull() ? tr("(Untitled)") : historyItem->data(HistoryModel::TitleRole).toString());
-		entryItem->parent()->child(entryItem->row(), 2)->setText(historyItem->data(HistoryModel::TimeVisitedRole).toDateTime().date().toString());
-	}
+	entryItem->setIcon(entry->icon().isNull() ? Utils::getIcon(QLatin1String("text-html")) : entry->icon());
+	entryItem->setText(entry->data(HistoryModel::UrlRole).toUrl().toDisplayString());
+	entryItem->parent()->child(entryItem->row(), 1)->setText(entry->data(HistoryModel::TitleRole).isNull() ? tr("(Untitled)") : entry->data(HistoryModel::TitleRole).toString());
+	entryItem->parent()->child(entryItem->row(), 2)->setText(entry->data(HistoryModel::TimeVisitedRole).toDateTime().date().toString());
 }
 
-void HistoryContentsWidget::removeEntry(quint64 identifier)
+void HistoryContentsWidget::removeEntry(HistoryEntryItem *entry)
 {
-	QStandardItem *entryItem = findEntry(identifier);
+	if (!entry || entry->data(HistoryModel::IdentifierRole).toULongLong() == 0)
+	{
+		return;
+	}
+
+	QStandardItem *entryItem = findEntry(entry->data(HistoryModel::IdentifierRole).toULongLong());
 
 	if (entryItem)
 	{
@@ -380,7 +380,7 @@ QStandardItem* HistoryContentsWidget::findEntry(quint64 identifier)
 			{
 				QStandardItem *entryItem = groupItem->child(j, 0);
 
-				if (entryItem && identifier == entryItem->data(Qt::UserRole).toULongLong())
+				if (entryItem && entryItem->data(Qt::UserRole).toULongLong() == identifier)
 				{
 					return entryItem;
 				}

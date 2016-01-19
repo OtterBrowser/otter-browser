@@ -68,12 +68,7 @@ private:
 	static bool m_isStoringFavicons;
 
 signals:
-	void cleared();
-	void entryAdded(quint64 entry);
-	void entryUpdated(quint64 entry);
-	void entryRemoved(quint64 entry);
 	void dayChanged();
-	void typedHistoryModelModified();
 };
 
 }

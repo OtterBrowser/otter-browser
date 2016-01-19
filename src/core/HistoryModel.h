@@ -77,6 +77,7 @@ private:
 	QMap<quint64, HistoryEntryItem*> m_identifiers;
 
 signals:
+	void cleared();
 	void entryAdded(HistoryEntryItem *entry);
 	void entryModified(HistoryEntryItem *entry);
 	void entryRemoved(HistoryEntryItem *entry);

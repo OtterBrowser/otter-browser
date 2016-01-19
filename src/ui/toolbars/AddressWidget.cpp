@@ -105,7 +105,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 	connect(m_lineEdit, SIGNAL(textDropped(QString)), this, SLOT(handleUserInput(QString)));
 	connect(m_completionModel, SIGNAL(completionReady(QString)), this, SLOT(setCompletion(QString)));
 	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(updateBookmark()));
-	connect(HistoryManager::getInstance(), SIGNAL(typedHistoryModelModified()), this, SLOT(updateLineEdit()));
+	connect(HistoryManager::getTypedHistoryModel(), SIGNAL(modelModified()), this, SLOT(updateLineEdit()));
 }
 
 void AddressWidget::changeEvent(QEvent *event)

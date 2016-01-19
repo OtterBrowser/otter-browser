@@ -115,11 +115,6 @@ void HistoryManager::clearHistory(uint period)
 	m_browsingHistoryModel->clearEntries(period);
 	m_typedHistoryModel->clearEntries(period);
 
-	if (period == 0)
-	{
-		emit m_instance->cleared();
-	}
-
 	m_instance->scheduleSave();
 }
 
@@ -138,8 +133,6 @@ void HistoryManager::removeEntry(quint64 identifier)
 	m_browsingHistoryModel->removeEntry(identifier);
 
 	m_instance->scheduleSave();
-
-	emit m_instance->entryRemoved(identifier);
 }
 
 void HistoryManager::removeEntries(const QList<quint64> &identifiers)
@@ -157,8 +150,6 @@ void HistoryManager::removeEntries(const QList<quint64> &identifiers)
 	for (int i = 0; i < identifiers.count(); ++i)
 	{
 		m_browsingHistoryModel->removeEntry(identifiers.at(i));
-
-		emit m_instance->entryRemoved(identifiers.at(i));
 	}
 
 	m_instance->scheduleSave();
@@ -193,8 +184,6 @@ void HistoryManager::updateEntry(quint64 identifier, const QUrl &url, const QStr
 	}
 
 	m_instance->scheduleSave();
-
-	emit m_instance->entryUpdated(identifier);
 }
 
 HistoryManager* HistoryManager::getInstance()
@@ -311,8 +300,6 @@ quint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QI
 ///TODO Remove extra entries if needed
 
 	m_instance->scheduleSave();
-
-	emit m_instance->entryAdded(identifier);
 
 	return identifier;
 }

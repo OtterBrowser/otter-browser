@@ -80,6 +80,8 @@ void HistoryModel::clearEntries(uint period)
 	{
 		clear();
 
+		emit cleared();
+
 		return;
 	}
 
@@ -145,6 +147,8 @@ HistoryEntryItem* HistoryModel::addEntry(const QUrl &url, const QString &title, 
 	setData(entry->index(), identifier, IdentifierRole);
 
 	m_identifiers[identifier] = entry;
+
+	emit entryAdded(entry);
 
 	return entry;
 }
