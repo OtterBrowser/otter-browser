@@ -195,7 +195,7 @@ void HistoryContentsWidget::addEntry(HistoryEntryItem *entry)
 	QList<QStandardItem*> entryItems;
 	entryItems.append(new QStandardItem((entry->icon().isNull() ? Utils::getIcon(QLatin1String("text-html")) : entry->icon()), entry->data(HistoryModel::UrlRole).toUrl().toDisplayString().replace(QLatin1String("%23"), QString(QLatin1Char('#')))));
 	entryItems.append(new QStandardItem(entry->data(HistoryModel::TitleRole).isNull() ? tr("(Untitled)") : entry->data(HistoryModel::TitleRole).toString()));
-	entryItems.append(new QStandardItem(entry->data(HistoryModel::TimeVisitedRole).toDateTime().toString()));
+	entryItems.append(new QStandardItem(Utils::formatDateTime(entry->data(HistoryModel::TimeVisitedRole).toDateTime())));
 	entryItems[0]->setData(entry->data(HistoryModel::IdentifierRole).toULongLong(), Qt::UserRole);
 	entryItems[0]->setFlags(entryItems[0]->flags() | Qt::ItemNeverHasChildren);
 	entryItems[1]->setFlags(entryItems[1]->flags() | Qt::ItemNeverHasChildren);
@@ -230,7 +230,7 @@ void HistoryContentsWidget::modifyEntry(HistoryEntryItem *entry)
 	entryItem->setIcon(entry->icon().isNull() ? Utils::getIcon(QLatin1String("text-html")) : entry->icon());
 	entryItem->setText(entry->data(HistoryModel::UrlRole).toUrl().toDisplayString());
 	entryItem->parent()->child(entryItem->row(), 1)->setText(entry->data(HistoryModel::TitleRole).isNull() ? tr("(Untitled)") : entry->data(HistoryModel::TitleRole).toString());
-	entryItem->parent()->child(entryItem->row(), 2)->setText(entry->data(HistoryModel::TimeVisitedRole).toDateTime().date().toString());
+	entryItem->parent()->child(entryItem->row(), 2)->setText(Utils::formatDateTime(entry->data(HistoryModel::TimeVisitedRole).toDateTime()));
 }
 
 void HistoryContentsWidget::removeEntry(HistoryEntryItem *entry)
