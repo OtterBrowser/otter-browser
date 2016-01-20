@@ -131,6 +131,8 @@ void HistoryModel::removeEntry(quint64 identifier)
 
 HistoryEntryItem* HistoryModel::addEntry(const QUrl &url, const QString &title, const QIcon &icon, const QDateTime &date, quint64 identifier)
 {
+	blockSignals(true);
+
 	HistoryEntryItem *entry = new HistoryEntryItem();
 	entry->setIcon(icon);
 
@@ -147,6 +149,8 @@ HistoryEntryItem* HistoryModel::addEntry(const QUrl &url, const QString &title, 
 	setData(entry->index(), identifier, IdentifierRole);
 
 	m_identifiers[identifier] = entry;
+
+	blockSignals(false);
 
 	emit entryAdded(entry);
 

@@ -168,7 +168,7 @@ void HistoryContentsWidget::populateEntries()
 
 void HistoryContentsWidget::addEntry(HistoryEntryItem *entry)
 {
-	if (!entry || entry->data(HistoryModel::IdentifierRole).toULongLong() == 0)
+	if (!entry || entry->data(HistoryModel::IdentifierRole).toULongLong() == 0 || findEntry(entry->data(HistoryModel::IdentifierRole).toULongLong()))
 	{
 		return;
 	}
