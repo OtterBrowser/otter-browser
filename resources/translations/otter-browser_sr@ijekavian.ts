@@ -398,7 +398,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="19"/>
         <source>Title:</source>
-        <translation>Име:</translation>
+        <translation>Назив:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="29"/>
@@ -488,7 +488,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/toolbars/BookmarkWidget.cpp" line="99"/>
         <source>Title: %1</source>
-        <translation>Име: %1</translation>
+        <translation>Назив: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/BookmarkWidget.cpp" line="103"/>
@@ -557,7 +557,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="95"/>
         <source>Title:</source>
-        <translation>Име:</translation>
+        <translation>Назив:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="102"/>
@@ -925,7 +925,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="120"/>
         <source>Failed to open file for writing.</source>
-        <translation type="unfinished"/>
+        <translation>Неуспјех отварања фајла за упис.</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="177"/>
@@ -1018,7 +1018,10 @@ Are you sure that you want to restore this session anyway?</source>
 %1
 
 Exponent: %2</source>
-        <translation type="unfinished"/>
+        <translation>Модуо:
+%1
+
+Експонент: %2</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="336"/>
@@ -1103,17 +1106,17 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="447"/>
         <source>Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>Отисак</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="451"/>
         <source>SHA-1 Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>СХА-1 отисак</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="455"/>
         <source>SHA-256 Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>СХА-256 отисак</translation>
     </message>
 </context>
 <context>
@@ -1189,24 +1192,24 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ColorWidget.cpp" line="34"/>
         <source>Select Color…</source>
-        <translation type="unfinished"/>
+        <translation>Одреди боју…</translation>
     </message>
     <message>
         <location filename="../../src/ui/ColorWidget.cpp" line="35"/>
         <source>Copy Color</source>
-        <translation type="unfinished"/>
+        <translation>Копирај боју</translation>
     </message>
     <message>
         <location filename="../../src/ui/ColorWidget.cpp" line="37"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Очисти</translation>
     </message>
     <message>
         <location filename="../../src/ui/ColorWidget.cpp" line="40"/>
         <location filename="../../src/ui/ColorWidget.cpp" line="41"/>
         <location filename="../../src/ui/ColorWidget.cpp" line="77"/>
         <source>Invalid</source>
-        <translation type="unfinished"/>
+        <translation>Неисправна</translation>
     </message>
 </context>
 <context>
@@ -1219,7 +1222,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="86"/>
         <source>Name</source>
-        <translation>име</translation>
+        <translation>назив</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="86"/>
@@ -1344,7 +1347,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="48"/>
         <source>Title</source>
-        <translation>име</translation>
+        <translation>назив</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="48"/>
@@ -1498,35 +1501,35 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="14"/>
         <source>Third-party Cookies Exceptions</source>
-        <translation type="unfinished"/>
+        <translation>Изузеци колачића треће стране</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="26"/>
         <source>Always ACCEPT third-party cookies from:</source>
-        <translation type="unfinished"/>
+        <translation>Увијек ПРИХВАТИ колачиће треће стране са:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="44"/>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="106"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Додај</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="51"/>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="113"/>
         <source>Edit</source>
-        <translation type="unfinished"/>
+        <translation>Уреди</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="58"/>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="120"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Уклони</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="88"/>
         <source>Always REJECT third-party cookies from:</source>
-        <translation type="unfinished"/>
+        <translation>Увијек ОДБАЦИ колачиће треће стране са:</translation>
     </message>
 </context>
 <context>
@@ -1613,32 +1616,32 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ItemViewWidget.cpp" line="63"/>
         <source>Sorting</source>
-        <translation type="unfinished"/>
+        <translation>Ређање</translation>
     </message>
     <message>
         <location filename="../../src/ui/ItemViewWidget.cpp" line="64"/>
         <source>Sort Ascending</source>
-        <translation type="unfinished"/>
+        <translation>растуће</translation>
     </message>
     <message>
         <location filename="../../src/ui/ItemViewWidget.cpp" line="69"/>
         <source>Sort Descending</source>
-        <translation type="unfinished"/>
+        <translation>опадајуће</translation>
     </message>
     <message>
         <location filename="../../src/ui/ItemViewWidget.cpp" line="76"/>
         <source>No Sorting</source>
-        <translation type="unfinished"/>
+        <translation>Без ређања</translation>
     </message>
     <message>
         <location filename="../../src/ui/ItemViewWidget.cpp" line="83"/>
         <source>Visible Columns</source>
-        <translation type="unfinished"/>
+        <translation>Видљиве колоне</translation>
     </message>
     <message>
         <location filename="../../src/ui/ItemViewWidget.cpp" line="91"/>
         <source>Show All</source>
-        <translation type="unfinished"/>
+        <translation>Прикажи све</translation>
     </message>
 </context>
 <context>
@@ -1691,7 +1694,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="50"/>
         <source>Title</source>
-        <translation>име</translation>
+        <translation>наслов</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="50"/>
@@ -1778,34 +1781,34 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="34"/>
         <source>Select From File…</source>
-        <translation type="unfinished"/>
+        <translation>Select From File…</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="35"/>
         <source>Select From Theme…</source>
-        <translation type="unfinished"/>
+        <translation>Изабери из теме…</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="37"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Очисти</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="40"/>
         <location filename="../../src/ui/IconWidget.cpp" line="68"/>
         <location filename="../../src/ui/IconWidget.cpp" line="95"/>
         <source>Select Icon</source>
-        <translation type="unfinished"/>
+        <translation>Изабери икону</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="68"/>
         <source>Images (*.png *.jpg *.bmp *.gif *.ico)</source>
-        <translation type="unfinished"/>
+        <translation>Слике (*.png *.jpg *.bmp *.gif *.ico)</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="95"/>
         <source>Icon Name:</source>
-        <translation type="unfinished"/>
+        <translation>Назив иконе:</translation>
     </message>
 </context>
 <context>
@@ -2006,7 +2009,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="135"/>
         <source>Title:</source>
-        <translation>Име:</translation>
+        <translation>Назив:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="145"/>
@@ -2044,7 +2047,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="75"/>
         <source>Name</source>
-        <translation>име</translation>
+        <translation>назив</translation>
     </message>
     <message>
         <location filename="../../src/core/LocalListingNetworkReply.cpp" line="76"/>
@@ -2155,7 +2158,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="104"/>
         <source>Import Opera Session…</source>
-        <translation type="unfinished"/>
+        <translation>Увези Оперину сесију…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="194"/>
@@ -2299,7 +2302,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="188"/>
         <source>Title:</source>
-        <translation>Име:</translation>
+        <translation>Назив:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="198"/>
@@ -2574,17 +2577,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="41"/>
         <source>Opera Session</source>
-        <translation type="unfinished"/>
+        <translation>Оперина сесија</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="46"/>
         <source>Imports session from Opera Browser version 12 or earlier</source>
-        <translation type="unfinished"/>
+        <translation>Увоз сесије из Опера веб прегледача, издање 12 или раније</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="56"/>
         <source>Opera session files (*.win)</source>
-        <translation type="unfinished"/>
+        <translation>Фајлови Опериних сесија (*.win)</translation>
     </message>
 </context>
 <context>
@@ -2592,12 +2595,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/OptionDelegate.cpp" line="42"/>
         <source>Yes</source>
-        <translation type="unfinished"/>
+        <translation>Да</translation>
     </message>
     <message>
         <location filename="../../src/ui/OptionDelegate.cpp" line="42"/>
         <source>No</source>
-        <translation type="unfinished"/>
+        <translation>Не</translation>
     </message>
 </context>
 <context>
@@ -2605,12 +2608,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/OptionWidget.cpp" line="51"/>
         <source>No</source>
-        <translation type="unfinished"/>
+        <translation>Не</translation>
     </message>
     <message>
         <location filename="../../src/ui/OptionWidget.cpp" line="52"/>
         <source>Yes</source>
-        <translation type="unfinished"/>
+        <translation>Да</translation>
     </message>
     <message>
         <location filename="../../src/ui/OptionWidget.cpp" line="255"/>
@@ -2747,17 +2750,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="68"/>
         <source>Blocked Pop-ups</source>
-        <translation type="unfinished"/>
+        <translation>Блокирани искачући прозори</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="69"/>
         <source>Open All</source>
-        <translation type="unfinished"/>
+        <translation>Отвори све</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="118"/>
         <source>%1 wants to open %n pop-up window(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 жели да отвори %n искачући прозор.</numerusform><numerusform>%1 жели да отвори %n искачућа прозора.</numerusform><numerusform>%1 жели да отвори %n искачућих прозора.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3715,7 +3718,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="263"/>
         <source>Exceptions…</source>
-        <translation type="unfinished"/>
+        <translation>Изузеци…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="279"/>
@@ -4195,7 +4198,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="22"/>
         <source>Session title:</source>
-        <translation>Име:</translation>
+        <translation>Назив:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.ui" line="32"/>
@@ -4268,96 +4271,96 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="14"/>
         <source>Edit Search Engine</source>
-        <translation type="unfinished"/>
+        <translation>Уређивање мотора претраге</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="22"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>Назив:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="49"/>
         <source>Change Icon…</source>
-        <translation type="unfinished"/>
+        <translation>Промени икону…</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="58"/>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>Опис:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="71"/>
         <source>Keyword:</source>
-        <translation type="unfinished"/>
+        <translation>Кључна ријеч:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="84"/>
         <source>Encoding:</source>
-        <translation type="unfinished"/>
+        <translation>Кодирање:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="101"/>
         <source>Form address:</source>
-        <translation type="unfinished"/>
+        <translation>Адреса формулара:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="117"/>
         <source>Update address:</source>
-        <translation type="unfinished"/>
+        <translation>Адреса ажурирања:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="129"/>
         <source>Set as default search engine</source>
-        <translation type="unfinished"/>
+        <translation>Постави за подразумијевани мотор претраге</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="140"/>
         <source>Results Query</source>
-        <translation type="unfinished"/>
+        <translation>Упит за претрагу</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="148"/>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="256"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Адреса:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="161"/>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="272"/>
         <source>Query:</source>
-        <translation type="unfinished"/>
+        <translation>Упит:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="176"/>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="284"/>
         <source>POST method</source>
-        <translation type="unfinished"/>
+        <translation>ПОСТ метода</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="217"/>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="325"/>
         <source>Data encoding (enctype):</source>
-        <translation type="unfinished"/>
+        <translation>Кодирање:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="245"/>
         <source>Suggestions Query</source>
-        <translation type="unfinished"/>
+        <translation>Упит за приједлоге</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.cpp" line="133"/>
         <source>Placeholders</source>
-        <translation type="unfinished"/>
+        <translation>Мјестодржачи</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.cpp" line="134"/>
         <source>Search Terms</source>
-        <translation type="unfinished"/>
+        <translation>Појмови за претрагу</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.cpp" line="135"/>
         <source>Language</source>
-        <translation type="unfinished"/>
+        <translation>Језик</translation>
     </message>
 </context>
 <context>
@@ -4365,7 +4368,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/core/SearchEnginesManager.cpp" line="169"/>
         <source>Manage Search Engines…</source>
-        <translation type="unfinished"/>
+        <translation>Управљај моторима претраге…</translation>
     </message>
 </context>
 <context>
@@ -4451,7 +4454,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="62"/>
         <source>Title</source>
-        <translation>име</translation>
+        <translation>назив</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="67"/>
@@ -4644,7 +4647,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="89"/>
         <source>Color:</source>
-        <translation type="unfinished"/>
+        <translation>Боја:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="109"/>
@@ -4950,38 +4953,38 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="269"/>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation>сви</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="277"/>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="419"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>непознат</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="286"/>
         <source>Show search engine:</source>
-        <translation type="unfinished"/>
+        <translation>Прикажи мотор претраге:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="287"/>
         <source>Show search button:</source>
-        <translation type="unfinished"/>
+        <translation>Прикажи дугме за претрагу:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="291"/>
         <source>Custom icon:</source>
-        <translation type="unfinished"/>
+        <translation>Посебна икона:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="292"/>
         <source>Custom text:</source>
-        <translation type="unfinished"/>
+        <translation>Посебан текст:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="301"/>
         <source>Edit Entry</source>
-        <translation type="unfinished"/>
+        <translation>Уреди унос</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="380"/>
@@ -4996,7 +4999,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="388"/>
         <source>Arbitrary List of Actions</source>
-        <translation type="unfinished"/>
+        <translation>Произвољни списак радњи</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="395"/>
@@ -5026,7 +5029,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="419"/>
         <source>Search Field (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Поље за претрагу (%1)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="424"/>
@@ -5155,7 +5158,7 @@ Do you want to save your changes or discard them?</source>
         <location filename="../../src/ui/toolbars/ToolButtonWidget.cpp" line="59"/>
         <location filename="../../src/ui/toolbars/ToolButtonWidget.cpp" line="122"/>
         <source>Menu</source>
-        <translation type="unfinished"/>
+        <translation>Мени</translation>
     </message>
 </context>
 <context>
@@ -5170,7 +5173,8 @@ Do you want to save your changes or discard them?</source>
         <location filename="../../src/core/Transfer.cpp" line="263"/>
         <source>File with that name already exists.
 Do you want to overwrite it?</source>
-        <translation type="unfinished"/>
+        <translation>Фајл истог назива већ постоји.
+Желите ли да га пребришете?</translation>
     </message>
     <message>
         <location filename="../../src/core/Transfer.cpp" line="600"/>
@@ -5566,7 +5570,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="37"/>
         <source>Title</source>
-        <translation>име</translation>
+        <translation>назив</translation>
     </message>
     <message>
         <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="37"/>
@@ -5657,7 +5661,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="422"/>
         <source>Title: %1</source>
-        <translation>Име: %1</translation>
+        <translation>Назив: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="422"/>
@@ -5765,7 +5769,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="126"/>
         <source>Title:</source>
-        <translation>Име:</translation>
+        <translation>Назив:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="137"/>
@@ -5775,7 +5779,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="149"/>
         <source>Preferences</source>
-        <translation type="unfinished"/>
+        <translation>Поставке</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="171"/>
@@ -5786,42 +5790,42 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="180"/>
         <source>Set cookies:</source>
-        <translation type="unfinished"/>
+        <translation>Постављање колачића:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="187"/>
         <source>Set third-party cookies:</source>
-        <translation type="unfinished"/>
+        <translation>Колачићи треће стране:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="194"/>
         <source>Show notifications:</source>
-        <translation type="unfinished"/>
+        <translation>Приказ обавјештења:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="201"/>
         <source>Access your location:</source>
-        <translation type="unfinished"/>
+        <translation>Приступ вашој локацији:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="208"/>
         <source>Load plugins:</source>
-        <translation type="unfinished"/>
+        <translation>Учитавање прикључака:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="215"/>
         <source>Load images:</source>
-        <translation type="unfinished"/>
+        <translation>Учитавање слика:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="222"/>
         <source>Use JavaScript:</source>
-        <translation type="unfinished"/>
+        <translation>Јаваскрипте:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="250"/>
         <source>Show pop-up windows:</source>
-        <translation type="unfinished"/>
+        <translation>Искачући прозори:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="261"/>
@@ -5881,7 +5885,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="407"/>
         <source>SSL Errors</source>
-        <translation type="unfinished"/>
+        <translation>ССЛ грешке</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="41"/>
@@ -5933,12 +5937,12 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="93"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="112"/>
         <source>Only existing</source>
-        <translation type="unfinished"/>
+        <translation>само постојеће</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="97"/>
         <source>Only read existing</source>
-        <translation type="unfinished"/>
+        <translation>само читај постојеће</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="101"/>
@@ -5950,7 +5954,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="164"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="183"/>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>никад</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="105"/>
@@ -5962,38 +5966,38 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="160"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="175"/>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>увијек</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="135"/>
         <source>On demand</source>
-        <translation type="unfinished"/>
+        <translation>по захтјеву</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="153"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="168"/>
         <source>Always Ask</source>
-        <translation type="unfinished"/>
+        <translation>увијек питај</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="179"/>
         <source>Always (open in backgound)</source>
-        <translation type="unfinished"/>
+        <translation>увијек (отвори у позадини)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="187"/>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>питај</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="216"/>
         <source>Error Message</source>
-        <translation type="unfinished"/>
+        <translation>порука грешке</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="216"/>
         <source>URL</source>
-        <translation type="unfinished"/>
+        <translation>УРЛ</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="235"/>
@@ -6255,17 +6259,17 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="78"/>
         <source>Block all</source>
-        <translation type="unfinished"/>
+        <translation>блокирај све</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="79"/>
         <source>Open all</source>
-        <translation type="unfinished"/>
+        <translation>отвори све</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="80"/>
         <source>Open all in background</source>
-        <translation type="unfinished"/>
+        <translation>отвори све у позадини</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="82"/>
@@ -6335,7 +6339,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="101"/>
         <source>Always ask</source>
-        <translation>Увијек питај</translation>
+        <translation>увијек питај</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="108"/>
@@ -6370,7 +6374,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="347"/>
         <source>Title</source>
-        <translation>име</translation>
+        <translation>назив</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="347"/>
@@ -6623,7 +6627,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="260"/>
         <source>Style</source>
-        <translation type="unfinished"/>
+        <translation>Стил</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="261"/>
@@ -7207,7 +7211,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="370"/>
         <source>Dictionaries</source>
-        <translation type="unfinished"/>
+        <translation>Рјечници</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="371"/>
@@ -7832,7 +7836,8 @@ Error: %2</source>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="442"/>
         <source>Failed to run File Associations Manager, error code: %1
 Application ID: %2</source>
-        <translation type="unfinished"/>
+        <translation>Неуспјех покретања менаџера придруживања фајлова, кôд грешке: %1
+ИД програма: %2</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="461"/>

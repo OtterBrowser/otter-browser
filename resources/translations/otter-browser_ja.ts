@@ -1501,12 +1501,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="14"/>
         <source>Third-party Cookies Exceptions</source>
-        <translation type="unfinished"/>
+        <translation>サードパーティーのクッキーの例外</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="26"/>
         <source>Always ACCEPT third-party cookies from:</source>
-        <translation type="unfinished"/>
+        <translation>常にサードパーティーのクッキーを受け入れる：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="44"/>
@@ -1529,7 +1529,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="88"/>
         <source>Always REJECT third-party cookies from:</source>
-        <translation type="unfinished"/>
+        <translation>常にサードパーティーのクッキ－を除外する：</translation>
     </message>
 </context>
 <context>
@@ -1616,22 +1616,22 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ItemViewWidget.cpp" line="63"/>
         <source>Sorting</source>
-        <translation type="unfinished"/>
+        <translation>並び替え</translation>
     </message>
     <message>
         <location filename="../../src/ui/ItemViewWidget.cpp" line="64"/>
         <source>Sort Ascending</source>
-        <translation type="unfinished"/>
+        <translation>昇順に並び替え</translation>
     </message>
     <message>
         <location filename="../../src/ui/ItemViewWidget.cpp" line="69"/>
         <source>Sort Descending</source>
-        <translation type="unfinished"/>
+        <translation>降順に並び替え</translation>
     </message>
     <message>
         <location filename="../../src/ui/ItemViewWidget.cpp" line="76"/>
         <source>No Sorting</source>
-        <translation type="unfinished"/>
+        <translation>並び替えをしない</translation>
     </message>
     <message>
         <location filename="../../src/ui/ItemViewWidget.cpp" line="83"/>

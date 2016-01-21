@@ -2158,7 +2158,7 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="104"/>
         <source>Import Opera Session…</source>
-        <translation>Opera-Sitzung importieren</translation>
+        <translation>Opera-Sitzung importieren...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="194"/>
@@ -3785,7 +3785,7 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="54"/>
         <source>Only read existing</source>
-        <translation>Nur vorhandene Lesen</translation>
+        <translation>Nur vorhandene lesen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="55"/>
@@ -7130,7 +7130,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="354"/>
         <source>Reload Every</source>
-        <translation>Jeden neu laden</translation>
+        <translation>Neu laden in ...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="355"/>

@@ -1058,7 +1058,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="407"/>
         <source>Issuer</source>
-        <translation type="unfinished"/>
+        <translation>Utgivare</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="411"/>
@@ -1108,12 +1108,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="451"/>
         <source>SHA-1 Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>SHA-1-fingeravtryck</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="455"/>
         <source>SHA-256 Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>SHA-256-fingeravtryck</translation>
     </message>
 </context>
 <context>
@@ -1151,7 +1151,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="78"/>
         <source>Clear forms History</source>
-        <translation type="unfinished"/>
+        <translation>Rensa formulärhistoriken</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="85"/>
@@ -1526,7 +1526,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="88"/>
         <source>Always REJECT third-party cookies from:</source>
-        <translation type="unfinished"/>
+        <translation>Neka ALLTID tredjepartscookies från:</translation>
     </message>
 </context>
 <context>
@@ -2584,7 +2584,7 @@ Vill du fortsätta?</translation>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="56"/>
         <source>Opera session files (*.win)</source>
-        <translation type="unfinished"/>
+        <translation>Sessionsfiler för Opera (*.win)</translation>
     </message>
 </context>
 <context>
@@ -3928,7 +3928,7 @@ Vill du fortsätta?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="135"/>
         <source>Directory Contents</source>
-        <translation type="unfinished"/>
+        <translation>Mappens innehåll</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="138"/>
@@ -3990,7 +3990,7 @@ Vill du fortsätta?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="358"/>
         <source>Completed request to %1</source>
-        <translation type="unfinished"/>
+        <translation>Slutförde förfrågningen till %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="551"/>

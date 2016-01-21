@@ -1206,7 +1206,7 @@ Exponent: %2</source>
         <location filename="../../src/ui/ColorWidget.cpp" line="41"/>
         <location filename="../../src/ui/ColorWidget.cpp" line="77"/>
         <source>Invalid</source>
-        <translation>Inválido</translation>
+        <translation>Inválida</translation>
     </message>
 </context>
 <context>
@@ -4634,7 +4634,7 @@ Salvar ou descartar as alterações?</translation>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="66"/>
         <source>Scaling mode:</source>
-        <translation type="unfinished"/>
+        <translation>Escala:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="79"/>
@@ -4674,7 +4674,7 @@ Salvar ou descartar as alterações?</translation>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="161"/>
         <source>Show tile to add new entries</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar mosaico para adicionar novas entradas</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="39"/>
