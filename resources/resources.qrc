@@ -153,6 +153,7 @@
         <file>searches/startpage.xml</file>
         <file>searches/wikipedia.xml</file>
         <file>searches/yahoo.xml</file>
+        <file>searches/yandex.xml</file>
         <file>searches/youtube.xml</file>
     </qresource>
 </RCC>

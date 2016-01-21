@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+ <Shortcut>ya</Shortcut>
+ <ShortName>Yandex</ShortName>
+ <Description>Search Yandex</Description>
+ <InputEncoding>UTF-8</InputEncoding>
+ <Image width="16" height="16" type="image/png">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABvklEQVR4nGJhYGAQBmIZIAaxiQG3gPgzsoDBx48fz/8nArx58+YYUL06uomm////+08snjp1cjJQDy+yAeb//v37j4y/HTzy/6Guxf8Hijr/bzPyoci9fv36JFCPJrIBFv/+/v0Pw79fvvp/V1D2//cTp8H82wy8/5HlQXjq1KnpQH18MAOs/v798x+GPy5b9f+xpROcDzIAWR6EX716dQaoTxukmQmEgZ5jgOF/nz4zMPLxwfkggCwPwkJCgsYTJ050AErxYxjAqq/D8PPMeYa/Hz7iNACEw8PDUoBS8iwwA2CAzdiAgScxmuG5lSsDu7UF3AB0ABVjAruAAcRBwgKVxQz/Pn5i4LC1hKnGwIsWLV4IlHkIknb5+eP7f2T8qrrx/1P/cDAbFIjo8k8ePz4P1GcM0ozhhb9PnzF8mjidQfzANpQwQAbz5s9ZDKTuw/ge379//Q/DL/JK/z+LT4Pz7wrI/EeWf/Dg/lmgHjOYZpALGBmQbODvqEf4Gwiknt1gQJafO3fOUiB1B8YHBeKvt+/e38QSThj4+fPn55qbW0EZ6h3MAEaQJUCsA4pBjLjCDo4D8VsYBxAAAP//6IDhNwTLz6MAAAAASUVORK5CYII=</Image>
+ <Url type="text/html" method="GET" template="https://yandex.ru/yandsearch?text={searchTerms}" />
+</OpenSearchDescription>
