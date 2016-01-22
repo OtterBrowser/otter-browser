@@ -67,6 +67,11 @@ void HistoryManager::timerEvent(QTimerEvent *event)
 		{
 			m_browsingHistoryModel->save(SessionsManager::getWritableDataPath(QLatin1String("browsingHistory.json")));
 		}
+
+		if (m_typedHistoryModel)
+		{
+			m_typedHistoryModel->save(SessionsManager::getWritableDataPath(QLatin1String("typedHistory.json")));
+		}
 	}
 	else if (event->timerId() == m_dayTimer)
 	{
@@ -294,7 +299,12 @@ quint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QI
 
 	if (isTypedIn)
 	{
-///TODO Add entry to typed history
+		if (!m_typedHistoryModel)
+		{
+			getTypedHistoryModel();
+		}
+
+		m_typedHistoryModel->addEntry(url, title, icon, QDateTime::currentDateTime());
 	}
 
 ///TODO Remove extra entries if needed
