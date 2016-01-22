@@ -33,9 +33,9 @@ OptionDelegate::OptionDelegate(bool isSimple, QObject *parent) : QItemDelegate(p
 
 void OptionDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	const OptionWidget::OptionType type = getType(index);
+	const SettingsManager::OptionType type = SettingsManager::getDefinition(index.data(Qt::UserRole).toString()).type;
 
-	if (type == OptionWidget::UnknownType)
+	if (type == SettingsManager::UnknownType)
 	{
 		QItemDelegate::paint(painter, option, index);
 
@@ -46,11 +46,11 @@ void OptionDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 
 	switch (type)
 	{
-		case OptionWidget::BooleanType:
+		case SettingsManager::BooleanType:
 			drawDisplay(painter, option, option.rect, index.data(Qt::DisplayRole).toBool() ? QCoreApplication::translate("Otter::OptionDelegate", "Yes") : QCoreApplication::translate("Otter::OptionDelegate", "No"));
 
 			break;
-		case OptionWidget::ColorType:
+		case SettingsManager::ColorType:
 			{
 				const QString color(index.data(Qt::DisplayRole).toString());
 
@@ -71,7 +71,7 @@ void OptionDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 
 				break;
 			}
-		case OptionWidget::FontType:
+		case SettingsManager::FontType:
 			{
 				const QString font(index.data(Qt::DisplayRole).toString());
 				QStyleOptionViewItem mutableOption(option);
@@ -113,7 +113,7 @@ QWidget* OptionDelegate::createEditor(QWidget *parent, const QStyleOptionViewIte
 {
 	Q_UNUSED(option)
 
-	const OptionWidget::OptionType type = getType(index);
+	const SettingsManager::OptionType type = SettingsManager::getDefinition(index.data(Qt::UserRole).toString()).type;
 	QVariant value = index.data(Qt::EditRole);
 
 	if (value.isNull())
@@ -125,7 +125,7 @@ QWidget* OptionDelegate::createEditor(QWidget *parent, const QStyleOptionViewIte
 	widget->setIndex(index);
 	widget->setControlsVisible(!m_isSimple);
 
-	if (type == OptionWidget::EnumerationType)
+	if (type == SettingsManager::EnumerationType)
 	{
 		widget->setChoices(index.data(Qt::UserRole + 2).toStringList());
 	}
@@ -141,53 +141,6 @@ QSize OptionDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelI
 	size.setHeight(option.fontMetrics.height() * 1.25);
 
 	return size;
-}
-
-OptionWidget::OptionType OptionDelegate::getType(const QModelIndex &index) const
-{
-	const QString typeString = index.data(Qt::UserRole + 1).toString();
-
-	if (typeString == QLatin1String("bool"))
-	{
-		return OptionWidget::BooleanType;
-	}
-
-	if (typeString == QLatin1String("color"))
-	{
-		return OptionWidget::ColorType;
-	}
-
-	if (typeString == QLatin1String("enumeration"))
-	{
-		return OptionWidget::EnumerationType;
-	}
-
-	if (typeString == QLatin1String("font"))
-	{
-		return OptionWidget::FontType;
-	}
-
-	if (typeString == QLatin1String("icon"))
-	{
-		return OptionWidget::IconType;
-	}
-
-	if (typeString == QLatin1String("integer"))
-	{
-		return OptionWidget::IntegerType;
-	}
-
-	if (typeString == QLatin1String("path"))
-	{
-		return OptionWidget::PathType;
-	}
-
-	if (typeString == QLatin1String("string"))
-	{
-		return OptionWidget::StringType;
-	}
-
-	return OptionWidget::UnknownType;
 }
 
 }

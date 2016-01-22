@@ -66,7 +66,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 			optionItems[2]->setData(((type == QLatin1String("enumeration")) ? defaults.value(QStringLiteral("%1/choices").arg(keys.at(j))).toStringList() : QVariant()), (Qt::UserRole + 2));
 			optionItems[2]->setFlags(optionItems[2]->flags() | Qt::ItemNeverHasChildren);
 
-			if (value != SettingsManager::getDefaultValue(key))
+			if (value != SettingsManager::getDefinition(key).defaultValue)
 			{
 				QFont font = optionItems[0]->font();
 				font.setBold(true);
@@ -136,7 +136,7 @@ void ConfigurationContentsWidget::optionChanged(const QString &option, const QVa
 			if (optionItem && option == QStringLiteral("%1/%2").arg(groupItem->text()).arg(optionItem->text()))
 			{
 				QFont font = optionItem->font();
-				font.setBold(value != SettingsManager::getDefaultValue(option));
+				font.setBold(value != SettingsManager::getDefinition(option).defaultValue);
 
 				optionItem->setFont(font);
 
@@ -210,7 +210,7 @@ void ConfigurationContentsWidget::restoreDefaults()
 
 	if (index.isValid())
 	{
-		SettingsManager::setValue(index.data(Qt::UserRole).toString(), SettingsManager::getDefaultValue(index.data(Qt::UserRole).toString()));
+		SettingsManager::setValue(index.data(Qt::UserRole).toString(), SettingsManager::getDefinition(index.data(Qt::UserRole).toString()).defaultValue);
 
 		m_ui->configurationViewWidget->setCurrentIndex(QModelIndex());
 		m_ui->configurationViewWidget->setCurrentIndex(index);
@@ -227,7 +227,7 @@ void ConfigurationContentsWidget::showContextMenu(const QPoint &point)
 		menu.addAction(tr("Copy Option Name"), this, SLOT(copyOptionName()));
 		menu.addAction(tr("Copy Option Value"), this, SLOT(copyOptionValue()));
 		menu.addSeparator();
-		menu.addAction(tr("Restore Default Value"), this, SLOT(restoreDefaults()))->setEnabled(index.sibling(index.row(), 2).data(Qt::EditRole) != SettingsManager::getDefaultValue(index.sibling(index.row(), 2).data(Qt::UserRole).toString()));
+		menu.addAction(tr("Restore Default Value"), this, SLOT(restoreDefaults()))->setEnabled(index.sibling(index.row(), 2).data(Qt::EditRole) != SettingsManager::getDefinition(index.sibling(index.row(), 2).data(Qt::UserRole).toString()).defaultValue);
 		menu.exec(m_ui->configurationViewWidget->mapToGlobal(point));
 	}
 }

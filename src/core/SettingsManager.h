@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2014, 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -33,13 +33,36 @@ class SettingsManager : public QObject
 	Q_OBJECT
 
 public:
+	enum OptionType
+	{
+		UnknownType = 0,
+		BooleanType,
+		ColorType,
+		EnumerationType,
+		FontType,
+		IconType,
+		IntegerType,
+		ListType,
+		PathType,
+		StringType
+	};
+
+	struct OptionDefinition
+	{
+		QString name;
+		QVariant defaultValue;
+		QStringList choices;
+		OptionType type;
+	};
+
 	static void createInstance(const QString &path, QObject *parent = NULL);
 	static void removeOverride(const QUrl &url, const QString &key = QString());
 	static void setValue(const QString &key, const QVariant &value, const QUrl &url = QUrl());
 	static SettingsManager* getInstance();
 	static QString getReport();
-	static QVariant getDefaultValue(const QString &key);
 	static QVariant getValue(const QString &key, const QUrl &url = QUrl());
+	static QStringList getOptions();
+	static OptionDefinition getDefinition(const QString &key);
 	static bool hasOverride(const QUrl &url, const QString &key = QString());
 
 protected:

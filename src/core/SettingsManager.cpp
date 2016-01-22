@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2014, 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -193,11 +193,6 @@ QString SettingsManager::getReport()
 	return report;
 }
 
-QVariant SettingsManager::getDefaultValue(const QString &key)
-{
-	return m_defaults[key];
-}
-
 QVariant SettingsManager::getValue(const QString &key, const QUrl &url)
 {
 	if (!url.isEmpty())
@@ -205,7 +200,90 @@ QVariant SettingsManager::getValue(const QString &key, const QUrl &url)
 		return QSettings(m_overridePath, QSettings::IniFormat).value((url.isLocalFile() ? QLatin1String("localhost") : url.host()) + QLatin1Char('/') + key, getValue(key));
 	}
 
-	return QSettings(m_globalPath, QSettings::IniFormat).value(key, getDefaultValue(key));
+	return QSettings(m_globalPath, QSettings::IniFormat).value(key, m_defaults[key]);
+}
+
+QStringList SettingsManager::getOptions()
+{
+	QStringList definition;
+	QSettings settings(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat);
+	const QStringList groups = settings.childGroups();
+
+	for (int i = 0; i < groups.count(); ++i)
+	{
+		settings.beginGroup(groups.at(i));
+
+		const QStringList children = settings.childGroups();
+
+		for (int j = 0; j < children.count(); ++j)
+		{
+			settings.beginGroup(children.at(j));
+
+			definition.append(settings.group());
+
+			settings.endGroup();
+		}
+
+		settings.endGroup();
+	}
+
+	return definition;
+}
+
+SettingsManager::OptionDefinition SettingsManager::getDefinition(const QString &key)
+{
+	QSettings settings(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat);
+	settings.beginGroup(key);
+
+	OptionDefinition options;
+	options.name = key;
+	options.defaultValue = m_defaults[key];
+
+	const QString type = settings.value(QLatin1String("type")).toString();
+
+	if (type == QLatin1String("bool"))
+	{
+		options.type = BooleanType;
+	}
+	else if (type == QLatin1String("color"))
+	{
+		options.type = ColorType;
+	}
+	else if (type == QLatin1String("enumeration"))
+	{
+		options.type = EnumerationType;
+		options.choices = settings.value(QLatin1String("choices")).toStringList();
+	}
+	else if (type == QLatin1String("font"))
+	{
+		options.type = FontType;
+	}
+	else if (type == QLatin1String("icon"))
+	{
+		options.type = IconType;
+	}
+	else if (type == QLatin1String("integer"))
+	{
+		options.type = IntegerType;
+	}
+	else if (type == QLatin1String("list"))
+	{
+		options.type = ListType;
+	}
+	else if (type == QLatin1String("path"))
+	{
+		options.type = PathType;
+	}
+	else if (type == QLatin1String("string"))
+	{
+		options.type = StringType;
+	}
+	else
+	{
+		options.type = UnknownType;
+	}
+
+	return options;
 }
 
 bool SettingsManager::hasOverride(const QUrl &url, const QString &key)

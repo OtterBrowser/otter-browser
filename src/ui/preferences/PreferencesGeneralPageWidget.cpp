@@ -128,7 +128,7 @@ void PreferencesGeneralPageWidget::useBookmarkAsHomePage(QAction *action)
 
 void PreferencesGeneralPageWidget::restoreHomePage()
 {
-	m_ui->homePageLineEdit->setText(SettingsManager::getDefaultValue(QLatin1String("Browser/HomePage")).toString());
+	m_ui->homePageLineEdit->setText(SettingsManager::getDefinition(QLatin1String("Browser/HomePage")).defaultValue.toString());
 }
 
 void PreferencesGeneralPageWidget::setupAcceptLanguage()

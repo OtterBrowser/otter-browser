@@ -38,9 +38,6 @@ public:
 	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
-protected:
-	OptionWidget::OptionType getType(const QModelIndex &index) const;
-
 private:
 	bool m_isSimple;
 };

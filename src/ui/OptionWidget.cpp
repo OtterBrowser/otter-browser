@@ -21,7 +21,6 @@
 #include "ColorWidget.h"
 #include "IconWidget.h"
 #include "FilePathWidget.h"
-#include "../core/SettingsManager.h"
 
 #include <QtWidgets/QCompleter>
 #include <QtWidgets/QHBoxLayout>
@@ -29,7 +28,7 @@
 namespace Otter
 {
 
-OptionWidget::OptionWidget(const QString &option, const QVariant &value, OptionType type, QWidget *parent) : QWidget(parent),
+OptionWidget::OptionWidget(const QString &option, const QVariant &value, SettingsManager::OptionType type, QWidget *parent) : QWidget(parent),
 	m_widget(NULL),
 	m_colorWidget(NULL),
 	m_filePathWidget(NULL),
@@ -45,7 +44,7 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, OptionT
 {
 	switch (type)
 	{
-		case BooleanType:
+		case SettingsManager::BooleanType:
 			m_widget = m_comboBox = new QComboBox(this);
 
 			m_comboBox->addItem(tr("No"), QLatin1String("false"));
@@ -55,7 +54,7 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, OptionT
 			connect(m_comboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(markModified()));
 
 			break;
-		case ColorType:
+		case SettingsManager::ColorType:
 			{
 				m_widget = m_colorWidget = new ColorWidget(this);
 
@@ -65,13 +64,13 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, OptionT
 			}
 
 			break;
-		case EnumerationType:
+		case SettingsManager::EnumerationType:
 			m_widget = m_comboBox = new QComboBox(this);
 
 			connect(m_comboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(markModified()));
 
 			break;
-		case FontType:
+		case SettingsManager::FontType:
 			m_widget = m_fontComboBox = new QFontComboBox(this);
 
 			m_fontComboBox->setCurrentFont(QFont(m_value.toString()));
@@ -80,7 +79,7 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, OptionT
 			connect(m_fontComboBox, SIGNAL(currentFontChanged(QFont)), this, SLOT(markModified()));
 
 			break;
-		case IconType:
+		case SettingsManager::IconType:
 			m_widget = m_iconWidget = new IconWidget(this);
 
 			if (m_value.type() == QVariant::String)
@@ -95,7 +94,7 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, OptionT
 			connect(m_iconWidget, SIGNAL(iconChanged(QIcon)), this, SLOT(markModified()));
 
 			break;
-		case IntegerType:
+		case SettingsManager::IntegerType:
 			m_widget = m_spinBox = new QSpinBox(this);
 
 			m_spinBox->setMinimum(-999999999);
@@ -106,7 +105,7 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, OptionT
 			connect(m_spinBox, SIGNAL(valueChanged(int)), this, SLOT(markModified()));
 
 			break;
-		case PathType:
+		case SettingsManager::PathType:
 			m_widget = m_filePathWidget = new FilePathWidget(this);
 
 			m_filePathWidget->setPath(m_value.toString());
@@ -153,7 +152,7 @@ void OptionWidget::markModified()
 {
 	if (m_resetButton)
 	{
-		m_resetButton->setEnabled(getValue() != SettingsManager::getDefaultValue(m_option));
+		m_resetButton->setEnabled(getValue() != SettingsManager::getDefinition(m_option).defaultValue);
 	}
 	else
 	{
@@ -163,7 +162,7 @@ void OptionWidget::markModified()
 
 void OptionWidget::reset()
 {
-	const QVariant value = SettingsManager::getDefaultValue(m_option);
+	const QVariant value = SettingsManager::getDefinition(m_option).defaultValue;
 
 	if (m_colorWidget)
 	{
@@ -253,7 +252,7 @@ void OptionWidget::setControlsVisible(bool isVisible)
 	if (isVisible && !m_resetButton)
 	{
 		m_resetButton = new QPushButton(tr("Defaults"), this);
-		m_resetButton->setEnabled(getValue() != SettingsManager::getDefaultValue(m_option));
+		m_resetButton->setEnabled(getValue() != SettingsManager::getDefinition(m_option).defaultValue);
 
 		m_saveButton = new QPushButton(tr("Save"), this);
 

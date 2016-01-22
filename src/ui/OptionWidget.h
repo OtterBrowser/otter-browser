@@ -20,6 +20,8 @@
 #ifndef OTTER_OPTIONWIDGET_H
 #define OTTER_OPTIONWIDGET_H
 
+#include "../core/SettingsManager.h"
+
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QFontComboBox>
 #include <QtWidgets/QLineEdit>
@@ -38,19 +40,6 @@ class OptionWidget : public QWidget
 	Q_OBJECT
 
 public:
-	enum OptionType
-	{
-		UnknownType = 0,
-		BooleanType,
-		ColorType,
-		EnumerationType,
-		FontType,
-		IconType,
-		IntegerType,
-		PathType,
-		StringType
-	};
-
 	struct EnumerationChoice
 	{
 		QString text;
@@ -58,7 +47,7 @@ public:
 		QIcon icon;
 	};
 
-	explicit OptionWidget(const QString &option, const QVariant &value, OptionType type, QWidget *parent = NULL);
+	explicit OptionWidget(const QString &option, const QVariant &value, SettingsManager::OptionType type, QWidget *parent = NULL);
 
 	void setIndex(const QModelIndex &index);
 	void setChoices(const QStringList &choices);

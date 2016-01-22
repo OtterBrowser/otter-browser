@@ -264,7 +264,7 @@ void ToolBarDialog::editEntry()
 	{
 		const QStringList searchEngines = SearchEnginesManager::getSearchEngines();
 		QList<OptionWidget::EnumerationChoice> searchEngineChoices;
-		OptionWidget *searchEngineWidget = new OptionWidget(QLatin1String("searchEngine"), options.value(QLatin1String("searchEngine")), OptionWidget::EnumerationType, this);
+		OptionWidget *searchEngineWidget = new OptionWidget(QLatin1String("searchEngine"), options.value(QLatin1String("searchEngine")), SettingsManager::EnumerationType, this);
 		OptionWidget::EnumerationChoice defaultSearchEngineChoice;
 		defaultSearchEngineChoice.text = tr("All");
 
@@ -284,12 +284,12 @@ void ToolBarDialog::editEntry()
 		searchEngineWidget->setChoices(searchEngineChoices);
 
 		widgets.append(qMakePair(tr("Show search engine:"), searchEngineWidget));
-		widgets.append(qMakePair(tr("Show search button:"), new OptionWidget(QLatin1String("showSearchButton"), options.value(QLatin1String("showSearchButton"), true), OptionWidget::BooleanType, this)));
+		widgets.append(qMakePair(tr("Show search button:"), new OptionWidget(QLatin1String("showSearchButton"), options.value(QLatin1String("showSearchButton"), true), SettingsManager::BooleanType, this)));
 	}
 	else if (identifier == QLatin1String("MenuButtonWidget") || identifier == QLatin1String("PanelChooserWidget") || identifier.startsWith(QLatin1String("bookmarks:")) || identifier.endsWith(QLatin1String("Action")) || identifier.endsWith(QLatin1String("Menu")))
 	{
-		widgets.append(qMakePair(tr("Custom icon:"), new OptionWidget(QLatin1String("icon"), options.value(QLatin1String("icon")), OptionWidget::IconType, this)));
-		widgets.append(qMakePair(tr("Custom text:"), new OptionWidget(QLatin1String("text"), options.value(QLatin1String("text")), OptionWidget::StringType, this)));
+		widgets.append(qMakePair(tr("Custom icon:"), new OptionWidget(QLatin1String("icon"), options.value(QLatin1String("icon")), SettingsManager::IconType, this)));
+		widgets.append(qMakePair(tr("Custom text:"), new OptionWidget(QLatin1String("text"), options.value(QLatin1String("text")), SettingsManager::StringType, this)));
 	}
 
 	if (widgets.isEmpty())
