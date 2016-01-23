@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -164,6 +165,25 @@ void OptionWidget::reset()
 {
 	const QVariant value = SettingsManager::getDefinition(m_option).defaultValue;
 
+	setValue(value);
+
+	m_resetButton->setEnabled(false);
+}
+
+void OptionWidget::save()
+{
+	SettingsManager::setValue(m_option, getValue());
+}
+
+void OptionWidget::setIndex(const QModelIndex &index)
+{
+	m_index = index;
+}
+
+void OptionWidget::setValue(const QVariant &value)
+{
+	m_value = value;
+
 	if (m_colorWidget)
 	{
 		m_colorWidget->setColor(value.value<QColor>());
@@ -178,7 +198,7 @@ void OptionWidget::reset()
 	}
 	else if (m_fontComboBox)
 	{
-		m_fontComboBox->setCurrentFont(QFont(value.toString()));
+		m_fontComboBox->setCurrentText(value.toString());
 	}
 	else if (m_iconWidget)
 	{
@@ -199,18 +219,6 @@ void OptionWidget::reset()
 	{
 		m_spinBox->setValue(value.toInt());
 	}
-
-	m_resetButton->setEnabled(false);
-}
-
-void OptionWidget::save()
-{
-	SettingsManager::setValue(m_option, getValue());
-}
-
-void OptionWidget::setIndex(const QModelIndex &index)
-{
-	m_index = index;
 }
 
 void OptionWidget::setChoices(const QStringList &choices)
@@ -270,6 +278,20 @@ void OptionWidget::setControlsVisible(bool isVisible)
 		m_saveButton->deleteLater();
 		m_saveButton = NULL;
 	}
+}
+
+void OptionWidget::setSizePolicy(QSizePolicy::Policy horizontal, QSizePolicy::Policy vertical)
+{
+	QWidget::setSizePolicy(horizontal, vertical);
+
+	m_widget->setSizePolicy(horizontal, vertical);
+}
+
+void OptionWidget::setSizePolicy(QSizePolicy policy)
+{
+	QWidget::setSizePolicy(policy);
+
+	m_widget->setSizePolicy(policy);
 }
 
 QString OptionWidget::getOption() const

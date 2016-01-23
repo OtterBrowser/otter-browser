@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -50,9 +51,12 @@ public:
 	explicit OptionWidget(const QString &option, const QVariant &value, SettingsManager::OptionType type, QWidget *parent = NULL);
 
 	void setIndex(const QModelIndex &index);
+	void setValue(const QVariant &value);
 	void setChoices(const QStringList &choices);
 	void setChoices(const QList<EnumerationChoice> &choices);
 	void setControlsVisible(bool isVisible);
+	void setSizePolicy(QSizePolicy::Policy horizontal, QSizePolicy::Policy vertical);
+	void setSizePolicy(QSizePolicy policy);
 	QString getOption() const;
 	QVariant getValue() const;
 	QModelIndex getIndex() const;
