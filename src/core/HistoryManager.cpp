@@ -275,12 +275,21 @@ HistoryEntryItem* HistoryManager::getEntry(quint64 identifier)
 
 QList<HistoryModel::HistoryEntryMatch> HistoryManager::findEntries(const QString &prefix)
 {
+	if (!m_typedHistoryModel)
+	{
+		getTypedHistoryModel();
+	}
+
 	if (!m_browsingHistoryModel)
 	{
 		getBrowsingHistoryModel();
 	}
 
-	return m_browsingHistoryModel->findEntries(prefix);
+	QList<HistoryModel::HistoryEntryMatch> entries;
+	entries.append(m_typedHistoryModel->findEntries(prefix));
+	entries.append(m_browsingHistoryModel->findEntries(prefix));
+
+	return entries;
 }
 
 quint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QIcon &icon, bool isTypedIn)
