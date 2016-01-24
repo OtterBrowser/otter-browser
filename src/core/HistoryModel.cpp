@@ -167,7 +167,7 @@ HistoryEntryItem* HistoryModel::getEntry(quint64 identifier) const
 	return NULL;
 }
 
-QList<HistoryModel::HistoryEntryMatch> HistoryModel::findEntries(const QString &prefix) const
+QList<HistoryModel::HistoryEntryMatch> HistoryModel::findEntries(const QString &prefix, bool markAsTypedIn) const
 {
 	QList<HistoryEntryItem*> matchedEntries;
 	QList<HistoryModel::HistoryEntryMatch> allMatches;
@@ -189,6 +189,11 @@ QList<HistoryModel::HistoryEntryMatch> HistoryModel::findEntries(const QString &
 			HistoryEntryMatch match;
 			match.entry = urlsIterator.value().first();
 			match.match = result;
+
+			if (markAsTypedIn)
+			{
+				match.isTypedIn = true;
+			}
 
 			matchesMap.insert(match.entry->data(TimeVisitedRole).toDateTime(), match);
 

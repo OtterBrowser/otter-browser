@@ -49,16 +49,16 @@ public:
 		TitleRole = Qt::DisplayRole,
 		UrlRole = Qt::StatusTipRole,
 		IdentifierRole = Qt::UserRole,
-		TimeVisitedRole = (Qt::UserRole + 1),
-		TypedInRole = (Qt::UserRole + 2)
+		TimeVisitedRole = (Qt::UserRole + 1)
 	};
 
 	struct HistoryEntryMatch
 	{
 		HistoryEntryItem *entry;
 		QString match;
+		bool isTypedIn;
 
-		HistoryEntryMatch () : entry(NULL) {}
+		HistoryEntryMatch () : entry(NULL), isTypedIn(false) {}
 	};
 
 	explicit HistoryModel(const QString &path, QObject *parent = NULL);
@@ -67,7 +67,7 @@ public:
 	void removeEntry(quint64 identifier);
 	HistoryEntryItem* addEntry(const QUrl &url, const QString &title, const QIcon &icon, const QDateTime &date = QDateTime::currentDateTime(), quint64 identifier = 0);
 	HistoryEntryItem* getEntry(quint64 identifier) const;
-	QList<HistoryEntryMatch> findEntries(const QString &prefix) const;
+	QList<HistoryEntryMatch> findEntries(const QString &prefix, bool markAsTypedIn = false) const;
 	bool hasEntry(const QUrl &url) const;
 	bool save(const QString &path) const;
 	bool setData(const QModelIndex &index, const QVariant &value, int role);

@@ -286,7 +286,7 @@ QList<HistoryModel::HistoryEntryMatch> HistoryManager::findEntries(const QString
 	}
 
 	QList<HistoryModel::HistoryEntryMatch> entries;
-	entries.append(m_typedHistoryModel->findEntries(prefix));
+	entries.append(m_typedHistoryModel->findEntries(prefix, true));
 	entries.append(m_browsingHistoryModel->findEntries(prefix));
 
 	return entries;

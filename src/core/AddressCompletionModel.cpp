@@ -82,7 +82,7 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 
 			for (int i = 0; i < entries.count(); ++i)
 			{
-				completions.append(CompletionEntry(entries.at(i).entry->data(HistoryModel::UrlRole).toUrl(), entries.at(i).entry->data(HistoryModel::TitleRole).toString(), entries.at(i).match, entries.at(i).entry->data(Qt::DecorationRole).value<QIcon>(), (entries.at(i).entry->data(HistoryModel::TypedInRole).toBool() ? TypedInHistoryType : HistoryType)));
+				completions.append(CompletionEntry(entries.at(i).entry->data(HistoryModel::UrlRole).toUrl(), entries.at(i).entry->data(HistoryModel::TitleRole).toString(), entries.at(i).match, entries.at(i).entry->data(Qt::DecorationRole).value<QIcon>(), (entries.at(i).isTypedIn ? TypedInHistoryType : HistoryType)));
 			}
 		}
 
