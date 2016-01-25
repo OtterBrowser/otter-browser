@@ -993,6 +993,11 @@ bool AddressWidget::startDrag(QMouseEvent *event)
 	mimeData->setText(getUrl().toString());
 	mimeData->setUrls(urls);
 
+	if (m_window)
+	{
+		mimeData->setProperty("x-url-title", m_window->getTitle());
+	}
+
 	drag->setMimeData(mimeData);
 	drag->setPixmap((m_window ? m_window->getIcon() : Utils::getIcon(QLatin1String("tab"))).pixmap(16, 16));
 	drag->exec(Qt::CopyAction);

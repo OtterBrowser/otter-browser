@@ -1037,6 +1037,17 @@ bool BookmarksModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
 		{
 			return moveBookmark(dynamic_cast<BookmarksItem*>(itemFromIndex(index)), dynamic_cast<BookmarksItem*>(itemFromIndex(parent)), row);
 		}
+		else if (data->hasUrls())
+		{
+			const QList<QUrl> urls(data->urls());
+
+			for (int i = 0; i < urls.count(); ++i)
+			{
+				addBookmark(UrlBookmark, 0, urls.at(i), (data->property("x-url-title").toString().isEmpty() ? urls.at(i).toString() : data->property("x-url-title").toString()), getBookmark(parent));
+			}
+
+			return true;
+		}
 
 		return QStandardItemModel::dropMimeData(data, action, row, column, parent);
 	}
