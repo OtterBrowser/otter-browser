@@ -294,7 +294,7 @@ void BookmarksModel::restoreBookmark(BookmarksItem *bookmark)
 		return;
 	}
 
-	BookmarksItem *formerParent = (m_trash.contains(bookmark) ? dynamic_cast<BookmarksItem*>(itemFromIndex(m_trash[bookmark].first)) : getRootItem());
+	BookmarksItem *formerParent = (m_trash.contains(bookmark) ? getBookmark(m_trash[bookmark].first) : getRootItem());
 
 	if (!formerParent || static_cast<BookmarkType>(formerParent->data(TypeRole).toInt()) != FolderBookmark)
 	{
@@ -1035,7 +1035,7 @@ bool BookmarksModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
 
 		if (index.isValid())
 		{
-			return moveBookmark(dynamic_cast<BookmarksItem*>(itemFromIndex(index)), dynamic_cast<BookmarksItem*>(itemFromIndex(parent)), row);
+			return moveBookmark(getBookmark(index), getBookmark(parent), row);
 		}
 		else if (data->hasUrls())
 		{
@@ -1043,7 +1043,7 @@ bool BookmarksModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
 
 			for (int i = 0; i < urls.count(); ++i)
 			{
-				addBookmark(UrlBookmark, 0, urls.at(i), (data->property("x-url-title").toString().isEmpty() ? urls.at(i).toString() : data->property("x-url-title").toString()), getBookmark(parent));
+				addBookmark(UrlBookmark, 0, urls.at(i), (data->property("x-url-title").toString().isEmpty() ? urls.at(i).toString() : data->property("x-url-title").toString()), getBookmark(parent), row);
 			}
 
 			return true;
