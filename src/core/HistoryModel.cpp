@@ -72,6 +72,9 @@ HistoryModel::HistoryModel(const QString &path, QObject *parent) : QStandardItem
 
 		addEntry(QUrl(object.value(QLatin1String("url")).toString()), object.value(QLatin1String("title")).toString(), QIcon(), QDateTime::fromString(object.value(QLatin1String("time")).toString(), QLatin1String("yyyy-MM-dd hh:mm:ss")));
 	}
+
+	setSortRole(TimeVisitedRole);
+	sort(0, Qt::DescendingOrder);
 }
 
 void HistoryModel::clearEntries(uint period)
@@ -136,7 +139,7 @@ HistoryEntryItem* HistoryModel::addEntry(const QUrl &url, const QString &title, 
 	HistoryEntryItem *entry = new HistoryEntryItem();
 	entry->setIcon(icon);
 
-	appendRow(entry);
+	insertRow(0, entry);
 	setData(entry->index(), url, UrlRole);
 	setData(entry->index(), title, TitleRole);
 	setData(entry->index(), date, TimeVisitedRole);

@@ -95,6 +95,23 @@ void HistoryManager::optionChanged(const QString &option)
 	{
 		m_isStoringFavicons = SettingsManager::getValue(option).toBool();
 	}
+	else if (option == QLatin1String("History/BrowsingLimitAmountGlobal"))
+	{
+		if (!m_browsingHistoryModel)
+		{
+			getBrowsingHistoryModel();
+		}
+
+		const int limit = SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountGlobal")).toInt();
+
+		if (limit > 0 && m_browsingHistoryModel->rowCount() > limit)
+		{
+			for (int i = (m_browsingHistoryModel->rowCount() - 1); i >= limit; --i)
+			{
+				m_browsingHistoryModel->removeEntry(m_browsingHistoryModel->index(i, 0).data(HistoryModel::IdentifierRole).toULongLong());
+			}
+		}
+	}
 }
 
 void HistoryManager::scheduleSave()
@@ -316,7 +333,15 @@ quint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QI
 		m_typedHistoryModel->addEntry(url, title, icon, QDateTime::currentDateTime());
 	}
 
-///TODO Remove extra entries if needed
+	const int limit = SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountGlobal")).toInt();
+
+	if (limit > 0 && m_browsingHistoryModel->rowCount() > limit)
+	{
+		for (int i = (m_browsingHistoryModel->rowCount() - 1); i >= limit; --i)
+		{
+			m_browsingHistoryModel->removeEntry(m_browsingHistoryModel->index(i, 0).data(HistoryModel::IdentifierRole).toULongLong());
+		}
+	}
 
 	m_instance->scheduleSave();
 
