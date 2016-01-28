@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2010 - 2014 David Rosca <nowrep@gmail.com>
-* Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -127,7 +127,7 @@ void ContentBlockingProfile::parseRuleLine(QString line)
 
 	if (line.startsWith(QLatin1String("##")))
 	{
-		m_styleSheet += line.mid(2) + QLatin1Char(',');
+		m_styleSheet.append(line.mid(2));
 
 		return;
 	}
@@ -499,7 +499,7 @@ void ContentBlockingProfile::replyFinished()
 	emit profileModified(m_information.name);
 }
 
-QString ContentBlockingProfile::getStyleSheet()
+QStringList ContentBlockingProfile::getStyleSheet()
 {
 	if (!m_wasLoaded)
 	{
@@ -600,12 +600,6 @@ bool ContentBlockingProfile::loadRules()
 	}
 
 	file.close();
-
-	if (m_styleSheet.length() > 0)
-	{
-		m_styleSheet = m_styleSheet.left(m_styleSheet.length() - 1);
-		m_styleSheet += QLatin1String("{display:none;}");
-	}
 
 	return true;
 }

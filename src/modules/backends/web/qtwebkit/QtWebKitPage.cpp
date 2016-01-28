@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -93,6 +93,8 @@ void QtWebKitPage::pageLoadFinished()
 
 	if (m_widget)
 	{
+		applyContentBlockingRules(ContentBlockingManager::getStyleSheet(m_widget->getContentBlockingProfiles()), true);
+
 		const QStringList domainList = ContentBlockingManager::createSubdomainList(m_widget->getUrl().host());
 
 		for (int i = 0; i < domainList.count(); ++i)
@@ -124,9 +126,11 @@ void QtWebKitPage::markAsPopup()
 
 void QtWebKitPage::applyContentBlockingRules(const QStringList &rules, bool remove)
 {
+	const QWebElement document = mainFrame()->documentElement();
+
 	for (int i = 0; i < rules.count(); ++i)
 	{
-		const QWebElementCollection elements = mainFrame()->documentElement().findAll(rules.at(i));
+		const QWebElementCollection elements = document.findAll(rules.at(i));
 
 		for (int j = 0; j < elements.count(); ++j)
 		{
@@ -139,11 +143,11 @@ void QtWebKitPage::applyContentBlockingRules(const QStringList &rules, bool remo
 
 			if (remove)
 			{
-				element.removeFromDocument();
+				element.setStyleProperty(QLatin1String("display"), QLatin1String("none !important"));
 			}
 			else
 			{
-				element.setStyleProperty(QLatin1String("display"), QLatin1String("block"));
+				element.setStyleProperty(QLatin1String("display"), QString());
 			}
 		}
 	}
@@ -152,7 +156,7 @@ void QtWebKitPage::applyContentBlockingRules(const QStringList &rules, bool remo
 void QtWebKitPage::updateStyleSheets(const QUrl &url)
 {
 	const QUrl currentUrl = (url.isEmpty() ? mainFrame()->url() : url);
-	QString styleSheet = QString(QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}")).arg(SettingsManager::getValue(QLatin1String("Content/TextColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/LinkColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/VisitedLinkColor")).toString()).toUtf8() + (m_widget ? ContentBlockingManager::getStyleSheet(m_widget->getContentBlockingProfiles()) : QByteArray());
+	QString styleSheet = QString(QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}")).arg(SettingsManager::getValue(QLatin1String("Content/TextColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/LinkColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/VisitedLinkColor")).toString()).toUtf8();
 	QWebElement media = mainFrame()->findFirstElement(QLatin1String("img, audio source, video source"));
 	const bool isViewingMedia = (!media.isNull() && QUrl(media.attribute(QLatin1String("src"))) == currentUrl);
 

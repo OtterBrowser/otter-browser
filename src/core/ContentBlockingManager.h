@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -37,7 +37,7 @@ class ContentBlockingManager : public QObject
 public:
 	static void createInstance(QObject *parent = NULL);
 	static ContentBlockingManager* getInstance();
-	static QByteArray getStyleSheet(const QVector<int> &profiles);
+	static QStringList getStyleSheet(const QVector<int> &profiles);
 	static ContentBlockingInformation getProfile(const QString &profile);
 	static QStringList createSubdomainList(const QString &domain);
 	static QVector<ContentBlockingInformation> getProfiles();
