@@ -19,6 +19,7 @@
 
 #include "HistoryModel.h"
 #include "Console.h"
+#include "SettingsManager.h"
 #include "Utils.h"
 
 #include <QtCore/QFile>
@@ -77,7 +78,7 @@ HistoryModel::HistoryModel(const QString &path, QObject *parent) : QStandardItem
 	sort(0, Qt::DescendingOrder);
 }
 
-void HistoryModel::clearEntries(uint period)
+void HistoryModel::clearRecentEntries(uint period)
 {
 	if (period == 0)
 	{
@@ -90,11 +91,29 @@ void HistoryModel::clearEntries(uint period)
 
 	for (int i = (rowCount() - 1); i >= 0; --i)
 	{
-		QStandardItem *entry = item(i);
-
-		if (entry && entry->data(TimeVisitedRole).toDateTime().secsTo(QDateTime::currentDateTime()) < (period * 3600))
+		if (index(i, 0).data(TimeVisitedRole).toDateTime().secsTo(QDateTime::currentDateTime()) < (period * 3600))
 		{
-			removeEntry(entry->data(IdentifierRole).toULongLong());
+			removeEntry(index(i, 0).data(IdentifierRole).toULongLong());
+		}
+	}
+}
+
+void HistoryModel::clearOldestEntries()
+{
+	const int period = SettingsManager::getValue(QLatin1String("History/BrowsingLimitPeriod")).toInt();
+
+	if (period < 0)
+	{
+		return;
+	}
+
+	const QDateTime currentDateTime(QDateTime::currentDateTime());
+
+	for (int i = (rowCount() - 1); i >= 0; --i)
+	{
+		if (index(i, 0).data(TimeVisitedRole).toDateTime().daysTo(currentDateTime) > period)
+		{
+			removeEntry(index(i, 0).data(IdentifierRole).toULongLong());
 		}
 	}
 }

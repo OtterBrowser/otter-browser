@@ -63,7 +63,8 @@ public:
 
 	explicit HistoryModel(const QString &path, QObject *parent = NULL);
 
-	void clearEntries(uint period);
+	void clearRecentEntries(uint period);
+	void clearOldestEntries();
 	void removeEntry(quint64 identifier);
 	HistoryEntryItem* addEntry(const QUrl &url, const QString &title, const QIcon &icon, const QDateTime &date = QDateTime::currentDateTime(), quint64 identifier = 0);
 	HistoryEntryItem* getEntry(quint64 identifier) const;

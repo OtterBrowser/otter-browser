@@ -77,7 +77,20 @@ void HistoryManager::timerEvent(QTimerEvent *event)
 	{
 		killTimer(m_dayTimer);
 
-///TODO Cleanup old entries
+		if (!m_browsingHistoryModel)
+		{
+			getBrowsingHistoryModel();
+		}
+
+		if (!m_typedHistoryModel)
+		{
+			getTypedHistoryModel();
+		}
+
+		m_browsingHistoryModel->clearOldestEntries();
+		m_typedHistoryModel->clearOldestEntries();
+
+		scheduleSave();
 
 		emit dayChanged();
 
@@ -110,7 +123,26 @@ void HistoryManager::optionChanged(const QString &option)
 			{
 				m_browsingHistoryModel->removeEntry(m_browsingHistoryModel->index(i, 0).data(HistoryModel::IdentifierRole).toULongLong());
 			}
+
+			scheduleSave();
 		}
+	}
+	else if (option == QLatin1String("History/BrowsingLimitPeriod"))
+	{
+		if (!m_browsingHistoryModel)
+		{
+			getBrowsingHistoryModel();
+		}
+
+		if (!m_typedHistoryModel)
+		{
+			getTypedHistoryModel();
+		}
+
+		m_browsingHistoryModel->clearOldestEntries();
+		m_typedHistoryModel->clearOldestEntries();
+
+		scheduleSave();
 	}
 }
 
@@ -134,8 +166,8 @@ void HistoryManager::clearHistory(uint period)
 		getTypedHistoryModel();
 	}
 
-	m_browsingHistoryModel->clearEntries(period);
-	m_typedHistoryModel->clearEntries(period);
+	m_browsingHistoryModel->clearRecentEntries(period);
+	m_typedHistoryModel->clearRecentEntries(period);
 
 	m_instance->scheduleSave();
 }
