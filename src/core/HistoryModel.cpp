@@ -78,6 +78,17 @@ HistoryModel::HistoryModel(const QString &path, QObject *parent) : QStandardItem
 	sort(0, Qt::DescendingOrder);
 }
 
+void HistoryModel::clearExcessEntries(int limit)
+{
+	if (limit > 0 && rowCount() > limit)
+	{
+		for (int i = (rowCount() - 1); i >= limit; --i)
+		{
+			removeEntry(index(i, 0).data(HistoryModel::IdentifierRole).toULongLong());
+		}
+	}
+}
+
 void HistoryModel::clearRecentEntries(uint period)
 {
 	if (period == 0)

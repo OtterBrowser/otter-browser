@@ -115,17 +115,17 @@ void HistoryManager::optionChanged(const QString &option)
 			getBrowsingHistoryModel();
 		}
 
+		if (!m_typedHistoryModel)
+		{
+			getTypedHistoryModel();
+		}
+
 		const int limit = SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountGlobal")).toInt();
 
-		if (limit > 0 && m_browsingHistoryModel->rowCount() > limit)
-		{
-			for (int i = (m_browsingHistoryModel->rowCount() - 1); i >= limit; --i)
-			{
-				m_browsingHistoryModel->removeEntry(m_browsingHistoryModel->index(i, 0).data(HistoryModel::IdentifierRole).toULongLong());
-			}
+		m_browsingHistoryModel->clearExcessEntries(limit);
+		m_typedHistoryModel->clearExcessEntries(limit);
 
-			scheduleSave();
-		}
+		scheduleSave();
 	}
 	else if (option == QLatin1String("History/BrowsingLimitPeriod"))
 	{

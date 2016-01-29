@@ -63,6 +63,7 @@ public:
 
 	explicit HistoryModel(const QString &path, QObject *parent = NULL);
 
+	void clearExcessEntries(int limit);
 	void clearRecentEntries(uint period);
 	void clearOldestEntries();
 	void removeEntry(quint64 identifier);
