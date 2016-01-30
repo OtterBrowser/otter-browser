@@ -65,7 +65,7 @@ public:
 
 	void clearExcessEntries(int limit);
 	void clearRecentEntries(uint period);
-	void clearOldestEntries();
+	void clearOldestEntries(int period);
 	void removeEntry(quint64 identifier);
 	HistoryEntryItem* addEntry(const QUrl &url, const QString &title, const QIcon &icon, const QDateTime &date = QDateTime::currentDateTime(), quint64 identifier = 0);
 	HistoryEntryItem* getEntry(quint64 identifier) const;

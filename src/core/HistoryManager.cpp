@@ -87,8 +87,10 @@ void HistoryManager::timerEvent(QTimerEvent *event)
 			getTypedHistoryModel();
 		}
 
-		m_browsingHistoryModel->clearOldestEntries();
-		m_typedHistoryModel->clearOldestEntries();
+		const int period = SettingsManager::getValue(QLatin1String("History/BrowsingLimitPeriod")).toInt();
+
+		m_browsingHistoryModel->clearOldestEntries(period);
+		m_typedHistoryModel->clearOldestEntries(period);
 
 		scheduleSave();
 
@@ -139,8 +141,10 @@ void HistoryManager::optionChanged(const QString &option)
 			getTypedHistoryModel();
 		}
 
-		m_browsingHistoryModel->clearOldestEntries();
-		m_typedHistoryModel->clearOldestEntries();
+		const int period = SettingsManager::getValue(QLatin1String("History/BrowsingLimitPeriod")).toInt();
+
+		m_browsingHistoryModel->clearOldestEntries(period);
+		m_typedHistoryModel->clearOldestEntries(period);
 
 		scheduleSave();
 	}

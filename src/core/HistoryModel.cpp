@@ -19,7 +19,6 @@
 
 #include "HistoryModel.h"
 #include "Console.h"
-#include "SettingsManager.h"
 #include "Utils.h"
 
 #include <QtCore/QFile>
@@ -109,10 +108,8 @@ void HistoryModel::clearRecentEntries(uint period)
 	}
 }
 
-void HistoryModel::clearOldestEntries()
+void HistoryModel::clearOldestEntries(int period)
 {
-	const int period = SettingsManager::getValue(QLatin1String("History/BrowsingLimitPeriod")).toInt();
-
 	if (period < 0)
 	{
 		return;
