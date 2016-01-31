@@ -47,11 +47,6 @@ public:
 	int getPinnedTabsAmount() const;
 	bool eventFilter(QObject *object, QEvent *event);
 
-public slots:
-	void setCycle(bool enable);
-	void setArea(Qt::ToolBarArea area);
-	void setShape(QTabBar::Shape shape);
-
 protected:
 	void timerEvent(QTimerEvent *event);
 	void resizeEvent(QResizeEvent *event);
@@ -76,6 +71,9 @@ protected slots:
 	void isPinnedChanged(Window *window = NULL);
 	void updateButtons();
 	void updateTabs(int index = -1);
+	void setCycle(bool enable);
+	void setArea(Qt::ToolBarArea area);
+	void setShape(QTabBar::Shape shape);
 
 private:
 	PreviewWidget *m_previewWidget;
