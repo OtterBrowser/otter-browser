@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014, 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -71,11 +71,11 @@ void SettingsManager::removeOverride(const QUrl &url, const QString &key)
 {
 	if (key.isEmpty())
 	{
-		QSettings(m_overridePath, QSettings::IniFormat).remove(url.isLocalFile() ? QLatin1String("localhost") : url.host());
+		QSettings(m_overridePath, QSettings::IniFormat).remove(getHost(url));
 	}
 	else
 	{
-		QSettings(m_overridePath, QSettings::IniFormat).remove((url.isLocalFile() ? QLatin1String("localhost") : url.host()) + QLatin1Char('/') + key);
+		QSettings(m_overridePath, QSettings::IniFormat).remove(getHost(url) + QLatin1Char('/') + key);
 	}
 }
 
@@ -85,11 +85,11 @@ void SettingsManager::setValue(const QString &key, const QVariant &value, const 
 	{
 		if (value.isNull())
 		{
-			QSettings(m_overridePath, QSettings::IniFormat).remove((url.isLocalFile() ? QLatin1String("localhost") : url.host()) + QLatin1Char('/') + key);
+			QSettings(m_overridePath, QSettings::IniFormat).remove(getHost(url) + QLatin1Char('/') + key);
 		}
 		else
 		{
-			QSettings(m_overridePath, QSettings::IniFormat).setValue((url.isLocalFile() ? QLatin1String("localhost") : url.host()) + QLatin1Char('/') + key, value);
+			QSettings(m_overridePath, QSettings::IniFormat).setValue(getHost(url) + QLatin1Char('/') + key, value);
 		}
 
 		return;
@@ -106,6 +106,11 @@ void SettingsManager::setValue(const QString &key, const QVariant &value, const 
 SettingsManager* SettingsManager::getInstance()
 {
 	return m_instance;
+}
+
+QString SettingsManager::getHost(const QUrl &url)
+{
+	return (url.isLocalFile() ? QLatin1String("localhost") : url.host());
 }
 
 QString SettingsManager::getReport()
@@ -197,7 +202,7 @@ QVariant SettingsManager::getValue(const QString &key, const QUrl &url)
 {
 	if (!url.isEmpty())
 	{
-		return QSettings(m_overridePath, QSettings::IniFormat).value((url.isLocalFile() ? QLatin1String("localhost") : url.host()) + QLatin1Char('/') + key, getValue(key));
+		return QSettings(m_overridePath, QSettings::IniFormat).value(getHost(url) + QLatin1Char('/') + key, getValue(key));
 	}
 
 	return QSettings(m_globalPath, QSettings::IniFormat).value(key, m_defaults[key]);
@@ -205,7 +210,7 @@ QVariant SettingsManager::getValue(const QString &key, const QUrl &url)
 
 QStringList SettingsManager::getOptions()
 {
-	QStringList definition;
+	QStringList options;
 	QSettings settings(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat);
 	const QStringList groups = settings.childGroups();
 
@@ -219,7 +224,7 @@ QStringList SettingsManager::getOptions()
 		{
 			settings.beginGroup(children.at(j));
 
-			definition.append(settings.group());
+			options.append(settings.group());
 
 			settings.endGroup();
 		}
@@ -227,7 +232,7 @@ QStringList SettingsManager::getOptions()
 		settings.endGroup();
 	}
 
-	return definition;
+	return options;
 }
 
 SettingsManager::OptionDefinition SettingsManager::getDefinition(const QString &key)
@@ -290,11 +295,11 @@ bool SettingsManager::hasOverride(const QUrl &url, const QString &key)
 {
 	if (key.isEmpty())
 	{
-		return QSettings(m_overridePath, QSettings::IniFormat).childGroups().contains(url.isLocalFile() ? QLatin1String("localhost") : url.host());
+		return QSettings(m_overridePath, QSettings::IniFormat).childGroups().contains(getHost(url));
 	}
 	else
 	{
-		return QSettings(m_overridePath, QSettings::IniFormat).contains((url.isLocalFile() ? QLatin1String("localhost") : url.host()) + QLatin1Char('/') + key);
+		return QSettings(m_overridePath, QSettings::IniFormat).contains(getHost(url) + QLatin1Char('/') + key);
 	}
 }
 
