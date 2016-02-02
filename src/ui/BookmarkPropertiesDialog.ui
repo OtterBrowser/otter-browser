@@ -68,7 +68,7 @@
        <item>
         <widget class="QPushButton" name="newFolderButton">
          <property name="text">
-          <string>New</string>
+          <string>New…</string>
          </property>
         </widget>
        </item>
