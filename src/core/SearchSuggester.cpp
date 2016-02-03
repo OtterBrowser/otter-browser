@@ -24,7 +24,6 @@
 
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
-#include <QtNetwork/QNetworkReply>
 
 namespace Otter
 {

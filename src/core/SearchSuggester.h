@@ -22,7 +22,7 @@
 
 #include <QtCore/QObject>
 #include <QtGui/QStandardItemModel>
-#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkReply>
 
 namespace Otter
 {
