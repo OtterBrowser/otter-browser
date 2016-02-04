@@ -35,6 +35,18 @@ class ContentBlockingManager : public QObject
 	Q_OBJECT
 
 public:
+	enum ResourceType
+	{
+		OtherType = 0,
+		MainFrameType,
+		SubFrameType,
+		StyleSheetType,
+		ScriptType,
+		ImageType,
+		ObjectType,
+		XmlHttpRequestType
+	};
+
 	static void createInstance(QObject *parent = NULL);
 	static ContentBlockingManager* getInstance();
 	static QStringList getStyleSheet(const QVector<int> &profiles);
