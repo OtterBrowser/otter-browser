@@ -40,6 +40,7 @@ namespace Otter
 ContentBlockingProfile::ContentBlockingProfile(const QString &path, QObject *parent) : QObject(parent),
 	m_root(NULL),
 	m_networkReply(NULL),
+	m_enableWildcards(SettingsManager::getValue(QLatin1String("ContentBlocking/EnableWildcards")).toBool()),
 	m_isUpdating(false),
 	m_isEmpty(true),
 	m_wasLoaded(false)
@@ -49,6 +50,37 @@ ContentBlockingProfile::ContentBlockingProfile(const QString &path, QObject *par
 	m_information.path = path;
 
 	load(true);
+
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
+}
+
+void ContentBlockingProfile::optionChanged(const QString &option)
+{
+	if (option == QLatin1String("ContentBlocking/EnableWildcards"))
+	{
+		m_enableWildcards = SettingsManager::getValue(QLatin1String("ContentBlocking/EnableWildcards")).toBool();
+
+		clear();
+	}
+}
+
+void ContentBlockingProfile::clear()
+{
+	if (!m_wasLoaded)
+	{
+		return;
+	}
+
+	if (m_root)
+	{
+		QtConcurrent::run(this, &ContentBlockingProfile::deleteNode, m_root);
+	}
+
+	m_styleSheet.clear();
+	m_styleSheetWhiteList.clear();
+	m_styleSheetBlackList.clear();
+
+	m_wasLoaded = false;
 }
 
 void ContentBlockingProfile::load(bool onlyHeader)
@@ -166,9 +198,9 @@ void ContentBlockingProfile::parseRuleLine(QString line)
 		line = line.mid(1);
 	}
 
-	if (line.contains(QLatin1Char('*')) || line.contains(QLatin1Char('^')))
+	if (line.contains(QLatin1Char('^')) || (!m_enableWildcards && line.contains(QLatin1Char('*'))))
 	{
-		// TODO
+		// TODO - '^'
 		return;
 	}
 
@@ -482,19 +514,10 @@ void ContentBlockingProfile::replyFinished()
 // TODO
 	}
 
-	if (m_wasLoaded)
-	{
-		if (m_root)
-		{
-			QtConcurrent::run(this, &ContentBlockingProfile::deleteNode, m_root);
-		}
+	const bool wasLoaded = m_wasLoaded;
 
-		m_styleSheet.clear();
-		m_styleSheetWhiteList.clear();
-		m_styleSheetBlackList.clear();
-	}
-
-	load(!m_wasLoaded);
+	clear();
+	load(wasLoaded);
 
 	emit profileModified(m_information.name);
 }
@@ -617,16 +640,13 @@ bool ContentBlockingProfile::resolveDomainExceptions(const QString &url, const Q
 	return false;
 }
 
-bool ContentBlockingProfile::checkUrlSubstring(const QString &subString, const QNetworkRequest &request)
+bool ContentBlockingProfile::checkUrlSubstring(Node *node, const QString &subString, QString currentRule, const QNetworkRequest &request)
 {
-	Node *node = m_root;
-	m_currentRule.clear();
-
 	for (int i = 0; i < subString.length(); ++i)
 	{
 		const QChar treeChar = subString.at(i);
 
-		if (node->rule && checkRuleMatch(node->rule, request))
+		if (node->rule && checkRuleMatch(node->rule, currentRule, request))
 		{
 			return true;
 		}
@@ -636,6 +656,19 @@ bool ContentBlockingProfile::checkUrlSubstring(const QString &subString, const Q
 		for (int j = 0; j < node->children.count(); ++j)
 		{
 			Node *nextNode = node->children.at(j);
+
+			if (nextNode->value == QLatin1Char('*'))
+			{
+				const QString wildcardSubString = subString.mid(i);
+
+				for (int k = 0; k < wildcardSubString.length(); ++k)
+				{
+					if (checkUrlSubstring(nextNode, wildcardSubString.right(wildcardSubString.length() - k), currentRule + wildcardSubString.left(k), request))
+					{
+						return true;
+					}
+				}
+			}
 
 			if (nextNode->value == treeChar)
 			{
@@ -652,10 +685,10 @@ bool ContentBlockingProfile::checkUrlSubstring(const QString &subString, const Q
 			return false;
 		}
 
-		m_currentRule += treeChar;
+		currentRule += treeChar;
 	}
 
-	if (node->rule && checkRuleMatch(node->rule, request))
+	if (node->rule && checkRuleMatch(node->rule, currentRule, request))
 	{
 		return true;
 	}
@@ -663,17 +696,17 @@ bool ContentBlockingProfile::checkUrlSubstring(const QString &subString, const Q
 	return false;
 }
 
-bool ContentBlockingProfile::checkRuleMatch(ContentBlockingRule *rule, const QNetworkRequest &request)
+bool ContentBlockingProfile::checkRuleMatch(ContentBlockingRule *rule, const QString &currentRule, const QNetworkRequest &request)
 {
 	bool isBlocked = false;
 
-	if (m_requestUrl.contains(m_currentRule))
+	if (m_requestUrl.contains(currentRule))
 	{
 		m_requestSubdomainList = ContentBlockingManager::createSubdomainList(m_requestHost);
 
 		if (rule->needsDomainCheck)
 		{
-			if (!m_requestSubdomainList.contains(m_currentRule.left(m_currentRule.indexOf(m_domainExpression))))
+			if (!m_requestSubdomainList.contains(currentRule.left(currentRule.indexOf(m_domainExpression))))
 			{
 				return false;
 			}
@@ -709,8 +742,13 @@ bool ContentBlockingProfile::isUrlBlocked(const QNetworkRequest &request, const 
 	}
 
 	m_baseUrlHost = baseUrl.host();
-	m_requestUrl = request.url().url();
+	m_requestUrl = request.url().url(QUrl::RemoveScheme);
 	m_requestHost = request.url().host();
+
+	if (m_requestUrl.startsWith(QLatin1String("//")))
+	{
+		m_requestUrl = m_requestUrl.mid(2);
+	}
 
 	const int urlLenght = m_requestUrl.length();
 
@@ -718,7 +756,7 @@ bool ContentBlockingProfile::isUrlBlocked(const QNetworkRequest &request, const 
 	{
 		const QString urlSubstring = m_requestUrl.right(urlLenght - i);
 
-		if (checkUrlSubstring(urlSubstring, request))
+		if (checkUrlSubstring(m_root, urlSubstring, QString(), request))
 		{
 			return true;
 		}

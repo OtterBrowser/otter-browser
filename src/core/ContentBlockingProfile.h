@@ -87,6 +87,7 @@ protected:
 		Node() : value(0), rule(NULL) {}
 	};
 
+	void clear();
 	void load(bool onlyHeader = false);
 	void parseRuleLine(QString line);
 	void resolveRuleOptions(ContentBlockingRule *rule, const QNetworkRequest &request, bool &isBlocked);
@@ -95,16 +96,16 @@ protected:
 	void deleteNode(Node *node);
 	bool loadRules();
 	bool resolveDomainExceptions(const QString &url, const QStringList &ruleList);
-	bool checkUrlSubstring(const QString &subString, const QNetworkRequest &request);
-	bool checkRuleMatch(ContentBlockingRule *rule, const QNetworkRequest &request);
+	bool checkUrlSubstring(Node *node, const QString &subString, QString currentRule, const QNetworkRequest &request);
+	bool checkRuleMatch(ContentBlockingRule *rule, const QString &currentRule, const QNetworkRequest &request);
 
 private slots:
 	void replyFinished();
+	void optionChanged(const QString &option);
 
 private:
 	Node *m_root;
 	QNetworkReply *m_networkReply;
-	QString m_currentRule;
 	QString m_requestUrl;
 	QString m_requestHost;
 	QString m_baseUrlHost;
@@ -113,6 +114,7 @@ private:
 	QStringList m_requestSubdomainList, m_styleSheet;
 	QMultiHash<QString, QString> m_styleSheetBlackList;
 	QMultiHash<QString, QString> m_styleSheetWhiteList;
+	bool m_enableWildcards;
 	bool m_isUpdating;
 	bool m_isEmpty;
 	bool m_wasLoaded;
