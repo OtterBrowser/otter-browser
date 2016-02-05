@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -2282,6 +2282,26 @@ bool QtWebKitWebWidget::isNavigating() const
 bool QtWebKitWebWidget::isScrollBar(const QPoint &position) const
 {
 	return (m_page->mainFrame()->scrollBarGeometry(Qt::Horizontal).contains(position) || m_page->mainFrame()->scrollBarGeometry(Qt::Vertical).contains(position));
+}
+
+bool QtWebKitWebWidget::hasFrame(const QUrl &url) const
+{
+	QList<QWebFrame*> frames;
+	frames.append(m_page->mainFrame());
+
+	while (!frames.isEmpty())
+	{
+		QWebFrame *frame = frames.takeFirst();
+
+		if (frame != m_page->mainFrame() && frame->requestedUrl() == url)
+		{
+			return true;
+		}
+
+		frames.append(frame->childFrames());
+	}
+
+	return false;
 }
 
 bool QtWebKitWebWidget::findInPage(const QString &text, FindFlags flags)
