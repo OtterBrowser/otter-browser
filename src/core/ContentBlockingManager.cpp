@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -204,14 +204,14 @@ bool ContentBlockingManager::updateProfile(const QString &profile)
 	return false;
 }
 
-bool ContentBlockingManager::isUrlBlocked(const QVector<int> &profiles, const QNetworkRequest &request, const QUrl &baseUrl)
+bool ContentBlockingManager::isUrlBlocked(const QVector<int> &profiles, const QUrl &baseUrl, const QUrl &requestUrl, ResourceType resourceType)
 {
 	if (profiles.isEmpty())
 	{
 		return false;
 	}
 
-	const QString scheme = request.url().scheme();
+	const QString scheme = requestUrl.scheme();
 
 	if (scheme != QLatin1String("http") && scheme != QLatin1String("https"))
 	{
@@ -220,7 +220,7 @@ bool ContentBlockingManager::isUrlBlocked(const QVector<int> &profiles, const QN
 
 	for (int i = 0; i < profiles.count(); ++i)
 	{
-		if (profiles[i] >= 0 && profiles[i] < m_profiles.count() && m_profiles.at(profiles[i])->isUrlBlocked(request, baseUrl))
+		if (profiles[i] >= 0 && profiles[i] < m_profiles.count() && m_profiles.at(profiles[i])->isUrlBlocked(baseUrl, requestUrl, resourceType))
 		{
 			return true;
 		}

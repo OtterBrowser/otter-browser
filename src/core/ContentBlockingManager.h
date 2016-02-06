@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ public:
 	static QMultiHash<QString, QString> getStyleSheetWhiteList(const QVector<int> &profiles);
 	static QVector<int> getProfileList(const QStringList &names);
 	static bool updateProfile(const QString &profile);
-	static bool isUrlBlocked(const QVector<int> &profiles, const QNetworkRequest &request, const QUrl &baseUrl);
+	static bool isUrlBlocked(const QVector<int> &profiles, const QUrl &baseUrl, const QUrl &requestUrl, ContentBlockingManager::ResourceType resourceType);
 
 protected:
 	explicit ContentBlockingManager(QObject *parent = NULL);

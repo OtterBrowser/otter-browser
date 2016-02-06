@@ -2,7 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2010 - 2014 David Rosca <nowrep@gmail.com>
 * Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,8 @@
 
 #ifndef OTTER_CONTENTBLOCKINGPROFILE_H
 #define OTTER_CONTENTBLOCKINGPROFILE_H
+
+#include "ContentBlockingManager.h"
 
 #include <QtCore/QObject>
 #include <QtCore/QRegularExpression>
@@ -75,7 +77,7 @@ public:
 	QMultiHash<QString, QString> getStyleSheetWhiteList();
 	QMultiHash<QString, QString> getStyleSheetBlackList();
 	bool downloadRules();
-	bool isUrlBlocked(const QNetworkRequest &request, const QUrl &baseUrl);
+	bool isUrlBlocked(const QUrl &baseUrl, const QUrl &requestUrl, ContentBlockingManager::ResourceType resourceType);
 
 protected:
 	struct Node
@@ -90,18 +92,18 @@ protected:
 	void clear();
 	void load(bool onlyHeader = false);
 	void parseRuleLine(QString line);
-	void resolveRuleOptions(ContentBlockingRule *rule, const QNetworkRequest &request, bool &isBlocked);
+	void resolveRuleOptions(ContentBlockingRule *rule, ContentBlockingManager::ResourceType resourceType, bool &isBlocked);
 	void parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list);
 	void addRule(ContentBlockingRule *rule, const QString &ruleString);
 	void deleteNode(Node *node);
 	bool loadRules();
 	bool resolveDomainExceptions(const QString &url, const QStringList &ruleList);
-	bool checkUrlSubstring(Node *node, const QString &subString, QString currentRule, const QNetworkRequest &request);
-	bool checkRuleMatch(ContentBlockingRule *rule, const QString &currentRule, const QNetworkRequest &request);
+	bool checkUrlSubstring(Node *node, const QString &subString, QString currentRule, ContentBlockingManager::ResourceType resourceType);
+	bool checkRuleMatch(ContentBlockingRule *rule, const QString &currentRule, ContentBlockingManager::ResourceType resourceType);
 
-private slots:
-	void replyFinished();
+protected slots:
 	void optionChanged(const QString &option);
+	void replyFinished();
 
 private:
 	Node *m_root;

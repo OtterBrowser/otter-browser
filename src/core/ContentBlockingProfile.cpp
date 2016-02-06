@@ -2,7 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2010 - 2014 David Rosca <nowrep@gmail.com>
 * Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@
 
 #include "ContentBlockingProfile.h"
 #include "Console.h"
-#include "ContentBlockingManager.h"
 #include "NetworkManager.h"
 #include "NetworkManagerFactory.h"
 #include "SessionsManager.h"
@@ -316,9 +315,8 @@ void ContentBlockingProfile::parseStyleSheetRule(const QStringList &line, QMulti
 	}
 }
 
-void ContentBlockingProfile::resolveRuleOptions(ContentBlockingRule *rule, const QNetworkRequest &request, bool &isBlocked)
+void ContentBlockingProfile::resolveRuleOptions(ContentBlockingRule *rule, ContentBlockingManager::ResourceType resourceType, bool &isBlocked)
 {
-	const QByteArray requestHeader = request.rawHeader(QByteArray("Accept"));
 	const bool blockedDomains = !rule->blockedDomains.isEmpty();
 	const bool allowedDomains = !rule->allowedDomains.isEmpty();
 
@@ -339,7 +337,7 @@ void ContentBlockingProfile::resolveRuleOptions(ContentBlockingRule *rule, const
 
 	if (rule->ruleOption.testFlag(ImageOption))
 	{
-		if (requestHeader.contains(QByteArray("image/")) || m_requestUrl.endsWith(QLatin1String(".png")) || m_requestUrl.endsWith(QLatin1String(".jpg")) || m_requestUrl.endsWith(QLatin1String(".gif")))
+		if (resourceType == ContentBlockingManager::ImageType)
 		{
 			isBlocked = (isBlocked ? !rule->exceptionRuleOption.testFlag(ImageOption) : isBlocked);
 		}
@@ -351,7 +349,7 @@ void ContentBlockingProfile::resolveRuleOptions(ContentBlockingRule *rule, const
 
 	if (rule->ruleOption.testFlag(ScriptOption))
 	{
-		if (requestHeader.contains(QByteArray("script/")) || m_requestUrl.endsWith(QLatin1String(".js")))
+		if (resourceType == ContentBlockingManager::ScriptType)
 		{
 			isBlocked = (isBlocked ? !rule->exceptionRuleOption.testFlag(ScriptOption) : isBlocked);
 		}
@@ -363,7 +361,7 @@ void ContentBlockingProfile::resolveRuleOptions(ContentBlockingRule *rule, const
 
 	if (rule->ruleOption.testFlag(StyleSheetOption))
 	{
-		if (requestHeader.contains(QByteArray("text/css")) || m_requestUrl.endsWith(QLatin1String(".css")))
+		if (resourceType == ContentBlockingManager::StyleSheetType)
 		{
 			isBlocked = (isBlocked ? !rule->exceptionRuleOption.testFlag(StyleSheetOption) : isBlocked);
 		}
@@ -375,7 +373,7 @@ void ContentBlockingProfile::resolveRuleOptions(ContentBlockingRule *rule, const
 
 	if (rule->ruleOption.testFlag(ObjectOption))
 	{
-		if (requestHeader.contains(QByteArray("object")))
+		if (resourceType == ContentBlockingManager::ObjectType)
 		{
 			isBlocked = (isBlocked ? !rule->exceptionRuleOption.testFlag(ObjectOption) : isBlocked);
 		}
@@ -397,7 +395,7 @@ void ContentBlockingProfile::resolveRuleOptions(ContentBlockingRule *rule, const
 
 	if (rule->ruleOption.testFlag(XmlHttpRequestOption))
 	{
-		if (request.rawHeader(QByteArray("X-Requested-With")) == QByteArray("XMLHttpRequest"))
+		if (resourceType == ContentBlockingManager::XmlHttpRequestType)
 		{
 			isBlocked = (isBlocked ? !rule->exceptionRuleOption.testFlag(XmlHttpRequestOption) : isBlocked);
 		}
@@ -640,13 +638,13 @@ bool ContentBlockingProfile::resolveDomainExceptions(const QString &url, const Q
 	return false;
 }
 
-bool ContentBlockingProfile::checkUrlSubstring(Node *node, const QString &subString, QString currentRule, const QNetworkRequest &request)
+bool ContentBlockingProfile::checkUrlSubstring(Node *node, const QString &subString, QString currentRule, ContentBlockingManager::ResourceType resourceType)
 {
 	for (int i = 0; i < subString.length(); ++i)
 	{
 		const QChar treeChar = subString.at(i);
 
-		if (node->rule && checkRuleMatch(node->rule, currentRule, request))
+		if (node->rule && checkRuleMatch(node->rule, currentRule, resourceType))
 		{
 			return true;
 		}
@@ -663,7 +661,7 @@ bool ContentBlockingProfile::checkUrlSubstring(Node *node, const QString &subStr
 
 				for (int k = 0; k < wildcardSubString.length(); ++k)
 				{
-					if (checkUrlSubstring(nextNode, wildcardSubString.right(wildcardSubString.length() - k), currentRule + wildcardSubString.left(k), request))
+					if (checkUrlSubstring(nextNode, wildcardSubString.right(wildcardSubString.length() - k), currentRule + wildcardSubString.left(k), resourceType))
 					{
 						return true;
 					}
@@ -688,7 +686,7 @@ bool ContentBlockingProfile::checkUrlSubstring(Node *node, const QString &subStr
 		currentRule += treeChar;
 	}
 
-	if (node->rule && checkRuleMatch(node->rule, currentRule, request))
+	if (node->rule && checkRuleMatch(node->rule, currentRule, resourceType))
 	{
 		return true;
 	}
@@ -696,7 +694,7 @@ bool ContentBlockingProfile::checkUrlSubstring(Node *node, const QString &subStr
 	return false;
 }
 
-bool ContentBlockingProfile::checkRuleMatch(ContentBlockingRule *rule, const QString &currentRule, const QNetworkRequest &request)
+bool ContentBlockingProfile::checkRuleMatch(ContentBlockingRule *rule, const QString &currentRule, ContentBlockingManager::ResourceType resourceType)
 {
 	bool isBlocked = false;
 
@@ -725,13 +723,13 @@ bool ContentBlockingProfile::checkRuleMatch(ContentBlockingRule *rule, const QSt
 			isBlocked = !rule->isException;
 		}
 
-		resolveRuleOptions(rule, request, isBlocked);
+		resolveRuleOptions(rule, resourceType, isBlocked);
 	}
 
 	return isBlocked;
 }
 
-bool ContentBlockingProfile::isUrlBlocked(const QNetworkRequest &request, const QUrl &baseUrl)
+bool ContentBlockingProfile::isUrlBlocked(const QUrl &baseUrl, const QUrl &requestUrl, ContentBlockingManager::ResourceType resourceType)
 {
 	if (!m_wasLoaded)
 	{
@@ -742,8 +740,8 @@ bool ContentBlockingProfile::isUrlBlocked(const QNetworkRequest &request, const 
 	}
 
 	m_baseUrlHost = baseUrl.host();
-	m_requestUrl = request.url().url(QUrl::RemoveScheme);
-	m_requestHost = request.url().host();
+	m_requestUrl = requestUrl.url(QUrl::RemoveScheme);
+	m_requestHost = requestUrl.host();
 
 	if (m_requestUrl.startsWith(QLatin1String("//")))
 	{
@@ -756,7 +754,7 @@ bool ContentBlockingProfile::isUrlBlocked(const QNetworkRequest &request, const 
 	{
 		const QString urlSubstring = m_requestUrl.right(urlLenght - i);
 
-		if (checkUrlSubstring(m_root, urlSubstring, QString(), request))
+		if (checkUrlSubstring(m_root, urlSubstring, QString(), resourceType))
 		{
 			return true;
 		}
