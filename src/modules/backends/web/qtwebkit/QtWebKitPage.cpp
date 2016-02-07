@@ -126,7 +126,8 @@ void QtWebKitPage::markAsPopup()
 
 void QtWebKitPage::applyContentBlockingRules(const QStringList &rules, bool remove)
 {
-	const QWebElement document = mainFrame()->documentElement();
+	const QWebElement document(mainFrame()->documentElement());
+	const QString value(remove ? QLatin1String("none !important") : QString());
 
 	for (int i = 0; i < rules.count(); ++i)
 	{
@@ -136,18 +137,9 @@ void QtWebKitPage::applyContentBlockingRules(const QStringList &rules, bool remo
 		{
 			QWebElement element = elements.at(j);
 
-			if (element.isNull())
+			if (!element.isNull())
 			{
-				continue;
-			}
-
-			if (remove)
-			{
-				element.setStyleProperty(QLatin1String("display"), QLatin1String("none !important"));
-			}
-			else
-			{
-				element.setStyleProperty(QLatin1String("display"), QString());
+				element.setStyleProperty(QLatin1String("display"), value);
 			}
 		}
 	}
