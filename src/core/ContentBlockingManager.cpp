@@ -153,7 +153,7 @@ QMultiHash<QString, QString> ContentBlockingManager::getStyleSheetBlackList(cons
 	{
 		if (profiles[i] >= 0 && profiles[i] < m_profiles.count())
 		{
-			blackList += m_profiles.at(profiles[i])->getStyleSheetWhiteList();
+			blackList += m_profiles.at(profiles[i])->getStyleSheetBlackList();
 		}
 	}
 
@@ -168,7 +168,7 @@ QMultiHash<QString, QString> ContentBlockingManager::getStyleSheetWhiteList(cons
 	{
 		if (profiles[i] >= 0 && profiles[i] < m_profiles.count())
 		{
-			whiteList += m_profiles.at(profiles[i])->getStyleSheetBlackList();
+			whiteList += m_profiles.at(profiles[i])->getStyleSheetWhiteList();
 		}
 	}
 

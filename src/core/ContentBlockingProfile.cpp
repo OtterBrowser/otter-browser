@@ -535,7 +535,7 @@ ContentBlockingInformation ContentBlockingProfile::getInformation() const
 	return m_information;
 }
 
-QMultiHash<QString, QString> ContentBlockingProfile::getStyleSheetWhiteList()
+QMultiHash<QString, QString> ContentBlockingProfile::getStyleSheetBlackList()
 {
 	if (!m_wasLoaded)
 	{
@@ -545,7 +545,7 @@ QMultiHash<QString, QString> ContentBlockingProfile::getStyleSheetWhiteList()
 	return m_styleSheetBlackList;
 }
 
-QMultiHash<QString, QString> ContentBlockingProfile::getStyleSheetBlackList()
+QMultiHash<QString, QString> ContentBlockingProfile::getStyleSheetWhiteList()
 {
 	if (!m_wasLoaded)
 	{

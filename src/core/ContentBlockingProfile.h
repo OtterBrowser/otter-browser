@@ -74,16 +74,16 @@ public:
 
 	ContentBlockingInformation getInformation() const;
 	QStringList getStyleSheet();
-	QMultiHash<QString, QString> getStyleSheetWhiteList();
 	QMultiHash<QString, QString> getStyleSheetBlackList();
+	QMultiHash<QString, QString> getStyleSheetWhiteList();
 	bool downloadRules();
 	bool isUrlBlocked(const QUrl &baseUrl, const QUrl &requestUrl, ContentBlockingManager::ResourceType resourceType);
 
 protected:
 	struct Node
 	{
-		QChar value;
 		ContentBlockingRule *rule;
+		QChar value;
 		QVarLengthArray<Node*, 5> children;
 
 		Node() : value(0), rule(NULL) {}
@@ -113,7 +113,8 @@ private:
 	QString m_baseUrlHost;
 	QRegularExpression m_domainExpression;
 	ContentBlockingInformation m_information;
-	QStringList m_requestSubdomainList, m_styleSheet;
+	QStringList m_requestSubdomainList;
+	QStringList m_styleSheet;
 	QMultiHash<QString, QString> m_styleSheetBlackList;
 	QMultiHash<QString, QString> m_styleSheetWhiteList;
 	bool m_enableWildcards;
