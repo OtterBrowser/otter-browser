@@ -38,7 +38,6 @@ namespace Ui
 	class MainWindow;
 }
 
-class ActionsManager;
 class WorkspaceWidget;
 class MenuBarWidget;
 class StatusBarWidget;
