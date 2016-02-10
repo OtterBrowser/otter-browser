@@ -86,7 +86,7 @@ protected:
 		QChar value;
 		QVarLengthArray<Node*, 5> children;
 
-		Node() : value(0), rule(NULL) {}
+		Node() : rule(NULL), value(0) {}
 	};
 
 	void clear();
