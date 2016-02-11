@@ -18,8 +18,8 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_FTPLISTINGNETWORKREPLY_H
-#define OTTER_FTPLISTINGNETWORKREPLY_H
+#ifndef OTTER_QTWEBKITFTPLISTINGNETWORKREPLY_H
+#define OTTER_QTWEBKITFTPLISTINGNETWORKREPLY_H
 
 #include "3rdparty/qtftp/qftp.h"
 #include "3rdparty/qtftp/qurlinfo.h"
