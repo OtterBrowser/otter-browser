@@ -86,6 +86,31 @@ ContentBlockingManager* ContentBlockingManager::getInstance()
 	return m_instance;
 }
 
+ContentBlockingManager::CheckResult ContentBlockingManager::checkUrl(const QVector<int> &profiles, const QUrl &baseUrl, const QUrl &requestUrl, ResourceType resourceType)
+{
+	if (profiles.isEmpty())
+	{
+		return CheckResult();
+	}
+
+	const QString scheme = requestUrl.scheme();
+
+	if (scheme != QLatin1String("http") && scheme != QLatin1String("https"))
+	{
+		return CheckResult();
+	}
+
+	for (int i = 0; i < profiles.count(); ++i)
+	{
+		if (profiles[i] >= 0 && profiles[i] < m_profiles.count())
+		{
+			return m_profiles.at(profiles[i])->checkUrl(baseUrl, requestUrl, resourceType);
+		}
+	}
+
+	return CheckResult();
+}
+
 QStringList ContentBlockingManager::getStyleSheet(const QVector<int> &profiles)
 {
 	QStringList styleSheet;
@@ -198,31 +223,6 @@ bool ContentBlockingManager::updateProfile(const QString &profile)
 		if (m_profiles.at(i)->getInformation().name == profile)
 		{
 			return m_profiles[i]->downloadRules();
-		}
-	}
-
-	return false;
-}
-
-bool ContentBlockingManager::isUrlBlocked(const QVector<int> &profiles, const QUrl &baseUrl, const QUrl &requestUrl, ResourceType resourceType)
-{
-	if (profiles.isEmpty())
-	{
-		return false;
-	}
-
-	const QString scheme = requestUrl.scheme();
-
-	if (scheme != QLatin1String("http") && scheme != QLatin1String("https"))
-	{
-		return false;
-	}
-
-	for (int i = 0; i < profiles.count(); ++i)
-	{
-		if (profiles[i] >= 0 && profiles[i] < m_profiles.count() && m_profiles.at(profiles[i])->isUrlBlocked(baseUrl, requestUrl, resourceType))
-		{
-			return true;
 		}
 	}
 

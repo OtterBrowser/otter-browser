@@ -22,7 +22,6 @@
 #include "QtWebKitNetworkManager.h"
 #include "QtWebKitFtpListingNetworkReply.h"
 #include "../../../../core/AddonsManager.h"
-#include "../../../../core/ContentBlockingManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/CookieJar.h"
 #include "../../../../core/CookieJarProxy.h"
@@ -542,21 +541,16 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 				resourceType = ContentBlockingManager::XmlHttpRequestType;
 			}
 
-			if (ContentBlockingManager::isUrlBlocked(profiles, m_widget->getUrl(), request.url(), resourceType))
+			const ContentBlockingManager::CheckResult result(ContentBlockingManager::checkUrl(profiles, m_widget->getUrl(), request.url(), resourceType));
+
+			if (result.isBlocked)
 			{
 				Console::addMessage(QCoreApplication::translate("main", "Blocked request"), Otter::NetworkMessageCategory, LogMessageLevel, request.url().toString());
 
 				QUrl url = QUrl();
 				url.setScheme(QLatin1String("http"));
 
-				if (m_blockedRequests.contains(host))
-				{
-					++m_blockedRequests[host];
-				}
-				else
-				{
-					m_blockedRequests[host] = 1;
-				}
+				m_blockedRequests.append(result);
 
 				return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(url));
 			}

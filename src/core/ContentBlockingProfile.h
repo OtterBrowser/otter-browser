@@ -73,11 +73,11 @@ public:
 	explicit ContentBlockingProfile(const QString &path, QObject *parent = NULL);
 
 	ContentBlockingInformation getInformation() const;
+	ContentBlockingManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, ContentBlockingManager::ResourceType resourceType);
 	QStringList getStyleSheet();
 	QMultiHash<QString, QString> getStyleSheetBlackList();
 	QMultiHash<QString, QString> getStyleSheetWhiteList();
 	bool downloadRules();
-	bool isUrlBlocked(const QUrl &baseUrl, const QUrl &requestUrl, ContentBlockingManager::ResourceType resourceType);
 
 protected:
 	struct Node

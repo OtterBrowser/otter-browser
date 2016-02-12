@@ -21,6 +21,7 @@
 #define OTTER_QTWEBKITNETWORKMANAGER_H
 
 #include "QtWebKitWebWidget.h"
+#include "../../../../core/ContentBlockingManager.h"
 #include "../../../../core/NetworkManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/WindowsManager.h"
@@ -79,8 +80,8 @@ private:
 	QDateTime m_dateDownloaded;
 	WebWidget::SslInformation m_sslInformation;
 	QList<QNetworkReply*> m_transfers;
+	QList<ContentBlockingManager::CheckResult> m_blockedRequests;
 	QHash<QNetworkReply*, QPair<qint64, bool> > m_replies;
-	QHash<QString, int> m_blockedRequests;
 	WindowsManager::ContentStates m_contentState;
 	qint64 m_speed;
 	qint64 m_bytesReceivedDifference;

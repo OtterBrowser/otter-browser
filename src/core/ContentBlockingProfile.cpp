@@ -535,6 +535,46 @@ ContentBlockingInformation ContentBlockingProfile::getInformation() const
 	return m_information;
 }
 
+ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, ContentBlockingManager::ResourceType resourceType)
+{
+	if (!m_wasLoaded)
+	{
+		if (!loadRules())
+		{
+			return ContentBlockingManager::CheckResult();
+		}
+	}
+
+	m_baseUrlHost = baseUrl.host();
+	m_requestUrl = requestUrl.url(QUrl::RemoveScheme);
+	m_requestHost = requestUrl.host();
+
+	if (m_requestUrl.startsWith(QLatin1String("//")))
+	{
+		m_requestUrl = m_requestUrl.mid(2);
+	}
+
+	const int urlLenght = m_requestUrl.length();
+
+	for (int i = 0; i < urlLenght; ++i)
+	{
+		const QString urlSubstring = m_requestUrl.right(urlLenght - i);
+
+		if (checkUrlSubstring(m_root, urlSubstring, QString(), resourceType))
+		{
+			ContentBlockingManager::CheckResult result;
+			result.url = requestUrl;
+			result.profile = m_information.name;
+			result.resourceType = resourceType;
+			result.isBlocked = true;
+
+			return result;
+		}
+	}
+
+	return ContentBlockingManager::CheckResult();
+}
+
 QMultiHash<QString, QString> ContentBlockingProfile::getStyleSheetBlackList()
 {
 	if (!m_wasLoaded)
@@ -727,40 +767,6 @@ bool ContentBlockingProfile::checkRuleMatch(ContentBlockingRule *rule, const QSt
 	}
 
 	return isBlocked;
-}
-
-bool ContentBlockingProfile::isUrlBlocked(const QUrl &baseUrl, const QUrl &requestUrl, ContentBlockingManager::ResourceType resourceType)
-{
-	if (!m_wasLoaded)
-	{
-		if (!loadRules())
-		{
-			return false;
-		}
-	}
-
-	m_baseUrlHost = baseUrl.host();
-	m_requestUrl = requestUrl.url(QUrl::RemoveScheme);
-	m_requestHost = requestUrl.host();
-
-	if (m_requestUrl.startsWith(QLatin1String("//")))
-	{
-		m_requestUrl = m_requestUrl.mid(2);
-	}
-
-	const int urlLenght = m_requestUrl.length();
-
-	for (int i = 0; i < urlLenght; ++i)
-	{
-		const QString urlSubstring = m_requestUrl.right(urlLenght - i);
-
-		if (checkUrlSubstring(m_root, urlSubstring, QString(), resourceType))
-		{
-			return true;
-		}
-	}
-
-	return false;
 }
 
 }
