@@ -99,8 +99,8 @@ void QtWebKitPage::pageLoadFinished()
 
 		for (int i = 0; i < domainList.count(); ++i)
 		{
-			applyContentBlockingRules(ContentBlockingManager::getStyleSheetBlackList(m_widget->getContentBlockingProfiles()).values(domainList.at(i)), true);
-			applyContentBlockingRules(ContentBlockingManager::getStyleSheetWhiteList(m_widget->getContentBlockingProfiles()).values(domainList.at(i)), false);
+			applyContentBlockingRules(ContentBlockingManager::getStyleSheetBlackList(domainList.at(i), m_widget->getContentBlockingProfiles()), true);
+			applyContentBlockingRules(ContentBlockingManager::getStyleSheetWhiteList(domainList.at(i), m_widget->getContentBlockingProfiles()), false);
 		}
 	}
 }

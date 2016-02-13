@@ -60,12 +60,12 @@ public:
 	static void createInstance(QObject *parent = NULL);
 	static ContentBlockingManager* getInstance();
 	static CheckResult checkUrl(const QVector<int> &profiles, const QUrl &baseUrl, const QUrl &requestUrl, ResourceType resourceType);
-	static QStringList getStyleSheet(const QVector<int> &profiles);
 	static ContentBlockingInformation getProfile(const QString &profile);
 	static QStringList createSubdomainList(const QString &domain);
+	static QStringList getStyleSheet(const QVector<int> &profiles);
+	static QStringList getStyleSheetBlackList(const QString &domain, const QVector<int> &profiles);
+	static QStringList getStyleSheetWhiteList(const QString &domain, const QVector<int> &profiles);
 	static QVector<ContentBlockingInformation> getProfiles();
-	static QMultiHash<QString, QString> getStyleSheetBlackList(const QVector<int> &profiles);
-	static QMultiHash<QString, QString> getStyleSheetWhiteList(const QVector<int> &profiles);
 	static QVector<int> getProfileList(const QStringList &names);
 	static bool updateProfile(const QString &profile);
 

@@ -75,8 +75,8 @@ public:
 	ContentBlockingInformation getInformation() const;
 	ContentBlockingManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, ContentBlockingManager::ResourceType resourceType);
 	QStringList getStyleSheet();
-	QMultiHash<QString, QString> getStyleSheetBlackList();
-	QMultiHash<QString, QString> getStyleSheetWhiteList();
+	QStringList getStyleSheetBlackList(const QString &domain);
+	QStringList getStyleSheetWhiteList(const QString &domain);
 	bool downloadRules();
 
 protected:

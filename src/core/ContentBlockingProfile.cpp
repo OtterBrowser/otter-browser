@@ -520,16 +520,6 @@ void ContentBlockingProfile::replyFinished()
 	emit profileModified(m_information.name);
 }
 
-QStringList ContentBlockingProfile::getStyleSheet()
-{
-	if (!m_wasLoaded)
-	{
-		loadRules();
-	}
-
-	return m_styleSheet;
-}
-
 ContentBlockingInformation ContentBlockingProfile::getInformation() const
 {
 	return m_information;
@@ -575,24 +565,34 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrl(const QUrl 
 	return ContentBlockingManager::CheckResult();
 }
 
-QMultiHash<QString, QString> ContentBlockingProfile::getStyleSheetBlackList()
+QStringList ContentBlockingProfile::getStyleSheet()
 {
 	if (!m_wasLoaded)
 	{
 		loadRules();
 	}
 
-	return m_styleSheetBlackList;
+	return m_styleSheet;
 }
 
-QMultiHash<QString, QString> ContentBlockingProfile::getStyleSheetWhiteList()
+QStringList ContentBlockingProfile::getStyleSheetBlackList(const QString &domain)
 {
 	if (!m_wasLoaded)
 	{
 		loadRules();
 	}
 
-	return m_styleSheetWhiteList;
+	return m_styleSheetBlackList.values(domain);
+}
+
+QStringList ContentBlockingProfile::getStyleSheetWhiteList(const QString &domain)
+{
+	if (!m_wasLoaded)
+	{
+		loadRules();
+	}
+
+	return m_styleSheetWhiteList.values(domain);
 }
 
 bool ContentBlockingProfile::downloadRules()

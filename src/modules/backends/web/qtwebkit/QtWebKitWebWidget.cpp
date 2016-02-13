@@ -2007,7 +2007,6 @@ WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &posit
 	}
 
 	const QWebHitTestResult nativeResult = m_webView->page()->mainFrame()->hitTestContent(position);
-
 	HitTestResult result;
 	result.title = nativeResult.title();
 	result.tagName = nativeResult.element().tagName().toLower();

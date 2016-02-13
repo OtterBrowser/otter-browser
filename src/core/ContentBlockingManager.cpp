@@ -111,21 +111,6 @@ ContentBlockingManager::CheckResult ContentBlockingManager::checkUrl(const QVect
 	return CheckResult();
 }
 
-QStringList ContentBlockingManager::getStyleSheet(const QVector<int> &profiles)
-{
-	QStringList styleSheet;
-
-	for (int i = 0; i < profiles.count(); ++i)
-	{
-		if (profiles[i] >= 0 && profiles[i] < m_profiles.count())
-		{
-			styleSheet += m_profiles.at(profiles[i])->getStyleSheet();
-		}
-	}
-
-	return styleSheet;
-}
-
 ContentBlockingInformation ContentBlockingManager::getProfile(const QString &profile)
 {
 	for (int i = 0; i < m_profiles.count(); ++i)
@@ -157,6 +142,51 @@ QStringList ContentBlockingManager::createSubdomainList(const QString &domain)
 	return subdomainList;
 }
 
+QStringList ContentBlockingManager::getStyleSheet(const QVector<int> &profiles)
+{
+	QStringList styleSheet;
+
+	for (int i = 0; i < profiles.count(); ++i)
+	{
+		if (profiles[i] >= 0 && profiles[i] < m_profiles.count())
+		{
+			styleSheet += m_profiles.at(profiles[i])->getStyleSheet();
+		}
+	}
+
+	return styleSheet;
+}
+
+QStringList ContentBlockingManager::getStyleSheetBlackList(const QString &domain, const QVector<int> &profiles)
+{
+	QStringList data;
+
+	for (int i = 0; i < profiles.count(); ++i)
+	{
+		if (profiles[i] >= 0 && profiles[i] < m_profiles.count())
+		{
+			data.append(m_profiles.at(profiles[i])->getStyleSheetBlackList(domain));
+		}
+	}
+
+	return data;
+}
+
+QStringList ContentBlockingManager::getStyleSheetWhiteList(const QString &domain, const QVector<int> &profiles)
+{
+	QStringList data;
+
+	for (int i = 0; i < profiles.count(); ++i)
+	{
+		if (profiles[i] >= 0 && profiles[i] < m_profiles.count())
+		{
+			data.append(m_profiles.at(profiles[i])->getStyleSheetWhiteList(domain));
+		}
+	}
+
+	return data;
+}
+
 QVector<ContentBlockingInformation> ContentBlockingManager::getProfiles()
 {
 	QVector<ContentBlockingInformation> profiles;
@@ -168,36 +198,6 @@ QVector<ContentBlockingInformation> ContentBlockingManager::getProfiles()
 	}
 
 	return profiles;
-}
-
-QMultiHash<QString, QString> ContentBlockingManager::getStyleSheetBlackList(const QVector<int> &profiles)
-{
-	QMultiHash<QString, QString> blackList;
-
-	for (int i = 0; i < profiles.count(); ++i)
-	{
-		if (profiles[i] >= 0 && profiles[i] < m_profiles.count())
-		{
-			blackList += m_profiles.at(profiles[i])->getStyleSheetBlackList();
-		}
-	}
-
-	return blackList;
-}
-
-QMultiHash<QString, QString> ContentBlockingManager::getStyleSheetWhiteList(const QVector<int> &profiles)
-{
-	QMultiHash<QString, QString> whiteList;
-
-	for (int i = 0; i < profiles.count(); ++i)
-	{
-		if (profiles[i] >= 0 && profiles[i] < m_profiles.count())
-		{
-			whiteList += m_profiles.at(profiles[i])->getStyleSheetWhiteList();
-		}
-	}
-
-	return whiteList;
 }
 
 QVector<int> ContentBlockingManager::getProfileList(const QStringList &names)
