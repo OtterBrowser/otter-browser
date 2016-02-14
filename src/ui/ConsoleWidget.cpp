@@ -18,11 +18,15 @@
 **************************************************************************/
 
 #include "ConsoleWidget.h"
+#include "MainWindow.h"
+#include "TabBarWidget.h"
+#include "Window.h"
 #include "../core/Utils.h"
 
 #include "ui_ConsoleWidget.h"
 
 #include <QtGui/QClipboard>
+#include <QtWidgets/QActionGroup>
 #include <QtWidgets/QMenu>
 
 namespace Otter
@@ -30,11 +34,36 @@ namespace Otter
 
 ConsoleWidget::ConsoleWidget(QWidget *parent) : QWidget(parent),
 	m_model(NULL),
+	m_messageScopes(AllTabsScope | OtherSourcesScope),
 	m_ui(new Ui::ConsoleWidget)
 {
 	m_ui->setupUi(this);
 
-	connect(m_ui->scopeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(filterCategories()));
+	QMenu *menu(new QMenu(m_ui->scopeButton));
+	QAction *allTabsAction(menu->addAction(tr("All Tabs")));
+	allTabsAction->setData(AllTabsScope);
+	allTabsAction->setCheckable(true);
+	allTabsAction->setChecked(true);
+
+	QAction *currentTabAction(menu->addAction(tr("Current Tab Only")));
+	currentTabAction->setData(CurrentTabScope);
+	currentTabAction->setCheckable(true);
+
+	menu->addSeparator();
+
+	QAction *otherSourcesAction(menu->addAction(tr("Other Sources")));
+	otherSourcesAction->setData(OtherSourcesScope);
+	otherSourcesAction->setCheckable(true);
+	otherSourcesAction->setChecked(true);
+
+	QActionGroup *actionGroup(new QActionGroup(menu));
+	actionGroup->setExclusive(true);
+	actionGroup->addAction(allTabsAction);
+	actionGroup->addAction(currentTabAction);
+
+	m_ui->scopeButton->setMenu(menu);
+
+	connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(filterCategories()));
 	connect(m_ui->networkButton, SIGNAL(clicked()), this, SLOT(filterCategories()));
 	connect(m_ui->securityButton, SIGNAL(clicked()), this, SLOT(filterCategories()));
 	connect(m_ui->javaScriptButton, SIGNAL(clicked()), this, SLOT(filterCategories()));
@@ -53,6 +82,13 @@ void ConsoleWidget::showEvent(QShowEvent *event)
 {
 	if (!m_model)
 	{
+		MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+		if (mainWindow)
+		{
+			connect(mainWindow->getWindowsManager(), SIGNAL(currentWindowChanged(quint64)), this, SLOT(filterCategories()));
+		}
+
 		m_model = new QStandardItemModel(this);
 		m_model->setSortRole(Qt::UserRole);
 
@@ -155,6 +191,23 @@ void ConsoleWidget::copyText()
 
 void ConsoleWidget::filterCategories()
 {
+	QMenu *menu(qobject_cast<QMenu*>(sender()));
+
+	if (menu)
+	{
+		MessagesScopes messageScopes(NoScope);
+
+		for (int i = 0; i < menu->actions().count(); ++i)
+		{
+			if (menu->actions().at(i) && menu->actions().at(i)->isChecked())
+			{
+				messageScopes |= static_cast<MessagesScope>(menu->actions().at(i)->data().toInt());
+			}
+		}
+
+		m_messageScopes = messageScopes;
+	}
+
 	QList<MessageCategory> categories;
 
 	if (m_ui->networkButton->isChecked())
@@ -177,13 +230,19 @@ void ConsoleWidget::filterCategories()
 		categories.append(OtherMessageCategory);
 	}
 
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
+	Window *currentWindow(mainWindow ? mainWindow->getWindowsManager()->getWindowByIndex(mainWindow->getTabBar()->currentIndex()) : NULL);
+	const quint64 currentWindowIdentifier(currentWindow ? currentWindow->getIdentifier() : 0);
+
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
 		QStandardItem *item = m_model->item(i, 0);
 
 		if (item)
 		{
-			if (categories.contains(static_cast<MessageCategory>(item->data(Qt::UserRole + 1).toInt())))
+			const quint64 windowIdentifier(item->data(Qt::UserRole + 3).toULongLong());
+
+			if (((windowIdentifier == 0 && m_messageScopes.testFlag(OtherSourcesScope)) || (windowIdentifier > 0 && (windowIdentifier == currentWindowIdentifier && m_messageScopes.testFlag(CurrentTabScope)) || (m_messageScopes.testFlag(AllTabsScope)))) && categories.contains(static_cast<MessageCategory>(item->data(Qt::UserRole + 1).toInt())))
 			{
 				item->setFlags(item->flags() | Qt::ItemIsEnabled);
 			}

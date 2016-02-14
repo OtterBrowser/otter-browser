@@ -65,11 +65,6 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	m_layout->setContentsMargins(0, 0, 0, 0);
 	m_layout->setSpacing(0);
 
-	if (window && widget)
-	{
-		widget->setWindowIdentifier(window->getIdentifier());
-	}
-
 	setLayout(m_layout);
 	setFocusPolicy(Qt::StrongFocus);
 	setStyleSheet(QLatin1String("workaround"));
@@ -890,6 +885,8 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 
 	if (window)
 	{
+		widget->setWindowIdentifier(window->getIdentifier());
+
 		connect(m_webWidget, SIGNAL(requestedCloseWindow()), window, SLOT(close()));
 	}
 
@@ -970,15 +967,7 @@ void WebContentsWidget::setUrl(const QUrl &url, bool typed)
 {
 	if (url.scheme() == QLatin1String("view-source") && m_webWidget->getUrl().scheme() != QLatin1String("view-source"))
 	{
-		Window *window(qobject_cast<Window*>(parent()));
-		SourceViewerWebWidget *widget(new SourceViewerWebWidget(isPrivate(), this));
-
-		if (window)
-		{
-			widget->setWindowIdentifier(window->getIdentifier());
-		}
-
-		setWidget(widget, isPrivate());
+		setWidget(new SourceViewerWebWidget(isPrivate(), this), isPrivate());
 	}
 	else if (url.scheme() != QLatin1String("view-source") && m_webWidget->getUrl().scheme() == QLatin1String("view-source"))
 	{
@@ -997,8 +986,10 @@ void WebContentsWidget::setParent(Window *window)
 {
 	ContentsWidget::setParent(window);
 
-	if (window)
+	if (window && m_webWidget)
 	{
+		m_webWidget->setWindowIdentifier(window->getIdentifier());
+
 		connect(m_webWidget, SIGNAL(requestedCloseWindow()), window, SLOT(close()));
 	}
 }

@@ -42,6 +42,16 @@ public:
 	~ConsoleWidget();
 
 protected:
+	enum MessagesScope
+	{
+		NoScope = 0,
+		CurrentTabScope = 1,
+		AllTabsScope = 2,
+		OtherSourcesScope = 4
+	};
+
+	Q_DECLARE_FLAGS(MessagesScopes, MessagesScope)
+
 	void showEvent(QShowEvent *event);
 
 protected slots:
@@ -54,6 +64,7 @@ protected slots:
 
 private:
 	QStandardItemModel *m_model;
+	MessagesScopes m_messageScopes;
 	Ui::ConsoleWidget *m_ui;
 };
 
