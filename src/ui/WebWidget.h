@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -129,6 +129,7 @@ public:
 	virtual void print(QPrinter *printer) = 0;
 	void showDialog(ContentsDialog *dialog, bool lockEventLoop = true);
 	virtual void setOptions(const QVariantHash &options);
+	void setWindowIdentifier(quint64 identifier);
 	virtual WebWidget* clone(bool cloneHistory = true, bool isPrivate = false) = 0;
 	virtual Action* getAction(int identifier);
 	WebBackend* getBackend();
@@ -154,6 +155,7 @@ public:
 	virtual QVariantHash getStatistics() const;
 	virtual QHash<QByteArray, QByteArray> getHeaders() const;
 	virtual WindowsManager::ContentStates getContentState() const;
+	quint64 getWindowIdentifier() const;
 	virtual int getZoom() const = 0;
 	bool hasOption(const QString &key) const;
 	virtual bool hasSelection() const;
@@ -236,6 +238,7 @@ private:
 	QHash<int, Action*> m_actions;
 	QVariantHash m_options;
 	HitTestResult m_hitResult;
+	quint64 m_windowIdentifier;
 	int m_reloadTimer;
 
 signals:

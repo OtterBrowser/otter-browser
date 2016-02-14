@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -49,8 +49,10 @@ struct ConsoleMessage
 	QString source;
 	MessageCategory category;
 	MessageLevel level;
-	qint64 window;
+	quint64 window;
 	int line;
+
+	ConsoleMessage() : category(OtherMessageCategory), level(UnknownMessageLevel), window(0), line(-1) {}
 };
 
 class Console : public QObject
@@ -61,7 +63,7 @@ public:
 	~Console();
 
 	static void createInstance(QObject *parent = NULL);
-	static void addMessage(const QString &note, MessageCategory category, MessageLevel level, const QString &source = QString(), int line = -1, qint64 window = -1);
+	static void addMessage(const QString &note, MessageCategory category, MessageLevel level, const QString &source = QString(), int line = -1, quint64 window = 0);
 	static Console* getInstance();
 	static QList<ConsoleMessage*> getMessages();
 

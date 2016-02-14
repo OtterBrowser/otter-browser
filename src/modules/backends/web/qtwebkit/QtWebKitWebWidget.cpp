@@ -362,7 +362,7 @@ void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
 
 			if (!writer.write(QImage::fromData(QByteArray::fromBase64(imageUrl.mid(imageUrl.indexOf(QLatin1String(";base64,")) + 7).toUtf8()), imageType.toStdString().c_str())))
 			{
-				Console::addMessage(tr("Failed to save image: %1").arg(writer.errorString()), OtherMessageCategory, ErrorMessageLevel, path);
+				Console::addMessage(tr("Failed to save image: %1").arg(writer.errorString()), OtherMessageCategory, ErrorMessageLevel, path, -1, getWindowIdentifier());
 			}
 
 			return;

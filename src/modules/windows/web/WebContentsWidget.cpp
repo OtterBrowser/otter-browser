@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -64,6 +64,11 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 {
 	m_layout->setContentsMargins(0, 0, 0, 0);
 	m_layout->setSpacing(0);
+
+	if (window && widget)
+	{
+		widget->setWindowIdentifier(window->getIdentifier());
+	}
 
 	setLayout(m_layout);
 	setFocusPolicy(Qt::StrongFocus);
@@ -965,7 +970,15 @@ void WebContentsWidget::setUrl(const QUrl &url, bool typed)
 {
 	if (url.scheme() == QLatin1String("view-source") && m_webWidget->getUrl().scheme() != QLatin1String("view-source"))
 	{
-		setWidget(new SourceViewerWebWidget(isPrivate(), this), isPrivate());
+		Window *window(qobject_cast<Window*>(parent()));
+		SourceViewerWebWidget *widget(new SourceViewerWebWidget(isPrivate(), this));
+
+		if (window)
+		{
+			widget->setWindowIdentifier(window->getIdentifier());
+		}
+
+		setWidget(widget, isPrivate());
 	}
 	else if (url.scheme() != QLatin1String("view-source") && m_webWidget->getUrl().scheme() == QLatin1String("view-source"))
 	{

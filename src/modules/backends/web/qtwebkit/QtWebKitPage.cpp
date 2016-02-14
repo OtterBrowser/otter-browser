@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -216,7 +216,7 @@ void QtWebKitPage::javaScriptAlert(QWebFrame *frame, const QString &message)
 
 void QtWebKitPage::javaScriptConsoleMessage(const QString &note, int line, const QString &source)
 {
-	Console::addMessage(note, JavaScriptMessageCategory, ErrorMessageLevel, source, line);
+	Console::addMessage(note, JavaScriptMessageCategory, ErrorMessageLevel, source, line, (m_widget ? m_widget->getWindowIdentifier() : 0));
 }
 
 void QtWebKitPage::triggerAction(QWebPage::WebAction action, bool checked)
@@ -496,7 +496,7 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 			domain = QLatin1String("HTTP");
 		}
 
-		Console::addMessage(tr("%1 error #%2: %3").arg(domain).arg(errorOption->error).arg(errorOption->errorString), NetworkMessageCategory, ErrorMessageLevel, errorOption->url.toString());
+		Console::addMessage(tr("%1 error #%2: %3").arg(domain).arg(errorOption->error).arg(errorOption->errorString), NetworkMessageCategory, ErrorMessageLevel, errorOption->url.toString(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
 
 		return true;
 	}

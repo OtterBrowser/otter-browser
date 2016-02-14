@@ -545,7 +545,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 			if (result.isBlocked)
 			{
-				Console::addMessage(QCoreApplication::translate("main", "Blocked request"), Otter::NetworkMessageCategory, LogMessageLevel, request.url().toString());
+				Console::addMessage(QCoreApplication::translate("main", "Blocked request"), Otter::NetworkMessageCategory, LogMessageLevel, request.url().toString(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
 
 				QUrl url = QUrl();
 				url.setScheme(QLatin1String("http"));

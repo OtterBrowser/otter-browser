@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -59,6 +59,7 @@ WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent
 	m_pageApplicationsMenu(NULL),
 	m_reloadTimeMenu(NULL),
 	m_quickSearchMenu(NULL),
+	m_windowIdentifier(0),
 	m_reloadTimer(0)
 {
 	Q_UNUSED(isPrivate)
@@ -1052,6 +1053,11 @@ void WebWidget::setReloadTime(QAction *action)
 	}
 }
 
+void WebWidget::setWindowIdentifier(quint64 identifier)
+{
+	m_windowIdentifier = identifier;
+}
+
 Action* WebWidget::getAction(int identifier)
 {
 	if (identifier < 0)
@@ -1422,6 +1428,11 @@ WebWidget::HitTestResult WebWidget::getHitTestResult(const QPoint &position)
 	Q_UNUSED(position)
 
 	return HitTestResult();
+}
+
+quint64 WebWidget::getWindowIdentifier() const
+{
+	return m_windowIdentifier;
 }
 
 int WebWidget::getAmountOfNotLoadedPlugins() const
