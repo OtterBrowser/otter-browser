@@ -134,7 +134,7 @@ signals:
 	void zoomChanged(int zoom);
 	void windowAdded(qint64 identifier);
 	void windowRemoved(qint64 identifier);
-	void currentWindowChanged(qint64 identifier);
+	void currentWindowChanged(quint64 identifier);
 	void windowTitleChanged(QString title);
 	void closedWindowsAvailableChanged(bool available);
 };

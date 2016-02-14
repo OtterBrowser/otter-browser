@@ -81,7 +81,7 @@ protected slots:
 	void bookmarkRemoved(BookmarksItem *bookmark);
 	void bookmarkTrashed(BookmarksItem *bookmark);
 	void loadBookmarks();
-	void notifyWindowChanged(qint64 identifier);
+	void notifyWindowChanged(quint64 identifier);
 	void updateVisibility();
 	void setToolBarLocked(bool locked);
 

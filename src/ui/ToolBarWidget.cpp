@@ -140,7 +140,7 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 
 	if (m_mainWindow && m_identifier != ToolBarsManager::NavigationBar)
 	{
-		connect(m_mainWindow->getWindowsManager(), SIGNAL(currentWindowChanged(qint64)), this, SLOT(notifyWindowChanged(qint64)));
+		connect(m_mainWindow->getWindowsManager(), SIGNAL(currentWindowChanged(quint64)), this, SLOT(notifyWindowChanged(quint64)));
 	}
 }
 
@@ -323,7 +323,7 @@ void ToolBarWidget::loadBookmarks()
 	}
 }
 
-void ToolBarWidget::notifyWindowChanged(qint64 identifier)
+void ToolBarWidget::notifyWindowChanged(quint64 identifier)
 {
 	m_window = m_mainWindow->getWindowsManager()->getWindowByIdentifier(identifier);
 
