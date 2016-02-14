@@ -60,22 +60,20 @@ class Console : public QObject
 	Q_OBJECT
 
 public:
-	~Console();
-
 	static void createInstance(QObject *parent = NULL);
 	static void addMessage(const QString &note, MessageCategory category, MessageLevel level, const QString &source = QString(), int line = -1, quint64 window = 0);
 	static Console* getInstance();
-	static QList<ConsoleMessage*> getMessages();
+	static QList<ConsoleMessage> getMessages();
 
 protected:
 	explicit Console(QObject *parent = NULL);
 
 private:
 	static Console *m_instance;
-	static QList<ConsoleMessage*> m_messages;
+	static QList<ConsoleMessage> m_messages;
 
 signals:
-	void messageAdded(ConsoleMessage *message);
+	void messageAdded(const ConsoleMessage &message);
 };
 
 }

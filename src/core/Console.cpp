@@ -23,18 +23,10 @@ namespace Otter
 {
 
 Console* Console::m_instance = NULL;
-QList<ConsoleMessage*> Console::m_messages;
+QList<ConsoleMessage> Console::m_messages;
 
 Console::Console(QObject *parent) : QObject(parent)
 {
-}
-
-Console::~Console()
-{
-	for (int i = 0; i < m_messages.count(); ++i)
-	{
-		delete m_messages.at(i);
-	}
 }
 
 void Console::createInstance(QObject *parent)
@@ -47,14 +39,14 @@ void Console::createInstance(QObject *parent)
 
 void Console::addMessage(const QString &note, MessageCategory category, MessageLevel level, const QString &source, int line, quint64 window)
 {
-	ConsoleMessage *message = new ConsoleMessage();
-	message->time = QDateTime::currentDateTime();
-	message->note = note;
-	message->source = source;
-	message->category = category;
-	message->level = level;
-	message->line = line;
-	message->window = window;
+	ConsoleMessage message;
+	message.time = QDateTime::currentDateTime();
+	message.note = note;
+	message.source = source;
+	message.category = category;
+	message.level = level;
+	message.line = line;
+	message.window = window;
 
 	m_messages.append(message);
 
@@ -71,7 +63,7 @@ Console *Console::getInstance()
 	return m_instance;
 }
 
-QList<ConsoleMessage*> Console::getMessages()
+QList<ConsoleMessage> Console::getMessages()
 {
 	return m_messages;
 }

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@ void ConsoleWidget::showEvent(QShowEvent *event)
 		m_model = new QStandardItemModel(this);
 		m_model->setSortRole(Qt::UserRole);
 
-		const QList<ConsoleMessage*> messages = Console::getMessages();
+		const QList<ConsoleMessage> messages(Console::getMessages());
 
 		for (int i = 0; i < messages.count(); ++i)
 		{
@@ -65,15 +65,15 @@ void ConsoleWidget::showEvent(QShowEvent *event)
 
 		m_ui->consoleView->setModel(m_model);
 
-		connect(Console::getInstance(), SIGNAL(messageAdded(ConsoleMessage*)), this, SLOT(addMessage(ConsoleMessage*)));
+		connect(Console::getInstance(), SIGNAL(messageAdded(ConsoleMessage)), this, SLOT(addMessage(ConsoleMessage)));
 	}
 
 	QWidget::showEvent(event);
 }
 
-void ConsoleWidget::addMessage(ConsoleMessage *message)
+void ConsoleWidget::addMessage(const ConsoleMessage &message)
 {
-	if (!m_model || !message)
+	if (!m_model)
 	{
 		return;
 	}
@@ -81,7 +81,7 @@ void ConsoleWidget::addMessage(ConsoleMessage *message)
 	QIcon icon;
 	QString category;
 
-	switch (message->level)
+	switch (message.level)
 	{
 		case ErrorMessageLevel:
 			icon = Utils::getIcon(QLatin1String("dialog-error"));
@@ -97,7 +97,7 @@ void ConsoleWidget::addMessage(ConsoleMessage *message)
 			break;
 	}
 
-	switch (message->category)
+	switch (message.category)
 	{
 		case NetworkMessageCategory:
 			category = tr("Network");
@@ -117,23 +117,23 @@ void ConsoleWidget::addMessage(ConsoleMessage *message)
 			break;
 	}
 
-	const QString source = message->source + ((message->line > 0) ? QStringLiteral(":%1").arg(message->line) : QString());
-	QString entry = QStringLiteral("[%1] %2").arg(message->time.toString()).arg(category);
+	const QString source = message.source + ((message.line > 0) ? QStringLiteral(":%1").arg(message.line) : QString());
+	QString entry = QStringLiteral("[%1] %2").arg(message.time.toString()).arg(category);
 
-	if (!message->source.isEmpty())
+	if (!message.source.isEmpty())
 	{
 		entry.append(QStringLiteral(" - %1").arg(source));
 	}
 
 	QStandardItem *parentItem = new QStandardItem(icon, entry);
-	parentItem->setData(message->time.toTime_t(), Qt::UserRole);
-	parentItem->setData(message->category, (Qt::UserRole + 1));
+	parentItem->setData(message.time.toTime_t(), Qt::UserRole);
+	parentItem->setData(message.category, (Qt::UserRole + 1));
 	parentItem->setData(source, (Qt::UserRole + 2));
-	parentItem->setData(message->window, (Qt::UserRole + 3));
+	parentItem->setData(message.window, (Qt::UserRole + 3));
 
-	if (!message->note.isEmpty())
+	if (!message.note.isEmpty())
 	{
-		parentItem->appendRow(new QStandardItem(message->note));
+		parentItem->appendRow(new QStandardItem(message.note));
 	}
 
 	m_model->appendRow(parentItem);
