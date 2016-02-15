@@ -161,19 +161,21 @@ void ConsoleWidget::addMessage(const ConsoleMessage &message)
 		entry.append(QStringLiteral(" - %1").arg(source));
 	}
 
-	QStandardItem *parentItem = new QStandardItem(icon, entry);
-	parentItem->setData(message.time.toTime_t(), Qt::UserRole);
-	parentItem->setData(message.category, (Qt::UserRole + 1));
-	parentItem->setData(source, (Qt::UserRole + 2));
-	parentItem->setData(message.window, (Qt::UserRole + 3));
+	QStandardItem *item = new QStandardItem(icon, entry);
+	item->setData(message.time.toTime_t(), Qt::UserRole);
+	item->setData(message.category, (Qt::UserRole + 1));
+	item->setData(source, (Qt::UserRole + 2));
+	item->setData(message.window, (Qt::UserRole + 3));
 
 	if (!message.note.isEmpty())
 	{
-		parentItem->appendRow(new QStandardItem(message.note));
+		item->appendRow(new QStandardItem(message.note));
 	}
 
-	m_model->appendRow(parentItem);
+	m_model->appendRow(item);
 	m_model->sort(0, Qt::DescendingOrder);
+
+	applyFilters(item, m_ui->filterLineEdit->text(), getCategories(), getCurrentWindow());
 }
 
 void ConsoleWidget::clear()
@@ -208,6 +210,61 @@ void ConsoleWidget::filterCategories()
 		m_messageScopes = messageScopes;
 	}
 
+	const QList<MessageCategory> categories(getCategories());
+	const quint64 currentWindow(getCurrentWindow());
+
+	for (int i = 0; i < m_model->rowCount(); ++i)
+	{
+		applyFilters(m_model->item(i, 0), m_ui->filterLineEdit->text(), categories, currentWindow);
+	}
+}
+
+void ConsoleWidget::filterMessages(const QString &filter)
+{
+	if (m_model)
+	{
+		const QList<MessageCategory> categories(getCategories());
+		const quint64 currentWindow(getCurrentWindow());
+
+		for (int i = 0; i < m_model->rowCount(); ++i)
+		{
+			applyFilters(m_model->item(i, 0), filter, categories, currentWindow);
+		}
+	}
+}
+
+void ConsoleWidget::applyFilters(QStandardItem *item, const QString &filter, const QList<MessageCategory> &categories, quint64 currentWindow)
+{
+	if (!item)
+	{
+		return;
+	}
+
+	bool matched(true);
+
+	if (!filter.isEmpty() && !(item->data(Qt::UserRole + 2).toString().contains(filter, Qt::CaseInsensitive) || (item->child(0, 0) && item->child(0, 0)->text().contains(filter, Qt::CaseInsensitive))))
+	{
+		matched = false;
+	}
+	else
+	{
+		const quint64 window(item->data(Qt::UserRole + 3).toULongLong());
+
+		matched = (((window == 0 && m_messageScopes.testFlag(OtherSourcesScope)) || (window > 0 && (window == currentWindow && m_messageScopes.testFlag(CurrentTabScope)) || (m_messageScopes.testFlag(AllTabsScope)))) && categories.contains(static_cast<MessageCategory>(item->data(Qt::UserRole + 1).toInt())));
+	}
+
+	m_ui->consoleView->setRowHidden(item->row(), m_ui->consoleView->rootIndex(), !matched);
+}
+
+void ConsoleWidget::showContextMenu(const QPoint position)
+{
+	QMenu menu(m_ui->consoleView);
+	menu.addAction(Utils::getIcon(QLatin1String("edit-copy")), tr("Copy"), this, SLOT(copyText()));
+	menu.exec(m_ui->consoleView->mapToGlobal(position));
+}
+
+QList<MessageCategory> ConsoleWidget::getCategories() const
+{
 	QList<MessageCategory> categories;
 
 	if (m_ui->networkButton->isChecked())
@@ -230,57 +287,15 @@ void ConsoleWidget::filterCategories()
 		categories.append(OtherMessageCategory);
 	}
 
+	return categories;
+}
+
+quint64 ConsoleWidget::getCurrentWindow()
+{
 	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 	Window *currentWindow(mainWindow ? mainWindow->getWindowsManager()->getWindowByIndex(mainWindow->getTabBar()->currentIndex()) : NULL);
-	const quint64 currentWindowIdentifier(currentWindow ? currentWindow->getIdentifier() : 0);
 
-	for (int i = 0; i < m_model->rowCount(); ++i)
-	{
-		QStandardItem *item = m_model->item(i, 0);
-
-		if (item)
-		{
-			const quint64 windowIdentifier(item->data(Qt::UserRole + 3).toULongLong());
-
-			if (((windowIdentifier == 0 && m_messageScopes.testFlag(OtherSourcesScope)) || (windowIdentifier > 0 && (windowIdentifier == currentWindowIdentifier && m_messageScopes.testFlag(CurrentTabScope)) || (m_messageScopes.testFlag(AllTabsScope)))) && categories.contains(static_cast<MessageCategory>(item->data(Qt::UserRole + 1).toInt())))
-			{
-				item->setFlags(item->flags() | Qt::ItemIsEnabled);
-			}
-			else
-			{
-				item->setFlags(item->flags() & ~Qt::ItemIsEnabled);
-
-				m_ui->consoleView->setRowHidden(i, m_ui->consoleView->rootIndex(), true);
-			}
-		}
-	}
-
-	filterMessages(m_ui->filterLineEdit->text());
-}
-
-void ConsoleWidget::filterMessages(const QString &filter)
-{
-	if (!m_model)
-	{
-		return;
-	}
-
-	for (int i = 0; i < m_model->rowCount(); ++i)
-	{
-		QStandardItem *item = m_model->item(i, 0);
-
-		if (item)
-		{
-			m_ui->consoleView->setRowHidden(i, m_ui->consoleView->rootIndex(), (!item->flags().testFlag(Qt::ItemIsEnabled) || (!filter.isEmpty() && !(item->data(Qt::UserRole + 2).toString().contains(filter, Qt::CaseInsensitive) || (item->child(0, 0) && item->child(0, 0)->text().contains(filter, Qt::CaseInsensitive))))));
-		}
-	}
-}
-
-void ConsoleWidget::showContextMenu(const QPoint position)
-{
-	QMenu menu(m_ui->consoleView);
-	menu.addAction(Utils::getIcon(QLatin1String("edit-copy")), tr("Copy"), this, SLOT(copyText()));
-	menu.exec(m_ui->consoleView->mapToGlobal(position));
+	return (currentWindow ? currentWindow->getIdentifier() : 0);
 }
 
 }
