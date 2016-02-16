@@ -79,7 +79,7 @@ void TransfersManager::addTransfer(Transfer *transfer)
 	connect(transfer, SIGNAL(changed()), m_instance, SLOT(transferChanged()));
 	connect(transfer, SIGNAL(stopped()), m_instance, SLOT(transferStopped()));
 
-	if (transfer->getOptions().testFlag(Transfer::CanNotifyOption))
+	if (transfer->getOptions().testFlag(Transfer::CanNotifyOption) && transfer->getState() != Transfer::CancelledState)
 	{
 		emit m_instance->transferStarted(transfer);
 
@@ -132,7 +132,7 @@ void TransfersManager::transferStarted()
 {
 	Transfer *transfer = qobject_cast<Transfer*>(sender());
 
-	if (transfer)
+	if (transfer && transfer->getState() != Transfer::CancelledState)
 	{
 		emit transferStarted(transfer);
 
