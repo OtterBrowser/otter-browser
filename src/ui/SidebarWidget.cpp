@@ -61,7 +61,6 @@ SidebarWidget::SidebarWidget(QWidget *parent) : QWidget(parent),
 	toolbar->addAction(ActionsManager::getAction(ActionsManager::ClosePanelAction, this));
 
 	m_ui->panelLayout->addWidget(toolbar);
-
 	m_ui->panelsButton->setPopupMode(QToolButton::InstantPopup);
 	m_ui->panelsButton->setIcon(Utils::getIcon(QLatin1String("list-add")));
 
@@ -97,7 +96,9 @@ void SidebarWidget::changeEvent(QEvent *event)
 	{
 		m_ui->retranslateUi(this);
 
-		for (QHash<QString, QToolButton*>::iterator iterator = m_buttons.begin(); iterator != m_buttons.end(); ++iterator)
+		QHash<QString, QToolButton*>::iterator iterator;
+
+		for (iterator = m_buttons.begin(); iterator != m_buttons.end(); ++iterator)
 		{
 			iterator.value()->setToolTip(getPanelTitle(iterator.key()));
 		}
