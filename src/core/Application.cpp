@@ -39,6 +39,7 @@
 #include "TransfersManager.h"
 #include "Utils.h"
 #include "Updater.h"
+#include "WebBackend.h"
 #include "./config.h"
 #ifdef Q_OS_WIN
 #include "../modules/platforms/windows/WindowsPlatformIntegration.h"
@@ -669,7 +670,9 @@ QCommandLineParser* Application::getCommandLineParser()
 QString Application::createReport()
 {
 	ActionsManager::createInstance(getInstance());
+	AddonsManager::createInstance(getInstance());
 
+	WebBackend *webBackend(AddonsManager::getWebBackend());
 	QString report;
 	QTextStream stream(&report);
 	stream.setFieldAlignment(QTextStream::AlignLeft);
@@ -698,6 +701,11 @@ QString Application::createReport()
 	stream.setFieldWidth(20);
 	stream << QLatin1String("Context");
 	stream << OTTER_VERSION_CONTEXT;
+	stream.setFieldWidth(0);
+	stream << QLatin1String("\n\t");
+	stream.setFieldWidth(20);
+	stream << QLatin1String("Web Backend");
+	stream << (webBackend ? QStringLiteral("%1 %2").arg(webBackend->getTitle()).arg(webBackend->getEngineVersion()) : QLatin1String("none"));
 	stream.setFieldWidth(0);
 	stream << QLatin1String("\n\nPaths:\n\t");
 	stream.setFieldWidth(20);
