@@ -817,9 +817,14 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 
 			triggerAction(gesture);
 
-			while (m_steps.count() && m_steps[m_steps.count() - 1].type == QEvent::Wheel)
+			while (!m_steps.isEmpty() && m_steps[m_steps.count() - 1].type == QEvent::Wheel)
 			{
 				m_steps.removeAt(m_steps.count() - 1);
+			}
+
+			while (!m_steps.isEmpty() && m_events[m_events.count() - 1]->type() == QEvent::Wheel)
+			{
+				m_events.removeAt(m_events.count() - 1);
 			}
 
 			m_afterScroll = true;
