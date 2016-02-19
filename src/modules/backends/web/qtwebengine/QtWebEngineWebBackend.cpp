@@ -126,6 +126,11 @@ QString QtWebEngineWebBackend::getEngineVersion() const
 	return m_engineVersion;
 }
 
+QString QtWebEngineWebBackend::getSslVersion() const
+{
+	return tr("unknown");
+}
+
 QString QtWebEngineWebBackend::getUserAgent(const QString &pattern) const
 {
 	if (!pattern.isEmpty())

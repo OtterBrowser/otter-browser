@@ -645,17 +645,23 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			break;
 		case ActionsManager::AboutApplicationAction:
 			{
-				WebBackend *backend = AddonsManager::getWebBackend();
+				WebBackend *webBackend(AddonsManager::getWebBackend());
 				QString about = tr("<b>Otter %1</b><br>Web browser controlled by the user, not vice-versa.").arg(Application::getInstance()->getFullVersion());
-				about.append(QLatin1String("<br><br>") + tr("Web backend: %1 %2.").arg(backend->getTitle()).arg(backend->getEngineVersion()) + QLatin1String("<br><br>"));
 
-				if (QSslSocket::supportsSsl())
+				if (webBackend)
 				{
-					 about.append(tr("SSL library version: %1.").arg(QSslSocket::sslLibraryVersionString()));
-				}
-				else
-				{
-					about.append(tr("SSL library not available."));
+					const QString sslVersion(webBackend->getSslVersion());
+
+					about.append(QLatin1String("<br><br>") + tr("Web backend: %1 %2.").arg(webBackend->getTitle()).arg(webBackend->getEngineVersion()) + QLatin1String("<br><br>"));
+
+					if (sslVersion.isEmpty())
+					{
+						about.append(tr("SSL library not available."));
+					}
+					else
+					{
+						about.append(tr("SSL library version: %1.").arg(sslVersion));
+					}
 				}
 
 				QMessageBox::about(this, QLatin1String("Otter"), about);

@@ -38,6 +38,7 @@ public:
 
 	virtual WebWidget* createWidget(bool isPrivate = false, ContentsWidget *parent = NULL) = 0;
 	virtual QString getEngineVersion() const = 0;
+	virtual QString getSslVersion() const = 0;
 	virtual QString getUserAgent(const QString &pattern = QString()) const = 0;
 	QUrl getUpdateUrl() const;
 	virtual QList<SpellCheckManager::DictionaryInformation> getDictionaries() const;

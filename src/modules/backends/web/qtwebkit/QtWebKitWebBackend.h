@@ -41,6 +41,7 @@ public:
 	QString getDescription() const;
 	QString getVersion() const;
 	QString getEngineVersion() const;
+	QString getSslVersion() const;
 	QString getUserAgent(const QString &pattern = QString()) const;
 	QUrl getHomePage() const;
 	QIcon getIcon() const;

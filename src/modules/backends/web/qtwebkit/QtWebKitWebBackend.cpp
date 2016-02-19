@@ -221,6 +221,11 @@ QString QtWebKitWebBackend::getEngineVersion() const
 	return qWebKitVersion();
 }
 
+QString QtWebKitWebBackend::getSslVersion() const
+{
+	return (QSslSocket::supportsSsl() ? QSslSocket::sslLibraryVersionString() : QString());
+}
+
 QString QtWebKitWebBackend::getUserAgent(const QString &pattern) const
 {
 	if (!pattern.isEmpty())
