@@ -4,12 +4,13 @@ Priority: extra
 Maintainer: Rog131 <samrog131@hotmail.com>
 Build-Depends: debhelper (>= 9.0),
  cmake,
- qtbase5-dev (>=5.2.0),
+ libhunspell-1.3-0 (>= 1.3.3),
  libqt5webkit5-dev (>=5.1.0),
- qtdeclarative5-dev (>=5.2.0),
- qtscript5-dev (>=5.2.0),
- qtmultimedia5-dev (>=5.2.0),
  libqt5xmlpatterns5-dev (>=5.2.0),
+ qtbase5-dev (>=5.2.0),
+ qtdeclarative5-dev (>=5.2.0),
+ qtmultimedia5-dev (>=5.2.0),
+ qtscript5-dev (>=5.2.0),
 Standards-Version: 3.9.6
 Homepage: http://otter-browser.org/
 

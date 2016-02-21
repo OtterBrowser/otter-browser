@@ -23,7 +23,7 @@
 #include <QtCore/QObject>
 
 #ifdef OTTER_ENABLE_SPELLCHECK
-#include "sonnet/speller.h"
+#include "../../3rdparty/sonnet/src/core/speller.h"
 #endif
 
 namespace Otter

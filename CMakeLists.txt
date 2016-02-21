@@ -32,7 +32,7 @@ if (EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	set(CPACK_PACKAGE_NAME "otter-browser")
 	set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}_${MAJOR_VERSION}.${MINOR_VERSION}.${CPACK_PACKAGE_VERSION_PATCH}")
 	set(CPACK_SOURCE_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}_${MAJOR_VERSION}.${MINOR_VERSION}.${CPACK_PACKAGE_VERSION_PATCH}")
-	set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt5webkit5 (>=5.1.0), libqt5script5 (>=5.2.0), libqt5multimedia5 (>=5.2.0), libqt5sql5-sqlite (>=5.2.0)")
+	set(CPACK_DEBIAN_PACKAGE_DEPENDS "libhunspell-1.3-0 (>= 1.3.3), libqt5multimedia5 (>=5.2.0), libqt5script5 (>=5.2.0), libqt5webkit5 (>=5.1.0), libqt5xmlpatterns5 (>=5.2.0)")
 	set(CPACK_DEBIAN_PACKAGE_RECOMMENDS "gstreamer0.10-plugins-base, gstreamer0.10-plugins-good")
 	set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
 	set(CPACK_DEBIAN_PACKAGE_SECTION "web")
@@ -69,7 +69,7 @@ option(EnableQtwebengine "Enable QtWebEngine backend (requires Qt 5.5)" OFF)
 option(EnableQtwebkit "Enable QtWebKit backend (requires Qt 5.2)" ON)
 
 find_package(Qt5 5.2.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Script Widgets XmlPatterns)
-find_package(KF5Sonnet)
+find_package(Hunspell)
 
 if (EnableQtwebengine)
 	find_package(Qt5 5.5.0 REQUIRED COMPONENTS WebEngine WebEngineWidgets)
@@ -335,8 +335,9 @@ if (EnableQtwebkit)
 	)
 endif (EnableQtwebkit)
 
-if (KF5Sonnet_FOUND)
+if (HUNSPELL_FOUND)
 	add_definitions(-DOTTER_ENABLE_SPELLCHECK)
+	add_definitions(-DSONNET_STATIC)
 	add_definitions(-DQT_STATICPLUGIN)
 
 	set(otter_src
@@ -344,8 +345,17 @@ if (KF5Sonnet_FOUND)
 		src/modules/backends/web/qtwebkit/qwebkitplatformplugin.h
 		src/modules/backends/web/qtwebkit/QtWebKitPlugin.cpp
 		src/modules/backends/web/qtwebkit/QtWebKitSpellChecker.cpp
+		3rdparty/sonnet/src/core/client.cpp
+		3rdparty/sonnet/src/core/loader.cpp
+		3rdparty/sonnet/src/core/speller.cpp
+		3rdparty/sonnet/src/core/spellerplugin.cpp
+		3rdparty/sonnet/src/core/settings.cpp
+		3rdparty/sonnet/src/core/textbreaks.cpp
+		3rdparty/sonnet/src/plugins/hunspell/hunspellclient.cpp
+		3rdparty/sonnet/src/plugins/hunspell/hunspelldebug.cpp
+		3rdparty/sonnet/src/plugins/hunspell/hunspelldict.cpp
 	)
-endif (KF5Sonnet_FOUND)
+endif (HUNSPELL_FOUND)
 
 if (WIN32)
 	add_definitions(-DUNICODE -D_UNICODE)
@@ -404,9 +414,9 @@ if (EnableQtwebengine)
 	qt5_use_modules(otter-browser WebEngine WebEngineWidgets)
 endif (EnableQtwebengine)
 
-if (KF5Sonnet_FOUND)
-	target_link_libraries(otter-browser KF5::SonnetCore)
-endif (KF5Sonnet_FOUND)
+if (HUNSPELL_FOUND)
+	target_link_libraries(otter-browser ${HUNSPELL_LIBRARIES})
+endif (HUNSPELL_FOUND)
 
 if (WIN32)
 	qt5_use_modules(otter-browser WinExtras)
