@@ -21,7 +21,7 @@
 #define QTWEBKITSPELLCHECKER_H
 
 #include "qwebkitplatformplugin.h"
-#include "sonnet/speller.h"
+#include "../../../../../3rdparty/sonnet/src/core/speller.h"
 
 namespace Otter
 {
