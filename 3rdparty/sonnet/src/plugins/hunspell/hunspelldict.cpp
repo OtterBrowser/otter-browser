@@ -29,34 +29,14 @@
 using namespace Sonnet;
 
 HunspellDict::HunspellDict(const QString &lang)
-    : SpellerPlugin(lang)
+    : SpellerPlugin(QFileInfo(lang).baseName())
     , m_speller(0)
     , m_codec(0)
 {
     qCDebug(SONNET_HUNSPELL) << " HunspellDict::HunspellDict( const QString& lang ):" << lang;
 
-    QByteArray dirPath = QByteArrayLiteral(HUNSPELL_MAIN_DICT_PATH);
-    QString dic = QLatin1String(dirPath) % lang % QLatin1String(".dic");
-
-#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
-    if (!QFileInfo(dic).exists()) {
-#ifdef Q_OS_MAC
-        dirPath = QByteArrayLiteral("/Applications/LibreOffice.app/Contents/Resources/extensions/dict-") + lang.leftRef(2).toLatin1();
-#endif
-#ifdef Q_OS_WIN
-        dirPath = QByteArrayLiteral("C:/Program Files (x86)/LibreOffice 5/share/extensions/dict-") + lang.leftRef(2).toLatin1();
-#endif
-        dic = QLatin1String(dirPath) % QLatin1Char('/') % lang % QLatin1String(".dic");
-        if (lang.length()==5 && !QFileInfo(dic).exists()) {
-            dirPath += '-' + lang.midRef(3,2).toLatin1();
-            dic = QLatin1String(dirPath) % QLatin1Char('/') % lang % QLatin1String(".dic");
-        }
-        dirPath += '/';
-    }
-#endif
-
-    if (QFileInfo(dic).exists()) {
-        m_speller = new Hunspell(QByteArray(dirPath + lang.toLatin1() + ".aff").constData(), dic.toLatin1().constData());
+    if (QFileInfo(lang).exists()) {
+        m_speller = new Hunspell(lang.toLatin1().constData(), (lang.left(lang.length() - 4) + QLatin1String(".dic")).toLatin1().constData());
         m_codec = QTextCodec::codecForName(m_speller->get_dic_encoding());
         if (!m_codec) {
             qWarning() << "Failed to find a text codec for name" << m_speller->get_dic_encoding() << "defaulting to locale text codec";

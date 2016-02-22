@@ -23,6 +23,8 @@
 
 #include "../../core/client_p.h"
 
+#include <QtCore/QHash>
+
 namespace Sonnet
 {
 class SpellerPlugin;
@@ -50,6 +52,9 @@ public:
     {
         return QStringLiteral("Hunspell");
     }
+
+private:
+    QHash<QString, QString> m_dictionaries;
 };
 
 #endif

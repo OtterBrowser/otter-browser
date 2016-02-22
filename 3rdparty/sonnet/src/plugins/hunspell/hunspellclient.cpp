@@ -31,22 +31,7 @@ HunspellClient::HunspellClient(QObject *parent)
     : Client(parent)
 {
     qCDebug(SONNET_HUNSPELL) << " HunspellClient::HunspellClient";
-}
-
-HunspellClient::~HunspellClient()
-{
-}
-
-SpellerPlugin *HunspellClient::createSpeller(const QString &language)
-{
-    qCDebug(SONNET_HUNSPELL) << " SpellerPlugin *HunspellClient::createSpeller(const QString &language) ;" << language;
-    HunspellDict *ad = new HunspellDict(language);
-    return ad;
-}
-
-QStringList HunspellClient::languages() const
-{
-    QStringList lst;
+	QStringList lst;
     const QString AFF_MASK = QStringLiteral("*.aff");
 
 #if defined(Q_OS_MAC) || defined(Q_OS_WIN)
@@ -61,7 +46,7 @@ QStringList HunspellClient::languages() const
         foreach (const QString &d, lodir.entryList(QStringList(DIR_MASK), QDir::Dirs)) {
             QDir dictDir(lodir.absoluteFilePath(d));
             foreach (const QString &dict, dictDir.entryList(QStringList(AFF_MASK), QDir::Files)) {
-                lst << dict.left(dict.length() - 4); // remove ".aff"
+                m_dictionaries[dict.left(dict.length() - 4)] = dictDir.absoluteFilePath(dict);
             }
         }
     }
@@ -71,9 +56,23 @@ QStringList HunspellClient::languages() const
 
     if (dir.exists()) {
         foreach (const QString &dict, dir.entryList(QStringList(AFF_MASK), QDir::Files)) {
-            lst << dict.left(dict.length() - 4); // remove ".aff"
+            m_dictionaries[dict.left(dict.length() - 4)] = dir.absoluteFilePath(dict);
         }
     }
-    return lst;
+}
+
+HunspellClient::~HunspellClient()
+{
+}
+
+SpellerPlugin *HunspellClient::createSpeller(const QString &language)
+{
+    qCDebug(SONNET_HUNSPELL) << " SpellerPlugin *HunspellClient::createSpeller(const QString &language) ;" << language;
+    return new HunspellDict(m_dictionaries.value(language));
+}
+
+QStringList HunspellClient::languages() const
+{
+    return m_dictionaries.keys();
 }
 
