@@ -104,7 +104,12 @@ ContentBlockingManager::CheckResult ContentBlockingManager::checkUrl(const QVect
 	{
 		if (profiles[i] >= 0 && profiles[i] < m_profiles.count())
 		{
-			return m_profiles.at(profiles[i])->checkUrl(baseUrl, requestUrl, resourceType);
+			const CheckResult currentResult = m_profiles.at(profiles[i])->checkUrl(baseUrl, requestUrl, resourceType);
+			
+			if (currentResult.isBlocked)
+			{
+				return currentResult;
+			}
 		}
 	}
 
