@@ -24,14 +24,6 @@
 #include "../../core/spellerplugin_p.h"
 #include "hunspell/hunspell.hxx"
 
-#ifndef HUNSPELL_MAIN_DICT_PATH
-#ifdef Q_OS_MAC
-#define HUNSPELL_MAIN_DICT_PATH "/System/Library/Spelling"
-#else
-#define HUNSPELL_MAIN_DICT_PATH "/usr/share/hunspell/"
-#endif
-#endif
-
 class HunspellDict : public Sonnet::SpellerPlugin
 {
 public:

@@ -31,7 +31,7 @@ HunspellClient::HunspellClient(QObject *parent)
     : Client(parent)
 {
     qCDebug(SONNET_HUNSPELL) << " HunspellClient::HunspellClient";
-	QStringList lst;
+    QStringList lst;
     const QString AFF_MASK = QStringLiteral("*.aff");
 
 #if defined(Q_OS_MAC) || defined(Q_OS_WIN)
@@ -52,11 +52,21 @@ HunspellClient::HunspellClient(QObject *parent)
     }
 #endif
 
-    QDir dir(QStringLiteral(HUNSPELL_MAIN_DICT_PATH));
+    QStringList directories;
 
-    if (dir.exists()) {
-        foreach (const QString &dict, dir.entryList(QStringList(AFF_MASK), QDir::Files)) {
-            m_dictionaries[dict.left(dict.length() - 4)] = dir.absoluteFilePath(dict);
+#ifdef Q_OS_MAC
+    directories << QLatin1String("/System/Library/Spelling/");
+#else
+    directories << QLatin1String("/usr/share/hunspell/") << QLatin1String("/usr/local/share/share/hunspell/");
+#endif
+
+    for (int i = 0; i < directories.count(); ++i) {
+        QDir dir(directories.at(i));
+
+        if (dir.exists()) {
+            foreach (const QString &dict, dir.entryList(QStringList(AFF_MASK), QDir::Files)) {
+                m_dictionaries[dict.left(dict.length() - 4)] = dir.absoluteFilePath(dict);
+            }
         }
     }
 }
