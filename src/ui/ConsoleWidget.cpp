@@ -250,7 +250,7 @@ void ConsoleWidget::applyFilters(QStandardItem *item, const QString &filter, con
 	{
 		const quint64 window(item->data(Qt::UserRole + 3).toULongLong());
 
-		matched = (((window == 0 && m_messageScopes.testFlag(OtherSourcesScope)) || (window > 0 && (window == currentWindow && m_messageScopes.testFlag(CurrentTabScope)) || (m_messageScopes.testFlag(AllTabsScope)))) && categories.contains(static_cast<MessageCategory>(item->data(Qt::UserRole + 1).toInt())));
+		matched = (((window == 0 && m_messageScopes.testFlag(OtherSourcesScope)) || (window > 0 && ((window == currentWindow && m_messageScopes.testFlag(CurrentTabScope)) || m_messageScopes.testFlag(AllTabsScope)))) && categories.contains(static_cast<MessageCategory>(item->data(Qt::UserRole + 1).toInt())));
 	}
 
 	m_ui->consoleView->setRowHidden(item->row(), m_ui->consoleView->rootIndex(), !matched);
