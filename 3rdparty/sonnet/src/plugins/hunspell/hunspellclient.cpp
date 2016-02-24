@@ -57,7 +57,7 @@ HunspellClient::HunspellClient(QObject *parent)
 #ifdef Q_OS_MAC
     directories << QLatin1String("/System/Library/Spelling/");
 #else
-    directories << QLatin1String("/usr/share/hunspell/") << QLatin1String("/usr/local/share/share/hunspell/");
+    directories << QLatin1String("/usr/share/hunspell/") << QLatin1String("/usr/local/share/hunspell/");
 #endif
 
     for (int i = 0; i < directories.count(); ++i) {
