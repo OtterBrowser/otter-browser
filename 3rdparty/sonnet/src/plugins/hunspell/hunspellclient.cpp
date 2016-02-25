@@ -60,6 +60,13 @@ HunspellClient::HunspellClient(QObject *parent)
     directories << QLatin1String("/usr/share/hunspell/") << QLatin1String("/usr/local/share/hunspell/");
 #endif
 
+    const QString otterDirectory(qgetenv("OTTER_DICTIONARIES"));
+
+    if (!otterDirectory.isEmpty())
+    {
+        directories.append(otterDirectory);
+    }
+
     for (int i = 0; i < directories.count(); ++i) {
         QDir dir(directories.at(i));
 
