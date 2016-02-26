@@ -77,6 +77,7 @@ public:
 		AlwaysOnTopTabAction,
 		ClearTabHistoryAction,
 		PurgeTabHistoryAction,
+		SuspendTabAction,
 		CloseTabAction,
 		CloseOtherTabsAction,
 		ClosePrivateTabsAction,
