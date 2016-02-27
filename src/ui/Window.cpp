@@ -155,50 +155,44 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 		}
 	}
 
-	if (identifier == ActionsManager::GoToParentDirectoryAction && getContentsWidget()->getType() == QLatin1String("web"))
+	switch (identifier)
 	{
-		const QUrl url = getContentsWidget()->getUrl();
+		case ActionsManager::PrintAction:
+			{
+				QPrinter printer;
+				QPrintDialog printDialog(&printer, this);
+				printDialog.setWindowTitle(tr("Print Page"));
 
-		if (url.toString().endsWith(QLatin1Char('/')))
-		{
-			getContentsWidget()->setUrl(url.resolved(QUrl(QLatin1String(".."))));
-		}
-		else
-		{
-			getContentsWidget()->setUrl(url.resolved(QUrl(QLatin1String("."))));
-		}
-	}
-	else if (identifier == ActionsManager::PrintAction)
-	{
-		QPrinter printer;
-		QPrintDialog printDialog(&printer, this);
-		printDialog.setWindowTitle(tr("Print Page"));
+				if (printDialog.exec() != QDialog::Accepted)
+				{
+					return;
+				}
 
-		if (printDialog.exec() != QDialog::Accepted)
-		{
-			return;
-		}
+				getContentsWidget()->print(&printer);
+			}
 
-		getContentsWidget()->print(&printer);
-	}
-	else if (identifier == ActionsManager::PrintPreviewAction)
-	{
-		QPrintPreviewDialog printPreviewDialog(this);
-		printPreviewDialog.setWindowFlags(printPreviewDialog.windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
-		printPreviewDialog.setWindowTitle(tr("Print Preview"));
+			break;
+		case ActionsManager::PrintPreviewAction:
+			{
+				QPrintPreviewDialog printPreviewDialog(this);
+				printPreviewDialog.setWindowFlags(printPreviewDialog.windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
+				printPreviewDialog.setWindowTitle(tr("Print Preview"));
 
-		if (QApplication::activeWindow())
-		{
-			printPreviewDialog.resize(QApplication::activeWindow()->size());
-		}
+				if (QApplication::activeWindow())
+				{
+					printPreviewDialog.resize(QApplication::activeWindow()->size());
+				}
 
-		connect(&printPreviewDialog, SIGNAL(paintRequested(QPrinter*)), getContentsWidget(), SLOT(print(QPrinter*)));
+				connect(&printPreviewDialog, SIGNAL(paintRequested(QPrinter*)), getContentsWidget(), SLOT(print(QPrinter*)));
 
-		printPreviewDialog.exec();
-	}
-	else
-	{
-		getContentsWidget()->triggerAction(identifier, parameters);
+				printPreviewDialog.exec();
+			}
+
+			break;
+		default:
+			getContentsWidget()->triggerAction(identifier, parameters);
+
+			break;
 	}
 }
 

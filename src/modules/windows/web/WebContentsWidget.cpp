@@ -344,6 +344,21 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 			}
 
 			break;
+		case ActionsManager::GoToParentDirectoryAction:
+			{
+				const QUrl url(getUrl());
+
+				if (url.toString().endsWith(QLatin1Char('/')))
+				{
+					setUrl(url.resolved(QUrl(QLatin1String(".."))));
+				}
+				else
+				{
+					setUrl(url.resolved(QUrl(QLatin1String("."))));
+				}
+			}
+
+			break;
 		case ActionsManager::PasteAndGoAction:
 			if (!QGuiApplication::clipboard()->text().isEmpty())
 			{
