@@ -157,6 +157,15 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 
 	switch (identifier)
 	{
+		case ActionsManager::SuspendTabAction:
+			if (m_contentsWidget)
+			{
+				m_session = getSession();
+
+				setContentsWidget(NULL);
+			}
+
+			break;
 		case ActionsManager::PrintAction:
 			{
 				QPrinter printer;
@@ -505,6 +514,14 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	if (!m_contentsWidget)
 	{
+		if (m_navigationBar)
+		{
+			layout()->removeWidget(m_navigationBar);
+
+			m_navigationBar->deleteLater();
+			m_navigationBar = NULL;
+		}
+
 		emit widgetChanged();
 
 		return;
