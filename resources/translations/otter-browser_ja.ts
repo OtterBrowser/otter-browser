@@ -34,7 +34,7 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="70"/>
         <source>Is HttpOnly:</source>
-        <translation>HTTPのみ:</translation>
+        <translation>httpのみ:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="47"/>
@@ -89,7 +89,7 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="14"/>
         <source>Preferred Webpage Language</source>
-        <translation>ご希望のWEBページ言語</translation>
+        <translation>ご希望のウェブページ言語</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="20"/>
@@ -201,7 +201,7 @@
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="94"/>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="117"/>
         <source>Enter address or search…</source>
-        <translation>検索キーワードあるいはWEBアドレスを入力...</translation>
+        <translation>検索キーワードあるいはウェブアドレスを入力...</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="307"/>
@@ -241,7 +241,7 @@
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="323"/>
         <source>Clear All</source>
-        <translation>すべてクリア</translation>
+        <translation>全件削除</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="324"/>
@@ -266,12 +266,12 @@
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="722"/>
         <source>Click to load all plugins on the page</source>
-        <translation>クリックするとページ上のすべてのプラグインを読み込みます。</translation>
+        <translation>クリックするとページ上の全てのプラグインを読み込みます。</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1011"/>
         <source>Show Website Information</source>
-        <translation>WEBサイト情報を表示</translation>
+        <translation>ウェブサイト情報を表示</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1107"/>
@@ -312,7 +312,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message numerus="yes">
         <location filename="../../src/core/Application.cpp" line="814"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
-        <translation><numerusform>あなたは、n個のファイルがまだダウンロードされている間に終了しようとしています。</numerusform></translation>
+        <translation><numerusform>あなたは、%n個のファイルがダウンロードされている間に終了しようとしています。</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="815"/>
@@ -413,7 +413,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="49"/>
         <source>Folder:</source>
-        <translation>フォルダ:</translation>
+        <translation>フォルダー:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="71"/>
@@ -521,7 +521,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksBarDialog.ui" line="22"/>
         <source>Folder:</source>
-        <translation>フォルダ:</translation>
+        <translation>フォルダー:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksBarDialog.ui" line="35"/>
@@ -534,12 +534,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksComboBoxWidget.cpp" line="50"/>
         <source>Folder Name</source>
-        <translation>フォルダ名</translation>
+        <translation>フォルダー名</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksComboBoxWidget.cpp" line="50"/>
         <source>Select name of new folder:</source>
-        <translation>新規フォルダの名前を選んでください</translation>
+        <translation>新しいフォルダーの名前を選択してください</translation>
     </message>
 </context>
 <context>
@@ -589,7 +589,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="164"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="205"/>
         <source>Add Folder</source>
-        <translation>フォルダを追加</translation>
+        <translation>フォルダーを追加</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="46"/>
@@ -619,12 +619,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="173"/>
         <source>Open in New Tab</source>
-        <translation>新規タブで開く</translation>
+        <translation>新しいタブで開く</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="174"/>
         <source>Open in New Background Tab</source>
-        <translation>新規バックグラウンドタブで開く</translation>
+        <translation>新しいバックグラウンドタブで開く</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="176"/>
@@ -662,7 +662,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="51"/>
         <source>Import into folder:</source>
-        <translation>フォルダにインポート:</translation>
+        <translation>フォルダーに取り込む:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="70"/>
@@ -672,22 +672,22 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
         <source>Allow to duplicate already existing bookmarks</source>
-        <translation>すでに既存のブックマークを複製することは許可されています。</translation>
+        <translation>既に既存のブックマークを複製することは許可されています。</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="107"/>
         <source>Import into subfolder</source>
-        <translation>サブフォルダにインポート</translation>
+        <translation>サブフォルダーに取り込む</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="120"/>
         <source>Leave empty to import into main folder</source>
-        <translation>メインフォルダにインポートする場合は空白のままにしておいてください。</translation>
+        <translation>メインフォルダーに取り込む場合は空白のままにしておいてください。</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="127"/>
         <source>Subfolder name:</source>
-        <translation>サブフォルダ名:</translation>
+        <translation>サブフォルダー名:</translation>
     </message>
 </context>
 <context>
@@ -826,12 +826,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="351"/>
         <source>Open in New Tab</source>
-        <translation>新規タブで開く</translation>
+        <translation>新しいタブで開く</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="352"/>
         <source>Open in New Background Tab</source>
-        <translation>新規バックグラウンドタブで開く</translation>
+        <translation>新しいバックグラウンドタブで開く</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="354"/>
@@ -856,7 +856,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="364"/>
         <source>Remove All Entries from This Domain</source>
-        <translation>このドメインからすべてのエントリーを削除</translation>
+        <translation>このドメインから全てのエントリーを削除</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="426"/>
@@ -1124,12 +1124,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="14"/>
         <source>Clear History</source>
-        <translation>履歴をクリア</translation>
+        <translation>履歴を削除</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="35"/>
         <source>Period to Clear:</source>
-        <translation>クリアまでの期間：</translation>
+        <translation>削除する迄の期間：</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="42"/>
@@ -1144,47 +1144,47 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="61"/>
         <source>Clear browsing history</source>
-        <translation>ブラウザ履歴をクリア</translation>
+        <translation>ブラウザー履歴を削除</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="68"/>
         <source>Clear cookies</source>
-        <translation>クッキーをクリア</translation>
+        <translation>クッキーを削除</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="78"/>
         <source>Clear forms History</source>
-        <translation>フォーム履歴をクリア</translation>
+        <translation>フォーム履歴を削除</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="85"/>
         <source>Clear downloads history</source>
-        <translation>ダウンロード履歴をクリア</translation>
+        <translation>ダウンロード履歴を削除</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="95"/>
         <source>Clear search history</source>
-        <translation>検索履歴をクリア</translation>
+        <translation>検索履歴を削除</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="102"/>
         <source>Clear caches</source>
-        <translation>キャッシュをクリア</translation>
+        <translation>キャッシュを削除</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="112"/>
         <source>Clear websites storage data</source>
-        <translation>WEBサイトのストレージデータをクリア</translation>
+        <translation>ウェブサイトのストレージデータを削除</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="122"/>
         <source>Clear passwords</source>
-        <translation>パスワードをクリア</translation>
+        <translation>パスワードを削除</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.cpp" line="53"/>
         <source>Clear Now</source>
-        <translation>クリアしています</translation>
+        <translation>削除しています</translation>
     </message>
 </context>
 <context>
@@ -1247,7 +1247,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="230"/>
         <source>Restore Default Value</source>
-        <translation>デフォルト値に戻す</translation>
+        <translation>初期値に戻す</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="237"/>
@@ -1436,7 +1436,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="183"/>
         <source>HttpOnly</source>
-        <translation>HTTPのみ</translation>
+        <translation>httpのみ</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="198"/>
@@ -1473,7 +1473,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="293"/>
         <source>You are about to delete all cookies.</source>
-        <translation>あなたはすべてのクッキーを削除しようとしています。</translation>
+        <translation>あなたは全てのクッキーを削除しようとしています。</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="314"/>
@@ -1501,12 +1501,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="14"/>
         <source>Third-party Cookies Exceptions</source>
-        <translation>サードパーティーのクッキーの例外</translation>
+        <translation>第三者のクッキーの例外</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="26"/>
         <source>Always ACCEPT third-party cookies from:</source>
-        <translation>常にサードパーティーのクッキーを受け入れる：</translation>
+        <translation>常に第三者のクッキーを受け入れる：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="44"/>
@@ -1529,7 +1529,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="88"/>
         <source>Always REJECT third-party cookies from:</source>
-        <translation>常にサードパーティーのクッキ－を除外する：</translation>
+        <translation>常に第三者のクッキ－を除外する：</translation>
     </message>
 </context>
 <context>
@@ -1641,7 +1641,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ItemViewWidget.cpp" line="91"/>
         <source>Show All</source>
-        <translation>すべて表示</translation>
+        <translation>全て表示</translation>
     </message>
 </context>
 <context>
@@ -1715,12 +1715,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="353"/>
         <source>Open in New Tab</source>
-        <translation>新規タブで開く</translation>
+        <translation>新しいタブで開く</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="354"/>
         <source>Open in New Background Tab</source>
-        <translation>新規バックグラウンドタブで開く</translation>
+        <translation>新しいバックグラウンドタブで開く</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="356"/>
@@ -1768,7 +1768,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="143"/>
         <source>Imports bookmarks from HTML file (Netscape format).</source>
-        <translation>HTMLファイルからブックマークをインポート(Netscapeフォーマット)</translation>
+        <translation>HTMLファイルからブックマークをインポート(Netscape形式)</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="153"/>
@@ -2113,7 +2113,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="650"/>
         <source>Web backend: %1 %2.</source>
-        <translation>WEBバックエンド: %1 %2.</translation>
+        <translation>ウェブバックエンド: %1 %2.</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="654"/>
@@ -2168,12 +2168,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="195"/>
         <source>Open in New Tab</source>
-        <translation>新規タブで開く</translation>
+        <translation>新しいタブで開く</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="196"/>
         <source>Open in New Background Tab</source>
-        <translation>新規バックグラウンドタブで開く</translation>
+        <translation>新しいバックグラウンドタブで開く</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="198"/>
@@ -2193,7 +2193,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="329"/>
         <source>This Folder</source>
-        <translation>このフォルダ</translation>
+        <translation>このフォルダー</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="348"/>
@@ -2249,7 +2249,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="591"/>
         <source>Reset to Defaults…</source>
-        <translation>下書きをリセット...</translation>
+        <translation>下書きを初期化...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="632"/>
@@ -2440,7 +2440,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="154"/>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="185"/>
         <source>Add Folder</source>
-        <translation>フォルダを追加</translation>
+        <translation>フォルダーを追加</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="46"/>
@@ -2464,12 +2464,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="102"/>
         <source>Select Folder Name</source>
-        <translation>フォルダ名を選択</translation>
+        <translation>フォルダー名を選択</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="102"/>
         <source>Enter folder name:</source>
-        <translation>フォルダ名を入力:</translation>
+        <translation>フォルダー名を入力:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="150"/>
@@ -2515,7 +2515,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/OpenAddressDialog.ui" line="20"/>
         <source>Enter a web address or choose one from the list:</source>
-        <translation>WEBアドレスを入力するか、リストからいずれかを選択します。</translation>
+        <translation>ウェブアドレスを入力するか、リストからいずれかを選択します。</translation>
     </message>
 </context>
 <context>
@@ -2541,7 +2541,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="61"/>
         <source>Imports bookmarks from Opera Browser version 12 or earlier</source>
-        <translation>Operaブラウザのver.12またはそれ以前のバージョンからブックマークをインポート</translation>
+        <translation>Presto版Operaブラウザーからブックマークを取り込む</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="71"/>
@@ -2554,7 +2554,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="97"/>
         <source>Import into folder:</source>
-        <translation>フォルダへインポート...</translation>
+        <translation>フォルダーへインポート...</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="105"/>
@@ -2564,7 +2564,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="110"/>
         <source>Imports notes from Opera Browser version 12 or earlier</source>
-        <translation>Operaのバージョン12以前から、ノートをインポート</translation>
+        <translation>Presto版Operaから、ノートを取り込む</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="120"/>
@@ -2582,7 +2582,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="46"/>
         <source>Imports session from Opera Browser version 12 or earlier</source>
-        <translation>Opera12以前のセッションをインポート</translation>
+        <translation>Presto版Operaのセッションを取り込む</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="56"/>
@@ -2636,7 +2636,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.ui" line="68"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>取り消し</translation>
     </message>
 </context>
 <context>
@@ -2664,7 +2664,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.ui" line="87"/>
         <source>Cancel</source>
-        <translation>キャンセル</translation>
+        <translation>取り消し</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="40"/>
@@ -2730,7 +2730,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="44"/>
         <source>Open All Pop-Ups from This Website</source>
-        <translation>このウェブサイトからすべてのポップアップを開きます。</translation>
+        <translation>このウェブサイトから全てのポップアップを開きます。</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="48"/>
@@ -2740,7 +2740,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="52"/>
         <source>Block All Pop-Ups from This Website</source>
-        <translation>このウェブサイトからすべてのポップアップをブロックする。</translation>
+        <translation>このウェブサイトから全てのポップアップをブロックする。</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="56"/>
@@ -2912,7 +2912,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="531"/>
         <source>Do not ask for folder, save directly to</source>
-        <translation>フォルダ要求せず、ディレクトリに保存</translation>
+        <translation>フォルダー要求せず、ディレクトリに保存</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="546"/>
@@ -2922,7 +2922,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="592"/>
         <source>Pass web address directly to application</source>
-        <translation>アプリケーションに直接WEBアドレスを渡します。</translation>
+        <translation>アプリケーションに直接ウェブアドレスを渡します。</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="642"/>
@@ -3311,12 +3311,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="57"/>
         <source>Zoom</source>
-        <translation>ズーム</translation>
+        <translation>拡大</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="69"/>
         <source>Default zoom:</source>
-        <translation>デフォルト拡大率:</translation>
+        <translation>拡大率の初期値:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="79"/>
@@ -3326,7 +3326,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="97"/>
         <source>Zoom text only</source>
-        <translation>テキストのみズーム</translation>
+        <translation>テキストのみ拡大</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="110"/>
@@ -3394,7 +3394,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="37"/>
         <source>Block all</source>
-        <translation>すべてブロック</translation>
+        <translation>全てブロック</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="38"/>
@@ -3404,7 +3404,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="39"/>
         <source>Open all in background</source>
-        <translation>すべてバックグラウンドで開く</translation>
+        <translation>全てバックグラウンドで開く</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="54"/>
@@ -3439,7 +3439,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="68"/>
         <source>The quick brown fox jumps over the lazy dog</source>
-        <translation>速い茶色のキツネは、のろまなイヌに飛びかかった</translation>
+        <translation>色はにほへど 散りぬるを 我が世たれぞ 常ならむ 有為の奥山 今日越えて 浅き夢見じ 酔ひもせず</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="80"/>
@@ -3497,7 +3497,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/PreferencesDialog.ui" line="62"/>
         <source>All Settings</source>
-        <translation>すべての設定</translation>
+        <translation>全ての設定</translation>
     </message>
 </context>
 <context>
@@ -3530,7 +3530,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="90"/>
         <source>Restore to Default</source>
-        <translation>デフォルトに戻す</translation>
+        <translation>初期設定に戻す</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="107"/>
@@ -3610,12 +3610,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="275"/>
         <source>System Defaults</source>
-        <translation>システムのデフォルト</translation>
+        <translation>システムの初期設定</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="287"/>
         <source>Set as a default browser</source>
-        <translation>規定のブラウザに設定する</translation>
+        <translation>規定のブラウザーに設定する</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="42"/>
@@ -3645,7 +3645,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="74"/>
         <source>Run Otter Browser with administrator rights to set it as a default browser.</source>
-        <translation>デフォルトのブラウザとして設定するには、管理者権限でOtterブラウザを実行する必要があります。</translation>
+        <translation>デフォルトのブラウザーとして設定するには、管理者権限でOtterを実行する必要があります。</translation>
     </message>
 </context>
 <context>
@@ -3653,7 +3653,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="23"/>
         <source>Tracking</source>
-        <translation>トラッキング</translation>
+        <translation>追跡</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="32"/>
@@ -3713,7 +3713,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="241"/>
         <source>Accept third-party cookies:</source>
-        <translation>サードパーティのクッキーを受け入れる：</translation>
+        <translation>第三者のクッキーを受け入れる：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="263"/>
@@ -3723,7 +3723,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="279"/>
         <source>Clear history when application closes</source>
-        <translation>アプリケーション終了時に履歴をクリア</translation>
+        <translation>アプリケーション終了時に履歴を削除</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="299"/>
@@ -3758,17 +3758,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="39"/>
         <source>Inform websites that I do not want to be tracked</source>
-        <translation>追跡されたくないウェブサイトを通知する</translation>
+        <translation>ウェブサイトに追跡されたくない事を通知する</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="40"/>
         <source>Inform websites that I allow tracking</source>
-        <translation>追跡できるようにウェブサイトを知らせる</translation>
+        <translation>ウェブサイトに追跡できるように通知する</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="41"/>
         <source>Do not inform websites about my preference</source>
-        <translation>好みのウェブサイトを通知しない</translation>
+        <translation>好みのウェブサイトを通知しない(Do not inform websites about my preference)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="52"/>
@@ -4119,7 +4119,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="558"/>
         <source>Webpage wants to close this tab, do you want to allow to close it?</source>
-        <translation>WEBページがこのタブを閉じようとしています。閉じても構いませんか？</translation>
+        <translation>ウェブページがこのタブを閉じようとしています。閉じても構いませんか？</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="559"/>
@@ -4422,7 +4422,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="223"/>
         <source>Clear All</source>
-        <translation>すべてクリア</translation>
+        <translation>全件削除</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/SearchWidget.cpp" line="224"/>
@@ -4525,17 +4525,17 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="218"/>
         <source>Add Web Panel…</source>
-        <translation>WEBパネルを追加</translation>
+        <translation>ウェブパネルを追加</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="279"/>
         <source>Add web panel</source>
-        <translation>WEBパネルを追加</translation>
+        <translation>ウェブパネルを追加</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="279"/>
         <source>Input address of web page to be shown in panel:</source>
-        <translation>パネルに表示するWebページのアドレスを入力して下さい：</translation>
+        <translation>パネルに表示するウェブページのアドレスを入力して下さい：</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="429"/>
@@ -4677,7 +4677,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="161"/>
         <source>Show tile to add new entries</source>
-        <translation>WEBサイトの追加ボタンを表示</translation>
+        <translation>ウェブサイトの追加ボタンを表示</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="39"/>
@@ -5124,12 +5124,12 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="298"/>
         <source>Reset Toolbar</source>
-        <translation>ツールバーをリセット</translation>
+        <translation>ツールバーを初期化</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="298"/>
         <source>Do you really want to reset this toolbar to default configuration?</source>
-        <translation>本当にデフォルト設定にこのツールバーをリセットしますか？</translation>
+        <translation>本当にこのツールバーを初期化しますか？</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="338"/>
@@ -5144,12 +5144,12 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="352"/>
         <source>Reset Toolbars</source>
-        <translation>ツールバーをリセット</translation>
+        <translation>ツールバーを初期化</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="352"/>
         <source>Do you really want to reset all toolbars to default configuration?</source>
-        <translation>本当にデフォルト設定にすべてのツールバーをリセットしますか？</translation>
+        <translation>本当に全てのツールバーを初期化しますか？</translation>
     </message>
 </context>
 <context>
@@ -5379,7 +5379,7 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="393"/>
         <source>Open Folder</source>
-        <translation>フォルダを開く</translation>
+        <translation>フォルダーを開く</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="395"/>
@@ -5425,7 +5425,7 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="276"/>
         <source>All files (*)</source>
-        <translation>すべてのファイル(*)</translation>
+        <translation>全てのファイル(*)</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="278"/>
@@ -5491,12 +5491,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="93"/>
         <source>There are no new updates.</source>
-        <translation>新しいアップデートはありません。</translation>
+        <translation>新しい更新はありません。</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="99"/>
         <source>Available updates:</source>
-        <translation>利用可能なアップデート：</translation>
+        <translation>利用可能な更新：</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="103"/>
@@ -5511,12 +5511,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="119"/>
         <source>Version %1 from %2 channel</source>
-        <translation>バージョン%1へ%2から進むのをキャンセル</translation>
+        <translation>バージョン%1へ%2から進むのを取り消す</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="129"/>
         <source>Some of the updates do not contain packages for your platform. Try to check for updates later or visit details page for more info.</source>
-        <translation>アップデートの中には、ご使用のプラットフォーム用のパッケージが含まれていません。後で更新を確認するか、より多くの情報の詳細ページを訪問してみてください。</translation>
+        <translation>更新の中には、ご使用のプラットフォーム用のパッケージが含まれていません。後で更新を確認するか、より多くの情報のある詳細ページを訪問してみてください。</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="173"/>
@@ -5537,8 +5537,8 @@ Select another one.</source>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="191"/>
         <source>New version of Otter Browser is ready to install.
 Click Install button to restart browser and install the update or close this dialog to install the update during next browser restart.</source>
-        <translation>新しいバージョンのOtterブラウザがインストールできます。
-インストールボタンをクリックしてこのダイアログを閉じてブラウザを再起動するとアップデートが始まり、次のバージョンのブラウザになって再起動します。</translation>
+        <translation>新しいバージョンにOtterブラウザーを更新できます。
+インストールボタンを選択してこのダイアログを閉じてブラウザーを再起動すると更新が始まり、次のバージョンのブラウザーになって再起動します。</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="213"/>
@@ -5599,7 +5599,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="454"/>
         <source>Block All Pop-Ups</source>
-        <translation>すべてのポップアップをブロック</translation>
+        <translation>全てのポップアップをブロック</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="458"/>
@@ -5644,7 +5644,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="518"/>
         <source>Reset Options</source>
-        <translation>オプションをリセット</translation>
+        <translation>オプションを初期化</translation>
     </message>
 </context>
 <context>
@@ -5687,12 +5687,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="832"/>
         <source>Open Image in New Background Tab (Untitled)</source>
-        <translation>新しい背景タブで画像を開く(無題)</translation>
+        <translation>新しいバックグラウンドタブで画像を開く(無題)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="832"/>
         <source>Open Image in New Background Tab (%1)</source>
-        <translation>新しい背景タブで画像を開く(%1)</translation>
+        <translation>新しいバックグラウンドタブで画像を開く(%1)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1120"/>
@@ -5727,7 +5727,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1127"/>
         <source>Page Default</source>
-        <translation>ページのデフォルト</translation>
+        <translation>ページの初期値</translation>
     </message>
 </context>
 <context>
@@ -5796,7 +5796,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="187"/>
         <source>Set third-party cookies:</source>
-        <translation>サードパーティーのクッキーをセット：</translation>
+        <translation>第三者のクッキーをセット：</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="194"/>
@@ -5896,7 +5896,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="46"/>
         <source>This website was marked as fraud.</source>
-        <translation>このWEBサイトは詐欺サイトとしてマークされました。</translation>
+        <translation>このウェブサイトは詐欺サイトとしてマークされました。</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="51"/>
@@ -5917,7 +5917,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="71"/>
         <source>You are viewing safe page from Otter Browser.</source>
-        <translation>あなたはOtterブラウザから安全なページを表示しています。</translation>
+        <translation>あなたはOtterから安全なページを表示しています。</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="76"/>
@@ -5983,7 +5983,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="179"/>
         <source>Always (open in backgound)</source>
-        <translation>いつも(バックグラウンドで開く)</translation>
+        <translation>常に(バックグラウンドで開く)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="187"/>
@@ -6011,12 +6011,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="14"/>
         <source>Website Preferences</source>
-        <translation>WEBサイトの環境設定</translation>
+        <translation>ウェブサイトの環境設定</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="25"/>
         <source>Website:</source>
-        <translation>WEBサイト:</translation>
+        <translation>ウェブサイト:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="44"/>
@@ -6029,7 +6029,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="498"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="641"/>
         <source>Override</source>
-        <translation>オーバーライド</translation>
+        <translation>上書き</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="91"/>
@@ -6109,7 +6109,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="408"/>
         <source>Accept third-party cookies:</source>
-        <translation>サードパーティーのクッキーを受け入れる：</translation>
+        <translation>第三者のクッキーを受け入れる：</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="447"/>
@@ -6260,7 +6260,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="78"/>
         <source>Block all</source>
-        <translation>すべてブロック</translation>
+        <translation>全てブロック</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="79"/>
@@ -6270,7 +6270,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="80"/>
         <source>Open all in background</source>
-        <translation>すべてバックグラウンドで開く</translation>
+        <translation>全てバックグラウンドで開く</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="82"/>
@@ -6304,17 +6304,17 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="90"/>
         <source>Inform websites that I do not want to be tracked</source>
-        <translation>追跡されたくないウェブサイトを通知する</translation>
+        <translation>ウェブサイトに追跡されたくない事を通知する</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="91"/>
         <source>Inform websites that I allow tracking</source>
-        <translation>追跡できるようにウェブサイトを知らせる</translation>
+        <translation>ウェブサイトに追跡できる事を通知する</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="92"/>
         <source>Do not inform websites about my preference</source>
-        <translation>任意のウェブサイトを通知しない</translation>
+        <translation>任意のウェブサイトを通知しない(Do not inform websites about my preference)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="95"/>
@@ -6480,7 +6480,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/toolbars/ZoomWidget.cpp" line="97"/>
         <location filename="../../src/ui/toolbars/ZoomWidget.cpp" line="98"/>
         <source>Zoom %1%</source>
-        <translation>ズーム %1%</translation>
+        <translation>拡大 %1%</translation>
     </message>
 </context>
 <context>
@@ -6691,22 +6691,22 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="275"/>
         <source>New Tab</source>
-        <translation>新規タブ</translation>
+        <translation>新しいタブ</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="276"/>
         <source>New Private Tab</source>
-        <translation>新規プライベートタブ</translation>
+        <translation>新しいプライベートタブ</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="277"/>
         <source>New Window</source>
-        <translation>新規ウィンドウ</translation>
+        <translation>新しいウィンドウ</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="278"/>
         <source>New Private Window</source>
-        <translation>新規プライベートウィンドウ</translation>
+        <translation>新しいプライベートウィンドウ</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="279"/>
@@ -6772,7 +6772,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="288"/>
         <source>Clear Tab History</source>
-        <translation>タブ履歴をクリア</translation>
+        <translation>タブ履歴を削除</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="288"/>
@@ -6802,12 +6802,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="292"/>
         <source>Close All Private Tabs</source>
-        <translation>全ての新規プライベートタブを閉じる</translation>
+        <translation>全ての新しいプライベートタブを閉じる</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="292"/>
         <source>Close All Private Tabs in Current Window</source>
-        <translation>現在のウィンドウですべてのプライベートタブを閉じる</translation>
+        <translation>現在のウィンドウで全てのプライベートタブを閉じる</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="293"/>
@@ -6879,7 +6879,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/core/ActionsManager.cpp" line="306"/>
         <location filename="../../src/core/ActionsManager.cpp" line="321"/>
         <source>Open in New Tab</source>
-        <translation>新規タブで開く</translation>
+        <translation>新しいタブで開く</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="307"/>
@@ -6890,7 +6890,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="308"/>
         <source>Open in New Window</source>
-        <translation>新規ウィンドウで開く</translation>
+        <translation>新しいウィンドウで開く</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="309"/>
@@ -6900,7 +6900,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="310"/>
         <source>Open in New Private Tab</source>
-        <translation>新規プライベートタブを開く</translation>
+        <translation>新しいプライベートタブを開く</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="311"/>
@@ -6910,7 +6910,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="312"/>
         <source>Open in New Private Window</source>
-        <translation>新規プライベートウィンドウを開く</translation>
+        <translation>新しいプライベートウィンドウを開く</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="313"/>
@@ -7203,7 +7203,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="368"/>
         <source>Clear All</source>
-        <translation>すべてクリア</translation>
+        <translation>全件削除</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="369"/>
@@ -7374,7 +7374,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="402"/>
         <source>Bookmark All Open Pages</source>
-        <translation>すべてのページをブックマークする</translation>
+        <translation>全てのページをブックマークする</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="403"/>
@@ -7409,7 +7409,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="409"/>
         <source>Third-party Cookies Policy</source>
-        <translation>サードパーティーのクッキーのポリシー</translation>
+        <translation>第三者のクッキーのポリシー</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="410"/>
@@ -7534,7 +7534,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="434"/>
         <source>Clear History…</source>
-        <translation>履歴をクリア</translation>
+        <translation>履歴を削除</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="435"/>
@@ -7556,7 +7556,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="438"/>
         <source>Website Preferences…</source>
-        <translation>WEBサイトの環境設定...</translation>
+        <translation>ウェブサイトの環境設定...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="439"/>
@@ -7566,17 +7566,17 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="440"/>
         <source>Reset Options</source>
-        <translation>オプションをリセット</translation>
+        <translation>オプションを初期化</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="441"/>
         <source>Website Information…</source>
-        <translation>WEBサイト情報...</translation>
+        <translation>ウェブサイト情報...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="442"/>
         <source>Website Certificate Information…</source>
-        <translation>WEBサイト証明書情報...</translation>
+        <translation>ウェブサイト証明書情報...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="443"/>
@@ -7788,7 +7788,7 @@ Click Install button to restart browser and install the update or close this dia
         <source>Failed to install update
 Updater: %1
 Script: %2</source>
-        <translation>アップデートのインストールに失敗しました。
+        <translation>更新が失敗しました。
 アップデーター: %1
 スクリプト: %2</translation>
     </message>
@@ -7873,7 +7873,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="89"/>
         <source>Update is available to be downloaded</source>
-        <translation>アップデートは、ダウンロードすることが可能です</translation>
+        <translation>更新することが可能です</translation>
     </message>
 </context>
 <context>
@@ -7886,7 +7886,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="147"/>
         <source>You tried to access the address &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, which is currently unavailable. Please make sure that the web address (URL) is correctly spelled and punctuated, then try reloading the page.</source>
-        <translation>あなたがアクセスしようとした&lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;のアドレスは、現在使用できません。本当に現在のWEBアドレス(URL)が正しいか、スペルチェックするか中断し、ページを再読み込みしてください。</translation>
+        <translation>あなたがアクセスしようとした&lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;のアドレスは、現在使用できません。本当に現在のウェブアドレス(URL)が正しいか、スペルチェックするか中断し、ページを再読み込みしてください。</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="154"/>
@@ -7896,7 +7896,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="155"/>
         <source>Check that the setup of any internet security software is correct and does not interfere with ordinary web browsing.</source>
-        <translation>任意のインターネットセキュリティソフトウェアのセットアップが正しく、通常のWebブラウジングに干渉しないことを確認してください。</translation>
+        <translation>任意のインターネットセキュリティソフトウェアのセットアップが正しく、通常のウェブブラウジングに干渉しないことを確認してください。</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="156"/>

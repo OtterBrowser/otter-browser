@@ -7502,7 +7502,7 @@ Kliknij przycisk &quot;Zainstaluj&quot;, aby uruchomić ponownie przeglądarkę 
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="428"/>
         <source>Show Error Console</source>
-        <translation>Pokaż konsolę  błędów</translation>
+        <translation>Pokaż konsolę błędów</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="429"/>
