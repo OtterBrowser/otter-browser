@@ -342,9 +342,6 @@ if (HUNSPELL_FOUND)
 
 	set(otter_src
 		${otter_src}
-		src/modules/backends/web/qtwebkit/qwebkitplatformplugin.h
-		src/modules/backends/web/qtwebkit/QtWebKitPlugin.cpp
-		src/modules/backends/web/qtwebkit/QtWebKitSpellChecker.cpp
 		3rdparty/sonnet/src/core/client.cpp
 		3rdparty/sonnet/src/core/loader.cpp
 		3rdparty/sonnet/src/core/speller.cpp
@@ -355,6 +352,15 @@ if (HUNSPELL_FOUND)
 		3rdparty/sonnet/src/plugins/hunspell/hunspelldebug.cpp
 		3rdparty/sonnet/src/plugins/hunspell/hunspelldict.cpp
 	)
+
+	if (EnableQtwebkit)
+		set(otter_src
+			${otter_src}
+			src/modules/backends/web/qtwebkit/qwebkitplatformplugin.h
+			src/modules/backends/web/qtwebkit/QtWebKitPlugin.cpp
+			src/modules/backends/web/qtwebkit/QtWebKitSpellChecker.cpp
+		)
+	endif (EnableQtwebkit)
 endif (HUNSPELL_FOUND)
 
 if (WIN32)
@@ -414,6 +420,10 @@ if (EnableQtwebengine)
 	qt5_use_modules(otter-browser WebEngine WebEngineWidgets)
 endif (EnableQtwebengine)
 
+if (EnableQtwebkit)
+	qt5_use_modules(otter-browser WebKit WebKitWidgets)
+endif (EnableQtwebkit)
+
 if (HUNSPELL_FOUND)
 	target_link_libraries(otter-browser ${HUNSPELL_LIBRARIES})
 endif (HUNSPELL_FOUND)
@@ -431,7 +441,7 @@ elseif (UNIX)
 	qt5_use_modules(otter-browser DBus)
 endif (WIN32)
 
-qt5_use_modules(otter-browser Core Gui Multimedia Network PrintSupport Script WebKit WebKitWidgets Widgets XmlPatterns)
+qt5_use_modules(otter-browser Core Gui Multimedia Network PrintSupport Script Widgets XmlPatterns)
 
 set(OTTER_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 set(XDG_APPS_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/applications CACHE FILEPATH "Install path for .desktop files")

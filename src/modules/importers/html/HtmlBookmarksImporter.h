@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2014 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,9 @@
 #include "../../../ui/BookmarksImporterWidget.h"
 
 #include <QtCore/QFile>
+#ifdef OTTER_ENABLE_QTWEBKIT
 #include <QtWebKit/QWebElement>
+#endif
 
 namespace Otter
 {
@@ -51,8 +53,10 @@ public:
 public slots:
 	bool import(const QString &path);
 
+#ifdef OTTER_ENABLE_QTWEBKIT
 protected:
 	void processElement(const QWebElement &element);
+#endif
 
 private:
 	BookmarksImporterWidget *m_optionsWidget;

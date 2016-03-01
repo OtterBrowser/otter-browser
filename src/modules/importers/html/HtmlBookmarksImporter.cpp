@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2014 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -22,10 +22,12 @@
 #include "../../../core/BookmarksManager.h"
 
 #include <QtCore/QDir>
+#ifdef OTTER_ENABLE_QTWEBKIT
 //TODO QtWebKit should not be used directly
 #include <QtWebKitWidgets/QWebPage>
 #include <QtWebKitWidgets/QWebFrame>
 #include <QtWebKit/QWebElementCollection>
+#endif
 
 namespace Otter
 {
@@ -43,6 +45,7 @@ HtmlBookmarksImporter::~HtmlBookmarksImporter()
 	}
 }
 
+#ifdef OTTER_ENABLE_QTWEBKIT
 void HtmlBookmarksImporter::processElement(const QWebElement &element)
 {
 	if (element.tagName().toLower() == QLatin1String("h3"))
@@ -122,6 +125,7 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 		goToParent();
 	}
 }
+#endif
 
 QWidget* HtmlBookmarksImporter::getOptionsWidget()
 {
@@ -180,6 +184,7 @@ QIcon HtmlBookmarksImporter::getIcon() const
 
 bool HtmlBookmarksImporter::import(const QString &path)
 {
+#ifdef OTTER_ENABLE_QTWEBKIT
 	QFile file(getSuggestedPath(path));
 
 	if (!file.open(QIODevice::ReadOnly))
@@ -213,6 +218,9 @@ bool HtmlBookmarksImporter::import(const QString &path)
 	file.close();
 
 	return true;
+#else
+	return false;
+#endif
 }
 
 }
