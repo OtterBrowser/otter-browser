@@ -689,6 +689,11 @@ void WebWidget::updateEditActions()
 		m_actions[ActionsManager::SearchMenuAction]->setEnabled(SearchEnginesManager::getSearchEngines().count() > 1);
 	}
 
+	if (m_actions.contains(ActionsManager::CreateSearchAction))
+	{
+		m_actions[ActionsManager::CreateSearchAction]->setEnabled(m_hitResult.flags.testFlag(IsFormTest));
+	}
+
 	updateLinkActions();
 	updateFrameActions();
 	updateImageActions();
@@ -1181,6 +1186,7 @@ Action* WebWidget::getAction(int identifier)
 		case ActionsManager::ClearAllAction:
 		case ActionsManager::CheckSpellingAction:
 		case ActionsManager::SearchAction:
+		case ActionsManager::CreateSearchAction:
 			updateEditActions();
 
 			break;
