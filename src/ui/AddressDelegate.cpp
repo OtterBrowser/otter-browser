@@ -53,7 +53,6 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 	if (m_isAddressField)
 	{
 		QStyleOptionViewItem mutableOption(option);
-
 		mutableOption.palette.setColor(QPalette::Text, option.palette.color(QPalette::Link));
 
 		drawDisplay(painter, mutableOption, titleRectangle, url);
