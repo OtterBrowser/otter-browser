@@ -72,7 +72,7 @@ find_package(Qt5 5.2.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network Prin
 find_package(Hunspell)
 
 if (EnableQtwebengine)
-	find_package(Qt5 5.5.0 REQUIRED COMPONENTS WebEngine WebEngineWidgets)
+	find_package(Qt5 5.6.0 REQUIRED COMPONENTS WebEngine WebEngineWidgets)
 endif (EnableQtwebengine)
 
 if (EnableQtwebkit)
