@@ -553,19 +553,19 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			return;
 		case ActionsManager::MediaControlsAction:
-			m_webView->page()->runJavaScript(QStringLiteral("var element = document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)); if (element && element.tagName && (element.tagName.toLowerCase() == 'audio' || element.tagName.toLowerCase() == 'video')) { element.controls = %3; }").arg(getClickPosition().x() / m_webView->zoomFactor()).arg(getClickPosition().y() / m_webView->zoomFactor()).arg(parameters.value(QLatin1String("isChecked")).toBool() ? QLatin1String("true") : QLatin1String("false")));
+			m_webView->page()->triggerAction(QWebEnginePage::ToggleMediaControls, parameters.value(QLatin1String("isChecked")).toBool());
 
 			return;
 		case ActionsManager::MediaLoopAction:
-			m_webView->page()->runJavaScript(QStringLiteral("var element = document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)); if (element && element.tagName && (element.tagName.toLowerCase() == 'audio' || element.tagName.toLowerCase() == 'video')) { element.loop = %3; }").arg(getClickPosition().x() / m_webView->zoomFactor()).arg(getClickPosition().y() / m_webView->zoomFactor()).arg(parameters.value(QLatin1String("isChecked")).toBool() ? QLatin1String("true") : QLatin1String("false")));
+			m_webView->page()->triggerAction(QWebEnginePage::ToggleMediaLoop, parameters.value(QLatin1String("isChecked")).toBool());
 
 			return;
 		case ActionsManager::MediaPlayPauseAction:
-			m_webView->page()->runJavaScript(QStringLiteral("var element = document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)); if (element && element.tagName && (element.tagName.toLowerCase() == 'audio' || element.tagName.toLowerCase() == 'video')) { if (element.paused) { element.play(); } else { element.pause(); } }").arg(getClickPosition().x() / m_webView->zoomFactor()).arg(getClickPosition().y() / m_webView->zoomFactor()));
+			m_webView->page()->triggerAction(QWebEnginePage::ToggleMediaPlayPause);
 
 			return;
 		case ActionsManager::MediaMuteAction:
-			m_webView->page()->runJavaScript(QStringLiteral("var element = document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)); if (element && element.tagName && (element.tagName.toLowerCase() == 'audio' || element.tagName.toLowerCase() == 'video')) { element.muted = !element.muted; }").arg(getClickPosition().x() / m_webView->zoomFactor()).arg(getClickPosition().y() / m_webView->zoomFactor()));
+			m_webView->page()->triggerAction(QWebEnginePage::ToggleMediaMute);
 
 			return;
 		case ActionsManager::GoBackAction:
