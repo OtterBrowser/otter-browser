@@ -485,6 +485,10 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			}
 
 			return;
+		case ActionsManager::CopyImageToClipboardAction:
+			m_page->triggerAction(QWebEnginePage::CopyImageToClipboard);
+
+			return;
 		case ActionsManager::CopyImageUrlToClipboardAction:
 			if (!m_hitResult.imageUrl.isEmpty())
 			{
