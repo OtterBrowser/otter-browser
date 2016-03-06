@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,41 +17,29 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_QTWEBENGINEWEBBACKEND_H
-#define OTTER_QTWEBENGINEWEBBACKEND_H
+#ifndef OTTER_QTWEBENGINEURLREQUESTINTERCEPTOR_H
+#define OTTER_QTWEBENGINEURLREQUESTINTERCEPTOR_H
 
-#include "../../../../core/WebBackend.h"
+#include <QtCore/QVector>
+#include <QtWebEngineCore/QWebEngineUrlRequestInterceptor>
 
 namespace Otter
 {
 
-class QtWebEngineWebBackend : public WebBackend
+class QtWebEngineUrlRequestInterceptor : public QWebEngineUrlRequestInterceptor
 {
 	Q_OBJECT
 
 public:
-	explicit QtWebEngineWebBackend(QObject *parent = NULL);
+	explicit QtWebEngineUrlRequestInterceptor(QObject *parent = NULL);
 
-	WebWidget* createWidget(bool isPrivate = false, ContentsWidget *parent = NULL);
-	QString getTitle() const;
-	QString getDescription() const;
-	QString getVersion() const;
-	QString getEngineVersion() const;
-	QString getSslVersion() const;
-	QString getUserAgent(const QString &pattern = QString()) const;
-	QUrl getHomePage() const;
-	QIcon getIcon() const;
-	bool requestThumbnail(const QUrl &url, const QSize &size);
+	void interceptRequest(QWebEngineUrlRequestInfo &request);
 
 protected slots:
-	void optionChanged(const QString &option);
+	void optionChanged(const QString &option, const QVariant &value);
 
 private:
-	bool m_isInitialized;
-
-	static QString m_engineVersion;
-	static QMap<QString, QString> m_userAgentComponents;
-	static QMap<QString, QString> m_userAgents;
+	QVector<int> m_contentBlockingProfiles;
 };
 
 }

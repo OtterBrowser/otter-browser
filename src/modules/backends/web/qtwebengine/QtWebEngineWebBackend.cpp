@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "QtWebEngineWebBackend.h"
+#include "QtWebEngineUrlRequestInterceptor.h"
 #include "QtWebEngineWebWidget.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
@@ -81,6 +82,7 @@ WebWidget* QtWebEngineWebBackend::createWidget(bool isPrivate, ContentsWidget *p
 		m_isInitialized = true;
 
 		QWebEngineProfile::defaultProfile()->setHttpUserAgent(getUserAgent());
+		QWebEngineProfile::defaultProfile()->setRequestInterceptor(new QtWebEngineUrlRequestInterceptor(this));
 
 		const QString cachePath = SessionsManager::getCachePath();
 
