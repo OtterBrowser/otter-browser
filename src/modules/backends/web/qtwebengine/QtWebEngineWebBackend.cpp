@@ -53,7 +53,15 @@ QtWebEngineWebBackend::QtWebEngineWebBackend(QObject *parent) : WebBackend(paren
 
 void QtWebEngineWebBackend::optionChanged(const QString &option)
 {
-	if (!(option.startsWith(QLatin1String("Browser/")) || option.startsWith(QLatin1String("Content/"))))
+	if (option == QLatin1String("Network/AcceptLanguage"))
+	{
+		QWebEngineProfile::defaultProfile()->setHttpAcceptLanguage(NetworkManagerFactory::getAcceptLanguage());
+	}
+	else if (option == QLatin1String("Network/UserAgent"))
+	{
+		QWebEngineProfile::defaultProfile()->setHttpUserAgent(getUserAgent());
+	}
+	else if (!(option.startsWith(QLatin1String("Browser/")) || option.startsWith(QLatin1String("Content/"))))
 	{
 		return;
 	}
@@ -82,6 +90,7 @@ WebWidget* QtWebEngineWebBackend::createWidget(bool isPrivate, ContentsWidget *p
 	{
 		m_isInitialized = true;
 
+		QWebEngineProfile::defaultProfile()->setHttpAcceptLanguage(NetworkManagerFactory::getAcceptLanguage());
 		QWebEngineProfile::defaultProfile()->setHttpUserAgent(getUserAgent());
 		QWebEngineProfile::defaultProfile()->setRequestInterceptor(new QtWebEngineUrlRequestInterceptor(this));
 
