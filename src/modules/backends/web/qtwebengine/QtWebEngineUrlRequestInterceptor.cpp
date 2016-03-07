@@ -20,6 +20,7 @@
 #include "QtWebEngineUrlRequestInterceptor.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/ContentBlockingManager.h"
+#include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
 
 #include <QtCore/QCoreApplication>
@@ -46,6 +47,13 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 {
 	if (m_contentBlockingProfiles.isEmpty())
 	{
+		const NetworkManagerFactory::DoNotTrackPolicy doNotTrackPolicy(NetworkManagerFactory::getDoNotTrackPolicy());
+
+		if (doNotTrackPolicy != NetworkManagerFactory::SkipTrackPolicy)
+		{
+			request.setHttpHeader(QStringLiteral("DNT").toLatin1(), ((doNotTrackPolicy == NetworkManagerFactory::DoNotAllowToTrackPolicy) ? QStringLiteral("1") : QStringLiteral("0")).toLatin1());
+		}
+
 		return;
 	}
 
