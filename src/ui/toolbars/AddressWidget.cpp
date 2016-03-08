@@ -1152,6 +1152,15 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 			return true;
 		}
 	}
+	else if (object == m_lineEdit && event->type() == QEvent::DragEnter)
+	{
+		QDragEnterEvent *dragEnterEvent(static_cast<QDragEnterEvent*>(event));
+
+		if (dragEnterEvent && dragEnterEvent->mimeData()->hasUrls())
+		{
+			event->accept();
+		}
+	}
 	else if (object == m_completionView && event->type() == QEvent::KeyPress)
 	{
 		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
