@@ -193,11 +193,8 @@ void WindowsPlatformIntegration::getApplicationInformation(ApplicationInformatio
 		information.command.replace(QLatin1Char('%') + rootPath + QLatin1Char('%'), m_environment.value(rootPath));
 	}
 
-	const QString fullApplicationPath = information.command.left(information.command.indexOf(QLatin1String(".exe"), 0, Qt::CaseInsensitive) + 4);
-	const QFileInfo fileInfo(fullApplicationPath);
-	const QFileIconProvider fileIconProvider;
-	information.icon = fileIconProvider.icon(fileInfo);
-
+	const QString fullApplicationPath(information.command.left(information.command.indexOf(QLatin1String(".exe"), 0, Qt::CaseInsensitive) + 4));
+	const QFileInfo fileInformation(fullApplicationPath);
 	HKEY key = NULL;
 	TCHAR readBuffer[128];
 	DWORD bufferSize = sizeof(readBuffer);
@@ -214,8 +211,10 @@ void WindowsPlatformIntegration::getApplicationInformation(ApplicationInformatio
 
 	if (information.name.isEmpty())
 	{
-		information.name = fileInfo.baseName();
+		information.name = fileInformation.baseName();
 	}
+
+	information.icon = QFileIconProvider().icon(fileInformation);
 }
 
 QList<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)
@@ -388,7 +387,6 @@ QString WindowsPlatformIntegration::getPlatform() const
 	}
 #endif
 	return QLatin1String("win32");
-
 }
 
 bool WindowsPlatformIntegration::canShowNotifications() const
@@ -564,7 +562,7 @@ bool WindowsPlatformIntegration::isDefaultBrowser() const
 		}
 	}
 
-	isDefault &= (registry.value("Clients/StartmenuInternet/.", QString()).toString() == m_registrationIdentifier);
+	isDefault &= (registry.value(QLatin1String("Clients/StartmenuInternet/."), QString()).toString() == m_registrationIdentifier);
 
 	return isDefault;
 }
