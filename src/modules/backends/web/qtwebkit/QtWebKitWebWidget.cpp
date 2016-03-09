@@ -918,7 +918,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::CopyLinkToClipboardAction:
 			if (!getCurrentHitTestResult().linkUrl.isEmpty())
 			{
-				QGuiApplication::clipboard()->setText(getCurrentHitTestResult().linkUrl.toString());
+				QGuiApplication::clipboard()->setText(getCurrentHitTestResult().linkUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
 			return;
@@ -978,7 +978,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::CopyFrameLinkToClipboardAction:
 			if (getCurrentHitTestResult().frameUrl.isValid())
 			{
-				QGuiApplication::clipboard()->setText(getCurrentHitTestResult().frameUrl.toString());
+				QGuiApplication::clipboard()->setText(getCurrentHitTestResult().frameUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
 			return;
@@ -1060,7 +1060,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::CopyImageUrlToClipboardAction:
 			if (!getCurrentHitTestResult().imageUrl.isEmpty())
 			{
-				QApplication::clipboard()->setText(getCurrentHitTestResult().imageUrl.toString());
+				QApplication::clipboard()->setText(getCurrentHitTestResult().imageUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
 			return;
@@ -1134,7 +1134,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::CopyMediaUrlToClipboardAction:
 			if (!getCurrentHitTestResult().mediaUrl.isEmpty())
 			{
-				QApplication::clipboard()->setText(getCurrentHitTestResult().mediaUrl.toString());
+				QApplication::clipboard()->setText(getCurrentHitTestResult().mediaUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
 			return;

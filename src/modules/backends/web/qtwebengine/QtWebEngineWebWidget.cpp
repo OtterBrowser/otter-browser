@@ -352,7 +352,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::CopyLinkToClipboardAction:
 			if (!m_hitResult.linkUrl.isEmpty())
 			{
-				QGuiApplication::clipboard()->setText(m_hitResult.linkUrl.toString());
+				QGuiApplication::clipboard()->setText(m_hitResult.linkUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
 			return;
@@ -402,7 +402,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::CopyFrameLinkToClipboardAction:
 			if (m_hitResult.frameUrl.isValid())
 			{
-				QGuiApplication::clipboard()->setText(m_hitResult.frameUrl.toString());
+				QGuiApplication::clipboard()->setText(m_hitResult.frameUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
 			return;
@@ -492,7 +492,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::CopyImageUrlToClipboardAction:
 			if (!m_hitResult.imageUrl.isEmpty())
 			{
-				QApplication::clipboard()->setText(m_hitResult.imageUrl.toString());
+				QApplication::clipboard()->setText(m_hitResult.imageUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
 			return;
@@ -552,7 +552,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::CopyMediaUrlToClipboardAction:
 			if (!m_hitResult.mediaUrl.isEmpty())
 			{
-				QApplication::clipboard()->setText(m_hitResult.mediaUrl.toString());
+				QApplication::clipboard()->setText(m_hitResult.mediaUrl.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 			}
 
 			return;
