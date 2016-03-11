@@ -24,6 +24,7 @@
 
 #include <QtNetwork/QNetworkReply>
 #include <QtWebEngineWidgets/QWebEngineDownloadItem>
+#include <QtWebEngineWidgets/QWebEngineFullScreenRequest>
 #include <QtWebEngineWidgets/QWebEngineView>
 
 namespace Otter
@@ -106,6 +107,7 @@ protected slots:
 	void handleIconChange(const QUrl &url);
 	void handleAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator);
 	void handleProxyAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator, const QString &proxy);
+	void handleFullScreenRequest(QWebEngineFullScreenRequest request);
 	void handlePermissionRequest(const QUrl &url, QWebEnginePage::Feature feature);
 	void handlePermissionCancel(const QUrl &url, QWebEnginePage::Feature feature);
 	void handleWindowCloseRequest();

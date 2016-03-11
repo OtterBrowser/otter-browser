@@ -35,6 +35,7 @@
 #include "../../../../ui/ContentsDialog.h"
 #include "../../../../ui/ContentsWidget.h"
 #include "../../../../ui/ImagePropertiesDialog.h"
+#include "../../../../ui/MainWindow.h"
 #include "../../../../ui/SearchEnginePropertiesDialog.h"
 #include "../../../../ui/SourceViewerWebWidget.h"
 #include "../../../../ui/WebsitePreferencesDialog.h"
@@ -108,6 +109,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	connect(m_page, SIGNAL(authenticationRequired(QUrl,QAuthenticator*)), this, SLOT(handleAuthenticationRequired(QUrl,QAuthenticator*)));
 	connect(m_page, SIGNAL(proxyAuthenticationRequired(QUrl,QAuthenticator*,QString)), this, SLOT(handleProxyAuthenticationRequired(QUrl,QAuthenticator*,QString)));
 	connect(m_page, SIGNAL(windowCloseRequested()), this, SLOT(handleWindowCloseRequest()));
+	connect(m_page, SIGNAL(fullScreenRequested(QWebEngineFullScreenRequest)), this, SLOT(handleFullScreenRequest(QWebEngineFullScreenRequest)));
 	connect(m_page, SIGNAL(featurePermissionRequested(QUrl,QWebEnginePage::Feature)), this, SLOT(handlePermissionRequest(QUrl,QWebEnginePage::Feature)));
 	connect(m_page, SIGNAL(featurePermissionRequestCanceled(QUrl,QWebEnginePage::Feature)), this, SLOT(handlePermissionCancel(QUrl,QWebEnginePage::Feature)));
 	connect(m_page, SIGNAL(viewingMediaChanged(bool)), this, SLOT(updateNavigationActions()));
@@ -949,6 +951,18 @@ void QtWebEngineWebWidget::handleImageProperties(const QVariant &result)
 	connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
 	showDialog(&dialog);
+}
+
+void QtWebEngineWebWidget::handleFullScreenRequest(QWebEngineFullScreenRequest request)
+{
+	request.accept();
+
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+	if (mainWindow && ((request.toggleOn() && !mainWindow->isFullScreen()) || (!request.toggleOn() && mainWindow->isFullScreen())))
+	{
+		mainWindow->triggerAction(ActionsManager::FullScreenAction);
+	}
 }
 
 void QtWebEngineWebWidget::handlePermissionRequest(const QUrl &url, QWebEnginePage::Feature feature)

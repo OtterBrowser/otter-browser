@@ -94,6 +94,8 @@ WebWidget* QtWebEngineWebBackend::createWidget(bool isPrivate, ContentsWidget *p
 		QWebEngineProfile::defaultProfile()->setHttpUserAgent(getUserAgent());
 		QWebEngineProfile::defaultProfile()->setRequestInterceptor(new QtWebEngineUrlRequestInterceptor(this));
 
+		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::FullScreenSupportEnabled, true);
+
 		const QString cachePath = SessionsManager::getCachePath();
 
 		if (cachePath.isEmpty())
