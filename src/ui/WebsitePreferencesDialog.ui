@@ -72,8 +72,7 @@
         <widget class="QComboBox" name="pluginsComboBox"/>
        </item>
        <item row="2" column="2">
-        <widget class="QComboBox" name="popupsComboBox">
-        </widget>
+        <widget class="QComboBox" name="popupsComboBox"/>
        </item>
        <item row="4" column="0" alignment="Qt::AlignHCenter">
         <widget class="QCheckBox" name="enableJavaOverrideCheckBox">
@@ -446,25 +445,55 @@
       <attribute name="title">
        <string>Scripting</string>
       </attribute>
-      <layout class="QGridLayout" name="scriptingLayout" columnstretch="0,1,1">
-       <item row="1" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="enableJavaScriptOverrideCheckBox">
+      <layout class="QGridLayout" name="scriptingLayout" columnstretch="0,0,0">
+       <item row="6" column="1">
+        <widget class="QCheckBox" name="canDisableContextMenuCheckBox">
+         <property name="text">
+          <string>Allow to disable context menu</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="canAccessClipboardOverrideCheckBox">
          <property name="text">
           <string/>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QCheckBox" name="enableJavaScriptCheckBox">
+       <item row="3" column="1">
+        <widget class="QCheckBox" name="canShowStatusMessagesCheckBox">
          <property name="text">
-          <string>Enable JavaScript</string>
+          <string>Allow changing of status field</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="canChangeWindowGeometryOverrideCheckBox">
+       <item row="10" column="1">
+        <spacer name="scriptingHorizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="6" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="canDisableContextMenuOverrideCheckBox">
          <property name="text">
           <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QLabel" name="canCloseWindowsLabel">
+         <property name="text">
+          <string>Allow to close windows:</string>
+         </property>
+         <property name="buddy">
+          <cstring>canCloseWindowsComboBox</cstring>
          </property>
         </widget>
        </item>
@@ -492,20 +521,6 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="scriptingOverrideLabel">
-         <property name="text">
-          <string>Override</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QCheckBox" name="canShowStatusMessagesCheckBox">
-         <property name="text">
-          <string>Allow changing of status field</string>
-         </property>
-        </widget>
-       </item>
        <item row="4" column="0" alignment="Qt::AlignHCenter">
         <widget class="QCheckBox" name="canHideAddressBarOverrideCheckBox">
          <property name="enabled">
@@ -516,49 +531,43 @@
          </property>
         </widget>
        </item>
-       <item row="10" column="1">
-        <spacer name="scriptingSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
+       <item row="0" column="0">
+        <widget class="QLabel" name="scriptingOverrideLabel">
+         <property name="text">
+          <string>Override</string>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
+        </widget>
        </item>
-       <item row="5" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="canAccessClipboardOverrideCheckBox">
+       <item row="1" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="enableJavaScriptOverrideCheckBox">
          <property name="text">
           <string/>
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
-        <widget class="QCheckBox" name="canAccessClipboardCheckBox">
+       <item row="1" column="1">
+        <widget class="QCheckBox" name="enableJavaScriptCheckBox">
          <property name="text">
-          <string>Allow access to clipboard</string>
+          <string>Enable JavaScript</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="canDisableContextMenuOverrideCheckBox">
+       <item row="2" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="canChangeWindowGeometryOverrideCheckBox">
          <property name="text">
           <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QCheckBox" name="canDisableContextMenuCheckBox">
-         <property name="text">
-          <string>Allow to disable context menu</string>
          </property>
         </widget>
        </item>
        <item row="7" column="0" alignment="Qt::AlignHCenter">
         <widget class="QCheckBox" name="canOpenWindowsOverrideCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="canCloseWindowsOverrideCheckBox">
          <property name="text">
           <string/>
          </property>
@@ -571,36 +580,46 @@
          </property>
         </widget>
        </item>
-       <item row="8" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="canCloseWindowsOverrideCheckBox">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
        <item row="8" column="2">
         <widget class="QComboBox" name="canCloseWindowsComboBox"/>
        </item>
-       <item row="9" column="1">
-        <spacer name="scriptingHorizontalSpacer">
+       <item row="5" column="1">
+        <widget class="QCheckBox" name="canAccessClipboardCheckBox">
+         <property name="text">
+          <string>Allow access to clipboard</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="1">
+        <spacer name="scriptingSpacer">
          <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+          <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>40</width>
+           <width>0</width>
            <height>0</height>
           </size>
          </property>
         </spacer>
        </item>
-       <item row="8" column="1">
-        <widget class="QLabel" name="canCloseWindowsLabel">
+       <item row="9" column="1">
+        <widget class="QLabel" name="enableFullScreenLabel">
          <property name="text">
-          <string>Allow to close windows:</string>
+          <string>Allow to enter full screen mode:</string>
          </property>
          <property name="buddy">
-          <cstring>canCloseWindowsComboBox</cstring>
+          <cstring>enableFullScreenComboBox</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="2">
+        <widget class="QComboBox" name="enableFullScreenComboBox"/>
+       </item>
+       <item row="9" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="enableFullScreenOverrideCheckBox">
+         <property name="text">
+          <string/>
          </property>
         </widget>
        </item>

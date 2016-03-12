@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -64,7 +64,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 
 	for (int i = 0; i < textCodecs.count(); ++i)
 	{
-		QTextCodec *codec = QTextCodec::codecForMib(textCodecs.at(i));
+		QTextCodec *codec(QTextCodec::codecForMib(textCodecs.at(i)));
 
 		if (!codec)
 		{
@@ -87,6 +87,10 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	m_ui->canCloseWindowsComboBox->addItem(tr("Always"), QLatin1String("allow"));
 	m_ui->canCloseWindowsComboBox->addItem(tr("Never"), QLatin1String("disallow"));
 
+	m_ui->enableFullScreenComboBox->addItem(tr("Ask"), QLatin1String("ask"));
+	m_ui->enableFullScreenComboBox->addItem(tr("Always"), QLatin1String("allow"));
+	m_ui->enableFullScreenComboBox->addItem(tr("Never"), QLatin1String("disallow"));
+
 	m_ui->doNotTrackComboBox->addItem(tr("Inform websites that I do not want to be tracked"), QLatin1String("doNotAllow"));
 	m_ui->doNotTrackComboBox->addItem(tr("Inform websites that I allow tracking"), QLatin1String("allow"));
 	m_ui->doNotTrackComboBox->addItem(tr("Do not inform websites about my preference"), QLatin1String("skip"));
@@ -107,7 +111,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	QStringList cookiesLabels;
 	cookiesLabels << tr("Domain") << tr("Path") << tr("Value") << tr("Expiration date");
 
-	QStandardItemModel *cookiesModel = new QStandardItemModel(this);
+	QStandardItemModel *cookiesModel(new QStandardItemModel(this));
 	cookiesModel->setHorizontalHeaderLabels(cookiesLabels);
 
 	for (int i = 0; i < cookies.count(); ++i)
@@ -123,14 +127,14 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 
 	m_ui->cookiesTableWidget->setModel(cookiesModel);
 
-	const QStringList userAgents = NetworkManagerFactory::getUserAgents();
+	const QStringList userAgents(NetworkManagerFactory::getUserAgents());
 
 	m_ui->userAgentComboBox->addItem(tr("Default"), QLatin1String("default"));
 
 	for (int i = 0; i < userAgents.count(); ++i)
 	{
-		const UserAgentInformation userAgent = NetworkManagerFactory::getUserAgent(userAgents.at(i));
-		const QString title = userAgent.title;
+		const UserAgentInformation userAgent(NetworkManagerFactory::getUserAgent(userAgents.at(i)));
+		const QString title(userAgent.title);
 
 		m_ui->userAgentComboBox->addItem((title.isEmpty() ? tr("(Untitled)") : title), userAgents.at(i));
 		m_ui->userAgentComboBox->setItemData((i + 1), userAgent.value, (Qt::UserRole + 1));
@@ -155,12 +159,13 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	m_ui->canDisableContextMenuOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/JavaScriptCanDisableContextMenu")));
 	m_ui->canOpenWindowsOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/JavaScriptCanOpenWindows")));
 	m_ui->canCloseWindowsOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/JavaScriptCanCloseWindows")));
+	m_ui->enableFullScreenOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/EnableFullScreen")));
 	m_ui->sendReferrerOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Network/EnableReferrer")));
 	m_ui->userAgentOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Network/UserAgent")));
 
 	updateValues();
 
-	QList<QCheckBox*> checkBoxes = findChildren<QCheckBox*>();
+	QList<QCheckBox*> checkBoxes(findChildren<QCheckBox*>());
 
 	for (int i = 0; i < checkBoxes.count(); ++i)
 	{
@@ -174,7 +179,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 		}
 	}
 
-	QList<QComboBox*> comboBoxes = findChildren<QComboBox*>();
+	QList<QComboBox*> comboBoxes(findChildren<QComboBox*>());
 
 	for (int i = 0; i < comboBoxes.count(); ++i)
 	{
@@ -228,6 +233,7 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanDisableContextMenu"), (m_ui->canDisableContextMenuOverrideCheckBox->isChecked() ? m_ui->canDisableContextMenuCheckBox->isChecked() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanOpenWindows"), (m_ui->canOpenWindowsOverrideCheckBox->isChecked() ? m_ui->canOpenWindowsCheckBox->isChecked() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanCloseWindows"), (m_ui->canCloseWindowsOverrideCheckBox->isChecked() ? m_ui->canCloseWindowsComboBox->currentData().toString() : QVariant()), url);
+			SettingsManager::setValue(QLatin1String("Browser/EnableFullScreen"), (m_ui->enableFullScreenOverrideCheckBox->isChecked() ? m_ui->enableFullScreenComboBox->currentData().toString() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Network/EnableReferrer"), (m_ui->sendReferrerOverrideCheckBox->isChecked() ? m_ui->sendReferrerCheckBox->isChecked() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Network/UserAgent"), (m_ui->userAgentOverrideCheckBox->isChecked() ? ((m_ui->userAgentComboBox->currentIndex() == 0) ? QString() : m_ui->userAgentComboBox->currentData(Qt::UserRole).toString()) : QVariant()), url);
 
@@ -260,7 +266,7 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 
 void WebsitePreferencesDialog::updateContentBlockingProfile(const QString &profile)
 {
-	const ContentBlockingInformation information = ContentBlockingManager::getProfile(profile);
+	const ContentBlockingInformation information(ContentBlockingManager::getProfile(profile));
 
 	if (information.name.isEmpty())
 	{
@@ -269,7 +275,7 @@ void WebsitePreferencesDialog::updateContentBlockingProfile(const QString &profi
 
 	for (int i = 0; i < m_ui->contentBlockingProfilesViewWidget->model()->rowCount(); ++i)
 	{
-		const QModelIndex index = m_ui->contentBlockingProfilesViewWidget->model()->index(i, 0);
+		const QModelIndex index(m_ui->contentBlockingProfilesViewWidget->model()->index(i, 0));
 
 		if (index.data(Qt::UserRole).toString() == profile)
 		{
@@ -297,14 +303,14 @@ void WebsitePreferencesDialog::updateValues(bool checked)
 
 	m_ui->encodingComboBox->setCurrentIndex(qMax(0, m_ui->encodingComboBox->findText(SettingsManager::getValue(QLatin1String("Content/DefaultEncoding"), (m_ui->encodingOverrideCheckBox->isChecked() ? url : QUrl())).toString())));
 
-	const int popupsPolicyIndex = m_ui->popupsComboBox->findData(SettingsManager::getValue(QLatin1String("Content/PopupsPolicy"), (m_ui->popupsOverrideCheckBox->isChecked() ? url : QUrl())).toString());
+	const int popupsPolicyIndex(m_ui->popupsComboBox->findData(SettingsManager::getValue(QLatin1String("Content/PopupsPolicy"), (m_ui->popupsOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
 
 	m_ui->popupsComboBox->setCurrentIndex((popupsPolicyIndex < 0) ? 0 : popupsPolicyIndex);
 
 	m_ui->enableImagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableImages"), (m_ui->enableImagesOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 	m_ui->enableJavaCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJava"), (m_ui->enableJavaOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 
-	const int pluginsIndex = m_ui->pluginsComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), (m_ui->pluginsOverrideCheckBox->isChecked() ? url : QUrl())).toString());
+	const int pluginsIndex(m_ui->pluginsComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), (m_ui->pluginsOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
 
 	m_ui->pluginsComboBox->setCurrentIndex((pluginsIndex < 0) ? 1 : pluginsIndex);
 	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Content/UserStyleSheet"), (m_ui->userStyleSheetOverrideCheckBox->isChecked() ? url : QUrl())).toString());
@@ -315,34 +321,38 @@ void WebsitePreferencesDialog::updateValues(bool checked)
 	m_ui->canDisableContextMenuCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanDisableContextMenu"), (m_ui->canDisableContextMenuOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 	m_ui->canOpenWindowsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanOpenWindows"), (m_ui->canOpenWindowsCheckBox->isChecked() ? url : QUrl())).toBool());
 
-	const int canCloseWindowsIndex = m_ui->canCloseWindowsComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanCloseWindows"), (m_ui->canCloseWindowsOverrideCheckBox->isChecked() ? url : QUrl())).toString());
+	const int canCloseWindowsIndex(m_ui->canCloseWindowsComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanCloseWindows"), (m_ui->canCloseWindowsOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
 
 	m_ui->canCloseWindowsComboBox->setCurrentIndex((canCloseWindowsIndex < 0) ? 0 : canCloseWindowsIndex);
 
-	const int doNotTrackPolicyIndex = m_ui->doNotTrackComboBox->findData(SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy"), (m_ui->doNotTrackOverrideCheckBox->isChecked() ? url : QUrl())).toString());
+	const int enableFullScreenIndex(m_ui->enableFullScreenComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/EnableFullScreen"), (m_ui->enableFullScreenOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
+
+	m_ui->enableFullScreenComboBox->setCurrentIndex((enableFullScreenIndex < 0) ? 0 : enableFullScreenIndex);
+
+	const int doNotTrackPolicyIndex(m_ui->doNotTrackComboBox->findData(SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy"), (m_ui->doNotTrackOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
 
 	m_ui->doNotTrackComboBox->setCurrentIndex((doNotTrackPolicyIndex < 0) ? 2 : doNotTrackPolicyIndex);
 	m_ui->rememberBrowsingHistoryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("History/RememberBrowsing"), (m_ui->rememberBrowsingHistoryOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 	m_ui->enableCookiesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Network/CookiesPolicy"), (m_ui->enableCookiesOverrideCheckBox->isChecked() ? url : QUrl())).toString() != QLatin1String("ignore"));
 
-	const int cookiesPolicyIndex = m_ui->cookiesPolicyComboBox->findData(SettingsManager::getValue(QLatin1String("Network/CookiesPolicy"), (m_ui->cookiesPolicyOverrideCheckBox->isChecked() ? url : QUrl())).toString());
+	const int cookiesPolicyIndex(m_ui->cookiesPolicyComboBox->findData(SettingsManager::getValue(QLatin1String("Network/CookiesPolicy"), (m_ui->cookiesPolicyOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
 
 	m_ui->cookiesPolicyComboBox->setCurrentIndex((cookiesPolicyIndex < 0) ? 0 : cookiesPolicyIndex);
 
-	const int cookiesKeepModeIndex = m_ui->keepCookiesModeComboBox->findData(SettingsManager::getValue(QLatin1String("Network/CookiesKeepMode"), (m_ui->keepCookiesModeOverrideCheckBox->isChecked() ? url : QUrl())).toString());
+	const int cookiesKeepModeIndex(m_ui->keepCookiesModeComboBox->findData(SettingsManager::getValue(QLatin1String("Network/CookiesKeepMode"), (m_ui->keepCookiesModeOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
 
 	m_ui->keepCookiesModeComboBox->setCurrentIndex((cookiesKeepModeIndex < 0) ? 0 : cookiesKeepModeIndex);
 
-	const int thirdPartyCookiesPolicyIndex = m_ui->thirdPartyCookiesPolicyComboBox->findData(SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), (m_ui->thirdPartyCookiesPolicyOverrideCheckBox->isChecked() ? url : QUrl())).toString());
+	const int thirdPartyCookiesPolicyIndex(m_ui->thirdPartyCookiesPolicyComboBox->findData(SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), (m_ui->thirdPartyCookiesPolicyOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
 
 	m_ui->thirdPartyCookiesPolicyComboBox->setCurrentIndex((thirdPartyCookiesPolicyIndex < 0) ? 0 : thirdPartyCookiesPolicyIndex);
 	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Network/EnableReferrer"), (m_ui->sendReferrerOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 	m_ui->userAgentComboBox->setCurrentIndex(m_ui->userAgentComboBox->findData(SettingsManager::getValue(QLatin1String("Network/UserAgent"), (m_ui->userAgentOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
 
 	const QSettings contentBlockingProfilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
-	const QStringList contentBlockingGlobalProfiles = SettingsManager::getValue(QLatin1String("Content/BlockingProfiles"), url).toStringList();
-	const QVector<ContentBlockingInformation> contentBlockingProfiles = ContentBlockingManager::getProfiles();
-	QStandardItemModel *contentBlockingProfilesModel = new QStandardItemModel(this);
+	const QStringList contentBlockingGlobalProfiles(SettingsManager::getValue(QLatin1String("Content/BlockingProfiles"), url).toStringList());
+	const QVector<ContentBlockingInformation> contentBlockingProfiles(ContentBlockingManager::getProfiles());
+	QStandardItemModel *contentBlockingProfilesModel(new QStandardItemModel(this));
 	QStringList contentBlockingLabels;
 	contentBlockingLabels << tr("Title") << tr("Update Interval") << tr("Last Update");
 
