@@ -102,6 +102,7 @@
         <file>icons/permission-capture-audio-video.png</file>
         <file>icons/permission-capture-audio.png</file>
         <file>icons/permission-capture-video.png</file>
+        <file>icons/permission-fullscreen.png</file>
         <file>icons/permission-geolocation.png</file>
         <file>icons/permission-notifications.png</file>
         <file>icons/permission-pointer-lock.png</file>

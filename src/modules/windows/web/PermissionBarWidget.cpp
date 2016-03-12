@@ -34,7 +34,12 @@ PermissionBarWidget::PermissionBarWidget(const QString &option, const QUrl &url,
 
 	m_ui->setupUi(this);
 
-	if (option == QLatin1String("Browser/EnableGeolocation"))
+	if (option == QLatin1String("Browser/EnableFullScreen"))
+	{
+		m_ui->iconLabel->setPixmap(Utils::getIcon(QLatin1String("permission-fullscreen"), false).pixmap(m_ui->iconLabel->size()));
+		m_ui->messageLabel->setText(tr("%1 wants to enter full screen mode.").arg(domain));
+	}
+	else if (option == QLatin1String("Browser/EnableGeolocation"))
 	{
 		m_ui->iconLabel->setPixmap(Utils::getIcon(QLatin1String("permission-geolocation"), false).pixmap(m_ui->iconLabel->size()));
 		m_ui->messageLabel->setText(tr("%1 wants access to your location.").arg(domain));
