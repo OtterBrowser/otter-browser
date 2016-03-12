@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
 	{
 		SessionsManager::restoreSession(SessionsManager::getSession(QLatin1String("default")), NULL, isPrivate);
 	}
-	else
+	else if (startupBehavior != QLatin1String("startEmpty"))
 	{
 		WindowHistoryEntry entry;
 
