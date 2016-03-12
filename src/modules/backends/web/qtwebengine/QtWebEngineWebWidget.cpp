@@ -957,11 +957,34 @@ void QtWebEngineWebWidget::handleFullScreenRequest(QWebEngineFullScreenRequest r
 {
 	request.accept();
 
-	MainWindow *mainWindow(MainWindow::findMainWindow(this));
-
-	if (mainWindow && ((request.toggleOn() && !mainWindow->isFullScreen()) || (!request.toggleOn() && mainWindow->isFullScreen())))
+	if (request.toggleOn())
 	{
-		mainWindow->triggerAction(ActionsManager::FullScreenAction);
+		const QString value = SettingsManager::getValue(QLatin1String("Browser/EnableFullScreen"), request.origin()).toString();
+
+		if (value == QLatin1String("allow"))
+		{
+			MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+			if (mainWindow && !mainWindow->isFullScreen())
+			{
+				mainWindow->triggerAction(ActionsManager::FullScreenAction);
+			}
+		}
+		else if (value == QLatin1String("ask"))
+		{
+			emit requestedPermission(QLatin1String("Browser/EnableFullScreen"), request.origin(), false);
+		}
+	}
+	else
+	{
+		MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+		if (mainWindow && mainWindow->isFullScreen())
+		{
+			mainWindow->triggerAction(ActionsManager::FullScreenAction);
+		}
+
+		emit requestedPermission(QLatin1String("Browser/EnableFullScreen"), request.origin(), true);
 	}
 }
 
@@ -1253,6 +1276,21 @@ void QtWebEngineWebWidget::setUrl(const QUrl &url, bool typed)
 void QtWebEngineWebWidget::setPermission(const QString &key, const QUrl &url, WebWidget::PermissionPolicies policies)
 {
 	WebWidget::setPermission(key, url, policies);
+
+	if (key == QLatin1String("Browser/EnableFullScreen"))
+	{
+		if (policies.testFlag(GrantedPermission))
+		{
+			MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+			if (mainWindow && !mainWindow->isFullScreen())
+			{
+				mainWindow->triggerAction(ActionsManager::FullScreenAction);
+			}
+		}
+
+		return;
+	}
 
 	QWebEnginePage::Feature feature = QWebEnginePage::Geolocation;
 
