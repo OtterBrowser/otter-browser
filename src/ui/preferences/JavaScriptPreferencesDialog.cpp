@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -37,10 +37,17 @@ JavaScriptPreferencesDialog::JavaScriptPreferencesDialog(const QVariantMap &opti
 	m_ui->canCloseWindowsComboBox->addItem(tr("Ask"), QLatin1String("ask"));
 	m_ui->canCloseWindowsComboBox->addItem(tr("Always"), QLatin1String("allow"));
 	m_ui->canCloseWindowsComboBox->addItem(tr("Never"), QLatin1String("disallow"));
+	m_ui->enableFullScreenComboBox->addItem(tr("Ask"), QLatin1String("ask"));
+	m_ui->enableFullScreenComboBox->addItem(tr("Always"), QLatin1String("allow"));
+	m_ui->enableFullScreenComboBox->addItem(tr("Never"), QLatin1String("disallow"));
 
-	const int canCloseWindowsIndex = m_ui->canCloseWindowsComboBox->findData(options.value(QLatin1String("Browser/JavaScriptCanCloseWindows")).toString());
+	const int canCloseWindowsIndex(m_ui->canCloseWindowsComboBox->findData(options.value(QLatin1String("Browser/JavaScriptCanCloseWindows")).toString()));
 
 	m_ui->canCloseWindowsComboBox->setCurrentIndex((canCloseWindowsIndex < 0) ? 0 : canCloseWindowsIndex);
+
+	const int enableFullScreenIndex(m_ui->enableFullScreenComboBox->findData(options.value(QLatin1String("Browser/EnableFullScreen")).toString()));
+
+	m_ui->enableFullScreenComboBox->setCurrentIndex((enableFullScreenIndex < 0) ? 0 : enableFullScreenIndex);
 
 	connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
 	connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
@@ -70,6 +77,7 @@ QVariantMap JavaScriptPreferencesDialog::getOptions() const
 	options[QLatin1String("Browser/JavaScriptCanDisableContextMenu")] = m_ui->canDisableContextMenuCheckBox->isChecked();
 	options[QLatin1String("Browser/JavaScriptCanOpenWindows")] = m_ui->canOpenWindowsCheckBox->isChecked();
 	options[QLatin1String("Browser/JavaScriptCanCloseWindows")] = m_ui->canCloseWindowsComboBox->currentData().toString();
+	options[QLatin1String("Browser/EnableFullScreen")] = m_ui->enableFullScreenComboBox->currentData().toString();
 
 	return options;
 }

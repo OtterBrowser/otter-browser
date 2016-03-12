@@ -1232,12 +1232,13 @@ void PreferencesAdvancedPageWidget::updateJavaScriptOptions()
 
 	if (!isSet)
 	{
-		m_javaScriptOptions[QLatin1String("Browser/JavaScriptCanChangeWindowGeometry")] = SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanChangeWindowGeometry"));
-		m_javaScriptOptions[QLatin1String("Browser/JavaScriptCanShowStatusMessages")] = SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"));
-		m_javaScriptOptions[QLatin1String("Browser/JavaScriptCanAccessClipboard")] = SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanAccessClipboard"));
-		m_javaScriptOptions[QLatin1String("Browser/JavaScriptCanDisableContextMenu")] = SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanDisableContextMenu"));
-		m_javaScriptOptions[QLatin1String("Browser/JavaScriptCanOpenWindows")] = SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanOpenWindows"));
-		m_javaScriptOptions[QLatin1String("Browser/JavaScriptCanCloseWindows")] = SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanCloseWindows"));
+		QStringList javaScriptOptions;
+		javaScriptOptions << QLatin1String("Browser/EnableFullScreen") << QLatin1String("Browser/JavaScriptCanAccessClipboard") << QLatin1String("Browser/JavaScriptCanChangeWindowGeometry") << QLatin1String("Browser/JavaScriptCanCloseWindows") << QLatin1String("Browser/JavaScriptCanDisableContextMenu") << QLatin1String("Browser/JavaScriptCanOpenWindows") << QLatin1String("Browser/JavaScriptCanShowStatusMessages");
+
+		for (int i = 0; i < javaScriptOptions.count(); ++i)
+		{
+			m_javaScriptOptions[javaScriptOptions.at(i)] = SettingsManager::getValue(javaScriptOptions.at(i));
+		}
 	}
 
 	JavaScriptPreferencesDialog dialog(m_javaScriptOptions, this);
@@ -1609,12 +1610,12 @@ void PreferencesAdvancedPageWidget::save()
 
 	if (!m_javaScriptOptions.isEmpty())
 	{
-		SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanChangeWindowGeometry"), m_javaScriptOptions.value(QLatin1String("Browser/JavaScriptCanChangeWindowGeometry")));
-		SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), m_javaScriptOptions.value(QLatin1String("Browser/JavaScriptCanShowStatusMessages")));
-		SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanAccessClipboard"), m_javaScriptOptions.value(QLatin1String("Browser/JavaScriptCanAccessClipboard")));
-		SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanDisableContextMenu"), m_javaScriptOptions.value(QLatin1String("Browser/JavaScriptCanDisableContextMenu")));
-		SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanOpenWindows"), m_javaScriptOptions.value(QLatin1String("Browser/JavaScriptCanOpenWindows")));
-		SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanCloseWindows"), m_javaScriptOptions.value(QLatin1String("Browser/JavaScriptCanCloseWindows")));
+		QVariantMap::iterator javaScriptOptionsIterator;
+
+		for (javaScriptOptionsIterator = m_javaScriptOptions.begin(); javaScriptOptionsIterator != m_javaScriptOptions.end(); ++javaScriptOptionsIterator)
+		{
+			SettingsManager::setValue(javaScriptOptionsIterator.key(), javaScriptOptionsIterator.value());
+		}
 	}
 
 	updateReaddKeyboardProfileMenu();

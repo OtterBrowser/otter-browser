@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>272</height>
+    <width>500</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -86,6 +86,19 @@
      <item row="0" column="1">
       <widget class="QComboBox" name="canCloseWindowsComboBox"/>
      </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="enableFullScreenComboBox"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="enableFullScreenLabel">
+       <property name="text">
+        <string>Allow to enter full screen mode:</string>
+       </property>
+       <property name="buddy">
+        <cstring>enableFullScreenComboBox</cstring>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -128,8 +141,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>257</x>
+     <y>290</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -144,8 +157,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>325</x>
+     <y>290</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
