@@ -59,7 +59,7 @@ public:
 		CancelledState = 4
 	};
 
-	explicit Transfer(QObject *parent = NULL);
+	explicit Transfer(TransferOptions options = CanAskForPathOption, QObject *parent = NULL);
 	Transfer(const QSettings &settings, QObject *parent = NULL);
 	Transfer(const QUrl &source, const QString &target = QString(), TransferOptions options = CanAskForPathOption, QObject *parent = NULL);
 	Transfer(const QNetworkRequest &request, const QString &target = QString(), TransferOptions options = CanAskForPathOption, QObject *parent = NULL);
@@ -97,6 +97,8 @@ protected slots:
 	void downloadData();
 	void downloadFinished();
 	void downloadError(QNetworkReply::NetworkError error);
+	void markStarted();
+	void markFinished(bool reset = false);
 
 private:
 	QPointer<QNetworkReply> m_reply;

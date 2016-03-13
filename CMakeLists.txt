@@ -304,6 +304,7 @@ if (EnableQtwebengine)
 		${otter_src}
 		src/modules/backends/web/qtwebengine/QtWebEnginePage.cpp
 		src/modules/backends/web/qtwebengine/QtWebEngineUrlRequestInterceptor.cpp
+		src/modules/backends/web/qtwebengine/QtWebEngineTransfer.cpp
 		src/modules/backends/web/qtwebengine/QtWebEngineWebBackend.cpp
 		src/modules/backends/web/qtwebengine/QtWebEngineWebWidget.cpp
 	)

@@ -39,7 +39,7 @@
 namespace Otter
 {
 
-Transfer::Transfer(QObject *parent) : QObject(parent ? parent : TransfersManager::getInstance()),
+Transfer::Transfer(TransferOptions options, QObject *parent) : QObject(parent ? parent : TransfersManager::getInstance()),
 	m_reply(NULL),
 	m_device(NULL),
 	m_speed(0),
@@ -47,7 +47,7 @@ Transfer::Transfer(QObject *parent) : QObject(parent ? parent : TransfersManager
 	m_bytesReceivedDifference(0),
 	m_bytesReceived(0),
 	m_bytesTotal(0),
-	m_options(NoOption),
+	m_options(options),
 	m_state(UnknownState),
 	m_updateTimer(0),
 	m_updateInterval(0),
@@ -223,7 +223,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 	}
 	else
 	{
-		m_timeFinished = QDateTime::currentDateTime();
+		markFinished();
 
 		if (m_options.testFlag(CanAutoDeleteOption) && !m_isSelectingPath)
 		{
@@ -411,8 +411,9 @@ void Transfer::downloadFinished()
 	}
 	else
 	{
+		markFinished();
+
 		m_state = FinishedState;
-		m_timeFinished = QDateTime::currentDateTime();
 		m_mimeType = QMimeDatabase().mimeTypeForFile(m_target);
 	}
 
@@ -454,6 +455,16 @@ void Transfer::downloadError(QNetworkReply::NetworkError error)
 	{
 		deleteLater();
 	}
+}
+
+void Transfer::markStarted()
+{
+	m_timeStarted = QDateTime::currentDateTime();
+}
+
+void Transfer::markFinished(bool reset)
+{
+	m_timeFinished = (reset ? QDateTime() : QDateTime::currentDateTime());
 }
 
 void Transfer::openTarget()
