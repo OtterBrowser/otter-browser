@@ -19,6 +19,7 @@
 
 #include "QtWebEngineWebWidget.h"
 #include "QtWebEnginePage.h"
+#include "QtWebEngineTransfer.h"
 #include "../../../../core/BookmarksManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/GesturesManager.h"
@@ -194,10 +195,7 @@ void QtWebEngineWebWidget::pageLoadFinished()
 
 void QtWebEngineWebWidget::downloadFile(QWebEngineDownloadItem *item)
 {
-	startTransfer(new Transfer(item->url(), QString(), (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
-
-	item->cancel();
-	item->deleteLater();
+	startTransfer(new QtWebEngineTransfer(item, (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 }
 
 void QtWebEngineWebWidget::linkHovered(const QString &link)

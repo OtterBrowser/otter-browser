@@ -30,6 +30,7 @@ QtWebEngineTransfer::QtWebEngineTransfer(QWebEngineDownloadItem *item, TransferO
 	m_suggestedFileName(QFileInfo(item->path()).fileName())
 {
 	m_item->accept();
+	m_item->setParent(this);
 
 	markStarted();
 
@@ -39,11 +40,24 @@ QtWebEngineTransfer::QtWebEngineTransfer(QWebEngineDownloadItem *item, TransferO
 
 void QtWebEngineTransfer::cancel()
 {
-	m_item->cancel();
+	if (m_item)
+	{
+		m_item->cancel();
+		m_item->deleteLater();
+	}
+	else
+	{
+		Transfer::cancel();
+	}
 }
 
 QUrl QtWebEngineTransfer::getSource() const
 {
+	if (!m_item)
+	{
+		return Transfer::getSource();
+	}
+
 	return m_item->url();
 }
 
@@ -54,26 +68,51 @@ QString QtWebEngineTransfer::getSuggestedFileName()
 
 QString QtWebEngineTransfer::getTarget() const
 {
+	if (!m_item)
+	{
+		return Transfer::getTarget();
+	}
+
 	return m_item->path();
 }
 
 QMimeType QtWebEngineTransfer::getMimeType() const
 {
+	if (!m_item)
+	{
+		return Transfer::getMimeType();
+	}
+
 	return QMimeDatabase().mimeTypeForName(m_item->mimeType());
 }
 
 qint64 QtWebEngineTransfer::getBytesReceived() const
 {
+	if (!m_item)
+	{
+		return Transfer::getBytesReceived();
+	}
+
 	return m_item->receivedBytes();
 }
 
 qint64 QtWebEngineTransfer::getBytesTotal() const
 {
+	if (!m_item)
+	{
+		return Transfer::getBytesTotal();
+	}
+
 	return m_item->totalBytes();
 }
 
 Transfer::TransferState QtWebEngineTransfer::getState() const
 {
+	if (!m_item)
+	{
+		return Transfer::getState();
+	}
+
 	switch (m_item->state())
 	{
 		case QWebEngineDownloadItem::DownloadRequested:
@@ -94,7 +133,14 @@ Transfer::TransferState QtWebEngineTransfer::getState() const
 
 bool QtWebEngineTransfer::setTarget(const QString &target)
 {
+	if (!m_item)
+	{
+		return Transfer::setTarget(target);
+	}
+
 	m_item->setPath(target);
+
+	return true;
 }
 
 }

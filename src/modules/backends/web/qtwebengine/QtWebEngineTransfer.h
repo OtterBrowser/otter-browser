@@ -47,7 +47,7 @@ public slots:
 	bool setTarget(const QString &target);
 
 private:
-	QWebEngineDownloadItem *m_item;
+	QPointer<QWebEngineDownloadItem> m_item;
 	QString m_suggestedFileName;
 };
 
