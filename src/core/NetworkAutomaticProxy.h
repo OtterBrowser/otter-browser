@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -22,44 +22,55 @@
 #define OTTER_NETWORKAUTOMATICPROXY_H
 
 #include <QtNetwork/QNetworkProxy>
-#include <QtScript/QScriptEngine>
-#include <QtScript/QScriptValue>
+#include <QtQml/QJSEngine>
 
 namespace Otter
 {
 
-class NetworkAutomaticProxy
+class PacUtils : public QObject
 {
+	Q_OBJECT
+
 public:
-	explicit NetworkAutomaticProxy();
+	explicit PacUtils(QObject *parent = NULL);
+
+public slots:
+	void alert(const QString &message) const;
+	QString dnsResolve(const QString &host) const;
+	QString myIpAddress() const;
+	int dnsDomainLevels(const QString &host) const;
+	bool isInNet(const QString &host, const QString &pattern, const QString &mask) const;
+	bool isPlainHostName(const QString &host) const;
+	bool isResolvable(const QString &host) const;
+	bool localHostOrDomainIs(const QString &host, QString domain) const;
+	bool dnsDomainIs(const QString &host, const QString &domain) const;
+	bool shExpMatch(const QString &string, const QString &expression) const;
+	bool weekdayRange(QString fromDay, QString toDay = QString(), const QString &gmt = QLatin1String("gmt")) const;
+	bool dateRange(const QVariant &arg1, const QVariant &arg2 = QVariant(), const QVariant &arg3 = QVariant(), const QVariant &arg4 = QVariant(), const QVariant &arg5 = QVariant(), const QVariant &arg6 = QVariant(), const QString &gmt = QLatin1String("gmt")) const;
+	bool timeRange(const QVariant &arg1, const QVariant &arg2, const QVariant &arg3, const QVariant &arg4, const QVariant &arg5, const QVariant &arg6, const QString &gmt = QLatin1String("gmt")) const;
+
+protected:
+	bool isInRange(const QVariant &valueOne, const QVariant &valueTwo, const QVariant &actualValue) const;
+
+private:
+	static QStringList m_months;
+	static QStringList m_days;
+};
+
+class NetworkAutomaticProxy : public QObject
+{
+	Q_OBJECT
+
+public:
+	explicit NetworkAutomaticProxy(QObject *parent = NULL);
 
 	QList<QNetworkProxy> getProxy(const QString &url, const QString &host);
 	bool setup(const QString &script);
 
-protected:
-	static QScriptValue alert(QScriptContext *context, QScriptEngine *engine);
-	static QScriptValue dnsDomainIs(QScriptContext *context, QScriptEngine *engine);
-	static QScriptValue isInNet(QScriptContext *context, QScriptEngine *engine);
-	static QScriptValue myIpAddress(QScriptContext *context, QScriptEngine *engine);
-	static QScriptValue dnsResolve(QScriptContext *context, QScriptEngine *engine);
-	static QScriptValue isPlainHostName(QScriptContext *context, QScriptEngine *engine);
-	static QScriptValue shExpMatch(QScriptContext *context, QScriptEngine *engine);
-	static QScriptValue isResolvable(QScriptContext *context, QScriptEngine *engine);
-	static QScriptValue localHostOrDomainIs(QScriptContext *context, QScriptEngine *engine);
-	static QScriptValue dnsDomainLevels(QScriptContext *context, QScriptEngine *engine);
-	static QScriptValue weekdayRange(QScriptContext *context, QScriptEngine *engine);
-	static QScriptValue dateRange(QScriptContext *context, QScriptEngine *engine);
-	static QScriptValue timeRange(QScriptContext *context, QScriptEngine *engine);
-	static QDateTime getDateTime(QScriptContext *context, int *numberOfArguments = NULL);
-	static bool compareRange(const QVariant &valueOne, const QVariant &valueTwo, const QVariant &actualValue);
-
 private:
-	QScriptEngine m_engine;
-	QScriptValue m_findProxy;
+	QJSEngine m_engine;
+	QJSValue m_findProxy;
 	QHash<QString, QList<QNetworkProxy> > m_proxies;
-
-	static QStringList m_months;
-	static QStringList m_days;
 };
 
 }
