@@ -254,7 +254,7 @@ bool PacUtils::timeRange(const QVariant &arg1, const QVariant &arg2, const QVari
 			break;
 		}
 
-		if (!rawArguments.at(i).type() == QVariant::Int)
+		if (rawArguments.at(i).type() != QVariant::Int)
 		{
 			return false;
 		}
