@@ -31,7 +31,6 @@
 #include "../core/NotesManager.h"
 #include "../core/SearchEnginesManager.h"
 #include "../core/SettingsManager.h"
-#include "../core/SpellCheckManager.h"
 #include "../core/Transfer.h"
 #include "../core/TransfersManager.h"
 #include "../core/Utils.h"
@@ -608,7 +607,7 @@ void WebWidget::updateNavigationActions()
 void WebWidget::updateEditActions()
 {
 	const bool canPaste = (QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText());
-	const bool canSpellCheck = (getOption(QLatin1String("Browser/EnableSpellCheck"), getUrl()).toBool() && !SpellCheckManager::getDictionaries().isEmpty());
+	const bool canSpellCheck = (getOption(QLatin1String("Browser/EnableSpellCheck"), getUrl()).toBool() && !getDictionaries().isEmpty());
 	const bool hasSelection = (this->hasSelection() && !getSelectedText().trimmed().isEmpty());
 
 	if (m_actions.contains(ActionsManager::CutAction))
@@ -1268,7 +1267,7 @@ Action* WebWidget::getAction(int identifier)
 			break;
 		case ActionsManager::SelectDictionaryAction:
 			{
-				const QList<SpellCheckManager::DictionaryInformation> dictionaries = SpellCheckManager::getDictionaries();
+				const QList<SpellCheckManager::DictionaryInformation> dictionaries(getDictionaries());
 
 				action->setEnabled(getOption(QLatin1String("Browser/EnableSpellCheck"), getUrl()).toBool() && !dictionaries.isEmpty());
 
@@ -1380,6 +1379,11 @@ WebWidget::SslInformation WebWidget::getSslInformation() const
 QStringList WebWidget::getStyleSheets() const
 {
 	return QStringList();
+}
+
+QList<SpellCheckManager::DictionaryInformation> WebWidget::getDictionaries() const
+{
+	return SpellCheckManager::getDictionaries();
 }
 
 QList<LinkUrl> WebWidget::getFeeds() const

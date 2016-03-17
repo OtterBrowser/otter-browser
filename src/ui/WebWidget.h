@@ -23,6 +23,7 @@
 #define OTTER_WEBWIDGET_H
 
 #include "../core/SessionsManager.h"
+#include "../core/SpellCheckManager.h"
 #include "Window.h"
 
 #include <QtGui/QHelpEvent>
@@ -194,6 +195,7 @@ protected:
 	Action* getExistingAction(int identifier);
 	QString suggestSaveFileName() const;
 	HitTestResult getCurrentHitTestResult() const;
+	virtual QList<SpellCheckManager::DictionaryInformation> getDictionaries() const;
 	virtual int getAmountOfNotLoadedPlugins() const;
 	virtual bool canGoBack() const;
 	virtual bool canGoForward() const;

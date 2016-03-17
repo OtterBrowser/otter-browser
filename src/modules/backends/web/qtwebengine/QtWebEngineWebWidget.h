@@ -91,6 +91,7 @@ protected:
 	void setHistory(QDataStream &stream);
 	void setOptions(const QVariantHash &options);
 	QWebEnginePage* getPage();
+	QList<SpellCheckManager::DictionaryInformation> getDictionaries() const;
 	bool canGoBack() const;
 	bool canGoForward() const;
 	bool canShowContextMenu(const QPoint &position) const;
