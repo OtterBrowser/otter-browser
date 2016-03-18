@@ -20,6 +20,7 @@
 #include "TabSwitcherWidget.h"
 #include "AddressDelegate.h"
 #include "Window.h"
+#include "../core/Utils.h"
 #include "../core/WindowsManager.h"
 
 #include <QtGui/QKeyEvent>
@@ -146,12 +147,7 @@ void TabSwitcherWidget::currentTabChanged(const QModelIndex &index)
 
 	if (window)
 	{
-		if (window->getLoadingState() == WindowsManager::FinishedLoadingState)
-		{
-			m_previewLabel->setMovie(NULL);
-			m_previewLabel->setPixmap(window->getThumbnail());
-		}
-		else
+		if (window->getLoadingState() == WindowsManager::DelayedLoadingState || window->getLoadingState() == WindowsManager::OngoingLoadingState)
 		{
 			if (!m_loadingMovie)
 			{
@@ -163,6 +159,11 @@ void TabSwitcherWidget::currentTabChanged(const QModelIndex &index)
 			m_previewLabel->setMovie(m_loadingMovie);
 
 			m_loadingMovie->setSpeed((window->getLoadingState() == WindowsManager::OngoingLoadingState) ? 100 : 10);
+		}
+		else
+		{
+			m_previewLabel->setMovie(NULL);
+			m_previewLabel->setPixmap((window->getLoadingState() == WindowsManager::CrashedLoadingState) ? Utils::getIcon(QLatin1String("tab-crashed")).pixmap(32, 32) : window->getThumbnail());
 		}
 	}
 	else
