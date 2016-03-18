@@ -37,7 +37,8 @@ enum WindowLoadingState
 {
 	DelayedState = 0,
 	LoadingState = 1,
-	LoadedState = 2
+	LoadedState = 2,
+	CrashedState = 3
 };
 
 struct LinkUrl

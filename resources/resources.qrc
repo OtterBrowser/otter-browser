@@ -112,6 +112,7 @@
         <file>icons/qt.png</file>
         <file>icons/tab-close-other.png</file>
         <file>icons/tab-close.png</file>
+        <file>icons/tab-crashed.png</file>
         <file>icons/tab-new-private.png</file>
         <file>icons/tab-new.png</file>
         <file>icons/tab-private.png</file>

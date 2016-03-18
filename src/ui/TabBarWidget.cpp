@@ -777,7 +777,7 @@ void TabBarWidget::updateTabs(int index)
 
 		if (label)
 		{
-			if (loadingState != LoadedState)
+			if (loadingState == DelayedState || loadingState == LoadingState)
 			{
 				if (!label->movie())
 				{
@@ -797,7 +797,18 @@ void TabBarWidget::updateTabs(int index)
 					label->setMovie(NULL);
 				}
 
-				label->setPixmap(getTabProperty(i, QLatin1String("icon"), Utils::getIcon(getTabProperty(i, QLatin1String("isPrivate"), false).toBool() ? QLatin1String("tab-private") : QLatin1String("tab"))).value<QIcon>().pixmap(16, 16));
+				QIcon icon;
+
+				if (loadingState == CrashedState)
+				{
+					icon = Utils::getIcon(QLatin1String("tab-crashed"));
+				}
+				else
+				{
+					icon = getTabProperty(i, QLatin1String("icon"), Utils::getIcon(getTabProperty(i, QLatin1String("isPrivate"), false).toBool() ? QLatin1String("tab-private") : QLatin1String("tab"))).value<QIcon>();
+				}
+
+				label->setPixmap(icon.pixmap(16, 16));
 			}
 		}
 	}
