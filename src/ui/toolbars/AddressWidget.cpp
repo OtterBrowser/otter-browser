@@ -679,7 +679,7 @@ void AddressWidget::updateBookmark(const QUrl &url)
 
 void AddressWidget::updateFeeds()
 {
-	const QList<LinkUrl> feeds = ((m_window && m_window->getLoadingState() == LoadedState) ? m_window->getContentsWidget()->getFeeds() : QList<LinkUrl>());
+	const QList<LinkUrl> feeds = ((m_window && m_window->getLoadingState() == WindowsManager::FinishedLoadingState) ? m_window->getContentsWidget()->getFeeds() : QList<LinkUrl>());
 
 	if (!feeds.isEmpty() && !m_feedsLabel)
 	{
@@ -909,7 +909,7 @@ void AddressWidget::setWindow(Window *window)
 		disconnect(m_window.data(), SIGNAL(destroyed(QObject*)), this, SLOT(setWindow()));
 		disconnect(m_window.data(), SIGNAL(urlChanged(QUrl,bool)), this, SLOT(setUrl(QUrl,bool)));
 		disconnect(m_window.data(), SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
-		disconnect(m_window.data(), SIGNAL(loadingStateChanged(WindowLoadingState)), this, SLOT(updateFeeds()));
+		disconnect(m_window.data(), SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateFeeds()));
 		disconnect(m_window.data(), SIGNAL(contentStateChanged(WindowsManager::ContentStates)), this, SLOT(update()));
 
 		if (m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction))
@@ -940,7 +940,7 @@ void AddressWidget::setWindow(Window *window)
 		connect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), window, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)));
 		connect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), window, SLOT(handleSearchRequest(QString,QString,WindowsManager::OpenHints)));
 		connect(window, SIGNAL(urlChanged(QUrl,bool)), this, SLOT(setUrl(QUrl,bool)));
-		connect(window, SIGNAL(loadingStateChanged(WindowLoadingState)), this, SLOT(updateFeeds()));
+		connect(window, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateFeeds()));
 		connect(window, SIGNAL(contentStateChanged(WindowsManager::ContentStates)), this, SLOT(update()));
 
 		ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parentWidget());
@@ -1097,7 +1097,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
 		{
-			const QList<LinkUrl> feeds = ((m_window && m_window->getLoadingState() == LoadedState) ? m_window->getContentsWidget()->getFeeds() : QList<LinkUrl>());
+			const QList<LinkUrl> feeds = ((m_window && m_window->getLoadingState() == WindowsManager::FinishedLoadingState) ? m_window->getContentsWidget()->getFeeds() : QList<LinkUrl>());
 
 			if (feeds.count() == 1 && m_window)
 			{

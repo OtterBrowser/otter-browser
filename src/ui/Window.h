@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -33,14 +33,6 @@
 namespace Otter
 {
 
-enum WindowLoadingState
-{
-	DelayedState = 0,
-	LoadingState = 1,
-	LoadedState = 2,
-	CrashedState = 3
-};
-
 struct LinkUrl
 {
 	QString title;
@@ -61,7 +53,7 @@ class Window : public QWidget
 	Q_PROPERTY(QUrl url READ getUrl WRITE setUrl NOTIFY urlChanged)
 	Q_PROPERTY(QIcon icon READ getIcon NOTIFY iconChanged)
 	Q_PROPERTY(QPixmap thumbnail READ getThumbnail)
-	Q_PROPERTY(WindowLoadingState loadingState READ getLoadingState NOTIFY loadingStateChanged)
+	Q_PROPERTY(WindowsManager::LoadingState loadingState READ getLoadingState NOTIFY loadingStateChanged)
 	Q_PROPERTY(bool canClone READ canClone)
 	Q_PROPERTY(bool isPinned READ isPinned WRITE setPinned NOTIFY isPinnedChanged)
 	Q_PROPERTY(bool isPrivate READ isPrivate)
@@ -88,7 +80,7 @@ public:
 	WindowHistoryInformation getHistory() const;
 	SessionWindow getSession() const;
 	QSize sizeHint() const;
-	WindowLoadingState getLoadingState() const;
+	WindowsManager::LoadingState getLoadingState() const;
 	WindowsManager::ContentStates getContentState() const;
 	quint64 getIdentifier() const;
 	bool canClone() const;
@@ -153,7 +145,7 @@ signals:
 	void urlChanged(const QUrl &url, bool force = false);
 	void iconChanged(const QIcon &icon);
 	void contentStateChanged(WindowsManager::ContentStates state);
-	void loadingStateChanged(WindowLoadingState loading);
+	void loadingStateChanged(WindowsManager::LoadingState loading);
 	void zoomChanged(int zoom);
 	void isPinnedChanged(bool pinned);
 	void widgetChanged();

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -329,7 +329,7 @@ void Window::handleGeometryChangeRequest(const QRect &geometry)
 
 void Window::notifyLoadingStateChanged(bool loading)
 {
-	emit loadingStateChanged(loading ? LoadingState : LoadedState);
+	emit loadingStateChanged(loading ? WindowsManager::OngoingLoadingState : WindowsManager::FinishedLoadingState);
 }
 
 void Window::notifyRequestedCloseWindow()
@@ -746,9 +746,9 @@ QSize Window::sizeHint() const
 	return QSize(800, 600);
 }
 
-WindowLoadingState Window::getLoadingState() const
+WindowsManager::LoadingState Window::getLoadingState() const
 {
-	return (m_contentsWidget ? (m_contentsWidget->isLoading() ? LoadingState : LoadedState) : DelayedState);
+	return (m_contentsWidget ? (m_contentsWidget->isLoading() ? WindowsManager::OngoingLoadingState : WindowsManager::FinishedLoadingState) : WindowsManager::DelayedLoadingState);
 }
 
 WindowsManager::ContentStates Window::getContentState() const

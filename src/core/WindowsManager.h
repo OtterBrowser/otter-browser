@@ -73,6 +73,14 @@ public:
 
 	Q_DECLARE_FLAGS(ContentStates, ContentState)
 
+	enum LoadingState
+	{
+		DelayedLoadingState = 0,
+		OngoingLoadingState = 1,
+		FinishedLoadingState = 2,
+		CrashedLoadingState = 3
+	};
+
 	explicit WindowsManager(bool isPrivate, MainWindow *parent);
 
 	Action* getAction(int identifier);

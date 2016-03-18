@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -146,7 +146,7 @@ void TabSwitcherWidget::currentTabChanged(const QModelIndex &index)
 
 	if (window)
 	{
-		if (window->getLoadingState() == LoadedState)
+		if (window->getLoadingState() == WindowsManager::FinishedLoadingState)
 		{
 			m_previewLabel->setMovie(NULL);
 			m_previewLabel->setPixmap(window->getThumbnail());
@@ -162,7 +162,7 @@ void TabSwitcherWidget::currentTabChanged(const QModelIndex &index)
 			m_previewLabel->setPixmap(QPixmap());
 			m_previewLabel->setMovie(m_loadingMovie);
 
-			m_loadingMovie->setSpeed((window->getLoadingState() == LoadingState) ? 100 : 10);
+			m_loadingMovie->setSpeed((window->getLoadingState() == WindowsManager::OngoingLoadingState) ? 100 : 10);
 		}
 	}
 	else

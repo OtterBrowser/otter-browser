@@ -62,7 +62,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_showUrlIcon(SettingsManager::getValue(QLatin1String("TabBar/ShowUrlIcon")).toBool()),
 	m_enablePreviews(SettingsManager::getValue(QLatin1String("TabBar/EnablePreviews")).toBool())
 {
-	qRegisterMetaType<WindowLoadingState>("WindowLoadingState");
+	qRegisterMetaType<WindowsManager::LoadingState>("WindowsManager::LoadingState");
 	setDrawBase(false);
 	setExpanding(false);
 	setMovable(true);
@@ -385,7 +385,7 @@ void TabBarWidget::addTab(int index, Window *window)
 	setTabData(index, window->getIdentifier());
 
 	connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(updateTabs()));
-	connect(window, SIGNAL(loadingStateChanged(WindowLoadingState)), this, SLOT(updateTabs()));
+	connect(window, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateTabs()));
 	connect(window, SIGNAL(isPinnedChanged(bool)), this, SLOT(isPinnedChanged()));
 
 	if (window->isPinned())
@@ -772,12 +772,12 @@ void TabBarWidget::updateTabs(int index)
 
 	for (int i = ((index >= 0) ? index : 0); i < limit; ++i)
 	{
-		const WindowLoadingState loadingState = static_cast<WindowLoadingState>(getTabProperty(i, QLatin1String("loadingState"), LoadedState).toInt());
+		const WindowsManager::LoadingState loadingState = static_cast<WindowsManager::LoadingState>(getTabProperty(i, QLatin1String("loadingState"), WindowsManager::FinishedLoadingState).toInt());
 		QLabel *label = qobject_cast<QLabel*>(tabButton(i, m_iconButtonPosition));
 
 		if (label)
 		{
-			if (loadingState == DelayedState || loadingState == LoadingState)
+			if (loadingState == WindowsManager::DelayedLoadingState || loadingState == WindowsManager::OngoingLoadingState)
 			{
 				if (!label->movie())
 				{
@@ -787,7 +787,7 @@ void TabBarWidget::updateTabs(int index)
 					label->setMovie(movie);
 				}
 
-				label->movie()->setSpeed((loadingState == LoadingState) ? 100 : 10);
+				label->movie()->setSpeed((loadingState == WindowsManager::OngoingLoadingState) ? 100 : 10);
 			}
 			else
 			{
@@ -799,7 +799,7 @@ void TabBarWidget::updateTabs(int index)
 
 				QIcon icon;
 
-				if (loadingState == CrashedState)
+				if (loadingState == WindowsManager::CrashedLoadingState)
 				{
 					icon = Utils::getIcon(QLatin1String("tab-crashed"));
 				}
