@@ -116,6 +116,7 @@ protected slots:
 	void notifyUrlChanged(const QUrl &url);
 	void notifyIconChanged();
 	void notifyPermissionRequested(const QUrl &url, QWebEnginePage::Feature feature, bool cancel);
+	void notifyRenderProcessTerminated(QWebEnginePage::RenderProcessTerminationStatus status);
 	void updateUndo();
 	void updateRedo();
 

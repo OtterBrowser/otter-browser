@@ -1123,6 +1123,16 @@ void QtWebEngineWebWidget::notifyPermissionRequested(const QUrl &url, QWebEngine
 	}
 }
 
+void QtWebEngineWebWidget::notifyRenderProcessTerminated(QWebEnginePage::RenderProcessTerminationStatus status)
+{
+	if (status != QWebEnginePage::NormalTerminationStatus)
+	{
+		m_loadingState = WindowsManager::CrashedLoadingState;
+
+		emit loadingStateChanged(WindowsManager::CrashedLoadingState);
+	}
+}
+
 void QtWebEngineWebWidget::updateUndo()
 {
 	Action *action = getExistingAction(ActionsManager::UndoAction);

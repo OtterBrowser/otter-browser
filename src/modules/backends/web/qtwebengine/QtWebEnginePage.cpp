@@ -65,6 +65,7 @@ QtWebEnginePage::QtWebEnginePage(bool isPrivate, QtWebEngineWebWidget *parent) :
 	m_isViewingMedia(false)
 {
 	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
+	connect(this, SIGNAL(renderProcessTerminated(RenderProcessTerminationStatus,int)), this, SLOT(notifyRenderProcessTerminated(RenderProcessTerminationStatus)));
 }
 
 void QtWebEnginePage::pageLoadFinished()
@@ -100,6 +101,14 @@ void QtWebEnginePage::handlePageLoaded(const QString &result)
 		m_isViewingMedia = isViewingMedia;
 
 		emit viewingMediaChanged(m_isViewingMedia);
+	}
+}
+
+void QtWebEnginePage::notifyRenderProcessTerminated(QWebEnginePage::RenderProcessTerminationStatus status)
+{
+	if (m_widget)
+	{
+		m_widget->notifyRenderProcessTerminated(status);
 	}
 }
 
