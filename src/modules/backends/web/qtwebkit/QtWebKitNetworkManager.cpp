@@ -508,15 +508,16 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 		if (!profiles.isEmpty())
 		{
-			const QByteArray acceptHeader = request.rawHeader(QByteArray("Accept"));
+			const QByteArray acceptHeader(request.rawHeader(QByteArray("Accept")));
 			const QString path(request.url().path());
 			ContentBlockingManager::ResourceType resourceType(ContentBlockingManager::OtherType);
 
 			if (!m_baseReply)
 			{
+				qDebug() << "main";
 				resourceType = ContentBlockingManager::MainFrameType;
 			}
-			else if (m_widget->hasFrame(request.url()))
+			else if (acceptHeader.contains(QByteArray("text/html")) || acceptHeader.contains(QByteArray("application/xhtml+xml")) || acceptHeader.contains(QByteArray("application/xml")) || path.endsWith(QLatin1String(".htm")) || path.endsWith(QLatin1String(".html")))
 			{
 				resourceType = ContentBlockingManager::SubFrameType;
 			}

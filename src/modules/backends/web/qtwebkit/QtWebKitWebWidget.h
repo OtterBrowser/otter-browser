@@ -125,7 +125,6 @@ protected:
 	bool canViewSource() const;
 	bool isNavigating() const;
 	bool isScrollBar(const QPoint &position) const;
-	bool hasFrame(const QUrl &url) const;
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);

@@ -2283,26 +2283,6 @@ bool QtWebKitWebWidget::isScrollBar(const QPoint &position) const
 	return (m_page->mainFrame()->scrollBarGeometry(Qt::Horizontal).contains(position) || m_page->mainFrame()->scrollBarGeometry(Qt::Vertical).contains(position));
 }
 
-bool QtWebKitWebWidget::hasFrame(const QUrl &url) const
-{
-	QList<QWebFrame*> frames;
-	frames.append(m_page->mainFrame());
-
-	while (!frames.isEmpty())
-	{
-		QWebFrame *frame = frames.takeFirst();
-
-		if (frame != m_page->mainFrame() && frame->requestedUrl() == url)
-		{
-			return true;
-		}
-
-		frames.append(frame->childFrames());
-	}
-
-	return false;
-}
-
 bool QtWebKitWebWidget::findInPage(const QString &text, FindFlags flags)
 {
 #if QTWEBKIT_VERSION >= 0x050200
