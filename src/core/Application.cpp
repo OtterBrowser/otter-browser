@@ -481,22 +481,24 @@ void Application::clearHistory()
 
 	if (!clearSettings.isEmpty())
 	{
-		if (clearSettings.contains(QLatin1String("browsing")))
+		const bool clearAll(clearSettings.contains(QLatin1String("all")));
+
+		if (clearAll || clearSettings.contains(QLatin1String("browsing")))
 		{
 			HistoryManager::clearHistory();
 		}
 
-		if (clearSettings.contains(QLatin1String("cookies")))
+		if (clearAll || clearSettings.contains(QLatin1String("cookies")))
 		{
 			NetworkManagerFactory::clearCookies();
 		}
 
-		if (clearSettings.contains(QLatin1String("downloads")))
+		if (clearAll || clearSettings.contains(QLatin1String("downloads")))
 		{
 			TransfersManager::clearTransfers();
 		}
 
-		if (clearSettings.contains(QLatin1String("caches")))
+		if (clearAll || clearSettings.contains(QLatin1String("caches")))
 		{
 			NetworkManagerFactory::clearCache();
 		}
