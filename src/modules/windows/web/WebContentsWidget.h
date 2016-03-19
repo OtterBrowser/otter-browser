@@ -83,10 +83,10 @@ public:
 	QList<LinkUrl> getSearchEngines() const;
 	QVariantHash getOptions() const;
 	WindowsManager::ContentStates getContentState() const;
+	WindowsManager::LoadingState getLoadingState() const;
 	int getZoom() const;
 	bool canClone() const;
 	bool canZoom() const;
-	bool isLoading() const;
 	bool isPrivate() const;
 	bool eventFilter(QObject *object, QEvent *event);
 
@@ -124,7 +124,7 @@ protected slots:
 	void notifyRequestedOpenUrl(const QUrl &url, WindowsManager::OpenHints hints);
 	void notifyRequestedNewWindow(WebWidget *widget, WindowsManager::OpenHints hints);
 	void updateFindHighlight(WebWidget::FindFlags flags);
-	void setLoading(bool loading);
+	void updateProgressBar(WindowsManager::LoadingState state);
 
 private:
 	QPointer<WebsiteInformationDialog> m_websiteInformationDialog;

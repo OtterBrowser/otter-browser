@@ -53,10 +53,10 @@ public:
 	virtual QList<LinkUrl> getFeeds() const;
 	virtual QList<LinkUrl> getSearchEngines() const;
 	virtual WindowsManager::ContentStates getContentState() const;
+	virtual WindowsManager::LoadingState getLoadingState() const;
 	virtual int getZoom() const;
 	virtual bool canClone() const;
 	virtual bool canZoom() const;
-	virtual bool isLoading() const;
 	virtual bool isPrivate() const;
 
 public slots:
@@ -99,8 +99,8 @@ signals:
 	void urlChanged(const QUrl &url);
 	void iconChanged(const QIcon &icon);
 	void contentStateChanged(WindowsManager::ContentStates state);
+	void loadingStateChanged(WindowsManager::LoadingState);
 	void zoomChanged(int zoom);
-	void loadingChanged(bool loading);
 };
 
 }

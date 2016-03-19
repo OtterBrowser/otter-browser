@@ -73,9 +73,9 @@ public:
 	QHash<QByteArray, QByteArray> getHeaders() const;
 	QVariantHash getStatistics() const;
 	WindowsManager::ContentStates getContentState() const;
+	WindowsManager::LoadingState getLoadingState() const;
 	int getZoom() const;
 	bool hasSelection() const;
-	bool isLoading() const;
 	bool isPrivate() const;
 	bool findInPage(const QString &text, FindFlags flags = NoFlagsFind);
 	bool eventFilter(QObject *object, QEvent *event);
@@ -167,9 +167,9 @@ private:
 	QVector<int> m_contentBlockingProfiles;
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
 	QNetworkAccessManager::Operation m_formRequestOperation;
+	WindowsManager::LoadingState m_loadingState;
 	int m_transfersTimer;
 	bool m_canLoadPlugins;
-	bool m_isLoading;
 	bool m_isTyped;
 	bool m_isNavigating;
 

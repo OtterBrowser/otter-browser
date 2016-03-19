@@ -49,9 +49,9 @@ public:
 	QRect getProgressBarGeometry() const;
 	WindowHistoryInformation getHistory() const;
 	HitTestResult getHitTestResult(const QPoint &position);
+	WindowsManager::LoadingState getLoadingState() const;
 	int getZoom() const;
 	bool hasSelection() const;
-	bool isLoading() const;
 	bool isPrivate() const;
 	bool findInPage(const QString &text, FindFlags flags = NoFlagsFind);
 

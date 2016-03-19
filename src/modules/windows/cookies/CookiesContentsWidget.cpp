@@ -88,7 +88,7 @@ void CookiesContentsWidget::populateCookies()
 
 	m_isLoading = false;
 
-	emit loadingChanged(false);
+	emit loadingStateChanged(WindowsManager::FinishedLoadingState);
 
 	connect(cookieJar, SIGNAL(cookieAdded(QNetworkCookie)), this, SLOT(addCookie(QNetworkCookie)));
 	connect(cookieJar, SIGNAL(cookieRemoved(QNetworkCookie)), this, SLOT(removeCookie(QNetworkCookie)));
@@ -473,9 +473,9 @@ QNetworkCookie CookiesContentsWidget::getCookie(const QModelIndex &index) const
 	return cookie;
 }
 
-bool CookiesContentsWidget::isLoading() const
+WindowsManager::LoadingState CookiesContentsWidget::getLoadingState() const
 {
-	return m_isLoading;
+	return (m_isLoading ? WindowsManager::OngoingLoadingState : WindowsManager::FinishedLoadingState);
 }
 
 bool CookiesContentsWidget::eventFilter(QObject *object, QEvent *event)

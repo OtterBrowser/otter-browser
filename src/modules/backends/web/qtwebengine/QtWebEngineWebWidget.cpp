@@ -85,9 +85,9 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	m_webView(new QWebEngineView(this)),
 	m_page(new QtWebEnginePage(isPrivate, this)),
 	m_iconReply(NULL),
+	m_loadingState(WindowsManager::FinishedLoadingState),
 	m_scrollTimer(startTimer(1000)),
 	m_isEditing(false),
-	m_isLoading(false),
 	m_isTyped(false)
 {
 	m_webView->setPage(m_page);
@@ -173,24 +173,24 @@ void QtWebEngineWebWidget::print(QPrinter *printer)
 
 void QtWebEngineWebWidget::pageLoadStarted()
 {
-	m_isLoading = true;
+	m_loadingState = WindowsManager::OngoingLoadingState;
 
 	setStatusMessage(QString());
 	setStatusMessage(QString(), true);
 
 	emit progressBarGeometryChanged();
-	emit loadingChanged(true);
+	emit loadingStateChanged(WindowsManager::OngoingLoadingState);
 }
 
 void QtWebEngineWebWidget::pageLoadFinished()
 {
-	m_isLoading = false;
+	m_loadingState = WindowsManager::FinishedLoadingState;
 
 	updateNavigationActions();
 	startReloadTimer();
 
 	emit contentStateChanged(getContentState());
-	emit loadingChanged(false);
+	emit loadingStateChanged(WindowsManager::FinishedLoadingState);
 }
 
 void QtWebEngineWebWidget::downloadFile(QWebEngineDownloadItem *item)
@@ -600,7 +600,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			return;
 		case ActionsManager::ReloadOrStopAction:
-			if (isLoading())
+			if (m_loadingState == WindowsManager::OngoingLoadingState)
 			{
 				triggerAction(ActionsManager::StopAction);
 			}
@@ -1487,7 +1487,7 @@ WindowHistoryInformation QtWebEngineWebWidget::getHistory() const
 		information.entries.append(entry);
 	}
 
-	if (isLoading() && requestedUrl != history->itemAt(history->currentItemIndex()).url().toString())
+	if (m_loadingState == WindowsManager::OngoingLoadingState && requestedUrl != history->itemAt(history->currentItemIndex()).url().toString())
 	{
 		WindowHistoryEntry entry;
 		entry.url = requestedUrl;
@@ -1535,6 +1535,11 @@ QVariantHash QtWebEngineWebWidget::getStatistics() const
 	return QVariantHash();
 }
 
+WindowsManager::LoadingState QtWebEngineWebWidget::getLoadingState() const
+{
+	return m_loadingState;
+}
+
 int QtWebEngineWebWidget::getZoom() const
 {
 	return (m_webView->zoomFactor() * 100);
@@ -1565,11 +1570,6 @@ bool QtWebEngineWebWidget::canViewSource() const
 bool QtWebEngineWebWidget::hasSelection() const
 {
 	return m_webView->hasSelection();
-}
-
-bool QtWebEngineWebWidget::isLoading() const
-{
-	return m_isLoading;
 }
 
 bool QtWebEngineWebWidget::isPrivate() const

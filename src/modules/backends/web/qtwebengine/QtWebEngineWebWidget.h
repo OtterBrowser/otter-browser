@@ -54,9 +54,9 @@ public:
 	HitTestResult getHitTestResult(const QPoint &position);
 	QHash<QByteArray, QByteArray> getHeaders() const;
 	QVariantHash getStatistics() const;
+	WindowsManager::LoadingState getLoadingState() const;
 	int getZoom() const;
 	bool hasSelection() const;
-	bool isLoading() const;
 	bool isPrivate() const;
 	bool findInPage(const QString &text, FindFlags flags = NoFlagsFind);
 	bool eventFilter(QObject *object, QEvent *event);
@@ -127,9 +127,9 @@ private:
 	HitTestResult m_hitResult;
 	QPoint m_scrollPosition;
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
+	WindowsManager::LoadingState m_loadingState;
 	int m_scrollTimer;
 	bool m_isEditing;
-	bool m_isLoading;
 	bool m_isTyped;
 
 signals:

@@ -314,6 +314,11 @@ WindowsManager::ContentStates ContentsWidget::getContentState() const
 	return WindowsManager::ApplicationContentState;
 }
 
+WindowsManager::LoadingState ContentsWidget::getLoadingState() const
+{
+	return WindowsManager::FinishedLoadingState;
+}
+
 int ContentsWidget::getZoom() const
 {
 	return 100;
@@ -325,11 +330,6 @@ bool ContentsWidget::canClone() const
 }
 
 bool ContentsWidget::canZoom() const
-{
-	return false;
-}
-
-bool ContentsWidget::isLoading() const
 {
 	return false;
 }

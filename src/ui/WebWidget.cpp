@@ -74,7 +74,7 @@ void WebWidget::timerEvent(QTimerEvent *event)
 
 		m_reloadTimer = 0;
 
-		if (!isLoading())
+		if (getLoadingState() == WindowsManager::FinishedLoadingState)
 		{
 			triggerAction(ActionsManager::ReloadAction);
 		}
@@ -580,17 +580,17 @@ void WebWidget::updateNavigationActions()
 
 	if (m_actions.contains(ActionsManager::StopAction))
 	{
-		m_actions[ActionsManager::StopAction]->setEnabled(isLoading());
+		m_actions[ActionsManager::StopAction]->setEnabled(getLoadingState() == WindowsManager::OngoingLoadingState);
 	}
 
 	if (m_actions.contains(ActionsManager::ReloadAction))
 	{
-		m_actions[ActionsManager::ReloadAction]->setEnabled(!isLoading());
+		m_actions[ActionsManager::ReloadAction]->setEnabled(getLoadingState() != WindowsManager::OngoingLoadingState);
 	}
 
 	if (m_actions.contains(ActionsManager::ReloadOrStopAction))
 	{
-		m_actions[ActionsManager::ReloadOrStopAction]->setup(isLoading() ? getAction(ActionsManager::StopAction) : getAction(ActionsManager::ReloadAction));
+		m_actions[ActionsManager::ReloadOrStopAction]->setup((getLoadingState() == WindowsManager::OngoingLoadingState) ? getAction(ActionsManager::StopAction) : getAction(ActionsManager::ReloadAction));
 	}
 
 	if (m_actions.contains(ActionsManager::LoadPluginsAction))
@@ -1111,16 +1111,16 @@ Action* WebWidget::getAction(int identifier)
 
 			break;
 		case ActionsManager::StopAction:
-			action->setEnabled(isLoading());
+			action->setEnabled(getLoadingState() == WindowsManager::OngoingLoadingState);
 
 			break;
 
 		case ActionsManager::ReloadAction:
-			action->setEnabled(!isLoading());
+			action->setEnabled(getLoadingState() != WindowsManager::OngoingLoadingState);
 
 			break;
 		case ActionsManager::ReloadOrStopAction:
-			action->setup(isLoading() ? getAction(ActionsManager::StopAction) : getAction(ActionsManager::ReloadAction));
+			action->setup((getLoadingState() == WindowsManager::OngoingLoadingState) ? getAction(ActionsManager::StopAction) : getAction(ActionsManager::ReloadAction));
 
 			break;
 		case ActionsManager::ScheduleReloadAction:
@@ -1363,7 +1363,7 @@ QVariant WebWidget::getOption(const QString &key, const QUrl &url) const
 
 QUrl WebWidget::getRequestedUrl() const
 {
-	return ((getUrl().isEmpty() || isLoading()) ? m_requestedUrl : getUrl());
+	return ((getUrl().isEmpty() || getLoadingState() == WindowsManager::OngoingLoadingState) ? m_requestedUrl : getUrl());
 }
 
 QPoint WebWidget::getClickPosition() const

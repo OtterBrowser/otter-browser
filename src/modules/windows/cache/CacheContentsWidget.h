@@ -48,7 +48,7 @@ public:
 	QLatin1String getType() const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
-	bool isLoading() const;
+	WindowsManager::LoadingState getLoadingState() const;
 	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:

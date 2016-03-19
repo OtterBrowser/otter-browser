@@ -109,7 +109,6 @@ protected slots:
 	void handleOpenUrlRequest(const QUrl &url, WindowsManager::OpenHints hints);
 	void handleSearchRequest(const QString &query, const QString &searchEngine, WindowsManager::OpenHints hints = WindowsManager::DefaultOpen);
 	void handleGeometryChangeRequest(const QRect &geometry);
-	void notifyLoadingStateChanged(bool loading);
 	void notifyRequestedCloseWindow();
 	void updateNavigationBar();
 
@@ -145,7 +144,7 @@ signals:
 	void urlChanged(const QUrl &url, bool force = false);
 	void iconChanged(const QIcon &icon);
 	void contentStateChanged(WindowsManager::ContentStates state);
-	void loadingStateChanged(WindowsManager::LoadingState loading);
+	void loadingStateChanged(WindowsManager::LoadingState state);
 	void zoomChanged(int zoom);
 	void isPinnedChanged(bool pinned);
 	void widgetChanged();

@@ -205,7 +205,7 @@ void WebContentsWidget::keyPressEvent(QKeyEvent *event)
 
 	if (event->key() == Qt::Key_Escape)
 	{
-		if (m_webWidget->isLoading())
+		if (m_webWidget->getLoadingState() == WindowsManager::OngoingLoadingState)
 		{
 			triggerAction(ActionsManager::StopAction);
 
@@ -875,7 +875,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 
 		layout()->removeWidget(m_webWidget);
 
-		setLoading(false);
+		updateProgressBar(WindowsManager::FinishedLoadingState);
 	}
 
 	Window *window = qobject_cast<Window*>(parentWidget());
@@ -905,10 +905,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 		connect(m_webWidget, SIGNAL(requestedCloseWindow()), window, SLOT(close()));
 	}
 
-	if (m_webWidget->isLoading())
-	{
-		setLoading(true);
-	}
+	updateProgressBar(m_webWidget->getLoadingState());
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(m_webWidget, SIGNAL(aboutToNavigate()), this, SLOT(closePopupsBar()));
@@ -926,21 +923,21 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 	connect(m_webWidget, SIGNAL(urlChanged(QUrl)), this, SLOT(handleUrlChange(QUrl)));
 	connect(m_webWidget, SIGNAL(iconChanged(QIcon)), this, SIGNAL(iconChanged(QIcon)));
 	connect(m_webWidget, SIGNAL(contentStateChanged(WindowsManager::ContentStates)), this, SIGNAL(contentStateChanged(WindowsManager::ContentStates)));
+	connect(m_webWidget, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)));
+	connect(m_webWidget, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateProgressBar(WindowsManager::LoadingState)));
 	connect(m_webWidget, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
-	connect(m_webWidget, SIGNAL(loadingChanged(bool)), this, SIGNAL(loadingChanged(bool)));
-	connect(m_webWidget, SIGNAL(loadingChanged(bool)), this, SLOT(setLoading(bool)));
 
 	emit webWidgetChanged();
 }
 
-void WebContentsWidget::setLoading(bool loading)
+void WebContentsWidget::updateProgressBar(WindowsManager::LoadingState state)
 {
 	if (!m_progressBarWidget && !SettingsManager::getValue(QLatin1String("Browser/ShowDetailedProgressBar")).toBool())
 	{
 		return;
 	}
 
-	if (loading && !m_progressBarWidget)
+	if (state == WindowsManager::OngoingLoadingState && !m_progressBarWidget)
 	{
 		m_progressBarWidget = new ProgressBarWidget(m_webWidget, this);
 	}
@@ -1107,6 +1104,11 @@ WindowsManager::ContentStates WebContentsWidget::getContentState() const
 	return m_webWidget->getContentState();
 }
 
+WindowsManager::LoadingState WebContentsWidget::getLoadingState() const
+{
+	return m_webWidget->getLoadingState();
+}
+
 int WebContentsWidget::getZoom() const
 {
 	return m_webWidget->getZoom();
@@ -1120,11 +1122,6 @@ bool WebContentsWidget::canClone() const
 bool WebContentsWidget::canZoom() const
 {
 	return true;
-}
-
-bool WebContentsWidget::isLoading() const
-{
-	return m_webWidget->isLoading();
 }
 
 bool WebContentsWidget::isPrivate() const

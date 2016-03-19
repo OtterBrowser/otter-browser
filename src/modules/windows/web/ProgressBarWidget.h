@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,8 @@
 
 #ifndef OTTER_PROGRESSBARWIDGET_H
 #define OTTER_PROGRESSBARWIDGET_H
+
+#include "../../../core/WindowsManager.h"
 
 #include <QtCore/QTime>
 #include <QtWidgets/QFrame>
@@ -44,7 +46,7 @@ protected:
 	void timerEvent(QTimerEvent *event);
 
 protected slots:
-	void loadingChanged(bool isLoading);
+	void updateLoadingState(WindowsManager::LoadingState state);
 	void updateLoadStatus(int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);
 
 private:
@@ -56,8 +58,8 @@ private:
 	QLabel *m_elapsedLabel;
 	QLabel *m_messageLabel;
 	QTime *m_time;
+	WindowsManager::LoadingState m_loadingState;
 	int m_geometryUpdateTimer;
-	bool m_isLoading;
 };
 
 }

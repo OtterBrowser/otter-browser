@@ -156,11 +156,11 @@ public:
 	virtual QVariantHash getStatistics() const;
 	virtual QHash<QByteArray, QByteArray> getHeaders() const;
 	virtual WindowsManager::ContentStates getContentState() const;
+	virtual WindowsManager::LoadingState getLoadingState() const = 0;
 	quint64 getWindowIdentifier() const;
 	virtual int getZoom() const = 0;
 	bool hasOption(const QString &key) const;
 	virtual bool hasSelection() const;
-	virtual bool isLoading() const = 0;
 	virtual bool isPrivate() const = 0;
 	virtual bool findInPage(const QString &text, FindFlags flags = NoFlagsFind) = 0;
 
@@ -262,9 +262,9 @@ signals:
 	void urlChanged(const QUrl &url);
 	void iconChanged(const QIcon &icon);
 	void contentStateChanged(WindowsManager::ContentStates state);
+	void loadingStateChanged(WindowsManager::LoadingState state);
 	void zoomChanged(int zoom);
 	void loadProgress(int progress);
-	void loadingChanged(bool loading);
 	void loadStatusChanged(int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);
 };
 

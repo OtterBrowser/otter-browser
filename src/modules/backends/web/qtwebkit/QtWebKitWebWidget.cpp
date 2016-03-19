@@ -77,9 +77,9 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	m_inspector(NULL),
 	m_networkManager(networkManager),
 	m_splitter(new QSplitter(Qt::Vertical, this)),
+	m_loadingState(WindowsManager::FinishedLoadingState),
 	m_transfersTimer(0),
 	m_canLoadPlugins(false),
-	m_isLoading(false),
 	m_isTyped(false),
 	m_isNavigating(false)
 {
@@ -271,13 +271,13 @@ void QtWebKitWebWidget::navigating(const QUrl &url, QWebFrame *frame, QWebPage::
 
 void QtWebKitWebWidget::pageLoadStarted()
 {
-	if (m_isLoading)
+	if (m_loadingState == WindowsManager::OngoingLoadingState)
 	{
 		return;
 	}
 
 	m_canLoadPlugins = (getOption(QLatin1String("Browser/EnablePlugins"), getUrl()).toString() == QLatin1String("enabled"));
-	m_isLoading = true;
+	m_loadingState = WindowsManager::OngoingLoadingState;
 	m_thumbnail = QPixmap();
 
 	updateNavigationActions();
@@ -285,17 +285,17 @@ void QtWebKitWebWidget::pageLoadStarted()
 	setStatusMessage(QString(), true);
 
 	emit progressBarGeometryChanged();
-	emit loadingChanged(true);
+	emit loadingStateChanged(WindowsManager::OngoingLoadingState);
 }
 
 void QtWebKitWebWidget::pageLoadFinished()
 {
-	if (!m_isLoading || m_networkManager->isLoading())
+	if (m_loadingState != WindowsManager::OngoingLoadingState || m_networkManager->isLoading())
 	{
 		return;
 	}
 
-	m_isLoading = false;
+	m_loadingState = WindowsManager::FinishedLoadingState;
 	m_thumbnail = QPixmap();
 
 	updateNavigationActions();
@@ -303,7 +303,7 @@ void QtWebKitWebWidget::pageLoadFinished()
 	startReloadTimer();
 
 	emit contentStateChanged(getContentState());
-	emit loadingChanged(false);
+	emit loadingStateChanged(WindowsManager::FinishedLoadingState);
 }
 
 void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
@@ -1188,7 +1188,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::ReloadOrStopAction:
-			if (isLoading())
+			if (m_loadingState == WindowsManager::OngoingLoadingState)
 			{
 				triggerAction(ActionsManager::StopAction);
 			}
@@ -1861,7 +1861,7 @@ QIcon QtWebKitWebWidget::getIcon() const
 
 QPixmap QtWebKitWebWidget::getThumbnail()
 {
-	if ((!m_thumbnail.isNull() && m_thumbnail.devicePixelRatio() == devicePixelRatio()) || isLoading())
+	if ((!m_thumbnail.isNull() && m_thumbnail.devicePixelRatio() == devicePixelRatio()) || m_loadingState == WindowsManager::OngoingLoadingState)
 	{
 		return m_thumbnail;
 	}
@@ -1982,7 +1982,7 @@ WindowHistoryInformation QtWebKitWebWidget::getHistory() const
 		information.entries.append(entry);
 	}
 
-	if (isLoading() && requestedUrl != history->itemAt(history->currentItemIndex()).url().toString())
+	if (m_loadingState == WindowsManager::OngoingLoadingState && requestedUrl != history->itemAt(history->currentItemIndex()).url().toString())
 	{
 		WindowHistoryEntry entry;
 		entry.url = requestedUrl;
@@ -2221,6 +2221,11 @@ QVector<int> QtWebKitWebWidget::getContentBlockingProfiles() const
 	return m_contentBlockingProfiles;
 }
 
+WindowsManager::LoadingState QtWebKitWebWidget::getLoadingState() const
+{
+	return m_loadingState;
+}
+
 int QtWebKitWebWidget::getZoom() const
 {
 	return (m_webView->zoomFactor() * 100);
@@ -2261,11 +2266,6 @@ bool QtWebKitWebWidget::canViewSource() const
 bool QtWebKitWebWidget::hasSelection() const
 {
 	return m_page->hasSelection();
-}
-
-bool QtWebKitWebWidget::isLoading() const
-{
-	return m_isLoading;
 }
 
 bool QtWebKitWebWidget::isPrivate() const

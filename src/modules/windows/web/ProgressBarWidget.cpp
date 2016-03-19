@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -36,8 +36,8 @@ ProgressBarWidget::ProgressBarWidget(WebWidget *webWidget, QWidget *parent) : QF
 	m_elapsedLabel(new QLabel(this)),
 	m_messageLabel(new QLabel(this)),
 	m_time(NULL),
-	m_geometryUpdateTimer(0),
-	m_isLoading(false)
+	m_loadingState(WindowsManager::FinishedLoadingState),
+	m_geometryUpdateTimer(0)
 {
 	QHBoxLayout *layout = new QHBoxLayout(this);
 	layout->addWidget(m_progressBar);
@@ -72,13 +72,13 @@ ProgressBarWidget::ProgressBarWidget(WebWidget *webWidget, QWidget *parent) : QF
 
 	setAutoFillBackground(true);
 	scheduleGeometryUpdate();
-	loadingChanged(webWidget->isLoading());
+	updateLoadingState(webWidget->getLoadingState());
 	hide();
 
 	connect(webWidget, SIGNAL(loadMessageChanged(QString)), m_messageLabel, SLOT(setText(QString)));
 	connect(webWidget, SIGNAL(loadProgress(int)), m_progressBar, SLOT(setValue(int)));
 	connect(webWidget, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)), this, SLOT(updateLoadStatus(int,int,qint64,qint64,qint64)));
-	connect(webWidget, SIGNAL(loadingChanged(bool)), this, SLOT(loadingChanged(bool)));
+	connect(webWidget, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateLoadingState(WindowsManager::LoadingState)));
 }
 
 void ProgressBarWidget::timerEvent(QTimerEvent *event)
@@ -91,7 +91,7 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 
 		QRect geometry = m_webWidget->getProgressBarGeometry();
 
-		if (m_webWidget->isLoading())
+		if (m_webWidget->getLoadingState() == WindowsManager::OngoingLoadingState)
 		{
 			if (!isVisible())
 			{
@@ -127,21 +127,21 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 			m_elapsedLabel->setText(QString());
 		}
 
-		if (!m_webWidget->isLoading())
+		if (m_webWidget->getLoadingState() != WindowsManager::OngoingLoadingState)
 		{
 			killTimer(event->timerId());
 		}
 	}
 }
 
-void ProgressBarWidget::loadingChanged(bool isLoading)
+void ProgressBarWidget::updateLoadingState(WindowsManager::LoadingState state)
 {
-	if (isLoading == m_isLoading)
+	if (state == m_loadingState)
 	{
 		return;
 	}
 
-	if (isLoading)
+	if (state == WindowsManager::OngoingLoadingState)
 	{
 		m_progressBar->setValue(0);
 		m_elapsedLabel->setText(tr("Time: %1").arg(QLatin1String("0:00")));
@@ -172,7 +172,7 @@ void ProgressBarWidget::loadingChanged(bool isLoading)
 		hide();
 	}
 
-	m_isLoading = isLoading;
+	m_loadingState = state;
 }
 
 void ProgressBarWidget::scheduleGeometryUpdate()

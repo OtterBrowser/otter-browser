@@ -163,7 +163,7 @@ void HistoryContentsWidget::populateEntries()
 
 	m_isLoading = false;
 
-	emit loadingChanged(false);
+	emit loadingStateChanged(WindowsManager::FinishedLoadingState);
 }
 
 void HistoryContentsWidget::addEntry(HistoryEntryItem *entry)
@@ -411,14 +411,14 @@ QIcon HistoryContentsWidget::getIcon() const
 	return Utils::getIcon(QLatin1String("view-history"), false);
 }
 
+WindowsManager::LoadingState HistoryContentsWidget::getLoadingState() const
+{
+	return (m_isLoading ? WindowsManager::OngoingLoadingState : WindowsManager::FinishedLoadingState);
+}
+
 quint64 HistoryContentsWidget::getEntry(const QModelIndex &index) const
 {
 	return ((index.isValid() && index.parent().isValid() && index.parent().parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::UserRole).toULongLong() : -1);
-}
-
-bool HistoryContentsWidget::isLoading() const
-{
-	return m_isLoading;
 }
 
 bool HistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
