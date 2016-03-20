@@ -146,6 +146,11 @@ void CookieJar::scheduleSave()
 
 void CookieJar::save()
 {
+	if (SessionsManager::isReadOnly())
+	{
+		return;
+	}
+
 	QSaveFile file(SessionsManager::getWritableDataPath(QLatin1String("cookies.dat")));
 
 	if (!file.open(QIODevice::WriteOnly))

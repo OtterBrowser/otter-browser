@@ -93,6 +93,11 @@ HandlerDefinition HandlersManager::getHandler(const QString &type)
 
 void HandlersManager::setHandler(const QString &type, const HandlerDefinition &definition)
 {
+	if (SessionsManager::isReadOnly())
+	{
+		return;
+	}
+
 	const QString path = SessionsManager::getWritableDataPath(QLatin1String("handlers.ini"));
 	Settings settings(QFile::exists(path) ? path : SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
 	QString transferMode = QLatin1String("ask");

@@ -20,6 +20,7 @@
 #include "BookmarksModel.h"
 #include "Console.h"
 #include "HistoryManager.h"
+#include "SessionsManager.h"
 #include "ThemesManager.h"
 #include "Utils.h"
 
@@ -1058,6 +1059,11 @@ bool BookmarksModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
 
 bool BookmarksModel::save(const QString &path) const
 {
+	if (SessionsManager::isReadOnly())
+	{
+		return false;
+	}
+
 	QSaveFile file(path);
 
 	if (!file.open(QIODevice::WriteOnly))

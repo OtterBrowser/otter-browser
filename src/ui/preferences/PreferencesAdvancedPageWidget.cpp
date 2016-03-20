@@ -1268,6 +1268,11 @@ void PreferencesAdvancedPageWidget::changeCurrentPage()
 
 void PreferencesAdvancedPageWidget::save()
 {
+	if (SessionsManager::isReadOnly())
+	{
+		return;
+	}
+
 	for (int i = 0; i < m_filesToRemove.count(); ++i)
 	{
 		QFile::remove(m_filesToRemove.at(i));

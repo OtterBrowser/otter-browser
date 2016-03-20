@@ -415,7 +415,7 @@ void ToolBarsManager::setToolBar(ToolBarsManager::ToolBarDefinition definition)
 
 void ToolBarsManager::scheduleSave()
 {
-	if (m_saveTimer == 0)
+	if (!SessionsManager::isReadOnly() && m_saveTimer == 0)
 	{
 		m_saveTimer = startTimer(1000);
 	}

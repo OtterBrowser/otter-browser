@@ -19,6 +19,7 @@
 
 #include "HistoryModel.h"
 #include "Console.h"
+#include "SessionsManager.h"
 #include "Utils.h"
 
 #include <QtCore/QFile>
@@ -245,6 +246,11 @@ QList<HistoryModel::HistoryEntryMatch> HistoryModel::findEntries(const QString &
 
 bool HistoryModel::save(const QString &path) const
 {
+	if (SessionsManager::isReadOnly())
+	{
+		return false;
+	}
+
 	QSaveFile file(path);
 
 	if (!file.open(QIODevice::WriteOnly))

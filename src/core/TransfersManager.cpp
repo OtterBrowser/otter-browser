@@ -97,7 +97,7 @@ void TransfersManager::addTransfer(Transfer *transfer)
 
 void TransfersManager::save()
 {
-	if (SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool() || !SettingsManager::getValue(QLatin1String("History/RememberDownloads")).toBool())
+	if (SessionsManager::isReadOnly() || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool() || !SettingsManager::getValue(QLatin1String("History/RememberDownloads")).toBool())
 	{
 		return;
 	}

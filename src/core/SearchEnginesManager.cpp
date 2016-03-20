@@ -443,7 +443,7 @@ QStringList SearchEnginesManager::getSearchKeywords()
 
 bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &searchEngine)
 {
-	if (searchEngine.identifier.isEmpty())
+	if (SessionsManager::isReadOnly() || searchEngine.identifier.isEmpty())
 	{
 		return false;
 	}
