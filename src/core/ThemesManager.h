@@ -37,8 +37,12 @@ public:
 protected:
 	explicit ThemesManager(QObject *parent = NULL);
 
+protected slots:
+	void optionChanged(const QString &option, const QVariant &value);
+
 private:
 	static ThemesManager *m_instance;
+	static bool m_useSystemIconTheme;
 };
 
 }

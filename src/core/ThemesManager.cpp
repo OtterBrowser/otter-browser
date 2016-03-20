@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "ThemesManager.h"
+#include "SettingsManager.h"
 
 #include <QtGui/QIcon>
 
@@ -25,9 +26,13 @@ namespace Otter
 {
 
 ThemesManager* ThemesManager::m_instance = NULL;
+bool ThemesManager::m_useSystemIconTheme = false;
 
 ThemesManager::ThemesManager(QObject *parent) : QObject(parent)
 {
+	m_useSystemIconTheme = SettingsManager::getValue(QLatin1String("Interface/UseSystemIconTheme")).toBool();
+
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
 
 void ThemesManager::createInstance(QObject *parent)
@@ -38,6 +43,14 @@ void ThemesManager::createInstance(QObject *parent)
 	}
 }
 
+void ThemesManager::optionChanged(const QString &option, const QVariant &value)
+{
+	if (option == QLatin1String("Interface/UseSystemIconTheme"))
+	{
+		m_useSystemIconTheme = value.toBool();
+	}
+}
+
 ThemesManager* ThemesManager::getInstance()
 {
 	return m_instance;
@@ -45,7 +58,7 @@ ThemesManager* ThemesManager::getInstance()
 
 QIcon ThemesManager::getIcon(const QString &name, bool fromTheme)
 {
-	if (fromTheme && QIcon::hasThemeIcon(name))
+	if (m_useSystemIconTheme && fromTheme && QIcon::hasThemeIcon(name))
 	{
 		return QIcon::fromTheme(name);
 	}
