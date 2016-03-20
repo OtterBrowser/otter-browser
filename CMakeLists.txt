@@ -65,7 +65,7 @@ set(CMAKE_AUTOMOC ON)
 
 include(GNUInstallDirs)
 
-option(EnableQtwebengine "Enable QtWebEngine backend (requires Qt 5.5)" OFF)
+option(EnableQtwebengine "Enable QtWebEngine backend (requires Qt 5.6)" OFF)
 option(EnableQtwebkit "Enable QtWebKit backend (requires Qt 5.2)" ON)
 
 find_package(Qt5 5.2.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Qml Widgets XmlPatterns)
