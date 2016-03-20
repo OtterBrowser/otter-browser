@@ -754,6 +754,48 @@ void WebContentsWidget::handlePermissionRequest(const QString &option, QUrl url,
 	}
 }
 
+void WebContentsWidget::handleLoadingStateChange(WindowsManager::LoadingState state)
+{
+	if (state == WindowsManager::OngoingLoadingState && !m_progressBarWidget && SettingsManager::getValue(QLatin1String("Browser/ShowDetailedProgressBar")).toBool())
+	{
+		m_progressBarWidget = new ProgressBarWidget(m_webWidget, this);
+	}
+	else if (state == WindowsManager::CrashedLoadingState)
+	{
+		const QString tabCrashingAction(SettingsManager::getValue(QLatin1String("Browser/TabCrashingAction"), getUrl()).toString());
+		bool reloadTab(tabCrashingAction != QLatin1String("close"));
+
+		if (tabCrashingAction == QLatin1String("ask"))
+		{
+			ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), tr("Question"), tr("This tab has crashed."), tr("Do you want to try to reload it?"), (QDialogButtonBox::Yes | QDialogButtonBox::Close), NULL, this);
+			dialog.setCheckBox(tr("Do not show this message again"), false);
+
+			showDialog(&dialog);
+
+			if (dialog.getCheckBoxState())
+			{
+				SettingsManager::setValue(QLatin1String("Browser/TabCrashingAction"), (dialog.isAccepted() ? QLatin1String("reload") : QLatin1String("close")));
+			}
+
+			reloadTab = dialog.isAccepted();
+		}
+
+		if (reloadTab)
+		{
+			triggerAction(ActionsManager::ReloadAction);
+		}
+		else
+		{
+			Window *window = qobject_cast<Window*>(parentWidget());
+
+			if (window)
+			{
+				window->close();
+			}
+		}
+	}
+}
+
 void WebContentsWidget::notifyPermissionChanged(WebWidget::PermissionPolicies policies)
 {
 	PermissionBarWidget *widget = qobject_cast<PermissionBarWidget*>(sender());
@@ -875,7 +917,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 
 		layout()->removeWidget(m_webWidget);
 
-		updateProgressBar(WindowsManager::FinishedLoadingState);
+		handleLoadingStateChange(WindowsManager::FinishedLoadingState);
 	}
 
 	Window *window = qobject_cast<Window*>(parentWidget());
@@ -905,7 +947,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 		connect(m_webWidget, SIGNAL(requestedCloseWindow()), window, SLOT(close()));
 	}
 
-	updateProgressBar(m_webWidget->getLoadingState());
+	handleLoadingStateChange(m_webWidget->getLoadingState());
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(m_webWidget, SIGNAL(aboutToNavigate()), this, SLOT(closePopupsBar()));
@@ -924,23 +966,10 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 	connect(m_webWidget, SIGNAL(iconChanged(QIcon)), this, SIGNAL(iconChanged(QIcon)));
 	connect(m_webWidget, SIGNAL(contentStateChanged(WindowsManager::ContentStates)), this, SIGNAL(contentStateChanged(WindowsManager::ContentStates)));
 	connect(m_webWidget, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)));
-	connect(m_webWidget, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateProgressBar(WindowsManager::LoadingState)));
+	connect(m_webWidget, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(handleLoadingStateChange(WindowsManager::LoadingState)));
 	connect(m_webWidget, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
 
 	emit webWidgetChanged();
-}
-
-void WebContentsWidget::updateProgressBar(WindowsManager::LoadingState state)
-{
-	if (!m_progressBarWidget && !SettingsManager::getValue(QLatin1String("Browser/ShowDetailedProgressBar")).toBool())
-	{
-		return;
-	}
-
-	if (state == WindowsManager::OngoingLoadingState && !m_progressBarWidget)
-	{
-		m_progressBarWidget = new ProgressBarWidget(m_webWidget, this);
-	}
 }
 
 void WebContentsWidget::setOption(const QString &key, const QVariant &value)

@@ -120,11 +120,11 @@ protected slots:
 	void handleUrlChange(const QUrl &url);
 	void handlePopupWindowRequest(const QUrl &parentUrl, const QUrl &popupUrl);
 	void handlePermissionRequest(const QString &option, QUrl url, bool cancel);
+	void handleLoadingStateChange(WindowsManager::LoadingState state);
 	void notifyPermissionChanged(WebWidget::PermissionPolicies policies);
 	void notifyRequestedOpenUrl(const QUrl &url, WindowsManager::OpenHints hints);
 	void notifyRequestedNewWindow(WebWidget *widget, WindowsManager::OpenHints hints);
 	void updateFindHighlight(WebWidget::FindFlags flags);
-	void updateProgressBar(WindowsManager::LoadingState state);
 
 private:
 	QPointer<WebsiteInformationDialog> m_websiteInformationDialog;
