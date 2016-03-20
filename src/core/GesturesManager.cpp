@@ -129,10 +129,6 @@ bool GesturesManager::m_afterScroll = false;
 GesturesManager::GesturesManager(QObject *parent) : QObject(parent),
 	m_reloadTimer(0)
 {
-	m_instance = this;
-
-	loadProfiles();
-
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), m_instance, SLOT(optionChanged(QString)));
 }
 
@@ -161,6 +157,8 @@ void GesturesManager::createInstance(QObject *parent)
 		m_nativeGestures[GesturesManager::TabHandleGesturesContext] = tabHandle;
 
 		m_instance = new GesturesManager(parent);
+
+		loadProfiles();
 	}
 }
 
