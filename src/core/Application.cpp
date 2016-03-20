@@ -63,6 +63,9 @@
 #include <QtCore/QLocale>
 #include <QtCore/QRegularExpression>
 #include <QtCore/QStandardPaths>
+#if QT_VERSION >= 0x050400
+#include <QtCore/QStorageInfo>
+#endif
 #include <QtCore/QTranslator>
 #include <QtNetwork/QLocalSocket>
 #include <QtWidgets/QCheckBox>
@@ -91,8 +94,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	m_instance = this;
 
-	QString profilePath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QLatin1String("/otter");
-	QString cachePath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+	QString profilePath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QLatin1String("/otter"));
+	QString cachePath(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
 
 	m_localePath = OTTER_INSTALL_PREFIX + QLatin1String("/share/otter-browser/locale/");
 
@@ -115,8 +118,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("readonly"), QCoreApplication::translate("main", "Tells application to avoid writing data to disk")));
 	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("report"), QCoreApplication::translate("main", "Prints out diagnostic report and exits application")));
 
-	QStringList arguments = this->arguments();
-	const QString argumentsPath = QDir::current().filePath(QLatin1String("arguments.txt"));
+	QStringList arguments(this->arguments());
+	const QString argumentsPath(QDir::current().filePath(QLatin1String("arguments.txt")));
 
 	if (QFile::exists(argumentsPath))
 	{
@@ -247,6 +250,64 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	Console::createInstance(this);
 
 	SettingsManager::createInstance(profilePath, this);
+
+#if QT_VERSION >= 0x050400
+	if (!isReadOnly)
+	{
+		QStorageInfo storageInformation(profilePath);
+
+		if (storageInformation.bytesAvailable() > -1 && storageInformation.bytesAvailable() < 10000000)
+		{
+			QString warnLowDiskSpaceMode(SettingsManager::getValue(QLatin1String("Choices/WarnLowDiskSpace")).toString());
+
+			if (warnLowDiskSpaceMode == QLatin1String("warn"))
+			{
+				QString message;
+
+				if (storageInformation.bytesAvailable() == 0)
+				{
+					message = tr("Your profile directory (%1) ran out of free disk space.\nThis may lead to malfunctions or even data loss.").arg(QDir::toNativeSeparators(profilePath));
+				}
+				else
+				{
+					message = tr("Your profile directory (%1) is running low on free disk space (%2 remaining).\nThis may lead to malfunctions or even data loss.").arg(QDir::toNativeSeparators(profilePath)).arg(Utils::formatUnit(storageInformation.bytesAvailable()));
+				}
+
+				QMessageBox messageBox;
+				messageBox.setWindowTitle(tr("Warning"));
+				messageBox.setText(message);
+				messageBox.setInformativeText(tr("Do you want to continue?"));
+				messageBox.setIcon(QMessageBox::Question);
+				messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
+				messageBox.addButton(tr("Continue in Read-only Mode"), QMessageBox::YesRole);
+
+				QAbstractButton *ignoreButton(messageBox.addButton(tr("Ignore"), QMessageBox::ActionRole));
+				QAbstractButton *quitButton(messageBox.addButton(tr("Quit"), QMessageBox::RejectRole));
+
+				messageBox.exec();
+
+				if (messageBox.clickedButton() == quitButton)
+				{
+					quit();
+
+					return;
+				}
+
+				warnLowDiskSpaceMode = ((messageBox.clickedButton() == ignoreButton) ? QLatin1String("continueReadWrite") : QLatin1String("continueReadOnly"));
+
+				if (messageBox.checkBox()->isChecked())
+				{
+					SettingsManager::setValue(QLatin1String("Choices/WarnLowDiskSpace"), warnLowDiskSpaceMode);
+				}
+			}
+
+			if (warnLowDiskSpaceMode == QLatin1String("continueReadOnly"))
+			{
+				isReadOnly = true;
+			}
+		}
+	}
+#endif
 
 	SessionsManager::createInstance(profilePath, cachePath, isPrivate, isReadOnly, this);
 
@@ -432,7 +493,7 @@ void Application::newConnection()
 	{
 		const SessionInformation sessionData = SessionsManager::getSession(session);
 
-		if (sessionData.isClean || QMessageBox::warning(NULL, tr("Warning"), tr("This session was not saved correctly.\nAre you sure that you want to restore this session anyway?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
+		if (sessionData.isClean || QMessageBox::warning(NULL, tr("Warning"), tr("This session was not saved correctly.\nAre you sure that you want to restore this session anyway?"), (QMessageBox::Yes | QMessageBox::No), QMessageBox::No) == QMessageBox::Yes)
 		{
 			for (int i = 0; i < sessionData.windows.count(); ++i)
 			{
