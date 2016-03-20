@@ -112,6 +112,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("privatesession"), QCoreApplication::translate("main", "Starts private session")));
 	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("sessionchooser"), QCoreApplication::translate("main", "Forces session chooser dialog")));
 	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("portable"), QCoreApplication::translate("main", "Sets profile and cache paths to directories inside the same directory as that of application binary")));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("readonly"), QCoreApplication::translate("main", "Tells application to avoid writing data to disk")));
 	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("report"), QCoreApplication::translate("main", "Prints out diagnostic report and exits application")));
 
 	QStringList arguments = this->arguments();
@@ -150,8 +151,9 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	m_commandLineParser.process(arguments);
 
-	const bool isPortable = m_commandLineParser.isSet(QLatin1String("portable"));
-	const bool isPrivate = m_commandLineParser.isSet(QLatin1String("privatesession"));
+	const bool isPortable(m_commandLineParser.isSet(QLatin1String("portable")));
+	const bool isPrivate(m_commandLineParser.isSet(QLatin1String("privatesession")));
+	bool isReadOnly(m_commandLineParser.isSet(QLatin1String("readonly")));
 
 	if (isPortable)
 	{
@@ -184,7 +186,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 		SettingsManager::createInstance(profilePath, this);
 
-		SessionsManager::createInstance(profilePath, cachePath, isPrivate, this);
+		SessionsManager::createInstance(profilePath, cachePath, isPrivate, true, this);
 
 #ifdef Q_OS_WIN
 		ReportDialog dialog;
@@ -246,7 +248,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	SettingsManager::createInstance(profilePath, this);
 
-	SessionsManager::createInstance(profilePath, cachePath, isPrivate, this);
+	SessionsManager::createInstance(profilePath, cachePath, isPrivate, isReadOnly, this);
 
 	ActionsManager::createInstance(this);
 

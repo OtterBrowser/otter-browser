@@ -42,6 +42,7 @@ QList<MainWindow*> SessionsManager::m_windows;
 QList<SessionMainWindow> SessionsManager::m_closedWindows;
 bool SessionsManager::m_isDirty = false;
 bool SessionsManager::m_isPrivate = false;
+bool SessionsManager::m_isReadOnly = false;
 
 SessionsManager::SessionsManager(QObject *parent) : QObject(parent),
 	m_saveTimer(0)
@@ -65,7 +66,7 @@ void SessionsManager::timerEvent(QTimerEvent *event)
 	}
 }
 
-void SessionsManager::createInstance(const QString &profilePath, const QString &cachePath, bool isPrivate, QObject *parent)
+void SessionsManager::createInstance(const QString &profilePath, const QString &cachePath, bool isPrivate, bool isReadOnly, QObject *parent)
 {
 	if (!m_instance)
 	{
@@ -73,6 +74,7 @@ void SessionsManager::createInstance(const QString &profilePath, const QString &
 		m_cachePath = cachePath;
 		m_profilePath = profilePath;
 		m_isPrivate = isPrivate;
+		m_isReadOnly = isReadOnly;
 	}
 }
 
@@ -543,6 +545,11 @@ bool SessionsManager::isLastWindow()
 bool SessionsManager::isPrivate()
 {
 	return m_isPrivate;
+}
+
+bool SessionsManager::isReadOnly()
+{
+	return m_isReadOnly;
 }
 
 bool SessionsManager::hasUrl(const QUrl &url, bool activate)
