@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -36,6 +36,7 @@
 #include "SettingsManager.h"
 #include "SpellCheckManager.h"
 #include "ToolBarsManager.h"
+#include "ThemesManager.h"
 #include "TransfersManager.h"
 #include "Utils.h"
 #include "Updater.h"
@@ -317,6 +318,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 #endif
 
 	SessionsManager::createInstance(profilePath, cachePath, isPrivate, isReadOnly, this);
+
+	ThemesManager::createInstance(this);
 
 	ActionsManager::createInstance(this);
 
