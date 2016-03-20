@@ -20,6 +20,7 @@
 
 #include "QtWebKitFtpListingNetworkReply.h"
 #include "../../../../core/SessionsManager.h"
+#include "../../../../core/ThemesManager.h"
 #include "../../../../core/Utils.h"
 
 #include <QtCore/QBuffer>
@@ -150,7 +151,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 						QByteArray byteArray;
 						QBuffer buffer(&byteArray);
 
-						QIcon::fromTheme(mimeType.iconName(), Utils::getIcon(entries.at(i).isDir() ? QLatin1String("inode-directory") : QLatin1String("unknown"))).pixmap(16, 16).save(&buffer, "PNG");
+						QIcon::fromTheme(mimeType.iconName(), ThemesManager::getIcon(entries.at(i).isDir() ? QLatin1String("inode-directory") : QLatin1String("unknown"))).pixmap(16, 16).save(&buffer, "PNG");
 
 						icons[mimeType.name()] = QString(byteArray.toBase64());
 					}

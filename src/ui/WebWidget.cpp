@@ -31,6 +31,7 @@
 #include "../core/NotesManager.h"
 #include "../core/SearchEnginesManager.h"
 #include "../core/SettingsManager.h"
+#include "../core/ThemesManager.h"
 #include "../core/Transfer.h"
 #include "../core/TransfersManager.h"
 #include "../core/Utils.h"
@@ -165,7 +166,7 @@ void WebWidget::startTransfer(Transfer *transfer)
 		case AskTransferMode:
 			{
 				TransferDialog *transferDialog = new TransferDialog(transfer, this);
-				ContentsDialog *dialog = new ContentsDialog(Utils::getIcon(QLatin1String("download")), transferDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, transferDialog, this);
+				ContentsDialog *dialog = new ContentsDialog(ThemesManager::getIcon(QLatin1String("download")), transferDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, transferDialog, this);
 
 				connect(transferDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
 
@@ -678,7 +679,7 @@ void WebWidget::updateEditActions()
 
 		m_actions[ActionsManager::SearchAction]->setEnabled(isValid);
 		m_actions[ActionsManager::SearchAction]->setData(isValid ? searchEngine.identifier : QVariant());
-		m_actions[ActionsManager::SearchAction]->setIcon((!isValid || searchEngine.icon.isNull()) ? Utils::getIcon(QLatin1String("edit-find")) : searchEngine.icon);
+		m_actions[ActionsManager::SearchAction]->setIcon((!isValid || searchEngine.icon.isNull()) ? ThemesManager::getIcon(QLatin1String("edit-find")) : searchEngine.icon);
 		m_actions[ActionsManager::SearchAction]->setOverrideText(isValid ? searchEngine.title : QT_TRANSLATE_NOOP("actions", "Search"));
 		m_actions[ActionsManager::SearchAction]->setToolTip(isValid ? searchEngine.description : tr("No search engines defined"));
 	}
@@ -898,14 +899,14 @@ void WebWidget::updateMediaActions()
 	if (m_actions.contains(ActionsManager::MediaPlayPauseAction))
 	{
 		m_actions[ActionsManager::MediaPlayPauseAction]->setOverrideText(isPaused ? QT_TRANSLATE_NOOP("actions", "Play") : QT_TRANSLATE_NOOP("actions", "Pause"));
-		m_actions[ActionsManager::MediaPlayPauseAction]->setIcon(Utils::getIcon(isPaused ? QLatin1String("media-playback-start") : QLatin1String("media-playback-pause")));
+		m_actions[ActionsManager::MediaPlayPauseAction]->setIcon(ThemesManager::getIcon(isPaused ? QLatin1String("media-playback-start") : QLatin1String("media-playback-pause")));
 		m_actions[ActionsManager::MediaPlayPauseAction]->setEnabled(isMedia);
 	}
 
 	if (m_actions.contains(ActionsManager::MediaMuteAction))
 	{
 		m_actions[ActionsManager::MediaMuteAction]->setOverrideText(isMuted ? QT_TRANSLATE_NOOP("actions", "Unmute") : QT_TRANSLATE_NOOP("actions", "Mute"));
-		m_actions[ActionsManager::MediaMuteAction]->setIcon(Utils::getIcon(isMuted ? QLatin1String("audio-volume-medium") : QLatin1String("audio-volume-muted")));
+		m_actions[ActionsManager::MediaMuteAction]->setIcon(ThemesManager::getIcon(isMuted ? QLatin1String("audio-volume-medium") : QLatin1String("audio-volume-muted")));
 		m_actions[ActionsManager::MediaMuteAction]->setEnabled(isMedia);
 	}
 }

@@ -33,6 +33,7 @@
 #include "../../core/SessionsManager.h"
 #include "../../core/Settings.h"
 #include "../../core/SettingsManager.h"
+#include "../../core/ThemesManager.h"
 #include "../../core/Utils.h"
 
 #include "ui_PreferencesAdvancedPageWidget.h"
@@ -95,7 +96,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->suggestBookmarksCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/SuggestBookmarks")).toBool());
 	m_ui->suggestHistoryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/SuggestHistory")).toBool());
 
-	m_ui->notificationsPlaySoundButton->setIcon(Utils::getIcon(QLatin1String("media-playback-start")));
+	m_ui->notificationsPlaySoundButton->setIcon(ThemesManager::getIcon(QLatin1String("media-playback-start")));
 
 	QStringList notificationsLabels;
 	notificationsLabels << tr("Name") << tr("Description");
@@ -307,8 +308,8 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	}
 #endif
 
-	m_ui->ciphersMoveDownButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
-	m_ui->ciphersMoveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
+	m_ui->ciphersMoveDownButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-down")));
+	m_ui->ciphersMoveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-up")));
 
 	QStandardItemModel *updateChannelsModel = new QStandardItemModel(this);
 	const QStringList availableUpdateChannels = SettingsManager::getValue(QLatin1String("Updates/ActiveChannels")).toStringList();
@@ -343,8 +344,8 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	updateUpdateChannelsActions();
 
-	m_ui->keyboardMoveDownButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
-	m_ui->keyboardMoveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
+	m_ui->keyboardMoveDownButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-down")));
+	m_ui->keyboardMoveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-up")));
 
 	QStandardItemModel *keyboardProfilesModel = new QStandardItemModel(this);
 	const QStringList keyboardProfiles = SettingsManager::getValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder")).toStringList();
@@ -380,8 +381,8 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	updateReaddKeyboardProfileMenu();
 
-	m_ui->mouseMoveDownButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
-	m_ui->mouseMoveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
+	m_ui->mouseMoveDownButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-down")));
+	m_ui->mouseMoveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-up")));
 
 	QStandardItemModel *mouseProfilesModel = new QStandardItemModel(this);
 	const QStringList mouseProfiles = SettingsManager::getValue(QLatin1String("Browser/MouseProfilesOrder")).toStringList();

@@ -18,7 +18,7 @@
 **************************************************************************/
 
 #include "CookieJarProxy.h"
-#include "Utils.h"
+#include "ThemesManager.h"
 #include "../ui/AcceptCookieDialog.h"
 #include "../ui/ContentsDialog.h"
 #include "../ui/WebWidget.h"
@@ -66,7 +66,7 @@ void CookieJarProxy::showDialog()
 	const QPair<CookieJar::CookieOperation, QNetworkCookie> operation = m_operations.dequeue();
 
 	AcceptCookieDialog *cookieDialog = new AcceptCookieDialog(operation.second, operation.first, m_cookieJar, m_widget);
-	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), cookieDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, cookieDialog, m_widget);
+	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), cookieDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, cookieDialog, m_widget);
 
 	connect(cookieDialog, SIGNAL(finished(int)), &dialog, SLOT(close()));
 	connect(cookieDialog, SIGNAL(finished(int)), this, SLOT(dialogClosed()));

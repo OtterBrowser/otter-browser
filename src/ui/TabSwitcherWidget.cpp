@@ -20,7 +20,7 @@
 #include "TabSwitcherWidget.h"
 #include "AddressDelegate.h"
 #include "Window.h"
-#include "../core/Utils.h"
+#include "../core/ThemesManager.h"
 #include "../core/WindowsManager.h"
 
 #include <QtGui/QKeyEvent>
@@ -163,7 +163,7 @@ void TabSwitcherWidget::currentTabChanged(const QModelIndex &index)
 		else
 		{
 			m_previewLabel->setMovie(NULL);
-			m_previewLabel->setPixmap((window->getLoadingState() == WindowsManager::CrashedLoadingState) ? Utils::getIcon(QLatin1String("tab-crashed")).pixmap(32, 32) : window->getThumbnail());
+			m_previewLabel->setPixmap((window->getLoadingState() == WindowsManager::CrashedLoadingState) ? ThemesManager::getIcon(QLatin1String("tab-crashed")).pixmap(32, 32) : window->getThumbnail());
 		}
 	}
 	else

@@ -18,7 +18,7 @@
 **************************************************************************/
 
 #include "PasswordBarWidget.h"
-#include "../../../core/Utils.h"
+#include "../../../core/ThemesManager.h"
 
 #include "ui_PasswordBarWidget.h"
 
@@ -29,7 +29,7 @@ PasswordBarWidget::PasswordBarWidget(QWidget *parent) : QWidget(parent),
 	m_ui(new Ui::PasswordBarWidget)
 {
 	m_ui->setupUi(this);
-	m_ui->iconLabel->setPixmap(Utils::getIcon(QLatin1String("dialog-password"), false).pixmap(m_ui->iconLabel->size()));
+	m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("dialog-password"), false).pixmap(m_ui->iconLabel->size()));
 }
 
 PasswordBarWidget::~PasswordBarWidget()

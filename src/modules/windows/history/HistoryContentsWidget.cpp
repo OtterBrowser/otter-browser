@@ -19,6 +19,7 @@
 
 #include "HistoryContentsWidget.h"
 #include "../../../core/ActionsManager.h"
+#include "../../../core/ThemesManager.h"
 #include "../../../core/Utils.h"
 
 #include "ui_HistoryContentsWidget.h"
@@ -43,7 +44,7 @@ HistoryContentsWidget::HistoryContentsWidget(Window *window) : ContentsWidget(wi
 
 	for (int i = 0; i < groups.count(); ++i)
 	{
-		m_model->appendRow(new QStandardItem(Utils::getIcon(QLatin1String("inode-directory")), groups.at(i)));
+		m_model->appendRow(new QStandardItem(ThemesManager::getIcon(QLatin1String("inode-directory")), groups.at(i)));
 	}
 
 	QStringList labels;
@@ -193,7 +194,7 @@ void HistoryContentsWidget::addEntry(HistoryEntryItem *entry)
 	}
 
 	QList<QStandardItem*> entryItems;
-	entryItems.append(new QStandardItem((entry->icon().isNull() ? Utils::getIcon(QLatin1String("text-html")) : entry->icon()), entry->data(HistoryModel::UrlRole).toUrl().toDisplayString().replace(QLatin1String("%23"), QString(QLatin1Char('#')))));
+	entryItems.append(new QStandardItem((entry->icon().isNull() ? ThemesManager::getIcon(QLatin1String("text-html")) : entry->icon()), entry->data(HistoryModel::UrlRole).toUrl().toDisplayString().replace(QLatin1String("%23"), QString(QLatin1Char('#')))));
 	entryItems.append(new QStandardItem(entry->data(HistoryModel::TitleRole).isNull() ? tr("(Untitled)") : entry->data(HistoryModel::TitleRole).toString()));
 	entryItems.append(new QStandardItem(Utils::formatDateTime(entry->data(HistoryModel::TimeVisitedRole).toDateTime())));
 	entryItems[0]->setData(entry->data(HistoryModel::IdentifierRole).toULongLong(), Qt::UserRole);
@@ -227,7 +228,7 @@ void HistoryContentsWidget::modifyEntry(HistoryEntryItem *entry)
 		return;
 	}
 
-	entryItem->setIcon(entry->icon().isNull() ? Utils::getIcon(QLatin1String("text-html")) : entry->icon());
+	entryItem->setIcon(entry->icon().isNull() ? ThemesManager::getIcon(QLatin1String("text-html")) : entry->icon());
 	entryItem->setText(entry->data(HistoryModel::UrlRole).toUrl().toDisplayString());
 	entryItem->parent()->child(entryItem->row(), 1)->setText(entry->data(HistoryModel::TitleRole).isNull() ? tr("(Untitled)") : entry->data(HistoryModel::TitleRole).toString());
 	entryItem->parent()->child(entryItem->row(), 2)->setText(Utils::formatDateTime(entry->data(HistoryModel::TimeVisitedRole).toDateTime()));
@@ -349,7 +350,7 @@ void HistoryContentsWidget::showContextMenu(const QPoint &point)
 
 	if (entry > 0)
 	{
-		menu.addAction(Utils::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openEntry()));
+		menu.addAction(ThemesManager::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openEntry()));
 		menu.addAction(tr("Open in New Tab"), this, SLOT(openEntry()))->setData(WindowsManager::NewTabOpen);
 		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openEntry()))->setData(static_cast<int>(WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen));
 		menu.addSeparator();
@@ -408,7 +409,7 @@ QUrl HistoryContentsWidget::getUrl() const
 
 QIcon HistoryContentsWidget::getIcon() const
 {
-	return Utils::getIcon(QLatin1String("view-history"), false);
+	return ThemesManager::getIcon(QLatin1String("view-history"), false);
 }
 
 WindowsManager::LoadingState HistoryContentsWidget::getLoadingState() const

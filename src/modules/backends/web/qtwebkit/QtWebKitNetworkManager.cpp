@@ -29,7 +29,7 @@
 #include "../../../../core/NetworkCache.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
-#include "../../../../core/Utils.h"
+#include "../../../../core/ThemesManager.h"
 #include "../../../../core/WebBackend.h"
 #include "../../../../ui/AuthenticationDialog.h"
 #include "../../../../ui/ContentsDialog.h"
@@ -110,7 +110,7 @@ void QtWebKitNetworkManager::handleAuthenticationRequired(QNetworkReply *reply, 
 	AuthenticationDialog *authenticationDialog = new AuthenticationDialog(reply->url(), authenticator, m_widget);
 	authenticationDialog->setButtonsVisible(false);
 
-	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, m_widget);
+	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, m_widget);
 
 	connect(&dialog, SIGNAL(accepted()), authenticationDialog, SLOT(accept()));
 	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
@@ -135,7 +135,7 @@ void QtWebKitNetworkManager::handleProxyAuthenticationRequired(const QNetworkPro
 	AuthenticationDialog *authenticationDialog = new AuthenticationDialog(proxy.hostName(), authenticator, m_widget);
 	authenticationDialog->setButtonsVisible(false);
 
-	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, m_widget);
+	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, m_widget);
 
 	connect(&dialog, SIGNAL(accepted()), authenticationDialog, SLOT(accept()));
 	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
@@ -186,7 +186,7 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 		return;
 	}
 
-	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), tr("Warning"), tr("SSL errors occured, do you want to continue?"), messages.join('\n'), (QDialogButtonBox::Yes | QDialogButtonBox::No), NULL, m_widget);
+	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), tr("Warning"), tr("SSL errors occured, do you want to continue?"), messages.join('\n'), (QDialogButtonBox::Yes | QDialogButtonBox::No), NULL, m_widget);
 
 	if (!m_widget->getUrl().isEmpty())
 	{

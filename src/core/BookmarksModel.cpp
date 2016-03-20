@@ -20,6 +20,7 @@
 #include "BookmarksModel.h"
 #include "Console.h"
 #include "HistoryManager.h"
+#include "ThemesManager.h"
 #include "Utils.h"
 
 #include <QtCore/QCoreApplication>
@@ -112,12 +113,12 @@ QVariant BookmarksItem::data(int role) const
 
 		if (type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark)
 		{
-			return Utils::getIcon(QLatin1String("inode-directory"));
+			return ThemesManager::getIcon(QLatin1String("inode-directory"));
 		}
 
 		if (type == BookmarksModel::TrashBookmark)
 		{
-			return Utils::getIcon(QLatin1String("user-trash"));
+			return ThemesManager::getIcon(QLatin1String("user-trash"));
 		}
 
 		if (type == BookmarksModel::UrlBookmark)

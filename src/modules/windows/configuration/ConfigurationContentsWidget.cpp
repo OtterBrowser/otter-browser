@@ -19,7 +19,7 @@
 
 #include "ConfigurationContentsWidget.h"
 #include "../../../core/SettingsManager.h"
-#include "../../../core/Utils.h"
+#include "../../../core/ThemesManager.h"
 #include "../../../ui/OptionDelegate.h"
 
 #include "ui_ConfigurationContentsWidget.h"
@@ -43,7 +43,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 
 	for (int i = 0; i < groups.count(); ++i)
 	{
-		QStandardItem *groupItem = new QStandardItem(Utils::getIcon(QLatin1String("inode-directory")), groups.at(i));
+		QStandardItem *groupItem = new QStandardItem(ThemesManager::getIcon(QLatin1String("inode-directory")), groups.at(i));
 
 		defaults.beginGroup(groups.at(i));
 
@@ -249,7 +249,7 @@ QUrl ConfigurationContentsWidget::getUrl() const
 
 QIcon ConfigurationContentsWidget::getIcon() const
 {
-	return Utils::getIcon(QLatin1String("configuration"), false);
+	return ThemesManager::getIcon(QLatin1String("configuration"), false);
 }
 
 bool ConfigurationContentsWidget::eventFilter(QObject *object, QEvent *event)

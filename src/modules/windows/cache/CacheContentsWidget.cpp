@@ -22,6 +22,7 @@
 #include "../../../core/HistoryManager.h"
 #include "../../../core/NetworkCache.h"
 #include "../../../core/NetworkManagerFactory.h"
+#include "../../../core/ThemesManager.h"
 #include "../../../core/Utils.h"
 
 #include "ui_CacheContentsWidget.h"
@@ -347,7 +348,7 @@ void CacheContentsWidget::showContextMenu(const QPoint &point)
 
 	if (entry.isValid())
 	{
-		menu.addAction(Utils::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openEntry()));
+		menu.addAction(ThemesManager::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openEntry()));
 		menu.addAction(tr("Open in New Tab"), this, SLOT(openEntry()))->setData(WindowsManager::NewTabOpen);
 		menu.addAction(tr("Open in New Background Tab"), this, SLOT(openEntry()))->setData(static_cast<int>(WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen));
 		menu.addSeparator();
@@ -417,7 +418,7 @@ void CacheContentsWidget::updateActions()
 
 		if (preview.isNull() && QIcon::hasThemeIcon(mimeType.iconName()))
 		{
-			preview = QIcon::fromTheme(mimeType.iconName(), Utils::getIcon(QLatin1String("unknown"))).pixmap(64, 64);
+			preview = QIcon::fromTheme(mimeType.iconName(), ThemesManager::getIcon(QLatin1String("unknown"))).pixmap(64, 64);
 		}
 
 		m_ui->addressLabelWidget->setText(entry.toString(QUrl::FullyDecoded | QUrl::PreferLocalFile));
@@ -569,7 +570,7 @@ QUrl CacheContentsWidget::getUrl() const
 
 QIcon CacheContentsWidget::getIcon() const
 {
-	return Utils::getIcon(QLatin1String("cache"), false);
+	return ThemesManager::getIcon(QLatin1String("cache"), false);
 }
 
 QUrl CacheContentsWidget::getEntry(const QModelIndex &index) const

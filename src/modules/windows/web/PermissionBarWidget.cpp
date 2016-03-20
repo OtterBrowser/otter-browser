@@ -18,7 +18,7 @@
 **************************************************************************/
 
 #include "PermissionBarWidget.h"
-#include "../../../core/Utils.h"
+#include "../../../core/ThemesManager.h"
 
 #include "ui_PermissionBarWidget.h"
 
@@ -36,42 +36,42 @@ PermissionBarWidget::PermissionBarWidget(const QString &option, const QUrl &url,
 
 	if (option == QLatin1String("Browser/EnableFullScreen"))
 	{
-		m_ui->iconLabel->setPixmap(Utils::getIcon(QLatin1String("permission-fullscreen"), false).pixmap(m_ui->iconLabel->size()));
+		m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-fullscreen"), false).pixmap(m_ui->iconLabel->size()));
 		m_ui->messageLabel->setText(tr("%1 wants to enter full screen mode.").arg(domain));
 	}
 	else if (option == QLatin1String("Browser/EnableGeolocation"))
 	{
-		m_ui->iconLabel->setPixmap(Utils::getIcon(QLatin1String("permission-geolocation"), false).pixmap(m_ui->iconLabel->size()));
+		m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-geolocation"), false).pixmap(m_ui->iconLabel->size()));
 		m_ui->messageLabel->setText(tr("%1 wants access to your location.").arg(domain));
 	}
 	else if (option == QLatin1String("Browser/EnableMediaCaptureAudio"))
 	{
-		m_ui->iconLabel->setPixmap(Utils::getIcon(QLatin1String("permission-capture-audio"), false).pixmap(m_ui->iconLabel->size()));
+		m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-capture-audio"), false).pixmap(m_ui->iconLabel->size()));
 		m_ui->messageLabel->setText(tr("%1 wants to access your microphone.").arg(domain));
 	}
 	else if (option == QLatin1String("Browser/EnableMediaCaptureVideo"))
 	{
-		m_ui->iconLabel->setPixmap(Utils::getIcon(QLatin1String("permission-capture-video"), false).pixmap(m_ui->iconLabel->size()));
+		m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-capture-video"), false).pixmap(m_ui->iconLabel->size()));
 		m_ui->messageLabel->setText(tr("%1 wants to access your camera.").arg(domain));
 	}
 	else if (option == QLatin1String("Browser/EnableMediaCaptureAudioVideo"))
 	{
-		m_ui->iconLabel->setPixmap(Utils::getIcon(QLatin1String("permission-capture-audio-video"), false).pixmap(m_ui->iconLabel->size()));
+		m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-capture-audio-video"), false).pixmap(m_ui->iconLabel->size()));
 		m_ui->messageLabel->setText(tr("%1 wants to access your microphone and camera.").arg(domain));
 	}
 	else if (option == QLatin1String("Browser/EnableNotifications"))
 	{
-		m_ui->iconLabel->setPixmap(Utils::getIcon(QLatin1String("permission-notifications"), false).pixmap(m_ui->iconLabel->size()));
+		m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-notifications"), false).pixmap(m_ui->iconLabel->size()));
 		m_ui->messageLabel->setText(tr("%1 wants to show notifications.").arg(domain));
 	}
 	else if (option == QLatin1String("Browser/EnablePointerLock"))
 	{
-		m_ui->iconLabel->setPixmap(Utils::getIcon(QLatin1String("permission-pointer-lock"), false).pixmap(m_ui->iconLabel->size()));
+		m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-pointer-lock"), false).pixmap(m_ui->iconLabel->size()));
 		m_ui->messageLabel->setText(tr("%1 wants to lock mouse pointer.").arg(domain));
 	}
 	else
 	{
-		m_ui->iconLabel->setPixmap(Utils::getIcon(QLatin1String("dialog-error"), false).pixmap(m_ui->iconLabel->size()));
+		m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("dialog-error"), false).pixmap(m_ui->iconLabel->size()));
 		m_ui->messageLabel->setText(tr("Invalid permission request from %1.").arg(domain));
 		m_ui->permissionComboBox->hide();
 		m_ui->okButton->hide();

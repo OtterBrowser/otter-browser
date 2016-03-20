@@ -23,7 +23,7 @@
 #include "toolbars/PanelChooserWidget.h"
 #include "../core/ActionsManager.h"
 #include "../core/SettingsManager.h"
-#include "../core/Utils.h"
+#include "../core/ThemesManager.h"
 #include "../core/WindowsManager.h"
 #include "../modules/windows/bookmarks/BookmarksContentsWidget.h"
 #include "../modules/windows/cache/CacheContentsWidget.h"
@@ -62,7 +62,7 @@ SidebarWidget::SidebarWidget(QWidget *parent) : QWidget(parent),
 
 	m_ui->panelLayout->addWidget(toolbar);
 	m_ui->panelsButton->setPopupMode(QToolButton::InstantPopup);
-	m_ui->panelsButton->setIcon(Utils::getIcon(QLatin1String("list-add")));
+	m_ui->panelsButton->setIcon(ThemesManager::getIcon(QLatin1String("list-add")));
 
 	optionChanged(QLatin1String("Sidebar/CurrentPanel"), SettingsManager::getValue(QLatin1String("Sidebar/CurrentPanel")));
 	optionChanged(QLatin1String("Sidebar/Panels"), SettingsManager::getValue(QLatin1String("Sidebar/Panels")));
@@ -161,35 +161,35 @@ void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
 
 			if (chosenPanels.at(i) == QLatin1String("bookmarks"))
 			{
-				button->setIcon(Utils::getIcon(QLatin1String("bookmarks")));
+				button->setIcon(ThemesManager::getIcon(QLatin1String("bookmarks")));
 			}
 			else if (chosenPanels.at(i) == QLatin1String("cache"))
 			{
-				button->setIcon(Utils::getIcon(QLatin1String("cache")));
+				button->setIcon(ThemesManager::getIcon(QLatin1String("cache")));
 			}
 			else if (chosenPanels.at(i) == QLatin1String("config"))
 			{
-				button->setIcon(Utils::getIcon(QLatin1String("configuration")));
+				button->setIcon(ThemesManager::getIcon(QLatin1String("configuration")));
 			}
 			else if (chosenPanels.at(i) == QLatin1String("cookies"))
 			{
-				button->setIcon(Utils::getIcon(QLatin1String("cookies")));
+				button->setIcon(ThemesManager::getIcon(QLatin1String("cookies")));
 			}
 			else if (chosenPanels.at(i) == QLatin1String("history"))
 			{
-				button->setIcon(Utils::getIcon(QLatin1String("view-history")));
+				button->setIcon(ThemesManager::getIcon(QLatin1String("view-history")));
 			}
 			else if (chosenPanels.at(i) == QLatin1String("notes"))
 			{
-				button->setIcon(Utils::getIcon(QLatin1String("notes")));
+				button->setIcon(ThemesManager::getIcon(QLatin1String("notes")));
 			}
 			else if (chosenPanels.at(i) == QLatin1String("transfers"))
 			{
-				button->setIcon(Utils::getIcon(QLatin1String("transfers")));
+				button->setIcon(ThemesManager::getIcon(QLatin1String("transfers")));
 			}
 			else if (chosenPanels.at(i).startsWith(QLatin1String("web:")))
 			{
-				button->setIcon(Utils::getIcon(QLatin1String("text-html")));
+				button->setIcon(ThemesManager::getIcon(QLatin1String("text-html")));
 
 				QAction *action = new QAction(menu);
 				action->setCheckable(true);
@@ -250,7 +250,7 @@ void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
 			}
 		}
 
-		ActionsManager::getAction(ActionsManager::OpenPanelAction, this)->setIcon(Utils::getIcon(isReversed ? QLatin1String("arrow-left") : QLatin1String("arrow-right")));
+		ActionsManager::getAction(ActionsManager::OpenPanelAction, this)->setIcon(ThemesManager::getIcon(isReversed ? QLatin1String("arrow-left") : QLatin1String("arrow-right")));
 	}
 }
 

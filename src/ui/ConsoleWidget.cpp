@@ -21,7 +21,7 @@
 #include "MainWindow.h"
 #include "TabBarWidget.h"
 #include "Window.h"
-#include "../core/Utils.h"
+#include "../core/ThemesManager.h"
 
 #include "ui_ConsoleWidget.h"
 
@@ -120,15 +120,15 @@ void ConsoleWidget::addMessage(const ConsoleMessage &message)
 	switch (message.level)
 	{
 		case ErrorMessageLevel:
-			icon = Utils::getIcon(QLatin1String("dialog-error"));
+			icon = ThemesManager::getIcon(QLatin1String("dialog-error"));
 
 			break;
 		case WarningMessageLevel:
-			icon = Utils::getIcon(QLatin1String("dialog-warning"));
+			icon = ThemesManager::getIcon(QLatin1String("dialog-warning"));
 
 			break;
 		default:
-			icon = Utils::getIcon(QLatin1String("dialog-information"));
+			icon = ThemesManager::getIcon(QLatin1String("dialog-information"));
 
 			break;
 	}
@@ -259,7 +259,7 @@ void ConsoleWidget::applyFilters(QStandardItem *item, const QString &filter, con
 void ConsoleWidget::showContextMenu(const QPoint position)
 {
 	QMenu menu(m_ui->consoleView);
-	menu.addAction(Utils::getIcon(QLatin1String("edit-copy")), tr("Copy"), this, SLOT(copyText()));
+	menu.addAction(ThemesManager::getIcon(QLatin1String("edit-copy")), tr("Copy"), this, SLOT(copyText()));
 	menu.exec(m_ui->consoleView->mapToGlobal(position));
 }
 

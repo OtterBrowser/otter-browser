@@ -20,7 +20,7 @@
 #include "HistoryManager.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
-#include "Utils.h"
+#include "ThemesManager.h"
 
 #include <QtCore/QBuffer>
 #include <QtCore/QFile>
@@ -275,45 +275,45 @@ QIcon HistoryManager::getIcon(const QUrl &url)
 	{
 		if (url.path() == QLatin1String("bookmarks"))
 		{
-			return Utils::getIcon(QLatin1String("bookmarks"));
+			return ThemesManager::getIcon(QLatin1String("bookmarks"));
 		}
 
 		if (url.path() == QLatin1String("cache"))
 		{
-			return Utils::getIcon(QLatin1String("cache"));
+			return ThemesManager::getIcon(QLatin1String("cache"));
 		}
 
 		if (url.path() == QLatin1String("config"))
 		{
-			return Utils::getIcon(QLatin1String("configuration"));
+			return ThemesManager::getIcon(QLatin1String("configuration"));
 		}
 
 		if (url.path() == QLatin1String("cookies"))
 		{
-			return Utils::getIcon(QLatin1String("cookies"));
+			return ThemesManager::getIcon(QLatin1String("cookies"));
 		}
 
 		if (url.path() == QLatin1String("history"))
 		{
-			return Utils::getIcon(QLatin1String("view-history"));
+			return ThemesManager::getIcon(QLatin1String("view-history"));
 		}
 
 		if (url.path() == QLatin1String("notes"))
 		{
-			return Utils::getIcon(QLatin1String("notes"));
+			return ThemesManager::getIcon(QLatin1String("notes"));
 		}
 
 		if (url.path() == QLatin1String("transfers"))
 		{
-			return Utils::getIcon(QLatin1String("transfers"));
+			return ThemesManager::getIcon(QLatin1String("transfers"));
 		}
 
-		return Utils::getIcon(QLatin1String("text-html"));
+		return ThemesManager::getIcon(QLatin1String("text-html"));
 	}
 
 ///TODO
 
-	return Utils::getIcon(QLatin1String("text-html"));
+	return ThemesManager::getIcon(QLatin1String("text-html"));
 }
 
 HistoryEntryItem* HistoryManager::getEntry(quint64 identifier)

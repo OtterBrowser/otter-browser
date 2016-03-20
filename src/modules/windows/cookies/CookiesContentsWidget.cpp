@@ -22,7 +22,7 @@
 #include "../../../core/CookieJar.h"
 #include "../../../core/HistoryManager.h"
 #include "../../../core/NetworkManagerFactory.h"
-#include "../../../core/Utils.h"
+#include "../../../core/ThemesManager.h"
 
 #include "ui_CookiesContentsWidget.h"
 
@@ -461,7 +461,7 @@ QUrl CookiesContentsWidget::getUrl() const
 
 QIcon CookiesContentsWidget::getIcon() const
 {
-	return Utils::getIcon(QLatin1String("cookies"), false);
+	return ThemesManager::getIcon(QLatin1String("cookies"), false);
 }
 
 QNetworkCookie CookiesContentsWidget::getCookie(const QModelIndex &index) const

@@ -22,7 +22,7 @@
 #include "BookmarksManager.h"
 #include "HistoryManager.h"
 #include "SettingsManager.h"
-#include "Utils.h"
+#include "ThemesManager.h"
 
 #include <QtCore/QCoreApplication>
 
@@ -52,7 +52,7 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 
 		if (m_types.testFlag(SearchSuggestionsCompletionType))
 		{
-			CompletionEntry completionEntry(QUrl(), m_defaultSearchEngine.title, QString(), Utils::getIcon(QLatin1String("edit-find")), SearchSuggestionType);
+			CompletionEntry completionEntry(QUrl(), m_defaultSearchEngine.title, QString(), ThemesManager::getIcon(QLatin1String("edit-find")), SearchSuggestionType);
 			completionEntry.text = m_filter;
 
 			completions.append(completionEntry);

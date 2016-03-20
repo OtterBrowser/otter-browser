@@ -49,6 +49,7 @@
 #include "../core/HistoryManager.h"
 #include "../core/InputInterpreter.h"
 #include "../core/SettingsManager.h"
+#include "../core/ThemesManager.h"
 #include "../core/TransfersManager.h"
 #include "../core/Utils.h"
 #include "../core/WebBackend.h"
@@ -1162,7 +1163,7 @@ bool MainWindow::event(QEvent *event)
 				{
 					if (isFullScreen())
 					{
-						getAction(ActionsManager::FullScreenAction)->setIcon(Utils::getIcon(QLatin1String("view-restore")));
+						getAction(ActionsManager::FullScreenAction)->setIcon(ThemesManager::getIcon(QLatin1String("view-restore")));
 
 						if (m_statusBar)
 						{
@@ -1178,7 +1179,7 @@ bool MainWindow::event(QEvent *event)
 					}
 					else
 					{
-						getAction(ActionsManager::FullScreenAction)->setIcon(Utils::getIcon(QLatin1String("view-fullscreen")));
+						getAction(ActionsManager::FullScreenAction)->setIcon(ThemesManager::getIcon(QLatin1String("view-fullscreen")));
 
 						if (m_statusBar)
 						{

@@ -19,7 +19,7 @@
 
 #include "QtWebKitInspector.h"
 #include "QtWebKitWebWidget.h"
-#include "../../../../core/Utils.h"
+#include "../../../../core/ThemesManager.h"
 
 namespace Otter
 {
@@ -32,7 +32,7 @@ QtWebKitInspector::QtWebKitInspector(QtWebKitWebWidget *parent) : QWebInspector(
 
 	m_closeButton->setAutoFillBackground(false);
 	m_closeButton->setAutoRaise(true);
-	m_closeButton->setIcon(Utils::getIcon(QLatin1String("window-close")));
+	m_closeButton->setIcon(ThemesManager::getIcon(QLatin1String("window-close")));
 	m_closeButton->setToolTip(tr("Close"));
 	m_closeButton->setFixedSize(16, 16);
 	m_closeButton->show();

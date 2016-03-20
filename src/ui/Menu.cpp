@@ -28,6 +28,7 @@
 #include "../core/NetworkManagerFactory.h"
 #include "../core/NotesManager.h"
 #include "../core/SessionsManager.h"
+#include "../core/ThemesManager.h"
 #include "../core/ToolBarsManager.h"
 #include "../core/Utils.h"
 #include "../core/WindowsManager.h"
@@ -79,7 +80,7 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 			break;
 		case ClosedWindowsMenu:
 			{
-				setIcon(Utils::getIcon(QLatin1String("user-trash")));
+				setIcon(ThemesManager::getIcon(QLatin1String("user-trash")));
 
 				MainWindow *mainWindow = MainWindow::findMainWindow(parent);
 
@@ -191,7 +192,7 @@ void Menu::contextMenuEvent(QContextMenuEvent *event)
 			m_bookmark = BookmarksManager::getModel()->getBookmark(action->data().toModelIndex());
 
 			QMenu contextMenu(this);
-			contextMenu.addAction(Utils::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
+			contextMenu.addAction(ThemesManager::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
 			contextMenu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setData(WindowsManager::NewTabOpen);
 			contextMenu.addAction(tr("Open in New Background Tab"), this, SLOT(openBookmark()))->setData(static_cast<int>(WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen));
 			contextMenu.addSeparator();
@@ -318,7 +319,7 @@ void Menu::populateModelMenu()
 
 	if (model->rowCount(index) > 1 && m_role == BookmarksMenuRole)
 	{
-		QAction *openAllAction = menu->addAction(Utils::getIcon(QLatin1String("document-open-folder")), tr("Open All"), this, SLOT(openBookmark()));
+		QAction *openAllAction = menu->addAction(ThemesManager::getIcon(QLatin1String("document-open-folder")), tr("Open All"), this, SLOT(openBookmark()));
 		openAllAction->setData(index);
 
 		menu->addSeparator();
@@ -326,7 +327,7 @@ void Menu::populateModelMenu()
 
 	if (m_role == BookmarkSelectorMenuRole)
 	{
-		QAction *addFolderAction = menu->addAction(Utils::getIcon(QLatin1String("document-open-folder")), tr("This Folder"));
+		QAction *addFolderAction = menu->addAction(ThemesManager::getIcon(QLatin1String("document-open-folder")), tr("This Folder"));
 		addFolderAction->setData(index);
 
 		menu->addSeparator();
@@ -438,7 +439,7 @@ void Menu::populateClosedWindowsMenu()
 {
 	clear();
 
-	QMenu::addAction(Utils::getIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(clearClosedWindows()))->setData(0);
+	QMenu::addAction(ThemesManager::getIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(clearClosedWindows()))->setData(0);
 
 	addSeparator();
 

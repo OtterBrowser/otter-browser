@@ -20,7 +20,7 @@
 #include "SearchEnginesManager.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
-#include "Utils.h"
+#include "ThemesManager.h"
 
 #include <QtCore/QBuffer>
 #include <QtCore/QDir>
@@ -151,7 +151,7 @@ void SearchEnginesManager::updateSearchEnginesModel()
 
 		if (!search.identifier.isEmpty())
 		{
-			QStandardItem *item = new QStandardItem((search.icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : search.icon), QString());
+			QStandardItem *item = new QStandardItem((search.icon.isNull() ? ThemesManager::getIcon(QLatin1String("edit-find")) : search.icon), QString());
 			item->setData(search.title, Qt::UserRole);
 			item->setData(search.identifier, (Qt::UserRole + 1));
 			item->setData(search.keyword, (Qt::UserRole + 2));
@@ -166,7 +166,7 @@ void SearchEnginesManager::updateSearchEnginesModel()
 		separatorItem->setData(QLatin1String("separator"), Qt::AccessibleDescriptionRole);
 		separatorItem->setData(QSize(-1, 10), Qt::SizeHintRole);
 
-		QStandardItem *manageItem = new QStandardItem(Utils::getIcon(QLatin1String("configure")), tr("Manage Search Engines…"));
+		QStandardItem *manageItem = new QStandardItem(ThemesManager::getIcon(QLatin1String("configure")), tr("Manage Search Engines…"));
 		manageItem->setData(QLatin1String("configure"), Qt::AccessibleDescriptionRole);
 
 		m_searchEnginesModel->appendRow(separatorItem);

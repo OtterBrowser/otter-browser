@@ -257,16 +257,6 @@ QUrl normalizeUrl(QUrl url)
 	return url;
 }
 
-QIcon getIcon(const QString &name, bool fromTheme)
-{
-	if (fromTheme && QIcon::hasThemeIcon(name))
-	{
-		return QIcon::fromTheme(name);
-	}
-
-	return QIcon(QStringLiteral(":/icons/%1.png").arg(name));
-}
-
 QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType)
 {
 	PlatformIntegration *integration = Application::getInstance()->getPlatformIntegration();

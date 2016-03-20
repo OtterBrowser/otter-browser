@@ -50,7 +50,6 @@ QString formatTime(int value);
 QString formatUnit(qint64 value, bool isSpeed = false, int precision = 1, bool appendRaw = false);
 QString formatDateTime(const QDateTime &dateTime, const QString &format = QString());
 QUrl normalizeUrl(QUrl url);
-QIcon getIcon(const QString &name, bool fromTheme = true);
 QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType);
 bool isUrlEmpty(const QUrl &url);
 

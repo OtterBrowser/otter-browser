@@ -18,7 +18,7 @@
 **************************************************************************/
 
 #include "IconWidget.h"
-#include "../core/Utils.h"
+#include "../core/ThemesManager.h"
 
 #include <QtCore/QBuffer>
 #include <QtWidgets/QFileDialog>
@@ -34,7 +34,7 @@ IconWidget::IconWidget(QWidget *parent) : QToolButton(parent)
 	menu->addAction(tr("Select From File…"), this, SLOT(selectFromFile()));
 	menu->addAction(tr("Select From Theme…"), this, SLOT(selectFromTheme()));
 	menu->addSeparator();
-	menu->addAction(Utils::getIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(clear()))->setEnabled(false);
+	menu->addAction(ThemesManager::getIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(clear()))->setEnabled(false);
 
 	setMenu(menu);
 	setToolTip(tr("Select Icon"));
@@ -119,7 +119,7 @@ void IconWidget::setIcon(const QString &data)
 	}
 	else
 	{
-		icon = Utils::getIcon(data);
+		icon = ThemesManager::getIcon(data);
 	}
 
 	QToolButton::setIcon(icon);

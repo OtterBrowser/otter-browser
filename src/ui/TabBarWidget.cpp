@@ -27,7 +27,7 @@
 #include "../core/ActionsManager.h"
 #include "../core/GesturesManager.h"
 #include "../core/SettingsManager.h"
-#include "../core/Utils.h"
+#include "../core/ThemesManager.h"
 
 #include <QtCore/QtMath>
 #include <QtCore/QTimer>
@@ -730,7 +730,7 @@ void TabBarWidget::updateButtons()
 
 			if (isPinned)
 			{
-				closeLabel->setPixmap(Utils::getIcon(QLatin1String("object-locked")).pixmap(16, 16));
+				closeLabel->setPixmap(ThemesManager::getIcon(QLatin1String("object-locked")).pixmap(16, 16));
 			}
 			else
 			{
@@ -801,11 +801,11 @@ void TabBarWidget::updateTabs(int index)
 
 				if (loadingState == WindowsManager::CrashedLoadingState)
 				{
-					icon = Utils::getIcon(QLatin1String("tab-crashed"));
+					icon = ThemesManager::getIcon(QLatin1String("tab-crashed"));
 				}
 				else
 				{
-					icon = getTabProperty(i, QLatin1String("icon"), Utils::getIcon(getTabProperty(i, QLatin1String("isPrivate"), false).toBool() ? QLatin1String("tab-private") : QLatin1String("tab"))).value<QIcon>();
+					icon = getTabProperty(i, QLatin1String("icon"), ThemesManager::getIcon(getTabProperty(i, QLatin1String("isPrivate"), false).toBool() ? QLatin1String("tab-private") : QLatin1String("tab"))).value<QIcon>();
 				}
 
 				label->setPixmap(icon.pixmap(16, 16));

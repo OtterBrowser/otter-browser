@@ -18,7 +18,7 @@
 **************************************************************************/
 
 #include "AddressDelegate.h"
-#include "../core/Utils.h"
+#include "../core/ThemesManager.h"
 
 namespace Otter
 {
@@ -43,7 +43,7 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 
 	if (icon.isNull())
 	{
-		icon = Utils::getIcon(QLatin1String("tab"));
+		icon = ThemesManager::getIcon(QLatin1String("tab"));
 	}
 
 	icon.paint(painter, decorationRectangle, option.decorationAlignment);

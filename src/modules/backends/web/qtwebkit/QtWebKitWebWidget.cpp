@@ -38,6 +38,7 @@
 #include "../../../../core/SearchEnginesManager.h"
 #include "../../../../core/SessionsManager.h"
 #include "../../../../core/SettingsManager.h"
+#include "../../../../core/ThemesManager.h"
 #include "../../../../core/Transfer.h"
 #include "../../../../core/TransfersManager.h"
 #include "../../../../core/Utils.h"
@@ -555,7 +556,7 @@ void QtWebKitWebWidget::handleWindowCloseRequest()
 		return;
 	}
 
-	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), tr("JavaScript"), tr("Webpage wants to close this tab, do you want to allow to close it?"), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), NULL, this);
+	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), tr("JavaScript"), tr("Webpage wants to close this tab, do you want to allow to close it?"), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), NULL, this);
 	dialog.setCheckBox(tr("Do not show this message again"), false);
 
 	connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
@@ -1114,7 +1115,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					ImagePropertiesDialog *imagePropertiesDialog = new ImagePropertiesDialog(getCurrentHitTestResult().imageUrl, properties, (m_networkManager->cache() ? m_networkManager->cache()->data(getCurrentHitTestResult().imageUrl) : NULL), this);
 					imagePropertiesDialog->setButtonsVisible(false);
 
-					ContentsDialog *dialog = new ContentsDialog(Utils::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this);
+					ContentsDialog *dialog = new ContentsDialog(ThemesManager::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this);
 
 					connect(this, SIGNAL(aboutToReload()), dialog, SLOT(close()));
 					connect(imagePropertiesDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
@@ -1363,7 +1364,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					searchEngine.identifier = Utils::createIdentifier(getUrl().host(), identifiers);
 					searchEngine.title = getTitle();
 					searchEngine.formUrl = getUrl();
-					searchEngine.icon = (icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : icon);
+					searchEngine.icon = (icon.isNull() ? ThemesManager::getIcon(QLatin1String("edit-find")) : icon);
 					searchEngine.resultsUrl.url = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
 					searchEngine.resultsUrl.enctype = parentElement.attribute(QLatin1String("enctype"));
 					searchEngine.resultsUrl.method = ((parentElement.attribute(QLatin1String("method"), QLatin1String("get")).toLower() == QLatin1String("post")) ? QLatin1String("post") : QLatin1String("get"));
@@ -1851,12 +1852,12 @@ QIcon QtWebKitWebWidget::getIcon() const
 {
 	if (isPrivate())
 	{
-		return Utils::getIcon(QLatin1String("tab-private"));
+		return ThemesManager::getIcon(QLatin1String("tab-private"));
 	}
 
 	const QIcon icon = m_webView->icon();
 
-	return (icon.isNull() ? Utils::getIcon(QLatin1String("tab")) : icon);
+	return (icon.isNull() ? ThemesManager::getIcon(QLatin1String("tab")) : icon);
 }
 
 QPixmap QtWebKitWebWidget::getThumbnail()

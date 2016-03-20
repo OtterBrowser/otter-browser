@@ -27,7 +27,7 @@
 #include "../../../core/AddonsManager.h"
 #include "../../../core/InputInterpreter.h"
 #include "../../../core/SettingsManager.h"
-#include "../../../core/Utils.h"
+#include "../../../core/ThemesManager.h"
 #include "../../../core/WebBackend.h"
 #include "../../../ui/CertificateDialog.h"
 #include "../../../ui/ContentsDialog.h"
@@ -567,7 +567,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 			{
 				m_websiteInformationDialog = new WebsiteInformationDialog(m_webWidget, this);
 
-				ContentsDialog *dialog = new ContentsDialog(Utils::getIcon(QLatin1String("dialog-information")), m_websiteInformationDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, m_websiteInformationDialog, this);
+				ContentsDialog *dialog = new ContentsDialog(ThemesManager::getIcon(QLatin1String("dialog-information")), m_websiteInformationDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, m_websiteInformationDialog, this);
 
 				connect(m_websiteInformationDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
 
@@ -767,7 +767,7 @@ void WebContentsWidget::handleLoadingStateChange(WindowsManager::LoadingState st
 
 		if (tabCrashingAction == QLatin1String("ask"))
 		{
-			ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), tr("Question"), tr("This tab has crashed."), tr("Do you want to try to reload it?"), (QDialogButtonBox::Yes | QDialogButtonBox::Close), NULL, this);
+			ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), tr("Question"), tr("This tab has crashed."), tr("Do you want to try to reload it?"), (QDialogButtonBox::Yes | QDialogButtonBox::Close), NULL, this);
 			dialog.setCheckBox(tr("Do not show this message again"), false);
 
 			showDialog(&dialog);

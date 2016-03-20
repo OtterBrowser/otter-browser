@@ -28,6 +28,7 @@
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/NotesManager.h"
 #include "../../../../core/SearchEnginesManager.h"
+#include "../../../../core/ThemesManager.h"
 #include "../../../../core/Transfer.h"
 #include "../../../../core/TransfersManager.h"
 #include "../../../../core/Utils.h"
@@ -525,7 +526,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 					ImagePropertiesDialog *imagePropertiesDialog = new ImagePropertiesDialog(m_hitResult.imageUrl, properties, NULL, this);
 					imagePropertiesDialog->setButtonsVisible(false);
 
-					ContentsDialog *dialog = new ContentsDialog(Utils::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this);
+					ContentsDialog *dialog = new ContentsDialog(ThemesManager::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this);
 
 					connect(this, SIGNAL(aboutToReload()), dialog, SLOT(close()));
 					connect(imagePropertiesDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
@@ -859,7 +860,7 @@ void QtWebEngineWebWidget::handleAuthenticationRequired(const QUrl &url, QAuthen
 	AuthenticationDialog *authenticationDialog = new AuthenticationDialog(url, authenticator, this);
 	authenticationDialog->setButtonsVisible(false);
 
-	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, this);
+	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, this);
 
 	connect(&dialog, SIGNAL(accepted()), authenticationDialog, SLOT(accept()));
 	connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
@@ -874,7 +875,7 @@ void QtWebEngineWebWidget::handleProxyAuthenticationRequired(const QUrl &url, QA
 	AuthenticationDialog *authenticationDialog = new AuthenticationDialog(proxy, authenticator, this);
 	authenticationDialog->setButtonsVisible(false);
 
-	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, this);
+	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, this);
 
 	connect(&dialog, SIGNAL(accepted()), authenticationDialog, SLOT(accept()));
 	connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
@@ -898,7 +899,7 @@ void QtWebEngineWebWidget::handleCreateSearch(const QVariant &result)
 	searchEngine.identifier = Utils::createIdentifier(getUrl().host(), identifiers);
 	searchEngine.title = getTitle();
 	searchEngine.formUrl = getUrl();
-	searchEngine.icon = (icon.isNull() ? Utils::getIcon(QLatin1String("edit-find")) : icon);
+	searchEngine.icon = (icon.isNull() ? ThemesManager::getIcon(QLatin1String("edit-find")) : icon);
 	searchEngine.resultsUrl.url = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
 	searchEngine.resultsUrl.enctype = result.toMap().value(QLatin1String("enctype")).toString();
 	searchEngine.resultsUrl.method = result.toMap().value(QLatin1String("method")).toString();
@@ -944,7 +945,7 @@ void QtWebEngineWebWidget::handleImageProperties(const QVariant &result)
 	ImagePropertiesDialog *imagePropertiesDialog = new ImagePropertiesDialog(m_hitResult.imageUrl, properties, NULL, this);
 	imagePropertiesDialog->setButtonsVisible(false);
 
-	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this);
+	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this);
 
 	connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
@@ -1026,7 +1027,7 @@ void QtWebEngineWebWidget::handleWindowCloseRequest()
 		return;
 	}
 
-	ContentsDialog dialog(Utils::getIcon(QLatin1String("dialog-warning")), tr("JavaScript"), tr("Webpage wants to close this tab, do you want to allow to close it?"), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), NULL, this);
+	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), tr("JavaScript"), tr("Webpage wants to close this tab, do you want to allow to close it?"), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), NULL, this);
 	dialog.setCheckBox(tr("Do not show this message again"), false);
 
 	connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
@@ -1457,10 +1458,10 @@ QIcon QtWebEngineWebWidget::getIcon() const
 {
 	if (isPrivate())
 	{
-		return Utils::getIcon(QLatin1String("tab-private"));
+		return ThemesManager::getIcon(QLatin1String("tab-private"));
 	}
 
-	return (m_icon.isNull() ? Utils::getIcon(QLatin1String("tab")) : m_icon);
+	return (m_icon.isNull() ? ThemesManager::getIcon(QLatin1String("tab")) : m_icon);
 }
 
 QPixmap QtWebEngineWebWidget::getThumbnail()

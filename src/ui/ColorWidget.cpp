@@ -18,7 +18,7 @@
 **************************************************************************/
 
 #include "ColorWidget.h"
-#include "../core/Utils.h"
+#include "../core/ThemesManager.h"
 
 #include <QtGui/QClipboard>
 #include <QtWidgets/QApplication>
@@ -34,7 +34,7 @@ ColorWidget::ColorWidget(QWidget *parent) : QPushButton(parent)
 	menu->addAction(tr("Select Color…"), this, SLOT(selectColor()));
 	menu->addAction(tr("Copy Color"), this, SLOT(copyColor()));
 	menu->addSeparator();
-	menu->addAction(Utils::getIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(clear()));
+	menu->addAction(ThemesManager::getIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(clear()));
 
 	setMenu(menu);
 	setText(tr("Invalid"));

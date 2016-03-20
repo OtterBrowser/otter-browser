@@ -32,6 +32,7 @@ class ThemesManager : public QObject
 public:
 	static void createInstance(QObject *parent = NULL);
 	static ThemesManager* getInstance();
+	static QIcon getIcon(const QString &name, bool fromTheme = true);
 
 protected:
 	explicit ThemesManager(QObject *parent = NULL);

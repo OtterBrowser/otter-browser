@@ -21,7 +21,7 @@
 #include "../Menu.h"
 #include "../ToolBarWidget.h"
 #include "../../core/SessionsManager.h"
-#include "../../core/Utils.h"
+#include "../../core/ThemesManager.h"
 
 #include <QtCore/QFile>
 #include <QtCore/QJsonDocument>
@@ -32,7 +32,7 @@ namespace Otter
 MenuButtonWidget::MenuButtonWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
 	m_menu(new Menu(Menu::NoMenuRole, this))
 {
-	setIcon(Utils::getIcon(QLatin1String("otter-browser"), false));
+	setIcon(ThemesManager::getIcon(QLatin1String("otter-browser"), false));
 	setText(tr("Menu"));
 	setMenu(m_menu);
 	setPopupMode(QToolButton::InstantPopup);

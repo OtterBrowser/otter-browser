@@ -19,6 +19,7 @@
 
 #include "TransferDialog.h"
 #include "../core/HandlersManager.h"
+#include "../core/ThemesManager.h"
 #include "../core/Transfer.h"
 #include "../core/TransfersManager.h"
 #include "../core/Utils.h"
@@ -35,7 +36,7 @@ TransferDialog::TransferDialog(Transfer *transfer, QWidget *parent) : Dialog(par
 	m_transfer(transfer),
 	m_ui(new Ui::TransferDialog)
 {
-	const QPixmap icon = Utils::getIcon(transfer->getMimeType().iconName()).pixmap(16, 16);
+	const QPixmap icon = ThemesManager::getIcon(transfer->getMimeType().iconName()).pixmap(16, 16);
 	QString fileName = transfer->getSuggestedFileName();
 
 	if (fileName.isEmpty())

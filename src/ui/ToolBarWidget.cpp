@@ -36,7 +36,7 @@
 #include "toolbars/ZoomWidget.h"
 #include "../core/BookmarksManager.h"
 #include "../core/GesturesManager.h"
-#include "../core/Utils.h"
+#include "../core/ThemesManager.h"
 #include "../core/WindowsManager.h"
 
 #include <QtCore/QMimeData>
@@ -574,7 +574,7 @@ QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QList<QAction*> ac
 
 	toolBarMenu->addSeparator();
 
-	QAction *removeAction = toolBarMenu->addAction(Utils::getIcon(QLatin1String("list-remove")), tr("Remove…"), ToolBarsManager::getInstance(), SLOT(removeToolBar()));
+	QAction *removeAction = toolBarMenu->addAction(ThemesManager::getIcon(QLatin1String("list-remove")), tr("Remove…"), ToolBarsManager::getInstance(), SLOT(removeToolBar()));
 	removeAction->setData(identifier);
 	removeAction->setEnabled(definition.identifier >= ToolBarsManager::OtherToolBar);
 

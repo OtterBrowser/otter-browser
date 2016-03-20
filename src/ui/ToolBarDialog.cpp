@@ -24,7 +24,7 @@
 #include "../core/BookmarksManager.h"
 #include "../core/BookmarksModel.h"
 #include "../core/SearchEnginesManager.h"
-#include "../core/Utils.h"
+#include "../core/ThemesManager.h"
 
 #include "ui_ToolBarDialog.h"
 
@@ -38,10 +38,10 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 	m_ui(new Ui::ToolBarDialog)
 {
 	m_ui->setupUi(this);
-	m_ui->removeButton->setIcon(Utils::getIcon(QLatin1String("go-previous")));
-	m_ui->addButton->setIcon(Utils::getIcon(QLatin1String("go-next")));
-	m_ui->moveUpButton->setIcon(Utils::getIcon(QLatin1String("go-up")));
-	m_ui->moveDownButton->setIcon(Utils::getIcon(QLatin1String("go-down")));
+	m_ui->removeButton->setIcon(ThemesManager::getIcon(QLatin1String("go-previous")));
+	m_ui->addButton->setIcon(ThemesManager::getIcon(QLatin1String("go-next")));
+	m_ui->moveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("go-up")));
+	m_ui->moveDownButton->setIcon(ThemesManager::getIcon(QLatin1String("go-down")));
 	m_ui->addEntryButton->setMenu(new QMenu(m_ui->addEntryButton));
 	m_ui->buttonBox->button(QDialogButtonBox::RestoreDefaults)->setEnabled(m_definition.canReset);
 	m_ui->titleLineEdit->setText(m_definition.title.isEmpty() ? tr("Custom Toolbar") : m_definition.title);
@@ -485,7 +485,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 			}
 			else
 			{
-				item->setIcon(Utils::getIcon(data));
+				item->setIcon(ThemesManager::getIcon(data));
 			}
 		}
 

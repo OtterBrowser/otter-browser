@@ -29,7 +29,7 @@
 #include "../../core/SearchSuggester.h"
 #include "../../core/SessionsManager.h"
 #include "../../core/SettingsManager.h"
-#include "../../core/Utils.h"
+#include "../../core/ThemesManager.h"
 
 #include <QtGui/QClipboard>
 #include <QtGui/QMouseEvent>
@@ -121,7 +121,7 @@ void SearchWidget::paintEvent(QPaintEvent *event)
 		style()->drawPrimitive(QStyle::PE_IndicatorArrowDown, &arrow, &painter, this);
 	}
 
-	painter.drawPixmap(m_searchButtonRectangle, Utils::getIcon(QLatin1String("edit-find")).pixmap(m_searchButtonRectangle.size(), (isEnabled() ? QIcon::Active : QIcon::Disabled)));
+	painter.drawPixmap(m_searchButtonRectangle, ThemesManager::getIcon(QLatin1String("edit-find")).pixmap(m_searchButtonRectangle.size(), (isEnabled() ? QIcon::Active : QIcon::Disabled)));
 }
 
 void SearchWidget::resizeEvent(QResizeEvent *event)

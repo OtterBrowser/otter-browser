@@ -19,7 +19,7 @@
 **************************************************************************/
 
 #include "AcceptLanguageDialog.h"
-#include "../../core/Utils.h"
+#include "../../core/ThemesManager.h"
 
 #include "ui_AcceptLanguageDialog.h"
 
@@ -80,8 +80,8 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 		m_ui->languagesComboBox->addItem(allLanguages.at(i).first, allLanguages.at(i).second);
 	}
 
-	m_ui->moveDownButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
-	m_ui->moveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
+	m_ui->moveDownButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-down")));
+	m_ui->moveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-up")));
 	m_ui->languagesComboBox->installEventFilter(this);
 
 	connect(m_ui->moveDownButton, SIGNAL(clicked()), m_ui->languagesViewWidget, SLOT(moveDownRow()));

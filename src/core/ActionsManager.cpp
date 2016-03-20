@@ -20,7 +20,7 @@
 **************************************************************************/
 
 #include "ActionsManager.h"
-#include "Utils.h"
+#include "ThemesManager.h"
 #include "../ui/MainWindow.h"
 
 #include <QtCore/QCoreApplication>
@@ -272,12 +272,12 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 
 	m_definitions.reserve(ActionsManager::OtherAction);
 
-	registerAction(NewTabAction, QT_TRANSLATE_NOOP("actions", "New Tab"), QString(), Utils::getIcon(QLatin1String("tab-new")));
-	registerAction(NewTabPrivateAction, QT_TRANSLATE_NOOP("actions", "New Private Tab"), QString(), Utils::getIcon(QLatin1String("tab-new-private")));
-	registerAction(NewWindowAction, QT_TRANSLATE_NOOP("actions", "New Window"), QString(), Utils::getIcon(QLatin1String("window-new")));
-	registerAction(NewWindowPrivateAction, QT_TRANSLATE_NOOP("actions", "New Private Window"), QString(), Utils::getIcon(QLatin1String("window-new-private")));
-	registerAction(OpenAction, QT_TRANSLATE_NOOP("actions", "Open…"), QString(), Utils::getIcon(QLatin1String("document-open")));
-	registerAction(SaveAction, QT_TRANSLATE_NOOP("actions", "Save…"), QString(), Utils::getIcon(QLatin1String("document-save")));
+	registerAction(NewTabAction, QT_TRANSLATE_NOOP("actions", "New Tab"), QString(), ThemesManager::getIcon(QLatin1String("tab-new")));
+	registerAction(NewTabPrivateAction, QT_TRANSLATE_NOOP("actions", "New Private Tab"), QString(), ThemesManager::getIcon(QLatin1String("tab-new-private")));
+	registerAction(NewWindowAction, QT_TRANSLATE_NOOP("actions", "New Window"), QString(), ThemesManager::getIcon(QLatin1String("window-new")));
+	registerAction(NewWindowPrivateAction, QT_TRANSLATE_NOOP("actions", "New Private Window"), QString(), ThemesManager::getIcon(QLatin1String("window-new-private")));
+	registerAction(OpenAction, QT_TRANSLATE_NOOP("actions", "Open…"), QString(), ThemesManager::getIcon(QLatin1String("document-open")));
+	registerAction(SaveAction, QT_TRANSLATE_NOOP("actions", "Save…"), QString(), ThemesManager::getIcon(QLatin1String("document-save")));
 	registerAction(CloneTabAction, QT_TRANSLATE_NOOP("actions", "Clone Tab"));
 	registerAction(PinTabAction, QT_TRANSLATE_NOOP("actions", "Pin Tab"));
 	registerAction(DetachTabAction, QT_TRANSLATE_NOOP("actions", "Detach Tab"));
@@ -288,8 +288,8 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(ClearTabHistoryAction, QT_TRANSLATE_NOOP("actions", "Clear Tab History"), QT_TRANSLATE_NOOP("actions", "Remove Local Tab History"));
 	registerAction(PurgeTabHistoryAction, QT_TRANSLATE_NOOP("actions", "Purge Tab History"), QT_TRANSLATE_NOOP("actions", "Remove Local and Global Tab History"));
 	registerAction(SuspendTabAction, QT_TRANSLATE_NOOP("actions", "Suspend Tab"), QString(), QIcon(), NoFlags);
-	registerAction(CloseTabAction, QT_TRANSLATE_NOOP("actions", "Close Tab"), QString(), Utils::getIcon(QLatin1String("tab-close")), NoFlags);
-	registerAction(CloseOtherTabsAction, QT_TRANSLATE_NOOP("actions", "Close Other Tabs"), QString(), Utils::getIcon(QLatin1String("tab-close-other")));
+	registerAction(CloseTabAction, QT_TRANSLATE_NOOP("actions", "Close Tab"), QString(), ThemesManager::getIcon(QLatin1String("tab-close")), NoFlags);
+	registerAction(CloseOtherTabsAction, QT_TRANSLATE_NOOP("actions", "Close Other Tabs"), QString(), ThemesManager::getIcon(QLatin1String("tab-close-other")));
 	registerAction(ClosePrivateTabsAction, QT_TRANSLATE_NOOP("actions", "Close All Private Tabs"), QT_TRANSLATE_NOOP("actions", "Close All Private Tabs in Current Window"), QIcon(), NoFlags);
 	registerAction(ClosePrivateTabsPanicAction, QT_TRANSLATE_NOOP("actions", "Close Private Tabs and Windows"));
 	registerAction(ReopenTabAction, QT_TRANSLATE_NOOP("actions", "Reopen Previously Closed Tab"));
@@ -302,7 +302,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(SessionsAction, QT_TRANSLATE_NOOP("actions", "Manage Sessions…"));
 	registerAction(SaveSessionAction, QT_TRANSLATE_NOOP("actions", "Save Current Session…"));
 	registerAction(OpenUrlAction, QT_TRANSLATE_NOOP("actions", "Open URL"));
-	registerAction(OpenLinkAction, QT_TRANSLATE_NOOP("actions", "Open"), QString(), Utils::getIcon(QLatin1String("document-open")));
+	registerAction(OpenLinkAction, QT_TRANSLATE_NOOP("actions", "Open"), QString(), ThemesManager::getIcon(QLatin1String("document-open")));
 	registerAction(OpenLinkInCurrentTabAction, QT_TRANSLATE_NOOP("actions", "Open in This Tab"));
 	registerAction(OpenLinkInNewTabAction, QT_TRANSLATE_NOOP("actions", "Open in New Tab"));
 	registerAction(OpenLinkInNewTabBackgroundAction, QT_TRANSLATE_NOOP("actions", "Open in New Background Tab"));
@@ -314,7 +314,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(OpenLinkInNewPrivateWindowBackgroundAction, QT_TRANSLATE_NOOP("actions", "Open in New Private Background Window"));
 	registerAction(OpenLinkInApplicationAction, QT_TRANSLATE_NOOP("actions", "Open with…"), QT_TRANSLATE_NOOP("actions", "Open Link with External Application"), QIcon(), (IsEnabledFlag | IsMenuFlag));
 	registerAction(CopyLinkToClipboardAction, QT_TRANSLATE_NOOP("actions", "Copy Link to Clipboard"));
-	registerAction(BookmarkLinkAction, QT_TRANSLATE_NOOP("actions", "Bookmark Link…"), QString(), Utils::getIcon(QLatin1String("bookmark-new")));
+	registerAction(BookmarkLinkAction, QT_TRANSLATE_NOOP("actions", "Bookmark Link…"), QString(), ThemesManager::getIcon(QLatin1String("bookmark-new")));
 	registerAction(SaveLinkToDiskAction, QT_TRANSLATE_NOOP("actions", "Save Link Target As…"));
 	registerAction(SaveLinkToDownloadsAction, QT_TRANSLATE_NOOP("actions", "Save to Downloads"));
 	registerAction(OpenSelectionAsLinkAction, QT_TRANSLATE_NOOP("actions", "Go to This Address"));
@@ -338,47 +338,47 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(MediaLoopAction, QT_TRANSLATE_NOOP("actions", "Looping"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag));
 	registerAction(MediaPlayPauseAction, QT_TRANSLATE_NOOP("actions", "Play"));
 	registerAction(MediaMuteAction, QT_TRANSLATE_NOOP("actions", "Mute"));
-	registerAction(GoAction, QT_TRANSLATE_NOOP("actions", "Go"), QString(), Utils::getIcon(QLatin1String("go-jump-locationbar")));
-	registerAction(GoBackAction, QT_TRANSLATE_NOOP("actions", "Back"), QString(), Utils::getIcon(QLatin1String("go-previous")), (IsEnabledFlag | IsMenuFlag));
-	registerAction(GoForwardAction, QT_TRANSLATE_NOOP("actions", "Forward"), QString(), Utils::getIcon(QLatin1String("go-next")), (IsEnabledFlag | IsMenuFlag));
+	registerAction(GoAction, QT_TRANSLATE_NOOP("actions", "Go"), QString(), ThemesManager::getIcon(QLatin1String("go-jump-locationbar")));
+	registerAction(GoBackAction, QT_TRANSLATE_NOOP("actions", "Back"), QString(), ThemesManager::getIcon(QLatin1String("go-previous")), (IsEnabledFlag | IsMenuFlag));
+	registerAction(GoForwardAction, QT_TRANSLATE_NOOP("actions", "Forward"), QString(), ThemesManager::getIcon(QLatin1String("go-next")), (IsEnabledFlag | IsMenuFlag));
 	registerAction(GoToPageAction, QT_TRANSLATE_NOOP("actions", "Go to Page or Search"));
-	registerAction(GoToHomePageAction, QT_TRANSLATE_NOOP("actions", "Go to Home Page"), QString(), Utils::getIcon(QLatin1String("go-home")));
+	registerAction(GoToHomePageAction, QT_TRANSLATE_NOOP("actions", "Go to Home Page"), QString(), ThemesManager::getIcon(QLatin1String("go-home")));
 	registerAction(GoToParentDirectoryAction, QT_TRANSLATE_NOOP("actions", "Go to Parent Directory"));
-	registerAction(RewindAction, QT_TRANSLATE_NOOP("actions", "Rewind"), QString(), Utils::getIcon(QLatin1String("go-first")));
-	registerAction(FastForwardAction, QT_TRANSLATE_NOOP("actions", "Fast Forward"), QString(), Utils::getIcon(QLatin1String("go-last")));
-	registerAction(StopAction, QT_TRANSLATE_NOOP("actions", "Stop"), QString(), Utils::getIcon(QLatin1String("process-stop")));
+	registerAction(RewindAction, QT_TRANSLATE_NOOP("actions", "Rewind"), QString(), ThemesManager::getIcon(QLatin1String("go-first")));
+	registerAction(FastForwardAction, QT_TRANSLATE_NOOP("actions", "Fast Forward"), QString(), ThemesManager::getIcon(QLatin1String("go-last")));
+	registerAction(StopAction, QT_TRANSLATE_NOOP("actions", "Stop"), QString(), ThemesManager::getIcon(QLatin1String("process-stop")));
 	registerAction(StopScheduledReloadAction, QT_TRANSLATE_NOOP("actions", "Stop Scheduled Page Reload"));
-	registerAction(ReloadAction, QT_TRANSLATE_NOOP("actions", "Reload"), QString(), Utils::getIcon(QLatin1String("view-refresh")));
-	registerAction(ReloadOrStopAction, QT_TRANSLATE_NOOP("actions", "Reload"), QT_TRANSLATE_NOOP("actions", "Reload or Stop"), Utils::getIcon(QLatin1String("view-refresh")));
+	registerAction(ReloadAction, QT_TRANSLATE_NOOP("actions", "Reload"), QString(), ThemesManager::getIcon(QLatin1String("view-refresh")));
+	registerAction(ReloadOrStopAction, QT_TRANSLATE_NOOP("actions", "Reload"), QT_TRANSLATE_NOOP("actions", "Reload or Stop"), ThemesManager::getIcon(QLatin1String("view-refresh")));
 	registerAction(ReloadAndBypassCacheAction, QT_TRANSLATE_NOOP("actions", "Reload and Bypass Cache"));
-	registerAction(ReloadAllAction, QT_TRANSLATE_NOOP("actions", "Reload All Tabs"), QString(), Utils::getIcon(QLatin1String("view-refresh")));
+	registerAction(ReloadAllAction, QT_TRANSLATE_NOOP("actions", "Reload All Tabs"), QString(), ThemesManager::getIcon(QLatin1String("view-refresh")));
 	registerAction(ScheduleReloadAction, QT_TRANSLATE_NOOP("actions", "Reload Every"), QString(), QIcon(), (IsEnabledFlag | IsMenuFlag));
 	registerAction(ContextMenuAction, QT_TRANSLATE_NOOP("actions", "Show Context Menu"));
-	registerAction(UndoAction, QT_TRANSLATE_NOOP("actions", "Undo"), QString(), Utils::getIcon(QLatin1String("edit-undo")));
-	registerAction(RedoAction, QT_TRANSLATE_NOOP("actions", "Redo"), QString(), Utils::getIcon(QLatin1String("edit-redo")));
-	registerAction(CutAction, QT_TRANSLATE_NOOP("actions", "Cut"), QString(), Utils::getIcon(QLatin1String("edit-cut")));
-	registerAction(CopyAction, QT_TRANSLATE_NOOP("actions", "Copy"), QString(), Utils::getIcon(QLatin1String("edit-copy")));
+	registerAction(UndoAction, QT_TRANSLATE_NOOP("actions", "Undo"), QString(), ThemesManager::getIcon(QLatin1String("edit-undo")));
+	registerAction(RedoAction, QT_TRANSLATE_NOOP("actions", "Redo"), QString(), ThemesManager::getIcon(QLatin1String("edit-redo")));
+	registerAction(CutAction, QT_TRANSLATE_NOOP("actions", "Cut"), QString(), ThemesManager::getIcon(QLatin1String("edit-cut")));
+	registerAction(CopyAction, QT_TRANSLATE_NOOP("actions", "Copy"), QString(), ThemesManager::getIcon(QLatin1String("edit-copy")));
 	registerAction(CopyPlainTextAction, QT_TRANSLATE_NOOP("actions", "Copy as Plain Text"));
 	registerAction(CopyAddressAction, QT_TRANSLATE_NOOP("actions", "Copy Address"));
 	registerAction(CopyToNoteAction, QT_TRANSLATE_NOOP("actions", "Copy to Note"));
-	registerAction(PasteAction, QT_TRANSLATE_NOOP("actions", "Paste"), QString(), Utils::getIcon(QLatin1String("edit-paste")));
+	registerAction(PasteAction, QT_TRANSLATE_NOOP("actions", "Paste"), QString(), ThemesManager::getIcon(QLatin1String("edit-paste")));
 	registerAction(PasteAndGoAction, QT_TRANSLATE_NOOP("actions", "Paste and Go"));
 	registerAction(PasteNoteAction, QT_TRANSLATE_NOOP("actions", "Insert Note"), QString(), QIcon(), (IsEnabledFlag | IsMenuFlag));
-	registerAction(DeleteAction, QT_TRANSLATE_NOOP("actions", "Delete"), QString(), Utils::getIcon(QLatin1String("edit-delete")));
-	registerAction(SelectAllAction, QT_TRANSLATE_NOOP("actions", "Select All"), QString(), Utils::getIcon(QLatin1String("edit-select-all")));
+	registerAction(DeleteAction, QT_TRANSLATE_NOOP("actions", "Delete"), QString(), ThemesManager::getIcon(QLatin1String("edit-delete")));
+	registerAction(SelectAllAction, QT_TRANSLATE_NOOP("actions", "Select All"), QString(), ThemesManager::getIcon(QLatin1String("edit-select-all")));
 	registerAction(ClearAllAction, QT_TRANSLATE_NOOP("actions", "Clear All"));
 	registerAction(CheckSpellingAction, QT_TRANSLATE_NOOP("actions", "Check Spelling"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag));
 	registerAction(SelectDictionaryAction, QT_TRANSLATE_NOOP("actions", "Dictionaries"), QString(), QIcon(), (IsEnabledFlag | IsMenuFlag));
-	registerAction(FindAction, QT_TRANSLATE_NOOP("actions", "Find…"), QString(), Utils::getIcon(QLatin1String("edit-find")));
+	registerAction(FindAction, QT_TRANSLATE_NOOP("actions", "Find…"), QString(), ThemesManager::getIcon(QLatin1String("edit-find")));
 	registerAction(FindNextAction, QT_TRANSLATE_NOOP("actions", "Find Next"));
 	registerAction(FindPreviousAction, QT_TRANSLATE_NOOP("actions", "Find Previous"));
 	registerAction(QuickFindAction, QT_TRANSLATE_NOOP("actions", "Quick Find"));
 	registerAction(SearchAction, QT_TRANSLATE_NOOP("actions", "Search"));
 	registerAction(SearchMenuAction, QT_TRANSLATE_NOOP("actions", "Search Using"));
 	registerAction(CreateSearchAction, QT_TRANSLATE_NOOP("actions", "Create Search…"));
-	registerAction(ZoomInAction, QT_TRANSLATE_NOOP("actions", "Zoom In"), QString(), Utils::getIcon(QLatin1String("zoom-in")));
-	registerAction(ZoomOutAction, QT_TRANSLATE_NOOP("actions", "Zoom Out"), QString(), Utils::getIcon(QLatin1String("zoom-out")));
-	registerAction(ZoomOriginalAction, QT_TRANSLATE_NOOP("actions", "Zoom Original"), QString(), Utils::getIcon(QLatin1String("zoom-original")));
+	registerAction(ZoomInAction, QT_TRANSLATE_NOOP("actions", "Zoom In"), QString(), ThemesManager::getIcon(QLatin1String("zoom-in")));
+	registerAction(ZoomOutAction, QT_TRANSLATE_NOOP("actions", "Zoom Out"), QString(), ThemesManager::getIcon(QLatin1String("zoom-out")));
+	registerAction(ZoomOriginalAction, QT_TRANSLATE_NOOP("actions", "Zoom Original"), QString(), ThemesManager::getIcon(QLatin1String("zoom-original")));
 	registerAction(ScrollToStartAction, QT_TRANSLATE_NOOP("actions", "Go to Start of the Page"));
 	registerAction(ScrollToEndAction, QT_TRANSLATE_NOOP("actions", "Go to the End of the Page"));
 	registerAction(ScrollPageUpAction, QT_TRANSLATE_NOOP("actions", "Page Up"));
@@ -388,8 +388,8 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(StartDragScrollAction, QT_TRANSLATE_NOOP("actions", "Enter Drag Scroll Mode"));
 	registerAction(StartMoveScrollAction, QT_TRANSLATE_NOOP("actions", "Enter Move Scroll Mode"));
 	registerAction(EndScrollAction, QT_TRANSLATE_NOOP("actions", "Exit Scroll Mode"));
-	registerAction(PrintAction, QT_TRANSLATE_NOOP("actions", "Print…"), QString(), Utils::getIcon(QLatin1String("document-print")));
-	registerAction(PrintPreviewAction, QT_TRANSLATE_NOOP("actions", "Print Preview"), QString(), Utils::getIcon(QLatin1String("document-print-preview")));
+	registerAction(PrintAction, QT_TRANSLATE_NOOP("actions", "Print…"), QString(), ThemesManager::getIcon(QLatin1String("document-print")));
+	registerAction(PrintPreviewAction, QT_TRANSLATE_NOOP("actions", "Print Preview"), QString(), ThemesManager::getIcon(QLatin1String("document-print-preview")));
 	registerAction(ActivateAddressFieldAction, QT_TRANSLATE_NOOP("actions", "Activate Address Field"));
 	registerAction(ActivateSearchFieldAction, QT_TRANSLATE_NOOP("actions", "Activate Search Field"));
 	registerAction(ActivateContentAction, QT_TRANSLATE_NOOP("actions", "Activate Content"));
@@ -398,8 +398,8 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(ActivateTabAction, QT_TRANSLATE_NOOP("actions", "Activate Tab"));
 	registerAction(ActivateTabOnLeftAction, QT_TRANSLATE_NOOP("actions", "Go to Tab on Left"));
 	registerAction(ActivateTabOnRightAction, QT_TRANSLATE_NOOP("actions", "Go to Tab on Right"));
-	registerAction(BookmarksAction, QT_TRANSLATE_NOOP("actions", "Manage Bookmarks"), QString(), Utils::getIcon(QLatin1String("bookmarks-organize")));
-	registerAction(BookmarkPageAction, QT_TRANSLATE_NOOP("actions", "Bookmark Page…"), QString(), Utils::getIcon(QLatin1String("bookmark-new")));
+	registerAction(BookmarksAction, QT_TRANSLATE_NOOP("actions", "Manage Bookmarks"), QString(), ThemesManager::getIcon(QLatin1String("bookmarks-organize")));
+	registerAction(BookmarkPageAction, QT_TRANSLATE_NOOP("actions", "Bookmark Page…"), QString(), ThemesManager::getIcon(QLatin1String("bookmark-new")));
 	registerAction(BookmarkAllOpenPagesAction, QT_TRANSLATE_NOOP("actions", "Bookmark All Open Pages"));
 	registerAction(OpenBookmarkAction, QT_TRANSLATE_NOOP("actions", "Open Bookmark"));
 	registerAction(QuickBookmarkAccessAction, QT_TRANSLATE_NOOP("actions", "Quick Bookmark Access"));
@@ -409,7 +409,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(CookiesPolicyAction, QT_TRANSLATE_NOOP("actions", "Cookies Policy"));
 	registerAction(ThirdPartyCookiesPolicyAction, QT_TRANSLATE_NOOP("actions", "Third-party Cookies Policy"));
 	registerAction(PluginsPolicyAction, QT_TRANSLATE_NOOP("actions", "Plugins"));
-	registerAction(LoadPluginsAction, QT_TRANSLATE_NOOP("actions", "Load Plugins"), QString(), Utils::getIcon(QLatin1String("preferences-plugin")));
+	registerAction(LoadPluginsAction, QT_TRANSLATE_NOOP("actions", "Load Plugins"), QString(), ThemesManager::getIcon(QLatin1String("preferences-plugin")));
 	registerAction(EnableJavaScriptAction, QT_TRANSLATE_NOOP("actions", "Enable JavaScript"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag | IsCheckedFlag));
 	registerAction(EnableJavaAction, QT_TRANSLATE_NOOP("actions", "Enable Java"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag | IsCheckedFlag));
 	registerAction(EnableReferrerAction, QT_TRANSLATE_NOOP("actions", "Enable Referrer"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag | IsCheckedFlag));
@@ -421,18 +421,18 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(InspectPageAction, QT_TRANSLATE_NOOP("actions", "Inspect Page"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag));
 	registerAction(InspectElementAction, QT_TRANSLATE_NOOP("actions", "Inspect Element…"));
 	registerAction(WorkOfflineAction, QT_TRANSLATE_NOOP("actions", "Work Offline"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag));
-	registerAction(FullScreenAction, QT_TRANSLATE_NOOP("actions", "Full Screen"), QString(), Utils::getIcon(QLatin1String("view-fullscreen")));
+	registerAction(FullScreenAction, QT_TRANSLATE_NOOP("actions", "Full Screen"), QString(), ThemesManager::getIcon(QLatin1String("view-fullscreen")));
 	registerAction(ShowTabSwitcherAction, QT_TRANSLATE_NOOP("actions", "Show Tab Switcher"));
 	registerAction(ShowMenuBarAction, QT_TRANSLATE_NOOP("actions", "Show Menubar"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag | IsCheckedFlag));
 	registerAction(ShowTabBarAction, QT_TRANSLATE_NOOP("actions", "Show Tabbar"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag | IsCheckedFlag));
 	registerAction(ShowSidebarAction, QT_TRANSLATE_NOOP("actions", "Show Sidebar"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag));
 	registerAction(ShowErrorConsoleAction, QT_TRANSLATE_NOOP("actions", "Show Error Console"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag));
 	registerAction(LockToolBarsAction, QT_TRANSLATE_NOOP("actions", "Lock Toolbars"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag));
-	registerAction(OpenPanelAction, QT_TRANSLATE_NOOP("actions", "Open Panel as Tab"), QString(), Utils::getIcon(QLatin1String("arrow-right")));
-	registerAction(ClosePanelAction, QT_TRANSLATE_NOOP("actions", "Close Panel"), QString(), Utils::getIcon(QLatin1String("window-close")));
+	registerAction(OpenPanelAction, QT_TRANSLATE_NOOP("actions", "Open Panel as Tab"), QString(), ThemesManager::getIcon(QLatin1String("arrow-right")));
+	registerAction(ClosePanelAction, QT_TRANSLATE_NOOP("actions", "Close Panel"), QString(), ThemesManager::getIcon(QLatin1String("window-close")));
 	registerAction(ContentBlockingAction, QT_TRANSLATE_NOOP("actions", "Content Blocking…"));
-	registerAction(HistoryAction, QT_TRANSLATE_NOOP("actions", "View History"), QString(), Utils::getIcon(QLatin1String("view-history")));
-	registerAction(ClearHistoryAction, QT_TRANSLATE_NOOP("actions", "Clear History…"), QString(), Utils::getIcon(QLatin1String("edit-clear-history")));
+	registerAction(HistoryAction, QT_TRANSLATE_NOOP("actions", "View History"), QString(), ThemesManager::getIcon(QLatin1String("view-history")));
+	registerAction(ClearHistoryAction, QT_TRANSLATE_NOOP("actions", "Clear History…"), QString(), ThemesManager::getIcon(QLatin1String("edit-clear-history")));
 	registerAction(NotesAction, QT_TRANSLATE_NOOP("actions", "Notes"));
 	registerAction(TransfersAction, QT_TRANSLATE_NOOP("actions", "Transfers"));
 	registerAction(PreferencesAction, QT_TRANSLATE_NOOP("actions", "Preferences…"));
@@ -441,12 +441,12 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(ResetQuickPreferencesAction, QT_TRANSLATE_NOOP("actions", "Reset Options"));
 	registerAction(WebsiteInformationAction, QT_TRANSLATE_NOOP("actions", "Website Information…"));
 	registerAction(WebsiteCertificateInformationAction, QT_TRANSLATE_NOOP("actions", "Website Certificate Information…"));
-	registerAction(SwitchApplicationLanguageAction, QT_TRANSLATE_NOOP("actions", "Switch Application Language…"), QString(), Utils::getIcon(QLatin1String("preferences-desktop-locale")));
+	registerAction(SwitchApplicationLanguageAction, QT_TRANSLATE_NOOP("actions", "Switch Application Language…"), QString(), ThemesManager::getIcon(QLatin1String("preferences-desktop-locale")));
 	registerAction(CheckForUpdatesAction, QT_TRANSLATE_NOOP("actions", "Check for Updates…"));
 	registerAction(DiagnosticReportAction, QT_TRANSLATE_NOOP("actions", "Diagnostic Report…"));
-	registerAction(AboutApplicationAction, QT_TRANSLATE_NOOP("actions", "About Otter…"), QString(), Utils::getIcon(QLatin1String("otter-browser"), NoFlags));
-	registerAction(AboutQtAction, QT_TRANSLATE_NOOP("actions", "About Qt…"), QString(), Utils::getIcon(QLatin1String("qt"), NoFlags));
-	registerAction(ExitAction, QT_TRANSLATE_NOOP("actions", "Exit"), QString(), Utils::getIcon(QLatin1String("application-exit")));
+	registerAction(AboutApplicationAction, QT_TRANSLATE_NOOP("actions", "About Otter…"), QString(), ThemesManager::getIcon(QLatin1String("otter-browser"), NoFlags));
+	registerAction(AboutQtAction, QT_TRANSLATE_NOOP("actions", "About Qt…"), QString(), ThemesManager::getIcon(QLatin1String("qt"), NoFlags));
+	registerAction(ExitAction, QT_TRANSLATE_NOOP("actions", "Exit"), QString(), ThemesManager::getIcon(QLatin1String("application-exit")));
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 }

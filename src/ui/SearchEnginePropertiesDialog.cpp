@@ -18,7 +18,7 @@
 **************************************************************************/
 
 #include "SearchEnginePropertiesDialog.h"
-#include "../core/Utils.h"
+#include "../core/ThemesManager.h"
 
 #include "ui_SearchEnginePropertiesDialog.h"
 
@@ -37,7 +37,7 @@ SearchEnginePropertiesDialog::SearchEnginePropertiesDialog(const SearchEnginesMa
 {
 	m_ui->setupUi(this);
 	m_ui->iconButton->setIcon(searchEngine.icon);
-	m_ui->iconButton->setPlaceholderIcon(Utils::getIcon(QLatin1String("edit-find")));
+	m_ui->iconButton->setPlaceholderIcon(ThemesManager::getIcon(QLatin1String("edit-find")));
 	m_ui->titleLineEdit->setText(searchEngine.title);
 	m_ui->descriptionLineEdit->setText(searchEngine.description);
 	m_ui->keywordLineEdit->setText(searchEngine.keyword);

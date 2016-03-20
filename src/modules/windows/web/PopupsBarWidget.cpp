@@ -18,7 +18,7 @@
 **************************************************************************/
 
 #include "PopupsBarWidget.h"
-#include "../../../core/Utils.h"
+#include "../../../core/ThemesManager.h"
 
 #include "ui_PopupsBarWidget.h"
 
@@ -37,7 +37,7 @@ PopupsBarWidget::PopupsBarWidget(const QUrl &parentUrl, QWidget *parent) : QWidg
 
 	QMenu *menu = new QMenu(this);
 
-	m_ui->iconLabel->setPixmap(Utils::getIcon(QLatin1String("window-popup-block"), false).pixmap(m_ui->iconLabel->size()));
+	m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("window-popup-block"), false).pixmap(m_ui->iconLabel->size()));
 	m_ui->detailsButton->setMenu(menu);
 	m_ui->detailsButton->setPopupMode(QToolButton::InstantPopup);
 

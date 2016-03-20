@@ -20,6 +20,7 @@
 #include "TransfersContentsWidget.h"
 #include "ProgressBarDelegate.h"
 #include "../../../core/ActionsManager.h"
+#include "../../../core/ThemesManager.h"
 #include "../../../core/Transfer.h"
 #include "../../../core/Utils.h"
 
@@ -56,8 +57,8 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 	m_ui->transfersViewWidget->header()->setSectionResizeMode(1, QHeaderView::Stretch);
 	m_ui->transfersViewWidget->setItemDelegateForColumn(3, new ProgressBarDelegate(this));
 	m_ui->transfersViewWidget->installEventFilter(this);
-	m_ui->stopResumeButton->setIcon(Utils::getIcon(QLatin1String("task-ongoing")));
-	m_ui->redownloadButton->setIcon(Utils::getIcon(QLatin1String("view-refresh")));
+	m_ui->stopResumeButton->setIcon(ThemesManager::getIcon(QLatin1String("task-ongoing")));
+	m_ui->redownloadButton->setIcon(ThemesManager::getIcon(QLatin1String("view-refresh")));
 	m_ui->downloadLineEdit->installEventFilter(this);
 
 	const QList<Transfer*> transfers = TransfersManager::getTransfers();
@@ -212,15 +213,15 @@ void TransfersContentsWidget::updateTransfer(Transfer *transfer)
 	switch (transfer->getState())
 	{
 		case Transfer::RunningState:
-			icon = Utils::getIcon(QLatin1String("task-ongoing"));
+			icon = ThemesManager::getIcon(QLatin1String("task-ongoing"));
 
 			break;
 		case Transfer::FinishedState:
-			icon = Utils::getIcon(QLatin1String("task-complete"));
+			icon = ThemesManager::getIcon(QLatin1String("task-complete"));
 
 			break;
 		default:
-			icon = Utils::getIcon(QLatin1String("task-reject"));
+			icon = ThemesManager::getIcon(QLatin1String("task-reject"));
 
 			break;
 	}
@@ -422,12 +423,12 @@ void TransfersContentsWidget::updateActions()
 	if (transfer && transfer->getState() == Transfer::ErrorState)
 	{
 		m_ui->stopResumeButton->setText(tr("Resume"));
-		m_ui->stopResumeButton->setIcon(Utils::getIcon(QLatin1String("task-ongoing")));
+		m_ui->stopResumeButton->setIcon(ThemesManager::getIcon(QLatin1String("task-ongoing")));
 	}
 	else
 	{
 		m_ui->stopResumeButton->setText(tr("Stop"));
-		m_ui->stopResumeButton->setIcon(Utils::getIcon(QLatin1String("task-reject")));
+		m_ui->stopResumeButton->setIcon(ThemesManager::getIcon(QLatin1String("task-reject")));
 	}
 
 	m_ui->stopResumeButton->setEnabled(transfer && (transfer->getState() == Transfer::RunningState || transfer->getState() == Transfer::ErrorState));
@@ -554,7 +555,7 @@ QUrl TransfersContentsWidget::getUrl() const
 
 QIcon TransfersContentsWidget::getIcon() const
 {
-	return Utils::getIcon(QLatin1String("transfers"), false);
+	return ThemesManager::getIcon(QLatin1String("transfers"), false);
 }
 
 WindowsManager::LoadingState TransfersContentsWidget::getLoadingState() const

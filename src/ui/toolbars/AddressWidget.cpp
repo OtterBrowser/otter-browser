@@ -32,6 +32,7 @@
 #include "../../core/InputInterpreter.h"
 #include "../../core/HistoryManager.h"
 #include "../../core/SearchEnginesManager.h"
+#include "../../core/ThemesManager.h"
 #include "../../core/Utils.h"
 
 #include <QtCore/QMimeData>
@@ -216,7 +217,7 @@ void AddressWidget::paintEvent(QPaintEvent *event)
 
 	if (!badgeIcon.isEmpty())
 	{
-		Utils::getIcon(badgeIcon, false).paint(&painter, rectangle.adjusted(4, 4, -4, -4));
+		ThemesManager::getIcon(badgeIcon, false).paint(&painter, rectangle.adjusted(4, 4, -4, -4));
 	}
 }
 
@@ -514,7 +515,7 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 			m_bookmarkLabel->setObjectName(QLatin1String("Bookmark"));
 			m_bookmarkLabel->setAutoFillBackground(false);
 			m_bookmarkLabel->setFixedSize(16, 16);
-			m_bookmarkLabel->setPixmap(Utils::getIcon(QLatin1String("bookmarks")).pixmap(m_bookmarkLabel->size(), QIcon::Disabled));
+			m_bookmarkLabel->setPixmap(ThemesManager::getIcon(QLatin1String("bookmarks")).pixmap(m_bookmarkLabel->size(), QIcon::Disabled));
 			m_bookmarkLabel->setCursor(Qt::ArrowCursor);
 			m_bookmarkLabel->setFocusPolicy(Qt::NoFocus);
 			m_bookmarkLabel->installEventFilter(this);
@@ -537,7 +538,7 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 			m_urlIconLabel->setObjectName(QLatin1String("Url"));
 			m_urlIconLabel->setAutoFillBackground(false);
 			m_urlIconLabel->setFixedSize(16, 16);
-			m_urlIconLabel->setPixmap((m_window ? m_window->getIcon() : Utils::getIcon(QLatin1String("tab"))).pixmap(m_urlIconLabel->size()));
+			m_urlIconLabel->setPixmap((m_window ? m_window->getIcon() : ThemesManager::getIcon(QLatin1String("tab"))).pixmap(m_urlIconLabel->size()));
 			m_urlIconLabel->setCursor(Qt::ArrowCursor);
 			m_urlIconLabel->setFocusPolicy(Qt::NoFocus);
 			m_urlIconLabel->installEventFilter(this);
@@ -664,7 +665,7 @@ void AddressWidget::updateBookmark(const QUrl &url)
 	if (Utils::isUrlEmpty(bookmarkUrl) || bookmarkUrl.scheme() == QLatin1String("about"))
 	{
 		m_bookmarkLabel->setEnabled(false);
-		m_bookmarkLabel->setPixmap(Utils::getIcon(QLatin1String("bookmarks")).pixmap(m_bookmarkLabel->size(), QIcon::Disabled));
+		m_bookmarkLabel->setPixmap(ThemesManager::getIcon(QLatin1String("bookmarks")).pixmap(m_bookmarkLabel->size(), QIcon::Disabled));
 		m_bookmarkLabel->setToolTip(QString());
 
 		return;
@@ -673,7 +674,7 @@ void AddressWidget::updateBookmark(const QUrl &url)
 	const bool hasBookmark = BookmarksManager::hasBookmark(bookmarkUrl);
 
 	m_bookmarkLabel->setEnabled(true);
-	m_bookmarkLabel->setPixmap(Utils::getIcon(QLatin1String("bookmarks")).pixmap(m_bookmarkLabel->size(), (hasBookmark ? QIcon::Active : QIcon::Disabled)));
+	m_bookmarkLabel->setPixmap(ThemesManager::getIcon(QLatin1String("bookmarks")).pixmap(m_bookmarkLabel->size(), (hasBookmark ? QIcon::Active : QIcon::Disabled)));
 	m_bookmarkLabel->setToolTip(hasBookmark ? tr("Remove Bookmark") : tr("Add Bookmark"));
 }
 
@@ -688,7 +689,7 @@ void AddressWidget::updateFeeds()
 		m_feedsLabel->setObjectName(QLatin1String("Feeds"));
 		m_feedsLabel->setAutoFillBackground(false);
 		m_feedsLabel->setFixedSize(16, 16);
-		m_feedsLabel->setPixmap(Utils::getIcon(QLatin1String("application-rss+xml")).pixmap(m_feedsLabel->size()));
+		m_feedsLabel->setPixmap(ThemesManager::getIcon(QLatin1String("application-rss+xml")).pixmap(m_feedsLabel->size()));
 		m_feedsLabel->setCursor(Qt::ArrowCursor);
 		m_feedsLabel->setToolTip(tr("Feed List"));
 		m_feedsLabel->setCursor(Qt::ArrowCursor);
@@ -717,7 +718,7 @@ void AddressWidget::updateLoadPlugins()
 		m_loadPluginsLabel->setObjectName(QLatin1String("LoadPlugins"));
 		m_loadPluginsLabel->setAutoFillBackground(false);
 		m_loadPluginsLabel->setFixedSize(16, 16);
-		m_loadPluginsLabel->setPixmap(Utils::getIcon(QLatin1String("preferences-plugin")).pixmap(m_loadPluginsLabel->size()));
+		m_loadPluginsLabel->setPixmap(ThemesManager::getIcon(QLatin1String("preferences-plugin")).pixmap(m_loadPluginsLabel->size()));
 		m_loadPluginsLabel->setCursor(Qt::ArrowCursor);
 		m_loadPluginsLabel->setToolTip(tr("Click to load all plugins on the page"));
 		m_loadPluginsLabel->setCursor(Qt::ArrowCursor);
@@ -862,7 +863,7 @@ void AddressWidget::setIcon(const QIcon &icon)
 {
 	if (m_urlIconLabel)
 	{
-		m_urlIconLabel->setPixmap((icon.isNull() ? Utils::getIcon(QLatin1String("tab")) : icon).pixmap(m_urlIconLabel->size()));
+		m_urlIconLabel->setPixmap((icon.isNull() ? ThemesManager::getIcon(QLatin1String("tab")) : icon).pixmap(m_urlIconLabel->size()));
 	}
 }
 
@@ -999,7 +1000,7 @@ bool AddressWidget::startDrag(QMouseEvent *event)
 	}
 
 	drag->setMimeData(mimeData);
-	drag->setPixmap((m_window ? m_window->getIcon() : Utils::getIcon(QLatin1String("tab"))).pixmap(16, 16));
+	drag->setPixmap((m_window ? m_window->getIcon() : ThemesManager::getIcon(QLatin1String("tab"))).pixmap(16, 16));
 	drag->exec(Qt::CopyAction);
 
 	return true;

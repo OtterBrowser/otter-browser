@@ -19,7 +19,7 @@
 
 #include "UserAgentsManagerDialog.h"
 #include "../core/NetworkManagerFactory.h"
-#include "../core/Utils.h"
+#include "../core/ThemesManager.h"
 
 #include "ui_UserAgentsManagerDialog.h"
 
@@ -30,8 +30,8 @@ UserAgentsManagerDialog::UserAgentsManagerDialog(QList<UserAgentInformation> use
 	m_ui(new Ui::UserAgentsManagerDialog)
 {
 	m_ui->setupUi(this);
-	m_ui->moveDownButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
-	m_ui->moveUpButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
+	m_ui->moveDownButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-down")));
+	m_ui->moveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-up")));
 
 	QStringList labels;
 	labels << tr("Title") << tr("Value");

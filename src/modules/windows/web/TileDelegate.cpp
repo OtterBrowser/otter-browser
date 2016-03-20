@@ -22,7 +22,7 @@
 #include "../../../core/HistoryManager.h"
 #include "../../../core/SessionsManager.h"
 #include "../../../core/SettingsManager.h"
-#include "../../../core/Utils.h"
+#include "../../../core/ThemesManager.h"
 
 #include <QtGui/QGuiApplication>
 #include <QtGui/QMovie>
@@ -74,7 +74,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 		if (isAddTile)
 		{
-			Utils::getIcon(QLatin1String("list-add")).paint(painter, rectangle);
+			ThemesManager::getIcon(QLatin1String("list-add")).paint(painter, rectangle);
 		}
 
 		return;
@@ -92,7 +92,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 	if (type == BookmarksModel::FolderBookmark && tileBackgroundMode != QLatin1String("none"))
 	{
-		Utils::getIcon(QLatin1String("inode-directory")).paint(painter, rectangle);
+		ThemesManager::getIcon(QLatin1String("inode-directory")).paint(painter, rectangle);
 	}
 	else if (tileBackgroundMode == QLatin1String("thumbnail"))
 	{

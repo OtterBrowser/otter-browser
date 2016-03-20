@@ -19,6 +19,8 @@
 
 #include "ThemesManager.h"
 
+#include <QtGui/QIcon>
+
 namespace Otter
 {
 
@@ -39,6 +41,16 @@ void ThemesManager::createInstance(QObject *parent)
 ThemesManager* ThemesManager::getInstance()
 {
 	return m_instance;
+}
+
+QIcon ThemesManager::getIcon(const QString &name, bool fromTheme)
+{
+	if (fromTheme && QIcon::hasThemeIcon(name))
+	{
+		return QIcon::fromTheme(name);
+	}
+
+	return QIcon(QStringLiteral(":/icons/%1.png").arg(name));
 }
 
 }

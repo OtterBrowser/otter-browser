@@ -24,6 +24,7 @@
 #include "../SearchEnginePropertiesDialog.h"
 #include "../../core/SessionsManager.h"
 #include "../../core/SettingsManager.h"
+#include "../../core/ThemesManager.h"
 #include "../../core/Utils.h"
 
 #include "ui_PreferencesSearchPageWidget.h"
@@ -82,8 +83,8 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 	addSearchMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->addSearchButton));
 
 	m_ui->addSearchButton->setMenu(addSearchMenu);
-	m_ui->moveDownSearchButton->setIcon(Utils::getIcon(QLatin1String("arrow-down")));
-	m_ui->moveUpSearchButton->setIcon(Utils::getIcon(QLatin1String("arrow-up")));
+	m_ui->moveDownSearchButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-down")));
+	m_ui->moveUpSearchButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-up")));
 
 	updateReaddSearchMenu();
 
@@ -142,7 +143,7 @@ void PreferencesSearchPageWidget::addSearchEngine()
 	SearchEnginesManager::SearchEngineDefinition searchEngine;
 	searchEngine.identifier = identifier;
 	searchEngine.title = tr("New Search Engine");
-	searchEngine.icon = Utils::getIcon(QLatin1String("edit-find"));
+	searchEngine.icon = ThemesManager::getIcon(QLatin1String("edit-find"));
 
 	SearchEnginePropertiesDialog dialog(searchEngine, keywords, false, this);
 

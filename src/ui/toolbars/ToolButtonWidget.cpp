@@ -21,7 +21,7 @@
 #include "../Menu.h"
 #include "../ToolBarWidget.h"
 #include "../../core/ActionsManager.h"
-#include "../../core/Utils.h"
+#include "../../core/ThemesManager.h"
 
 #include <QtCore/QEvent>
 #include <QtWidgets/QStyleOptionToolButton>
@@ -142,7 +142,7 @@ void ToolButtonWidget::setOptions(const QVariantMap &options)
 		}
 		else
 		{
-			m_options[QLatin1String("icon")] = Utils::getIcon(data);
+			m_options[QLatin1String("icon")] = ThemesManager::getIcon(data);
 		}
 	}
 
