@@ -163,7 +163,7 @@ QString SessionsManager::getCurrentSession()
 
 QString SessionsManager::getCachePath()
 {
-	return m_cachePath;
+	return (m_isReadOnly ? QString() : m_cachePath);
 }
 
 QString SessionsManager::getProfilePath()
