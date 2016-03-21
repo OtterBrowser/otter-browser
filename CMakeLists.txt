@@ -299,8 +299,10 @@ qt5_wrap_ui(otter_ui
 	src/modules/windows/web/StartPagePreferencesDialog.ui
 )
 
-if (Qt5WebEngine_FOUND AND Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
+if (Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
 	add_definitions(-DOTTER_ENABLE_QTWEBENGINE)
+
+	list(APPEND OTTER_BACKENDS_WEB "QtWebEngine")
 
 	set(otter_src
 		${otter_src}
@@ -314,10 +316,12 @@ if (Qt5WebEngine_FOUND AND Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
 	qt5_add_resources(otter_res
 		src/modules/backends/web/qtwebengine/QtWebEngineResources.qrc
 	)
-endif (Qt5WebEngine_FOUND AND Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
+endif (Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
 
-if (Qt5WebKit_FOUND AND Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
+if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 	add_definitions(-DOTTER_ENABLE_QTWEBKIT)
+
+	list(APPEND OTTER_BACKENDS_WEB "QtWebKit")
 
 	set(otter_src
 		${otter_src}
@@ -337,7 +341,7 @@ if (Qt5WebKit_FOUND AND Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 	qt5_add_resources(otter_res
 		src/modules/backends/web/qtwebkit/QtWebKitResources.qrc
 	)
-endif (Qt5WebKit_FOUND AND Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
+endif (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 
 if (HUNSPELL_FOUND)
 	add_definitions(-DOTTER_ENABLE_SPELLCHECK)
@@ -358,14 +362,14 @@ if (HUNSPELL_FOUND)
 		3rdparty/sonnet/src/plugins/hunspell/hunspelldict.cpp
 	)
 
-	if (Qt5WebKit_FOUND AND Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
+	if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 		set(otter_src
 			${otter_src}
 			src/modules/backends/web/qtwebkit/qwebkitplatformplugin.h
 			src/modules/backends/web/qtwebkit/QtWebKitPlugin.cpp
 			src/modules/backends/web/qtwebkit/QtWebKitSpellChecker.cpp
 		)
-	endif (Qt5WebKit_FOUND AND Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
+	endif (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 endif (HUNSPELL_FOUND)
 
 if (WIN32)
@@ -421,13 +425,13 @@ add_executable(otter-browser WIN32 MACOSX_BUNDLE
 	${otter_src}
 )
 
-if (Qt5WebEngine_FOUND AND Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
+if (Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
 	qt5_use_modules(otter-browser WebEngine WebEngineWidgets)
-endif (Qt5WebEngine_FOUND AND Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
+endif (Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
 
-if (Qt5WebKit_FOUND AND Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
+if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 	qt5_use_modules(otter-browser WebKit WebKitWidgets)
-endif (Qt5WebKit_FOUND AND Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
+endif (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 
 if (HUNSPELL_FOUND)
 	target_link_libraries(otter-browser ${HUNSPELL_LIBRARIES})
@@ -470,3 +474,17 @@ install(FILES man/otter-browser.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1/)
 install(TARGETS otter-browser DESTINATION bin/)
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
+
+list(LENGTH OTTER_BACKENDS_WEB OTTER_BACKENDS_WEB_LENGTH)
+
+if (${OTTER_BACKENDS_WEB_LENGTH} EQUAL 0)
+	message(SEND_ERROR "No web backends available!")
+else (${OTTER_BACKENDS_WEB_LENGTH} EQUAL 0)
+	set(OTTER_BACKENDS_WEB_SUMMARY "The following web backends will be built:\n")
+
+	foreach(_backend ${OTTER_BACKENDS_WEB})
+		set(OTTER_BACKENDS_WEB_SUMMARY "${OTTER_BACKENDS_WEB_SUMMARY}* ${_backend}\n")
+	endforeach(_backend)
+
+	message(STATUS ${OTTER_BACKENDS_WEB_SUMMARY})
+endif (${OTTER_BACKENDS_WEB_LENGTH} EQUAL 0)
