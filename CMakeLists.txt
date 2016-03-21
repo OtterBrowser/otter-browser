@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.10.2)
+cmake_minimum_required(VERSION 2.8.12)
 
 if (POLICY CMP0020)
 	cmake_policy(SET CMP0020 NEW)
@@ -63,21 +63,22 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
+include(FeatureSummary)
 include(GNUInstallDirs)
 
-option(EnableQtwebengine "Enable QtWebEngine backend (requires Qt 5.6)" OFF)
-option(EnableQtwebkit "Enable QtWebKit backend (requires Qt 5.2)" ON)
+option(ENABLE_QTWEBENGINE "Enable QtWebEngine backend (requires Qt 5.6)" ON)
+option(ENABLE_QTWEBKIT "Enable QtWebKit backend (requires Qt 5.2)" ON)
 
 find_package(Qt5 5.2.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Qml Widgets XmlPatterns)
-find_package(Hunspell)
+find_package(Qt5 5.6.0 QUIET OPTIONAL_COMPONENTS WebEngineCore WebEngineWidgets)
+find_package(Qt5 5.2.0 QUIET OPTIONAL_COMPONENTS WebKit WebKitWidgets)
+find_package(Hunspell 1.3.0 QUIET)
 
-if (EnableQtwebengine)
-	find_package(Qt5 5.6.0 REQUIRED COMPONENTS WebEngine WebEngineWidgets)
-endif (EnableQtwebengine)
-
-if (EnableQtwebkit)
-	find_package(Qt5 5.2.0 REQUIRED COMPONENTS WebKit WebKitWidgets)
-endif (EnableQtwebkit)
+set_package_properties(Qt5WebEngineCore PROPERTIES URL "http://qt.io/" DESCRIPTION "QtWebEngine based backend (core)" TYPE OPTIONAL)
+set_package_properties(Qt5WebEngineWidgets PROPERTIES URL "http://qt.io/" DESCRIPTION "QtWebEngine based backend (widgets)" TYPE OPTIONAL)
+set_package_properties(Qt5WebKit PROPERTIES URL "http://qt.io/" DESCRIPTION "QtWebKit based backend (core)" TYPE OPTIONAL)
+set_package_properties(Qt5WebKitWidgets PROPERTIES URL "http://qt.io/" DESCRIPTION "QtWebKit based backend (widgets)" TYPE OPTIONAL)
+set_package_properties(Hunspell PROPERTIES URL "http://hunspell.github.io" DESCRIPTION "Generic spell checking support" TYPE OPTIONAL)
 
 set(otter_src
 	src/main.cpp
@@ -298,7 +299,7 @@ qt5_wrap_ui(otter_ui
 	src/modules/windows/web/StartPagePreferencesDialog.ui
 )
 
-if (EnableQtwebengine)
+if (Qt5WebEngine_FOUND AND Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
 	add_definitions(-DOTTER_ENABLE_QTWEBENGINE)
 
 	set(otter_src
@@ -313,9 +314,9 @@ if (EnableQtwebengine)
 	qt5_add_resources(otter_res
 		src/modules/backends/web/qtwebengine/QtWebEngineResources.qrc
 	)
-endif (EnableQtwebengine)
+endif (Qt5WebEngine_FOUND AND Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
 
-if (EnableQtwebkit)
+if (Qt5WebKit_FOUND AND Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 	add_definitions(-DOTTER_ENABLE_QTWEBKIT)
 
 	set(otter_src
@@ -336,7 +337,7 @@ if (EnableQtwebkit)
 	qt5_add_resources(otter_res
 		src/modules/backends/web/qtwebkit/QtWebKitResources.qrc
 	)
-endif (EnableQtwebkit)
+endif (Qt5WebKit_FOUND AND Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 
 if (HUNSPELL_FOUND)
 	add_definitions(-DOTTER_ENABLE_SPELLCHECK)
@@ -357,14 +358,14 @@ if (HUNSPELL_FOUND)
 		3rdparty/sonnet/src/plugins/hunspell/hunspelldict.cpp
 	)
 
-	if (EnableQtwebkit)
+	if (Qt5WebKit_FOUND AND Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 		set(otter_src
 			${otter_src}
 			src/modules/backends/web/qtwebkit/qwebkitplatformplugin.h
 			src/modules/backends/web/qtwebkit/QtWebKitPlugin.cpp
 			src/modules/backends/web/qtwebkit/QtWebKitSpellChecker.cpp
 		)
-	endif (EnableQtwebkit)
+	endif (Qt5WebKit_FOUND AND Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 endif (HUNSPELL_FOUND)
 
 if (WIN32)
@@ -420,13 +421,13 @@ add_executable(otter-browser WIN32 MACOSX_BUNDLE
 	${otter_src}
 )
 
-if (EnableQtwebengine)
+if (Qt5WebEngine_FOUND AND Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
 	qt5_use_modules(otter-browser WebEngine WebEngineWidgets)
-endif (EnableQtwebengine)
+endif (Qt5WebEngine_FOUND AND Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
 
-if (EnableQtwebkit)
+if (Qt5WebKit_FOUND AND Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 	qt5_use_modules(otter-browser WebKit WebKitWidgets)
-endif (EnableQtwebkit)
+endif (Qt5WebKit_FOUND AND Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 
 if (HUNSPELL_FOUND)
 	target_link_libraries(otter-browser ${HUNSPELL_LIBRARIES})
@@ -467,3 +468,5 @@ install(FILES resources/icons/otter-browser-256.png DESTINATION ${CMAKE_INSTALL_
 install(FILES otter-browser.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 install(FILES man/otter-browser.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1/)
 install(TARGETS otter-browser DESTINATION bin/)
+
+feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
