@@ -129,7 +129,7 @@ bool GesturesManager::m_afterScroll = false;
 GesturesManager::GesturesManager(QObject *parent) : QObject(parent),
 	m_reloadTimer(0)
 {
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), m_instance, SLOT(optionChanged(QString)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 }
 
 void GesturesManager::createInstance(QObject *parent)
