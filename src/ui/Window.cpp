@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "Window.h"
+#include "MainWindow.h"
 #include "OpenAddressDialog.h"
 #include "ToolBarWidget.h"
 #include "WebWidget.h"
@@ -316,6 +317,11 @@ void Window::handleSearchRequest(const QString &query, const QString &searchEngi
 
 void Window::handleGeometryChangeRequest(const QRect &geometry)
 {
+	QVariantMap parameters;
+	parameters[QLatin1String("window")] = getIdentifier();
+
+	ActionsManager::triggerAction(ActionsManager::RestoreTabAction, MainWindow::findMainWindow(this), parameters);
+
 	QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow*>(parentWidget());
 
 	if (subWindow)

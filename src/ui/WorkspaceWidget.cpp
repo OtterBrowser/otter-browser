@@ -329,6 +329,8 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 				subWindow->setWindowFlags(Qt::SubWindow | Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
 				subWindow->showMaximized();
 				subWindow->storeState();
+
+				setActiveWindow(m_activeWindow, true);
 			}
 
 			break;
@@ -368,6 +370,8 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 				subWindow->setWindowFlags(Qt::SubWindow);
 				subWindow->showNormal();
 				subWindow->storeState();
+
+				setActiveWindow(m_activeWindow, true);
 			}
 
 			break;
