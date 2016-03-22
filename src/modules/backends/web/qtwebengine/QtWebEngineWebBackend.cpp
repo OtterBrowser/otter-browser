@@ -28,6 +28,8 @@
 #include <QtCore/QDir>
 #include <QtCore/QRegularExpression>
 #include <QtWebEngineWidgets/QWebEngineProfile>
+#include <QtWebEngineWidgets/QWebEngineScript>
+#include <QtWebEngineWidgets/QWebEngineScriptCollection>
 #include <QtWebEngineWidgets/QWebEngineSettings>
 
 namespace Otter
@@ -96,7 +98,7 @@ WebWidget* QtWebEngineWebBackend::createWidget(bool isPrivate, ContentsWidget *p
 
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::FullScreenSupportEnabled, true);
 
-		const QString cachePath = SessionsManager::getCachePath();
+		const QString cachePath(SessionsManager::getCachePath());
 
 		if (cachePath.isEmpty())
 		{
@@ -113,6 +115,28 @@ WebWidget* QtWebEngineWebBackend::createWidget(bool isPrivate, ContentsWidget *p
 		}
 
 		optionChanged(QLatin1String("Browser/"));
+
+		const QList<QFileInfo> scripts(QDir(SessionsManager::getWritableDataPath(QLatin1String("scripts"))).entryInfoList(QStringList(QLatin1String("*.js")), QDir::Files));
+
+		for (int i = 0; i < scripts.count(); ++i)
+		{
+			QFile file(scripts.at(i).absoluteFilePath());
+
+			if (!file.open(QIODevice::ReadOnly))
+			{
+				continue;
+			}
+
+			QTextStream stream(&file);
+			stream.setCodec("UTF-8");
+
+			QWebEngineScript script;
+			script.setSourceCode(stream.readAll());
+
+			QWebEngineProfile::defaultProfile()->scripts()->insert(script);
+
+			file.close();
+		}
 
 		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 	}
