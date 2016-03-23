@@ -94,14 +94,16 @@ void QtWebKitPage::pageLoadFinished()
 
 	if (m_widget)
 	{
-		applyContentBlockingRules(ContentBlockingManager::getStyleSheet(m_widget->getContentBlockingProfiles()), true);
+		const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(QLatin1String("Content/BlockingProfiles"), m_widget->getUrl()).toStringList()));
 
-		const QStringList domainList = ContentBlockingManager::createSubdomainList(m_widget->getUrl().host());
+		applyContentBlockingRules(ContentBlockingManager::getStyleSheet(profiles), true);
+
+		const QStringList domainList(ContentBlockingManager::createSubdomainList(m_widget->getUrl().host()));
 
 		for (int i = 0; i < domainList.count(); ++i)
 		{
-			applyContentBlockingRules(ContentBlockingManager::getStyleSheetBlackList(domainList.at(i), m_widget->getContentBlockingProfiles()), true);
-			applyContentBlockingRules(ContentBlockingManager::getStyleSheetWhiteList(domainList.at(i), m_widget->getContentBlockingProfiles()), false);
+			applyContentBlockingRules(ContentBlockingManager::getStyleSheetBlackList(domainList.at(i), profiles), true);
+			applyContentBlockingRules(ContentBlockingManager::getStyleSheetWhiteList(domainList.at(i), profiles), false);
 		}
 	}
 }

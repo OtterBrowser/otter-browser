@@ -81,6 +81,7 @@ private:
 	WebWidget::SslInformation m_sslInformation;
 	QList<QNetworkReply*> m_transfers;
 	QList<ContentBlockingManager::CheckResult> m_blockedRequests;
+	QVector<int> m_contentBlockingProfiles;
 	QHash<QNetworkReply*, QPair<qint64, bool> > m_replies;
 	WindowsManager::ContentStates m_contentState;
 	qint64 m_speed;

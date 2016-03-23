@@ -252,8 +252,6 @@ void QtWebKitWebWidget::optionChanged(const QString &option, const QVariant &val
 
 void QtWebKitWebWidget::navigating(const QUrl &url, QWebFrame *frame, QWebPage::NavigationType type)
 {
-	Q_UNUSED(url)
-
 	if (frame == m_page->mainFrame())
 	{
 		if (type != QWebPage::NavigationTypeBackOrForward)
@@ -263,6 +261,7 @@ void QtWebKitWebWidget::navigating(const QUrl &url, QWebFrame *frame, QWebPage::
 		}
 
 		m_networkManager->resetStatistics();
+		m_networkManager->updateOptions(url);
 
 		m_isNavigating = true;
 
@@ -733,8 +732,6 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 	{
 		setStatusMessage(QString());
 	}
-
-	m_contentBlockingProfiles = ContentBlockingManager::getProfileList(getOption(QLatin1String("Content/BlockingProfiles"), url).toStringList());
 
 	m_page->updateStyleSheets(url);
 
@@ -2215,11 +2212,6 @@ WindowsManager::ContentStates QtWebKitWebWidget::getContentState() const
 	}
 
 	return (m_networkManager->getContentState() | WindowsManager::RemoteContentState);
-}
-
-QVector<int> QtWebKitWebWidget::getContentBlockingProfiles() const
-{
-	return m_contentBlockingProfiles;
 }
 
 WindowsManager::LoadingState QtWebKitWebWidget::getLoadingState() const

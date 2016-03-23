@@ -227,6 +227,7 @@ void QtWebKitNetworkManager::resetStatistics()
 	m_sslInformation = WebWidget::SslInformation();
 	m_updateTimer = 0;
 	m_replies.clear();
+	m_contentBlockingProfiles.clear();
 	m_blockedRequests.clear();
 	m_baseReply = NULL;
 	m_speed = 0;
@@ -400,13 +401,15 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 		m_backend = AddonsManager::getWebBackend(QLatin1String("qtwebkit"));
 	}
 
-	QString acceptLanguage = SettingsManager::getValue(QLatin1String("Network/AcceptLanguage"), url).toString();
+	m_contentBlockingProfiles = ContentBlockingManager::getProfileList(m_widget->getOption(QLatin1String("Content/BlockingProfiles"), url).toStringList());
+
+	QString acceptLanguage(SettingsManager::getValue(QLatin1String("Network/AcceptLanguage"), url).toString());
 	acceptLanguage = ((acceptLanguage.isEmpty()) ? QLatin1String(" ") : acceptLanguage.replace(QLatin1String("system"), QLocale::system().bcp47Name()));
 
 	m_acceptLanguage = ((acceptLanguage == NetworkManagerFactory::getAcceptLanguage()) ? QString() : acceptLanguage);
 	m_userAgent = m_backend->getUserAgent(m_widget ? NetworkManagerFactory::getUserAgent(m_widget->getOption(QLatin1String("Network/UserAgent"), url).toString()).value : QString());
 
-	const QString doNotTrackPolicyValue = SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy"), url).toString();
+	const QString doNotTrackPolicyValue(SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy"), url).toString());
 
 	if (doNotTrackPolicyValue == QLatin1String("allow"))
 	{
@@ -423,8 +426,8 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 
 	m_canSendReferrer = SettingsManager::getValue(QLatin1String("Network/EnableReferrer"), url).toBool();
 
-	const QString generalCookiesPolicyValue = SettingsManager::getValue(QLatin1String("Network/CookiesPolicy"), url).toString();
-	CookieJar::CookiesPolicy generalCookiesPolicy = CookieJar::AcceptAllCookies;
+	const QString generalCookiesPolicyValue(SettingsManager::getValue(QLatin1String("Network/CookiesPolicy"), url).toString());
+	CookieJar::CookiesPolicy generalCookiesPolicy(CookieJar::AcceptAllCookies);
 
 	if (generalCookiesPolicyValue == QLatin1String("ignore"))
 	{
@@ -439,8 +442,8 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 		generalCookiesPolicy = CookieJar::AcceptExistingCookies;
 	}
 
-	const QString thirdPartyCookiesPolicyValue = SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), url).toString();
-	CookieJar::CookiesPolicy thirdPartyCookiesPolicy = CookieJar::AcceptAllCookies;
+	const QString thirdPartyCookiesPolicyValue(SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), url).toString());
+	CookieJar::CookiesPolicy thirdPartyCookiesPolicy(CookieJar::AcceptAllCookies);
 
 	if (thirdPartyCookiesPolicyValue == QLatin1String("ignore"))
 	{
@@ -455,8 +458,8 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 		thirdPartyCookiesPolicy = CookieJar::AcceptExistingCookies;
 	}
 
-	const QString keepModeValue = SettingsManager::getValue(QLatin1String("Network/CookiesKeepMode"), url).toString();
-	CookieJar::KeepMode keepMode = CookieJar::KeepUntilExpiresMode;
+	const QString keepModeValue(SettingsManager::getValue(QLatin1String("Network/CookiesKeepMode"), url).toString());
+	CookieJar::KeepMode keepMode(CookieJar::KeepUntilExpiresMode);
 
 	if (keepModeValue == QLatin1String("keepUntilExit"))
 	{
@@ -504,9 +507,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 	if (!m_widget->isNavigating())
 	{
-		const QVector<int> profiles(m_widget->getContentBlockingProfiles());
-
-		if (!profiles.isEmpty())
+		if (!m_contentBlockingProfiles.isEmpty())
 		{
 			const QByteArray acceptHeader(request.rawHeader(QByteArray("Accept")));
 			const QString path(request.url().path());
@@ -541,13 +542,13 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 				resourceType = ContentBlockingManager::XmlHttpRequestType;
 			}
 
-			const ContentBlockingManager::CheckResult result(ContentBlockingManager::checkUrl(profiles, m_widget->getUrl(), request.url(), resourceType));
+			const ContentBlockingManager::CheckResult result(ContentBlockingManager::checkUrl(m_contentBlockingProfiles, m_widget->getUrl(), request.url(), resourceType));
 
 			if (result.isBlocked)
 			{
 				Console::addMessage(QCoreApplication::translate("main", "Blocked request"), Otter::NetworkMessageCategory, LogMessageLevel, request.url().toString(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
 
-				QUrl url = QUrl();
+				QUrl url;
 				url.setScheme(QLatin1String("http"));
 
 				m_blockedRequests.append(result);

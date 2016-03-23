@@ -69,7 +69,6 @@ public:
 	QStringList getStyleSheets() const;
 	QList<LinkUrl> getFeeds() const;
 	QList<LinkUrl> getSearchEngines() const;
-	QVector<int> getContentBlockingProfiles() const;
 	QHash<QByteArray, QByteArray> getHeaders() const;
 	QVariantHash getStatistics() const;
 	WindowsManager::ContentStates getContentState() const;
@@ -163,7 +162,6 @@ private:
 	QUrl m_formRequestUrl;
 	QByteArray m_formRequestBody;
 	QQueue<Transfer*> m_transfers;
-	QVector<int> m_contentBlockingProfiles;
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
 	QNetworkAccessManager::Operation m_formRequestOperation;
 	WindowsManager::LoadingState m_loadingState;
