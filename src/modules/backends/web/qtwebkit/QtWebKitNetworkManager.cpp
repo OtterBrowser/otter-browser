@@ -514,7 +514,6 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 			if (!m_baseReply)
 			{
-				qDebug() << "main";
 				resourceType = ContentBlockingManager::MainFrameType;
 			}
 			else if (acceptHeader.contains(QByteArray("text/html")) || acceptHeader.contains(QByteArray("application/xhtml+xml")) || acceptHeader.contains(QByteArray("application/xml")) || path.endsWith(QLatin1String(".htm")) || path.endsWith(QLatin1String(".html")))
