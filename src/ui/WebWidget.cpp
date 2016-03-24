@@ -266,32 +266,36 @@ void WebWidget::reloadTimeMenuAboutToShow()
 {
 	switch (getOption(QLatin1String("Content/PageReloadTime")).toInt())
 	{
-		case 1800:
+		case 60:
 			m_reloadTimeMenu->actions().at(0)->setChecked(true);
 
 			break;
-		case 3600:
+		case 1800:
 			m_reloadTimeMenu->actions().at(1)->setChecked(true);
 
 			break;
-		case 7200:
+		case 3600:
 			m_reloadTimeMenu->actions().at(2)->setChecked(true);
 
 			break;
-		case 21600:
+		case 7200:
 			m_reloadTimeMenu->actions().at(3)->setChecked(true);
 
 			break;
-		case 0:
+		case 21600:
 			m_reloadTimeMenu->actions().at(4)->setChecked(true);
 
 			break;
+		case 0:
+			m_reloadTimeMenu->actions().at(5)->setChecked(true);
+
+			break;
 		case -1:
-			m_reloadTimeMenu->actions().at(7)->setChecked(true);
+			m_reloadTimeMenu->actions().at(8)->setChecked(true);
 
 			break;
 		default:
-			m_reloadTimeMenu->actions().at(5)->setChecked(true);
+			m_reloadTimeMenu->actions().at(6)->setChecked(true);
 
 			break;
 	}
@@ -1128,6 +1132,7 @@ Action* WebWidget::getAction(int identifier)
 			if (!m_reloadTimeMenu)
 			{
 				m_reloadTimeMenu = new QMenu(this);
+				m_reloadTimeMenu->addAction(tr("1 Minute"))->setData(60);
 				m_reloadTimeMenu->addAction(tr("30 Minutes"))->setData(1800);
 				m_reloadTimeMenu->addAction(tr("1 Hour"))->setData(3600);
 				m_reloadTimeMenu->addAction(tr("2 Hours"))->setData(7200);
