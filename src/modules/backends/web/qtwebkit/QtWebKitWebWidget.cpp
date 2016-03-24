@@ -1136,7 +1136,6 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			}
 
 			return;
-#if QTWEBKIT_VERSION >= 0x050200
 		case ActionsManager::MediaControlsAction:
 			m_webView->page()->triggerAction(QWebPage::ToggleMediaControls, parameters.value(QLatin1String("isChecked")).toBool());
 
@@ -1153,7 +1152,6 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			m_webView->page()->triggerAction(QWebPage::ToggleMediaMute);
 
 			return;
-#endif
 		case ActionsManager::GoBackAction:
 			m_webView->page()->triggerAction(QWebPage::Back);
 
@@ -2013,9 +2011,7 @@ WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &posit
 	result.frameUrl = ((nativeResult.frame() && nativeResult.frame() != m_page->mainFrame()) ? (nativeResult.frame()->url().isValid() ? nativeResult.frame()->url() : nativeResult.frame()->requestedUrl()) : QUrl());
 	result.imageUrl = nativeResult.imageUrl();
 	result.linkUrl = nativeResult.linkUrl();
-#if QTWEBKIT_VERSION >= 0x050200
 	result.mediaUrl = nativeResult.mediaUrl();
-#endif
 	result.position = position;
 	result.geometry = nativeResult.element().geometry();
 
@@ -2278,11 +2274,7 @@ bool QtWebKitWebWidget::isScrollBar(const QPoint &position) const
 
 bool QtWebKitWebWidget::findInPage(const QString &text, FindFlags flags)
 {
-#if QTWEBKIT_VERSION >= 0x050200
-	QWebPage::FindFlags nativeFlags = (QWebPage::FindWrapsAroundDocument | QWebPage::FindBeginsInSelection);
-#else
-	QWebPage::FindFlags nativeFlags = QWebPage::FindWrapsAroundDocument;
-#endif
+	QWebPage::FindFlags nativeFlags(QWebPage::FindWrapsAroundDocument | QWebPage::FindBeginsInSelection);
 
 	if (flags.testFlag(BackwardFind))
 	{
