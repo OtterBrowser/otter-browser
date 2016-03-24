@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,6 +21,7 @@
 #include "QtWebEnginePage.h"
 #include "QtWebEngineWebWidget.h"
 #include "../../../../core/Console.h"
+#include "../../../../core/ContentBlockingManager.h"
 #include "../../../../core/ThemesManager.h"
 #include "../../../../ui/ContentsDialog.h"
 
@@ -77,6 +79,31 @@ void QtWebEnginePage::pageLoadFinished()
 
 void QtWebEnginePage::handlePageLoaded(const QString &result)
 {
+	if (m_widget)
+	{
+		const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(QLatin1String("Content/BlockingProfiles"), url()).toStringList()));
+
+		if (!profiles.isEmpty())
+		{
+			const QStringList domainList(ContentBlockingManager::createSubdomainList(url().host()));
+			QStringList styleSheetBlackList(ContentBlockingManager::getStyleSheet(profiles));
+			QStringList styleSheetWhiteList;
+
+			for (int i = 0; i < domainList.count(); ++i)
+			{
+				styleSheetBlackList += ContentBlockingManager::getStyleSheetBlackList(domainList.at(i), profiles);
+				styleSheetWhiteList += ContentBlockingManager::getStyleSheetWhiteList(domainList.at(i), profiles);
+			}
+
+			QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hideElements.js"));
+			file.open(QIODevice::ReadOnly);
+
+			runJavaScript(QString(file.readAll()).arg(createJavaScriptList(styleSheetWhiteList)).arg(createJavaScriptList(styleSheetBlackList)));
+
+			file.close();
+		}
+	}
+
 	QString string(url().toString());
 	string.truncate(1000);
 
@@ -177,6 +204,21 @@ QWebEnginePage* QtWebEnginePage::createWindow(QWebEnginePage::WebWindowType type
 	}
 
 	return QWebEnginePage::createWindow(type);
+}
+
+QString QtWebEnginePage::createJavaScriptList(QStringList &rules) const
+{
+	if (rules.isEmpty())
+	{
+		return QString();
+	}
+
+	for (int i = 0; i < rules.count(); ++i)
+	{
+		rules[i] = rules[i].replace(QLatin1Char('\''), QLatin1String("\\'"));
+	}
+
+	return QStringLiteral("'%1'").arg(rules.join("','"));
 }
 
 bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::NavigationType type, bool isMainFrame)
