@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 #include "../../../core/Utils.h"
 #include "../../../ui/BookmarkPropertiesDialog.h"
 #include "../../../ui/MainWindow.h"
+#include "../../../ui/ProxyModel.h"
 
 #include "ui_BookmarksContentsWidget.h"
 
@@ -42,7 +43,7 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 {
 	m_ui->setupUi(this);
 
-	QMenu *addMenu = new QMenu(m_ui->addButton);
+	QMenu *addMenu(new QMenu(m_ui->addButton));
 	addMenu->addAction(ThemesManager::getIcon(QLatin1String("inode-directory")), tr("Add Folder"), this, SLOT(addFolder()));
 	addMenu->addAction(tr("Add Bookmark"), this, SLOT(addBookmark()));
 	addMenu->addAction(tr("Add Separator"), this, SLOT(addSeparator()));
@@ -50,10 +51,15 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 	QSet<int> filterRoles;
 	filterRoles << BookmarksModel::UrlRole << BookmarksModel::TitleRole << BookmarksModel::DescriptionRole << BookmarksModel::KeywordRole;
 
+	QList<QPair<QString, int> > rolesMapping;
+	rolesMapping << qMakePair(tr("Title"), BookmarksModel::TitleRole) << qMakePair(tr("Address"), BookmarksModel::UrlRole) << qMakePair(tr("Description"), BookmarksModel::DescriptionRole) << qMakePair(tr("Keyword"), BookmarksModel::KeywordRole) << qMakePair(tr("Added"), BookmarksModel::TimeAddedRole) << qMakePair(tr("Modified"), BookmarksModel::TimeModifiedRole) << qMakePair(tr("Visited"), BookmarksModel::TimeVisitedRole) << qMakePair(tr("Visits"), BookmarksModel::VisitsRole);
+
+	ProxyModel *model(new ProxyModel(BookmarksManager::getModel(), rolesMapping, this));
+
 	m_ui->addButton->setMenu(addMenu);
 	m_ui->bookmarksViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
-	m_ui->bookmarksViewWidget->setModel(BookmarksManager::getModel());
-	m_ui->bookmarksViewWidget->setExpanded(BookmarksManager::getModel()->getRootItem()->index(), true);
+	m_ui->bookmarksViewWidget->setModel(model);
+	m_ui->bookmarksViewWidget->setExpanded(m_ui->bookmarksViewWidget->model()->index(0, 0), true);
 	m_ui->bookmarksViewWidget->setFilterRoles(filterRoles);
 	m_ui->bookmarksViewWidget->installEventFilter(this);
 	m_ui->bookmarksViewWidget->viewport()->installEventFilter(this);

@@ -50,9 +50,6 @@
      <property name="defaultDropAction">
       <enum>Qt::CopyAction</enum>
      </property>
-     <attribute name="headerVisible">
-      <bool>false</bool>
-     </attribute>
      <attribute name="headerDefaultSectionSize">
       <number>250</number>
      </attribute>
