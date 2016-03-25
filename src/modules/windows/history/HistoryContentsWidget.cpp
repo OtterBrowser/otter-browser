@@ -54,7 +54,7 @@ HistoryContentsWidget::HistoryContentsWidget(Window *window) : ContentsWidget(wi
 	m_model->setSortRole(Qt::DisplayRole);
 
 	m_ui->historyViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
-	m_ui->historyViewWidget->setModel(m_model);
+	m_ui->historyViewWidget->setModel(m_model, true);
 	m_ui->historyViewWidget->installEventFilter(this);
 	m_ui->historyViewWidget->viewport()->installEventFilter(this);
 	m_ui->filterLineEdit->installEventFilter(this);
