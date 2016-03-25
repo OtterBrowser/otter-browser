@@ -412,10 +412,11 @@ void ItemViewWidget::removeRow()
 	}
 
 	const int row(currentIndex().row());
-	QStandardItem *parent(m_sourceModel->itemFromIndex(currentIndex().parent()));
 
 	if (row >= 0)
 	{
+		QStandardItem *parent(m_sourceModel->itemFromIndex(currentIndex().parent()));
+
 		if (parent)
 		{
 			parent->removeRow(row);
