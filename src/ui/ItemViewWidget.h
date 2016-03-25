@@ -22,6 +22,7 @@
 #ifndef OTTER_ITEMVIEWWIDGET_H
 #define OTTER_ITEMVIEWWIDGET_H
 
+#include <QtCore/QSortFilterProxyModel>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QStandardItemModel>
 #include <QtWidgets/QHeaderView>
@@ -69,6 +70,7 @@ public:
 
 	void setData(const QModelIndex &index, const QVariant &value, int role);
 	void setModel(QAbstractItemModel *model);
+	void setModel(QAbstractItemModel *model, bool useSortProxy);
 	void setViewMode(ViewMode mode);
 	QStandardItemModel* getModel();
 	QStandardItem* getItem(const QModelIndex &index) const;
@@ -113,7 +115,8 @@ protected slots:
 
 private:
 	HeaderViewWidget *m_headerWidget;
-	QStandardItemModel *m_model;
+	QStandardItemModel *m_sourceModel;
+	QSortFilterProxyModel *m_proxyModel;
 	QString m_filterString;
 	QModelIndex m_currentIndex;
 	QModelIndex m_previousIndex;

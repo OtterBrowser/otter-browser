@@ -194,7 +194,8 @@ int ItemViewWidget::m_treeIndentation = 0;
 
 ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 	m_headerWidget(new HeaderViewWidget(Qt::Horizontal, this)),
-	m_model(NULL),
+	m_sourceModel(NULL),
+	m_proxyModel(NULL),
 	m_viewMode(ListViewMode),
 	m_sortOrder(Qt::AscendingOrder),
 	m_sortColumn(-1),
@@ -278,14 +279,14 @@ void ItemViewWidget::showEvent(QShowEvent *event)
 
 void ItemViewWidget::dropEvent(QDropEvent *event)
 {
-	if (m_viewMode == TreeViewMode)
+	if (m_viewMode == TreeViewMode || !model())
 	{
 		QTreeView::dropEvent(event);
 
 		return;
 	}
 
-	QDropEvent mutableEvent(QPointF((visualRect(m_model->index(0, 0)).x() + 1), event->posF().y()), Qt::MoveAction, event->mimeData(), event->mouseButtons(), event->keyboardModifiers(), event->type());
+	QDropEvent mutableEvent(QPointF((visualRect(model()->index(0, 0)).x() + 1), event->posF().y()), Qt::MoveAction, event->mimeData(), event->mouseButtons(), event->keyboardModifiers(), event->type());
 
 	QTreeView::dropEvent(&mutableEvent);
 
@@ -333,7 +334,7 @@ void ItemViewWidget::optionChanged(const QString &option, const QVariant &value)
 
 void ItemViewWidget::moveRow(bool up)
 {
-	if (!m_model)
+	if (!m_sourceModel)
 	{
 		return;
 	}
@@ -341,9 +342,9 @@ void ItemViewWidget::moveRow(bool up)
 	const int sourceRow(currentIndex().row());
 	const int destinationRow(up ? (sourceRow - 1) : (sourceRow + 1));
 
-	if ((up && sourceRow > 0) || (!up && sourceRow < (m_model->rowCount() - 1)))
+	if ((up && sourceRow > 0) || (!up && sourceRow < (m_sourceModel->rowCount() - 1)))
 	{
-		m_model->insertRow(sourceRow, m_model->takeRow(destinationRow));
+		m_sourceModel->insertRow(sourceRow, m_sourceModel->takeRow(destinationRow));
 
 		setCurrentIndex(getIndex(destinationRow, 0));
 		notifySelectionChanged();
@@ -356,22 +357,22 @@ void ItemViewWidget::moveRow(bool up)
 
 void ItemViewWidget::insertRow(const QList<QStandardItem*> &items)
 {
-	if (!m_model)
+	if (!m_sourceModel)
 	{
 		return;
 	}
 
-	if (m_model->rowCount() > 0)
+	if (m_sourceModel->rowCount() > 0)
 	{
 		const int row(currentIndex().row() + 1);
 
 		if (items.count() > 0)
 		{
-			m_model->insertRow(row, items);
+			m_sourceModel->insertRow(row, items);
 		}
 		else
 		{
-			m_model->insertRow(row);
+			m_sourceModel->insertRow(row);
 		}
 
 		setCurrentIndex(getIndex(row, 0));
@@ -380,11 +381,11 @@ void ItemViewWidget::insertRow(const QList<QStandardItem*> &items)
 	{
 		if (items.isEmpty())
 		{
-			m_model->appendRow(new QStandardItem());
+			m_sourceModel->appendRow(new QStandardItem());
 		}
 		else
 		{
-			m_model->appendRow(items);
+			m_sourceModel->appendRow(items);
 		}
 
 		setCurrentIndex(getIndex(0, 0));
@@ -405,13 +406,13 @@ void ItemViewWidget::insertRow(QStandardItem *item)
 
 void ItemViewWidget::removeRow()
 {
-	if (!m_model)
+	if (!m_sourceModel)
 	{
 		return;
 	}
 
 	const int row(currentIndex().row());
-	QStandardItem *parent(m_model->itemFromIndex(currentIndex().parent()));
+	QStandardItem *parent(m_sourceModel->itemFromIndex(currentIndex().parent()));
 
 	if (row >= 0)
 	{
@@ -421,7 +422,7 @@ void ItemViewWidget::removeRow()
 		}
 		else
 		{
-			m_model->removeRow(row);
+			m_sourceModel->removeRow(row);
 		}
 
 		m_isModified = true;
@@ -478,7 +479,7 @@ void ItemViewWidget::saveState()
 
 void ItemViewWidget::notifySelectionChanged()
 {
-	if (m_model)
+	if (m_sourceModel)
 	{
 		m_previousIndex = m_currentIndex;
 		m_currentIndex = getIndex(getCurrentRow());
@@ -499,7 +500,10 @@ void ItemViewWidget::updateDropSelection()
 
 void ItemViewWidget::updateFilter()
 {
-	applyFilter(m_model->invisibleRootItem());
+	if (m_sourceModel)
+	{
+		applyFilter(m_sourceModel->invisibleRootItem());
+	}
 }
 
 void ItemViewWidget::setSort(int column, Qt::SortOrder order)
@@ -538,7 +542,7 @@ void ItemViewWidget::setColumnVisibility(int column, bool hide)
 
 void ItemViewWidget::setFilterString(const QString filter)
 {
-	if (!m_model)
+	if (!m_sourceModel)
 	{
 		return;
 	}
@@ -547,23 +551,23 @@ void ItemViewWidget::setFilterString(const QString filter)
 	{
 		if (m_filterString.isEmpty())
 		{
-			connect(m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(updateFilter()));
-			connect(m_model, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(updateFilter()));
-			connect(m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateFilter()));
+			connect(m_sourceModel, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(updateFilter()));
+			connect(m_sourceModel, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(updateFilter()));
+			connect(m_sourceModel, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateFilter()));
 		}
 
 		m_canGatherExpanded = m_filterString.isEmpty();
 		m_filterString = filter;
 
-		applyFilter(m_model->invisibleRootItem());
+		applyFilter(m_sourceModel->invisibleRootItem());
 
 		if (m_filterString.isEmpty())
 		{
 			m_expandedBranches.clear();
 
-			disconnect(m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(updateFilter()));
-			disconnect(m_model, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(updateFilter()));
-			disconnect(m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateFilter()));
+			disconnect(m_sourceModel, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(updateFilter()));
+			disconnect(m_sourceModel, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(updateFilter()));
+			disconnect(m_sourceModel, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateFilter()));
 		}
 	}
 }
@@ -575,15 +579,38 @@ void ItemViewWidget::setFilterRoles(const QSet<int> &roles)
 
 void ItemViewWidget::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-	if (m_model)
+	if (m_sourceModel)
 	{
-		m_model->setData(index, value, role);
+		m_sourceModel->setData(index, value, role);
 	}
 }
 
 void ItemViewWidget::setModel(QAbstractItemModel *model)
 {
-	QTreeView::setModel(model);
+	setModel(model, false);
+}
+
+void ItemViewWidget::setModel(QAbstractItemModel *model, bool useSortProxy)
+{
+	QAbstractItemModel *usedModel(model);
+
+	if (model && useSortProxy)
+	{
+		m_proxyModel = new QSortFilterProxyModel(this);
+		m_proxyModel->setSourceModel(model);
+		m_proxyModel->setDynamicSortFilter(true);
+
+		usedModel = m_proxyModel;
+	}
+	else if (m_proxyModel)
+	{
+		m_proxyModel->deleteLater();
+		m_proxyModel = NULL;
+	}
+
+	m_sourceModel = qobject_cast<QStandardItemModel*>(model);
+
+	QTreeView::setModel(usedModel);
 
 	if (!model)
 	{
@@ -595,11 +622,9 @@ void ItemViewWidget::setModel(QAbstractItemModel *model)
 		model->setParent(this);
 	}
 
-	if (model->inherits(QStringLiteral("QStandardItemModel").toLatin1()))
+	if (m_sourceModel)
 	{
-		m_model = qobject_cast<QStandardItemModel*>(model);
-
-		connect(m_model, SIGNAL(itemChanged(QStandardItem*)), this, SLOT(notifySelectionChanged()));
+		connect(m_sourceModel, SIGNAL(itemChanged(QStandardItem*)), this, SLOT(notifySelectionChanged()));
 	}
 
 	connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(notifySelectionChanged()));
@@ -615,29 +640,29 @@ void ItemViewWidget::setViewMode(ItemViewWidget::ViewMode mode)
 
 QStandardItemModel* ItemViewWidget::getModel()
 {
-	return m_model;
+	return m_sourceModel;
 }
 
 QStandardItem* ItemViewWidget::getItem(const QModelIndex &index) const
 {
-	return(m_model ? m_model->itemFromIndex(index) : NULL);
+	return(m_sourceModel ? m_sourceModel->itemFromIndex(index) : NULL);
 }
 
 QStandardItem* ItemViewWidget::getItem(int row, int column) const
 {
-	return(m_model ? m_model->item(row, column) : NULL);
+	return(m_sourceModel ? m_sourceModel->item(row, column) : NULL);
 }
 
 QModelIndex ItemViewWidget::getIndex(int row, int column) const
 {
-	return (m_model ? m_model->index(row, column) : QModelIndex());
+	return (m_sourceModel ? m_sourceModel->index(row, column) : QModelIndex());
 }
 
 QSize ItemViewWidget::sizeHint() const
 {
 	const QSize size(QTreeView::sizeHint());
 
-	if (m_model && m_model->columnCount() == 1)
+	if (m_sourceModel && m_sourceModel->columnCount() == 1)
 	{
 		return QSize((sizeHintForColumn(0) + (frameWidth() * 2)), size.height());
 	}
@@ -672,24 +697,24 @@ int ItemViewWidget::getPreviousRow() const
 
 int ItemViewWidget::getRowCount() const
 {
-	return (m_model ? m_model->rowCount() : 0);
+	return (m_sourceModel ? m_sourceModel->rowCount() : 0);
 }
 
 int ItemViewWidget::getColumnCount() const
 {
-	return (m_model ? m_model->columnCount() : 0);
+	return (m_sourceModel ? m_sourceModel->columnCount() : 0);
 }
 
 bool ItemViewWidget::canMoveUp() const
 {
-	return (currentIndex().row() > 0 && m_model->rowCount() > 1);
+	return (currentIndex().row() > 0 && m_sourceModel->rowCount() > 1);
 }
 
 bool ItemViewWidget::canMoveDown() const
 {
 	const int currentRow(currentIndex().row());
 
-	return (currentRow >= 0 && m_model->rowCount() > 1 && currentRow < (m_model->rowCount() - 1));
+	return (currentRow >= 0 && m_sourceModel->rowCount() > 1 && currentRow < (m_sourceModel->rowCount() - 1));
 }
 
 bool ItemViewWidget::applyFilter(QStandardItem *item)
@@ -716,11 +741,11 @@ bool ItemViewWidget::applyFilter(QStandardItem *item)
 	}
 	else
 	{
-		const int columnCount(item->parent() ? item->parent()->columnCount() : m_model->columnCount());
+		const int columnCount(item->parent() ? item->parent()->columnCount() : m_sourceModel->columnCount());
 
 		for (int i = 0; i < columnCount; ++i)
 		{
-			QStandardItem *child(m_model->itemFromIndex(item->index().sibling(item->row(), i)));
+			QStandardItem *child(m_sourceModel->itemFromIndex(item->index().sibling(item->row(), i)));
 
 			if (!child)
 			{
