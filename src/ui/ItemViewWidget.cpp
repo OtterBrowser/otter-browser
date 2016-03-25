@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -50,42 +50,42 @@ void HeaderViewWidget::showEvent(QShowEvent *event)
 
 void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 {
-	ItemViewWidget *view = qobject_cast<ItemViewWidget*>(parent());
+	ItemViewWidget *view(qobject_cast<ItemViewWidget*>(parent()));
 
 	if (!view)
 	{
 		return;
 	}
 
-	const int sortColumn = view->getSortColumn();
-	const int sortOrder = view->getSortOrder();
+	const int sortColumn(view->getSortColumn());
+	const int sortOrder(view->getSortOrder());
 
 	QMenu menu(this);
-	QMenu *sortMenu = menu.addMenu(tr("Sorting"));
-	QAction *sortAscendingAction = sortMenu->addAction(tr("Sort Ascending"));
+	QMenu *sortMenu(menu.addMenu(tr("Sorting")));
+	QAction *sortAscendingAction(sortMenu->addAction(tr("Sort Ascending")));
 	sortAscendingAction->setData(-2);
 	sortAscendingAction->setCheckable(true);
 	sortAscendingAction->setChecked(sortOrder == Qt::AscendingOrder);
 
-	QAction *sortDescendingAction = sortMenu->addAction(tr("Sort Descending"));
+	QAction *sortDescendingAction(sortMenu->addAction(tr("Sort Descending")));
 	sortDescendingAction->setData(-3);
 	sortDescendingAction->setCheckable(true);
 	sortDescendingAction->setChecked(sortOrder == Qt::DescendingOrder);
 
 	sortMenu->addSeparator();
 
-	QAction *noSortAction = sortMenu->addAction(tr("No Sorting"));
+	QAction *noSortAction(sortMenu->addAction(tr("No Sorting")));
 	noSortAction->setData(-1);
 	noSortAction->setCheckable(true);
 	noSortAction->setChecked(sortColumn < 0);
 
 	sortMenu->addSeparator();
 
-	QMenu *visibilityMenu = menu.addMenu(tr("Visible Columns"));
+	QMenu *visibilityMenu(menu.addMenu(tr("Visible Columns")));
 	visibilityMenu->setEnabled(model()->columnCount() > 1);
 
-	QAction *showAllColumnsAction = NULL;
-	bool allColumnsVisible = true;
+	QAction *showAllColumnsAction(NULL);
+	bool allColumnsVisible(true);
 
 	if (visibilityMenu->isEnabled())
 	{
@@ -99,14 +99,14 @@ void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 	for (int i = 0; i < model()->columnCount(); ++i)
 	{
 		const QString title(model()->headerData(i, orientation()).toString());
-		QAction *action = sortMenu->addAction(title);
+		QAction *action(sortMenu->addAction(title));
 		action->setData(i);
 		action->setCheckable(true);
 		action->setChecked(i == sortColumn);
 
 		if (visibilityMenu->isEnabled())
 		{
-			QAction *action = visibilityMenu->addAction(title);
+			QAction *action(visibilityMenu->addAction(title));
 			action->setData(i);
 			action->setCheckable(true);
 			action->setChecked(!view->isColumnHidden(i));
@@ -142,11 +142,11 @@ void HeaderViewWidget::toggleSort(QAction *action)
 {
 	if (action)
 	{
-		const int value = action->data().toInt();
+		const int value(action->data().toInt());
 
 		if (value == -2 || value == -3)
 		{
-			ItemViewWidget *view = qobject_cast<ItemViewWidget*>(parent());
+			ItemViewWidget *view(qobject_cast<ItemViewWidget*>(parent()));
 
 			if (view)
 			{
@@ -162,7 +162,7 @@ void HeaderViewWidget::toggleSort(QAction *action)
 
 void HeaderViewWidget::toggleSort(int column)
 {
-	ItemViewWidget *view = qobject_cast<ItemViewWidget*>(parent());
+	ItemViewWidget *view(qobject_cast<ItemViewWidget*>(parent()));
 
 	if (!view)
 	{
@@ -232,9 +232,8 @@ void ItemViewWidget::showEvent(QShowEvent *event)
 		return;
 	}
 
-	const QString name = objectName();
-	const QString suffix = QLatin1String("ViewWidget");
-	const QString type = (name.endsWith(suffix) ? name.left(name.size() - suffix.size()) : name);
+	const QString suffix(QLatin1String("ViewWidget"));
+	const QString type(objectName().endsWith(suffix) ? objectName().left(objectName().size() - suffix.size()) : objectName());
 
 	if (type.isEmpty())
 	{
@@ -246,7 +245,7 @@ void ItemViewWidget::showEvent(QShowEvent *event)
 
 	setSort(settings.getValue(QLatin1String("sortColumn"), -1).toInt(), ((settings.getValue(QLatin1String("sortOrder"), QLatin1String("ascending")).toString() == QLatin1String("ascending")) ? Qt::AscendingOrder : Qt::DescendingOrder));
 
-	const QStringList columns = settings.getValue(QLatin1String("columns")).toString().split(QLatin1Char(','), QString::SkipEmptyParts);
+	const QStringList columns(settings.getValue(QLatin1String("columns")).toString().split(QLatin1Char(','), QString::SkipEmptyParts));
 
 	if (!columns.isEmpty())
 	{
@@ -339,8 +338,8 @@ void ItemViewWidget::moveRow(bool up)
 		return;
 	}
 
-	const int sourceRow = currentIndex().row();
-	const int destinationRow = (up ? (sourceRow - 1) : (sourceRow + 1));
+	const int sourceRow(currentIndex().row());
+	const int destinationRow(up ? (sourceRow - 1) : (sourceRow + 1));
 
 	if ((up && sourceRow > 0) || (!up && sourceRow < (m_model->rowCount() - 1)))
 	{
@@ -364,7 +363,7 @@ void ItemViewWidget::insertRow(const QList<QStandardItem*> &items)
 
 	if (m_model->rowCount() > 0)
 	{
-		const int row = (currentIndex().row() + 1);
+		const int row(currentIndex().row() + 1);
 
 		if (items.count() > 0)
 		{
@@ -411,8 +410,8 @@ void ItemViewWidget::removeRow()
 		return;
 	}
 
-	const int row = currentIndex().row();
-	QStandardItem *parent = m_model->itemFromIndex(currentIndex().parent());
+	const int row(currentIndex().row());
+	QStandardItem *parent(m_model->itemFromIndex(currentIndex().parent()));
 
 	if (row >= 0)
 	{
@@ -448,9 +447,8 @@ void ItemViewWidget::saveState()
 		return;
 	}
 
-	const QString name = objectName();
-	const QString suffix = QLatin1String("ViewWidget");
-	const QString type = (name.endsWith(suffix) ? name.left(name.size() - suffix.size()) : name);
+	const QString suffix(QLatin1String("ViewWidget"));
+	const QString type(objectName().endsWith(suffix) ? objectName().left(objectName().size() - suffix.size()) : objectName());
 
 	if (type.isEmpty())
 	{
@@ -464,7 +462,7 @@ void ItemViewWidget::saveState()
 
 	for (int i = 0; i < getColumnCount(); ++i)
 	{
-		const int section = m_headerWidget->logicalIndex(i);
+		const int section(m_headerWidget->logicalIndex(i));
 
 		if (section >= 0 && !isColumnHidden(section))
 		{
@@ -637,7 +635,7 @@ QModelIndex ItemViewWidget::getIndex(int row, int column) const
 
 QSize ItemViewWidget::sizeHint() const
 {
-	const QSize size = QTreeView::sizeHint();
+	const QSize size(QTreeView::sizeHint());
 
 	if (m_model && m_model->columnCount() == 1)
 	{
@@ -687,10 +685,17 @@ bool ItemViewWidget::canMoveUp() const
 	return (currentIndex().row() > 0 && m_model->rowCount() > 1);
 }
 
+bool ItemViewWidget::canMoveDown() const
+{
+	const int currentRow(currentIndex().row());
+
+	return (currentRow >= 0 && m_model->rowCount() > 1 && currentRow < (m_model->rowCount() - 1));
+}
+
 bool ItemViewWidget::applyFilter(QStandardItem *item)
 {
-	bool hasFound = m_filterString.isEmpty();
-	const bool isFolder = !item->flags().testFlag(Qt::ItemNeverHasChildren);
+	bool hasFound(m_filterString.isEmpty());
+	const bool isFolder(!item->flags().testFlag(Qt::ItemNeverHasChildren));
 
 	if (isFolder)
 	{
@@ -701,7 +706,7 @@ bool ItemViewWidget::applyFilter(QStandardItem *item)
 
 		for (int i = 0; i < item->rowCount(); ++i)
 		{
-			QStandardItem *child = item->child(i, 0);
+			QStandardItem *child(item->child(i, 0));
 
 			if (child && applyFilter(child))
 			{
@@ -711,11 +716,11 @@ bool ItemViewWidget::applyFilter(QStandardItem *item)
 	}
 	else
 	{
-		const int columnCount = (item->parent() ? item->parent()->columnCount() : m_model->columnCount());
+		const int columnCount(item->parent() ? item->parent()->columnCount() : m_model->columnCount());
 
 		for (int i = 0; i < columnCount; ++i)
 		{
-			QStandardItem *child = m_model->itemFromIndex(item->index().sibling(item->row(), i));
+			QStandardItem *child(m_model->itemFromIndex(item->index().sibling(item->row(), i)));
 
 			if (!child)
 			{
@@ -749,13 +754,6 @@ bool ItemViewWidget::applyFilter(QStandardItem *item)
 	}
 
 	return hasFound;
-}
-
-bool ItemViewWidget::canMoveDown() const
-{
-	const int currentRow = currentIndex().row();
-
-	return (currentRow >= 0 && m_model->rowCount() > 1 && currentRow < (m_model->rowCount() - 1));
 }
 
 bool ItemViewWidget::isModified() const
