@@ -500,9 +500,12 @@ void ItemViewWidget::updateDropSelection()
 
 void ItemViewWidget::updateFilter()
 {
-	if (m_sourceModel)
+	if (model())
 	{
-		applyFilter(m_sourceModel->invisibleRootItem());
+		for (int i = 0; i < model()->rowCount(); ++i)
+		{
+			applyFilter(model()->index(i, 0));
+		}
 	}
 }
 
@@ -542,7 +545,7 @@ void ItemViewWidget::setColumnVisibility(int column, bool hide)
 
 void ItemViewWidget::setFilterString(const QString filter)
 {
-	if (!m_sourceModel)
+	if (!model())
 	{
 		return;
 	}
@@ -551,23 +554,23 @@ void ItemViewWidget::setFilterString(const QString filter)
 	{
 		if (m_filterString.isEmpty())
 		{
-			connect(m_sourceModel, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(updateFilter()));
-			connect(m_sourceModel, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(updateFilter()));
-			connect(m_sourceModel, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateFilter()));
+			connect(model(), SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(updateFilter()));
+			connect(model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(updateFilter()));
+			connect(model(), SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateFilter()));
 		}
 
 		m_canGatherExpanded = m_filterString.isEmpty();
 		m_filterString = filter;
 
-		applyFilter(m_sourceModel->invisibleRootItem());
+		updateFilter();
 
 		if (m_filterString.isEmpty())
 		{
 			m_expandedBranches.clear();
 
-			disconnect(m_sourceModel, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(updateFilter()));
-			disconnect(m_sourceModel, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(updateFilter()));
-			disconnect(m_sourceModel, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateFilter()));
+			disconnect(model(), SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(updateFilter()));
+			disconnect(model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(updateFilter()));
+			disconnect(model(), SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateFilter()));
 		}
 	}
 }
@@ -717,23 +720,28 @@ bool ItemViewWidget::canMoveDown() const
 	return (currentRow >= 0 && m_sourceModel->rowCount() > 1 && currentRow < (m_sourceModel->rowCount() - 1));
 }
 
-bool ItemViewWidget::applyFilter(QStandardItem *item)
+bool ItemViewWidget::applyFilter(const QModelIndex &index)
 {
+	if (!model())
+	{
+		return false;
+	}
+
 	bool hasFound(m_filterString.isEmpty());
-	const bool isFolder(!item->flags().testFlag(Qt::ItemNeverHasChildren));
+	const bool isFolder(!index.flags().testFlag(Qt::ItemNeverHasChildren));
 
 	if (isFolder)
 	{
-		if (m_canGatherExpanded && isExpanded(item->index()))
+		if (m_canGatherExpanded && isExpanded(index))
 		{
-			m_expandedBranches.insert(item);
+			m_expandedBranches.insert(index);
 		}
 
-		for (int i = 0; i < item->rowCount(); ++i)
-		{
-			QStandardItem *child(item->child(i, 0));
+		const int rowCount(model()->rowCount(index));
 
-			if (child && applyFilter(child))
+		for (int i = 0; i < rowCount; ++i)
+		{
+			if (applyFilter(index.child(i, 0)))
 			{
 				hasFound = true;
 			}
@@ -741,13 +749,13 @@ bool ItemViewWidget::applyFilter(QStandardItem *item)
 	}
 	else
 	{
-		const int columnCount(item->parent() ? item->parent()->columnCount() : m_sourceModel->columnCount());
+		const int columnCount(index.parent().isValid() ? model()->rowCount(index.parent()) : model()->columnCount());
 
 		for (int i = 0; i < columnCount; ++i)
 		{
-			QStandardItem *child(m_sourceModel->itemFromIndex(item->index().sibling(item->row(), i)));
+			const QModelIndex childIndex(index.sibling(index.row(), i));
 
-			if (!child)
+			if (!childIndex.isValid())
 			{
 				continue;
 			}
@@ -756,7 +764,7 @@ bool ItemViewWidget::applyFilter(QStandardItem *item)
 
 			for (iterator = m_filterRoles.begin(); iterator != m_filterRoles.end(); ++iterator)
 			{
-				if (child->data(*iterator).toString().contains(m_filterString, Qt::CaseInsensitive))
+				if (childIndex.data(*iterator).toString().contains(m_filterString, Qt::CaseInsensitive))
 				{
 					hasFound = true;
 
@@ -771,11 +779,11 @@ bool ItemViewWidget::applyFilter(QStandardItem *item)
 		}
 	}
 
-	setRowHidden(item->row(), item->index().parent(), !hasFound);
+	setRowHidden(index.row(), index.parent(), !hasFound);
 
 	if (isFolder)
 	{
-		setExpanded(item->index(), ((hasFound && !m_filterString.isEmpty()) || (m_filterString.isEmpty() && m_expandedBranches.contains(item))));
+		setExpanded(index, ((hasFound && !m_filterString.isEmpty()) || (m_filterString.isEmpty() && m_expandedBranches.contains(index))));
 	}
 
 	return hasFound;

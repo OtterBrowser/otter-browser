@@ -104,7 +104,7 @@ protected:
 	void dropEvent(QDropEvent *event);
 	void startDrag(Qt::DropActions supportedActions);
 	void moveRow(bool up);
-	bool applyFilter(QStandardItem *item);
+	bool applyFilter(const QModelIndex &index);
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
@@ -120,7 +120,7 @@ private:
 	QString m_filterString;
 	QModelIndex m_currentIndex;
 	QModelIndex m_previousIndex;
-	QSet<QStandardItem*> m_expandedBranches;
+	QSet<QModelIndex> m_expandedBranches;
 	QSet<int> m_filterRoles;
 	ViewMode m_viewMode;
 	Qt::SortOrder m_sortOrder;
