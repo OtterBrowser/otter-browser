@@ -780,7 +780,7 @@ bool ItemViewWidget::applyFilter(const QModelIndex &index)
 		}
 	}
 
-	setRowHidden(index.row(), index.parent(), !hasFound);
+	setRowHidden(index.row(), index.parent(), (!hasFound || (isFolder && model()->rowCount(index) == 0)));
 
 	if (isFolder)
 	{
