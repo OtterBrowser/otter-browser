@@ -758,12 +758,12 @@ bool ContentBlockingProfile::checkRuleMatch(ContentBlockingRule *rule, const QSt
 			isBlocked = true;
 		}
 
+		resolveRuleOptions(rule, resourceType, isBlocked);
+
 		if (isBlocked)
 		{
 			isBlocked = !rule->isException;
 		}
-
-		resolveRuleOptions(rule, resourceType, isBlocked);
 	}
 
 	return isBlocked;
