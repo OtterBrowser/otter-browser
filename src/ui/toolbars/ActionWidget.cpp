@@ -62,7 +62,7 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 {
 	if ((m_identifier == ActionsManager::NewTabAction || m_identifier == ActionsManager::NewTabPrivateAction) && event->button() != Qt::RightButton)
 	{
-		WindowsManager::OpenHints hints = WindowsManager::calculateOpenHints(event->modifiers(), event->button(), WindowsManager::NewTabOpen);
+		WindowsManager::OpenHints hints = WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen, event->button(), event->modifiers());
 
 		if (m_identifier == ActionsManager::NewTabPrivateAction)
 		{

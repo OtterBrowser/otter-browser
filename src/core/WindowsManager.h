@@ -91,7 +91,7 @@ public:
 	QUrl getUrl() const;
 	SessionMainWindow getSession() const;
 	QList<ClosedWindow> getClosedWindows() const;
-	static WindowsManager::OpenHints calculateOpenHints(Qt::KeyboardModifiers modifiers = Qt::NoModifier, Qt::MouseButton button = Qt::LeftButton, OpenHints hints = DefaultOpen);
+	static WindowsManager::OpenHints calculateOpenHints(OpenHints hints = DefaultOpen, Qt::MouseButton button = Qt::LeftButton, int modifiers = -1);
 	int getWindowCount(bool onlyPrivate = false) const;
 	int getWindowIndex(quint64 identifier) const;
 	int getZoom() const;

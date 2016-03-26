@@ -58,7 +58,7 @@ void BookmarkWidget::mouseReleaseEvent(QMouseEvent *event)
 
 		if (mainWindow)
 		{
-			mainWindow->getWindowsManager()->open(m_bookmark, WindowsManager::calculateOpenHints(event->modifiers(), event->button()));
+			mainWindow->getWindowsManager()->open(m_bookmark, WindowsManager::calculateOpenHints(WindowsManager::DefaultOpen, event->button(), event->modifiers()));
 		}
 	}
 }

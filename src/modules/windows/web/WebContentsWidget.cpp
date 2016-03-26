@@ -339,7 +339,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 					connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)));
 					connect(interpreter, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
 
-					interpreter->interpret(text, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers()), true);
+					interpreter->interpret(text, WindowsManager::calculateOpenHints(), true);
 				}
 			}
 

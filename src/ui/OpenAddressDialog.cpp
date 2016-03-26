@@ -89,7 +89,7 @@ void OpenAddressDialog::handleUserInput()
 		connect(m_inputInterpreter, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
 		connect(m_inputInterpreter, SIGNAL(destroyed()), this, SLOT(accept()));
 
-		m_inputInterpreter->interpret(m_addressWidget->lineEdit()->text(), WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, WindowsManager::CurrentTabOpen));
+		m_inputInterpreter->interpret(m_addressWidget->lineEdit()->text(), WindowsManager::calculateOpenHints(WindowsManager::CurrentTabOpen));
 	}
 }
 

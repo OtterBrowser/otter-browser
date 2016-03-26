@@ -962,26 +962,22 @@ QList<ClosedWindow> WindowsManager::getClosedWindows() const
 	return m_closedWindows;
 }
 
-WindowsManager::OpenHints WindowsManager::calculateOpenHints(Qt::KeyboardModifiers modifiers, Qt::MouseButton button, OpenHints hints)
+WindowsManager::OpenHints WindowsManager::calculateOpenHints(OpenHints hints, Qt::MouseButton button, int modifiers)
 {
 	const bool useNewTab = (!hints.testFlag(NewWindowOpen) && SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool());
+	const Qt::KeyboardModifiers keyboardModifiers((modifiers == -1) ? QGuiApplication::keyboardModifiers() : static_cast<Qt::KeyboardModifiers>(modifiers));
 
-	if (modifiers == Qt::NoModifier)
-	{
-		modifiers = QGuiApplication::keyboardModifiers();
-	}
-
-	if (button == Qt::MiddleButton && modifiers.testFlag(Qt::AltModifier))
+	if (button == Qt::MiddleButton && keyboardModifiers.testFlag(Qt::AltModifier))
 	{
 		return ((useNewTab ? NewTabOpen : NewWindowOpen) | BackgroundOpen | EndOpen);
 	}
 
-	if (modifiers.testFlag(Qt::ControlModifier) || button == Qt::MiddleButton)
+	if (keyboardModifiers.testFlag(Qt::ControlModifier) || button == Qt::MiddleButton)
 	{
 		return ((useNewTab ? NewTabOpen : NewWindowOpen) | BackgroundOpen);
 	}
 
-	if (modifiers.testFlag(Qt::ShiftModifier))
+	if (keyboardModifiers.testFlag(Qt::ShiftModifier))
 	{
 		return (useNewTab ? NewTabOpen : NewWindowOpen);
 	}

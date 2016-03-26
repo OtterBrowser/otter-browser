@@ -469,7 +469,7 @@ bool HistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (url.isValid())
 			{
-				emit requestedOpenUrl(url, WindowsManager::calculateOpenHints(mouseEvent->modifiers(), mouseEvent->button(), WindowsManager::NewTabOpen));
+				emit requestedOpenUrl(url, WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen, mouseEvent->button(), mouseEvent->modifiers()));
 
 				return true;
 			}

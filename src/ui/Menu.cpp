@@ -171,7 +171,7 @@ void Menu::mouseReleaseEvent(QMouseEvent *event)
 
 			if (mainWindow)
 			{
-				mainWindow->getWindowsManager()->open(BookmarksManager::getModel()->getBookmark(action->data().toModelIndex()), WindowsManager::calculateOpenHints(event->modifiers(), event->button()));
+				mainWindow->getWindowsManager()->open(BookmarksManager::getModel()->getBookmark(action->data().toModelIndex()), WindowsManager::calculateOpenHints(WindowsManager::DefaultOpen, event->button(), event->modifiers()));
 
 				return;
 			}

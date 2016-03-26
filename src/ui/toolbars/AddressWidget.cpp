@@ -281,7 +281,7 @@ void AddressWidget::keyPressEvent(QKeyEvent *event)
 	}
 	else if (!m_isUsingSimpleMode && (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return))
 	{
-		handleUserInput(m_lineEdit->text().trimmed(), WindowsManager::calculateOpenHints(event->modifiers(), Qt::LeftButton, WindowsManager::CurrentTabOpen));
+		handleUserInput(m_lineEdit->text().trimmed(), WindowsManager::calculateOpenHints(WindowsManager::CurrentTabOpen, Qt::LeftButton, event->modifiers()));
 	}
 }
 
@@ -638,7 +638,7 @@ void AddressWidget::handleUserInput(const QString &text, WindowsManager::OpenHin
 {
 	if (hints == WindowsManager::DefaultOpen)
 	{
-		hints = WindowsManager::calculateOpenHints(QApplication::keyboardModifiers(), Qt::LeftButton, WindowsManager::CurrentTabOpen);
+		hints = WindowsManager::calculateOpenHints(WindowsManager::CurrentTabOpen);
 	}
 
 	if (!text.isEmpty())

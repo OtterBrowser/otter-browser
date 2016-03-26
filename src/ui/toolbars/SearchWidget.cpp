@@ -424,12 +424,12 @@ void SearchWidget::sendRequest(const QString &query)
 
 			if (searchEngine.formUrl.isValid())
 			{
-				emit requestedOpenUrl(searchEngine.formUrl, WindowsManager::calculateOpenHints(QApplication::keyboardModifiers(), Qt::LeftButton, WindowsManager::DefaultOpen));
+				emit requestedOpenUrl(searchEngine.formUrl, WindowsManager::calculateOpenHints());
 			}
 		}
 		else
 		{
-			emit requestedSearch(m_query, currentData(Qt::UserRole + 1).toString(), WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers()));
+			emit requestedSearch(m_query, currentData(Qt::UserRole + 1).toString(), WindowsManager::calculateOpenHints());
 		}
 	}
 }

@@ -671,7 +671,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 						if (mainWindow)
 						{
-							mainWindow->getWindowsManager()->open(url, WindowsManager::calculateOpenHints(keyEvent->modifiers(), Qt::LeftButton));
+							mainWindow->getWindowsManager()->open(url, WindowsManager::calculateOpenHints(WindowsManager::DefaultOpen, Qt::LeftButton, keyEvent->modifiers()));
 						}
 					}
 					else if (parentWidget() && parentWidget()->parentWidget())
@@ -750,7 +750,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 						if (mainWindow)
 						{
-							mainWindow->getWindowsManager()->open(url, WindowsManager::calculateOpenHints(mouseEvent->modifiers(), mouseEvent->button()));
+							mainWindow->getWindowsManager()->open(url, WindowsManager::calculateOpenHints(WindowsManager::DefaultOpen, mouseEvent->button(), mouseEvent->modifiers()));
 						}
 					}
 					else if (parentWidget() && parentWidget()->parentWidget() && mouseEvent->button() != Qt::MiddleButton)

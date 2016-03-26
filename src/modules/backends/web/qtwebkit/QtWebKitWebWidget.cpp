@@ -860,7 +860,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::OpenLinkInNewTabAction:
 			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
-				openUrl(getCurrentHitTestResult().linkUrl, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, WindowsManager::NewTabOpen));
+				openUrl(getCurrentHitTestResult().linkUrl, WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen));
 			}
 
 			return;
@@ -874,7 +874,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::OpenLinkInNewWindowAction:
 			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
-				openUrl(getCurrentHitTestResult().linkUrl, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, WindowsManager::NewWindowOpen));
+				openUrl(getCurrentHitTestResult().linkUrl, WindowsManager::calculateOpenHints(WindowsManager::NewWindowOpen));
 			}
 
 			return;
@@ -962,7 +962,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::OpenFrameInNewTabAction:
 			if (getCurrentHitTestResult().frameUrl.isValid())
 			{
-				openUrl(getCurrentHitTestResult().frameUrl, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, WindowsManager::NewTabOpen));
+				openUrl(getCurrentHitTestResult().frameUrl, WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen));
 			}
 
 			return;
@@ -1022,7 +1022,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::OpenImageInNewTabAction:
 			if (!getCurrentHitTestResult().imageUrl.isEmpty())
 			{
-				openUrl(getCurrentHitTestResult().imageUrl, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, WindowsManager::NewTabOpen));
+				openUrl(getCurrentHitTestResult().imageUrl, WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen));
 			}
 
 			return;

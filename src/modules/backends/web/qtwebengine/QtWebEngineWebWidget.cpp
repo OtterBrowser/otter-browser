@@ -297,7 +297,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::OpenLinkInNewTabAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, WindowsManager::NewTabOpen));
+				openUrl(m_hitResult.linkUrl, WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen));
 			}
 
 			return;
@@ -311,7 +311,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::OpenLinkInNewWindowAction:
 			if (m_hitResult.linkUrl.isValid())
 			{
-				openUrl(m_hitResult.linkUrl, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, WindowsManager::NewWindowOpen));
+				openUrl(m_hitResult.linkUrl, WindowsManager::calculateOpenHints(WindowsManager::NewWindowOpen));
 			}
 
 			return;
@@ -389,7 +389,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::OpenFrameInNewTabAction:
 			if (m_hitResult.frameUrl.isValid())
 			{
-				openUrl(m_hitResult.frameUrl, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, WindowsManager::NewTabOpen));
+				openUrl(m_hitResult.frameUrl, WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen));
 			}
 
 			return;
@@ -444,7 +444,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::OpenImageInNewTabAction:
 			if (!m_hitResult.imageUrl.isEmpty())
 			{
-				openUrl(m_hitResult.imageUrl, WindowsManager::calculateOpenHints(QGuiApplication::keyboardModifiers(), Qt::LeftButton, WindowsManager::NewTabOpen));
+				openUrl(m_hitResult.imageUrl, WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen));
 			}
 
 			return;
