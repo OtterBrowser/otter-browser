@@ -780,14 +780,6 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 	bounceAction(identifier, parameters);
 }
 
-void QtWebEngineWebWidget::openUrl(const QUrl &url, WindowsManager::OpenHints hints)
-{
-	WebWidget *widget = clone(false);
-	widget->setRequestedUrl(url);
-
-	emit requestedNewWindow(widget, hints);
-}
-
 void QtWebEngineWebWidget::pasteText(const QString &text)
 {
 	QMimeData *mimeData = new QMimeData();
