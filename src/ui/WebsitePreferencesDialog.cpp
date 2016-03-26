@@ -109,7 +109,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	m_ui->thirdPartyCookiesPolicyComboBox->addItem(tr("Never"), QLatin1String("ignore"));
 
 	QStringList cookiesLabels;
-	cookiesLabels << tr("Domain") << tr("Path") << tr("Value") << tr("Expiration date");
+	cookiesLabels << tr("Domain") << tr("Name") << tr("Path") << tr("Value") << tr("Expiration date");
 
 	QStandardItemModel *cookiesModel(new QStandardItemModel(this));
 	cookiesModel->setHorizontalHeaderLabels(cookiesLabels);
@@ -118,9 +118,10 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	{
 		QList<QStandardItem*> items;
 		items.append(new QStandardItem(cookies.at(i).domain()));
+		items.append(new QStandardItem(QString(cookies.at(i).name())));
 		items.append(new QStandardItem(cookies.at(i).path()));
 		items.append(new QStandardItem(QString(cookies.at(i).value())));
-		items.append(new QStandardItem(cookies.at(i).expirationDate().toString()));
+		items.append(new QStandardItem(Utils::formatDateTime(cookies.at(i).expirationDate())));
 
 		cookiesModel->appendRow(items);
 	}
