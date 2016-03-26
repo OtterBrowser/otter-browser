@@ -64,17 +64,6 @@ HistoryContentsWidget::HistoryContentsWidget(Window *window) : ContentsWidget(wi
 		m_ui->historyViewWidget->setRowHidden(i, m_model->invisibleRootItem()->index(), true);
 	}
 
-	const QString expandBranches = SettingsManager::getValue(QLatin1String("History/ExpandBranches")).toString();
-
-	if (expandBranches == QLatin1String("first"))
-	{
-		m_ui->historyViewWidget->expand(m_model->index(0, 0));
-	}
-	else if (expandBranches == QLatin1String("all"))
-	{
-		m_ui->historyViewWidget->expandAll();
-	}
-
 	QTimer::singleShot(100, this, SLOT(populateEntries()));
 
 	connect(HistoryManager::getBrowsingHistoryModel(), SIGNAL(cleared()), this, SLOT(populateEntries()));
@@ -130,13 +119,13 @@ void HistoryContentsWidget::print(QPrinter *printer)
 
 void HistoryContentsWidget::populateEntries()
 {
-	const QDate date = QDate::currentDate();
+	const QDate date(QDate::currentDate());
 	QList<QDate> dates;
 	dates << date << date.addDays(-1) << date.addDays(-7) << date.addDays(-14) << date.addDays(-30) << date.addDays(-365);
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		QStandardItem *groupItem = m_model->item(i, 0);
+		QStandardItem *groupItem(m_model->item(i, 0));
 
 		if (groupItem)
 		{
@@ -145,21 +134,32 @@ void HistoryContentsWidget::populateEntries()
 		}
 	}
 
-	HistoryModel *model = HistoryManager::getBrowsingHistoryModel();
+	HistoryModel *model(HistoryManager::getBrowsingHistoryModel());
 
 	for (int i = 0; i < model->rowCount(); ++i)
 	{
 		addEntry(dynamic_cast<HistoryEntryItem*>(model->item(i, 0)));
 	}
 
-	for (int i = 0; i < m_model->rowCount(); ++i)
-	{
-		QStandardItem *groupItem = m_model->item(i, 0);
+	const QString expandBranches(SettingsManager::getValue(QLatin1String("History/ExpandBranches")).toString());
 
-		if (groupItem)
+	if (expandBranches == QLatin1String("first"))
+	{
+		for (int i = 0; i < m_model->rowCount(); ++i)
 		{
-			groupItem->sortChildren(2, Qt::DescendingOrder);
+			const QModelIndex index(m_model->index(i, 0));
+
+			if (m_model->rowCount(index) > 0)
+			{
+				m_ui->historyViewWidget->expand(m_ui->historyViewWidget->getProxyModel()->mapFromSource(index));
+
+				break;
+			}
 		}
+	}
+	else if (expandBranches == QLatin1String("all"))
+	{
+		m_ui->historyViewWidget->expandAll();
 	}
 
 	m_isLoading = false;
@@ -174,7 +174,7 @@ void HistoryContentsWidget::addEntry(HistoryEntryItem *entry)
 		return;
 	}
 
-	QStandardItem *groupItem = NULL;
+	QStandardItem *groupItem(NULL);
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
@@ -219,7 +219,7 @@ void HistoryContentsWidget::modifyEntry(HistoryEntryItem *entry)
 		return;
 	}
 
-	QStandardItem *entryItem = findEntry(entry->data(HistoryModel::IdentifierRole).toULongLong());
+	QStandardItem *entryItem(findEntry(entry->data(HistoryModel::IdentifierRole).toULongLong()));
 
 	if (!entryItem)
 	{
@@ -241,11 +241,11 @@ void HistoryContentsWidget::removeEntry(HistoryEntryItem *entry)
 		return;
 	}
 
-	QStandardItem *entryItem = findEntry(entry->data(HistoryModel::IdentifierRole).toULongLong());
+	QStandardItem *entryItem(findEntry(entry->data(HistoryModel::IdentifierRole).toULongLong()));
 
 	if (entryItem)
 	{
-		QStandardItem *groupItem = entryItem->parent();
+		QStandardItem *groupItem(entryItem->parent());
 
 		if (groupItem)
 		{
@@ -261,7 +261,7 @@ void HistoryContentsWidget::removeEntry(HistoryEntryItem *entry)
 
 void HistoryContentsWidget::removeEntry()
 {
-	const quint64 entry = getEntry(m_ui->historyViewWidget->currentIndex());
+	const quint64 entry(getEntry(m_ui->historyViewWidget->currentIndex()));
 
 	if (entry > 0)
 	{
@@ -271,19 +271,19 @@ void HistoryContentsWidget::removeEntry()
 
 void HistoryContentsWidget::removeDomainEntries()
 {
-	QStandardItem *domainItem = findEntry(getEntry(m_ui->historyViewWidget->currentIndex()));
+	QStandardItem *domainItem(findEntry(getEntry(m_ui->historyViewWidget->currentIndex())));
 
 	if (!domainItem)
 	{
 		return;
 	}
 
-	const QString host = QUrl(domainItem->text()).host();
+	const QString host(QUrl(domainItem->text()).host());
 	QList<quint64> entries;
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		QStandardItem *groupItem = m_model->item(i, 0);
+		QStandardItem *groupItem(m_model->item(i, 0));
 
 		if (!groupItem)
 		{
@@ -292,7 +292,7 @@ void HistoryContentsWidget::removeDomainEntries()
 
 		for (int j = (groupItem->rowCount() - 1); j >= 0; --j)
 		{
-			QStandardItem *entryItem = groupItem->child(j, 0);
+			QStandardItem *entryItem(groupItem->child(j, 0));
 
 			if (entryItem && host == QUrl(entryItem->text()).host())
 			{
@@ -306,7 +306,7 @@ void HistoryContentsWidget::removeDomainEntries()
 
 void HistoryContentsWidget::openEntry(const QModelIndex &index)
 {
-	const QModelIndex entryIndex = (index.isValid() ? index : m_ui->historyViewWidget->currentIndex());
+	const QModelIndex entryIndex(index.isValid() ? index : m_ui->historyViewWidget->currentIndex());
 
 	if (!entryIndex.isValid() || entryIndex.parent() == m_model->invisibleRootItem()->index())
 	{
@@ -317,7 +317,7 @@ void HistoryContentsWidget::openEntry(const QModelIndex &index)
 
 	if (url.isValid())
 	{
-		QAction *action = qobject_cast<QAction*>(sender());
+		QAction *action(qobject_cast<QAction*>(sender()));
 
 		emit requestedOpenUrl(url, (action ? static_cast<WindowsManager::OpenHints>(action->data().toInt()) : WindowsManager::DefaultOpen));
 	}
@@ -325,7 +325,7 @@ void HistoryContentsWidget::openEntry(const QModelIndex &index)
 
 void HistoryContentsWidget::bookmarkEntry()
 {
-	QStandardItem *entryItem = findEntry(getEntry(m_ui->historyViewWidget->currentIndex()));
+	QStandardItem *entryItem(findEntry(getEntry(m_ui->historyViewWidget->currentIndex())));
 
 	if (entryItem)
 	{
@@ -335,7 +335,7 @@ void HistoryContentsWidget::bookmarkEntry()
 
 void HistoryContentsWidget::copyEntryLink()
 {
-	QStandardItem *entryItem = findEntry(getEntry(m_ui->historyViewWidget->currentIndex()));
+	QStandardItem *entryItem(findEntry(getEntry(m_ui->historyViewWidget->currentIndex())));
 
 	if (entryItem)
 	{
@@ -345,7 +345,7 @@ void HistoryContentsWidget::copyEntryLink()
 
 void HistoryContentsWidget::showContextMenu(const QPoint &point)
 {
-	const quint64 entry = getEntry(m_ui->historyViewWidget->indexAt(point));
+	const quint64 entry(getEntry(m_ui->historyViewWidget->indexAt(point)));
 	QMenu menu(this);
 
 	if (entry > 0)
@@ -373,13 +373,13 @@ QStandardItem* HistoryContentsWidget::findEntry(quint64 identifier)
 {
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		QStandardItem *groupItem = m_model->item(i, 0);
+		QStandardItem *groupItem(m_model->item(i, 0));
 
 		if (groupItem)
 		{
 			for (int j = 0; j < groupItem->rowCount(); ++j)
 			{
-				QStandardItem *entryItem = groupItem->child(j, 0);
+				QStandardItem *entryItem(groupItem->child(j, 0));
 
 				if (entryItem && entryItem->data(Qt::UserRole).toULongLong() == identifier)
 				{
@@ -426,7 +426,7 @@ bool HistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_ui->historyViewWidget && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent && (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
 		{
@@ -444,11 +444,11 @@ bool HistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_ui->historyViewWidget->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
 		{
-			const QModelIndex entryIndex = m_ui->historyViewWidget->currentIndex();
+			const QModelIndex entryIndex(m_ui->historyViewWidget->currentIndex());
 
 			if (!entryIndex.isValid() || entryIndex.parent() == m_model->invisibleRootItem()->index())
 			{
@@ -467,7 +467,7 @@ bool HistoryContentsWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{
