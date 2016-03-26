@@ -36,7 +36,7 @@ ProxyModel::ProxyModel(QStandardItemModel *model, const QList<QPair<QString, int
 
 QVariant ProxyModel::data(const QModelIndex &index, int role) const
 {
-	if (role == Qt::DisplayRole)
+	if (role == Qt::DisplayRole && index.column() < m_mapping.count())
 	{
 		const QVariant data = mapToSource(index.sibling(index.row(), 0)).data(m_mapping.at(index.column()).second);
 
