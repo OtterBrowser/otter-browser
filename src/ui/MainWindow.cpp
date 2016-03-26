@@ -986,7 +986,7 @@ void MainWindow::updateSidebars()
 
 void MainWindow::updateWindowTitle(const QString &title)
 {
-	m_windowTitle = (title.isEmpty() ? QStringLiteral("Otter") : QStringLiteral("%1 - Otter").arg(title));
+	m_windowTitle = title;
 
 	setWindowTitle(m_windowTitle);
 }
