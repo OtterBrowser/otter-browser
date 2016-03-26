@@ -982,9 +982,9 @@ WindowsManager::OpenHints WindowsManager::calculateOpenHints(OpenHints hints, Qt
 		return (useNewTab ? NewTabOpen : NewWindowOpen);
 	}
 
-	if (hints != DefaultOpen)
+	if (hints.testFlag(NewTabOpen) && !hints.testFlag(NewWindowOpen))
 	{
-		return hints;
+		return (useNewTab ? NewTabOpen : NewWindowOpen);
 	}
 
 	if (SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool())
@@ -992,7 +992,7 @@ WindowsManager::OpenHints WindowsManager::calculateOpenHints(OpenHints hints, Qt
 		return CurrentTabOpen;
 	}
 
-	return (useNewTab ? NewTabOpen : NewWindowOpen);
+	return hints;
 }
 
 int WindowsManager::getWindowCount(bool onlyPrivate) const

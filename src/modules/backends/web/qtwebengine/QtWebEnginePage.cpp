@@ -198,7 +198,7 @@ QWebEnginePage* QtWebEnginePage::createWindow(QWebEnginePage::WebWindowType type
 			widget = new QtWebEngineWebWidget(false, NULL, NULL);
 		}
 
-		emit requestedNewWindow(widget, WindowsManager::DefaultOpen);
+		emit requestedNewWindow(widget, WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen));
 
 		return widget->getPage();
 	}

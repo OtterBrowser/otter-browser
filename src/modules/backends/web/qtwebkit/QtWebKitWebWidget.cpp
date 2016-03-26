@@ -585,12 +585,12 @@ void QtWebKitWebWidget::openFormRequest(const QUrl &url, QNetworkAccessManager::
 {
 	m_webView->stop();
 
-	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate(), getBackend(), m_networkManager->clone());
+	QtWebKitWebWidget *widget(new QtWebKitWebWidget(isPrivate(), getBackend(), m_networkManager->clone()));
 	widget->setOptions(getOptions());
 	widget->setZoom(getZoom());
 	widget->openRequest(url, operation, outgoingData);
 
-	emit requestedNewWindow(widget, WindowsManager::NewTabOpen);
+	emit requestedNewWindow(widget, WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen));
 }
 
 void QtWebKitWebWidget::pasteText(const QString &text)
