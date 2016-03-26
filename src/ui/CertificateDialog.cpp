@@ -144,7 +144,7 @@ void CertificateDialog::updateCertificate()
 {
 	const QSslCertificate certificate = m_certificates.value(m_ui->chainItemView->currentIndex().data(Qt::UserRole).toInt());
 
-	m_ui->detailsItemView->getModel()->clear();
+	m_ui->detailsItemView->getSourceModel()->clear();
 
 	createField(VersionField);
 	createField(SerialNumberField);
@@ -475,7 +475,7 @@ QStandardItem* CertificateDialog::createField(CertificateDialog::CertificateFiel
 	}
 	else
 	{
-		m_ui->detailsItemView->getModel()->appendRow(item);
+		m_ui->detailsItemView->getSourceModel()->appendRow(item);
 	}
 
 	return item;

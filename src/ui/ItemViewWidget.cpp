@@ -642,9 +642,14 @@ void ItemViewWidget::setViewMode(ItemViewWidget::ViewMode mode)
 	setIndentation((mode == TreeViewMode) ? m_treeIndentation : 0);
 }
 
-QStandardItemModel* ItemViewWidget::getModel()
+QStandardItemModel* ItemViewWidget::getSourceModel()
 {
 	return m_sourceModel;
+}
+
+QSortFilterProxyModel* ItemViewWidget::getProxyModel()
+{
+	return m_proxyModel;
 }
 
 QStandardItem* ItemViewWidget::getItem(const QModelIndex &index) const

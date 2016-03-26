@@ -197,7 +197,7 @@ void ToolBarDialog::addEntry(const ActionsManager::ActionEntryDefinition &entry,
 	}
 	else
 	{
-		m_ui->currentEntriesItemView->getModel()->appendRow(item);
+		m_ui->currentEntriesItemView->getSourceModel()->appendRow(item);
 	}
 
 	if (entry.action == QLatin1String("CustomMenu"))

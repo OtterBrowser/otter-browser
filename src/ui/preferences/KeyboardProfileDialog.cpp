@@ -117,16 +117,16 @@ void KeyboardProfileDialog::removeShortcut()
 
 void KeyboardProfileDialog::updateActionsActions()
 {
-	disconnect(m_ui->shortcutsViewWidget->getModel(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(saveShortcuts()));
+	disconnect(m_ui->shortcutsViewWidget->getSourceModel(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(saveShortcuts()));
 
-	m_ui->shortcutsViewWidget->getModel()->clear();
+	m_ui->shortcutsViewWidget->getSourceModel()->clear();
 
 	QStringList labels;
 	labels << tr("Shortcut");
 
 	m_currentAction = m_ui->actionsViewWidget->getIndex(m_ui->actionsViewWidget->getCurrentRow(), 0);
 
-	m_ui->shortcutsViewWidget->getModel()->setHorizontalHeaderLabels(labels);
+	m_ui->shortcutsViewWidget->getSourceModel()->setHorizontalHeaderLabels(labels);
 
 	if (!m_currentAction.isValid())
 	{
@@ -152,11 +152,11 @@ void KeyboardProfileDialog::updateActionsActions()
 			items.append(new QStandardItem(shortcut.toString()));
 			items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
-			m_ui->shortcutsViewWidget->getModel()->appendRow(items);
+			m_ui->shortcutsViewWidget->getSourceModel()->appendRow(items);
 		}
 	}
 
-	connect(m_ui->shortcutsViewWidget->getModel(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(saveShortcuts()));
+	connect(m_ui->shortcutsViewWidget->getSourceModel(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(saveShortcuts()));
 }
 
 void KeyboardProfileDialog::updateShortcutsActions()

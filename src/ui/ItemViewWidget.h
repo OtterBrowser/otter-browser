@@ -72,7 +72,8 @@ public:
 	void setModel(QAbstractItemModel *model);
 	void setModel(QAbstractItemModel *model, bool useSortProxy);
 	void setViewMode(ViewMode mode);
-	QStandardItemModel* getModel();
+	QStandardItemModel* getSourceModel();
+	QSortFilterProxyModel* getProxyModel();
 	QStandardItem* getItem(const QModelIndex &index) const;
 	QStandardItem* getItem(int row, int column = 0) const;
 	QModelIndex getIndex(int row, int column = 0) const;

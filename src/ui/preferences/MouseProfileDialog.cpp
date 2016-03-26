@@ -116,7 +116,7 @@ void MouseProfileDialog::changeEvent(QEvent *event)
 
 void MouseProfileDialog::addGesture()
 {
-	QStandardItem *item = m_ui->gesturesViewWidget->getModel()->itemFromIndex(m_ui->gesturesViewWidget->currentIndex().sibling(m_ui->gesturesViewWidget->currentIndex().row(), 0));
+	QStandardItem *item = m_ui->gesturesViewWidget->getSourceModel()->itemFromIndex(m_ui->gesturesViewWidget->currentIndex().sibling(m_ui->gesturesViewWidget->currentIndex().row(), 0));
 
 	if (item && item->flags().testFlag(Qt::ItemNeverHasChildren))
 	{
@@ -142,7 +142,7 @@ void MouseProfileDialog::addGesture()
 
 void MouseProfileDialog::removeGesture()
 {
-	QStandardItem *item = m_ui->gesturesViewWidget->getModel()->itemFromIndex(m_ui->gesturesViewWidget->currentIndex().sibling(m_ui->gesturesViewWidget->currentIndex().row(), 0));
+	QStandardItem *item = m_ui->gesturesViewWidget->getSourceModel()->itemFromIndex(m_ui->gesturesViewWidget->currentIndex().sibling(m_ui->gesturesViewWidget->currentIndex().row(), 0));
 
 	if (item && item->flags().testFlag(Qt::ItemNeverHasChildren))
 	{
@@ -191,11 +191,11 @@ void MouseProfileDialog::removeStep()
 
 void MouseProfileDialog::updateGesturesActions()
 {
-	disconnect(m_ui->stepsViewWidget->getModel(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(saveGesture()));
+	disconnect(m_ui->stepsViewWidget->getSourceModel(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(saveGesture()));
 
-	m_ui->stepsViewWidget->getModel()->removeRows(0, m_ui->stepsViewWidget->getModel()->rowCount());
+	m_ui->stepsViewWidget->getSourceModel()->removeRows(0, m_ui->stepsViewWidget->getSourceModel()->rowCount());
 
-	QStandardItem *item = m_ui->gesturesViewWidget->getModel()->itemFromIndex(m_ui->gesturesViewWidget->currentIndex().sibling(m_ui->gesturesViewWidget->currentIndex().row(), 0));
+	QStandardItem *item = m_ui->gesturesViewWidget->getSourceModel()->itemFromIndex(m_ui->gesturesViewWidget->currentIndex().sibling(m_ui->gesturesViewWidget->currentIndex().row(), 0));
 	const bool isGesture = (item && item->flags().testFlag(Qt::ItemNeverHasChildren));
 
 	m_ui->addGestureButton->setEnabled(item);
@@ -210,21 +210,21 @@ void MouseProfileDialog::updateGesturesActions()
 			QStandardItem *item = new QStandardItem(steps.at(i));
 			item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
-			m_ui->stepsViewWidget->getModel()->appendRow(item);
+			m_ui->stepsViewWidget->getSourceModel()->appendRow(item);
 		}
 	}
 
 	updateStepsActions();
 
-	connect(m_ui->stepsViewWidget->getModel(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(saveGesture()));
+	connect(m_ui->stepsViewWidget->getSourceModel(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(saveGesture()));
 }
 
 void MouseProfileDialog::updateStepsActions()
 {
-	QStandardItem *item = m_ui->gesturesViewWidget->getModel()->itemFromIndex(m_ui->gesturesViewWidget->currentIndex().sibling(m_ui->gesturesViewWidget->currentIndex().row(), 0));
+	QStandardItem *item = m_ui->gesturesViewWidget->getSourceModel()->itemFromIndex(m_ui->gesturesViewWidget->currentIndex().sibling(m_ui->gesturesViewWidget->currentIndex().row(), 0));
 	const bool isGesture = (item && item->flags().testFlag(Qt::ItemNeverHasChildren));
 
-	item = m_ui->stepsViewWidget->getModel()->itemFromIndex(m_ui->stepsViewWidget->currentIndex().sibling(m_ui->stepsViewWidget->currentIndex().row(), 0));
+	item = m_ui->stepsViewWidget->getSourceModel()->itemFromIndex(m_ui->stepsViewWidget->currentIndex().sibling(m_ui->stepsViewWidget->currentIndex().row(), 0));
 
 	m_ui->addStepButton->setEnabled(isGesture);
 	m_ui->removeStepButton->setEnabled(isGesture && item);
@@ -239,9 +239,9 @@ MouseProfile MouseProfileDialog::getProfile() const
 	profile.author = m_ui->authorLineEdit->text();
 	profile.isModified = m_isModified;
 
-	for (int i = 0; i < m_ui->gesturesViewWidget->getModel()->rowCount(); ++i)
+	for (int i = 0; i < m_ui->gesturesViewWidget->getSourceModel()->rowCount(); ++i)
 	{
-		QStandardItem *contextItem = m_ui->gesturesViewWidget->getModel()->item(i, 0);
+		QStandardItem *contextItem = m_ui->gesturesViewWidget->getSourceModel()->item(i, 0);
 
 		if (contextItem && contextItem->rowCount() > 0)
 		{

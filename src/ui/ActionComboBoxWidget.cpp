@@ -77,7 +77,7 @@ void ActionComboBoxWidget::paintEvent(QPaintEvent *event)
 
 	if (currentIndex() >= 0)
 	{
-		itemDelegate()->paint(&painter, viewItemOption, m_view->getModel()->index(currentIndex(), 0));
+		itemDelegate()->paint(&painter, viewItemOption, m_view->getSourceModel()->index(currentIndex(), 0));
 	}
 	else
 	{
@@ -118,7 +118,7 @@ void ActionComboBoxWidget::setActionIdentifier(int action)
 
 int ActionComboBoxWidget::getActionIdentifier() const
 {
-	return m_view->getModel()->index(currentIndex(), 0).data(Qt::UserRole).toInt();
+	return m_view->getSourceModel()->index(currentIndex(), 0).data(Qt::UserRole).toInt();
 }
 
 bool ActionComboBoxWidget::eventFilter(QObject *object, QEvent *event)

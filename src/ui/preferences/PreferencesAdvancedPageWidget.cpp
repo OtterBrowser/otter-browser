@@ -1429,7 +1429,7 @@ void PreferencesAdvancedPageWidget::save()
 	SettingsManager::setValue(QLatin1String("Proxy/AutomaticConfigurationPath"), m_ui->automaticProxyConfigurationFilePathWidget->getPath());
 	SettingsManager::setValue(QLatin1String("Proxy/UseSystemAuthentication"), m_ui->proxySystemAuthentication->isChecked());
 
-	QStandardItemModel *proxyListModel = m_ui->proxyExceptionsItemView->getModel();
+	QStandardItemModel *proxyListModel = m_ui->proxyExceptionsItemView->getSourceModel();
 	QStringList proxyExceptions;
 
 	for (int i = 0; i < proxyListModel->rowCount(); ++i)
@@ -1646,7 +1646,7 @@ QString PreferencesAdvancedPageWidget::createProfileIdentifier(ItemViewWidget *v
 
 QStringList PreferencesAdvancedPageWidget::getSelectedUpdateChannels() const
 {
-	QStandardItemModel *updateListModel = m_ui->updateChannelsItemView->getModel();
+	QStandardItemModel *updateListModel = m_ui->updateChannelsItemView->getSourceModel();
 	QStringList updateChannels;
 
 	for (int i = 0; i < updateListModel->rowCount(); ++i)
