@@ -191,12 +191,13 @@ QWebEnginePage* QtWebEnginePage::createWindow(QWebEnginePage::WebWindowType type
 		if (m_widget)
 		{
 			widget = qobject_cast<QtWebEngineWebWidget*>(m_widget->clone(false));
-			widget->setRequestedUrl(m_widget->getRequestedUrl(), false, true);
 		}
 		else
 		{
 			widget = new QtWebEngineWebWidget(false, NULL, NULL);
 		}
+
+		widget->pageLoadStarted();
 
 		emit requestedNewWindow(widget, WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen));
 

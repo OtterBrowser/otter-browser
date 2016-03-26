@@ -282,12 +282,13 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 		if (m_widget)
 		{
 			widget = qobject_cast<QtWebKitWebWidget*>(m_widget->clone(false));
-			widget->setRequestedUrl(m_widget->getRequestedUrl(), false, true);
 		}
 		else
 		{
 			widget = new QtWebKitWebWidget(settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled), NULL, NULL);
 		}
+
+		widget->pageLoadStarted();
 
 		emit requestedNewWindow(widget, WindowsManager::calculateOpenHints(popupsPolicy == QLatin1String("openAllInBackground") ? (WindowsManager::NewTabOpen | WindowsManager::BackgroundOpen) : WindowsManager::NewTabOpen));
 
