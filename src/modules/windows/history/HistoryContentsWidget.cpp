@@ -206,9 +206,19 @@ void HistoryContentsWidget::addEntry(HistoryEntryItem *entry)
 
 	m_ui->historyViewWidget->setRowHidden(groupItem->row(), groupItem->index().parent(), false);
 
-	if (sender())
+	if (sender() && groupItem->rowCount() == 1 && SettingsManager::getValue(QLatin1String("History/ExpandBranches")).toString() == QLatin1String("first"))
 	{
-		groupItem->sortChildren(2, Qt::DescendingOrder);
+		for (int i = 0; i < m_model->rowCount(); ++i)
+		{
+			const QModelIndex index(m_model->index(i, 0));
+
+			if (m_model->rowCount(index) > 0)
+			{
+				m_ui->historyViewWidget->expand(m_ui->historyViewWidget->getProxyModel()->mapFromSource(index));
+
+				break;
+			}
+		}
 	}
 }
 
