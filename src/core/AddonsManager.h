@@ -27,6 +27,7 @@
 namespace Otter
 {
 
+class UserScript;
 class WebBackend;
 
 class AddonsManager : public QObject
@@ -59,8 +60,10 @@ public:
 	static void createInstance(QObject *parent = NULL);
 	static void registerWebBackend(WebBackend *backend, const QString &name);
 	static void registerSpecialPage(const SpecialPageInformation &information, const QString &name);
+	static UserScript* getUserScript(const QString &name = QString());
 	static WebBackend* getWebBackend(const QString &name = QString());
 	static SpecialPageInformation getSpecialPage(const QString &name);
+	static QStringList getUserScripts();
 	static QStringList getWebBackends();
 	static QStringList getSpecialPages();
 
@@ -69,8 +72,10 @@ protected:
 
 private:
 	static AddonsManager *m_instance;
+	static QHash<QString, UserScript*> m_userScripts;
 	static QHash<QString, WebBackend*> m_webBackends;
 	static QHash<QString, SpecialPageInformation> m_specialPages;
+	static bool m_areUserScripsInitialized;
 };
 
 }

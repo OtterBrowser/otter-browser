@@ -20,6 +20,7 @@
 #include "AddonsManager.h"
 #include "SettingsManager.h"
 #include "ThemesManager.h"
+#include "UserScript.h"
 #include "WebBackend.h"
 #ifdef OTTER_ENABLE_QTWEBENGINE
 #include "../modules/backends/web/qtwebengine/QtWebEngineWebBackend.h"
@@ -32,8 +33,10 @@ namespace Otter
 {
 
 AddonsManager *AddonsManager::m_instance = NULL;
+QHash<QString, UserScript*> AddonsManager::m_userScripts;
 QHash<QString, WebBackend*> AddonsManager::m_webBackends;
 QHash<QString, AddonsManager::SpecialPageInformation> AddonsManager::m_specialPages;
+bool AddonsManager::m_areUserScripsInitialized = false;
 
 AddonsManager::AddonsManager(QObject *parent) : QObject(parent)
 {
@@ -71,14 +74,14 @@ void AddonsManager::registerSpecialPage(const AddonsManager::SpecialPageInformat
 	m_specialPages[name] = information;
 }
 
-QStringList AddonsManager::getWebBackends()
+UserScript* AddonsManager::getUserScript(const QString &name)
 {
-	return m_webBackends.keys();
-}
+	if (m_userScripts.contains(name))
+	{
+		return m_userScripts[name];
+	}
 
-QStringList AddonsManager::getSpecialPages()
-{
-	return m_specialPages.keys();
+	return NULL;
 }
 
 WebBackend* AddonsManager::getWebBackend(const QString &name)
@@ -111,6 +114,21 @@ AddonsManager::SpecialPageInformation AddonsManager::getSpecialPage(const QStrin
 	}
 
 	return SpecialPageInformation();
+}
+
+QStringList AddonsManager::getUserScripts()
+{
+	return m_userScripts.keys();
+}
+
+QStringList AddonsManager::getWebBackends()
+{
+	return m_webBackends.keys();
+}
+
+QStringList AddonsManager::getSpecialPages()
+{
+	return m_specialPages.keys();
 }
 
 }

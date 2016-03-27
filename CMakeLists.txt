@@ -126,6 +126,7 @@ set(otter_src
 	src/core/TransfersManager.cpp
 	src/core/UpdateChecker.cpp
 	src/core/Updater.cpp
+	src/core/UserScript.cpp
 	src/core/Utils.cpp
 	src/core/WebBackend.cpp
 	src/core/WindowsManager.cpp
