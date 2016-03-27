@@ -168,6 +168,13 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 			restore();
 
 			break;
+		case ActionsManager::StopAllAction:
+			for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
+			{
+				getWindowByIndex(i)->triggerAction(ActionsManager::StopAction);
+			}
+
+			break;
 		case ActionsManager::ReloadAllAction:
 			for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
 			{

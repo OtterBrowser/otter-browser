@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -348,6 +348,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(FastForwardAction, QT_TRANSLATE_NOOP("actions", "Fast Forward"), QString(), ThemesManager::getIcon(QLatin1String("go-last")));
 	registerAction(StopAction, QT_TRANSLATE_NOOP("actions", "Stop"), QString(), ThemesManager::getIcon(QLatin1String("process-stop")));
 	registerAction(StopScheduledReloadAction, QT_TRANSLATE_NOOP("actions", "Stop Scheduled Page Reload"));
+	registerAction(StopAllAction, QT_TRANSLATE_NOOP("actions", "Stop All Pages"), QString(), ThemesManager::getIcon(QLatin1String("process-stop")));
 	registerAction(ReloadAction, QT_TRANSLATE_NOOP("actions", "Reload"), QString(), ThemesManager::getIcon(QLatin1String("view-refresh")));
 	registerAction(ReloadOrStopAction, QT_TRANSLATE_NOOP("actions", "Reload"), QT_TRANSLATE_NOOP("actions", "Reload or Stop"), ThemesManager::getIcon(QLatin1String("view-refresh")));
 	registerAction(ReloadAndBypassCacheAction, QT_TRANSLATE_NOOP("actions", "Reload and Bypass Cache"));
