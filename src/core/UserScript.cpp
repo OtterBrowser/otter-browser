@@ -78,6 +78,10 @@ UserScript::UserScript(const QString &path, QObject *parent) : Addon(parent),
 		{
 			m_excludeRules.append(line.section(QLatin1Char(' '), 0, -1));
 		}
+		else if (keyword == QLatin1String("homepage"))
+		{
+			m_homePage = QUrl(line.section(QLatin1Char(' '), 0, -1));
+		}
 		else if (keyword == QLatin1String("include"))
 		{
 			m_includeRules.append(line.section(QLatin1Char(' '), 0, -1));
@@ -165,7 +169,7 @@ QString UserScript::getSource()
 
 QUrl UserScript::getHomePage() const
 {
-	return QUrl();
+	return m_homePage;
 }
 
 QUrl UserScript::getUpdateUrl() const

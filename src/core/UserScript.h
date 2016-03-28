@@ -59,6 +59,7 @@ private:
 	QString m_title;
 	QString m_description;
 	QString m_version;
+	QUrl m_homePage;
 	QUrl m_updateUrl;
 	QIcon  m_icon;
 	QStringList m_excludeRules;
