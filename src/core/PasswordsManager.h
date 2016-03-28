@@ -20,13 +20,14 @@
 #ifndef OTTER_PASSWORDSMANAGER_H
 #define OTTER_PASSWORDSMANAGER_H
 
+#include <QtCore/QMap>
 #include <QtCore/QObject>
+#include <QtCore/QUrl>
 
 namespace Otter
 {
 
 class PasswordsStorageBackend;
-class WebWidget;
 
 class PasswordsManager : public QObject
 {
@@ -39,10 +40,20 @@ public:
 		AuthPassword = 1
 	};
 
+	struct PasswordInformation
+	{
+		QUrl url;
+		QStringList passwords;
+		QMap<QString, QString> fields;
+		PasswordType type;
+
+		PasswordInformation() : type(FormPassword) {}
+	};
+
 	static void createInstance(QObject *parent = NULL);
-	static void addPassword(const QUrl &url, const QMap<QString, QString> &values, PasswordType type = FormPassword);
-	static void applyPassword(WebWidget *widget);
+	static void addPassword(const PasswordInformation &password);
 	static PasswordsManager* getInstance();
+	static QList<PasswordInformation> getPasswords(const QUrl &url);
 
 protected:
 	explicit PasswordsManager(QObject *parent = NULL);

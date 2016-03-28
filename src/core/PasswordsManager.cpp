@@ -18,7 +18,6 @@
 **************************************************************************/
 
 #include "PasswordsManager.h"
-#include "../ui/WebWidget.h"
 
 namespace Otter
 {
@@ -38,21 +37,19 @@ void PasswordsManager::createInstance(QObject *parent)
 	}
 }
 
-void PasswordsManager::addPassword(const QUrl &url, const QMap<QString, QString> &values, PasswordsManager::PasswordType type)
+void PasswordsManager::addPassword(const PasswordInformation &password)
 {
-	Q_UNUSED(url)
-	Q_UNUSED(values)
-	Q_UNUSED(type)
-}
-
-void PasswordsManager::applyPassword(WebWidget *widget)
-{
-	Q_UNUSED(widget)
+	Q_UNUSED(password)
 }
 
 PasswordsManager* PasswordsManager::getInstance()
 {
 	return m_instance;
+}
+
+QList<PasswordsManager::PasswordInformation> PasswordsManager::getPasswords(const QUrl &url)
+{
+	Q_UNUSED(url)
 }
 
 }
