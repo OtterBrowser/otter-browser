@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "AddonsManager.h"
+#include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "ThemesManager.h"
 #include "UserScript.h"
@@ -28,6 +29,11 @@
 #ifdef OTTER_ENABLE_QTWEBKIT
 #include "../modules/backends/web/qtwebkit/QtWebKitWebBackend.h"
 #endif
+
+#include <QtCore/QDir>
+#include <QtCore/QFileInfo>
+#include <QtCore/QJsonDocument>
+#include <QtCore/QJsonObject>
 
 namespace Otter
 {
@@ -89,8 +95,53 @@ void AddonsManager::registerSpecialPage(const AddonsManager::SpecialPageInformat
 	m_specialPages[name] = information;
 }
 
+void AddonsManager::loadUserScripts()
+{
+	qDeleteAll(m_userScripts.values());
+
+	m_userScripts.clear();
+
+	QHash<QString, bool> enabledScripts;
+	QFile file(SessionsManager::getWritableDataPath(QLatin1String("scripts/scripts.json")));
+
+	if (file.open(QIODevice::ReadOnly))
+	{
+		const QJsonObject settings(QJsonDocument::fromJson(file.readAll()).object());
+		QJsonObject::const_iterator iterator;
+
+		for (iterator = settings.constBegin(); iterator != settings.constEnd(); ++iterator)
+		{
+			enabledScripts[iterator.key()] = iterator.value().toObject().value(QLatin1String("isEnabled")).toBool(false);
+		}
+
+		file.close();
+	}
+
+	const QList<QFileInfo> scripts(QDir(SessionsManager::getWritableDataPath(QLatin1String("scripts"))).entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot));
+
+	for (int i = 0; i < scripts.count(); ++i)
+	{
+		const QString path(QDir(scripts.at(i).absoluteFilePath()).filePath(scripts.at(i).fileName() + QLatin1String(".js")));
+
+		if (QFile::exists(path))
+		{
+			UserScript *script = new UserScript(path, m_instance);
+			script->setEnabled(enabledScripts.value(scripts.at(i).fileName(), false));
+
+			m_userScripts[scripts.at(i).fileName()] = script;
+		}
+	}
+
+	m_areUserScripsInitialized = true;
+}
+
 UserScript* AddonsManager::getUserScript(const QString &name)
 {
+	if (!m_areUserScripsInitialized)
+	{
+		loadUserScripts();
+	}
+
 	if (m_userScripts.contains(name))
 	{
 		return m_userScripts[name];
@@ -133,6 +184,11 @@ AddonsManager::SpecialPageInformation AddonsManager::getSpecialPage(const QStrin
 
 QStringList AddonsManager::getUserScripts()
 {
+	if (!m_areUserScripsInitialized)
+	{
+		loadUserScripts();
+	}
+
 	return m_userScripts.keys();
 }
 

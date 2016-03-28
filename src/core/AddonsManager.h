@@ -85,6 +85,7 @@ public:
 	static void createInstance(QObject *parent = NULL);
 	static void registerWebBackend(WebBackend *backend, const QString &name);
 	static void registerSpecialPage(const SpecialPageInformation &information, const QString &name);
+	static void loadUserScripts();
 	static UserScript* getUserScript(const QString &name = QString());
 	static WebBackend* getWebBackend(const QString &name = QString());
 	static SpecialPageInformation getSpecialPage(const QString &name);
