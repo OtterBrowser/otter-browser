@@ -28,6 +28,7 @@
 #include "../../../../core/LocalListingNetworkReply.h"
 #include "../../../../core/NetworkCache.h"
 #include "../../../../core/NetworkManagerFactory.h"
+#include "../../../../core/PasswordsManager.h"
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/ThemesManager.h"
 #include "../../../../core/WebBackend.h"
@@ -36,6 +37,9 @@
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QFileInfo>
+#include <QtCore/QJsonArray>
+#include <QtCore/QJsonDocument>
+#include <QtCore/QJsonObject>
 #include <QtNetwork/QNetworkProxy>
 #include <QtNetwork/QNetworkReply>
 
@@ -503,7 +507,40 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 		return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest());
 	}
 
-	const QString host = request.url().host();
+	if (request.url().path() == QLatin1String("/otter-password") && request.hasRawHeader(QByteArray("X-Otter-Token")) && request.hasRawHeader(QByteArray("X-Otter-Data")))
+	{
+		if (QString(request.rawHeader(QByteArray("X-Otter-Token"))) == m_widget->getPasswordToken())
+		{
+			const QJsonObject object(QJsonDocument::fromJson(QByteArray::fromBase64(request.rawHeader(QByteArray("X-Otter-Data")))).object());
+			PasswordsManager::PasswordInformation password;
+			password.url = QUrl(object.value(QLatin1String("url")).toString());
+			password.type = PasswordsManager::FormPassword;
+
+			const QJsonObject fields(object.value(QLatin1String("fields")).toObject());
+			QJsonObject::const_iterator iterator;
+
+			for (iterator = fields.constBegin(); iterator != fields.constEnd(); ++iterator)
+			{
+				password.fields[iterator.key()] = iterator.value().toString();
+			}
+
+			const QJsonArray passwords(object.value(QLatin1String("passwords")).toArray());
+
+			for (int i = 0; i < passwords.count(); ++i)
+			{
+				password.passwords.append(passwords.at(i).toString());
+			}
+
+			m_widget->notifyAddPasswordRequested(password);
+		}
+
+		QUrl url;
+		url.setScheme(QLatin1String("http"));
+
+		return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(url));
+	}
+
+	const QString host(request.url().host());
 
 	if (!m_widget->isNavigating())
 	{

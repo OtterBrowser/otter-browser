@@ -115,6 +115,7 @@ protected:
 	void setHistory(QDataStream &stream);
 	void setOptions(const QVariantHash &options);
 	QWebPage* getPage();
+	QString getPasswordToken() const;
 	QString getPluginToken() const;
 	int getAmountOfNotLoadedPlugins() const;
 	bool canLoadPlugins() const;
@@ -145,6 +146,7 @@ protected slots:
 	void notifyUrlChanged(const QUrl &url);
 	void notifyIconChanged();
 	void notifyPermissionRequested(QWebFrame *frame, QWebPage::Feature feature, bool cancel);
+	void notifyAddPasswordRequested(const PasswordsManager::PasswordInformation &password);
 	void notifyContentStateChanged();
 	void updateUndoText(const QString &text);
 	void updateRedoText(const QString &text);
@@ -157,6 +159,7 @@ private:
 	QtWebKitInspector *m_inspector;
 	QtWebKitNetworkManager *m_networkManager;
 	QSplitter *m_splitter;
+	QString m_passwordToken;
 	QString m_pluginToken;
 	QPixmap m_thumbnail;
 	QUrl m_formRequestUrl;

@@ -339,6 +339,40 @@ void QtWebKitWebWidget::pageLoadFinished()
 			m_page->mainFrame()->evaluateJavaScript(scripts.at(i)->getSource());
 		}
 	}
+
+	if (!SettingsManager::getValue(QLatin1String("Browser/EnablePasswordsManager")).toBool() || !SettingsManager::getValue(QLatin1String("Browser/AskToSavePassword")).toBool())
+	{
+		return;
+	}
+
+	m_passwordToken = QUuid::createUuid().toString();
+
+	QFile file(QLatin1String(":/modules/backends/web/qtwebkit/resources/formExtractor.js"));
+	file.open(QIODevice::ReadOnly);
+
+	if (frames.isEmpty())
+	{
+		QList<QWebFrame*> temporaryFrames;
+		temporaryFrames.append(m_page->mainFrame());
+
+		while (!temporaryFrames.isEmpty())
+		{
+			QWebFrame *frame(temporaryFrames.takeFirst());
+
+			frames.append(frame);
+
+			temporaryFrames.append(frame->childFrames());
+		}
+	}
+
+	const QString script(QString(file.readAll()).arg(m_passwordToken));
+
+	for (int j = 0; j < frames.count(); ++j)
+	{
+		frames.at(j)->evaluateJavaScript(script);
+	}
+
+	file.close();
 }
 
 void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
@@ -717,6 +751,11 @@ void QtWebKitWebWidget::notifyPermissionRequested(QWebFrame *frame, QWebPage::Fe
 			}
 		}
 	}
+}
+
+void QtWebKitWebWidget::notifyAddPasswordRequested(const PasswordsManager::PasswordInformation &password)
+{
+	emit requestedAddPassword(password);
 }
 
 void QtWebKitWebWidget::notifyContentStateChanged()
@@ -1864,6 +1903,11 @@ QString QtWebKitWebWidget::getActiveStyleSheet() const
 QString QtWebKitWebWidget::getSelectedText() const
 {
 	return m_webView->selectedText();
+}
+
+QString QtWebKitWebWidget::getPasswordToken() const
+{
+	return m_passwordToken;
 }
 
 QString QtWebKitWebWidget::getPluginToken() const
