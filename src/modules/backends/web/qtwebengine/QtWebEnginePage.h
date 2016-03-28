@@ -50,6 +50,7 @@ protected:
 	bool javaScriptPrompt(const QUrl &url, const QString &message, const QString &defaultValue, QString *result);
 
 protected slots:
+	void pageLoadStarted();
 	void pageLoadFinished();
 	void handlePageLoaded(const QString &result);
 	void notifyRenderProcessTerminated(RenderProcessTerminationStatus status);

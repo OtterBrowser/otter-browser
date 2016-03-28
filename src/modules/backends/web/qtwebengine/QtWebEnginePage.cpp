@@ -20,9 +20,11 @@
 
 #include "QtWebEnginePage.h"
 #include "QtWebEngineWebWidget.h"
+#include "../../../../core/AddonsManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/ContentBlockingManager.h"
 #include "../../../../core/ThemesManager.h"
+#include "../../../../core/UserScript.h"
 #include "../../../../ui/ContentsDialog.h"
 
 #include <QtCore/QEventLoop>
@@ -30,6 +32,8 @@
 #include <QtCore/QRegularExpression>
 #include <QtGui/QDesktopServices>
 #include <QtWebEngineWidgets/QWebEngineProfile>
+#include <QtWebEngineWidgets/QWebEngineScript>
+#include <QtWebEngineWidgets/QWebEngineScriptCollection>
 #include <QtWebEngineWidgets/QWebEngineSettings>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLineEdit>
@@ -66,8 +70,37 @@ QtWebEnginePage::QtWebEnginePage(bool isPrivate, QtWebEngineWebWidget *parent) :
 	m_ignoreJavaScriptPopups(false),
 	m_isViewingMedia(false)
 {
+	connect(this, SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
 	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 	connect(this, SIGNAL(renderProcessTerminated(RenderProcessTerminationStatus,int)), this, SLOT(notifyRenderProcessTerminated(RenderProcessTerminationStatus)));
+}
+
+void QtWebEnginePage::pageLoadStarted()
+{
+	scripts().clear();
+
+	const QList<UserScript*> scripts(AddonsManager::getUserScriptsForUrl(url()));
+
+	for (int i = 0; i < scripts.count(); ++i)
+	{
+		QWebEngineScript::InjectionPoint injectionPoint(QWebEngineScript::DocumentReady);
+
+		if (scripts.at(i)->getInjectionTime() == UserScript::DocumentCreationTime)
+		{
+			injectionPoint = QWebEngineScript::DocumentCreation;
+		}
+		else if (scripts.at(i)->getInjectionTime() == UserScript::DeferredTime)
+		{
+			injectionPoint = QWebEngineScript::Deferred;
+		}
+
+		QWebEngineScript script;
+		script.setSourceCode(scripts.at(i)->getSource());
+		script.setRunsOnSubFrames(scripts.at(i)->shouldRunOnSubFrames());
+		script.setInjectionPoint(injectionPoint);
+
+		this->scripts().insert(script);
+	}
 }
 
 void QtWebEnginePage::pageLoadFinished()
@@ -107,8 +140,8 @@ void QtWebEnginePage::handlePageLoaded(const QString &result)
 	QString string(url().toString());
 	string.truncate(1000);
 
-	const QRegularExpressionMatch match = QRegularExpression(QStringLiteral(">(<img style=\"-webkit-user-select: none;(?: cursor: zoom-in;)?\"|<video controls=\"\" autoplay=\"\" name=\"media\"><source) src=\"%1").arg(QRegularExpression::escape(string))).match(result);
-	const bool isViewingMedia = match.hasMatch();
+	const QRegularExpressionMatch match(QRegularExpression(QStringLiteral(">(<img style=\"-webkit-user-select: none;(?: cursor: zoom-in;)?\"|<video controls=\"\" autoplay=\"\" name=\"media\"><source) src=\"%1").arg(QRegularExpression::escape(string))).match(result));
+	const bool isViewingMedia(match.hasMatch());
 
 	if (isViewingMedia && match.captured().startsWith(QLatin1String("><img")))
 	{
