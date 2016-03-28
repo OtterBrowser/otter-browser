@@ -90,6 +90,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 	if (toolBar)
 	{
 		optionChanged(QLatin1String("AddressField/ShowBookmarkIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowBookmarkIcon")));
+		optionChanged(QLatin1String("AddressField/ShowFeedsIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowFeedsIcon")));
 		optionChanged(QLatin1String("AddressField/ShowUrlIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowUrlIcon")));
 
 		m_lineEdit->setPlaceholderText(tr("Enter address or search…"));
@@ -530,6 +531,10 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 			updateIcons();
 		}
 	}
+	else if (option == QLatin1String("AddressField/ShowFeedsIcon"))
+	{
+		updateFeeds();
+	}
 	else if (option == QLatin1String("AddressField/ShowUrlIcon"))
 	{
 		if (value.toBool() && !m_urlIconLabel)
@@ -680,7 +685,7 @@ void AddressWidget::updateBookmark(const QUrl &url)
 
 void AddressWidget::updateFeeds()
 {
-	const QList<LinkUrl> feeds = ((m_window && m_window->getLoadingState() == WindowsManager::FinishedLoadingState) ? m_window->getContentsWidget()->getFeeds() : QList<LinkUrl>());
+	const QList<LinkUrl> feeds((SettingsManager::getValue(QLatin1String("AddressField/ShowFeedsIcon")).toBool() && m_window && m_window->getLoadingState() == WindowsManager::FinishedLoadingState) ? m_window->getContentsWidget()->getFeeds() : QList<LinkUrl>());
 
 	if (!feeds.isEmpty() && !m_feedsLabel)
 	{
