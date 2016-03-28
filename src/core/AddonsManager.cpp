@@ -32,8 +32,19 @@
 namespace Otter
 {
 
-Addon::Addon(QObject *parent) : QObject(parent)
+Addon::Addon(QObject *parent) : QObject(parent),
+	m_isEnabled(true)
 {
+}
+
+void Addon::setEnabled(bool isEnabled)
+{
+	m_isEnabled = isEnabled;
+}
+
+bool Addon::isEnabled() const
+{
+	return m_isEnabled;
 }
 
 AddonsManager *AddonsManager::m_instance = NULL;

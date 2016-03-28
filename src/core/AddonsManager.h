@@ -27,6 +27,7 @@
 namespace Otter
 {
 
+class AddonsManager;
 class UserScript;
 class WebBackend;
 
@@ -43,6 +44,15 @@ public:
 	virtual QUrl getHomePage() const = 0;
 	virtual QUrl getUpdateUrl() const = 0;
 	virtual QIcon getIcon() const = 0;
+	virtual bool isEnabled() const;
+
+protected:
+	void setEnabled(bool isEnabled);
+
+private:
+	bool m_isEnabled;
+
+friend class AddonsManager;
 };
 
 class AddonsManager : public QObject
