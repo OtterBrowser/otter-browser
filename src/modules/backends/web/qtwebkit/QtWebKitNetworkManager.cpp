@@ -98,6 +98,7 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, CookieJarProxy *c
 	connect(this, SIGNAL(authenticationRequired(QNetworkReply*,QAuthenticator*)), this, SLOT(handleAuthenticationRequired(QNetworkReply*,QAuthenticator*)));
 	connect(this, SIGNAL(proxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)), this, SLOT(handleProxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)));
 	connect(this, SIGNAL(sslErrors(QNetworkReply*,QList<QSslError>)), this, SLOT(handleSslErrors(QNetworkReply*,QList<QSslError>)));
+	connect(NetworkManagerFactory::getInstance(), SIGNAL(onlineStateChanged(bool)), this, SLOT(handleOnlineStateChanged(bool)));
 }
 
 void QtWebKitNetworkManager::timerEvent(QTimerEvent *event)
@@ -219,6 +220,14 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 
 			SettingsManager::setValue(QLatin1String("Security/IgnoreSslErrors"), ignoredErrors, m_widget->getUrl());
 		}
+	}
+}
+
+void QtWebKitNetworkManager::handleOnlineStateChanged(bool isOnline)
+{
+	if (isOnline)
+	{
+		setNetworkAccessible(QNetworkAccessManager::Accessible);
 	}
 }
 
