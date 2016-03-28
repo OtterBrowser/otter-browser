@@ -46,6 +46,9 @@ public:
 	QUrl getHomePage() const;
 	QUrl getUpdateUrl() const;
 	QIcon getIcon() const;
+	QStringList getExcludeRules() const;
+	QStringList getIncludeRules() const;
+	QStringList getMatchRules() const;
 	InjectionTime getInjectionTime() const;
 	bool isEnabledForUrl(const QUrl &url);
 	bool shouldRunOnSubFrames() const;
@@ -56,9 +59,11 @@ private:
 	QString m_title;
 	QString m_description;
 	QString m_version;
-	QUrl m_homePage;
 	QUrl m_updateUrl;
 	QIcon  m_icon;
+	QStringList m_excludeRules;
+	QStringList m_includeRules;
+	QStringList m_matchRules;
 	InjectionTime m_injectionTime;
 	bool m_shouldRunOnSubFrames;
 

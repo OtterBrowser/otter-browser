@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "UserScript.h"
+#include "Console.h"
 
 #include <QtCore/QFile>
 #include <QtCore/QTextStream>
@@ -30,6 +31,102 @@ UserScript::UserScript(const QString &path, QObject *parent) : Addon(parent),
 	m_injectionTime(DocumentReadyTime),
 	m_shouldRunOnSubFrames(true)
 {
+	QFile file(path);
+
+	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+	{
+		Console::addMessage(QCoreApplication::translate("main", "Failed to open user script file: %1").arg(file.errorString()), Otter::OtherMessageCategory, ErrorMessageLevel, path);
+
+		return;
+	}
+
+	QTextStream stream(&file);
+	bool hasHeader(false);
+
+	while (!stream.atEnd())
+	{
+		QString line(stream.readLine().trimmed());
+
+		if (!line.startsWith(QLatin1String("//")))
+		{
+			continue;
+		}
+
+		line = line.mid(2).trimmed();
+
+		if (line.startsWith(QLatin1String("==UserScript==")))
+		{
+			hasHeader = true;
+
+			continue;
+		}
+
+		if (!line.startsWith(QLatin1Char('@')))
+		{
+			continue;
+		}
+
+		line = line.mid(1);
+
+		const QString keyword(line.section(QLatin1Char(' '), 0, 0));
+
+		if (keyword == QLatin1String("description"))
+		{
+			m_description = line.section(QLatin1Char(' '), 0, -1);
+		}
+		else if (keyword == QLatin1String("exclude"))
+		{
+			m_excludeRules.append(line.section(QLatin1Char(' '), 0, -1));
+		}
+		else if (keyword == QLatin1String("include"))
+		{
+			m_includeRules.append(line.section(QLatin1Char(' '), 0, -1));
+		}
+		else if (keyword == QLatin1String("match"))
+		{
+			m_matchRules.append(line.section(QLatin1Char(' '), 0, -1));
+		}
+		else if (keyword == QLatin1String("name"))
+		{
+			m_title = line.section(QLatin1Char(' '), 0, -1);
+		}
+		else if (keyword == QLatin1String("noframes"))
+		{
+			m_shouldRunOnSubFrames = true;
+		}
+		else if (keyword == QLatin1String("run-at"))
+		{
+			const QString injectionTime(line.section(QLatin1Char(' '), 0, -1));
+
+			if (injectionTime == QLatin1String("document-start"))
+			{
+				m_injectionTime = DocumentCreationTime;
+			}
+			else if (injectionTime == QLatin1String("document-idle"))
+			{
+				m_injectionTime = DeferredTime;
+			}
+			else
+			{
+				m_injectionTime = DocumentReadyTime;
+			}
+		}
+		else if (keyword == QLatin1String("updateURL"))
+		{
+			m_updateUrl = QUrl(line.section(QLatin1Char(' '), 0, -1));
+		}
+		else if (keyword == QLatin1String("version"))
+		{
+			m_version = line.section(QLatin1Char(' '), 0, -1);
+		}
+	}
+
+	file.close();
+
+	if (!hasHeader)
+	{
+		Console::addMessage(QCoreApplication::translate("main", "Failed to locate header of user script file"), Otter::OtherMessageCategory, WarningMessageLevel, path);
+	}
 }
 
 QString UserScript::getTitle() const
@@ -68,7 +165,7 @@ QString UserScript::getSource()
 
 QUrl UserScript::getHomePage() const
 {
-	return m_homePage;
+	return QUrl();
 }
 
 QUrl UserScript::getUpdateUrl() const
@@ -79,6 +176,21 @@ QUrl UserScript::getUpdateUrl() const
 QIcon UserScript::getIcon() const
 {
 	return m_icon;
+}
+
+QStringList UserScript::getExcludeRules() const
+{
+	return m_excludeRules;
+}
+
+QStringList UserScript::getIncludeRules() const
+{
+	return m_includeRules;
+}
+
+QStringList UserScript::getMatchRules() const
+{
+	return m_matchRules;
 }
 
 UserScript::InjectionTime UserScript::getInjectionTime() const
