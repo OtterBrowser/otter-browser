@@ -22,6 +22,7 @@
 #ifndef OTTER_WEBWIDGET_H
 #define OTTER_WEBWIDGET_H
 
+#include "../core/PasswordsManager.h"
 #include "../core/SessionsManager.h"
 #include "../core/SpellCheckManager.h"
 #include "Window.h"
@@ -254,6 +255,7 @@ signals:
 	void requestedSearch(QString query, QString search, WindowsManager::OpenHints hints);
 	void requestedPopupWindow(const QUrl &parentUrl, const QUrl &popupUrl);
 	void requestedPermission(QString option, QUrl url, bool cancel);
+	void requestedAddPassword(const PasswordsManager::PasswordInformation &password);
 	void requestedGeometryChange(const QRect &geometry);
 	void progressBarGeometryChanged();
 	void loadMessageChanged(QString message);

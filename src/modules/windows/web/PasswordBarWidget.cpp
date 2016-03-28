@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -25,11 +25,15 @@
 namespace Otter
 {
 
-PasswordBarWidget::PasswordBarWidget(QWidget *parent) : QWidget(parent),
+PasswordBarWidget::PasswordBarWidget(const PasswordsManager::PasswordInformation &password, QWidget *parent) : QWidget(parent),
 	m_ui(new Ui::PasswordBarWidget)
 {
 	m_ui->setupUi(this);
 	m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("dialog-password"), false).pixmap(m_ui->iconLabel->size()));
+	m_ui->messageLabel->setText(tr("Do you want to save login data for %1?").arg(password.url.host()));
+
+	connect(m_ui->okButton, SIGNAL(clicked()), this, SLOT(accepted()));
+	connect(m_ui->cancelButton, SIGNAL(clicked()), this, SLOT(rejected()));
 }
 
 PasswordBarWidget::~PasswordBarWidget()
@@ -45,6 +49,22 @@ void PasswordBarWidget::changeEvent(QEvent *event)
 	{
 		m_ui->retranslateUi(this);
 	}
+}
+
+void PasswordBarWidget::accepted()
+{
+	hide();
+
+	emit requestedClose();
+
+	PasswordsManager::addPassword(m_password);
+}
+
+void PasswordBarWidget::rejected()
+{
+	hide();
+
+	emit requestedClose();
 }
 
 }

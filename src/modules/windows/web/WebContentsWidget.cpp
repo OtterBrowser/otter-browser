@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "WebContentsWidget.h"
+#include "PasswordBarWidget.h"
 #include "PermissionBarWidget.h"
 #include "PopupsBarWidget.h"
 #include "ProgressBarWidget.h"
@@ -650,6 +651,16 @@ void WebContentsWidget::findInPage(WebWidget::FindFlags flags)
 	}
 }
 
+void WebContentsWidget::closePasswordBar()
+{
+	if (m_passwordBarWidget)
+	{
+		m_passwordBarWidget->hide();
+		m_passwordBarWidget->deleteLater();
+		m_passwordBarWidget = NULL;
+	}
+}
+
 void WebContentsWidget::closePopupsBar()
 {
 	if (m_popupsBarWidget)
@@ -694,6 +705,20 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 		m_startPageWidget->hide();
 		m_startPageWidget->deleteLater();
 		m_startPageWidget = NULL;
+	}
+}
+
+void WebContentsWidget::handleAddPasswordRequest(const PasswordsManager::PasswordInformation &password)
+{
+	if (!m_passwordBarWidget)
+	{
+		m_passwordBarWidget = new PasswordBarWidget(password, this);
+
+		connect(m_passwordBarWidget, SIGNAL(requestedClose()), this, SLOT(closePasswordBar()));
+
+		m_layout->insertWidget(0, m_passwordBarWidget);
+
+		m_passwordBarWidget->show();
 	}
 }
 
@@ -958,6 +983,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 	connect(m_webWidget, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
 	connect(m_webWidget, SIGNAL(requestedPopupWindow(QUrl,QUrl)), this, SLOT(handlePopupWindowRequest(QUrl,QUrl)));
 	connect(m_webWidget, SIGNAL(requestedPermission(QString,QUrl,bool)), this, SLOT(handlePermissionRequest(QString,QUrl,bool)));
+	connect(m_webWidget, SIGNAL(requestedAddPassword(PasswordsManager::PasswordInformation)), this, SLOT(handleAddPasswordRequest(PasswordsManager::PasswordInformation)));
 	connect(m_webWidget, SIGNAL(requestedGeometryChange(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
 	connect(m_webWidget, SIGNAL(statusMessageChanged(QString)), this, SIGNAL(statusMessageChanged(QString)));
 	connect(m_webWidget, SIGNAL(titleChanged(QString)), this, SIGNAL(titleChanged(QString)));

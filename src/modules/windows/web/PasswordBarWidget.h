@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 -2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,8 @@
 #ifndef OTTER_PASSWORDBARWIDGET_H
 #define OTTER_PASSWORDBARWIDGET_H
 
+#include "../../../core/PasswordsManager.h"
+
 #include <QtWidgets/QWidget>
 
 namespace Otter
@@ -35,14 +37,22 @@ class PasswordBarWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit PasswordBarWidget(QWidget *parent = NULL);
+	explicit PasswordBarWidget(const PasswordsManager::PasswordInformation &password, QWidget *parent = NULL);
 	~PasswordBarWidget();
 
 protected:
 	void changeEvent(QEvent *event);
 
+protected slots:
+	void accepted();
+	void rejected();
+
 private:
+	PasswordsManager::PasswordInformation m_password;
 	Ui::PasswordBarWidget *m_ui;
+
+signals:
+	void requestedClose();
 };
 
 }

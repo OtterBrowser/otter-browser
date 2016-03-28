@@ -21,6 +21,7 @@
 #ifndef OTTER_WEBCONTENTSWIDGET_H
 #define OTTER_WEBCONTENTSWIDGET_H
 
+#include "../../../core/PasswordsManager.h"
 #include "../../../ui/ContentsWidget.h"
 #include "../../../ui/WebWidget.h"
 
@@ -29,6 +30,7 @@
 namespace Otter
 {
 
+class PasswordBarWidget;
 class PermissionBarWidget;
 class PopupsBarWidget;
 class ProgressBarWidget;
@@ -116,8 +118,10 @@ protected:
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void findInPage(WebWidget::FindFlags flags = WebWidget::NoFlagsFind);
+	void closePasswordBar();
 	void closePopupsBar();
 	void handleUrlChange(const QUrl &url);
+	void handleAddPasswordRequest(const PasswordsManager::PasswordInformation &password);
 	void handlePopupWindowRequest(const QUrl &parentUrl, const QUrl &popupUrl);
 	void handlePermissionRequest(const QString &option, QUrl url, bool cancel);
 	void handleLoadingStateChange(WindowsManager::LoadingState state);
@@ -133,6 +137,7 @@ private:
 	StartPageWidget *m_startPageWidget;
 	SearchBarWidget *m_searchBarWidget;
 	ProgressBarWidget *m_progressBarWidget;
+	PasswordBarWidget *m_passwordBarWidget;
 	PopupsBarWidget *m_popupsBarWidget;
 	QString m_quickFindQuery;
 	QPoint m_beginCursorPosition;
