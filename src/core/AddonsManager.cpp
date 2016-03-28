@@ -32,6 +32,10 @@
 namespace Otter
 {
 
+Addon::Addon(QObject *parent) : QObject(parent)
+{
+}
+
 AddonsManager *AddonsManager::m_instance = NULL;
 QHash<QString, UserScript*> AddonsManager::m_userScripts;
 QHash<QString, WebBackend*> AddonsManager::m_webBackends;

@@ -20,7 +20,7 @@
 #ifndef OTTER_USERSCRIPT_H
 #define OTTER_USERSCRIPT_H
 
-#include "Addon.h"
+#include "AddonsManager.h"
 
 namespace Otter
 {

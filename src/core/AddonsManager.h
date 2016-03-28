@@ -30,6 +30,21 @@ namespace Otter
 class UserScript;
 class WebBackend;
 
+class Addon : public QObject
+{
+	Q_OBJECT
+
+public:
+	explicit Addon(QObject *parent = NULL);
+
+	virtual QString getTitle() const = 0;
+	virtual QString getDescription() const = 0;
+	virtual QString getVersion() const = 0;
+	virtual QUrl getHomePage() const = 0;
+	virtual QUrl getUpdateUrl() const = 0;
+	virtual QIcon getIcon() const = 0;
+};
+
 class AddonsManager : public QObject
 {
 	Q_OBJECT
