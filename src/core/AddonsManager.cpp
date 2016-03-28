@@ -182,6 +182,27 @@ AddonsManager::SpecialPageInformation AddonsManager::getSpecialPage(const QStrin
 	return SpecialPageInformation();
 }
 
+QList<UserScript*> AddonsManager::getUserScriptsForUrl(const QUrl &url)
+{
+	if (!m_areUserScripsInitialized)
+	{
+		loadUserScripts();
+	}
+
+	QList<UserScript*> scripts;
+	QHash<QString, UserScript*>::iterator iterator;
+
+	for (iterator = m_userScripts.begin(); iterator != m_userScripts.end(); ++iterator)
+	{
+		if (iterator.value()->isEnabled() && iterator.value()->isEnabledForUrl(url))
+		{
+			scripts.append(iterator.value());
+		}
+	}
+
+	return scripts;
+}
+
 QStringList AddonsManager::getUserScripts()
 {
 	if (!m_areUserScripsInitialized)

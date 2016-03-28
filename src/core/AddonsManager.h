@@ -89,6 +89,7 @@ public:
 	static UserScript* getUserScript(const QString &name = QString());
 	static WebBackend* getWebBackend(const QString &name = QString());
 	static SpecialPageInformation getSpecialPage(const QString &name);
+	static QList<UserScript*> getUserScriptsForUrl(const QUrl &url);
 	static QStringList getUserScripts();
 	static QStringList getWebBackends();
 	static QStringList getSpecialPages();

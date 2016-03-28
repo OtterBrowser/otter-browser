@@ -47,6 +47,7 @@ public:
 	QUrl getUpdateUrl() const;
 	QIcon getIcon() const;
 	InjectionTime getInjectionTime() const;
+	bool isEnabledForUrl(const QUrl &url);
 	bool shouldRunOnSubFrames() const;
 
 private:

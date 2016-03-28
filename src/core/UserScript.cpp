@@ -86,6 +86,15 @@ UserScript::InjectionTime UserScript::getInjectionTime() const
 	return m_injectionTime;
 }
 
+bool UserScript::isEnabledForUrl(const QUrl &url)
+{
+	Q_UNUSED(url)
+
+///TODO
+
+	return true;
+}
+
 bool UserScript::shouldRunOnSubFrames() const
 {
 	return m_shouldRunOnSubFrames;
