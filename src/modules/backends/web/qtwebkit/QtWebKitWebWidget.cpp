@@ -25,6 +25,7 @@
 #include "QtWebKitPluginWidget.h"
 #include "QtWebKitPage.h"
 #include "../../../../core/ActionsManager.h"
+#include "../../../../core/AddonsManager.h"
 #include "../../../../core/BookmarksManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/CookieJar.h"
@@ -41,6 +42,7 @@
 #include "../../../../core/ThemesManager.h"
 #include "../../../../core/Transfer.h"
 #include "../../../../core/TransfersManager.h"
+#include "../../../../core/UserScript.h"
 #include "../../../../core/Utils.h"
 #include "../../../../ui/ContentsDialog.h"
 #include "../../../../ui/ContentsWidget.h"
@@ -304,6 +306,39 @@ void QtWebKitWebWidget::pageLoadFinished()
 
 	emit contentStateChanged(getContentState());
 	emit loadingStateChanged(WindowsManager::FinishedLoadingState);
+
+	QList<QWebFrame*> frames;
+	const QList<UserScript*> scripts(AddonsManager::getUserScriptsForUrl(getUrl()));
+
+	for (int i = 0; i < scripts.count(); ++i)
+	{
+		if (scripts.at(i)->shouldRunOnSubFrames())
+		{
+			if (frames.isEmpty())
+			{
+				QList<QWebFrame*> temporaryFrames;
+				temporaryFrames.append(m_page->mainFrame());
+
+				while (!temporaryFrames.isEmpty())
+				{
+					QWebFrame *frame(temporaryFrames.takeFirst());
+
+					frames.append(frame);
+
+					temporaryFrames.append(frame->childFrames());
+				}
+			}
+
+			for (int j = 0; j < frames.count(); ++j)
+			{
+				frames.at(j)->evaluateJavaScript(scripts.at(i)->getSource());
+			}
+		}
+		else
+		{
+			m_page->mainFrame()->evaluateJavaScript(scripts.at(i)->getSource());
+		}
+	}
 }
 
 void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
