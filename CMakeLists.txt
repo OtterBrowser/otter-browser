@@ -221,6 +221,7 @@ set(otter_src
 	src/modules/importers/opera/OperaBookmarksImporter.cpp
 	src/modules/importers/opera/OperaNotesImporter.cpp
 	src/modules/importers/opera/OperaSessionImporter.cpp
+	src/modules/windows/addons/AddonsContentsWidget.cpp
 	src/modules/windows/bookmarks/BookmarksContentsWidget.cpp
 	src/modules/windows/cache/CacheContentsWidget.cpp
 	src/modules/windows/configuration/ConfigurationContentsWidget.cpp
@@ -286,6 +287,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/preferences/PreferencesGeneralPageWidget.ui
 	src/ui/preferences/PreferencesPrivacyPageWidget.ui
 	src/ui/preferences/PreferencesSearchPageWidget.ui
+	src/modules/windows/addons/AddonsContentsWidget.ui
 	src/modules/windows/bookmarks/BookmarksContentsWidget.ui
 	src/modules/windows/cache/CacheContentsWidget.ui
 	src/modules/windows/configuration/ConfigurationContentsWidget.ui

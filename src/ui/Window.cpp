@@ -29,6 +29,7 @@
 #include "../core/NetworkManagerFactory.h"
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
+#include "../modules/windows/addons/AddonsContentsWidget.h"
 #include "../modules/windows/bookmarks/BookmarksContentsWidget.h"
 #include "../modules/windows/cache/CacheContentsWidget.h"
 #include "../modules/windows/cookies/CookiesContentsWidget.h"
@@ -414,7 +415,11 @@ void Window::setUrl(const QUrl &url, bool typed)
 			return;
 		}
 
-		if (url.path() == QLatin1String("bookmarks"))
+		if (url.path() == QLatin1String("addons"))
+		{
+			newWidget = new AddonsContentsWidget(this);
+		}
+		else if (url.path() == QLatin1String("bookmarks"))
 		{
 			newWidget = new BookmarksContentsWidget(this);
 		}

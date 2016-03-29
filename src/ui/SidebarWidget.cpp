@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
 #include "../core/SettingsManager.h"
 #include "../core/ThemesManager.h"
 #include "../core/WindowsManager.h"
+#include "../modules/windows/addons/AddonsContentsWidget.h"
 #include "../modules/windows/bookmarks/BookmarksContentsWidget.h"
 #include "../modules/windows/cache/CacheContentsWidget.h"
 #include "../modules/windows/configuration/ConfigurationContentsWidget.h"
@@ -333,6 +334,10 @@ void SidebarWidget::selectPanel(const QString &identifier)
 	if (m_panels.contains(identifier) && m_panels[identifier])
 	{
 		widget = m_panels[identifier];
+	}
+	else if (identifier == QLatin1String("addons"))
+	{
+		widget = new AddonsContentsWidget(NULL);
 	}
 	else if (identifier == QLatin1String("bookmarks"))
 	{

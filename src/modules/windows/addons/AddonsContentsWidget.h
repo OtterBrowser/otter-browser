@@ -1,7 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,54 +17,58 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_SIDEBARWIDGET_H
-#define OTTER_SIDEBARWIDGET_H
+#ifndef OTTER_ADDONSCONTENTSWIDGET_H
+#define OTTER_ADDONSCONTENTSWIDGET_H
 
-#include "../core/WindowsManager.h"
+#include "../../../ui/ContentsWidget.h"
 
-#include <QtWidgets/QToolButton>
-#include <QtWidgets/QWidget>
+#include <QtGui/QStandardItemModel>
 
 namespace Otter
 {
 
 namespace Ui
 {
-	class SidebarWidget;
+	class AddonsContentsWidget;
 }
 
-class SidebarWidget : public QWidget
+class Window;
+
+class AddonsContentsWidget : public ContentsWidget
 {
 	Q_OBJECT
 
 public:
-	explicit SidebarWidget(QWidget *parent = NULL);
-	~SidebarWidget();
+	explicit AddonsContentsWidget(Window *window);
+	~AddonsContentsWidget();
 
-	void selectPanel(const QString &identifier);
-	ContentsWidget* getCurrentPanel();
-	static QString getPanelTitle(const QString &identifier);
-	QSize sizeHint() const;
+	void print(QPrinter *printer);
+	Action* getAction(int identifier);
+	QString getTitle() const;
+	QLatin1String getType() const;
+	QUrl getUrl() const;
+	QIcon getIcon() const;
+	WindowsManager::LoadingState getLoadingState() const;
+	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
-	void scheduleSizeSave();
+	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 
 protected:
-	void timerEvent(QTimerEvent *event);
 	void changeEvent(QEvent *event);
 
 protected slots:
-	void optionChanged(const QString &option, const QVariant &value);
-	void addWebPanel();
-	void choosePanel(bool checked);
-	void selectPanel();
+	void populateAddons();
+	void filterAddons(const QString &filter);
+	void addAddon();
+	void removeAddons();
+	void showContextMenu(const QPoint &point);
 
 private:
-	QString m_currentPanel;
-	QHash<QString, QToolButton*> m_buttons;
-	QHash<QString, ContentsWidget*> m_panels;
-	int m_resizeTimer;
-	Ui::SidebarWidget *m_ui;
+	QStandardItemModel *m_model;
+	QHash<int, Action*> m_actions;
+	bool m_isLoading;
+	Ui::AddonsContentsWidget *m_ui;
 };
 
 }

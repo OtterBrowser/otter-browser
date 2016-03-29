@@ -36,6 +36,19 @@ class Addon : public QObject
 	Q_OBJECT
 
 public:
+	enum AddonType
+	{
+		UnknownType = 0,
+		ExporterType,
+		ExtensionType,
+		ImporterType,
+		ModuleType,
+		ScriptletType,
+		UserScriptType,
+		UserStylesheetType,
+		WebBackendType
+	};
+
 	explicit Addon(QObject *parent = NULL);
 
 	virtual QString getTitle() const = 0;
