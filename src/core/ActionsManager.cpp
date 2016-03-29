@@ -434,6 +434,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(ContentBlockingAction, QT_TRANSLATE_NOOP("actions", "Content Blocking…"));
 	registerAction(HistoryAction, QT_TRANSLATE_NOOP("actions", "View History"), QString(), ThemesManager::getIcon(QLatin1String("view-history")));
 	registerAction(ClearHistoryAction, QT_TRANSLATE_NOOP("actions", "Clear History…"), QString(), ThemesManager::getIcon(QLatin1String("edit-clear-history")));
+	registerAction(AddonsAction, QT_TRANSLATE_NOOP("actions", "Addons"));
 	registerAction(NotesAction, QT_TRANSLATE_NOOP("actions", "Notes"));
 	registerAction(TransfersAction, QT_TRANSLATE_NOOP("actions", "Transfers"));
 	registerAction(PreferencesAction, QT_TRANSLATE_NOOP("actions", "Preferences…"));

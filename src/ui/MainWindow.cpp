@@ -583,6 +583,17 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			}
 
 			break;
+		case ActionsManager::AddonsAction:
+			{
+				const QUrl url(QLatin1String("about:addons"));
+
+				if (!SessionsManager::hasUrl(url, true))
+				{
+					m_windowsManager->open(url);
+				}
+			}
+
+			break;
 		case ActionsManager::NotesAction:
 			{
 				const QUrl url(QLatin1String("about:notes"));

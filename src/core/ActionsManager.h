@@ -224,6 +224,7 @@ public:
 		ContentBlockingAction,
 		HistoryAction,
 		ClearHistoryAction,
+		AddonsAction,
 		NotesAction,
 		TransfersAction,
 		PreferencesAction,

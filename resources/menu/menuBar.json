@@ -157,6 +157,7 @@
 		"title": "Tools",
 		"actions":
 		[
+			"Addons",
 			"Transfers",
 			"Notes",
 			"Cookies",
