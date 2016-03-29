@@ -22,6 +22,7 @@
 #include "../../../core/AddonsManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/UserScript.h"
+#include "../../../ui/OptionDelegate.h"
 
 #include "ui_AddonsContentsWidget.h"
 
@@ -39,6 +40,8 @@ AddonsContentsWidget::AddonsContentsWidget(Window *window) : ContentsWidget(wind
 	m_ui(new Ui::AddonsContentsWidget)
 {
 	m_ui->setupUi(this);
+	m_ui->addonsViewWidget->setItemDelegate(new OptionDelegate(true, this));
+	m_ui->addonsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->addonsViewWidget->installEventFilter(this);
 	m_ui->filterLineEdit->installEventFilter(this);
 
@@ -74,10 +77,12 @@ void AddonsContentsWidget::populateAddons()
 
 		if (userScript)
 		{
-			QStandardItem *item(new QStandardItem(userScript->getIcon(), userScript->getTitle()));
+			QStandardItem *item(new QStandardItem(userScript->getIcon(), (userScript->getVersion().isEmpty() ? userScript->getTitle() : QStringLiteral("%1  %2").arg(userScript->getTitle()).arg(userScript->getVersion()))));
 			item->setData(userScripts.at(i), Qt::UserRole);
-			item->setToolTip(userScript->getTitle());
 			item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
+			item->setCheckable(true);
+			item->setCheckState(userScript->isEnabled() ? Qt::Checked : Qt::Unchecked);
+			item->setToolTip(userScript->getDescription());
 
 			userScriptsItem->appendRow(item);
 		}
