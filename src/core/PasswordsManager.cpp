@@ -50,6 +50,8 @@ PasswordsManager* PasswordsManager::getInstance()
 QList<PasswordsManager::PasswordInformation> PasswordsManager::getPasswords(const QUrl &url)
 {
 	Q_UNUSED(url)
+
+	return QList<PasswordsManager::PasswordInformation>();
 }
 
 }

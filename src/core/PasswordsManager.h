@@ -22,6 +22,7 @@
 
 #include <QtCore/QMap>
 #include <QtCore/QObject>
+#include <QtCore/QStringList>
 #include <QtCore/QUrl>
 
 namespace Otter
