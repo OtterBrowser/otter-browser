@@ -36,4 +36,25 @@
 	{
 		attachFormListener(document.forms[i]);
 	}
+
+	var observer = new MutationObserver(function(mutations)
+	{
+		mutations.forEach(function(mutation)
+		{
+			for (var i = 0; i < mutation.addedNodes.length; i++)
+			{
+				var addedNode = mutation.addedNodes[i];
+
+				if (addedNode.tagName.toLowerCase() === 'form')
+				{
+					attachFormListener(addedNode);
+				}
+			}
+		});
+	});
+
+	document.addEventListener('DOMContentLoaded', function()
+	{
+		observer.observe(document.body, { childList: true });
+	});
 })(window);
