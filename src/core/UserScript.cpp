@@ -19,6 +19,7 @@
 
 #include "UserScript.h"
 #include "Console.h"
+#include "ThemesManager.h"
 
 #include <QtCore/QFile>
 #include <QtCore/QTextStream>
@@ -28,6 +29,7 @@ namespace Otter
 
 UserScript::UserScript(const QString &path, QObject *parent) : Addon(parent),
 	m_path(path),
+	m_icon(ThemesManager::getIcon(QLatin1String("addon-user-script"), false)),
 	m_injectionTime(DocumentReadyTime),
 	m_shouldRunOnSubFrames(true)
 {
@@ -72,27 +74,27 @@ UserScript::UserScript(const QString &path, QObject *parent) : Addon(parent),
 
 		if (keyword == QLatin1String("description"))
 		{
-			m_description = line.section(QLatin1Char(' '), 0, -1);
+			m_description = line.section(QLatin1Char(' '), 1, -1);
 		}
 		else if (keyword == QLatin1String("exclude"))
 		{
-			m_excludeRules.append(line.section(QLatin1Char(' '), 0, -1));
+			m_excludeRules.append(line.section(QLatin1Char(' '), 1, -1));
 		}
 		else if (keyword == QLatin1String("homepage"))
 		{
-			m_homePage = QUrl(line.section(QLatin1Char(' '), 0, -1));
+			m_homePage = QUrl(line.section(QLatin1Char(' '), 1, -1));
 		}
 		else if (keyword == QLatin1String("include"))
 		{
-			m_includeRules.append(line.section(QLatin1Char(' '), 0, -1));
+			m_includeRules.append(line.section(QLatin1Char(' '), 1, -1));
 		}
 		else if (keyword == QLatin1String("match"))
 		{
-			m_matchRules.append(line.section(QLatin1Char(' '), 0, -1));
+			m_matchRules.append(line.section(QLatin1Char(' '), 1, -1));
 		}
 		else if (keyword == QLatin1String("name"))
 		{
-			m_title = line.section(QLatin1Char(' '), 0, -1);
+			m_title = line.section(QLatin1Char(' '), 1, -1);
 		}
 		else if (keyword == QLatin1String("noframes"))
 		{
@@ -100,7 +102,7 @@ UserScript::UserScript(const QString &path, QObject *parent) : Addon(parent),
 		}
 		else if (keyword == QLatin1String("run-at"))
 		{
-			const QString injectionTime(line.section(QLatin1Char(' '), 0, -1));
+			const QString injectionTime(line.section(QLatin1Char(' '), 1, -1));
 
 			if (injectionTime == QLatin1String("document-start"))
 			{
@@ -117,11 +119,11 @@ UserScript::UserScript(const QString &path, QObject *parent) : Addon(parent),
 		}
 		else if (keyword == QLatin1String("updateURL"))
 		{
-			m_updateUrl = QUrl(line.section(QLatin1Char(' '), 0, -1));
+			m_updateUrl = QUrl(line.section(QLatin1Char(' '), 1, -1));
 		}
 		else if (keyword == QLatin1String("version"))
 		{
-			m_version = line.section(QLatin1Char(' '), 0, -1);
+			m_version = line.section(QLatin1Char(' '), 1, -1);
 		}
 	}
 
