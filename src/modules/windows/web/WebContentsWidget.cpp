@@ -54,6 +54,7 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	m_startPageWidget(NULL),
 	m_searchBarWidget(NULL),
 	m_progressBarWidget(NULL),
+	m_passwordBarWidget(NULL),
 	m_popupsBarWidget(NULL),
 	m_scrollMode(NoScroll),
 	m_quickFindTimer(0),
@@ -685,6 +686,11 @@ void WebContentsWidget::scrollContents(const QPoint &delta)
 
 void WebContentsWidget::handleUrlChange(const QUrl &url)
 {
+	if (m_passwordBarWidget && m_passwordBarWidget->shouldClose(url))
+	{
+		closePasswordBar();
+	}
+
 	Window *window = qobject_cast<Window*>(parentWidget());
 
 	if (!window)

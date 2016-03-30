@@ -22,6 +22,7 @@
 
 #include "../../../core/PasswordsManager.h"
 
+#include <QtCore/QDateTime>
 #include <QtWidgets/QWidget>
 
 namespace Otter
@@ -40,6 +41,8 @@ public:
 	explicit PasswordBarWidget(const PasswordsManager::PasswordInformation &password, QWidget *parent = NULL);
 	~PasswordBarWidget();
 
+	bool shouldClose(const QUrl &url) const;
+
 protected:
 	void changeEvent(QEvent *event);
 
@@ -49,6 +52,7 @@ protected slots:
 
 private:
 	PasswordsManager::PasswordInformation m_password;
+	QDateTime m_created;
 	Ui::PasswordBarWidget *m_ui;
 
 signals:
