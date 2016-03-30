@@ -331,12 +331,12 @@ void QtWebKitWebWidget::pageLoadFinished()
 
 			for (int j = 0; j < frames.count(); ++j)
 			{
-				frames.at(j)->evaluateJavaScript(scripts.at(i)->getSource());
+				frames.at(j)->documentElement().evaluateJavaScript(scripts.at(i)->getSource());
 			}
 		}
 		else
 		{
-			m_page->mainFrame()->evaluateJavaScript(scripts.at(i)->getSource());
+			m_page->mainFrame()->documentElement().evaluateJavaScript(scripts.at(i)->getSource());
 		}
 	}
 
@@ -369,7 +369,7 @@ void QtWebKitWebWidget::pageLoadFinished()
 
 	for (int j = 0; j < frames.count(); ++j)
 	{
-		frames.at(j)->evaluateJavaScript(script);
+		frames.at(j)->documentElement().evaluateJavaScript(script);
 	}
 
 	file.close();
@@ -831,7 +831,7 @@ void QtWebKitWebWidget::clearSelection()
 	}
 	else
 	{
-		m_page->mainFrame()->evaluateJavaScript(QLatin1String("window.getSelection().empty()"));
+		m_page->mainFrame()->documentElement().evaluateJavaScript(QLatin1String("window.getSelection().empty()"));
 	}
 }
 
@@ -1159,7 +1159,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 					hitResult.element().setAttribute(QLatin1String("src"), src);
 
-					m_webView->page()->mainFrame()->evaluateJavaScript(QStringLiteral("var images = document.querySelectorAll('img[src=\"%1\"]'); for (var i = 0; i < images.length; ++i) { images[i].src = ''; images[i].src = \'%1\'; }").arg(src));
+					m_webView->page()->mainFrame()->documentElement().evaluateJavaScript(QStringLiteral("var images = document.querySelectorAll('img[src=\"%1\"]'); for (var i = 0; i < images.length; ++i) { images[i].src = ''; images[i].src = \'%1\'; }").arg(src));
 				}
 			}
 
@@ -1485,7 +1485,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				if (element.tagName().toLower() == QLatin1String("textarea") || element.tagName().toLower() == QLatin1String("input"))
 				{
-					m_page->mainFrame()->evaluateJavaScript(QLatin1String("document.activeElement.blur()"));
+					m_page->mainFrame()->documentElement().evaluateJavaScript(QLatin1String("document.activeElement.blur()"));
 				}
 			}
 
@@ -1702,7 +1702,7 @@ void QtWebKitWebWidget::setUrl(const QUrl &url, bool typed)
 {
 	if (url.scheme() == QLatin1String("javascript"))
 	{
-		m_webView->page()->mainFrame()->evaluateJavaScript(url.toDisplayString(QUrl::RemoveScheme | QUrl::DecodeReserved));
+		m_webView->page()->mainFrame()->documentElement().evaluateJavaScript(url.toDisplayString(QUrl::RemoveScheme | QUrl::DecodeReserved));
 
 		return;
 	}
@@ -1892,7 +1892,7 @@ QString QtWebKitWebWidget::getTitle() const
 
 QString QtWebKitWebWidget::getActiveStyleSheet() const
 {
-	if (m_page->mainFrame()->evaluateJavaScript(QLatin1String("var isDefault = true; for (var i = 0; i < document.styleSheets.length; ++i) { if (document.styleSheets[i].ownerNode.rel.indexOf('alt') >= 0) { isDefault = false; break; } } isDefault")).toBool())
+	if (m_page->mainFrame()->documentElement().evaluateJavaScript(QLatin1String("var isDefault = true; for (var i = 0; i < document.styleSheets.length; ++i) { if (document.styleSheets[i].ownerNode.rel.indexOf('alt') >= 0) { isDefault = false; break; } } isDefault")).toBool())
 	{
 		return QString();
 	}

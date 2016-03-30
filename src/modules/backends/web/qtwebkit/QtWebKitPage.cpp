@@ -237,10 +237,15 @@ void QtWebKitPage::triggerAction(QWebPage::WebAction action, bool checked)
 
 QVariant QtWebKitPage::runScript(const QString &path, QWebElement element)
 {
+	if (element.isNull())
+	{
+		element = mainFrame()->documentElement();
+	}
+
 	QFile file(QString(":/modules/backends/web/qtwebkit/resources/%1.js").arg(path));
 	file.open(QIODevice::ReadOnly);
 
-	const QVariant result = (element.isNull() ? mainFrame()->evaluateJavaScript(file.readAll()) : element.evaluateJavaScript(file.readAll()));
+	const QVariant result(element.evaluateJavaScript(file.readAll()));
 
 	file.close();
 
@@ -314,7 +319,7 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 
 	if (frame && request.url().scheme() == QLatin1String("javascript"))
 	{
-		frame->evaluateJavaScript(request.url().path());
+		frame->documentElement().evaluateJavaScript(request.url().path());
 
 		return false;
 	}
