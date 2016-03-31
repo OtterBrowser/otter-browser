@@ -1,3 +1,12 @@
+0.9.10 (2016-??-??):
+- added initial support for user scripts;
+- added Addons Manager;
+- many enhancements in experimental backend for QtWebEngine (Blink):
+-- added support for entering full screen mode;
+-- added support for content blocking;
+-- added support for several missing actions;
+- many other fixes and improvements.
+
 0.9.09 (2016-01-01):
 - added initial support for spell checking;
 - added support for selecting allowed and rejected domains for third-party cookies;
