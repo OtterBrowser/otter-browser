@@ -27,7 +27,7 @@ namespace Otter
 
 class Menu;
 
-class MenuButtonWidget : public Otter::ToolButtonWidget
+class MenuButtonWidget : public ToolButtonWidget
 {
 	Q_OBJECT
 
