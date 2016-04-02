@@ -102,7 +102,7 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 		m_ui->arrangementWidget->hide();
 	}
 
-	QStandardItemModel *availableEntriesModel = new QStandardItemModel(this);
+	QStandardItemModel *availableEntriesModel(new QStandardItemModel(this));
 	availableEntriesModel->appendRow(createEntry(QLatin1String("separator")));
 	availableEntriesModel->appendRow(createEntry(QLatin1String("spacer")));
 
@@ -115,7 +115,7 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 
 		if (widgets.at(i) == QLatin1String("SearchWidget"))
 		{
-			const QStringList searchEngines = SearchEnginesManager::getSearchEngines();
+			const QStringList searchEngines(SearchEnginesManager::getSearchEngines());
 
 			for (int j = 0; j < searchEngines.count(); ++j)
 			{
@@ -131,7 +131,7 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 
 	for (int i = 0; i < actions.count(); ++i)
 	{
-		QStandardItem *item = new QStandardItem(actions.at(i).icon, QCoreApplication::translate("actions", (actions.at(i).description.isEmpty() ? actions.at(i).text : actions.at(i).description).toUtf8().constData()));
+		QStandardItem *item(new QStandardItem(actions.at(i).icon, QCoreApplication::translate("actions", (actions.at(i).description.isEmpty() ? actions.at(i).text : actions.at(i).description).toUtf8().constData())));
 		item->setData(ActionsManager::getActionName(actions.at(i).identifier) + QLatin1String("Action"), Qt::UserRole);
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 		item->setToolTip(item->text());
@@ -152,7 +152,7 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 
 	m_definition.entries.clear();
 
-	Menu *bookmarksMenu = new Menu(Menu::BookmarkSelectorMenuRole, m_ui->addEntryButton);
+	Menu *bookmarksMenu(new Menu(Menu::BookmarkSelectorMenuRole, m_ui->addEntryButton));
 
 	m_ui->addEntryButton->setMenu(bookmarksMenu);
 	m_ui->addEntryButton->setEnabled(BookmarksManager::getModel()->getRootItem()->rowCount() > 0);
@@ -189,7 +189,7 @@ void ToolBarDialog::changeEvent(QEvent *event)
 
 void ToolBarDialog::addEntry(const ActionsManager::ActionEntryDefinition &entry, QStandardItem *parent)
 {
-	QStandardItem *item = createEntry(entry.action, entry.options);
+	QStandardItem *item(createEntry(entry.action, entry.options));
 
 	if (parent)
 	{
@@ -213,12 +213,12 @@ void ToolBarDialog::addEntry(const ActionsManager::ActionEntryDefinition &entry,
 
 void ToolBarDialog::addEntry()
 {
-	QStandardItem *sourceItem = m_ui->availableEntriesItemView->getItem(m_ui->availableEntriesItemView->getCurrentRow());
+	QStandardItem *sourceItem(m_ui->availableEntriesItemView->getItem(m_ui->availableEntriesItemView->getCurrentRow()));
 
 	if (sourceItem)
 	{
-		QStandardItem *newItem = sourceItem->clone();
-		QStandardItem *targetItem = m_ui->currentEntriesItemView->getItem(m_ui->currentEntriesItemView->currentIndex());
+		QStandardItem *newItem(sourceItem->clone());
+		QStandardItem *targetItem(m_ui->currentEntriesItemView->getItem(m_ui->currentEntriesItemView->currentIndex()));
 
 		if (targetItem && targetItem->data(Qt::UserRole).toString() != QLatin1String("CustomMenu"))
 		{
@@ -255,16 +255,16 @@ void ToolBarDialog::addEntry()
 
 void ToolBarDialog::editEntry()
 {
-	const QModelIndex index = m_ui->currentEntriesItemView->currentIndex();
-	const QString identifier = index.data(Qt::UserRole).toString();
-	QVariantMap options = index.data(Qt::UserRole + 1).toMap();
+	const QModelIndex index(m_ui->currentEntriesItemView->currentIndex());
+	const QString identifier(index.data(Qt::UserRole).toString());
+	QVariantMap options(index.data(Qt::UserRole + 1).toMap());
 	QList<QPair<QString, OptionWidget*> > widgets;
 
 	if (identifier == QLatin1String("SearchWidget"))
 	{
-		const QStringList searchEngines = SearchEnginesManager::getSearchEngines();
+		const QStringList searchEngines(SearchEnginesManager::getSearchEngines());
 		QList<OptionWidget::EnumerationChoice> searchEngineChoices;
-		OptionWidget *searchEngineWidget = new OptionWidget(QLatin1String("searchEngine"), options.value(QLatin1String("searchEngine")), SettingsManager::EnumerationType, this);
+		OptionWidget *searchEngineWidget(new OptionWidget(QLatin1String("searchEngine"), options.value(QLatin1String("searchEngine")), SettingsManager::EnumerationType, this));
 		OptionWidget::EnumerationChoice defaultSearchEngineChoice;
 		defaultSearchEngineChoice.text = tr("All");
 
@@ -272,7 +272,7 @@ void ToolBarDialog::editEntry()
 
 		for (int i = 0; i < searchEngines.count(); ++i)
 		{
-			const SearchEnginesManager::SearchEngineDefinition searchEngine = SearchEnginesManager::getSearchEngine(searchEngines.at(i));
+			const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(searchEngines.at(i)));
 			OptionWidget::EnumerationChoice searchEngineChoice;
 			searchEngineChoice.text = (searchEngine.title.isEmpty() ? tr("Unknown") : searchEngine.title);
 			searchEngineChoice.value = searchEngines.at(i);
@@ -300,12 +300,12 @@ void ToolBarDialog::editEntry()
 	QDialog dialog(this);
 	dialog.setWindowTitle(tr("Edit Entry"));
 
-	QDialogButtonBox *buttonBox = new QDialogButtonBox(&dialog);
+	QDialogButtonBox *buttonBox(new QDialogButtonBox(&dialog));
 	buttonBox->addButton(QDialogButtonBox::Cancel);
 	buttonBox->addButton(QDialogButtonBox::Ok);
 
-	QFormLayout *formLayout = new QFormLayout();
-	QVBoxLayout *mainLayout = new QVBoxLayout(&dialog);
+	QFormLayout *formLayout(new QFormLayout());
+	QVBoxLayout *mainLayout(new QVBoxLayout(&dialog));
 	mainLayout->addLayout(formLayout);
 	mainLayout->addWidget(buttonBox);
 
@@ -334,7 +334,7 @@ void ToolBarDialog::editEntry()
 		}
 	}
 
-	QStandardItem *item = createEntry(identifier, options);
+	QStandardItem *item(createEntry(identifier, options));
 
 	m_ui->currentEntriesItemView->setData(index, item->text(), Qt::DisplayRole);
 	m_ui->currentEntriesItemView->setData(index, item->text(), Qt::ToolTipRole);
@@ -361,8 +361,8 @@ void ToolBarDialog::restoreDefaults()
 
 void ToolBarDialog::updateActions()
 {
-	const QString sourceIdentifier = m_ui->availableEntriesItemView->currentIndex().data(Qt::UserRole).toString();
-	const QString targetIdentifier = m_ui->currentEntriesItemView->currentIndex().data(Qt::UserRole).toString();
+	const QString sourceIdentifier(m_ui->availableEntriesItemView->currentIndex().data(Qt::UserRole).toString());
+	const QString targetIdentifier(m_ui->currentEntriesItemView->currentIndex().data(Qt::UserRole).toString());
 
 	m_ui->addButton->setEnabled(!sourceIdentifier.isEmpty() && (!(m_ui->currentEntriesItemView->currentIndex().data(Qt::UserRole).toString() == QLatin1String("CustomMenu") || m_ui->currentEntriesItemView->currentIndex().parent().data(Qt::UserRole).toString() == QLatin1String("CustomMenu")) || (sourceIdentifier == QLatin1String("separator") || sourceIdentifier.endsWith(QLatin1String("Action")) || sourceIdentifier.endsWith(QLatin1String("Menu")))));
 	m_ui->removeButton->setEnabled(m_ui->currentEntriesItemView->currentIndex().isValid() && targetIdentifier != QLatin1String("MenuBarWidget") && targetIdentifier != QLatin1String("TabBarWidget"));
@@ -371,7 +371,7 @@ void ToolBarDialog::updateActions()
 
 QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVariantMap &options)
 {
-	QStandardItem *item = new QStandardItem();
+	QStandardItem *item(new QStandardItem());
 	item->setData(identifier, Qt::UserRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
@@ -414,7 +414,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	{
 		if (options.contains(QLatin1String("searchEngine")))
 		{
-			const SearchEnginesManager::SearchEngineDefinition definition = SearchEnginesManager::getSearchEngine(options[QLatin1String("searchEngine")].toString());
+			const SearchEnginesManager::SearchEngineDefinition definition(SearchEnginesManager::getSearchEngine(options[QLatin1String("searchEngine")].toString()));
 
 			item->setText(tr("Search Field (%1)").arg(definition.title.isEmpty() ? tr("Unknown") : definition.title));
 			item->setIcon(definition.icon);
@@ -438,7 +438,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	}
 	else if (identifier.startsWith(QLatin1String("bookmarks:")))
 	{
-		BookmarksItem *bookmark = (identifier.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getItem(identifier.mid(11)) : BookmarksManager::getBookmark(identifier.mid(10).toULongLong()));
+		BookmarksItem *bookmark(identifier.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getItem(identifier.mid(11)) : BookmarksManager::getBookmark(identifier.mid(10).toULongLong()));
 
 		if (bookmark)
 		{
@@ -452,7 +452,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	}
 	else if (identifier.endsWith(QLatin1String("Action")))
 	{
-		const int actionIdentifier = ActionsManager::getActionIdentifier(identifier.left(identifier.length() - 6));
+		const int actionIdentifier(ActionsManager::getActionIdentifier(identifier.left(identifier.length() - 6)));
 
 		if (actionIdentifier < 0)
 		{
@@ -460,7 +460,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 		}
 		else
 		{
-			const ActionsManager::ActionDefinition definition = ActionsManager::getActionDefinition(actionIdentifier);
+			const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(actionIdentifier));
 
 			item->setText(QCoreApplication::translate("actions", (definition.description.isEmpty() ? definition.text : definition.description).toUtf8().constData()));
 			item->setIcon(definition.icon);
@@ -477,7 +477,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 
 		if (options.contains(QLatin1String("icon")))
 		{
-			const QString data = options[QLatin1String("icon")].toString();
+			const QString data(options[QLatin1String("icon")].toString());
 
 			if (data.startsWith(QLatin1String("data:image/")))
 			{
