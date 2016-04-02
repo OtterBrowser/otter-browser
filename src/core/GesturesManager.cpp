@@ -820,7 +820,7 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 				m_steps.removeAt(m_steps.count() - 1);
 			}
 
-			while (!m_steps.isEmpty() && m_events[m_events.count() - 1]->type() == QEvent::Wheel)
+			while (!m_events.isEmpty() && m_events[m_events.count() - 1]->type() == QEvent::Wheel)
 			{
 				m_events.removeAt(m_events.count() - 1);
 			}
