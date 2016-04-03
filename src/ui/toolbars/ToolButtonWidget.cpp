@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ ToolButtonWidget::ToolButtonWidget(const ActionsManager::ActionEntryDefinition &
 	setContextMenuPolicy(Qt::NoContextMenu);
 	setOptions(definition.options);
 
-	Menu *menu = NULL;
+	Menu *menu(NULL);
 
 	if (!definition.entries.isEmpty())
 	{
@@ -59,17 +59,17 @@ ToolButtonWidget::ToolButtonWidget(const ActionsManager::ActionEntryDefinition &
 		setText(definition.options.value(QLatin1String("text"), tr("Menu")).toString());
 	}
 
-	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
+	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
 	if (toolBar)
 	{
 		setIconSize(toolBar->iconSize());
 		setMaximumButtonSize(toolBar->getMaximumButtonSize());
-		setToolButtonStyle(toolBar->toolButtonStyle());
+		updateToolButtonStyle(toolBar->toolButtonStyle());
 
 		connect(toolBar, SIGNAL(iconSizeChanged(QSize)), this, SLOT(setIconSize(QSize)));
 		connect(toolBar, SIGNAL(maximumButtonSizeChanged(int)), this, SLOT(setMaximumButtonSize(int)));
-		connect(toolBar, SIGNAL(toolButtonStyleChanged(Qt::ToolButtonStyle)), this, SLOT(setToolButtonStyle(Qt::ToolButtonStyle)));
+		connect(toolBar, SIGNAL(toolButtonStyleChanged(Qt::ToolButtonStyle)), this, SLOT(updateToolButtonStyle(Qt::ToolButtonStyle)));
 	}
 }
 
@@ -117,8 +117,8 @@ void ToolButtonWidget::addMenu(Menu *menu, const QList<ActionsManager::ActionEnt
 		}
 		else
 		{
-			Menu *subMenu = new Menu();
-			Action *subMenuAction = menu->addAction(-1);
+			Menu *subMenu(new Menu());
+			Action *subMenuAction(menu->addAction(-1));
 			subMenuAction->setText(entries.at(i).options.value(QLatin1String("text"), tr("Menu")).toString());
 			subMenuAction->setMenu(subMenu);
 
@@ -134,7 +134,7 @@ void ToolButtonWidget::setOptions(const QVariantMap &options)
 
 	if (m_isCustomized && options.contains(QLatin1String("icon")))
 	{
-		const QString data = options[QLatin1String("icon")].toString();
+		const QString data(options[QLatin1String("icon")].toString());
 
 		if (data.startsWith(QLatin1String("data:image/")))
 		{
@@ -146,6 +146,7 @@ void ToolButtonWidget::setOptions(const QVariantMap &options)
 		}
 	}
 
+	updateToolButtonStyle(toolButtonStyle());
 	update();
 }
 
@@ -159,6 +160,37 @@ void ToolButtonWidget::setMaximumButtonSize(int size)
 	{
 		setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
 	}
+}
+
+void ToolButtonWidget::updateToolButtonStyle(Qt::ToolButtonStyle buttonStyle)
+{
+	if (m_options.contains(QLatin1String("buttonStyle")))
+	{
+		const QString buttonStyleString(m_options[QLatin1String("buttonStyle")].toString());
+
+		if (buttonStyleString == QLatin1String("auto"))
+		{
+			buttonStyle = Qt::ToolButtonFollowStyle;
+		}
+		else if (buttonStyleString == QLatin1String("textOnly"))
+		{
+			buttonStyle = Qt::ToolButtonTextOnly;
+		}
+		else if (buttonStyleString == QLatin1String("textBesideIcon"))
+		{
+			buttonStyle = Qt::ToolButtonTextBesideIcon;
+		}
+		else if (buttonStyleString == QLatin1String("textUnderIcon"))
+		{
+			buttonStyle = Qt::ToolButtonTextUnderIcon;
+		}
+		else
+		{
+			buttonStyle = Qt::ToolButtonIconOnly;
+		}
+	}
+
+	setToolButtonStyle(buttonStyle);
 }
 
 QVariantMap ToolButtonWidget::getOptions() const
