@@ -29,7 +29,7 @@ if (element)
 			}
 			else
 			{
-				if (inputs[i].tagName.toLowerCase() !== 'textarea' && (inputs[i].type == 'checkbox' || inputs[i].type == 'radio') && !inputs[i].checked)
+				if (inputs[i].type == 'submit' || ((inputs[i].type == 'checkbox' || inputs[i].type == 'radio') && !inputs[i].checked))
 				{
 					continue;
 				}
