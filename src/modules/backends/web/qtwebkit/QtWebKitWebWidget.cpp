@@ -1376,8 +1376,8 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			return;
 		case ActionsManager::CreateSearchAction:
 			{
-				const QWebHitTestResult hitResult = m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position);
-				QWebElement parentElement = hitResult.element().parent();
+				const QWebHitTestResult hitResult(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position));
+				QWebElement parentElement(hitResult.element().parent());
 
 				while (!parentElement.isNull() && parentElement.tagName().toLower() != QLatin1String("form"))
 				{
@@ -1414,7 +1414,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 						}
 						else
 						{
-							if ((inputs.at(i).attribute(QLatin1String("type")) == QLatin1String("checkbox") || inputs.at(i).attribute(QLatin1String("type")) == QLatin1String("radio")) && !inputs.at(i).hasAttribute(QLatin1String("checked")))
+							if (inputs.at(i).attribute(QLatin1String("type")) == QLatin1String("submit") || ((inputs.at(i).attribute(QLatin1String("type")) == QLatin1String("checkbox") || inputs.at(i).attribute(QLatin1String("type")) == QLatin1String("radio")) && !inputs.at(i).hasAttribute(QLatin1String("checked"))))
 							{
 								continue;
 							}
