@@ -215,7 +215,7 @@ void ToolBarAreaWidget::dropEvent(QDropEvent *event)
 		}
 	}
 
-	if (identifiers.isEmpty())
+	if (m_layout->count() == m_dropRow)
 	{
 		identifiers.append(draggedIdentifier);
 	}
