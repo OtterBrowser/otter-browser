@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -24,28 +25,44 @@
 #include "../../../../core/SettingsManager.h"
 
 #include <QtCore/QCoreApplication>
+#include <QtCore/QTimer>
 
 namespace Otter
 {
 
 QtWebEngineUrlRequestInterceptor::QtWebEngineUrlRequestInterceptor(QObject *parent) : QWebEngineUrlRequestInterceptor(parent)
 {
-	optionChanged(QLatin1String("Content/BlockingProfiles"), SettingsManager::getValue(QLatin1String("Content/BlockingProfiles")));
+	QTimer::singleShot(3600000, this, SLOT(clearContentBlockingProfiles()));
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant,QUrl)), this, SLOT(optionChanged(QString)));
 }
 
-void QtWebEngineUrlRequestInterceptor::optionChanged(const QString &option, const QVariant &value)
+void QtWebEngineUrlRequestInterceptor::optionChanged(const QString &option)
 {
 	if (option == QLatin1String("Content/BlockingProfiles"))
 	{
-		m_contentBlockingProfiles = ContentBlockingManager::getProfileList(value.toStringList());
+		clearContentBlockingProfiles();
 	}
+}
+
+void QtWebEngineUrlRequestInterceptor::clearContentBlockingProfiles()
+{
+	m_contentBlockingProfiles.clear();
+
+	QTimer::singleShot(3600000, this, SLOT(clearContentBlockingProfiles()));
 }
 
 void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo &request)
 {
-	if (m_contentBlockingProfiles.isEmpty())
+	if (!m_contentBlockingProfiles.contains(request.firstPartyUrl().host()))
+	{
+		m_contentBlockingProfiles[request.firstPartyUrl().host()] = ContentBlockingManager::getProfileList(SettingsManager::getValue(QLatin1String("Content/BlockingProfiles"), request.firstPartyUrl()).toStringList());
+	}
+
+	const QVector<int> contentBlockingProfiles(m_contentBlockingProfiles.value(request.firstPartyUrl().host()));
+
+	if (contentBlockingProfiles.isEmpty())
 	{
 		const NetworkManagerFactory::DoNotTrackPolicy doNotTrackPolicy(NetworkManagerFactory::getDoNotTrackPolicy());
 
@@ -94,7 +111,7 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 			break;
 	}
 
-	const ContentBlockingManager::CheckResult result(ContentBlockingManager::checkUrl(m_contentBlockingProfiles, request.firstPartyUrl(), request.requestUrl(), resourceType));
+	const ContentBlockingManager::CheckResult result(ContentBlockingManager::checkUrl(contentBlockingProfiles, request.firstPartyUrl(), request.requestUrl(), resourceType));
 
 	if (result.isBlocked)
 	{
