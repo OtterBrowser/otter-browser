@@ -658,7 +658,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::AboutApplicationAction:
 			{
 				WebBackend *webBackend(AddonsManager::getWebBackend());
-				QString about = tr("<b>Otter %1</b><br>Web browser controlled by the user, not vice-versa.").arg(Application::getInstance()->getFullVersion());
+				QString about = tr("<b>Otter %1</b><br>Web browser controlled by the user, not vice-versa.<br><a href=\"https://www.otter-browser.org/\">https://www.otter-browser.org/</a>").arg(Application::getInstance()->getFullVersion());
 
 				if (webBackend)
 				{
