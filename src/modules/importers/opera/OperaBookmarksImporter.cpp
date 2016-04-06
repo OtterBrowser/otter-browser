@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2014 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 
 #include <QtCore/QDateTime>
 #include <QtCore/QDir>
+#include <QtCore/QStandardPaths>
 #include <QtCore/QTextStream>
 
 namespace Otter
@@ -77,6 +78,14 @@ QString OperaBookmarksImporter::getSuggestedPath(const QString &path) const
 	{
 		return QDir(path).filePath(QLatin1String("bookmarks.adr"));
 	}
+#if !defined(Q_OS_MAC) && defined(Q_OS_UNIX)
+	const QString homePath(QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0));
+
+	if (!homePath.isEmpty())
+	{
+		return QDir(homePath).filePath(QLatin1String(".opera/bookmarks.adr"));
+	}
+#endif
 
 	return path;
 }
