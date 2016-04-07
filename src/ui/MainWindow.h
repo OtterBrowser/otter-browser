@@ -1,7 +1,8 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -52,6 +53,16 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 public:
+	enum MainWindowFlag
+	{
+		NoFlags = 0,
+		PrivateFlag = 1,
+		SingleWindowFlag = 2,
+		NoToolBarsFlag = 4
+	};
+
+	Q_DECLARE_FLAGS(MainWindowFlags, MainWindowFlag)
+
 	explicit MainWindow(bool isPrivate = false, const SessionMainWindow &session = SessionMainWindow(), QWidget *parent = NULL);
 	~MainWindow();
 
@@ -130,5 +141,7 @@ friend class WindowsManager;
 };
 
 }
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::MainWindow::MainWindowFlags)
 
 #endif
