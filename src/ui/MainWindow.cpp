@@ -64,7 +64,7 @@
 namespace Otter
 {
 
-MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget *parent) : QMainWindow(parent),
+MainWindow::MainWindow(MainWindowFlags flags, const SessionMainWindow &session, QWidget *parent) : QMainWindow(parent),
 	m_windowsManager(NULL),
 	m_tabSwitcher(NULL),
 	m_workspace(new WorkspaceWidget(this)),
@@ -90,7 +90,7 @@ MainWindow::MainWindow(bool isPrivate, const SessionMainWindow &session, QWidget
 
 	SessionsManager::setActiveWindow(this);
 
-	m_windowsManager = new WindowsManager((isPrivate || SessionsManager::isPrivate() || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()), this);
+	m_windowsManager = new WindowsManager((flags.testFlag(PrivateFlag) || SessionsManager::isPrivate() || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()), this);
 	m_topToolBarArea = new ToolBarAreaWidget(Qt::TopToolBarArea, this);
 	m_bottomToolBarArea = new ToolBarAreaWidget(Qt::BottomToolBarArea, this);
 	m_leftToolBarArea = new ToolBarAreaWidget(Qt::LeftToolBarArea, this);

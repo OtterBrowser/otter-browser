@@ -63,7 +63,7 @@ public:
 
 	Q_DECLARE_FLAGS(MainWindowFlags, MainWindowFlag)
 
-	explicit MainWindow(bool isPrivate = false, const SessionMainWindow &session = SessionMainWindow(), QWidget *parent = NULL);
+	explicit MainWindow(MainWindowFlags flags = NoFlags, const SessionMainWindow &session = SessionMainWindow(), QWidget *parent = NULL);
 	~MainWindow();
 
 	static MainWindow* findMainWindow(QObject *parent);
