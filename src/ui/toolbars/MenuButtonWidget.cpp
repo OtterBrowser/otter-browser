@@ -79,6 +79,8 @@ void MenuButtonWidget::updateMenu()
 	disconnect(m_menu, SIGNAL(aboutToShow()), this, SLOT(updateMenu()));
 
 	m_menu->load(QLatin1String("menu/menuButton.json"));
+
+	connect(m_menu, SIGNAL(aboutToShow()), this, SLOT(updateMenu()));
 }
 
 }
