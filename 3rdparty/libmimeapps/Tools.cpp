@@ -124,24 +124,18 @@ std::vector<file> directoryEntries(const std::string &directory)
 std::vector<std::string> unfoldVariable(const std::string &string)
 {
 	std::vector<std::string> result;
+	size_t begin = string.find('$');
 
-	if (!match(string, "$"))
+	if (begin == std::string::npos)
 	{
 		result.push_back(string);
 
 		return result;
 	}
 
-	int begin = 0;
+	size_t end = begin+1;
 
-	while (string.at(begin) != '$')
-	{
-		++begin;
-	}
-
-	int end = begin+1;
-
-	while (std::isalnum(string.at(end)) || string.at(end) == '_')
+	while (end < string.size() && (std::isalnum(string.at(end)) || string.at(end) == '_'))
 	{
 		++end;
 	}
