@@ -129,6 +129,7 @@ private:
 	Qt::WindowStates m_previousState;
 	Qt::WindowStates m_previousRaisedState;
 	int m_tabSwitcherTimer;
+	bool m_hasToolBars;
 	Ui::MainWindow *m_ui;
 
 signals:
