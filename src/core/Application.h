@@ -42,6 +42,16 @@ class Application : public QApplication
 	Q_OBJECT
 
 public:
+	enum MainWindowFlag
+	{
+		NoFlags = 0,
+		PrivateFlag = 1,
+		SingleWindowFlag = 2,
+		NoToolBarsFlag = 4
+	};
+
+	Q_DECLARE_FLAGS(MainWindowFlags, MainWindowFlag)
+
 	explicit Application(int &argc, char **argv);
 	~Application();
 
@@ -96,5 +106,7 @@ signals:
 };
 
 }
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::Application::MainWindowFlags)
 
 #endif

@@ -44,7 +44,6 @@
 #include "toolbars/ActionWidget.h"
 #include "../core/ActionsManager.h"
 #include "../core/AddonsManager.h"
-#include "../core/Application.h"
 #include "../core/BookmarksManager.h"
 #include "../core/HistoryManager.h"
 #include "../core/InputInterpreter.h"
@@ -64,7 +63,7 @@
 namespace Otter
 {
 
-MainWindow::MainWindow(MainWindowFlags flags, const SessionMainWindow &session, QWidget *parent) : QMainWindow(parent),
+MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWindow &session, QWidget *parent) : QMainWindow(parent),
 	m_windowsManager(NULL),
 	m_tabSwitcher(NULL),
 	m_workspace(new WorkspaceWidget(this)),
@@ -80,7 +79,7 @@ MainWindow::MainWindow(MainWindowFlags flags, const SessionMainWindow &session, 
 	m_splitter(new QSplitter(this)),
 	m_currentWindow(NULL),
 	m_tabSwitcherTimer(0),
-	m_hasToolBars(!flags.testFlag(NoToolBarsFlag)),
+	m_hasToolBars(!flags.testFlag(Application::NoToolBarsFlag)),
 	m_ui(new Ui::MainWindow)
 {
 	m_ui->setupUi(this);
@@ -91,7 +90,7 @@ MainWindow::MainWindow(MainWindowFlags flags, const SessionMainWindow &session, 
 
 	SessionsManager::setActiveWindow(this);
 
-	m_windowsManager = new WindowsManager((flags.testFlag(PrivateFlag) || SessionsManager::isPrivate() || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()), this);
+	m_windowsManager = new WindowsManager((flags.testFlag(Application::PrivateFlag) || SessionsManager::isPrivate() || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()), this);
 
 	m_workspace->updateActions();
 

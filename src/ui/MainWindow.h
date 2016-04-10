@@ -24,6 +24,7 @@
 
 #include "SidebarWidget.h"
 #include "toolbars/ActionWidget.h"
+#include "../core/Application.h"
 #include "../core/SessionsManager.h"
 #include "../core/WindowsManager.h"
 
@@ -53,17 +54,7 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 public:
-	enum MainWindowFlag
-	{
-		NoFlags = 0,
-		PrivateFlag = 1,
-		SingleWindowFlag = 2,
-		NoToolBarsFlag = 4
-	};
-
-	Q_DECLARE_FLAGS(MainWindowFlags, MainWindowFlag)
-
-	explicit MainWindow(MainWindowFlags flags = NoFlags, const SessionMainWindow &session = SessionMainWindow(), QWidget *parent = NULL);
+	explicit MainWindow(Application::MainWindowFlags flags = Application::NoFlags, const SessionMainWindow &session = SessionMainWindow(), QWidget *parent = NULL);
 	~MainWindow();
 
 	static MainWindow* findMainWindow(QObject *parent);
@@ -142,7 +133,5 @@ friend class WindowsManager;
 };
 
 }
-
-Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::MainWindow::MainWindowFlags)
 
 #endif

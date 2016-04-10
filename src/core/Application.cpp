@@ -688,7 +688,7 @@ void Application::setLocale(const QString &locale)
 
 MainWindow* Application::createWindow(bool isPrivate, bool inBackground, const SessionMainWindow &windows)
 {
-	MainWindow *window(new MainWindow((isPrivate ? MainWindow::PrivateFlag : MainWindow::NoFlags), windows));
+	MainWindow *window(new MainWindow((isPrivate ? PrivateFlag : NoFlags), windows));
 
 	m_windows.prepend(window);
 
