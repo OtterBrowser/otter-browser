@@ -146,7 +146,7 @@ int main(int argc, char *argv[])
 
 	if (application.getWindows().isEmpty())
 	{
-		application.createWindow(isPrivate);
+		application.createWindow(isPrivate ? Application::PrivateFlag : Application::NoFlags);
 	}
 
 	return application.exec();

@@ -58,7 +58,7 @@ public:
 	void removeWindow(MainWindow* window);
 	void showNotification(Notification *notification);
 	void setLocale(const QString &locale);
-	MainWindow* createWindow(bool isPrivate = false, bool inBackground = false, const SessionMainWindow &windows = SessionMainWindow());
+	MainWindow* createWindow(MainWindowFlags flags = NoFlags, bool inBackground = false, const SessionMainWindow &windows = SessionMainWindow());
 	static Application* getInstance();
 	MainWindow* getWindow();
 	TrayIcon* getTrayIcon();

@@ -496,7 +496,7 @@ void Application::newConnection()
 	{
 		if (!window || !SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool() || (isPrivate && !window->getWindowsManager()->isPrivate()))
 		{
-			window = createWindow(isPrivate);
+			window = createWindow(isPrivate ? PrivateFlag : NoFlags);
 		}
 	}
 	else
@@ -507,7 +507,7 @@ void Application::newConnection()
 		{
 			for (int i = 0; i < sessionData.windows.count(); ++i)
 			{
-				createWindow(isPrivate, false, sessionData.windows.at(i));
+				createWindow((isPrivate ? PrivateFlag : NoFlags), false, sessionData.windows.at(i));
 			}
 		}
 	}
@@ -627,7 +627,7 @@ void Application::showUpdateDetails()
 
 void Application::newWindow(bool isPrivate, bool inBackground, const QUrl &url)
 {
-	MainWindow *window = createWindow(isPrivate, inBackground);
+	MainWindow *window = createWindow((isPrivate ? PrivateFlag : NoFlags), inBackground);
 
 	if (url.isValid() && window)
 	{
@@ -686,9 +686,9 @@ void Application::setLocale(const QString &locale)
 	QLocale::setDefault(QLocale(identifier));
 }
 
-MainWindow* Application::createWindow(bool isPrivate, bool inBackground, const SessionMainWindow &windows)
+MainWindow* Application::createWindow(MainWindowFlags flags, bool inBackground, const SessionMainWindow &windows)
 {
-	MainWindow *window(new MainWindow((isPrivate ? PrivateFlag : NoFlags), windows));
+	MainWindow *window(new MainWindow(flags, windows));
 
 	m_windows.prepend(window);
 
