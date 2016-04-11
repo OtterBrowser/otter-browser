@@ -251,16 +251,16 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 		QString path;
 		QString fileName = getSuggestedFileName();
 
-		if (!m_options.testFlag(IsQuickTransferOption) && !SettingsManager::getValue(QLatin1String("Browser/AlwaysAskWhereToSaveDownload")).toBool())
+		if (!SettingsManager::getValue(QLatin1String("Browser/AlwaysAskWhereToSaveDownload")).toBool())
 		{
 			m_options |= IsQuickTransferOption;
 		}
 
 		if (m_options.testFlag(IsQuickTransferOption))
 		{
-			path = SettingsManager::getValue(QLatin1String("Paths/Downloads")).toString() + QDir::separator() + fileName;
+			path = SettingsManager::getValue(QLatin1String("Paths/Downloads")).toString();
 
-			if (QFile::exists(path) && QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with that name already exists.\nDo you want to overwrite it?"), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::No)
+			if (QFile::exists(path + QDir::separator() + fileName) && QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with that name already exists.\nDo you want to overwrite it?"), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::No)
 			{
 				path = QString();
 			}
