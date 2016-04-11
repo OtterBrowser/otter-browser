@@ -172,7 +172,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Procurar...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="71"/>
@@ -182,17 +182,17 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="125"/>
         <source>Remove Addon…</source>
-        <translation type="unfinished"/>
+        <translation>Remover Extensão...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="129"/>
         <source>Add Addon…</source>
-        <translation type="unfinished"/>
+        <translation>Adicionar Extensão...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="198"/>
         <source>Addons Manager</source>
-        <translation type="unfinished"/>
+        <translation>Gestor de Extensões</translation>
     </message>
 </context>
 <context>
@@ -370,17 +370,17 @@ This may lead to malfunctions or even data loss.</source>
     <message>
         <location filename="../../src/core/Application.cpp" line="290"/>
         <source>Continue in Read-only Mode</source>
-        <translation type="unfinished"/>
+        <translation>Continuar em Modo Leitura</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="292"/>
         <source>Ignore</source>
-        <translation type="unfinished"/>
+        <translation>Ignorar</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="293"/>
         <source>Quit</source>
-        <translation type="unfinished"/>
+        <translation>Sair</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="506"/>
@@ -497,7 +497,7 @@ Tem a certeza que quer restaurar esta sessão?</translation>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="71"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Nova...</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="96"/>
@@ -688,17 +688,17 @@ Tem a certeza que quer restaurar esta sessão?</translation>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Título</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Address</source>
-        <translation type="unfinished"/>
+        <translation>Endereço</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>Descrição</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
@@ -708,22 +708,22 @@ Tem a certeza que quer restaurar esta sessão?</translation>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Added</source>
-        <translation type="unfinished"/>
+        <translation>Adicionado</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Modified</source>
-        <translation type="unfinished"/>
+        <translation>Modificado</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Visited</source>
-        <translation type="unfinished"/>
+        <translation>Visitado</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Visits</source>
-        <translation type="unfinished"/>
+        <translation>Visitas</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
@@ -786,7 +786,7 @@ Tem a certeza que quer restaurar esta sessão?</translation>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="70"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Nova...</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
@@ -1415,17 +1415,17 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="43"/>
         <source>All Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Todos os Separadores</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="48"/>
         <source>Current Tab Only</source>
-        <translation type="unfinished"/>
+        <translation>Apenas o Separador Atual</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="54"/>
         <source>Other Sources</source>
-        <translation type="unfinished"/>
+        <translation>Outras Fontes</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="262"/>
@@ -1884,7 +1884,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/core/HistoryModel.cpp" line="61"/>
         <source>Failed to open history file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Falhou ao abrir o ficheiro do histórico: %1</translation>
     </message>
 </context>
 <context>
@@ -6521,7 +6521,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Nome</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
@@ -6958,7 +6958,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="290"/>
         <source>Suspend Tab</source>
-        <translation type="unfinished"/>
+        <translation>Suspender Separador</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="291"/>

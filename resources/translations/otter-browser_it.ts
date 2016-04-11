@@ -172,27 +172,27 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Ricerca...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="71"/>
         <source>User Scripts</source>
-        <translation type="unfinished"/>
+        <translation>Script utente</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="125"/>
         <source>Remove Addon…</source>
-        <translation type="unfinished"/>
+        <translation>Rimuovere Componenti Aggiuntivi...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="129"/>
         <source>Add Addon…</source>
-        <translation type="unfinished"/>
+        <translation>Aggiungere Componenti Aggiuntivi...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="198"/>
         <source>Addons Manager</source>
-        <translation type="unfinished"/>
+        <translation>Gestore degli Componenti Aggiuntivi...</translation>
     </message>
 </context>
 <context>
@@ -200,7 +200,7 @@
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="71"/>
         <source>Adons Manager</source>
-        <translation type="unfinished"/>
+        <translation>Gestore dei Componenti Aggiuntivi</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="72"/>
@@ -339,19 +339,21 @@
     <message>
         <location filename="../../src/core/Application.cpp" line="253"/>
         <source>Profile directory (%1) is not writable, application will be running in read-only mode.</source>
-        <translation type="unfinished"/>
+        <translation>La cartella del profilo (%1) non è scrivibile, l&apos;applicazione verrà eseguita in modalità di sola lettura.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="277"/>
         <source>Your profile directory (%1) ran out of free disk space.
 This may lead to malfunctions or even data loss.</source>
-        <translation type="unfinished"/>
+        <translation>La cartella del profilo utente (%1) ha esaurito lo spazio libero su disco.
+Questo può portare a malfunzionamenti o perfino a perdita di dati.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="281"/>
         <source>Your profile directory (%1) is running low on free disk space (%2 remaining).
 This may lead to malfunctions or even data loss.</source>
-        <translation type="unfinished"/>
+        <translation>La cartella del profilo utente (%1) sta esaurendo lo spazio libero su disco (%2 restanti).
+Questo può portare a malfunzionamenti o perfino a perdita di dati.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="287"/>
@@ -370,17 +372,17 @@ This may lead to malfunctions or even data loss.</source>
     <message>
         <location filename="../../src/core/Application.cpp" line="290"/>
         <source>Continue in Read-only Mode</source>
-        <translation type="unfinished"/>
+        <translation>Continuare in modalità di Sola-Lettura</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="292"/>
         <source>Ignore</source>
-        <translation type="unfinished"/>
+        <translation>Ignorare</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="293"/>
         <source>Quit</source>
-        <translation type="unfinished"/>
+        <translation>Uscita</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="506"/>
@@ -688,42 +690,42 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Titolo</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Address</source>
-        <translation type="unfinished"/>
+        <translation>Indirizzo</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>Descrizione</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Keyword</source>
-        <translation type="unfinished"/>
+        <translation>Parola chiave</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Added</source>
-        <translation type="unfinished"/>
+        <translation>Aggiunto</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Modified</source>
-        <translation type="unfinished"/>
+        <translation>Modificato</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Visited</source>
-        <translation type="unfinished"/>
+        <translation>Visitato</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Visits</source>
-        <translation type="unfinished"/>
+        <translation>Visite</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
@@ -993,17 +995,17 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.ui" line="17"/>
         <source>Certificate chain:</source>
-        <translation type="unfinished"/>
+        <translation>Catena degli certificati:</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.ui" line="34"/>
         <source>Certificate fields:</source>
-        <translation type="unfinished"/>
+        <translation>Campi del certificato</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.ui" line="51"/>
         <source>Field value:</source>
-        <translation type="unfinished"/>
+        <translation>Valore del campo</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="42"/>
@@ -1034,7 +1036,7 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="112"/>
         <source>DER encoded X509 certificates (*.der);;PEM encoded X509 certificates (*.pem);;Text files (*.txt)</source>
-        <translation type="unfinished"/>
+        <translation>DER con codifica X509 certificati (*.der);;PEM con codifica X509  certificati(*.pem);;File di testo(*.txt)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="120"/>
@@ -1049,87 +1051,87 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="177"/>
         <source>Authority Key Identifier</source>
-        <translation type="unfinished"/>
+        <translation>Identificatore della Chiave di Autorità</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="181"/>
         <source>Subject Key Identifier</source>
-        <translation type="unfinished"/>
+        <translation>Identificatore della Chiave del Soggetto</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="185"/>
         <source>Key Usage</source>
-        <translation type="unfinished"/>
+        <translation>Utilizzo della chiave</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="189"/>
         <source>Certificate Policies</source>
-        <translation type="unfinished"/>
+        <translation>Criteri del certificato</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="193"/>
         <source>Policy Mappings</source>
-        <translation type="unfinished"/>
+        <translation>Criteri di Mapping</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="197"/>
         <source>Subject Alternative Name</source>
-        <translation type="unfinished"/>
+        <translation>Nome Alternativo del Soggetto</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="201"/>
         <source>Issuer Alternative Name</source>
-        <translation type="unfinished"/>
+        <translation>Nome Alternativo dell&apos;Emittente</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="205"/>
         <source>Subject Directory Attributes</source>
-        <translation type="unfinished"/>
+        <translation>Attributi della Cartella del Soggetto</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="209"/>
         <source>Basic Constraints</source>
-        <translation type="unfinished"/>
+        <translation>Vincoli di Base</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="213"/>
         <source>Name Constraints</source>
-        <translation type="unfinished"/>
+        <translation>Vincoli dei nomi</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="217"/>
         <source>Policy Constraints</source>
-        <translation type="unfinished"/>
+        <translation>Vincoli dei Criteri</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="221"/>
         <source>Extended Key Usage</source>
-        <translation type="unfinished"/>
+        <translation>Utilizzo Esteso della Chiave</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="225"/>
         <source>CRL Distribution Points</source>
-        <translation type="unfinished"/>
+        <translation>Punti di Distribuzione CRL</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="229"/>
         <source>Inhibit Any Policy</source>
-        <translation type="unfinished"/>
+        <translation>Inibire Qualsiasi Criterio</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="233"/>
         <source>Delta CRL Distribution Point</source>
-        <translation type="unfinished"/>
+        <translation>Punto di Distribuzione Delta CRL</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="237"/>
         <source>Authority Information Access</source>
-        <translation type="unfinished"/>
+        <translation>Accesso alle Informazioni dell&apos;Autorità</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="241"/>
         <source>Subject Information Access</source>
-        <translation type="unfinished"/>
+        <translation>Accesso alle Informazioni del Soggetto</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="323"/>
@@ -1137,7 +1139,10 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
 %1
 
 Exponent: %2</source>
-        <translation type="unfinished"/>
+        <translation>Modulo:
+%1
+
+Esponente:%2</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="336"/>
@@ -1152,7 +1157,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="337"/>
         <source>OID: %1</source>
-        <translation type="unfinished"/>
+        <translation>OID: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="341"/>
@@ -1172,12 +1177,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="403"/>
         <source>Certificate Signature Algorithm</source>
-        <translation type="unfinished"/>
+        <translation>Algoritmo della Firma del Certificato</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="407"/>
         <source>Issuer</source>
-        <translation type="unfinished"/>
+        <translation>Emittente</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="411"/>
@@ -1202,7 +1207,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="427"/>
         <source>Subject Public Key</source>
-        <translation type="unfinished"/>
+        <translation>Chiave Pubblica del Soggetto</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="431"/>
@@ -1222,17 +1227,17 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="447"/>
         <source>Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>Impronta Digitale</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="451"/>
         <source>SHA-1 Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>SHA-1  Impronta Digitale</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="455"/>
         <source>SHA-256 Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>SHA-256 Impronta Digitale</translation>
     </message>
 </context>
 <context>
@@ -1376,7 +1381,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="31"/>
         <source>Scope</source>
-        <translation type="unfinished"/>
+        <translation>Scopo</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="60"/>
@@ -1622,7 +1627,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="14"/>
         <source>Third-party Cookies Exceptions</source>
-        <translation type="unfinished"/>
+        <translation>Eccezioni  Cookie di Terze parti</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="26"/>
@@ -2494,12 +2499,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
         <source>Tab Handle of Active Tab</source>
-        <translation type="unfinished"/>
+        <translation>Maniglia Tab della Scheda Attiva</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
         <source>Empty Area of Tab Bar</source>
-        <translation type="unfinished"/>
+        <translation>Area Vuota della Barra delle Schede</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="131"/>
@@ -2724,7 +2729,7 @@ Si desidera continuare?</translation>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="56"/>
         <source>Opera session files (*.win)</source>
-        <translation type="unfinished"/>
+        <translation>File di sessione di opera(*.win)</translation>
     </message>
 </context>
 <context>
@@ -2778,7 +2783,7 @@ Si desidera continuare?</translation>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="33"/>
         <source>Do you want to save login data for %1?</source>
-        <translation type="unfinished"/>
+        <translation>Vuoi salvare i dati di login per %1?</translation>
     </message>
 </context>
 <context>
@@ -2907,7 +2912,7 @@ Si desidera continuare?</translation>
     <message numerus="yes">
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="118"/>
         <source>%1 wants to open %n pop-up window(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 vuole aprire %n finestra(e) di pop-up.</numerusform><numerusform>%1 vuole aprire %n finestra(e) di pop-up.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4481,18 +4486,18 @@ Si desidera sovrascriverlo? </translation>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="176"/>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="284"/>
         <source>POST method</source>
-        <translation type="unfinished"/>
+        <translation>Metodo POST</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="217"/>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="325"/>
         <source>Data encoding (enctype):</source>
-        <translation type="unfinished"/>
+        <translation>Dati di codifica (enctype):</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="245"/>
         <source>Suggestions Query</source>
-        <translation type="unfinished"/>
+        <translation>Suggerimenti Domande</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.cpp" line="133"/>
@@ -5146,7 +5151,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="388"/>
         <source>Arbitrary List of Actions</source>
-        <translation type="unfinished"/>
+        <translation>Elenco Arbitrario delle Azioni</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="395"/>
@@ -5663,7 +5668,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="129"/>
         <source>Some of the updates do not contain packages for your platform. Try to check for updates later or visit details page for more info.</source>
-        <translation type="unfinished"/>
+        <translation>Alcuni degli aggiornamenti non contengono pacchetti per la tua piattaforma. Tenta di cercare gli aggiornamenti più tardi o visitare la pagina dei dettagli per maggiori informazioni.</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="173"/>
@@ -5695,7 +5700,7 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="215"/>
         <source>Check Error Console for more information.</source>
-        <translation type="unfinished"/>
+        <translation>Controllare la Console degli errori per ulteriori informazioni.</translation>
     </message>
 </context>
 <context>
@@ -5796,22 +5801,22 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="795"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Domanda</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="795"/>
         <source>This tab has crashed.</source>
-        <translation type="unfinished"/>
+        <translation>Questa scheda è andata in crash.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="795"/>
         <source>Do you want to try to reload it?</source>
-        <translation type="unfinished"/>
+        <translation>Vuoi provare a ricaricarla?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="796"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Non mostrare più questo messaggio</translation>
     </message>
 </context>
 <context>
@@ -5859,12 +5864,12 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="842"/>
         <source>Open Image in New Background Tab (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Apri Immagine in una Nuova Scheda in Background (%1)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1135"/>
         <source>1 Minute</source>
-        <translation type="unfinished"/>
+        <translation>1 Minuto</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1136"/>
@@ -6013,17 +6018,17 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="306"/>
         <source>Issued to:</source>
-        <translation type="unfinished"/>
+        <translation>Rilasciato a:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="313"/>
         <source>Issued by:</source>
-        <translation type="unfinished"/>
+        <translation>Rilasciato da:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="320"/>
         <source>Issued on:</source>
-        <translation type="unfinished"/>
+        <translation>Emesso il:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="327"/>
@@ -6033,7 +6038,7 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="340"/>
         <source>Cipher</source>
-        <translation type="unfinished"/>
+        <translation>Cifrario</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="347"/>
@@ -6053,7 +6058,7 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="368"/>
         <source>Key exchange method:</source>
-        <translation type="unfinished"/>
+        <translation>Metodo di scambio della chiave:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="407"/>
@@ -6068,28 +6073,28 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="47"/>
         <source>This website was marked as fraud.</source>
-        <translation type="unfinished"/>
+        <translation>Questo sito è stato contrassegnato come frode.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="52"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="57"/>
         <source>Your connection with this website is private.</source>
-        <translation type="unfinished"/>
+        <translation>La connessione con questo sito Web è privata.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="62"/>
         <source>Your connection with this website is not private.</source>
-        <translation type="unfinished"/>
+        <translation>La connessione con questo sito Web non è privata.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="67"/>
         <source>You are viewing content from your local filesystem.</source>
-        <translation type="unfinished"/>
+        <translation>Si sta visualizzando contenuti dal file system locale.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="72"/>
         <source>You are viewing safe page from Otter Browser.</source>
-        <translation type="unfinished"/>
+        <translation>Si sta visualizzando la pagina sicura di Otter Browser.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="77"/>
@@ -6104,7 +6109,7 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message numerus="yes">
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="87"/>
         <source>%1 (%n blocked)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%n bloccato)</numerusform><numerusform>%1 (%n bloccato)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="94"/>
@@ -6175,7 +6180,7 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="236"/>
         <source>Information for %1</source>
-        <translation type="unfinished"/>
+        <translation>Informazioni per %1</translation>
     </message>
 </context>
 <context>
@@ -6530,7 +6535,7 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Nome</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
@@ -6565,7 +6570,7 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="358"/>
         <source>Update Interval</source>
-        <translation type="unfinished"/>
+        <translation>Intervallo degli Aggiornamenti</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="358"/>
@@ -6606,7 +6611,7 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message numerus="yes">
         <location filename="../../src/core/WindowsManager.cpp" line="343"/>
         <source>You are about to open %n bookmark(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Si sta per aprire %n. segnalibro/i.</numerusform><numerusform>Si sta per aprire %n. segnalibro(i).</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="344"/>
@@ -6641,13 +6646,13 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="227"/>
         <source>No valid suffix for given MIME type: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nessun suffisso valido per questo tipo MIME: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="294"/>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="344"/>
         <source>Failed to load a valid application path for MIME type %1: %2</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile caricare un percorso di applicazione valido per tipo MIME %1: %2</translation>
     </message>
 </context>
 <context>
@@ -6687,17 +6692,17 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="921"/>
         <source>Connection timed out to host %1</source>
-        <translation type="unfinished"/>
+        <translation>Timeout della connessione con  host %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="1027"/>
         <source>Connected to host %1</source>
-        <translation type="unfinished"/>
+        <translation>Collegato all&apos;host %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="1246"/>
         <source>Connection refused for data connection</source>
-        <translation type="unfinished"/>
+        <translation>Connessione rifiutata per connessione-dati</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="1422"/>
@@ -6708,7 +6713,8 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2337"/>
         <source>Connecting to host failed:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Connessione non riuscita, all&apos;host :
+%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2341"/>
@@ -6721,13 +6727,15 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2345"/>
         <source>Listing directory failed:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Elencare cartella non riuscita:
+%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2349"/>
         <source>Changing directory failed:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Cambiare cartella non riuscita:
+%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2353"/>
@@ -6867,7 +6875,7 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="271"/>
         <source>Frame</source>
-        <translation type="unfinished"/>
+        <translation>Frame</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="275"/>
@@ -6958,22 +6966,22 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="288"/>
         <source>Remove Local Tab History</source>
-        <translation type="unfinished"/>
+        <translation>Rimuovere la Cronologia delle Schede Locali</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="289"/>
         <source>Purge Tab History</source>
-        <translation type="unfinished"/>
+        <translation>Epurare la Cronologia della Schede</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="289"/>
         <source>Remove Local and Global Tab History</source>
-        <translation type="unfinished"/>
+        <translation>Rimuovere la Cronologia delle Schede Locale e Globale</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="290"/>
         <source>Suspend Tab</source>
-        <translation type="unfinished"/>
+        <translation>Sospendere la Scheda</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="291"/>
@@ -7023,7 +7031,7 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="299"/>
         <source>Cascade</source>
-        <translation type="unfinished"/>
+        <translation>Cascata</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="300"/>
@@ -7159,7 +7167,7 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="324"/>
         <source>Open Frame with External Application</source>
-        <translation type="unfinished"/>
+        <translation>Aprire Frame con l&apos;Applicazione Esterna</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="325"/>
@@ -7181,7 +7189,7 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="327"/>
         <source>View Frame Source</source>
-        <translation type="unfinished"/>
+        <translation>Visualizza Origine Frame</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="328"/>
@@ -7304,7 +7312,7 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="351"/>
         <source>Stop All Pages</source>
-        <translation type="unfinished"/>
+        <translation>Interrompere Tutte le Pagine</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="353"/>
@@ -7490,17 +7498,17 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="389"/>
         <source>Enter Drag Scroll Mode</source>
-        <translation type="unfinished"/>
+        <translation>Immettere la Modalità di Scorrimento-Trascinamento</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="390"/>
         <source>Enter Move Scroll Mode</source>
-        <translation type="unfinished"/>
+        <translation>Immettere la Modalità di Scorrimento-Spostamento</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="391"/>
         <source>Exit Scroll Mode</source>
-        <translation type="unfinished"/>
+        <translation>Uscire dalla Modalità di Scorrimento</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="392"/>
@@ -7530,17 +7538,17 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="397"/>
         <source>Go to Previously Used Tab</source>
-        <translation type="unfinished"/>
+        <translation>Vai alla Scheda Utilizzata in Precedenza</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="398"/>
         <source>Go to Least Recently Used Tab</source>
-        <translation type="unfinished"/>
+        <translation>Vai alla Scheda Utilizzata Meno di Recente</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="399"/>
         <source>Activate Tab</source>
-        <translation type="unfinished"/>
+        <translation>Attivare la scheda</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="400"/>
@@ -7730,7 +7738,7 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="437"/>
         <source>Addons</source>
-        <translation type="unfinished"/>
+        <translation>Componenti aggiuntivi</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="438"/>
@@ -7767,12 +7775,12 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="444"/>
         <source>Website Information…</source>
-        <translation type="unfinished"/>
+        <translation>Informazioni sul Sito Web...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="445"/>
         <source>Website Certificate Information…</source>
-        <translation type="unfinished"/>
+        <translation>Informazioni sul certificato del sito Web...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="446"/>
@@ -7787,7 +7795,7 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="448"/>
         <source>Diagnostic Report…</source>
-        <translation type="unfinished"/>
+        <translation>Rapporto di Diagnostica...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="449"/>
@@ -7930,7 +7938,7 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/core/Application.cpp" line="117"/>
         <source>Forces session chooser dialog</source>
-        <translation type="unfinished"/>
+        <translation>Forzatura dialogo selezione di sessione</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="118"/>
@@ -7940,55 +7948,57 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/core/Application.cpp" line="119"/>
         <source>Tells application to avoid writing data to disk</source>
-        <translation type="unfinished"/>
+        <translation>Istruire l&apos;applicazione di evitare la scrittura dati su disco</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="120"/>
         <source>Prints out diagnostic report and exits application</source>
-        <translation type="unfinished"/>
+        <translation>Stampa rapporto di diagnostica e chiude l&apos;applicazione</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="91"/>
         <source>Failed to open content blocking profile file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile aprire profilo blocco degli contenuti file: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="100"/>
         <source>Failed to load content blocking profile file: invalid header</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile caricare profilo blocco degli contenuti file: intestazione non valida</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="474"/>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="496"/>
         <source>Failed to update content blocking profile: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile aggiornare profilo blocco degli contenuti: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="486"/>
         <source>Failed to update content blocking profile: checksum mismatch</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile aggiornare profilo blocco degli contenuti: mancata corrispondenza del checksum</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="609"/>
         <source>Failed to update content blocking profile, update URL is empty</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile aggiornare profilo blocco degli contenuti, indirizzo URL del aggiornamento vuoto</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="613"/>
         <source>Failed to update content blocking profile, update URL (%1) is invalid</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile aggiornare profilo blocco degli contenuti, URL (%1) non è valido</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="359"/>
         <source>Failed to parse entry of proxy auto-config (PAC): %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile analizzare la voce di configurazione automatica proxy (PAC): %1</translation>
     </message>
     <message>
         <location filename="../../src/core/PlatformIntegration.cpp" line="103"/>
         <source>Failed to install update
 Updater: %1
 Script: %2</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile installare aggiornamento
+Updater: %1
+Script: %2</translation>
     </message>
     <message>
         <location filename="../../src/core/SessionsManager.h" line="84"/>
@@ -7999,38 +8009,39 @@ Script: %2</source>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="45"/>
         <source>Unable to check for updates. Invalid URL: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile controllare aggiornamenti. URL invalido: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="66"/>
         <source>Unable to check for updates: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile controllare aggiornamenti: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="97"/>
         <source>Unable to parse version number: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile analizzare la versione numero. %1</translation>
     </message>
     <message>
         <location filename="../../src/core/Updater.cpp" line="84"/>
         <source>Downloaded update script is not valid: %1</source>
-        <translation type="unfinished"/>
+        <translation>Script di aggiornamento scaricato non è valido: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/Updater.cpp" line="104"/>
         <source>Unable to download update: %1
 Error: %2</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile scaricare l&apos;aggiornamento: %1
+Errore: %2</translation>
     </message>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="40"/>
         <source>Failed to open user script file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile aprire il file utente di script: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="134"/>
         <source>Failed to locate header of user script file</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile individuare l&apos;intestazione del file script del utente</translation>
     </message>
     <message>
         <location filename="../../src/main.cpp" line="125"/>
@@ -8046,7 +8057,8 @@ Error: %2</source>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="440"/>
         <source>Failed to run File Associations Manager, error code: %1
 Application ID: %2</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile eseguire Gestione Associazioni File, codice errore: %1
+ID Applicazione: %2</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="459"/>
@@ -8056,7 +8068,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="514"/>
         <source>Failed to register application to system registry: %1, %2</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile registrare l&apos;applicazione nel registro di sistema: %1, %2</translation>
     </message>
 </context>
 <context>
@@ -8092,7 +8104,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="147"/>
         <source>You tried to access the address &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, which is currently unavailable. Please make sure that the web address (URL) is correctly spelled and punctuated, then try reloading the page.</source>
-        <translation type="unfinished"/>
+        <translation>Si è tentato di accedere all&apos;indirizzo &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, che non è attualmente disponibile. Si prega di assicurarsi che l&apos;indirizzo web (URL) è correttamente ortografato e punteggiato, quindi prova a ricaricare la pagina.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="154"/>
@@ -8102,7 +8114,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="155"/>
         <source>Check that the setup of any internet security software is correct and does not interfere with ordinary web browsing.</source>
-        <translation type="unfinished"/>
+        <translation>Verificare che l&apos;installazione di qualsiasi software di sicurezza internet è corretta e non interferisce con la navigazione web ordinaria.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="156"/>
