@@ -20,14 +20,20 @@
 #include "AddonsContentsWidget.h"
 #include "../../../core/ActionsManager.h"
 #include "../../../core/AddonsManager.h"
+#include "../../../core/SessionsManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/UserScript.h"
 #include "../../../ui/OptionDelegate.h"
 
 #include "ui_AddonsContentsWidget.h"
 
+#include <QtCore/QFile>
+#include <QtCore/QJsonDocument>
+#include <QtCore/QJsonObject>
+#include <QtCore/QStandardPaths>
 #include <QtCore/QTimer>
 #include <QtGui/QKeyEvent>
+#include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
 
@@ -100,7 +106,61 @@ void AddonsContentsWidget::populateAddons()
 
 void AddonsContentsWidget::addAddon()
 {
-//TODO
+	const QString sourcePath(QFileDialog::getOpenFileName(this, tr("Select File"),  QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), tr("User Script files (*.js)")));
+
+	if (sourcePath.isEmpty())
+	{
+		return;
+	}
+
+	const QString targetPath(QDir(SessionsManager::getWritableDataPath(QLatin1String("scripts"))).filePath(QFileInfo(sourcePath).baseName()));
+
+	if (QFile::exists(targetPath))
+	{
+		QMessageBox::critical(this, tr("Error"), tr("User Script with this name already exists."), QMessageBox::Close);
+
+		return;
+	}
+
+	if (!QDir().mkpath(targetPath) || !QFile::copy(sourcePath, QDir(targetPath).filePath(QFileInfo(sourcePath).fileName())))
+	{
+		QMessageBox::critical(this, tr("Error"), tr("Failed to import User Script file."), QMessageBox::Close);
+
+		return;
+	}
+
+	QFile file(SessionsManager::getWritableDataPath(QLatin1String("scripts/scripts.json")));
+
+	if (!file.open(QIODevice::ReadOnly))
+	{
+		return;
+	}
+
+	QJsonObject settings(QJsonDocument::fromJson(file.readAll()).object());
+
+	file.close();
+
+	if (!file.open(QIODevice::WriteOnly))
+	{
+		return;
+	}
+
+	QJsonObject script;
+	script.insert(QLatin1String("isEnabled"), QJsonValue(true));
+
+	settings.insert(QFileInfo(sourcePath).baseName(), script);
+
+	QJsonDocument document;
+	document.setObject(settings);
+
+	file.write(document.toJson(QJsonDocument::Indented));
+	file.close();
+
+	AddonsManager::loadUserScripts();
+
+	m_model->clear();
+
+	populateAddons();
 }
 
 void AddonsContentsWidget::removeAddons()
