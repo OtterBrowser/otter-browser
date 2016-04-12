@@ -103,6 +103,7 @@ Comment[tr]=Webe göz atın
 Comment[uk]=Перегляд Інтернету
 Comment[zh_CN]=畅游网络
 Comment[zh_TW]=瀏覽網路
+Icon=otter-browser
 Type=Application
 Categories=Network;WebBrowser;
 Exec=otter-browser %u
