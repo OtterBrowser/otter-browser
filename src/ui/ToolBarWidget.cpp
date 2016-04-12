@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -157,6 +158,13 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	if (m_identifier < 0)
 	{
 		event->ignore();
+
+		return;
+	}
+
+	if (event->reason() == QContextMenuEvent::Mouse)
+	{
+		event->accept();
 
 		return;
 	}
@@ -616,10 +624,16 @@ bool ToolBarWidget::event(QEvent *event)
 		return result;
 	}
 
-	if (m_identifier == ToolBarsManager::TabBar && (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel) && !GesturesManager::isTracking())
+	if (!GesturesManager::isTracking() && (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel))
 	{
 		QList<GesturesManager::GesturesContext> contexts;
-		contexts << GesturesManager::NoTabHandleGesturesContext;
+
+		if (m_identifier == ToolBarsManager::TabBar)
+		{
+			contexts << GesturesManager::NoTabHandleGesturesContext;
+		}
+
+		contexts << GesturesManager::ToolBarGesturesContext << GesturesManager::GenericGesturesContext;
 
 		GesturesManager::startGesture(this, event, contexts);
 	}

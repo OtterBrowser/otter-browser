@@ -222,6 +222,10 @@ void GesturesManager::loadProfiles()
 			{
 				context = ContentEditableGesturesContext;
 			}
+			else if (contexts.at(j) == QLatin1String("ToolBar"))
+			{
+				context = ToolBarGesturesContext;
+			}
 			else if (contexts.at(j) == QLatin1String("TabHandle"))
 			{
 				context = TabHandleGesturesContext;
@@ -248,13 +252,13 @@ void GesturesManager::loadProfiles()
 			for (int k = 0; k < gestures.count(); ++k)
 			{
 				const QStringList rawMouseActions = gestures.at(k).split(QLatin1Char(','));
-				const int action = ActionsManager::getActionIdentifier(profile.getValue(gestures.at(k), QString()).toString());
+				int action = ActionsManager::getActionIdentifier(profile.getValue(gestures.at(k), QString()).toString());
 
 				if (action < 0 || rawMouseActions.isEmpty())
 				{
 					if (profile.getValue(gestures.at(k)) == QLatin1String("NoAction"))
 					{
-						action == NATIVE_GESTURE;
+						action = NATIVE_GESTURE;
 					}
 					else
 					{
@@ -275,7 +279,7 @@ void GesturesManager::loadProfiles()
 					}
 				}
 
-				if (!steps.empty() && !(!enableMoves && hasMove))
+				if (!steps.empty() && (!hasMove || enableMoves))
 				{
 					MouseGesture definition;
 					definition.steps = steps;

@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,6 +22,7 @@
 #include "../ContentsWidget.h"
 #include "../ToolBarWidget.h"
 #include "../Window.h"
+#include "../../core/GesturesManager.h"
 #include "../../core/HistoryManager.h"
 
 #include <QtGui/QHelpEvent>
@@ -72,12 +74,30 @@ void GoBackActionWidget::updateMenu()
 
 bool GoBackActionWidget::event(QEvent *event)
 {
+	if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel)
+	{
+		QList<GesturesManager::GesturesContext> contexts;
+		contexts << GesturesManager::ToolBarGesturesContext << GesturesManager::GenericGesturesContext;
+
+		if (GesturesManager::startGesture(this, event, contexts))
+		{
+			return true;
+		}
+	}
+
 	if (event->type() == QEvent::ContextMenu)
 	{
 		QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
 
 		if (contextMenuEvent)
 		{
+			if (contextMenuEvent->reason() == QContextMenuEvent::Mouse)
+			{
+				contextMenuEvent->accept();
+
+				return true;
+			}
+
 			event->accept();
 
 			Window *window = getWindow();

@@ -989,6 +989,8 @@ bool TabBarWidget::event(QEvent *event)
 			contexts << GesturesManager::TabHandleGesturesContext;
 		}
 
+		contexts << GesturesManager::ToolBarGesturesContext << GesturesManager::GenericGesturesContext;
+
 		GesturesManager::startGesture(this, event, contexts, parameters);
 	}
 
