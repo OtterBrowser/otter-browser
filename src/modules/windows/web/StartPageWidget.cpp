@@ -551,7 +551,7 @@ void StartPageWidget::showContextMenu(const QPoint &position)
 	}
 
 	const QModelIndex index(m_listView->indexAt(m_listView->mapFromGlobal(hitPosition)));
-	QMenu menu(this);
+	QMenu menu;
 
 	if (index.isValid() && index.data(Qt::AccessibleDescriptionRole).toString() != QLatin1String("add"))
 	{
