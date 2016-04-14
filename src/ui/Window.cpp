@@ -63,7 +63,7 @@ Window::Window(bool isPrivate, ContentsWidget *widget, QWidget *parent) : QWidge
 	m_isPinned(false),
 	m_isPrivate(isPrivate)
 {
-	QBoxLayout *layout = new QBoxLayout(QBoxLayout::TopToBottom, this);
+	QBoxLayout *layout(new QBoxLayout(QBoxLayout::TopToBottom, this));
 	layout->setContentsMargins(0, 0, 0, 0);
 	layout->setSpacing(0);
 
@@ -84,7 +84,7 @@ void Window::focusInEvent(QFocusEvent *event)
 {
 	QWidget::focusInEvent(event);
 
-	AddressWidget *addressWidget = findAddressWidget();
+	AddressWidget *addressWidget(findAddressWidget());
 
 	if (Utils::isUrlEmpty(getUrl()) && m_contentsWidget->getLoadingState() != WindowsManager::OngoingLoadingState && addressWidget)
 	{
@@ -100,8 +100,8 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 {
 	if (parameters.contains(QLatin1String("isBounced")))
 	{
-		AddressWidget *addressWidget = NULL;
-		SearchWidget *searchWidget = NULL;
+		AddressWidget *addressWidget(NULL);
+		SearchWidget *searchWidget(NULL);
 
 		if (identifier == ActionsManager::ActivateAddressFieldAction || identifier == ActionsManager::ActivateSearchFieldAction)
 		{
@@ -256,7 +256,7 @@ void Window::close()
 
 void Window::search(const QString &query, const QString &searchEngine)
 {
-	WebContentsWidget *widget = qobject_cast<WebContentsWidget*>(m_contentsWidget);
+	WebContentsWidget *widget(qobject_cast<WebContentsWidget*>(m_contentsWidget));
 
 	if (!widget)
 	{
@@ -282,7 +282,7 @@ void Window::markActive()
 
 void Window::handleIconChanged(const QIcon &icon)
 {
-	QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow*>(parentWidget());
+	QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
 
 	if (subWindow)
 	{
@@ -326,7 +326,7 @@ void Window::handleGeometryChangeRequest(const QRect &geometry)
 
 	ActionsManager::triggerAction(ActionsManager::RestoreTabAction, MainWindow::findMainWindow(this), parameters);
 
-	QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow*>(parentWidget());
+	QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
 
 	if (subWindow)
 	{
@@ -377,8 +377,8 @@ void Window::setOption(const QString &key, const QVariant &value)
 		{
 			if (key == QLatin1String("Network/UserAgent") && value.toString() == QLatin1String("custom"))
 			{
-				bool confirmed = false;
-				const QString userAgent = QInputDialog::getText(this, tr("Select User Agent"), tr("Enter User Agent:"), QLineEdit::Normal, NetworkManagerFactory::getUserAgent(webWidget->getWebWidget()->getOption(QLatin1String("Network/UserAgent")).toString()).value, &confirmed);
+				bool confirmed(false);
+				const QString userAgent(QInputDialog::getText(this, tr("Select User Agent"), tr("Enter User Agent:"), QLineEdit::Normal, NetworkManagerFactory::getUserAgent(webWidget->getWebWidget()->getOption(QLatin1String("Network/UserAgent")).toString()).value, &confirmed));
 
 				if (confirmed)
 				{
@@ -407,7 +407,7 @@ void Window::setSearchEngine(const QString &searchEngine)
 
 void Window::setUrl(const QUrl &url, bool typed)
 {
-	ContentsWidget *newWidget = NULL;
+	ContentsWidget *newWidget(NULL);
 
 	if (url.scheme() == QLatin1String("about"))
 	{
@@ -550,7 +550,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	{
 		if (m_contentsWidget->getType() == QLatin1String("web"))
 		{
-			WebContentsWidget *webWidget = qobject_cast<WebContentsWidget*>(m_contentsWidget);
+			WebContentsWidget *webWidget(qobject_cast<WebContentsWidget*>(m_contentsWidget));
 
 			if (webWidget)
 			{
@@ -570,7 +570,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	}
 	else
 	{
-		AddressWidget *addressWidget = findAddressWidget();
+		AddressWidget *addressWidget(findAddressWidget());
 
 		if (Utils::isUrlEmpty(getUrl()) && addressWidget)
 		{
@@ -626,7 +626,7 @@ Window* Window::clone(bool cloneHistory, QWidget *parent)
 		return NULL;
 	}
 
-	Window *window = new Window(false, m_contentsWidget->clone(cloneHistory), parent);
+	Window *window(new Window(false, m_contentsWidget->clone(cloneHistory), parent));
 	window->setSearchEngine(getSearchEngine());
 
 	return window;
@@ -646,7 +646,7 @@ QVariant Window::getOption(const QString &key) const
 {
 	if (m_contentsWidget && m_contentsWidget->getType() == QLatin1String("web"))
 	{
-		WebContentsWidget *webWidget = qobject_cast<WebContentsWidget*>(m_contentsWidget);
+		WebContentsWidget *webWidget(qobject_cast<WebContentsWidget*>(m_contentsWidget));
 
 		if (webWidget && webWidget->getWebWidget()->hasOption(key))
 		{
@@ -702,7 +702,7 @@ SessionWindow Window::getSession() const
 
 		if (m_contentsWidget->getType() == QLatin1String("web"))
 		{
-			WebContentsWidget *webWidget = qobject_cast<WebContentsWidget*>(m_contentsWidget);
+			WebContentsWidget *webWidget(qobject_cast<WebContentsWidget*>(m_contentsWidget));
 
 			if (webWidget)
 			{
@@ -721,7 +721,7 @@ SessionWindow Window::getSession() const
 		session = m_session;
 	}
 
-	QMdiSubWindow *subWindow = qobject_cast<QMdiSubWindow*>(parentWidget());
+	QMdiSubWindow *subWindow(qobject_cast<QMdiSubWindow*>(parentWidget()));
 
 	if (subWindow)
 	{
