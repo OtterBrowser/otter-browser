@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -45,7 +45,7 @@ WindowsManager::WindowsManager(bool isPrivate, MainWindow *parent) : QObject(par
 
 void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	Window *window = NULL;
+	Window *window(NULL);
 
 	if (parameters.contains(QLatin1String("window")))
 	{
@@ -83,7 +83,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 		case ActionsManager::DetachTabAction:
 			if (window && m_mainWindow->getTabBar()->count() > 1)
 			{
-				OpenHints hints = NewWindowOpen;
+				OpenHints hints(NewWindowOpen);
 
 				if (window->isPrivate())
 				{
@@ -92,7 +92,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 
 				window->getContentsWidget()->setParent(NULL);
 
-				Window *newWindow = openWindow(window->getContentsWidget(), hints);
+				Window *newWindow(openWindow(window->getContentsWidget(), hints));
 
 				if (newWindow && window->isPinned())
 				{
@@ -101,7 +101,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 
 				m_mainWindow->getTabBar()->removeTab(getWindowIndex(window->getIdentifier()));
 
-				Action *closePrivateTabsAction = m_mainWindow->getAction(ActionsManager::ClosePrivateTabsAction);
+				Action *closePrivateTabsAction(m_mainWindow->getAction(ActionsManager::ClosePrivateTabsAction));
 
 				if (closePrivateTabsAction->isEnabled() && getWindowCount(true) == 0)
 				{
@@ -124,7 +124,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 		case ActionsManager::CloseOtherTabsAction:
 			if (window)
 			{
-				const int index = getWindowIndex(window->getIdentifier());
+				const int index(getWindowIndex(window->getIdentifier()));
 
 				if (index >= 0)
 				{
@@ -148,7 +148,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 		case ActionsManager::OpenUrlAction:
 			{
 				QUrl url;
-				OpenHints hints = DefaultOpen;
+				OpenHints hints(DefaultOpen);
 
 				if (parameters.contains(QLatin1String("url")))
 				{
@@ -186,11 +186,11 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 		case ActionsManager::ActivateLeastRecentlyUsedTabAction:
 			{
 				QMultiMap<qint64, quint64> map;
-				const bool includeMinimized = parameters.contains(QLatin1String("includeMinimized"));
+				const bool includeMinimized(parameters.contains(QLatin1String("includeMinimized")));
 
 				for (int i = 0; i < getWindowCount(); ++i)
 				{
-					Window *window = getWindowByIndex(i);
+					Window *window(getWindowByIndex(i));
 
 					if (window && (includeMinimized || !window->isMinimized()))
 					{
@@ -198,7 +198,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 					}
 				}
 
-				const QList<quint64> list = map.values();
+				const QList<quint64> list(map.values());
 
 				if (list.count() > 1)
 				{
@@ -225,7 +225,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 		case ActionsManager::BookmarkAllOpenPagesAction:
 			for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
 			{
-				Window *window = getWindowByIndex(i);
+				Window *window(getWindowByIndex(i));
 
 				if (window && !Utils::isUrlEmpty(window->getUrl()))
 				{
@@ -236,7 +236,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 			break;
 		case ActionsManager::OpenBookmarkAction:
 			{
-				OpenHints hints = DefaultOpen;
+				OpenHints hints(DefaultOpen);
 
 				if (parameters.contains(QLatin1String("hints")))
 				{
@@ -265,7 +265,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 
 void WindowsManager::open(const QUrl &url, OpenHints hints)
 {
-	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
+	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
 
 	if (hints == NewTabOpen && !url.isEmpty() && window && Utils::isUrlEmpty(window->getUrl()))
 	{
@@ -317,7 +317,7 @@ void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints)
 		return;
 	}
 
-	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
+	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
 
 	if (hints == DefaultOpen && ((window && Utils::isUrlEmpty(window->getUrl())) || SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool()))
 	{
@@ -333,8 +333,8 @@ void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints)
 		case BookmarksModel::RootBookmark:
 		case BookmarksModel::FolderBookmark:
 			{
-				const QList<QUrl> urls = bookmark->getUrls();
-				bool canOpen = true;
+				const QList<QUrl> urls(bookmark->getUrls());
+				bool canOpen(true);
 
 				if (urls.count() > 1 && SettingsManager::getValue(QLatin1String("Choices/WarnOpenBookmarkFolder")).toBool())
 				{
@@ -376,7 +376,7 @@ void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints)
 
 void WindowsManager::openTab(const QUrl &url, OpenHints hints)
 {
-	Window *window = new Window(hints.testFlag(PrivateOpen));
+	Window *window(new Window(hints.testFlag(PrivateOpen)));
 
 	addWindow(window, hints);
 
@@ -385,7 +385,7 @@ void WindowsManager::openTab(const QUrl &url, OpenHints hints)
 
 void WindowsManager::search(const QString &query, const QString &searchEngine, OpenHints hints)
 {
-	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
+	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
 
 	if (hints == NewTabOpen && window && Utils::isUrlEmpty(window->getUrl()))
 	{
@@ -430,7 +430,7 @@ void WindowsManager::close(int index)
 		return;
 	}
 
-	Window *window = getWindowByIndex(index);
+	Window *window(getWindowByIndex(index));
 
 	if (window)
 	{
@@ -490,7 +490,7 @@ void WindowsManager::restore(const SessionMainWindow &session)
 	{
 		for (int i = 0; i < session.windows.count(); ++i)
 		{
-			Window *window = new Window(m_isPrivate);
+			Window *window(new Window(m_isPrivate));
 			window->setSession(session.windows.at(i));
 
 			if (index < 0 && session.windows.at(i).state != MinimizedWindowState)
@@ -519,8 +519,8 @@ void WindowsManager::restore(int index)
 		return;
 	}
 
-	const ClosedWindow closedWindow = m_closedWindows.at(index);
-	int windowIndex = -1;
+	const ClosedWindow closedWindow(m_closedWindows.at(index));
+	int windowIndex(-1);
 
 	if (closedWindow.previousWindow == 0)
 	{
@@ -532,7 +532,7 @@ void WindowsManager::restore(int index)
 	}
 	else
 	{
-		const int previousIndex = getWindowIndex(closedWindow.previousWindow);
+		const int previousIndex(getWindowIndex(closedWindow.previousWindow));
 
 		if (previousIndex >= 0)
 		{
@@ -540,7 +540,7 @@ void WindowsManager::restore(int index)
 		}
 		else
 		{
-			const int nextIndex = getWindowIndex(closedWindow.nextWindow);
+			const int nextIndex(getWindowIndex(closedWindow.nextWindow));
 
 			if (nextIndex >= 0)
 			{
@@ -549,7 +549,7 @@ void WindowsManager::restore(int index)
 		}
 	}
 
-	Window *window = new Window(m_isPrivate);
+	Window *window(new Window(m_isPrivate));
 	window->setSession(closedWindow.window);
 
 	m_closedWindows.removeAt(index);
@@ -595,7 +595,7 @@ void WindowsManager::addWindow(Window *window, OpenHints hints, int index, const
 
 	if (!window->isPinned())
 	{
-		const int offset = m_mainWindow->getTabBar()->getPinnedTabsAmount();
+		const int offset(m_mainWindow->getTabBar()->getPinnedTabsAmount());
 
 		if (index < offset)
 		{
@@ -603,7 +603,7 @@ void WindowsManager::addWindow(Window *window, OpenHints hints, int index, const
 		}
 	}
 
-	const QString newTabOpeningAction = SettingsManager::getValue(QLatin1String("Interface/NewTabOpeningAction")).toString();
+	const QString newTabOpeningAction(SettingsManager::getValue(QLatin1String("Interface/NewTabOpeningAction")).toString());
 
 	if (m_isRestored && newTabOpeningAction == QLatin1String("maximizeTab"))
 	{
@@ -673,7 +673,7 @@ void WindowsManager::removeStoredUrl(const QString &url)
 
 void WindowsManager::handleWindowClose(Window *window)
 {
-	const int index = (window ? getWindowIndex(window->getIdentifier()) : -1);
+	const int index(window ? getWindowIndex(window->getIdentifier()) : -1);
 
 	if (index < 0)
 	{
@@ -682,12 +682,12 @@ void WindowsManager::handleWindowClose(Window *window)
 
 	if (window && !window->isPrivate())
 	{
-		const WindowHistoryInformation history = window->getContentsWidget()->getHistory();
+		const WindowHistoryInformation history(window->getContentsWidget()->getHistory());
 
 		if (!Utils::isUrlEmpty(window->getUrl()) || history.entries.count() > 1)
 		{
-			Window *nextWindow = getWindowByIndex(index + 1);
-			Window *previousWindow = ((index > 0) ? getWindowByIndex(index - 1) : NULL);
+			Window *nextWindow(getWindowByIndex(index + 1));
+			Window *previousWindow((index > 0) ? getWindowByIndex(index - 1) : NULL);
 
 			ClosedWindow closedWindow;
 			closedWindow.window = window->getSession();
@@ -705,7 +705,7 @@ void WindowsManager::handleWindowClose(Window *window)
 		}
 	}
 
-	const QString lastTabClosingAction = SettingsManager::getValue(QLatin1String("Interface/LastTabClosingAction")).toString();
+	const QString lastTabClosingAction(SettingsManager::getValue(QLatin1String("Interface/LastTabClosingAction")).toString());
 
 	if (m_mainWindow->getTabBar()->count() == 1)
 	{
@@ -738,7 +738,7 @@ void WindowsManager::handleWindowClose(Window *window)
 
 	m_mainWindow->getTabBar()->removeTab(index);
 
-	Action *closePrivateTabsAction = m_mainWindow->getAction(ActionsManager::ClosePrivateTabsAction);
+	Action *closePrivateTabsAction(m_mainWindow->getAction(ActionsManager::ClosePrivateTabsAction));
 
 	if (closePrivateTabsAction->isEnabled() && getWindowCount(true) == 0)
 	{
@@ -757,7 +757,7 @@ void WindowsManager::handleWindowClose(Window *window)
 
 void WindowsManager::setOption(const QString &key, const QVariant &value)
 {
-	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
+	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
 
 	if (window)
 	{
@@ -767,7 +767,7 @@ void WindowsManager::setOption(const QString &key, const QVariant &value)
 
 void WindowsManager::setZoom(int zoom)
 {
-	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
+	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
 
 	if (window)
 	{
@@ -789,7 +789,7 @@ void WindowsManager::setActiveWindowByIndex(int index)
 		return;
 	}
 
-	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
+	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
 
 	if (window)
 	{
@@ -831,7 +831,7 @@ void WindowsManager::setActiveWindowByIdentifier(quint64 identifier)
 {
 	for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
 	{
-		Window *window = getWindowByIndex(i);
+		Window *window(getWindowByIndex(i));
 
 		if (window && window->getIdentifier() == identifier)
 		{
@@ -844,15 +844,15 @@ void WindowsManager::setActiveWindowByIdentifier(quint64 identifier)
 
 void WindowsManager::setTitle(const QString &title)
 {
-	QString text = (title.isEmpty() ? tr("Empty") : title);
-	Window *window = qobject_cast<Window*>(sender());
+	QString text(title.isEmpty() ? tr("Empty") : title);
+	Window *window(qobject_cast<Window*>(sender()));
 
 	if (!window)
 	{
 		return;
 	}
 
-	const int index = getWindowIndex(window->getIdentifier());
+	const int index(getWindowIndex(window->getIdentifier()));
 
 	if (index == m_mainWindow->getTabBar()->currentIndex())
 	{
@@ -871,7 +871,7 @@ void WindowsManager::setStatusMessage(const QString &message)
 
 Action* WindowsManager::getAction(int identifier)
 {
-	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
+	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
 
 	return (window ? window->getContentsWidget()->getAction(identifier) : NULL);
 }
@@ -883,11 +883,11 @@ Window* WindowsManager::openWindow(ContentsWidget *widget, OpenHints hints)
 		return NULL;
 	}
 
-	Window *window = NULL;
+	Window *window(NULL);
 
 	if (hints.testFlag(NewWindowOpen))
 	{
-		MainWindow *mainWindow = Application::getInstance()->createWindow((widget->isPrivate() ? Application::PrivateFlag : Application::NoFlags), hints.testFlag(BackgroundOpen));
+		MainWindow *mainWindow(Application::getInstance()->createWindow((widget->isPrivate() ? Application::PrivateFlag : Application::NoFlags), hints.testFlag(BackgroundOpen)));
 
 		if (mainWindow)
 		{
@@ -923,21 +923,21 @@ Window* WindowsManager::getWindowByIdentifier(quint64 identifier) const
 
 QVariant WindowsManager::getOption(const QString &key) const
 {
-	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
+	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
 
 	return (window ? window->getOption(key) : QVariant());
 }
 
 QString WindowsManager::getTitle() const
 {
-	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
+	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
 
 	return (window ? window->getTitle() : tr("Empty"));
 }
 
 QUrl WindowsManager::getUrl() const
 {
-	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
+	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
 
 	return (window ? window->getUrl() : QUrl());
 }
@@ -949,7 +949,7 @@ SessionMainWindow WindowsManager::getSession() const
 
 	for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
 	{
-		Window *window = getWindowByIndex(i);
+		Window *window(getWindowByIndex(i));
 
 		if (window && !window->isPrivate())
 		{
@@ -971,7 +971,7 @@ QList<ClosedWindow> WindowsManager::getClosedWindows() const
 
 WindowsManager::OpenHints WindowsManager::calculateOpenHints(OpenHints hints, Qt::MouseButton button, int modifiers)
 {
-	const bool useNewTab = (!hints.testFlag(NewWindowOpen) && SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool());
+	const bool useNewTab(!hints.testFlag(NewWindowOpen) && SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool());
 	const Qt::KeyboardModifiers keyboardModifiers((modifiers == -1) ? QGuiApplication::keyboardModifiers() : static_cast<Qt::KeyboardModifiers>(modifiers));
 
 	if (button == Qt::MiddleButton && keyboardModifiers.testFlag(Qt::AltModifier))
@@ -1037,7 +1037,7 @@ int WindowsManager::getWindowIndex(quint64 identifier) const
 
 int WindowsManager::getZoom() const
 {
-	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
+	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
 
 	return (window ? window->getContentsWidget()->getZoom() : 100);
 }
@@ -1048,11 +1048,11 @@ bool WindowsManager::event(QEvent *event)
 	{
 		for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
 		{
-			Window *window = getWindowByIndex(i);
+			Window *window(getWindowByIndex(i));
 
 			if (window)
 			{
-				QString text = (window->getTitle().isEmpty() ? tr("Empty") : window->getTitle());
+				QString text(window->getTitle().isEmpty() ? tr("Empty") : window->getTitle());
 
 				if (i == m_mainWindow->getTabBar()->currentIndex())
 				{
@@ -1069,7 +1069,7 @@ bool WindowsManager::event(QEvent *event)
 
 bool WindowsManager::canZoom() const
 {
-	Window *window = m_mainWindow->getWorkspace()->getActiveWindow();
+	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
 
 	return (window ? window->getContentsWidget()->canZoom() : false);
 }
@@ -1083,7 +1083,7 @@ bool WindowsManager::hasUrl(const QUrl &url, bool activate)
 {
 	for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
 	{
-		Window *window = getWindowByIndex(i);
+		Window *window(getWindowByIndex(i));
 
 		if (window && window->getUrl() == url)
 		{
