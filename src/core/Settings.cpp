@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,8 @@
 namespace Otter
 {
 
-Settings::Settings(QObject *parent) : QObject(parent)
+Settings::Settings(QObject *parent) : QObject(parent),
+	m_hasError(false)
 {
 }
 
@@ -37,12 +38,14 @@ Settings::Settings(const QString &path, QObject *parent) : QObject(parent)
 
 	if (!file.open(QIODevice::ReadOnly))
 	{
+		m_hasError = true;
+
 		return;
 	}
 
 	QString group;
 	QStringList comment;
-	bool isHeader = true;
+	bool isHeader(true);
 	QTextStream stream(&file);
 	stream.setCodec("UTF-8");
 
@@ -68,8 +71,8 @@ Settings::Settings(const QString &path, QObject *parent) : QObject(parent)
 		{
 			if (line.contains(QLatin1Char('=')))
 			{
-				const QString key = line.section(QLatin1Char('='), 0, 0);
-				const QVariant value = QVariant(line.section(QLatin1Char('='), 1, -1));
+				const QString key(line.section(QLatin1Char('='), 0, 0));
+				const QVariant value(QVariant(line.section(QLatin1Char('='), 1, -1)));
 
 				if (!key.isEmpty())
 				{
@@ -196,6 +199,8 @@ bool Settings::save(const QString &path)
 {
 	if (path.isEmpty() && m_path.isEmpty())
 	{
+		m_hasError = true;
+
 		return false;
 	}
 
@@ -203,16 +208,20 @@ bool Settings::save(const QString &path)
 
 	if (!file.open(QIODevice::WriteOnly))
 	{
+		m_hasError = true;
+
 		return false;
 	}
 
-	bool canAddNewLine = false;
+	m_hasError = false;
+
+	bool canAddNewLine(false);
 	QTextStream stream(&file);
 	stream.setCodec("UTF-8");
 
 	if (!m_comment.isEmpty())
 	{
-		QStringList comment = m_comment.split(QLatin1Char('\n'));
+		QStringList comment(m_comment.split(QLatin1Char('\n')));
 
 		for (int i = 0; i < comment.count(); ++i)
 		{
@@ -253,6 +262,11 @@ bool Settings::save(const QString &path)
 	file.close();
 
 	return true;
+}
+
+bool Settings::hasError() const
+{
+	return m_hasError;
 }
 
 }
