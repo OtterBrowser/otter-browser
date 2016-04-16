@@ -105,9 +105,9 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 		m_splitter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 		m_splitter->addWidget(m_workspace);
 
-		QWidget *verticalWidget = new QWidget(this);
-		QWidget *horizontalWidget = new QWidget(verticalWidget);
-		QHBoxLayout *horizontalLayout = new QHBoxLayout(horizontalWidget);
+		QWidget *verticalWidget(new QWidget(this));
+		QWidget *horizontalWidget(new QWidget(verticalWidget));
+		QHBoxLayout *horizontalLayout(new QHBoxLayout(horizontalWidget));
 		horizontalLayout->setContentsMargins(0, 0, 0, 0);
 		horizontalLayout->setSpacing(0);
 
@@ -115,7 +115,7 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 		horizontalLayout->addWidget(m_splitter);
 		horizontalLayout->addWidget(m_rightToolBarArea);
 
-		QVBoxLayout *verticalLayout = new QVBoxLayout(verticalWidget);
+		QVBoxLayout *verticalLayout(new QVBoxLayout(verticalWidget));
 		verticalLayout->setContentsMargins(0, 0, 0, 0);
 		verticalLayout->setSpacing(0);
 		verticalLayout->addWidget(m_topToolBarArea);
@@ -396,7 +396,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			break;
 		case ActionsManager::OpenAction:
 			{
-				const QUrl url = QFileDialog::getOpenFileUrl(this, tr("Open File"));
+				const QUrl url(QFileDialog::getOpenFileUrl(this, tr("Open File")));
 
 				if (url.isValid())
 				{
@@ -412,7 +412,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			}
 			else
 			{
-				const QList<MainWindow*> windows = SessionsManager::getWindows();
+				const QList<MainWindow*> windows(SessionsManager::getWindows());
 
 				for (int i = 0; i < windows.count(); ++i)
 				{
@@ -472,7 +472,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			break;
 		case ActionsManager::GoToHomePageAction:
 			{
-				const QString homePage = SettingsManager::getValue(QLatin1String("Browser/HomePage")).toString();
+				const QString homePage(SettingsManager::getValue(QLatin1String("Browser/HomePage")).toString());
 
 				if (!homePage.isEmpty())
 				{
@@ -535,7 +535,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			break;
 		case ActionsManager::ShowMenuBarAction:
 			{
-				ToolBarsManager::ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar);
+				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar));
 				definition.visibility = (parameters.value(QLatin1String("isChecked")).toBool() ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
 
 				ToolBarsManager::setToolBar(definition);
@@ -544,7 +544,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			break;
 		case ActionsManager::ShowTabBarAction:
 			{
-				ToolBarsManager::ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar);
+				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar));
 				definition.visibility = (parameters.value(QLatin1String("isChecked")).toBool() ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
 
 				ToolBarsManager::setToolBar(definition);
@@ -659,14 +659,14 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			break;
 		case ActionsManager::CheckForUpdatesAction:
 			{
-				UpdateCheckerDialog *dialog = new UpdateCheckerDialog(this);
+				UpdateCheckerDialog *dialog(new UpdateCheckerDialog(this));
 				dialog->show();
 			}
 
 			break;
 		case ActionsManager::DiagnosticReportAction:
 			{
-				ReportDialog *dialog = new ReportDialog(this);
+				ReportDialog *dialog(new ReportDialog(this));
 				dialog->show();
 			}
 
@@ -713,7 +713,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 void MainWindow::triggerAction()
 {
-	QShortcut *shortcut = qobject_cast<QShortcut*>(sender());
+	QShortcut *shortcut(qobject_cast<QShortcut*>(sender()));
 
 	if (shortcut)
 	{
@@ -721,13 +721,13 @@ void MainWindow::triggerAction()
 		{
 			if (m_actionShortcuts[i].second.contains(shortcut))
 			{
-				const ActionsManager::ActionDefinition definition = ActionsManager::getActionDefinition(m_actionShortcuts[i].first);
+				const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(m_actionShortcuts[i].first));
 
 				if (definition.identifier >= 0)
 				{
 					if (definition.flags.testFlag(ActionsManager::IsCheckableFlag))
 					{
-						Action *action = getAction(m_actionShortcuts[i].first);
+						Action *action(getAction(m_actionShortcuts[i].first));
 
 						if (action)
 						{
@@ -747,7 +747,7 @@ void MainWindow::triggerAction()
 		return;
 	}
 
-	Action *action = qobject_cast<Action*>(sender());
+	Action *action(qobject_cast<Action*>(sender()));
 
 	if (action)
 	{
@@ -759,11 +759,11 @@ void MainWindow::triggerAction(bool checked)
 {
 	Q_UNUSED(checked)
 
-	Action *action = qobject_cast<Action*>(sender());
+	Action *action(qobject_cast<Action*>(sender()));
 
 	if (action)
 	{
-		QVariantMap parameters = action->data().toMap();
+		QVariantMap parameters(action->data().toMap());
 
 		if (action->isCheckable())
 		{
@@ -834,7 +834,7 @@ void MainWindow::openUrl(const QString &text)
 	}
 	else
 	{
-		InputInterpreter *interpreter = new InputInterpreter(this);
+		InputInterpreter *interpreter(new InputInterpreter(this));
 
 		connect(interpreter, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), m_windowsManager, SLOT(open(BookmarksItem*,WindowsManager::OpenHints)));
 		connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), m_windowsManager, SLOT(open(QUrl,WindowsManager::OpenHints)));
@@ -861,7 +861,7 @@ void MainWindow::raiseWindow()
 
 void MainWindow::addBookmark(const QUrl &url, const QString &title, const QString &description, bool warn)
 {
-	const QUrl bookmarkUrl = (url.isValid() ? url : m_windowsManager->getUrl()).adjusted(QUrl::RemovePassword);
+	const QUrl bookmarkUrl((url.isValid() ? url : m_windowsManager->getUrl()).adjusted(QUrl::RemovePassword));
 
 	if (bookmarkUrl.isEmpty() || (warn && BookmarksManager::hasBookmark(bookmarkUrl) && QMessageBox::warning(this, tr("Warning"), tr("You already have this address in your bookmarks.\nDo you want to continue?"), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Cancel))
 	{
@@ -874,7 +874,7 @@ void MainWindow::addBookmark(const QUrl &url, const QString &title, const QStrin
 
 void MainWindow::editBookmark(const QUrl &url)
 {
-	const QList<BookmarksItem*> bookmarks = BookmarksManager::getModel()->getBookmarks(url);
+	const QList<BookmarksItem*> bookmarks(BookmarksManager::getModel()->getBookmarks(url));
 
 	if (!bookmarks.isEmpty())
 	{
@@ -887,7 +887,7 @@ void MainWindow::toolBarModified(int identifier)
 {
 	if (identifier == ToolBarsManager::MenuBar)
 	{
-		const bool showMenuBar = (ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).visibility != ToolBarsManager::AlwaysHiddenToolBar);
+		const bool showMenuBar(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).visibility != ToolBarsManager::AlwaysHiddenToolBar);
 
 		if (m_menuBar && !showMenuBar)
 		{
@@ -907,7 +907,7 @@ void MainWindow::toolBarModified(int identifier)
 	}
 	else if (identifier == ToolBarsManager::StatusBar)
 	{
-		const bool showStatusBar = (ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).visibility != ToolBarsManager::AlwaysHiddenToolBar);
+		const bool showStatusBar(ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).visibility != ToolBarsManager::AlwaysHiddenToolBar);
 
 		if (m_statusBar && !showStatusBar)
 		{
@@ -927,7 +927,7 @@ void MainWindow::toolBarModified(int identifier)
 
 void MainWindow::transferStarted()
 {
-	const QString action = SettingsManager::getValue(QLatin1String("Browser/TransferStartingAction")).toString();
+	const QString action(SettingsManager::getValue(QLatin1String("Browser/TransferStartingAction")).toString());
 
 	if (action == QLatin1String("openTab"))
 	{
@@ -972,7 +972,7 @@ void MainWindow::placeSidebars()
 
 	m_splitter->addWidget(m_workspace);
 
-	if (SettingsManager::getValue(QString("Sidebar/Reverse")).toBool())
+	if (SettingsManager::getValue(QLatin1String("Sidebar/Reverse")).toBool())
 	{
 		for (int i = m_splitter->count() - 1; i >= 0; --i)
 		{
@@ -986,9 +986,9 @@ void MainWindow::placeSidebars()
 void MainWindow::updateSidebars()
 {
 	QList<int> sizes;
-	const int sidebarSize = ((m_sidebar && m_sidebar->isVisible()) ? m_sidebar->sizeHint().width() : 0);
-	const int sidebarToggleSize = (m_sidebarToggle ? m_sidebarToggle->width() : 0);
-	const bool isReversed = SettingsManager::getValue(QLatin1String("Sidebar/Reverse")).toBool();
+	const int sidebarSize((m_sidebar && m_sidebar->isVisible()) ? m_sidebar->sizeHint().width() : 0);
+	const int sidebarToggleSize(m_sidebarToggle ? m_sidebarToggle->width() : 0);
+	const bool isReversed(SettingsManager::getValue(QLatin1String("Sidebar/Reverse")).toBool());
 
 	if (m_sidebarToggle)
 	{
@@ -1014,7 +1014,7 @@ void MainWindow::updateSidebars()
 		}
 	}
 
-	const int sidebarToggleIndex = (m_sidebarToggle ? (m_splitter->indexOf(m_sidebarToggle) + (isReversed ? 0 : 1)) : -1);
+	const int sidebarToggleIndex(m_sidebarToggle ? (m_splitter->indexOf(m_sidebarToggle) + (isReversed ? 0 : 1)) : -1);
 
 	for (int i = 0; i < m_splitter->count(); ++i)
 	{
@@ -1043,7 +1043,7 @@ void MainWindow::updateShortcuts()
 
 	m_actionShortcuts.clear();
 
-	const QVector<ActionsManager::ActionDefinition> definitions = ActionsManager::getActionDefinitions();
+	const QVector<ActionsManager::ActionDefinition> definitions(ActionsManager::getActionDefinitions());
 	QList<QKeySequence> standardShortcuts;
 	standardShortcuts << QKeySequence(QKeySequence::Copy) << QKeySequence(QKeySequence::Cut) << QKeySequence(QKeySequence::Delete) << QKeySequence(QKeySequence::Paste) << QKeySequence(QKeySequence::Redo) << QKeySequence(QKeySequence::SelectAll) << QKeySequence(QKeySequence::Undo);
 
@@ -1056,7 +1056,7 @@ void MainWindow::updateShortcuts()
 		{
 			if (!standardShortcuts.contains(definitions[i].shortcuts[j]))
 			{
-				QShortcut *shortcut = new QShortcut(definitions[i].shortcuts[j], this);
+				QShortcut *shortcut(new QShortcut(definitions[i].shortcuts[j], this));
 
 				shortcuts.append(shortcut);
 
@@ -1070,7 +1070,7 @@ void MainWindow::updateShortcuts()
 
 void MainWindow::setCurrentWindow(Window *window)
 {
-	Window *previousWindow = m_currentWindow;
+	Window *previousWindow(m_currentWindow);
 
 	m_currentWindow = window;
 
@@ -1078,9 +1078,9 @@ void MainWindow::setCurrentWindow(Window *window)
 	{
 		if (m_standardActions[i] && Action::isLocal(m_standardActions[i]->getIdentifier()))
 		{
-			const int identifier = m_standardActions[i]->getIdentifier();
-			Action *previousAction = ((previousWindow && previousWindow->getContentsWidget()) ? previousWindow->getContentsWidget()->getAction(identifier) : NULL);
-			Action *currentAction = (window ? window->getContentsWidget()->getAction(identifier) : NULL);
+			const int identifier(m_standardActions[i]->getIdentifier());
+			Action *previousAction((previousWindow && previousWindow->getContentsWidget()) ? previousWindow->getContentsWidget()->getAction(identifier) : NULL);
+			Action *currentAction(window ? window->getContentsWidget()->getAction(identifier) : NULL);
 
 			if (previousAction)
 			{
@@ -1114,8 +1114,8 @@ MainWindow* MainWindow::findMainWindow(QObject *parent)
 		return qobject_cast<MainWindow*>(parent);
 	}
 
-	MainWindow *window = NULL;
-	QWidget *widget = qobject_cast<QWidget*>(parent);
+	MainWindow *window(NULL);
+	QWidget *widget(qobject_cast<QWidget*>(parent));
 
 	if (widget && widget->window())
 	{
@@ -1151,8 +1151,8 @@ Action* MainWindow::getAction(int identifier)
 
 	if (!m_standardActions[identifier])
 	{
-		const ActionsManager::ActionDefinition definition = ActionsManager::getActionDefinition(identifier);
-		Action *action = new Action(identifier, this);
+		const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(identifier));
+		Action *action(new Action(identifier, this));
 
 		m_standardActions[identifier] = action;
 
@@ -1198,7 +1198,7 @@ bool MainWindow::event(QEvent *event)
 			break;
 		case QEvent::WindowStateChange:
 			{
-				QWindowStateChangeEvent *stateChangeEvent = dynamic_cast<QWindowStateChangeEvent*>(event);
+				QWindowStateChangeEvent *stateChangeEvent(dynamic_cast<QWindowStateChangeEvent*>(event));
 
 				SessionsManager::markSessionModified();
 
@@ -1269,7 +1269,7 @@ bool MainWindow::event(QEvent *event)
 			break;
 		case QEvent::StatusTip:
 			{
-				QStatusTipEvent *statusTipEvent = static_cast<QStatusTipEvent*>(event);
+				QStatusTipEvent *statusTipEvent(static_cast<QStatusTipEvent*>(event));
 
 				if (statusTipEvent)
 				{
@@ -1293,7 +1293,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_workspace && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent && keyEvent->key() == Qt::Key_Escape)
 		{
