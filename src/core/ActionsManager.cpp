@@ -79,8 +79,8 @@ void Action::update(bool reset)
 		return;
 	}
 
-	const ActionsManager::ActionDefinition action = ActionsManager::getActionDefinition(m_identifier);
-	QString text = QCoreApplication::translate("actions", (m_isOverridingText ? m_overrideText : action.text).toUtf8().constData());
+	const ActionsManager::ActionDefinition action(ActionsManager::getActionDefinition(m_identifier));
+	QString text(QCoreApplication::translate("actions", (m_isOverridingText ? m_overrideText : action.text).toUtf8().constData()));
 
 	if (!action.shortcuts.isEmpty())
 	{
@@ -487,19 +487,19 @@ void ActionsManager::loadProfiles()
 {
 	QHash<int, QVector<QKeySequence> > actionShortcuts;
 	QVector<QKeySequence> allShortcuts;
-	const QStringList shortcutProfiles = SettingsManager::getValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder")).toStringList();
-	const bool enableSingleKeyShortcuts = SettingsManager::getValue(QLatin1String("Browser/EnableSingleKeyShortcuts")).toBool();
+	const QStringList shortcutProfiles(SettingsManager::getValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder")).toStringList());
+	const bool enableSingleKeyShortcuts(SettingsManager::getValue(QLatin1String("Browser/EnableSingleKeyShortcuts")).toBool());
 	QRegularExpression functionKeyExpression(QLatin1String("F\\d+"));
 
 	for (int i = 0; i < shortcutProfiles.count(); ++i)
 	{
 		const QSettings profile(SessionsManager::getReadableDataPath(QLatin1String("keyboard/") + shortcutProfiles.at(i) + QLatin1String(".ini")), QSettings::IniFormat);
-		const QStringList rawActions = profile.childGroups();
+		const QStringList rawActions(profile.childGroups());
 
 		for (int j = 0; j < rawActions.count(); ++j)
 		{
-			const int action = ActionsManager::getActionIdentifier(rawActions.at(j));
-			const QStringList rawShortcuts = profile.value(rawActions.at(j) + QLatin1String("/shortcuts"), QString()).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
+			const int action(ActionsManager::getActionIdentifier(rawActions.at(j)));
+			const QStringList rawShortcuts(profile.value(rawActions.at(j) + QLatin1String("/shortcuts"), QString()).toString().split(QLatin1Char(' '), QString::SkipEmptyParts));
 			QVector<QKeySequence> shortcuts;
 
 			if (actionShortcuts.contains(action))
@@ -540,7 +540,7 @@ void ActionsManager::loadProfiles()
 
 void ActionsManager::triggerAction(int identifier, QObject *parent, const QVariantMap &parameters)
 {
-	MainWindow *window = MainWindow::findMainWindow(parent);
+	MainWindow *window(MainWindow::findMainWindow(parent));
 
 	if (window)
 	{
@@ -555,7 +555,7 @@ ActionsManager* ActionsManager::getInstance()
 
 Action* ActionsManager::getAction(int identifier, QObject *parent)
 {
-	MainWindow *window = MainWindow::findMainWindow(parent);
+	MainWindow *window(MainWindow::findMainWindow(parent));
 
 	return (window ? window->getAction(identifier) : NULL);
 }
@@ -595,7 +595,7 @@ QString ActionsManager::getReport()
 
 QString ActionsManager::getActionName(int identifier)
 {
-	QString name = m_instance->metaObject()->enumerator(m_instance->metaObject()->indexOfEnumerator(QLatin1String("ActionIdentifier").data())).valueToKey(identifier);
+	QString name(m_instance->metaObject()->enumerator(m_instance->metaObject()->indexOfEnumerator(QLatin1String("ActionIdentifier").data())).valueToKey(identifier));
 
 	if (!name.isEmpty())
 	{
@@ -638,11 +638,11 @@ int ActionsManager::registerAction(int identifier, const QString &text, const QS
 
 int ActionsManager::getActionIdentifier(const QString &name)
 {
-	const int enumerator = m_instance->metaObject()->indexOfEnumerator(QLatin1String("ActionIdentifier").data());
+	const int enumerator(m_instance->metaObject()->indexOfEnumerator(QLatin1String("ActionIdentifier").data()));
 
 	if (!name.endsWith(QLatin1String("Action")))
 	{
-		const QString fullName = name + QLatin1String("Action");
+		const QString fullName(name + QLatin1String("Action"));
 
 		return m_instance->metaObject()->enumerator(enumerator).keyToValue(fullName.toLatin1());
 	}
