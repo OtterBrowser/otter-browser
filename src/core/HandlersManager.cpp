@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -61,8 +61,8 @@ HandlerDefinition HandlersManager::getHandler(const QString &type)
 		settings.beginGroup(QLatin1String("*"));
 	}
 
-	const QString downloadsPath = settings.getValue(QLatin1String("downloadsPath"), QString()).toString();
-	const QString transferMode = settings.getValue(QLatin1String("transferMode"), QString()).toString();
+	const QString downloadsPath(settings.getValue(QLatin1String("downloadsPath"), QString()).toString());
+	const QString transferMode(settings.getValue(QLatin1String("transferMode"), QString()).toString());
 
 	definition.openCommand = settings.getValue(QLatin1String("openCommand"), QString()).toString();
 	definition.downloadsPath = (downloadsPath.isEmpty() ? SettingsManager::getValue(QLatin1String("Paths/Downloads")).toString() : downloadsPath);
@@ -98,9 +98,9 @@ void HandlersManager::setHandler(const QString &type, const HandlerDefinition &d
 		return;
 	}
 
-	const QString path = SessionsManager::getWritableDataPath(QLatin1String("handlers.ini"));
+	const QString path(SessionsManager::getWritableDataPath(QLatin1String("handlers.ini")));
 	Settings settings(QFile::exists(path) ? path : SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
-	QString transferMode = QLatin1String("ask");
+	QString transferMode(QLatin1String("ask"));
 
 	if (definition.transferMode == IgnoreTransferMode)
 	{
