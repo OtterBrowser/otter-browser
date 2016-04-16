@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -50,12 +50,12 @@ CertificateDialog::CertificateDialog(QList<QSslCertificate> certificates, QWidge
 
 	setWindowTitle(tr("View Certificate for %1").arg(certificates.first().subjectInfo(QSslCertificate::CommonName).join(QLatin1String(", "))));
 
-	QStandardItemModel *chainModel = new QStandardItemModel(this);
-	QStandardItem *certificateItem = NULL;
+	QStandardItemModel *chainModel(new QStandardItemModel(this));
+	QStandardItem *certificateItem(NULL);
 
 	for (int i = (certificates.count() - 1); i >= 0; --i)
 	{
-		QStandardItem *parentCertificateItem = certificateItem;
+		QStandardItem *parentCertificateItem(certificateItem);
 
 		certificateItem = new QStandardItem(certificates.at(i).subjectInfo(QSslCertificate::Organization).value(0, tr("Unknown")));
 		certificateItem->setData(i, Qt::UserRole);
@@ -101,7 +101,7 @@ void CertificateDialog::changeEvent(QEvent *event)
 
 void CertificateDialog::exportCertificate()
 {
-	const QSslCertificate certificate = m_certificates.value(m_ui->chainItemView->currentIndex().data(Qt::UserRole).toInt());
+	const QSslCertificate certificate(m_certificates.value(m_ui->chainItemView->currentIndex().data(Qt::UserRole).toInt()));
 
 	if (certificate.isNull())
 	{
@@ -109,11 +109,11 @@ void CertificateDialog::exportCertificate()
 	}
 
 	QString filter;
-	const QString fileName = QFileDialog::getSaveFileName(this, tr("Select File"), QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), tr("DER encoded X509 certificates (*.der);;PEM encoded X509 certificates (*.pem);;Text files (*.txt)"), &filter);
+	const QString path(QFileDialog::getSaveFileName(this, tr("Select File"), QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), tr("DER encoded X509 certificates (*.der);;PEM encoded X509 certificates (*.pem);;Text files (*.txt)"), &filter));
 
-	if (!fileName.isEmpty())
+	if (!path.isEmpty())
 	{
-		QFile file(fileName);
+		QFile file(path);
 
 		if (!file.open(QIODevice::WriteOnly))
 		{
@@ -142,7 +142,7 @@ void CertificateDialog::exportCertificate()
 
 void CertificateDialog::updateCertificate()
 {
-	const QSslCertificate certificate = m_certificates.value(m_ui->chainItemView->currentIndex().data(Qt::UserRole).toInt());
+	const QSslCertificate certificate(m_certificates.value(m_ui->chainItemView->currentIndex().data(Qt::UserRole).toInt()));
 
 	m_ui->detailsItemView->getSourceModel()->clear();
 
@@ -170,7 +170,7 @@ void CertificateDialog::updateCertificate()
 
 	for (int i = 0; i < certificate.extensions().count(); ++i)
 	{
-		QString title = certificate.extensions().at(i).name();
+		QString title(certificate.extensions().at(i).name());
 
 		if (title == QLatin1String("authorityKeyIdentifier"))
 		{
@@ -248,7 +248,7 @@ void CertificateDialog::updateCertificate()
 		createField(ExtensionField, extensionsItem, data);
 	}
 
-	QStandardItem *digestItem = createField(DigestField);
+	QStandardItem *digestItem(createField(DigestField));
 
 	createField(DigestSha256Field, digestItem);
 	createField(DigestSha1Field, digestItem);
@@ -259,8 +259,8 @@ void CertificateDialog::updateCertificate()
 
 void CertificateDialog::updateValue()
 {
-	const QSslCertificate certificate = m_certificates.value(m_ui->chainItemView->currentIndex().data(Qt::UserRole).toInt());
-	const CertificateField field = static_cast<CertificateField>(m_ui->detailsItemView->currentIndex().data(Qt::UserRole).toInt());
+	const QSslCertificate certificate(m_certificates.value(m_ui->chainItemView->currentIndex().data(Qt::UserRole).toInt()));
+	const CertificateField field(static_cast<CertificateField>(m_ui->detailsItemView->currentIndex().data(Qt::UserRole).toInt()));
 
 	m_ui->valueTextEdit->clear();
 
@@ -285,7 +285,7 @@ void CertificateDialog::updateValue()
 			break;
 		case IssuerField:
 			{
-				const QList<QByteArray> attributes = certificate.issuerInfoAttributes();
+				const QList<QByteArray> attributes(certificate.issuerInfoAttributes());
 
 				for (int i = 0; i < attributes.count(); ++i)
 				{
@@ -304,7 +304,7 @@ void CertificateDialog::updateValue()
 			break;
 		case SubjectField:
 			{
-				const QList<QByteArray> attributes = certificate.subjectInfoAttributes();
+				const QList<QByteArray> attributes(certificate.subjectInfoAttributes());
 
 				for (int i = 0; i < attributes.count(); ++i)
 				{
@@ -316,7 +316,7 @@ void CertificateDialog::updateValue()
 		case PublicKeyValueField:
 			{
 				const QRegularExpression expression(QLatin1String("Public-Key:[.\\s\\S]+Modulus:([.\\s\\S]+)Exponent:(.+)"), QRegularExpression::MultilineOption);
-				const QRegularExpressionMatch match = expression.match(certificate.toText());
+				const QRegularExpressionMatch match(expression.match(certificate.toText()));
 
 				if (match.hasMatch())
 				{
@@ -342,7 +342,7 @@ void CertificateDialog::updateValue()
 
 					if (extension.value().type() == QVariant::List)
 					{
-						const QVariantList list = extension.value().toList();
+						const QVariantList list(extension.value().toList());
 
 						for (int i = 0; i < list.count(); ++i)
 						{
@@ -351,7 +351,7 @@ void CertificateDialog::updateValue()
 					}
 					else if (extension.value().type() == QVariant::Map)
 					{
-						const QVariantMap map = extension.value().toMap();
+						const QVariantMap map(extension.value().toMap());
 						QVariantMap::const_iterator iterator;
 
 						for (iterator = map.constBegin(); iterator != map.constEnd(); ++iterator)
@@ -459,7 +459,7 @@ QStandardItem* CertificateDialog::createField(CertificateDialog::CertificateFiel
 			break;
 	}
 
-	QStandardItem *item = new QStandardItem(title);
+	QStandardItem *item(new QStandardItem(title));
 	item->setData(field, Qt::UserRole);
 
 	QMap<int, QVariant>::const_iterator iterator;
@@ -484,8 +484,8 @@ QStandardItem* CertificateDialog::createField(CertificateDialog::CertificateFiel
 QString CertificateDialog::formatHex(const QString &source, const QChar &separator)
 {
 	QString result;
-	int characterCount = 0;
-	int pairCount = 0;
+	int characterCount(0);
+	int pairCount(0);
 
 	for (int i = 0; i < source.length(); ++i)
 	{
