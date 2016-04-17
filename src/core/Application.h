@@ -80,6 +80,7 @@ public slots:
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
+	void openUrl(const QUrl &url);
 	void updateCheckFinished(const QList<UpdateInformation> &availableUpdates);
 	void newConnection();
 	void clearHistory();

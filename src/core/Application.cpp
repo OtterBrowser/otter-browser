@@ -68,6 +68,7 @@
 #include <QtCore/QStorageInfo>
 #endif
 #include <QtCore/QTranslator>
+#include <QtGui/QDesktopServices>
 #include <QtNetwork/QLocalSocket>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QMessageBox>
@@ -403,6 +404,9 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		}
 	}
 
+	QDesktopServices::setUrlHandler(QLatin1String("http"), this, "openUrl");
+	QDesktopServices::setUrlHandler(QLatin1String("https"), this, "openUrl");
+
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 	connect(this, SIGNAL(aboutToQuit()), this, SLOT(clearHistory()));
 }
@@ -428,6 +432,16 @@ void Application::optionChanged(const QString &option, const QVariant &value)
 			m_trayIcon->deleteLater();
 			m_trayIcon = NULL;
 		}
+	}
+}
+
+void Application::openUrl(const QUrl &url)
+{
+	MainWindow *mainWindow(SessionsManager::getActiveWindow());
+
+	if (mainWindow)
+	{
+		mainWindow->getWindowsManager()->open(url);
 	}
 }
 
