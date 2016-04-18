@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -22,6 +23,7 @@
 #include "ThemesManager.h"
 
 #include <QtCore/QFile>
+#include <QtCore/QRegularExpression>
 #include <QtCore/QTextStream>
 
 namespace Otter
@@ -90,7 +92,27 @@ UserScript::UserScript(const QString &path, QObject *parent) : Addon(parent),
 		}
 		else if (keyword == QLatin1String("match"))
 		{
-			m_matchRules.append(line.section(QLatin1Char(' '), 1, -1));
+			line = line.section(QLatin1Char(' '), 1, -1);
+
+			if (QRegularExpression(QLatin1String("^.+://.*/.*")).match(line).hasMatch() && (!line.startsWith(QLatin1Char('*')) || line.at(1) == QLatin1Char(':')))
+			{
+				const QString scheme(line.left(line.indexOf(QLatin1String("://"))));
+
+				if (scheme == QLatin1String("*") || scheme == QLatin1String("http") || scheme == QLatin1String("https") || scheme == QLatin1String("file") || scheme == QLatin1String("ftp"))
+				{
+					const QString pathAndDomain(line.mid(line.indexOf(QLatin1String("://")) + 3));
+					const QString domain(pathAndDomain.left(pathAndDomain.indexOf(QLatin1Char('/'))));
+
+					if (domain.indexOf(QLatin1Char('*')) < 0 || (domain.indexOf(QLatin1Char('*')) == 0 && (domain.length() == 1 || (domain.length() > 1 && domain.at(1) == QLatin1Char('.')))))
+					{
+						m_matchRules.append(line);
+
+						continue;
+					}
+				}
+			}
+
+			Console::addMessage(QCoreApplication::translate("main", "Invalid match rule for User Script: %1").arg(line), Otter::OtherMessageCategory, ErrorMessageLevel, path);
 		}
 		else if (keyword == QLatin1String("name"))
 		{
