@@ -47,13 +47,13 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 		m_overridePath = path + QLatin1String("/override.ini");
 
 		QSettings defaults(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat);
-		const QStringList groups = defaults.childGroups();
+		const QStringList groups(defaults.childGroups());
 
 		for (int i = 0; i < groups.count(); ++i)
 		{
 			defaults.beginGroup(groups.at(i));
 
-			const QStringList keys = defaults.childGroups();
+			const QStringList keys(defaults.childGroups());
 
 			for (int j = 0; j < keys.count(); ++j)
 			{
@@ -125,17 +125,17 @@ QString SettingsManager::getReport()
 
 	QStringList excludeValues;
 	QSettings defaults(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat);
-	const QStringList defaultsGroups = defaults.childGroups();
+	const QStringList defaultsGroups(defaults.childGroups());
 
 	for (int i = 0; i < defaultsGroups.count(); ++i)
 	{
 		defaults.beginGroup(defaultsGroups.at(i));
 
-		const QStringList keys = defaults.childGroups();
+		const QStringList keys(defaults.childGroups());
 
 		for (int j = 0; j < keys.count(); ++j)
 		{
-			const QString type = defaults.value(QStringLiteral("%1/type").arg(keys.at(j))).toString();
+			const QString type(defaults.value(QStringLiteral("%1/type").arg(keys.at(j))).toString());
 
 			if (type == QLatin1String("string") || type == QLatin1String("path"))
 			{
@@ -148,13 +148,13 @@ QString SettingsManager::getReport()
 
 	QHash<QString, int> overridenValues;
 	QSettings overrides(m_overridePath, QSettings::IniFormat);
-	const QStringList overridesGroups = overrides.childGroups();
+	const QStringList overridesGroups(overrides.childGroups());
 
 	for (int i = 0; i < overridesGroups.count(); ++i)
 	{
 		overrides.beginGroup(overridesGroups.at(i));
 
-		const QStringList keys = overrides.allKeys();
+		const QStringList keys(overrides.allKeys());
 
 		for (int j = 0; j < keys.count(); ++j)
 		{
@@ -171,7 +171,7 @@ QString SettingsManager::getReport()
 		overrides.endGroup();
 	}
 
-	QStringList keys = m_defaults.keys();
+	QStringList keys(m_defaults.keys());
 	keys.sort();
 
 	for (int i = 0; i < keys.count(); ++i)
@@ -215,13 +215,13 @@ QStringList SettingsManager::getOptions()
 {
 	QStringList options;
 	QSettings settings(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat);
-	const QStringList groups = settings.childGroups();
+	const QStringList groups(settings.childGroups());
 
 	for (int i = 0; i < groups.count(); ++i)
 	{
 		settings.beginGroup(groups.at(i));
 
-		const QStringList children = settings.childGroups();
+		const QStringList children(settings.childGroups());
 
 		for (int j = 0; j < children.count(); ++j)
 		{
