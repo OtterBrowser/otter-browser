@@ -191,6 +191,44 @@ QString UserScript::getSource()
 	return m_source;
 }
 
+QString UserScript::checkUrlSubString(const QString &rule, const QString &urlSubString, QString generatedUrl, int position) const
+{
+	for (int i = 0; i < urlSubString.length(); ++i)
+	{
+		const QChar character(urlSubString.at(i));
+
+		if (rule[position] == QLatin1Char('*'))
+		{
+			const QString wildcardString(urlSubString.mid(i));
+
+			for (int j = 1; j < wildcardString.length(); ++j)
+			{
+				const QString result(checkUrlSubString(rule, urlSubString.right(wildcardString.length() - j), generatedUrl + wildcardString.left(j), (position + 1)));
+
+				if (!result.isEmpty())
+				{
+					return result;
+				}
+			}
+		}
+		else if (character != rule[position])
+		{
+			return QString();
+		}
+
+		++position;
+
+		generatedUrl += character;
+
+		if (position == rule.length())
+		{
+			return generatedUrl;
+		}
+	}
+
+	return QString();
+}
+
 QUrl UserScript::getHomePage() const
 {
 	return m_homePage;
@@ -228,11 +266,65 @@ UserScript::InjectionTime UserScript::getInjectionTime() const
 
 bool UserScript::isEnabledForUrl(const QUrl &url)
 {
-	Q_UNUSED(url)
+	if (url.scheme() != QLatin1String("http") && url.scheme() != QLatin1String("https") && url.scheme() != QLatin1String("file") && url.scheme() != QLatin1String("ftp"))
+	{
+		return false;
+	}
 
-///TODO
+	bool isEnabled(!(m_includeRules.length() > 0 || m_matchRules.length() > 0));
 
-	return true;
+	if (checkUrl(url, m_matchRules))
+	{
+		isEnabled = true;
+	}
+
+	if (!isEnabled && checkUrl(url, m_includeRules))
+	{
+		isEnabled = true;
+	}
+
+	if (checkUrl(url, m_excludeRules))
+	{
+		isEnabled = false;
+	}
+
+	return isEnabled;
+}
+
+bool UserScript::checkUrl(const QUrl &url, const QStringList &rules) const
+{
+	for (int i = 0; i < rules.length(); ++i)
+	{
+		QString rule(rules[i]);
+
+		if (rule.startsWith(QLatin1Char('/')) && rule.endsWith(QLatin1Char('/')))
+		{
+			return QRegularExpression(rule.mid(1, rule.length() - 2)).match(url.url()).hasMatch();
+		}
+
+		if (rule.contains(QLatin1String(".tld"), Qt::CaseInsensitive))
+		{
+			rule.replace(QLatin1String(".tld"), url.topLevelDomain(), Qt::CaseInsensitive);
+		}
+
+		bool useExactMatch(true);
+
+		if (rule.endsWith(QLatin1Char('*')))
+		{
+			useExactMatch = false;
+			rule = rule.left(rule.length() - 1);
+		}
+
+		const QString result(checkUrlSubString(rule, url.url(), QString()));
+
+		if (!result.isEmpty() && ((useExactMatch && url.url() == result) || (!useExactMatch && url.url().startsWith(result))))
+		{
+			return true;
+		}
+		
+	}
+
+	return false;
 }
 
 bool UserScript::shouldRunOnSubFrames() const
