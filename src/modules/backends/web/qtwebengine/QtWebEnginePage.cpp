@@ -71,37 +71,8 @@ QtWebEnginePage::QtWebEnginePage(bool isPrivate, QtWebEngineWebWidget *parent) :
 	m_ignoreJavaScriptPopups(false),
 	m_isViewingMedia(false)
 {
-	connect(this, SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
 	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 	connect(this, SIGNAL(renderProcessTerminated(RenderProcessTerminationStatus,int)), this, SLOT(notifyRenderProcessTerminated(RenderProcessTerminationStatus)));
-}
-
-void QtWebEnginePage::pageLoadStarted()
-{
-	scripts().clear();
-
-	const QList<UserScript*> scripts(AddonsManager::getUserScriptsForUrl(url()));
-
-	for (int i = 0; i < scripts.count(); ++i)
-	{
-		QWebEngineScript::InjectionPoint injectionPoint(QWebEngineScript::DocumentReady);
-
-		if (scripts.at(i)->getInjectionTime() == UserScript::DocumentCreationTime)
-		{
-			injectionPoint = QWebEngineScript::DocumentCreation;
-		}
-		else if (scripts.at(i)->getInjectionTime() == UserScript::DeferredTime)
-		{
-			injectionPoint = QWebEngineScript::Deferred;
-		}
-
-		QWebEngineScript script;
-		script.setSourceCode(scripts.at(i)->getSource());
-		script.setRunsOnSubFrames(scripts.at(i)->shouldRunOnSubFrames());
-		script.setInjectionPoint(injectionPoint);
-
-		this->scripts().insert(script);
-	}
 }
 
 void QtWebEnginePage::pageLoadFinished()
@@ -331,6 +302,34 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::N
 	if (isMainFrame && type != QWebEnginePage::NavigationTypeReload)
 	{
 		m_previousNavigationType = type;
+	}
+
+	if (isMainFrame)
+	{
+		scripts().clear();
+
+		const QList<UserScript*> scripts(AddonsManager::getUserScriptsForUrl(url));
+
+		for (int i = 0; i < scripts.count(); ++i)
+		{
+			QWebEngineScript::InjectionPoint injectionPoint(QWebEngineScript::DocumentReady);
+
+			if (scripts.at(i)->getInjectionTime() == UserScript::DocumentCreationTime)
+			{
+				injectionPoint = QWebEngineScript::DocumentCreation;
+			}
+			else if (scripts.at(i)->getInjectionTime() == UserScript::DeferredTime)
+			{
+				injectionPoint = QWebEngineScript::Deferred;
+			}
+
+			QWebEngineScript script;
+			script.setSourceCode(scripts.at(i)->getSource());
+			script.setRunsOnSubFrames(scripts.at(i)->shouldRunOnSubFrames());
+			script.setInjectionPoint(injectionPoint);
+
+			this->scripts().insert(script);
+		}
 	}
 
 	return true;
