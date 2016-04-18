@@ -44,7 +44,7 @@ protected:
 	void javaScriptAlert(const QUrl &url, const QString &message);
 	void javaScriptConsoleMessage(JavaScriptConsoleMessageLevel level, const QString &note, int line, const QString &source);
 	QWebEnginePage* createWindow(WebWindowType type);
-	QString createJavaScriptList(QStringList &rules) const;
+	QString createJavaScriptList(QStringList rules) const;
 	bool acceptNavigationRequest(const QUrl &url, QWebEnginePage::NavigationType type, bool isMainFrame);
 	bool javaScriptConfirm(const QUrl &url, const QString &message);
 	bool javaScriptPrompt(const QUrl &url, const QString &message, const QString &defaultValue, QString *result);

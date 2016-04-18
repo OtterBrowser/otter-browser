@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -25,6 +26,8 @@
 namespace Otter
 {
 
+class QtWebEngineUrlRequestInterceptor;
+
 class QtWebEngineWebBackend : public WebBackend
 {
 	Q_OBJECT
@@ -39,6 +42,7 @@ public:
 	QString getEngineVersion() const;
 	QString getSslVersion() const;
 	QString getUserAgent(const QString &pattern = QString()) const;
+	QStringList getBlockedElements(const QString &domain) const;
 	QUrl getHomePage() const;
 	QIcon getIcon() const;
 	bool requestThumbnail(const QUrl &url, const QSize &size);
@@ -47,6 +51,7 @@ protected slots:
 	void optionChanged(const QString &option);
 
 private:
+	QtWebEngineUrlRequestInterceptor *m_requestInterceptor;
 	bool m_isInitialized;
 
 	static QString m_engineVersion;

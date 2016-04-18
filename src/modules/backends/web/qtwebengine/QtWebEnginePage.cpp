@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "QtWebEnginePage.h"
+#include "QtWebEngineWebBackend.h"
 #include "QtWebEngineWebWidget.h"
 #include "../../../../core/AddonsManager.h"
 #include "../../../../core/Console.h"
@@ -129,11 +130,27 @@ void QtWebEnginePage::handlePageLoaded(const QString &result)
 			}
 
 			QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hideElements.js"));
-			file.open(QIODevice::ReadOnly);
+			
+			if (file.open(QIODevice::ReadOnly))
+			{
+				runJavaScript(QString(file.readAll()).arg(createJavaScriptList(styleSheetWhiteList)).arg(createJavaScriptList(styleSheetBlackList)));
 
-			runJavaScript(QString(file.readAll()).arg(createJavaScriptList(styleSheetWhiteList)).arg(createJavaScriptList(styleSheetBlackList)));
+				file.close();
+			}
+		}
 
-			file.close();
+		const QStringList blockedRequests(qobject_cast<QtWebEngineWebBackend*>(m_widget->getBackend())->getBlockedElements(url().host()));
+
+		if (!blockedRequests.isEmpty())
+		{
+			QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hideBlockedRequests.js"));
+
+			if (file.open(QIODevice::ReadOnly))
+			{
+				runJavaScript(QString(file.readAll()).arg(createJavaScriptList(blockedRequests)));
+
+				file.close();
+			}
 		}
 	}
 
@@ -240,7 +257,7 @@ QWebEnginePage* QtWebEnginePage::createWindow(QWebEnginePage::WebWindowType type
 	return QWebEnginePage::createWindow(type);
 }
 
-QString QtWebEnginePage::createJavaScriptList(QStringList &rules) const
+QString QtWebEnginePage::createJavaScriptList(QStringList rules) const
 {
 	if (rules.isEmpty())
 	{

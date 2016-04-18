@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -38,6 +39,7 @@ QMap<QString, QString> QtWebEngineWebBackend::m_userAgentComponents;
 QMap<QString, QString> QtWebEngineWebBackend::m_userAgents;
 
 QtWebEngineWebBackend::QtWebEngineWebBackend(QObject *parent) : WebBackend(parent),
+	m_requestInterceptor(NULL),
 	m_isInitialized(false)
 {
 	const QString userAgent = QWebEngineProfile::defaultProfile()->httpUserAgent();
@@ -89,10 +91,11 @@ WebWidget* QtWebEngineWebBackend::createWidget(bool isPrivate, ContentsWidget *p
 	if (!m_isInitialized)
 	{
 		m_isInitialized = true;
+		m_requestInterceptor = new QtWebEngineUrlRequestInterceptor(this);
 
 		QWebEngineProfile::defaultProfile()->setHttpAcceptLanguage(NetworkManagerFactory::getAcceptLanguage());
 		QWebEngineProfile::defaultProfile()->setHttpUserAgent(getUserAgent());
-		QWebEngineProfile::defaultProfile()->setRequestInterceptor(new QtWebEngineUrlRequestInterceptor(this));
+		QWebEngineProfile::defaultProfile()->setRequestInterceptor(m_requestInterceptor);
 
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::FullScreenSupportEnabled, true);
 
@@ -170,6 +173,11 @@ QString QtWebEngineWebBackend::getUserAgent(const QString &pattern) const
 	const UserAgentInformation userAgent = NetworkManagerFactory::getUserAgent(SettingsManager::getValue(QLatin1String("Network/UserAgent")).toString());
 
 	return ((userAgent.value.isEmpty()) ? QString() : getUserAgent(userAgent.value));
+}
+
+QStringList QtWebEngineWebBackend::getBlockedElements(const QString &domain) const
+{
+	return (m_requestInterceptor ? m_requestInterceptor->getBlockedElements(domain) : QStringList());
 }
 
 QUrl QtWebEngineWebBackend::getHomePage() const

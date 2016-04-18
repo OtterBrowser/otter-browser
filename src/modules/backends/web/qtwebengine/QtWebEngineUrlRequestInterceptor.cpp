@@ -32,7 +32,7 @@ namespace Otter
 
 QtWebEngineUrlRequestInterceptor::QtWebEngineUrlRequestInterceptor(QObject *parent) : QWebEngineUrlRequestInterceptor(parent)
 {
-	QTimer::singleShot(3600000, this, SLOT(clearContentBlockingProfiles()));
+	QTimer::singleShot(1800000, this, SLOT(clearContentBlockingInformation()));
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant,QUrl)), this, SLOT(optionChanged(QString)));
@@ -42,15 +42,21 @@ void QtWebEngineUrlRequestInterceptor::optionChanged(const QString &option)
 {
 	if (option == QLatin1String("Content/BlockingProfiles"))
 	{
-		clearContentBlockingProfiles();
+		clearContentBlockingInformation();
 	}
 }
 
-void QtWebEngineUrlRequestInterceptor::clearContentBlockingProfiles()
+void QtWebEngineUrlRequestInterceptor::clearContentBlockingInformation()
 {
+	m_blockedElements.clear();
 	m_contentBlockingProfiles.clear();
 
-	QTimer::singleShot(3600000, this, SLOT(clearContentBlockingProfiles()));
+	QTimer::singleShot(1800000, this, SLOT(clearContentBlockingInformation()));
+}
+
+QStringList QtWebEngineUrlRequestInterceptor::getBlockedElements(const QString &domain) const
+{
+	return m_blockedElements.value(domain);
 }
 
 void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo &request)
@@ -75,6 +81,7 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 	}
 
 	ContentBlockingManager::ResourceType resourceType(ContentBlockingManager::OtherType);
+	bool storeBlockedUrl(true);
 
 	switch (request.resourceType())
 	{
@@ -88,10 +95,12 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 			break;
 		case QWebEngineUrlRequestInfo::ResourceTypeStylesheet:
 			resourceType = ContentBlockingManager::StyleSheetType;
+			storeBlockedUrl = false;
 
 			break;
 		case QWebEngineUrlRequestInfo::ResourceTypeScript:
 			resourceType = ContentBlockingManager::ScriptType;
+			storeBlockedUrl = false;
 
 			break;
 		case QWebEngineUrlRequestInfo::ResourceTypeImage:
@@ -115,6 +124,11 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 
 	if (result.isBlocked)
 	{
+		if (storeBlockedUrl && !m_blockedElements.value(request.firstPartyUrl().host()).contains(request.requestUrl().url()))
+		{
+			m_blockedElements[request.firstPartyUrl().host()].append(request.requestUrl().url());
+		}
+
 		Console::addMessage(QCoreApplication::translate("main", "Blocked request"), Otter::NetworkMessageCategory, LogMessageLevel, request.requestUrl().toString(), -1);
 
 		request.block(true);

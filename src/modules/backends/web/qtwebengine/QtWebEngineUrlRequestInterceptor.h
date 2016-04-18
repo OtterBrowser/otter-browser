@@ -35,13 +35,15 @@ class QtWebEngineUrlRequestInterceptor : public QWebEngineUrlRequestInterceptor
 public:
 	explicit QtWebEngineUrlRequestInterceptor(QObject *parent = NULL);
 
+	QStringList getBlockedElements(const QString &domain) const;
 	void interceptRequest(QWebEngineUrlRequestInfo &request);
 
 protected slots:
 	void optionChanged(const QString &option);
-	void clearContentBlockingProfiles();
+	void clearContentBlockingInformation();
 
 private:
+	QMap<QString, QStringList> m_blockedElements;
 	QMap<QString, QVector<int> > m_contentBlockingProfiles;
 };
 
