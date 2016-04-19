@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -149,7 +149,7 @@ void Transfer::timerEvent(QTimerEvent *event)
 {
 	if (event->timerId() == m_updateTimer)
 	{
-		const qint64 oldSpeed = m_speed;
+		const qint64 oldSpeed(m_speed);
 
 		m_speed = (m_bytesReceivedDifference * 2);
 		m_bytesReceivedDifference = 0;
@@ -178,7 +178,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 	m_reply = reply;
 	m_mimeType = QMimeDatabase().mimeTypeForName(m_reply->header(QNetworkRequest::ContentTypeHeader).toString());
 
-	QString temporaryFileName = getSuggestedFileName();
+	QString temporaryFileName(getSuggestedFileName());
 
 	if (temporaryFileName.isEmpty())
 	{
@@ -186,7 +186,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 	}
 	else if (temporaryFileName.contains(QLatin1Char('.')))
 	{
-		QStringList parts = temporaryFileName.split(QLatin1Char('.'));
+		QStringList parts(temporaryFileName.split(QLatin1Char('.')));
 		parts[parts.count() - 2].append(QLatin1String("-XXXXXX"));
 
 		temporaryFileName = parts.join(QLatin1Char('.'));
@@ -213,7 +213,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 
 	downloadData();
 
-	const bool isRunning = (m_state == RunningState);
+	const bool isRunning(m_state == RunningState);
 
 	if (isRunning)
 	{
@@ -249,7 +249,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 	if (target.isEmpty())
 	{
 		QString path;
-		QString fileName = getSuggestedFileName();
+		QString fileName(getSuggestedFileName());
 
 		if (!SettingsManager::getValue(QLatin1String("Browser/AlwaysAskWhereToSaveDownload")).toBool())
 		{
@@ -539,7 +539,7 @@ void Transfer::setOpenCommand(const QString &command)
 
 	m_options |= HasToOpenAfterFinishOption;
 
-	QTemporaryFile *file = qobject_cast<QTemporaryFile*>(m_device);
+	QTemporaryFile *file(qobject_cast<QTemporaryFile*>(m_device));
 
 	if (file)
 	{
@@ -731,7 +731,7 @@ bool Transfer::restart()
 {
 	stop();
 
-	QFile *file = new QFile(m_target);
+	QFile *file(new QFile(m_target));
 
 	if (!file->open(QIODevice::WriteOnly))
 	{
@@ -779,12 +779,12 @@ bool Transfer::setTarget(const QString &target)
 
 	if (QFile::exists(target) && !m_options.testFlag(CanOverwriteOption))
 	{
-		const QMessageBox::StandardButton result = QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with the same name already exists.\nDo you want to overwrite it?\n\n%1").arg(target), (QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel));
+		const QMessageBox::StandardButton result(QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with the same name already exists.\nDo you want to overwrite it?\n\n%1").arg(target), (QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel)));
 
 		if (result == QMessageBox::No)
 		{
 			QFileInfo information(target);
-			const QString path = TransfersManager::getSavePath(information.fileName(), information.path(), true);
+			const QString path(TransfersManager::getSavePath(information.fileName(), information.path(), true));
 
 			if (path.isEmpty())
 			{
@@ -820,7 +820,7 @@ bool Transfer::setTarget(const QString &target)
 		return success;
 	}
 
-	QFile *file = new QFile(mutableTarget, this);
+	QFile *file(new QFile(mutableTarget, this));
 
 	if (!file->open(QIODevice::WriteOnly))
 	{

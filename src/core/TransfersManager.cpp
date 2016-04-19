@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -105,8 +105,8 @@ void TransfersManager::save()
 	QSettings history(SessionsManager::getWritableDataPath(QLatin1String("transfers.ini")), QSettings::IniFormat);
 	history.clear();
 
-	const int limit = SettingsManager::getValue(QLatin1String("History/DownloadsLimitPeriod")).toInt();
-	int entry = 1;
+	const int limit(SettingsManager::getValue(QLatin1String("History/DownloadsLimitPeriod")).toInt());
+	int entry(1);
 
 	for (int i = 0; i < m_transfers.count(); ++i)
 	{
@@ -130,7 +130,7 @@ void TransfersManager::save()
 
 void TransfersManager::transferStarted()
 {
-	Transfer *transfer = qobject_cast<Transfer*>(sender());
+	Transfer *transfer(qobject_cast<Transfer*>(sender()));
 
 	if (transfer && transfer->getState() != Transfer::CancelledState)
 	{
@@ -142,7 +142,7 @@ void TransfersManager::transferStarted()
 
 void TransfersManager::transferFinished()
 {
-	Transfer *transfer = qobject_cast<Transfer*>(sender());
+	Transfer *transfer(qobject_cast<Transfer*>(sender()));
 
 	if (transfer)
 	{
@@ -162,7 +162,7 @@ void TransfersManager::transferFinished()
 
 void TransfersManager::transferChanged()
 {
-	Transfer *transfer = qobject_cast<Transfer*>(sender());
+	Transfer *transfer(qobject_cast<Transfer*>(sender()));
 
 	if (transfer)
 	{
@@ -174,7 +174,7 @@ void TransfersManager::transferChanged()
 
 void TransfersManager::transferStopped()
 {
-	Transfer *transfer = qobject_cast<Transfer*>(sender());
+	Transfer *transfer(qobject_cast<Transfer*>(sender()));
 
 	if (transfer)
 	{
@@ -202,7 +202,7 @@ TransfersManager* TransfersManager::getInstance()
 
 Transfer* TransfersManager::startTransfer(const QUrl &source, const QString &target, Transfer::TransferOptions options)
 {
-	Transfer *transfer = new Transfer(source, target, options, m_instance);
+	Transfer *transfer(new Transfer(source, target, options, m_instance));
 
 	if (transfer->getState() == Transfer::CancelledState)
 	{
@@ -218,7 +218,7 @@ Transfer* TransfersManager::startTransfer(const QUrl &source, const QString &tar
 
 Transfer* TransfersManager::startTransfer(const QNetworkRequest &request, const QString &target, Transfer::TransferOptions options)
 {
-	Transfer *transfer = new Transfer(request, target, options, m_instance);
+	Transfer *transfer(new Transfer(request, target, options, m_instance));
 
 	if (transfer->getState() == Transfer::CancelledState)
 	{
@@ -234,7 +234,7 @@ Transfer* TransfersManager::startTransfer(const QNetworkRequest &request, const 
 
 Transfer* TransfersManager::startTransfer(QNetworkReply *reply, const QString &target, Transfer::TransferOptions options)
 {
-	Transfer *transfer = new Transfer(reply, target, options, m_instance);
+	Transfer *transfer(new Transfer(reply, target, options, m_instance));
 
 	if (transfer->getState() == Transfer::CancelledState)
 	{
@@ -259,7 +259,7 @@ QString TransfersManager::getSavePath(const QString &fileName, QString path, boo
 	{
 		if (path.isEmpty() || forceAsk)
 		{
-			QString suffix = QMimeDatabase().suffixForFileName(fileName);
+			QString suffix(QMimeDatabase().suffixForFileName(fileName));
 
 			if (suffix.isEmpty())
 			{
@@ -288,7 +288,7 @@ QString TransfersManager::getSavePath(const QString &fileName, QString path, boo
 			path = dialog.selectedFiles().value(0);
 		}
 
-		const bool exists = QFile::exists(path);
+		const bool exists(QFile::exists(path));
 
 		if (isDownloading(QString(), path))
 		{
@@ -328,7 +328,7 @@ QList<Transfer*> TransfersManager::getTransfers()
 	if (!m_isInitilized)
 	{
 		QSettings history(SessionsManager::getWritableDataPath(QLatin1String("transfers.ini")), QSettings::IniFormat);
-		const QStringList entries = history.childGroups();
+		const QStringList entries(history.childGroups());
 
 		m_transfers.reserve(entries.count());
 

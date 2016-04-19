@@ -247,7 +247,7 @@ SettingsManager::OptionDefinition SettingsManager::getDefinition(const QString &
 	options.name = key;
 	options.defaultValue = m_defaults[key];
 
-	const QString type = settings.value(QLatin1String("type")).toString();
+	const QString type(settings.value(QLatin1String("type")).toString());
 
 	if (type == QLatin1String("bool"))
 	{
