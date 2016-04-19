@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 			{
 				installEventFilter(this);
 
-				Menu *parentMenu = qobject_cast<Menu*>(parent);
+				Menu *parentMenu(qobject_cast<Menu*>(parent));
 
 				if (!parentMenu || parentMenu->getRole() != m_role)
 				{
@@ -82,7 +82,7 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 			{
 				setIcon(ThemesManager::getIcon(QLatin1String("user-trash")));
 
-				MainWindow *mainWindow = MainWindow::findMainWindow(parent);
+				MainWindow *mainWindow(MainWindow::findMainWindow(parent));
 
 				if (mainWindow)
 				{
@@ -150,11 +150,11 @@ void Menu::mouseReleaseEvent(QMouseEvent *event)
 {
 	if (m_role == BookmarksMenuRole && (event->button() == Qt::LeftButton || event->button() == Qt::MiddleButton))
 	{
-		QAction *action = actionAt(event->pos());
+		QAction *action(actionAt(event->pos()));
 
 		if (action && action->isEnabled() && action->data().type() == QVariant::ModelIndex)
 		{
-			QWidget *menu = this;
+			QWidget *menu(this);
 
 			while (menu)
 			{
@@ -167,7 +167,7 @@ void Menu::mouseReleaseEvent(QMouseEvent *event)
 				}
 			}
 
-			MainWindow *mainWindow = MainWindow::findMainWindow(parent());
+			MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
 
 			if (mainWindow)
 			{
@@ -185,7 +185,7 @@ void Menu::contextMenuEvent(QContextMenuEvent *event)
 {
 	if (m_role == BookmarksMenuRole)
 	{
-		QAction *action = actionAt(event->pos());
+		QAction *action(actionAt(event->pos()));
 
 		if (action && action->isEnabled() && action->data().type() == QVariant::ModelIndex)
 		{
@@ -219,7 +219,7 @@ void Menu::load(const QString &path, const QStringList &options)
 
 void Menu::load(const QJsonObject &definition, const QStringList &options)
 {
-	const QString identifier = definition.value(QLatin1String("identifier")).toString();
+	const QString identifier(definition.value(QLatin1String("identifier")).toString());
 
 	if (m_role == NoMenuRole)
 	{
@@ -231,20 +231,20 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 	setObjectName(identifier);
 	setTitle(QCoreApplication::translate("actions", m_title.toUtf8().constData()));
 
-	const QJsonArray actions = definition.value(QLatin1String("actions")).toArray();
+	const QJsonArray actions(definition.value(QLatin1String("actions")).toArray());
 
 	for (int i = 0; i < actions.count(); ++i)
 	{
 		if (actions.at(i).isObject())
 		{
-			const QJsonObject object = actions.at(i).toObject();
+			const QJsonObject object(actions.at(i).toObject());
 
 			if (object.contains(QLatin1String("includeIn")) && !options.contains(object.value(QLatin1String("includeIn")).toString()))
 			{
 				continue;
 			}
 
-			Menu *menu = new Menu(Menu::getRole(object.value(QLatin1String("identifier")).toString()), this);
+			Menu *menu(new Menu(Menu::getRole(object.value(QLatin1String("identifier")).toString()), this));
 			menu->load(object, options);
 
 			if (object.value(QLatin1String("type")).toString() == QLatin1String("menu"))
@@ -261,7 +261,7 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 		}
 		else
 		{
-			const QString rawAction = actions.at(i).toString();
+			const QString rawAction(actions.at(i).toString());
 
 			if (rawAction == QLatin1String("separator"))
 			{
@@ -269,11 +269,11 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 			}
 			else
 			{
-				const int action = ActionsManager::getActionIdentifier(rawAction);
+				const int action(ActionsManager::getActionIdentifier(rawAction));
 
 				if (action >= 0)
 				{
-					WindowsManager *manager = SessionsManager::getWindowsManager();
+					WindowsManager *manager(SessionsManager::getWindowsManager());
 
 					if (manager && Action::isLocal(action) && manager->getAction(action))
 					{
@@ -291,14 +291,14 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 
 void Menu::populateModelMenu()
 {
-	QMenu *menu = qobject_cast<QMenu*>(sender());
+	QMenu *menu(qobject_cast<QMenu*>(sender()));
 
 	if (!menu || !menu->menuAction())
 	{
 		return;
 	}
 
-	QModelIndex index = menu->menuAction()->data().toModelIndex();
+	QModelIndex index(menu->menuAction()->data().toModelIndex());
 
 	if (!menu->actions().isEmpty() && !(m_role == BookmarksMenuRole && !index.isValid() && menu->actions().count() == 3))
 	{
@@ -319,7 +319,7 @@ void Menu::populateModelMenu()
 
 	if (model->rowCount(index) > 1 && m_role == BookmarksMenuRole)
 	{
-		QAction *openAllAction = menu->addAction(ThemesManager::getIcon(QLatin1String("document-open-folder")), tr("Open All"), this, SLOT(openBookmark()));
+		QAction *openAllAction(menu->addAction(ThemesManager::getIcon(QLatin1String("document-open-folder")), tr("Open All"), this, SLOT(openBookmark())));
 		openAllAction->setData(index);
 
 		menu->addSeparator();
@@ -327,7 +327,7 @@ void Menu::populateModelMenu()
 
 	if (m_role == BookmarkSelectorMenuRole)
 	{
-		QAction *addFolderAction = menu->addAction(ThemesManager::getIcon(QLatin1String("document-open-folder")), tr("This Folder"));
+		QAction *addFolderAction(menu->addAction(ThemesManager::getIcon(QLatin1String("document-open-folder")), tr("This Folder")));
 		addFolderAction->setData(index);
 
 		menu->addSeparator();
@@ -335,18 +335,18 @@ void Menu::populateModelMenu()
 
 	for (int i = 0; i < model->rowCount(index); ++i)
 	{
-		const QModelIndex childIndex = index.child(i, 0);
+		const QModelIndex childIndex(index.child(i, 0));
 
 		if (!childIndex.isValid())
 		{
 			continue;
 		}
 
-		const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(childIndex.data(BookmarksModel::TypeRole).toInt());
+		const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(childIndex.data(BookmarksModel::TypeRole).toInt()));
 
 		if (type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark || type == BookmarksModel::UrlBookmark)
 		{
-			QAction *action = menu->addAction(childIndex.data(Qt::DecorationRole).value<QIcon>(), (childIndex.data(BookmarksModel::TitleRole).toString().isEmpty() ? tr("(Untitled)") : Utils::elideText(QString(childIndex.data(BookmarksModel::TitleRole).toString()).replace(QLatin1Char('&'), QLatin1String("&&")), menu)));
+			QAction *action(menu->addAction(childIndex.data(Qt::DecorationRole).value<QIcon>(), (childIndex.data(BookmarksModel::TitleRole).toString().isEmpty() ? tr("(Untitled)") : Utils::elideText(QString(childIndex.data(BookmarksModel::TitleRole).toString()).replace(QLatin1Char('&'), QLatin1String("&&")), menu))));
 			action->setData(childIndex);
 			action->setToolTip(childIndex.data(BookmarksModel::DescriptionRole).toString());
 			action->setStatusTip(childIndex.data(BookmarksModel::UrlRole).toString());
@@ -384,7 +384,7 @@ void Menu::populateCharacterEncodingMenu()
 		m_actionGroup = new QActionGroup(this);
 		m_actionGroup->setExclusive(true);
 
-		QAction *defaultAction = QMenu::addAction(tr("Auto Detect"));
+		QAction *defaultAction(QMenu::addAction(tr("Auto Detect")));
 		defaultAction->setData(-1);
 		defaultAction->setCheckable(true);
 
@@ -401,7 +401,7 @@ void Menu::populateCharacterEncodingMenu()
 				continue;
 			}
 
-			QAction *textCodecAction = QMenu::addAction(Utils::elideText(codec->name(), this));
+			QAction *textCodecAction(QMenu::addAction(Utils::elideText(codec->name(), this)));
 			textCodecAction->setData(textCodecs.at(i));
 			textCodecAction->setCheckable(true);
 
@@ -409,12 +409,12 @@ void Menu::populateCharacterEncodingMenu()
 		}
 	}
 
-	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
-	const QString encoding = (mainWindow ? mainWindow->getWindowsManager()->getOption(QLatin1String("Content/DefaultCharacterEncoding")).toString().toLower() : QString());
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
+	const QString encoding(mainWindow ? mainWindow->getWindowsManager()->getOption(QLatin1String("Content/DefaultCharacterEncoding")).toString().toLower() : QString());
 
 	for (int i = 2; i < actions().count(); ++i)
 	{
-		QAction *action = actions().at(i);
+		QAction *action(actions().at(i));
 
 		if (!action)
 		{
@@ -443,7 +443,7 @@ void Menu::populateClosedWindowsMenu()
 
 	addSeparator();
 
-	const QStringList windows = SessionsManager::getClosedWindows();
+	const QStringList windows(SessionsManager::getClosedWindows());
 
 	if (!windows.isEmpty())
 	{
@@ -455,7 +455,7 @@ void Menu::populateClosedWindowsMenu()
 		addSeparator();
 	}
 
-	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
 
 	if (mainWindow)
 	{
@@ -463,7 +463,7 @@ void Menu::populateClosedWindowsMenu()
 
 		for (int i = 0; i < tabs.count(); ++i)
 		{
-			QAction *action = QMenu::addAction(HistoryManager::getIcon(QUrl(tabs.at(i).window.getUrl())), Utils::elideText(tabs.at(i).window.getTitle(), this), this, SLOT(restoreClosedWindow()));
+			QAction *action(QMenu::addAction(HistoryManager::getIcon(QUrl(tabs.at(i).window.getUrl())), Utils::elideText(tabs.at(i).window.getTitle(), this), this, SLOT(restoreClosedWindow())));
 			action->setData(i + 1);
 			action->setStatusTip(tabs.at(i).window.getUrl());
 		}
@@ -487,29 +487,29 @@ void Menu::populateSessionsMenu()
 	m_actionGroup = new QActionGroup(this);
 	m_actionGroup->setExclusive(true);
 
-	const QStringList sessions = SessionsManager::getSessions();
+	const QStringList sessions(SessionsManager::getSessions());
 	QMultiHash<QString, SessionInformation> information;
 
 	for (int i = 0; i < sessions.count(); ++i)
 	{
-		const SessionInformation session = SessionsManager::getSession(sessions.at(i));
+		const SessionInformation session(SessionsManager::getSession(sessions.at(i)));
 
 		information.insert((session.title.isEmpty() ? tr("(Untitled)") : session.title), session);
 	}
 
-	const QList<SessionInformation> sorted = information.values();
-	const QString currentSession = SessionsManager::getCurrentSession();
+	const QList<SessionInformation> sorted(information.values());
+	const QString currentSession(SessionsManager::getCurrentSession());
 
 	for (int i = 0; i < sorted.count(); ++i)
 	{
-		int windows = 0;
+		int windows(0);
 
 		for (int j = 0; j < sorted.at(i).windows.count(); ++j)
 		{
 			windows += sorted.at(i).windows.at(j).windows.count();
 		}
 
-		QAction *action = QMenu::addAction(tr("%1 (%n tab(s))", "", windows).arg(sorted.at(i).title.isEmpty() ? tr("(Untitled)") : QString(sorted.at(i).title).replace(QLatin1Char('&'), QLatin1String("&&"))));
+		QAction *action(QMenu::addAction(tr("%1 (%n tab(s))", "", windows).arg(sorted.at(i).title.isEmpty() ? tr("(Untitled)") : QString(sorted.at(i).title).replace(QLatin1Char('&'), QLatin1String("&&")))));
 		action->setData(sorted.at(i).path);
 		action->setCheckable(true);
 		action->setChecked(sorted.at(i).path == currentSession);
@@ -522,19 +522,18 @@ void Menu::populateStyleSheetsMenu()
 {
 	clear();
 
-	QAction *defaultAction = QMenu::addAction(tr("Default"));
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
+	QAction *defaultAction(QMenu::addAction(tr("Default")));
 	defaultAction->setData(-1);
 	defaultAction->setCheckable(true);
 	defaultAction->setChecked(true);
-
-	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
 
 	if (!mainWindow)
 	{
 		return;
 	}
 
-	Window *window = mainWindow->getWindowsManager()->getWindowByIndex(mainWindow->getWindowsManager()->getWindowIndex(-1));
+	Window *window(mainWindow->getWindowsManager()->getWindowByIndex(mainWindow->getWindowsManager()->getWindowIndex(-1)));
 
 	if (!window)
 	{
@@ -543,15 +542,15 @@ void Menu::populateStyleSheetsMenu()
 
 	addSeparator();
 
-	const QString activeStyleSheet = window->getContentsWidget()->getActiveStyleSheet();
-	const QStringList styleSheets = window->getContentsWidget()->getStyleSheets();
-	QActionGroup *actionGroup = new QActionGroup(this);
+	const QString activeStyleSheet(window->getContentsWidget()->getActiveStyleSheet());
+	const QStringList styleSheets(window->getContentsWidget()->getStyleSheets());
+	QActionGroup *actionGroup(new QActionGroup(this));
 	actionGroup->setExclusive(true);
 	actionGroup->addAction(defaultAction);
 
 	for (int i = 0; i < styleSheets.count(); ++i)
 	{
-		QAction *action = QMenu::addAction(styleSheets.at(i));
+		QAction *action(QMenu::addAction(styleSheets.at(i)));
 
 		action->setCheckable(true);
 		action->setChecked(styleSheets.at(i) == activeStyleSheet);
@@ -566,11 +565,11 @@ void Menu::populateToolBarsMenu()
 {
 	clear();
 
-	const QVector<ToolBarsManager::ToolBarDefinition> definitions = ToolBarsManager::getToolBarDefinitions();
+	const QVector<ToolBarsManager::ToolBarDefinition> definitions(ToolBarsManager::getToolBarDefinitions());
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		QAction *toolBarAction = QMenu::addAction(definitions.at(i).title.isEmpty() ? tr("(Untitled)") : definitions.at(i).title);
+		QAction *toolBarAction(QMenu::addAction(definitions.at(i).title.isEmpty() ? tr("(Untitled)") : definitions.at(i).title));
 		toolBarAction->setData(definitions.at(i).identifier);
 		toolBarAction->setCheckable(true);
 		toolBarAction->setChecked(definitions.at(i).visibility != ToolBarsManager::AlwaysHiddenToolBar);
@@ -582,7 +581,7 @@ void Menu::populateToolBarsMenu()
 	addAction(ActionsManager::ShowErrorConsoleAction, true);
 	addSeparator();
 
-	QMenu *menu = addMenu(tr("Add New"));
+	QMenu *menu(addMenu(tr("Add New")));
 	menu->addAction(tr("Add Toolbar"), ToolBarsManager::getInstance(), SLOT(addToolBar()));
 	menu->addAction(tr("Add Bookmarks Bar…"), ToolBarsManager::getInstance(), SLOT(addBookmarksBar()));
 
@@ -601,14 +600,14 @@ void Menu::populateUserAgentMenu()
 		clear();
 	}
 
-	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
-	const QStringList userAgents = NetworkManagerFactory::getUserAgents();
-	const QString userAgent = (mainWindow ? mainWindow->getWindowsManager()->getOption(QLatin1String("Network/UserAgent")).toString() : QString());
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
+	const QStringList userAgents(NetworkManagerFactory::getUserAgents());
+	const QString userAgent(mainWindow ? mainWindow->getWindowsManager()->getOption(QLatin1String("Network/UserAgent")).toString() : QString());
 
 	m_actionGroup = new QActionGroup(this);
 	m_actionGroup->setExclusive(true);
 
-	QAction *defaultAction = QMenu::addAction(tr("Default"));
+	QAction *defaultAction(QMenu::addAction(tr("Default")));
 	defaultAction->setData(QLatin1String("default"));
 	defaultAction->setCheckable(true);
 	defaultAction->setChecked(userAgent == QLatin1String("default"));
@@ -619,8 +618,8 @@ void Menu::populateUserAgentMenu()
 
 	for (int i = 0; i < userAgents.count(); ++i)
 	{
-		const QString title = NetworkManagerFactory::getUserAgent(userAgents.at(i)).title;
-		QAction *userAgentAction = QMenu::addAction((title.isEmpty() ? tr("(Untitled)") : Utils::elideText(title, this)));
+		const QString title(NetworkManagerFactory::getUserAgent(userAgents.at(i)).title);
+		QAction *userAgentAction(QMenu::addAction((title.isEmpty() ? tr("(Untitled)") : Utils::elideText(title, this))));
 		userAgentAction->setData(userAgents.at(i));
 		userAgentAction->setCheckable(true);
 		userAgentAction->setChecked(userAgent == userAgents.at(i));
@@ -630,7 +629,7 @@ void Menu::populateUserAgentMenu()
 
 	addSeparator();
 
-	QAction *customAction = QMenu::addAction(tr("Custom"));
+	QAction *customAction(QMenu::addAction(tr("Custom")));
 	customAction->setData(QLatin1String("custom"));
 	customAction->setCheckable(true);
 	customAction->setChecked(userAgent.startsWith(QLatin1String("custom;")));
@@ -647,7 +646,7 @@ void Menu::populateWindowsMenu()
 {
 	if (actions().isEmpty())
 	{
-		MainWindow *mainWindow = MainWindow::findMainWindow(this);
+		MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
 		if (mainWindow)
 		{
@@ -661,7 +660,7 @@ void Menu::populateWindowsMenu()
 
 	clear();
 
-	MainWindow *mainWindow = MainWindow::findMainWindow(this);
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
 	if (!mainWindow)
 	{
@@ -670,7 +669,7 @@ void Menu::populateWindowsMenu()
 
 	for (int i = 0; i < mainWindow->getWindowsManager()->getWindowCount(); ++i)
 	{
-		Window *window = mainWindow->getWindowsManager()->getWindowByIndex(i);
+		Window *window(mainWindow->getWindowsManager()->getWindowByIndex(i));
 
 		if (window)
 		{
@@ -681,7 +680,7 @@ void Menu::populateWindowsMenu()
 
 void Menu::clearModelMenu()
 {
-	const int offset = ((m_role == BookmarksMenuRole && menuAction() && !menuAction()->data().toModelIndex().isValid()) ? 3 : 0);
+	const int offset((m_role == BookmarksMenuRole && menuAction() && !menuAction()->data().toModelIndex().isValid()) ? 3 : 0);
 
 	for (int i = (actions().count() - 1); i >= offset; --i)
 	{
@@ -692,7 +691,7 @@ void Menu::clearModelMenu()
 
 	if (m_role != BookmarksMenuRole && menuAction())
 	{
-		const QAbstractItemModel *model = menuAction()->data().toModelIndex().model();
+		const QAbstractItemModel *model(menuAction()->data().toModelIndex().model());
 
 		if (model)
 		{
@@ -705,7 +704,7 @@ void Menu::clearModelMenu()
 
 void Menu::clearClosedWindows()
 {
-	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
 
 	if (mainWindow)
 	{
@@ -717,12 +716,12 @@ void Menu::clearClosedWindows()
 
 void Menu::restoreClosedWindow()
 {
-	QAction *action = qobject_cast<QAction*>(sender());
-	const int index = ((action && action->data().type() == QVariant::Int) ? action->data().toInt() : 0);
+	QAction *action(qobject_cast<QAction*>(sender()));
+	const int index((action && action->data().type() == QVariant::Int) ? action->data().toInt() : 0);
 
 	if (index > 0)
 	{
-		MainWindow *mainWindow = MainWindow::findMainWindow(parent());
+		MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
 
 		if (mainWindow)
 		{
@@ -737,7 +736,7 @@ void Menu::restoreClosedWindow()
 
 void Menu::openBookmark()
 {
-	QWidget *menu = this;
+	QWidget *menu(this);
 
 	while (menu)
 	{
@@ -750,8 +749,8 @@ void Menu::openBookmark()
 		}
 	}
 
-	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
-	QAction *action = qobject_cast<QAction*>(sender());
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
+	QAction *action(qobject_cast<QAction*>(sender()));
 
 	if (action && action->data().type() == QVariant::ModelIndex)
 	{
@@ -760,7 +759,7 @@ void Menu::openBookmark()
 
 	if (mainWindow)
 	{
-		const WindowsManager::OpenHints hints = (action ? static_cast<WindowsManager::OpenHints>(action->data().toInt()) : WindowsManager::DefaultOpen);
+		const WindowsManager::OpenHints hints(action ? static_cast<WindowsManager::OpenHints>(action->data().toInt()) : WindowsManager::DefaultOpen);
 
 		mainWindow->getWindowsManager()->open(m_bookmark, ((hints == WindowsManager::DefaultOpen) ? WindowsManager::calculateOpenHints() : hints));
 	}
@@ -786,7 +785,7 @@ void Menu::openSession(QAction *action)
 
 void Menu::selectCharacterEncoding(QAction *action)
 {
-	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
 
 	if (!mainWindow)
 	{
@@ -797,7 +796,7 @@ void Menu::selectCharacterEncoding(QAction *action)
 
 	if (action && action->data().toInt() > 0)
 	{
-		QTextCodec *codec = QTextCodec::codecForMib(action->data().toInt());
+		QTextCodec *codec(QTextCodec::codecForMib(action->data().toInt()));
 
 		if (codec)
 		{
@@ -810,14 +809,14 @@ void Menu::selectCharacterEncoding(QAction *action)
 
 void Menu::selectStyleSheet(QAction *action)
 {
-	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
 
 	if (!mainWindow)
 	{
 		return;
 	}
 
-	Window *window = mainWindow->getWindowsManager()->getWindowByIndex(mainWindow->getWindowsManager()->getWindowIndex(-1));
+	Window *window(mainWindow->getWindowsManager()->getWindowByIndex(mainWindow->getWindowsManager()->getWindowIndex(-1)));
 
 	if (window && action)
 	{
@@ -827,7 +826,7 @@ void Menu::selectStyleSheet(QAction *action)
 
 void Menu::selectUserAgent(QAction *action)
 {
-	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
 
 	if (action && mainWindow)
 	{
@@ -848,18 +847,18 @@ void Menu::selectWindow(QAction *action)
 
 void Menu::updateClosedWindowsMenu()
 {
-	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
 
 	setEnabled((mainWindow && mainWindow->getWindowsManager()->getClosedWindows().count() > 0) || SessionsManager::getClosedWindows().count() > 0);
 }
 
 void Menu::setToolBarVisibility(bool visible)
 {
-	QAction *action = qobject_cast<QAction*>(sender());
+	QAction *action(qobject_cast<QAction*>(sender()));
 
 	if (action)
 	{
-		ToolBarsManager::ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(action->data().toInt());
+		ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(action->data().toInt()));
 		definition.visibility = (visible ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
 
 		ToolBarsManager::setToolBar(definition);
@@ -868,7 +867,7 @@ void Menu::setToolBarVisibility(bool visible)
 
 Action* Menu::addAction(int identifier, bool useGlobal)
 {
-	Action *action = (useGlobal ? ActionsManager::getAction(identifier, this) : new Action(identifier, this));
+	Action *action(useGlobal ? ActionsManager::getAction(identifier, this) : new Action(identifier, this));
 
 	QMenu::addAction(action);
 
