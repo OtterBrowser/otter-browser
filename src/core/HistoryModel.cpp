@@ -63,7 +63,7 @@ HistoryModel::HistoryModel(const QString &path, QObject *parent) : QStandardItem
 		return;
 	}
 
-	const QJsonArray array = QJsonDocument::fromJson(file.readAll()).array();
+	const QJsonArray array(QJsonDocument::fromJson(file.readAll()).array());
 
 	file.close();
 
@@ -129,14 +129,14 @@ void HistoryModel::clearOldestEntries(int period)
 
 void HistoryModel::removeEntry(quint64 identifier)
 {
-	HistoryEntryItem *entry = getEntry(identifier);
+	HistoryEntryItem *entry(getEntry(identifier));
 
 	if (!entry)
 	{
 		return;
 	}
 
-	const QUrl url = Utils::normalizeUrl(entry->data(UrlRole).toUrl());
+	const QUrl url(Utils::normalizeUrl(entry->data(UrlRole).toUrl()));
 
 	if (m_urls.contains(url))
 	{
@@ -164,7 +164,7 @@ HistoryEntryItem* HistoryModel::addEntry(const QUrl &url, const QString &title, 
 {
 	blockSignals(true);
 
-	HistoryEntryItem *entry = new HistoryEntryItem();
+	HistoryEntryItem *entry(new HistoryEntryItem());
 	entry->setIcon(icon);
 
 	insertRow(0, entry);
@@ -213,7 +213,7 @@ QList<HistoryModel::HistoryEntryMatch> HistoryModel::findEntries(const QString &
 			continue;
 		}
 
-		const QString result = Utils::matchUrl(urlsIterator.key(), prefix);
+		const QString result(Utils::matchUrl(urlsIterator.key(), prefix));
 
 		if (!result.isEmpty())
 		{
@@ -262,7 +262,7 @@ bool HistoryModel::save(const QString &path) const
 
 	for (int i = 0; i < rowCount(); ++i)
 	{
-		QStandardItem *entry = item(i);
+		QStandardItem *entry(item(i));
 
 		if (entry)
 		{
@@ -285,7 +285,7 @@ bool HistoryModel::save(const QString &path) const
 
 bool HistoryModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-	HistoryEntryItem *entry = dynamic_cast<HistoryEntryItem*>(itemFromIndex(index));
+	HistoryEntryItem *entry(dynamic_cast<HistoryEntryItem*>(itemFromIndex(index)));
 
 	if (!entry)
 	{
@@ -294,8 +294,8 @@ bool HistoryModel::setData(const QModelIndex &index, const QVariant &value, int 
 
 	if (role == UrlRole && value.toUrl() != index.data(UrlRole).toUrl())
 	{
-		const QUrl oldUrl = Utils::normalizeUrl(index.data(UrlRole).toUrl());
-		const QUrl newUrl = Utils::normalizeUrl(value.toUrl());
+		const QUrl oldUrl(Utils::normalizeUrl(index.data(UrlRole).toUrl()));
+		const QUrl newUrl(Utils::normalizeUrl(value.toUrl()));
 
 		if (!oldUrl.isEmpty() && m_urls.contains(oldUrl))
 		{
