@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -65,7 +65,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 	m_isUsingSimpleMode(false),
 	m_wasPopupVisible(false)
 {
-	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
+	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
 	if (!toolBar)
 	{
@@ -128,7 +128,7 @@ void AddressWidget::timerEvent(QTimerEvent *event)
 
 		m_removeModelTimer = 0;
 
-		const QString text = m_lineEdit->text();
+		const QString text(m_lineEdit->text());
 
 		setModel(new QStandardItemModel(this));
 		updateLineEdit();
@@ -164,9 +164,9 @@ void AddressWidget::paintEvent(QPaintEvent *event)
 		return;
 	}
 
-	const WindowsManager::ContentStates state = (m_window ? m_window->getContentState() : WindowsManager::UnknownContentState);
-	QString badgeIcon = QLatin1String("unknown");
-	QColor badgeColor = QColor(245, 245, 245);
+	const WindowsManager::ContentStates state(m_window ? m_window->getContentState() : WindowsManager::UnknownContentState);
+	QString badgeIcon(QLatin1String("unknown"));
+	QColor badgeColor(245, 245, 245);
 
 	if (state.testFlag(WindowsManager::FraudContentState))
 	{
@@ -199,7 +199,7 @@ void AddressWidget::paintEvent(QPaintEvent *event)
 	panel.palette.setColor(QPalette::Base, badgeColor);
 	panel.state = QStyle::State_Active;
 
-	QRect rectangle = style()->subElementRect(QStyle::SE_LineEditContents, &panel, this);
+	QRect rectangle(style()->subElementRect(QStyle::SE_LineEditContents, &panel, this));
 	rectangle.setWidth(30);
 	rectangle.moveTo(panel.lineWidth, panel.lineWidth);
 
@@ -210,7 +210,7 @@ void AddressWidget::paintEvent(QPaintEvent *event)
 
 	style()->drawPrimitive(QStyle::PE_PanelLineEdit, &panel, &painter, this);
 
-	QPalette linePalette = palette();
+	QPalette linePalette(palette());
 	linePalette.setCurrentColorGroup(QPalette::Disabled);
 
 	painter.setPen(QPen(linePalette.mid().color(), 1));
@@ -264,7 +264,7 @@ void AddressWidget::keyPressEvent(QKeyEvent *event)
 	}
 	else if (m_window && event->key() == Qt::Key_Escape)
 	{
-		const QUrl url = m_window->getUrl();
+		const QUrl url(m_window->getUrl());
 
 		if (m_lineEdit->text().trimmed().isEmpty() || m_lineEdit->text().trimmed() != url.toString())
 		{
@@ -298,7 +298,7 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 		}
 		else
 		{
-			Action *websiteInformationAction = new Action(ActionsManager::WebsiteInformationAction);
+			Action *websiteInformationAction(new Action(ActionsManager::WebsiteInformationAction));
 			websiteInformationAction->setEnabled(false);
 
 			menu.addAction(websiteInformationAction);
@@ -326,7 +326,7 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 		menu.addAction(tr("Select All"), m_lineEdit, SLOT(selectAll()))->setEnabled(!m_lineEdit->text().isEmpty());
 	}
 
-	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parentWidget());
+	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
 
 	if (toolBar)
 	{
@@ -420,7 +420,7 @@ void AddressWidget::showPopup()
 		return;
 	}
 
-	const QString text = m_lineEdit->text();
+	const QString text(m_lineEdit->text());
 
 	if (model() && model() != HistoryManager::getTypedHistoryModel())
 	{
@@ -631,7 +631,7 @@ void AddressWidget::openUrl(const QModelIndex &index)
 
 void AddressWidget::removeIcon()
 {
-	QAction *action = qobject_cast<QAction*>(sender());
+	QAction *action(qobject_cast<QAction*>(sender()));
 
 	if (action)
 	{
@@ -648,7 +648,7 @@ void AddressWidget::handleUserInput(const QString &text, WindowsManager::OpenHin
 
 	if (!text.isEmpty())
 	{
-		InputInterpreter *interpreter = new InputInterpreter(this);
+		InputInterpreter *interpreter(new InputInterpreter(this));
 
 		connect(interpreter, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), this, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)));
 		connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)));
@@ -676,7 +676,7 @@ void AddressWidget::updateBookmark(const QUrl &url)
 		return;
 	}
 
-	const bool hasBookmark = BookmarksManager::hasBookmark(bookmarkUrl);
+	const bool hasBookmark(BookmarksManager::hasBookmark(bookmarkUrl));
 
 	m_bookmarkLabel->setEnabled(true);
 	m_bookmarkLabel->setPixmap(ThemesManager::getIcon(QLatin1String("bookmarks")).pixmap(m_bookmarkLabel->size(), (hasBookmark ? QIcon::Active : QIcon::Disabled)));
@@ -714,7 +714,7 @@ void AddressWidget::updateFeeds()
 
 void AddressWidget::updateLoadPlugins()
 {
-	const bool canLoadPlugins = (SettingsManager::getValue(QLatin1String("AddressField/ShowLoadPluginsIcon")).toBool() && m_window && !m_window->isAboutToClose() && m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction) && m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction)->isEnabled());
+	const bool canLoadPlugins(SettingsManager::getValue(QLatin1String("AddressField/ShowLoadPluginsIcon")).toBool() && m_window && !m_window->isAboutToClose() && m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction) && m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction)->isEnabled());
 
 	if (canLoadPlugins && !m_loadPluginsLabel)
 	{
@@ -903,7 +903,7 @@ void AddressWidget::setUrl(const QUrl &url, bool force)
 
 void AddressWidget::setWindow(Window *window)
 {
-	MainWindow *mainWindow = MainWindow::findMainWindow(this);
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
 	if (m_window && (!sender() || sender() != m_window) && !m_window->isAboutToClose())
 	{
@@ -949,7 +949,7 @@ void AddressWidget::setWindow(Window *window)
 		connect(window, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateFeeds()));
 		connect(window, SIGNAL(contentStateChanged(WindowsManager::ContentStates)), this, SLOT(update()));
 
-		ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parentWidget());
+		ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
 
 		if (!toolBar || toolBar->getIdentifier() != ToolBarsManager::NavigationBar)
 		{
@@ -994,8 +994,8 @@ bool AddressWidget::startDrag(QMouseEvent *event)
 	QList<QUrl> urls;
 	urls << getUrl();
 
-	QDrag *drag = new QDrag(this);
-	QMimeData *mimeData = new QMimeData();
+	QDrag *drag(new QDrag(this));
+	QMimeData *mimeData(new QMimeData());
 	mimeData->setText(getUrl().toString());
 	mimeData->setUrls(urls);
 
@@ -1015,7 +1015,7 @@ bool AddressWidget::event(QEvent *event)
 {
 	if (event->type() == QEvent::ToolTip)
 	{
-		QHelpEvent *helpEvent = static_cast<QHelpEvent*>(event);
+		QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
 
 		if (helpEvent && m_securityBadgeRectangle.contains(helpEvent->pos()))
 		{
@@ -1032,7 +1032,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_lineEdit && event->type() == QEvent::MouseButtonRelease)
 	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent && mouseEvent->button() == Qt::MiddleButton && m_lineEdit->text().isEmpty() && !QApplication::clipboard()->text().isEmpty() && SettingsManager::getValue(QLatin1String("AddressField/PasteAndGoOnMiddleClick")).toBool())
 		{
@@ -1045,7 +1045,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_urlIconLabel && m_urlIconLabel && event->type() == QEvent::MouseButtonPress)
 	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent->button() == Qt::LeftButton && m_securityBadgeRectangle.contains(mouseEvent->pos()))
 		{
@@ -1062,7 +1062,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_urlIconLabel && m_urlIconLabel && event->type() == QEvent::MouseMove)
 	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent && startDrag(mouseEvent))
 		{
@@ -1071,13 +1071,13 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_bookmarkLabel && m_bookmarkLabel && m_window && event->type() == QEvent::MouseButtonPress)
 	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
 		{
 			if (m_bookmarkLabel->isEnabled())
 			{
-				const QUrl url = getUrl();
+				const QUrl url(getUrl());
 
 				if (BookmarksManager::hasBookmark(url))
 				{
@@ -1099,11 +1099,11 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_feedsLabel && m_feedsLabel && m_window && event->type() == QEvent::MouseButtonPress)
 	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
 		{
-			const QList<LinkUrl> feeds = ((m_window && m_window->getLoadingState() == WindowsManager::FinishedLoadingState) ? m_window->getContentsWidget()->getFeeds() : QList<LinkUrl>());
+			const QList<LinkUrl> feeds((m_window && m_window->getLoadingState() == WindowsManager::FinishedLoadingState) ? m_window->getContentsWidget()->getFeeds() : QList<LinkUrl>());
 
 			if (feeds.count() == 1 && m_window)
 			{
@@ -1130,7 +1130,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_loadPluginsLabel && m_loadPluginsLabel && m_window && event->type() == QEvent::MouseButtonPress)
 	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
 		{
@@ -1143,12 +1143,12 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object != m_lineEdit && event->type() == QEvent::ContextMenu)
 	{
-		QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
+		QContextMenuEvent *contextMenuEvent(static_cast<QContextMenuEvent*>(event));
 
 		if (contextMenuEvent)
 		{
 			QMenu menu(this);
-			QAction *action = menu.addAction(tr("Remove This Icon"), this, SLOT(removeIcon()));
+			QAction *action(menu.addAction(tr("Remove This Icon"), this, SLOT(removeIcon())));
 			action->setData(object->objectName());
 
 			menu.exec(contextMenuEvent->globalPos());
@@ -1169,7 +1169,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_completionView && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent)
 		{
@@ -1254,11 +1254,11 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (m_completionView && object == m_completionView->viewport() && event->type() == QEvent::MouseMove)
 	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent)
 		{
-			const QModelIndex index = m_completionView->indexAt(mouseEvent->pos());
+			const QModelIndex index(m_completionView->indexAt(mouseEvent->pos()));
 
 			if (index.isValid())
 			{
