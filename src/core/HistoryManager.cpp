@@ -87,7 +87,7 @@ void HistoryManager::timerEvent(QTimerEvent *event)
 			getTypedHistoryModel();
 		}
 
-		const int period = SettingsManager::getValue(QLatin1String("History/BrowsingLimitPeriod")).toInt();
+		const int period(SettingsManager::getValue(QLatin1String("History/BrowsingLimitPeriod")).toInt());
 
 		m_browsingHistoryModel->clearOldestEntries(period);
 		m_typedHistoryModel->clearOldestEntries(period);
@@ -122,7 +122,7 @@ void HistoryManager::optionChanged(const QString &option)
 			getTypedHistoryModel();
 		}
 
-		const int limit = SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountGlobal")).toInt();
+		const int limit(SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountGlobal")).toInt());
 
 		m_browsingHistoryModel->clearExcessEntries(limit);
 		m_typedHistoryModel->clearExcessEntries(limit);
@@ -141,7 +141,7 @@ void HistoryManager::optionChanged(const QString &option)
 			getTypedHistoryModel();
 		}
 
-		const int period = SettingsManager::getValue(QLatin1String("History/BrowsingLimitPeriod")).toInt();
+		const int period(SettingsManager::getValue(QLatin1String("History/BrowsingLimitPeriod")).toInt());
 
 		m_browsingHistoryModel->clearOldestEntries(period);
 		m_typedHistoryModel->clearOldestEntries(period);
@@ -232,7 +232,7 @@ void HistoryManager::updateEntry(quint64 identifier, const QUrl &url, const QStr
 		getBrowsingHistoryModel();
 	}
 
-	HistoryEntryItem *item = m_browsingHistoryModel->getEntry(identifier);
+	HistoryEntryItem *item(m_browsingHistoryModel->getEntry(identifier));
 
 	if (item)
 	{
@@ -357,7 +357,7 @@ quint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QI
 		getBrowsingHistoryModel();
 	}
 
-	const quint64 identifier = m_browsingHistoryModel->addEntry(url, title, icon, QDateTime::currentDateTime())->data(HistoryModel::IdentifierRole).toULongLong();
+	const quint64 identifier(m_browsingHistoryModel->addEntry(url, title, icon, QDateTime::currentDateTime())->data(HistoryModel::IdentifierRole).toULongLong());
 
 	if (isTypedIn)
 	{
@@ -369,7 +369,7 @@ quint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QI
 		m_typedHistoryModel->addEntry(url, title, icon, QDateTime::currentDateTime());
 	}
 
-	const int limit = SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountGlobal")).toInt();
+	const int limit(SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountGlobal")).toInt());
 
 	if (limit > 0 && m_browsingHistoryModel->rowCount() > limit)
 	{

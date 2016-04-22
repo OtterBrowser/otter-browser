@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -74,11 +74,11 @@ void BookmarksManager::updateVisits(const QUrl &url)
 		getModel();
 	}
 
-	const QUrl adjustedUrl = Utils::normalizeUrl(url);
+	const QUrl adjustedUrl(Utils::normalizeUrl(url));
 
 	if (m_model->hasBookmark(adjustedUrl))
 	{
-		const QList<BookmarksItem*> bookmarks = m_model->getBookmarks(adjustedUrl);
+		const QList<BookmarksItem*> bookmarks(m_model->getBookmarks(adjustedUrl));
 
 		for (int i = 0; i < bookmarks.count(); ++i)
 		{
@@ -95,14 +95,14 @@ void BookmarksManager::removeBookmark(const QUrl &url)
 		getModel();
 	}
 
-	const QUrl adjustedUrl = Utils::normalizeUrl(url);
+	const QUrl adjustedUrl(Utils::normalizeUrl(url));
 
 	if (!hasBookmark(adjustedUrl))
 	{
 		return;
 	}
 
-	const QList<BookmarksItem*> items = m_model->findUrls(adjustedUrl);
+	const QList<BookmarksItem*> items(m_model->findUrls(adjustedUrl));
 
 	for (int i = 0; i < items.count(); ++i)
 	{
@@ -169,7 +169,7 @@ BookmarksItem* BookmarksManager::getBookmark(quint64 identifier)
 
 BookmarksItem* BookmarksManager::getLastUsedFolder()
 {
-	BookmarksItem *folder = getModel()->getBookmark(m_lastUsedFolder);
+	BookmarksItem *folder(getModel()->getBookmark(m_lastUsedFolder));
 
 	return ((!folder || static_cast<BookmarksModel::BookmarkType>(folder->data(BookmarksModel::TypeRole).toInt()) != BookmarksModel::FolderBookmark) ? getModel()->getRootItem() : folder);
 }
