@@ -448,6 +448,8 @@ bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &search
 		return false;
 	}
 
+	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("searches")));
+
 	QFile file(SessionsManager::getWritableDataPath(QLatin1String("searches/") + searchEngine.identifier + QLatin1String(".xml")));
 
 	if (!file.open(QFile::WriteOnly))

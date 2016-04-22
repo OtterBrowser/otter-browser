@@ -388,8 +388,6 @@ void PreferencesSearchPageWidget::save()
 		}
 	}
 
-	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("searches")));
-
 	QHash<QString, QPair<bool, SearchEnginesManager::SearchEngineDefinition> >::iterator searchEnginesIterator;
 
 	for (searchEnginesIterator = m_searchEngines.begin(); searchEnginesIterator != m_searchEngines.end(); ++searchEnginesIterator)
