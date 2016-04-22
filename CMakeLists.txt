@@ -70,8 +70,8 @@ option(ENABLE_QTWEBENGINE "Enable QtWebEngine backend (requires Qt 5.6)" ON)
 option(ENABLE_QTWEBKIT "Enable QtWebKit backend (requires Qt 5.2)" ON)
 
 find_package(Qt5 5.2.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Qml Widgets XmlPatterns)
-find_package(Qt5 5.6.0 QUIET OPTIONAL_COMPONENTS WebEngineCore WebEngineWidgets)
-find_package(Qt5 5.2.0 QUIET OPTIONAL_COMPONENTS WebKit WebKitWidgets)
+find_package(Qt5WebEngineWidgets 5.6.0 QUIET)
+find_package(Qt5WebKitWidgets 5.2.0 QUIET)
 find_package(Hunspell 1.3.0 QUIET)
 
 set_package_properties(Qt5WebEngineCore PROPERTIES URL "http://qt.io/" DESCRIPTION "QtWebEngine based backend (core)" TYPE OPTIONAL)
