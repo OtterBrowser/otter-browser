@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -45,6 +46,7 @@ public:
 
 	CookieJar* getCookieJar();
 	WebWidget::SslInformation getSslInformation() const;
+	QStringList getBlockedElements() const;
 	QHash<QByteArray, QByteArray> getHeaders() const;
 	QVariantHash getStatistics() const;
 	WindowsManager::ContentStates getContentState() const;
@@ -77,6 +79,7 @@ private:
 	QNetworkReply *m_baseReply;
 	QString m_acceptLanguage;
 	QString m_userAgent;
+	QStringList m_blockedElements;
 	QUrl m_formRequestUrl;
 	QDateTime m_dateDownloaded;
 	WebWidget::SslInformation m_sslInformation;

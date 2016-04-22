@@ -2,7 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -242,6 +242,7 @@ void QtWebKitNetworkManager::resetStatistics()
 	m_replies.clear();
 	m_contentBlockingProfiles.clear();
 	m_blockedRequests.clear();
+	m_blockedElements.clear();
 	m_baseReply = NULL;
 	m_speed = 0;
 	m_contentState = WindowsManager::UnknownContentState;
@@ -558,6 +559,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 			const QByteArray acceptHeader(request.rawHeader(QByteArray("Accept")));
 			const QString path(request.url().path());
 			ContentBlockingManager::ResourceType resourceType(ContentBlockingManager::OtherType);
+			bool storeBlockedUrl(true);
 
 			if (!m_baseReply)
 			{
@@ -574,10 +576,12 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 			else if (acceptHeader.contains(QByteArray("script/")) || path.endsWith(QLatin1String(".js")))
 			{
 				resourceType = ContentBlockingManager::ScriptType;
+				storeBlockedUrl = false;
 			}
 			else if (acceptHeader.contains(QByteArray("text/css")) || path.endsWith(QLatin1String(".css")))
 			{
 				resourceType = ContentBlockingManager::StyleSheetType;
+				storeBlockedUrl = false;
 			}
 			else if (acceptHeader.contains(QByteArray("object")))
 			{
@@ -594,12 +598,14 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 			{
 				Console::addMessage(QCoreApplication::translate("main", "Blocked request"), Otter::NetworkMessageCategory, LogMessageLevel, request.url().toString(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
 
-				QUrl url;
-				url.setScheme(QLatin1String("http"));
+				if (storeBlockedUrl)
+				{
+					m_blockedElements.append(request.url().url());
+				}
 
 				m_blockedRequests.append(result);
 
-				return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(url));
+				return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(QUrl()));
 			}
 		}
 	}
@@ -686,6 +692,11 @@ CookieJar* QtWebKitNetworkManager::getCookieJar()
 WebWidget::SslInformation QtWebKitNetworkManager::getSslInformation() const
 {
 	return m_sslInformation;
+}
+
+QStringList QtWebKitNetworkManager::getBlockedElements() const
+{
+	return m_blockedElements;
 }
 
 QHash<QByteArray, QByteArray> QtWebKitNetworkManager::getHeaders() const

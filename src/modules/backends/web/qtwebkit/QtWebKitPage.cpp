@@ -106,6 +106,28 @@ void QtWebKitPage::pageLoadFinished()
 			applyContentBlockingRules(ContentBlockingManager::getStyleSheetWhiteList(domainList.at(i), profiles), false);
 		}
 	}
+
+	const QStringList blockedRequests(m_widget->getBlockedElements());
+
+	if (blockedRequests.count() > 0)
+	{
+		const QWebElementCollection elements(mainFrame()->documentElement().findAll(QLatin1String("[src]")));
+
+		for (int i = 0; i < blockedRequests.count(); ++i)
+		{
+			for (int j = 0; j < elements.count(); ++j)
+			{
+				QWebElement element(elements.at(j));
+
+				if (element.attribute(QLatin1String("src")) == blockedRequests[i]) ///NOTE: Consider comparing them as URLs
+				{
+					element.setStyleProperty(QLatin1String("display"), QLatin1String("none !important"));
+
+					break;
+				}
+			}
+		}
+	}
 }
 
 void QtWebKitPage::removePopup(const QUrl &url)
