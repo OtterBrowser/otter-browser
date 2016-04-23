@@ -23,8 +23,11 @@
 #include "HistoryManager.h"
 #include "SettingsManager.h"
 #include "ThemesManager.h"
+#include "Utils.h"
 
 #include <QtCore/QCoreApplication>
+#include <QtCore/QDir>
+#include <QtCore/QFileInfo>
 
 namespace Otter
 {
@@ -76,6 +79,23 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 			}
 		}
 
+		if (m_types.testFlag(LocalPathSuggestionsCompletionType) && m_filter.contains(QDir::separator()))
+		{
+			const QString directory(m_filter.section(QDir::separator(), 0, -2) + QDir::separator());
+			const QString prefix(m_filter.section(QDir::separator(), -1, -1));
+			const QList<QFileInfo> entries(QDir(Utils::normalizePath(directory)).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot));
+
+			for (int i = 0; i < entries.count(); ++i)
+			{
+				if (entries.at(i).fileName().startsWith(prefix, Qt::CaseInsensitive))
+				{
+					const QString path(directory + entries.at(i).fileName());
+
+					completions.append(CompletionEntry(path, path, QString(), QIcon(), LocalPathType));
+				}
+			}
+		}
+
 		if (m_types.testFlag(HistoryCompletionType))
 		{
 			const QList<HistoryModel::HistoryEntryMatch> entries = HistoryManager::findEntries(m_filter);
@@ -86,7 +106,7 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 			}
 		}
 
-		if (m_types.testFlag(SpecialPageCompletionType))
+		if (m_types.testFlag(SpecialPagesCompletionType))
 		{
 			const QStringList specialPages = AddonsManager::getSpecialPages();
 
@@ -136,7 +156,12 @@ void AddressCompletionModel::setFilter(const QString &filter)
 
 		if (SettingsManager::getValue(QLatin1String("AddressField/SuggestSpecialPages")).toBool())
 		{
-			m_types |= SpecialPageCompletionType;
+			m_types |= SpecialPagesCompletionType;
+		}
+
+		if (SettingsManager::getValue(QLatin1String("AddressField/SuggestLocalFiles")).toBool())
+		{
+			m_types |= LocalPathSuggestionsCompletionType;
 		}
 	}
 

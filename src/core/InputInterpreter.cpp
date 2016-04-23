@@ -21,11 +21,10 @@
 #include "InputInterpreter.h"
 #include "BookmarksManager.h"
 #include "SearchEnginesManager.h"
+#include "Utils.h"
 
-#include <QtCore/QDir>
 #include <QtCore/QFileInfo>
 #include <QtCore/QRegularExpression>
-#include <QtCore/QStandardPaths>
 
 namespace Otter
 {
@@ -100,18 +99,15 @@ void InputInterpreter::interpret(const QString &text, WindowsManager::OpenHints 
 		}
 	}
 
-	if (text == QString(QLatin1Char('~')) || text.startsWith(QLatin1Char('~') + QDir::separator()))
+	const QString localPath(Utils::normalizePath(text));
+
+	if (localPath != text)
 	{
-		const QStringList locations = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+		emit requestedOpenUrl(localPath, hints);
 
-		if (!locations.isEmpty())
-		{
-			emit requestedOpenUrl(locations.first() + text.mid(1), hints);
+		deleteLater();
 
-			deleteLater();
-
-			return;
-		}
+		return;
 	}
 
 	const QFileInfo fileInformation(text);

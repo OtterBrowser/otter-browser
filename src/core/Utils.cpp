@@ -23,7 +23,9 @@
 #include "PlatformIntegration.h"
 
 #include <QtCore/QCoreApplication>
+#include <QtCore/QDir>
 #include <QtCore/QFile>
+#include <QtCore/QFileInfo>
 #include <QtCore/QRegularExpression>
 #include <QtCore/QTextStream>
 #include <QtCore/QTime>
@@ -243,6 +245,21 @@ QString formatUnit(qint64 value, bool isSpeed, int precision, bool appendRaw)
 	}
 
 	return QCoreApplication::translate("utils", (isSpeed ? "%1 B/s" : "%1 B")).arg(value);
+}
+
+QString normalizePath(const QString &path)
+{
+	if (path == QString(QLatin1Char('~')) || path.startsWith(QLatin1Char('~') + QDir::separator()))
+	{
+		const QStringList locations(QStandardPaths::standardLocations(QStandardPaths::HomeLocation));
+
+		if (!locations.isEmpty())
+		{
+			return locations.first() + path.mid(1);
+		}
+	}
+
+	return path;
 }
 
 QUrl normalizeUrl(QUrl url)

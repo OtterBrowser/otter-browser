@@ -39,7 +39,8 @@ public:
 		BookmarksCompletionType = 1,
 		HistoryCompletionType = 2,
 		SearchSuggestionsCompletionType = 4,
-		SpecialPageCompletionType = 4,
+		SpecialPagesCompletionType = 4,
+		LocalPathSuggestionsCompletionType = 5
 	};
 
 	Q_DECLARE_FLAGS(CompletionTypes, CompletionType)
@@ -52,6 +53,7 @@ public:
 		TypedInHistoryType,
 		SearchSuggestionType,
 		SpecialPageType,
+		LocalPathType
 	};
 
 	enum EntryRole
