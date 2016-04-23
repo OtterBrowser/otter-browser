@@ -220,6 +220,7 @@ set(otter_src
 	src/modules/importers/html/HtmlBookmarksImporter.cpp
 	src/modules/importers/opera/OperaBookmarksImporter.cpp
 	src/modules/importers/opera/OperaNotesImporter.cpp
+	src/modules/importers/opera/OperaSearchEnginesImporter.cpp
 	src/modules/importers/opera/OperaSessionImporter.cpp
 	src/modules/windows/addons/AddonsContentsWidget.cpp
 	src/modules/windows/bookmarks/BookmarksContentsWidget.cpp
