@@ -55,8 +55,30 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 
 		if (m_types.testFlag(SearchSuggestionsCompletionType))
 		{
-			CompletionEntry completionEntry(QUrl(), m_defaultSearchEngine.title, QString(), ThemesManager::getIcon(QLatin1String("edit-find")), SearchSuggestionType);
-			completionEntry.text = m_filter;
+			const QString keyword(m_filter.section(QLatin1Char(' '), 0, 0));
+			const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(keyword, true));
+			QString title(m_defaultSearchEngine.title);
+			QString text(m_filter);
+			QIcon icon(m_defaultSearchEngine.icon);
+
+			if (!searchEngine.identifier.isEmpty())
+			{
+				title = searchEngine.title;
+				text = m_filter.section(QLatin1Char(' '), 1, -1);
+				icon = searchEngine.icon;
+			}
+			else if (keyword == QLatin1String("?"))
+			{
+				text = m_filter.section(QLatin1Char(' '), 1, -1);
+			}
+
+			if (icon.isNull())
+			{
+				icon = ThemesManager::getIcon(QLatin1String("edit-find"));
+			}
+
+			CompletionEntry completionEntry(QUrl(), title, QString(), icon, SearchSuggestionType);
+			completionEntry.text = text;
 
 			completions.append(completionEntry);
 		}
