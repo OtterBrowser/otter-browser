@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -45,12 +45,12 @@ PreferencesGeneralPageWidget::PreferencesGeneralPageWidget(QWidget *parent) : QW
 	m_ui->startupBehaviorComboBox->addItem(tr("Show start page"), QLatin1String("startStartPage"));
 	m_ui->startupBehaviorComboBox->addItem(tr("Show empty page"), QLatin1String("startEmpty"));
 
-	const int startupBehaviorIndex = m_ui->startupBehaviorComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/StartupBehavior")).toString());
+	const int startupBehaviorIndex(m_ui->startupBehaviorComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/StartupBehavior")).toString()));
 
 	m_ui->startupBehaviorComboBox->setCurrentIndex((startupBehaviorIndex < 0) ? 0 : startupBehaviorIndex);
 	m_ui->homePageLineEdit->setText(SettingsManager::getValue(QLatin1String("Browser/HomePage")).toString());
 
-	Menu *bookmarksMenu = new Menu(Menu::BookmarkSelectorMenuRole, m_ui->useBookmarkAsHomePageButton);
+	Menu *bookmarksMenu(new Menu(Menu::BookmarkSelectorMenuRole, m_ui->useBookmarkAsHomePageButton));
 
 	m_ui->useBookmarkAsHomePageButton->setMenu(bookmarksMenu);
 	m_ui->useBookmarkAsHomePageButton->setEnabled(BookmarksManager::getModel()->getRootItem()->rowCount() > 0);
@@ -62,7 +62,7 @@ PreferencesGeneralPageWidget::PreferencesGeneralPageWidget(QWidget *parent) : QW
 	m_ui->reuseCurrentTabCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool());
 	m_ui->openNextToActiveheckBox->setChecked(SettingsManager::getValue(QLatin1String("TabBar/OpenNextToActive")).toBool());
 
-	PlatformIntegration *integration = Application::getInstance()->getPlatformIntegration();
+	PlatformIntegration *integration(Application::getInstance()->getPlatformIntegration());
 
 	if (integration == NULL || integration->isDefaultBrowser())
 	{
@@ -101,7 +101,7 @@ void PreferencesGeneralPageWidget::changeEvent(QEvent *event)
 
 void PreferencesGeneralPageWidget::useCurrentAsHomePage()
 {
-	WindowsManager *manager = SessionsManager::getWindowsManager();
+	WindowsManager *manager(SessionsManager::getWindowsManager());
 
 	if (manager)
 	{
@@ -113,7 +113,7 @@ void PreferencesGeneralPageWidget::useBookmarkAsHomePage(QAction *action)
 {
 	if (action)
 	{
-		const QString url = action->data().toModelIndex().data(BookmarksModel::UrlRole).toString();
+		const QString url(action->data().toModelIndex().data(BookmarksModel::UrlRole).toString());
 
 		if (!url.isEmpty())
 		{

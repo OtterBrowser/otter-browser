@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -43,7 +43,7 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 	m_ui->fixedFontSizeSpinBox->setValue(SettingsManager::getValue(QLatin1String("Content/DefaultFixedFontSize")).toInt());
 	m_ui->minimumFontSizeSpinBox->setValue(SettingsManager::getValue(QLatin1String("Content/MinimumFontSize")).toInt());
 
-	const int popupsPolicyIndex = m_ui->popupsComboBox->findData(SettingsManager::getValue(QLatin1String("Content/PopupsPolicy")).toString());
+	const int popupsPolicyIndex(m_ui->popupsComboBox->findData(SettingsManager::getValue(QLatin1String("Content/PopupsPolicy")).toString()));
 
 	m_ui->popupsComboBox->setCurrentIndex((popupsPolicyIndex < 0) ? 0 : popupsPolicyIndex);
 
@@ -53,19 +53,19 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 	QStringList fontCategories;
 	fontCategories << tr("Standard font") << tr("Fixed-width font") << tr("Serif font") << tr("Sans-serif font") << tr("Cursive font") << tr("Fantasy font");
 
-	OptionDelegate *fontsDelegate = new OptionDelegate(true, this);
+	OptionDelegate *fontsDelegate(new OptionDelegate(true, this));
 
 	m_ui->fontsWidget->setRowCount(fonts.count());
 	m_ui->fontsWidget->setItemDelegateForColumn(1, fontsDelegate);
 
 	for (int i = 0; i < fonts.count(); ++i)
 	{
-		const QString family = SettingsManager::getValue(QLatin1String("Content/") + fonts.at(i)).toString();
-		QTableWidgetItem *familyItem = new QTableWidgetItem(family);
+		const QString family(SettingsManager::getValue(QLatin1String("Content/") + fonts.at(i)).toString());
+		QTableWidgetItem *familyItem(new QTableWidgetItem(family));
 		familyItem->setData(Qt::UserRole, QLatin1String("Content/") + fonts.at(i));
 		familyItem->setData((Qt::UserRole + 1), QLatin1String("font"));
 
-		QTableWidgetItem *previewItem = new QTableWidgetItem(tr("The quick brown fox jumps over the lazy dog"));
+		QTableWidgetItem *previewItem(new QTableWidgetItem(tr("The quick brown fox jumps over the lazy dog")));
 		previewItem->setFont(QFont(family));
 
 		m_ui->fontsWidget->setItem(i, 0, new QTableWidgetItem(fontCategories.at(i)));
@@ -79,15 +79,15 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 	QStringList colorTypes;
 	colorTypes << tr("Background Color") << tr("Text Color") << tr("Link Color") << tr("Visited Link Color");
 
-	OptionDelegate *colorsDelegate = new OptionDelegate(true, this);
+	OptionDelegate *colorsDelegate(new OptionDelegate(true, this));
 
 	m_ui->colorsWidget->setRowCount(colors.count());
 	m_ui->colorsWidget->setItemDelegateForColumn(1, colorsDelegate);
 
 	for (int i = 0; i < colors.count(); ++i)
 	{
-		const QString color = SettingsManager::getValue(QLatin1String("Content/") + colors.at(i)).toString();
-		QTableWidgetItem *previewItem = new QTableWidgetItem(color);
+		const QString color(SettingsManager::getValue(QLatin1String("Content/") + colors.at(i)).toString());
+		QTableWidgetItem *previewItem(new QTableWidgetItem(color));
 		previewItem->setBackgroundColor(QColor(color));
 		previewItem->setTextColor(Qt::transparent);
 		previewItem->setData(Qt::UserRole, QLatin1String("Content/") + colors.at(i));
@@ -123,7 +123,7 @@ void PreferencesContentPageWidget::currentFontChanged(int currentRow, int curren
 	Q_UNUSED(currentColumn)
 	Q_UNUSED(previousColumn)
 
-	QTableWidgetItem *previousItem = m_ui->fontsWidget->item(previousRow, 1);
+	QTableWidgetItem *previousItem(m_ui->fontsWidget->item(previousRow, 1));
 
 	m_ui->fontsWidget->closePersistentEditor(previousItem);
 
@@ -135,7 +135,7 @@ void PreferencesContentPageWidget::currentFontChanged(int currentRow, int curren
 
 void PreferencesContentPageWidget::fontChanged(QWidget *editor)
 {
-	OptionWidget *widget = qobject_cast<OptionWidget*>(editor);
+	OptionWidget *widget(qobject_cast<OptionWidget*>(editor));
 
 	if (widget && widget->getIndex().row() >= 0 && widget->getIndex().row() < m_ui->fontsWidget->rowCount())
 	{
@@ -151,7 +151,7 @@ void PreferencesContentPageWidget::currentColorChanged(int currentRow, int curre
 	Q_UNUSED(currentColumn)
 	Q_UNUSED(previousColumn)
 
-	QTableWidgetItem *previousItem = m_ui->colorsWidget->item(previousRow, 1);
+	QTableWidgetItem *previousItem(m_ui->colorsWidget->item(previousRow, 1));
 
 	m_ui->colorsWidget->closePersistentEditor(previousItem);
 
@@ -163,7 +163,7 @@ void PreferencesContentPageWidget::currentColorChanged(int currentRow, int curre
 
 void PreferencesContentPageWidget::colorChanged(QWidget *editor)
 {
-	OptionWidget *widget = qobject_cast<OptionWidget*>(editor);
+	OptionWidget *widget(qobject_cast<OptionWidget*>(editor));
 
 	if (widget && widget->getIndex().row() >= 0 && widget->getIndex().row() < m_ui->colorsWidget->rowCount())
 	{

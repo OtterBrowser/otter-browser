@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -47,14 +47,14 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 	QStringList searchEnginesLabels;
 	searchEnginesLabels << tr("Name") << tr("Keyword");
 
-	QStandardItemModel *searchEnginesModel = new QStandardItemModel(this);
+	QStandardItemModel *searchEnginesModel(new QStandardItemModel(this));
 	searchEnginesModel->setHorizontalHeaderLabels(searchEnginesLabels);
 
-	const QStringList searchEngines = SearchEnginesManager::getSearchEngines();
+	const QStringList searchEngines(SearchEnginesManager::getSearchEngines());
 
 	for (int i = 0; i < searchEngines.count(); ++i)
 	{
-		const SearchEnginesManager::SearchEngineDefinition searchEngine = SearchEnginesManager::getSearchEngine(searchEngines.at(i));
+		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(searchEngines.at(i)));
 
 		if (searchEngine.identifier.isEmpty())
 		{
@@ -78,7 +78,7 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 	m_ui->searchViewWidget->setItemDelegateForColumn(1, new SearchKeywordDelegate(this));
 	m_ui->searchSuggestionsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Search/SearchEnginesSuggestions")).toBool());
 
-	QMenu *addSearchMenu = new QMenu(m_ui->addSearchButton);
+	QMenu *addSearchMenu(new QMenu(m_ui->addSearchButton));
 	addSearchMenu->addAction(tr("New…"));
 	addSearchMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->addSearchButton));
 
@@ -125,7 +125,7 @@ void PreferencesSearchPageWidget::addSearchEngine()
 	{
 		identifiers.append(m_ui->searchViewWidget->getIndex(i, 0).data(Qt::UserRole).toString());
 
-		const QString keyword = m_ui->searchViewWidget->getIndex(i, 1).data(Qt::DisplayRole).toString();
+		const QString keyword(m_ui->searchViewWidget->getIndex(i, 1).data(Qt::DisplayRole).toString());
 
 		if (!keyword.isEmpty())
 		{
@@ -133,7 +133,7 @@ void PreferencesSearchPageWidget::addSearchEngine()
 		}
 	}
 
-	const QString identifier = Utils::createIdentifier(QString(), identifiers);
+	const QString identifier(Utils::createIdentifier(QString(), identifiers));
 
 	if (identifier.isEmpty())
 	{
@@ -181,7 +181,7 @@ void PreferencesSearchPageWidget::readdSearchEngine(QAction *action)
 		return;
 	}
 
-	const QString identifier = action->data().toString();
+	const QString identifier(action->data().toString());
 	QFile file(SessionsManager::getReadableDataPath(QLatin1String("searches/") + identifier + QLatin1String(".xml")));
 
 	if (!file.open(QIODevice::ReadOnly))
@@ -189,7 +189,7 @@ void PreferencesSearchPageWidget::readdSearchEngine(QAction *action)
 		return;
 	}
 
-	const SearchEnginesManager::SearchEngineDefinition searchEngine = SearchEnginesManager::loadSearchEngine(&file, identifier);
+	const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::loadSearchEngine(&file, identifier));
 
 	file.close();
 
@@ -217,8 +217,8 @@ void PreferencesSearchPageWidget::readdSearchEngine(QAction *action)
 
 void PreferencesSearchPageWidget::editSearchEngine()
 {
-	const QModelIndex index = m_ui->searchViewWidget->getIndex(m_ui->searchViewWidget->getCurrentRow(), 0);
-	const QString identifier = index.data(Qt::UserRole).toString();
+	const QModelIndex index(m_ui->searchViewWidget->getIndex(m_ui->searchViewWidget->getCurrentRow(), 0));
+	const QString identifier(index.data(Qt::UserRole).toString());
 
 	if (identifier.isEmpty() || !m_searchEngines.contains(identifier))
 	{
@@ -229,7 +229,7 @@ void PreferencesSearchPageWidget::editSearchEngine()
 
 	for (int i = 0; i < m_ui->searchViewWidget->getRowCount(); ++i)
 	{
-		const QString keyword = m_ui->searchViewWidget->getIndex(i, 1).data(Qt::DisplayRole).toString();
+		const QString keyword(m_ui->searchViewWidget->getIndex(i, 1).data(Qt::DisplayRole).toString());
 
 		if (m_ui->searchViewWidget->getCurrentRow() != i && !keyword.isEmpty())
 		{
@@ -244,7 +244,7 @@ void PreferencesSearchPageWidget::editSearchEngine()
 		return;
 	}
 
-	SearchEnginesManager::SearchEngineDefinition searchEngine = dialog.getSearchEngine();
+	SearchEnginesManager::SearchEngineDefinition searchEngine(dialog.getSearchEngine());
 
 	if (keywords.contains(searchEngine.keyword))
 	{
@@ -268,7 +268,7 @@ void PreferencesSearchPageWidget::editSearchEngine()
 
 void PreferencesSearchPageWidget::removeSearchEngine()
 {
-	const QString identifier = m_ui->searchViewWidget->getIndex(m_ui->searchViewWidget->getCurrentRow(), 0).data(Qt::UserRole).toString();
+	const QString identifier(m_ui->searchViewWidget->getIndex(m_ui->searchViewWidget->getCurrentRow(), 0).data(Qt::UserRole).toString());
 
 	if (identifier.isEmpty() || !m_searchEngines.contains(identifier))
 	{
@@ -282,7 +282,7 @@ void PreferencesSearchPageWidget::removeSearchEngine()
 	messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
 	messageBox.setDefaultButton(QMessageBox::Cancel);
 
-	const QString path = SessionsManager::getWritableDataPath(QLatin1String("searches/") + identifier + QLatin1String(".xml"));
+	const QString path(SessionsManager::getWritableDataPath(QLatin1String("searches/") + identifier + QLatin1String(".xml")));
 
 	if (QFile::exists(path))
 	{
@@ -308,8 +308,8 @@ void PreferencesSearchPageWidget::removeSearchEngine()
 
 void PreferencesSearchPageWidget::updateSearchActions()
 {
-	const int currentRow = m_ui->searchViewWidget->getCurrentRow();
-	const bool isSelected = (currentRow >= 0 && currentRow < m_ui->searchViewWidget->getRowCount());
+	const int currentRow(m_ui->searchViewWidget->getCurrentRow());
+	const bool isSelected(currentRow >= 0 && currentRow < m_ui->searchViewWidget->getRowCount());
 
 	m_ui->editSearchButton->setEnabled(isSelected);
 	m_ui->removeSearchButton->setEnabled(isSelected);
@@ -324,12 +324,12 @@ void PreferencesSearchPageWidget::updateReaddSearchMenu()
 
 	QStringList availableIdentifiers;
 	QList<SearchEnginesManager::SearchEngineDefinition> availableSearchEngines;
-	QList<QFileInfo> allSearchEngines = QDir(SessionsManager::getReadableDataPath(QLatin1String("searches"))).entryInfoList(QDir::Files);
+	QList<QFileInfo> allSearchEngines(QDir(SessionsManager::getReadableDataPath(QLatin1String("searches"))).entryInfoList(QDir::Files));
 	allSearchEngines.append(QDir(SessionsManager::getReadableDataPath(QLatin1String("searches"), true)).entryInfoList(QDir::Files));
 
 	for (int i = 0; i < allSearchEngines.count(); ++i)
 	{
-		const QString identifier = allSearchEngines.at(i).baseName();
+		const QString identifier(allSearchEngines.at(i).baseName());
 
 		if (!m_searchEngines.contains(identifier) && !availableIdentifiers.contains(identifier))
 		{
@@ -337,7 +337,7 @@ void PreferencesSearchPageWidget::updateReaddSearchMenu()
 
 			if (file.open(QIODevice::ReadOnly))
 			{
-				const SearchEnginesManager::SearchEngineDefinition searchEngine = SearchEnginesManager::loadSearchEngine(&file, identifier);
+				const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::loadSearchEngine(&file, identifier));
 
 				if (!searchEngine.identifier.isEmpty())
 				{
@@ -373,8 +373,8 @@ void PreferencesSearchPageWidget::save()
 
 	for (int i = 0; i < m_ui->searchViewWidget->getRowCount(); ++i)
 	{
-		const QString identifier = m_ui->searchViewWidget->getIndex(i, 0).data(Qt::UserRole).toString();
-		const QString keyword = m_ui->searchViewWidget->getIndex(i, 1).data(Qt::DisplayRole).toString();
+		const QString identifier(m_ui->searchViewWidget->getIndex(i, 0).data(Qt::UserRole).toString());
+		const QString keyword(m_ui->searchViewWidget->getIndex(i, 1).data(Qt::DisplayRole).toString());
 
 		if (!identifier.isEmpty())
 		{

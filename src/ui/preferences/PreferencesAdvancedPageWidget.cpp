@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -58,7 +58,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 {
 	m_ui->setupUi(this);
 
-	QStandardItemModel *navigationModel = new QStandardItemModel(this);
+	QStandardItemModel *navigationModel(new QStandardItemModel(this));
 	QStringList navigationTitles;
 	navigationTitles << tr("Browsing") << tr("Notifications") << tr("Appearance") << tr("Content") << QString() << tr("Downloads") << tr("Programs") << QString() << tr("History") << tr("Network") << tr("Security") << tr("Updates") << QString() << tr("Keyboard") << tr("Mouse");
 
@@ -66,7 +66,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	for (int i = 0; i < navigationTitles.count(); ++i)
 	{
-		QStandardItem *item = new QStandardItem(navigationTitles.at(i));
+		QStandardItem *item(new QStandardItem(navigationTitles.at(i)));
 
 		if (navigationTitles.at(i).isEmpty())
 		{
@@ -101,10 +101,10 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	QStringList notificationsLabels;
 	notificationsLabels << tr("Name") << tr("Description");
 
-	QStandardItemModel *notificationsModel = new QStandardItemModel(this);
+	QStandardItemModel *notificationsModel(new QStandardItemModel(this));
 	notificationsModel->setHorizontalHeaderLabels(notificationsLabels);
 
-	const QVector<EventDefinition> events = NotificationsManager::getEventDefinitions();
+	const QVector<EventDefinition> events(NotificationsManager::getEventDefinitions());
 
 	for (int i = 0; i < events.count(); ++i)
 	{
@@ -125,7 +125,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->notificationsItemView->setItemDelegate(new ItemDelegate(false, this));
 	m_ui->preferNativeNotificationsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Interface/UseNativeNotifications")).toBool());
 
-	const QStringList widgetStyles = QStyleFactory::keys();
+	const QStringList widgetStyles(QStyleFactory::keys());
 
 	m_ui->appearranceWidgetStyleComboBox->addItem(tr("System Style"));
 
@@ -147,7 +147,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->pluginsComboBox->addItem(tr("On demand"), QLatin1String("onDemand"));
 	m_ui->pluginsComboBox->addItem(tr("Disabled"), QLatin1String("disabled"));
 
-	const int pluginsIndex = m_ui->pluginsComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/EnablePlugins")).toString());
+	const int pluginsIndex(m_ui->pluginsComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/EnablePlugins")).toString()));
 
 	m_ui->pluginsComboBox->setCurrentIndex((pluginsIndex < 0) ? 1 : pluginsIndex);
 	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Content/UserStyleSheet")).toString());
@@ -155,11 +155,11 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	QStringList downloadsLabels;
 	downloadsLabels << tr("Name");
 
-	QStandardItemModel *downloadsModel = new QStandardItemModel(this);
+	QStandardItemModel *downloadsModel(new QStandardItemModel(this));
 	downloadsModel->setHorizontalHeaderLabels(downloadsLabels);
 
 	Settings handlersSettings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
-	const QStringList handlers = handlersSettings.getGroups();
+	const QStringList handlers(handlersSettings.getGroups());
 
 	for (int i = 0; i < handlers.count(); ++i)
 	{
@@ -170,7 +170,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 		handlersSettings.beginGroup(handlers.at(i));
 
-		QStandardItem *item = new QStandardItem(handlers.at(i));
+		QStandardItem *item(new QStandardItem(handlers.at(i)));
 		item->setData(handlersSettings.getValue(QLatin1String("transferMode")), Qt::UserRole);
 		item->setData(handlersSettings.getValue(QLatin1String("downloadsPath")), (Qt::UserRole + 1));
 		item->setData(handlersSettings.getValue(QLatin1String("openCommand")), (Qt::UserRole + 2));
@@ -189,14 +189,14 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Network/EnableReferrer")).toBool());
 
-	const QStringList userAgents = NetworkManagerFactory::getUserAgents();
+	const QStringList userAgents(NetworkManagerFactory::getUserAgents());
 
 	m_ui->userAgentComboBox->addItem(tr("Default"), QLatin1String("default"));
 
 	for (int i = 0; i < userAgents.count(); ++i)
 	{
-		const UserAgentInformation userAgent = NetworkManagerFactory::getUserAgent(userAgents.at(i));
-		const QString title = userAgent.title;
+		const UserAgentInformation userAgent(NetworkManagerFactory::getUserAgent(userAgents.at(i)));
+		const QString title(userAgent.title);
 
 		m_ui->userAgentComboBox->addItem((title.isEmpty() ? tr("(Untitled)") : title), userAgents.at(i));
 		m_ui->userAgentComboBox->setItemData((i + 1), userAgent.value, (Qt::UserRole + 1));
@@ -204,8 +204,8 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->userAgentComboBox->setCurrentIndex(m_ui->userAgentComboBox->findData(SettingsManager::getValue(QLatin1String("Network/UserAgent")).toString()));
 
-	QStandardItemModel *proxyExceptionsModel = new QStandardItemModel(this);
-	const QStringList currentProxyExceptions = SettingsManager::getValue(QLatin1String("Proxy/Exceptions")).toStringList();
+	QStandardItemModel *proxyExceptionsModel(new QStandardItemModel(this));
+	const QStringList currentProxyExceptions(SettingsManager::getValue(QLatin1String("Proxy/Exceptions")).toStringList());
 
 	for (int i = 0; i < currentProxyExceptions.count(); ++i)
 	{
@@ -215,23 +215,14 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->proxyExceptionsItemView->setModel(proxyExceptionsModel);
 	m_ui->proxyExceptionsItemView->setItemDelegate(new OptionDelegate(true, this));
 
-	const QString proxyString = SettingsManager::getValue(QLatin1String("Network/ProxyMode")).toString();
-	int proxyIndex = 0;
+	m_ui->proxyModeComboBox->addItem(tr("No proxy"), QLatin1String("noproxy"));
+	m_ui->proxyModeComboBox->addItem(tr("System configuration"), QLatin1String("system"));
+	m_ui->proxyModeComboBox->addItem(tr("Manual configuration"), QLatin1String("manual"));
+	m_ui->proxyModeComboBox->addItem(tr("Automatic configuration (PAC)"), QLatin1String("automatic"));
 
-	if (proxyString == QLatin1String("system"))
-	{
-		proxyIndex = 1;
-	}
-	else if (proxyString == QLatin1String("manual"))
-	{
-		proxyIndex = 2;
-	}
-	else if (proxyString == QLatin1String("automatic"))
-	{
-		proxyIndex = 3;
-	}
+	const int proxyIndex(m_ui->proxyModeComboBox->findData(SettingsManager::getValue(QLatin1String("Network/ProxyMode")).toString()));
 
-	m_ui->proxyModeComboBox->setCurrentIndex(proxyIndex);
+	m_ui->proxyModeComboBox->setCurrentIndex((proxyIndex < 0) ? 1 : proxyIndex);
 
 	if (proxyIndex == 2 || proxyIndex == 3)
 	{
@@ -261,9 +252,9 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 #if QT_VERSION >= 0x050300
 	if (QSslSocket::supportsSsl())
 	{
-		QStandardItemModel *ciphersModel = new QStandardItemModel(this);
-		const bool useDefaultCiphers = (SettingsManager::getValue(QLatin1String("Security/Ciphers")).toString() == QLatin1String("default"));
-		const QStringList selectedCiphers = (useDefaultCiphers ? QStringList() : SettingsManager::getValue(QLatin1String("Security/Ciphers")).toStringList());
+		QStandardItemModel *ciphersModel(new QStandardItemModel(this));
+		const bool useDefaultCiphers(SettingsManager::getValue(QLatin1String("Security/Ciphers")).toString() == QLatin1String("default"));
+		const QStringList selectedCiphers(useDefaultCiphers ? QStringList() : SettingsManager::getValue(QLatin1String("Security/Ciphers")).toStringList());
 
 		for (int i = 0; i < selectedCiphers.count(); ++i)
 		{
@@ -271,21 +262,21 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 			if (!cipher.isNull())
 			{
-				QStandardItem *item = new QStandardItem(cipher.name());
+				QStandardItem *item(new QStandardItem(cipher.name()));
 				item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
 				ciphersModel->appendRow(item);
 			}
 		}
 
-		const QList<QSslCipher> defaultCiphers = NetworkManagerFactory::getDefaultCiphers();
-		const QList<QSslCipher> supportedCiphers = QSslSocket::supportedCiphers();
+		const QList<QSslCipher> defaultCiphers(NetworkManagerFactory::getDefaultCiphers());
+		const QList<QSslCipher> supportedCiphers(QSslSocket::supportedCiphers());
 
 		for (int i = 0; i < supportedCiphers.count(); ++i)
 		{
 			if (useDefaultCiphers && defaultCiphers.contains(supportedCiphers.at(i)))
 			{
-				QStandardItem *item = new QStandardItem(supportedCiphers.at(i).name());
+				QStandardItem *item(new QStandardItem(supportedCiphers.at(i).name()));
 				item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
 				ciphersModel->appendRow(item);
@@ -311,8 +302,8 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->ciphersMoveDownButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-down")));
 	m_ui->ciphersMoveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-up")));
 
-	QStandardItemModel *updateChannelsModel = new QStandardItemModel(this);
-	const QStringList availableUpdateChannels = SettingsManager::getValue(QLatin1String("Updates/ActiveChannels")).toStringList();
+	QStandardItemModel *updateChannelsModel(new QStandardItemModel(this));
+	const QStringList availableUpdateChannels(SettingsManager::getValue(QLatin1String("Updates/ActiveChannels")).toStringList());
 
 	QMap<QString, QString> defaultChannels;
 	defaultChannels[QLatin1String("release")] = tr("Stable version");
@@ -323,7 +314,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	for (iterator = defaultChannels.begin(); iterator != defaultChannels.end(); ++iterator)
 	{
-		QStandardItem *item = new QStandardItem(iterator.value());
+		QStandardItem *item(new QStandardItem(iterator.value()));
 		item->setData(iterator.key(), Qt::UserRole);
 		item->setCheckable(true);
 
@@ -347,12 +338,12 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->keyboardMoveDownButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-down")));
 	m_ui->keyboardMoveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-up")));
 
-	QStandardItemModel *keyboardProfilesModel = new QStandardItemModel(this);
-	const QStringList keyboardProfiles = SettingsManager::getValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder")).toStringList();
+	QStandardItemModel *keyboardProfilesModel(new QStandardItemModel(this));
+	const QStringList keyboardProfiles(SettingsManager::getValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder")).toStringList());
 
 	for (int i = 0; i < keyboardProfiles.count(); ++i)
 	{
-		const KeyboardProfile profile = loadKeyboardProfile(keyboardProfiles.at(i), true);
+		const KeyboardProfile profile(loadKeyboardProfile(keyboardProfiles.at(i), true));
 
 		if (profile.identifier.isEmpty())
 		{
@@ -361,7 +352,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 		m_keyboardProfiles[keyboardProfiles.at(i)] = profile;
 
-		QStandardItem *item = new QStandardItem(profile.title.isEmpty() ? tr("(Untitled)") : profile.title);
+		QStandardItem *item(new QStandardItem(profile.title.isEmpty() ? tr("(Untitled)") : profile.title));
 		item->setToolTip(profile.description);
 		item->setData(profile.identifier, Qt::UserRole);
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
@@ -372,7 +363,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->keyboardViewWidget->setModel(keyboardProfilesModel);
 	m_ui->keyboardViewWidget->setItemDelegate(new OptionDelegate(true, this));
 
-	QMenu *addKeyboardProfileMenu = new QMenu(m_ui->keyboardAddButton);
+	QMenu *addKeyboardProfileMenu(new QMenu(m_ui->keyboardAddButton));
 	addKeyboardProfileMenu->addAction(tr("New…"));
 	addKeyboardProfileMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->keyboardAddButton));
 
@@ -384,12 +375,12 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->mouseMoveDownButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-down")));
 	m_ui->mouseMoveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-up")));
 
-	QStandardItemModel *mouseProfilesModel = new QStandardItemModel(this);
-	const QStringList mouseProfiles = SettingsManager::getValue(QLatin1String("Browser/MouseProfilesOrder")).toStringList();
+	QStandardItemModel *mouseProfilesModel(new QStandardItemModel(this));
+	const QStringList mouseProfiles(SettingsManager::getValue(QLatin1String("Browser/MouseProfilesOrder")).toStringList());
 
 	for (int i = 0; i < mouseProfiles.count(); ++i)
 	{
-		const MouseProfile profile = loadMouseProfile(mouseProfiles.at(i), true);
+		const MouseProfile profile(loadMouseProfile(mouseProfiles.at(i), true));
 
 		if (profile.identifier.isEmpty())
 		{
@@ -398,7 +389,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 		m_mouseProfiles[mouseProfiles.at(i)] = profile;
 
-		QStandardItem *item = new QStandardItem(profile.title.isEmpty() ? tr("(Untitled)") : profile.title);
+		QStandardItem *item(new QStandardItem(profile.title.isEmpty() ? tr("(Untitled)") : profile.title));
 		item->setToolTip(profile.description);
 		item->setData(profile.identifier, Qt::UserRole);
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
@@ -409,7 +400,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->mouseViewWidget->setModel(mouseProfilesModel);
 	m_ui->mouseViewWidget->setItemDelegate(new OptionDelegate(true, this));
 
-	QMenu *addMouseProfileMenu = new QMenu(m_ui->mouseAddButton);
+	QMenu *addMouseProfileMenu(new QMenu(m_ui->mouseAddButton));
 	addMouseProfileMenu->addAction(tr("New…"));
 	addMouseProfileMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->mouseAddButton));
 
@@ -487,7 +478,7 @@ void PreferencesAdvancedPageWidget::changeEvent(QEvent *event)
 
 void PreferencesAdvancedPageWidget::playNotificationSound()
 {
-	QSoundEffect *effect = new QSoundEffect(this);
+	QSoundEffect *effect(new QSoundEffect(this));
 	effect->setSource(QUrl::fromLocalFile(m_ui->notificationsPlaySoundFilePathWidget->getPath()));
 	effect->setLoopCount(1);
 	effect->setVolume(0.5);
@@ -510,7 +501,7 @@ void PreferencesAdvancedPageWidget::updateNotificationsActions()
 	disconnect(m_ui->notificationsShowAlertCheckBox, SIGNAL(clicked()), this, SLOT(updateNotificationsOptions()));
 	disconnect(m_ui->notificationsShowNotificationCheckBox, SIGNAL(clicked()), this, SLOT(updateNotificationsOptions()));
 
-	const QModelIndex index = m_ui->notificationsItemView->getIndex(m_ui->notificationsItemView->getCurrentRow());
+	const QModelIndex index(m_ui->notificationsItemView->getIndex(m_ui->notificationsItemView->getCurrentRow()));
 
 	m_ui->notificationOptionsWidget->setEnabled(index.isValid());
 	m_ui->notificationsPlaySoundFilePathWidget->setPath(index.data(Qt::UserRole + 1).toString());
@@ -525,7 +516,7 @@ void PreferencesAdvancedPageWidget::updateNotificationsActions()
 
 void PreferencesAdvancedPageWidget::updateNotificationsOptions()
 {
-	const QModelIndex index = m_ui->notificationsItemView->getIndex(m_ui->notificationsItemView->getCurrentRow());
+	const QModelIndex index(m_ui->notificationsItemView->getIndex(m_ui->notificationsItemView->getCurrentRow()));
 
 	if (index.isValid())
 	{
@@ -543,13 +534,13 @@ void PreferencesAdvancedPageWidget::updateNotificationsOptions()
 
 void PreferencesAdvancedPageWidget::addDownloadsMimeType()
 {
-	const QString mimeType = QInputDialog::getText(this, tr("MIME Type Name"), tr("Select name of MIME Type:"));
+	const QString mimeType(QInputDialog::getText(this, tr("MIME Type Name"), tr("Select name of MIME Type:")));
 
 	if (!mimeType.isEmpty())
 	{
-		if (QRegularExpression("^[a-zA-Z\\-]+/[a-zA-Z0-9\\.\\+\\-_]+$").match(mimeType).hasMatch())
+		if (QRegularExpression(QLatin1String("^[a-zA-Z\\-]+/[a-zA-Z0-9\\.\\+\\-_]+$")).match(mimeType).hasMatch())
 		{
-			QStandardItem *item = new QStandardItem(mimeType);
+			QStandardItem *item(new QStandardItem(mimeType));
 			item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
 			m_ui->downloadsItemView->insertRow(item);
@@ -564,7 +555,7 @@ void PreferencesAdvancedPageWidget::addDownloadsMimeType()
 
 void PreferencesAdvancedPageWidget::removeDownloadsMimeType()
 {
-	const QModelIndex index = m_ui->downloadsItemView->getIndex(m_ui->downloadsItemView->getCurrentRow());
+	const QModelIndex index(m_ui->downloadsItemView->getIndex(m_ui->downloadsItemView->getCurrentRow()));
 
 	if (index.isValid() && index.data(Qt::DisplayRole).toString() != QLatin1String("*"))
 	{
@@ -580,8 +571,8 @@ void PreferencesAdvancedPageWidget::updateDownloadsActions()
 	disconnect(m_ui->downloadsPassUrlCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateDownloadsOptions()));
 	disconnect(m_ui->downloadsApplicationComboBoxWidget, SIGNAL(currentIndexChanged(int)), this, SLOT(updateDownloadsOptions()));
 
-	const QModelIndex index = m_ui->downloadsItemView->getIndex(m_ui->downloadsItemView->getCurrentRow());
-	const QString mode = index.data(Qt::UserRole).toString();
+	const QModelIndex index(m_ui->downloadsItemView->getIndex(m_ui->downloadsItemView->getCurrentRow()));
+	const QString mode(index.data(Qt::UserRole).toString());
 
 	if (mode == QLatin1String("save") || mode == QLatin1String("saveAs"))
 	{
@@ -612,7 +603,7 @@ void PreferencesAdvancedPageWidget::updateDownloadsActions()
 
 void PreferencesAdvancedPageWidget::updateDownloadsOptions()
 {
-	const QModelIndex index = m_ui->downloadsItemView->getIndex(m_ui->downloadsItemView->getCurrentRow());
+	const QModelIndex index(m_ui->downloadsItemView->getIndex(m_ui->downloadsItemView->getCurrentRow()));
 
 	disconnect(m_ui->downloadsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateDownloadsActions()));
 	disconnect(m_ui->downloadsButtonGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(updateDownloadsOptions()));
@@ -665,7 +656,7 @@ void PreferencesAdvancedPageWidget::manageUserAgents()
 		userAgents.append(userAgent);
 	}
 
-	const QString selectedUserAgent = m_ui->userAgentComboBox->currentData().toString();
+	const QString selectedUserAgent(m_ui->userAgentComboBox->currentData().toString());
 
 	UserAgentsManagerDialog dialog(userAgents, this);
 
@@ -681,7 +672,7 @@ void PreferencesAdvancedPageWidget::manageUserAgents()
 
 		for (int i = 0; i < userAgents.count(); ++i)
 		{
-			const QString title = userAgents.at(i).title;
+			const QString title(userAgents.at(i).title);
 
 			m_ui->userAgentComboBox->addItem((title.isEmpty() ? tr("(Untitled)") : title), userAgents.at(i).identifier);
 			m_ui->userAgentComboBox->setItemData((i + 1), userAgents.at(i).value, (Qt::UserRole + 1));
@@ -778,7 +769,7 @@ void PreferencesAdvancedPageWidget::removeProxyException()
 
 void PreferencesAdvancedPageWidget::updateProxyExceptionsActions()
 {
-	const bool isEditable = (m_ui->proxyExceptionsItemView->getCurrentRow() >= 0);
+	const bool isEditable(m_ui->proxyExceptionsItemView->getCurrentRow() >= 0);
 
 	m_ui->editProxyExceptionButton->setEnabled(isEditable);
 	m_ui->removeProxyExceptionButton->setEnabled(isEditable);
@@ -791,7 +782,7 @@ void PreferencesAdvancedPageWidget::addCipher(QAction *action)
 		return;
 	}
 
-	QStandardItem *item = new QStandardItem(action->text());
+	QStandardItem *item(new QStandardItem(action->text()));
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
 	m_ui->ciphersViewWidget->insertRow(item);
@@ -801,7 +792,7 @@ void PreferencesAdvancedPageWidget::addCipher(QAction *action)
 
 void PreferencesAdvancedPageWidget::removeCipher()
 {
-	const int currentRow = m_ui->ciphersViewWidget->getCurrentRow();
+	const int currentRow(m_ui->ciphersViewWidget->getCurrentRow());
 
 	if (currentRow >= 0)
 	{
@@ -814,7 +805,7 @@ void PreferencesAdvancedPageWidget::removeCipher()
 
 void PreferencesAdvancedPageWidget::updateCiphersActions()
 {
-	const int currentRow = m_ui->ciphersViewWidget->getCurrentRow();
+	const int currentRow(m_ui->ciphersViewWidget->getCurrentRow());
 
 	m_ui->ciphersRemoveButton->setEnabled(currentRow >= 0 && currentRow < m_ui->ciphersViewWidget->getRowCount());
 }
@@ -829,7 +820,7 @@ void PreferencesAdvancedPageWidget::updateUpdateChannelsActions()
 
 void PreferencesAdvancedPageWidget::addKeyboardProfile()
 {
-	const QString identifier = createProfileIdentifier(m_ui->keyboardViewWidget);
+	const QString identifier(createProfileIdentifier(m_ui->keyboardViewWidget));
 
 	if (identifier.isEmpty())
 	{
@@ -841,7 +832,7 @@ void PreferencesAdvancedPageWidget::addKeyboardProfile()
 
 	m_keyboardProfiles[identifier] = profile;
 
-	QStandardItem *item = new QStandardItem(tr("(Untitled)"));
+	QStandardItem *item(new QStandardItem(tr("(Untitled)")));
 	item->setData(identifier, Qt::UserRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
@@ -857,8 +848,8 @@ void PreferencesAdvancedPageWidget::readdKeyboardProfile(QAction *action)
 		return;
 	}
 
-	const QString identifier = action->data().toString();
-	const KeyboardProfile profile = loadKeyboardProfile(identifier, true);
+	const QString identifier(action->data().toString());
+	const KeyboardProfile profile(loadKeyboardProfile(identifier, true));
 
 	if (profile.identifier.isEmpty())
 	{
@@ -867,7 +858,7 @@ void PreferencesAdvancedPageWidget::readdKeyboardProfile(QAction *action)
 
 	m_keyboardProfiles[identifier] = profile;
 
-	QStandardItem *item = new QStandardItem(profile.title.isEmpty() ? tr("(Untitled)") : profile.title);
+	QStandardItem *item(new QStandardItem(profile.title.isEmpty() ? tr("(Untitled)") : profile.title));
 	item->setToolTip(profile.description);
 	item->setData(profile.identifier, Qt::UserRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
@@ -881,8 +872,8 @@ void PreferencesAdvancedPageWidget::readdKeyboardProfile(QAction *action)
 
 void PreferencesAdvancedPageWidget::editKeyboardProfile()
 {
-	const QModelIndex index = m_ui->keyboardViewWidget->currentIndex();
-	const QString identifier = index.data(Qt::UserRole).toString();
+	const QModelIndex index(m_ui->keyboardViewWidget->currentIndex());
+	const QString identifier(index.data(Qt::UserRole).toString());
 
 	if (identifier.isEmpty() || !m_keyboardProfiles.contains(identifier))
 	{
@@ -911,14 +902,14 @@ void PreferencesAdvancedPageWidget::editKeyboardProfile()
 
 void PreferencesAdvancedPageWidget::cloneKeyboardProfile()
 {
-	const QString identifier = m_ui->keyboardViewWidget->currentIndex().data(Qt::UserRole).toString();
+	const QString identifier(m_ui->keyboardViewWidget->currentIndex().data(Qt::UserRole).toString());
 
 	if (identifier.isEmpty() || !m_keyboardProfiles.contains(identifier))
 	{
 		return;
 	}
 
-	const QString newIdentifier = createProfileIdentifier(m_ui->keyboardViewWidget, identifier);
+	const QString newIdentifier(createProfileIdentifier(m_ui->keyboardViewWidget, identifier));
 
 	if (newIdentifier.isEmpty())
 	{
@@ -929,7 +920,7 @@ void PreferencesAdvancedPageWidget::cloneKeyboardProfile()
 	m_keyboardProfiles[newIdentifier].identifier = newIdentifier;
 	m_keyboardProfiles[newIdentifier].isModified = true;
 
-	QStandardItem *item = new QStandardItem(m_keyboardProfiles[newIdentifier].title.isEmpty() ? tr("(Untitled)") : m_keyboardProfiles[newIdentifier].title);
+	QStandardItem *item(new QStandardItem(m_keyboardProfiles[newIdentifier].title.isEmpty() ? tr("(Untitled)") : m_keyboardProfiles[newIdentifier].title));
 	item->setToolTip(m_keyboardProfiles[newIdentifier].description);
 	item->setData(newIdentifier, Qt::UserRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
@@ -941,7 +932,7 @@ void PreferencesAdvancedPageWidget::cloneKeyboardProfile()
 
 void PreferencesAdvancedPageWidget::removeKeyboardProfile()
 {
-	const QString identifier = m_ui->keyboardViewWidget->currentIndex().data(Qt::UserRole).toString();
+	const QString identifier(m_ui->keyboardViewWidget->currentIndex().data(Qt::UserRole).toString());
 
 	if (identifier.isEmpty() || !m_keyboardProfiles.contains(identifier))
 	{
@@ -955,7 +946,7 @@ void PreferencesAdvancedPageWidget::removeKeyboardProfile()
 	messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
 	messageBox.setDefaultButton(QMessageBox::Cancel);
 
-	const QString path = SessionsManager::getWritableDataPath(QLatin1String("keyboard/") + identifier + QLatin1String(".ini"));
+	const QString path(SessionsManager::getWritableDataPath(QLatin1String("keyboard/") + identifier + QLatin1String(".ini")));
 
 	if (QFile::exists(path))
 	{
@@ -981,8 +972,8 @@ void PreferencesAdvancedPageWidget::removeKeyboardProfile()
 
 void PreferencesAdvancedPageWidget::updateKeyboardProfileActions()
 {
-	const int currentRow = m_ui->keyboardViewWidget->getCurrentRow();
-	const bool isSelected = (currentRow >= 0 && currentRow < m_ui->keyboardViewWidget->getRowCount());
+	const int currentRow(m_ui->keyboardViewWidget->getCurrentRow());
+	const bool isSelected(currentRow >= 0 && currentRow < m_ui->keyboardViewWidget->getRowCount());
 
 	m_ui->keyboardEditButton->setEnabled(isSelected);
 	m_ui->keyboardCloneButton->setEnabled(isSelected);
@@ -998,16 +989,16 @@ void PreferencesAdvancedPageWidget::updateReaddKeyboardProfileMenu()
 
 	QStringList availableIdentifiers;
 	QList<KeyboardProfile> availableShortcutsProfiles;
-	QList<QFileInfo> allShortcutsProfiles = QDir(SessionsManager::getReadableDataPath(QLatin1String("keyboard"))).entryInfoList(QDir::Files);
+	QList<QFileInfo> allShortcutsProfiles(QDir(SessionsManager::getReadableDataPath(QLatin1String("keyboard"))).entryInfoList(QDir::Files));
 	allShortcutsProfiles.append(QDir(SessionsManager::getReadableDataPath(QLatin1String("keyboard"), true)).entryInfoList(QDir::Files));
 
 	for (int i = 0; i < allShortcutsProfiles.count(); ++i)
 	{
-		const QString identifier = allShortcutsProfiles.at(i).baseName();
+		const QString identifier(allShortcutsProfiles.at(i).baseName());
 
 		if (!m_keyboardProfiles.contains(identifier) && !availableIdentifiers.contains(identifier))
 		{
-			const KeyboardProfile profile = loadKeyboardProfile(identifier, false);
+			const KeyboardProfile profile(loadKeyboardProfile(identifier, false));
 
 			if (!profile.identifier.isEmpty())
 			{
@@ -1029,7 +1020,7 @@ void PreferencesAdvancedPageWidget::updateReaddKeyboardProfileMenu()
 
 void PreferencesAdvancedPageWidget::addMouseProfile()
 {
-	const QString identifier = createProfileIdentifier(m_ui->mouseViewWidget);
+	const QString identifier(createProfileIdentifier(m_ui->mouseViewWidget));
 
 	if (identifier.isEmpty())
 	{
@@ -1041,7 +1032,7 @@ void PreferencesAdvancedPageWidget::addMouseProfile()
 
 	m_mouseProfiles[identifier] = profile;
 
-	QStandardItem *item = new QStandardItem(tr("(Untitled)"));
+	QStandardItem *item(new QStandardItem(tr("(Untitled)")));
 	item->setData(identifier, Qt::UserRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
@@ -1057,8 +1048,8 @@ void PreferencesAdvancedPageWidget::readdMouseProfile(QAction *action)
 		return;
 	}
 
-	const QString identifier = action->data().toString();
-	const MouseProfile profile = loadMouseProfile(identifier, true);
+	const QString identifier(action->data().toString());
+	const MouseProfile profile(loadMouseProfile(identifier, true));
 
 	if (profile.identifier.isEmpty())
 	{
@@ -1067,7 +1058,7 @@ void PreferencesAdvancedPageWidget::readdMouseProfile(QAction *action)
 
 	m_mouseProfiles[identifier] = profile;
 
-	QStandardItem *item = new QStandardItem(profile.title.isEmpty() ? tr("(Untitled)") : profile.title);
+	QStandardItem *item(new QStandardItem(profile.title.isEmpty() ? tr("(Untitled)") : profile.title));
 	item->setToolTip(profile.description);
 	item->setData(profile.identifier, Qt::UserRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
@@ -1081,8 +1072,8 @@ void PreferencesAdvancedPageWidget::readdMouseProfile(QAction *action)
 
 void PreferencesAdvancedPageWidget::editMouseProfile()
 {
-	const QModelIndex index = m_ui->mouseViewWidget->currentIndex();
-	const QString identifier = index.data(Qt::UserRole).toString();
+	const QModelIndex index(m_ui->mouseViewWidget->currentIndex());
+	const QString identifier(index.data(Qt::UserRole).toString());
 
 	if (identifier.isEmpty() || !m_mouseProfiles.contains(identifier))
 	{
@@ -1111,14 +1102,14 @@ void PreferencesAdvancedPageWidget::editMouseProfile()
 
 void PreferencesAdvancedPageWidget::cloneMouseProfile()
 {
-	const QString identifier = m_ui->mouseViewWidget->currentIndex().data(Qt::UserRole).toString();
+	const QString identifier(m_ui->mouseViewWidget->currentIndex().data(Qt::UserRole).toString());
 
 	if (identifier.isEmpty() || !m_mouseProfiles.contains(identifier))
 	{
 		return;
 	}
 
-	const QString newIdentifier = createProfileIdentifier(m_ui->mouseViewWidget, identifier);
+	const QString newIdentifier(createProfileIdentifier(m_ui->mouseViewWidget, identifier));
 
 	if (newIdentifier.isEmpty())
 	{
@@ -1129,7 +1120,7 @@ void PreferencesAdvancedPageWidget::cloneMouseProfile()
 	m_mouseProfiles[newIdentifier].identifier = newIdentifier;
 	m_mouseProfiles[newIdentifier].isModified = true;
 
-	QStandardItem *item = new QStandardItem(m_mouseProfiles[newIdentifier].title.isEmpty() ? tr("(Untitled)") : m_mouseProfiles[newIdentifier].title);
+	QStandardItem *item(new QStandardItem(m_mouseProfiles[newIdentifier].title.isEmpty() ? tr("(Untitled)") : m_mouseProfiles[newIdentifier].title));
 	item->setToolTip(m_mouseProfiles[newIdentifier].description);
 	item->setData(newIdentifier, Qt::UserRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
@@ -1141,7 +1132,7 @@ void PreferencesAdvancedPageWidget::cloneMouseProfile()
 
 void PreferencesAdvancedPageWidget::removeMouseProfile()
 {
-	const QString identifier = m_ui->mouseViewWidget->currentIndex().data(Qt::UserRole).toString();
+	const QString identifier(m_ui->mouseViewWidget->currentIndex().data(Qt::UserRole).toString());
 
 	if (identifier.isEmpty() || !m_mouseProfiles.contains(identifier))
 	{
@@ -1155,7 +1146,7 @@ void PreferencesAdvancedPageWidget::removeMouseProfile()
 	messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
 	messageBox.setDefaultButton(QMessageBox::Cancel);
 
-	const QString path = SessionsManager::getWritableDataPath(QLatin1String("mouse/") + identifier + QLatin1String(".ini"));
+	const QString path(SessionsManager::getWritableDataPath(QLatin1String("mouse/") + identifier + QLatin1String(".ini")));
 
 	if (QFile::exists(path))
 	{
@@ -1181,8 +1172,8 @@ void PreferencesAdvancedPageWidget::removeMouseProfile()
 
 void PreferencesAdvancedPageWidget::updateMouseProfileActions()
 {
-	const int currentRow = m_ui->mouseViewWidget->getCurrentRow();
-	const bool isSelected = (currentRow >= 0 && currentRow < m_ui->mouseViewWidget->getRowCount());
+	const int currentRow(m_ui->mouseViewWidget->getCurrentRow());
+	const bool isSelected(currentRow >= 0 && currentRow < m_ui->mouseViewWidget->getRowCount());
 
 	m_ui->mouseEditButton->setEnabled(isSelected);
 	m_ui->mouseCloneButton->setEnabled(isSelected);
@@ -1198,16 +1189,16 @@ void PreferencesAdvancedPageWidget::updateReaddMouseProfileMenu()
 
 	QStringList availableIdentifiers;
 	QList<MouseProfile> availableMouseProfiles;
-	QList<QFileInfo> allMouseProfiles = QDir(SessionsManager::getReadableDataPath(QLatin1String("mouse"))).entryInfoList(QDir::Files);
+	QList<QFileInfo> allMouseProfiles(QDir(SessionsManager::getReadableDataPath(QLatin1String("mouse"))).entryInfoList(QDir::Files));
 	allMouseProfiles.append(QDir(SessionsManager::getReadableDataPath(QLatin1String("mouse"), true)).entryInfoList(QDir::Files));
 
 	for (int i = 0; i < allMouseProfiles.count(); ++i)
 	{
-		const QString identifier = allMouseProfiles.at(i).baseName();
+		const QString identifier(allMouseProfiles.at(i).baseName());
 
 		if (!m_mouseProfiles.contains(identifier) && !availableIdentifiers.contains(identifier))
 		{
-			const MouseProfile profile = loadMouseProfile(identifier, false);
+			const MouseProfile profile(loadMouseProfile(identifier, false));
 
 			if (!profile.identifier.isEmpty())
 			{
@@ -1229,7 +1220,7 @@ void PreferencesAdvancedPageWidget::updateReaddMouseProfileMenu()
 
 void PreferencesAdvancedPageWidget::updateJavaScriptOptions()
 {
-	const bool isSet = !m_javaScriptOptions.isEmpty();
+	const bool isSet(!m_javaScriptOptions.isEmpty());
 
 	if (!isSet)
 	{
@@ -1258,7 +1249,7 @@ void PreferencesAdvancedPageWidget::updateJavaScriptOptions()
 
 void PreferencesAdvancedPageWidget::changeCurrentPage()
 {
-	const QModelIndex index = m_ui->advancedViewWidget->currentIndex();
+	const QModelIndex index(m_ui->advancedViewWidget->currentIndex());
 
 	if (index.isValid() && index.data(Qt::UserRole).type() == QVariant::Int)
 	{
@@ -1289,8 +1280,8 @@ void PreferencesAdvancedPageWidget::save()
 
 	for (int i = 0; i < m_ui->notificationsItemView->getRowCount(); ++i)
 	{
-		const QModelIndex index = m_ui->notificationsItemView->getIndex(i, 0);
-		const QString eventName = NotificationsManager::getEventName(index.data(Qt::UserRole).toInt());
+		const QModelIndex index(m_ui->notificationsItemView->getIndex(i, 0));
+		const QString eventName(NotificationsManager::getEventName(index.data(Qt::UserRole).toInt()));
 
 		if (eventName.isEmpty())
 		{
@@ -1306,7 +1297,7 @@ void PreferencesAdvancedPageWidget::save()
 
 	SettingsManager::setValue(QLatin1String("Interface/UseNativeNotifications"), m_ui->preferNativeNotificationsCheckBox->isChecked());
 
-	const QString widgetStyle = ((m_ui->appearranceWidgetStyleComboBox->currentIndex() == 0) ? QString() : m_ui->appearranceWidgetStyleComboBox->currentText());
+	const QString widgetStyle((m_ui->appearranceWidgetStyleComboBox->currentIndex() == 0) ? QString() : m_ui->appearranceWidgetStyleComboBox->currentText());
 
 	SettingsManager::setValue(QLatin1String("Interface/WidgetStyle"), widgetStyle);
 	SettingsManager::setValue(QLatin1String("Interface/StyleSheet"), m_ui->appearranceStyleSheetFilePathWidget->getPath());
@@ -1342,7 +1333,7 @@ void PreferencesAdvancedPageWidget::save()
 	SettingsManager::setValue(QLatin1String("Content/UserStyleSheet"), m_ui->userStyleSheetFilePathWidget->getPath());
 
 	Settings handlersSettings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
-	const QStringList handlers = handlersSettings.getGroups();
+	const QStringList handlers(handlersSettings.getGroups());
 
 	for (int i = 0; i < handlers.count(); ++i)
 	{
@@ -1354,7 +1345,7 @@ void PreferencesAdvancedPageWidget::save()
 
 	for (int i = 0; i < m_ui->downloadsItemView->getRowCount(); ++i)
 	{
-		const QModelIndex index = m_ui->downloadsItemView->getIndex(i, 0);
+		const QModelIndex index(m_ui->downloadsItemView->getIndex(i, 0));
 
 		if (index.data(Qt::DisplayRole).isNull())
 		{
@@ -1372,24 +1363,7 @@ void PreferencesAdvancedPageWidget::save()
 
 	SettingsManager::setValue(QLatin1String("Network/EnableReferrer"), m_ui->sendReferrerCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("Network/UserAgent"), m_ui->userAgentComboBox->currentData().toString());
-
-	const int proxyIndex = m_ui->proxyModeComboBox->currentIndex();
-	QLatin1String proxyString = QLatin1String("noproxy");
-
-	if (proxyIndex == 1)
-	{
-		proxyString = QLatin1String("system");
-	}
-	else if (proxyIndex == 2)
-	{
-		proxyString = QLatin1String("manual");
-	}
-	else if (proxyIndex == 3)
-	{
-		proxyString = QLatin1String("automatic");
-	}
-
-	SettingsManager::setValue(QLatin1String("Network/ProxyMode"), proxyString);
+	SettingsManager::setValue(QLatin1String("Network/ProxyMode"), m_ui->proxyModeComboBox->currentData(Qt::UserRole).toString());
 
 	if (!m_ui->allProxyServersLineEdit->text().isEmpty())
 	{
@@ -1429,12 +1403,12 @@ void PreferencesAdvancedPageWidget::save()
 	SettingsManager::setValue(QLatin1String("Proxy/AutomaticConfigurationPath"), m_ui->automaticProxyConfigurationFilePathWidget->getPath());
 	SettingsManager::setValue(QLatin1String("Proxy/UseSystemAuthentication"), m_ui->proxySystemAuthentication->isChecked());
 
-	QStandardItemModel *proxyListModel = m_ui->proxyExceptionsItemView->getSourceModel();
+	QStandardItemModel *proxyListModel(m_ui->proxyExceptionsItemView->getSourceModel());
 	QStringList proxyExceptions;
 
 	for (int i = 0; i < proxyListModel->rowCount(); ++i)
 	{
-		const QString value = proxyListModel->item(i)->text();
+		const QString value(proxyListModel->item(i)->text());
 
 		if (!value.isEmpty())
 		{
@@ -1479,7 +1453,7 @@ void PreferencesAdvancedPageWidget::save()
 
 	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("keyboard")));
 
-	bool needsKeyboardProfilesReload = false;
+	bool needsKeyboardProfilesReload(false);
 	QHash<QString, KeyboardProfile>::iterator keyboardProfilesIterator;
 
 	for (keyboardProfilesIterator = m_keyboardProfiles.begin(); keyboardProfilesIterator != m_keyboardProfiles.end(); ++keyboardProfilesIterator)
@@ -1531,7 +1505,7 @@ void PreferencesAdvancedPageWidget::save()
 
 	for (int i = 0; i < m_ui->keyboardViewWidget->getRowCount(); ++i)
 	{
-		const QString identifier = m_ui->keyboardViewWidget->getIndex(i, 0).data(Qt::UserRole).toString();
+		const QString identifier(m_ui->keyboardViewWidget->getIndex(i, 0).data(Qt::UserRole).toString());
 
 		if (!identifier.isEmpty())
 		{
@@ -1549,7 +1523,7 @@ void PreferencesAdvancedPageWidget::save()
 
 	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("mouse")));
 
-	bool needsMouseProfilesReload = false;
+	bool needsMouseProfilesReload(false);
 	QHash<QString, MouseProfile>::iterator mouseProfilesIterator;
 
 	for (mouseProfilesIterator = m_mouseProfiles.begin(); mouseProfilesIterator != m_mouseProfiles.end(); ++mouseProfilesIterator)
@@ -1598,7 +1572,7 @@ void PreferencesAdvancedPageWidget::save()
 
 	for (int i = 0; i < m_ui->mouseViewWidget->getRowCount(); ++i)
 	{
-		const QString identifier = m_ui->mouseViewWidget->getIndex(i, 0).data(Qt::UserRole).toString();
+		const QString identifier(m_ui->mouseViewWidget->getIndex(i, 0).data(Qt::UserRole).toString());
 
 		if (!identifier.isEmpty())
 		{
@@ -1633,7 +1607,7 @@ QString PreferencesAdvancedPageWidget::createProfileIdentifier(ItemViewWidget *v
 
 	for (int i = 0; i < view->getRowCount(); ++i)
 	{
-		const QString identifier = view->getIndex(i, 0).data(Qt::UserRole).toString();
+		const QString identifier(view->getIndex(i, 0).data(Qt::UserRole).toString());
 
 		if (!identifier.isEmpty())
 		{
@@ -1646,12 +1620,12 @@ QString PreferencesAdvancedPageWidget::createProfileIdentifier(ItemViewWidget *v
 
 QStringList PreferencesAdvancedPageWidget::getSelectedUpdateChannels() const
 {
-	QStandardItemModel *updateListModel = m_ui->updateChannelsItemView->getSourceModel();
+	QStandardItemModel *updateListModel(m_ui->updateChannelsItemView->getSourceModel());
 	QStringList updateChannels;
 
 	for (int i = 0; i < updateListModel->rowCount(); ++i)
 	{
-		QStandardItem *item = updateListModel->item(i);
+		QStandardItem *item(updateListModel->item(i));
 
 		if (item->checkState() == Qt::Checked)
 		{
@@ -1665,14 +1639,14 @@ QStringList PreferencesAdvancedPageWidget::getSelectedUpdateChannels() const
 KeyboardProfile PreferencesAdvancedPageWidget::loadKeyboardProfile(const QString &identifier, bool loadShortcuts) const
 {
 	Settings settings(SessionsManager::getReadableDataPath(QLatin1String("keyboard/") + identifier + QLatin1String(".ini")));
-	const QStringList comments = settings.getComment().split(QLatin1Char('\n'));
+	const QStringList comments(settings.getComment().split(QLatin1Char('\n')));
 	KeyboardProfile profile;
 	profile.identifier = identifier;
 
 	for (int i = 0; i < comments.count(); ++i)
 	{
-		const QString key = comments.at(i).section(QLatin1Char(':'), 0, 0).trimmed();
-		const QString value = comments.at(i).section(QLatin1Char(':'), 1).trimmed();
+		const QString key(comments.at(i).section(QLatin1Char(':'), 0, 0).trimmed());
+		const QString value(comments.at(i).section(QLatin1Char(':'), 1).trimmed());
 
 		if (key == QLatin1String("Title"))
 		{
@@ -1697,11 +1671,11 @@ KeyboardProfile PreferencesAdvancedPageWidget::loadKeyboardProfile(const QString
 		return profile;
 	}
 
-	const QStringList actions = settings.getGroups();
+	const QStringList actions(settings.getGroups());
 
 	for (int i = 0; i < actions.count(); ++i)
 	{
-		const int action = ActionsManager::getActionIdentifier(actions.at(i));
+		const int action(ActionsManager::getActionIdentifier(actions.at(i)));
 
 		if (action < 0)
 		{
@@ -1710,7 +1684,7 @@ KeyboardProfile PreferencesAdvancedPageWidget::loadKeyboardProfile(const QString
 
 		settings.beginGroup(actions.at(i));
 
-		const QStringList rawShortcuts = settings.getValue(QLatin1String("shortcuts")).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
+		const QStringList rawShortcuts(settings.getValue(QLatin1String("shortcuts")).toString().split(QLatin1Char(' '), QString::SkipEmptyParts));
 		QVector<QKeySequence> shortcuts;
 		shortcuts.reserve(rawShortcuts.count());
 
@@ -1738,14 +1712,14 @@ KeyboardProfile PreferencesAdvancedPageWidget::loadKeyboardProfile(const QString
 MouseProfile PreferencesAdvancedPageWidget::loadMouseProfile(const QString &identifier, bool loadGestures) const
 {
 	Settings settings(SessionsManager::getReadableDataPath(QLatin1String("mouse/") + identifier + QLatin1String(".ini")));
-	const QStringList comments = settings.getComment().split(QLatin1Char('\n'));
+	const QStringList comments(settings.getComment().split(QLatin1Char('\n')));
 	MouseProfile profile;
 	profile.identifier = identifier;
 
 	for (int i = 0; i < comments.count(); ++i)
 	{
-		const QString key = comments.at(i).section(QLatin1Char(':'), 0, 0).trimmed();
-		const QString value = comments.at(i).section(QLatin1Char(':'), 1).trimmed();
+		const QString key(comments.at(i).section(QLatin1Char(':'), 0, 0).trimmed());
+		const QString value(comments.at(i).section(QLatin1Char(':'), 1).trimmed());
 
 		if (key == QLatin1String("Title"))
 		{
@@ -1770,18 +1744,18 @@ MouseProfile PreferencesAdvancedPageWidget::loadMouseProfile(const QString &iden
 		return profile;
 	}
 
-	const QStringList contexts = settings.getGroups();
+	const QStringList contexts(settings.getGroups());
 
 	for (int i = 0; i < contexts.count(); ++i)
 	{
 		settings.beginGroup(contexts.at(i));
 
 		QHash<QString, int> rawGestures;
-		const QStringList gestures = settings.getKeys();
+		const QStringList gestures(settings.getKeys());
 
 		for (int j = 0; j < gestures.count(); ++j)
 		{
-			const int action = ActionsManager::getActionIdentifier(settings.getValue(gestures.at(j)).toString());
+			const int action(ActionsManager::getActionIdentifier(settings.getValue(gestures.at(j)).toString()));
 
 			if (action < 0)
 			{

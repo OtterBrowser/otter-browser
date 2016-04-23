@@ -697,26 +697,6 @@
            <property name="enabled">
             <bool>true</bool>
            </property>
-           <item>
-            <property name="text">
-             <string>No proxy</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>System configuration</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Manual configuration</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Automatic configuration (PAC)</string>
-            </property>
-           </item>
           </widget>
          </item>
         </layout>
