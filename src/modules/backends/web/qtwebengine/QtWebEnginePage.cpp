@@ -69,7 +69,8 @@ QtWebEnginePage::QtWebEnginePage(bool isPrivate, QtWebEngineWebWidget *parent) :
 	m_widget(parent),
 	m_previousNavigationType(QtWebEnginePage::NavigationTypeOther),
 	m_ignoreJavaScriptPopups(false),
-	m_isViewingMedia(false)
+	m_isViewingMedia(false),
+	m_isPopup(false)
 {
 	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 	connect(this, SIGNAL(renderProcessTerminated(RenderProcessTerminationStatus,int)), this, SLOT(notifyRenderProcessTerminated(RenderProcessTerminationStatus)));
@@ -152,6 +153,25 @@ void QtWebEnginePage::handlePageLoaded(const QString &result)
 	}
 }
 
+void QtWebEnginePage::removePopup(const QUrl &url)
+{
+	QtWebEnginePage *page(qobject_cast<QtWebEnginePage*>(sender()));
+
+	if (page)
+	{
+		m_popups.removeAll(page);
+
+		page->deleteLater();
+	}
+
+	emit requestedPopupWindow(requestedUrl(), url);
+}
+
+void QtWebEnginePage::markAsPopup()
+{
+	m_isPopup = true;
+}
+
 void QtWebEnginePage::notifyRenderProcessTerminated(QWebEnginePage::RenderProcessTerminationStatus status)
 {
 	if (m_widget)
@@ -205,9 +225,29 @@ void QtWebEnginePage::javaScriptConsoleMessage(JavaScriptConsoleMessageLevel lev
 
 QWebEnginePage* QtWebEnginePage::createWindow(QWebEnginePage::WebWindowType type)
 {
-	if (type == QtWebEnginePage::WebBrowserWindow || type == QWebEnginePage::WebBrowserTab)
+	if (type == QWebEnginePage::WebDialog)
 	{
-		QtWebEngineWebWidget *widget = NULL;
+		QtWebEngineWebWidget *widget(NULL);
+
+		if (!m_widget || m_widget->getLastUrlClickTime().isNull() || m_widget->getLastUrlClickTime().secsTo(QDateTime::currentDateTime()) > 1)
+		{
+			const QString popupsPolicy(SettingsManager::getValue(QLatin1String("Content/PopupsPolicy"), (m_widget ? m_widget->getRequestedUrl() : QUrl())).toString());
+
+			if (popupsPolicy == QLatin1String("blockAll"))
+			{
+				return NULL;
+			}
+
+			if (popupsPolicy == QLatin1String("ask"))
+			{
+				QtWebEnginePage *page(new QtWebEnginePage(false, NULL));
+				page->markAsPopup();
+
+				connect(page, SIGNAL(aboutToNavigate(QUrl, QWebEnginePage::NavigationType)), this, SLOT(removePopup(QUrl)));
+
+				return page;
+			}
+		}
 
 		if (m_widget)
 		{
@@ -245,6 +285,13 @@ QString QtWebEnginePage::createJavaScriptList(QStringList rules) const
 
 bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::NavigationType type, bool isMainFrame)
 {
+	if (m_isPopup)
+	{
+		emit aboutToNavigate(url, type);
+
+		return false;
+	}
+
 	if (isMainFrame && url.scheme() == QLatin1String("javascript"))
 	{
 		runJavaScript(url.path());
@@ -330,6 +377,8 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::N
 
 			this->scripts().insert(script);
 		}
+
+		emit aboutToNavigate(url, type);
 	}
 
 	return true;

@@ -108,6 +108,9 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	connect(m_page, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 	connect(m_page, SIGNAL(linkHovered(QString)), this, SLOT(linkHovered(QString)));
 	connect(m_page, SIGNAL(iconUrlChanged(QUrl)), this, SLOT(handleIconChange(QUrl)));
+	connect(m_page, SIGNAL(requestedPopupWindow(QUrl,QUrl)), this, SIGNAL(requestedPopupWindow(QUrl,QUrl)));
+	connect(m_page, SIGNAL(aboutToNavigate(QUrl,QWebEnginePage::NavigationType)), this, SIGNAL(aboutToNavigate()));
+	connect(m_page, SIGNAL(requestedNewWindow(WebWidget*,WindowsManager::OpenHints)), this, SIGNAL(requestedNewWindow(WebWidget*,WindowsManager::OpenHints)));
 	connect(m_page, SIGNAL(authenticationRequired(QUrl,QAuthenticator*)), this, SLOT(handleAuthenticationRequired(QUrl,QAuthenticator*)));
 	connect(m_page, SIGNAL(proxyAuthenticationRequired(QUrl,QAuthenticator*,QString)), this, SLOT(handleProxyAuthenticationRequired(QUrl,QAuthenticator*,QString)));
 	connect(m_page, SIGNAL(windowCloseRequested()), this, SLOT(handleWindowCloseRequest()));
@@ -175,6 +178,7 @@ void QtWebEngineWebWidget::print(QPrinter *printer)
 void QtWebEngineWebWidget::pageLoadStarted()
 {
 	m_loadingState = WindowsManager::OngoingLoadingState;
+	m_lastUrlClickTime = QDateTime();
 
 	setStatusMessage(QString());
 	setStatusMessage(QString(), true);
@@ -1456,6 +1460,11 @@ QIcon QtWebEngineWebWidget::getIcon() const
 	return (m_icon.isNull() ? ThemesManager::getIcon(QLatin1String("tab")) : m_icon);
 }
 
+QDateTime QtWebEngineWebWidget::getLastUrlClickTime() const
+{
+	return m_lastUrlClickTime;
+}
+
 QPixmap QtWebEngineWebWidget::getThumbnail()
 {
 	return QPixmap();
@@ -1625,6 +1634,11 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			setClickPosition(mouseEvent->pos());
 			updateHitTestResult(mouseEvent->pos());
+		}
+
+		if (mouseEvent->button() == Qt::LeftButton && !getCurrentHitTestResult().linkUrl.isEmpty())
+		{
+			m_lastUrlClickTime = QDateTime::currentDateTime();
 		}
 
 		QList<GesturesManager::GesturesContext> contexts;

@@ -41,6 +41,7 @@ public:
 	bool isViewingMedia() const;
 
 protected:
+	void markAsPopup();
 	void javaScriptAlert(const QUrl &url, const QString &message);
 	void javaScriptConsoleMessage(JavaScriptConsoleMessageLevel level, const QString &note, int line, const QString &source);
 	QWebEnginePage* createWindow(WebWindowType type);
@@ -53,15 +54,20 @@ protected slots:
 	void pageLoadFinished();
 	void handlePageLoaded(const QString &result);
 	void notifyRenderProcessTerminated(RenderProcessTerminationStatus status);
+	void removePopup(const QUrl &url);
 
 private:
 	QtWebEngineWebWidget *m_widget;
+	QList<QtWebEnginePage*> m_popups;
 	QWebEnginePage::NavigationType m_previousNavigationType;
 	bool m_ignoreJavaScriptPopups;
 	bool m_isViewingMedia;
+	bool m_isPopup;
 
 signals:
 	void requestedNewWindow(WebWidget *widget, WindowsManager::OpenHints hints);
+	void requestedPopupWindow(const QUrl &parentUrl, const QUrl &popupUrl);
+	void aboutToNavigate(const QUrl &url, QWebEnginePage::NavigationType navigationType);
 	void viewingMediaChanged(bool viewingMedia);
 };
 

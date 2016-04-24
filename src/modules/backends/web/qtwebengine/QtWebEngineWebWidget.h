@@ -91,6 +91,7 @@ protected:
 	void setOptions(const QVariantHash &options);
 	QWebEnginePage* getPage();
 	QList<SpellCheckManager::DictionaryInformation> getDictionaries() const;
+	QDateTime getLastUrlClickTime() const;
 	bool canGoBack() const;
 	bool canGoForward() const;
 	bool canShowContextMenu(const QPoint &position) const;
@@ -124,6 +125,7 @@ private:
 	QtWebEnginePage *m_page;
 	QNetworkReply *m_iconReply;
 	QIcon m_icon;
+	QDateTime m_lastUrlClickTime;
 	HitTestResult m_hitResult;
 	QPoint m_scrollPosition;
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
