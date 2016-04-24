@@ -106,6 +106,7 @@
         <file>icons/permission-fullscreen.png</file>
         <file>icons/permission-geolocation.png</file>
         <file>icons/permission-notifications.png</file>
+        <file>icons/permission-playback-audio.png</file>
         <file>icons/permission-pointer-lock.png</file>
         <file>icons/preferences-desktop-locale.png</file>
         <file>icons/preferences-plugin.png</file>

@@ -59,6 +59,11 @@ PermissionBarWidget::PermissionBarWidget(const QString &option, const QUrl &url,
 		m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-capture-audio-video"), false).pixmap(m_ui->iconLabel->size()));
 		m_ui->messageLabel->setText(tr("%1 wants to access your microphone and camera.").arg(domain));
 	}
+	else if (option == QLatin1String("Browser/EnableMediaPlaybackAudio"))
+	{
+		m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-playback-audio"), false).pixmap(m_ui->iconLabel->size()));
+		m_ui->messageLabel->setText(tr("%1 wants to play audio.").arg(domain));
+	}
 	else if (option == QLatin1String("Browser/EnableNotifications"))
 	{
 		m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-notifications"), false).pixmap(m_ui->iconLabel->size()));
