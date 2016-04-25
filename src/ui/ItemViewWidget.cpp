@@ -2,7 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2015 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -482,9 +482,6 @@ void ItemViewWidget::notifySelectionChanged()
 {
 	if (m_sourceModel)
 	{
-		m_previousIndex = m_currentIndex;
-		m_currentIndex = getIndex(getCurrentRow());
-
 		emit canMoveUpChanged(canMoveUp());
 		emit canMoveDownChanged(canMoveDown());
 	}
@@ -697,11 +694,6 @@ int ItemViewWidget::getSortColumn() const
 int ItemViewWidget::getCurrentRow() const
 {
 	return (selectionModel()->hasSelection() ? currentIndex().row() : -1);
-}
-
-int ItemViewWidget::getPreviousRow() const
-{
-	return m_previousIndex.row();
 }
 
 int ItemViewWidget::getRowCount() const

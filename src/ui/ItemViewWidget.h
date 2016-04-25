@@ -82,7 +82,6 @@ public:
 	Qt::SortOrder getSortOrder() const;
 	int getSortColumn() const;
 	int getCurrentRow() const;
-	int getPreviousRow() const;
 	int getRowCount() const;
 	int getColumnCount() const;
 	bool canMoveUp() const;
@@ -119,8 +118,6 @@ private:
 	QStandardItemModel *m_sourceModel;
 	QSortFilterProxyModel *m_proxyModel;
 	QString m_filterString;
-	QModelIndex m_currentIndex;
-	QModelIndex m_previousIndex;
 	QSet<QModelIndex> m_expandedBranches;
 	QSet<int> m_filterRoles;
 	ViewMode m_viewMode;
