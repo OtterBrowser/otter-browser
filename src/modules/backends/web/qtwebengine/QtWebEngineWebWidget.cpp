@@ -87,7 +87,11 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	m_page(new QtWebEnginePage(isPrivate, this)),
 	m_iconReply(NULL),
 	m_loadingState(WindowsManager::FinishedLoadingState),
+#if QT_VERSION < 0x050700
 	m_scrollTimer(startTimer(1000)),
+#else
+	m_scrollTimer(0),
+#endif
 	m_isEditing(false),
 	m_isTyped(false)
 {
@@ -1472,7 +1476,11 @@ QPixmap QtWebEngineWebWidget::getThumbnail()
 
 QPoint QtWebEngineWebWidget::getScrollPosition() const
 {
+#if QT_VERSION < 0x050700
 	return m_scrollPosition;
+#else
+	return m_page->scrollPosition().toPoint();
+#endif
 }
 
 QRect QtWebEngineWebWidget::getProgressBarGeometry() const
