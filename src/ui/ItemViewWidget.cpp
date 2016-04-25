@@ -332,6 +332,19 @@ void ItemViewWidget::optionChanged(const QString &option, const QVariant &value)
 	}
 }
 
+void ItemViewWidget::currentChanged(const QModelIndex &current, const QModelIndex &previous)
+{
+	QTreeView::currentChanged(current, previous);
+
+	if (m_sourceModel)
+	{
+		emit canMoveUpChanged(canMoveUp());
+		emit canMoveDownChanged(canMoveDown());
+	}
+
+	emit needsActionsUpdate();
+}
+
 void ItemViewWidget::moveRow(bool up)
 {
 	if (!m_sourceModel)

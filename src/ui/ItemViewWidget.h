@@ -108,6 +108,7 @@ protected:
 
 protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
+	void currentChanged(const QModelIndex &current, const QModelIndex &previous);
 	void saveState();
 	void notifySelectionChanged();
 	void updateDropSelection();
