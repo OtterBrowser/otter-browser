@@ -111,7 +111,11 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	connect(m_page, SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
 	connect(m_page, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 	connect(m_page, SIGNAL(linkHovered(QString)), this, SLOT(linkHovered(QString)));
+#if QT_VERSION < 0x050700
 	connect(m_page, SIGNAL(iconUrlChanged(QUrl)), this, SLOT(handleIconChange(QUrl)));
+#else
+	connect(m_page, SIGNAL(iconChanged(QIcon)), this, SIGNAL(iconChanged(QIcon)));
+#endif
 	connect(m_page, SIGNAL(requestedPopupWindow(QUrl,QUrl)), this, SIGNAL(requestedPopupWindow(QUrl,QUrl)));
 	connect(m_page, SIGNAL(aboutToNavigate(QUrl,QWebEnginePage::NavigationType)), this, SIGNAL(aboutToNavigate()));
 	connect(m_page, SIGNAL(requestedNewWindow(WebWidget*,WindowsManager::OpenHints)), this, SIGNAL(requestedNewWindow(WebWidget*,WindowsManager::OpenHints)));
@@ -1461,7 +1465,13 @@ QIcon QtWebEngineWebWidget::getIcon() const
 		return ThemesManager::getIcon(QLatin1String("tab-private"));
 	}
 
+#if QT_VERSION < 0x050700
 	return (m_icon.isNull() ? ThemesManager::getIcon(QLatin1String("tab")) : m_icon);
+#else
+	const QIcon icon(m_page->icon());
+
+	return (icon.isNull() ? ThemesManager::getIcon(QLatin1String("tab")) : icon);
+#endif
 }
 
 QDateTime QtWebEngineWebWidget::getLastUrlClickTime() const
