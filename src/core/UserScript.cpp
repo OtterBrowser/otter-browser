@@ -23,6 +23,7 @@
 #include "ThemesManager.h"
 
 #include <QtCore/QFile>
+#include <QtCore/QFileInfo>
 #include <QtCore/QRegularExpression>
 #include <QtCore/QTextStream>
 
@@ -150,6 +151,11 @@ UserScript::UserScript(const QString &path, QObject *parent) : Addon(parent),
 	}
 
 	file.close();
+
+	if (m_title.isEmpty())
+	{
+		m_title = QFileInfo(file).completeBaseName();
+	}
 
 	if (!hasHeader)
 	{
