@@ -129,7 +129,9 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	connect(m_page->profile(), SIGNAL(downloadRequested(QWebEngineDownloadItem*)), this, SLOT(downloadFile(QWebEngineDownloadItem*)));
 	connect(m_webView, SIGNAL(titleChanged(QString)), this, SLOT(notifyTitleChanged()));
 	connect(m_webView, SIGNAL(urlChanged(QUrl)), this, SLOT(notifyUrlChanged(QUrl)));
+#if QT_VERSION < 0x050700
 	connect(m_webView, SIGNAL(iconUrlChanged(QUrl)), this, SLOT(notifyIconChanged()));
+#endif
 	connect(m_webView, SIGNAL(renderProcessTerminated(QWebEnginePage::RenderProcessTerminationStatus,int)), this, SLOT(notifyRenderProcessTerminated(QWebEnginePage::RenderProcessTerminationStatus)));
 }
 
