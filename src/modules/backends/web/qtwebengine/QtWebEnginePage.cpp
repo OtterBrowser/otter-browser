@@ -73,7 +73,6 @@ QtWebEnginePage::QtWebEnginePage(bool isPrivate, QtWebEngineWebWidget *parent) :
 	m_isPopup(false)
 {
 	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
-	connect(this, SIGNAL(renderProcessTerminated(RenderProcessTerminationStatus,int)), this, SLOT(notifyRenderProcessTerminated(RenderProcessTerminationStatus)));
 }
 
 void QtWebEnginePage::pageLoadFinished()
@@ -102,7 +101,7 @@ void QtWebEnginePage::handlePageLoaded(const QString &result)
 			}
 
 			QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hideElements.js"));
-			
+
 			if (file.open(QIODevice::ReadOnly))
 			{
 				runJavaScript(QString(file.readAll()).arg(createJavaScriptList(styleSheetWhiteList)).arg(createJavaScriptList(styleSheetBlackList)));
@@ -170,14 +169,6 @@ void QtWebEnginePage::removePopup(const QUrl &url)
 void QtWebEnginePage::markAsPopup()
 {
 	m_isPopup = true;
-}
-
-void QtWebEnginePage::notifyRenderProcessTerminated(QWebEnginePage::RenderProcessTerminationStatus status)
-{
-	if (m_widget)
-	{
-		m_widget->notifyRenderProcessTerminated(status);
-	}
 }
 
 void QtWebEnginePage::javaScriptAlert(const QUrl &url, const QString &message)
