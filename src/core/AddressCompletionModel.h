@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -48,6 +49,7 @@ public:
 	enum EntryType
 	{
 		UnknownType = 0,
+		HeaderType,
 		BookmarkType,
 		HistoryType,
 		TypedInHistoryType,
@@ -83,6 +85,7 @@ public:
 
 	QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 	QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+	Qt::ItemFlags flags(const QModelIndex &index) const;
 	int rowCount(const QModelIndex &index = QModelIndex()) const;
 
 public slots:
@@ -97,6 +100,7 @@ private:
 	SearchEnginesManager::SearchEngineDefinition m_defaultSearchEngine;
 	AddressCompletionModel::CompletionTypes m_types;
 	int m_updateTimer;
+	bool m_showCompletionCategories;
 
 signals:
 	void completionReady(const QString &filter);

@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -34,7 +35,8 @@ namespace Otter
 
 AddressCompletionModel::AddressCompletionModel(QObject *parent) : QAbstractListModel(parent),
 	m_types(UnknownCompletionType),
-	m_updateTimer(0)
+	m_updateTimer(0),
+	m_showCompletionCategories(true)
 {
 }
 
@@ -77,6 +79,13 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 				icon = ThemesManager::getIcon(QLatin1String("edit-find"));
 			}
 
+			if (m_showCompletionCategories)
+			{
+				completions.append(CompletionEntry(QUrl(), tr("Search with %1").arg(title), QString(), QIcon(), HeaderType));
+
+				title = QString();
+			}
+
 			CompletionEntry completionEntry(QUrl(), title, QString(), icon, SearchSuggestionType);
 			completionEntry.text = text;
 
@@ -86,6 +95,11 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 		if (m_types.testFlag(BookmarksCompletionType))
 		{
 			const QList<BookmarksModel::BookmarkMatch> bookmarks = BookmarksManager::findBookmarks(m_filter);
+
+			if (m_showCompletionCategories && bookmarks.count() > 0)
+			{
+				completions.append(CompletionEntry(QUrl(), tr("Bookmarks"), QString(), QIcon(), HeaderType));
+			}
 
 			for (int i = 0; i < bookmarks.count(); ++i)
 			{
@@ -107,6 +121,11 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 			const QString prefix(m_filter.section(QDir::separator(), -1, -1));
 			const QList<QFileInfo> entries(QDir(Utils::normalizePath(directory)).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot));
 
+			if (m_showCompletionCategories && entries.count() > 0)
+			{
+				completions.append(CompletionEntry(QUrl(), tr("Local files"), QString(), QIcon(), HeaderType));
+			}
+
 			for (int i = 0; i < entries.count(); ++i)
 			{
 				if (entries.at(i).fileName().startsWith(prefix, Qt::CaseInsensitive))
@@ -122,6 +141,11 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 		{
 			const QList<HistoryModel::HistoryEntryMatch> entries = HistoryManager::findEntries(m_filter);
 
+			if (m_showCompletionCategories && entries.count() > 0)
+			{
+				completions.append(CompletionEntry(QUrl(), tr("History"), QString(), QIcon(), HeaderType));
+			}
+
 			for (int i = 0; i < entries.count(); ++i)
 			{
 				completions.append(CompletionEntry(entries.at(i).entry->data(HistoryModel::UrlRole).toUrl(), entries.at(i).entry->data(HistoryModel::TitleRole).toString(), entries.at(i).match, entries.at(i).entry->data(Qt::DecorationRole).value<QIcon>(), (entries.at(i).isTypedIn ? TypedInHistoryType : HistoryType)));
@@ -131,6 +155,7 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 		if (m_types.testFlag(SpecialPagesCompletionType))
 		{
 			const QStringList specialPages = AddonsManager::getSpecialPages();
+			bool wasAdded(!m_showCompletionCategories);
 
 			for (int i = 0; i < specialPages.count(); ++i)
 			{
@@ -138,6 +163,13 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 
 				if (information.url.toString().startsWith(m_filter))
 				{
+					if (!wasAdded)
+					{
+						completions.append(CompletionEntry(QUrl(), tr("Special pages"), QString(), QIcon(), HeaderType));
+
+						wasAdded = true;
+					}
+
 					completions.append(CompletionEntry(information.url, information.getTitle(), QString(), information.icon, SpecialPageType));
 				}
 			}
@@ -188,6 +220,7 @@ void AddressCompletionModel::setFilter(const QString &filter)
 	}
 
 	m_filter = filter;
+	m_showCompletionCategories = SettingsManager::getValue(QLatin1String("AddressField/ShowCompletionCategories")).toBool();
 
 	if (m_filter.isEmpty())
 	{
@@ -246,6 +279,16 @@ QVariant AddressCompletionModel::headerData(int section, Qt::Orientation orienta
 	Q_UNUSED(role)
 
 	return QVariant();
+}
+
+Qt::ItemFlags AddressCompletionModel::flags(const QModelIndex &index) const
+{
+	if (!index.isValid() || m_completions.at(index.row()).type == AddressCompletionModel::HeaderType)
+	{
+		return Qt::ItemNeverHasChildren;
+	}
+
+	return (Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemNeverHasChildren);
 }
 
 int AddressCompletionModel::rowCount(const QModelIndex &index) const

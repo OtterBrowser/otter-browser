@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,7 +19,10 @@
 **************************************************************************/
 
 #include "AddressDelegate.h"
+#include "../core/AddressCompletionModel.h"
 #include "../core/ThemesManager.h"
+
+#include <QtGui/QPainter>
 
 namespace Otter
 {
@@ -32,10 +36,30 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 {
 	drawBackground(painter, option, index);
 
-	QRect titleRectangle = option.rect;
+	QRect titleRectangle(option.rect);
+
+	if (static_cast<AddressCompletionModel::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) == AddressCompletionModel::HeaderType)
+	{
+		titleRectangle = titleRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
+
+		if (index.row() != 0)
+		{
+			QPen pen(Qt::lightGray);
+			pen.setWidth(1);
+			pen.setStyle(Qt::SolidLine);
+
+			painter->setPen(pen);
+			painter->drawLine((option.rect.left() + 5), (option.rect.top() + 3), (option.rect.right() - 5), (option.rect.top() + 3));
+		}
+
+		drawDisplay(painter, option, titleRectangle, index.data(Qt::UserRole + 1).toString());
+
+		return;
+	}
+
 	titleRectangle.setLeft(m_isAddressField ? 33 : (option.rect.height() + 1));
 
-	QRect decorationRectangle = option.rect;
+	QRect decorationRectangle(option.rect);
 	decorationRectangle.setRight(titleRectangle.left());
 	decorationRectangle = decorationRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
 
@@ -77,8 +101,16 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 
 QSize AddressDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	QSize size = index.data(Qt::SizeHintRole).toSize();
-	size.setHeight(option.fontMetrics.height() * 1.25);
+	QSize size(index.data(Qt::SizeHintRole).toSize());
+
+	if (index.row() != 0 && static_cast<AddressCompletionModel::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) == AddressCompletionModel::HeaderType)
+	{
+		size.setHeight(option.fontMetrics.height() * 1.75);
+	}
+	else
+	{
+		size.setHeight(option.fontMetrics.height() * 1.25);
+	}
 
 	return size;
 }

@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -837,7 +837,7 @@ void AddressWidget::setCompletion(const QString &filter)
 			m_completionView->show();
 		}
 
-		m_completionView->setFixedHeight((qMin(m_completionModel->rowCount(), 10) * m_completionView->sizeHintForRow(0)) + 3);
+		m_completionView->setFixedHeight((qMin(m_completionModel->rowCount(), 15) * m_completionView->sizeHintForRow(0)) + 3);
 		m_completionView->setCurrentIndex(m_completionModel->index(0, 0));
 	}
 
