@@ -19,7 +19,6 @@
 
 #include "AddonsContentsWidget.h"
 #include "../../../core/ActionsManager.h"
-#include "../../../core/AddonsManager.h"
 #include "../../../core/SessionsManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/UserScript.h"
@@ -55,6 +54,7 @@ AddonsContentsWidget::AddonsContentsWidget(Window *window) : ContentsWidget(wind
 
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterAddons(QString)));
 	connect(m_ui->addonsViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
+	connect(m_ui->addonsViewWidget, SIGNAL(clicked(QModelIndex)), this, SLOT(save()));
 }
 
 AddonsContentsWidget::~AddonsContentsWidget()
@@ -74,27 +74,20 @@ void AddonsContentsWidget::changeEvent(QEvent *event)
 
 void AddonsContentsWidget::populateAddons()
 {
+	m_types.clear();
+	m_types[Addon::UserScriptType] = 0;
+
 	QStandardItem *userScriptsItem(new QStandardItem(ThemesManager::getIcon(QLatin1String("addon-user-script"), false), tr("User Scripts")));
+	userScriptsItem->setData(Addon::UserScriptType, Qt::UserRole);
+
+	m_model->appendRow(userScriptsItem);
+
 	const QStringList userScripts(AddonsManager::getUserScripts());
 
 	for (int i = 0; i < userScripts.count(); ++i)
 	{
-		UserScript *userScript(AddonsManager::getUserScript(userScripts.at(i)));
-
-		if (userScript)
-		{
-			QStandardItem *item(new QStandardItem(userScript->getIcon(), (userScript->getVersion().isEmpty() ? userScript->getTitle() : QStringLiteral("%1  %2").arg(userScript->getTitle()).arg(userScript->getVersion()))));
-			item->setData(userScripts.at(i), Qt::UserRole);
-			item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
-			item->setCheckable(true);
-			item->setCheckState(userScript->isEnabled() ? Qt::Checked : Qt::Unchecked);
-			item->setToolTip(userScript->getDescription());
-
-			userScriptsItem->appendRow(item);
-		}
+		addAddon(AddonsManager::getUserScript(userScripts.at(i)));
 	}
-
-	m_model->appendRow(userScriptsItem);
 
 	m_ui->addonsViewWidget->setModel(m_model);
 	m_ui->addonsViewWidget->expandAll();
@@ -129,43 +122,55 @@ void AddonsContentsWidget::addAddon()
 		return;
 	}
 
-	QFile file(SessionsManager::getWritableDataPath(QLatin1String("scripts/scripts.json")));
+	UserScript script(QDir(targetPath).filePath(QFileInfo(sourcePath).fileName()));
 
-	if (!file.open(QIODevice::ReadOnly))
-	{
-		return;
-	}
-
-	QJsonObject settings(QJsonDocument::fromJson(file.readAll()).object());
-
-	file.close();
-
-	if (!file.open(QIODevice::WriteOnly))
-	{
-		return;
-	}
-
-	QJsonObject script;
-	script.insert(QLatin1String("isEnabled"), QJsonValue(true));
-
-	settings.insert(QFileInfo(sourcePath).baseName(), script);
-
-	QJsonDocument document;
-	document.setObject(settings);
-
-	file.write(document.toJson(QJsonDocument::Indented));
-	file.close();
+	addAddon(&script);
+	save();
 
 	AddonsManager::loadUserScripts();
+}
 
-	m_model->clear();
+void AddonsContentsWidget::addAddon(Addon *addon)
+{
+	if (!addon)
+	{
+		return;
+	}
 
-	populateAddons();
+	QStandardItem *typeItem(NULL);
+
+	if (m_types.contains(addon->getType()))
+	{
+		typeItem = m_model->item(m_types[addon->getType()]);
+	}
+
+	if (!typeItem)
+	{
+		return;
+	}
+
+	QStandardItem *item(new QStandardItem(addon->getIcon(), (addon->getVersion().isEmpty() ? addon->getTitle() : QStringLiteral("%1  %2").arg(addon->getTitle()).arg(addon->getVersion()))));
+	item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
+	item->setCheckable(true);
+	item->setCheckState(addon->isEnabled() ? Qt::Checked : Qt::Unchecked);
+	item->setToolTip(addon->getDescription());
+
+	if (addon->getType() == Addon::UserScriptType)
+	{
+		UserScript *script(qobject_cast<UserScript*>(addon));
+
+		if (script)
+		{
+			item->setData(script->getName(), Qt::UserRole);
+		}
+	}
+
+	typeItem->appendRow(item);
 }
 
 void AddonsContentsWidget::removeAddons()
 {
-	const QModelIndexList indexes = m_ui->addonsViewWidget->selectionModel()->selectedIndexes();
+	const QModelIndexList indexes(m_ui->addonsViewWidget->selectionModel()->selectedIndexes());
 
 	if (indexes.isEmpty())
 	{
@@ -173,6 +178,49 @@ void AddonsContentsWidget::removeAddons()
 	}
 
 //TODO
+}
+
+void AddonsContentsWidget::save()
+{
+	QStandardItem *userScriptsItem(NULL);
+
+	if (m_types.contains(Addon::UserScriptType))
+	{
+		userScriptsItem = m_model->item(m_types[Addon::UserScriptType]);
+	}
+
+	if (!userScriptsItem)
+	{
+		return;
+	}
+
+	QFile file(SessionsManager::getWritableDataPath(QLatin1String("scripts/scripts.json")));
+
+	if (!file.open(QIODevice::WriteOnly))
+	{
+		return;
+	}
+
+	QJsonObject settings;
+
+	for (int i = 0; i < userScriptsItem->rowCount(); ++i)
+	{
+		QStandardItem *item(userScriptsItem->child(i));
+
+		if (item && !item->data(Qt::UserRole).toString().isEmpty())
+		{
+			QJsonObject script;
+			script.insert(QLatin1String("isEnabled"), QJsonValue(item->checkState() == Qt::Checked));
+
+			settings.insert(item->data(Qt::UserRole).toString(), script);
+		}
+	}
+
+	QJsonDocument document;
+	document.setObject(settings);
+
+	file.write(document.toJson(QJsonDocument::Indented));
+	file.close();
 }
 
 void AddonsContentsWidget::showContextMenu(const QPoint &point)

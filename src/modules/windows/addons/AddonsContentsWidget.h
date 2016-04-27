@@ -20,6 +20,7 @@
 #ifndef OTTER_ADDONSCONTENTSWIDGET_H
 #define OTTER_ADDONSCONTENTSWIDGET_H
 
+#include "../../../core/AddonsManager.h"
 #include "../../../ui/ContentsWidget.h"
 
 #include <QtGui/QStandardItemModel>
@@ -61,11 +62,14 @@ protected slots:
 	void populateAddons();
 	void filterAddons(const QString &filter);
 	void addAddon();
+	void addAddon(Addon *addon);
 	void removeAddons();
+	void save();
 	void showContextMenu(const QPoint &point);
 
 private:
 	QStandardItemModel *m_model;
+	QHash<Addon::AddonType, int> m_types;
 	QHash<int, Action*> m_actions;
 	bool m_isLoading;
 	Ui::AddonsContentsWidget *m_ui;
