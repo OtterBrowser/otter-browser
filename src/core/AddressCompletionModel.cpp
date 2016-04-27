@@ -99,7 +99,7 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 		{
 			const QList<BookmarksModel::BookmarkMatch> bookmarks = BookmarksManager::findBookmarks(m_filter);
 
-			if (m_showCompletionCategories && bookmarks.count() > 0)
+			if (m_showCompletionCategories && !bookmarks.isEmpty())
 			{
 				completions.append(CompletionEntry(QUrl(), tr("Bookmarks"), QString(), QIcon(), HeaderType));
 			}
@@ -124,11 +124,7 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 			const QString prefix(m_filter.section(QDir::separator(), -1, -1));
 			const QList<QFileInfo> entries(QDir(Utils::normalizePath(directory)).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot));
 			const QFileIconProvider iconProvider;
-
-			if (m_showCompletionCategories && entries.count() > 0)
-			{
-				completions.append(CompletionEntry(QUrl(), tr("Local files"), QString(), QIcon(), HeaderType));
-			}
+			bool wasAdded(!m_showCompletionCategories);
 
 			for (int i = 0; i < entries.count(); ++i)
 			{
@@ -136,6 +132,13 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 				{
 					const QString path(directory + entries.at(i).fileName());
 					const QMimeType type(QMimeDatabase().mimeTypeForFile(entries.at(i), QMimeDatabase::MatchExtension));
+
+					if (!wasAdded)
+					{
+						completions.append(CompletionEntry(QUrl(), tr("Local files"), QString(), QIcon(), HeaderType));
+
+						wasAdded = true;
+					}
 
 					completions.append(CompletionEntry(path, path, QString(), QIcon::fromTheme(type.iconName(), iconProvider.icon(entries.at(i))), LocalPathType));
 				}
@@ -146,7 +149,7 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 		{
 			const QList<HistoryModel::HistoryEntryMatch> entries = HistoryManager::findEntries(m_filter);
 
-			if (m_showCompletionCategories && entries.count() > 0)
+			if (m_showCompletionCategories && !entries.isEmpty())
 			{
 				completions.append(CompletionEntry(QUrl(), tr("History"), QString(), QIcon(), HeaderType));
 			}
