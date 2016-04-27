@@ -163,6 +163,11 @@ UserScript::UserScript(const QString &path, QObject *parent) : Addon(parent),
 	}
 }
 
+QString UserScript::getName() const
+{
+	return QFileInfo(m_path).completeBaseName();
+}
+
 QString UserScript::getTitle() const
 {
 	return m_title;

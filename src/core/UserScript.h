@@ -40,6 +40,7 @@ public:
 
 	explicit UserScript(const QString &path, QObject *parent = NULL);
 
+	QString getName() const;
 	QString getTitle() const;
 	QString getDescription() const;
 	QString getVersion() const;
