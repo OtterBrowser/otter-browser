@@ -353,6 +353,13 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	setLocale(SettingsManager::getValue(QLatin1String("Browser/Locale")).toString());
 	setQuitOnLastWindowClosed(true);
 
+	WebBackend *webBackend(AddonsManager::getWebBackend());
+
+	if (!QSslSocket::supportsSsl() || (webBackend && webBackend->getSslVersion().isEmpty()))
+	{
+		QMessageBox::warning(NULL, tr("Warning"), tr("SSL support is not available or incomplete.\nSome websites may work incorrectly or do not work at all."), QMessageBox::Close);
+	}
+
 	if (SettingsManager::getValue(QLatin1String("Browser/EnableTrayIcon")).toBool())
 	{
 		m_trayIcon = new TrayIcon(this);
