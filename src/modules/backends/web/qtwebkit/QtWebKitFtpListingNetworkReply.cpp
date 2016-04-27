@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2014 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -20,7 +20,6 @@
 
 #include "QtWebKitFtpListingNetworkReply.h"
 #include "../../../../core/SessionsManager.h"
-#include "../../../../core/ThemesManager.h"
 #include "../../../../core/Utils.h"
 
 #include <QtCore/QBuffer>
@@ -28,6 +27,7 @@
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QRegularExpression>
 #include <QtGui/QGuiApplication>
+#include <QtWidgets/QFileIconProvider>
 
 namespace Otter
 {
@@ -141,6 +141,8 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 				variables[QLatin1String("headerSize")] = tr("Size");
 				variables[QLatin1String("headerDate")] = tr("Date");
 
+				const QFileIconProvider iconProvider;
+
 				for (int i = 0; i < entries.count(); ++i)
 				{
 					const QMimeType mimeType = (entries.at(i).isDir() ? database.mimeTypeForName(QLatin1String("inode-directory")) : database.mimeTypeForUrl(request().url().url() + entries.at(i).name()));
@@ -151,7 +153,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 						QByteArray byteArray;
 						QBuffer buffer(&byteArray);
 
-						QIcon::fromTheme(mimeType.iconName(), ThemesManager::getIcon(entries.at(i).isDir() ? QLatin1String("inode-directory") : QLatin1String("unknown"))).pixmap(16, 16).save(&buffer, "PNG");
+						QIcon::fromTheme(mimeType.iconName(), iconProvider.icon(entries.at(i).isDir() ? QFileIconProvider::Folder : QFileIconProvider::File)).pixmap(16, 16).save(&buffer, "PNG");
 
 						icons[mimeType.name()] = QString(byteArray.toBase64());
 					}

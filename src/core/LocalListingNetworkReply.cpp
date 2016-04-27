@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2015 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
 
 #include "LocalListingNetworkReply.h"
 #include "SessionsManager.h"
-#include "ThemesManager.h"
 #include "Utils.h"
 
 #include <QtCore/QBuffer>
@@ -31,6 +30,7 @@
 #include <QtCore/QTimer>
 #include <QtGui/QGuiApplication>
 #include <QtGui/QIcon>
+#include <QtWidgets/QFileIconProvider>
 
 namespace Otter
 {
@@ -78,6 +78,8 @@ LocalListingNetworkReply::LocalListingNetworkReply(QObject *parent, const QNetwo
 	variables[QLatin1String("headerSize")] = tr("Size");
 	variables[QLatin1String("headerDate")] = tr("Date");
 
+	const QFileIconProvider iconProvider;
+
 	for (int i = 0; i < entries.count(); ++i)
 	{
 		const QMimeType mimeType = database.mimeTypeForFile(entries.at(i).canonicalFilePath());
@@ -88,7 +90,7 @@ LocalListingNetworkReply::LocalListingNetworkReply(QObject *parent, const QNetwo
 			QByteArray byteArray;
 			QBuffer buffer(&byteArray);
 
-			QIcon::fromTheme(mimeType.iconName(), ThemesManager::getIcon(entries.at(i).isDir() ? QLatin1String("inode-directory") : QLatin1String("unknown"))).pixmap(16, 16).save(&buffer, "PNG");
+			QIcon::fromTheme(mimeType.iconName(), iconProvider.icon(entries.at(i))).pixmap(16, 16).save(&buffer, "PNG");
 
 			icons[mimeType.name()] = QString(byteArray.toBase64());
 		}
