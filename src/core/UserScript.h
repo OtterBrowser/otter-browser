@@ -51,6 +51,7 @@ public:
 	QStringList getIncludeRules() const;
 	QStringList getMatchRules() const;
 	InjectionTime getInjectionTime() const;
+	AddonType getType() const;
 	bool isEnabledForUrl(const QUrl &url);
 	bool shouldRunOnSubFrames() const;
 

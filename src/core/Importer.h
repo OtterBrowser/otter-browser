@@ -53,7 +53,8 @@ public:
 	virtual QString getSuggestedPath(const QString &path = QString()) const = 0;
 	virtual QString getBrowser() const = 0;
 	QUrl getUpdateUrl() const;
-	virtual ImportType getType() const = 0;
+	AddonType getType() const;
+	virtual ImportType getImportType() const = 0;
 
 public slots:
 	virtual bool import(const QString &path) = 0;

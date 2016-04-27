@@ -161,7 +161,7 @@ QIcon OperaNotesImporter::getIcon() const
 	return QIcon();
 }
 
-ImportType OperaNotesImporter::getType() const
+ImportType OperaNotesImporter::getImportType() const
 {
 	return NotesImport;
 }

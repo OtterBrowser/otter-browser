@@ -42,7 +42,7 @@ public:
 	QString getBrowser() const;
 	QUrl getHomePage() const;
 	QIcon getIcon() const;
-	ImportType getType() const;
+	ImportType getImportType() const;
 
 public slots:
 	bool import(const QString &path);

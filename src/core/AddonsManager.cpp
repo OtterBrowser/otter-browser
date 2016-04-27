@@ -48,6 +48,11 @@ void Addon::setEnabled(bool isEnabled)
 	m_isEnabled = isEnabled;
 }
 
+Addon::AddonType Addon::getType() const
+{
+	return UnknownType;
+}
+
 bool Addon::isEnabled() const
 {
 	return m_isEnabled;

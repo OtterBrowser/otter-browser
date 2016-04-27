@@ -97,7 +97,7 @@ QIcon OperaSessionImporter::getIcon() const
 	return QIcon();
 }
 
-ImportType OperaSessionImporter::getType() const
+ImportType OperaSessionImporter::getImportType() const
 {
 	return SessionsImport;
 }

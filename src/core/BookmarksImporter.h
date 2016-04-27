@@ -37,7 +37,7 @@ public:
 	explicit BookmarksImporter(QObject *parent = NULL);
 
 	BookmarksItem *getCurrentFolder() const;
-	ImportType getType() const;
+	ImportType getImportType() const;
 	bool allowDuplicates() const;
 
 protected:

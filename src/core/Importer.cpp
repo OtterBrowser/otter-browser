@@ -31,4 +31,9 @@ QUrl Importer::getUpdateUrl() const
 	return QUrl();
 }
 
+Addon::AddonType Importer::getType() const
+{
+	return ImporterType;
+}
+
 }

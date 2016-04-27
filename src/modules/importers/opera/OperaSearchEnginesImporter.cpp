@@ -110,7 +110,7 @@ QIcon OperaSearchEnginesImporter::getIcon() const
 	return QIcon();
 }
 
-ImportType OperaSearchEnginesImporter::getType() const
+ImportType OperaSearchEnginesImporter::getImportType() const
 {
 	return SearchEnginesImport;
 }

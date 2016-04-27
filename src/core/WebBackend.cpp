@@ -36,4 +36,9 @@ QList<SpellCheckManager::DictionaryInformation> WebBackend::getDictionaries() co
 	return QList<SpellCheckManager::DictionaryInformation>();
 }
 
+Addon::AddonType WebBackend::getType() const
+{
+	return WebBackendType;
+}
+
 }

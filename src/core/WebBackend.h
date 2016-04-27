@@ -42,6 +42,7 @@ public:
 	virtual QString getUserAgent(const QString &pattern = QString()) const = 0;
 	QUrl getUpdateUrl() const;
 	virtual QList<SpellCheckManager::DictionaryInformation> getDictionaries() const;
+	AddonType getType() const;
 	virtual bool requestThumbnail(const QUrl &url, const QSize &size) = 0;
 
 signals:

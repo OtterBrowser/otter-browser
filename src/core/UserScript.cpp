@@ -270,6 +270,11 @@ UserScript::InjectionTime UserScript::getInjectionTime() const
 	return m_injectionTime;
 }
 
+Addon::AddonType UserScript::getType() const
+{
+	return Addon::UserScriptType;
+}
+
 bool UserScript::isEnabledForUrl(const QUrl &url)
 {
 	if (url.scheme() != QLatin1String("http") && url.scheme() != QLatin1String("https") && url.scheme() != QLatin1String("file") && url.scheme() != QLatin1String("ftp"))
@@ -327,7 +332,6 @@ bool UserScript::checkUrl(const QUrl &url, const QStringList &rules) const
 		{
 			return true;
 		}
-		
 	}
 
 	return false;
