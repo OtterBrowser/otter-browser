@@ -2,6 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -29,6 +30,8 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
+#include <QtCore/QMimeDatabase>
+#include <QtWidgets/QFileIconProvider>
 
 namespace Otter
 {
@@ -120,6 +123,7 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 			const QString directory(m_filter.section(QDir::separator(), 0, -2) + QDir::separator());
 			const QString prefix(m_filter.section(QDir::separator(), -1, -1));
 			const QList<QFileInfo> entries(QDir(Utils::normalizePath(directory)).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot));
+			const QFileIconProvider iconProvider;
 
 			if (m_showCompletionCategories && entries.count() > 0)
 			{
@@ -131,8 +135,9 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 				if (entries.at(i).fileName().startsWith(prefix, Qt::CaseInsensitive))
 				{
 					const QString path(directory + entries.at(i).fileName());
+					const QMimeType type(QMimeDatabase().mimeTypeForFile(entries.at(i), QMimeDatabase::MatchExtension));
 
-					completions.append(CompletionEntry(path, path, QString(), QIcon(), LocalPathType));
+					completions.append(CompletionEntry(path, path, QString(), QIcon::fromTheme(type.iconName(), iconProvider.icon(entries.at(i))), LocalPathType));
 				}
 			}
 		}
