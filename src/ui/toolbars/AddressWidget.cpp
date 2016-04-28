@@ -837,7 +837,22 @@ void AddressWidget::setCompletion(const QString &filter)
 			m_completionView->show();
 		}
 
-		m_completionView->setFixedHeight((qMin(m_completionModel->rowCount(), 15) * m_completionView->sizeHintForRow(0)) + 3);
+		int completionHeight(3);
+
+		if (m_completionModel->rowCount() < 20)
+		{
+			for (int i = 0; i < m_completionModel->rowCount(); ++i)
+			{
+				completionHeight += m_completionView->sizeHintForRow(i);
+			}
+		}
+		else
+		{
+			completionHeight += (20 * m_completionView->sizeHintForRow(0));
+		}
+
+		m_completionView->setFixedHeight(completionHeight);
+		m_completionView->viewport()->setFixedHeight(completionHeight);
 		m_completionView->setCurrentIndex(m_completionModel->index(0, 0));
 	}
 
