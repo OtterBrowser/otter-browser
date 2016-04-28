@@ -42,9 +42,9 @@
       <number>0</number>
      </property>
      <widget class="QWidget" name="browsingPage">
-      <layout class="QVBoxLayout" name="browsingLayout" stretch="0,0,1">
+      <layout class="QVBoxLayout" name="browsingLayout">
        <item>
-        <widget class="QLabel" name="suggestionsHeader">
+        <widget class="QLabel" name="browsingSuggestionsHeader">
          <property name="font">
           <font>
            <weight>75</weight>
@@ -57,23 +57,23 @@
         </widget>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="suggestionsLayout">
+        <layout class="QVBoxLayout" name="browsingSuggestionsLayout">
          <item>
-          <widget class="QCheckBox" name="suggestBookmarksCheckBox">
+          <widget class="QCheckBox" name="browsingSuggestBookmarksCheckBox">
            <property name="text">
             <string>Suggest bookmarks</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="suggestHistoryCheckBox">
+          <widget class="QCheckBox" name="browsingSuggestHistoryCheckBox">
            <property name="text">
             <string>Suggest history</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="suggestSearchCheckBox">
+          <widget class="QCheckBox" name="browsingSuggestSearchCheckBox">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -85,7 +85,59 @@
         </layout>
        </item>
        <item>
-        <spacer name="suggestionsSpacer">
+        <widget class="QLabel" name="browsingCompletionHeader">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Address Completion</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="browsingCompletionLayout">
+         <item>
+          <widget class="QCheckBox" name="browsingCategoriesCheckBox">
+           <property name="text">
+            <string>Show category headers</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QFormLayout" name="browsingDisplayModeLayout">
+           <item row="0" column="0">
+            <widget class="QLabel" name="browsingDisplayModeLabel">
+             <property name="text">
+              <string>Display mode:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QComboBox" name="browsingDisplayModeComboBox">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <item>
+              <property name="text">
+               <string>Single column</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Multi column</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="browsingBrowsingSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>

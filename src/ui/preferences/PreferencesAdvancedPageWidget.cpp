@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -93,8 +93,9 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->advancedViewWidget->setMinimumWidth(qMax(100, m_ui->advancedViewWidget->sizeHint().width()));
 	m_ui->advancedViewWidget->setItemDelegate(new ItemDelegate(false, this));
 
-	m_ui->suggestBookmarksCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/SuggestBookmarks")).toBool());
-	m_ui->suggestHistoryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/SuggestHistory")).toBool());
+	m_ui->browsingSuggestBookmarksCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/SuggestBookmarks")).toBool());
+	m_ui->browsingSuggestHistoryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/SuggestHistory")).toBool());
+	m_ui->browsingCategoriesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/ShowCompletionCategories")).toBool());
 
 	m_ui->notificationsPlaySoundButton->setIcon(ThemesManager::getIcon(QLatin1String("media-playback-start")));
 
@@ -1271,8 +1272,9 @@ void PreferencesAdvancedPageWidget::save()
 
 	m_filesToRemove.clear();
 
-	SettingsManager::setValue(QLatin1String("AddressField/SuggestBookmarks"), m_ui->suggestBookmarksCheckBox->isChecked());
-	SettingsManager::setValue(QLatin1String("AddressField/SuggestHistory"), m_ui->suggestHistoryCheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("AddressField/SuggestBookmarks"), m_ui->browsingSuggestBookmarksCheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("AddressField/SuggestHistory"), m_ui->browsingSuggestHistoryCheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("AddressField/ShowCompletionCategories"), m_ui->browsingCategoriesCheckBox->isChecked());
 
 	QSettings notificationsSettings(SessionsManager::getWritableDataPath(QLatin1String("notifications.ini")), QSettings::IniFormat);
 	notificationsSettings.setIniCodec("UTF-8");
