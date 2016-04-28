@@ -72,7 +72,7 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, CookieJarProxy *c
 		m_cookieJar = NetworkManagerFactory::getCookieJar();
 		m_cookieJar->setParent(QCoreApplication::instance());
 
-		QNetworkDiskCache *cache = NetworkManagerFactory::getCache();
+		QNetworkDiskCache *cache(NetworkManagerFactory::getCache());
 
 		setCache(cache);
 
@@ -112,7 +112,7 @@ void QtWebKitNetworkManager::handleAuthenticationRequired(QNetworkReply *reply, 
 {
 	emit messageChanged(tr("Waiting for authentication…"));
 
-	AuthenticationDialog *authenticationDialog = new AuthenticationDialog(reply->url(), authenticator, m_widget);
+	AuthenticationDialog *authenticationDialog(new AuthenticationDialog(reply->url(), authenticator, m_widget));
 	authenticationDialog->setButtonsVisible(false);
 
 	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, m_widget);
@@ -137,7 +137,7 @@ void QtWebKitNetworkManager::handleProxyAuthenticationRequired(const QNetworkPro
 
 	emit messageChanged(tr("Waiting for authentication…"));
 
-	AuthenticationDialog *authenticationDialog = new AuthenticationDialog(proxy.hostName(), authenticator, m_widget);
+	AuthenticationDialog *authenticationDialog(new AuthenticationDialog(proxy.hostName(), authenticator, m_widget));
 	authenticationDialog->setButtonsVisible(false);
 
 	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, m_widget);
@@ -160,7 +160,7 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 		return;
 	}
 
-	QStringList ignoredErrors = m_widget->getOption(QLatin1String("Security/IgnoreSslErrors"), m_widget->getUrl()).toStringList();
+	QStringList ignoredErrors(m_widget->getOption(QLatin1String("Security/IgnoreSslErrors"), m_widget->getUrl()).toStringList());
 	QStringList messages;
 	QList<QSslError> errorsToIgnore;
 
@@ -210,7 +210,7 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 		{
 			for (int i = 0; i < errors.count(); ++i)
 			{
-				const QString digest = errors.at(i).certificate().digest().toBase64();
+				const QString digest(errors.at(i).certificate().digest().toBase64());
 
 				if (!ignoredErrors.contains(digest))
 				{
@@ -270,7 +270,7 @@ void QtWebKitNetworkManager::registerTransfer(QNetworkReply *reply)
 
 void QtWebKitNetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
-	QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
+	QNetworkReply *reply(qobject_cast<QNetworkReply*>(sender()));
 
 	if (reply && reply == m_baseReply)
 	{
@@ -303,7 +303,7 @@ void QtWebKitNetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytes
 		emit messageChanged(tr("Receiving data from %1…").arg(reply->url().host().isEmpty() ? QLatin1String("localhost") : reply->url().host()));
 	}
 
-	const qint64 difference = (bytesReceived - m_replies[reply].first);
+	const qint64 difference(bytesReceived - m_replies[reply].first);
 
 	m_replies[reply].first = bytesReceived;
 
@@ -378,7 +378,7 @@ void QtWebKitNetworkManager::requestFinished(QNetworkReply *reply)
 
 void QtWebKitNetworkManager::transferFinished()
 {
-	QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
+	QNetworkReply *reply(qobject_cast<QNetworkReply*>(sender()));
 
 	if (reply)
 	{
@@ -638,7 +638,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 	emit messageChanged(tr("Sending request to %1…").arg(host));
 
-	QNetworkReply *reply = NULL;
+	QNetworkReply *reply(NULL);
 
 	if (operation == GetOperation && request.url().isLocalFile() && QFileInfo(request.url().toLocalFile()).isDir())
 	{
@@ -660,7 +660,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 	if (m_isSecure >= 0)
 	{
-		const QString scheme = reply->url().scheme();
+		const QString scheme(reply->url().scheme());
 
 		if (scheme == QLatin1String("https"))
 		{
@@ -705,7 +705,7 @@ QHash<QByteArray, QByteArray> QtWebKitNetworkManager::getHeaders() const
 
 	if (m_baseReply)
 	{
-		const QList<QNetworkReply::RawHeaderPair> rawHeaders = m_baseReply->rawHeaderPairs();
+		const QList<QNetworkReply::RawHeaderPair> rawHeaders(m_baseReply->rawHeaderPairs());
 
 		for (int i = 0; i < rawHeaders.count(); ++i)
 		{

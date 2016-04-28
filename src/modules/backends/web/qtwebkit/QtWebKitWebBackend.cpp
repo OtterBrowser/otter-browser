@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -45,7 +45,7 @@ QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent),
 {
 	m_instance = this;
 
-	QtWebKitPage *page = new QtWebKitPage();
+	QtWebKitPage *page(new QtWebKitPage());
 	QRegularExpression platformExpression(QLatin1String("(\\([^\\)]+\\))"));
 
 	m_userAgentComponents[QLatin1String("platform")] = platformExpression.match(page->getDefaultUserAgent()).captured(1);
@@ -74,7 +74,7 @@ void QtWebKitWebBackend::optionChanged(const QString &option)
 		return;
 	}
 
-	QWebSettings *globalSettings = QWebSettings::globalSettings();
+	QWebSettings *globalSettings(QWebSettings::globalSettings());
 	globalSettings->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
 	globalSettings->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
 	globalSettings->setAttribute(QWebSettings::AutoLoadImages, SettingsManager::getValue(QLatin1String("Browser/EnableImages")).toBool());
@@ -103,7 +103,7 @@ void QtWebKitWebBackend::optionChanged(const QString &option)
 
 void QtWebKitWebBackend::pageLoaded(bool success)
 {
-	QtWebKitPage *page = qobject_cast<QtWebKitPage*>(sender());
+	QtWebKitPage *page(qobject_cast<QtWebKitPage*>(sender()));
 
 	if (!page)
 	{
@@ -116,7 +116,7 @@ void QtWebKitWebBackend::pageLoaded(bool success)
 
 		if (!m_thumbnailRequests[page].second.isEmpty())
 		{
-			QSize contentsSize = page->mainFrame()->contentsSize();
+			QSize contentsSize(page->mainFrame()->contentsSize());
 
 			page->setViewportSize(contentsSize);
 
@@ -166,11 +166,11 @@ WebWidget* QtWebKitWebBackend::createWidget(bool isPrivate, ContentsWidget *pare
 
 		QWebHistoryInterface::setDefaultInterface(new QtWebKitHistoryInterface(this));
 
-		QWebSettings *globalSettings = QWebSettings::globalSettings();
+		QWebSettings *globalSettings(QWebSettings::globalSettings());
 		globalSettings->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
 		globalSettings->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
 
-		const QString cachePath = SessionsManager::getCachePath();
+		const QString cachePath(SessionsManager::getCachePath());
 
 		if (!cachePath.isEmpty())
 		{
@@ -189,7 +189,7 @@ WebWidget* QtWebKitWebBackend::createWidget(bool isPrivate, ContentsWidget *pare
 		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
 	}
 
-	QtWebKitWebWidget *widget = new QtWebKitWebWidget(isPrivate, this, NULL, parent);
+	QtWebKitWebWidget *widget(new QtWebKitWebWidget(isPrivate, this, NULL, parent));
 
 	connect(widget, SIGNAL(widgetActivated(WebWidget*)), this, SLOT(setActiveWidget(WebWidget*)));
 
@@ -235,7 +235,7 @@ QString QtWebKitWebBackend::getUserAgent(const QString &pattern) const
 			return (m_userAgents[pattern].isEmpty() ? pattern : m_userAgents[pattern]);
 		}
 
-		QString userAgent = pattern;
+		QString userAgent(pattern);
 		QMap<QString, QString>::iterator iterator;
 
 		for (iterator = m_userAgentComponents.begin(); iterator != m_userAgentComponents.end(); ++iterator)
@@ -282,7 +282,7 @@ QList<SpellCheckManager::DictionaryInformation> QtWebKitWebBackend::getDictionar
 
 bool QtWebKitWebBackend::requestThumbnail(const QUrl &url, const QSize &size)
 {
-	QtWebKitPage *page = new QtWebKitPage();
+	QtWebKitPage *page(new QtWebKitPage());
 
 	m_thumbnailRequests[page] = qMakePair(url, size);
 

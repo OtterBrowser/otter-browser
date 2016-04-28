@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2016 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -102,8 +102,8 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 				QTextStream stream(&file);
 				stream.setCodec("UTF-8");
 
-				QString mainTemplate = stream.readAll();
-				const QString entryTemplate = entryExpression.match(mainTemplate).captured(1);
+				QString mainTemplate(stream.readAll());
+				const QString entryTemplate(entryExpression.match(mainTemplate).captured(1));
 				QUrl url(request().url());
 				QStringList navigation;
 				QList<QUrlInfo> entries;
@@ -116,7 +116,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 
 				while (true)
 				{
-					const bool isRoot = (url.path() == QLatin1String("/"));
+					const bool isRoot(url.path() == QLatin1String("/"));
 
 					url = url.adjusted(QUrl::StripTrailingSlash);
 
@@ -145,7 +145,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 
 				for (int i = 0; i < entries.count(); ++i)
 				{
-					const QMimeType mimeType = (entries.at(i).isDir() ? database.mimeTypeForName(QLatin1String("inode-directory")) : database.mimeTypeForUrl(request().url().url() + entries.at(i).name()));
+					const QMimeType mimeType(entries.at(i).isDir() ? database.mimeTypeForName(QLatin1String("inode-directory")) : database.mimeTypeForUrl(request().url().url() + entries.at(i).name()));
 					QString entryHtml(entryTemplate);
 
 					if (!icons.contains(mimeType.name()))
@@ -248,7 +248,7 @@ qint64 QtWebKitFtpListingNetworkReply::readData(char *data, qint64 maxSize)
 {
 	if (m_offset < m_content.size())
 	{
-		qint64 number = qMin(maxSize, m_content.size() - m_offset);
+		const qint64 number(qMin(maxSize, m_content.size() - m_offset));
 
 		memcpy(data, (m_content.constData() + m_offset), number);
 

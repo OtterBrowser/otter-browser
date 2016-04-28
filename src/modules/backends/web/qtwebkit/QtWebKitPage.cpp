@@ -132,7 +132,7 @@ void QtWebKitPage::pageLoadFinished()
 
 void QtWebKitPage::removePopup(const QUrl &url)
 {
-	QtWebKitPage *page = qobject_cast<QtWebKitPage*>(sender());
+	QtWebKitPage *page(qobject_cast<QtWebKitPage*>(sender()));
 
 	if (page)
 	{
@@ -156,11 +156,11 @@ void QtWebKitPage::applyContentBlockingRules(const QStringList &rules, bool remo
 
 	for (int i = 0; i < rules.count(); ++i)
 	{
-		const QWebElementCollection elements = document.findAll(rules.at(i));
+		const QWebElementCollection elements(document.findAll(rules.at(i)));
 
 		for (int j = 0; j < elements.count(); ++j)
 		{
-			QWebElement element = elements.at(j);
+			QWebElement element(elements.at(j));
 
 			if (!element.isNull())
 			{
@@ -172,10 +172,10 @@ void QtWebKitPage::applyContentBlockingRules(const QStringList &rules, bool remo
 
 void QtWebKitPage::updateStyleSheets(const QUrl &url)
 {
-	const QUrl currentUrl = (url.isEmpty() ? mainFrame()->url() : url);
-	QString styleSheet = QString(QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}")).arg(SettingsManager::getValue(QLatin1String("Content/TextColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/LinkColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/VisitedLinkColor")).toString()).toUtf8();
-	QWebElement media = mainFrame()->findFirstElement(QLatin1String("img, audio source, video source"));
-	const bool isViewingMedia = (!media.isNull() && QUrl(media.attribute(QLatin1String("src"))) == currentUrl);
+	const QUrl currentUrl(url.isEmpty() ? mainFrame()->url() : url);
+	QString styleSheet((QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}")).arg(SettingsManager::getValue(QLatin1String("Content/TextColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/LinkColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/VisitedLinkColor")).toString()).toUtf8());
+	QWebElement media(mainFrame()->findFirstElement(QLatin1String("img, audio source, video source")));
+	const bool isViewingMedia(!media.isNull() && QUrl(media.attribute(QLatin1String("src"))) == currentUrl);
 
 	if (isViewingMedia && media.tagName().toLower() == QLatin1String("img"))
 	{
@@ -199,7 +199,7 @@ void QtWebKitPage::updateStyleSheets(const QUrl &url)
 		styleSheet.append(QLatin1String("body::-webkit-scrollbar {display:none;}"));
 	}
 
-	const QString userSyleSheet = (m_widget ? m_widget->getOption(QLatin1String("Content/UserStyleSheet"), currentUrl).toString() : QString());
+	const QString userSyleSheet(m_widget ? m_widget->getOption(QLatin1String("Content/UserStyleSheet"), currentUrl).toString() : QString());
 
 	if (!userSyleSheet.isEmpty())
 	{
@@ -278,9 +278,9 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 {
 	if (type == QWebPage::WebBrowserWindow)
 	{
-		QtWebKitWebWidget *widget = NULL;
-		QString popupsPolicy = SettingsManager::getValue(QLatin1String("Content/PopupsPolicy")).toString();
-		bool isPopup = true;
+		QtWebKitWebWidget *widget(NULL);
+		QString popupsPolicy(SettingsManager::getValue(QLatin1String("Content/PopupsPolicy")).toString());
+		bool isPopup(true);
 
 		if (m_widget)
 		{
@@ -297,7 +297,7 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 
 			if (popupsPolicy == QLatin1String("ask"))
 			{
-				QtWebKitPage *page = new QtWebKitPage();
+				QtWebKitPage *page(new QtWebKitPage());
 				page->markAsPopup();
 
 				connect(page, SIGNAL(aboutToNavigate(QUrl,QWebFrame*,QWebPage::NavigationType)), this, SLOT(removePopup(QUrl)));
@@ -360,8 +360,8 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 
 	if (type == QWebPage::NavigationTypeFormResubmitted && SettingsManager::getValue(QLatin1String("Choices/WarnFormResend")).toBool())
 	{
-		bool cancel = false;
-		bool warn = true;
+		bool cancel(false);
+		bool warn(true);
 
 		if (m_widget)
 		{
@@ -442,13 +442,13 @@ bool QtWebKitPage::javaScriptPrompt(QWebFrame *frame, const QString &message, co
 		return QWebPage::javaScriptPrompt(frame, message, defaultValue, result);
 	}
 
-	QWidget *widget = new QWidget(m_widget);
-	QLineEdit *lineEdit = new QLineEdit(defaultValue, widget);
-	QLabel *label = new QLabel(message, widget);
+	QWidget *widget(new QWidget(m_widget));
+	QLineEdit *lineEdit(new QLineEdit(defaultValue, widget));
+	QLabel *label(new QLabel(message, widget));
 	label->setBuddy(lineEdit);
 	label->setTextFormat(Qt::PlainText);
 
-	QVBoxLayout *layout = new QVBoxLayout(widget);
+	QVBoxLayout *layout(new QVBoxLayout(widget));
 	layout->addWidget(label);
 	layout->addWidget(lineEdit);
 
@@ -476,7 +476,7 @@ bool QtWebKitPage::event(QEvent *event)
 {
 	if (event->type() == QEvent::Wheel)
 	{
-		QWheelEvent *wheelEvent = static_cast<QWheelEvent*>(event);
+		QWheelEvent *wheelEvent(static_cast<QWheelEvent*>(event));
 
 		if (wheelEvent->buttons() == Qt::RightButton)
 		{
@@ -491,8 +491,8 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 {
 	if (extension == QWebPage::ChooseMultipleFilesExtension && m_widget)
 	{
-		const QWebPage::ChooseMultipleFilesExtensionOption *filesOption = static_cast<const QWebPage::ChooseMultipleFilesExtensionOption*>(option);
-		QWebPage::ChooseMultipleFilesExtensionReturn *filesOutput = static_cast<QWebPage::ChooseMultipleFilesExtensionReturn*>(output);
+		const QWebPage::ChooseMultipleFilesExtensionOption *filesOption(static_cast<const QWebPage::ChooseMultipleFilesExtensionOption*>(option));
+		QWebPage::ChooseMultipleFilesExtensionReturn *filesOutput(static_cast<QWebPage::ChooseMultipleFilesExtensionReturn*>(output));
 
 		filesOutput->fileNames = QFileDialog::getOpenFileNames(m_widget, tr("Open File"), QString(), filesOption->suggestedFileNames.join(QLatin1Char(';')));
 
@@ -501,8 +501,8 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 
 	if (extension == QWebPage::ErrorPageExtension)
 	{
-		const QWebPage::ErrorPageExtensionOption *errorOption = static_cast<const QWebPage::ErrorPageExtensionOption*>(option);
-		QWebPage::ErrorPageExtensionReturn *errorOutput = static_cast<QWebPage::ErrorPageExtensionReturn*>(output);
+		const QWebPage::ErrorPageExtensionOption *errorOption(static_cast<const QWebPage::ErrorPageExtensionOption*>(option));
+		QWebPage::ErrorPageExtensionReturn *errorOutput(static_cast<QWebPage::ErrorPageExtensionReturn*>(output));
 
 		if (!errorOption || !errorOutput || (errorOption->error == 203 && errorOption->domain == QWebPage::WebKit))
 		{

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 -2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ void QtWebKitInspector::childEvent(QChildEvent *event)
 
 	if (event->type() == QEvent::ChildAdded && event->child()->inherits("QWebView"))
 	{
-		QWebView *webView = qobject_cast<QWebView*>(event->child());
+		QWebView *webView(qobject_cast<QWebView*>(event->child()));
 
 		if (webView)
 		{

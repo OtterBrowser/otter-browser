@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2012 by Lindsay Mathieson <lindsay dot mathieson at gmail dot com>
 * Copyright (C) 2012 by Andrea Diamantini <adjam7 at gmail dot com>
 *
@@ -63,9 +63,9 @@ void QtWebKitSpellChecker::checkSpellingOfString(const QString &word, int *missp
 
 	QTextBoundaryFinder finder(QTextBoundaryFinder::Word, word);
 	QTextBoundaryFinder::BoundaryReasons boundary(finder.boundaryReasons());
-	int start = finder.position();
-	int end = finder.position();
-	bool inWord = boundary.testFlag(QTextBoundaryFinder::StartOfItem);
+	int start(finder.position());
+	int end(finder.position());
+	bool inWord(boundary.testFlag(QTextBoundaryFinder::StartOfItem));
 
 	while (finder.toNextBoundary() > 0)
 	{
@@ -75,7 +75,7 @@ void QtWebKitSpellChecker::checkSpellingOfString(const QString &word, int *missp
 		{
 			end = finder.position();
 
-			const QString string = finder.string().mid(start, (end - start));
+			const QString string(finder.string().mid(start, (end - start)));
 
 			if (isValidWord(string))
 			{
