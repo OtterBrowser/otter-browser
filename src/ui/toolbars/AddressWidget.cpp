@@ -831,7 +831,6 @@ void AddressWidget::setCompletion(const QString &filter)
 			m_completionView->viewport()->installEventFilter(this);
 
 			connect(m_completionView, SIGNAL(clicked(QModelIndex)), this, SLOT(openUrl(QModelIndex)));
-			connect(m_completionView, SIGNAL(entered(QModelIndex)), this, SLOT(setText(QModelIndex)));
 
 			m_completionView->move(mapToGlobal(contentsRect().bottomLeft()));
 			m_completionView->show();
