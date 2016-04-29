@@ -19,6 +19,8 @@
 **************************************************************************/
 
 #include "AddressDelegate.h"
+
+#include "toolbars/AddressWidget.h"
 #include "../core/AddressCompletionModel.h"
 #include "../core/ThemesManager.h"
 
@@ -28,6 +30,7 @@ namespace Otter
 {
 
 AddressDelegate::AddressDelegate(bool isAddressField, QObject *parent) : QItemDelegate(parent),
+	m_displayMode((SettingsManager::getValue(QLatin1String("AddressField/CompletionDisplayMode")).toString() == QLatin1String("columns")) ? ColumnsMode : CompactMode),
 	m_isAddressField(isAddressField)
 {
 }
@@ -72,18 +75,40 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 
 	icon.paint(painter, decorationRectangle, option.decorationAlignment);
 
-	const QString url(index.data(Qt::DisplayRole).toString());
+	QString url(index.data(Qt::DisplayRole).toString());
 
 	if (m_isAddressField)
 	{
-		QStyleOptionViewItem mutableOption(option);
-		mutableOption.palette.setColor(QPalette::Text, option.palette.color(QPalette::Link));
+		QStyleOptionViewItem linkOption(option);
 
-		drawDisplay(painter, mutableOption, titleRectangle, url);
+		if (static_cast<AddressCompletionModel::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) != AddressCompletionModel::SearchSuggestionType)
+		{
+			linkOption.palette.setColor(QPalette::Text, option.palette.color(QPalette::Link));
+		}
+
+		if (m_displayMode == ColumnsMode)
+		{
+			const int maxUrlWidth(option.rect.width() / 2);
+
+			url = option.fontMetrics.elidedText(url, Qt::ElideRight, (maxUrlWidth - 40));
+
+			drawDisplay(painter, linkOption, titleRectangle, url);
+
+			if (!index.data(Qt::UserRole + 1).isNull())
+			{
+				titleRectangle.setLeft(maxUrlWidth);
+
+				drawDisplay(painter, option, titleRectangle, index.data(Qt::UserRole + 1).toString());
+			}
+
+			return;
+		}
+
+		drawDisplay(painter, linkOption, titleRectangle, url);
 
 		if (!index.data(Qt::UserRole + 1).isNull())
 		{
-			const int urlLength = option.fontMetrics.width(url + QLatin1Char(' '));
+			const int urlLength(option.fontMetrics.width(url + QLatin1Char(' ')));
 
 			if (urlLength < titleRectangle.width())
 			{
@@ -92,11 +117,11 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 				drawDisplay(painter, option, titleRectangle, QLatin1String("- ") + index.data(Qt::UserRole + 1).toString());
 			}
 		}
+
+		return;
 	}
-	else
-	{
-		drawDisplay(painter, option, titleRectangle, url);
-	}
+
+	drawDisplay(painter, option, titleRectangle, url);
 }
 
 QSize AddressDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const

@@ -29,12 +29,19 @@ namespace Otter
 class AddressDelegate : public QItemDelegate
 {
 public:
+	enum DisplayMode
+	{
+		CompactMode = 0,
+		ColumnsMode
+	};
+
 	explicit AddressDelegate(bool isAddressField, QObject *parent = NULL);
 
 	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
 private:
+	DisplayMode m_displayMode;
 	bool m_isAddressField;
 };
 

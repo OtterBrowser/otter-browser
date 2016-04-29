@@ -97,6 +97,13 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->browsingSuggestHistoryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/SuggestHistory")).toBool());
 	m_ui->browsingCategoriesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/ShowCompletionCategories")).toBool());
 
+	m_ui->browsingDisplayModeComboBox->addItem(tr("Compact"), QLatin1String("compact"));
+	m_ui->browsingDisplayModeComboBox->addItem(tr("Columns"), QLatin1String("columns"));
+
+	const int displayModeIndex(m_ui->browsingDisplayModeComboBox->findData(SettingsManager::getValue(QLatin1String("AddressField/CompletionDisplayMode")).toString()));
+
+	m_ui->browsingDisplayModeComboBox->setCurrentIndex((displayModeIndex < 0) ? 1 : displayModeIndex);
+
 	m_ui->notificationsPlaySoundButton->setIcon(ThemesManager::getIcon(QLatin1String("media-playback-start")));
 
 	QStringList notificationsLabels;
@@ -1275,6 +1282,7 @@ void PreferencesAdvancedPageWidget::save()
 	SettingsManager::setValue(QLatin1String("AddressField/SuggestBookmarks"), m_ui->browsingSuggestBookmarksCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("AddressField/SuggestHistory"), m_ui->browsingSuggestHistoryCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("AddressField/ShowCompletionCategories"), m_ui->browsingCategoriesCheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("AddressField/CompletionDisplayMode"), m_ui->browsingDisplayModeComboBox->currentData(Qt::UserRole).toString());
 
 	QSettings notificationsSettings(SessionsManager::getWritableDataPath(QLatin1String("notifications.ini")), QSettings::IniFormat);
 	notificationsSettings.setIniCodec("UTF-8");
