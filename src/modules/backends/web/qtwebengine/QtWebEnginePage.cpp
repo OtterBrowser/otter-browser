@@ -200,7 +200,7 @@ void QtWebEnginePage::javaScriptAlert(const QUrl &url, const QString &message)
 
 void QtWebEnginePage::javaScriptConsoleMessage(JavaScriptConsoleMessageLevel level, const QString &note, int line, const QString &source)
 {
-	MessageLevel mappedLevel = Otter::LogMessageLevel;
+	MessageLevel mappedLevel(Otter::LogMessageLevel);
 
 	if (level == QWebEnginePage::WarningMessageLevel)
 	{
@@ -299,8 +299,8 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::N
 
 	if (isMainFrame && type == QWebEnginePage::NavigationTypeReload && m_previousNavigationType == QWebEnginePage::NavigationTypeFormSubmitted && SettingsManager::getValue(QLatin1String("Choices/WarnFormResend")).toBool())
 	{
-		bool cancel = false;
-		bool warn = true;
+		bool cancel(false);
+		bool warn(true);
 
 		if (m_widget)
 		{
@@ -414,13 +414,13 @@ bool QtWebEnginePage::javaScriptPrompt(const QUrl &url, const QString &message, 
 		return QWebEnginePage::javaScriptPrompt(url, message, defaultValue, result);
 	}
 
-	QWidget *widget = new QWidget(m_widget);
-	QLineEdit *lineEdit = new QLineEdit(defaultValue, widget);
-	QLabel *label = new QLabel(message, widget);
+	QWidget *widget(new QWidget(m_widget));
+	QLineEdit *lineEdit(new QLineEdit(defaultValue, widget));
+	QLabel *label(new QLabel(message, widget));
 	label->setBuddy(lineEdit);
 	label->setTextFormat(Qt::PlainText);
 
-	QVBoxLayout *layout = new QVBoxLayout(widget);
+	QVBoxLayout *layout(new QVBoxLayout(widget));
 	layout->addWidget(label);
 	layout->addWidget(lineEdit);
 

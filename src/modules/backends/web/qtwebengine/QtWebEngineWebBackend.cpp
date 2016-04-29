@@ -42,7 +42,7 @@ QtWebEngineWebBackend::QtWebEngineWebBackend(QObject *parent) : WebBackend(paren
 	m_requestInterceptor(NULL),
 	m_isInitialized(false)
 {
-	const QString userAgent = QWebEngineProfile::defaultProfile()->httpUserAgent();
+	const QString userAgent(QWebEngineProfile::defaultProfile()->httpUserAgent());
 	QRegularExpression platformExpression(QLatin1String("(\\([^\\)]+\\))"));
 	QRegularExpression engineExpression(QLatin1String("Chrome/([\\d\\.]+)"));
 
@@ -68,7 +68,7 @@ void QtWebEngineWebBackend::optionChanged(const QString &option)
 		return;
 	}
 
-	QWebEngineSettings *globalSettings = QWebEngineSettings::globalSettings();
+	QWebEngineSettings *globalSettings(QWebEngineSettings::globalSettings());
 	globalSettings->setAttribute(QWebEngineSettings::AutoLoadImages, SettingsManager::getValue(QLatin1String("Browser/EnableImages")).toBool());
 	globalSettings->setAttribute(QWebEngineSettings::PluginsEnabled, SettingsManager::getValue(QLatin1String("Browser/EnablePlugins")).toString() != QLatin1String("disabled"));
 	globalSettings->setAttribute(QWebEngineSettings::JavascriptEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableJavaScript")).toBool());
@@ -157,7 +157,7 @@ QString QtWebEngineWebBackend::getUserAgent(const QString &pattern) const
 			return (m_userAgents[pattern].isEmpty() ? pattern : m_userAgents[pattern]);
 		}
 
-		QString userAgent = pattern;
+		QString userAgent(pattern);
 		QMap<QString, QString>::iterator iterator;
 
 		for (iterator = m_userAgentComponents.begin(); iterator != m_userAgentComponents.end(); ++iterator)
@@ -170,7 +170,7 @@ QString QtWebEngineWebBackend::getUserAgent(const QString &pattern) const
 		return userAgent;
 	}
 
-	const UserAgentInformation userAgent = NetworkManagerFactory::getUserAgent(SettingsManager::getValue(QLatin1String("Network/UserAgent")).toString());
+	const UserAgentInformation userAgent(NetworkManagerFactory::getUserAgent(SettingsManager::getValue(QLatin1String("Network/UserAgent")).toString()));
 
 	return ((userAgent.value.isEmpty()) ? QString() : getUserAgent(userAgent.value));
 }

@@ -99,7 +99,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
 	m_webView->installEventFilter(this);
 
-	QVBoxLayout *layout = new QVBoxLayout(this);
+	QVBoxLayout *layout(new QVBoxLayout(this));
 	layout->addWidget(m_webView);
 	layout->setContentsMargins(0, 0, 0, 0);
 
@@ -240,7 +240,7 @@ void QtWebEngineWebWidget::removeHistoryIndex(int index, bool purge)
 {
 	Q_UNUSED(purge)
 
-	WindowHistoryInformation history = getHistory();
+	WindowHistoryInformation history(getHistory());
 
 	if (index < 0 || index >= history.entries.count())
 	{
@@ -268,7 +268,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 	{
 		case ActionsManager::SaveAction:
 			{
-				const QString path = TransfersManager::getSavePath(suggestSaveFileName());
+				const QString path(TransfersManager::getSavePath(suggestSaveFileName()));
 
 				if (!path.isEmpty())
 				{
@@ -433,13 +433,13 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::ViewFrameSourceAction:
 			if (m_hitResult.frameUrl.isValid())
 			{
-				const QString defaultEncoding = m_webView->page()->settings()->defaultTextEncoding();
+				const QString defaultEncoding(m_webView->page()->settings()->defaultTextEncoding());
 				QNetworkRequest request(m_hitResult.frameUrl);
 				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
 				request.setHeader(QNetworkRequest::UserAgentHeader, m_webView->page()->profile()->httpUserAgent());
 
-				QNetworkReply *reply = NetworkManagerFactory::getNetworkManager()->get(request);
-				SourceViewerWebWidget *sourceViewer = new SourceViewerWebWidget(isPrivate());
+				QNetworkReply *reply(NetworkManagerFactory::getNetworkManager()->get(request));
+				SourceViewerWebWidget *sourceViewer(new SourceViewerWebWidget(isPrivate()));
 				sourceViewer->setRequestedUrl(QUrl(QLatin1String("view-source:") + m_hitResult.frameUrl.toString()), false);
 
 				if (!defaultEncoding.isEmpty())
@@ -475,9 +475,9 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			{
 				if (m_hitResult.imageUrl.url().contains(QLatin1String(";base64,")))
 				{
-					const QString imageUrl = m_hitResult.imageUrl.url();
-					const QString imageType = imageUrl.mid(11, (imageUrl.indexOf(QLatin1Char(';')) - 11));
-					const QString path = TransfersManager::getSavePath(tr("file") + QLatin1Char('.') + imageType);
+					const QString imageUrl(m_hitResult.imageUrl.url());
+					const QString imageType(imageUrl.mid(11, (imageUrl.indexOf(QLatin1Char(';')) - 11)));
+					const QString path(TransfersManager::getSavePath(tr("file") + QLatin1Char('.') + imageType));
 
 					if (path.isEmpty())
 					{
@@ -534,14 +534,14 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				properties[QLatin1String("alternativeText")] = m_hitResult.alternateText;
 				properties[QLatin1String("longDescription")] = m_hitResult.longDescription;
 
-				ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
+				ContentsWidget *parent(qobject_cast<ContentsWidget*>(parentWidget()));
 
 				if (parent)
 				{
-					ImagePropertiesDialog *imagePropertiesDialog = new ImagePropertiesDialog(m_hitResult.imageUrl, properties, NULL, this);
+					ImagePropertiesDialog *imagePropertiesDialog(new ImagePropertiesDialog(m_hitResult.imageUrl, properties, NULL, this));
 					imagePropertiesDialog->setButtonsVisible(false);
 
-					ContentsDialog *dialog = new ContentsDialog(ThemesManager::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this);
+					ContentsDialog *dialog(new ContentsDialog(ThemesManager::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this));
 
 					connect(this, SIGNAL(aboutToReload()), dialog, SLOT(close()));
 					connect(imagePropertiesDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
@@ -652,7 +652,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			return;
 		case ActionsManager::CopyPlainTextAction:
 			{
-				const QString text = getSelectedText();
+				const QString text(getSelectedText());
 
 				if (!text.isEmpty())
 				{
@@ -667,7 +667,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			return;
 		case ActionsManager::CopyToNoteAction:
 			{
-				BookmarksItem *note = NotesManager::addNote(BookmarksModel::UrlBookmark, getUrl());
+				BookmarksItem *note(NotesManager::addNote(BookmarksModel::UrlBookmark, getUrl()));
 				note->setData(getSelectedText(), BookmarksModel::DescriptionRole);
 			}
 
@@ -737,7 +737,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			return;
 		case ActionsManager::BookmarkPageAction:
 			{
-				const QUrl url = getUrl();
+				const QUrl url(getUrl());
 
 				if (BookmarksManager::hasBookmark(url))
 				{
@@ -753,13 +753,13 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::ViewSourceAction:
 			if (canViewSource())
 			{
-				const QString defaultEncoding = m_webView->page()->settings()->defaultTextEncoding();
+				const QString defaultEncoding(m_webView->page()->settings()->defaultTextEncoding());
 				QNetworkRequest request(getUrl());
 				request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
 				request.setHeader(QNetworkRequest::UserAgentHeader, m_webView->page()->profile()->httpUserAgent());
 
-				QNetworkReply *reply = NetworkManagerFactory::getNetworkManager()->get(request);
-				SourceViewerWebWidget *sourceViewer = new SourceViewerWebWidget(isPrivate());
+				QNetworkReply *reply(NetworkManagerFactory::getNetworkManager()->get(request));
+				SourceViewerWebWidget *sourceViewer(new SourceViewerWebWidget(isPrivate()));
 				sourceViewer->setRequestedUrl(QUrl(QLatin1String("view-source:") + getUrl().toString()), false);
 
 				if (!defaultEncoding.isEmpty())
@@ -797,8 +797,8 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 void QtWebEngineWebWidget::pasteText(const QString &text)
 {
-	QMimeData *mimeData = new QMimeData();
-	const QStringList mimeTypes = QGuiApplication::clipboard()->mimeData()->formats();
+	QMimeData *mimeData(new QMimeData());
+	const QStringList mimeTypes(QGuiApplication::clipboard()->mimeData()->formats());
 
 	for (int i = 0; i < mimeTypes.count(); ++i)
 	{
@@ -829,7 +829,7 @@ void QtWebEngineWebWidget::iconReplyFinished()
 
 void QtWebEngineWebWidget::viewSourceReplyFinished(QNetworkReply::NetworkError error)
 {
-	QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
+	QNetworkReply *reply(qobject_cast<QNetworkReply*>(sender()));
 
 	if (error == QNetworkReply::NoError && m_viewSourceReplies.contains(reply) && m_viewSourceReplies[reply])
 	{
@@ -864,7 +864,7 @@ void QtWebEngineWebWidget::handleIconChange(const QUrl &url)
 
 void QtWebEngineWebWidget::handleAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator)
 {
-	AuthenticationDialog *authenticationDialog = new AuthenticationDialog(url, authenticator, this);
+	AuthenticationDialog *authenticationDialog(new AuthenticationDialog(url, authenticator, this));
 	authenticationDialog->setButtonsVisible(false);
 
 	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, this);
@@ -879,7 +879,7 @@ void QtWebEngineWebWidget::handleProxyAuthenticationRequired(const QUrl &url, QA
 {
 	Q_UNUSED(url)
 
-	AuthenticationDialog *authenticationDialog = new AuthenticationDialog(proxy, authenticator, this);
+	AuthenticationDialog *authenticationDialog(new AuthenticationDialog(proxy, authenticator, this));
 	authenticationDialog->setButtonsVisible(false);
 
 	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, this);
@@ -898,9 +898,9 @@ void QtWebEngineWebWidget::handleCreateSearch(const QVariant &result)
 	}
 
 	const QUrlQuery parameters(result.toMap().value(QLatin1String("query")).toString());
-	const QStringList identifiers = SearchEnginesManager::getSearchEngines();
-	const QStringList keywords = SearchEnginesManager::getSearchKeywords();
-	const QIcon icon = getIcon();
+	const QStringList identifiers(SearchEnginesManager::getSearchEngines());
+	const QStringList keywords(SearchEnginesManager::getSearchKeywords());
+	const QIcon icon(getIcon());
 	const QUrl url(result.toMap().value(QLatin1String("url")).toString());
 	SearchEnginesManager::SearchEngineDefinition searchEngine;
 	searchEngine.identifier = Utils::createIdentifier(getUrl().host(), identifiers);
@@ -949,7 +949,7 @@ void QtWebEngineWebWidget::handleImageProperties(const QVariant &result)
 		properties[QLatin1String("height")] = result.toList()[1].toInt();
 	}
 
-	ImagePropertiesDialog *imagePropertiesDialog = new ImagePropertiesDialog(m_hitResult.imageUrl, properties, NULL, this);
+	ImagePropertiesDialog *imagePropertiesDialog(new ImagePropertiesDialog(m_hitResult.imageUrl, properties, NULL, this));
 	imagePropertiesDialog->setButtonsVisible(false);
 
 	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this);
@@ -965,7 +965,7 @@ void QtWebEngineWebWidget::handleFullScreenRequest(QWebEngineFullScreenRequest r
 
 	if (request.toggleOn())
 	{
-		const QString value = SettingsManager::getValue(QLatin1String("Browser/EnableFullScreen"), request.origin()).toString();
+		const QString value(SettingsManager::getValue(QLatin1String("Browser/EnableFullScreen"), request.origin()).toString());
 
 		if (value == QLatin1String("allow"))
 		{
@@ -1022,7 +1022,7 @@ void QtWebEngineWebWidget::handleScrollToAnchor(const QVariant &result)
 
 void QtWebEngineWebWidget::handleWindowCloseRequest()
 {
-	const QString mode = SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanCloseWindows"), getUrl()).toString();
+	const QString mode(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanCloseWindows"), getUrl()).toString());
 
 	if (mode != QLatin1String("ask"))
 	{
@@ -1113,7 +1113,7 @@ void QtWebEngineWebWidget::notifyPermissionRequested(const QUrl &url, QWebEngine
 		}
 		else
 		{
-			const QString value = SettingsManager::getValue(option, url).toString();
+			const QString value(SettingsManager::getValue(option, url).toString());
 
 			if (value == QLatin1String("allow"))
 			{
@@ -1143,7 +1143,7 @@ void QtWebEngineWebWidget::notifyRenderProcessTerminated(QWebEnginePage::RenderP
 
 void QtWebEngineWebWidget::updateUndo()
 {
-	Action *action = getExistingAction(ActionsManager::UndoAction);
+	Action *action(getExistingAction(ActionsManager::UndoAction));
 
 	if (action)
 	{
@@ -1154,7 +1154,7 @@ void QtWebEngineWebWidget::updateUndo()
 
 void QtWebEngineWebWidget::updateRedo()
 {
-	Action *action = getExistingAction(ActionsManager::RedoAction);
+	Action *action(getExistingAction(ActionsManager::RedoAction));
 
 	if (action)
 	{
@@ -1165,7 +1165,7 @@ void QtWebEngineWebWidget::updateRedo()
 
 void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 {
-	QWebEngineSettings *settings = m_webView->page()->settings();
+	QWebEngineSettings *settings(m_webView->page()->settings());
 	settings->setAttribute(QWebEngineSettings::AutoLoadImages, getOption(QLatin1String("Browser/EnableImages"), url).toBool());
 	settings->setAttribute(QWebEngineSettings::JavascriptEnabled, getOption(QLatin1String("Browser/EnableJavaScript"), url).toBool());
 	settings->setAttribute(QWebEngineSettings::JavascriptCanAccessClipboard, getOption(QLatin1String("Browser/JavaScriptCanAccessClipboard"), url).toBool());
@@ -1215,7 +1215,7 @@ void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
 
 	m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(history.index));
 
-	const QUrl url = m_webView->page()->history()->itemAt(history.index).url();
+	const QUrl url(m_webView->page()->history()->itemAt(history.index).url());
 
 	setRequestedUrl(url, false, true);
 	updateOptions(url);
@@ -1268,14 +1268,14 @@ void QtWebEngineWebWidget::setUrl(const QUrl &url, bool typed)
 
 	if (url.isValid() && url.scheme().isEmpty() && !url.path().startsWith('/'))
 	{
-		QUrl httpUrl = url;
+		QUrl httpUrl(url);
 		httpUrl.setScheme(QLatin1String("http"));
 
 		targetUrl = httpUrl;
 	}
 	else if (url.isValid() && (url.scheme().isEmpty() || url.scheme() == "file"))
 	{
-		QUrl localUrl = url;
+		QUrl localUrl(url);
 		localUrl.setScheme(QLatin1String("file"));
 
 		targetUrl = localUrl;
@@ -1308,7 +1308,7 @@ void QtWebEngineWebWidget::setPermission(const QString &key, const QUrl &url, We
 		return;
 	}
 
-	QWebEnginePage::Feature feature = QWebEnginePage::Geolocation;
+	QWebEnginePage::Feature feature(QWebEnginePage::Geolocation);
 
 	if (key == QLatin1String("Browser/EnableGeolocation"))
 	{
@@ -1363,7 +1363,7 @@ void QtWebEngineWebWidget::setOptions(const QVariantHash &options)
 
 WebWidget* QtWebEngineWebWidget::clone(bool cloneHistory, bool isPrivate)
 {
-	QtWebEngineWebWidget *widget = new QtWebEngineWebWidget((this->isPrivate() || isPrivate), getBackend());
+	QtWebEngineWebWidget *widget(new QtWebEngineWebWidget((this->isPrivate() || isPrivate), getBackend()));
 	widget->setOptions(getOptions());
 
 	if (cloneHistory)
@@ -1384,7 +1384,7 @@ Action* QtWebEngineWebWidget::getAction(int identifier)
 {
 	if (identifier == ActionsManager::UndoAction && !getExistingAction(ActionsManager::UndoAction))
 	{
-		Action *action = WebWidget::getAction(ActionsManager::UndoAction);
+		Action *action(WebWidget::getAction(ActionsManager::UndoAction));
 
 		updateUndo();
 
@@ -1395,7 +1395,7 @@ Action* QtWebEngineWebWidget::getAction(int identifier)
 
 	if (identifier == ActionsManager::RedoAction && !getExistingAction(ActionsManager::RedoAction))
 	{
-		Action *action = WebWidget::getAction(ActionsManager::RedoAction);
+		Action *action(WebWidget::getAction(ActionsManager::RedoAction));
 
 		updateRedo();
 
@@ -1406,7 +1406,7 @@ Action* QtWebEngineWebWidget::getAction(int identifier)
 
 	if (identifier == ActionsManager::InspectElementAction && !getExistingAction(ActionsManager::InspectElementAction))
 	{
-		Action *action = WebWidget::getAction(ActionsManager::InspectElementAction);
+		Action *action(WebWidget::getAction(ActionsManager::InspectElementAction));
 		action->setEnabled(false);
 
 		return action;
@@ -1422,11 +1422,11 @@ QWebEnginePage* QtWebEngineWebWidget::getPage()
 
 QString QtWebEngineWebWidget::getTitle() const
 {
-	const QString title = m_webView->title();
+	const QString title(m_webView->title());
 
 	if (title.isEmpty())
 	{
-		const QUrl url = getUrl();
+		const QUrl url(getUrl());
 
 		if (url.scheme() == QLatin1String("about") && (url.path().isEmpty() || url.path() == QLatin1String("blank") || url.path() == QLatin1String("start")))
 		{
@@ -1456,7 +1456,7 @@ QString QtWebEngineWebWidget::getSelectedText() const
 
 QUrl QtWebEngineWebWidget::getUrl() const
 {
-	const QUrl url = m_webView->url();
+	const QUrl url(m_webView->url());
 
 	return ((url.isEmpty() || url.toString() == QLatin1String("about:blank")) ? m_webView->page()->requestedUrl() : url);
 }
@@ -1503,16 +1503,16 @@ QRect QtWebEngineWebWidget::getProgressBarGeometry() const
 
 WindowHistoryInformation QtWebEngineWebWidget::getHistory() const
 {
-	QWebEngineHistory *history = m_webView->history();
+	QWebEngineHistory *history(m_webView->history());
 	WindowHistoryInformation information;
 	information.index = history->currentItemIndex();
 
-	const QString requestedUrl = m_webView->page()->requestedUrl().toString();
-	const int historyCount = history->count();
+	const QString requestedUrl(m_webView->page()->requestedUrl().toString());
+	const int historyCount(history->count());
 
 	for (int i = 0; i < historyCount; ++i)
 	{
-		const QWebEngineHistoryItem item = history->itemAt(i);
+		const QWebEngineHistoryItem item(history->itemAt(i));
 		WindowHistoryEntry entry;
 		entry.url = item.url().toString();
 		entry.title = item.title();
@@ -1619,7 +1619,7 @@ bool QtWebEngineWebWidget::isScrollBar(const QPoint &position) const
 
 bool QtWebEngineWebWidget::findInPage(const QString &text, FindFlags flags)
 {
-	QWebEnginePage::FindFlags nativeFlags = 0;
+	QWebEnginePage::FindFlags nativeFlags(0);
 
 	if (flags.testFlag(BackwardFind))
 	{
@@ -1640,7 +1640,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_webView && event->type() == QEvent::ChildAdded)
 	{
-		QChildEvent *childEvent = static_cast<QChildEvent*>(event);
+		QChildEvent *childEvent(static_cast<QChildEvent*>(event));
 
 		if (childEvent->child())
 		{
@@ -1649,7 +1649,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel)
 	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent)
 		{
@@ -1683,7 +1683,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (event->type() == QEvent::MouseButtonDblClick && mouseEvent->button() == Qt::LeftButton && SettingsManager::getValue(QLatin1String("Browser/ShowSelectionContextMenuOnDoubleClick")).toBool())
 		{
-			const WebWidget::HitTestResult hitResult = getHitTestResult(mouseEvent->pos());
+			const WebWidget::HitTestResult hitResult(getHitTestResult(mouseEvent->pos()));
 
 			if (!hitResult.flags.testFlag(IsContentEditableTest) && hitResult.tagName != QLatin1String("textarea") && hitResult.tagName!= QLatin1String("select") && hitResult.tagName != QLatin1String("input"))
 			{
@@ -1695,7 +1695,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_webView && event->type() == QEvent::ContextMenu)
 	{
-		QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
+		QContextMenuEvent *contextMenuEvent(static_cast<QContextMenuEvent*>(event));
 
 		if (contextMenuEvent && contextMenuEvent->reason() != QContextMenuEvent::Mouse)
 		{
@@ -1711,7 +1711,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (event->type() == QEvent::ToolTip)
 	{
-		QHelpEvent *helpEvent = static_cast<QHelpEvent*>(event);
+		QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
 
 		if (helpEvent)
 		{
