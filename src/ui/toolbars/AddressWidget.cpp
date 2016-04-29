@@ -836,7 +836,7 @@ void AddressWidget::setCompletion(const QString &filter)
 			m_completionView->show();
 		}
 
-		int completionHeight(3);
+		int completionHeight(5);
 
 		if (m_completionModel->rowCount() < 20)
 		{
@@ -851,7 +851,7 @@ void AddressWidget::setCompletion(const QString &filter)
 		}
 
 		m_completionView->setFixedHeight(completionHeight);
-		m_completionView->viewport()->setFixedHeight(completionHeight);
+		m_completionView->viewport()->setFixedHeight(completionHeight - 3);
 		m_completionView->setCurrentIndex(m_completionModel->index(0, 0));
 	}
 
