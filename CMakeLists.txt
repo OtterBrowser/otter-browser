@@ -111,6 +111,7 @@ set(otter_src
 	src/core/NotesManager.cpp
 	src/core/NotificationsManager.cpp
 	src/core/PasswordsManager.cpp
+	src/core/PasswordsStorageBackend.cpp
 	src/core/PlatformIntegration.cpp
 	src/core/SearchEnginesManager.cpp
 	src/core/SearchSuggester.cpp

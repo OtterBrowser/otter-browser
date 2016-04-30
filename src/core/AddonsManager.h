@@ -43,6 +43,7 @@ public:
 		ExtensionType,
 		ImporterType,
 		ModuleType,
+		PasswordsStorageBackendType,
 		ScriptletType,
 		UserScriptType,
 		UserStylesheetType,
