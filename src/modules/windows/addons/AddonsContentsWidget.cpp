@@ -230,7 +230,7 @@ void AddonsContentsWidget::showContextMenu(const QPoint &point)
 
 	if (index.isValid() && index.parent() != m_model->invisibleRootItem()->index())
 	{
-		menu.addAction(tr("Remove Addon…"), this, SLOT(removeAddons()));
+		menu.addAction(tr("Remove Addon…"), this, SLOT(removeAddons()))->setEnabled(false);
 		menu.addSeparator();
 	}
 
