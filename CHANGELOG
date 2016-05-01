@@ -1,10 +1,14 @@
-0.9.10 (2016-??-??):
-- added initial support for user scripts;
+0.9.10 (2016-05-01):
+- added initial support for User Scripts;
 - added Addons Manager;
+- added alternative display mode and support for optional headers for URL completion in address field;
 - many enhancements in experimental backend for QtWebEngine (Blink):
 -- added support for entering full screen mode;
 -- added support for content blocking;
 -- added support for several missing actions;
+- several fixes and improvements in content blocking;
+- improved CMake build system (also now it is the only officially supported);
+- added new backend for storing browsing history;
 - many other fixes and improvements.
 
 0.9.09 (2016-01-01):
