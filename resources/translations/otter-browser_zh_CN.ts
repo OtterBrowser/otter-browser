@@ -172,70 +172,124 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>搜索…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="71"/>
+        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="80"/>
         <source>User Scripts</source>
+        <translation>用户脚本</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="102"/>
+        <source>Select File</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="125"/>
+        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="102"/>
+        <source>User Script files (*.js)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="113"/>
+        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="120"/>
+        <source>Error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="113"/>
+        <source>User Script with this name already exists.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="120"/>
+        <source>Failed to import User Script file.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="233"/>
         <source>Remove Addon…</source>
-        <translation type="unfinished"/>
+        <translation>移除扩展…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="129"/>
+        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="237"/>
         <source>Add Addon…</source>
-        <translation type="unfinished"/>
+        <translation>添加扩展…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="198"/>
+        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="306"/>
         <source>Addons Manager</source>
-        <translation type="unfinished"/>
+        <translation>扩展管理器</translation>
     </message>
 </context>
 <context>
     <name>Otter::AddonsManager</name>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="71"/>
-        <source>Adons Manager</source>
+        <location filename="../../src/core/AddonsManager.cpp" line="76"/>
+        <source>Addons Manager</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="72"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="77"/>
         <source>Bookmarks Manager</source>
         <translation>书签管理器</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="73"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="78"/>
         <source>Cache Manager</source>
         <translation>缓存管理器</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="74"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="79"/>
         <source>Configuration Manager</source>
         <translation>配置管理器</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="75"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="80"/>
         <source>Cookies Manager</source>
         <translation>Cookies 管理器</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="76"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="81"/>
         <source>History Manager</source>
         <translation>历史管理器</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="77"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="82"/>
         <source>Notes Manager</source>
         <translation>笔记管理器</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="78"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="83"/>
         <source>Transfers Manager</source>
         <translation>下载管理器</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::AddressCompletionModel</name>
+    <message>
+        <location filename="../../src/core/AddressCompletionModel.cpp" line="87"/>
+        <source>Search with %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/AddressCompletionModel.cpp" line="104"/>
+        <source>Bookmarks</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/AddressCompletionModel.cpp" line="138"/>
+        <source>Local files</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/AddressCompletionModel.cpp" line="154"/>
+        <source>History</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/AddressCompletionModel.cpp" line="176"/>
+        <source>Special pages</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -312,17 +366,17 @@
         <translation>点击以加载所有在页面上的插件</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1022"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1036"/>
         <source>Show Website Information</source>
         <translation>显示网站信息</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1118"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1132"/>
         <source>(Untitled)</source>
         <translation>（无标题）</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1151"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1165"/>
         <source>Remove This Icon</source>
         <translation>移除此图标</translation>
     </message>
@@ -330,89 +384,98 @@
 <context>
     <name>Otter::Application</name>
     <message>
-        <location filename="../../src/core/Application.cpp" line="253"/>
-        <location filename="../../src/core/Application.cpp" line="285"/>
-        <location filename="../../src/core/Application.cpp" line="506"/>
+        <location filename="../../src/core/Application.cpp" line="254"/>
+        <location filename="../../src/core/Application.cpp" line="286"/>
+        <location filename="../../src/core/Application.cpp" line="360"/>
+        <location filename="../../src/core/Application.cpp" line="527"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="253"/>
+        <location filename="../../src/core/Application.cpp" line="254"/>
         <source>Profile directory (%1) is not writable, application will be running in read-only mode.</source>
-        <translation type="unfinished"/>
+        <translation>配置目录 (%1) 是不可写的， 应用将在只读模式下运行。</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="277"/>
+        <location filename="../../src/core/Application.cpp" line="278"/>
         <source>Your profile directory (%1) ran out of free disk space.
 This may lead to malfunctions or even data loss.</source>
-        <translation type="unfinished"/>
+        <translation>您的配置文件目录 (%1) 可用磁盘空间已不足。
+这可能导致功能异常甚至是数据丢失。</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="281"/>
+        <location filename="../../src/core/Application.cpp" line="282"/>
         <source>Your profile directory (%1) is running low on free disk space (%2 remaining).
 This may lead to malfunctions or even data loss.</source>
-        <translation type="unfinished"/>
+        <translation>您的配置目录 (%1) 的可用空间已经较低 (%2 remaining)。
+这可能导致功能异常甚至是数据丢失。</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="287"/>
-        <location filename="../../src/core/Application.cpp" line="898"/>
-        <location filename="../../src/core/Application.cpp" line="947"/>
+        <location filename="../../src/core/Application.cpp" line="288"/>
+        <location filename="../../src/core/Application.cpp" line="919"/>
+        <location filename="../../src/core/Application.cpp" line="968"/>
         <source>Do you want to continue?</source>
         <translation>确定继续吗？</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="289"/>
-        <location filename="../../src/core/Application.cpp" line="902"/>
-        <location filename="../../src/core/Application.cpp" line="951"/>
+        <location filename="../../src/core/Application.cpp" line="290"/>
+        <location filename="../../src/core/Application.cpp" line="923"/>
+        <location filename="../../src/core/Application.cpp" line="972"/>
         <source>Do not show this message again</source>
         <translation>不再弹出此提示</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="290"/>
+        <location filename="../../src/core/Application.cpp" line="291"/>
         <source>Continue in Read-only Mode</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/core/Application.cpp" line="292"/>
-        <source>Ignore</source>
-        <translation type="unfinished"/>
+        <translation>以只读模式继续</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="293"/>
+        <source>Ignore</source>
+        <translation>忽略</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/Application.cpp" line="294"/>
         <source>Quit</source>
+        <translation>退出</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/Application.cpp" line="360"/>
+        <source>SSL support is not available or incomplete.
+Some websites may work incorrectly or do not work at all.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="506"/>
+        <location filename="../../src/core/Application.cpp" line="527"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
         <translation>此会话没有被正确地保存。
 确定仍然要恢复此会话？</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="610"/>
+        <location filename="../../src/core/Application.cpp" line="631"/>
         <source>New update %1 from %2 channel is available!</source>
         <translation> %2 分支的新版 %1 已经可用！</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="896"/>
-        <location filename="../../src/core/Application.cpp" line="945"/>
+        <location filename="../../src/core/Application.cpp" line="917"/>
+        <location filename="../../src/core/Application.cpp" line="966"/>
         <source>Question</source>
         <translation>确认</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/core/Application.cpp" line="897"/>
+        <location filename="../../src/core/Application.cpp" line="918"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
         <translation><numerusform>退出时您仍在下载 %n 个文件。</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="904"/>
-        <location filename="../../src/core/Application.cpp" line="953"/>
+        <location filename="../../src/core/Application.cpp" line="925"/>
+        <location filename="../../src/core/Application.cpp" line="974"/>
         <source>Hide</source>
         <translation>隐藏</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="946"/>
+        <location filename="../../src/core/Application.cpp" line="967"/>
         <source>You are about to quit the current Otter Browser session.</source>
         <translation>您即将退出当前的会话。</translation>
     </message>
@@ -688,42 +751,42 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>标题</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Address</source>
-        <translation type="unfinished"/>
+        <translation>地址</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>描述</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Keyword</source>
-        <translation type="unfinished"/>
+        <translation>快捷键</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Added</source>
-        <translation type="unfinished"/>
+        <translation>添加日期</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Modified</source>
-        <translation type="unfinished"/>
+        <translation>最后修改日期</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Visited</source>
-        <translation type="unfinished"/>
+        <translation>已访问</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Visits</source>
-        <translation type="unfinished"/>
+        <translation>访问数</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
@@ -1379,7 +1442,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="31"/>
         <source>Scope</source>
-        <translation type="unfinished"/>
+        <translation>作用域</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="60"/>
@@ -1700,18 +1763,18 @@ Exponent: %2</source>
 <context>
     <name>Otter::GoBackActionWidget</name>
     <message>
-        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="67"/>
-        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="120"/>
+        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="69"/>
+        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="140"/>
         <source>(Untitled)</source>
         <translation>(未命名)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="148"/>
+        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="168"/>
         <source>Remove Entry</source>
         <translation>移除项目</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="149"/>
+        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="169"/>
         <source>Purge Entry</source>
         <translation>清除项目</translation>
     </message>
@@ -1719,18 +1782,18 @@ Exponent: %2</source>
 <context>
     <name>Otter::GoForwardActionWidget</name>
     <message>
-        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="67"/>
-        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="120"/>
+        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="69"/>
+        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="140"/>
         <source>(Untitled)</source>
         <translation>(未命名)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="148"/>
+        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="168"/>
         <source>Remove Entry</source>
         <translation>移除项目</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="149"/>
+        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="169"/>
         <source>Purge Entry</source>
         <translation>清除项目</translation>
     </message>
@@ -1887,7 +1950,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/core/HistoryModel.cpp" line="61"/>
         <source>Failed to open history file: %1</source>
-        <translation type="unfinished"/>
+        <translation>打开下列历史文件失败： %1</translation>
     </message>
 </context>
 <context>
@@ -2032,18 +2095,18 @@ Exponent: %2</source>
         <translation>源文件：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="100"/>
-        <location filename="../../src/ui/ImportDialog.cpp" line="113"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="105"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="118"/>
         <source>Error</source>
         <translation>出错了！</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="100"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="105"/>
         <source>Unable to import selected type.</source>
         <translation>无法导入选定的类别。</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImportDialog.cpp" line="113"/>
+        <location filename="../../src/ui/ImportDialog.cpp" line="118"/>
         <source>Failed to import selected type.</source>
         <translation>导入选定的类型失败。</translation>
     </message>
@@ -2093,7 +2156,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="95"/>
         <source>Allow to enter full screen mode:</source>
-        <translation type="unfinished"/>
+        <translation>允许进入全屏模式：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="37"/>
@@ -2241,37 +2304,37 @@ Exponent: %2</source>
         <translation>控制台</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="383"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="399"/>
         <source>Open File</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="661"/>
-        <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.</source>
-        <translation>&lt;b&gt;水獭浏览器 %1&lt;/b&gt;&lt;br&gt;一款旨在由用户操纵，而非操纵用户的浏览器。</translation>
+        <location filename="../../src/ui/MainWindow.cpp" line="677"/>
+        <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="667"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="683"/>
         <source>Web backend: %1 %2.</source>
         <translation>渲染引擎：%1 %2</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="671"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="687"/>
         <source>SSL library not available.</source>
         <translation>SSL库不可用。</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="675"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="691"/>
         <source>SSL library version: %1.</source>
         <translation>SSL库版本号：%1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="839"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="866"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="839"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="866"/>
         <source>You already have this address in your bookmarks.
 Do you want to continue?</source>
         <translation>这个地址已经存在于你的书签中，仍要继续？</translation>
@@ -2296,102 +2359,107 @@ Do you want to continue?</source>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="105"/>
+        <source>Import Opera Search Engines…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/Menu.cpp" line="107"/>
         <source>Import Opera Session…</source>
         <translation>导入 Opera 会话…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="195"/>
+        <location filename="../../src/ui/Menu.cpp" line="197"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="196"/>
+        <location filename="../../src/ui/Menu.cpp" line="198"/>
         <source>Open in New Tab</source>
         <translation>在新标签打开</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="197"/>
+        <location filename="../../src/ui/Menu.cpp" line="199"/>
         <source>Open in New Background Tab</source>
         <translation>在新后台标签打开</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="199"/>
+        <location filename="../../src/ui/Menu.cpp" line="201"/>
         <source>Open in New Window</source>
         <translation>在新窗口中打开</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="200"/>
+        <location filename="../../src/ui/Menu.cpp" line="202"/>
         <source>Open in New Background Window</source>
         <translation>在新后台窗口中打开</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="322"/>
+        <location filename="../../src/ui/Menu.cpp" line="324"/>
         <source>Open All</source>
         <translation>打开全部</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="330"/>
+        <location filename="../../src/ui/Menu.cpp" line="332"/>
         <source>This Folder</source>
         <translation>此文件夹</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="349"/>
-        <location filename="../../src/ui/Menu.cpp" line="497"/>
-        <location filename="../../src/ui/Menu.cpp" line="512"/>
-        <location filename="../../src/ui/Menu.cpp" line="573"/>
-        <location filename="../../src/ui/Menu.cpp" line="623"/>
-        <location filename="../../src/ui/Menu.cpp" line="677"/>
+        <location filename="../../src/ui/Menu.cpp" line="351"/>
+        <location filename="../../src/ui/Menu.cpp" line="499"/>
+        <location filename="../../src/ui/Menu.cpp" line="514"/>
+        <location filename="../../src/ui/Menu.cpp" line="574"/>
+        <location filename="../../src/ui/Menu.cpp" line="624"/>
+        <location filename="../../src/ui/Menu.cpp" line="678"/>
         <source>(Untitled)</source>
         <translation>(未命名)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="387"/>
+        <location filename="../../src/ui/Menu.cpp" line="389"/>
         <source>Auto Detect</source>
         <translation>自动检测</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="442"/>
+        <location filename="../../src/ui/Menu.cpp" line="444"/>
         <source>Clear</source>
         <translation>清除</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="452"/>
+        <location filename="../../src/ui/Menu.cpp" line="454"/>
         <source>Window - %1</source>
         <translation>窗口 - %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/Menu.cpp" line="512"/>
+        <location filename="../../src/ui/Menu.cpp" line="514"/>
         <source>%1 (%n tab(s))</source>
         <translation><numerusform>%1 (%n 个标签)</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="525"/>
-        <location filename="../../src/ui/Menu.cpp" line="611"/>
+        <location filename="../../src/ui/Menu.cpp" line="528"/>
+        <location filename="../../src/ui/Menu.cpp" line="612"/>
         <source>Default</source>
         <translation>默认</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="585"/>
+        <location filename="../../src/ui/Menu.cpp" line="586"/>
         <source>Add New</source>
         <translation>添加新的</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="586"/>
+        <location filename="../../src/ui/Menu.cpp" line="587"/>
         <source>Add Toolbar</source>
         <translation>添加工具栏</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="587"/>
+        <location filename="../../src/ui/Menu.cpp" line="588"/>
         <source>Add Bookmarks Bar…</source>
         <translation>添加书签栏…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="592"/>
+        <location filename="../../src/ui/Menu.cpp" line="593"/>
         <source>Reset to Defaults…</source>
         <translation>重设为默认值…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="633"/>
+        <location filename="../../src/ui/Menu.cpp" line="634"/>
         <source>Custom</source>
         <translation>自定义</translation>
     </message>
@@ -2502,6 +2570,11 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
         <source>Empty Area of Tab Bar</source>
         <translation>标签栏的空白区域</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
+        <source>Any Toolbar</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="131"/>
@@ -2673,17 +2746,17 @@ Do you want to continue?</source>
 <context>
     <name>Otter::OperaBookmarksImporter</name>
     <message>
-        <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="56"/>
+        <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="57"/>
         <source>Opera Bookmarks</source>
         <translation>Opera书签</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="61"/>
+        <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="62"/>
         <source>Imports bookmarks from Opera Browser version 12 or earlier</source>
         <translation>从Opera12及更早版本中导入书签</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="71"/>
+        <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="72"/>
         <source>Opera bookmarks files (bookmarks.adr)</source>
         <translation>Opera书签文件 (bookmarks.adr)</translation>
     </message>
@@ -2691,22 +2764,22 @@ Do you want to continue?</source>
 <context>
     <name>Otter::OperaNotesImporter</name>
     <message>
-        <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="97"/>
+        <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="98"/>
         <source>Import into folder:</source>
         <translation>导入到文件夹：</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="105"/>
+        <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="106"/>
         <source>Opera Notes</source>
         <translation>Opera 笔记</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="110"/>
+        <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="111"/>
         <source>Imports notes from Opera Browser version 12 or earlier</source>
         <translation>从 Opera 浏览器 12 或更早版本导入笔记</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="120"/>
+        <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="121"/>
         <source>Opera notes files (notes.adr)</source>
         <translation>Opera 笔记文件 (notes.adr)</translation>
     </message>
@@ -2714,17 +2787,17 @@ Do you want to continue?</source>
 <context>
     <name>Otter::OperaSessionImporter</name>
     <message>
-        <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="41"/>
+        <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="42"/>
         <source>Opera Session</source>
         <translation>Opera 会话</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="46"/>
+        <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="47"/>
         <source>Imports session from Opera Browser version 12 or earlier</source>
         <translation>从 Opera 浏览器 12 或更早版本导入会话</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="56"/>
+        <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="57"/>
         <source>Opera session files (*.win)</source>
         <translation>Opera 会话文件 (*.win)</translation>
     </message>
@@ -2778,9 +2851,9 @@ Do you want to continue?</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="33"/>
+        <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="34"/>
         <source>Do you want to save login data for %1?</source>
-        <translation type="unfinished"/>
+        <translation>是否想要保存对 %1的登录信息？</translation>
     </message>
 </context>
 <context>
@@ -2813,7 +2886,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="40"/>
         <source>%1 wants to enter full screen mode.</source>
-        <translation type="unfinished"/>
+        <translation>%1 想要进入全屏模式。</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="45"/>
@@ -2837,16 +2910,21 @@ Do you want to continue?</source>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="65"/>
+        <source>%1 wants to play audio.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="70"/>
         <source>%1 wants to show notifications.</source>
         <translation>%1 想要显示通知。</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="70"/>
+        <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="75"/>
         <source>%1 wants to lock mouse pointer.</source>
         <translation>%1 想要锁定您的鼠标光标。</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="75"/>
+        <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="80"/>
         <source>Invalid permission request from %1.</source>
         <translation>来自 %1 的权限请求无效。</translation>
     </message>
@@ -2935,328 +3013,323 @@ Do you want to continue?</source>
         <translation>建议搜索结果</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="113"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="96"/>
+        <source>Address Completion</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="105"/>
+        <source>Show category headers</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="114"/>
+        <source>Display mode:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="152"/>
         <source>Events</source>
         <translation>活动</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="153"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="192"/>
         <source>Play sound:</source>
         <translation>播放声音：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="168"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="207"/>
         <source>Show notification</source>
         <translation>显示通知</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="175"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="214"/>
         <source>Mark taskbar entry</source>
         <translation>标示任务栏项目</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="191"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="230"/>
         <source>Options</source>
         <translation>选项</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="198"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="237"/>
         <source>Prefer native notifications</source>
-        <translation>偏好原生通知</translation>
+        <translation>原生通知优先</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="228"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="267"/>
         <source>Style</source>
         <translation>样式</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="237"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="276"/>
         <source>Widget style:</source>
         <translation>小工具样式：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="247"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="286"/>
         <source>Style sheet:</source>
         <translation>样式表：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="271"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="310"/>
         <source>Other</source>
         <translation>其他</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="280"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="319"/>
         <source>Show tray icon</source>
-        <translation>显示系统托盘图标</translation>
+        <translation>显示托盘图标</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="312"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="635"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="351"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="674"/>
         <source>General</source>
         <translation>一般</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="319"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="358"/>
         <source>Enable images</source>
         <translation>启用图片</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="328"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="367"/>
         <source>Enable JavaScript</source>
         <translation>启用 JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="335"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="374"/>
         <source>JavaScript Options…</source>
         <translation>JavaScript 选项…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="344"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="383"/>
         <source>Enable Java</source>
         <translation>启用 Java</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="353"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="392"/>
         <source>Plugins:</source>
         <translation>插件：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="367"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="406"/>
         <source>User style sheet:</source>
         <translation>用户样式表：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="402"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="441"/>
         <source>MIME Types</source>
         <translation>MIME 类型</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="426"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="980"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1096"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1316"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1469"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="465"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="999"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1115"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1335"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1488"/>
         <source>Add</source>
         <translation>添加</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="436"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="994"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1106"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1346"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1499"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="475"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1013"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1125"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1365"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1518"/>
         <source>Remove</source>
         <translation>移除</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="478"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="517"/>
         <source>Show download dialog</source>
         <translation>显示下载对话框</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="488"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="527"/>
         <source>Save to disk</source>
         <translation>保存到磁盘中</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="531"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="570"/>
         <source>Do not ask for folder, save directly to</source>
         <translation>不要询问文件夹，直接保存至</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="546"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="585"/>
         <source>Open with application</source>
         <translation>以何种应用程序打开</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="592"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="631"/>
         <source>Pass web address directly to application</source>
         <translation>将网址直接发送给应用程序</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="642"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="681"/>
         <source>Send referrer information</source>
         <translation>发送引用页（Referrer）信息</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="651"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="690"/>
         <source>User Agent:</source>
         <translation>用户代理：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="664"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="703"/>
         <source>Manage…</source>
         <translation>管理…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="679"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="718"/>
         <source>Proxy</source>
         <translation>代理服务器</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="688"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="727"/>
         <source>Mode:</source>
         <translation>模式：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="702"/>
-        <source>No proxy</source>
-        <translation>无代理服务器</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="707"/>
-        <source>System configuration</source>
-        <translation>系统设置</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="712"/>
-        <source>Manual configuration</source>
-        <translation>手动设置</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="717"/>
-        <source>Automatic configuration (PAC)</source>
-        <translation>自动设置（PAC）</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="819"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="838"/>
         <source>Port</source>
         <translation>端口</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="826"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="845"/>
         <source>Protocol</source>
         <translation>协议</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="833"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="852"/>
         <source>Servers</source>
         <translation>服务器</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="840"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="859"/>
         <source>FTP</source>
         <translation>FTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="847"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="866"/>
         <source>SOCKS5</source>
         <translation>SOCKS5</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="854"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="873"/>
         <source>HTTP</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="868"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="887"/>
         <source>HTTPS</source>
         <translation>HTTPS</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="882"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="901"/>
         <source>All</source>
         <translation>所有</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="920"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="939"/>
         <source>Path to PAC file:</source>
         <translation>到 PAC 文件的路径：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="937"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="956"/>
         <source>Use system authentication</source>
         <translation>使用系统认证</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="962"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="981"/>
         <source>Do not use proxy for:</source>
         <translation>代理排除列表：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="987"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1006"/>
         <source>Edit</source>
         <translation>编辑</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1018"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1037"/>
         <source>Example: domain.com, localhost, 127.0.0.1, 192.168.1.0/24</source>
         <translation>范例：domain.com, localhost, 127.0.0.1, 192.168.1.0/24</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1051"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1070"/>
         <source>SSL ciphers</source>
         <translation>SSL 密钥</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1131"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1371"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1524"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1150"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1390"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1543"/>
         <source>Move Up</source>
         <translation>上移</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1157"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1397"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1550"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1176"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1416"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1569"/>
         <source>Move Down</source>
         <translation>下移</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1180"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1199"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
         <source>Updates</source>
         <translation>更新</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1187"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1206"/>
         <source>Select channels from which you want to receive updates:</source>
         <translation>选取您想要在哪一个频道接收更新：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1226"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1245"/>
         <source>Check for updates every</source>
-        <translation>检查更新，每</translation>
+        <translation>检查更新间隔：每</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1236"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1255"/>
         <source>day(s)</source>
         <translation>天</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1245"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1264"/>
         <source>Install updates automatically</source>
         <translation>自动安装更新</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1277"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1296"/>
         <source>Keyboard Shortcuts</source>
         <translation>键盘快捷键</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1326"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1479"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1345"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1498"/>
         <source>Edit…</source>
         <translation>编辑…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1336"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1489"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1355"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1508"/>
         <source>Clone</source>
         <translation>克隆</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1410"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1429"/>
         <source>Enable single key shortcuts</source>
         <translation>启用单键快捷键</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1430"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1449"/>
         <source>Mouse Actions and Gestures</source>
         <translation>鼠标动作与手势</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1563"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1582"/>
         <source>Enable mouse gestures</source>
         <translation>启用鼠标手势</translation>
     </message>
@@ -3316,131 +3389,161 @@ Do you want to continue?</source>
         <translation>鼠标</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="102"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="156"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="100"/>
+        <source>Compact</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="101"/>
+        <source>Columns</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="110"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="164"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="102"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="110"/>
         <source>Description</source>
         <translation>描述</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="130"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="138"/>
         <source>System Style</source>
         <translation>系统样式</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="146"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="154"/>
         <source>Enabled</source>
         <translation>已启用</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="147"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="155"/>
         <source>On demand</source>
         <translation>一经要求</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="148"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="156"/>
         <source>Disabled</source>
         <translation>已停用</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="194"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="680"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="202"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="679"/>
         <source>Default</source>
         <translation>缺省</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="201"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="364"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="401"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="686"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="840"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="844"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="870"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="906"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="932"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1026"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1040"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1044"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1070"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1106"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1132"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1226"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1498"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1568"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="209"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="363"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="400"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="685"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="839"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="843"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="869"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="905"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="931"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1025"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1039"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1043"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1069"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1105"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1131"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1225"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1482"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1552"/>
         <source>(Untitled)</source>
         <translation>（无标题）</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="318"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="226"/>
+        <source>No proxy</source>
+        <translation>无代理服务器</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="227"/>
+        <source>System configuration</source>
+        <translation>系统设置</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="228"/>
+        <source>Manual configuration</source>
+        <translation>手动设置</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="229"/>
+        <source>Automatic configuration (PAC)</source>
+        <translation>自动设置（PAC）</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="317"/>
         <source>Stable version</source>
         <translation>稳定版本</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="319"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="318"/>
         <source>Beta version</source>
         <translation>测试版本</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="320"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="319"/>
         <source>Weekly development version</source>
         <translation>每周开发版本</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="376"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="413"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="375"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="412"/>
         <source>New…</source>
         <translation>新建…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="377"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="414"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="376"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="413"/>
         <source>Readd</source>
         <translation>重新添加</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="517"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="516"/>
         <source>WAV files (*.wav)</source>
         <translation>WAV 文件 (*.wav)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="546"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="545"/>
         <source>MIME Type Name</source>
         <translation>MIME 类型名称</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="546"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="545"/>
         <source>Select name of MIME Type:</source>
         <translation>选取 MIME 类型的名称：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="560"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="559"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="560"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="559"/>
         <source>Invalid MIME Type name.</source>
         <translation>无效的 MIME 类型名称</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="952"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1152"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="951"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1151"/>
         <source>Question</source>
         <translation>问题</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="953"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1153"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="952"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1152"/>
         <source>Do you really want to remove this profile?</source>
         <translation>您真的想要移除这个配置文件吗？</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="962"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1162"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="961"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1161"/>
         <source>Delete profile permanently</source>
         <translation>永久删除配置文件</translation>
     </message>
@@ -3588,7 +3691,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="68"/>
         <source>The quick brown fox jumps over the lazy dog</source>
-        <translation>東国三力今書鷹酬鬱愛袋永 over the lazy doge</translation>
+        <translation>The quick brown fox jumps over the lazy dog</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="80"/>
@@ -3694,7 +3797,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="134"/>
         <source>Always ask me where to save files</source>
-        <translation>总是询问我要保存文件到何处</translation>
+        <translation>总是询问文件保存位置</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="147"/>
@@ -3704,12 +3807,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="154"/>
         <source>Open new windows in a new tab instead</source>
-        <translation>以新标签取代新窗口</translation>
+        <translation>以新建标签取代新建窗口</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="161"/>
         <source>Delay loading of tabs until selected</source>
-        <translation>在选定前不要加载标签</translation>
+        <translation>直到被选定才加载标签</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="168"/>
@@ -3719,7 +3822,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="175"/>
         <source>Open new tab next to active</source>
-        <translation>在前景标签的旁边打开新标签</translation>
+        <translation>在前台标签的旁边打开新标签</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="184"/>
@@ -3739,7 +3842,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="208"/>
         <source>Activate the first tab opened from current tab</source>
-        <translation>启用从当前标签打开的第一个标签</translation>
+        <translation>激活从当前标签打开的第一个标签</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="224"/>
@@ -3784,7 +3887,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="45"/>
         <source>Show start page</source>
-        <translation>显示开始页</translation>
+        <translation>显示起始页</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="46"/>
@@ -3794,7 +3897,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="74"/>
         <source>Run Otter Browser with administrator rights to set it as a default browser.</source>
-        <translation>以管理员权限运行水獭浏览器以将其设置为默认浏览器。</translation>
+        <translation>请使用管理员权限运行水獭浏览器以将其设置为默认浏览器。</translation>
     </message>
 </context>
 <context>
@@ -3857,7 +3960,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="228"/>
         <source>Keep until:</source>
-        <translation>保存直到：</translation>
+        <translation>保存期限：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="241"/>
@@ -3877,7 +3980,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="299"/>
         <source>Settings…</source>
-        <translation>设置值…</translation>
+        <translation>设置…</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="319"/>
@@ -3897,7 +4000,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="368"/>
         <source>Use a master password</source>
-        <translation>使用主控密码</translation>
+        <translation>使用主密码</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="391"/>
@@ -3912,7 +4015,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="40"/>
         <source>Inform websites that I allow tracking</source>
-        <translation>告诉网站我想要被追踪</translation>
+        <translation>告诉网站我允许被追踪</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="41"/>
@@ -3945,7 +4048,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="60"/>
         <source>Expires</source>
-        <translation>到期</translation>
+        <translation>过期</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="61"/>
@@ -4135,17 +4238,17 @@ Do you want to continue?</source>
         <translation>不再弹出此提示</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="302"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="303"/>
         <source>Receiving data from %1…</source>
         <translation>正在从 %1接收数据…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="371"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="372"/>
         <source>Completed request to %1</source>
         <translation>已向 %1提交请求</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="633"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="639"/>
         <source>Sending request to %1…</source>
         <translation>正在向 %1提交请求…</translation>
     </message>
@@ -4153,61 +4256,61 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitPage</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="207"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="391"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="428"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="229"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="418"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="455"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="208"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="392"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="429"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="230"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="419"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="456"/>
         <source>Disable JavaScript popups</source>
         <translation>禁用 JavaScript 弹出窗口</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="341"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="354"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="515"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="368"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="381"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="542"/>
         <source>Question</source>
         <translation>询问</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="341"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="355"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="368"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="382"/>
         <source>Are you sure that you want to send form data again?</source>
         <translation>确认再次提交数据？</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="341"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="356"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="368"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="383"/>
         <source>Do you want to resend data?</source>
         <translation>重新发送数据？</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="342"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="360"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="369"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="387"/>
         <source>Do not show this message again</source>
         <translation>不再弹出此提示</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="470"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="497"/>
         <source>Open File</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="503"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="530"/>
         <source>%1 error #%2: %3</source>
         <translation>%1 错误 #%2: %3</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="515"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="542"/>
         <source>The script on this page appears to have a problem.</source>
         <translation>这个页面的脚本似乎出现了问题。</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="515"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="542"/>
         <source>Do you want to stop the script?</source>
         <translation>停止载入脚本？</translation>
     </message>
@@ -4748,8 +4851,8 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="117"/>
         <source>The document has been modified.
 Do you want to save your changes or discard them?</source>
-        <translation>此文档已更改。
-是否将更改保存？</translation>
+        <translation>此文档已被更改。
+是否保存？</translation>
     </message>
     <message>
         <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="298"/>
@@ -4768,7 +4871,7 @@ Do you want to save your changes or discard them?</source>
         <location filename="../../src/modules/windows/web/StartPageModel.cpp" line="175"/>
         <location filename="../../src/modules/windows/web/StartPageModel.cpp" line="176"/>
         <source>Add Tile…</source>
-        <translation>添加瓷砖…</translation>
+        <translation>添加磁贴…</translation>
     </message>
 </context>
 <context>
@@ -4776,7 +4879,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="14"/>
         <source>Start Page Preferences</source>
-        <translation>开始页选项</translation>
+        <translation>起始页选项</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="20"/>
@@ -4826,7 +4929,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="161"/>
         <source>Show tile to add new entries</source>
-        <translation>显示瓷砖以添加新的项目</translation>
+        <translation>显示磁贴以添加新的项目</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="39"/>
@@ -4859,7 +4962,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="404"/>
         <source>Add Tile</source>
-        <translation>添加瓷砖</translation>
+        <translation>添加磁贴</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="558"/>
@@ -4889,7 +4992,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="573"/>
         <source>Add Tile…</source>
-        <translation>添加瓷砖…</translation>
+        <translation>添加磁贴…</translation>
     </message>
 </context>
 <context>
@@ -4913,7 +5016,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="114"/>
         <source>Begin with start page</source>
-        <translation>以开始页开始</translation>
+        <translation>从起始页开始</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="124"/>
@@ -4960,7 +5063,7 @@ Do you want to save your changes or discard them?</source>
         <translation>未命名</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="1016"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="1018"/>
         <source>Close Tab</source>
         <translation>关闭标签</translation>
     </message>
@@ -5220,7 +5323,7 @@ Do you want to save your changes or discard them?</source>
 <context>
     <name>Otter::ToolBarDragAreaWidget</name>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="54"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="55"/>
         <source>Drag to move toolbar</source>
         <translation>拖曳以移动工具栏</translation>
     </message>
@@ -5228,42 +5331,42 @@ Do you want to save your changes or discard them?</source>
 <context>
     <name>Otter::ToolBarWidget</name>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="174"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="182"/>
         <source>Switch tabs using the mouse wheel</source>
         <translation>使用鼠标滚轮切换标签</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="191"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="199"/>
         <source>Arrange</source>
         <translation>整理</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="555"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="563"/>
         <source>Customize</source>
         <translation>自定义</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="557"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="565"/>
         <source>(Untitled)</source>
         <translation>（无标题）</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="558"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="566"/>
         <source>Configure…</source>
         <translation>配置…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="560"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="568"/>
         <source>Reset to Defaults…</source>
         <translation>重设为默认值…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="577"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="585"/>
         <source>Remove…</source>
         <translation>移除…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="581"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="589"/>
         <source>Toolbars</source>
         <translation>工具栏</translation>
     </message>
@@ -5278,7 +5381,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="298"/>
         <source>Do you really want to reset this toolbar to default configuration?</source>
-        <translation>您真的想要重置这个工具栏到缺省的设置吗？</translation>
+        <translation>确认重置这个工具栏为默认设置？</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="338"/>
@@ -5288,7 +5391,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="338"/>
         <source>Do you really want to remove this toolbar?</source>
-        <translation>您真的想要移除这个工具栏吗？</translation>
+        <translation>确认移除这个工具栏？</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="352"/>
@@ -5664,7 +5767,7 @@ Select another one.</source>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="129"/>
         <source>Some of the updates do not contain packages for your platform. Try to check for updates later or visit details page for more info.</source>
-        <translation>有些更新不包含您所用平台上的软件包。请稍后再检查更新，或访问详细信息页面以取得更多信息。</translation>
+        <translation>一些更新不包含您所用平台上的软件包。请稍后再检查更新，或访问详细信息页面以获取更多信息。</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="173"/>
@@ -5686,7 +5789,7 @@ Select another one.</source>
         <source>New version of Otter Browser is ready to install.
 Click Install button to restart browser and install the update or close this dialog to install the update during next browser restart.</source>
         <translation>新版本的水獭浏览器已经就绪，可以安装。
-按下安装按钮以重新启动浏览器并安装更新，或是关闭这个对话框以在下一次浏览器重新启动时安装更新，</translation>
+按下安装按钮以重新启动浏览器并安装更新，或是关闭这个对话框以在下一次浏览器重新启动时安装更新。</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="213"/>
@@ -5696,7 +5799,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="215"/>
         <source>Check Error Console for more information.</source>
-        <translation>检查错误控制台以取得更详细的信息。</translation>
+        <translation>检查错误控制台以获取详细信息。</translation>
     </message>
 </context>
 <context>
@@ -5735,84 +5838,84 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>Otter::WebContentsWidget</name>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="462"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="463"/>
         <source>Open All Pop-Ups</source>
         <translation>打开所有弹出窗口</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="466"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="467"/>
         <source>Open Pop-Ups in Background</source>
         <translation>在后台打开弹出窗口</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="470"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="471"/>
         <source>Block All Pop-Ups</source>
         <translation>屏蔽所有弹出窗口</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="474"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="475"/>
         <source>Ask What to Do</source>
         <translation>询问要怎么做</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="499"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="500"/>
         <source>Enable Images</source>
         <translation>允许图像</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="504"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="505"/>
         <source>Enable JavaScript</source>
         <translation>允许 JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="509"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="510"/>
         <source>Enable Java</source>
         <translation>允许启用 Java</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="514"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="515"/>
         <source>Enable Plugins</source>
         <translation>允许插件</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="521"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="522"/>
         <source>Enable Cookies</source>
         <translation>允许 Cookies</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="525"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="526"/>
         <source>Enable Referrer</source>
         <translation>允许发送 Referrer信息</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="529"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="530"/>
         <source>Enable Proxy</source>
         <translation>允许使用代理</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="534"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="535"/>
         <source>Reset Options</source>
         <translation>重置选项</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="795"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>请确认</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="795"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
         <source>This tab has crashed.</source>
-        <translation type="unfinished"/>
+        <translation>此标签已经崩溃。</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="795"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
         <source>Do you want to try to reload it?</source>
-        <translation type="unfinished"/>
+        <translation>是否尝试重新载入？</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="796"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="802"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>不再显示此消息</translation>
     </message>
 </context>
 <context>
@@ -5865,7 +5968,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1135"/>
         <source>1 Minute</source>
-        <translation type="unfinished"/>
+        <translation>1 分钟</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1136"/>
@@ -6332,7 +6435,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="609"/>
         <source>Allow to enter full screen mode:</source>
-        <translation type="unfinished"/>
+        <translation>允许进入全屏模式：</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="630"/>
@@ -6506,7 +6609,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="100"/>
         <source>Only read existing</source>
-        <translation>只读取已存在的</translation>
+        <translation>只读取已有</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
@@ -6531,7 +6634,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>名称</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
@@ -6577,22 +6680,22 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>Otter::Window</name>
     <message>
-        <location filename="../../src/ui/Window.cpp" line="175"/>
+        <location filename="../../src/ui/Window.cpp" line="177"/>
         <source>Print Page</source>
         <translation>打印页面</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Window.cpp" line="190"/>
+        <location filename="../../src/ui/Window.cpp" line="193"/>
         <source>Print Preview</source>
         <translation>打印预览</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Window.cpp" line="378"/>
+        <location filename="../../src/ui/Window.cpp" line="381"/>
         <source>Select User Agent</source>
         <translation>选择UA</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Window.cpp" line="378"/>
+        <location filename="../../src/ui/Window.cpp" line="381"/>
         <source>Enter User Agent:</source>
         <translation>输入用户标识符：</translation>
     </message>
@@ -6967,17 +7070,17 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="289"/>
         <source>Purge Tab History</source>
-        <translation>将标签历史清除干净</translation>
+        <translation>清理标签历史记录</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="289"/>
         <source>Remove Local and Global Tab History</source>
-        <translation>移除本地及全局页面历史</translation>
+        <translation>移除本地及全局标签历史</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="290"/>
         <source>Suspend Tab</source>
-        <translation type="unfinished"/>
+        <translation>暂停标签页</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="291"/>
@@ -7308,7 +7411,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="351"/>
         <source>Stop All Pages</source>
-        <translation type="unfinished"/>
+        <translation>停止载入所有页面</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="353"/>
@@ -7709,12 +7812,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="432"/>
         <source>Open Panel as Tab</source>
-        <translation>将皮肤打开为标签</translation>
+        <translation>将面板打开为标签</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="433"/>
         <source>Close Panel</source>
-        <translation>关闭皮肤</translation>
+        <translation>关闭面板</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="434"/>
@@ -7734,7 +7837,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="437"/>
         <source>Addons</source>
-        <translation type="unfinished"/>
+        <translation>扩展</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="438"/>
@@ -7756,7 +7859,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="441"/>
         <source>Website Preferences…</source>
-        <translation>网页选项…</translation>
+        <translation>站点首选项…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="442"/>
@@ -7771,7 +7874,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="444"/>
         <source>Website Information…</source>
-        <translation>网页信息…</translation>
+        <translation>站点信息…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="445"/>
@@ -7907,47 +8010,47 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>main</name>
     <message>
-        <location filename="../../src/core/Application.cpp" line="112"/>
+        <location filename="../../src/core/Application.cpp" line="113"/>
         <source>URL to open</source>
         <translation>打开URL</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="113"/>
+        <location filename="../../src/core/Application.cpp" line="114"/>
         <source>Uses &lt;path&gt; as cache directory</source>
         <translation>缓存路径为 &lt;path&gt; </translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="114"/>
+        <location filename="../../src/core/Application.cpp" line="115"/>
         <source>Uses &lt;path&gt; as profile directory</source>
         <translation>配置目录为 &lt;path&gt; </translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="115"/>
+        <location filename="../../src/core/Application.cpp" line="116"/>
         <source>Restores session &lt;session&gt; if it exists</source>
         <translation>如果其存在，恢复会话 &lt;session&gt; </translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="116"/>
+        <location filename="../../src/core/Application.cpp" line="117"/>
         <source>Starts private session</source>
         <translation>新建隐私会话</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="117"/>
+        <location filename="../../src/core/Application.cpp" line="118"/>
         <source>Forces session chooser dialog</source>
         <translation>强制会话选择器对话框</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="118"/>
+        <location filename="../../src/core/Application.cpp" line="119"/>
         <source>Sets profile and cache paths to directories inside the same directory as that of application binary</source>
         <translation>将配置和缓存目录设置到程序文件子目录下</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="119"/>
+        <location filename="../../src/core/Application.cpp" line="120"/>
         <source>Tells application to avoid writing data to disk</source>
-        <translation type="unfinished"/>
+        <translation>使应用不在磁盘写入数据</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="120"/>
+        <location filename="../../src/core/Application.cpp" line="121"/>
         <source>Prints out diagnostic report and exits application</source>
         <translation>打印诊断报告并退出应用程序</translation>
     </message>
@@ -7975,7 +8078,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="609"/>
         <source>Failed to update content blocking profile, update URL is empty</source>
-        <translation>更新内容屏蔽配置文件失败，更新 URL 是空的</translation>
+        <translation>更新内容屏蔽配置文件失败，更新 URL 为空</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingProfile.cpp" line="613"/>
@@ -7985,7 +8088,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="359"/>
         <source>Failed to parse entry of proxy auto-config (PAC): %1</source>
-        <translation>解析代理服务器自动设置 (PAC) 项目时失败：%1</translation>
+        <translation>解析代理服务器自动设置 (PAC) 时失败：%1</translation>
     </message>
     <message>
         <location filename="../../src/core/PlatformIntegration.cpp" line="103"/>
@@ -8030,14 +8133,19 @@ Error: %2</source>
 错误：%2</translation>
     </message>
     <message>
-        <location filename="../../src/core/UserScript.cpp" line="40"/>
+        <location filename="../../src/core/UserScript.cpp" line="43"/>
         <source>Failed to open user script file: %1</source>
+        <translation>打开下列用户脚本失败： %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/UserScript.cpp" line="116"/>
+        <source>Invalid match rule for User Script: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/UserScript.cpp" line="134"/>
+        <location filename="../../src/core/UserScript.cpp" line="162"/>
         <source>Failed to locate header of user script file</source>
-        <translation type="unfinished"/>
+        <translation>定位用户脚本头部失败。</translation>
     </message>
     <message>
         <location filename="../../src/main.cpp" line="125"/>
@@ -8045,7 +8153,7 @@ Error: %2</source>
         <translation>默认</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="595"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="599"/>
         <source>Blocked request</source>
         <translation>被阻止的请求</translation>
     </message>
@@ -8072,12 +8180,12 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="88"/>
         <source>Transfer Completed</source>
-        <translation>传输完成</translation>
+        <translation>下载完成</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="88"/>
         <source>File transfer was completed</source>
-        <translation>文件传输完成</translation>
+        <translation>文件下载完成</translation>
     </message>
     <message>
         <location filename="../../src/core/NotificationsManager.cpp" line="89"/>
@@ -8093,27 +8201,27 @@ Application ID: %2</source>
 <context>
     <name>utils</name>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="145"/>
+        <location filename="../../src/core/Utils.cpp" line="147"/>
         <source>Error %1</source>
         <translation>错误 %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="147"/>
+        <location filename="../../src/core/Utils.cpp" line="149"/>
         <source>You tried to access the address &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, which is currently unavailable. Please make sure that the web address (URL) is correctly spelled and punctuated, then try reloading the page.</source>
         <translation>您试图访问网址 &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;，但其当前不可用。请确定您的网址 (URL) 拼写及标点正确，然后尝试重新加载页面。</translation>
     </message>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="154"/>
+        <location filename="../../src/core/Utils.cpp" line="156"/>
         <source>Make sure your internet connection is active and check whether other applications that rely on the same connection are working.</source>
         <translation>确保您的网络连接已启用，并检查其他使用相同连接的应用程序是否可用。</translation>
     </message>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="155"/>
+        <location filename="../../src/core/Utils.cpp" line="157"/>
         <source>Check that the setup of any internet security software is correct and does not interfere with ordinary web browsing.</source>
-        <translation>检查任何关于网络安全的软件的设置是否正确，而不干扰一般的网页浏览。</translation>
+        <translation>检查任何关于网络安全软件的设置是否正确，确认其不会干扰一般的网页浏览。</translation>
     </message>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="156"/>
+        <location filename="../../src/core/Utils.cpp" line="158"/>
         <source>Try pressing the F12 key on your keyboard and disabling proxy servers, unless you know that you are required to use a proxy to connect to the internet, and then reload the page.</source>
         <translation>尝试按下您键盘上的 F12 键并停用代理服务器，除非您确定您需要使用代理服务器连接到互联网，然后重新加载页面。</translation>
     </message>
