@@ -20,6 +20,10 @@
 #include "PasswordsManager.h"
 #include "PasswordsStorageBackend.h"
 
+#ifdef OTTER_ENABLE_ENCRYPTION
+#include <gcrypt.h>
+#endif
+
 namespace Otter
 {
 
@@ -54,6 +58,15 @@ PasswordsManager* PasswordsManager::getInstance()
 QList<PasswordsManager::PasswordInformation> PasswordsManager::getPasswords(const QUrl &url)
 {
 	return (m_backend ? m_backend->getPasswords(url) : QList<PasswordsManager::PasswordInformation>());
+}
+
+bool PasswordsManager::isEncryptionAvailable()
+{
+#ifdef OTTER_ENABLE_ENCRYPTION
+	return true;
+#else
+	return false;
+#endif
 }
 
 }
