@@ -57,10 +57,7 @@ NotesContentsWidget::NotesContentsWidget(Window *window) : ContentsWidget(window
 	m_ui->notesViewWidget->viewport()->installEventFilter(this);
 	m_ui->notesViewWidget->viewport()->setMouseTracking(true);
 	m_ui->filterLineEdit->installEventFilter(this);
-
-#if QT_VERSION >= 0x050300
 	m_ui->textEdit->setPlaceholderText(tr("Add note…"));
-#endif
 
 	if (!window)
 	{

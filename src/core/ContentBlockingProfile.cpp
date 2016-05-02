@@ -642,9 +642,7 @@ bool ContentBlockingProfile::loadRules()
 	if (m_domainExpression.pattern().isEmpty())
 	{
 		m_domainExpression = QRegularExpression(QLatin1String("[:\?&/=]"));
-#if QT_VERSION >= 0x050400
 		m_domainExpression.optimize();
-#endif
 	}
 
 	QFile file(m_information.path);

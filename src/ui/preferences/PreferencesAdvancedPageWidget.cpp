@@ -257,7 +257,6 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->ciphersAddButton->setMenu(new QMenu(m_ui->ciphersAddButton));
 
-#if QT_VERSION >= 0x050300
 	if (QSslSocket::supportsSsl())
 	{
 		QStandardItemModel *ciphersModel(new QStandardItemModel(this));
@@ -301,11 +300,8 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	}
 	else
 	{
-#endif
 		m_ui->ciphersViewWidget->setEnabled(false);
-#if QT_VERSION >= 0x050300
 	}
-#endif
 
 	m_ui->ciphersMoveDownButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-down")));
 	m_ui->ciphersMoveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-up")));
