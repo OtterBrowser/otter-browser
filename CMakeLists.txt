@@ -13,9 +13,11 @@ project(otter-browser)
 set(MAJOR_VERSION "0")
 set(MINOR_VERSION "9")
 set(PATCH_VERSION "11")
-set(OTTER_VERSION_MAIN ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION})
-set(OTTER_VERSION_WEEKLY " ")
-set(OTTER_VERSION_CONTEXT "-dev")
+
+add_definitions(-DOTTER_VERSION_MAIN="${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}")
+add_definitions(-DOTTER_VERSION_WEEKLY=" ")
+add_definitions(-DOTTER_VERSION_CONTEXT="-dev")
+add_definitions(-DOTTER_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}")
 
 if (EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	include(InstallRequiredSystemLibraries)
@@ -470,8 +472,6 @@ qt5_use_modules(otter-browser Core Gui Multimedia Network PrintSupport Qml Widge
 
 set(OTTER_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 set(XDG_APPS_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/applications CACHE FILEPATH "Install path for .desktop files")
-
-configure_file(config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 
 file(GLOB _qm_files resources/translations/*.qm)
 

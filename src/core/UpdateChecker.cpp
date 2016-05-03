@@ -25,7 +25,6 @@
 #include "NetworkManagerFactory.h"
 #include "PlatformIntegration.h"
 #include "SettingsManager.h"
-#include "./config.h"
 
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>

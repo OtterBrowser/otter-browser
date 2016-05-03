@@ -41,7 +41,6 @@
 #include "Utils.h"
 #include "Updater.h"
 #include "WebBackend.h"
-#include "./config.h"
 #ifdef Q_OS_WIN
 #include "../modules/platforms/windows/WindowsPlatformIntegration.h"
 #elif defined(Q_OS_MAC)
