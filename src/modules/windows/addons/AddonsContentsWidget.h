@@ -40,6 +40,12 @@ class AddonsContentsWidget : public ContentsWidget
 	Q_OBJECT
 
 public:
+	enum DataRole
+	{
+		TypeRole = Qt::UserRole,
+		NameRole = (Qt::UserRole + 1)
+	};
+
 	explicit AddonsContentsWidget(Window *window);
 	~AddonsContentsWidget();
 

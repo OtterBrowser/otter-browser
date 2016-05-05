@@ -78,7 +78,7 @@ void AddonsContentsWidget::populateAddons()
 	m_types[Addon::UserScriptType] = 0;
 
 	QStandardItem *userScriptsItem(new QStandardItem(ThemesManager::getIcon(QLatin1String("addon-user-script"), false), tr("User Scripts")));
-	userScriptsItem->setData(Addon::UserScriptType, Qt::UserRole);
+	userScriptsItem->setData(Addon::UserScriptType, TypeRole);
 
 	m_model->appendRow(userScriptsItem);
 
@@ -161,7 +161,7 @@ void AddonsContentsWidget::addAddon(Addon *addon)
 
 		if (script)
 		{
-			item->setData(script->getName(), Qt::UserRole);
+			item->setData(script->getName(), NameRole);
 		}
 	}
 
@@ -207,12 +207,12 @@ void AddonsContentsWidget::save()
 	{
 		QStandardItem *item(userScriptsItem->child(i));
 
-		if (item && !item->data(Qt::UserRole).toString().isEmpty())
+		if (item && !item->data(NameRole).toString().isEmpty())
 		{
 			QJsonObject script;
 			script.insert(QLatin1String("isEnabled"), QJsonValue(item->checkState() == Qt::Checked));
 
-			settings.insert(item->data(Qt::UserRole).toString(), script);
+			settings.insert(item->data(NameRole).toString(), script);
 		}
 	}
 
