@@ -3809,7 +3809,7 @@ Chcete pokračovat?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="154"/>
         <source>Open new windows in a new tab instead</source>
-        <translation>Otevřít nová okna místo toho v nových listech</translation>
+        <translation>Otevřít nová okna v nových listech</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="161"/>
@@ -7901,7 +7901,7 @@ Klepněte na tlačítko Nainstalovat pro opětovné spuštění prohlížeče a 
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="449"/>
         <source>About Otter…</source>
-        <translation>O Otteru…</translation>
+        <translation>O programu Otter…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="450"/>

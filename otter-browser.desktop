@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Otter Browser
+Name[ar]=متصفح أوتِر
 Name[bg]=Otter Браузър
 Name[cs]=Otter Browser
 Name[da]=Otter Browser
@@ -40,6 +41,7 @@ Name[uk]=Otter Browser
 Name[zh_CN]=水獭浏览器
 Name[zh_TW]=Otter 瀏覽器
 GenericName=Web Browser
+GenericName[ar]=متصفح الويب
 GenericName[bg]=Уеб Браузър
 GenericName[cs]=Internetový prohlížeč
 GenericName[da]=Web Browser
@@ -80,6 +82,7 @@ GenericName[uk]=Веб-браузер
 GenericName[zh_CN]=网页浏览器
 GenericName[zh_TW]=網頁瀏覽器
 Comment=Browse the Web
+Comment[ar]=تصفح الويب
 Comment[cs]=Prohlížet internet
 Comment[de]=Surfen im Web
 Comment[es]=Navega por la Red
