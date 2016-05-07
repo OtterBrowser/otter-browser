@@ -159,6 +159,7 @@ set(otter_src
 	src/ui/LineEditWidget.cpp
 	src/ui/LocaleDialog.cpp
 	src/ui/MainWindow.cpp
+	src/ui/MasterPasswordDialog.cpp
 	src/ui/Menu.cpp
 	src/ui/MenuBarWidget.cpp
 	src/ui/NotificationDialog.cpp
@@ -266,6 +267,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/ImportDialog.ui
 	src/ui/LocaleDialog.ui
 	src/ui/MainWindow.ui
+	src/ui/MasterPasswordDialog.ui
 	src/ui/OpenAddressDialog.ui
 	src/ui/OpenBookmarkDialog.ui
 	src/ui/PreferencesDialog.ui
