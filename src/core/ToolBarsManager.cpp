@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -268,7 +268,7 @@ void ToolBarsManager::addBookmarksBar()
 
 void ToolBarsManager::configureToolBar(int identifier)
 {
-	QAction *action = qobject_cast<QAction*>(sender());
+	QAction *action(qobject_cast<QAction*>(sender()));
 
 	if (action && identifier < 0)
 	{
@@ -288,7 +288,7 @@ void ToolBarsManager::configureToolBar(int identifier)
 
 void ToolBarsManager::resetToolBar(int identifier)
 {
-	QAction *action = qobject_cast<QAction*>(sender());
+	QAction *action(qobject_cast<QAction*>(sender()));
 
 	if (action && identifier < 0)
 	{
@@ -297,7 +297,7 @@ void ToolBarsManager::resetToolBar(int identifier)
 
 	if (identifier >= 0 && identifier < OtherToolBar && QMessageBox::question(NULL, tr("Reset Toolbar"), tr("Do you really want to reset this toolbar to default configuration?"), (QMessageBox::Yes | QMessageBox::Cancel)) == QMessageBox::Yes)
 	{
-		const QHash<QString, ToolBarDefinition> defaultDefinitions = loadToolBars(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"), true), true);
+		const QHash<QString, ToolBarDefinition> defaultDefinitions(loadToolBars(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"), true), true));
 		ToolBarDefinition definition;
 
 		if (identifier == MenuBar)
@@ -328,7 +328,7 @@ void ToolBarsManager::resetToolBar(int identifier)
 
 void ToolBarsManager::removeToolBar(int identifier)
 {
-	QAction *action = qobject_cast<QAction*>(sender());
+	QAction *action(qobject_cast<QAction*>(sender()));
 
 	if (action && identifier < 0)
 	{
@@ -354,7 +354,7 @@ void ToolBarsManager::resetToolBars()
 		return;
 	}
 
-	const QList<int> customToolBars = m_identifiers.keys();
+	const QList<int> customToolBars(m_identifiers.keys());
 
 	for (int i = 0; i < customToolBars.count(); ++i)
 	{
@@ -364,7 +364,7 @@ void ToolBarsManager::resetToolBars()
 	m_definitions.clear();
 	m_identifiers.clear();
 
-	const QHash<QString, ToolBarDefinition> defaultDefinitions = loadToolBars(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"), true), true);
+	const QHash<QString, ToolBarDefinition> defaultDefinitions(loadToolBars(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"), true), true));
 
 	m_definitions.append(defaultDefinitions[QLatin1String("MenuBar")]);
 	m_definitions.append(defaultDefinitions[QLatin1String("TabBar")]);
@@ -381,11 +381,11 @@ void ToolBarsManager::resetToolBars()
 
 void ToolBarsManager::setToolBar(ToolBarsManager::ToolBarDefinition definition)
 {
-	int identifier = definition.identifier;
+	int identifier(definition.identifier);
 
 	if (identifier < 0 || identifier >= m_definitions.count())
 	{
-		QStringList toolBars = m_identifiers.values();
+		QStringList toolBars(m_identifiers.values());
 		toolBars << QLatin1String("MenuBar") << QLatin1String("TabBar") << QLatin1String("NavigationBar") << QLatin1String("StatusBar");
 
 		identifier = m_definitions.count();
@@ -482,14 +482,14 @@ ActionsManager::ActionEntryDefinition ToolBarsManager::decodeEntry(const QJsonVa
 		return definition;
 	}
 
-	const QJsonObject object = value.toObject();
+	const QJsonObject object(value.toObject());
 
 	definition.action = object.value(QLatin1String("identifier")).toString();
 	definition.options = object.value(QLatin1String("options")).toObject().toVariantMap();
 
 	if (object.contains(QLatin1String("actions")))
 	{
-		const QJsonArray actions = object.value(QLatin1String("actions")).toArray();
+		const QJsonArray actions(object.value(QLatin1String("actions")).toArray());
 
 		for (int i = 0; i < actions.count(); ++i)
 		{
@@ -509,7 +509,7 @@ ToolBarsManager::ToolBarDefinition ToolBarsManager::getToolBarDefinition(int ide
 
 	if (identifier >= 0 && identifier < m_definitions.count())
 	{
-		ToolBarDefinition definition = m_definitions[identifier];
+		ToolBarDefinition definition(m_definitions[identifier]);
 		definition.identifier = identifier;
 
 		return definition;
@@ -528,18 +528,18 @@ QHash<QString, ToolBarsManager::ToolBarDefinition> ToolBarsManager::loadToolBars
 		return definitions;
 	}
 
-	const QJsonArray toolBars = QJsonDocument::fromJson(file.readAll()).array();
+	const QJsonArray toolBars(QJsonDocument::fromJson(file.readAll()).array());
 
 	file.close();
 
 	for (int i = 0; i < toolBars.count(); ++i)
 	{
-		const QJsonObject toolBarObject = toolBars.at(i).toObject();
-		const QJsonArray actions = toolBarObject.value(QLatin1String("actions")).toArray();
-		const QString identifier = toolBarObject.value(QLatin1String("identifier")).toString();
-		const QString visibility = toolBarObject.value(QLatin1String("visibility")).toString();
-		const QString location = toolBarObject.value(QLatin1String("location")).toString();
-		const QString buttonStyle = toolBarObject.value(QLatin1String("buttonStyle")).toString();
+		const QJsonObject toolBarObject(toolBars.at(i).toObject());
+		const QJsonArray actions(toolBarObject.value(QLatin1String("actions")).toArray());
+		const QString identifier(toolBarObject.value(QLatin1String("identifier")).toString());
+		const QString visibility(toolBarObject.value(QLatin1String("visibility")).toString());
+		const QString location(toolBarObject.value(QLatin1String("location")).toString());
+		const QString buttonStyle(toolBarObject.value(QLatin1String("buttonStyle")).toString());
 		ToolBarDefinition toolBar;
 		toolBar.title = toolBarObject.value(QLatin1String("title")).toString();
 		toolBar.bookmarksPath = toolBarObject.value(QLatin1String("bookmarksPath")).toString();
@@ -611,7 +611,7 @@ QVector<ToolBarsManager::ToolBarDefinition> ToolBarsManager::getToolBarDefinitio
 {
 	if (m_definitions.isEmpty())
 	{
-		const QHash<QString, ToolBarsManager::ToolBarDefinition> defaultDefinitions = loadToolBars(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"), true), true);
+		const QHash<QString, ToolBarsManager::ToolBarDefinition> defaultDefinitions(loadToolBars(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"), true), true));
 
 		m_definitions.reserve(4);
 		m_definitions.append(defaultDefinitions[QLatin1String("MenuBar")]);
@@ -623,7 +623,7 @@ QVector<ToolBarsManager::ToolBarDefinition> ToolBarsManager::getToolBarDefinitio
 
 		if (QFile::exists(customToolBarsPath))
 		{
-			const QHash<QString, ToolBarDefinition> customDefinitions = loadToolBars(customToolBarsPath, false);
+			const QHash<QString, ToolBarDefinition> customDefinitions(loadToolBars(customToolBarsPath, false));
 
 			if (!customDefinitions.isEmpty())
 			{
@@ -673,7 +673,7 @@ QVector<ToolBarsManager::ToolBarDefinition> ToolBarsManager::getToolBarDefinitio
 		m_definitions[NavigationBar].identifier = NavigationBar;
 		m_definitions[StatusBar].identifier = StatusBar;
 
-		bool hasMenuBar = false;
+		bool hasMenuBar(false);
 
 		for (int i = 0; i < m_definitions[MenuBar].entries.count(); ++i)
 		{
@@ -693,7 +693,7 @@ QVector<ToolBarsManager::ToolBarDefinition> ToolBarsManager::getToolBarDefinitio
 			m_definitions[MenuBar].entries.prepend(definition);
 		}
 
-		bool hasTabBar = false;
+		bool hasTabBar(false);
 
 		for (int i = 0; i < m_definitions[TabBar].entries.count(); ++i)
 		{
