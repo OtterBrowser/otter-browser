@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ UpdateChecker::UpdateChecker(QObject *parent, bool inBackground) : QObject(paren
 	m_networkReply(NULL),
 	m_isInBackground(inBackground)
 {
-	const QUrl url = SettingsManager::getValue(QLatin1String("Updates/ServerUrl")).toString();
+	const QUrl url(SettingsManager::getValue(QLatin1String("Updates/ServerUrl")).toString());
 
 	if (!url.isValid())
 	{
@@ -69,27 +69,27 @@ void UpdateChecker::runUpdateCheck()
 		return;
 	}
 
-	QStringList activeChannels = SettingsManager::getValue(QLatin1String("Updates/ActiveChannels")).toStringList();
+	QStringList activeChannels(SettingsManager::getValue(QLatin1String("Updates/ActiveChannels")).toStringList());
 	activeChannels.removeAll(QString());
 
-	const QJsonObject updateData = QJsonDocument::fromJson(m_networkReply->readAll()).object();
-	const QJsonArray channels = updateData.value(QLatin1String("channels")).toArray();
-	const QString platform = Application::getInstance()->getPlatformIntegration()->getPlatform();
-	const int mainVersion = QCoreApplication::applicationVersion().remove(QChar('.')).toInt();
-	const int subVersion = QString(OTTER_VERSION_WEEKLY).toInt();
+	const QJsonObject updateData(QJsonDocument::fromJson(m_networkReply->readAll()).object());
+	const QJsonArray channels(updateData.value(QLatin1String("channels")).toArray());
+	const QString platform(Application::getInstance()->getPlatformIntegration()->getPlatform());
+	const int mainVersion(QCoreApplication::applicationVersion().remove(QChar('.')).toInt());
+	const int subVersion(QString(OTTER_VERSION_WEEKLY).toInt());
 	QList<UpdateInformation> availableUpdates;
 
 	for (int i = 0; i < channels.count(); ++i)
 	{
 		if (channels.at(i).isObject())
 		{
-			const QJsonObject object = channels.at(i).toObject();
-			const QString identifier = object[QLatin1String("identifier")].toString();
-			const QString channelVersion = object[QLatin1String("version")].toString();
+			const QJsonObject object(channels.at(i).toObject());
+			const QString identifier(object[QLatin1String("identifier")].toString());
+			const QString channelVersion(object[QLatin1String("version")].toString());
 
 			if (activeChannels.contains(identifier, Qt::CaseInsensitive) || (!m_isInBackground && activeChannels.isEmpty()))
 			{
-				const int channelMainVersion = channelVersion.trimmed().remove(QChar('.')).toInt();
+				const int channelMainVersion(channelVersion.trimmed().remove(QChar('.')).toInt());
 
 				if (channelMainVersion == 0)
 				{
@@ -98,7 +98,7 @@ void UpdateChecker::runUpdateCheck()
 					continue;
 				}
 
-				const int channelSubVersion = object[QLatin1String("subVersion")].toString().toInt();
+				const int channelSubVersion(object[QLatin1String("subVersion")].toString().toInt());
 
 				if (mainVersion < channelMainVersion || (subVersion > 0 && subVersion < channelSubVersion))
 				{
