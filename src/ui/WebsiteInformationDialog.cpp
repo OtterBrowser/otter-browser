@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -33,9 +33,9 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 {
 	m_ui->setupUi(this);
 
-	const QVariantHash statistics = widget->getStatistics();
-	const WindowsManager::ContentStates state = widget->getContentState();
-	QString host = widget->getUrl().host();
+	const QVariantHash statistics(widget->getStatistics());
+	const WindowsManager::ContentStates state(widget->getContentState());
+	QString host(widget->getUrl().host());
 
 	if (host.isEmpty())
 	{
@@ -106,7 +106,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		m_ui->cookiesValueLabel->setText(tr("Always"));
 	}
 
-	const QString thirdPartyCookiesPolicy = widget->getOption(QLatin1String("Network/ThirdPartyCookiesPolicy")).toString();
+	const QString thirdPartyCookiesPolicy(widget->getOption(QLatin1String("Network/ThirdPartyCookiesPolicy")).toString());
 
 	if (thirdPartyCookiesPolicy == QLatin1String("acceptExisting"))
 	{
@@ -121,7 +121,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		m_ui->thirdPartyCookiesValueLabel->setText(tr("Always"));
 	}
 
-	const QString pluginsPolicy = widget->getOption(QLatin1String("Browser/EnablePlugins")).toString();
+	const QString pluginsPolicy(widget->getOption(QLatin1String("Browser/EnablePlugins")).toString());
 
 	if (pluginsPolicy == QLatin1String("enabled"))
 	{
@@ -139,7 +139,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 	m_ui->imagesValueLabel->setText(widget->getOption(QLatin1String("Browser/EnableImages")).toBool() ? tr("Always") : tr("Never"));
 	m_ui->javascriptValueLabel->setText(widget->getOption(QLatin1String("Browser/EnableJavaScript")).toBool() ? tr("Always") : tr("Never"));
 
-	const QString geolocationPolicy = widget->getOption(QLatin1String("Browser/EnableGeolocation")).toString();
+	const QString geolocationPolicy(widget->getOption(QLatin1String("Browser/EnableGeolocation")).toString());
 
 	if (geolocationPolicy == QLatin1String("enabled"))
 	{
@@ -154,7 +154,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		m_ui->geolocationValueLabel->setText(tr("Always Ask"));
 	}
 
-	const QString notificationsPolicy = widget->getOption(QLatin1String("Browser/EnableNotifications")).toString();
+	const QString notificationsPolicy(widget->getOption(QLatin1String("Browser/EnableNotifications")).toString());
 
 	if (notificationsPolicy == QLatin1String("enabled"))
 	{
@@ -169,7 +169,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		m_ui->notificationsValueLabel->setText(tr("Always Ask"));
 	}
 
-	const QString popupsPolicy = widget->getOption(QLatin1String("Content/PopupsPolicy")).toString();
+	const QString popupsPolicy(widget->getOption(QLatin1String("Content/PopupsPolicy")).toString());
 
 	if (popupsPolicy == QLatin1String("openAll"))
 	{
@@ -194,7 +194,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 	}
 	else
 	{
-		const QSslCertificate certificate = m_sslInformation.certificates.first();
+		const QSslCertificate certificate(m_sslInformation.certificates.first());
 
 		m_ui->certificateIssuedToLabelWidget->setText(certificate.subjectInfo(QSslCertificate::CommonName).join(QLatin1String(", ")));
 		m_ui->certificateIssuedByLabelWidget->setText(certificate.issuerInfo(QSslCertificate::CommonName).join(QLatin1String(", ")));
@@ -216,7 +216,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		QStringList sslErrorsLabels;
 		sslErrorsLabels << tr("Error Message") << tr("URL");
 
-		QStandardItemModel *sslErrorsModel = new QStandardItemModel(this);
+		QStandardItemModel *sslErrorsModel(new QStandardItemModel(this));
 		sslErrorsModel->setHorizontalHeaderLabels(sslErrorsLabels);
 
 		for (int i = 0; i < m_sslInformation.errors.count(); ++i)
@@ -261,7 +261,7 @@ void WebsiteInformationDialog::showPreferences()
 
 void WebsiteInformationDialog::showCertificate()
 {
-	CertificateDialog *dialog = new CertificateDialog(m_sslInformation.certificates);
+	CertificateDialog *dialog(new CertificateDialog(m_sslInformation.certificates));
 	dialog->setAttribute(Qt::WA_DeleteOnClose);
 	dialog->show();
 }
