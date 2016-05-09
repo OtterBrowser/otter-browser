@@ -84,8 +84,8 @@ void WebWidget::timerEvent(QTimerEvent *event)
 
 void WebWidget::bounceAction(int identifier, QVariantMap parameters)
 {
-	Window *window = NULL;
-	QObject *parent = parentWidget();
+	Window *window(NULL);
+	QObject *parent(parentWidget());
 
 	while (parent)
 	{
@@ -109,7 +109,7 @@ void WebWidget::bounceAction(int identifier, QVariantMap parameters)
 
 void WebWidget::triggerAction()
 {
-	Action *action = qobject_cast<Action*>(sender());
+	Action *action(qobject_cast<Action*>(sender()));
 
 	if (action)
 	{
@@ -132,7 +132,7 @@ void WebWidget::search(const QString &query, const QString &searchEngine)
 
 void WebWidget::startReloadTimer()
 {
-	const int reloadTime = getOption(QLatin1String("Content/PageReloadTime")).toInt();
+	const int reloadTime(getOption(QLatin1String("Content/PageReloadTime")).toInt());
 
 	if (reloadTime >= 0)
 	{
@@ -154,7 +154,7 @@ void WebWidget::startTransfer(Transfer *transfer)
 		return;
 	}
 
-	const HandlerDefinition handler = HandlersManager::getHandler(transfer->getMimeType().name());
+	const HandlerDefinition handler(HandlersManager::getHandler(transfer->getMimeType().name()));
 
 	switch (handler.transferMode)
 	{
@@ -165,8 +165,8 @@ void WebWidget::startTransfer(Transfer *transfer)
 			break;
 		case AskTransferMode:
 			{
-				TransferDialog *transferDialog = new TransferDialog(transfer, this);
-				ContentsDialog *dialog = new ContentsDialog(ThemesManager::getIcon(QLatin1String("download")), transferDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, transferDialog, this);
+				TransferDialog *transferDialog(new TransferDialog(transfer, this));
+				ContentsDialog *dialog(new ContentsDialog(ThemesManager::getIcon(QLatin1String("download")), transferDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, transferDialog, this));
 
 				connect(transferDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
 
@@ -195,7 +195,7 @@ void WebWidget::startTransfer(Transfer *transfer)
 			break;
 		case SaveAsTransferMode:
 			{
-				const QString path = TransfersManager::getSavePath(transfer->getSuggestedFileName(), handler.downloadsPath, true);
+				const QString path(TransfersManager::getSavePath(transfer->getSuggestedFileName(), handler.downloadsPath, true));
 
 				if (path.isEmpty())
 				{
@@ -218,7 +218,7 @@ void WebWidget::pasteNote(QAction *action)
 {
 	if (action && action->data().isValid())
 	{
-		BookmarksItem *note = NotesManager::getModel()->getBookmark(action->data().toModelIndex());
+		BookmarksItem *note(NotesManager::getModel()->getBookmark(action->data().toModelIndex()));
 
 		if (note)
 		{
@@ -237,7 +237,7 @@ void WebWidget::selectDictionary(QAction *action)
 
 void WebWidget::selectDictionaryMenuAboutToShow()
 {
-	QMenu *menu = qobject_cast<QMenu*>(sender());
+	QMenu *menu(qobject_cast<QMenu*>(sender()));
 
 	if (!menu)
 	{
@@ -253,7 +253,7 @@ void WebWidget::selectDictionaryMenuAboutToShow()
 
 	for (int i = 0; i < menu->actions().count(); ++i)
 	{
-		QAction *action = menu->actions().at(i);
+		QAction *action(menu->actions().at(i));
 
 		if (action)
 		{
@@ -303,17 +303,15 @@ void WebWidget::reloadTimeMenuAboutToShow()
 
 void WebWidget::openInApplication(QAction *action)
 {
-	QObject *menu = sender();
-
-	if (menu == m_pageApplicationsMenu)
+	if (sender() == m_pageApplicationsMenu)
 	{
 		Utils::runApplication(action->data().toString(), getUrl());
 	}
-	else if (menu == m_linkApplicationsMenu && m_hitResult.linkUrl.isValid())
+	else if (sender() == m_linkApplicationsMenu && m_hitResult.linkUrl.isValid())
 	{
 		Utils::runApplication(action->data().toString(), m_hitResult.linkUrl);
 	}
-	else if (menu == m_frameApplicationsMenu && m_hitResult.frameUrl.isValid())
+	else if (sender() == m_frameApplicationsMenu && m_hitResult.frameUrl.isValid())
 	{
 		Utils::runApplication(action->data().toString(), m_hitResult.frameUrl);
 	}
@@ -321,14 +319,14 @@ void WebWidget::openInApplication(QAction *action)
 
 void WebWidget::openInApplicationMenuAboutToShow()
 {
-	QMenu *menu = qobject_cast<QMenu*>(sender());
+	QMenu *menu(qobject_cast<QMenu*>(sender()));
 
 	if (!menu || !menu->actions().isEmpty())
 	{
 		return;
 	}
 
-	const QList<ApplicationInformation> applications = Utils::getApplicationsForMimeType(QMimeDatabase().mimeTypeForName(QLatin1String("text/html")));
+	const QList<ApplicationInformation> applications(Utils::getApplicationsForMimeType(QMimeDatabase().mimeTypeForName(QLatin1String("text/html"))));
 
 	if (applications.isEmpty())
 	{
@@ -352,7 +350,7 @@ void WebWidget::openInApplicationMenuAboutToShow()
 
 void WebWidget::quickSearch(QAction *action)
 {
-	const SearchEnginesManager::SearchEngineDefinition searchEngine = SearchEnginesManager::getSearchEngine((!action || action->data().type() != QVariant::String) ? QString() : action->data().toString());
+	const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine((!action || action->data().type() != QVariant::String) ? QString() : action->data().toString()));
 
 	if (searchEngine.identifier.isEmpty())
 	{
@@ -364,7 +362,7 @@ void WebWidget::quickSearch(QAction *action)
 		setOption(QLatin1String("Search/DefaultQuickSearchEngine"), searchEngine.identifier);
 	}
 
-	const WindowsManager::OpenHints hints = WindowsManager::calculateOpenHints();
+	const WindowsManager::OpenHints hints(WindowsManager::calculateOpenHints());
 
 	if (hints == WindowsManager::CurrentTabOpen)
 	{
@@ -380,15 +378,15 @@ void WebWidget::quickSearchMenuAboutToShow()
 {
 	if (m_quickSearchMenu && m_quickSearchMenu->isEmpty())
 	{
-		const QStringList searchEngines = SearchEnginesManager::getSearchEngines();
+		const QStringList searchEngines(SearchEnginesManager::getSearchEngines());
 
 		for (int i = 0; i < searchEngines.count(); ++i)
 		{
-			const SearchEnginesManager::SearchEngineDefinition searchEngine = SearchEnginesManager::getSearchEngine(searchEngines.at(i));
+			const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(searchEngines.at(i)));
 
 			if (!searchEngine.identifier.isEmpty())
 			{
-				QAction *action = m_quickSearchMenu->addAction(searchEngine.icon, searchEngine.title);
+				QAction *action(m_quickSearchMenu->addAction(searchEngine.icon, searchEngine.title));
 				action->setData(searchEngine.identifier);
 				action->setToolTip(searchEngine.description);
 			}
@@ -403,7 +401,7 @@ void WebWidget::clearOptions()
 
 void WebWidget::openUrl(const QUrl &url, WindowsManager::OpenHints hints)
 {
-	WebWidget *widget = clone(false, hints.testFlag(WindowsManager::PrivateOpen));
+	WebWidget *widget(clone(false, hints.testFlag(WindowsManager::PrivateOpen)));
 	widget->setRequestedUrl(url, false);
 
 	emit requestedNewWindow(widget, hints);
@@ -411,14 +409,14 @@ void WebWidget::openUrl(const QUrl &url, WindowsManager::OpenHints hints)
 
 void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 {
-	const HitTestResult hitResult = getHitTestResult(event->pos());
-	const QString toolTipsMode = SettingsManager::getValue(QLatin1String("Browser/ToolTipsMode")).toString();
-	const QString link = (hitResult.linkUrl.isValid() ? hitResult.linkUrl : hitResult.formUrl).toString();
+	const HitTestResult hitResult(getHitTestResult(event->pos()));
+	const QString toolTipsMode(SettingsManager::getValue(QLatin1String("Browser/ToolTipsMode")).toString());
+	const QString link((hitResult.linkUrl.isValid() ? hitResult.linkUrl : hitResult.formUrl).toString());
 	QString text;
 
 	if (toolTipsMode != QLatin1String("disabled"))
 	{
-		const QString title = QString(hitResult.title).replace(QLatin1Char('&'), QLatin1String("&amp;")).replace(QLatin1Char('<'), QLatin1String("&lt;")).replace(QLatin1Char('>'), QLatin1String("&gt;"));
+		const QString title(QString(hitResult.title).replace(QLatin1Char('&'), QLatin1String("&amp;")).replace(QLatin1Char('<'), QLatin1String("&lt;")).replace(QLatin1Char('>'), QLatin1String("&gt;")));
 
 		if (toolTipsMode == QLatin1String("extended"))
 		{
@@ -454,7 +452,7 @@ void WebWidget::updateHitTestResult(const QPoint &position)
 
 void WebWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 {
-	ContentsWidget *parent = qobject_cast<ContentsWidget*>(parentWidget());
+	ContentsWidget *parent(qobject_cast<ContentsWidget*>(parentWidget()));
 
 	if (parent)
 	{
@@ -464,14 +462,14 @@ void WebWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 
 void WebWidget::showContextMenu(const QPoint &position)
 {
-	const bool hasSelection = (this->hasSelection() && !getSelectedText().trimmed().isEmpty());
+	const bool hasSelection(this->hasSelection() && !getSelectedText().trimmed().isEmpty());
 
 	if (position.isNull() && (!hasSelection || m_clickPosition.isNull()))
 	{
 		return;
 	}
 
-	const QPoint hitPosition = (position.isNull() ? m_clickPosition : position);
+	const QPoint hitPosition(position.isNull() ? m_clickPosition : position);
 
 	if (isScrollBar(hitPosition) || (SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanDisableContextMenu")).toBool() && !canShowContextMenu(hitPosition)))
 	{
@@ -611,9 +609,9 @@ void WebWidget::updateNavigationActions()
 
 void WebWidget::updateEditActions()
 {
-	const bool canPaste = (QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText());
-	const bool canSpellCheck = (getOption(QLatin1String("Browser/EnableSpellCheck"), getUrl()).toBool() && !getDictionaries().isEmpty());
-	const bool hasSelection = (this->hasSelection() && !getSelectedText().trimmed().isEmpty());
+	const bool canPaste(QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText());
+	const bool canSpellCheck(getOption(QLatin1String("Browser/EnableSpellCheck"), getUrl()).toBool() && !getDictionaries().isEmpty());
+	const bool hasSelection(this->hasSelection() && !getSelectedText().trimmed().isEmpty());
 
 	if (m_actions.contains(ActionsManager::CutAction))
 	{
@@ -678,8 +676,8 @@ void WebWidget::updateEditActions()
 
 	if (m_actions.contains(ActionsManager::SearchAction))
 	{
-		const SearchEnginesManager::SearchEngineDefinition searchEngine = SearchEnginesManager::getSearchEngine(getOption(QLatin1String("Search/DefaultQuickSearchEngine")).toString());
-		const bool isValid = !searchEngine.identifier.isEmpty();
+		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(getOption(QLatin1String("Search/DefaultQuickSearchEngine")).toString()));
+		const bool isValid(!searchEngine.identifier.isEmpty());
 
 		m_actions[ActionsManager::SearchAction]->setEnabled(isValid);
 		m_actions[ActionsManager::SearchAction]->setData(isValid ? searchEngine.identifier : QVariant());
@@ -706,7 +704,7 @@ void WebWidget::updateEditActions()
 
 void WebWidget::updateLinkActions()
 {
-	const bool isLink = m_hitResult.linkUrl.isValid();
+	const bool isLink(m_hitResult.linkUrl.isValid());
 
 	if (m_actions.contains(ActionsManager::OpenLinkAction))
 	{
@@ -787,7 +785,7 @@ void WebWidget::updateLinkActions()
 
 void WebWidget::updateFrameActions()
 {
-	const bool isFrame = (m_hitResult.frameUrl.isValid());
+	const bool isFrame(m_hitResult.frameUrl.isValid());
 
 	if (m_actions.contains(ActionsManager::OpenFrameInCurrentTabAction))
 	{
@@ -827,9 +825,9 @@ void WebWidget::updateFrameActions()
 
 void WebWidget::updateImageActions()
 {
-	const bool isImage = !m_hitResult.imageUrl.isEmpty();
-	const bool isOpened = getUrl().matches(m_hitResult.imageUrl, (QUrl::NormalizePathSegments | QUrl::RemoveFragment | QUrl::StripTrailingSlash));
-	const QString fileName = fontMetrics().elidedText(m_hitResult.imageUrl.fileName(), Qt::ElideMiddle, 256);
+	const bool isImage(!m_hitResult.imageUrl.isEmpty());
+	const bool isOpened(getUrl().matches(m_hitResult.imageUrl, (QUrl::NormalizePathSegments | QUrl::RemoveFragment | QUrl::StripTrailingSlash)));
+	const QString fileName(fontMetrics().elidedText(m_hitResult.imageUrl.fileName(), Qt::ElideMiddle, 256));
 
 	if (m_actions.contains(ActionsManager::OpenImageInNewTabAction))
 	{
@@ -871,10 +869,10 @@ void WebWidget::updateImageActions()
 
 void WebWidget::updateMediaActions()
 {
-	const bool isMedia = m_hitResult.mediaUrl.isValid();
-	const bool isVideo = (m_hitResult.tagName == QLatin1String("video"));
-	const bool isPaused = m_hitResult.flags.testFlag(MediaIsPausedTest);
-	const bool isMuted = m_hitResult.flags.testFlag(MediaIsMutedTest);
+	const bool isMedia(m_hitResult.mediaUrl.isValid());
+	const bool isVideo(m_hitResult.tagName == QLatin1String("video"));
+	const bool isPaused(m_hitResult.flags.testFlag(MediaIsPausedTest));
+	const bool isMuted(m_hitResult.flags.testFlag(MediaIsMutedTest));
 
 	if (m_actions.contains(ActionsManager::SaveMediaToDiskAction))
 	{
@@ -933,7 +931,7 @@ void WebWidget::setClickPosition(const QPoint &position)
 
 void WebWidget::setStatusMessage(const QString &message, bool override)
 {
-	const QString oldMessage = getStatusMessage();
+	const QString previousMessage(getStatusMessage());
 
 	if (override)
 	{
@@ -944,11 +942,11 @@ void WebWidget::setStatusMessage(const QString &message, bool override)
 		m_javaScriptStatusMessage = message;
 	}
 
-	const QString newMessage = getStatusMessage();
+	const QString currentMessage(getStatusMessage());
 
-	if (newMessage != oldMessage)
+	if (currentMessage != previousMessage)
 	{
-		emit statusMessageChanged(newMessage);
+		emit statusMessageChanged(currentMessage);
 	}
 }
 
@@ -972,7 +970,7 @@ void WebWidget::setOption(const QString &key, const QVariant &value)
 {
 	if (key == QLatin1String("Search/DefaultQuickSearchEngine"))
 	{
-		const QString quickSearchEngine = value.toString();
+		const QString quickSearchEngine(value.toString());
 
 		if (quickSearchEngine != m_options.value(QLatin1String("Search/DefaultQuickSearchEngine")).toString())
 		{
@@ -993,7 +991,7 @@ void WebWidget::setOption(const QString &key, const QVariant &value)
 
 	if (key == QLatin1String("Content/PageReloadTime"))
 	{
-		const int reloadTime = value.toInt();
+		const int reloadTime(value.toInt());
 
 		if (reloadTime == m_options.value(QLatin1String("Content/PageReloadTime"), -1).toInt())
 		{
@@ -1045,7 +1043,7 @@ void WebWidget::setRequestedUrl(const QUrl &url, bool typed, bool onlyUpdate)
 
 void WebWidget::setReloadTime(QAction *action)
 {
-	const int reloadTime = action->data().toInt();
+	const int reloadTime(action->data().toInt());
 
 	if (reloadTime == -2)
 	{
@@ -1079,7 +1077,7 @@ Action* WebWidget::getAction(int identifier)
 		return m_actions[identifier];
 	}
 
-	Action *action = new Action(identifier, this);
+	Action *action(new Action(identifier, this));
 
 	m_actions[identifier] = action;
 
@@ -1142,7 +1140,7 @@ Action* WebWidget::getAction(int identifier)
 				m_reloadTimeMenu->addSeparator();
 				m_reloadTimeMenu->addAction(tr("Page Default"))->setData(-1);
 
-				QActionGroup *actionGroup = new QActionGroup(m_reloadTimeMenu);
+				QActionGroup *actionGroup(new QActionGroup(m_reloadTimeMenu));
 				actionGroup->setExclusive(true);
 
 				for (int i = 0; i < m_reloadTimeMenu->actions().count(); ++i)
@@ -1277,15 +1275,15 @@ Action* WebWidget::getAction(int identifier)
 
 				action->setEnabled(getOption(QLatin1String("Browser/EnableSpellCheck"), getUrl()).toBool() && !dictionaries.isEmpty());
 
-				QMenu *menu = new QMenu(this);
-				QActionGroup *dictionariesGroup = new QActionGroup(menu);
+				QMenu *menu(new QMenu(this));
+				QActionGroup *dictionariesGroup(new QActionGroup(menu));
 				dictionariesGroup->setExclusive(true);
 
 				action->setMenu(menu);
 
 				for (int i = 0; i < dictionaries.count(); ++i)
 				{
-					QAction *action = menu->addAction(dictionaries.at(i).title);
+					QAction *action(menu->addAction(dictionaries.at(i).title));
 					action->setCheckable(true);
 					action->setData(dictionaries.at(i).name);
 
@@ -1316,8 +1314,8 @@ WebBackend* WebWidget::getBackend()
 
 QString WebWidget::suggestSaveFileName() const
 {
-	const QUrl url = getUrl();
-	QString fileName = url.fileName();
+	const QUrl url(getUrl());
+	QString fileName(url.fileName());
 
 	if (fileName.isEmpty() && !url.path().isEmpty() && url.path() != QLatin1String("/"))
 	{
@@ -1419,7 +1417,7 @@ QHash<QByteArray, QByteArray> WebWidget::getHeaders() const
 
 WindowsManager::ContentStates WebWidget::getContentState() const
 {
-	const QUrl url = getUrl();
+	const QUrl url(getUrl());
 
 	if (url.isEmpty() || url.scheme() == QLatin1String("about"))
 	{
