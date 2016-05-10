@@ -71,7 +71,7 @@ QList<SpellCheckManager::DictionaryInformation> SpellCheckManager::getDictionari
 	QList<DictionaryInformation> dictionaries;
 
 #ifdef OTTER_ENABLE_SPELLCHECK
-	const QMap<QString, QString> availableDictionaries = m_speller->availableDictionaries();
+	const QMap<QString, QString> availableDictionaries(m_speller->availableDictionaries());
 	QMap<QString, QString>::const_iterator iterator;
 
 	for (iterator = availableDictionaries.constBegin(); iterator != availableDictionaries.constEnd(); ++iterator)
