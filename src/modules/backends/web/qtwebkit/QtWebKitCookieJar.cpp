@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,18 +17,18 @@
 *
 **************************************************************************/
 
-#include "CookieJarProxy.h"
-#include "ThemesManager.h"
-#include "../ui/AcceptCookieDialog.h"
-#include "../ui/ContentsDialog.h"
-#include "../ui/WebWidget.h"
+#include "QtWebKitCookieJar.h"
+#include "../../../../core/ThemesManager.h"
+#include "../../../../ui/AcceptCookieDialog.h"
+#include "../../../../ui/ContentsDialog.h"
+#include "../../../../ui/WebWidget.h"
 
 #include <QtCore/QTimer>
 
 namespace Otter
 {
 
-CookieJarProxy::CookieJarProxy(CookieJar *cookieJar, WebWidget *widget) : QNetworkCookieJar(widget),
+QtWebKitCookieJar::QtWebKitCookieJar(CookieJar *cookieJar, WebWidget *widget) : QNetworkCookieJar(widget),
 	m_widget(widget),
 	m_cookieJar(cookieJar),
 	m_generalCookiesPolicy(CookieJar::AcceptAllCookies),
@@ -38,7 +38,7 @@ CookieJarProxy::CookieJarProxy(CookieJar *cookieJar, WebWidget *widget) : QNetwo
 {
 }
 
-void CookieJarProxy::setup(const QStringList &thirdPartyAcceptedHosts, const QStringList &thirdPartyRejectedHosts, CookieJar::CookiesPolicy generalCookiesPolicy, CookieJar::CookiesPolicy thirdPartyCookiesPolicy, CookieJar::KeepMode keepMode)
+void QtWebKitCookieJar::setup(const QStringList &thirdPartyAcceptedHosts, const QStringList &thirdPartyRejectedHosts, CookieJar::CookiesPolicy generalCookiesPolicy, CookieJar::CookiesPolicy thirdPartyCookiesPolicy, CookieJar::KeepMode keepMode)
 {
 	m_thirdPartyAcceptedHosts = thirdPartyAcceptedHosts;
 	m_thirdPartyRejectedHosts = thirdPartyRejectedHosts;
@@ -47,14 +47,14 @@ void CookieJarProxy::setup(const QStringList &thirdPartyAcceptedHosts, const QSt
 	m_keepMode = keepMode;
 }
 
-void CookieJarProxy::dialogClosed()
+void QtWebKitCookieJar::dialogClosed()
 {
 	m_isDialogVisible = false;
 
 	showDialog();
 }
 
-void CookieJarProxy::showDialog()
+void QtWebKitCookieJar::showDialog()
 {
 	if (m_operations.isEmpty() || m_isDialogVisible)
 	{
@@ -63,9 +63,8 @@ void CookieJarProxy::showDialog()
 
 	m_isDialogVisible = true;
 
-	const QPair<CookieJar::CookieOperation, QNetworkCookie> operation = m_operations.dequeue();
-
-	AcceptCookieDialog *cookieDialog = new AcceptCookieDialog(operation.second, operation.first, m_cookieJar, m_widget);
+	const QPair<CookieJar::CookieOperation, QNetworkCookie> operation(m_operations.dequeue());
+	AcceptCookieDialog *cookieDialog(new AcceptCookieDialog(operation.second, operation.first, m_cookieJar, m_widget));
 	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), cookieDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, cookieDialog, m_widget);
 
 	connect(cookieDialog, SIGNAL(finished(int)), &dialog, SLOT(close()));
@@ -75,22 +74,22 @@ void CookieJarProxy::showDialog()
 	m_widget->showDialog(&dialog);
 }
 
-void CookieJarProxy::setWidget(WebWidget *widget)
+void QtWebKitCookieJar::setWidget(WebWidget *widget)
 {
 	m_widget = widget;
 }
 
-CookieJarProxy* CookieJarProxy::clone(WebWidget *parent)
+QtWebKitCookieJar* QtWebKitCookieJar::clone(WebWidget *parent)
 {
-	return new CookieJarProxy(m_cookieJar, parent);
+	return new QtWebKitCookieJar(m_cookieJar, parent);
 }
 
-CookieJar* CookieJarProxy::getCookieJar()
+CookieJar* QtWebKitCookieJar::getCookieJar()
 {
 	return m_cookieJar;
 }
 
-QList<QNetworkCookie> CookieJarProxy::cookiesForUrl(const QUrl &url) const
+QList<QNetworkCookie> QtWebKitCookieJar::cookiesForUrl(const QUrl &url) const
 {
 	if (m_generalCookiesPolicy == CookieJar::IgnoreCookies)
 	{
@@ -100,7 +99,7 @@ QList<QNetworkCookie> CookieJarProxy::cookiesForUrl(const QUrl &url) const
 	return m_cookieJar->getCookiesForUrl(url);
 }
 
-bool CookieJarProxy::insertCookie(const QNetworkCookie &cookie)
+bool QtWebKitCookieJar::insertCookie(const QNetworkCookie &cookie)
 {
 	if (!canModifyCookie(cookie))
 	{
@@ -130,12 +129,12 @@ bool CookieJarProxy::insertCookie(const QNetworkCookie &cookie)
 	return m_cookieJar->forceInsertCookie(cookie);
 }
 
-bool CookieJarProxy::updateCookie(const QNetworkCookie &cookie)
+bool QtWebKitCookieJar::updateCookie(const QNetworkCookie &cookie)
 {
 	return insertCookie(cookie);
 }
 
-bool CookieJarProxy::deleteCookie(const QNetworkCookie &cookie)
+bool QtWebKitCookieJar::deleteCookie(const QNetworkCookie &cookie)
 {
 	if (!canModifyCookie(cookie))
 	{
@@ -157,7 +156,7 @@ bool CookieJarProxy::deleteCookie(const QNetworkCookie &cookie)
 	return m_cookieJar->forceDeleteCookie(cookie);
 }
 
-bool CookieJarProxy::canModifyCookie(const QNetworkCookie &cookie) const
+bool QtWebKitCookieJar::canModifyCookie(const QNetworkCookie &cookie) const
 {
 	if (m_generalCookiesPolicy == CookieJar::IgnoreCookies || m_generalCookiesPolicy == CookieJar::ReadOnlyCookies)
 	{
@@ -197,7 +196,7 @@ bool CookieJarProxy::canModifyCookie(const QNetworkCookie &cookie) const
 	return true;
 }
 
-bool CookieJarProxy::setCookiesFromUrl(const QList<QNetworkCookie> &cookieList, const QUrl &url)
+bool QtWebKitCookieJar::setCookiesFromUrl(const QList<QNetworkCookie> &cookieList, const QUrl &url)
 {
 	if (m_generalCookiesPolicy == CookieJar::IgnoreCookies || m_generalCookiesPolicy == CookieJar::ReadOnlyCookies)
 	{
@@ -208,7 +207,7 @@ bool CookieJarProxy::setCookiesFromUrl(const QList<QNetworkCookie> &cookieList, 
 
 	for (int i = 0; i < cookieList.count(); ++i)
 	{
-		QNetworkCookie cookie = cookieList.at(i);
+		QNetworkCookie cookie(cookieList.at(i));
 		cookie.normalize(url);
 
 		if (validateCookie(cookie, url) && canModifyCookie(cookie))

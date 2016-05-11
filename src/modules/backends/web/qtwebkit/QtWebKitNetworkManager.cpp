@@ -20,11 +20,11 @@
 **************************************************************************/
 
 #include "QtWebKitNetworkManager.h"
+#include "QtWebKitCookieJar.h"
 #include "QtWebKitFtpListingNetworkReply.h"
 #include "../../../../core/AddonsManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/CookieJar.h"
-#include "../../../../core/CookieJarProxy.h"
 #include "../../../../core/LocalListingNetworkReply.h"
 #include "../../../../core/NetworkCache.h"
 #include "../../../../core/NetworkManagerFactory.h"
@@ -48,7 +48,7 @@ namespace Otter
 
 WebBackend* QtWebKitNetworkManager::m_backend = NULL;
 
-QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, CookieJarProxy *cookieJarProxy, QtWebKitWebWidget *parent) : QNetworkAccessManager(parent),
+QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar *cookieJarProxy, QtWebKitWebWidget *parent) : QNetworkAccessManager(parent),
 	m_widget(parent),
 	m_cookieJar(NULL),
 	m_cookieJarProxy(cookieJarProxy),
@@ -89,7 +89,7 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, CookieJarProxy *c
 	}
 	else
 	{
-		m_cookieJarProxy = new CookieJarProxy(m_cookieJar, parent);
+		m_cookieJarProxy = new QtWebKitCookieJar(m_cookieJar, parent);
 	}
 
 	setCookieJar(m_cookieJarProxy);

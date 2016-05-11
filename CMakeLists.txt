@@ -97,7 +97,6 @@ set(otter_src
 	src/core/ContentBlockingProfile.cpp
 	src/core/Console.cpp
 	src/core/CookieJar.cpp
-	src/core/CookieJarProxy.cpp
 	src/core/FileSystemCompleterModel.cpp
 	src/core/GesturesManager.cpp
 	src/core/HandlersManager.cpp
@@ -336,6 +335,7 @@ if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 
 	set(otter_src
 		${otter_src}
+		src/modules/backends/web/qtwebkit/QtWebKitCookieJar.cpp
 		src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp
 		src/modules/backends/web/qtwebkit/QtWebKitHistoryInterface.cpp
 		src/modules/backends/web/qtwebkit/QtWebKitInspector.cpp

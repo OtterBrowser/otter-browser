@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,10 +17,10 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_COOKIEJARPROXY_H
-#define OTTER_COOKIEJARPROXY_H
+#ifndef OTTER_QTWEBKITCOOKIEJAR_H
+#define OTTER_QTWEBKITCOOKIEJAR_H
 
-#include "CookieJar.h"
+#include "../../../../core/CookieJar.h"
 
 #include <QtCore/QQueue>
 #include <QtCore/QStringList>
@@ -30,16 +30,16 @@ namespace Otter
 
 class WebWidget;
 
-class CookieJarProxy : public QNetworkCookieJar
+class QtWebKitCookieJar : public QNetworkCookieJar
 {
 	Q_OBJECT
 
 public:
-	explicit CookieJarProxy(CookieJar *cookieJar, WebWidget *widget);
+	explicit QtWebKitCookieJar(CookieJar *cookieJar, WebWidget *widget);
 
 	void setup(const QStringList &thirdPartyAcceptedHosts, const QStringList &thirdPartyRejectedHosts, CookieJar::CookiesPolicy generalCookiesPolicy, CookieJar::CookiesPolicy thirdPartyCookiesPolicy, CookieJar::KeepMode keepMode);
 	void setWidget(WebWidget *widget);
-	CookieJarProxy* clone(WebWidget *parent = NULL);
+	QtWebKitCookieJar* clone(WebWidget *parent = NULL);
 	CookieJar* getCookieJar();
 	QList<QNetworkCookie> cookiesForUrl(const QUrl &url) const;
 	bool insertCookie(const QNetworkCookie &cookie);
