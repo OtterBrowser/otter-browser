@@ -46,6 +46,7 @@ public:
 
 protected:
 	void changeEvent(QEvent *event);
+	void resizeEvent(QResizeEvent *event);
 	void updateReaddKeyboardProfileMenu();
 	void updateReaddMouseProfileMenu();
 	QString createProfileIdentifier(ItemViewWidget *view, const QString &base = QString()) const;
@@ -87,6 +88,7 @@ protected slots:
 	void updateJavaScriptOptions();
 	void changeCurrentPage();
 	void save();
+	void updatePageSwitcher();
 
 private:
 	QStringList m_filesToRemove;

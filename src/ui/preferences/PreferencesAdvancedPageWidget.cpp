@@ -62,7 +62,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	QStringList navigationTitles;
 	navigationTitles << tr("Browsing") << tr("Notifications") << tr("Appearance") << tr("Content") << QString() << tr("Downloads") << tr("Programs") << QString() << tr("History") << tr("Network") << tr("Security") << tr("Updates") << QString() << tr("Keyboard") << tr("Mouse");
 
-	int navigationIndex = 0;
+	int navigationIndex(0);
 
 	for (int i = 0; i < navigationTitles.count(); ++i)
 	{
@@ -90,8 +90,9 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->advancedViewWidget->setModel(navigationModel);
 	m_ui->advancedViewWidget->selectionModel()->select(navigationModel->index(0, 0), QItemSelectionModel::Select);
-	m_ui->advancedViewWidget->setMinimumWidth(qMax(100, m_ui->advancedViewWidget->sizeHint().width()));
 	m_ui->advancedViewWidget->setItemDelegate(new ItemDelegate(false, this));
+
+	updatePageSwitcher();
 
 	m_ui->browsingSuggestBookmarksCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/SuggestBookmarks")).toBool());
 	m_ui->browsingSuggestHistoryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/SuggestHistory")).toBool());
@@ -476,8 +477,16 @@ void PreferencesAdvancedPageWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-		m_ui->advancedViewWidget->setMinimumWidth(qMax(100, m_ui->advancedViewWidget->sizeHint().width()));
+
+		updatePageSwitcher();
 	}
+}
+
+void PreferencesAdvancedPageWidget::resizeEvent(QResizeEvent *event)
+{
+	QWidget::resizeEvent(event);
+
+	updatePageSwitcher();
 }
 
 void PreferencesAdvancedPageWidget::playNotificationSound()
@@ -1605,6 +1614,23 @@ void PreferencesAdvancedPageWidget::save()
 	}
 
 	updateReaddKeyboardProfileMenu();
+}
+
+void PreferencesAdvancedPageWidget::updatePageSwitcher()
+{
+	int maximumWidth(100);
+
+	for (int i = 0; i < m_ui->advancedViewWidget->model()->rowCount(); ++i)
+	{
+		const int itemWidth(m_ui->advancedViewWidget->fontMetrics().width(m_ui->advancedViewWidget->model()->index(i, 0).data(Qt::DisplayRole).toString()) + 10);
+
+		if (itemWidth > maximumWidth)
+		{
+			maximumWidth = itemWidth;
+		}
+	}
+
+	m_ui->advancedViewWidget->setMinimumWidth(qMin(200, maximumWidth));
 }
 
 QString PreferencesAdvancedPageWidget::createProfileIdentifier(ItemViewWidget *view, const QString &base) const
