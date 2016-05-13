@@ -85,8 +85,8 @@ void WebContentsWidget::timerEvent(QTimerEvent *event)
 	}
 	else if (event->timerId() == m_scrollTimer)
 	{
-		const QPoint scrollDelta = (QCursor::pos() - m_beginCursorPosition) / 20;
-		ScrollDirections directions = NoDirection;
+		const QPoint scrollDelta((QCursor::pos() - m_beginCursorPosition) / 20);
+		ScrollDirections directions(NoDirection);
 
 		if (scrollDelta.x() < 0)
 		{
@@ -231,11 +231,11 @@ void WebContentsWidget::keyPressEvent(QKeyEvent *event)
 		}
 		else
 		{
-			MainWindow *window = MainWindow::findMainWindow(this);
+			MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
-			if (window && window->isFullScreen())
+			if (mainWindow && mainWindow->isFullScreen())
 			{
-				window->triggerAction(ActionsManager::FullScreenAction);
+				mainWindow->triggerAction(ActionsManager::FullScreenAction);
 			}
 		}
 	}
@@ -336,7 +336,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				if (!text.isEmpty())
 				{
-					InputInterpreter *interpreter = new InputInterpreter(this);
+					InputInterpreter *interpreter(new InputInterpreter(this));
 
 					connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)));
 					connect(interpreter, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
@@ -364,7 +364,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::PasteAndGoAction:
 			if (!QGuiApplication::clipboard()->text().isEmpty())
 			{
-				InputInterpreter *interpreter = new InputInterpreter(this);
+				InputInterpreter *interpreter(new InputInterpreter(this));
 
 				connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)));
 				connect(interpreter, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
@@ -414,7 +414,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::FindNextAction:
 		case ActionsManager::FindPreviousAction:
 			{
-				WebWidget::FindFlags flags = (m_searchBarWidget ? m_searchBarWidget->getFlags() : WebWidget::NoFlagsFind);
+				WebWidget::FindFlags flags(m_searchBarWidget ? m_searchBarWidget->getFlags() : WebWidget::NoFlagsFind);
 
 				if (identifier == ActionsManager::FindPreviousAction)
 				{
@@ -459,20 +459,19 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				m_isTabPreferencesMenuVisible = true;
 
 				QMenu menu;
-
-				QAction *openAllAction = menu.addAction(tr("Open All Pop-Ups"));
+				QAction *openAllAction(menu.addAction(tr("Open All Pop-Ups")));
 				openAllAction->setCheckable(true);
 				openAllAction->setData(QLatin1String("openAll"));
 
-				QAction *openAllInBackgroundAction = menu.addAction(tr("Open Pop-Ups in Background"));
+				QAction *openAllInBackgroundAction(menu.addAction(tr("Open Pop-Ups in Background")));
 				openAllInBackgroundAction->setCheckable(true);
 				openAllInBackgroundAction->setData(QLatin1String("openAllInBackground"));
 
-				QAction *blockAllAction = menu.addAction(tr("Block All Pop-Ups"));
+				QAction *blockAllAction(menu.addAction(tr("Block All Pop-Ups")));
 				blockAllAction->setCheckable(true);
 				blockAllAction->setData(QLatin1String("blockAll"));
 
-				QAction *askAction = menu.addAction(tr("Ask What to Do"));
+				QAction *askAction(menu.addAction(tr("Ask What to Do")));
 				askAction->setCheckable(true);
 				askAction->setData(QLatin1String("ask"));
 
@@ -483,7 +482,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				popupsGroup.addAction(blockAllAction);
 				popupsGroup.addAction(askAction);
 
-				const QString popupsPolicy = m_webWidget->getOption(QLatin1String("Content/PopupsPolicy")).toString();
+				const QString popupsPolicy(m_webWidget->getOption(QLatin1String("Content/PopupsPolicy")).toString());
 
 				for (int i = 0; i < popupsGroup.actions().count(); ++i)
 				{
@@ -497,37 +496,37 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				menu.addSeparator();
 
-				QAction *enableImagesAction = menu.addAction(tr("Enable Images"));
+				QAction *enableImagesAction(menu.addAction(tr("Enable Images")));
 				enableImagesAction->setCheckable(true);
 				enableImagesAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnableImages")).toBool());
 				enableImagesAction->setData(QLatin1String("Browser/EnableImages"));
 
-				QAction *enableJavaScriptAction = menu.addAction(tr("Enable JavaScript"));
+				QAction *enableJavaScriptAction(menu.addAction(tr("Enable JavaScript")));
 				enableJavaScriptAction->setCheckable(true);
 				enableJavaScriptAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnableJavaScript")).toBool());
 				enableJavaScriptAction->setData(QLatin1String("Browser/EnableJavaScript"));
 
-				QAction *enableJavaAction = menu.addAction(tr("Enable Java"));
+				QAction *enableJavaAction(menu.addAction(tr("Enable Java")));
 				enableJavaAction->setCheckable(true);
 				enableJavaAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnableJava")).toBool());
 				enableJavaAction->setData(QLatin1String("Browser/EnableJava"));
 
-				QAction *enablePluginsAction = menu.addAction(tr("Enable Plugins"));
+				QAction *enablePluginsAction(menu.addAction(tr("Enable Plugins")));
 				enablePluginsAction->setCheckable(true);
 				enablePluginsAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnablePlugins")).toString() == QLatin1String("enabled"));
 				enablePluginsAction->setData(QLatin1String("Browser/EnablePlugins"));
 
 				menu.addSeparator();
 
-				QAction *enableCookiesAction = menu.addAction(tr("Enable Cookies"));
+				QAction *enableCookiesAction(menu.addAction(tr("Enable Cookies")));
 				enableCookiesAction->setCheckable(true);
 				enableCookiesAction->setEnabled(false);
 
-				QAction *enableReferrerAction = menu.addAction(tr("Enable Referrer"));
+				QAction *enableReferrerAction(menu.addAction(tr("Enable Referrer")));
 				enableReferrerAction->setCheckable(true);
 				enableReferrerAction->setEnabled(false);
 
-				QAction *enableProxyAction = menu.addAction(tr("Enable Proxy"));
+				QAction *enableProxyAction(menu.addAction(tr("Enable Proxy")));
 				enableProxyAction->setCheckable(true);
 				enableProxyAction->setEnabled(false);
 
@@ -536,7 +535,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				menu.addSeparator();
 				menu.addAction(m_webWidget->getAction(ActionsManager::WebsitePreferencesAction));
 
-				QAction *triggeredAction = menu.exec(QCursor::pos());
+				QAction *triggeredAction(menu.exec(QCursor::pos()));
 
 				if (triggeredAction && triggeredAction->data().isValid())
 				{
@@ -569,7 +568,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 			{
 				m_websiteInformationDialog = new WebsiteInformationDialog(m_webWidget, this);
 
-				ContentsDialog *dialog = new ContentsDialog(ThemesManager::getIcon(QLatin1String("dialog-information")), m_websiteInformationDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, m_websiteInformationDialog, this);
+				ContentsDialog *dialog(new ContentsDialog(ThemesManager::getIcon(QLatin1String("dialog-information")), m_websiteInformationDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, m_websiteInformationDialog, this));
 
 				connect(m_websiteInformationDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
 
@@ -580,7 +579,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::WebsiteCertificateInformationAction:
 			if (!m_webWidget->getSslInformation().certificates.isEmpty())
 			{
-				CertificateDialog *dialog = new CertificateDialog(m_webWidget->getSslInformation().certificates);
+				CertificateDialog *dialog(new CertificateDialog(m_webWidget->getSslInformation().certificates));
 				dialog->setAttribute(Qt::WA_DeleteOnClose);
 				dialog->show();
 			}
@@ -639,7 +638,7 @@ void WebContentsWidget::findInPage(WebWidget::FindFlags flags)
 
 	m_quickFindQuery = ((m_searchBarWidget && !m_searchBarWidget->getQuery().isEmpty()) ? m_searchBarWidget->getQuery() : m_sharedQuickFindQuery);
 
-	const bool found = m_webWidget->findInPage(m_quickFindQuery, flags);
+	const bool hasFound(m_webWidget->findInPage(m_quickFindQuery, flags));
 
 	if (!m_quickFindQuery.isEmpty() && !isPrivate() && SettingsManager::getValue(QLatin1String("Search/ReuseLastQuickFindQuery")).toBool())
 	{
@@ -648,7 +647,7 @@ void WebContentsWidget::findInPage(WebWidget::FindFlags flags)
 
 	if (m_searchBarWidget)
 	{
-		m_searchBarWidget->setResultsFound(found);
+		m_searchBarWidget->setResultsFound(hasFound);
 	}
 }
 
@@ -691,14 +690,14 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 		closePasswordBar();
 	}
 
-	Window *window = qobject_cast<Window*>(parentWidget());
+	Window *window(qobject_cast<Window*>(parentWidget()));
 
 	if (!window)
 	{
 		return;
 	}
 
-	const bool showStartPage = ((url.isEmpty() && m_showStartPage) || url == QUrl(QLatin1String("about:start")));
+	const bool showStartPage((url.isEmpty() && m_showStartPage) || url == QUrl(QLatin1String("about:start")));
 
 	if (showStartPage && !m_startPageWidget)
 	{
@@ -773,7 +772,7 @@ void WebContentsWidget::handlePermissionRequest(const QString &option, QUrl url,
 			}
 		}
 
-		PermissionBarWidget *widget = new PermissionBarWidget(option, url, this);
+		PermissionBarWidget *widget(new PermissionBarWidget(option, url, this));
 
 		m_layout->insertWidget((m_permissionBarWidgets.count() + (m_searchBarWidget ? 1 : 0)), widget);
 
@@ -817,7 +816,7 @@ void WebContentsWidget::handleLoadingStateChange(WindowsManager::LoadingState st
 		}
 		else
 		{
-			Window *window = qobject_cast<Window*>(parentWidget());
+			Window *window(qobject_cast<Window*>(parentWidget()));
 
 			if (window)
 			{
@@ -829,7 +828,7 @@ void WebContentsWidget::handleLoadingStateChange(WindowsManager::LoadingState st
 
 void WebContentsWidget::notifyPermissionChanged(WebWidget::PermissionPolicies policies)
 {
-	PermissionBarWidget *widget = qobject_cast<PermissionBarWidget*>(sender());
+	PermissionBarWidget *widget(qobject_cast<PermissionBarWidget*>(sender()));
 
 	if (widget)
 	{
@@ -951,7 +950,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 		handleLoadingStateChange(WindowsManager::FinishedLoadingState);
 	}
 
-	Window *window = qobject_cast<Window*>(parentWidget());
+	Window *window(qobject_cast<Window*>(parentWidget()));
 
 	if (widget)
 	{
@@ -1074,7 +1073,7 @@ WebContentsWidget* WebContentsWidget::clone(bool cloneHistory)
 		return NULL;
 	}
 
-	WebContentsWidget *webWidget = new WebContentsWidget(m_webWidget->isPrivate(), m_webWidget->clone(cloneHistory), NULL);
+	WebContentsWidget *webWidget(new WebContentsWidget(m_webWidget->isPrivate(), m_webWidget->clone(cloneHistory), NULL));
 	webWidget->m_webWidget->setRequestedUrl(m_webWidget->getUrl(), false, true);
 
 	return webWidget;
