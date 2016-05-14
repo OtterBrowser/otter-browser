@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ namespace Otter
 
 ColorWidget::ColorWidget(QWidget *parent) : QPushButton(parent)
 {
-	QMenu *menu = new QMenu(this);
+	QMenu *menu(new QMenu(this));
 	menu->addAction(tr("Select Color…"), this, SLOT(selectColor()));
 	menu->addAction(tr("Copy Color"), this, SLOT(copyColor()));
 	menu->addSeparator();
@@ -75,7 +75,7 @@ void ColorWidget::setColor(const QColor &color)
 	m_color = color;
 
 	const QString text(color.isValid() ? color.name().toUpper() : tr("Invalid"));
-	QPalette palette = this->palette();
+	QPalette palette(this->palette());
 	palette.setColor(QPalette::Button, (color.isValid() ? color : QApplication::palette(this).color(QPalette::Button)));
 
 	setPalette(palette);

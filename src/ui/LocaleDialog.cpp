@@ -31,11 +31,11 @@ LocaleDialog::LocaleDialog(QWidget *parent) : Dialog(parent),
 {
 	m_ui->setupUi(this);
 
-	const QList<QFileInfo> locales = QDir(Application::getInstance()->getLocalePath()).entryInfoList(QStringList(QLatin1String("*.qm")), QDir::Files, QDir::Name);
+	const QList<QFileInfo> locales(QDir(Application::getInstance()->getLocalePath()).entryInfoList(QStringList(QLatin1String("*.qm")), QDir::Files, QDir::Name));
 
 	for (int i = 0; i < locales.count(); ++i)
 	{
-		const QString name = locales.at(i).baseName().remove(QLatin1String("otter-browser_"));
+		const QString name(locales.at(i).baseName().remove(QLatin1String("otter-browser_")));
 		const QLocale locale(name);
 
 		if (locale.nativeCountryName().isEmpty() || locale.nativeLanguageName().isEmpty())
@@ -48,7 +48,7 @@ LocaleDialog::LocaleDialog(QWidget *parent) : Dialog(parent),
 		}
 	}
 
-	const QString currentLocale = SettingsManager::getValue(QLatin1String("Browser/Locale")).toString();
+	const QString currentLocale(SettingsManager::getValue(QLatin1String("Browser/Locale")).toString());
 
 	m_ui->languageComboBox->setCurrentIndex((currentLocale.endsWith(QLatin1String(".qm"))) ? 1 : qMax(0, m_ui->languageComboBox->findData(currentLocale)));
 	m_ui->customFilePathWidget->setEnabled(m_ui->languageComboBox->currentIndex() == 1);

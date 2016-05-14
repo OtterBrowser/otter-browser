@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -43,12 +43,12 @@ ActionComboBoxWidget::ActionComboBoxWidget(QWidget *parent) : QComboBox(parent),
 
 	view()->viewport()->parentWidget()->installEventFilter(this);
 
-	QStandardItemModel *model = new QStandardItemModel(this);
-	const QVector<ActionsManager::ActionDefinition> definitions = ActionsManager::getActionDefinitions();
+	QStandardItemModel *model(new QStandardItemModel(this));
+	const QVector<ActionsManager::ActionDefinition> definitions(ActionsManager::getActionDefinitions());
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		QStandardItem *item = new QStandardItem(definitions.at(i).icon, QCoreApplication::translate("actions", (definitions.at(i).description.isEmpty() ? definitions.at(i).text : definitions.at(i).description).toUtf8().constData()));
+		QStandardItem *item(new QStandardItem(definitions.at(i).icon, QCoreApplication::translate("actions", (definitions.at(i).description.isEmpty() ? definitions.at(i).text : definitions.at(i).description).toUtf8().constData())));
 		item->setData(definitions.at(i).identifier, Qt::UserRole);
 		item->setToolTip(ActionsManager::getActionName(definitions.at(i).identifier));
 		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
@@ -81,7 +81,7 @@ void ActionComboBoxWidget::paintEvent(QPaintEvent *event)
 	}
 	else
 	{
-		const int textMargin = (style()->pixelMetric(QStyle::PM_FocusFrameHMargin, 0, this) + 1);
+		const int textMargin(style()->pixelMetric(QStyle::PM_FocusFrameHMargin, 0, this) + 1);
 
 		painter.setFont(viewItemOption.font);
 		painter.drawText(viewItemOption.rect.adjusted(textMargin, 0, -textMargin, 0), Qt::AlignVCenter, tr("Select Action"));

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 	m_buttonBox(NULL),
 	m_isAccepted(false)
 {
-	QBoxLayout *mainLayout = new QBoxLayout(QBoxLayout::TopToBottom, this);
+	QBoxLayout *mainLayout(new QBoxLayout(QBoxLayout::TopToBottom, this));
 	mainLayout->setContentsMargins(0, 0, 0, 0);
 	mainLayout->setSpacing(0);
 	mainLayout->addWidget(m_headerWidget);
@@ -49,19 +49,19 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 	m_headerWidget->setObjectName(QLatin1String("headerWidget"));
 	m_headerWidget->setStyleSheet(QStringLiteral("#headerWidget {border-bottom:1px solid #CCC;border-top-left-radius:4px;border-top-right-radius:4px;background:%1;}").arg(palette().color(QPalette::Window).darker(50).name()));
 
-	QBoxLayout *headerLayout = new QBoxLayout(QBoxLayout::LeftToRight, m_headerWidget);
+	QBoxLayout *headerLayout(new QBoxLayout(QBoxLayout::LeftToRight, m_headerWidget));
 	headerLayout->setContentsMargins(0, 0, 0, 0);
 	headerLayout->setSpacing(0);
 
 	m_headerWidget->setLayout(headerLayout);
 	m_headerWidget->installEventFilter(this);
 
-	QLabel *iconLabel = new QLabel(m_headerWidget);
+	QLabel *iconLabel(new QLabel(m_headerWidget));
 	iconLabel->setToolTip(title);
 	iconLabel->setPixmap(icon.pixmap(16, 16));
 	iconLabel->setMargin(5);
 
-	QFont font = this->font();
+	QFont font(this->font());
 	font.setBold(true);
 
 	QLabel *titleLabel = new QLabel(title, m_headerWidget);
@@ -88,7 +88,7 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 
 	if (!text.isEmpty())
 	{
-		QLabel *textLabel = new QLabel(text, this);
+		QLabel *textLabel(new QLabel(text, this));
 		textLabel->setTextFormat(Qt::PlainText);
 		textLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
 
@@ -100,10 +100,10 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 		m_scrollArea = new QScrollArea(this);
 		m_scrollArea->setWidgetResizable(true);
 
-		QWidget *scrollWidget = new QWidget(m_scrollArea);
+		QWidget *scrollWidget(new QWidget(m_scrollArea));
 		scrollWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-		QBoxLayout *scrollLayout = new QBoxLayout(QBoxLayout::TopToBottom, scrollWidget);
+		QBoxLayout *scrollLayout(new QBoxLayout(QBoxLayout::TopToBottom, scrollWidget));
 		scrollLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
 		scrollLayout->setContentsMargins(3, 3, 3, 3);
 
@@ -111,7 +111,7 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 
 		if (!details.isEmpty())
 		{
-			QLabel *label = new QLabel(details, scrollWidget);
+			QLabel *label(new QLabel(details, scrollWidget));
 			label->setTextFormat(Qt::PlainText);
 			label->setTextInteractionFlags(Qt::TextBrowserInteraction);
 
@@ -127,7 +127,7 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 
 			scrollLayout->addWidget(payload);
 
-			QDialog *dialog = qobject_cast<QDialog*>(payload);
+			QDialog *dialog(qobject_cast<QDialog*>(payload));
 
 			if (dialog)
 			{
@@ -264,20 +264,20 @@ bool ContentsDialog::eventFilter(QObject *object, QEvent *event)
 	{
 		if (event->type() == QEvent::MouseButtonPress)
 		{
-			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+			QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 			m_offset = mouseEvent->pos();
 		}
 		else if (event->type() == QEvent::MouseMove)
 		{
-			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+			QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 			move(mapToParent(mouseEvent->pos()) - m_offset);
 		}
 	}
 	else if (object == m_closeLabel && event->type() == QEvent::MouseButtonPress)
 	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
 		{
@@ -286,7 +286,7 @@ bool ContentsDialog::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if ((keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
 		{

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -97,7 +97,7 @@ void ContentsWidget::triggerAction(int identifier, const QVariantMap &parameters
 
 void ContentsWidget::triggerAction()
 {
-	Action *action = qobject_cast<Action*>(sender());
+	Action *action(qobject_cast<Action*>(sender()));
 
 	if (action)
 	{
@@ -125,7 +125,7 @@ void ContentsWidget::close()
 
 void ContentsWidget::cleanupDialog()
 {
-	ContentsDialog *dialog = qobject_cast<ContentsDialog*>(sender());
+	ContentsDialog *dialog(qobject_cast<ContentsDialog*>(sender()));
 
 	if (dialog)
 	{
@@ -148,7 +148,7 @@ void ContentsWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 		return;
 	}
 
-	Window *window = qobject_cast<Window*>(parent());
+	Window *window(qobject_cast<Window*>(parent()));
 
 	if (window && window->isAboutToClose())
 	{
@@ -168,7 +168,7 @@ void ContentsWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 
 	if (!m_layer)
 	{
-		QPalette palette = this->palette();
+		QPalette palette(this->palette());
 		palette.setColor(QPalette::Window, QColor(0, 0, 0, 70));
 
 		m_layer = new QWidget(this);

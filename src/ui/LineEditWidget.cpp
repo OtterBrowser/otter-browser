@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -75,8 +75,8 @@ void LineEditWidget::dropEvent(QDropEvent *event)
 {
 	if (m_selectionStart >= 0)
 	{
-		const int selectionEnd = (m_selectionStart + event->mimeData()->text().length());
-		int dropPosition = cursorPositionAt(event->pos());
+		const int selectionEnd(m_selectionStart + event->mimeData()->text().length());
+		int dropPosition(cursorPositionAt(event->pos()));
 
 		if (dropPosition < m_selectionStart || dropPosition > selectionEnd)
 		{
@@ -175,7 +175,7 @@ void LineEditWidget::setCompletion(const QString &completion)
 		return;
 	}
 
-	QString currentText = text().mid(selectionStart());
+	QString currentText(text().mid(selectionStart()));
 
 	if (m_completion != currentText)
 	{

@@ -153,15 +153,15 @@ void ConsoleWidget::addMessage(const ConsoleMessage &message)
 			break;
 	}
 
-	const QString source = message.source + ((message.line > 0) ? QStringLiteral(":%1").arg(message.line) : QString());
-	QString entry = QStringLiteral("[%1] %2").arg(message.time.toString()).arg(category);
+	const QString source(message.source + ((message.line > 0) ? QStringLiteral(":%1").arg(message.line) : QString()));
+	QString entry(QStringLiteral("[%1] %2").arg(message.time.toString()).arg(category));
 
 	if (!message.source.isEmpty())
 	{
 		entry.append(QStringLiteral(" - %1").arg(source));
 	}
 
-	QStandardItem *item = new QStandardItem(icon, entry);
+	QStandardItem *item(new QStandardItem(icon, entry));
 	item->setData(message.time.toTime_t(), Qt::UserRole);
 	item->setData(message.category, (Qt::UserRole + 1));
 	item->setData(source, (Qt::UserRole + 2));

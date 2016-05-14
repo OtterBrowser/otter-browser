@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ AcceptCookieDialog::AcceptCookieDialog(const QNetworkCookie &cookie, CookieJar::
 	m_operation(operation),
 	m_ui(new Ui::AcceptCookieDialog)
 {
-	QString domain = cookie.domain();
+	QString domain(cookie.domain());
 
 	if (domain.startsWith(QLatin1Char('.')))
 	{
@@ -90,8 +90,8 @@ void AcceptCookieDialog::changeEvent(QEvent *event)
 
 void AcceptCookieDialog::buttonClicked(QAbstractButton *button)
 {
-	const QDialogButtonBox::ButtonRole role = m_ui->buttonBox->buttonRole(button);
-	const AcceptCookieResult result = ((role == QDialogButtonBox::AcceptRole) ? ((button->objectName() == QLatin1String("sessionOnly")) ? AcceptAsSessionCookie : AcceptCookie) : IgnoreCookie);
+	const QDialogButtonBox::ButtonRole role(m_ui->buttonBox->buttonRole(button));
+	const AcceptCookieResult result((role == QDialogButtonBox::AcceptRole) ? ((button->objectName() == QLatin1String("sessionOnly")) ? AcceptAsSessionCookie : AcceptCookie) : IgnoreCookie);
 
 	if (m_operation == CookieJar::InsertCookie)
 	{

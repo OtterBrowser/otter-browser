@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -47,7 +47,7 @@ BookmarksComboBoxWidget::BookmarksComboBoxWidget(QWidget *parent) : QComboBox(pa
 
 void BookmarksComboBoxWidget::createFolder()
 {
-	const QString title = QInputDialog::getText(this, tr("Folder Name"), tr("Select name of new folder:"));
+	const QString title(QInputDialog::getText(this, tr("Folder Name"), tr("Select name of new folder:")));
 
 	if (!title.isEmpty())
 	{
@@ -76,11 +76,11 @@ void BookmarksComboBoxWidget::updateBranch(QStandardItem *branch)
 
 	for (int i = 0; i < branch->rowCount(); ++i)
 	{
-		QStandardItem *item = branch->child(i, 0);
+		QStandardItem *item(branch->child(i, 0));
 
 		if (item)
 		{
-			const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(item->data(BookmarksModel::TypeRole).toInt());
+			const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(item->data(BookmarksModel::TypeRole).toInt()));
 
 			if (type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark)
 			{
@@ -98,7 +98,7 @@ void BookmarksComboBoxWidget::updateBranch(QStandardItem *branch)
 
 void BookmarksComboBoxWidget::setCurrentFolder(BookmarksItem *folder)
 {
-	const QModelIndex index = (folder ? folder->index() : QModelIndex());
+	const QModelIndex index(folder ? folder->index() : QModelIndex());
 
 	setRootModelIndex(index.parent());
 	setModelColumn(0);
@@ -133,7 +133,7 @@ void BookmarksComboBoxWidget::setMode(BookmarksModel::FormatMode mode)
 
 BookmarksItem* BookmarksComboBoxWidget::getCurrentFolder()
 {
-	BookmarksItem *item = qobject_cast<BookmarksModel*>(model())->getBookmark(currentData(BookmarksModel::IdentifierRole).toLongLong());
+	BookmarksItem *item(qobject_cast<BookmarksModel*>(model())->getBookmark(currentData(BookmarksModel::IdentifierRole).toLongLong()));
 
 	return (item ? item :qobject_cast<BookmarksModel*>(model())->getRootItem());
 }

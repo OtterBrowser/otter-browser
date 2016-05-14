@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -33,8 +33,8 @@ FilePathWidget::FilePathWidget(QWidget *parent) : QWidget(parent),
 	m_completer(NULL),
 	m_selectFile(true)
 {
-	QPushButton *button = new QPushButton(tr("Browse…"), this);
-	QHBoxLayout *layout = new QHBoxLayout(this);
+	QPushButton *button(new QPushButton(tr("Browse…"), this));
+	QHBoxLayout *layout(new QHBoxLayout(this));
 	layout->addWidget(m_lineEdit);
 	layout->addWidget(button);
 	layout->setContentsMargins(0, 0, 0, 0);
@@ -57,7 +57,7 @@ void FilePathWidget::focusInEvent(QFocusEvent *event)
 
 void FilePathWidget::selectPath()
 {
-	QString path = (m_lineEdit->text().isEmpty() ? QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0) : m_lineEdit->text());
+	QString path(m_lineEdit->text().isEmpty() ? QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0) : m_lineEdit->text());
 	path = (m_selectFile ? QFileDialog::getOpenFileName(this, tr("Select File"), path, m_filter) : QFileDialog::getExistingDirectory(this, tr("Select Directory"), path));
 
 	if (!path.isEmpty())
@@ -72,7 +72,7 @@ void FilePathWidget::updateCompleter()
 	{
 		m_completer = new QCompleter(this);
 
-		FileSystemCompleterModel *model = new FileSystemCompleterModel(m_completer);
+		FileSystemCompleterModel *model(new FileSystemCompleterModel(m_completer));
 		model->setFilter(m_selectFile ? (QDir::AllDirs | QDir::Files) : QDir::AllDirs);
 
 		m_completer->setModel(model);

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -45,14 +45,14 @@ void Dialog::showEvent(QShowEvent *event)
 		}
 		else
 		{
-			const QString name = normalizeDialogName(objectName());
-			const QJsonObject object = QJsonDocument::fromJson(file.readAll()).object();
+			const QString name(normalizeDialogName(objectName()));
+			const QJsonObject object(QJsonDocument::fromJson(file.readAll()).object());
 
 			file.close();
 
 			if (object.contains(name))
 			{
-				QJsonObject size = object.value(name).toObject().value(QLatin1String("size")).toObject();
+				QJsonObject size(object.value(name).toObject().value(QLatin1String("size")).toObject());
 
 				if (!size.isEmpty() && size.value(QLatin1String("width")).toInt() > 0 && size.value(QLatin1String("height")).toInt() > 0)
 				{
@@ -86,8 +86,8 @@ void Dialog::resizeEvent(QResizeEvent *event)
 		file.close();
 	}
 
-	const QString name = normalizeDialogName(objectName());
-	QJsonObject dialog = object.value(name).toObject();
+	const QString name(normalizeDialogName(objectName()));
+	QJsonObject dialog(object.value(name).toObject());
 	QJsonObject size;
 	size.insert(QLatin1String("width"), width());
 	size.insert(QLatin1String("height"), height());

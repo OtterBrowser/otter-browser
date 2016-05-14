@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ namespace Otter
 
 IconWidget::IconWidget(QWidget *parent) : QToolButton(parent)
 {
-	QMenu *menu = new QMenu(this);
+	QMenu *menu(new QMenu(this));
 	menu->addAction(tr("Select From File…"), this, SLOT(selectFromFile()));
 	menu->addAction(tr("Select From Theme…"), this, SLOT(selectFromTheme()));
 	menu->addSeparator();
@@ -47,7 +47,7 @@ void IconWidget::resizeEvent(QResizeEvent *event)
 {
 	QToolButton::resizeEvent(event);
 
-	const int iconSize = (qMin(height(), width()) * 0.9);
+	const int iconSize(qMin(height(), width()) * 0.9);
 
 	setIconSize(QSize(iconSize, iconSize));
 }
@@ -65,7 +65,7 @@ void IconWidget::clear()
 
 void IconWidget::selectFromFile()
 {
-	const QString path = QFileDialog::getOpenFileName(this, tr("Select Icon"), QString(), tr("Images (*.png *.jpg *.bmp *.gif *.ico)"));
+	const QString path(QFileDialog::getOpenFileName(this, tr("Select Icon"), QString(), tr("Images (*.png *.jpg *.bmp *.gif *.ico)")));
 
 	if (path.isEmpty())
 	{
@@ -92,7 +92,7 @@ void IconWidget::selectFromFile()
 
 void IconWidget::selectFromTheme()
 {
-	const QString name = QInputDialog::getText(this, tr("Select Icon"), tr("Icon Name:"), QLineEdit::Normal, (m_icon.startsWith(QLatin1String("data:")) ? QString() : m_icon));
+	const QString name(QInputDialog::getText(this, tr("Select Icon"), tr("Icon Name:"), QLineEdit::Normal, (m_icon.startsWith(QLatin1String("data:")) ? QString() : m_icon)));
 
 	if (!name.isEmpty())
 	{
