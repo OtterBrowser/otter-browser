@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ PreviewWidget::PreviewWidget(QWidget *parent) : QFrame(parent),
 	m_pixmapLabel(new QLabel(this)),
 	m_moveAnimation(NULL)
 {
-	QVBoxLayout *layout = new QVBoxLayout(this);
+	QVBoxLayout *layout(new QVBoxLayout(this));
 	layout->addWidget(m_pixmapLabel);
 	layout->addWidget(m_textLabel);
 

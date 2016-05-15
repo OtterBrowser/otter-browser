@@ -50,12 +50,12 @@ SidebarWidget::SidebarWidget(QWidget *parent) : QWidget(parent),
 {
 	m_ui->setupUi(this);
 
-	QToolBar *toolbar = new QToolBar(this);
+	QToolBar *toolbar(new QToolBar(this));
 	toolbar->setIconSize(QSize(16, 16));
 	toolbar->addWidget(new PanelChooserWidget(ActionsManager::ActionEntryDefinition(), this));
 	toolbar->addAction(ActionsManager::getAction(ActionsManager::OpenPanelAction, this));
 
-	QWidget *spacer = new QWidget(toolbar);
+	QWidget *spacer(new QWidget(toolbar));
 	spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
 	toolbar->addWidget(spacer);
@@ -106,7 +106,7 @@ void SidebarWidget::changeEvent(QEvent *event)
 
 		if (m_ui->panelsButton->menu())
 		{
-			QList<QAction*> actions = m_ui->panelsButton->menu()->actions();
+			QList<QAction*> actions(m_ui->panelsButton->menu()->actions());
 
 			for (int i = 0; i < actions.count(); ++i)
 			{
@@ -131,14 +131,14 @@ void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
 
 		m_buttons.clear();
 
-		QMenu *menu = new QMenu(m_ui->panelsButton);
-		const QStringList chosenPanels = value.toStringList();
+		QMenu *menu(new QMenu(m_ui->panelsButton));
+		const QStringList chosenPanels(value.toStringList());
 		QStringList allPanels;
 		allPanels << QLatin1String("bookmarks") << QLatin1String("cache") << QLatin1String("cookies") << QLatin1String("config") << QLatin1String("history") << QLatin1String("notes") << QLatin1String("transfers");
 
 		for (int i = 0; i < allPanels.count(); ++i)
 		{
-			QAction *action = new QAction(menu);
+			QAction *action(new QAction(menu));
 			action->setCheckable(true);
 			action->setChecked(chosenPanels.contains(allPanels[i]));
 			action->setData(allPanels[i]);
@@ -153,7 +153,7 @@ void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
 
 		for (int i = 0; i < chosenPanels.count(); ++i)
 		{
-			QToolButton *button = new QToolButton(this);
+			QToolButton *button(new QToolButton(this));
 			button->setDefaultAction(new QAction(button));
 			button->setToolTip(getPanelTitle(chosenPanels.at(i)));
 			button->setCheckable(true);
@@ -192,7 +192,7 @@ void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
 			{
 				button->setIcon(ThemesManager::getIcon(QLatin1String("text-html")));
 
-				QAction *action = new QAction(menu);
+				QAction *action(new QAction(menu));
 				action->setCheckable(true);
 				action->setChecked(true);
 				action->setData(chosenPanels.at(i));
@@ -216,7 +216,7 @@ void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
 			connect(button->defaultAction(), SIGNAL(triggered()), this, SLOT(selectPanel()));
 		}
 
-		QAction *addWebPanelAction = new QAction(menu);
+		QAction *addWebPanelAction(new QAction(menu));
 		addWebPanelAction->setText(tr("Add Web Panel…"));
 
 		connect(addWebPanelAction, SIGNAL(triggered()), this, SLOT(addWebPanel()));
@@ -233,17 +233,17 @@ void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
 	}
 	else if (option == QLatin1String("Sidebar/Reverse"))
 	{
-		const bool isReversed = value.toBool();
+		const bool isReversed(value.toBool());
 
 		qobject_cast<QBoxLayout*>(layout())->setDirection(isReversed ? QBoxLayout::RightToLeft : QBoxLayout::LeftToRight);
 
-		QToolBar *toolbar = findChild<QToolBar*>();
+		QToolBar *toolbar(findChild<QToolBar*>());
 
 		if (toolbar)
 		{
 			toolbar->setLayoutDirection(isReversed ? Qt::RightToLeft : Qt::LeftToRight);
 
-			QList<QWidget*> widgets = toolbar->findChildren<QWidget*>();
+			QList<QWidget*> widgets(toolbar->findChildren<QWidget*>());
 
 			for (int i = 0; i < widgets.count(); ++i)
 			{
@@ -270,7 +270,7 @@ void SidebarWidget::scheduleSizeSave()
 
 void SidebarWidget::addWebPanel()
 {
-	WindowsManager *manager = SessionsManager::getWindowsManager();
+	WindowsManager *manager(SessionsManager::getWindowsManager());
 	QString url;
 
 	if (manager)
@@ -290,14 +290,14 @@ void SidebarWidget::addWebPanel()
 
 void SidebarWidget::choosePanel(bool checked)
 {
-	QAction *action = qobject_cast<QAction*>(sender());
+	QAction *action(qobject_cast<QAction*>(sender()));
 
 	if (!action)
 	{
 		return;
 	}
 
-	QStringList chosenPanels = SettingsManager::getValue(QLatin1String("Sidebar/Panels")).toStringList();
+	QStringList chosenPanels(SettingsManager::getValue(QLatin1String("Sidebar/Panels")).toStringList());
 
 	if (checked)
 	{
@@ -313,7 +313,7 @@ void SidebarWidget::choosePanel(bool checked)
 
 void SidebarWidget::selectPanel()
 {
-	QAction *action = qobject_cast<QAction*>(sender());
+	QAction *action(qobject_cast<QAction*>(sender()));
 
 	if (action)
 	{
@@ -328,8 +328,8 @@ void SidebarWidget::selectPanel(const QString &identifier)
 		return;
 	}
 
-	MainWindow *mainWindow = MainWindow::findMainWindow(parent());
-	ContentsWidget *widget = NULL;
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
+	ContentsWidget *widget(NULL);
 
 	if (m_panels.contains(identifier) && m_panels[identifier])
 	{
@@ -369,7 +369,7 @@ void SidebarWidget::selectPanel(const QString &identifier)
 	}
 	else if (identifier.startsWith(QLatin1String("web:")))
 	{
-		WebContentsWidget *webWidget = new WebContentsWidget((mainWindow ? mainWindow->getWindowsManager()->isPrivate() : true), NULL, NULL);
+		WebContentsWidget *webWidget(new WebContentsWidget((mainWindow ? mainWindow->getWindowsManager()->isPrivate() : true), NULL, NULL));
 		webWidget->setUrl(identifier.section(QLatin1Char(':'), 1, -1), false);
 
 		widget = webWidget;

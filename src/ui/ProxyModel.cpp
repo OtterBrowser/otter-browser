@@ -38,7 +38,7 @@ QVariant ProxyModel::data(const QModelIndex &index, int role) const
 {
 	if (role == Qt::DisplayRole && index.column() < m_mapping.count())
 	{
-		const QVariant data = mapToSource(index.sibling(index.row(), 0)).data(m_mapping.at(index.column()).second);
+		const QVariant data(mapToSource(index.sibling(index.row(), 0)).data(m_mapping.at(index.column()).second));
 
 		if (data.type() == QVariant::DateTime)
 		{
@@ -63,8 +63,8 @@ QVariant ProxyModel::headerData(int section, Qt::Orientation orientation, int ro
 
 QModelIndex ProxyModel::index(int row, int column, const QModelIndex &parent) const
 {
-	const QModelIndex sourceParent = mapToSource(parent);
-	const QModelIndex sourceIndex = m_model->index(row, 0, sourceParent);
+	const QModelIndex sourceParent(mapToSource(parent));
+	const QModelIndex sourceIndex(m_model->index(row, 0, sourceParent));
 
 	if (column > 0)
 	{
@@ -86,6 +86,8 @@ Qt::ItemFlags ProxyModel::flags(const QModelIndex &index) const
 
 int ProxyModel::columnCount(const QModelIndex &parent) const
 {
+	Q_UNUSED(parent)
+
 	return m_mapping.count();
 }
 

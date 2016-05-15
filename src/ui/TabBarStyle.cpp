@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ void TabBarStyle::drawControl(QStyle::ControlElement element, const QStyleOption
 {
 	if (element == CE_TabBarTabLabel)
 	{
-		const QStyleOptionTab *tabOption = qstyleoption_cast<const QStyleOptionTab*>(option);
+		const QStyleOptionTab *tabOption(qstyleoption_cast<const QStyleOptionTab*>(option));
 
 		if (tabOption)
 		{
@@ -50,8 +50,8 @@ void TabBarStyle::drawControl(QStyle::ControlElement element, const QStyleOption
 
 QSize TabBarStyle::sizeFromContents(QStyle::ContentsType type, const QStyleOption *option, const QSize &size, const QWidget *widget) const
 {
-	QSize mutableSize = QProxyStyle::sizeFromContents(type, option, size, widget);
-	const QStyleOptionTab *tabOption = qstyleoption_cast<const QStyleOptionTab*>(option);
+	QSize mutableSize(QProxyStyle::sizeFromContents(type, option, size, widget));
+	const QStyleOptionTab *tabOption(qstyleoption_cast<const QStyleOptionTab*>(option));
 
 	if (type == QStyle::CT_TabBarTab && tabOption && (tabOption->shape == QTabBar::RoundedEast || tabOption->shape == QTabBar::RoundedWest))
 	{
@@ -65,14 +65,14 @@ QRect TabBarStyle::subElementRect(QStyle::SubElement element, const QStyleOption
 {
 	if (element == QStyle::SE_TabBarTabLeftButton || element == QStyle::SE_TabBarTabRightButton || element == QStyle::SE_TabBarTabText)
 	{
-		const QStyleOptionTab *tabOption = qstyleoption_cast<const QStyleOptionTab*>(option);
+		const QStyleOptionTab *tabOption(qstyleoption_cast<const QStyleOptionTab*>(option));
 
 		if (tabOption->shape == QTabBar::RoundedEast || tabOption->shape == QTabBar::RoundedWest)
 		{
 			QStyleOptionTab mutableTabOption(*tabOption);
 			mutableTabOption.shape = QTabBar::RoundedNorth;
 
-			QRect rectangle = QProxyStyle::subElementRect(element, &mutableTabOption, widget);
+			QRect rectangle(QProxyStyle::subElementRect(element, &mutableTabOption, widget));
 			rectangle.translate(0, option->rect.top());
 
 			return rectangle;

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -45,13 +45,13 @@ void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 		return;
 	}
 
-	const bool configureEntry = (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("configure"));
-	const int shortcutWidth = ((!configureEntry && option.rect.width() > 150) ? 40 : 0);
-	QRect titleRectangle = option.rect;
+	const bool configureEntry(index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("configure"));
+	const int shortcutWidth((!configureEntry && option.rect.width() > 150) ? 40 : 0);
+	QRect titleRectangle(option.rect);
 
 	if (!index.data(Qt::DecorationRole).value<QIcon>().isNull())
 	{
-		QRect decorationRectangle = option.rect;
+		QRect decorationRectangle(option.rect);
 		decorationRectangle.setRight(option.rect.height());
 		decorationRectangle = decorationRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
 
@@ -69,7 +69,7 @@ void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 
 	if (shortcutWidth > 0)
 	{
-		QRect shortcutReactangle = option.rect;
+		QRect shortcutReactangle(option.rect);
 		shortcutReactangle.setLeft(option.rect.right() - shortcutWidth);
 
 		drawDisplay(painter, option, shortcutReactangle, index.data(Qt::UserRole + 2).toString());
@@ -78,7 +78,7 @@ void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 
 QSize SearchDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	QSize size = index.data(Qt::SizeHintRole).toSize();
+	QSize size(index.data(Qt::SizeHintRole).toSize());
 
 	if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("separator"))
 	{

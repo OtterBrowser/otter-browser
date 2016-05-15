@@ -44,7 +44,7 @@ SourceViewerWebWidget::SourceViewerWebWidget(bool isPrivate, ContentsWidget *par
 	m_isLoading(true),
 	m_isPrivate(isPrivate)
 {
-	QVBoxLayout *layout = new QVBoxLayout(this);
+	QVBoxLayout *layout(new QVBoxLayout(this));
 	layout->setContentsMargins(0, 0, 0, 0);
 	layout->setSpacing(0);
 	layout->addWidget(m_sourceViewer);
@@ -114,7 +114,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 			{
 				if (m_sourceViewer->document()->isModified())
 				{
-					const QMessageBox::StandardButton result = QMessageBox::warning(this, tr("Warning"), tr("The document has been modified.\nDo you want to save your changes or discard them?"), (QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel));
+					const QMessageBox::StandardButton result(QMessageBox::warning(this, tr("Warning"), tr("The document has been modified.\nDo you want to save your changes or discard them?"), (QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel)));
 
 					if (result == QMessageBox::Cancel)
 					{
@@ -206,7 +206,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 			return;
 		case ActionsManager::CopyToNoteAction:
 			{
-				BookmarksItem *note = NotesManager::addNote(BookmarksModel::UrlBookmark, getUrl());
+				BookmarksItem *note(NotesManager::addNote(BookmarksModel::UrlBookmark, getUrl()));
 				note->setData(getSelectedText(), BookmarksModel::DescriptionRole);
 			}
 
@@ -290,12 +290,12 @@ void SourceViewerWebWidget::showContextMenu(const QPoint &position)
 	updateHitTestResult(position);
 	updateEditActions();
 
-	QWidget *child = childAt(position.isNull() ? mapFromGlobal(QCursor::pos()) : position);
+	QWidget *child(childAt(position.isNull() ? mapFromGlobal(QCursor::pos()) : position));
 	QMenu menu;
 
 	if (child && child->metaObject()->className() == QLatin1String("Otter::MarginWidget"))
 	{
-		QAction *showLineNumbersAction = menu.addAction(tr("Show Line Numbers"));
+		QAction *showLineNumbersAction(menu.addAction(tr("Show Line Numbers")));
 		showLineNumbersAction->setCheckable(true);
 		showLineNumbersAction->setChecked(SettingsManager::getValue(QLatin1String("SourceViewer/ShowLineNumbers")).toBool());
 
@@ -325,7 +325,7 @@ void SourceViewerWebWidget::setShowLineNumbers(bool show)
 
 void SourceViewerWebWidget::setOption(const QString &key, const QVariant &value)
 {
-	const bool needsReload = (key == QLatin1String("Content/DefaultCharacterEncoding") && getOption(key).toString() != value.toString());
+	const bool needsReload(key == QLatin1String("Content/DefaultCharacterEncoding") && getOption(key).toString() != value.toString());
 
 	WebWidget::setOption(key, value);
 
@@ -383,7 +383,7 @@ void SourceViewerWebWidget::setContents(const QByteArray &contents, const QStrin
 {
 	triggerAction(ActionsManager::StopAction);
 
-	QTextCodec *codec = NULL;
+	QTextCodec *codec(NULL);
 
 	if (hasOption(QLatin1String("Content/DefaultCharacterEncoding")))
 	{
@@ -461,7 +461,7 @@ Action* SourceViewerWebWidget::getAction(int identifier)
 
 	if (identifier == ActionsManager::UndoAction && !getExistingAction(ActionsManager::UndoAction))
 	{
-		Action *action = WebWidget::getAction(ActionsManager::UndoAction);
+		Action *action(WebWidget::getAction(ActionsManager::UndoAction));
 		action->setEnabled(m_sourceViewer->document()->isUndoAvailable());
 
 		connect(m_sourceViewer, SIGNAL(undoAvailable(bool)), action, SLOT(setEnabled(bool)));
@@ -471,7 +471,7 @@ Action* SourceViewerWebWidget::getAction(int identifier)
 
 	if (identifier == ActionsManager::RedoAction && !getExistingAction(ActionsManager::RedoAction))
 	{
-		Action *action = WebWidget::getAction(ActionsManager::RedoAction);
+		Action *action(WebWidget::getAction(ActionsManager::RedoAction));
 		action->setEnabled(m_sourceViewer->document()->isRedoAvailable());
 
 		connect(m_sourceViewer, SIGNAL(redoAvailable(bool)), action, SLOT(setEnabled(bool)));

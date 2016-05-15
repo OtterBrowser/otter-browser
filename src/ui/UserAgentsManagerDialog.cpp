@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -36,12 +36,12 @@ UserAgentsManagerDialog::UserAgentsManagerDialog(QList<UserAgentInformation> use
 	QStringList labels;
 	labels << tr("Title") << tr("Value");
 
-	QStandardItemModel *model = new QStandardItemModel(this);
+	QStandardItemModel *model(new QStandardItemModel(this));
 	model->setHorizontalHeaderLabels(labels);
 
 	for (int i = 0; i < userAgents.count(); ++i)
 	{
-		const QString title = userAgents.at(i).title;
+		const QString title(userAgents.at(i).title);
 		QList<QStandardItem*> items;
 		items.append(new QStandardItem(title.isEmpty() ? tr("(Untitled)") : title));
 		items[0]->setData(userAgents.at(i).identifier, Qt::UserRole);
@@ -96,7 +96,7 @@ void UserAgentsManagerDialog::removeUserAgent()
 
 void UserAgentsManagerDialog::updateUserAgentActions()
 {
-	const int currentRow = m_ui->userAgentsView->getCurrentRow();
+	const int currentRow(m_ui->userAgentsView->getCurrentRow());
 
 	m_ui->removeButton->setEnabled(currentRow >= 0 && currentRow < m_ui->userAgentsView->getRowCount());
 }
@@ -108,11 +108,11 @@ QList<UserAgentInformation> UserAgentsManagerDialog::getUserAgents() const
 
 	for (int i = 0; i < m_ui->userAgentsView->getRowCount(); ++i)
 	{
-		QString identifier = m_ui->userAgentsView->getIndex(i, 0).data(Qt::UserRole).toString();
+		QString identifier(m_ui->userAgentsView->getIndex(i, 0).data(Qt::UserRole).toString());
 
 		if (identifier.isEmpty() || identifiers.contains(identifier))
 		{
-			int number = 1;
+			int number(1);
 
 			do
 			{

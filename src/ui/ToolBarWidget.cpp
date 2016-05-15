@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -101,10 +101,10 @@ void ToolBarDragAreaWidget::mouseMoveEvent(QMouseEvent *event)
 
 	m_toolBar->startToolBarDragging();
 
-	QMimeData *mimeData = new QMimeData();
+	QMimeData *mimeData(new QMimeData());
 	mimeData->setData(QLatin1String("x-toolbar-identifier"), QString::number(m_toolBar->getIdentifier()).toUtf8());
 
-	QDrag *drag = new QDrag(this);
+	QDrag *drag(new QDrag(this));
 	drag->setMimeData(mimeData);
 	drag->exec(Qt::MoveAction);
 }
@@ -171,7 +171,7 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	if (m_identifier != ToolBarsManager::TabBar)
 	{
-		QMenu *menu = createCustomizationMenu(m_identifier);
+		QMenu *menu(createCustomizationMenu(m_identifier));
 		menu->exec(event->globalPos());
 		menu->deleteLater();
 
@@ -179,7 +179,7 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	}
 
 	QList<QAction*> actions;
-	QAction *cycleAction = new QAction(tr("Switch tabs using the mouse wheel"), this);
+	QAction *cycleAction(new QAction(tr("Switch tabs using the mouse wheel"), this));
 	cycleAction->setCheckable(true);
 	cycleAction->setChecked(!SettingsManager::getValue(QLatin1String("TabBar/RequireModifierToSwitchTabOnScroll")).toBool());
 	cycleAction->setEnabled(m_mainWindow->getTabBar());
@@ -196,7 +196,7 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	menu.addAction(ActionsManager::getAction(ActionsManager::NewTabPrivateAction, this));
 	menu.addSeparator();
 
-	QMenu *arrangeMenu = menu.addMenu(tr("Arrange"));
+	QMenu *arrangeMenu(menu.addMenu(tr("Arrange")));
 	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::RestoreTabAction, this));
 	arrangeMenu->addSeparator();
 	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::RestoreAllAction, this));
@@ -214,7 +214,7 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 void ToolBarWidget::startToolBarDragging()
 {
-	ToolBarAreaWidget *toolBarArea = qobject_cast<ToolBarAreaWidget*>(parentWidget());
+	ToolBarAreaWidget *toolBarArea(qobject_cast<ToolBarAreaWidget*>(parentWidget()));
 
 	if (toolBarArea)
 	{
@@ -224,7 +224,7 @@ void ToolBarWidget::startToolBarDragging()
 
 void ToolBarWidget::endToolBarDragging()
 {
-	ToolBarAreaWidget *toolBarArea = qobject_cast<ToolBarAreaWidget*>(parentWidget());
+	ToolBarAreaWidget *toolBarArea(qobject_cast<ToolBarAreaWidget*>(parentWidget()));
 
 	if (toolBarArea)
 	{
@@ -234,7 +234,7 @@ void ToolBarWidget::endToolBarDragging()
 
 void ToolBarWidget::reload()
 {
-	const ToolBarsManager::ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(m_identifier);
+	const ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(m_identifier));
 
 	setDefinition(definition);
 
@@ -315,7 +315,7 @@ void ToolBarWidget::loadBookmarks()
 
 	for (int i = 0; i < m_bookmark->rowCount(); ++i)
 	{
-		BookmarksItem *bookmark = dynamic_cast<BookmarksItem*>(m_bookmark->child(i));
+		BookmarksItem *bookmark(dynamic_cast<BookmarksItem*>(m_bookmark->child(i)));
 
 		if (bookmark)
 		{
@@ -365,7 +365,7 @@ void ToolBarWidget::setToolBarLocked(bool locked)
 
 void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &definition)
 {
-	TabBarWidget *tabBar = ((m_identifier == ToolBarsManager::TabBar && m_mainWindow) ? m_mainWindow->getTabBar() : NULL);
+	TabBarWidget *tabBar((m_identifier == ToolBarsManager::TabBar && m_mainWindow) ? m_mainWindow->getTabBar() : NULL);
 
 	setVisible(definition.visibility != ToolBarsManager::AlwaysHiddenToolBar);
 	setOrientation((definition.location == Qt::LeftToolBarArea || definition.location == Qt::RightToolBarArea) ? Qt::Vertical : Qt::Horizontal);
@@ -430,7 +430,7 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 			}
 			else
 			{
-				QWidget *widget = createWidget(definition.entries.at(i));
+				QWidget *widget(createWidget(definition.entries.at(i)));
 
 				if (widget)
 				{
@@ -445,7 +445,7 @@ QWidget* ToolBarWidget::createWidget(const ActionsManager::ActionEntryDefinition
 {
 	if (definition.action == QLatin1String("spacer"))
 	{
-		QWidget *spacer = new QWidget(this);
+		QWidget *spacer(new QWidget(this));
 		spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
 		return spacer;
@@ -473,7 +473,7 @@ QWidget* ToolBarWidget::createWidget(const ActionsManager::ActionEntryDefinition
 
 	if (definition.action == QLatin1String("SearchWidget"))
 	{
-		SearchWidget *searchWidget = new SearchWidget(m_window, this);
+		SearchWidget *searchWidget(new SearchWidget(m_window, this));
 		searchWidget->setOptions(definition.options);
 
 		return searchWidget;
@@ -496,7 +496,7 @@ QWidget* ToolBarWidget::createWidget(const ActionsManager::ActionEntryDefinition
 			return NULL;
 		}
 
-		TabBarWidget *tabBar = new TabBarWidget(this);
+		TabBarWidget *tabBar(new TabBarWidget(this));
 
 		connect(tabBar, SIGNAL(tabsAmountChanged(int)), this, SLOT(updateVisibility()));
 
@@ -512,7 +512,7 @@ QWidget* ToolBarWidget::createWidget(const ActionsManager::ActionEntryDefinition
 
 	if (definition.action.startsWith(QLatin1String("bookmarks:")))
 	{
-		BookmarksItem *bookmark = (definition.action.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getItem(definition.action.mid(11)) : BookmarksManager::getBookmark(definition.action.mid(10).toULongLong()));
+		BookmarksItem *bookmark(definition.action.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getItem(definition.action.mid(11)) : BookmarksManager::getBookmark(definition.action.mid(10).toULongLong()));
 
 		if (bookmark)
 		{
@@ -522,11 +522,11 @@ QWidget* ToolBarWidget::createWidget(const ActionsManager::ActionEntryDefinition
 
 	if (definition.action.endsWith(QLatin1String("Action")))
 	{
-		const int identifier = ActionsManager::getActionIdentifier(definition.action.left(definition.action.length() - 6));
+		const int identifier(ActionsManager::getActionIdentifier(definition.action.left(definition.action.length() - 6)));
 
 		if (identifier >= 0)
 		{
-			ActionWidget *actionWidget = NULL;
+			ActionWidget *actionWidget(NULL);
 
 			if (identifier == ActionsManager::GoBackAction)
 			{
@@ -557,15 +557,14 @@ QWidget* ToolBarWidget::createWidget(const ActionsManager::ActionEntryDefinition
 
 QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QList<QAction*> actions, QWidget *parent)
 {
-	const ToolBarsManager::ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(identifier);
-
-	QMenu *menu = new QMenu(parent);
+	const ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(identifier));
+	QMenu *menu(new QMenu(parent));
 	menu->setTitle(tr("Customize"));
 
-	QMenu *toolBarMenu = menu->addMenu(definition.title.isEmpty() ? tr("(Untitled)") : definition.title);
+	QMenu *toolBarMenu(menu->addMenu(definition.title.isEmpty() ? tr("(Untitled)") : definition.title));
 	toolBarMenu->addAction(tr("Configure…"), ToolBarsManager::getInstance(), SLOT(configureToolBar()))->setData(identifier);
 
-	QAction *resetAction = toolBarMenu->addAction(tr("Reset to Defaults…"), ToolBarsManager::getInstance(), SLOT(resetToolBar()));
+	QAction *resetAction(toolBarMenu->addAction(tr("Reset to Defaults…"), ToolBarsManager::getInstance(), SLOT(resetToolBar())));
 	resetAction->setData(identifier);
 	resetAction->setEnabled(definition.canReset);
 
@@ -582,7 +581,7 @@ QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QList<QAction*> ac
 
 	toolBarMenu->addSeparator();
 
-	QAction *removeAction = toolBarMenu->addAction(ThemesManager::getIcon(QLatin1String("list-remove")), tr("Remove…"), ToolBarsManager::getInstance(), SLOT(removeToolBar()));
+	QAction *removeAction(toolBarMenu->addAction(ThemesManager::getIcon(QLatin1String("list-remove")), tr("Remove…"), ToolBarsManager::getInstance(), SLOT(removeToolBar())));
 	removeAction->setData(identifier);
 	removeAction->setEnabled(definition.identifier >= ToolBarsManager::OtherToolBar);
 
@@ -593,7 +592,7 @@ QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QList<QAction*> ac
 
 Qt::ToolBarArea ToolBarWidget::getArea() const
 {
-	ToolBarAreaWidget *toolBarArea = qobject_cast<ToolBarAreaWidget*>(parentWidget());
+	ToolBarAreaWidget *toolBarArea(qobject_cast<ToolBarAreaWidget*>(parentWidget()));
 
 	if (toolBarArea)
 	{
@@ -617,7 +616,7 @@ bool ToolBarWidget::event(QEvent *event)
 {
 	if (event->type() == QEvent::LayoutRequest)
 	{
-		const bool result = QToolBar::event(event);
+		const bool result(QToolBar::event(event));
 
 		layout()->setContentsMargins(0, 0, 0, 0);
 

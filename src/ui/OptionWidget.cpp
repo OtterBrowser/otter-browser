@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -128,7 +128,7 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, Setting
 
 	setAutoFillBackground(false);
 
-	QHBoxLayout *layout = new QHBoxLayout(this);
+	QHBoxLayout *layout(new QHBoxLayout(this));
 	layout->setMargin(0);
 	layout->addWidget(m_widget);
 
@@ -163,7 +163,7 @@ void OptionWidget::markModified()
 
 void OptionWidget::reset()
 {
-	const QVariant value = SettingsManager::getDefinition(m_option).defaultValue;
+	const QVariant value(SettingsManager::getDefinition(m_option).defaultValue);
 
 	setValue(value);
 

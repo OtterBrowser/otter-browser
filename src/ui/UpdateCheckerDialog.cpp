@@ -94,16 +94,16 @@ void UpdateCheckerDialog::updateCheckFinished(const QList<UpdateInformation> &av
 	}
 	else
 	{
-		bool isPackageMissing = false;
+		bool isPackageMissing(false);
 
 		m_ui->label->setText(tr("Available updates:"));
 
 		for (int i = 0; i < availableUpdates.count(); ++i)
 		{
-			QPushButton *detailsButton = new QPushButton(tr("Details…"), this);
+			QPushButton *detailsButton(new QPushButton(tr("Details…"), this));
 			detailsButton->setProperty("detailsUrl", availableUpdates.at(i).detailsUrl);
 
-			QPushButton *updateButton = new QPushButton(tr("Download"), this);
+			QPushButton *updateButton(new QPushButton(tr("Download"), this));
 
 			if (availableUpdates.at(i).isAvailable)
 			{
@@ -126,7 +126,7 @@ void UpdateCheckerDialog::updateCheckFinished(const QList<UpdateInformation> &av
 
 		if (isPackageMissing)
 		{
-			QLabel *packageWarning = new QLabel(tr("Some of the updates do not contain packages for your platform. Try to check for updates later or visit details page for more info."), this);
+			QLabel *packageWarning(new QLabel(tr("Some of the updates do not contain packages for your platform. Try to check for updates later or visit details page for more info."), this));
 			packageWarning->setWordWrap(true);
 
 			m_ui->gridLayout->addWidget(packageWarning, m_ui->gridLayout->rowCount(), 0, m_ui->gridLayout->columnCount(), 0);
@@ -136,11 +136,11 @@ void UpdateCheckerDialog::updateCheckFinished(const QList<UpdateInformation> &av
 
 void UpdateCheckerDialog::showDetails()
 {
-	QPushButton *button = qobject_cast<QPushButton*>(sender());
+	QPushButton *button(qobject_cast<QPushButton*>(sender()));
 
 	if (button)
 	{
-		const QUrl url = button->property("detailsUrl").toUrl();
+		const QUrl url(button->property("detailsUrl").toUrl());
 
 		if (url.isValid() && !SessionsManager::hasUrl(url, true))
 		{
@@ -156,11 +156,11 @@ void UpdateCheckerDialog::showDetails()
 
 void UpdateCheckerDialog::downloadUpdate()
 {
-	QPushButton *button = qobject_cast<QPushButton*>(sender());
+	QPushButton *button(qobject_cast<QPushButton*>(sender()));
 
 	if (button)
 	{
-		QVariant updateInfo = button->property("downloadInfo");
+		QVariant updateInfo(button->property("downloadInfo"));
 
 		if (!updateInfo.isNull())
 		{
@@ -175,7 +175,7 @@ void UpdateCheckerDialog::downloadUpdate()
 			m_ui->progressBar->show();
 			m_ui->buttonBox->setDisabled(true);
 
-			Updater *updater = new Updater(updateInfo.value<UpdateInformation>(), this);
+			Updater *updater(new Updater(updateInfo.value<UpdateInformation>(), this));
 
 			connect(updater, SIGNAL(progress(int)), this, SLOT(updateProgress(int)));
 			connect(updater, SIGNAL(finished(bool)), this, SLOT(transferFinished(bool)));
@@ -188,7 +188,7 @@ void UpdateCheckerDialog::readyToInstall()
 	m_ui->label->setText(tr("Download finished!"));
 	m_ui->buttonBox->addButton(tr("Install"), QDialogButtonBox::AcceptRole);
 
-	QLabel *informationLabel = new QLabel(tr("New version of Otter Browser is ready to install.\nClick Install button to restart browser and install the update or close this dialog to install the update during next browser restart."), this);
+	QLabel *informationLabel(new QLabel(tr("New version of Otter Browser is ready to install.\nClick Install button to restart browser and install the update or close this dialog to install the update during next browser restart."), this));
 	informationLabel->setWordWrap(true);
 
 	m_ui->gridLayout->addWidget(informationLabel);
@@ -212,7 +212,7 @@ void UpdateCheckerDialog::transferFinished(const bool success)
 	{
 		m_ui->label->setText(tr("Download failed!"));
 
-		QLabel *informationLabel = new QLabel(tr("Check Error Console for more information."), this);
+		QLabel *informationLabel(new QLabel(tr("Check Error Console for more information."), this));
 		informationLabel->setWordWrap(true);
 
 		m_ui->gridLayout->addWidget(informationLabel);

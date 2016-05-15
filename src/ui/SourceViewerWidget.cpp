@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -40,27 +40,27 @@ SyntaxHighlighter::SyntaxHighlighter(QTextDocument *parent) : QSyntaxHighlighter
 		QFile file(SessionsManager::getReadableDataPath(QLatin1String("syntaxHighlighting.json")));
 		file.open(QIODevice::ReadOnly);
 
-		const QJsonObject syntaxes = QJsonDocument::fromJson(file.readAll()).object();
-		const QMetaEnum highlightingSyntaxEnum = metaObject()->enumerator(metaObject()->indexOfEnumerator(QLatin1String("HighlightingSyntax").data()));
-		const QMetaEnum highlightingStateEnum = metaObject()->enumerator(metaObject()->indexOfEnumerator(QLatin1String("HighlightingState").data()));
+		const QJsonObject syntaxes(QJsonDocument::fromJson(file.readAll()).object());
+		const QMetaEnum highlightingSyntaxEnum(metaObject()->enumerator(metaObject()->indexOfEnumerator(QLatin1String("HighlightingSyntax").data())));
+		const QMetaEnum highlightingStateEnum(metaObject()->enumerator(metaObject()->indexOfEnumerator(QLatin1String("HighlightingState").data())));
 
 		for (int i = 1; i < highlightingSyntaxEnum.keyCount(); ++i)
 		{
 			QMap<HighlightingState, QTextCharFormat> formats;
-			QString syntax = highlightingSyntaxEnum.valueToKey(i);
+			QString syntax(highlightingSyntaxEnum.valueToKey(i));
 			syntax.chop(6);
 
-			const QJsonObject definitions = syntaxes.value(syntax).toObject();
+			const QJsonObject definitions(syntaxes.value(syntax).toObject());
 
 			for (int j = 0; j < highlightingStateEnum.keyCount(); ++j)
 			{
 				QString state = highlightingStateEnum.valueToKey(j);
 				state.chop(5);
 
-				const QJsonObject definition = definitions.value(state).toObject();
-				const QString foreground = definition.value(QLatin1String("foreground")).toString(QLatin1String("auto"));
-				const QString fontStyle = definition.value(QLatin1String("fontStyle")).toString(QLatin1String("auto"));
-				const QString fontWeight = definition.value(QLatin1String("fontWeight")).toString(QLatin1String("auto"));
+				const QJsonObject definition(definitions.value(state).toObject());
+				const QString foreground(definition.value(QLatin1String("foreground")).toString(QLatin1String("auto")));
+				const QString fontStyle(definition.value(QLatin1String("fontStyle")).toString(QLatin1String("auto")));
+				const QString fontWeight(definition.value(QLatin1String("fontWeight")).toString(QLatin1String("auto")));
 				QTextCharFormat format;
 
 				if (foreground != QLatin1String("auto"))
@@ -97,11 +97,11 @@ void SyntaxHighlighter::highlightBlock(const QString &text)
 {
 	QString buffer;
 	BlockData currentData;
-	HighlightingState previousState = static_cast<HighlightingState>(qMax(previousBlockState(), 0));
-	HighlightingState currentState = previousState;
-	int previousStateBegin = 0;
-	int currentStateBegin = 0;
-	int position = 0;
+	HighlightingState previousState(static_cast<HighlightingState>(qMax(previousBlockState(), 0)));
+	HighlightingState currentState(previousState);
+	int previousStateBegin(0);
+	int currentStateBegin(0);
+	int position(0);
 
 	if (currentBlock().previous().userData())
 	{
@@ -114,7 +114,7 @@ void SyntaxHighlighter::highlightBlock(const QString &text)
 
 		++position;
 
-		const bool isEndOfLine = (position == text.length());
+		const bool isEndOfLine(position == text.length());
 
 		if (currentState == NoState && text.at(position - 1) == QLatin1Char('<'))
 		{
@@ -186,7 +186,7 @@ void SyntaxHighlighter::highlightBlock(const QString &text)
 
 	if (!currentData.context.isEmpty())
 	{
-		BlockData *nextBlockData = new BlockData();
+		BlockData *nextBlockData(new BlockData());
 		nextBlockData->context = currentData.context;
 		nextBlockData->state = currentData.state;
 
@@ -213,12 +213,12 @@ void MarginWidget::paintEvent(QPaintEvent *event)
 	QPainter painter(this);
 	painter.fillRect(event->rect(), Qt::transparent);
 
-	QTextBlock block = m_sourceViewer->firstVisibleBlock();
-	int top = m_sourceViewer->blockBoundingGeometry(block).translated(m_sourceViewer->contentOffset()).top();
-	int bottom = (top + m_sourceViewer->blockBoundingRect(block).height());
-	const int right = (width() - 5);
-	const int selectionStart = m_sourceViewer->document()->findBlock(m_sourceViewer->textCursor().selectionStart()).blockNumber();
-	const int selectionEnd = m_sourceViewer->document()->findBlock(m_sourceViewer->textCursor().selectionEnd()).blockNumber();
+	QTextBlock block(m_sourceViewer->firstVisibleBlock());
+	int top(m_sourceViewer->blockBoundingGeometry(block).translated(m_sourceViewer->contentOffset()).top());
+	int bottom(top + m_sourceViewer->blockBoundingRect(block).height());
+	const int right(width() - 5);
+	const int selectionStart(m_sourceViewer->document()->findBlock(m_sourceViewer->textCursor().selectionStart()).blockNumber());
+	const int selectionEnd(m_sourceViewer->document()->findBlock(m_sourceViewer->textCursor().selectionEnd()).blockNumber());
 
 	while (block.isValid() && top <= event->rect().bottom())
 	{
@@ -241,7 +241,7 @@ void MarginWidget::mousePressEvent(QMouseEvent *event)
 {
 	if (event->button() == Qt::LeftButton)
 	{
-		QTextCursor textCursor = m_sourceViewer->cursorForPosition(QPoint(1, event->y()));
+		QTextCursor textCursor(m_sourceViewer->cursorForPosition(QPoint(1, event->y())));
 		textCursor.select(QTextCursor::LineUnderCursor);
 		textCursor.movePosition(QTextCursor::NextBlock, QTextCursor::KeepAnchor);
 
@@ -257,8 +257,8 @@ void MarginWidget::mousePressEvent(QMouseEvent *event)
 
 void MarginWidget::mouseMoveEvent(QMouseEvent *event)
 {
-	QTextCursor textCursor = m_sourceViewer->cursorForPosition(QPoint(1, event->y()));
-	int currentLine = textCursor.blockNumber();
+	QTextCursor textCursor(m_sourceViewer->cursorForPosition(QPoint(1, event->y())));
+	int currentLine(textCursor.blockNumber());
 
 	if (currentLine == m_lastClickedLine)
 	{
@@ -296,8 +296,8 @@ void MarginWidget::setAmount(int amount)
 		amount = m_sourceViewer->blockCount();
 	}
 
-	int digits = 1;
-	int max = qMax(1, amount);
+	int digits(1);
+	int max(qMax(1, amount));
 
 	while (max >= 10)
 	{
@@ -313,14 +313,14 @@ void MarginWidget::setAmount(int amount)
 
 bool MarginWidget::event(QEvent *event)
 {
-	const bool value = QWidget::event(event);
+	const bool result(QWidget::event(event));
 
 	if (event->type() == QEvent::FontChange)
 	{
 		setAmount();
 	}
 
-	return value;
+	return result;
 }
 
 SourceViewerWidget::SourceViewerWidget(QWidget *parent) : QPlainTextEdit(parent),
@@ -421,7 +421,7 @@ void SourceViewerWidget::updateSelection()
 
 		extraSelections.append(selection);
 
-		QTextCursor textCursor = this->textCursor();
+		QTextCursor textCursor(this->textCursor());
 		textCursor.setPosition(0);
 
 		if (m_findFlags.testFlag(WebWidget::HighlightAllFind))
@@ -458,7 +458,7 @@ void SourceViewerWidget::setZoom(int zoom)
 	{
 		m_zoom = zoom;
 
-		QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
+		QFont font(QFontDatabase::systemFont(QFontDatabase::FixedFont));
 		font.setPointSize(font.pointSize() * (qreal(zoom) / 100));
 
 		setFont(font);
@@ -479,7 +479,7 @@ int SourceViewerWidget::getZoom() const
 
 bool SourceViewerWidget::findText(const QString &text, WebWidget::FindFlags flags)
 {
-	const bool isTheSame = (text == m_findText);
+	const bool isTheSame(text == m_findText);
 
 	m_findText = text;
 	m_findFlags = flags;
@@ -498,7 +498,7 @@ bool SourceViewerWidget::findText(const QString &text, WebWidget::FindFlags flag
 			nativeFlags |= QTextDocument::FindCaseSensitively;
 		}
 
-		QTextCursor findTextCursor = m_findTextAnchor;
+		QTextCursor findTextCursor(m_findTextAnchor);
 
 		if (!isTheSame)
 		{
@@ -520,7 +520,7 @@ bool SourceViewerWidget::findText(const QString &text, WebWidget::FindFlags flag
 
 		if (!m_findTextAnchor.isNull())
 		{
-			const QTextCursor currentTextCursor = textCursor();
+			const QTextCursor currentTextCursor(textCursor());
 
 			disconnect(this, SIGNAL(cursorPositionChanged()), this, SLOT(updateTextCursor()));
 

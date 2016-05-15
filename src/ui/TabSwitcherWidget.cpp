@@ -40,13 +40,13 @@ TabSwitcherWidget::TabSwitcherWidget(WindowsManager *manager, QWidget *parent) :
 	m_loadingMovie(NULL),
 	m_reason(KeyboardReason)
 {
-	QHBoxLayout *mainLayout = new QHBoxLayout(this);
+	QHBoxLayout *mainLayout(new QHBoxLayout(this));
 	mainLayout->addWidget(m_frame, 0, Qt::AlignCenter);
 
 	setLayout(mainLayout);
 	setAutoFillBackground(false);
 
-	QHBoxLayout *frameLayout = new QHBoxLayout(m_frame);
+	QHBoxLayout *frameLayout(new QHBoxLayout(m_frame));
 	frameLayout->addWidget(m_tabsView, 1);
 	frameLayout->addWidget(m_previewLabel, 0, Qt::AlignCenter);
 
@@ -77,7 +77,7 @@ void TabSwitcherWidget::showEvent(QShowEvent *event)
 
 	for (int i = 0; i < m_windowsManager->getWindowCount(); ++i)
 	{
-		Window *window = m_windowsManager->getWindowByIndex(i);
+		Window *window(m_windowsManager->getWindowByIndex(i));
 
 		if (window)
 		{
@@ -89,7 +89,7 @@ void TabSwitcherWidget::showEvent(QShowEvent *event)
 
 	m_tabsView->setCurrentIndex(m_model->index(0, 0));
 
-	const int contentsHeight = (m_model->rowCount() * 22);
+	const int contentsHeight(m_model->rowCount() * 22);
 
 	m_tabsView->setMinimumHeight(qMin(contentsHeight, int(height() * 0.9)));
 
@@ -143,7 +143,7 @@ void TabSwitcherWidget::keyReleaseEvent(QKeyEvent *event)
 
 void TabSwitcherWidget::currentTabChanged(const QModelIndex &index)
 {
-	Window *window = m_windowsManager->getWindowByIdentifier(index.data(Qt::UserRole).toLongLong());
+	Window *window(m_windowsManager->getWindowByIdentifier(index.data(Qt::UserRole).toLongLong()));
 
 	if (window)
 	{
@@ -175,7 +175,7 @@ void TabSwitcherWidget::currentTabChanged(const QModelIndex &index)
 
 void TabSwitcherWidget::tabAdded(qint64 identifier)
 {
-	Window *window = m_windowsManager->getWindowByIdentifier(identifier);
+	Window *window(m_windowsManager->getWindowByIdentifier(identifier));
 
 	if (window)
 	{
@@ -185,7 +185,7 @@ void TabSwitcherWidget::tabAdded(qint64 identifier)
 
 void TabSwitcherWidget::tabRemoved(qint64 identifier)
 {
-	const int row = findRow(identifier);
+	const int row(findRow(identifier));
 
 	if (row >= 0)
 	{
@@ -209,18 +209,18 @@ void TabSwitcherWidget::accept()
 
 void TabSwitcherWidget::selectTab(bool next)
 {
-	const int currentRow = m_tabsView->currentIndex().row();
+	const int currentRow(m_tabsView->currentIndex().row());
 
 	m_tabsView->setCurrentIndex(m_model->index((next ? ((currentRow == (m_model->rowCount() - 1)) ? 0 : (currentRow + 1)) : ((currentRow == 0) ? (m_model->rowCount() - 1) : (currentRow - 1))), 0));
 }
 
 void TabSwitcherWidget::setTitle(const QString &title)
 {
-	Window *window = qobject_cast<Window*>(sender());
+	Window *window(qobject_cast<Window*>(sender()));
 
 	if (window)
 	{
-		const int row = findRow(window->getIdentifier());
+		const int row(findRow(window->getIdentifier()));
 
 		if (row >= 0)
 		{
@@ -231,11 +231,11 @@ void TabSwitcherWidget::setTitle(const QString &title)
 
 void TabSwitcherWidget::setIcon(const QIcon &icon)
 {
-	Window *window = qobject_cast<Window*>(sender());
+	Window *window(qobject_cast<Window*>(sender()));
 
 	if (window)
 	{
-		const int row = findRow(window->getIdentifier());
+		const int row(findRow(window->getIdentifier()));
 
 		if (row >= 0)
 		{
@@ -279,11 +279,11 @@ bool TabSwitcherWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_tabsView->viewport() && event->type() == QEvent::MouseButtonPress)
 	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent && mouseEvent->button() == Qt::MiddleButton)
 		{
-			const int index = m_windowsManager->getWindowIndex(m_tabsView->indexAt(mouseEvent->pos()).data(Qt::UserRole).toLongLong());
+			const int index(m_windowsManager->getWindowIndex(m_tabsView->indexAt(mouseEvent->pos()).data(Qt::UserRole).toLongLong()));
 
 			if (index >= 0)
 			{

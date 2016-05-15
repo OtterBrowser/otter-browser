@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -45,14 +45,14 @@ MenuBarWidget::MenuBarWidget(MainWindow *parent) : QMenuBar(parent),
 	QFile file(SessionsManager::getReadableDataPath(QLatin1String("menu/menuBar.json")));
 	file.open(QIODevice::ReadOnly);
 
-	const QJsonArray definition = QJsonDocument::fromJson(file.readAll()).array();
+	const QJsonArray definition(QJsonDocument::fromJson(file.readAll()).array());
 
 	file.close();
 
 	for (int i = 0; i < definition.count(); ++i)
 	{
-		const QJsonObject object = definition.at(i).toObject();
-		Menu *menu = new Menu(Menu::getRole(object.value(QLatin1String("identifier")).toString()), this);
+		const QJsonObject object(definition.at(i).toObject());
+		Menu *menu(new Menu(Menu::getRole(object.value(QLatin1String("identifier")).toString()), this));
 		menu->load(object);
 
 		addMenu(menu);
@@ -85,14 +85,14 @@ void MenuBarWidget::resizeEvent(QResizeEvent *event)
 
 void MenuBarWidget::contextMenuEvent(QContextMenuEvent *event)
 {
-	QMenu *menu = ToolBarWidget::createCustomizationMenu(ToolBarsManager::MenuBar);
+	QMenu *menu(ToolBarWidget::createCustomizationMenu(ToolBarsManager::MenuBar));
 	menu->exec(event->globalPos());
 	menu->deleteLater();
 }
 
 void MenuBarWidget::setup()
 {
-	const ToolBarsManager::ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar);
+	const ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar));
 	QStringList actions;
 
 	for (int i = 0; i < definition.entries.count(); ++i)
@@ -121,9 +121,9 @@ void MenuBarWidget::setup()
 		return;
 	}
 
-	const int position = actions.indexOf(QLatin1String("MenuBarWidget"));
-	const bool needsLeftToolbar = (position != 0);
-	const bool needsRightToolbar = (position != (definition.entries.count() - 1));
+	const int position(actions.indexOf(QLatin1String("MenuBarWidget")));
+	const bool needsLeftToolbar(position != 0);
+	const bool needsRightToolbar(position != (definition.entries.count() - 1));
 
 	if (needsLeftToolbar && !m_leftToolBar)
 	{
@@ -184,8 +184,8 @@ void MenuBarWidget::setup()
 		m_rightToolBar->setDefinition(rightDefinition);
 	}
 
-	const int menuBarHeight = actionGeometry(this->actions().at(0)).height();
-	const int toolBarHeight = ((m_leftToolBar || m_rightToolBar) ? (definition.iconSize + 12) : 0);
+	const int menuBarHeight(actionGeometry(this->actions().at(0)).height());
+	const int toolBarHeight((m_leftToolBar || m_rightToolBar) ? (definition.iconSize + 12) : 0);
 
 	setFixedHeight((toolBarHeight > 0 && toolBarHeight > menuBarHeight) ? toolBarHeight : menuBarHeight);
 
@@ -207,7 +207,7 @@ void MenuBarWidget::updateSize()
 		return;
 	}
 
-	int size = 0;
+	int size(0);
 
 	if (actions().count() > 0)
 	{
@@ -225,8 +225,8 @@ void MenuBarWidget::updateSize()
 
 	if (m_rightToolBar && width() > (size + (m_leftToolBar ? m_leftToolBar->sizeHint().width() : 0) + (m_rightToolBar ? m_rightToolBar->sizeHint().width() : 0)))
 	{
-		const int offset = (size - (m_leftToolBar ? m_leftToolBar->sizeHint().width() : 0));
-		ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(m_rightToolBar);
+		const int offset(size - (m_leftToolBar ? m_leftToolBar->sizeHint().width() : 0));
+		ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(m_rightToolBar));
 		toolBar->move(QPoint(offset, 0));
 		toolBar->resize((width() - offset), toolBar->height());
 	}

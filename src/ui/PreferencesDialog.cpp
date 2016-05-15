@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -42,7 +42,7 @@ PreferencesDialog::PreferencesDialog(const QLatin1String &section, QWidget *pare
 
 	m_loadedTabs.fill(false, 5);
 
-	int tab = 0;
+	int tab(0);
 
 	if (section == QLatin1String("content"))
 	{
@@ -101,7 +101,7 @@ void PreferencesDialog::currentTabChanged(int tab)
 	{
 		case 0:
 			{
-				PreferencesGeneralPageWidget *pageWidget = new PreferencesGeneralPageWidget(this);
+				PreferencesGeneralPageWidget *pageWidget(new PreferencesGeneralPageWidget(this));
 
 				m_ui->generalLayout->addWidget(pageWidget);
 
@@ -112,7 +112,7 @@ void PreferencesDialog::currentTabChanged(int tab)
 			break;
 		case 1:
 			{
-				PreferencesContentPageWidget *pageWidget = new PreferencesContentPageWidget(this);
+				PreferencesContentPageWidget *pageWidget(new PreferencesContentPageWidget(this));
 
 				m_ui->contentLayout->addWidget(pageWidget);
 
@@ -123,7 +123,7 @@ void PreferencesDialog::currentTabChanged(int tab)
 			break;
 		case 2:
 			{
-				PreferencesPrivacyPageWidget *pageWidget = new PreferencesPrivacyPageWidget(this);
+				PreferencesPrivacyPageWidget *pageWidget(new PreferencesPrivacyPageWidget(this));
 
 				m_ui->privacyLayout->addWidget(pageWidget);
 
@@ -134,7 +134,7 @@ void PreferencesDialog::currentTabChanged(int tab)
 			break;
 		case 3:
 			{
-				PreferencesSearchPageWidget *pageWidget = new PreferencesSearchPageWidget(this);
+				PreferencesSearchPageWidget *pageWidget(new PreferencesSearchPageWidget(this));
 
 				m_ui->searchLayout->addWidget(pageWidget);
 
@@ -145,7 +145,7 @@ void PreferencesDialog::currentTabChanged(int tab)
 			break;
 		default:
 			{
-				PreferencesAdvancedPageWidget *pageWidget = new PreferencesAdvancedPageWidget(this);
+				PreferencesAdvancedPageWidget *pageWidget(new PreferencesAdvancedPageWidget(this));
 
 				m_ui->advancedLayout->addWidget(pageWidget);
 
@@ -156,22 +156,22 @@ void PreferencesDialog::currentTabChanged(int tab)
 			break;
 	}
 
-	QWidget *widget = m_ui->tabWidget->widget(tab);
-	QList<QLineEdit*> lineEdits = widget->findChildren<QLineEdit*>();
+	QWidget *widget(m_ui->tabWidget->widget(tab));
+	QList<QLineEdit*> lineEdits(widget->findChildren<QLineEdit*>());
 
 	for (int i = 0; i < lineEdits.count(); ++i)
 	{
 		connect(lineEdits.at(i), SIGNAL(textChanged(QString)), this, SLOT(markModified()));
 	}
 
-	QList<QAbstractButton*> buttons = widget->findChildren<QAbstractButton*>();
+	QList<QAbstractButton*> buttons(widget->findChildren<QAbstractButton*>());
 
 	for (int i = 0; i < buttons.count(); ++i)
 	{
 		connect(buttons.at(i), SIGNAL(toggled(bool)), this, SLOT(markModified()));
 	}
 
-	QList<QComboBox*> comboBoxes = widget->findChildren<QComboBox*>();
+	QList<QComboBox*> comboBoxes(widget->findChildren<QComboBox*>());
 
 	for (int i = 0; i < comboBoxes.count(); ++i)
 	{

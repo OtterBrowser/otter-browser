@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -90,7 +90,7 @@ void SearchEnginePropertiesDialog::insertPlaceholder(QAction *action)
 
 SearchEnginesManager::SearchEngineDefinition SearchEnginePropertiesDialog::getSearchEngine() const
 {
-	const QString keyword = m_ui->keywordLineEdit->text().trimmed();
+	const QString keyword(m_ui->keywordLineEdit->text().trimmed());
 	SearchEnginesManager::SearchEngineDefinition searchEngine;
 	searchEngine.identifier = m_identifier;
 	searchEngine.title = m_ui->titleLineEdit->text();
@@ -121,16 +121,16 @@ bool SearchEnginePropertiesDialog::eventFilter(QObject *object, QEvent *event)
 {
 	if (event->type() == QEvent::ContextMenu)
 	{
-		QLineEdit *lineEdit = qobject_cast<QLineEdit*>(object);
+		QLineEdit *lineEdit(qobject_cast<QLineEdit*>(object));
 
 		if (lineEdit)
 		{
 			m_currentLineEdit = lineEdit;
 
-			QMenu *contextMenu = lineEdit->createStandardContextMenu();
+			QMenu *contextMenu(lineEdit->createStandardContextMenu());
 			contextMenu->addSeparator();
 
-			QMenu *placeholdersMenu = contextMenu->addMenu(tr("Placeholders"));
+			QMenu *placeholdersMenu(contextMenu->addMenu(tr("Placeholders")));
 			placeholdersMenu->addAction(tr("Search Terms"))->setData(QLatin1String("searchTerms"));
 			placeholdersMenu->addAction(tr("Language"))->setData(QLatin1String("language"));
 

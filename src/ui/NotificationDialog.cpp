@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -38,23 +38,23 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 	m_notification(notification),
 	m_closeLabel(NULL)
 {
-	QFrame *notificationFrame = new QFrame(this);
+	QFrame *notificationFrame(new QFrame(this));
 	notificationFrame->setObjectName(QLatin1String("notificationFrame"));
 	notificationFrame->setStyleSheet(QLatin1String("#notificationFrame {padding:5px;border:1px solid #CCC;border-radius:10px;background:#F0F0f0;}"));
 	notificationFrame->setCursor(QCursor(Qt::PointingHandCursor));
 	notificationFrame->installEventFilter(this);
 
-	QBoxLayout *mainLayout = new QBoxLayout(QBoxLayout::LeftToRight);
+	QBoxLayout *mainLayout(new QBoxLayout(QBoxLayout::LeftToRight));
 	mainLayout->setContentsMargins(0, 0, 0, 0);
 	mainLayout->setSpacing(0);
 	mainLayout->setSizeConstraint(QLayout::SetMinimumSize);
 	mainLayout->addWidget(notificationFrame);
 
-	QLabel *iconLabel = new QLabel(this);
+	QLabel *iconLabel(new QLabel(this));
 	iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("otter-browser-32")).pixmap(32, 32));
 	iconLabel->setStyleSheet(QLatin1String("padding:5px;"));
 
-	QLabel *messageLabel = new QLabel(this);
+	QLabel *messageLabel(new QLabel(this));
 	messageLabel->setText(m_notification->getMessage());
 	messageLabel->setStyleSheet(QLatin1String("padding:5px;font-size:13px;"));
 	messageLabel->setWordWrap(true);
@@ -76,7 +76,7 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 	m_closeLabel->setMargin(5);
 	m_closeLabel->installEventFilter(this);
 
-	QBoxLayout *notificationLayout = new QBoxLayout(QBoxLayout::LeftToRight);
+	QBoxLayout *notificationLayout(new QBoxLayout(QBoxLayout::LeftToRight));
 	notificationLayout->setContentsMargins(0, 0, 0, 0);
 	notificationLayout->setSpacing(0);
 	notificationLayout->setSizeConstraint(QLayout::SetMinimumSize);
@@ -103,7 +103,7 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 	m_animation->setEndValue(1.0);
 	m_animation->start();
 
-	const int visibilityDuration = SettingsManager::getValue(QLatin1String("Interface/NotificationVisibilityDuration")).toInt();
+	const int visibilityDuration(SettingsManager::getValue(QLatin1String("Interface/NotificationVisibilityDuration")).toInt());
 
 	if (visibilityDuration > 0)
 	{
@@ -149,7 +149,7 @@ bool NotificationDialog::eventFilter(QObject *object, QEvent *event)
 {
 	if (event->type() == QEvent::MouseButtonPress)
 	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
 		{

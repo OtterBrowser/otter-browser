@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -33,24 +33,24 @@ StartupDialog::StartupDialog(const QString &session, QWidget *parent) : Dialog(p
 	m_ui->setupUi(this);
 	m_ui->windowsTreeView->setModel(m_windowsModel);
 
-	const QStringList sessions = SessionsManager::getSessions();
+	const QStringList sessions(SessionsManager::getSessions());
 	QMultiHash<QString, SessionInformation> information;
 
 	for (int i = 0; i < sessions.count(); ++i)
 	{
-		const SessionInformation session = SessionsManager::getSession(sessions.at(i));
+		const SessionInformation session(SessionsManager::getSession(sessions.at(i)));
 
 		information.insert((session.title.isEmpty() ? tr("(Untitled)") : session.title), session);
 	}
 
-	const QList<SessionInformation> sorted = information.values();
+	const QList<SessionInformation> sorted(information.values());
 
 	for (int i = 0; i < sorted.count(); ++i)
 	{
 		m_ui->sessionComboBox->addItem((sorted.at(i).title.isEmpty() ? tr("(Untitled)") : sorted.at(i).title), sorted.at(i).path);
 	}
 
-	const int index = qMax(0, m_ui->sessionComboBox->findData(session));
+	const int index(qMax(0, m_ui->sessionComboBox->findData(session)));
 
 	m_ui->sessionComboBox->setCurrentIndex(index);
 
@@ -84,18 +84,18 @@ void StartupDialog::setSession(int index)
 {
 	m_windowsModel->clear();
 
-	const SessionInformation session = SessionsManager::getSession(m_ui->sessionComboBox->itemData(index).toString());
+	const SessionInformation session(SessionsManager::getSession(m_ui->sessionComboBox->itemData(index).toString()));
 	QFont font(m_ui->windowsTreeView->font());
 	font.setBold(true);
 
 	for (int i = 0; i < session.windows.count(); ++i)
 	{
-		QStandardItem *windowItem = new QStandardItem(tr("Window %1").arg(i + 1));
+		QStandardItem *windowItem(new QStandardItem(tr("Window %1").arg(i + 1)));
 		windowItem->setData(session.windows.at(i).geometry, Qt::UserRole);
 
 		for (int j = 0; j < session.windows.at(i).windows.count(); ++j)
 		{
-			QStandardItem *tabItem = new QStandardItem(session.windows.at(i).windows.at(j).getTitle());
+			QStandardItem *tabItem(new QStandardItem(session.windows.at(i).windows.at(j).getTitle()));
 			tabItem->setFlags(windowItem->flags() | Qt::ItemIsUserCheckable);
 			tabItem->setData(Qt::Checked, Qt::CheckStateRole);
 
@@ -131,21 +131,21 @@ SessionInformation StartupDialog::getSession() const
 
 		for (int i = 0; i < m_windowsModel->rowCount(); ++i)
 		{
-			QStandardItem *windowItem = m_windowsModel->item(i, 0);
+			QStandardItem *windowItem(m_windowsModel->item(i, 0));
 
 			if (!windowItem || (windowItem->flags().testFlag(Qt::ItemIsUserCheckable) && windowItem->data(Qt::CheckStateRole).toInt() == Qt::Unchecked))
 			{
 				continue;
 			}
 
-			const int index = (session.windows.value(i, SessionMainWindow()).index - 1);
+			const int index(session.windows.value(i, SessionMainWindow()).index - 1);
 			SessionMainWindow window;
 			window.index = (index + 1);
 			window.geometry = windowItem->data(Qt::UserRole).toByteArray();
 
 			for (int j = 0; j < windowItem->rowCount(); ++j)
 			{
-				QStandardItem *tabItem = windowItem->child(j, 0);
+				QStandardItem *tabItem(windowItem->child(j, 0));
 
 				if (tabItem && tabItem->data(Qt::CheckStateRole).toInt() == Qt::Checked)
 				{

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -35,25 +35,25 @@ SessionsManagerDialog::SessionsManagerDialog(QWidget *parent) : Dialog(parent),
 	m_ui->setupUi(this);
 	m_ui->openInExistingWindowCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Sessions/OpenInExistingWindow")).toBool());
 
-	const QStringList sessions = SessionsManager::getSessions();
+	const QStringList sessions(SessionsManager::getSessions());
 	QMultiHash<QString, SessionInformation> information;
 
 	for (int i = 0; i < sessions.count(); ++i)
 	{
-		const SessionInformation session = SessionsManager::getSession(sessions.at(i));
+		const SessionInformation session(SessionsManager::getSession(sessions.at(i)));
 
 		information.insert((session.title.isEmpty() ? tr("(Untitled)") : session.title), session);
 	}
 
-	const QList<SessionInformation> sorted = information.values();
-	const QString currentSession = SessionsManager::getCurrentSession();
-	int index = 0;
+	const QList<SessionInformation> sorted(information.values());
+	const QString currentSession(SessionsManager::getCurrentSession());
+	int index(0);
 
 	m_ui->sessionsWidget->setRowCount(sorted.count());
 
 	for (int i = 0; i < sorted.count(); ++i)
 	{
-		int windows = 0;
+		int windows(0);
 
 		for (int j = 0; j < sorted.at(i).windows.count(); ++j)
 		{
@@ -94,7 +94,7 @@ void SessionsManagerDialog::changeEvent(QEvent *event)
 
 void SessionsManagerDialog::openSession()
 {
-	const SessionInformation session = SessionsManager::getSession(m_ui->sessionsWidget->item(m_ui->sessionsWidget->currentRow(), 1)->data(Qt::DisplayRole).toString());
+	const SessionInformation session(SessionsManager::getSession(m_ui->sessionsWidget->item(m_ui->sessionsWidget->currentRow(), 1)->data(Qt::DisplayRole).toString()));
 
 	if (session.isClean || QMessageBox::warning(this, tr("Warning"), tr("This session was not saved correctly.\nAre you sure that you want to restore this session anyway?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
 	{
@@ -111,7 +111,7 @@ void SessionsManagerDialog::deleteSession()
 		return;
 	}
 
-	const int index = m_ui->sessionsWidget->currentRow();
+	const int index(m_ui->sessionsWidget->currentRow());
 
 	if (QMessageBox::question(this, tr("Confirm"), tr("Are you sure that you want to delete session %1?").arg(m_ui->sessionsWidget->item(index, 0)->data(Qt::DisplayRole).toString()), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
 	{

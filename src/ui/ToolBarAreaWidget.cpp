@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ ToolBarAreaWidget::ToolBarAreaWidget(Qt::ToolBarArea area, MainWindow *parent) :
 	m_area(area),
 	m_dropRow(-1)
 {
-	QBoxLayout::Direction direction = QBoxLayout::BottomToTop;
+	QBoxLayout::Direction direction(QBoxLayout::BottomToTop);
 
 	if (area == Qt::BottomToolBarArea)
 	{
@@ -61,7 +61,7 @@ ToolBarAreaWidget::ToolBarAreaWidget(Qt::ToolBarArea area, MainWindow *parent) :
 	setLayout(m_layout);
 	setAcceptDrops(true);
 
-	const QVector<ToolBarsManager::ToolBarDefinition> toolBarDefinitions = ToolBarsManager::getToolBarDefinitions();
+	const QVector<ToolBarsManager::ToolBarDefinition> toolBarDefinitions(ToolBarsManager::getToolBarDefinitions());
 
 	for (int i = 0; i < toolBarDefinitions.count(); ++i)
 	{
@@ -88,8 +88,8 @@ void ToolBarAreaWidget::paintEvent(QPaintEvent *event)
 	QPainter painter(this);
 	painter.setPen(QPen(palette().text(), 3, Qt::DotLine));
 
-	const bool isHorizontal = (m_area == Qt::TopToolBarArea || m_area == Qt::BottomToolBarArea);
-	int lineOffset = 4;
+	const bool isHorizontal(m_area == Qt::TopToolBarArea || m_area == Qt::BottomToolBarArea);
+	int lineOffset(4);
 
 	for (int i = 0; i < m_layout->count(); ++i)
 	{
@@ -98,7 +98,7 @@ void ToolBarAreaWidget::paintEvent(QPaintEvent *event)
 			break;
 		}
 
-		QWidget *widget = m_layout->itemAt(i)->widget();
+		QWidget *widget(m_layout->itemAt(i)->widget());
 
 		if (widget)
 		{
@@ -196,13 +196,13 @@ void ToolBarAreaWidget::dropEvent(QDropEvent *event)
 
 	updateDropRow(event->pos());
 
-	const int draggedIdentifier = QString(event->mimeData()->data(QLatin1String("x-toolbar-identifier"))).toInt();
+	const int draggedIdentifier(QString(event->mimeData()->data(QLatin1String("x-toolbar-identifier"))).toInt());
 	QVector<int> identifiers;
 	identifiers.reserve(m_layout->count() + 1);
 
 	for (int i = 0; i < m_layout->count(); ++i)
 	{
-		ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(m_layout->itemAt(i)->widget());
+		ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(m_layout->itemAt(i)->widget()));
 
 		if (i == m_dropRow)
 		{
@@ -222,7 +222,7 @@ void ToolBarAreaWidget::dropEvent(QDropEvent *event)
 
 	for (int i = 0; i < identifiers.count(); ++i)
 	{
-		ToolBarsManager::ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(identifiers.at(i));
+		ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(identifiers.at(i)));
 		definition.location = m_area;
 		definition.row = i;
 
@@ -250,7 +250,7 @@ void ToolBarAreaWidget::controlsHiddenChanged(bool hidden)
 {
 	if (m_tabBarToolBar)
 	{
-		const QList<ToolBarWidget*> toolBars = findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly);
+		const QList<ToolBarWidget*> toolBars(findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly));
 
 		if (hidden)
 		{
@@ -308,7 +308,7 @@ void ToolBarAreaWidget::insertToolBar(ToolBarWidget *toolBar)
 
 void ToolBarAreaWidget::toolBarAdded(int identifier)
 {
-	const ToolBarsManager::ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(identifier);
+	const ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(identifier));
 
 	if (definition.location != m_area)
 	{
@@ -338,11 +338,11 @@ void ToolBarAreaWidget::toolBarModified(int identifier)
 {
 	for (int i = 0; i < m_layout->count(); ++i)
 	{
-		ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(m_layout->itemAt(i)->widget());
+		ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(m_layout->itemAt(i)->widget()));
 
 		if (toolBar && toolBar->getIdentifier() == identifier)
 		{
-			const ToolBarsManager::ToolBarDefinition definition = ToolBarsManager::getToolBarDefinition(toolBar->getIdentifier());
+			const ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(toolBar->getIdentifier()));
 
 			if (toolBar->getArea() != definition.location)
 			{
@@ -365,13 +365,13 @@ void ToolBarAreaWidget::updateDropRow(const QPoint &position)
 
 	for (int i = 0; i < m_layout->count(); ++i)
 	{
-		QWidget *widget = m_layout->itemAt(i)->widget();
+		QWidget *widget(m_layout->itemAt(i)->widget());
 
 		if (widget && widget->geometry().contains(position))
 		{
 			row = i;
 
-			const QPoint center = widget->geometry().center();
+			const QPoint center(widget->geometry().center());
 
 			switch (m_area)
 			{

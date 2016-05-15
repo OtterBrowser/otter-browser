@@ -100,7 +100,7 @@ void OptionDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, co
 {
 	if (m_isSimple)
 	{
-		OptionWidget *widget = qobject_cast<OptionWidget*>(editor);
+		OptionWidget *widget(qobject_cast<OptionWidget*>(editor));
 
 		if (widget)
 		{
@@ -113,15 +113,15 @@ QWidget* OptionDelegate::createEditor(QWidget *parent, const QStyleOptionViewIte
 {
 	Q_UNUSED(option)
 
-	const SettingsManager::OptionType type = SettingsManager::getDefinition(index.data(Qt::UserRole).toString()).type;
-	QVariant value = index.data(Qt::EditRole);
+	const SettingsManager::OptionType type(SettingsManager::getDefinition(index.data(Qt::UserRole).toString()).type);
+	QVariant value(index.data(Qt::EditRole));
 
 	if (value.isNull())
 	{
 		value = SettingsManager::getValue(index.data(Qt::UserRole).toString());
 	}
 
-	OptionWidget *widget = new OptionWidget(index.data(Qt::UserRole).toString(), value, type, parent);
+	OptionWidget *widget(new OptionWidget(index.data(Qt::UserRole).toString(), value, type, parent));
 	widget->setIndex(index);
 	widget->setControlsVisible(!m_isSimple);
 
@@ -137,7 +137,7 @@ QWidget* OptionDelegate::createEditor(QWidget *parent, const QStyleOptionViewIte
 
 QSize OptionDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	QSize size = index.data(Qt::SizeHintRole).toSize();
+	QSize size(index.data(Qt::SizeHintRole).toSize());
 	size.setHeight(option.fontMetrics.height() * 1.25);
 
 	return size;

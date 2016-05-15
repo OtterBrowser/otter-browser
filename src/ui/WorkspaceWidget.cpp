@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -99,7 +99,7 @@ void MdiWindow::changeEvent(QEvent *event)
 
 void MdiWindow::closeEvent(QCloseEvent *event)
 {
-	Window *window = qobject_cast<Window*>(widget());
+	Window *window(qobject_cast<Window*>(widget()));
 
 	if (window)
 	{
@@ -146,8 +146,8 @@ void MdiWindow::mouseReleaseEvent(QMouseEvent *event)
 	}
 	else if (!isMinimized() && style()->subControlRect(QStyle::CC_TitleBar, &option, QStyle::SC_TitleBarMinButton, this).contains(event->pos()))
 	{
-		const QList<QMdiSubWindow*> subWindows = mdiArea()->subWindowList();
-		int activeSubWindows = 0;
+		const QList<QMdiSubWindow*> subWindows(mdiArea()->subWindowList());
+		int activeSubWindows(0);
 
 		for (int i = 0; i < subWindows.count(); ++i)
 		{
@@ -163,7 +163,7 @@ void MdiWindow::mouseReleaseEvent(QMouseEvent *event)
 
 		if (activeSubWindows == 1)
 		{
-			MainWindow *mainWindow = MainWindow::findMainWindow(mdiArea());
+			MainWindow *mainWindow(MainWindow::findMainWindow(mdiArea()));
 
 			if (mainWindow)
 			{
@@ -217,7 +217,7 @@ WorkspaceWidget::WorkspaceWidget(MainWindow *parent) : QWidget(parent),
 	m_restoreTimer(0),
 	m_isRestored(false)
 {
-	QVBoxLayout *layout = new QVBoxLayout(this);
+	QVBoxLayout *layout(new QVBoxLayout(this));
 	layout->setContentsMargins(0, 0, 0, 0);
 	layout->setSpacing(0);
 
@@ -268,21 +268,21 @@ void WorkspaceWidget::createMdi()
 
 	disconnect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 
-	Window *activeWindow = m_activeWindow;
+	Window *activeWindow(m_activeWindow);
 
 	m_mdi = new MdiWidget(this);
 	m_mdi->setOption(QMdiArea::DontMaximizeSubWindowOnActivation, true);
 
 	layout()->addWidget(m_mdi);
 
-	const bool wasRestored = m_isRestored;
+	const bool wasRestored(m_isRestored);
 
 	if (wasRestored)
 	{
 		m_isRestored = false;
 	}
 
-	QList<Window*> windows = findChildren<Window*>();
+	QList<Window*> windows(findChildren<Window*>());
 
 	for (int i = 0; i < windows.count(); ++i)
 	{
@@ -305,11 +305,11 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 		createMdi();
 	}
 
-	MdiWindow *subWindow = NULL;
+	MdiWindow *subWindow(NULL);
 
 	if (parameters.contains(QLatin1String("window")))
 	{
-		Window *window = m_mainWindow->getWindowsManager()->getWindowByIdentifier(parameters[QLatin1String("window")].toULongLong());
+		Window *window(m_mainWindow->getWindowsManager()->getWindowByIdentifier(parameters[QLatin1String("window")].toULongLong()));
 
 		if (window)
 		{
@@ -337,9 +337,9 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 		case ActionsManager::MinimizeTabAction:
 			if (subWindow)
 			{
-				const QList<QMdiSubWindow*> subWindows = m_mdi->subWindowList();
-				int activeSubWindows = 0;
-				const bool wasActive = (subWindow == m_mdi->currentSubWindow());
+				const QList<QMdiSubWindow*> subWindows(m_mdi->subWindowList());
+				int activeSubWindows(0);
+				const bool wasActive(subWindow == m_mdi->currentSubWindow());
 
 				for (int i = 0; i < subWindows.count(); ++i)
 				{
@@ -393,11 +393,11 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 			{
 				disconnect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
 
-				const QList<QMdiSubWindow*> subWindows = m_mdi->subWindowList();
+				const QList<QMdiSubWindow*> subWindows(m_mdi->subWindowList());
 
 				for (int i = 0; i < subWindows.count(); ++i)
 				{
-					MdiWindow *subWindow = qobject_cast<MdiWindow*>(subWindows.at(i));
+					MdiWindow *subWindow(qobject_cast<MdiWindow*>(subWindows.at(i)));
 
 					if (subWindow)
 					{
@@ -417,11 +417,11 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 			{
 				disconnect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
 
-				const QList<QMdiSubWindow*> subWindows = m_mdi->subWindowList();
+				const QList<QMdiSubWindow*> subWindows(m_mdi->subWindowList());
 
 				for (int i = 0; i < subWindows.count(); ++i)
 				{
-					MdiWindow *subWindow = qobject_cast<MdiWindow*>(subWindows.at(i));
+					MdiWindow *subWindow(qobject_cast<MdiWindow*>(subWindows.at(i)));
 
 					if (subWindow)
 					{
@@ -441,11 +441,11 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 			{
 				disconnect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
 
-				const QList<QMdiSubWindow*> subWindows = m_mdi->subWindowList();
+				const QList<QMdiSubWindow*> subWindows(m_mdi->subWindowList());
 
 				for (int i = 0; i < subWindows.count(); ++i)
 				{
-					MdiWindow *subWindow = qobject_cast<MdiWindow*>(subWindows.at(i));
+					MdiWindow *subWindow(qobject_cast<MdiWindow*>(subWindows.at(i)));
 
 					if (subWindow)
 					{
@@ -503,14 +503,14 @@ void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowSta
 		{
 			disconnect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
 
-			QMdiSubWindow *activeWindow = m_mdi->currentSubWindow();
-			MdiWindow *mdiWindow = new MdiWindow(window, m_mdi);
-			Action *closeAction = new Action(ActionsManager::CloseTabAction);
+			QMdiSubWindow *activeWindow(m_mdi->currentSubWindow());
+			MdiWindow *mdiWindow(new MdiWindow(window, m_mdi));
+			Action *closeAction(new Action(ActionsManager::CloseTabAction));
 			closeAction->setEnabled(true);
 			closeAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Close"));
 			closeAction->setIcon(QIcon());
 
-			QMenu *menu = new QMenu(mdiWindow);
+			QMenu *menu(new QMenu(mdiWindow));
 			menu->addAction(closeAction);
 			menu->addAction(ActionsManager::getAction(ActionsManager::RestoreTabAction, m_mainWindow));
 			menu->addAction(ActionsManager::getAction(ActionsManager::MinimizeTabAction, m_mainWindow));
@@ -518,7 +518,7 @@ void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowSta
 			menu->addAction(ActionsManager::getAction(ActionsManager::AlwaysOnTopTabAction, m_mainWindow));
 			menu->addSeparator();
 
-			QMenu *arrangeMenu = menu->addMenu(tr("Arrange"));
+			QMenu *arrangeMenu(menu->addMenu(tr("Arrange")));
 			arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::RestoreAllAction, m_mainWindow));
 			arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::MaximizeAllAction, m_mainWindow));
 			arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::MinimizeAllAction, m_mainWindow));
@@ -586,7 +586,7 @@ void WorkspaceWidget::activeSubWindowChanged(QMdiSubWindow *subWindow)
 {
 	if (subWindow)
 	{
-		Window *window = qobject_cast<Window*>(subWindow->widget());
+		Window *window(qobject_cast<Window*>(subWindow->widget()));
 
 		if (window)
 		{
@@ -601,15 +601,15 @@ void WorkspaceWidget::activeSubWindowChanged(QMdiSubWindow *subWindow)
 
 void WorkspaceWidget::updateActions()
 {
-	const QList<QMdiSubWindow*> subWindows = (m_mdi ? m_mdi->subWindowList() : QList<QMdiSubWindow*>());
-	const int subWindowsCount = (m_mdi ? subWindows.count() : findChildren<Window*>().count());
-	int maximizedSubWindows = (m_mdi ? 0 : subWindowsCount);
-	int minimizedSubWindows = 0;
-	int restoredSubWindows = 0;
+	const QList<QMdiSubWindow*> subWindows(m_mdi ? m_mdi->subWindowList() : QList<QMdiSubWindow*>());
+	const int subWindowsCount(m_mdi ? subWindows.count() : findChildren<Window*>().count());
+	int maximizedSubWindows(m_mdi ? 0 : subWindowsCount);
+	int minimizedSubWindows(0);
+	int restoredSubWindows(0);
 
 	for (int i = 0; i < subWindows.count(); ++i)
 	{
-		const Qt::WindowStates states = subWindows.at(i)->windowState();
+		const Qt::WindowStates states(subWindows.at(i)->windowState());
 
 		if (states.testFlag(Qt::WindowMaximized))
 		{
@@ -631,7 +631,7 @@ void WorkspaceWidget::updateActions()
 	ActionsManager::getAction(ActionsManager::CascadeAllAction, m_mainWindow)->setEnabled(subWindowsCount > 0);
 	ActionsManager::getAction(ActionsManager::TileAllAction, m_mainWindow)->setEnabled(subWindowsCount > 0);
 
-	QMdiSubWindow *activeSubWindow = (m_mdi ? m_mdi->currentSubWindow() : NULL);
+	QMdiSubWindow *activeSubWindow(m_mdi ? m_mdi->currentSubWindow() : NULL);
 
 	ActionsManager::getAction(ActionsManager::MaximizeTabAction, m_mainWindow)->setEnabled(activeSubWindow && !activeSubWindow->windowState().testFlag(Qt::WindowMaximized));
 	ActionsManager::getAction(ActionsManager::MinimizeTabAction, m_mainWindow)->setEnabled(activeSubWindow && !activeSubWindow->windowState().testFlag(Qt::WindowMinimized));
@@ -651,7 +651,7 @@ void WorkspaceWidget::setActiveWindow(Window *window, bool force)
 	{
 		if (m_mdi)
 		{
-			MdiWindow *subWindow = NULL;
+			MdiWindow *subWindow(NULL);
 
 			if (window)
 			{

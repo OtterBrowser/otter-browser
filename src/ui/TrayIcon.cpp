@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -34,7 +34,7 @@ TrayIcon::TrayIcon(Application *parent) : QObject(parent),
 	m_trayIcon(new QSystemTrayIcon(this)),
 	m_autoHideTimer(0)
 {
-	Menu *menu = new Menu();
+	Menu *menu(new Menu());
 	menu->addAction(-1)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Show Windows"));
 	menu->addSeparator();
 	menu->addAction(ActionsManager::NewTabAction);
@@ -78,14 +78,14 @@ void TrayIcon::activated(QSystemTrayIcon::ActivationReason reason)
 {
 	if (reason == QSystemTrayIcon::Trigger)
 	{
-		Application *application = Application::getInstance();
+		Application *application(Application::getInstance());
 		application->setHidden(!application->isHidden());
 	}
 }
 
 void TrayIcon::triggerAction(QAction *action)
 {
-	Action *actionObject = qobject_cast<Action*>(action);
+	Action *actionObject(qobject_cast<Action*>(action));
 
 	if (!actionObject)
 	{
@@ -98,7 +98,7 @@ void TrayIcon::triggerAction(QAction *action)
 	}
 	else
 	{
-		MainWindow *window = SessionsManager::getActiveWindow();
+		MainWindow *window(SessionsManager::getActiveWindow());
 
 		if (window)
 		{
@@ -127,7 +127,7 @@ void TrayIcon::showMessage(Notification *notification)
 
 	m_trayIcon->showMessage(tr("Otter Browser"), notification->getMessage(), QSystemTrayIcon::MessageIcon(m_notification->getLevel() + 1));
 
-	const int visibilityDuration = SettingsManager::getValue(QLatin1String("Interface/NotificationVisibilityDuration")).toInt();
+	const int visibilityDuration(SettingsManager::getValue(QLatin1String("Interface/NotificationVisibilityDuration")).toInt());
 
 	if (visibilityDuration > 0)
 	{
