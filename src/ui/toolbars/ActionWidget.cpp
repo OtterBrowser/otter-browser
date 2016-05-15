@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ ActionWidget::ActionWidget(int identifier, Window *window, const ActionsManager:
 {
 	setWindow(window);
 
-	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
+	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
 	if (toolBar && toolBar->getIdentifier() != ToolBarsManager::NavigationBar)
 	{
@@ -49,7 +49,7 @@ void ActionWidget::actionEvent(QActionEvent *event)
 
 	if (event->type() == QEvent::ActionChanged || event->type() == QEvent::ActionAdded)
 	{
-		Action *action = qobject_cast<Action*>(defaultAction());
+		Action *action(qobject_cast<Action*>(defaultAction()));
 
 		if (action)
 		{
@@ -62,7 +62,7 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 {
 	if ((m_identifier == ActionsManager::NewTabAction || m_identifier == ActionsManager::NewTabPrivateAction) && event->button() != Qt::RightButton)
 	{
-		WindowsManager::OpenHints hints = WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen, event->button(), event->modifiers());
+		WindowsManager::OpenHints hints(WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen, event->button(), event->modifiers()));
 
 		if (m_identifier == ActionsManager::NewTabPrivateAction)
 		{
@@ -74,7 +74,7 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 
 		ActionsManager::triggerAction(ActionsManager::OpenUrlAction, this, parameters);
 
-		QAction *action = defaultAction();
+		QAction *action(defaultAction());
 
 		setDefaultAction(NULL);
 
@@ -90,7 +90,7 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 
 void ActionWidget::resetAction()
 {
-	Action *action = NULL;
+	Action *action(NULL);
 
 	if (m_window && Action::isLocal(m_identifier) && m_window->getContentsWidget() && m_window->getContentsWidget()->getAction(m_identifier))
 	{
@@ -132,12 +132,12 @@ bool ActionWidget::event(QEvent *event)
 {
 	if (event->type() == QEvent::ToolTip)
 	{
-		Action *action = qobject_cast<Action*>(defaultAction());
-		QHelpEvent *helpEvent = dynamic_cast<QHelpEvent*>(event);
+		Action *action(qobject_cast<Action*>(defaultAction()));
+		QHelpEvent *helpEvent(dynamic_cast<QHelpEvent*>(event));
 
 		if (helpEvent)
 		{
-			const QVector<QKeySequence> shortcuts = ActionsManager::getActionDefinition(action ? action->getIdentifier() : m_identifier).shortcuts;
+			const QVector<QKeySequence> shortcuts(ActionsManager::getActionDefinition(action ? action->getIdentifier() : m_identifier).shortcuts);
 
 			QToolTip::showText(helpEvent->globalPos(), text() + (shortcuts.isEmpty() ? QString() : QLatin1String(" (") + shortcuts.at(0).toString(QKeySequence::NativeText) + QLatin1Char(')')));
 		}

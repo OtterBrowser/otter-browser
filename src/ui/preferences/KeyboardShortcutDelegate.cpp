@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ KeyboardShortcutDelegate::KeyboardShortcutDelegate(QObject *parent) : QItemDeleg
 
 void KeyboardShortcutDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-	QKeySequenceEdit *widget = qobject_cast<QKeySequenceEdit*>(editor);
+	QKeySequenceEdit *widget(qobject_cast<QKeySequenceEdit*>(editor));
 
 	if (widget)
 	{
@@ -47,7 +47,7 @@ QWidget* KeyboardShortcutDelegate::createEditor(QWidget *parent, const QStyleOpt
 
 QSize KeyboardShortcutDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	QSize size = index.data(Qt::SizeHintRole).toSize();
+	QSize size(index.data(Qt::SizeHintRole).toSize());
 	size.setHeight(option.fontMetrics.height() * 1.25);
 
 	return size;

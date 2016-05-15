@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ void PanelChooserWidget::menuAboutToShow()
 {
 	menu()->clear();
 
-	const QStringList panels = SettingsManager::getValue(QLatin1String("Sidebar/Panels")).toStringList();
+	const QStringList panels(SettingsManager::getValue(QLatin1String("Sidebar/Panels")).toStringList());
 
 	for (int i = 0; i < panels.count(); ++i)
 	{

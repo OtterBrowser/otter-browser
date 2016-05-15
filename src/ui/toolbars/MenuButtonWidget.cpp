@@ -39,7 +39,7 @@ MenuButtonWidget::MenuButtonWidget(const ActionsManager::ActionEntryDefinition &
 	updateToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	toolBarModified(ToolBarsManager::MenuBar);
 
-	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
+	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
 	if (toolBar)
 	{
@@ -60,7 +60,7 @@ void MenuButtonWidget::toolBarModified(int identifier)
 		}
 		else
 		{
-			ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parentWidget());
+			ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
 
 			if (toolBar)
 			{

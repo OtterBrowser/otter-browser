@@ -31,7 +31,7 @@ ContentBlockingIntervalDelegate::ContentBlockingIntervalDelegate(QObject *parent
 
 void ContentBlockingIntervalDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	const int updateInterval = index.data(Qt::EditRole).toInt();
+	const int updateInterval(index.data(Qt::EditRole).toInt());
 
 	drawBackground(painter, option, index);
 	drawDisplay(painter, option, option.rect, ((updateInterval > 0) ? QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", "%n day(s)", "", updateInterval) : QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", "Never")));
@@ -47,7 +47,7 @@ void ContentBlockingIntervalDelegate::updateEditorGeometry(QWidget *editor, cons
 
 void ContentBlockingIntervalDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-	QSpinBox *spinBox = qobject_cast<QSpinBox*>(editor);
+	QSpinBox *spinBox(qobject_cast<QSpinBox*>(editor));
 
 	if (spinBox)
 	{
@@ -59,7 +59,7 @@ QWidget* ContentBlockingIntervalDelegate::createEditor(QWidget *parent, const QS
 {
 	Q_UNUSED(option)
 
-	QSpinBox *spinBox = new QSpinBox(parent);
+	QSpinBox *spinBox(new QSpinBox(parent));
 	spinBox->setSuffix(QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", " day(s)"));
 	spinBox->setSpecialValueText(QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", "Never"));
 	spinBox->setMinimum(0);
@@ -71,7 +71,7 @@ QWidget* ContentBlockingIntervalDelegate::createEditor(QWidget *parent, const QS
 
 QSize ContentBlockingIntervalDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	QSize size = index.data(Qt::SizeHintRole).toSize();
+	QSize size(index.data(Qt::SizeHintRole).toSize());
 	size.setHeight(option.fontMetrics.height() * 1.25);
 
 	return size;

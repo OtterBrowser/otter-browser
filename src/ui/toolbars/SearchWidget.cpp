@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -69,7 +69,7 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : QComboBox(parent),
 	m_lineEdit->setCompleter(m_completer);
 	m_lineEdit->setStyleSheet(QLatin1String("QLineEdit {background:transparent;}"));
 
-	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parent);
+	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
 	if (toolBar && toolBar->getIdentifier() != ToolBarsManager::NavigationBar)
 	{
@@ -133,7 +133,7 @@ void SearchWidget::resizeEvent(QResizeEvent *event)
 	panel.rect = rect();
 	panel.lineWidth = 1;
 
-	const QRect rectangle = style()->subElementRect(QStyle::SE_LineEditContents, &panel, this);
+	const QRect rectangle(style()->subElementRect(QStyle::SE_LineEditContents, &panel, this));
 
 	m_iconRectangle = rectangle;
 	m_iconRectangle.setWidth(rectangle.height());
@@ -223,7 +223,7 @@ void SearchWidget::contextMenuEvent(QContextMenuEvent *event)
 	menu.addAction(tr("Clear All"), m_lineEdit, SLOT(clear()))->setEnabled(!m_lineEdit->text().isEmpty());
 	menu.addAction(tr("Select All"), m_lineEdit, SLOT(selectAll()))->setEnabled(!m_lineEdit->text().isEmpty());
 
-	ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parentWidget());
+	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
 
 	if (toolBar)
 	{
@@ -305,7 +305,7 @@ void SearchWidget::optionChanged(const QString &option, const QVariant &value)
 {
 	if (option == QLatin1String("AddressField/DropAction"))
 	{
-		const QString dropAction = value.toString();
+		const QString dropAction(value.toString());
 
 		if (dropAction == QLatin1String("pasteAndGo"))
 		{
@@ -378,7 +378,7 @@ void SearchWidget::currentIndexChanged(int index)
 	}
 	else
 	{
-		const QString query = m_query;
+		const QString query(m_query);
 
 		setCurrentIndex(m_lastValidIndex);
 
@@ -420,7 +420,7 @@ void SearchWidget::sendRequest(const QString &query)
 	{
 		if (m_query.isEmpty())
 		{
-			const SearchEnginesManager::SearchEngineDefinition searchEngine = SearchEnginesManager::getSearchEngine(currentData(Qt::UserRole + 1).toString());
+			const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(currentData(Qt::UserRole + 1).toString()));
 
 			if (searchEngine.formUrl.isValid())
 			{
@@ -479,7 +479,7 @@ void SearchWidget::setSearchEngine(const QString &searchEngine)
 		return;
 	}
 
-	const QStringList searchEngines = SearchEnginesManager::getSearchEngines();
+	const QStringList searchEngines(SearchEnginesManager::getSearchEngines());
 
 	if (searchEngines.isEmpty())
 	{
@@ -491,7 +491,7 @@ void SearchWidget::setSearchEngine(const QString &searchEngine)
 		return;
 	}
 
-	const int index = qMax(0, searchEngines.indexOf(searchEngine.isEmpty() ? SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString() : searchEngine));
+	const int index(qMax(0, searchEngines.indexOf(searchEngine.isEmpty() ? SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString() : searchEngine)));
 
 	if (index == currentIndex())
 	{
@@ -530,7 +530,7 @@ void SearchWidget::setOptions(const QVariantMap &options)
 
 void SearchWidget::setWindow(Window *window)
 {
-	MainWindow *mainWindow = MainWindow::findMainWindow(this);
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
 	if (m_window && (!sender() || sender() != m_window) && !m_window->isAboutToClose())
 	{

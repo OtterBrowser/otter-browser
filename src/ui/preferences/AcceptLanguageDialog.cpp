@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -43,19 +43,19 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 
 	m_ui->languagesViewWidget->setModel(m_model);
 
-	QStringList chosenLanguages = languages.split(QLatin1Char(','), QString::SkipEmptyParts);
+	QStringList chosenLanguages(languages.split(QLatin1Char(','), QString::SkipEmptyParts));
 
 	for (int i = 0; i < chosenLanguages.count(); ++i)
 	{
 		addLanguage(chosenLanguages.at(i).section(QLatin1Char(';'), 0, 0));
 	}
 
-	const QList<QLocale> allLocales = QLocale::matchingLocales(QLocale::AnyLanguage, QLocale::AnyScript, QLocale::AnyCountry);
+	const QList<QLocale> allLocales(QLocale::matchingLocales(QLocale::AnyLanguage, QLocale::AnyScript, QLocale::AnyCountry));
 	QList<QPair<QString, QString> > allLanguages;
 
 	for (int i = 0; i < allLocales.count(); ++i)
 	{
-		const QLocale locale = allLocales.at(i);
+		const QLocale locale(allLocales.at(i));
 
 		if (locale != QLocale::c())
 		{
@@ -110,7 +110,7 @@ void AcceptLanguageDialog::changeEvent(QEvent *event)
 
 void AcceptLanguageDialog::addLanguage()
 {
-	const int index = m_ui->languagesComboBox->currentIndex();
+	const int index(m_ui->languagesComboBox->currentIndex());
 
 	if (m_ui->languagesComboBox->currentText() == m_ui->languagesComboBox->itemText(index))
 	{
@@ -169,7 +169,7 @@ void AcceptLanguageDialog::addLanguage(const QString &language)
 
 void AcceptLanguageDialog::updateActions()
 {
-	const int currentRow = m_ui->languagesViewWidget->getCurrentRow();
+	const int currentRow(m_ui->languagesViewWidget->getCurrentRow());
 
 	m_ui->removeButton->setEnabled(currentRow >= 0 && currentRow < m_ui->languagesViewWidget->getRowCount());
 }
@@ -177,7 +177,7 @@ void AcceptLanguageDialog::updateActions()
 QString AcceptLanguageDialog::getLanguages()
 {
 	QString result;
-	double step = 0.1;
+	double step(0.1);
 
 	if (m_model->rowCount() > 100)
 	{

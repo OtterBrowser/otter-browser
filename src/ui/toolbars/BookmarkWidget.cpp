@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ void BookmarkWidget::mouseReleaseEvent(QMouseEvent *event)
 
 	if ((event->button() == Qt::LeftButton || event->button() == Qt::MiddleButton) && m_bookmark)
 	{
-		MainWindow *mainWindow = MainWindow::findMainWindow(parentWidget());
+		MainWindow *mainWindow(MainWindow::findMainWindow(parentWidget()));
 
 		if (mainWindow)
 		{
@@ -80,12 +80,12 @@ void BookmarkWidget::updateBookmark(BookmarksItem *bookmark)
 		return;
 	}
 
-	const QString title = (m_bookmark->data(BookmarksModel::TitleRole).toString().isEmpty() ? tr("(Untitled)") : m_bookmark->data(BookmarksModel::TitleRole).toString());
-	const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(m_bookmark->data(BookmarksModel::TypeRole).toInt());
+	const QString title(m_bookmark->data(BookmarksModel::TitleRole).toString().isEmpty() ? tr("(Untitled)") : m_bookmark->data(BookmarksModel::TitleRole).toString());
+	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(m_bookmark->data(BookmarksModel::TypeRole).toInt()));
 
 	if (type == BookmarksModel::RootBookmark || type == BookmarksModel::TrashBookmark || type == BookmarksModel::FolderBookmark)
 	{
-		Menu *menu = new Menu(Menu::BookmarksMenuRole, this);
+		Menu *menu(new Menu(Menu::BookmarksMenuRole, this));
 		menu->menuAction()->setData(m_bookmark->index());
 
 		setPopupMode(QToolButton::InstantPopup);

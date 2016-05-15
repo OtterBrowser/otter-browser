@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -61,12 +61,12 @@ void GoBackActionWidget::updateMenu()
 
 	menu()->clear();
 
-	const WindowHistoryInformation history = getWindow()->getContentsWidget()->getHistory();
+	const WindowHistoryInformation history(getWindow()->getContentsWidget()->getHistory());
 
 	for (int i = (history.index - 1); i >= 0; --i)
 	{
-		QString title = history.entries.at(i).title;
-		QAction *action = menu()->addAction(HistoryManager::getIcon(QUrl(history.entries.at(i).url)), (title.isEmpty() ? tr("(Untitled)") : title.replace(QLatin1Char('&'), QLatin1String("&&"))));
+		QString title(history.entries.at(i).title);
+		QAction *action(menu()->addAction(HistoryManager::getIcon(QUrl(history.entries.at(i).url)), (title.isEmpty() ? tr("(Untitled)") : title.replace(QLatin1Char('&'), QLatin1String("&&")))));
 		action->setData(i);
 		action->setStatusTip(history.entries.at(i).url);
 	}
@@ -87,7 +87,7 @@ bool GoBackActionWidget::event(QEvent *event)
 
 	if (event->type() == QEvent::ContextMenu)
 	{
-		QContextMenuEvent *contextMenuEvent = static_cast<QContextMenuEvent*>(event);
+		QContextMenuEvent *contextMenuEvent(static_cast<QContextMenuEvent*>(event));
 
 		if (contextMenuEvent)
 		{
@@ -100,12 +100,12 @@ bool GoBackActionWidget::event(QEvent *event)
 
 			event->accept();
 
-			Window *window = getWindow();
+			Window *window(getWindow());
 			QMenu menu(this);
 			menu.addAction(window ? window->getContentsWidget()->getAction(ActionsManager::ClearTabHistoryAction) : ActionsManager::getAction(ActionsManager::ClearTabHistoryAction, this));
 			menu.addAction(window ? window->getContentsWidget()->getAction(ActionsManager::PurgeTabHistoryAction) : ActionsManager::getAction(ActionsManager::PurgeTabHistoryAction, this));
 
-			ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parentWidget());
+			ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
 
 			if (toolBar)
 			{
@@ -123,20 +123,20 @@ bool GoBackActionWidget::event(QEvent *event)
 
 	if (event->type() == QEvent::ToolTip)
 	{
-		QHelpEvent *helpEvent = dynamic_cast<QHelpEvent*>(event);
+		QHelpEvent *helpEvent(dynamic_cast<QHelpEvent*>(event));
 
 		if (helpEvent)
 		{
-			const QVector<QKeySequence> shortcuts = ActionsManager::getActionDefinition(ActionsManager::GoBackAction).shortcuts;
-			QString toolTip = text() + (shortcuts.isEmpty() ? QString() : QLatin1String(" (") + shortcuts.at(0).toString(QKeySequence::NativeText) + QLatin1Char(')'));
+			const QVector<QKeySequence> shortcuts(ActionsManager::getActionDefinition(ActionsManager::GoBackAction).shortcuts);
+			QString toolTip(text() + (shortcuts.isEmpty() ? QString() : QLatin1String(" (") + shortcuts.at(0).toString(QKeySequence::NativeText) + QLatin1Char(')')));
 
 			if (getWindow())
 			{
-				const WindowHistoryInformation history = getWindow()->getContentsWidget()->getHistory();
+				const WindowHistoryInformation history(getWindow()->getContentsWidget()->getHistory());
 
 				if (!history.entries.isEmpty() && history.index > 0)
 				{
-					QString title = history.entries.at(history.index - 1).title;
+					QString title(history.entries.at(history.index - 1).title);
 					title = (title.isEmpty() ? tr("(Untitled)") : title.replace(QLatin1Char('&'), QLatin1String("&&")));
 
 					toolTip = title + QLatin1String(" (") + text() + (shortcuts.isEmpty() ? QString() : QLatin1String(" - ") + shortcuts.at(0).toString(QKeySequence::NativeText)) + QLatin1Char(')');
@@ -156,18 +156,18 @@ bool GoBackActionWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (event->type() == QEvent::ContextMenu)
 	{
-		QContextMenuEvent *contextMenuEvent = dynamic_cast<QContextMenuEvent*>(event);
+		QContextMenuEvent *contextMenuEvent(dynamic_cast<QContextMenuEvent*>(event));
 
 		if (contextMenuEvent)
 		{
-			QAction *action = menu()->activeAction();
+			QAction *action(menu()->activeAction());
 
 			if (action && action->data().type() == QVariant::Int)
 			{
 				QMenu contextMenu(menu());
-				QAction *removeEntryAction = contextMenu.addAction(tr("Remove Entry"), NULL, NULL, QKeySequence(Qt::Key_Delete));
-				QAction *purgeEntryAction = contextMenu.addAction(tr("Purge Entry"), NULL, NULL, QKeySequence(Qt::ShiftModifier | Qt::Key_Delete));
-				QAction *selectedAction = contextMenu.exec(contextMenuEvent->globalPos());
+				QAction *removeEntryAction(contextMenu.addAction(tr("Remove Entry"), NULL, NULL, QKeySequence(Qt::Key_Delete)));
+				QAction *purgeEntryAction(contextMenu.addAction(tr("Purge Entry"), NULL, NULL, QKeySequence(Qt::ShiftModifier | Qt::Key_Delete)));
+				QAction *selectedAction(contextMenu.exec(contextMenuEvent->globalPos()));
 
 				if (selectedAction == removeEntryAction)
 				{
@@ -186,11 +186,11 @@ bool GoBackActionWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent = dynamic_cast<QKeyEvent*>(event);
+		QKeyEvent *keyEvent(dynamic_cast<QKeyEvent*>(event));
 
 		if (keyEvent && keyEvent->key() == Qt::Key_Delete && getWindow())
 		{
-			QAction *action = menu()->activeAction();
+			QAction *action(menu()->activeAction());
 
 			if (action && action->data().type() == QVariant::Int)
 			{

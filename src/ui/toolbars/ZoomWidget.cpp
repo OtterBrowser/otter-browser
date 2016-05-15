@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -29,10 +29,8 @@ namespace Otter
 {
 
 ZoomWidget::ZoomWidget(QWidget *parent) : QSlider(parent),
-	m_mainWindow(NULL)
+	m_mainWindow(MainWindow::findMainWindow(parent))
 {
-	m_mainWindow = MainWindow::findMainWindow(parent);
-
 	if (m_mainWindow)
 	{
 		connect(m_mainWindow->getWindowsManager(), SIGNAL(canZoomChanged(bool)), this, SLOT(setEnabled(bool)));
@@ -68,8 +66,8 @@ void ZoomWidget::mousePressEvent(QMouseEvent *event)
 	option.sliderPosition = value();
 	option.sliderValue = value();
 
-	const QRect handle = style()->subControlRect(QStyle::CC_Slider, &option, QStyle::SC_SliderHandle, this);
-	const QRect groove = style()->subControlRect(QStyle::CC_Slider, &option, QStyle::SC_SliderGroove, this);
+	const QRect handle(style()->subControlRect(QStyle::CC_Slider, &option, QStyle::SC_SliderHandle, this));
+	const QRect groove(style()->subControlRect(QStyle::CC_Slider, &option, QStyle::SC_SliderGroove, this));
 	int value = 0;
 
 	if (orientation() == Qt::Horizontal)

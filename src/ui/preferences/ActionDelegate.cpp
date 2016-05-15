@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -40,11 +40,11 @@ void ActionDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionVie
 
 void ActionDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-	ActionComboBoxWidget *widget = qobject_cast<ActionComboBoxWidget*>(editor);
+	ActionComboBoxWidget *widget(qobject_cast<ActionComboBoxWidget*>(editor));
 
 	if (widget)
 	{
-		ActionsManager::ActionDefinition definition = ActionsManager::getActionDefinition(widget->getActionIdentifier());
+		ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(widget->getActionIdentifier()));
 
 		model->setData(index, definition.icon, Qt::DecorationRole);
 		model->setData(index, QCoreApplication::translate("actions", (definition.description.isEmpty() ? definition.text : definition.description).toUtf8().constData()), Qt::DisplayRole);
@@ -56,7 +56,7 @@ QWidget* ActionDelegate::createEditor(QWidget *parent, const QStyleOptionViewIte
 {
 	Q_UNUSED(option)
 
-	ActionComboBoxWidget *widget = new ActionComboBoxWidget(parent);
+	ActionComboBoxWidget *widget(new ActionComboBoxWidget(parent));
 	widget->setActionIdentifier(index.data(Qt::UserRole).toInt());
 
 	return widget;
@@ -64,7 +64,7 @@ QWidget* ActionDelegate::createEditor(QWidget *parent, const QStyleOptionViewIte
 
 QSize ActionDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	QSize size = index.data(Qt::SizeHintRole).toSize();
+	QSize size(index.data(Qt::SizeHintRole).toSize());
 	size.setHeight(option.fontMetrics.height() * 1.25);
 
 	return size;

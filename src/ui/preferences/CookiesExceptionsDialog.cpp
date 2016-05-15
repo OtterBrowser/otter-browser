@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ CookiesExceptionsDialog::CookiesExceptionsDialog(const QStringList &acceptedHost
 {
 	m_ui->setupUi(this);
 
-	QStandardItemModel *acceptedHostsModel = new QStandardItemModel(this);
+	QStandardItemModel *acceptedHostsModel(new QStandardItemModel(this));
 
 	for (int i = 0; i < acceptedHosts.count(); ++i)
 	{
@@ -43,7 +43,7 @@ CookiesExceptionsDialog::CookiesExceptionsDialog(const QStringList &acceptedHost
 	m_ui->acceptedHostsItemView->setModel(acceptedHostsModel);
 	m_ui->acceptedHostsItemView->setItemDelegate(new OptionDelegate(true, this));
 
-	QStandardItemModel *rejectedHostsModel = new QStandardItemModel(this);
+	QStandardItemModel *rejectedHostsModel(new QStandardItemModel(this));
 
 	for (int i = 0; i < rejectedHosts.count(); ++i)
 	{
@@ -126,7 +126,7 @@ void CookiesExceptionsDialog::removeRejectedHost()
 
 void CookiesExceptionsDialog::updateAcceptedHostsActions()
 {
-	const bool isEditable = (m_ui->acceptedHostsItemView->getCurrentRow() >= 0);
+	const bool isEditable(m_ui->acceptedHostsItemView->getCurrentRow() >= 0);
 
 	m_ui->editAcceptedHostsButton->setEnabled(isEditable);
 	m_ui->removeAcceptedHostsButton->setEnabled(isEditable);
@@ -146,7 +146,7 @@ QStringList CookiesExceptionsDialog::getAcceptedHosts() const
 
 	for (int i = 0; i < m_ui->acceptedHostsItemView->model()->rowCount(); ++i)
 	{
-		const QString entry = m_ui->acceptedHostsItemView->getIndex(i).data(Qt::DisplayRole).toString();
+		const QString entry(m_ui->acceptedHostsItemView->getIndex(i).data(Qt::DisplayRole).toString());
 
 		if (!entry.isEmpty() && !entries.contains(entry))
 		{
@@ -163,7 +163,7 @@ QStringList CookiesExceptionsDialog::getRejectedHosts() const
 
 	for (int i = 0; i < m_ui->rejectedHostsItemView->model()->rowCount(); ++i)
 	{
-		const QString entry = m_ui->rejectedHostsItemView->getIndex(i).data(Qt::DisplayRole).toString();
+		const QString entry(m_ui->rejectedHostsItemView->getIndex(i).data(Qt::DisplayRole).toString());
 
 		if (!entry.isEmpty() && !entries.contains(entry))
 		{

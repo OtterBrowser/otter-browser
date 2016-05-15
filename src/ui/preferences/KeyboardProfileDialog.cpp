@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -35,14 +35,14 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 {
 	m_ui->setupUi(this);
 
-	QStandardItemModel *model = new QStandardItemModel(this);
-	const QVector<ActionsManager::ActionDefinition> definitions = ActionsManager::getActionDefinitions();
+	QStandardItemModel *model(new QStandardItemModel(this));
+	const QVector<ActionsManager::ActionDefinition> definitions(ActionsManager::getActionDefinitions());
 	QStringList labels;
 	labels << tr("Action");
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		QStandardItem *item = new QStandardItem(definitions.at(i).icon, QCoreApplication::translate("actions", (definitions.at(i).description.isEmpty() ? definitions.at(i).text : definitions.at(i).description).toUtf8().constData()));
+		QStandardItem *item(new QStandardItem(definitions.at(i).icon, QCoreApplication::translate("actions", (definitions.at(i).description.isEmpty() ? definitions.at(i).text : definitions.at(i).description).toUtf8().constData())));
 		item->setData(definitions.at(i).identifier, Qt::UserRole);
 		item->setToolTip(ActionsManager::getActionName(definitions.at(i).identifier));
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
@@ -140,7 +140,7 @@ void KeyboardProfileDialog::updateActionsActions()
 
 	m_ui->addShortcutButton->setEnabled(true);
 
-	const QStringList rawShortcuts = m_currentAction.data(Qt::UserRole + 1).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
+	const QStringList rawShortcuts(m_currentAction.data(Qt::UserRole + 1).toString().split(QLatin1Char(' '), QString::SkipEmptyParts));
 
 	for (int i = 0; i < rawShortcuts.count(); ++i)
 	{
@@ -197,7 +197,7 @@ KeyboardProfile KeyboardProfileDialog::getProfile() const
 
 	for (int i = 0; i < m_ui->actionsViewWidget->getRowCount(); ++i)
 	{
-		const QStringList rawShortcuts = m_ui->actionsViewWidget->getIndex(i, 0).data(Qt::UserRole + 1).toString().split(QLatin1Char(' '), QString::SkipEmptyParts);
+		const QStringList rawShortcuts(m_ui->actionsViewWidget->getIndex(i, 0).data(Qt::UserRole + 1).toString().split(QLatin1Char(' '), QString::SkipEmptyParts));
 
 		if (!rawShortcuts.isEmpty())
 		{

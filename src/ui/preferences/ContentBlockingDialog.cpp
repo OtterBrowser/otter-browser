@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -41,9 +41,9 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 	m_ui->setupUi(this);
 
 	const QSettings profilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
-	const QStringList globalProfiles = SettingsManager::getValue(QLatin1String("Content/BlockingProfiles")).toStringList();
+	const QStringList globalProfiles(SettingsManager::getValue(QLatin1String("Content/BlockingProfiles")).toStringList());
 	const QVector<ContentBlockingInformation> profiles = ContentBlockingManager::getProfiles();
-	QStandardItemModel *model = new QStandardItemModel(this);
+	QStandardItemModel *model(new QStandardItemModel(this));
 	QStringList labels;
 	labels << tr("Title") << tr("Update Interval") << tr("Last Update");
 
@@ -96,7 +96,7 @@ void ContentBlockingDialog::changeEvent(QEvent *event)
 
 void ContentBlockingDialog::profileModified(const QString &profile)
 {
-	const ContentBlockingInformation information = ContentBlockingManager::getProfile(profile);
+	const ContentBlockingInformation information(ContentBlockingManager::getProfile(profile));
 
 	if (information.name.isEmpty())
 	{
@@ -105,7 +105,7 @@ void ContentBlockingDialog::profileModified(const QString &profile)
 
 	for (int i = 0; i < m_ui->profilesViewWidget->model()->rowCount(); ++i)
 	{
-		const QModelIndex index = m_ui->profilesViewWidget->model()->index(i, 0);
+		const QModelIndex index(m_ui->profilesViewWidget->model()->index(i, 0));
 
 		if (index.data(Qt::UserRole).toString() == profile)
 		{
@@ -121,7 +121,7 @@ void ContentBlockingDialog::profileModified(const QString &profile)
 
 void ContentBlockingDialog::updateProfile()
 {
-	const QModelIndex index = m_ui->profilesViewWidget->getIndex(m_ui->profilesViewWidget->getCurrentRow());
+	const QModelIndex index(m_ui->profilesViewWidget->getIndex(m_ui->profilesViewWidget->getCurrentRow()));
 
 	if (index.isValid())
 	{
@@ -131,7 +131,7 @@ void ContentBlockingDialog::updateProfile()
 
 void ContentBlockingDialog::updateActions()
 {
-	const QModelIndex index = m_ui->profilesViewWidget->getIndex(m_ui->profilesViewWidget->getCurrentRow());
+	const QModelIndex index(m_ui->profilesViewWidget->getIndex(m_ui->profilesViewWidget->getCurrentRow()));
 
 	m_ui->updateButton->setEnabled(index.isValid() && index.data(Qt::UserRole + 1).toUrl().isValid());
 }

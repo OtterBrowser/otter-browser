@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ void SearchKeywordDelegate::updateEditorGeometry(QWidget *editor, const QStyleOp
 
 void SearchKeywordDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-	QLineEdit *widget = qobject_cast<QLineEdit*>(editor);
+	QLineEdit *widget(qobject_cast<QLineEdit*>(editor));
 
 	if (widget)
 	{
@@ -55,7 +55,7 @@ QWidget* SearchKeywordDelegate::createEditor(QWidget *parent, const QStyleOption
 
 	for (int i = 0; i < index.model()->rowCount(); ++i)
 	{
-		const QString keyword = index.model()->index(i, 1).data(Qt::DisplayRole).toString();
+		const QString keyword(index.model()->index(i, 1).data(Qt::DisplayRole).toString());
 
 		if (index.row() != i && !keyword.isEmpty())
 		{
@@ -63,7 +63,7 @@ QWidget* SearchKeywordDelegate::createEditor(QWidget *parent, const QStyleOption
 		}
 	}
 
-	QLineEdit *widget = new QLineEdit(index.data(Qt::DisplayRole).toString(), parent);
+	QLineEdit *widget(new QLineEdit(index.data(Qt::DisplayRole).toString(), parent));
 	widget->setValidator(new QRegularExpressionValidator(QRegularExpression((keywords.isEmpty() ? QString() : QStringLiteral("(?!\\b(%1)\\b)").arg(keywords.join('|'))) + "[a-z0-9]*"), widget));
 
 	return widget;
@@ -71,7 +71,7 @@ QWidget* SearchKeywordDelegate::createEditor(QWidget *parent, const QStyleOption
 
 QSize SearchKeywordDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	QSize size = index.data(Qt::SizeHintRole).toSize();
+	QSize size(index.data(Qt::SizeHintRole).toSize());
 	size.setHeight(option.fontMetrics.height() * 1.25);
 
 	return size;
