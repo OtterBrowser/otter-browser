@@ -48,7 +48,7 @@ void ContentBlockingManager::createInstance(QObject *parent)
 
 void ContentBlockingManager::loadProfiles()
 {
-	const QString contentBlockingPath = SessionsManager::getWritableDataPath(QLatin1String("blocking"));
+	const QString contentBlockingPath(SessionsManager::getWritableDataPath(QLatin1String("blocking")));
 	const QDir directory(contentBlockingPath);
 
 	if (!directory.exists())
@@ -56,11 +56,11 @@ void ContentBlockingManager::loadProfiles()
 		QDir().mkpath(contentBlockingPath);
 	}
 
-	const QList<QFileInfo> availableProfiles = QDir(QLatin1String(":/blocking/")).entryInfoList(QStringList(QLatin1String("*.txt")), QDir::Files);
+	const QList<QFileInfo> availableProfiles(QDir(QLatin1String(":/blocking/")).entryInfoList(QStringList(QLatin1String("*.txt")), QDir::Files));
 
 	for (int i = 0; i < availableProfiles.count(); ++i)
 	{
-		const QString path = directory.filePath(availableProfiles.at(i).fileName());
+		const QString path(directory.filePath(availableProfiles.at(i).fileName()));
 
 		if (!QFile::exists(path))
 		{
@@ -69,11 +69,11 @@ void ContentBlockingManager::loadProfiles()
 		}
 	}
 
-	const QList<QFileInfo> existingProfiles = directory.entryInfoList(QStringList(QLatin1String("*.txt")), QDir::Files);
+	const QList<QFileInfo> existingProfiles(directory.entryInfoList(QStringList(QLatin1String("*.txt")), QDir::Files));
 
 	for (int i = 0; i < existingProfiles.count(); ++i)
 	{
-		ContentBlockingProfile *profile = new ContentBlockingProfile(existingProfiles.at(i).absoluteFilePath(), m_instance);
+		ContentBlockingProfile *profile(new ContentBlockingProfile(existingProfiles.at(i).absoluteFilePath(), m_instance));
 
 		m_profiles.append(profile);
 
@@ -93,7 +93,7 @@ ContentBlockingManager::CheckResult ContentBlockingManager::checkUrl(const QVect
 		return CheckResult();
 	}
 
-	const QString scheme = requestUrl.scheme();
+	const QString scheme(requestUrl.scheme());
 
 	if (scheme != QLatin1String("http") && scheme != QLatin1String("https"))
 	{
@@ -104,8 +104,8 @@ ContentBlockingManager::CheckResult ContentBlockingManager::checkUrl(const QVect
 	{
 		if (profiles[i] >= 0 && profiles[i] < m_profiles.count())
 		{
-			const CheckResult currentResult = m_profiles.at(profiles[i])->checkUrl(baseUrl, requestUrl, resourceType);
-			
+			const CheckResult currentResult(m_profiles.at(profiles[i])->checkUrl(baseUrl, requestUrl, resourceType));
+
 			if (currentResult.isBlocked)
 			{
 				return currentResult;
@@ -132,7 +132,7 @@ ContentBlockingInformation ContentBlockingManager::getProfile(const QString &pro
 QStringList ContentBlockingManager::createSubdomainList(const QString &domain)
 {
 	QStringList subdomainList;
-	int dotPosition = domain.lastIndexOf(QLatin1Char('.'));
+	int dotPosition(domain.lastIndexOf(QLatin1Char('.')));
 	dotPosition = domain.lastIndexOf(QLatin1Char('.'), dotPosition - 1);
 
 	while (dotPosition != -1)
