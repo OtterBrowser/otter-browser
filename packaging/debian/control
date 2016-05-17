@@ -4,7 +4,7 @@ Priority: extra
 Maintainer: Rog131 <samrog131@hotmail.com>
 Build-Depends: debhelper (>= 9.0),
  cmake,
- libgcrypt20-dev (>= 1.6.0),
+ libgcrypt-dev (>= 1.6.0),
  libhunspell-dev (>= 1.3.3),
  libqt5webkit5-dev (>=5.4.0),
  libqt5xmlpatterns5-dev (>=5.4.0),
