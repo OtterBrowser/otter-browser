@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -110,7 +110,7 @@ void SessionsManager::storeClosedWindow(MainWindow *window)
 
 	m_windows.removeAll(window);
 
-	SessionMainWindow session = window->getWindowsManager()->getSession();
+	SessionMainWindow session(window->getWindowsManager()->getSession());
 	session.geometry = window->saveGeometry();
 
 	if (!session.windows.isEmpty())
@@ -173,7 +173,7 @@ QString SessionsManager::getProfilePath()
 
 QString SessionsManager::getReadableDataPath(const QString &path, bool forceBundled)
 {
-	const QString writablePath = getWritableDataPath(path);
+	const QString writablePath(getWritableDataPath(path));
 
 	return ((!forceBundled && QFile::exists(writablePath)) ? writablePath : QLatin1String(":/") + (path.contains(QLatin1Char('/')) ? QString() : QLatin1String("other/")) + QDir::separator() + path);
 }
@@ -185,7 +185,7 @@ QString SessionsManager::getWritableDataPath(const QString &path)
 
 QString SessionsManager::getSessionPath(const QString &path, bool isBound)
 {
-	QString cleanPath = path;
+	QString cleanPath(path);
 
 	if (cleanPath.isEmpty())
 	{
@@ -213,7 +213,7 @@ QString SessionsManager::getSessionPath(const QString &path, bool isBound)
 
 SessionInformation SessionsManager::getSession(const QString &path)
 {
-	const QString sessionPath = getSessionPath(path);
+	const QString sessionPath(getSessionPath(path));
 	QSettings sessionData(sessionPath, QSettings::IniFormat);
 	sessionData.setIniCodec("UTF-8");
 
@@ -223,24 +223,24 @@ SessionInformation SessionsManager::getSession(const QString &path)
 	session.index = (sessionData.value(QLatin1String("Session/index"), 1).toInt() - 1);
 	session.isClean = sessionData.value(QLatin1String("Session/clean"), true).toBool();
 
-	const int windows = sessionData.value(QLatin1String("Session/windows"), 0).toInt();
-	const int defaultZoom = SettingsManager::getValue(QLatin1String("Content/DefaultZoom")).toInt();
+	const int windows(sessionData.value(QLatin1String("Session/windows"), 0).toInt());
+	const int defaultZoom(SettingsManager::getValue(QLatin1String("Content/DefaultZoom")).toInt());
 
 	for (int i = 1; i <= windows; ++i)
 	{
-		const int tabs = sessionData.value(QStringLiteral("%1/Properties/windows").arg(i), 0).toInt();
+		const int tabs(sessionData.value(QStringLiteral("%1/Properties/windows").arg(i), 0).toInt());
 		SessionMainWindow sessionEntry;
 		sessionEntry.geometry = QByteArray::fromBase64(sessionData.value(QStringLiteral("%1/Properties/geometry").arg(i), 1).toString().toLatin1());
 		sessionEntry.index = (sessionData.value(QStringLiteral("%1/Properties/index").arg(i), 1).toInt() - 1);
 
 		for (int j = 1; j <= tabs; ++j)
 		{
-			const QString state = sessionData.value(QStringLiteral("%1/%2/Properties/state").arg(i).arg(j), QString()).toString();
-			const QString searchEngine = sessionData.value(QStringLiteral("%1/%2/Properties/searchEngine").arg(i).arg(j), QString()).toString();
-			const QString userAgent = sessionData.value(QStringLiteral("%1/%2/Properties/userAgent").arg(i).arg(j), QString()).toString();
-			const QStringList geometry = sessionData.value(QStringLiteral("%1/%2/Properties/geometry").arg(i).arg(j), QString()).toString().split(QLatin1Char(','));
-			const int history = sessionData.value(QStringLiteral("%1/%2/Properties/history").arg(i).arg(j), 0).toInt();
-			const int reloadTime = (sessionData.value(QStringLiteral("%1/%2/Properties/reloadTime").arg(i).arg(j), -1).toInt());
+			const QString state(sessionData.value(QStringLiteral("%1/%2/Properties/state").arg(i).arg(j), QString()).toString());
+			const QString searchEngine(sessionData.value(QStringLiteral("%1/%2/Properties/searchEngine").arg(i).arg(j), QString()).toString());
+			const QString userAgent(sessionData.value(QStringLiteral("%1/%2/Properties/userAgent").arg(i).arg(j), QString()).toString());
+			const QStringList geometry(sessionData.value(QStringLiteral("%1/%2/Properties/geometry").arg(i).arg(j), QString()).toString().split(QLatin1Char(',')));
+			const int history(sessionData.value(QStringLiteral("%1/%2/Properties/history").arg(i).arg(j), 0).toInt());
+			const int reloadTime(sessionData.value(QStringLiteral("%1/%2/Properties/reloadTime").arg(i).arg(j), -1).toInt());
 			SessionWindow sessionWindow;
 			sessionWindow.geometry = ((geometry.count() == 4) ? QRect(geometry.at(0).toInt(), geometry.at(1).toInt(), geometry.at(2).toInt(), geometry.at(3).toInt()) : QRect());
 			sessionWindow.state = ((state == QLatin1String("maximized")) ? MaximizedWindowState : ((state == QLatin1String("minimized")) ? MinimizedWindowState : NormalWindowState));
@@ -266,7 +266,7 @@ SessionInformation SessionsManager::getSession(const QString &path)
 
 			for (int k = 1; k <= history; ++k)
 			{
-				const QStringList position = sessionData.value(QStringLiteral("%1/%2/History/%3/position").arg(i).arg(j).arg(k), 1).toStringList();
+				const QStringList position(sessionData.value(QStringLiteral("%1/%2/History/%3/position").arg(i).arg(j).arg(k), 1).toStringList());
 				WindowHistoryEntry historyEntry;
 				historyEntry.url = sessionData.value(QStringLiteral("%1/%2/History/%3/url").arg(i).arg(j).arg(k), 0).toString();
 				historyEntry.title = sessionData.value(QStringLiteral("%1/%2/History/%3/title").arg(i).arg(j).arg(k), 1).toString();
@@ -296,8 +296,8 @@ QStringList SessionsManager::getClosedWindows()
 
 	for (int i = 0; i < m_closedWindows.count(); ++i)
 	{
-		const SessionMainWindow window = m_closedWindows.at(i);
-		const QString title = window.windows.value(window.index, SessionWindow()).getTitle();
+		const SessionMainWindow window(m_closedWindows.at(i));
+		const QString title(window.windows.value(window.index, SessionWindow()).getTitle());
 
 		closedWindows.append(title.isEmpty() ? tr("(Untitled)") : title);
 	}
@@ -307,7 +307,7 @@ QStringList SessionsManager::getClosedWindows()
 
 QStringList SessionsManager::getSessions()
 {
-	QStringList entries = QDir(m_profilePath + QLatin1String("/sessions/")).entryList(QStringList(QLatin1String("*.ini")), QDir::Files);
+	QStringList entries(QDir(m_profilePath + QLatin1String("/sessions/")).entryList(QStringList(QLatin1String("*.ini")), QDir::Files));
 
 	for (int i = 0; i < entries.count(); ++i)
 	{
@@ -419,7 +419,7 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 		return false;
 	}
 
-	QString path = session.path;
+	QString path(session.path);
 
 	if (path.isEmpty())
 	{
@@ -445,8 +445,8 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 		return false;
 	}
 
-	const QString defaultSearchEngine = SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString();
-	const QString defaultUserAgent = SettingsManager::getValue(QLatin1String("Network/UserAgent")).toString();
+	const QString defaultSearchEngine(SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString());
+	const QString defaultUserAgent(SettingsManager::getValue(QLatin1String("Network/UserAgent")).toString());
 	QTextStream stream(&file);
 	stream.setCodec("UTF-8");
 	stream << QLatin1String("[Session]\n");
@@ -462,7 +462,7 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 
 	for (int i = 0; i < session.windows.count(); ++i)
 	{
-		const SessionMainWindow sessionEntry = session.windows.at(i);
+		const SessionMainWindow sessionEntry(session.windows.at(i));
 
 		stream << QStringLiteral("[%1/Properties]\n").arg(i + 1);
 		stream << Utils::formatConfigurationEntry(QLatin1String("geometry"), session.windows.at(i).geometry.toBase64(), true);
@@ -527,7 +527,7 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 
 bool SessionsManager::deleteSession(const QString &path)
 {
-	const QString cleanPath = getSessionPath(path, true);
+	const QString cleanPath(getSessionPath(path, true));
 
 	if (QFile::exists(cleanPath))
 	{
@@ -558,7 +558,7 @@ bool SessionsManager::hasUrl(const QUrl &url, bool activate)
 	{
 		if (m_windows.at(i)->getWindowsManager()->hasUrl(url, activate))
 		{
-			QWidget *window = qobject_cast<QWidget*>(m_windows.at(i)->parent());
+			QWidget *window(qobject_cast<QWidget*>(m_windows.at(i)->parent()));
 
 			if (window)
 			{
