@@ -74,6 +74,9 @@ void QtWebEngineWebBackend::optionChanged(const QString &option)
 	globalSettings->setAttribute(QWebEngineSettings::JavascriptEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableJavaScript")).toBool());
 	globalSettings->setAttribute(QWebEngineSettings::JavascriptCanAccessClipboard, SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanAccessClipboard")).toBool());
 	globalSettings->setAttribute(QWebEngineSettings::JavascriptCanOpenWindows, SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanOpenWindows")).toBool());
+#if QT_VERSION >= 0x050700
+	globalSettings->setAttribute(QWebEngineSettings::WebGLEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableWebgl")).toBool());
+#endif
 	globalSettings->setAttribute(QWebEngineSettings::LocalStorageEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableLocalStorage")).toBool());
 	globalSettings->setFontSize(QWebEngineSettings::DefaultFontSize, SettingsManager::getValue(QLatin1String("Content/DefaultFontSize")).toInt());
 	globalSettings->setFontSize(QWebEngineSettings::DefaultFixedFontSize, SettingsManager::getValue(QLatin1String("Content/DefaultFixedFontSize")).toInt());
