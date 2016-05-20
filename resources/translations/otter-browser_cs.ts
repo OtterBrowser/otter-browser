@@ -4921,7 +4921,7 @@ Chcete uložit změny nebo je zahodit?</translation>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="136"/>
         <source>%</source>
-        <translation>%</translation>
+        <translation> %</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="154"/>
@@ -5507,7 +5507,7 @@ Chcete jej přepsat?
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="180"/>
         <source>%1 (%2% downloaded)</source>
-        <translation>%1 (%2% stažených)</translation>
+        <translation>%1 (%2 % staženo)</translation>
     </message>
 </context>
 <context>
@@ -6770,7 +6770,7 @@ Klepněte na tlačítko Nainstalovat pro opětovné spuštění prohlížeče a 
         <location filename="../../src/ui/toolbars/ZoomWidget.cpp" line="97"/>
         <location filename="../../src/ui/toolbars/ZoomWidget.cpp" line="98"/>
         <source>Zoom %1%</source>
-        <translation>Zvětšení %1%</translation>
+        <translation>Zvětšení %1 %</translation>
     </message>
 </context>
 <context>

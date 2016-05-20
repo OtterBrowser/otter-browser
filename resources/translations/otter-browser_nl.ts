@@ -182,28 +182,28 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="102"/>
         <source>Select File</source>
-        <translation type="unfinished"/>
+        <translation>Bestand selecteren</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="102"/>
         <source>User Script files (*.js)</source>
-        <translation type="unfinished"/>
+        <translation>Gebruikersscriptbestanden (*.js)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="113"/>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="120"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Fout</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="113"/>
         <source>User Script with this name already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Er is al een gebruikersscript met deze naam.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="120"/>
         <source>Failed to import User Script file.</source>
-        <translation type="unfinished"/>
+        <translation>Het importeren van het gebruikersscriptbestnd is mislukt.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="233"/>
@@ -226,7 +226,7 @@
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="76"/>
         <source>Addons Manager</source>
-        <translation type="unfinished"/>
+        <translation>Add-ons-beheer</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="77"/>
@@ -269,27 +269,27 @@
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="87"/>
         <source>Search with %1</source>
-        <translation type="unfinished"/>
+        <translation>Zoeken met %1</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="104"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Bladwijzers</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="138"/>
         <source>Local files</source>
-        <translation type="unfinished"/>
+        <translation>Lokale bestanden</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="154"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>Geschiedenis</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="176"/>
         <source>Special pages</source>
-        <translation type="unfinished"/>
+        <translation>Speciale pagina&apos;s</translation>
     </message>
 </context>
 <context>
@@ -394,19 +394,21 @@
     <message>
         <location filename="../../src/core/Application.cpp" line="254"/>
         <source>Profile directory (%1) is not writable, application will be running in read-only mode.</source>
-        <translation type="unfinished"/>
+        <translation>De profielmap (%1) is niet beschrijfbaar; de applicatie zal draaien in alleen-lezenmodus.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="278"/>
         <source>Your profile directory (%1) ran out of free disk space.
 This may lead to malfunctions or even data loss.</source>
-        <translation type="unfinished"/>
+        <translation>Uw profielmap (%1) heeft geen vrije ruimte meer.
+Dit kan leiden tot storingen of erger nog: gegevensverlies.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="282"/>
         <source>Your profile directory (%1) is running low on free disk space (%2 remaining).
 This may lead to malfunctions or even data loss.</source>
-        <translation type="unfinished"/>
+        <translation>Uw profielmap (%1) heeft bijna geen vrije ruimte meer (%2 resterend).
+Dit kan leiden tot storingen of erger nog: gegevensverlies.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="288"/>
@@ -425,7 +427,7 @@ This may lead to malfunctions or even data loss.</source>
     <message>
         <location filename="../../src/core/Application.cpp" line="291"/>
         <source>Continue in Read-only Mode</source>
-        <translation type="unfinished"/>
+        <translation>Doorgaan in Alleen-lezenmodus</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="293"/>
@@ -441,7 +443,8 @@ This may lead to malfunctions or even data loss.</source>
         <location filename="../../src/core/Application.cpp" line="360"/>
         <source>SSL support is not available or incomplete.
 Some websites may work incorrectly or do not work at all.</source>
-        <translation type="unfinished"/>
+        <translation>De SSL-ondersteuning is niet beschikbaar of niet compleet.
+Sommige websites werken mogelijk niet of niet goed.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="527"/>
@@ -749,42 +752,42 @@ Weet u zeker dat u de sessie tóch wilt herstellen?</translation>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Titel</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Address</source>
-        <translation type="unfinished"/>
+        <translation>Adres</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>Beschrijving</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Keyword</source>
-        <translation type="unfinished"/>
+        <translation>Sleutelwoord</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Added</source>
-        <translation type="unfinished"/>
+        <translation>Toegevoegd</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Modified</source>
-        <translation type="unfinished"/>
+        <translation>Bewerkt</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Visited</source>
-        <translation type="unfinished"/>
+        <translation>Bezocht</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Visits</source>
-        <translation type="unfinished"/>
+        <translation>Aantal bezoeken</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
@@ -2309,7 +2312,7 @@ Exponent: %2</translation>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="677"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser wordt bestuurd door de gebruiker en niet andersom.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="683"/>
@@ -2359,7 +2362,7 @@ Wilt u doorgaan?</translation>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="105"/>
         <source>Import Opera Search Engines…</source>
-        <translation type="unfinished"/>
+        <translation>Opera-zoekmachines importeren...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="107"/>
@@ -2573,7 +2576,7 @@ Wilt u doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
         <source>Any Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Elke werkbalk</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="131"/>
@@ -2852,7 +2855,7 @@ Wilt u doorgaan?</translation>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="34"/>
         <source>Do you want to save login data for %1?</source>
-        <translation type="unfinished"/>
+        <translation>Wilt u de inloggegevens voor %1 opslaan?</translation>
     </message>
 </context>
 <context>
@@ -2910,7 +2913,7 @@ Wilt u doorgaan?</translation>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="65"/>
         <source>%1 wants to play audio.</source>
-        <translation type="unfinished"/>
+        <translation>%1 wil audio afspelen.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="70"/>
@@ -3014,17 +3017,17 @@ Wilt u doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="96"/>
         <source>Address Completion</source>
-        <translation type="unfinished"/>
+        <translation>Adresvoltooiing</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="105"/>
         <source>Show category headers</source>
-        <translation type="unfinished"/>
+        <translation>Categoriekoppen weergeven</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="114"/>
         <source>Display mode:</source>
-        <translation type="unfinished"/>
+        <translation>Weergavemodus:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="152"/>
@@ -3390,12 +3393,12 @@ Wilt u doorgaan?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="100"/>
         <source>Compact</source>
-        <translation type="unfinished"/>
+        <translation>Compact</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="101"/>
         <source>Columns</source>
-        <translation type="unfinished"/>
+        <translation>Kolommen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="110"/>
@@ -5898,22 +5901,22 @@ Klik op de Installeren-knop om de webbrowser te herstarten en de update te insta
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Vraag</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
         <source>This tab has crashed.</source>
-        <translation type="unfinished"/>
+        <translation>Deze tab is gecrasht.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
         <source>Do you want to try to reload it?</source>
-        <translation type="unfinished"/>
+        <translation>Wilt u proberen om hem te herladen?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="802"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Dit bericht nooit meer weergeven</translation>
     </message>
 </context>
 <context>
@@ -5966,7 +5969,7 @@ Klik op de Installeren-knop om de webbrowser te herstarten en de update te insta
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1135"/>
         <source>1 Minute</source>
-        <translation type="unfinished"/>
+        <translation>1 minuut</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1136"/>
@@ -6632,7 +6635,7 @@ Klik op de Installeren-knop om de webbrowser te herstarten en de update te insta
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Naam</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
@@ -7411,7 +7414,7 @@ Klik op de Installeren-knop om de webbrowser te herstarten en de update te insta
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="351"/>
         <source>Stop All Pages</source>
-        <translation type="unfinished"/>
+        <translation>Alle pagina&apos;s stoppen</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="353"/>
@@ -7837,7 +7840,7 @@ Klik op de Installeren-knop om de webbrowser te herstarten en de update te insta
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="437"/>
         <source>Addons</source>
-        <translation type="unfinished"/>
+        <translation>Add-ons</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="438"/>
@@ -8047,7 +8050,7 @@ Klik op de Installeren-knop om de webbrowser te herstarten en de update te insta
     <message>
         <location filename="../../src/core/Application.cpp" line="120"/>
         <source>Tells application to avoid writing data to disk</source>
-        <translation type="unfinished"/>
+        <translation>Vertelt de applicatie om geen gegevens naar de schijf te schrijven</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="121"/>
@@ -8135,17 +8138,17 @@ Fout: %2</translation>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="43"/>
         <source>Failed to open user script file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Het openen van het gebruikersscriptbestand, %1, is mislukt.</translation>
     </message>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="116"/>
         <source>Invalid match rule for User Script: %1</source>
-        <translation type="unfinished"/>
+        <translation>Het gebruikersscript, %1, bevat een ongeldige overeenkomstige regel.</translation>
     </message>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="162"/>
         <source>Failed to locate header of user script file</source>
-        <translation type="unfinished"/>
+        <translation>Het opsporen van de kop van het gebruikersscript bestand is mislukt</translation>
     </message>
     <message>
         <location filename="../../src/main.cpp" line="125"/>

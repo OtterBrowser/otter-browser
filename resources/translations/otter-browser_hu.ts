@@ -2312,7 +2312,7 @@ Exponent: %2</translation>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="677"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</source>
-        <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;böngészőt a felhaszháló írányítja, nem fordítva.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</translation>
+        <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Webböngésző, amit a felhaszháló írányít, nem fordítva.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="683"/>
