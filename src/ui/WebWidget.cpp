@@ -1345,6 +1345,11 @@ QString WebWidget::getActiveStyleSheet() const
 	return QString();
 }
 
+QString WebWidget::getCharacterEncoding() const
+{
+	return QString();
+}
+
 QString WebWidget::getSelectedText() const
 {
 	return QString();

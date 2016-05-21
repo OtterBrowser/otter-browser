@@ -137,6 +137,7 @@ public:
 	WebBackend* getBackend();
 	virtual QString getTitle() const = 0;
 	virtual QString getActiveStyleSheet() const;
+	virtual QString getCharacterEncoding() const;
 	virtual QString getSelectedText() const;
 	QString getStatusMessage() const;
 	QVariant getOption(const QString &key, const QUrl &url = QUrl()) const;

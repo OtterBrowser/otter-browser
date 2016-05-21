@@ -35,6 +35,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 
 	const QVariantHash statistics(widget->getStatistics());
 	const WindowsManager::ContentStates state(widget->getContentState());
+	const QString characterEncoding(widget->getCharacterEncoding());
 	QString host(widget->getUrl().host());
 
 	if (host.isEmpty())
@@ -81,8 +82,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 	m_ui->hostLabel->setText(host);
 	m_ui->addressLabelWidget->setText(widget->getUrl().toString());
 	m_ui->titleLabelWidget->setText(widget->getTitle());
-///FIXME
-	m_ui->encodingLabelWidget->setText(tr("unknown"));
+	m_ui->encodingLabelWidget->setText(characterEncoding.isEmpty() ? tr("unknown") : characterEncoding);
 	m_ui->sizeLabelWidget->setText(Utils::formatUnit(statistics.value(QLatin1String("bytesTotal")).toLongLong(), false, 1, true));
 	m_ui->elementsLabelWidget->setText((statistics.value(QLatin1String("requestsBlocked")).toInt() > 0) ? tr("%1 (%n blocked)", "", statistics.value(QLatin1String("requestsBlocked")).toInt()).arg(statistics.value(QLatin1String("requestsStarted")).toInt()) : QString::number(statistics.value(QLatin1String("requestsStarted")).toInt()));
 	m_ui->downloadDateLabelWidget->setText(Utils::formatDateTime(statistics.value(QLatin1String("dateDownloaded")).toDateTime()));
