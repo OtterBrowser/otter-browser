@@ -87,7 +87,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 	m_ui->elementsLabelWidget->setText((statistics.value(QLatin1String("requestsBlocked")).toInt() > 0) ? tr("%1 (%n blocked)", "", statistics.value(QLatin1String("requestsBlocked")).toInt()).arg(statistics.value(QLatin1String("requestsStarted")).toInt()) : QString::number(statistics.value(QLatin1String("requestsStarted")).toInt()));
 	m_ui->downloadDateLabelWidget->setText(Utils::formatDateTime(statistics.value(QLatin1String("dateDownloaded")).toDateTime()));
 
-	const QString cookiesPolicy = widget->getOption(QLatin1String("Network/CookiesPolicy")).toString();
+	const QString cookiesPolicy(widget->getOption(QLatin1String("Network/CookiesPolicy")).toString());
 
 	if (cookiesPolicy == QLatin1String("acceptExisting"))
 	{
@@ -152,6 +152,21 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 	else
 	{
 		m_ui->geolocationValueLabel->setText(tr("Always Ask"));
+	}
+
+	const QString fullScreenPolicy(widget->getOption(QLatin1String("Browser/EnableFullScreen")).toString());
+
+	if (fullScreenPolicy == QLatin1String("enabled"))
+	{
+		m_ui->fullScreenValueLabel->setText(tr("Always"));
+	}
+	else if (fullScreenPolicy == QLatin1String("disabled"))
+	{
+		m_ui->fullScreenValueLabel->setText(tr("Never"));
+	}
+	else
+	{
+		m_ui->fullScreenValueLabel->setText(tr("Always Ask"));
 	}
 
 	const QString notificationsPolicy(widget->getOption(QLatin1String("Browser/EnableNotifications")).toString());
