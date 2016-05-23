@@ -44,7 +44,9 @@ LocalListingNetworkReply::LocalListingNetworkReply(QObject *parent, const QNetwo
 	QString entriesHtml;
 	QRegularExpression entryExpression(QLatin1String("<!--entry:begin-->(.*)<!--entry:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
 	QRegularExpression urlExpression(QLatin1String("^/+"));
+#if QT_VERSION >= 0x050400
 	urlExpression.optimize();
+#endif
 
 	QFile file(SessionsManager::getReadableDataPath(QLatin1String("files/listing.html")));
 	file.open(QIODevice::ReadOnly | QIODevice::Text);
