@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -47,7 +47,7 @@ void runApplication(const QString &command, const QUrl &url)
 		return;
 	}
 
-	PlatformIntegration *integration = Application::getInstance()->getPlatformIntegration();
+	PlatformIntegration *integration(Application::getInstance()->getPlatformIntegration());
 
 	if (integration)
 	{
@@ -61,7 +61,7 @@ void runApplication(const QString &command, const QUrl &url)
 
 QString matchUrl(const QUrl &url, const QString &prefix)
 {
-	QString match = url.toString();
+	QString match(url.toString());
 
 	if (match.startsWith(prefix, Qt::CaseInsensitive))
 	{
@@ -117,7 +117,7 @@ QString createIdentifier(const QString &base, const QStringList &exclude, bool t
 	int number = 2;
 
 	const QRegularExpression expression(QLatin1String("_([0-9]+)$"));
-	const QRegularExpressionMatch match = expression.match(identifier);
+	const QRegularExpressionMatch match(expression.match(identifier));
 
 	if (match.hasMatch())
 	{
@@ -148,9 +148,9 @@ QString createErrorPage(const QUrl &url, const QString &errorNumber, const QStri
 	variables[QLatin1String("description")] = errorString;
 	variables[QLatin1String("introduction")] = QCoreApplication::translate("utils", "You tried to access the address <a href=\"%1\">%1</a>, which is currently unavailable. Please make sure that the web address (URL) is correctly spelled and punctuated, then try reloading the page.").arg(url.toDisplayString());
 
-	QString mainTemplate = stream.readAll();
+	QString mainTemplate(stream.readAll());
 	QRegularExpression hintExpression(QLatin1String("<!--hint:begin-->(.*)<!--hint:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
-	const QString hintTemplate = hintExpression.match(mainTemplate).captured(1);
+	const QString hintTemplate(hintExpression.match(mainTemplate).captured(1));
 	QString hintsHtml;
 	QStringList hints;
 	hints << QCoreApplication::translate("utils", "Make sure your internet connection is active and check whether other applications that rely on the same connection are working.")
@@ -204,7 +204,7 @@ QString formatTime(int value)
 
 	if (value > 3600)
 	{
-		QString string = time.toString(QLatin1String("hh:mm:ss"));
+		QString string(time.toString(QLatin1String("hh:mm:ss")));
 
 		if (value > SECONDS_IN_DAY)
 		{
@@ -276,7 +276,7 @@ QUrl normalizeUrl(QUrl url)
 
 QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType)
 {
-	PlatformIntegration *integration = Application::getInstance()->getPlatformIntegration();
+	PlatformIntegration *integration(Application::getInstance()->getPlatformIntegration());
 
 	if (integration)
 	{
