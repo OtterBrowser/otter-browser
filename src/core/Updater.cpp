@@ -37,8 +37,8 @@ Updater::Updater(const UpdateInformation &information, QObject *parent) : QObjec
 	m_transfersCount(0),
 	m_transfersSuccessful(true)
 {
-	const QString path = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QLatin1String("/OtterBrowser/");
-	QDir directory = QDir(path);
+	const QString path(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QLatin1String("/OtterBrowser/"));
+	QDir directory(path);
 
 	if (!directory.exists())
 	{
@@ -67,11 +67,11 @@ Updater::Updater(const UpdateInformation &information, QObject *parent) : QObjec
 
 void Updater::transferFinished()
 {
-	Transfer *transfer = qobject_cast<Transfer*>(sender());
+	Transfer *transfer(qobject_cast<Transfer*>(sender()));
 
 	if (transfer)
 	{
-		const QString path = transfer->getTarget();
+		const QString path(transfer->getTarget());
 
 		if ((transfer->getState() == Transfer::FinishedState) && QFile::exists(path))
 		{
@@ -172,8 +172,8 @@ bool Updater::isReadyToInstall(QString path)
 
 Transfer* Updater::downloadFile(const QUrl url, const QString path)
 {
-	const QString urlString = url.path();
-	Transfer *transfer = new Transfer(url, path + urlString.mid(urlString.lastIndexOf(QLatin1Char('/')) + 1), (Transfer::CanOverwriteOption), this);
+	const QString urlString(url.path());
+	Transfer *transfer(new Transfer(url, path + urlString.mid(urlString.lastIndexOf(QLatin1Char('/')) + 1), (Transfer::CanOverwriteOption), this));
 
 	connect(transfer, SIGNAL(finished()), this, SLOT(transferFinished()));
 
