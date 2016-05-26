@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -18,10 +18,10 @@
 *
 **************************************************************************/
 
+#include "NetworkProxyFactory.h"
 #include "Console.h"
 #include "NetworkManager.h"
 #include "NetworkManagerFactory.h"
-#include "NetworkProxyFactory.h"
 #include "SettingsManager.h"
 
 #include <QtCore/QFile>
@@ -59,7 +59,7 @@ void NetworkProxyFactory::optionChanged(const QString &option)
 			m_automaticProxy = new NetworkAutomaticProxy();
 		}
 
-		const QString path = SettingsManager::getValue(QLatin1String("Proxy/AutomaticConfigurationPath")).toString();
+		const QString path(SettingsManager::getValue(QLatin1String("Proxy/AutomaticConfigurationPath")).toString());
 
 		if (QFile::exists(path))
 		{
@@ -102,7 +102,7 @@ void NetworkProxyFactory::optionChanged(const QString &option)
 		m_proxies.clear();
 		m_proxies[QLatin1String("NoProxy")] << QNetworkProxy(QNetworkProxy::NoProxy);
 
-		const bool useCommon = SettingsManager::getValue(QLatin1String("Proxy/UseCommon")).toBool();
+		const bool useCommon(SettingsManager::getValue(QLatin1String("Proxy/UseCommon")).toBool());
 		QList<QPair<QNetworkProxy::ProxyType, QString> > proxyTypes;
 		proxyTypes << qMakePair(QNetworkProxy::HttpProxy, QLatin1String("http")) << qMakePair(QNetworkProxy::HttpProxy, QLatin1String("https")) << qMakePair(QNetworkProxy::FtpCachingProxy, QLatin1String("ftp")) << qMakePair(QNetworkProxy::Socks5Proxy, QLatin1String("socks"));
 
@@ -125,7 +125,7 @@ void NetworkProxyFactory::optionChanged(const QString &option)
 	{
 		m_proxies.clear();
 
-		const QString value = SettingsManager::getValue(option).toString();
+		const QString value(SettingsManager::getValue(option).toString());
 
 		if (value == QLatin1String("system"))
 		{
@@ -160,14 +160,14 @@ QList<QNetworkProxy> NetworkProxyFactory::queryProxy(const QNetworkProxyQuery &q
 
 	if (m_proxyMode == ManualProxy)
 	{
-		const QString host = query.peerHostName();
+		const QString host(query.peerHostName());
 
 		for (int i = 0; i < m_proxyExceptions.count(); ++i)
 		{
 			if (m_proxyExceptions.at(i).contains(QLatin1Char('/')))
 			{
-				const QHostAddress address = QHostAddress(host);
-				const QPair<QHostAddress, int> subnet = QHostAddress::parseSubnet(m_proxyExceptions.at(i));
+				const QHostAddress address(host);
+				const QPair<QHostAddress, int> subnet(QHostAddress::parseSubnet(m_proxyExceptions.at(i)));
 
 				if (!address.isNull() && subnet.second != -1 && address.isInSubnet(subnet))
 				{
@@ -180,28 +180,29 @@ QList<QNetworkProxy> NetworkProxyFactory::queryProxy(const QNetworkProxyQuery &q
 			}
 		}
 
-		const QString protocol = query.protocolTag().toLower();
+		const QString protocol(query.protocolTag().toLower());
 
 		if (m_proxies.contains(QLatin1String("socks")))
 		{
 			return m_proxies[QLatin1String("socks")];
 		}
-		else if ((protocol == QLatin1String("http")) && m_proxies.contains(protocol))
+
+		if (protocol == QLatin1String("http") && m_proxies.contains(protocol))
 		{
 			return m_proxies[protocol];
 		}
-		else if (protocol == QLatin1String("https") && m_proxies.contains(protocol))
+
+		if (protocol == QLatin1String("https") && m_proxies.contains(protocol))
 		{
 			return m_proxies[protocol];
 		}
-		else if (protocol == QLatin1String("ftp") && m_proxies.contains(protocol))
+
+		if (protocol == QLatin1String("ftp") && m_proxies.contains(protocol))
 		{
 			return m_proxies[protocol];
 		}
-		else
-		{
-			return m_proxies[QLatin1String("NoProxy")];
-		}
+
+		return m_proxies[QLatin1String("NoProxy")];
 	}
 
 	if (m_proxyMode == AutomaticProxy && m_automaticProxy)

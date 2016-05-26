@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -85,8 +85,8 @@ void PlatformIntegration::showNotification(Notification *notification)
 
 bool PlatformIntegration::installUpdate() const
 {
-	const QString updaterPath = QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + QDir::separator() + getUpdaterBinary());
-	const QString scriptPath = Updater::getScriptPath();
+	const QString updaterPath(QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + QDir::separator() + getUpdaterBinary()));
+	const QString scriptPath(Updater::getScriptPath());
 
 	if (Updater::isReadyToInstall(scriptPath) && QFileInfo(updaterPath).isExecutable())
 	{

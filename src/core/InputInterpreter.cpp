@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -73,7 +73,7 @@ void InputInterpreter::interpret(const QString &text, WindowsManager::OpenHints 
 {
 	if (text.startsWith(QLatin1String("bookmarks:")))
 	{
-		BookmarksItem *bookmark = (text.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getItem(text.mid(11)) : BookmarksManager::getBookmark(text.mid(10).toULongLong()));
+		BookmarksItem *bookmark(text.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getItem(text.mid(11)) : BookmarksManager::getBookmark(text.mid(10).toULongLong()));
 
 		if (bookmark)
 		{
@@ -87,7 +87,7 @@ void InputInterpreter::interpret(const QString &text, WindowsManager::OpenHints 
 
 	if (!ignoreBookmarks)
 	{
-		BookmarksItem *bookmark = BookmarksManager::getBookmark(text);
+		BookmarksItem *bookmark(BookmarksManager::getBookmark(text));
 
 		if (bookmark)
 		{
@@ -121,7 +121,7 @@ void InputInterpreter::interpret(const QString &text, WindowsManager::OpenHints 
 		return;
 	}
 
-	const QUrl url = QUrl::fromUserInput(text);
+	const QUrl url(QUrl::fromUserInput(text));
 	const QHostAddress address(text);
 
 	if (!address.isNull() || (url.isValid() && (url.isLocalFile() || QRegularExpression(QLatin1String("^(\\w+\\:\\S+)|([\\w\\-]+\\.[a-zA-Z]{2,}(/\\S*)?$)")).match(text).hasMatch())))
@@ -133,8 +133,8 @@ void InputInterpreter::interpret(const QString &text, WindowsManager::OpenHints 
 		return;
 	}
 
-	const QString keyword = text.section(QLatin1Char(' '), 0, 0);
-	const SearchEnginesManager::SearchEngineDefinition searchEngine = SearchEnginesManager::getSearchEngine(keyword, true);
+	const QString keyword(text.section(QLatin1Char(' '), 0, 0));
+	const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(keyword, true));
 
 	if (!searchEngine.identifier.isEmpty())
 	{
@@ -154,7 +154,7 @@ void InputInterpreter::interpret(const QString &text, WindowsManager::OpenHints 
 		return;
 	}
 
-	const int lookupTimeout = SettingsManager::getValue(QLatin1String("AddressField/HostLookupTimeout")).toInt();
+	const int lookupTimeout(SettingsManager::getValue(QLatin1String("AddressField/HostLookupTimeout")).toInt());
 
 	if (url.isValid() && lookupTimeout > 0)
 	{

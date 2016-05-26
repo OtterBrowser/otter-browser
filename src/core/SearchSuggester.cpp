@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ SearchSuggester::SearchSuggester(const QString &searchEngine, QObject *parent) :
 
 void SearchSuggester::setSearchEngine(const QString &searchEngine)
 {
-	const QString query = m_query;
+	const QString query(m_query);
 
 	m_searchEngine = searchEngine;
 	m_query = QString();
@@ -58,7 +58,7 @@ void SearchSuggester::setQuery(const QString &query)
 			m_networkReply = NULL;
 		}
 
-		const SearchEnginesManager::SearchEngineDefinition searchEngine = SearchEnginesManager::getSearchEngine(m_searchEngine);
+		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(m_searchEngine));
 
 		if (searchEngine.identifier.isEmpty() || searchEngine.suggestionsUrl.url.isEmpty())
 		{
@@ -107,13 +107,13 @@ void SearchSuggester::replyFinished()
 		return;
 	}
 
-	const QJsonDocument document = QJsonDocument::fromJson(m_networkReply->readAll());
+	const QJsonDocument document(QJsonDocument::fromJson(m_networkReply->readAll()));
 
 	if (!document.isEmpty() && document.isArray() && document.array().count() > 1 && document.array().at(0).toString() == m_query)
 	{
-		const QJsonArray completionsArray = document.array().at(1).toArray();
-		const QJsonArray descriptionsArray = document.array().at(2).toArray();
-		const QJsonArray urlsArray = document.array().at(3).toArray();
+		const QJsonArray completionsArray(document.array().at(1).toArray());
+		const QJsonArray descriptionsArray(document.array().at(2).toArray());
+		const QJsonArray urlsArray(document.array().at(3).toArray());
 		QList<SearchSuggestion> suggestions;
 
 		for (int i = 0; i < completionsArray.count(); ++i)

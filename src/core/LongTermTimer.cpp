@@ -66,8 +66,8 @@ void LongTermTimer::runTimer(quint64 seconds, QObject *receiver, const char *mem
 
 void LongTermTimer::updateTimer(const quint64 secondsLeft, const bool updateCounter)
 {
-	int timerValue = std::numeric_limits<int>::max();
-	const quint64 milisecondsLeft = (secondsLeft * 1000);
+	int timerValue(std::numeric_limits<int>::max());
+	const quint64 milisecondsLeft(secondsLeft * 1000);
 
 	if (milisecondsLeft <= static_cast<quint64>(timerValue))
 	{

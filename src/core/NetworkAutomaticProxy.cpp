@@ -169,7 +169,7 @@ bool PacUtils::dateRange(const QVariant &arg1, const QVariant &arg2, const QVari
 
 		if (rawArguments.at(i).type() == QVariant::String)
 		{
-			const int month = (m_months.indexOf(rawArguments.at(i).toString().toLower()) + 1);
+			const int month(m_months.indexOf(rawArguments.at(i).toString().toLower()) + 1);
 
 			if (month < 1)
 			{
