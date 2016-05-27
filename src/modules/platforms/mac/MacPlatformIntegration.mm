@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -167,7 +167,7 @@ void MacPlatformIntegration::timerEvent(QTimerEvent *event)
 {
 	if (event->timerId() == m_notificationsWatcherTimer)
 	{
-		const int visibilityDuration = SettingsManager::getValue(QLatin1String("Interface/NotificationVisibilityDuration")).toInt();
+		const int visibilityDuration(SettingsManager::getValue(QLatin1String("Interface/NotificationVisibilityDuration")).toInt());
 		QHash<quint64, NSUserNotification*> existingNotifications;
 
 		for (NSUserNotification *notification in [[NSUserNotificationCenter defaultUserNotificationCenter] deliveredNotifications])
@@ -175,7 +175,7 @@ void MacPlatformIntegration::timerEvent(QTimerEvent *event)
 			existingNotifications[QString::fromNSString(notification.identifier).toULongLong()] = notification;
 		}
 
-		const QList<quint64> allNotifications = m_notifications.keys();
+		const QList<quint64> allNotifications(m_notifications.keys());
 
 		for (int i = 0; i < allNotifications.count(); ++i)
 		{
@@ -226,10 +226,10 @@ void MacPlatformIntegration::runApplication(const QString &command, const QUrl &
 
 void MacPlatformIntegration::updateDockIcon()
 {
-	const QList<Transfer*> transfers = TransfersManager::getInstance()->getTransfers();
-	qint64 bytesTotal = 0;
-	qint64 bytesReceived = 0;
-	bool hasActiveTransfers = false;
+	const QList<Transfer*> transfers(TransfersManager::getInstance()->getTransfers());
+	qint64 bytesTotal(0);
+	qint64 bytesReceived(0);
+	bool hasActiveTransfers(false);
 
 	for (int i = 0; i < transfers.count(); ++i)
 	{
@@ -241,7 +241,7 @@ void MacPlatformIntegration::updateDockIcon()
 		}
 	}
 
-	const qreal progress = ((hasActiveTransfers && bytesReceived > 0 && bytesTotal > 0) ? (static_cast<qreal>(bytesReceived) / bytesTotal) : 0);
+	const qreal progress((hasActiveTransfers && bytesReceived > 0 && bytesTotal > 0) ? (static_cast<qreal>(bytesReceived) / bytesTotal) : 0);
 
 	if (progress > 0)
 	{
@@ -287,7 +287,7 @@ void MacPlatformIntegration::showNotification(Notification *notification)
 			break;
 	}
 
-	const quint64 identifier = ++m_notificationIdentifier;
+	const quint64 identifier(++m_notificationIdentifier);
 
 	m_notifications[identifier] = notification;
 

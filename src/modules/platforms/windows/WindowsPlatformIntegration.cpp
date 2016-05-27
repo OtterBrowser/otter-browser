@@ -83,10 +83,10 @@ void WindowsPlatformIntegration::removeWindow(MainWindow *window)
 
 void WindowsPlatformIntegration::updateTaskbarButtons()
 {
-	const QList<Transfer*> transfers = TransfersManager::getInstance()->getTransfers();
-	qint64 bytesTotal = 0;
-	qint64 bytesReceived = 0;
-	bool hasActiveTransfers = false;
+	const QList<Transfer*> transfers(TransfersManager::getInstance()->getTransfers());
+	qint64 bytesTotal(0);
+	qint64 bytesReceived(0);
+	bool hasActiveTransfers(false);
 
 	for (int i = 0; i < transfers.count(); ++i)
 	{
@@ -98,11 +98,11 @@ void WindowsPlatformIntegration::updateTaskbarButtons()
 		}
 	}
 
-	const QList<MainWindow*> windows = Application::getInstance()->getWindows();
+	const QList<MainWindow*> windows(Application::getInstance()->getWindows());
 
 	for (int i = 0; i < windows.count(); ++i)
 	{
-		MainWindow *window = windows.at(i);
+		MainWindow *window(windows.at(i));
 
 		if (hasActiveTransfers)
 		{
@@ -127,7 +127,7 @@ void WindowsPlatformIntegration::updateTaskbarButtons()
 
 void WindowsPlatformIntegration::showNotification(Notification *notification)
 {
-	TrayIcon *trayIcon = Application::getInstance()->getTrayIcon();
+	TrayIcon *trayIcon(Application::getInstance()->getTrayIcon());
 
 	if (trayIcon && QSystemTrayIcon::supportsMessages())
 	{
@@ -135,7 +135,7 @@ void WindowsPlatformIntegration::showNotification(Notification *notification)
 	}
 	else
 	{
-		NotificationDialog *dialog = new NotificationDialog(notification);
+		NotificationDialog *dialog(new NotificationDialog(notification));
 		dialog->show();
 	}
 }
@@ -149,7 +149,7 @@ void WindowsPlatformIntegration::runApplication(const QString &command, const QU
 		return;
 	}
 
-	const int indexOfExecutable = command.indexOf(QLatin1String(".exe"), 0, Qt::CaseInsensitive);
+	const int indexOfExecutable(command.indexOf(QLatin1String(".exe"), 0, Qt::CaseInsensitive));
 
 	if (indexOfExecutable == -1)
 	{
@@ -158,9 +158,9 @@ void WindowsPlatformIntegration::runApplication(const QString &command, const QU
 		return;
 	}
 
-	const QString application = command.left(indexOfExecutable + 4);
-	QStringList arguments = command.mid(indexOfExecutable + 5).split(QLatin1Char(' '), QString::SkipEmptyParts);
-	const int indexOfPlaceholder = arguments.indexOf(QLatin1String("%1"));
+	const QString application(command.left(indexOfExecutable + 4));
+	QStringList arguments(command.mid(indexOfExecutable + 5).split(QLatin1Char(' '), QString::SkipEmptyParts));
+	const int indexOfPlaceholder(arguments.indexOf(QLatin1String("%1")));
 
 	if (url.isValid())
 	{
@@ -186,7 +186,7 @@ void WindowsPlatformIntegration::runApplication(const QString &command, const QU
 
 void WindowsPlatformIntegration::getApplicationInformation(ApplicationInformation &information)
 {
-	const QString rootPath = information.command.left(information.command.indexOf(QLatin1String("\\"))).remove(QLatin1Char('%'));
+	const QString rootPath(information.command.left(information.command.indexOf(QLatin1String("\\"))).remove(QLatin1Char('%')));
 
 	if (m_environment.contains(rootPath))
 	{
@@ -220,7 +220,7 @@ void WindowsPlatformIntegration::getApplicationInformation(ApplicationInformatio
 QList<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)
 {
 	QList<ApplicationInformation> applications;
-	const QString suffix = mimeType.preferredSuffix();
+	const QString suffix(mimeType.preferredSuffix());
 
 	if (suffix.isEmpty())
 	{
@@ -248,7 +248,7 @@ QList<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMime
 
 	// Vista+ applications
 	const QSettings defaultAssociation(QLatin1String("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.") + suffix, QSettings::NativeFormat);
-	QString defaultApplication = defaultAssociation.value(QLatin1String("."), QString()).toString();
+	QString defaultApplication(defaultAssociation.value(QLatin1String("."), QString()).toString());
 	QStringList associations;
 
 	if (defaultApplication.isEmpty())
@@ -271,7 +271,7 @@ QList<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMime
 
 	for (int i = 0; i < associations.count(); ++i)
 	{
-		const QString value = associations.at(i);
+		const QString value(associations.at(i));
 
 		if (m_registrationIdentifier == value)
 		{
@@ -303,8 +303,8 @@ QList<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMime
 
 	// Win XP applications
 	const QSettings legacyAssociations(QLatin1String("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.") + suffix + QLatin1String("\\OpenWithList"), QSettings::NativeFormat);
-	const QString order = legacyAssociations.value(QLatin1String("MRUList"), QString()).toString();
-	const QString applicationFileName = QFileInfo(QCoreApplication::applicationFilePath()).fileName();
+	const QString order(legacyAssociations.value(QLatin1String("MRUList"), QString()).toString());
+	const QString applicationFileName(QFileInfo(QCoreApplication::applicationFilePath()).fileName());
 
 	associations = legacyAssociations.childKeys();
 	associations.removeAt(associations.indexOf(QLatin1String("MRUList")));
@@ -312,7 +312,7 @@ QList<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMime
 	for (int i = 0; i < associations.count(); ++i)
 	{
 		ApplicationInformation information;
-		const QString value = legacyAssociations.value(order.at(i)).toString();
+		const QString value(legacyAssociations.value(order.at(i)).toString());
 
 		if (applicationFileName == value)
 		{
@@ -350,7 +350,7 @@ QList<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMime
 
 		getApplicationInformation(information);
 
-		bool exclude = false;
+		bool exclude(false);
 
 		for (int j = 0; j < applications.count(); ++j)
 		{
@@ -536,7 +536,7 @@ bool WindowsPlatformIntegration::canSetAsDefaultBrowser() const
 
 bool WindowsPlatformIntegration::isDefaultBrowser() const
 {
-	bool isDefault = true;
+	bool isDefault(true);
 
 	if (m_applicationRegistration.value(m_registrationIdentifier).isNull())
 	{

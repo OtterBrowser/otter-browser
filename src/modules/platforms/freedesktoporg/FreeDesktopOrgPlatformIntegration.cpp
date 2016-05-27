@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2010 David Sansome <me@davidsansome.com>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -44,20 +44,20 @@ QDBusArgument& operator<<(QDBusArgument &argument, const QImage &image)
 		return argument;
 	}
 
-	const QImage scaled = image.scaledToHeight(100, Qt::SmoothTransformation).convertToFormat(QImage::Format_ARGB32);
+	const QImage scaled(image.scaledToHeight(100, Qt::SmoothTransformation).convertToFormat(QImage::Format_ARGB32));
 
 #if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
 	// ABGR -> ARGB
-	QImage target = scaled.rgbSwapped();
+	QImage target(scaled.rgbSwapped());
 #else
 	// ABGR -> GBAR
 	QImage target(scaled.size(), scaled.format());
 
 	for (int y = 0; y < target.height(); ++y)
 	{
-		QRgb *p = (QRgb*) scaled.scanLine(y);
-		QRgb *q = (QRgb*) target.scanLine(y);
-		QRgb *end = p + scaled.width();
+		QRgb *p((QRgb*) scaled.scanLine(y));
+		QRgb *q((QRgb*) target.scanLine(y));
+		QRgb *end(p + scaled.width());
 
 		while (p < end)
 		{
@@ -74,7 +74,7 @@ QDBusArgument& operator<<(QDBusArgument &argument, const QImage &image)
 	argument << target.bytesPerLine();
 	argument << target.hasAlphaChannel();
 
-	const int channels = (target.isGrayscale() ? 1 : (target.hasAlphaChannel() ? 4 : 3));
+	const int channels(target.isGrayscale() ? 1 : (target.hasAlphaChannel() ? 4 : 3));
 
 	argument << (target.depth() / channels);
 	argument << channels;
@@ -145,7 +145,7 @@ void FreeDesktopOrgPlatformIntegration::createApplicationsCacheThread()
 
 void FreeDesktopOrgPlatformIntegration::notificationCallFinished(QDBusPendingCallWatcher *watcher)
 {
-	Notification *notification = m_notificationWatchers.value(watcher, NULL);
+	Notification *notification(m_notificationWatchers.value(watcher, NULL));
 
 	if (notification)
 	{
@@ -161,7 +161,7 @@ void FreeDesktopOrgPlatformIntegration::notificationIgnored(quint32 identifier, 
 {
 	Q_UNUSED(reason)
 
-	Notification *notification = m_notifications.value(identifier, NULL);
+	Notification *notification(m_notifications.value(identifier, NULL));
 
 	if (notification)
 	{
@@ -175,7 +175,7 @@ void FreeDesktopOrgPlatformIntegration::notificationClicked(quint32 identifier, 
 {
 	Q_UNUSED(action)
 
-	Notification *notification = m_notifications.value(identifier, NULL);
+	Notification *notification(m_notifications.value(identifier, NULL));
 
 	if (notification)
 	{
@@ -205,7 +205,7 @@ void FreeDesktopOrgPlatformIntegration::showNotification(Notification *notificat
 			break;
 	}
 
-	const int visibilityDuration = SettingsManager::getValue(QLatin1String("Interface/NotificationVisibilityDuration")).toInt();
+	const int visibilityDuration(SettingsManager::getValue(QLatin1String("Interface/NotificationVisibilityDuration")).toInt());
 	QVariantMap hints;
 	hints[QLatin1String("image_data")] = Application::windowIcon().pixmap(128, 128).toImage();
 
@@ -219,7 +219,7 @@ void FreeDesktopOrgPlatformIntegration::showNotification(Notification *notificat
 	arguments << hints;
 	arguments << ((visibilityDuration < 0) ? -1 : (visibilityDuration * 1000));
 
-	QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(m_notificationsInterface->asyncCallWithArgumentList(QLatin1String("Notify"), arguments), this);
+	QDBusPendingCallWatcher *watcher(new QDBusPendingCallWatcher(m_notificationsInterface->asyncCallWithArgumentList(QLatin1String("Notify"), arguments), this));
 
 	m_notificationWatchers[watcher] = notification;
 
@@ -234,7 +234,7 @@ QList<ApplicationInformation> FreeDesktopOrgPlatformIntegration::getApplications
 	}
 
 	LibMimeApps::Index index(QLocale().bcp47Name().toStdString());
-	std::vector<LibMimeApps::DesktopEntry> applications = index.appsForMime(mimeType.name().toStdString());
+	std::vector<LibMimeApps::DesktopEntry> applications(index.appsForMime(mimeType.name().toStdString()));
 	QList<ApplicationInformation> result;
 
 	for (std::vector<LibMimeApps::DesktopEntry>::size_type i = 0; i < applications.size(); ++i)
