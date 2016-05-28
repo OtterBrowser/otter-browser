@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -109,7 +109,7 @@ void CacheContentsWidget::triggerAction(int identifier, const QVariantMap &param
 
 void CacheContentsWidget::populateCache()
 {
-	NetworkCache *cache = NetworkManagerFactory::getCache();
+	NetworkCache *cache(NetworkManagerFactory::getCache());
 	QStringList labels;
 	labels << tr("Address") << tr("Type") << tr("Size") << tr("Last Modified") << tr("Expires");
 
@@ -149,14 +149,14 @@ void CacheContentsWidget::clearEntries()
 
 void CacheContentsWidget::addEntry(const QUrl &entry)
 {
-	const QString domain = entry.host();
-	QStandardItem *domainItem = findDomain(domain);
+	const QString domain(entry.host());
+	QStandardItem *domainItem(findDomain(domain));
 
 	if (domainItem)
 	{
 		for (int i = 0; i < domainItem->rowCount(); ++i)
 		{
-			QStandardItem *entryItem = domainItem->child(i, 0);
+			QStandardItem *entryItem(domainItem->child(i, 0));
 
 			if (entry == entryItem->data(Qt::UserRole).toUrl())
 			{
@@ -178,10 +178,10 @@ void CacheContentsWidget::addEntry(const QUrl &entry)
 		}
 	}
 
-	NetworkCache *cache = NetworkManagerFactory::getCache();
-	QIODevice *device = cache->data(entry);
-	const QNetworkCacheMetaData metaData = cache->metaData(entry);
-	const QList<QPair<QByteArray, QByteArray> > headers = metaData.rawHeaders();
+	NetworkCache *cache(NetworkManagerFactory::getCache());
+	QIODevice *device(cache->data(entry));
+	const QNetworkCacheMetaData metaData(cache->metaData(entry));
+	const QList<QPair<QByteArray, QByteArray> > headers(metaData.rawHeaders());
 	QString type;
 
 	for (int i = 0; i < headers.count(); ++i)
@@ -194,7 +194,7 @@ void CacheContentsWidget::addEntry(const QUrl &entry)
 		}
 	}
 
-	const QMimeType mimeType = ((type.isEmpty() && device) ? QMimeDatabase().mimeTypeForData(device) : QMimeDatabase().mimeTypeForName(type));
+	const QMimeType mimeType((type.isEmpty() && device) ? QMimeDatabase().mimeTypeForData(device) : QMimeDatabase().mimeTypeForName(type));
 	QList<QStandardItem*> entryItems;
 	entryItems.append(new QStandardItem(entry.path()));
 	entryItems.append(new QStandardItem(mimeType.name()));
@@ -209,7 +209,7 @@ void CacheContentsWidget::addEntry(const QUrl &entry)
 	entryItems[3]->setFlags(entryItems[3]->flags() | Qt::ItemNeverHasChildren);
 	entryItems[4]->setFlags(entryItems[4]->flags() | Qt::ItemNeverHasChildren);
 
-	QStandardItem *sizeItem = m_model->item(domainItem->row(), 2);
+	QStandardItem *sizeItem(m_model->item(domainItem->row(), 2));
 
 	if (sizeItem && device)
 	{
@@ -233,16 +233,16 @@ void CacheContentsWidget::addEntry(const QUrl &entry)
 
 void CacheContentsWidget::removeEntry(const QUrl &entry)
 {
-	QStandardItem *entryItem = findEntry(entry);
+	QStandardItem *entryItem(findEntry(entry));
 
 	if (entryItem)
 	{
-		QStandardItem *domainItem = entryItem->parent();
+		QStandardItem *domainItem(entryItem->parent());
 
 		if (domainItem)
 		{
-			QStandardItem *sizeItem = domainItem->child(entryItem->row(), 2);
-			const qint64 size = (sizeItem ? sizeItem->data(Qt::UserRole).toLongLong() : 0);
+			QStandardItem *sizeItem(domainItem->child(entryItem->row(), 2));
+			const qint64 size(sizeItem ? sizeItem->data(Qt::UserRole).toLongLong() : 0);
 
 			m_model->removeRow(entryItem->row(), domainItem->index());
 
@@ -252,7 +252,7 @@ void CacheContentsWidget::removeEntry(const QUrl &entry)
 			}
 			else
 			{
-				QStandardItem *domainSizeItem = m_model->item(domainItem->row(), 2);
+				QStandardItem *domainSizeItem(m_model->item(domainItem->row(), 2));
 
 				if (domainSizeItem && size > 0)
 				{
@@ -266,7 +266,7 @@ void CacheContentsWidget::removeEntry(const QUrl &entry)
 
 void CacheContentsWidget::removeEntry()
 {
-	const QUrl entry = getEntry(m_ui->cacheViewWidget->currentIndex());
+	const QUrl entry(getEntry(m_ui->cacheViewWidget->currentIndex()));
 
 	if (entry.isValid())
 	{
@@ -276,19 +276,19 @@ void CacheContentsWidget::removeEntry()
 
 void CacheContentsWidget::removeDomainEntries()
 {
-	const QModelIndex index = m_ui->cacheViewWidget->currentIndex();
-	QStandardItem *domainItem = ((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? findDomain(index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString()) : findEntry(getEntry(index)));
+	const QModelIndex index(m_ui->cacheViewWidget->currentIndex());
+	QStandardItem *domainItem((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? findDomain(index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString()) : findEntry(getEntry(index)));
 
 	if (!domainItem)
 	{
 		return;
 	}
 
-	NetworkCache *cache = NetworkManagerFactory::getCache();
+	NetworkCache *cache(NetworkManagerFactory::getCache());
 
 	for (int i = (domainItem->rowCount() - 1); i >= 0; --i)
 	{
-		QStandardItem *entryItem = domainItem->child(i, 0);
+		QStandardItem *entryItem(domainItem->child(i, 0));
 
 		if (entryItem)
 		{
@@ -299,7 +299,7 @@ void CacheContentsWidget::removeDomainEntries()
 
 void CacheContentsWidget::removeDomainEntriesOrEntry()
 {
-	const QUrl entry = getEntry(m_ui->cacheViewWidget->currentIndex());
+	const QUrl entry(getEntry(m_ui->cacheViewWidget->currentIndex()));
 
 	if (entry.isValid())
 	{
@@ -313,18 +313,18 @@ void CacheContentsWidget::removeDomainEntriesOrEntry()
 
 void CacheContentsWidget::openEntry(const QModelIndex &index)
 {
-	const QModelIndex entryIndex = (index.isValid() ? index : m_ui->cacheViewWidget->currentIndex());
+	const QModelIndex entryIndex(index.isValid() ? index : m_ui->cacheViewWidget->currentIndex());
 
 	if (!entryIndex.isValid() || entryIndex.parent() == m_model->invisibleRootItem()->index())
 	{
 		return;
 	}
 
-	const QUrl url = entryIndex.sibling(entryIndex.row(), 0).data(Qt::UserRole).toUrl();
+	const QUrl url(entryIndex.sibling(entryIndex.row(), 0).data(Qt::UserRole).toUrl());
 
 	if (url.isValid())
 	{
-		QAction *action = qobject_cast<QAction*>(sender());
+		QAction *action(qobject_cast<QAction*>(sender()));
 
 		emit requestedOpenUrl(url, (action ? static_cast<WindowsManager::OpenHints>(action->data().toInt()) : WindowsManager::DefaultOpen));
 	}
@@ -332,7 +332,7 @@ void CacheContentsWidget::openEntry(const QModelIndex &index)
 
 void CacheContentsWidget::copyEntryLink()
 {
-	QStandardItem *entryItem = findEntry(getEntry(m_ui->cacheViewWidget->currentIndex()));
+	QStandardItem *entryItem(findEntry(getEntry(m_ui->cacheViewWidget->currentIndex())));
 
 	if (entryItem)
 	{
@@ -342,8 +342,8 @@ void CacheContentsWidget::copyEntryLink()
 
 void CacheContentsWidget::showContextMenu(const QPoint &point)
 {
-	const QModelIndex index = m_ui->cacheViewWidget->indexAt(point);
-	const QUrl entry = getEntry(index);
+	const QModelIndex index(m_ui->cacheViewWidget->indexAt(point));
+	const QUrl entry(getEntry(index));
 	QMenu menu(this);
 
 	if (entry.isValid())
@@ -372,9 +372,9 @@ void CacheContentsWidget::showContextMenu(const QPoint &point)
 
 void CacheContentsWidget::updateActions()
 {
-	const QModelIndex index = (m_ui->cacheViewWidget->selectionModel()->hasSelection() ? m_ui->cacheViewWidget->selectionModel()->currentIndex() : QModelIndex());
-	const QUrl entry = getEntry(index);
-	const QString domain = ((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString() : entry.host());
+	const QModelIndex index(m_ui->cacheViewWidget->selectionModel()->hasSelection() ? m_ui->cacheViewWidget->selectionModel()->currentIndex() : QModelIndex());
+	const QUrl entry(getEntry(index));
+	const QString domain((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString() : entry.host());
 
 	m_ui->locationLabelWidget->setText(QString());
 	m_ui->previewLabel->hide();
@@ -383,10 +383,10 @@ void CacheContentsWidget::updateActions()
 
 	if (entry.isValid())
 	{
-		NetworkCache *cache = NetworkManagerFactory::getCache();
-		QIODevice *device = cache->data(entry);
-		const QNetworkCacheMetaData metaData = cache->metaData(entry);
-		const QList<QPair<QByteArray, QByteArray> > headers = metaData.rawHeaders();
+		NetworkCache *cache(NetworkManagerFactory::getCache());
+		QIODevice *device(cache->data(entry));
+		const QNetworkCacheMetaData metaData(cache->metaData(entry));
+		const QList<QPair<QByteArray, QByteArray> > headers(metaData.rawHeaders());
 		QString type;
 
 		for (int i = 0; i < headers.count(); ++i)
@@ -399,9 +399,9 @@ void CacheContentsWidget::updateActions()
 			}
 		}
 
-		const QMimeType mimeType = ((type.isEmpty() && device) ? QMimeDatabase().mimeTypeForData(device) : QMimeDatabase().mimeTypeForName(type));
+		const QMimeType mimeType((type.isEmpty() && device) ? QMimeDatabase().mimeTypeForData(device) : QMimeDatabase().mimeTypeForName(type));
 		QPixmap preview;
-		const int size = (m_ui->formWidget->contentsRect().height() - 10);
+		const int size(m_ui->formWidget->contentsRect().height() - 10);
 
 		if (mimeType.name().startsWith(QLatin1String("image")) && device)
 		{
@@ -434,21 +434,21 @@ void CacheContentsWidget::updateActions()
 			m_ui->previewLabel->setPixmap(preview);
 		}
 
-		QStandardItem *typeItem = m_model->itemFromIndex(index.sibling(index.row(), 1));
+		QStandardItem *typeItem(m_model->itemFromIndex(index.sibling(index.row(), 1)));
 
 		if (typeItem && typeItem->text().isEmpty())
 		{
 			typeItem->setText(mimeType.name());
 		}
 
-		QStandardItem *lastModifiedItem = m_model->itemFromIndex(index.sibling(index.row(), 3));
+		QStandardItem *lastModifiedItem(m_model->itemFromIndex(index.sibling(index.row(), 3)));
 
 		if (lastModifiedItem && lastModifiedItem->text().isEmpty())
 		{
 			lastModifiedItem->setText(metaData.lastModified().toString());
 		}
 
-		QStandardItem *expiresItem = m_model->itemFromIndex(index.sibling(index.row(), 4));
+		QStandardItem *expiresItem(m_model->itemFromIndex(index.sibling(index.row(), 4)));
 
 		if (expiresItem && expiresItem->text().isEmpty())
 		{
@@ -457,14 +457,14 @@ void CacheContentsWidget::updateActions()
 
 		if (device)
 		{
-			QStandardItem *sizeItem = m_model->itemFromIndex(index.sibling(index.row(), 2));
+			QStandardItem *sizeItem(m_model->itemFromIndex(index.sibling(index.row(), 2)));
 
 			if (sizeItem && sizeItem->text().isEmpty())
 			{
 				sizeItem->setText(Utils::formatUnit(device->size()));
 				sizeItem->setData(device->size(), Qt::UserRole);
 
-				QStandardItem *domainSizeItem = (sizeItem->parent() ? m_model->item(sizeItem->parent()->row(), 2) : NULL);
+				QStandardItem *domainSizeItem(sizeItem->parent() ? m_model->item(sizeItem->parent()->row(), 2) : NULL);
 
 				if (domainSizeItem)
 				{
@@ -513,13 +513,13 @@ QStandardItem* CacheContentsWidget::findEntry(const QUrl &entry)
 {
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		QStandardItem *domainItem = m_model->item(i, 0);
+		QStandardItem *domainItem(m_model->item(i, 0));
 
 		if (domainItem)
 		{
 			for (int j = 0; j < domainItem->rowCount(); ++j)
 			{
-				QStandardItem *entryItem = domainItem->child(j, 0);
+				QStandardItem *entryItem(domainItem->child(j, 0));
 
 				if (entryItem && entry == entryItem->data(Qt::UserRole).toUrl())
 				{
@@ -544,7 +544,7 @@ Action* CacheContentsWidget::getAction(int identifier)
 		return NULL;
 	}
 
-	Action *action = new Action(identifier, this);
+	Action *action(new Action(identifier, this));
 
 	m_actions[identifier] = action;
 
@@ -587,7 +587,7 @@ bool CacheContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_ui->cacheViewWidget && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent && (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
 		{
@@ -605,18 +605,18 @@ bool CacheContentsWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_ui->cacheViewWidget->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
 		{
-			const QModelIndex entryIndex = m_ui->cacheViewWidget->currentIndex();
+			const QModelIndex entryIndex(m_ui->cacheViewWidget->currentIndex());
 
 			if (!entryIndex.isValid() || entryIndex.parent() == m_model->invisibleRootItem()->index())
 			{
 				return ContentsWidget::eventFilter(object, event);
 			}
 
-			const QUrl url = entryIndex.sibling(entryIndex.row(), 0).data(Qt::UserRole).toUrl();
+			const QUrl url(entryIndex.sibling(entryIndex.row(), 0).data(Qt::UserRole).toUrl());
 
 			if (url.isValid())
 			{
@@ -628,7 +628,7 @@ bool CacheContentsWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{

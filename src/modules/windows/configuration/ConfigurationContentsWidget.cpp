@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -39,21 +39,21 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 	m_ui->setupUi(this);
 
 	QSettings defaults(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat, this);
-	const QStringList groups = defaults.childGroups();
+	const QStringList groups(defaults.childGroups());
 
 	for (int i = 0; i < groups.count(); ++i)
 	{
-		QStandardItem *groupItem = new QStandardItem(ThemesManager::getIcon(QLatin1String("inode-directory")), groups.at(i));
+		QStandardItem *groupItem(new QStandardItem(ThemesManager::getIcon(QLatin1String("inode-directory")), groups.at(i)));
 
 		defaults.beginGroup(groups.at(i));
 
-		const QStringList keys = defaults.childGroups();
+		const QStringList keys(defaults.childGroups());
 
 		for (int j = 0; j < keys.count(); ++j)
 		{
-			const QString key = QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j));
-			const QString type = defaults.value(QStringLiteral("%1/type").arg(keys.at(j))).toString();
-			const QVariant value = SettingsManager::getValue(key);
+			const QString key(QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j)));
+			const QString type(defaults.value(QStringLiteral("%1/type").arg(keys.at(j))).toString());
+			const QVariant value(SettingsManager::getValue(key));
 			QList<QStandardItem*> optionItems;
 			optionItems.append(new QStandardItem(keys.at(j)));
 			optionItems.append(new QStandardItem(type));
@@ -68,7 +68,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 
 			if (value != SettingsManager::getDefinition(key).defaultValue)
 			{
-				QFont font = optionItems[0]->font();
+				QFont font(optionItems[0]->font());
 				font.setBold(true);
 
 				optionItems[0]->setFont(font);
@@ -122,7 +122,7 @@ void ConfigurationContentsWidget::optionChanged(const QString &option, const QVa
 {
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		QStandardItem *groupItem = m_model->item(i, 0);
+		QStandardItem *groupItem(m_model->item(i, 0));
 
 		if (!groupItem || !QString(option).startsWith(groupItem->text()))
 		{
@@ -131,11 +131,11 @@ void ConfigurationContentsWidget::optionChanged(const QString &option, const QVa
 
 		for (int j = 0; j < groupItem->rowCount(); ++j)
 		{
-			QStandardItem *optionItem = groupItem->child(j, 0);
+			QStandardItem *optionItem(groupItem->child(j, 0));
 
 			if (optionItem && option == QStringLiteral("%1/%2").arg(groupItem->text()).arg(optionItem->text()))
 			{
-				QFont font = optionItem->font();
+				QFont font(optionItem->font());
 				font.setBold(value != SettingsManager::getDefinition(option).defaultValue);
 
 				optionItem->setFont(font);
@@ -186,7 +186,7 @@ void ConfigurationContentsWidget::currentChanged(const QModelIndex &currentIndex
 
 void ConfigurationContentsWidget::copyOptionName()
 {
-	const QModelIndex index = m_ui->configurationViewWidget->currentIndex().sibling(m_ui->configurationViewWidget->currentIndex().row(), 2);
+	const QModelIndex index(m_ui->configurationViewWidget->currentIndex().sibling(m_ui->configurationViewWidget->currentIndex().row(), 2));
 
 	if (index.isValid())
 	{
@@ -196,7 +196,7 @@ void ConfigurationContentsWidget::copyOptionName()
 
 void ConfigurationContentsWidget::copyOptionValue()
 {
-	const QModelIndex index = m_ui->configurationViewWidget->currentIndex().sibling(m_ui->configurationViewWidget->currentIndex().row(), 2);
+	const QModelIndex index(m_ui->configurationViewWidget->currentIndex().sibling(m_ui->configurationViewWidget->currentIndex().row(), 2));
 
 	if (index.isValid())
 	{
@@ -206,7 +206,7 @@ void ConfigurationContentsWidget::copyOptionValue()
 
 void ConfigurationContentsWidget::restoreDefaults()
 {
-	const QModelIndex index = m_ui->configurationViewWidget->currentIndex().sibling(m_ui->configurationViewWidget->currentIndex().row(), 2);
+	const QModelIndex index(m_ui->configurationViewWidget->currentIndex().sibling(m_ui->configurationViewWidget->currentIndex().row(), 2));
 
 	if (index.isValid())
 	{
@@ -219,7 +219,7 @@ void ConfigurationContentsWidget::restoreDefaults()
 
 void ConfigurationContentsWidget::showContextMenu(const QPoint &point)
 {
-	const QModelIndex index = m_ui->configurationViewWidget->indexAt(point);
+	const QModelIndex index(m_ui->configurationViewWidget->indexAt(point));
 
 	if (index.isValid() && index.parent() != m_ui->configurationViewWidget->rootIndex())
 	{
@@ -256,7 +256,7 @@ bool ConfigurationContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{

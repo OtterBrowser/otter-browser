@@ -98,24 +98,24 @@ void BookmarksContentsWidget::changeEvent(QEvent *event)
 
 void BookmarksContentsWidget::addBookmark()
 {
-	const QModelIndex index = m_ui->bookmarksViewWidget->currentIndex();
-	BookmarksItem *folder = findFolder(index);
+	const QModelIndex index(m_ui->bookmarksViewWidget->currentIndex());
+	BookmarksItem *folder(findFolder(index));
 	BookmarkPropertiesDialog dialog(QUrl(), QString(), QString(), folder, ((folder && folder->index() == index) ? -1 : (index.row() + 1)), true, this);
 	dialog.exec();
 }
 
 void BookmarksContentsWidget::addFolder()
 {
-	const QModelIndex index = m_ui->bookmarksViewWidget->currentIndex();
-	BookmarksItem *folder = findFolder(index);
+	const QModelIndex index(m_ui->bookmarksViewWidget->currentIndex());
+	BookmarksItem *folder(findFolder(index));
 	BookmarkPropertiesDialog dialog(QUrl(), QString(), QString(), folder, ((folder && folder->index() == index) ? -1 : (index.row() + 1)), false, this);
 	dialog.exec();
 }
 
 void BookmarksContentsWidget::addSeparator()
 {
-	const QModelIndex index = m_ui->bookmarksViewWidget->currentIndex();
-	BookmarksItem *folder = findFolder(index);
+	const QModelIndex index(m_ui->bookmarksViewWidget->currentIndex());
+	BookmarksItem *folder(findFolder(index));
 
 	BookmarksManager::addBookmark(BookmarksModel::SeparatorBookmark, QUrl(), QString(), folder, ((folder && folder->index() == index) ? -1 : (index.row() + 1)));
 }
@@ -132,12 +132,12 @@ void BookmarksContentsWidget::restoreBookmark()
 
 void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 {
-	BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(index.isValid() ? index : m_ui->bookmarksViewWidget->currentIndex());
-	WindowsManager *manager = SessionsManager::getWindowsManager();
+	BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(index.isValid() ? index : m_ui->bookmarksViewWidget->currentIndex()));
+	WindowsManager *manager(SessionsManager::getWindowsManager());
 
 	if (bookmark && manager)
 	{
-		QAction *action = qobject_cast<QAction*>(sender());
+		QAction *action(qobject_cast<QAction*>(sender()));
 
 		manager->open(bookmark, (action ? static_cast<WindowsManager::OpenHints>(action->data().toInt()) : WindowsManager::DefaultOpen));
 	}
@@ -145,7 +145,7 @@ void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 
 void BookmarksContentsWidget::bookmarkProperties()
 {
-	BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->currentIndex());
+	BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->currentIndex()));
 
 	if (bookmark)
 	{
@@ -158,8 +158,8 @@ void BookmarksContentsWidget::bookmarkProperties()
 
 void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 {
-	const QModelIndex index = m_ui->bookmarksViewWidget->indexAt(point);
-	const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt());
+	const QModelIndex index(m_ui->bookmarksViewWidget->indexAt(point));
+	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
 	QMenu menu(this);
 
 	if (type == BookmarksModel::TrashBookmark)
@@ -174,7 +174,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 	}
 	else
 	{
-		const bool isInTrash = index.data(BookmarksModel::IsTrashedRole).toBool();
+		const bool isInTrash(index.data(BookmarksModel::IsTrashedRole).toBool());
 
 		menu.addAction(ThemesManager::getIcon(QLatin1String("document-open")), tr("Open"), this, SLOT(openBookmark()));
 		menu.addAction(tr("Open in New Tab"), this, SLOT(openBookmark()))->setData(WindowsManager::NewTabOpen);
@@ -191,11 +191,11 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 			}
 		}
 
-		MainWindow *mainWindow = MainWindow::findMainWindow(this);
-		Action *bookmarkAllOpenPagesAction = new Action(ActionsManager::BookmarkAllOpenPagesAction, this);
+		MainWindow *mainWindow(MainWindow::findMainWindow(this));
+		Action *bookmarkAllOpenPagesAction(new Action(ActionsManager::BookmarkAllOpenPagesAction, this));
 		bookmarkAllOpenPagesAction->setEnabled(mainWindow && mainWindow->getWindowsManager()->getWindowCount() > 0);
 
-		Action *copyLinkAction = new Action(ActionsManager::CopyLinkToClipboardAction, this);
+		Action *copyLinkAction(new Action(ActionsManager::CopyLinkToClipboardAction, this));
 		copyLinkAction->setEnabled(type == BookmarksModel::UrlBookmark);
 
 		menu.addSeparator();
@@ -208,7 +208,7 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 		{
 			menu.addSeparator();
 
-			QMenu *addMenu = menu.addMenu(tr("Add Bookmark"));
+			QMenu *addMenu(menu.addMenu(tr("Add Bookmark")));
 			addMenu->addAction(ThemesManager::getIcon(QLatin1String("inode-directory")), tr("Add Folder"), this, SLOT(addFolder()));
 			addMenu->addAction(tr("Add Bookmark"), this, SLOT(addBookmark()));
 			addMenu->addAction(tr("Add Separator"), this, SLOT(addSeparator()));
@@ -267,13 +267,13 @@ void BookmarksContentsWidget::triggerAction(int identifier, const QVariantMap &p
 			break;
 		case ActionsManager::BookmarkAllOpenPagesAction:
 			{
-				MainWindow *mainWindow = MainWindow::findMainWindow(this);
+				MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
 				if (mainWindow)
 				{
 					for (int i = 0; i < mainWindow->getWindowsManager()->getWindowCount(); ++i)
 					{
-						Window *window = mainWindow->getWindowsManager()->getWindowByIndex(i);
+						Window *window(mainWindow->getWindowsManager()->getWindowByIndex(i));
 
 						if (window && !Utils::isUrlEmpty(window->getUrl()))
 						{
@@ -291,9 +291,9 @@ void BookmarksContentsWidget::triggerAction(int identifier, const QVariantMap &p
 
 void BookmarksContentsWidget::updateActions()
 {
-	const bool hasSelecion = !m_ui->bookmarksViewWidget->selectionModel()->selectedIndexes().isEmpty();
-	const QModelIndex index = (m_ui->bookmarksViewWidget->selectionModel()->hasSelection() ? m_ui->bookmarksViewWidget->selectionModel()->currentIndex() : QModelIndex());
-	const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt());
+	const bool hasSelecion(!m_ui->bookmarksViewWidget->selectionModel()->selectedIndexes().isEmpty());
+	const QModelIndex index(m_ui->bookmarksViewWidget->selectionModel()->hasSelection() ? m_ui->bookmarksViewWidget->selectionModel()->currentIndex() : QModelIndex());
+	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
 
 	m_ui->addressLabelWidget->setText(index.data(BookmarksModel::UrlRole).toString());
 	m_ui->titleLabelWidget->setText(index.data(BookmarksModel::TitleRole).toString());
@@ -325,7 +325,7 @@ Action* BookmarksContentsWidget::getAction(int identifier)
 		return NULL;
 	}
 
-	Action *action = new Action(identifier, this);
+	Action *action(new Action(identifier, this));
 
 	if (identifier == ActionsManager::DeleteAction)
 	{
@@ -341,14 +341,14 @@ Action* BookmarksContentsWidget::getAction(int identifier)
 
 BookmarksItem* BookmarksContentsWidget::findFolder(const QModelIndex &index)
 {
-	BookmarksItem *item = BookmarksManager::getModel()->getBookmark(index);
+	BookmarksItem *item(BookmarksManager::getModel()->getBookmark(index));
 
 	if (!item || item == BookmarksManager::getModel()->getRootItem() || item == BookmarksManager::getModel()->getTrashItem())
 	{
 		return BookmarksManager::getModel()->getRootItem();
 	}
 
-	const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(item->data(BookmarksModel::TypeRole).toInt());
+	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(item->data(BookmarksModel::TypeRole).toInt()));
 
 	return ((type == BookmarksModel::RootBookmark || type == BookmarksModel::FolderBookmark) ? item : dynamic_cast<BookmarksItem*>(item->parent()));
 }
@@ -377,7 +377,7 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_ui->bookmarksViewWidget && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent && (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
 		{
@@ -395,12 +395,12 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_ui->bookmarksViewWidget->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
-		WindowsManager *manager = SessionsManager::getWindowsManager();
+		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+		WindowsManager *manager(SessionsManager::getWindowsManager());
 
 		if (mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
 		{
-			BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->indexAt(mouseEvent->pos()));
+			BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->indexAt(mouseEvent->pos())));
 
 			if (bookmark)
 			{
@@ -412,12 +412,12 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_ui->bookmarksViewWidget->viewport() && event->type() == QEvent::ToolTip)
 	{
-		QHelpEvent *helpEvent = static_cast<QHelpEvent*>(event);
+		QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
 
 		if (helpEvent)
 		{
-			const QModelIndex index = m_ui->bookmarksViewWidget->indexAt(helpEvent->pos());
-			BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(index);
+			const QModelIndex index(m_ui->bookmarksViewWidget->indexAt(helpEvent->pos()));
+			BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(index));
 
 			if (bookmark)
 			{
@@ -429,7 +429,7 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{
