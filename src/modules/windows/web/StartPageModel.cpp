@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -76,14 +76,14 @@ void StartPageModel::thumbnailCreated(const QUrl &url, const QPixmap &thumbnail,
 
 	if (!thumbnail.isNull())
 	{
-		const QString path = SessionsManager::getWritableDataPath(QLatin1String("thumbnails/"));
+		const QString path(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")));
 
 		QDir().mkpath(path);
 
 		thumbnail.save(path + QString::number(m_reloads[url].first) + QLatin1String(".png"), "png");
 	}
 
-	BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(m_reloads[url].first);
+	BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_reloads[url].first));
 
 	if (bookmark)
 	{
@@ -100,13 +100,13 @@ void StartPageModel::thumbnailCreated(const QUrl &url, const QPixmap &thumbnail,
 
 void StartPageModel::reloadModel()
 {
-	const QString path = SettingsManager::getValue(QLatin1String("StartPage/BookmarksFolder")).toString();
+	const QString path(SettingsManager::getValue(QLatin1String("StartPage/BookmarksFolder")).toString());
 
 	m_bookmark = BookmarksManager::getModel()->getItem(path);
 
 	if (!m_bookmark)
 	{
-		const QStringList directories = path.split(QLatin1Char('/'), QString::SkipEmptyParts);
+		const QStringList directories(path.split(QLatin1Char('/'), QString::SkipEmptyParts));
 
 		m_bookmark = BookmarksManager::getModel()->getRootItem();
 
@@ -145,16 +145,16 @@ void StartPageModel::reloadModel()
 		{
 			if (m_bookmark->child(i))
 			{
-				const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(m_bookmark->child(i)->data(BookmarksModel::TypeRole).toInt());
+				const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(m_bookmark->child(i)->data(BookmarksModel::TypeRole).toInt()));
 
 				if (type != BookmarksModel::UrlBookmark && type != BookmarksModel::FolderBookmark)
 				{
 					continue;
 				}
 
-				const quint64 identifier = m_bookmark->child(i)->data(BookmarksModel::IdentifierRole).toULongLong();
-				const QUrl url = m_bookmark->child(i)->data(BookmarksModel::UrlRole).toUrl();
-				QStandardItem *item = m_bookmark->child(i)->clone();
+				const quint64 identifier(m_bookmark->child(i)->data(BookmarksModel::IdentifierRole).toULongLong());
+				const QUrl url(m_bookmark->child(i)->data(BookmarksModel::UrlRole).toUrl());
+				QStandardItem *item(m_bookmark->child(i)->clone());
 				item->setData(identifier, BookmarksModel::IdentifierRole);
 
 				if (url.isValid() && SettingsManager::getValue(QLatin1String("StartPage/TileBackgroundMode")) == QLatin1String("thumbnail") && !QFile::exists(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")) + QString::number(identifier) + QLatin1String(".png")))
@@ -171,7 +171,7 @@ void StartPageModel::reloadModel()
 
 	if (SettingsManager::getValue(QLatin1String("StartPage/ShowAddTile")).toBool())
 	{
-		QStandardItem *item = new QStandardItem();
+		QStandardItem *item(new QStandardItem());
 		item->setData(tr("Add Tile…"), Qt::ToolTipRole);
 		item->setData(tr("Add Tile…"), Qt::StatusTipRole);
 		item->setData(QLatin1String("add"), Qt::AccessibleDescriptionRole);
@@ -186,7 +186,7 @@ void StartPageModel::reloadModel()
 
 void StartPageModel::reloadTile(const QModelIndex &index, bool full)
 {
-	const QUrl url = index.data(BookmarksModel::UrlRole).toUrl();
+	const QUrl url(index.data(BookmarksModel::UrlRole).toUrl());
 
 	if (url.isValid())
 	{
@@ -211,7 +211,7 @@ void StartPageModel::reloadTile(const QModelIndex &index, bool full)
 
 QMimeData* StartPageModel::mimeData(const QModelIndexList &indexes) const
 {
-	QMimeData *mimeData = new QMimeData();
+	QMimeData *mimeData(new QMimeData());
 	QStringList texts;
 	QList<QUrl> urls;
 
@@ -249,8 +249,8 @@ bool StartPageModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
 	Q_UNUSED(action)
 	Q_UNUSED(column)
 
-	const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(parent.data(BookmarksModel::TypeRole).toInt());
-	const QModelIndex index = data->property("x-item-index").toModelIndex();
+	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(parent.data(BookmarksModel::TypeRole).toInt()));
+	const QModelIndex index(data->property("x-item-index").toModelIndex());
 
 	if (index.isValid())
 	{

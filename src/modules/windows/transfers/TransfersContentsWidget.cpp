@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 	m_ui->redownloadButton->setIcon(ThemesManager::getIcon(QLatin1String("view-refresh")));
 	m_ui->downloadLineEdit->installEventFilter(this);
 
-	const QList<Transfer*> transfers = TransfersManager::getTransfers();
+	const QList<Transfer*> transfers(TransfersManager::getTransfers());
 
 	for (int i = 0; i < transfers.count(); ++i)
 	{
@@ -103,7 +103,7 @@ void TransfersContentsWidget::changeEvent(QEvent *event)
 void TransfersContentsWidget::addTransfer(Transfer *transfer)
 {
 	QList<QStandardItem*> items;
-	QStandardItem *item = new QStandardItem();
+	QStandardItem *item(new QStandardItem());
 	item->setData(qVariantFromValue(static_cast<void*>(transfer)), Qt::UserRole);
 	item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
@@ -134,7 +134,7 @@ void TransfersContentsWidget::addTransfer(Transfer *transfer)
 
 void TransfersContentsWidget::removeTransfer(Transfer *transfer)
 {
-	const int row = findTransfer(transfer);
+	const int row(findTransfer(transfer));
 
 	if (row >= 0)
 	{
@@ -146,7 +146,7 @@ void TransfersContentsWidget::removeTransfer(Transfer *transfer)
 
 void TransfersContentsWidget::removeTransfer()
 {
-	Transfer *transfer = getTransfer(m_ui->transfersViewWidget->currentIndex());
+	Transfer *transfer(getTransfer(m_ui->transfersViewWidget->currentIndex()));
 
 	if (transfer)
 	{
@@ -165,7 +165,7 @@ void TransfersContentsWidget::removeTransfer()
 
 void TransfersContentsWidget::updateTransfer(Transfer *transfer)
 {
-	const int row = findTransfer(transfer);
+	const int row(findTransfer(transfer));
 
 	if (row < 0)
 	{
@@ -190,8 +190,8 @@ void TransfersContentsWidget::updateTransfer(Transfer *transfer)
 
 		if (transfer->getBytesTotal() > 0)
 		{
-			qint64 speedSum = 0;
-			const QList<qint64> speeds = m_speeds[transfer];
+			qint64 speedSum(0);
+			const QList<qint64> speeds(m_speeds[transfer]);
 
 			for (int i = 0; i < speeds.count(); ++i)
 			{
@@ -235,7 +235,7 @@ void TransfersContentsWidget::updateTransfer(Transfer *transfer)
 	m_model->item(row, 6)->setText(transfer->getTimeStarted().toString(QLatin1String("yyyy-MM-dd HH:mm:ss")));
 	m_model->item(row, 7)->setText(transfer->getTimeFinished().toString(QLatin1String("yyyy-MM-dd HH:mm:ss")));
 
-	const QString tooltip = tr("<div style=\"white-space:pre;\">Source: %1\nTarget: %2\nSize: %3\nDownloaded: %4\nProgress: %5</div>").arg(transfer->getSource().toDisplayString().toHtmlEscaped()).arg(transfer->getTarget().toHtmlEscaped()).arg(Utils::formatUnit(transfer->getBytesTotal(), false, 1, true)).arg(Utils::formatUnit(transfer->getBytesReceived(), false, 1, true)).arg(QStringLiteral("%1%").arg(((transfer->getBytesTotal() > 0) ? ((static_cast<qreal>(transfer->getBytesReceived()) / transfer->getBytesTotal()) * 100) : 0.0), 0, 'f', 1));
+	const QString tooltip(tr("<div style=\"white-space:pre;\">Source: %1\nTarget: %2\nSize: %3\nDownloaded: %4\nProgress: %5</div>").arg(transfer->getSource().toDisplayString().toHtmlEscaped()).arg(transfer->getTarget().toHtmlEscaped()).arg(Utils::formatUnit(transfer->getBytesTotal(), false, 1, true)).arg(Utils::formatUnit(transfer->getBytesReceived(), false, 1, true)).arg(QStringLiteral("%1%").arg(((transfer->getBytesTotal() > 0) ? ((static_cast<qreal>(transfer->getBytesReceived()) / transfer->getBytesTotal()) * 100) : 0.0), 0, 'f', 1)));
 
 	for (int i = 0; i < m_model->columnCount(); ++i)
 	{
@@ -247,7 +247,7 @@ void TransfersContentsWidget::updateTransfer(Transfer *transfer)
 		updateActions();
 	}
 
-	const bool isRunning = (transfer && transfer->getState() == Transfer::RunningState);
+	const bool isRunning(transfer && transfer->getState() == Transfer::RunningState);
 
 	if (isRunning != m_isLoading)
 	{
@@ -259,8 +259,8 @@ void TransfersContentsWidget::updateTransfer(Transfer *transfer)
 		}
 		else
 		{
-			const QList<Transfer*> transfers = TransfersManager::getTransfers();
-			bool hasRunning = false;
+			const QList<Transfer*> transfers(TransfersManager::getTransfers());
+			bool hasRunning(false);
 
 			for (int i = 0; i < transfers.count(); ++i)
 			{
@@ -284,7 +284,7 @@ void TransfersContentsWidget::updateTransfer(Transfer *transfer)
 
 void TransfersContentsWidget::openTransfer(const QModelIndex &index)
 {
-	Transfer *transfer = getTransfer(index.isValid() ? index : m_ui->transfersViewWidget->currentIndex());
+	Transfer *transfer(getTransfer(index.isValid() ? index : m_ui->transfersViewWidget->currentIndex()));
 
 	if (transfer)
 	{
@@ -294,7 +294,7 @@ void TransfersContentsWidget::openTransfer(const QModelIndex &index)
 
 void TransfersContentsWidget::openTransfer(QAction *action)
 {
-	Transfer *transfer = getTransfer(m_ui->transfersViewWidget->currentIndex());
+	Transfer *transfer(getTransfer(m_ui->transfersViewWidget->currentIndex()));
 
 	if (transfer && action && !action->data().isNull())
 	{
@@ -304,7 +304,7 @@ void TransfersContentsWidget::openTransfer(QAction *action)
 
 void TransfersContentsWidget::openTransferFolder(const QModelIndex &index)
 {
-	Transfer *transfer = getTransfer(index.isValid() ? index : m_ui->transfersViewWidget->currentIndex());
+	Transfer *transfer(getTransfer(index.isValid() ? index : m_ui->transfersViewWidget->currentIndex()));
 
 	if (transfer)
 	{
@@ -314,7 +314,7 @@ void TransfersContentsWidget::openTransferFolder(const QModelIndex &index)
 
 void TransfersContentsWidget::copyTransferInformation()
 {
-	QStandardItem *item = m_model->itemFromIndex(m_ui->transfersViewWidget->currentIndex());
+	QStandardItem *item(m_model->itemFromIndex(m_ui->transfersViewWidget->currentIndex()));
 
 	if (item)
 	{
@@ -324,7 +324,7 @@ void TransfersContentsWidget::copyTransferInformation()
 
 void TransfersContentsWidget::stopResumeTransfer()
 {
-	Transfer *transfer = getTransfer(m_ui->transfersViewWidget->selectionModel()->hasSelection() ? m_ui->transfersViewWidget->selectionModel()->currentIndex() : QModelIndex());
+	Transfer *transfer(getTransfer(m_ui->transfersViewWidget->selectionModel()->hasSelection() ? m_ui->transfersViewWidget->selectionModel()->currentIndex() : QModelIndex()));
 
 	if (transfer)
 	{
@@ -343,7 +343,7 @@ void TransfersContentsWidget::stopResumeTransfer()
 
 void TransfersContentsWidget::redownloadTransfer()
 {
-	Transfer *transfer = getTransfer(m_ui->transfersViewWidget->selectionModel()->hasSelection() ? m_ui->transfersViewWidget->selectionModel()->currentIndex() : QModelIndex());
+	Transfer *transfer(getTransfer(m_ui->transfersViewWidget->selectionModel()->hasSelection() ? m_ui->transfersViewWidget->selectionModel()->currentIndex() : QModelIndex()));
 
 	if (transfer)
 	{
@@ -365,18 +365,18 @@ void TransfersContentsWidget::clearFinishedTransfers()
 
 void TransfersContentsWidget::showContextMenu(const QPoint &point)
 {
-	Transfer *transfer = getTransfer(m_ui->transfersViewWidget->indexAt(point));
+	Transfer *transfer(getTransfer(m_ui->transfersViewWidget->indexAt(point)));
 	QMenu menu(this);
 
 	if (transfer)
 	{
 		menu.addAction(tr("Open"), this, SLOT(openTransfer()));
 
-		const QList<ApplicationInformation> applications = Utils::getApplicationsForMimeType(transfer->getMimeType());
+		const QList<ApplicationInformation> applications(Utils::getApplicationsForMimeType(transfer->getMimeType()));
 
 		if (applications.count() > 1)
 		{
-			QMenu *applicationsMenu = menu.addMenu(tr("Open With"));
+			QMenu *applicationsMenu(menu.addMenu(tr("Open With")));
 
 			for (int i = 0; i < applications.count(); ++i)
 			{
@@ -401,8 +401,8 @@ void TransfersContentsWidget::showContextMenu(const QPoint &point)
 		menu.addAction(tr("Remove"), this, SLOT(removeTransfer()));
 	}
 
-	const QList<Transfer*> transfers = TransfersManager::getTransfers();
-	int finishedTransfers = 0;
+	const QList<Transfer*> transfers(TransfersManager::getTransfers());
+	int finishedTransfers(0);
 
 	for (int i = 0; i < transfers.count(); ++i)
 	{
@@ -418,7 +418,7 @@ void TransfersContentsWidget::showContextMenu(const QPoint &point)
 
 void TransfersContentsWidget::updateActions()
 {
-	Transfer *transfer = getTransfer(m_ui->transfersViewWidget->selectionModel()->hasSelection() ? m_ui->transfersViewWidget->selectionModel()->currentIndex() : QModelIndex());
+	Transfer *transfer(getTransfer(m_ui->transfersViewWidget->selectionModel()->hasSelection() ? m_ui->transfersViewWidget->selectionModel()->currentIndex() : QModelIndex()));
 
 	if (transfer && transfer->getState() == Transfer::ErrorState)
 	{
@@ -473,11 +473,11 @@ void TransfersContentsWidget::triggerAction(int identifier, const QVariantMap &p
 			}
 			else
 			{
-				QWidget *widget = focusWidget();
+				QWidget *widget(focusWidget());
 
 				if (widget->metaObject()->className() == QLatin1String("Otter::TextLabelWidget"))
 				{
-					TextLabelWidget *label = qobject_cast<TextLabelWidget*>(widget);
+					TextLabelWidget *label(qobject_cast<TextLabelWidget*>(widget));
 
 					if (label)
 					{
@@ -529,7 +529,7 @@ Action* TransfersContentsWidget::getAction(int identifier)
 		return NULL;
 	}
 
-	Action *action = new Action(identifier, this);
+	Action *action(new Action(identifier, this));
 
 	m_actions[identifier] = action;
 
@@ -585,7 +585,7 @@ bool TransfersContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_ui->transfersViewWidget && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent && (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return))
 		{
@@ -603,7 +603,7 @@ bool TransfersContentsWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_ui->downloadLineEdit && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{

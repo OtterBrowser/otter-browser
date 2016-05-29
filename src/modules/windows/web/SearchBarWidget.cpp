@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -71,7 +71,7 @@ void SearchBarWidget::keyPressEvent(QKeyEvent *event)
 
 void SearchBarWidget::notifyRequestedSearch()
 {
-	WebWidget::FindFlags flags = getFlags();
+	WebWidget::FindFlags flags(getFlags());
 
 	if (sender() && sender()->objectName() == QLatin1String("previousButton"))
 	{
@@ -109,7 +109,7 @@ void SearchBarWidget::setVisible(bool visible)
 
 void SearchBarWidget::setResultsFound(bool found)
 {
-	QPalette palette = this->palette();
+	QPalette palette(this->palette());
 
 	if (!m_ui->queryLineEdit->text().isEmpty())
 	{
@@ -136,7 +136,7 @@ QString SearchBarWidget::getQuery() const
 
 WebWidget::FindFlags SearchBarWidget::getFlags() const
 {
-	WebWidget::FindFlags flags = WebWidget::NoFlagsFind;
+	WebWidget::FindFlags flags(WebWidget::NoFlagsFind);
 
 	if (m_ui->highlightButton->isChecked())
 	{

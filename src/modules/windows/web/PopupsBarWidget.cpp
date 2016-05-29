@@ -35,25 +35,25 @@ PopupsBarWidget::PopupsBarWidget(const QUrl &parentUrl, QWidget *parent) : QWidg
 {
 	m_ui->setupUi(this);
 
-	QMenu *menu = new QMenu(this);
+	QMenu *menu(new QMenu(this));
 
 	m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("window-popup-block"), false).pixmap(m_ui->iconLabel->size()));
 	m_ui->detailsButton->setMenu(menu);
 	m_ui->detailsButton->setPopupMode(QToolButton::InstantPopup);
 
-	QAction *openAllAction = menu->addAction(tr("Open All Pop-Ups from This Website"));
+	QAction *openAllAction(menu->addAction(tr("Open All Pop-Ups from This Website")));
 	openAllAction->setCheckable(true);
 	openAllAction->setData(QLatin1String("openAll"));
 
-	QAction *openAllInBackgroundAction = menu->addAction(tr("Open Pop-Ups from This Website in Background"));
+	QAction *openAllInBackgroundAction(menu->addAction(tr("Open Pop-Ups from This Website in Background")));
 	openAllInBackgroundAction->setCheckable(true);
 	openAllInBackgroundAction->setData(QLatin1String("openAllInBackground"));
 
-	QAction *blockAllAction = menu->addAction(tr("Block All Pop-Ups from This Website"));
+	QAction *blockAllAction(menu->addAction(tr("Block All Pop-Ups from This Website")));
 	blockAllAction->setCheckable(true);
 	blockAllAction->setData(QLatin1String("blockAll"));
 
-	QAction *askAction = menu->addAction(tr("Always Ask What to Do for This Website"));
+	QAction *askAction(menu->addAction(tr("Always Ask What to Do for This Website")));
 	askAction->setCheckable(true);
 	askAction->setData(QLatin1String("ask"));
 
@@ -96,7 +96,7 @@ void PopupsBarWidget::optionChanged(const QString &option)
 {
 	if (option == QLatin1String("Content/PopupsPolicy"))
 	{
-		const QString popupsPolicy = SettingsManager::getValue(QLatin1String("Content/PopupsPolicy"), m_parentUrl).toString();
+		const QString popupsPolicy(SettingsManager::getValue(QLatin1String("Content/PopupsPolicy"), m_parentUrl).toString());
 
 		for (int i = 0; i < m_popupsGroup->actions().count(); ++i)
 		{
@@ -112,7 +112,7 @@ void PopupsBarWidget::optionChanged(const QString &option)
 
 void PopupsBarWidget::addPopup(const QUrl &url)
 {
-	QAction *action = m_popupsMenu->addAction(QString("%1").arg(fontMetrics().elidedText(url.url(), Qt::ElideMiddle, 256)));
+	QAction *action(m_popupsMenu->addAction(QString("%1").arg(fontMetrics().elidedText(url.url(), Qt::ElideMiddle, 256))));
 	action->setData(url.url());
 
 	m_ui->messageLabel->setText(tr("%1 wants to open %n pop-up window(s).", "", m_popupsMenu->actions().count() - 2).arg(m_parentUrl.host()));
@@ -129,7 +129,7 @@ void PopupsBarWidget::openUrl(QAction *action)
 	{
 		for (int i = 0; i < m_popupsMenu->actions().count(); ++i)
 		{
-			const QUrl url = m_popupsMenu->actions().at(i)->data().toUrl();
+			const QUrl url(m_popupsMenu->actions().at(i)->data().toUrl());
 
 			if (!url.isEmpty())
 			{

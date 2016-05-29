@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -76,8 +76,8 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 	{
 		case BestFitBackground:
 			{
-				const QString key = QLatin1String("start-page-best-fit-") + QString::number(width()) + QLatin1Char('-') + QString::number(height());
-				QPixmap *cachedBackground = QPixmapCache::find(key);
+				const QString key(QLatin1String("start-page-best-fit-") + QString::number(width()) + QLatin1Char('-') + QString::number(height()));
+				QPixmap *cachedBackground(QPixmapCache::find(key));
 
 				if (cachedBackground)
 				{
@@ -85,8 +85,8 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 				}
 				else
 				{
-					const qreal pixmapAscpectRatio = (pixmap.width() / qreal(pixmap.height()));
-					const qreal backgroundAscpectRatio = (width() / qreal(height()));
+					const qreal pixmapAscpectRatio(pixmap.width() / qreal(pixmap.height()));
+					const qreal backgroundAscpectRatio(width() / qreal(height()));
 					QPixmap newBackground(size());
 
 					if (pixmapAscpectRatio > backgroundAscpectRatio)
@@ -115,8 +115,8 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 			break;
 		case StretchBackground:
 			{
-				const QString key = QLatin1String("start-page-stretch-") + QString::number(width()) + QLatin1Char('-') + QString::number(height());
-				QPixmap *cachedBackground = QPixmapCache::find(key);
+				const QString key(QLatin1String("start-page-stretch-") + QString::number(width()) + QLatin1Char('-') + QString::number(height()));
+				QPixmap *cachedBackground(QPixmapCache::find(key));
 
 				if (cachedBackground)
 				{
@@ -124,7 +124,7 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 				}
 				else
 				{
-					const QPixmap newBackground = pixmap.scaled(size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+					const QPixmap newBackground(pixmap.scaled(size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 
 					painter.drawPixmap(contentsRect(), newBackground, contentsRect());
 
@@ -144,7 +144,7 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 
 void StartPageContentsWidget::setBackgroundMode(StartPageContentsWidget::BackgroundMode mode)
 {
-	const QString color = SettingsManager::getValue(QLatin1String("StartPage/BackgroundColor")).toString();
+	const QString color(SettingsManager::getValue(QLatin1String("StartPage/BackgroundColor")).toString());
 
 	m_path = ((mode == NoCustomBackground) ? QString() : SettingsManager::getValue(QLatin1String("StartPage/BackgroundPath")).toString());
 	m_color = (color.isEmpty() ? QColor(Qt::transparent) : QColor(color));
@@ -234,7 +234,7 @@ void StartPageWidget::optionChanged(const QString &option, const QVariant &value
 	}
 	else if (option == QLatin1String("StartPage/BackgroundColor") || option == QLatin1String("StartPage/BackgroundMode") || option == QLatin1String("StartPage/BackgroundPath"))
 	{
-		const QString backgroundMode = SettingsManager::getValue(QLatin1String("StartPage/BackgroundMode")).toString();
+		const QString backgroundMode(SettingsManager::getValue(QLatin1String("StartPage/BackgroundMode")).toString());
 
 		if (backgroundMode == QLatin1String("bestFit"))
 		{
@@ -259,8 +259,8 @@ void StartPageWidget::optionChanged(const QString &option, const QVariant &value
 	}
 	else if (option == QLatin1String("StartPage/ShowSearchField"))
 	{
-		QGridLayout *layout = NULL;
-		const bool needsInitialization = (m_contentsWidget->layout() == NULL);
+		QGridLayout *layout(NULL);
+		const bool needsInitialization(m_contentsWidget->layout() == NULL);
 
 		if (needsInitialization)
 		{
@@ -274,7 +274,7 @@ void StartPageWidget::optionChanged(const QString &option, const QVariant &value
 
 			for (int i = (layout->count() - 1); i >=0; --i)
 			{
-				QLayoutItem *item = layout->takeAt(i);
+				QLayoutItem *item(layout->takeAt(i));
 
 				if (item)
 				{
@@ -377,8 +377,8 @@ void StartPageWidget::triggerAction(int identifier, const QVariantMap &parameter
 			return;
 	}
 
-	const QUrl url = m_currentIndex.data(BookmarksModel::UrlRole).toUrl();
-	MainWindow *mainWindow = MainWindow::findMainWindow(this);
+	const QUrl url(m_currentIndex.data(BookmarksModel::UrlRole).toUrl());
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
 	if (url.isValid() && mainWindow)
 	{
@@ -412,7 +412,7 @@ void StartPageWidget::addTile()
 
 void StartPageWidget::addTile(const QUrl &url)
 {
-	BookmarksItem *bookmark = BookmarksManager::getModel()->addBookmark(BookmarksModel::UrlBookmark, 0, url, QString(), BookmarksManager::getModel()->getItem(SettingsManager::getValue(QLatin1String("StartPage/BookmarksFolder")).toString()));
+	BookmarksItem *bookmark(BookmarksManager::getModel()->addBookmark(BookmarksModel::UrlBookmark, 0, url, QString(), BookmarksManager::getModel()->getItem(SettingsManager::getValue(QLatin1String("StartPage/BookmarksFolder")).toString())));
 
 	if (bookmark)
 	{
@@ -433,8 +433,8 @@ void StartPageWidget::openTile()
 
 	if (type == BookmarksModel::FolderBookmark)
 	{
-		MainWindow *mainWindow = MainWindow::findMainWindow(this);
-		BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(m_currentIndex);
+		MainWindow *mainWindow(MainWindow::findMainWindow(this));
+		BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
 
 		if (mainWindow && bookmark && bookmark->rowCount() > 0)
 		{
@@ -453,7 +453,7 @@ void StartPageWidget::openTile()
 
 	if (url.isValid() && parentWidget() && parentWidget()->parentWidget())
 	{
-		WebContentsWidget *contentsWidget = qobject_cast<WebContentsWidget*>(parentWidget()->parentWidget());
+		WebContentsWidget *contentsWidget(qobject_cast<WebContentsWidget*>(parentWidget()->parentWidget()));
 
 		if (contentsWidget)
 		{
@@ -464,7 +464,7 @@ void StartPageWidget::openTile()
 
 void StartPageWidget::editTile()
 {
-	BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(m_currentIndex);
+	BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
 
 	if (bookmark)
 	{
@@ -484,11 +484,11 @@ void StartPageWidget::reloadTile()
 
 void StartPageWidget::removeTile()
 {
-	BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(m_currentIndex);
+	BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
 
 	if (bookmark)
 	{
-		const QString path = SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")) + QString::number(bookmark->data(BookmarksModel::IdentifierRole).toULongLong()) + QLatin1String(".png");
+		const QString path(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")) + QString::number(bookmark->data(BookmarksModel::IdentifierRole).toULongLong()) + QLatin1String(".png"));
 
 		if (QFile::exists(path))
 		{
@@ -507,12 +507,12 @@ void StartPageWidget::updateTile(const QModelIndex &index)
 
 void StartPageWidget::updateSize()
 {
-	const qreal zoom = (SettingsManager::getValue(QLatin1String("StartPage/ZoomLevel")).toInt() / qreal(100));
-	const int tileHeight = (SettingsManager::getValue(QLatin1String("StartPage/TileHeight")).toInt() * zoom);
-	const int tileWidth = (SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt() * zoom);
-	const int amount = m_model->rowCount();
-	const int columns = getTilesPerRow();
-	const int rows = qCeil(amount / qreal(columns));
+	const qreal zoom(SettingsManager::getValue(QLatin1String("StartPage/ZoomLevel")).toInt() / qreal(100));
+	const int tileHeight(SettingsManager::getValue(QLatin1String("StartPage/TileHeight")).toInt() * zoom);
+	const int tileWidth(SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt() * zoom);
+	const int amount(m_model->rowCount());
+	const int columns(getTilesPerRow());
+	const int rows(qCeil(amount / qreal(columns)));
 
 	m_listView->setGridSize(QSize(tileWidth, tileHeight));
 	m_listView->setFixedSize(((qMin(amount, columns) * tileWidth) + 2), ((rows * tileHeight) + 20));
@@ -533,11 +533,11 @@ void StartPageWidget::updateTiles()
 
 void StartPageWidget::showContextMenu(const QPoint &position)
 {
-	QPoint hitPosition = position;
+	QPoint hitPosition(position);
 
 	if (hitPosition.isNull())
 	{
-		WebWidget *webWidget = qobject_cast<WebWidget*>(parentWidget());
+		WebWidget *webWidget(qobject_cast<WebWidget*>(parentWidget()));
 
 		if (webWidget && !webWidget->getClickPosition().isNull())
 		{
@@ -578,7 +578,7 @@ void StartPageWidget::showContextMenu(const QPoint &position)
 
 int StartPageWidget::getTilesPerRow() const
 {
-	const int tilesPerRow = SettingsManager::getValue(QLatin1String("StartPage/TilesPerRow")).toInt();
+	const int tilesPerRow(SettingsManager::getValue(QLatin1String("StartPage/TilesPerRow")).toInt());
 
 	if (tilesPerRow > 0)
 	{
@@ -594,7 +594,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		if (event->type() == QEvent::Wheel)
 		{
-			QWheelEvent *wheelEvent = static_cast<QWheelEvent*>(event);
+			QWheelEvent *wheelEvent(static_cast<QWheelEvent*>(event));
 
 			if (wheelEvent)
 			{
@@ -603,7 +603,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 		}
 		else
 		{
-			QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+			QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 			if (mouseEvent)
 			{
@@ -628,7 +628,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 	if (event->type() == QEvent::KeyRelease && object == m_listView)
 	{
-		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent)
 		{
@@ -646,11 +646,11 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return)
 			{
-				const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(m_currentIndex.data(BookmarksModel::TypeRole).toInt());
+				const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(m_currentIndex.data(BookmarksModel::TypeRole).toInt()));
 
 				if (type == BookmarksModel::FolderBookmark)
 				{
-					BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(m_currentIndex);
+					BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
 
 					if (bookmark && bookmark->rowCount() > 0)
 					{
@@ -667,7 +667,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 					if (keyEvent->modifiers() != Qt::NoModifier)
 					{
-						MainWindow *mainWindow = MainWindow::findMainWindow(this);
+						MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
 						if (mainWindow)
 						{
@@ -676,7 +676,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 					}
 					else if (parentWidget() && parentWidget()->parentWidget())
 					{
-						WebContentsWidget *contentsWidget = qobject_cast<WebContentsWidget*>(parentWidget()->parentWidget());
+						WebContentsWidget *contentsWidget(qobject_cast<WebContentsWidget*>(parentWidget()->parentWidget()));
 
 						if (contentsWidget)
 						{
@@ -695,7 +695,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (event->type() == QEvent::MouseButtonRelease && object == m_listView->viewport())
 	{
-		QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent)
 		{
@@ -708,11 +708,11 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (mouseEvent->button() == Qt::LeftButton || mouseEvent->button() == Qt::MiddleButton)
 			{
-				const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(m_currentIndex.data(BookmarksModel::TypeRole).toInt());
+				const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(m_currentIndex.data(BookmarksModel::TypeRole).toInt()));
 
 				if (type == BookmarksModel::FolderBookmark)
 				{
-					BookmarksItem *bookmark = BookmarksManager::getModel()->getBookmark(m_currentIndex);
+					BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_currentIndex));
 
 					if (bookmark && bookmark->rowCount() > 0)
 					{
@@ -746,7 +746,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 				{
 					if ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier))
 					{
-						MainWindow *mainWindow = MainWindow::findMainWindow(this);
+						MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
 						if (mainWindow)
 						{
@@ -755,7 +755,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 					}
 					else if (parentWidget() && parentWidget()->parentWidget() && mouseEvent->button() != Qt::MiddleButton)
 					{
-						WebContentsWidget *contentsWidget = qobject_cast<WebContentsWidget*>(parentWidget()->parentWidget());
+						WebContentsWidget *contentsWidget(qobject_cast<WebContentsWidget*>(parentWidget()->parentWidget()));
 
 						if (contentsWidget)
 						{

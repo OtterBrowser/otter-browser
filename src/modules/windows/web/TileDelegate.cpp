@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -38,8 +38,8 @@ TileDelegate::TileDelegate(QObject *parent) : QStyledItemDelegate(parent)
 
 void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	const int textHeight = (option.fontMetrics.boundingRect(QLatin1String("X")).height() * 1.5);
-	const QString tileBackgroundMode = SettingsManager::getValue(QLatin1String("StartPage/TileBackgroundMode")).toString();
+	const int textHeight(option.fontMetrics.boundingRect(QLatin1String("X")).height() * 1.5);
+	const QString tileBackgroundMode(SettingsManager::getValue(QLatin1String("StartPage/TileBackgroundMode")).toString());
 	QRect rectangle(option.rect);
 	rectangle.adjust(3, 3, -3, -3);
 
@@ -50,7 +50,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 	if (index.data(BookmarksModel::UserRole).toBool() || index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
 	{
-		const bool isAddTile = (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"));
+		const bool isAddTile(index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"));
 
 		if (isAddTile && (option.state.testFlag(QStyle::State_MouseOver) || option.state.testFlag(QStyle::State_HasFocus)))
 		{
@@ -88,7 +88,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 		rectangle.adjust(0, 0, 0, -textHeight);
 	}
 
-	const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt());
+	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
 
 	if (type == BookmarksModel::FolderBookmark && tileBackgroundMode != QLatin1String("none"))
 	{
@@ -146,11 +146,11 @@ QWidget* TileDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem 
 	Q_UNUSED(option)
 	Q_UNUSED(index)
 
-	QLabel *editor = new QLabel(parent);
+	QLabel *editor(new QLabel(parent));
 
 	editor->setAlignment(Qt::AlignCenter);
 
-	QMovie *movie = new QMovie(QLatin1String(":/icons/loading.gif"), QByteArray(), editor);
+	QMovie *movie(new QMovie(QLatin1String(":/icons/loading.gif"), QByteArray(), editor));
 	movie->start();
 
 	editor->setMovie(movie);
@@ -163,7 +163,7 @@ QSize TileDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelInd
 	Q_UNUSED(option)
 	Q_UNUSED(index)
 
-	const qreal zoom = (SettingsManager::getValue(QLatin1String("StartPage/ZoomLevel")).toInt() / qreal(100));
+	const qreal zoom(SettingsManager::getValue(QLatin1String("StartPage/ZoomLevel")).toInt() / qreal(100));
 
 	return QSize((SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt() * zoom), (SettingsManager::getValue(QLatin1String("StartPage/TileHeight")).toInt() * zoom));
 }

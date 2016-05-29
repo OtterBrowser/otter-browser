@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -72,9 +72,8 @@ void CookiesContentsWidget::changeEvent(QEvent *event)
 
 void CookiesContentsWidget::populateCookies()
 {
-	CookieJar *cookieJar = qobject_cast<CookieJar*>(NetworkManagerFactory::getCookieJar());
-
-	const QList<QNetworkCookie> cookies = cookieJar->getCookies();
+	CookieJar *cookieJar(qobject_cast<CookieJar*>(NetworkManagerFactory::getCookieJar()));
+	const QList<QNetworkCookie> cookies(cookieJar->getCookies());
 
 	for (int i = 0; i < cookies.count(); ++i)
 	{
@@ -98,8 +97,8 @@ void CookiesContentsWidget::populateCookies()
 
 void CookiesContentsWidget::addCookie(const QNetworkCookie &cookie)
 {
-	const QString domain = (cookie.domain().startsWith('.') ? cookie.domain().mid(1) : cookie.domain());
-	QStandardItem *domainItem = findDomain(domain);
+	const QString domain(cookie.domain().startsWith(QLatin1Char('.')) ? cookie.domain().mid(1) : cookie.domain());
+	QStandardItem *domainItem(findDomain(domain));
 
 	if (domainItem)
 	{
@@ -124,7 +123,7 @@ void CookiesContentsWidget::addCookie(const QNetworkCookie &cookie)
 		}
 	}
 
-	QStandardItem *cookieItem = new QStandardItem(QString(cookie.name()));
+	QStandardItem *cookieItem(new QStandardItem(QString(cookie.name())));
 	cookieItem->setData(cookie.path(), Qt::UserRole);
 	cookieItem->setData(cookie.domain(), (Qt::UserRole + 1));
 	cookieItem->setToolTip(cookie.name());
@@ -136,8 +135,8 @@ void CookiesContentsWidget::addCookie(const QNetworkCookie &cookie)
 
 void CookiesContentsWidget::removeCookie(const QNetworkCookie &cookie)
 {
-	const QString domain = (cookie.domain().startsWith('.') ? cookie.domain().mid(1) : cookie.domain());
-	QStandardItem *domainItem = findDomain(domain);
+	const QString domain(cookie.domain().startsWith(QLatin1Char('.')) ? cookie.domain().mid(1) : cookie.domain());
+	QStandardItem *domainItem(findDomain(domain));
 
 	if (domainItem)
 	{
@@ -166,7 +165,7 @@ void CookiesContentsWidget::removeCookie(const QNetworkCookie &cookie)
 
 		if (!point.isNull())
 		{
-			const QModelIndex index = m_ui->cookiesViewWidget->indexAt(point);
+			const QModelIndex index(m_ui->cookiesViewWidget->indexAt(point));
 
 			m_ui->cookiesViewWidget->setCurrentIndex(index);
 			m_ui->cookiesViewWidget->selectionModel()->select(index, QItemSelectionModel::Select);
@@ -176,14 +175,14 @@ void CookiesContentsWidget::removeCookie(const QNetworkCookie &cookie)
 
 void CookiesContentsWidget::removeCookies()
 {
-	const QModelIndexList indexes = m_ui->cookiesViewWidget->selectionModel()->selectedIndexes();
+	const QModelIndexList indexes(m_ui->cookiesViewWidget->selectionModel()->selectedIndexes());
 
 	if (indexes.isEmpty())
 	{
 		return;
 	}
 
-	QNetworkCookieJar *cookieJar = NetworkManagerFactory::getCookieJar();
+	QNetworkCookieJar *cookieJar(NetworkManagerFactory::getCookieJar());
 	QList<QNetworkCookie> cookies;
 
 	for (int i = 0; i < indexes.count(); ++i)
@@ -195,7 +194,7 @@ void CookiesContentsWidget::removeCookies()
 
 		if (indexes.at(i).data(Qt::UserRole).toString().isEmpty())
 		{
-			QStandardItem *domainItem = m_model->itemFromIndex(indexes.at(i));
+			QStandardItem *domainItem(m_model->itemFromIndex(indexes.at(i)));
 
 			if (!domainItem)
 			{
@@ -204,7 +203,7 @@ void CookiesContentsWidget::removeCookies()
 
 			for (int j = 0; j < domainItem->rowCount(); ++j)
 			{
-				QStandardItem *cookieItem = domainItem->child(j, 0);
+				QStandardItem *cookieItem(domainItem->child(j, 0));
 
 				if (cookieItem)
 				{
@@ -214,7 +213,7 @@ void CookiesContentsWidget::removeCookies()
 		}
 		else
 		{
-			QStandardItem *cookieItem = m_model->itemFromIndex(indexes.at(i));
+			QStandardItem *cookieItem(m_model->itemFromIndex(indexes.at(i)));
 
 			if (cookieItem)
 			{
@@ -231,29 +230,29 @@ void CookiesContentsWidget::removeCookies()
 
 void CookiesContentsWidget::removeDomainCookies()
 {
-	const QModelIndexList indexes = m_ui->cookiesViewWidget->selectionModel()->selectedIndexes();
+	const QModelIndexList indexes(m_ui->cookiesViewWidget->selectionModel()->selectedIndexes());
 
 	if (indexes.isEmpty())
 	{
 		return;
 	}
 
-	QNetworkCookieJar *cookieJar = NetworkManagerFactory::getCookieJar();
+	QNetworkCookieJar *cookieJar(NetworkManagerFactory::getCookieJar());
 	QList<QNetworkCookie> cookies;
 
 	for (int i = 0; i < indexes.count(); ++i)
 	{
-		QStandardItem *domainItem = ((indexes.at(i).isValid() && indexes.at(i).parent() == m_model->invisibleRootItem()->index()) ? findDomain(indexes.at(i).sibling(indexes.at(i).row(), 0).data(Qt::ToolTipRole).toString()) : m_model->itemFromIndex(indexes.at(i).parent()));
+		QStandardItem *domainItem((indexes.at(i).isValid() && indexes.at(i).parent() == m_model->invisibleRootItem()->index()) ? findDomain(indexes.at(i).sibling(indexes.at(i).row(), 0).data(Qt::ToolTipRole).toString()) : m_model->itemFromIndex(indexes.at(i).parent()));
 
 		if (domainItem)
 		{
 			for (int j = 0; j < domainItem->rowCount(); ++j)
 			{
-				QStandardItem *cookieItem = domainItem->child(j, 0);
+				QStandardItem *cookieItem(domainItem->child(j, 0));
 
 				if (cookieItem)
 				{
-					const QNetworkCookie cookie = getCookie(cookieItem->index());
+					const QNetworkCookie cookie(getCookie(cookieItem->index()));
 
 					if (!cookies.contains(cookie))
 					{
@@ -304,7 +303,7 @@ void CookiesContentsWidget::removeAllCookies()
 
 void CookiesContentsWidget::showContextMenu(const QPoint &point)
 {
-	const QModelIndex index = m_ui->cookiesViewWidget->indexAt(point);
+	const QModelIndex index(m_ui->cookiesViewWidget->indexAt(point));
 	QMenu menu(this);
 
 	if (index.isValid())
@@ -359,7 +358,7 @@ void CookiesContentsWidget::triggerAction(int identifier, const QVariantMap &par
 
 void CookiesContentsWidget::updateActions()
 {
-	const QModelIndexList indexes = m_ui->cookiesViewWidget->selectionModel()->selectedIndexes();
+	const QModelIndexList indexes(m_ui->cookiesViewWidget->selectionModel()->selectedIndexes());
 
 	m_ui->deleteButton->setEnabled(!indexes.isEmpty());
 
@@ -377,13 +376,13 @@ void CookiesContentsWidget::updateActions()
 
 	if (indexes.count() == 1 && !indexes.first().data(Qt::UserRole).toString().isEmpty())
 	{
-		const QModelIndex index = indexes.first();
+		const QModelIndex index(indexes.first());
 		QUrl url;
 		url.setScheme(QLatin1String("http"));
 		url.setHost(index.parent().data(Qt::ToolTipRole).toString());
 		url.setPath(index.data(Qt::UserRole).toString());
 
-		const QList<QNetworkCookie> cookies = NetworkManagerFactory::getCookieJar()->cookiesForUrl(url);
+		const QList<QNetworkCookie> cookies(NetworkManagerFactory::getCookieJar()->cookiesForUrl(url));
 
 		for (int i = 0; i < cookies.count(); ++i)
 		{
@@ -435,7 +434,7 @@ Action* CookiesContentsWidget::getAction(int identifier)
 		return NULL;
 	}
 
-	Action *action = new Action(identifier, this);
+	Action *action(new Action(identifier, this));
 
 	m_actions[identifier] = action;
 
@@ -482,7 +481,7 @@ bool CookiesContentsWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_ui->cookiesViewWidget && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent && keyEvent->key() == Qt::Key_Delete)
 		{
@@ -493,7 +492,7 @@ bool CookiesContentsWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_ui->filterLineEdit && event->type() == QEvent::KeyPress)
 	{
-		QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent->key() == Qt::Key_Escape)
 		{

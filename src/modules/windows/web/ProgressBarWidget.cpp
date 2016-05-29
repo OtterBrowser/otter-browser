@@ -39,7 +39,7 @@ ProgressBarWidget::ProgressBarWidget(WebWidget *webWidget, QWidget *parent) : QF
 	m_loadingState(WindowsManager::FinishedLoadingState),
 	m_geometryUpdateTimer(0)
 {
-	QHBoxLayout *layout = new QHBoxLayout(this);
+	QHBoxLayout *layout(new QHBoxLayout(this));
 	layout->addWidget(m_progressBar);
 	layout->addWidget(m_elementsLabel);
 	layout->addWidget(m_totalLabel);
@@ -49,7 +49,7 @@ ProgressBarWidget::ProgressBarWidget(WebWidget *webWidget, QWidget *parent) : QF
 	layout->setContentsMargins(0, 0, 0, 0);
 	layout->setSizeConstraint(QLayout::SetMinAndMaxSize);
 
-	QPalette palette = m_elementsLabel->palette();
+	QPalette palette(m_elementsLabel->palette());
 	palette.setColor(QPalette::Background, palette.color(QPalette::Base));
 
 	setPalette(palette);
@@ -89,7 +89,7 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 
 		m_geometryUpdateTimer = 0;
 
-		QRect geometry = m_webWidget->getProgressBarGeometry();
+		QRect geometry(m_webWidget->getProgressBarGeometry());
 
 		if (m_webWidget->getLoadingState() == WindowsManager::OngoingLoadingState)
 		{
@@ -115,8 +115,8 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 	{
 		if (m_time)
 		{
-			int seconds = (m_time->elapsed() / 1000);
-			int minutes = (seconds / 60);
+			int seconds(m_time->elapsed() / 1000);
+			int minutes(seconds / 60);
 
 			seconds = (seconds - (minutes * 60));
 
