@@ -207,7 +207,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	hash.addData(profilePath.toUtf8());
 
 	const QString identifier(hash.result().toHex());
-	const QString server = applicationName() + (identifier.isEmpty() ? QString() : (QLatin1Char('-') + identifier));
+	const QString server(applicationName() + (identifier.isEmpty() ? QString() : (QLatin1Char('-') + identifier)));
 	QLocalSocket socket;
 	socket.connectToServer(server);
 
@@ -382,12 +382,12 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		}
 	}
 
-	const QDate lastUpdate = QDate::fromString(SettingsManager::getValue(QLatin1String("Updates/LastCheck")).toString(), Qt::ISODate);
-	const int interval = SettingsManager::getValue(QLatin1String("Updates/CheckInterval")).toInt();
+	const QDate lastUpdate(QDate::fromString(SettingsManager::getValue(QLatin1String("Updates/LastCheck")).toString(), Qt::ISODate));
+	const int interval(SettingsManager::getValue(QLatin1String("Updates/CheckInterval")).toInt());
 
 	if (interval > 0 && (lastUpdate.isNull() ? interval : lastUpdate.daysTo(QDate::currentDate())) >= interval && !SettingsManager::getValue(QLatin1String("Updates/ActiveChannels")).toStringList().isEmpty())
 	{
-		UpdateChecker *updateChecker = new UpdateChecker(this);
+		UpdateChecker *updateChecker(new UpdateChecker(this));
 
 		connect(updateChecker, SIGNAL(finished(QList<UpdateInformation>)), this, SLOT(updateCheckFinished(QList<UpdateInformation>)));
 
@@ -396,7 +396,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	setStyle(SettingsManager::getValue(QLatin1String("Interface/WidgetStyle")).toString());
 
-	const QString styleSheet = SettingsManager::getValue(QLatin1String("Interface/StyleSheet")).toString();
+	const QString styleSheet(SettingsManager::getValue(QLatin1String("Interface/StyleSheet")).toString());
 
 	if (!styleSheet.isEmpty())
 	{
@@ -485,7 +485,7 @@ void Application::showNotification(Notification *notification)
 
 void Application::newConnection()
 {
-	QLocalSocket *socket = m_localServer->nextPendingConnection();
+	QLocalSocket *socket(m_localServer->nextPendingConnection());
 
 	if (!socket)
 	{
@@ -494,12 +494,12 @@ void Application::newConnection()
 
 	socket->waitForReadyRead(1000);
 
-	MainWindow *window = (getWindows().isEmpty() ? NULL : getWindow());
+	MainWindow *window(getWindows().isEmpty() ? NULL : getWindow());
 	QString data;
 	QTextStream stream(socket);
 	stream >> data;
 
-	const QStringList encodedArguments = QString(QByteArray::fromBase64(data.toUtf8())).split(QLatin1Char(' '));
+	const QStringList encodedArguments(QString(QByteArray::fromBase64(data.toUtf8())).split(QLatin1Char(' ')));
 	QStringList decodedArguments;
 
 	for (int i = 0; i < encodedArguments.count(); ++i)
@@ -509,8 +509,8 @@ void Application::newConnection()
 
 	m_commandLineParser.parse(decodedArguments);
 
-	const QString session = m_commandLineParser.value(QLatin1String("session"));
-	const bool isPrivate = m_commandLineParser.isSet(QLatin1String("privatesession"));
+	const QString session(m_commandLineParser.value(QLatin1String("session")));
+	const bool isPrivate(m_commandLineParser.isSet(QLatin1String("privatesession")));
 
 	if (session.isEmpty())
 	{
@@ -521,7 +521,7 @@ void Application::newConnection()
 	}
 	else
 	{
-		const SessionInformation sessionData = SessionsManager::getSession(session);
+		const SessionInformation sessionData(SessionsManager::getSession(session));
 
 		if (sessionData.isClean || QMessageBox::warning(NULL, tr("Warning"), tr("This session was not saved correctly.\nAre you sure that you want to restore this session anyway?"), (QMessageBox::Yes | QMessageBox::No), QMessageBox::No) == QMessageBox::Yes)
 		{
@@ -540,7 +540,7 @@ void Application::newConnection()
 		}
 		else
 		{
-			const QStringList urls = m_commandLineParser.positionalArguments();
+			const QStringList urls(m_commandLineParser.positionalArguments());
 
 			for (int i = 0; i < urls.count(); ++i)
 			{
@@ -569,29 +569,29 @@ void Application::newConnection()
 
 void Application::clearHistory()
 {
-	QStringList clearSettings = SettingsManager::getValue(QLatin1String("History/ClearOnClose")).toStringList();
+	QStringList clearSettings(SettingsManager::getValue(QLatin1String("History/ClearOnClose")).toStringList());
 	clearSettings.removeAll(QString());
 
 	if (!clearSettings.isEmpty())
 	{
-		const bool clearAll(clearSettings.contains(QLatin1String("all")));
+		const bool shouldClearAll(clearSettings.contains(QLatin1String("all")));
 
-		if (clearAll || clearSettings.contains(QLatin1String("browsing")))
+		if (shouldClearAll || clearSettings.contains(QLatin1String("browsing")))
 		{
 			HistoryManager::clearHistory();
 		}
 
-		if (clearAll || clearSettings.contains(QLatin1String("cookies")))
+		if (shouldClearAll || clearSettings.contains(QLatin1String("cookies")))
 		{
 			NetworkManagerFactory::clearCookies();
 		}
 
-		if (clearAll || clearSettings.contains(QLatin1String("downloads")))
+		if (shouldClearAll || clearSettings.contains(QLatin1String("downloads")))
 		{
 			TransfersManager::clearTransfers();
 		}
 
-		if (clearAll || clearSettings.contains(QLatin1String("caches")))
+		if (shouldClearAll || clearSettings.contains(QLatin1String("caches")))
 		{
 			NetworkManagerFactory::clearCache();
 		}
@@ -600,7 +600,7 @@ void Application::clearHistory()
 
 void Application::periodicUpdateCheck()
 {
-	UpdateChecker *updateChecker = new UpdateChecker(this);
+	UpdateChecker *updateChecker(new UpdateChecker(this));
 
 	connect(updateChecker, SIGNAL(finished(QList<UpdateInformation>)), this, SLOT(updateCheckFinished(QList<UpdateInformation>)));
 
@@ -619,7 +619,7 @@ void Application::updateCheckFinished(const QList<UpdateInformation> &availableU
 		return;
 	}
 
-	const int latestVersion = (availableUpdates.count() - 1);
+	const int latestVersion(availableUpdates.count() - 1);
 
 	if (SettingsManager::getValue(QLatin1String("Updates/AutomaticInstall")).toBool())
 	{
@@ -627,7 +627,7 @@ void Application::updateCheckFinished(const QList<UpdateInformation> &availableU
 	}
 	else
 	{
-		Notification *notification = NotificationsManager::createNotification(NotificationsManager::UpdateAvailableEvent, tr("New update %1 from %2 channel is available!").arg(availableUpdates.at(latestVersion).version).arg(availableUpdates.at(latestVersion).channel));
+		Notification *notification(NotificationsManager::createNotification(NotificationsManager::UpdateAvailableEvent, tr("New update %1 from %2 channel is available!").arg(availableUpdates.at(latestVersion).version).arg(availableUpdates.at(latestVersion).channel)));
 		notification->setData(QVariant::fromValue<QList<UpdateInformation> >(availableUpdates));
 
 		connect(notification, SIGNAL(clicked()), this, SLOT(showUpdateDetails()));
@@ -636,18 +636,18 @@ void Application::updateCheckFinished(const QList<UpdateInformation> &availableU
 
 void Application::showUpdateDetails()
 {
-	Notification *notification = dynamic_cast<Notification*>(sender());
+	Notification *notification(dynamic_cast<Notification*>(sender()));
 
 	if (notification)
 	{
-		UpdateCheckerDialog *dialog = new UpdateCheckerDialog(NULL, notification->getData().value<QList<UpdateInformation> >());
+		UpdateCheckerDialog *dialog(new UpdateCheckerDialog(NULL, notification->getData().value<QList<UpdateInformation> >()));
 		dialog->show();
 	}
 }
 
 void Application::newWindow(bool isPrivate, bool inBackground, const QUrl &url)
 {
-	MainWindow *window = createWindow((isPrivate ? PrivateFlag : NoFlags), inBackground);
+	MainWindow *window(createWindow((isPrivate ? PrivateFlag : NoFlags), inBackground));
 
 	if (url.isValid() && window)
 	{
@@ -664,7 +664,7 @@ void Application::setHidden(bool hidden)
 
 	m_isHidden = hidden;
 
-	const QList<MainWindow*> windows = SessionsManager::getWindows();
+	const QList<MainWindow*> windows(SessionsManager::getWindows());
 
 	for (int i = 0; i < windows.count(); ++i)
 	{
@@ -698,7 +698,7 @@ void Application::setLocale(const QString &locale)
 		installTranslator(m_applicationTranslator);
 	}
 
-	const QString identifier = (locale.endsWith(QLatin1String(".qm")) ? QFileInfo(locale).baseName().remove(QLatin1String("otter-browser_")) : ((locale == QLatin1String("system")) ? QLocale::system().name() : locale));
+	const QString identifier(locale.endsWith(QLatin1String(".qm")) ? QFileInfo(locale).baseName().remove(QLatin1String("otter-browser_")) : ((locale == QLatin1String("system")) ? QLocale::system().name() : locale));
 
 	m_qtTranslator->load(QLatin1String("qt_") + ((locale.isEmpty() || locale == QLatin1String("system")) ? QLocale::system().name() : identifier), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
 	m_applicationTranslator->load((locale.endsWith(QLatin1String(".qm")) ? locale : QLatin1String("otter-browser_") + ((locale.isEmpty() || locale == QLatin1String("system")) ? QLocale::system().name() : locale)), m_localePath);
@@ -898,9 +898,9 @@ QList<MainWindow*> Application::getWindows() const
 
 bool Application::canClose()
 {
-	const QList<Transfer*> transfers = TransfersManager::getTransfers();
-	int runningTransfers = 0;
-	bool transfersDialog = false;
+	const QList<Transfer*> transfers(TransfersManager::getTransfers());
+	int runningTransfers(0);
+	bool transfersDialog(false);
 
 	for (int i = 0; i < transfers.count(); ++i)
 	{
@@ -921,8 +921,8 @@ bool Application::canClose()
 		messageBox.setDefaultButton(QMessageBox::Cancel);
 		messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
 
-		QPushButton *hideButton = messageBox.addButton(tr("Hide"), QMessageBox::ActionRole);
-		const int result = messageBox.exec();
+		QPushButton *hideButton(messageBox.addButton(tr("Hide"), QMessageBox::ActionRole));
+		const int result(messageBox.exec());
 
 		SettingsManager::setValue(QLatin1String("Choices/WarnQuitTransfers"), !messageBox.checkBox()->isChecked());
 
@@ -945,11 +945,11 @@ bool Application::canClose()
 		}
 	}
 
-	const QString warnQuitMode = SettingsManager::getValue(QLatin1String("Choices/WarnQuit")).toString();
+	const QString warnQuitMode(SettingsManager::getValue(QLatin1String("Choices/WarnQuit")).toString());
 
 	if (!transfersDialog && warnQuitMode != QLatin1String("noWarn"))
 	{
-		int tabsAmount = 0;
+		int tabsAmount(0);
 
 		for (int i = 0; i < m_windows.count(); ++i)
 		{
@@ -970,8 +970,8 @@ bool Application::canClose()
 			messageBox.setDefaultButton(QMessageBox::Yes);
 			messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
 
-			QPushButton *hideButton = messageBox.addButton(tr("Hide"), QMessageBox::ActionRole);
-			const int result = messageBox.exec();
+			QPushButton *hideButton(messageBox.addButton(tr("Hide"), QMessageBox::ActionRole));
+			const int result(messageBox.exec());
 
 			if (messageBox.checkBox()->isChecked())
 			{
