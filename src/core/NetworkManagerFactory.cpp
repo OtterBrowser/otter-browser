@@ -110,7 +110,7 @@ void NetworkManagerFactory::optionChanged(const QString &option, const QVariant 
 	}
 	else if (option == QLatin1String("Network/DoNotTrackPolicy"))
 	{
-		const QString policyValue = value.toString();
+		const QString policyValue(value.toString());
 
 		if (policyValue == QLatin1String("allow"))
 		{
@@ -146,7 +146,7 @@ void NetworkManagerFactory::optionChanged(const QString &option, const QVariant 
 			return;
 		}
 
-		const QStringList selectedCiphers = value.toStringList();
+		const QStringList selectedCiphers(value.toStringList());
 		QList<QSslCipher> ciphers;
 
 		for (int i = 0; i < selectedCiphers.count(); ++i)
@@ -184,7 +184,7 @@ void NetworkManagerFactory::clearCache(int period)
 void NetworkManagerFactory::loadUserAgents()
 {
 	const QSettings settings(SessionsManager::getReadableDataPath(QLatin1String("userAgents.ini")), QSettings::IniFormat);
-	const QStringList userAgentsOrder = settings.childGroups();
+	const QStringList userAgentsOrder(settings.childGroups());
 	QMap<QString, UserAgentInformation> userAgents;
 
 	for (int i = 0; i < userAgentsOrder.count(); ++i)
