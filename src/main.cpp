@@ -73,9 +73,9 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 
-	const QString session = (application.getCommandLineParser()->value(QLatin1String("session")).isEmpty() ? QLatin1String("default") : application.getCommandLineParser()->value(QLatin1String("session")));
-	const QString startupBehavior = SettingsManager::getValue(QLatin1String("Browser/StartupBehavior")).toString();
-	const bool isPrivate = application.getCommandLineParser()->isSet(QLatin1String("privatesession"));
+	const QString session(application.getCommandLineParser()->value(QLatin1String("session")).isEmpty() ? QLatin1String("default") : application.getCommandLineParser()->value(QLatin1String("session")));
+	const QString startupBehavior(SettingsManager::getValue(QLatin1String("Browser/StartupBehavior")).toString());
+	const bool isPrivate(application.getCommandLineParser()->isSet(QLatin1String("privatesession")));
 
 	if (!application.getCommandLineParser()->value(QLatin1String("session")).isEmpty() && SessionsManager::getSession(session).isClean)
 	{
@@ -131,11 +131,11 @@ int main(int argc, char *argv[])
 
 	if (!application.getCommandLineParser()->positionalArguments().isEmpty())
 	{
-		MainWindow *window = application.getWindow();
+		MainWindow *window(application.getWindow());
 
 		if (window)
 		{
-			const QStringList urls = application.getCommandLineParser()->positionalArguments();
+			const QStringList urls(application.getCommandLineParser()->positionalArguments());
 
 			for (int i = 0; i < urls.count(); ++i)
 			{

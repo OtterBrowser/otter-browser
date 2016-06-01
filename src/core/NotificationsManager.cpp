@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -99,12 +99,12 @@ void NotificationsManager::createInstance(QObject *parent)
 
 Notification* NotificationsManager::createNotification(int event, const QString &message, Notification::NotificationLevel level, QObject *parent)
 {
-	Notification *notification = new Notification(message, level, event, Application::getInstance());
-	const EventDefinition definition = getEventDefinition(event);
+	Notification *notification(new Notification(message, level, event, Application::getInstance()));
+	const EventDefinition definition(getEventDefinition(event));
 
 	if (!definition.playSound.isEmpty())
 	{
-		QSoundEffect *effect = new QSoundEffect(m_instance);
+		QSoundEffect *effect(new QSoundEffect(m_instance));
 		effect->setSource(QUrl::fromLocalFile(definition.playSound));
 		effect->setLoopCount(1);
 		effect->setVolume(0.5);
@@ -141,7 +141,7 @@ QString NotificationsManager::getEventName(int identifier)
 		return m_identifiers[identifier];
 	}
 
-	QString name = m_instance->metaObject()->enumerator(m_instance->metaObject()->indexOfEnumerator(QLatin1String("EventIdentifier").data())).valueToKey(identifier);
+	QString name(m_instance->metaObject()->enumerator(m_instance->metaObject()->indexOfEnumerator(QLatin1String("EventIdentifier").data())).valueToKey(identifier));
 
 	if (!name.isEmpty())
 	{
@@ -161,7 +161,7 @@ EventDefinition NotificationsManager::getEventDefinition(int identifier)
 	}
 
 	const QSettings notificationsSettings(SessionsManager::getReadableDataPath(QLatin1String("notifications.ini")), QSettings::IniFormat);
-	const QString eventName = getEventName(identifier);
+	const QString eventName(getEventName(identifier));
 
 	m_definitions[identifier].playSound = notificationsSettings.value(eventName + QLatin1String("/playSound"), QString()).toString();
 	m_definitions[identifier].showAlert = notificationsSettings.value(eventName + QLatin1String("/showAlert"), false).toBool();
@@ -190,7 +190,7 @@ QVector<EventDefinition> NotificationsManager::getEventDefinitions()
 
 int NotificationsManager::registerEvent(const QString &title, const QString &description)
 {
-	const int identifier = m_definitions.count();
+	const int identifier(m_definitions.count());
 
 	EventDefinition definition;
 	definition.title = title;

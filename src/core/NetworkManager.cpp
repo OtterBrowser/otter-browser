@@ -49,7 +49,7 @@ NetworkManager::NetworkManager(bool isPrivate, QObject *parent) : QNetworkAccess
 
 		m_cookieJar->setParent(QCoreApplication::instance());
 
-		QNetworkDiskCache *cache = NetworkManagerFactory::getCache();
+		QNetworkDiskCache *cache(NetworkManagerFactory::getCache());
 
 		setCache(cache);
 
@@ -96,7 +96,7 @@ void NetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError
 		return;
 	}
 
-	QStringList ignoredErrors = SettingsManager::getValue(QLatin1String("Security/IgnoreSslErrors"), reply->url()).toStringList();
+	QStringList ignoredErrors(SettingsManager::getValue(QLatin1String("Security/IgnoreSslErrors"), reply->url()).toStringList());
 	QStringList messages;
 	QList<QSslError> errorsToIgnore;
 
