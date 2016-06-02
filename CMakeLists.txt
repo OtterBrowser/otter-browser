@@ -125,7 +125,6 @@ set(otter_src
 	src/core/SpellCheckManager.cpp
 	src/core/ThemesManager.cpp
 	src/core/ToolBarsManager.cpp
-	src/core/Transfer.cpp
 	src/core/TransfersManager.cpp
 	src/core/UpdateChecker.cpp
 	src/core/Updater.cpp

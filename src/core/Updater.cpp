@@ -21,7 +21,7 @@
 #include "Application.h"
 #include "Console.h"
 #include "PlatformIntegration.h"
-#include "Transfer.h"
+#include "TransfersManager.h"
 
 #include <QtCore/QDir>
 #include <QtCore/QtMath>

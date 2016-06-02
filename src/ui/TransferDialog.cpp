@@ -20,7 +20,6 @@
 #include "TransferDialog.h"
 #include "../core/HandlersManager.h"
 #include "../core/ThemesManager.h"
-#include "../core/Transfer.h"
 #include "../core/TransfersManager.h"
 #include "../core/Utils.h"
 

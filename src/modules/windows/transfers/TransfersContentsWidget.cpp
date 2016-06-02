@@ -21,7 +21,7 @@
 #include "ProgressBarDelegate.h"
 #include "../../../core/ActionsManager.h"
 #include "../../../core/ThemesManager.h"
-#include "../../../core/Transfer.h"
+#include "../../../core/TransfersManager.h"
 #include "../../../core/Utils.h"
 
 #include "ui_TransfersContentsWidget.h"
