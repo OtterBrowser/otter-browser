@@ -20,7 +20,7 @@
 #ifndef OTTER_QTWEBENGINETRANSFER_H
 #define OTTER_QTWEBENGINETRANSFER_H
 
-#include "../../../../core/Transfer.h"
+#include "../../../../core/TransfersManager.h"
 
 #include <QtWebEngineWidgets/QWebEngineDownloadItem>
 

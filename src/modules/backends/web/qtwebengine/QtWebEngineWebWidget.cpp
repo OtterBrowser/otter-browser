@@ -29,7 +29,6 @@
 #include "../../../../core/NotesManager.h"
 #include "../../../../core/SearchEnginesManager.h"
 #include "../../../../core/ThemesManager.h"
-#include "../../../../core/Transfer.h"
 #include "../../../../core/TransfersManager.h"
 #include "../../../../core/Utils.h"
 #include "../../../../core/WebBackend.h"
