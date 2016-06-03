@@ -65,8 +65,18 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
+include(CheckCXXCompilerFlag)
 include(FeatureSummary)
 include(GNUInstallDirs)
+
+CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+
+if (COMPILER_SUPPORTS_CXX11)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+elseif (COMPILER_SUPPORTS_CXX0X)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+endif (COMPILER_SUPPORTS_CXX11)
 
 option(ENABLE_QTWEBENGINE "Enable QtWebEngine backend (requires Qt 5.6)" ON)
 option(ENABLE_QTWEBKIT "Enable QtWebKit backend (requires Qt 5.3)" ON)
