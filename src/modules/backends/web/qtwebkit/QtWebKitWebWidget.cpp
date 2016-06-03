@@ -62,7 +62,6 @@
 #include <QtPrintSupport/QPrintPreviewDialog>
 #include <QtWebKit/QWebHistory>
 #include <QtWebKit/QWebElement>
-#include <QtWebKit/QtWebKitVersion>
 #include <QtWebKitWidgets/QWebFrame>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
