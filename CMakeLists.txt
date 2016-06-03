@@ -81,7 +81,7 @@ set_package_properties(Qt5WebEngineCore PROPERTIES URL "http://qt.io/" DESCRIPTI
 set_package_properties(Qt5WebEngineWidgets PROPERTIES URL "http://qt.io/" DESCRIPTION "QtWebEngine based backend (widgets)" TYPE OPTIONAL)
 set_package_properties(Qt5WebKit PROPERTIES URL "http://qt.io/" DESCRIPTION "QtWebKit based backend (core)" TYPE OPTIONAL)
 set_package_properties(Qt5WebKitWidgets PROPERTIES URL "http://qt.io/" DESCRIPTION "QtWebKit based backend (widgets)" TYPE OPTIONAL)
-set_package_properties(GCrypt PROPERTIES URL "http://directory.fsf.org/project/libgcrypt/" DESCRIPTION "Data encryption support" TYPE OPTIONAL)
+set_package_properties(Gcrypt PROPERTIES URL "http://directory.fsf.org/project/libgcrypt/" DESCRIPTION "Data encryption support" TYPE OPTIONAL)
 set_package_properties(Hunspell PROPERTIES URL "http://hunspell.github.io/" DESCRIPTION "Generic spell checking support" TYPE OPTIONAL)
 
 set(otter_src
@@ -500,7 +500,7 @@ else (${OTTER_BACKENDS_WEB_LENGTH} EQUAL 0)
 	set(OTTER_BACKENDS_WEB_SUMMARY "The following web backends will be built:\n")
 
 	foreach(_backend ${OTTER_BACKENDS_WEB})
-		set(OTTER_BACKENDS_WEB_SUMMARY "${OTTER_BACKENDS_WEB_SUMMARY}* ${_backend}\n")
+		set(OTTER_BACKENDS_WEB_SUMMARY "${OTTER_BACKENDS_WEB_SUMMARY} * ${_backend}\n")
 	endforeach(_backend)
 
 	message(STATUS ${OTTER_BACKENDS_WEB_SUMMARY})
