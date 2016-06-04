@@ -1635,6 +1635,31 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 	}
 
 	const int index(qMin(history.index, (m_webView->history()->maximumItemCount() - 1)));
+
+#ifdef OTTER_ENABLE_QTWEBKITNG
+	QVariantList entries;
+
+	for (int i = 0; i < history.entries.count(); ++i)
+	{
+		QVariantMap position;
+		position[QLatin1String("x")] = history.entries.at(i).position.x();
+		position[QLatin1String("y")] = history.entries.at(i).position.y();
+
+		QVariantMap entry;
+		entry[QLatin1String("pageScaleFactor")] = (history.entries.at(i).zoom / qreal(100));
+		entry[QLatin1String("title")] = history.entries.at(i).title;
+		entry[QLatin1String("urlString")] = history.entries.at(i).url;
+		entry[QLatin1String("scrollPosition")] = position;
+
+		entries.append(entry);
+	}
+
+	QVariantMap map;
+	map[QLatin1String("currentItemIndex")] = index;
+	map[QLatin1String("history")] = entries;
+
+	m_webView->page()->history()->loadFromMap(map);
+#else
 	qint64 documentSequence(0);
 	qint64 itemSequence(0);
 	QByteArray data;
@@ -1648,6 +1673,7 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 
 	stream.device()->reset();
 	stream >> *(m_webView->page()->history());
+#endif
 
 	for (int i = 0; i < history.entries.count(); ++i)
 	{
@@ -1670,6 +1696,20 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 	m_webView->page()->triggerAction(QWebPage::Reload);
 }
 
+#ifdef OTTER_ENABLE_QTWEBKITNG
+void QtWebKitWebWidget::setHistory(const QVariantMap &history)
+{
+	m_webView->page()->history()->loadFromMap(history);
+
+	const QUrl url(m_webView->page()->history()->currentItem().url());
+
+	setRequestedUrl(url, false, true);
+	updateOptions(url);
+	updatePageActions(url);
+
+	m_webView->page()->triggerAction(QWebPage::Reload);
+}
+#else
 void QtWebKitWebWidget::setHistory(QDataStream &stream)
 {
 	stream.device()->reset();
@@ -1683,6 +1723,7 @@ void QtWebKitWebWidget::setHistory(QDataStream &stream)
 
 	m_webView->page()->triggerAction(QWebPage::Reload);
 }
+#endif
 
 void QtWebKitWebWidget::setZoom(int zoom)
 {
@@ -1812,11 +1853,15 @@ WebWidget* QtWebKitWebWidget::clone(bool cloneHistory, bool isPrivate)
 
 	if (cloneHistory)
 	{
+#ifdef OTTER_ENABLE_QTWEBKITNG
+		widget->setHistory(m_webView->page()->history()->toMap());
+#else
 		QByteArray data;
 		QDataStream stream(&data, QIODevice::ReadWrite);
 		stream << *(m_webView->page()->history());
 
 		widget->setHistory(stream);
+#endif
 	}
 
 	widget->setZoom(getZoom());

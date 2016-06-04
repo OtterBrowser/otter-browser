@@ -113,7 +113,11 @@ protected:
 	void pasteText(const QString &text);
 	void startDelayedTransfer(Transfer *transfer);
 	void handleHistory();
+#ifdef OTTER_ENABLE_QTWEBKITNG
+	void setHistory(const QVariantMap &history);
+#else
 	void setHistory(QDataStream &stream);
+#endif
 	void setOptions(const QVariantHash &options);
 	QWebPage* getPage();
 	QString getPasswordToken() const;
