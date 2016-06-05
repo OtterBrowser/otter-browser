@@ -37,11 +37,13 @@ public:
 
 protected:
 	void childEvent(QChildEvent *event);
+#ifndef OTTER_ENABLE_QTWEBKITNG
 	void showEvent(QShowEvent *event);
 	void resizeEvent(QResizeEvent *event);
 
 protected slots:
 	void hideInspector();
+#endif
 
 private:
 	QtWebKitWebWidget *m_widget;

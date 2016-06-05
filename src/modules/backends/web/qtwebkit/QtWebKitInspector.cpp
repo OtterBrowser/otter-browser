@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 -2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -26,10 +26,15 @@ namespace Otter
 
 QtWebKitInspector::QtWebKitInspector(QtWebKitWebWidget *parent) : QWebInspector(parent),
 	m_widget(parent),
+#ifdef OTTER_ENABLE_QTWEBKITNG
+	m_closeButton(NULL)
+#else
 	m_closeButton(new QToolButton(this))
+#endif
 {
 	setMinimumHeight(200);
 
+#ifndef OTTER_ENABLE_QTWEBKITNG
 	m_closeButton->setAutoFillBackground(false);
 	m_closeButton->setAutoRaise(true);
 	m_closeButton->setIcon(ThemesManager::getIcon(QLatin1String("window-close")));
@@ -40,6 +45,7 @@ QtWebKitInspector::QtWebKitInspector(QtWebKitWebWidget *parent) : QWebInspector(
 	m_closeButton->move(QPoint((width() - 19), 3));
 
 	connect(m_closeButton, SIGNAL(clicked()), this, SLOT(hideInspector()));
+#endif
 }
 
 void QtWebKitInspector::childEvent(QChildEvent *event)
@@ -57,6 +63,7 @@ void QtWebKitInspector::childEvent(QChildEvent *event)
 	}
 }
 
+#ifndef OTTER_ENABLE_QTWEBKITNG
 void QtWebKitInspector::showEvent(QShowEvent *event)
 {
 	QWebInspector::showEvent(event);
@@ -80,5 +87,6 @@ void QtWebKitInspector::hideInspector()
 
 	m_widget->triggerAction(ActionsManager::InspectPageAction, parameters);
 }
+#endif
 
 }
