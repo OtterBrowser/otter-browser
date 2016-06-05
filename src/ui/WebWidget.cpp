@@ -1419,6 +1419,18 @@ QHash<QByteArray, QByteArray> WebWidget::getHeaders() const
 	return QHash<QByteArray, QByteArray>();
 }
 
+WebWidget::HitTestResult WebWidget::getCurrentHitTestResult() const
+{
+	return m_hitResult;
+}
+
+WebWidget::HitTestResult WebWidget::getHitTestResult(const QPoint &position)
+{
+	Q_UNUSED(position)
+
+	return HitTestResult();
+}
+
 WindowsManager::ContentStates WebWidget::getContentState() const
 {
 	const QUrl url(getUrl());
@@ -1436,16 +1448,9 @@ WindowsManager::ContentStates WebWidget::getContentState() const
 	return WindowsManager::RemoteContentState;
 }
 
-WebWidget::HitTestResult WebWidget::getCurrentHitTestResult() const
+WebWidget::SaveFormats WebWidget::getSupportedSaveFormats() const
 {
-	return m_hitResult;
-}
-
-WebWidget::HitTestResult WebWidget::getHitTestResult(const QPoint &position)
-{
-	Q_UNUSED(position)
-
-	return HitTestResult();
+	return SingleHtmlFileSaveFormat;
 }
 
 quint64 WebWidget::getWindowIdentifier() const

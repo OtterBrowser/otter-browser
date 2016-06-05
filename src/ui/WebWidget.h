@@ -83,6 +83,16 @@ public:
 
 	Q_DECLARE_FLAGS(HitTestFlags, HitTestFlag)
 
+	enum SaveFormat
+	{
+		UnknownSaveFormat = 0,
+		SingleHtmlFileSaveFormat = 1,
+		CompletePageSaveFormat = 2,
+		MhtmlSaveFormat = 4
+	};
+
+	Q_DECLARE_FLAGS(SaveFormats, SaveFormat)
+
 	struct HitTestResult
 	{
 		QString title;
@@ -102,8 +112,8 @@ public:
 
 		explicit HitTestResult(const QVariant &result)
 		{
-			const QVariantMap map = result.toMap();
-			const QVariantMap geometryMap = map.value(QLatin1String("geometry")).toMap();
+			const QVariantMap map(result.toMap());
+			const QVariantMap geometryMap(map.value(QLatin1String("geometry")).toMap());
 
 			title = map.value(QLatin1String("title")).toString();
 			tagName = map.value(QLatin1String("tagName")).toString();
@@ -198,6 +208,7 @@ protected:
 	QString suggestSaveFileName() const;
 	HitTestResult getCurrentHitTestResult() const;
 	virtual QList<SpellCheckManager::DictionaryInformation> getDictionaries() const;
+	virtual SaveFormats getSupportedSaveFormats() const;
 	virtual int getAmountOfNotLoadedPlugins() const;
 	virtual bool canGoBack() const;
 	virtual bool canGoForward() const;
