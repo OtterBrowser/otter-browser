@@ -267,7 +267,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 	{
 		case ActionsManager::SaveAction:
 			{
-				const QString path(TransfersManager::getSavePath(suggestSaveFileName()));
+				const QString path(TransfersManager::getSavePath(suggestSaveFileName(SingleHtmlFileSaveFormat)));
 
 				if (!path.isEmpty())
 				{

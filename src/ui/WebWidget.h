@@ -86,9 +86,9 @@ public:
 	enum SaveFormat
 	{
 		UnknownSaveFormat = 0,
-		SingleHtmlFileSaveFormat = 1,
-		CompletePageSaveFormat = 2,
-		MhtmlSaveFormat = 4
+		CompletePageSaveFormat = 1,
+		MhtmlSaveFormat = 2,
+		SingleHtmlFileSaveFormat = 4
 	};
 
 	Q_DECLARE_FLAGS(SaveFormats, SaveFormat)
@@ -205,7 +205,7 @@ protected:
 	void updateHitTestResult(const QPoint &position);
 	void setClickPosition(const QPoint &position);
 	Action* getExistingAction(int identifier);
-	QString suggestSaveFileName() const;
+	QString suggestSaveFileName(SaveFormat format) const;
 	HitTestResult getCurrentHitTestResult() const;
 	virtual QList<SpellCheckManager::DictionaryInformation> getDictionaries() const;
 	virtual SaveFormats getSupportedSaveFormats() const;

@@ -1311,10 +1311,25 @@ WebBackend* WebWidget::getBackend()
 	return m_backend;
 }
 
-QString WebWidget::suggestSaveFileName() const
+QString WebWidget::suggestSaveFileName(SaveFormat format) const
 {
 	const QUrl url(getUrl());
 	QString fileName(url.fileName());
+	QString extension;
+
+	switch (format)
+	{
+		case MhtmlSaveFormat:
+			extension = QLatin1String(".mht");
+
+			break;
+		case SingleHtmlFileSaveFormat:
+			extension = QLatin1String(".html");
+
+			break;
+		default:
+			break;
+	}
 
 	if (fileName.isEmpty() && !url.path().isEmpty() && url.path() != QLatin1String("/"))
 	{
@@ -1323,17 +1338,17 @@ QString WebWidget::suggestSaveFileName() const
 
 	if (fileName.isEmpty() && !url.host().isEmpty())
 	{
-		fileName = url.host() + QLatin1String(".html");
+		fileName = url.host() + extension;
 	}
 
 	if (fileName.isEmpty())
 	{
-		fileName = QLatin1String("file.html");
+		fileName = QLatin1String("file") + extension;
 	}
 
-	if (!fileName.contains(QLatin1Char('.')))
+	if (!fileName.contains(QLatin1Char('.')) && !extension.isEmpty())
 	{
-		fileName.append(QLatin1String(".html"));
+		fileName.append(extension);
 	}
 
 	return fileName;
