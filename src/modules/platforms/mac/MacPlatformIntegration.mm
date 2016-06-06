@@ -21,7 +21,6 @@
 #include "../../../core/Application.h"
 #include "../../../core/NotificationsManager.h"
 #include "../../../core/SettingsManager.h"
-#include "../../../core/Transfer.h"
 #include "../../../core/TransfersManager.h"
 
 #include <QtCore/QDateTime>
