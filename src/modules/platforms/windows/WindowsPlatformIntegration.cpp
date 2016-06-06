@@ -21,7 +21,6 @@
 #include "../../../core/Application.h"
 #include "../../../core/Console.h"
 #include "../../../core/NotificationsManager.h"
-#include "../../../core/Transfer.h"
 #include "../../../core/TransfersManager.h"
 #include "../../../core/Utils.h"
 #include "../../../ui/MainWindow.h"
