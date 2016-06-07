@@ -129,7 +129,7 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="64"/>
         <source>Unknown [%1]</source>
-        <translation type="unfinished"/>
+        <translation>Nepoznato [%1]</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="75"/>
@@ -151,7 +151,7 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="152"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Nepoznato</translation>
     </message>
 </context>
 <context>
@@ -159,12 +159,12 @@
     <message>
         <location filename="../../src/ui/ActionComboBoxWidget.cpp" line="87"/>
         <source>Select Action</source>
-        <translation type="unfinished"/>
+        <translation>Odaberi radnju</translation>
     </message>
     <message>
         <location filename="../../src/ui/ActionComboBoxWidget.cpp" line="132"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Traži...</translation>
     </message>
 </context>
 <context>
@@ -172,7 +172,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Traži...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="80"/>
@@ -182,7 +182,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="102"/>
         <source>Select File</source>
-        <translation type="unfinished"/>
+        <translation>Odaberi datoteku</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="102"/>
@@ -193,7 +193,7 @@
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="113"/>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="120"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Greška</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="113"/>
@@ -208,17 +208,17 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="233"/>
         <source>Remove Addon…</source>
-        <translation type="unfinished"/>
+        <translation>Ukloni dodatak...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="237"/>
         <source>Add Addon…</source>
-        <translation type="unfinished"/>
+        <translation>Dodaj dodatak...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="306"/>
         <source>Addons Manager</source>
-        <translation type="unfinished"/>
+        <translation>Upravitelj dodacima</translation>
     </message>
 </context>
 <context>
@@ -226,12 +226,12 @@
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="76"/>
         <source>Addons Manager</source>
-        <translation type="unfinished"/>
+        <translation>Upravitelj dodacima</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="77"/>
         <source>Bookmarks Manager</source>
-        <translation type="unfinished"/>
+        <translation>Upravitelj zabilješkama</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="78"/>
@@ -241,27 +241,27 @@
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="79"/>
         <source>Configuration Manager</source>
-        <translation type="unfinished"/>
+        <translation>Upravitelj konfiguracijom</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="80"/>
         <source>Cookies Manager</source>
-        <translation type="unfinished"/>
+        <translation>Upravitelj kolačićima</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="81"/>
         <source>History Manager</source>
-        <translation type="unfinished"/>
+        <translation>Upravitelj povijesti</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="82"/>
         <source>Notes Manager</source>
-        <translation type="unfinished"/>
+        <translation>Upravitelj bilješkama</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="83"/>
         <source>Transfers Manager</source>
-        <translation type="unfinished"/>
+        <translation>Upravitelj prijenosima</translation>
     </message>
 </context>
 <context>
@@ -269,27 +269,27 @@
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="87"/>
         <source>Search with %1</source>
-        <translation type="unfinished"/>
+        <translation>Traži pomoću %1</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="104"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Zabilješke</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="138"/>
         <source>Local files</source>
-        <translation type="unfinished"/>
+        <translation>Lokalne datoteke</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="154"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>Povijest</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="176"/>
         <source>Special pages</source>
-        <translation type="unfinished"/>
+        <translation>Posebne stranice</translation>
     </message>
 </context>
 <context>
@@ -368,7 +368,7 @@
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1036"/>
         <source>Show Website Information</source>
-        <translation type="unfinished"/>
+        <translation>Pokaži informacije o web stranici</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1132"/>
@@ -430,7 +430,7 @@ This may lead to malfunctions or even data loss.</source>
     <message>
         <location filename="../../src/core/Application.cpp" line="293"/>
         <source>Ignore</source>
-        <translation type="unfinished"/>
+        <translation>Ignoriraj</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="294"/>
@@ -558,7 +558,7 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="71"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Novi...</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="96"/>
@@ -749,42 +749,42 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Naslov</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Address</source>
-        <translation type="unfinished"/>
+        <translation>Adresa</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>Opis</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Keyword</source>
-        <translation type="unfinished"/>
+        <translation>Ključna riječ</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Added</source>
-        <translation type="unfinished"/>
+        <translation>Dodano</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Modified</source>
-        <translation type="unfinished"/>
+        <translation>Izmjenjeno</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Visited</source>
-        <translation type="unfinished"/>
+        <translation>Posjećeno</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Visits</source>
-        <translation type="unfinished"/>
+        <translation>Posjete</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
@@ -1069,7 +1069,7 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="42"/>
         <source>Export…</source>
-        <translation type="unfinished"/>
+        <translation>Izvezi...</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="46"/>
@@ -1085,12 +1085,12 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
         <location filename="../../src/ui/CertificateDialog.cpp" line="60"/>
         <location filename="../../src/ui/CertificateDialog.cpp" line="443"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Nepoznato</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="112"/>
         <source>Select File</source>
-        <translation type="unfinished"/>
+        <translation>Odaberi datoteku</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="112"/>
@@ -1100,12 +1100,12 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="120"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Greška</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="120"/>
         <source>Failed to open file for writing.</source>
-        <translation type="unfinished"/>
+        <translation>Neuspjelo otvaranje datoteke za pisanje.</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="177"/>
@@ -1218,17 +1218,17 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="341"/>
         <source>Value:</source>
-        <translation type="unfinished"/>
+        <translation>Vrijednost:</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="395"/>
         <source>Version</source>
-        <translation type="unfinished"/>
+        <translation>Verzija</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="399"/>
         <source>Serial Number</source>
-        <translation type="unfinished"/>
+        <translation>Serijski broj</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="403"/>
@@ -1248,12 +1248,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="415"/>
         <source>Not Before</source>
-        <translation type="unfinished"/>
+        <translation>Ne prije</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="419"/>
         <source>Not After</source>
-        <translation type="unfinished"/>
+        <translation>Ne poslije</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="423"/>
@@ -1268,7 +1268,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="431"/>
         <source>Algorithm</source>
-        <translation type="unfinished"/>
+        <translation>Algoritam</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="435"/>
@@ -1369,24 +1369,24 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ColorWidget.cpp" line="34"/>
         <source>Select Color…</source>
-        <translation type="unfinished"/>
+        <translation>Odaberi boju...</translation>
     </message>
     <message>
         <location filename="../../src/ui/ColorWidget.cpp" line="35"/>
         <source>Copy Color</source>
-        <translation type="unfinished"/>
+        <translation>Kopiraj boju</translation>
     </message>
     <message>
         <location filename="../../src/ui/ColorWidget.cpp" line="37"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Očisti</translation>
     </message>
     <message>
         <location filename="../../src/ui/ColorWidget.cpp" line="40"/>
         <location filename="../../src/ui/ColorWidget.cpp" line="41"/>
         <location filename="../../src/ui/ColorWidget.cpp" line="77"/>
         <source>Invalid</source>
-        <translation type="unfinished"/>
+        <translation>Neispravno</translation>
     </message>
 </context>
 <context>
@@ -1476,17 +1476,17 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="43"/>
         <source>All Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Sve kartice</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="48"/>
         <source>Current Tab Only</source>
-        <translation type="unfinished"/>
+        <translation>Samo trenutna kartica</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="54"/>
         <source>Other Sources</source>
-        <translation type="unfinished"/>
+        <translation>Ostali izvori</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="262"/>
@@ -1688,25 +1688,25 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="26"/>
         <source>Always ACCEPT third-party cookies from:</source>
-        <translation type="unfinished"/>
+        <translation>Uvijek PRIHVATI kolačiće treće strane od:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="44"/>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="106"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Dodaj</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="51"/>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="113"/>
         <source>Edit</source>
-        <translation type="unfinished"/>
+        <translation>Uredi</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="58"/>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="120"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Ukloni</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="88"/>
@@ -1818,12 +1818,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ItemViewWidget.cpp" line="84"/>
         <source>Visible Columns</source>
-        <translation type="unfinished"/>
+        <translation>Vidljivi stupci</translation>
     </message>
     <message>
         <location filename="../../src/ui/ItemViewWidget.cpp" line="92"/>
         <source>Show All</source>
-        <translation type="unfinished"/>
+        <translation>Pokaži sve</translation>
     </message>
 </context>
 <context>
@@ -1971,34 +1971,34 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="34"/>
         <source>Select From File…</source>
-        <translation type="unfinished"/>
+        <translation>Odaberi iz datoteke...</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="35"/>
         <source>Select From Theme…</source>
-        <translation type="unfinished"/>
+        <translation>Odaberi iz teme...</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="37"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Očisti</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="40"/>
         <location filename="../../src/ui/IconWidget.cpp" line="68"/>
         <location filename="../../src/ui/IconWidget.cpp" line="95"/>
         <source>Select Icon</source>
-        <translation type="unfinished"/>
+        <translation>Odaberi ikonu</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="68"/>
         <source>Images (*.png *.jpg *.bmp *.gif *.ico)</source>
-        <translation type="unfinished"/>
+        <translation>Slike (*.png *.jpg *.bmp *.gif *.ico)</translation>
     </message>
     <message>
         <location filename="../../src/ui/IconWidget.cpp" line="95"/>
         <source>Icon Name:</source>
-        <translation type="unfinished"/>
+        <translation>Ime ikone:</translation>
     </message>
 </context>
 <context>
@@ -2177,7 +2177,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="14"/>
         <source>Profile Configuration</source>
-        <translation type="unfinished"/>
+        <translation>Konfiguracija profila</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="24"/>
@@ -2217,22 +2217,22 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="155"/>
         <source>Version:</source>
-        <translation type="unfinished"/>
+        <translation>Verzija:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="165"/>
         <source>Author:</source>
-        <translation type="unfinished"/>
+        <translation>Autor:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="41"/>
         <source>Action</source>
-        <translation type="unfinished"/>
+        <translation>Radnja</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="125"/>
         <source>Shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Kratica</translation>
     </message>
 </context>
 <context>
@@ -2306,7 +2306,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="677"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;web preglednik kontrolira korisnik, a ne obrnuto.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="683"/>
@@ -2356,12 +2356,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="105"/>
         <source>Import Opera Search Engines…</source>
-        <translation type="unfinished"/>
+        <translation>Uvezi Opera tražilice...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="107"/>
         <source>Import Opera Session…</source>
-        <translation type="unfinished"/>
+        <translation>Uvezi Opera sesiju...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="197"/>
@@ -2473,7 +2473,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="14"/>
         <source>Profile Configuration</source>
-        <translation type="unfinished"/>
+        <translation>Konfiguracija profila</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="24"/>
@@ -2515,37 +2515,37 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="208"/>
         <source>Version:</source>
-        <translation type="unfinished"/>
+        <translation>Verzija:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="218"/>
         <source>Author:</source>
-        <translation type="unfinished"/>
+        <translation>Autor:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="39"/>
         <source>Context and Steps</source>
-        <translation type="unfinished"/>
+        <translation>Kontekst i koraci</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="39"/>
         <source>Action</source>
-        <translation type="unfinished"/>
+        <translation>Radnja</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="42"/>
         <source>Step</source>
-        <translation type="unfinished"/>
+        <translation>Korak</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
         <source>Generic</source>
-        <translation type="unfinished"/>
+        <translation>Generički</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
         <source>Link</source>
-        <translation type="unfinished"/>
+        <translation>Poveznica</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
@@ -2570,12 +2570,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
         <source>Any Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Bilo koja alatna traka</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="131"/>
         <source>Select Action</source>
-        <translation type="unfinished"/>
+        <translation>Odaberi radnju</translation>
     </message>
 </context>
 <context>
@@ -2785,17 +2785,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="42"/>
         <source>Opera Session</source>
-        <translation type="unfinished"/>
+        <translation>Opera sesija</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="47"/>
         <source>Imports session from Opera Browser version 12 or earlier</source>
-        <translation type="unfinished"/>
+        <translation>Uvozi sesije iz Opera preglednika verzije 12 ili ranije</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="57"/>
         <source>Opera session files (*.win)</source>
-        <translation type="unfinished"/>
+        <translation>Opera datoteke sesije  (*.win)</translation>
     </message>
 </context>
 <context>
@@ -2803,12 +2803,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/OptionDelegate.cpp" line="50"/>
         <source>Yes</source>
-        <translation type="unfinished"/>
+        <translation>Da</translation>
     </message>
     <message>
         <location filename="../../src/ui/OptionDelegate.cpp" line="50"/>
         <source>No</source>
-        <translation type="unfinished"/>
+        <translation>Ne</translation>
     </message>
 </context>
 <context>
@@ -2816,12 +2816,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/OptionWidget.cpp" line="51"/>
         <source>No</source>
-        <translation type="unfinished"/>
+        <translation>Ne</translation>
     </message>
     <message>
         <location filename="../../src/ui/OptionWidget.cpp" line="52"/>
         <source>Yes</source>
-        <translation type="unfinished"/>
+        <translation>Da</translation>
     </message>
     <message>
         <location filename="../../src/ui/OptionWidget.cpp" line="262"/>
@@ -2849,7 +2849,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="34"/>
         <source>Do you want to save login data for %1?</source>
-        <translation type="unfinished"/>
+        <translation>Želite li spremiti podatke prijave za %1?</translation>
     </message>
 </context>
 <context>
@@ -2943,12 +2943,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.ui" line="61"/>
         <source>Details</source>
-        <translation type="unfinished"/>
+        <translation>Pojedinosti</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.ui" line="71"/>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Zatvori</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="44"/>
@@ -2978,7 +2978,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="69"/>
         <source>Open All</source>
-        <translation type="unfinished"/>
+        <translation>Otvori sve</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="118"/>
@@ -3011,7 +3011,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="96"/>
         <source>Address Completion</source>
-        <translation type="unfinished"/>
+        <translation>Kompletiranje adrese</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="105"/>
@@ -3312,7 +3312,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1355"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1508"/>
         <source>Clone</source>
-        <translation type="unfinished"/>
+        <translation>Kloniraj</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1429"/>
@@ -3392,7 +3392,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="101"/>
         <source>Columns</source>
-        <translation type="unfinished"/>
+        <translation>Stupci</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="110"/>
@@ -3622,7 +3622,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="233"/>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>Nijedan</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="257"/>
@@ -3637,22 +3637,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="36"/>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>Pitaj</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="37"/>
         <source>Block all</source>
-        <translation type="unfinished"/>
+        <translation>Blokiraj sve</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="38"/>
         <source>Open all</source>
-        <translation type="unfinished"/>
+        <translation>Otvori sve</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="39"/>
         <source>Open all in background</source>
-        <translation type="unfinished"/>
+        <translation>Otvori sve u pozadini</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="54"/>
@@ -3813,32 +3813,32 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="168"/>
         <source>Reuse current tab</source>
-        <translation type="unfinished"/>
+        <translation>Ponovno koristi trenutnu karticu</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="175"/>
         <source>Open new tab next to active</source>
-        <translation type="unfinished"/>
+        <translation>Otvori novu karticu do aktivne</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="184"/>
         <source>When closing tab:</source>
-        <translation type="unfinished"/>
+        <translation>Kad zatvaraš karticu:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="198"/>
         <source>Activate the last active tab</source>
-        <translation type="unfinished"/>
+        <translation>Aktiviraj zadnju aktivnu karticu</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="203"/>
         <source>Activate the next tab</source>
-        <translation type="unfinished"/>
+        <translation>Aktiviraj slijedeću karticu</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="208"/>
         <source>Activate the first tab opened from current tab</source>
-        <translation type="unfinished"/>
+        <translation>Aktiviraj prvu karticu otvorenu iz trenutne kartice</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="224"/>
@@ -3883,7 +3883,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="45"/>
         <source>Show start page</source>
-        <translation type="unfinished"/>
+        <translation>Pokaži početnu stranicu</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="46"/>
@@ -3966,7 +3966,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="263"/>
         <source>Exceptions…</source>
-        <translation type="unfinished"/>
+        <translation>Izuzeci...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="279"/>
@@ -4092,7 +4092,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="150"/>
         <source>Enable search suggestions</source>
-        <translation type="unfinished"/>
+        <translation>Omogući sugestije traženja</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="48"/>
@@ -4174,32 +4174,32 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="70"/>
         <source>Unknown command</source>
-        <translation type="unfinished"/>
+        <translation>Nepoznata naredba</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="136"/>
         <source>Directory Contents</source>
-        <translation type="unfinished"/>
+        <translation>Sadržaj direktorija</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="139"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Ime</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="140"/>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>Vrsta</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="141"/>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>Veličina</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="142"/>
         <source>Date</source>
-        <translation type="unfinished"/>
+        <translation>Nadnevak</translation>
     </message>
 </context>
 <context>
@@ -4518,27 +4518,27 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="14"/>
         <source>Edit Search Engine</source>
-        <translation type="unfinished"/>
+        <translation>Uredi tražilicu</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="22"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>Naslov:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="49"/>
         <source>Change Icon…</source>
-        <translation type="unfinished"/>
+        <translation>Promjeni ikonu...</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="58"/>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>Opis:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="71"/>
         <source>Keyword:</source>
-        <translation type="unfinished"/>
+        <translation>Ključna riječ:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="84"/>
@@ -4553,12 +4553,12 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="117"/>
         <source>Update address:</source>
-        <translation type="unfinished"/>
+        <translation>Ažuriraj adresu:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="129"/>
         <source>Set as default search engine</source>
-        <translation type="unfinished"/>
+        <translation>Postavi kao zadanu tražilicu</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="140"/>
@@ -4569,7 +4569,7 @@ Do you want to overwrite it?</source>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="148"/>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="256"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Adresa:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="161"/>
@@ -4581,7 +4581,7 @@ Do you want to overwrite it?</source>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="176"/>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="284"/>
         <source>POST method</source>
-        <translation type="unfinished"/>
+        <translation>POST metoda</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="217"/>
@@ -4607,7 +4607,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.cpp" line="135"/>
         <source>Language</source>
-        <translation type="unfinished"/>
+        <translation>Jezik</translation>
     </message>
 </context>
 <context>
@@ -4615,7 +4615,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/core/SearchEnginesManager.cpp" line="169"/>
         <source>Manage Search Engines…</source>
-        <translation type="unfinished"/>
+        <translation>Upravljaj tražilicama...</translation>
     </message>
 </context>
 <context>
@@ -4772,7 +4772,7 @@ Jeste li sigurni da ipak želite obnoviti ovu sesiju?</translation>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="220"/>
         <source>Add Web Panel…</source>
-        <translation type="unfinished"/>
+        <translation>Dodaj web ploču</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="281"/>
@@ -4873,12 +4873,12 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="14"/>
         <source>Start Page Preferences</source>
-        <translation type="unfinished"/>
+        <translation>Osobitosti početne stranice</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="20"/>
         <source>Use custom background image</source>
-        <translation type="unfinished"/>
+        <translation>Koristi prilagođenu sliku pozadine</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="66"/>
@@ -4893,7 +4893,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="89"/>
         <source>Color:</source>
-        <translation type="unfinished"/>
+        <translation>Boja:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="109"/>
@@ -4903,7 +4903,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="119"/>
         <source>Automatic</source>
-        <translation type="unfinished"/>
+        <translation>Automatski</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="126"/>
@@ -4928,22 +4928,22 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="39"/>
         <source>Images (*.png *.jpg *.bmp *.gif)</source>
-        <translation type="unfinished"/>
+        <translation>Slike (*.png *.jpg *.bmp *.gif *.ico)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="40"/>
         <source>Best fit</source>
-        <translation type="unfinished"/>
+        <translation>Najbolje pristajanje</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="41"/>
         <source>Center</source>
-        <translation type="unfinished"/>
+        <translation>Centar</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="42"/>
         <source>Stretch</source>
-        <translation type="unfinished"/>
+        <translation>Rašireno</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="43"/>
@@ -5010,7 +5010,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="114"/>
         <source>Begin with start page</source>
-        <translation type="unfinished"/>
+        <translation>Započni sa početnom stranicom</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="124"/>
@@ -5199,18 +5199,18 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="269"/>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation>Sve</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="277"/>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="419"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Nepoznato</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="286"/>
         <source>Show search engine:</source>
-        <translation type="unfinished"/>
+        <translation>Pokaži tražilicu:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="287"/>
@@ -5220,17 +5220,17 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="291"/>
         <source>Custom icon:</source>
-        <translation type="unfinished"/>
+        <translation>Prilagođena ikona:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="292"/>
         <source>Custom text:</source>
-        <translation type="unfinished"/>
+        <translation>Prilagođeni tekst:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="301"/>
         <source>Edit Entry</source>
-        <translation type="unfinished"/>
+        <translation>Uredi unos</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="380"/>
@@ -5404,7 +5404,7 @@ Do you want to save your changes or discard them?</source>
         <location filename="../../src/ui/toolbars/ToolButtonWidget.cpp" line="59"/>
         <location filename="../../src/ui/toolbars/ToolButtonWidget.cpp" line="122"/>
         <source>Menu</source>
-        <translation type="unfinished"/>
+        <translation>Izbornik</translation>
     </message>
 </context>
 <context>
