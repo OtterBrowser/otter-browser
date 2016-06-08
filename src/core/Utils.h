@@ -37,6 +37,12 @@ struct ApplicationInformation
 	QIcon icon;
 };
 
+struct SaveInformation
+{
+	QString path;
+	QString filter;
+};
+
 namespace Utils
 {
 
@@ -51,6 +57,7 @@ QString formatDateTime(const QDateTime &dateTime, const QString &format = QStrin
 QString formatUnit(qint64 value, bool isSpeed = false, int precision = 1, bool appendRaw = false);
 QString normalizePath(const QString &path);
 QUrl normalizeUrl(QUrl url);
+SaveInformation getSavePath(const QString &fileName, QString path = QString(), QStringList filters = QStringList(), bool forceAsk = false);
 QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType);
 bool isUrlEmpty(const QUrl &url);
 

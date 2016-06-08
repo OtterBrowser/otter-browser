@@ -21,11 +21,14 @@
 #include "Utils.h"
 #include "Application.h"
 #include "PlatformIntegration.h"
+#include "TransfersManager.h"
+#include "../ui/MainWindow.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
+#include <QtCore/QMimeDatabase>
 #include <QtCore/QRegularExpression>
 #include <QtCore/QTextStream>
 #include <QtCore/QTime>
@@ -33,6 +36,8 @@
 #include <QtGui/QDesktopServices>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDesktopWidget>
+#include <QtWidgets/QFileDialog>
+#include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
@@ -284,6 +289,88 @@ QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeTy
 	}
 
 	return QList<ApplicationInformation>();
+}
+
+SaveInformation getSavePath(const QString &fileName, QString path, QStringList filters, bool forceAsk)
+{
+	SaveInformation information;
+
+	if (!path.isEmpty())
+	{
+		path.append(QDir::separator() + fileName);
+	}
+
+	if (filters.isEmpty())
+	{
+		QString suffix(QMimeDatabase().suffixForFileName(fileName));
+
+		if (suffix.isEmpty())
+		{
+			suffix = QFileInfo(fileName).suffix();
+		}
+
+		if (!suffix.isEmpty())
+		{
+			filters << QCoreApplication::translate("utils", "%1 files (*.%2)").arg(suffix.toUpper()).arg(suffix);
+		}
+	}
+
+	filters << QCoreApplication::translate("utils", "All files (*)");
+
+	do
+	{
+		if (path.isEmpty() || forceAsk)
+		{
+			QFileDialog dialog(SessionsManager::getActiveWindow(), QCoreApplication::translate("utils", "Save File"), SettingsManager::getValue(QLatin1String("Paths/SaveFile")).toString() + QDir::separator() + fileName);
+			dialog.setNameFilters(filters);
+			dialog.setFileMode(QFileDialog::AnyFile);
+			dialog.setAcceptMode(QFileDialog::AcceptSave);
+
+			if (dialog.exec() == QDialog::Rejected || dialog.selectedFiles().isEmpty())
+			{
+				break;
+			}
+
+			information.filter = dialog.selectedNameFilter();
+
+			path = dialog.selectedFiles().value(0);
+		}
+
+		const bool isExisting(QFile::exists(path));
+
+		if (TransfersManager::isDownloading(QString(), path))
+		{
+			path = QString();
+
+			if (QMessageBox::warning(SessionsManager::getActiveWindow(), QCoreApplication::translate("utils", "Warning"), QCoreApplication::translate("utils", "This path is already used by different download, pick another one."), (QMessageBox::Ok | QMessageBox::Cancel)) == QMessageBox::Cancel)
+			{
+				break;
+			}
+		}
+		else if ((isExisting && !QFileInfo(path).isWritable()) || (!isExisting && !QFileInfo(QFileInfo(path).dir().path()).isWritable()))
+		{
+			path = QString();
+
+			if (QMessageBox::warning(SessionsManager::getActiveWindow(), QCoreApplication::translate("utils", "Warning"), QCoreApplication::translate("utils", "Target path is not writable.\nSelect another one."), (QMessageBox::Ok | QMessageBox::Cancel)) == QMessageBox::Cancel)
+			{
+				break;
+			}
+		}
+		else
+		{
+			break;
+		}
+	}
+	while (true);
+
+	if (!path.isEmpty())
+	{
+		SettingsManager::setValue(QLatin1String("Paths/SaveFile"), QFileInfo(path).dir().canonicalPath());
+	}
+
+	information.path = path;
+
+	return information;
 }
 
 bool isUrlEmpty(const QUrl &url)

@@ -25,12 +25,12 @@
 #include "Utils.h"
 #include "../ui/MainWindow.h"
 
+#include <QtCore/QDir>
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QRegularExpression>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QTemporaryFile>
 #include <QtCore/QTimer>
-#include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
@@ -272,7 +272,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 		{
 			m_isSelectingPath = true;
 
-			path = TransfersManager::getSavePath(fileName, path);
+			path = Utils::getSavePath(fileName, path).path;
 
 			m_isSelectingPath = false;
 
@@ -786,7 +786,7 @@ bool Transfer::setTarget(const QString &target)
 		if (result == QMessageBox::No)
 		{
 			QFileInfo information(target);
-			const QString path(TransfersManager::getSavePath(information.fileName(), information.path(), true));
+			const QString path(Utils::getSavePath(information.fileName(), information.path(), QStringList(), true).path);
 
 			if (path.isEmpty())
 			{
@@ -1082,81 +1082,6 @@ Transfer* TransfersManager::startTransfer(QNetworkReply *reply, const QString &t
 	addTransfer(transfer);
 
 	return transfer;
-}
-
-QString TransfersManager::getSavePath(const QString &fileName, QString path, bool forceAsk)
-{
-	if (!path.isEmpty())
-	{
-		path.append(QDir::separator() + fileName);
-	}
-
-	do
-	{
-		if (path.isEmpty() || forceAsk)
-		{
-			QString suffix(QMimeDatabase().suffixForFileName(fileName));
-
-			if (suffix.isEmpty())
-			{
-				suffix = QFileInfo(fileName).suffix();
-			}
-
-			QStringList filters;
-
-			if (!suffix.isEmpty())
-			{
-				filters << tr("%1 files (*.%2)").arg(suffix.toUpper()).arg(suffix);
-			}
-
-			filters << tr("All files (*)");
-
-			QFileDialog dialog(SessionsManager::getActiveWindow(), tr("Save File"), SettingsManager::getValue(QLatin1String("Paths/SaveFile")).toString() + QDir::separator() + fileName);
-			dialog.setNameFilters(filters);
-			dialog.setFileMode(QFileDialog::AnyFile);
-			dialog.setAcceptMode(QFileDialog::AcceptSave);
-
-			if (dialog.exec() == QDialog::Rejected || dialog.selectedFiles().isEmpty())
-			{
-				break;
-			}
-
-			path = dialog.selectedFiles().value(0);
-		}
-
-		const bool exists(QFile::exists(path));
-
-		if (isDownloading(QString(), path))
-		{
-			path = QString();
-
-			if (QMessageBox::warning(SessionsManager::getActiveWindow(), tr("Warning"), tr("This path is already used by different download, pick another one."), (QMessageBox::Ok | QMessageBox::Cancel)) == QMessageBox::Cancel)
-			{
-				break;
-			}
-		}
-		else if ((exists && !QFileInfo(path).isWritable()) || (!exists && !QFileInfo(QFileInfo(path).dir().path()).isWritable()))
-		{
-			path = QString();
-
-			if (QMessageBox::warning(SessionsManager::getActiveWindow(), tr("Warning"), tr("Target path is not writable.\nSelect another one."), (QMessageBox::Ok | QMessageBox::Cancel)) == QMessageBox::Cancel)
-			{
-				break;
-			}
-		}
-		else
-		{
-			break;
-		}
-	}
-	while (true);
-
-	if (!path.isEmpty())
-	{
-		SettingsManager::setValue(QLatin1String("Paths/SaveFile"), QFileInfo(path).dir().canonicalPath());
-	}
-
-	return path;
 }
 
 QList<Transfer*> TransfersManager::getTransfers()

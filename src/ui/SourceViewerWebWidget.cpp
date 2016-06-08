@@ -24,7 +24,6 @@
 #include "../core/NetworkManager.h"
 #include "../core/NetworkManagerFactory.h"
 #include "../core/NotesManager.h"
-#include "../core/TransfersManager.h"
 #include "../core/Utils.h"
 
 #include <QtCore/QFile>
@@ -70,7 +69,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 	{
 		case ActionsManager::SaveAction:
 			{
-				const QString path(TransfersManager::getSavePath(suggestSaveFileName(SingleHtmlFileSaveFormat)));
+				const QString path(Utils::getSavePath(suggestSaveFileName(SingleHtmlFileSaveFormat)).path);
 
 				if (!path.isEmpty())
 				{

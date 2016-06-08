@@ -194,7 +194,7 @@ void WebWidget::startTransfer(Transfer *transfer)
 			break;
 		case SaveAsTransferMode:
 			{
-				const QString path(TransfersManager::getSavePath(transfer->getSuggestedFileName(), handler.downloadsPath, true));
+				const QString path(Utils::getSavePath(transfer->getSuggestedFileName(), handler.downloadsPath, QStringList(), true).path);
 
 				if (path.isEmpty())
 				{

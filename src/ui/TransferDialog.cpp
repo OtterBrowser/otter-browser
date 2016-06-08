@@ -134,7 +134,7 @@ void TransferDialog::buttonClicked(QAbstractButton *button)
 			dialog = dialog->parentWidget();
 		}
 
-		const QString path(TransfersManager::getSavePath(m_transfer->getSuggestedFileName()));
+		const QString path(Utils::getSavePath(m_transfer->getSuggestedFileName()).path);
 
 		if (path.isEmpty())
 		{

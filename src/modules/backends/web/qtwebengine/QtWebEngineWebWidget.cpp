@@ -267,7 +267,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 	{
 		case ActionsManager::SaveAction:
 			{
-				const QString path(TransfersManager::getSavePath(suggestSaveFileName(SingleHtmlFileSaveFormat)));
+				const QString path(Utils::getSavePath(suggestSaveFileName(SingleHtmlFileSaveFormat)).path);
 
 				if (!path.isEmpty())
 				{
@@ -476,7 +476,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				{
 					const QString imageUrl(m_hitResult.imageUrl.url());
 					const QString imageType(imageUrl.mid(11, (imageUrl.indexOf(QLatin1Char(';')) - 11)));
-					const QString path(TransfersManager::getSavePath(tr("file") + QLatin1Char('.') + imageType));
+					const QString path(Utils::getSavePath(tr("file") + QLatin1Char('.') + imageType).path);
 
 					if (path.isEmpty())
 					{

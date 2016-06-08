@@ -385,7 +385,7 @@ void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
 
 			if (device && device->size() > 0)
 			{
-				const QString path(TransfersManager::getSavePath(request.url().fileName()));
+				const QString path(Utils::getSavePath(request.url().fileName()).path);
 
 				if (path.isEmpty())
 				{
@@ -418,7 +418,7 @@ void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
 		{
 			const QString imageUrl(getCurrentHitTestResult().imageUrl.url());
 			const QString imageType(imageUrl.mid(11, (imageUrl.indexOf(QLatin1Char(';')) - 11)));
-			const QString path(TransfersManager::getSavePath(tr("file") + QLatin1Char('.') + imageType));
+			const QString path(Utils::getSavePath(tr("file") + QLatin1Char('.') + imageType).path);
 
 			if (path.isEmpty())
 			{
@@ -879,7 +879,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 	{
 		case ActionsManager::SaveAction:
 			{
-				const QString path(TransfersManager::getSavePath(suggestSaveFileName(SingleHtmlFileSaveFormat)));
+				const QString path(Utils::getSavePath(suggestSaveFileName(SingleHtmlFileSaveFormat)).path);
 
 				if (!path.isEmpty())
 				{
