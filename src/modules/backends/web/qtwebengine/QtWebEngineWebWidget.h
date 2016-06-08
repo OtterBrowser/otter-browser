@@ -23,7 +23,6 @@
 #include "../../../../ui/WebWidget.h"
 
 #include <QtNetwork/QNetworkReply>
-#include <QtWebEngineWidgets/QWebEngineDownloadItem>
 #include <QtWebEngineWidgets/QWebEngineFullScreenRequest>
 #include <QtWebEngineWidgets/QWebEngineView>
 
@@ -101,7 +100,6 @@ protected:
 protected slots:
 	void pageLoadStarted();
 	void pageLoadFinished();
-	void downloadFile(QWebEngineDownloadItem *item);
 	void linkHovered(const QString &link);
 	void iconReplyFinished();
 	void viewSourceReplyFinished(QNetworkReply::NetworkError error = QNetworkReply::NoError);

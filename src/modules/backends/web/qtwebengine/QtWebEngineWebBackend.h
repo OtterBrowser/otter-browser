@@ -23,9 +23,12 @@
 
 #include "../../../../core/WebBackend.h"
 
+#include <QtWebEngineWidgets/QWebEngineDownloadItem>
+
 namespace Otter
 {
 
+class QtWebEnginePage;
 class QtWebEngineUrlRequestInterceptor;
 
 class QtWebEngineWebBackend : public WebBackend
@@ -49,6 +52,7 @@ public:
 
 protected slots:
 	void optionChanged(const QString &option);
+	void downloadFile(QWebEngineDownloadItem *item);
 
 private:
 	QtWebEngineUrlRequestInterceptor *m_requestInterceptor;
@@ -57,6 +61,8 @@ private:
 	static QString m_engineVersion;
 	static QMap<QString, QString> m_userAgentComponents;
 	static QMap<QString, QString> m_userAgents;
+
+friend class QtWebEnginePage;
 };
 
 }

@@ -19,7 +19,6 @@
 
 #include "QtWebEngineWebWidget.h"
 #include "QtWebEnginePage.h"
-#include "QtWebEngineTransfer.h"
 #include "../../../../core/BookmarksManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/GesturesManager.h"
@@ -125,7 +124,6 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	connect(m_page, SIGNAL(featurePermissionRequested(QUrl,QWebEnginePage::Feature)), this, SLOT(handlePermissionRequest(QUrl,QWebEnginePage::Feature)));
 	connect(m_page, SIGNAL(featurePermissionRequestCanceled(QUrl,QWebEnginePage::Feature)), this, SLOT(handlePermissionCancel(QUrl,QWebEnginePage::Feature)));
 	connect(m_page, SIGNAL(viewingMediaChanged(bool)), this, SLOT(updateNavigationActions()));
-	connect(m_page->profile(), SIGNAL(downloadRequested(QWebEngineDownloadItem*)), this, SLOT(downloadFile(QWebEngineDownloadItem*)));
 	connect(m_webView, SIGNAL(titleChanged(QString)), this, SLOT(notifyTitleChanged()));
 	connect(m_webView, SIGNAL(urlChanged(QUrl)), this, SLOT(notifyUrlChanged(QUrl)));
 #if QT_VERSION < 0x050700
@@ -206,11 +204,6 @@ void QtWebEngineWebWidget::pageLoadFinished()
 
 	emit contentStateChanged(getContentState());
 	emit loadingStateChanged(WindowsManager::FinishedLoadingState);
-}
-
-void QtWebEngineWebWidget::downloadFile(QWebEngineDownloadItem *item)
-{
-	startTransfer(new QtWebEngineTransfer(item, (Transfer::CanNotifyOption | (isPrivate() ? Transfer::IsPrivateOption : Transfer::NoOption))));
 }
 
 void QtWebEngineWebWidget::linkHovered(const QString &link)

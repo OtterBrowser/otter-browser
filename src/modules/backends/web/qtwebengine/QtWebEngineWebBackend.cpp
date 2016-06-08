@@ -19,11 +19,15 @@
 **************************************************************************/
 
 #include "QtWebEngineWebBackend.h"
+#include "QtWebEngineTransfer.h"
 #include "QtWebEngineUrlRequestInterceptor.h"
 #include "QtWebEngineWebWidget.h"
+#include "../../../../core/HandlersManager.h"
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
+#include "../../../../core/TransfersManager.h"
 #include "../../../../core/Utils.h"
+#include "../../../../ui/TransferDialog.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
@@ -89,6 +93,71 @@ void QtWebEngineWebBackend::optionChanged(const QString &option)
 	globalSettings->setFontFamily(QWebEngineSettings::FantasyFont, SettingsManager::getValue(QLatin1String("Content/FantasyFont")).toString());
 }
 
+void QtWebEngineWebBackend::downloadFile(QWebEngineDownloadItem *item)
+{
+	QWebEngineProfile *profile(qobject_cast<QWebEngineProfile*>(sender()));
+	QtWebEngineTransfer *transfer(new QtWebEngineTransfer(item, (Transfer::CanNotifyOption | ((profile && profile->isOffTheRecord()) ? Transfer::IsPrivateOption : Transfer::NoOption))));
+
+	if (transfer->getState() == Transfer::CancelledState)
+	{
+		transfer->deleteLater();
+
+		return;
+	}
+
+	const HandlerDefinition handler(HandlersManager::getHandler(transfer->getMimeType().name()));
+
+	switch (handler.transferMode)
+	{
+		case IgnoreTransferMode:
+			transfer->cancel();
+			transfer->deleteLater();
+
+			break;
+		case AskTransferMode:
+			TransferDialog(transfer).exec();
+
+			break;
+		case OpenTransferMode:
+			transfer->setOpenCommand(handler.openCommand);
+
+			TransfersManager::addTransfer(transfer);
+
+			break;
+		case SaveTransferMode:
+			transfer->setTarget(handler.downloadsPath + QDir::separator() + transfer->getSuggestedFileName());
+
+			if (transfer->getState() == Transfer::CancelledState)
+			{
+				TransfersManager::addTransfer(transfer);
+			}
+			else
+			{
+				transfer->deleteLater();
+			}
+
+			break;
+		case SaveAsTransferMode:
+			{
+				const QString path(Utils::getSavePath(transfer->getSuggestedFileName(), handler.downloadsPath, QStringList(), true).path);
+
+				if (path.isEmpty())
+				{
+					transfer->cancel();
+					transfer->deleteLater();
+
+					return;
+				}
+
+				transfer->setTarget(path);
+
+				TransfersManager::addTransfer(transfer);
+			}
+
+			break;
+	}
+}
+
 WebWidget* QtWebEngineWebBackend::createWidget(bool isPrivate, ContentsWidget *parent)
 {
 	if (!m_isInitialized)
@@ -121,6 +190,7 @@ WebWidget* QtWebEngineWebBackend::createWidget(bool isPrivate, ContentsWidget *p
 		optionChanged(QLatin1String("Browser/"));
 
 		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
+		connect(QWebEngineProfile::defaultProfile(), SIGNAL(downloadRequested(QWebEngineDownloadItem*)), this, SLOT(downloadFile(QWebEngineDownloadItem*)));
 	}
 
 	return new QtWebEngineWebWidget(isPrivate, this, parent);
