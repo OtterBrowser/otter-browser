@@ -158,7 +158,7 @@ void CacheContentsWidget::addEntry(const QUrl &entry)
 		{
 			QStandardItem *entryItem(domainItem->child(i, 0));
 
-			if (entry == entryItem->data(Qt::UserRole).toUrl())
+			if (entryItem && entry == entryItem->data(Qt::UserRole).toUrl())
 			{
 				return;
 			}
@@ -209,16 +209,16 @@ void CacheContentsWidget::addEntry(const QUrl &entry)
 	entryItems[3]->setFlags(entryItems[3]->flags() | Qt::ItemNeverHasChildren);
 	entryItems[4]->setFlags(entryItems[4]->flags() | Qt::ItemNeverHasChildren);
 
-	QStandardItem *sizeItem(m_model->item(domainItem->row(), 2));
-
-	if (sizeItem && device)
-	{
-		sizeItem->setData((sizeItem->data(Qt::UserRole).toLongLong() + device->size()), Qt::UserRole);
-		sizeItem->setText(Utils::formatUnit(sizeItem->data(Qt::UserRole).toLongLong()));
-	}
-
 	if (device)
 	{
+		QStandardItem *sizeItem(m_model->item(domainItem->row(), 2));
+
+		if (sizeItem)
+		{
+			sizeItem->setData((sizeItem->data(Qt::UserRole).toLongLong() + device->size()), Qt::UserRole);
+			sizeItem->setText(Utils::formatUnit(sizeItem->data(Qt::UserRole).toLongLong()));
+		}
+
 		device->deleteLater();
 	}
 
@@ -500,9 +500,11 @@ QStandardItem* CacheContentsWidget::findDomain(const QString &domain)
 {
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		if (domain == m_model->item(i, 0)->toolTip())
+		QStandardItem *domainItem(m_model->item(i, 0));
+
+		if (domainItem && domain == domainItem->toolTip())
 		{
-			return m_model->item(i, 0);
+			return domainItem;
 		}
 	}
 
