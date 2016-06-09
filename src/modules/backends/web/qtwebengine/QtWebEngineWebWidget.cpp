@@ -259,6 +259,10 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 	switch (identifier)
 	{
 		case ActionsManager::SaveAction:
+#if QT_VERSION >= 0x050700
+			m_page->triggerAction(QWebEnginePage::SavePage);
+#else
+
 			{
 				const QString path(Utils::getSavePath(suggestSaveFileName(SingleHtmlFileSaveFormat)).path);
 
@@ -270,6 +274,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 					new Transfer(request, path, (Transfer::CanAskForPathOption | Transfer::CanAutoDeleteOption | Transfer::CanOverwriteOption | Transfer::IsPrivateOption));
 				}
 			}
+#endif
 
 			return;
 		case ActionsManager::PurgeTabHistoryAction:

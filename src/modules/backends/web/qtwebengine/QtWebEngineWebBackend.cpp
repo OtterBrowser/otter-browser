@@ -95,6 +95,44 @@ void QtWebEngineWebBackend::optionChanged(const QString &option)
 
 void QtWebEngineWebBackend::downloadFile(QWebEngineDownloadItem *item)
 {
+#if QT_VERSION >= 0x050700
+	if (item->savePageFormat() != QWebEngineDownloadItem::UnknownSaveFormat)
+	{
+		QStringList filters;
+		filters << tr("HTML file (*.html *.htm)") << tr("HTML file with all resources (*.html *.htm)") << tr("Web archive (*.mht)");
+
+		const SaveInformation result(Utils::getSavePath(QFileInfo(item->path()).baseName() + QLatin1String(".html"), QString(), filters));
+
+		if (result.path.isEmpty())
+		{
+			item->cancel();
+			item->deleteLater();
+		}
+		else
+		{
+			const int index(filters.indexOf(result.filter));
+
+			if (index == 1)
+			{
+				item->setSavePageFormat(QWebEngineDownloadItem::CompleteHtmlSaveFormat);
+			}
+			else if (index == 2)
+			{
+				item->setSavePageFormat(QWebEngineDownloadItem::MimeHtmlSaveFormat);
+			}
+			else
+			{
+				item->setSavePageFormat(QWebEngineDownloadItem::SingleHtmlSaveFormat);
+			}
+
+			item->setPath(result.path);
+			item->accept();
+		}
+
+		return;
+	}
+#endif
+
 	QWebEngineProfile *profile(qobject_cast<QWebEngineProfile*>(sender()));
 	QtWebEngineTransfer *transfer(new QtWebEngineTransfer(item, (Transfer::CanNotifyOption | ((profile && profile->isOffTheRecord()) ? Transfer::IsPrivateOption : Transfer::NoOption))));
 
