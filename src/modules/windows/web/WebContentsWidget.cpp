@@ -459,47 +459,82 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				m_isTabPreferencesMenuVisible = true;
 
 				QMenu menu;
-				QAction *openAllAction(menu.addAction(tr("Open All Pop-Ups")));
-				openAllAction->setCheckable(true);
-				openAllAction->setData(QLatin1String("openAll"));
+				QMenu *popupsPolicyMenu(menu.addMenu(tr("Pop-Ups")));
+				QAction *openAllPopupsAction(popupsPolicyMenu->addAction(tr("Open All")));
+				openAllPopupsAction->setCheckable(true);
+				openAllPopupsAction->setData(QVariantList({QLatin1String("Content/PopupsPolicy"), QLatin1String("openAll")}));
 
-				QAction *openAllInBackgroundAction(menu.addAction(tr("Open Pop-Ups in Background")));
-				openAllInBackgroundAction->setCheckable(true);
-				openAllInBackgroundAction->setData(QLatin1String("openAllInBackground"));
+				QAction *openAllPopupsInBackgroundAction(popupsPolicyMenu->addAction(tr("Open in Background")));
+				openAllPopupsInBackgroundAction->setCheckable(true);
+				openAllPopupsInBackgroundAction->setData(QVariantList({QLatin1String("Content/PopupsPolicy"), QLatin1String("openAllInBackground")}));
 
-				QAction *blockAllAction(menu.addAction(tr("Block All Pop-Ups")));
-				blockAllAction->setCheckable(true);
-				blockAllAction->setData(QLatin1String("blockAll"));
+				QAction *blockAllPopupsAction(popupsPolicyMenu->addAction(tr("Block All")));
+				blockAllPopupsAction->setCheckable(true);
+				blockAllPopupsAction->setData(QVariantList({QLatin1String("Content/PopupsPolicy"), QLatin1String("blockAll")}));
 
-				QAction *askAction(menu.addAction(tr("Ask What to Do")));
-				askAction->setCheckable(true);
-				askAction->setData(QLatin1String("ask"));
+				QAction *popupsAskAction(popupsPolicyMenu->addAction(tr("Ask What to Do")));
+				popupsAskAction->setCheckable(true);
+				popupsAskAction->setData(QVariantList({QLatin1String("Content/PopupsPolicy"), QLatin1String("ask")}));
 
-				QActionGroup popupsGroup(this);
-				popupsGroup.setExclusive(true);
-				popupsGroup.addAction(openAllAction);
-				popupsGroup.addAction(openAllInBackgroundAction);
-				popupsGroup.addAction(blockAllAction);
-				popupsGroup.addAction(askAction);
+				QActionGroup popupsPolicyGroup(this);
+				popupsPolicyGroup.setExclusive(true);
+				popupsPolicyGroup.addAction(openAllPopupsAction);
+				popupsPolicyGroup.addAction(openAllPopupsInBackgroundAction);
+				popupsPolicyGroup.addAction(blockAllPopupsAction);
+				popupsPolicyGroup.addAction(popupsAskAction);
 
 				const QString popupsPolicy(m_webWidget->getOption(QLatin1String("Content/PopupsPolicy")).toString());
 
-				for (int i = 0; i < popupsGroup.actions().count(); ++i)
+				for (int i = 0; i < popupsPolicyGroup.actions().count(); ++i)
 				{
-					if (popupsPolicy == popupsGroup.actions().at(i)->data().toString())
+					if (popupsPolicy == popupsPolicyGroup.actions().at(i)->data().toList().value(1).toString())
 					{
-						popupsGroup.actions().at(i)->setChecked(true);
+						popupsPolicyGroup.actions().at(i)->setChecked(true);
 
 						break;
 					}
 				}
 
-				menu.addSeparator();
+				if (!popupsPolicyGroup.checkedAction())
+				{
+					popupsAskAction->setChecked(true);
+				}
 
-				QAction *enableImagesAction(menu.addAction(tr("Enable Images")));
-				enableImagesAction->setCheckable(true);
-				enableImagesAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnableImages")).toString() != QLatin1String("disabled"));
-				enableImagesAction->setData(QLatin1String("Browser/EnableImages"));
+				QMenu *enableImagesMenu(menu.addMenu(tr("Images")));
+				QAction *showAllImagesAction(enableImagesMenu->addAction(tr("All Images")));
+				showAllImagesAction->setCheckable(true);
+				showAllImagesAction->setData(QVariantList({QLatin1String("Browser/EnableImages"), QLatin1String("enabled")}));
+
+				QAction *showCachedImagesAction(enableImagesMenu->addAction(tr("Cached Images")));
+				showCachedImagesAction->setCheckable(true);
+				showCachedImagesAction->setData(QVariantList({QLatin1String("Browser/EnableImages"), QLatin1String("onlyCached")}));
+
+				QAction *noImagesAction(enableImagesMenu->addAction(tr("No Images")));
+				noImagesAction->setCheckable(true);
+				noImagesAction->setData(QVariantList({QLatin1String("Browser/EnableImages"), QLatin1String("disabled")}));
+
+				QActionGroup enableImagesGroup(this);
+				enableImagesGroup.setExclusive(true);
+				enableImagesGroup.addAction(showAllImagesAction);
+				enableImagesGroup.addAction(showCachedImagesAction);
+				enableImagesGroup.addAction(noImagesAction);
+
+				const QString enableImagesPolicy(m_webWidget->getOption(QLatin1String("Browser/EnableImages")).toString());
+
+				for (int i = 0; i < enableImagesGroup.actions().count(); ++i)
+				{
+					if (enableImagesPolicy == enableImagesGroup.actions().at(i)->data().toList().value(1).toString())
+					{
+						enableImagesGroup.actions().at(i)->setChecked(true);
+
+						break;
+					}
+				}
+
+				if (!enableImagesGroup.checkedAction())
+				{
+					showAllImagesAction->setChecked(true);
+				}
 
 				QAction *enableJavaScriptAction(menu.addAction(tr("Enable JavaScript")));
 				enableJavaScriptAction->setCheckable(true);
@@ -511,10 +546,41 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				enableJavaAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnableJava")).toBool());
 				enableJavaAction->setData(QLatin1String("Browser/EnableJava"));
 
-				QAction *enablePluginsAction(menu.addAction(tr("Enable Plugins")));
+				QMenu *enablePluginsMenu(menu.addMenu(tr("Plugins")));
+				QAction *enablePluginsAction(enablePluginsMenu->addAction(tr("Enabled")));
 				enablePluginsAction->setCheckable(true);
-				enablePluginsAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnablePlugins")).toString() == QLatin1String("enabled"));
-				enablePluginsAction->setData(QLatin1String("Browser/EnablePlugins"));
+				enablePluginsAction->setData(QVariantList({QLatin1String("Browser/EnablePlugins"), QLatin1String("enabled")}));
+
+				QAction *onDemandPluginsAction(enablePluginsMenu->addAction(tr("On Demand")));
+				onDemandPluginsAction->setCheckable(true);
+				onDemandPluginsAction->setData(QVariantList({QLatin1String("Browser/EnablePlugins"), QLatin1String("onDemand")}));
+
+				QAction *disablePluginsAction(enablePluginsMenu->addAction(tr("Disabled")));
+				disablePluginsAction->setCheckable(true);
+				disablePluginsAction->setData(QVariantList({QLatin1String("Browser/EnablePlugins"), QLatin1String("disabled")}));
+
+				QActionGroup enablePluginsGroup(this);
+				enablePluginsGroup.setExclusive(true);
+				enablePluginsGroup.addAction(enablePluginsAction);
+				enablePluginsGroup.addAction(onDemandPluginsAction);
+				enablePluginsGroup.addAction(disablePluginsAction);
+
+				const QString enablePluginsPolicy(m_webWidget->getOption(QLatin1String("Browser/EnablePlugins")).toString());
+
+				for (int i = 0; i < enablePluginsGroup.actions().count(); ++i)
+				{
+					if (enablePluginsPolicy == enablePluginsGroup.actions().at(i)->data().toList().value(1).toString())
+					{
+						enablePluginsGroup.actions().at(i)->setChecked(true);
+
+						break;
+					}
+				}
+
+				if (!enablePluginsGroup.checkedAction())
+				{
+					onDemandPluginsAction->setChecked(true);
+				}
 
 				menu.addSeparator();
 
@@ -539,17 +605,11 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				if (triggeredAction && triggeredAction->data().isValid())
 				{
-					if (triggeredAction->data().toString() == QLatin1String("Browser/EnableImages"))
+					if (triggeredAction->data().type() == QVariant::List)
 					{
-						m_webWidget->setOption(QLatin1String("Browser/EnableImages"), (triggeredAction->isChecked() ? QLatin1String("enabled") : QLatin1String("disabled")));
-					}
-					else if (triggeredAction->data().toString() == QLatin1String("Browser/EnablePlugins"))
-					{
-						m_webWidget->setOption(QLatin1String("Browser/EnablePlugins"), (triggeredAction->isChecked() ? QLatin1String("enabled") : QLatin1String("disabled")));
-					}
-					else if (popupsGroup.actions().contains(triggeredAction))
-					{
-						m_webWidget->setOption(QLatin1String("Content/PopupsPolicy"), triggeredAction->data());
+						QVariantList actionData(triggeredAction->data().toList());
+
+						m_webWidget->setOption(actionData.value(0).toString(), actionData.value(1).toString());
 					}
 					else
 					{
