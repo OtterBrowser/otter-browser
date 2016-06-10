@@ -30,7 +30,8 @@
 namespace Otter
 {
 
-QtWebEngineUrlRequestInterceptor::QtWebEngineUrlRequestInterceptor(QObject *parent) : QWebEngineUrlRequestInterceptor(parent)
+QtWebEngineUrlRequestInterceptor::QtWebEngineUrlRequestInterceptor(QObject *parent) : QWebEngineUrlRequestInterceptor(parent),
+	m_areImagesEnabled(SettingsManager::getValue(QLatin1String("Browser/EnableImages")).toString() != QLatin1String("disabled"))
 {
 	QTimer::singleShot(1800000, this, SLOT(clearContentBlockingInformation()));
 
@@ -40,7 +41,11 @@ QtWebEngineUrlRequestInterceptor::QtWebEngineUrlRequestInterceptor(QObject *pare
 
 void QtWebEngineUrlRequestInterceptor::optionChanged(const QString &option)
 {
-	if (option == QLatin1String("Content/BlockingProfiles"))
+	if (option == QLatin1String("Browser/EnableImages"))
+	{
+		m_areImagesEnabled = (SettingsManager::getValue(QLatin1String("Browser/EnableImages")).toString() != QLatin1String("disabled"));
+	}
+	else if (option == QLatin1String("Content/BlockingProfiles"))
 	{
 		clearContentBlockingInformation();
 	}
@@ -61,6 +66,13 @@ QStringList QtWebEngineUrlRequestInterceptor::getBlockedElements(const QString &
 
 void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo &request)
 {
+	if (!m_areImagesEnabled && request.resourceType() == QWebEngineUrlRequestInfo::ResourceTypeImage)
+	{
+		request.block(true);
+
+		return;
+	}
+
 	if (!m_contentBlockingProfiles.contains(request.firstPartyUrl().host()))
 	{
 		m_contentBlockingProfiles[request.firstPartyUrl().host()] = ContentBlockingManager::getProfileList(SettingsManager::getValue(QLatin1String("Content/BlockingProfiles"), request.firstPartyUrl()).toStringList());

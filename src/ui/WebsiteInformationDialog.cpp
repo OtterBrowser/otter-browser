@@ -136,7 +136,21 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		m_ui->pluginsValueLabel->setText(tr("On demand"));
 	}
 
-	m_ui->imagesValueLabel->setText(widget->getOption(QLatin1String("Browser/EnableImages")).toBool() ? tr("Always") : tr("Never"));
+	const QString imagesPolicy(widget->getOption(QLatin1String("Browser/EnableImages")).toString());
+
+	if (imagesPolicy == QLatin1String("onlyCached"))
+	{
+		m_ui->imagesValueLabel->setText(tr("Only cached"));
+	}
+	else if (imagesPolicy == QLatin1String("disabled"))
+	{
+		m_ui->imagesValueLabel->setText(tr("Never"));
+	}
+	else
+	{
+		m_ui->imagesValueLabel->setText(tr("Always"));
+	}
+
 	m_ui->javascriptValueLabel->setText(widget->getOption(QLatin1String("Browser/EnableJavaScript")).toBool() ? tr("Always") : tr("Never"));
 
 	const QString geolocationPolicy(widget->getOption(QLatin1String("Browser/EnableGeolocation")).toString());
@@ -151,7 +165,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 	}
 	else
 	{
-		m_ui->geolocationValueLabel->setText(tr("Always Ask"));
+		m_ui->geolocationValueLabel->setText(tr("Always ask"));
 	}
 
 	const QString fullScreenPolicy(widget->getOption(QLatin1String("Browser/EnableFullScreen")).toString());
@@ -166,7 +180,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 	}
 	else
 	{
-		m_ui->fullScreenValueLabel->setText(tr("Always Ask"));
+		m_ui->fullScreenValueLabel->setText(tr("Always ask"));
 	}
 
 	const QString notificationsPolicy(widget->getOption(QLatin1String("Browser/EnableNotifications")).toString());
@@ -181,7 +195,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 	}
 	else
 	{
-		m_ui->notificationsValueLabel->setText(tr("Always Ask"));
+		m_ui->notificationsValueLabel->setText(tr("Always ask"));
 	}
 
 	const QString popupsPolicy(widget->getOption(QLatin1String("Content/PopupsPolicy")).toString());

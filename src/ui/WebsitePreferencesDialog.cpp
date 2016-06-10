@@ -74,14 +74,18 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 		m_ui->encodingComboBox->addItem(codec->name(), textCodecs.at(i));
 	}
 
-	m_ui->popupsComboBox->addItem(tr("Ask"), QLatin1String("ask"));
-	m_ui->popupsComboBox->addItem(tr("Block all"), QLatin1String("blockAll"));
-	m_ui->popupsComboBox->addItem(tr("Open all"), QLatin1String("openAll"));
-	m_ui->popupsComboBox->addItem(tr("Open all in background"), QLatin1String("openAllInBackground"));
+	m_ui->popupsPolicyComboBox->addItem(tr("Ask"), QLatin1String("ask"));
+	m_ui->popupsPolicyComboBox->addItem(tr("Block all"), QLatin1String("blockAll"));
+	m_ui->popupsPolicyComboBox->addItem(tr("Open all"), QLatin1String("openAll"));
+	m_ui->popupsPolicyComboBox->addItem(tr("Open all in background"), QLatin1String("openAllInBackground"));
 
-	m_ui->pluginsComboBox->addItem(tr("Enabled"), QLatin1String("enabled"));
-	m_ui->pluginsComboBox->addItem(tr("On demand"), QLatin1String("onDemand"));
-	m_ui->pluginsComboBox->addItem(tr("Disabled"), QLatin1String("disabled"));
+	m_ui->enableImagesComboBox->addItem(tr("All images"), QLatin1String("enabled"));
+	m_ui->enableImagesComboBox->addItem(tr("Cached images"), QLatin1String("onlyCached"));
+	m_ui->enableImagesComboBox->addItem(tr("No images"), QLatin1String("disabled"));
+
+	m_ui->enablePluginsComboBox->addItem(tr("Enabled"), QLatin1String("enabled"));
+	m_ui->enablePluginsComboBox->addItem(tr("On demand"), QLatin1String("onDemand"));
+	m_ui->enablePluginsComboBox->addItem(tr("Disabled"), QLatin1String("disabled"));
 
 	m_ui->canCloseWindowsComboBox->addItem(tr("Ask"), QLatin1String("ask"));
 	m_ui->canCloseWindowsComboBox->addItem(tr("Always"), QLatin1String("allow"));
@@ -142,10 +146,10 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	}
 
 	m_ui->encodingOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));
-	m_ui->popupsOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/PopupsPolicy")));
+	m_ui->popupsPolicyOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/PopupsPolicy")));
 	m_ui->enableImagesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/EnableImages")));
 	m_ui->enableJavaOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/EnableJava")));
-	m_ui->pluginsOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/EnablePlugins")));
+	m_ui->enablePluginsOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/EnablePlugins")));
 	m_ui->userStyleSheetOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/UserStyleSheet")));
 	m_ui->doNotTrackOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Network/DoNotTrackPolicy")));
 	m_ui->rememberBrowsingHistoryOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("History/RememberBrowsing")));
@@ -217,10 +221,10 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 	{
 		case QDialogButtonBox::AcceptRole:
 			SettingsManager::setValue(QLatin1String("Content/DefaultEncoding"), (m_ui->encodingOverrideCheckBox->isChecked() ? (m_ui->encodingComboBox->currentIndex() ? m_ui->encodingComboBox->currentText() : QString()) : QVariant()), url);
-			SettingsManager::setValue(QLatin1String("Content/PopupsPolicy"), (m_ui->popupsOverrideCheckBox->isChecked() ? m_ui->popupsComboBox->currentData(Qt::UserRole).toString() : QVariant()), url);
-			SettingsManager::setValue(QLatin1String("Browser/EnableImages"), (m_ui->enableImagesOverrideCheckBox->isChecked() ? m_ui->enableImagesCheckBox->isChecked() : QVariant()), url);
+			SettingsManager::setValue(QLatin1String("Content/PopupsPolicy"), (m_ui->popupsPolicyOverrideCheckBox->isChecked() ? m_ui->popupsPolicyComboBox->currentData(Qt::UserRole).toString() : QVariant()), url);
+			SettingsManager::setValue(QLatin1String("Browser/EnableImages"), (m_ui->enableImagesOverrideCheckBox->isChecked() ? m_ui->enableImagesComboBox->currentData(Qt::UserRole).toString() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Browser/EnableJava"), (m_ui->enableJavaOverrideCheckBox->isChecked() ? m_ui->enableJavaCheckBox->isChecked() : QVariant()), url);
-			SettingsManager::setValue(QLatin1String("Browser/EnablePlugins"), (m_ui->pluginsOverrideCheckBox->isChecked() ? m_ui->pluginsComboBox->currentData(Qt::UserRole).toString() : QVariant()), url);
+			SettingsManager::setValue(QLatin1String("Browser/EnablePlugins"), (m_ui->enablePluginsOverrideCheckBox->isChecked() ? m_ui->enablePluginsComboBox->currentData(Qt::UserRole).toString() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Content/UserStyleSheet"), (m_ui->userStyleSheetOverrideCheckBox->isChecked() ? m_ui->userStyleSheetFilePathWidget->getPath() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Network/DoNotTrackPolicy"), (m_ui->doNotTrackOverrideCheckBox->isChecked() ? m_ui->doNotTrackComboBox->currentData().toString() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("History/RememberBrowsing"), (m_ui->rememberBrowsingHistoryOverrideCheckBox->isChecked() ? m_ui->rememberBrowsingHistoryCheckBox->isChecked() : QVariant()), url);
@@ -304,16 +308,18 @@ void WebsitePreferencesDialog::updateValues(bool checked)
 
 	m_ui->encodingComboBox->setCurrentIndex(qMax(0, m_ui->encodingComboBox->findText(SettingsManager::getValue(QLatin1String("Content/DefaultEncoding"), (m_ui->encodingOverrideCheckBox->isChecked() ? url : QUrl())).toString())));
 
-	const int popupsPolicyIndex(m_ui->popupsComboBox->findData(SettingsManager::getValue(QLatin1String("Content/PopupsPolicy"), (m_ui->popupsOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
+	const int popupsPolicyIndex(m_ui->popupsPolicyComboBox->findData(SettingsManager::getValue(QLatin1String("Content/PopupsPolicy"), (m_ui->popupsPolicyOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
 
-	m_ui->popupsComboBox->setCurrentIndex((popupsPolicyIndex < 0) ? 0 : popupsPolicyIndex);
+	m_ui->popupsPolicyComboBox->setCurrentIndex((popupsPolicyIndex < 0) ? 0 : popupsPolicyIndex);
 
-	m_ui->enableImagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableImages"), (m_ui->enableImagesOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
+	const int enableImagesIndex(m_ui->enableImagesComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/EnableImages"), (m_ui->enableImagesOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
+
+	m_ui->enableImagesComboBox->setCurrentIndex((enableImagesIndex < 0) ? 0 : enableImagesIndex);
 	m_ui->enableJavaCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJava"), (m_ui->enableJavaOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 
-	const int pluginsIndex(m_ui->pluginsComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), (m_ui->pluginsOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
+	const int enablePluginsIndex(m_ui->enablePluginsComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/EnablePlugins"), (m_ui->enablePluginsOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
 
-	m_ui->pluginsComboBox->setCurrentIndex((pluginsIndex < 0) ? 1 : pluginsIndex);
+	m_ui->enablePluginsComboBox->setCurrentIndex((enablePluginsIndex < 0) ? 1 : enablePluginsIndex);
 	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Content/UserStyleSheet"), (m_ui->userStyleSheetOverrideCheckBox->isChecked() ? url : QUrl())).toString());
 	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJavaScript"), (m_ui->enableJavaScriptOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 	m_ui->canChangeWindowGeometryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanChangeWindowGeometry"), (m_ui->canChangeWindowGeometryOverrideCheckBox->isChecked() ? url : QUrl())).toBool());

@@ -55,7 +55,7 @@
         </widget>
        </item>
        <item row="2" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="popupsOverrideCheckBox">
+        <widget class="QCheckBox" name="popupsPolicyOverrideCheckBox">
          <property name="text">
           <string/>
          </property>
@@ -69,10 +69,10 @@
         </widget>
        </item>
        <item row="5" column="2">
-        <widget class="QComboBox" name="pluginsComboBox"/>
+        <widget class="QComboBox" name="enablePluginsComboBox"/>
        </item>
        <item row="2" column="2">
-        <widget class="QComboBox" name="popupsComboBox"/>
+        <widget class="QComboBox" name="popupsPolicyComboBox"/>
        </item>
        <item row="4" column="0" alignment="Qt::AlignHCenter">
         <widget class="QCheckBox" name="enableJavaOverrideCheckBox">
@@ -102,19 +102,22 @@
         </widget>
        </item>
        <item row="5" column="1">
-        <widget class="QLabel" name="pluginsLabel">
+        <widget class="QLabel" name="enablePluginsLabel">
          <property name="text">
           <string>Plugins:</string>
+         </property>
+         <property name="buddy">
+          <cstring>enablePluginsComboBox</cstring>
          </property>
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QLabel" name="popupsLabel">
+        <widget class="QLabel" name="popupsPolicyLabel">
          <property name="text">
           <string>Pop-ups:</string>
          </property>
          <property name="buddy">
-          <cstring>popupsComboBox</cstring>
+          <cstring>popupsPolicyComboBox</cstring>
          </property>
         </widget>
        </item>
@@ -132,15 +135,8 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
-        <widget class="QCheckBox" name="enableImagesCheckBox">
-         <property name="text">
-          <string>Enable images</string>
-         </property>
-        </widget>
-       </item>
        <item row="5" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="pluginsOverrideCheckBox">
+        <widget class="QCheckBox" name="enablePluginsOverrideCheckBox">
          <property name="text">
           <string/>
          </property>
@@ -178,6 +174,19 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="enableImagesLabel">
+         <property name="text">
+          <string>Images:</string>
+         </property>
+         <property name="buddy">
+          <cstring>enableImagesComboBox</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QComboBox" name="enableImagesComboBox"/>
        </item>
       </layout>
      </widget>
@@ -1025,14 +1034,13 @@
   <tabstop>tabWidget</tabstop>
   <tabstop>encodingOverrideCheckBox</tabstop>
   <tabstop>encodingComboBox</tabstop>
-  <tabstop>popupsOverrideCheckBox</tabstop>
-  <tabstop>popupsComboBox</tabstop>
+  <tabstop>popupsPolicyOverrideCheckBox</tabstop>
+  <tabstop>popupsPolicyComboBox</tabstop>
   <tabstop>enableImagesOverrideCheckBox</tabstop>
-  <tabstop>enableImagesCheckBox</tabstop>
   <tabstop>enableJavaOverrideCheckBox</tabstop>
   <tabstop>enableJavaCheckBox</tabstop>
-  <tabstop>pluginsOverrideCheckBox</tabstop>
-  <tabstop>pluginsComboBox</tabstop>
+  <tabstop>enablePluginsOverrideCheckBox</tabstop>
+  <tabstop>enablePluginsComboBox</tabstop>
   <tabstop>userStyleSheetOverrideCheckBox</tabstop>
   <tabstop>cookiesTableWidget</tabstop>
   <tabstop>addCookieButton</tabstop>

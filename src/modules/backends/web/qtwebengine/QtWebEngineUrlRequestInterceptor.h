@@ -45,6 +45,7 @@ protected slots:
 private:
 	QMap<QString, QStringList> m_blockedElements;
 	QMap<QString, QVector<int> > m_contentBlockingProfiles;
+	bool m_areImagesEnabled;
 };
 
 }

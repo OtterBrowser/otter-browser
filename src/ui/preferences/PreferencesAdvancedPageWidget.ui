@@ -116,8 +116,7 @@
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QComboBox" name="browsingDisplayModeComboBox">
-            </widget>
+            <widget class="QComboBox" name="browsingDisplayModeComboBox"/>
            </item>
           </layout>
          </item>
@@ -353,11 +352,21 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="enableImagesCheckBox">
-         <property name="text">
-          <string>Enable images</string>
-         </property>
-        </widget>
+        <layout class="QHBoxLayout" name="enableImagesLayout">
+         <item>
+          <widget class="QLabel" name="enableImagesLabel">
+           <property name="text">
+            <string>Images:</string>
+           </property>
+           <property name="buddy">
+            <cstring>enableImagesComboBox</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="enableImagesComboBox"/>
+         </item>
+        </layout>
        </item>
        <item>
         <layout class="QHBoxLayout" name="javaScriptOptionslLayout" stretch="1,0">
@@ -385,16 +394,19 @@
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="pluginsLayout">
+        <layout class="QHBoxLayout" name="enablePluginsLayout">
          <item>
           <widget class="QLabel" name="pluginsLabel">
            <property name="text">
             <string>Plugins:</string>
            </property>
+           <property name="buddy">
+            <cstring>enablePluginsComboBox</cstring>
+           </property>
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="pluginsComboBox"/>
+          <widget class="QComboBox" name="enablePluginsComboBox"/>
          </item>
         </layout>
        </item>

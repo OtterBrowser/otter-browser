@@ -776,7 +776,7 @@ void QtWebKitWebWidget::updateRedoText(const QString &text)
 void QtWebKitWebWidget::updateOptions(const QUrl &url)
 {
 	QWebSettings *settings(m_webView->page()->settings());
-	settings->setAttribute(QWebSettings::AutoLoadImages, getOption(QLatin1String("Browser/EnableImages"), url).toBool());
+	settings->setAttribute(QWebSettings::AutoLoadImages, (getOption(QLatin1String("Browser/EnableImages"), url).toString() != QLatin1String("onlyCached")));
 	settings->setAttribute(QWebSettings::PluginsEnabled, getOption(QLatin1String("Browser/EnablePlugins"), url).toString() != QLatin1String("disabled"));
 	settings->setAttribute(QWebSettings::JavaEnabled, getOption(QLatin1String("Browser/EnableJava"), url).toBool());
 	settings->setAttribute(QWebSettings::JavascriptEnabled, getOption(QLatin1String("Browser/EnableJavaScript"), url).toBool());

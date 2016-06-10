@@ -63,6 +63,7 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar
 	m_startedRequests(0),
 	m_updateTimer(0),
 	m_doNotTrackPolicy(NetworkManagerFactory::SkipTrackPolicy),
+	m_areImagesEnabled(true),
 	m_canSendReferrer(true)
 {
 	NetworkManagerFactory::initialize();
@@ -438,6 +439,7 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 		m_doNotTrackPolicy = NetworkManagerFactory::SkipTrackPolicy;
 	}
 
+	m_areImagesEnabled = (SettingsManager::getValue(QLatin1String("Browser/EnableImages"), url).toString() != QLatin1String("disabled"));
 	m_canSendReferrer = SettingsManager::getValue(QLatin1String("Network/EnableReferrer"), url).toBool();
 
 	const QString generalCookiesPolicyValue(SettingsManager::getValue(QLatin1String("Network/CookiesPolicy"), url).toString());
@@ -548,6 +550,11 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 		url.setScheme(QLatin1String("http"));
 
 		return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(url));
+	}
+
+	if (!m_areImagesEnabled && (request.rawHeader(QByteArray("Accept")).contains(QByteArray("image/")) || request.url().path().endsWith(QLatin1String(".png")) || request.url().path().endsWith(QLatin1String(".jpg")) || request.url().path().endsWith(QLatin1String(".gif"))))
+	{
+		return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(QUrl()));
 	}
 
 	const QString host(request.url().host());

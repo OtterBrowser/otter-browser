@@ -97,6 +97,7 @@ private:
 	int m_startedRequests;
 	int m_updateTimer;
 	NetworkManagerFactory::DoNotTrackPolicy m_doNotTrackPolicy;
+	bool m_areImagesEnabled;
 	bool m_canSendReferrer;
 
 	static WebBackend *m_backend;

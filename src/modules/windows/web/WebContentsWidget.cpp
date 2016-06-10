@@ -498,7 +498,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				QAction *enableImagesAction(menu.addAction(tr("Enable Images")));
 				enableImagesAction->setCheckable(true);
-				enableImagesAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnableImages")).toBool());
+				enableImagesAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnableImages")).toString() != QLatin1String("disabled"));
 				enableImagesAction->setData(QLatin1String("Browser/EnableImages"));
 
 				QAction *enableJavaScriptAction(menu.addAction(tr("Enable JavaScript")));
@@ -539,7 +539,11 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				if (triggeredAction && triggeredAction->data().isValid())
 				{
-					if (triggeredAction->data().toString() == QLatin1String("Browser/EnablePlugins"))
+					if (triggeredAction->data().toString() == QLatin1String("Browser/EnableImages"))
+					{
+						m_webWidget->setOption(QLatin1String("Browser/EnableImages"), (triggeredAction->isChecked() ? QLatin1String("enabled") : QLatin1String("disabled")));
+					}
+					else if (triggeredAction->data().toString() == QLatin1String("Browser/EnablePlugins"))
 					{
 						m_webWidget->setOption(QLatin1String("Browser/EnablePlugins"), (triggeredAction->isChecked() ? QLatin1String("enabled") : QLatin1String("disabled")));
 					}

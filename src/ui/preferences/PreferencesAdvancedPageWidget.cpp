@@ -147,18 +147,23 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->appearranceStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Interface/StyleSheet")).toString());
 	m_ui->enableTrayIconCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableTrayIcon")).toBool());
 
-	m_ui->enableImagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableImages")).toBool());
+	m_ui->enableImagesComboBox->addItem(tr("All images"), QLatin1String("enabled"));
+	m_ui->enableImagesComboBox->addItem(tr("Cached images"), QLatin1String("onlyCached"));
+	m_ui->enableImagesComboBox->addItem(tr("No images"), QLatin1String("disabled"));
+
+	const int enableImagesIndex(m_ui->enableImagesComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/EnableImages")).toString()));
+
+	m_ui->enableImagesComboBox->setCurrentIndex((enableImagesIndex < 0) ? 0 : enableImagesIndex);
 	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJavaScript")).toBool());
 	m_ui->javaScriptOptionsButton->setEnabled(m_ui->enableJavaScriptCheckBox->isChecked());
 	m_ui->enableJavaCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJava")).toBool());
+	m_ui->enablePluginsComboBox->addItem(tr("Enabled"), QLatin1String("enabled"));
+	m_ui->enablePluginsComboBox->addItem(tr("On demand"), QLatin1String("onDemand"));
+	m_ui->enablePluginsComboBox->addItem(tr("Disabled"), QLatin1String("disabled"));
 
-	m_ui->pluginsComboBox->addItem(tr("Enabled"), QLatin1String("enabled"));
-	m_ui->pluginsComboBox->addItem(tr("On demand"), QLatin1String("onDemand"));
-	m_ui->pluginsComboBox->addItem(tr("Disabled"), QLatin1String("disabled"));
+	const int enablePluginsIndex(m_ui->enablePluginsComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/EnablePlugins")).toString()));
 
-	const int pluginsIndex(m_ui->pluginsComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/EnablePlugins")).toString()));
-
-	m_ui->pluginsComboBox->setCurrentIndex((pluginsIndex < 0) ? 1 : pluginsIndex);
+	m_ui->enablePluginsComboBox->setCurrentIndex((enablePluginsIndex < 0) ? 1 : enablePluginsIndex);
 	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Content/UserStyleSheet")).toString());
 
 	QStringList downloadsLabels;
@@ -1340,11 +1345,10 @@ void PreferencesAdvancedPageWidget::save()
 		}
 	}
 
-	SettingsManager::setValue(QLatin1String("Browser/EnableImages"), m_ui->enableImagesCheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("Browser/EnableImages"), m_ui->enableImagesComboBox->currentData(Qt::UserRole).toString());
 	SettingsManager::setValue(QLatin1String("Browser/EnableJavaScript"), m_ui->enableJavaScriptCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("Browser/EnableJava"), m_ui->enableJavaCheckBox->isChecked());
-	SettingsManager::setValue(QLatin1String("Browser/EnablePlugins"), m_ui->pluginsComboBox->currentData(Qt::UserRole).toString());
-
+	SettingsManager::setValue(QLatin1String("Browser/EnablePlugins"), m_ui->enablePluginsComboBox->currentData(Qt::UserRole).toString());
 	SettingsManager::setValue(QLatin1String("Content/UserStyleSheet"), m_ui->userStyleSheetFilePathWidget->getPath());
 
 	Settings handlersSettings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));

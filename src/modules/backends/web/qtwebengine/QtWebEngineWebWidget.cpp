@@ -1163,7 +1163,7 @@ void QtWebEngineWebWidget::updateRedo()
 void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 {
 	QWebEngineSettings *settings(m_webView->page()->settings());
-	settings->setAttribute(QWebEngineSettings::AutoLoadImages, getOption(QLatin1String("Browser/EnableImages"), url).toBool());
+	settings->setAttribute(QWebEngineSettings::AutoLoadImages, (getOption(QLatin1String("Browser/EnableImages"), url).toString() != QLatin1String("onlyCached")));
 	settings->setAttribute(QWebEngineSettings::JavascriptEnabled, getOption(QLatin1String("Browser/EnableJavaScript"), url).toBool());
 	settings->setAttribute(QWebEngineSettings::JavascriptCanAccessClipboard, getOption(QLatin1String("Browser/JavaScriptCanAccessClipboard"), url).toBool());
 	settings->setAttribute(QWebEngineSettings::JavascriptCanOpenWindows, getOption(QLatin1String("Browser/JavaScriptCanOpenWindows"), url).toBool());
