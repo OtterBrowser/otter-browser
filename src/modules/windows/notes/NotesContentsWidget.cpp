@@ -294,6 +294,7 @@ void NotesContentsWidget::updateText()
 	if (index.isValid() && static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark)
 	{
 		m_ui->notesViewWidget->model()->setData(index, m_ui->textEdit->toPlainText(), BookmarksModel::DescriptionRole);
+		m_ui->notesViewWidget->model()->setData(index, QDateTime::currentDateTime(), BookmarksModel::TimeModifiedRole);
 	}
 	else
 	{
