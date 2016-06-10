@@ -411,6 +411,11 @@ void QtWebKitNetworkManager::updateStatus()
 
 void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 {
+	if (!m_widget)
+	{
+		return;
+	}
+
 	if (!m_backend)
 	{
 		m_backend = AddonsManager::getWebBackend(QLatin1String("qtwebkit"));
@@ -418,13 +423,13 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 
 	m_contentBlockingProfiles = ContentBlockingManager::getProfileList(m_widget->getOption(QLatin1String("Content/BlockingProfiles"), url).toStringList());
 
-	QString acceptLanguage(SettingsManager::getValue(QLatin1String("Network/AcceptLanguage"), url).toString());
+	QString acceptLanguage(m_widget->getOption(QLatin1String("Network/AcceptLanguage"), url).toString());
 	acceptLanguage = ((acceptLanguage.isEmpty()) ? QLatin1String(" ") : acceptLanguage.replace(QLatin1String("system"), QLocale::system().bcp47Name()));
 
 	m_acceptLanguage = ((acceptLanguage == NetworkManagerFactory::getAcceptLanguage()) ? QString() : acceptLanguage);
-	m_userAgent = m_backend->getUserAgent(m_widget ? NetworkManagerFactory::getUserAgent(m_widget->getOption(QLatin1String("Network/UserAgent"), url).toString()).value : QString());
+	m_userAgent = m_backend->getUserAgent(NetworkManagerFactory::getUserAgent(m_widget->getOption(QLatin1String("Network/UserAgent"), url).toString()).value);
 
-	const QString doNotTrackPolicyValue(SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy"), url).toString());
+	const QString doNotTrackPolicyValue(m_widget->getOption(QLatin1String("Network/DoNotTrackPolicy"), url).toString());
 
 	if (doNotTrackPolicyValue == QLatin1String("allow"))
 	{
@@ -439,10 +444,10 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 		m_doNotTrackPolicy = NetworkManagerFactory::SkipTrackPolicy;
 	}
 
-	m_areImagesEnabled = (SettingsManager::getValue(QLatin1String("Browser/EnableImages"), url).toString() != QLatin1String("disabled"));
-	m_canSendReferrer = SettingsManager::getValue(QLatin1String("Network/EnableReferrer"), url).toBool();
+	m_areImagesEnabled = (m_widget->getOption(QLatin1String("Browser/EnableImages"), url).toString() != QLatin1String("disabled"));
+	m_canSendReferrer = m_widget->getOption(QLatin1String("Network/EnableReferrer"), url).toBool();
 
-	const QString generalCookiesPolicyValue(SettingsManager::getValue(QLatin1String("Network/CookiesPolicy"), url).toString());
+	const QString generalCookiesPolicyValue(m_widget->getOption(QLatin1String("Network/CookiesPolicy"), url).toString());
 	CookieJar::CookiesPolicy generalCookiesPolicy(CookieJar::AcceptAllCookies);
 
 	if (generalCookiesPolicyValue == QLatin1String("ignore"))
@@ -458,7 +463,7 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 		generalCookiesPolicy = CookieJar::AcceptExistingCookies;
 	}
 
-	const QString thirdPartyCookiesPolicyValue(SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), url).toString());
+	const QString thirdPartyCookiesPolicyValue(m_widget->getOption(QLatin1String("Network/ThirdPartyCookiesPolicy"), url).toString());
 	CookieJar::CookiesPolicy thirdPartyCookiesPolicy(CookieJar::AcceptAllCookies);
 
 	if (thirdPartyCookiesPolicyValue == QLatin1String("ignore"))
@@ -474,7 +479,7 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 		thirdPartyCookiesPolicy = CookieJar::AcceptExistingCookies;
 	}
 
-	const QString keepModeValue(SettingsManager::getValue(QLatin1String("Network/CookiesKeepMode"), url).toString());
+	const QString keepModeValue(m_widget->getOption(QLatin1String("Network/CookiesKeepMode"), url).toString());
 	CookieJar::KeepMode keepMode(CookieJar::KeepUntilExpiresMode);
 
 	if (keepModeValue == QLatin1String("keepUntilExit"))
@@ -486,7 +491,7 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 		keepMode = CookieJar::AskIfKeepMode;
 	}
 
-	m_cookieJarProxy->setup(SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesAcceptedHosts"), url).toStringList(), SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesRejectedHosts"), url).toStringList(), generalCookiesPolicy, thirdPartyCookiesPolicy, keepMode);
+	m_cookieJarProxy->setup(m_widget->getOption(QLatin1String("Network/ThirdPartyCookiesAcceptedHosts"), url).toStringList(), m_widget->getOption(QLatin1String("Network/ThirdPartyCookiesRejectedHosts"), url).toStringList(), generalCookiesPolicy, thirdPartyCookiesPolicy, keepMode);
 }
 
 void QtWebKitNetworkManager::setFormRequest(const QUrl &url)

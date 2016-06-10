@@ -27,7 +27,6 @@
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/WindowsManager.h"
 
-#include <QtCore/QPointer>
 #include <QtNetwork/QNetworkRequest>
 
 namespace Otter
@@ -73,7 +72,7 @@ protected slots:
 	void transferFinished();
 
 private:
-	QPointer<QtWebKitWebWidget> m_widget;
+	QtWebKitWebWidget *m_widget;
 	CookieJar *m_cookieJar;
 	QtWebKitCookieJar *m_cookieJarProxy;
 	QNetworkReply *m_baseReply;
