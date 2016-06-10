@@ -139,7 +139,15 @@ BookmarksItem* BookmarksManager::addBookmark(BookmarksModel::BookmarkType type, 
 		getModel();
 	}
 
-	return m_model->addBookmark(type, 0, url, title, parent, index);
+	BookmarksItem *bookmark(m_model->addBookmark(type, 0, url, title, parent, index));
+
+	if (bookmark)
+	{
+		bookmark->setData(QDateTime::currentDateTime(), BookmarksModel::TimeAddedRole);
+		bookmark->setData(QDateTime::currentDateTime(), BookmarksModel::TimeModifiedRole);
+	}
+
+	return bookmark;
 }
 
 BookmarksItem* BookmarksManager::getBookmark(const QString &keyword)

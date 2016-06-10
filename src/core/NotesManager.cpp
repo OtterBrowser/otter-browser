@@ -88,7 +88,15 @@ BookmarksItem* NotesManager::addNote(BookmarksModel::BookmarkType type, const QU
 		getModel();
 	}
 
-	return m_model->addBookmark(type, 0, url, title, parent);
+	BookmarksItem *bookmark(m_model->addBookmark(type, 0, url, title, parent));
+
+	if (bookmark)
+	{
+		bookmark->setData(QDateTime::currentDateTime(), BookmarksModel::TimeAddedRole);
+		bookmark->setData(QDateTime::currentDateTime(), BookmarksModel::TimeModifiedRole);
+	}
+
+	return bookmark;
 }
 
 }
