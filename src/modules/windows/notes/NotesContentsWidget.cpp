@@ -22,6 +22,7 @@
 #include "../../../core/NotesManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/ThemesManager.h"
+#include "../../../core/Utils.h"
 
 #include "ui_NotesContentsWidget.h"
 
@@ -260,6 +261,8 @@ void NotesContentsWidget::updateActions(bool updateText)
 	const QModelIndex index(m_ui->notesViewWidget->selectionModel()->hasSelection() ? m_ui->notesViewWidget->selectionModel()->currentIndex() : QModelIndex());
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
 
+	m_ui->addressLabelWidget->setText((type == BookmarksModel::UrlBookmark) ? index.data(BookmarksModel::UrlRole).toString() : QString());
+	m_ui->dateLabelWidget->setText((type == BookmarksModel::UrlBookmark) ? Utils::formatDateTime(index.data(BookmarksModel::TimeAddedRole).toDateTime()) : QString());
 	m_ui->deleteButton->setEnabled(hasSelecion && type != BookmarksModel::RootBookmark && type != BookmarksModel::TrashBookmark);
 
 	if (updateText)
