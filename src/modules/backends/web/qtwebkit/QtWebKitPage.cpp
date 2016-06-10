@@ -504,13 +504,10 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 		const QWebPage::ErrorPageExtensionOption *errorOption(static_cast<const QWebPage::ErrorPageExtensionOption*>(option));
 		QWebPage::ErrorPageExtensionReturn *errorOutput(static_cast<QWebPage::ErrorPageExtensionReturn*>(output));
 
-		if (!errorOption || !errorOutput || (errorOption->error == 203 && errorOption->domain == QWebPage::WebKit))
+		if (!errorOption || !errorOutput)
 		{
 			return false;
 		}
-
-		errorOutput->baseUrl = errorOption->url;
-		errorOutput->content = Utils::createErrorPage(errorOption->url, QString::number(errorOption->error), errorOption->errorString).toUtf8();
 
 		QString domain;
 
@@ -528,6 +525,14 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 		}
 
 		Console::addMessage(tr("%1 error #%2: %3").arg(domain).arg(errorOption->error).arg(errorOption->errorString), NetworkMessageCategory, ErrorMessageLevel, errorOption->url.toString(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
+
+		if (errorOption->domain == QWebPage::WebKit && (errorOption->error == 102 || errorOption->error == 203))
+		{
+			return false;
+		}
+
+		errorOutput->baseUrl = errorOption->url;
+		errorOutput->content = Utils::createErrorPage(errorOption->url, QString::number(errorOption->error), errorOption->errorString).toUtf8();
 
 		return true;
 	}
