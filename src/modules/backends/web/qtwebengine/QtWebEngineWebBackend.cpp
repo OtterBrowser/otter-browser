@@ -98,9 +98,7 @@ void QtWebEngineWebBackend::downloadFile(QWebEngineDownloadItem *item)
 #if QT_VERSION >= 0x050700
 	if (item->savePageFormat() != QWebEngineDownloadItem::UnknownSaveFormat)
 	{
-		QStringList filters;
-		filters << tr("HTML file (*.html *.htm)") << tr("HTML file with all resources (*.html *.htm)") << tr("Web archive (*.mht)");
-
+		const QStringList filters({tr("HTML file (*.html *.htm)"), tr("HTML file with all resources (*.html *.htm)"), tr("Web archive (*.mht)")});
 		const SaveInformation result(Utils::getSavePath(QFileInfo(item->path()).baseName() + QLatin1String(".html"), QString(), filters));
 
 		if (result.path.isEmpty())

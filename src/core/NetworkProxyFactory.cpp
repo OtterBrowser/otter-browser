@@ -100,22 +100,21 @@ void NetworkProxyFactory::optionChanged(const QString &option)
 		m_proxyMode = ManualProxy;
 
 		m_proxies.clear();
-		m_proxies[QLatin1String("NoProxy")] << QNetworkProxy(QNetworkProxy::NoProxy);
+		m_proxies[QLatin1String("NoProxy")] = QList<QNetworkProxy>({QNetworkProxy(QNetworkProxy::NoProxy)});
 
 		const bool useCommon(SettingsManager::getValue(QLatin1String("Proxy/UseCommon")).toBool());
-		QList<QPair<QNetworkProxy::ProxyType, QString> > proxyTypes;
-		proxyTypes << qMakePair(QNetworkProxy::HttpProxy, QLatin1String("http")) << qMakePair(QNetworkProxy::HttpProxy, QLatin1String("https")) << qMakePair(QNetworkProxy::FtpCachingProxy, QLatin1String("ftp")) << qMakePair(QNetworkProxy::Socks5Proxy, QLatin1String("socks"));
+		const QList<QPair<QNetworkProxy::ProxyType, QString> > proxyTypes({qMakePair(QNetworkProxy::HttpProxy, QLatin1String("http")), qMakePair(QNetworkProxy::HttpProxy, QLatin1String("https")), qMakePair(QNetworkProxy::FtpCachingProxy, QLatin1String("ftp")), qMakePair(QNetworkProxy::Socks5Proxy, QLatin1String("socks"))});
 
 		for (int i = 0; i < proxyTypes.count(); ++i)
 		{
 			if (useCommon && proxyTypes.at(i).first != QNetworkProxy::Socks5Proxy)
 			{
-				m_proxies[proxyTypes.at(i).second] << QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(QStringLiteral("Proxy/CommonServers")).toString(), SettingsManager::getValue(QStringLiteral("Proxy/CommonPort")).toInt());
+				m_proxies[proxyTypes.at(i).second] = QList<QNetworkProxy>({QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(QStringLiteral("Proxy/CommonServers")).toString(), SettingsManager::getValue(QStringLiteral("Proxy/CommonPort")).toInt())});
 			}
 
 			if (SettingsManager::getValue(QStringLiteral("Proxy/Use%1").arg(proxyTypes.at(i).second)).toBool())
 			{
-				m_proxies[proxyTypes.at(i).second] << QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(QStringLiteral("Proxy/%1Servers").arg(proxyTypes.at(i).second)).toString(), SettingsManager::getValue(QStringLiteral("Proxy/%1Port").arg(proxyTypes.at(i).second)).toInt());
+				m_proxies[proxyTypes.at(i).second] = QList<QNetworkProxy>({QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(QStringLiteral("Proxy/%1Servers").arg(proxyTypes.at(i).second)).toString(), SettingsManager::getValue(QStringLiteral("Proxy/%1Port").arg(proxyTypes.at(i).second)).toInt())});
 			}
 		}
 
@@ -134,7 +133,7 @@ void NetworkProxyFactory::optionChanged(const QString &option)
 		else
 		{
 			m_proxyMode = NoProxy;
-			m_proxies[QLatin1String("NoProxy")] << QNetworkProxy(QNetworkProxy::NoProxy);
+			m_proxies[QLatin1String("NoProxy")] = QList<QNetworkProxy>({QNetworkProxy(QNetworkProxy::NoProxy)});
 		}
 	}
 }

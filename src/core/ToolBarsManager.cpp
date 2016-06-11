@@ -385,8 +385,8 @@ void ToolBarsManager::setToolBar(ToolBarsManager::ToolBarDefinition definition)
 
 	if (identifier < 0 || identifier >= m_definitions.count())
 	{
-		QStringList toolBars(m_identifiers.values());
-		toolBars << QLatin1String("MenuBar") << QLatin1String("TabBar") << QLatin1String("NavigationBar") << QLatin1String("StatusBar");
+		QStringList toolBars({QLatin1String("MenuBar"), QLatin1String("TabBar"), QLatin1String("NavigationBar"), QLatin1String("StatusBar")});
+		toolBars.append(m_identifiers.values());
 
 		identifier = m_definitions.count();
 

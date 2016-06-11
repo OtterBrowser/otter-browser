@@ -46,10 +46,7 @@ TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidge
 {
 	m_ui->setupUi(this);
 
-	QStringList labels;
-	labels << QString() << tr("Filename") << tr("Size") << tr("Progress") << tr("Time") << tr("Speed") << tr("Started") << tr("Finished");
-
-	m_model->setHorizontalHeaderLabels(labels);
+	m_model->setHorizontalHeaderLabels(QStringList({QString(), tr("Filename"), tr("Size"), tr("Progress"), tr("Time"), tr("Speed"), tr("Started"), tr("Finished")}));
 
 	m_ui->transfersViewWidget->setModel(m_model);
 	m_ui->transfersViewWidget->header()->resizeSection(0, 30);

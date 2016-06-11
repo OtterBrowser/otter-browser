@@ -39,18 +39,14 @@ HistoryContentsWidget::HistoryContentsWidget(Window *window) : ContentsWidget(wi
 {
 	m_ui->setupUi(this);
 
-	QStringList groups;
-	groups << tr("Today") << tr("Yesterday") << tr("Earlier This Week") << tr("Previous Week") << tr("Earlier This Month") << tr("Earlier This Year") << tr("Older");
+	const QStringList groups({tr("Today"), tr("Yesterday"), tr("Earlier This Week"), tr("Previous Week"), tr("Earlier This Month"), tr("Earlier This Year"), tr("Older")});
 
 	for (int i = 0; i < groups.count(); ++i)
 	{
 		m_model->appendRow(new QStandardItem(ThemesManager::getIcon(QLatin1String("inode-directory")), groups.at(i)));
 	}
 
-	QStringList labels;
-	labels << tr("Address") << tr("Title") << tr("Date");
-
-	m_model->setHorizontalHeaderLabels(labels);
+	m_model->setHorizontalHeaderLabels(QStringList({tr("Address"), tr("Title"), tr("Date")}));
 	m_model->setSortRole(Qt::DisplayRole);
 
 	m_ui->historyViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
@@ -120,8 +116,7 @@ void HistoryContentsWidget::print(QPrinter *printer)
 void HistoryContentsWidget::populateEntries()
 {
 	const QDate date(QDate::currentDate());
-	QList<QDate> dates;
-	dates << date << date.addDays(-1) << date.addDays(-7) << date.addDays(-14) << date.addDays(-30) << date.addDays(-365);
+	const QList<QDate> dates({date, date.addDays(-1), date.addDays(-7), date.addDays(-14), date.addDays(-30), date.addDays(-365)});
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{

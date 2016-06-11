@@ -133,8 +133,7 @@ void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
 
 		QMenu *menu(new QMenu(m_ui->panelsButton));
 		const QStringList chosenPanels(value.toStringList());
-		QStringList allPanels;
-		allPanels << QLatin1String("bookmarks") << QLatin1String("cache") << QLatin1String("cookies") << QLatin1String("config") << QLatin1String("history") << QLatin1String("notes") << QLatin1String("transfers");
+		const QStringList allPanels({QLatin1String("bookmarks"), QLatin1String("cache"), QLatin1String("cookies"), QLatin1String("config"), QLatin1String("history"), QLatin1String("notes"), QLatin1String("transfers")});
 
 		for (int i = 0; i < allPanels.count(); ++i)
 		{
@@ -282,9 +281,10 @@ void SidebarWidget::addWebPanel()
 
 	if (!url.isEmpty())
 	{
-		url = QLatin1String("web:") + url;
+		QStringList panels(SettingsManager::getValue(QLatin1String("Sidebar/Panels")).toStringList());
+		panels.append(QLatin1String("web:") + url);
 
-		SettingsManager::setValue(QLatin1String("Sidebar/Panels"), SettingsManager::getValue(QLatin1String("Sidebar/Panels")).toStringList() << url);
+		SettingsManager::setValue(QLatin1String("Sidebar/Panels"), panels);
 	}
 }
 

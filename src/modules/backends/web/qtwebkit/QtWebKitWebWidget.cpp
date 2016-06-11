@@ -2470,15 +2470,15 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 			if (getCurrentHitTestResult().flags.testFlag(IsContentEditableTest))
 			{
-				contexts << GesturesManager::ContentEditableGesturesContext;
+				contexts.append(GesturesManager::ContentEditableGesturesContext);
 			}
 
 			if (getCurrentHitTestResult().linkUrl.isValid())
 			{
-				contexts << GesturesManager::LinkGesturesContext;
+				contexts.append(GesturesManager::LinkGesturesContext);
 			}
 
-			contexts << GesturesManager::GenericGesturesContext;
+			contexts.append(GesturesManager::GenericGesturesContext);
 
 			if ((!mouseEvent || !isScrollBar(mouseEvent->pos())) && GesturesManager::startGesture(object, event, contexts))
 			{

@@ -110,10 +110,8 @@ void CacheContentsWidget::triggerAction(int identifier, const QVariantMap &param
 void CacheContentsWidget::populateCache()
 {
 	NetworkCache *cache(NetworkManagerFactory::getCache());
-	QStringList labels;
-	labels << tr("Address") << tr("Type") << tr("Size") << tr("Last Modified") << tr("Expires");
 
-	m_model->setHorizontalHeaderLabels(labels);
+	m_model->setHorizontalHeaderLabels(QStringList({tr("Address"), tr("Type"), tr("Size"), tr("Last Modified"), tr("Expires")}));
 	m_model->setSortRole(Qt::DisplayRole);
 
 	const QList<QUrl> entries = cache->getEntries();
@@ -125,11 +123,8 @@ void CacheContentsWidget::populateCache()
 
 	m_model->sort(0);
 
-	QSet<int> filterRoles;
-	filterRoles << Qt::DisplayRole << Qt::UserRole;
-
 	m_ui->cacheViewWidget->setModel(m_model);
-	m_ui->cacheViewWidget->setFilterRoles(filterRoles);
+	m_ui->cacheViewWidget->setFilterRoles(QSet<int>({Qt::DisplayRole, Qt::UserRole}));
 
 	m_isLoading = false;
 

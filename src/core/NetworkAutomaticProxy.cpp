@@ -29,8 +29,8 @@
 namespace Otter
 {
 
-QStringList PacUtils::m_months = QStringList() << QLatin1String("jan") << QLatin1String("feb") << QLatin1String("mar") << QLatin1String("apr") << QLatin1String("may") << QLatin1String("jun") << QLatin1String("jul") << QLatin1String("aug") << QLatin1String("sep") << QLatin1String("oct") << QLatin1String("nov") << QLatin1String("dec");
-QStringList PacUtils::m_days = QStringList() << QLatin1String("mon") << QLatin1String("tue") << QLatin1String("wed") << QLatin1String("thu") << QLatin1String("fri") << QLatin1String("sat") << QLatin1String("sun");
+QStringList PacUtils::m_months = QStringList({QLatin1String("jan"), QLatin1String("feb"), QLatin1String("mar"), QLatin1String("apr"), QLatin1String("may"), QLatin1String("jun"), QLatin1String("jul"), QLatin1String("aug"), QLatin1String("sep"), QLatin1String("oct"), QLatin1String("nov"), QLatin1String("dec")});
+QStringList PacUtils::m_days = QStringList({QLatin1String("mon"), QLatin1String("tue"), QLatin1String("wed"), QLatin1String("thu"), QLatin1String("fri"), QLatin1String("sat"), QLatin1String("sun")});
 
 PacUtils::PacUtils(QObject *parent) : QObject(parent)
 {
@@ -154,9 +154,7 @@ bool PacUtils::weekdayRange(QString fromDay, QString toDay, const QString &gmt) 
 
 bool PacUtils::dateRange(const QVariant &arg1, const QVariant &arg2, const QVariant &arg3, const QVariant &arg4, const QVariant &arg5, const QVariant &arg6, const QString &gmt) const
 {
-	QVariantList rawArguments;
-	rawArguments << arg1 << arg2 << arg3 << arg4 << arg5 << arg6;
-
+	const QVariantList rawArguments({arg1, arg2, arg3, arg4, arg5, arg6});
 	QList<int> arguments;
 	const QDate currentDay(((gmt.toLower() == QLatin1String("gmt")) ? QDateTime::currentDateTimeUtc() : QDateTime::currentDateTime()).date());
 
@@ -241,9 +239,7 @@ bool PacUtils::dateRange(const QVariant &arg1, const QVariant &arg2, const QVari
 
 bool PacUtils::timeRange(const QVariant &arg1, const QVariant &arg2, const QVariant &arg3, const QVariant &arg4, const QVariant &arg5, const QVariant &arg6, const QString &gmt) const
 {
-	QVariantList rawArguments;
-	rawArguments << arg1 << arg2 << arg3 << arg4 << arg5 << arg6;
-
+	const QVariantList rawArguments({arg1, arg2, arg3, arg4, arg5, arg6});
 	QList<int> arguments;
 	const QTime currentTime(((gmt.toLower() == QLatin1String("gmt")) ? QDateTime::currentDateTimeUtc() : QDateTime::currentDateTime()).time());
 
@@ -294,24 +290,20 @@ NetworkAutomaticProxy::NetworkAutomaticProxy(QObject *parent) : QObject(parent)
 {
 	m_engine.globalObject().setProperty(QLatin1String("PacUtils"), m_engine.newQObject(new PacUtils(this)));
 
-	QStringList functions;
-	functions << QLatin1String("alert") << QLatin1String("dnsResolve") << QLatin1String("myIpAddress") << QLatin1String("dnsDomainLevels") << QLatin1String("isInNet") << QLatin1String("isPlainHostName") << QLatin1String("isResolvable") << QLatin1String("localHostOrDomainIs") << QLatin1String("dnsDomainIs") << QLatin1String("shExpMatch") << QLatin1String("weekdayRange") << QLatin1String("dateRange") << QLatin1String("timeRange");
+	const QStringList functions({QLatin1String("alert"), QLatin1String("dnsResolve"), QLatin1String("myIpAddress"), QLatin1String("dnsDomainLevels"), QLatin1String("isInNet"), QLatin1String("isPlainHostName"), QLatin1String("isResolvable"), QLatin1String("localHostOrDomainIs"), QLatin1String("dnsDomainIs"), QLatin1String("shExpMatch"), QLatin1String("weekdayRange"), QLatin1String("dateRange"), QLatin1String("timeRange")});
 
 	for (int i = 0; i < functions.count(); ++i)
 	{
 		m_engine.evaluate(QStringLiteral("function %1() { return PacUtils.%1.apply(null, arguments); }").arg(functions.at(i))).isError();
 	}
 
-	m_proxies.insert(QLatin1String("ERROR"), QList<QNetworkProxy>() << QNetworkProxy(QNetworkProxy::DefaultProxy));
-	m_proxies.insert(QLatin1String("DIRECT"), QList<QNetworkProxy>() << QNetworkProxy(QNetworkProxy::NoProxy));
+	m_proxies.insert(QLatin1String("ERROR"), QList<QNetworkProxy>({QNetworkProxy(QNetworkProxy::DefaultProxy)}));
+	m_proxies.insert(QLatin1String("DIRECT"), QList<QNetworkProxy>({QNetworkProxy(QNetworkProxy::NoProxy)}));
 }
 
 QList<QNetworkProxy> NetworkAutomaticProxy::getProxy(const QString &url, const QString &host)
 {
-	QJSValueList arguments;
-	arguments << m_engine.toScriptValue(url) << m_engine.toScriptValue(host);
-
-	const QJSValue result = m_findProxy.call(arguments);
+	const QJSValue result(m_findProxy.call(QJSValueList({m_engine.toScriptValue(url), m_engine.toScriptValue(host)})));
 
 	if (result.isError())
 	{
@@ -337,21 +329,21 @@ QList<QNetworkProxy> NetworkAutomaticProxy::getProxy(const QString &url, const Q
 
 		if (proxy.count() == 2 && proxyHost.indexOf(QLatin1String("PROXY"), Qt::CaseInsensitive) == 0)
 		{
-			proxiesForQuery << QNetworkProxy(QNetworkProxy::HttpProxy, proxyHost.replace(0, 5, QString()), proxy.at(1).toInt());
+			proxiesForQuery.append(QNetworkProxy(QNetworkProxy::HttpProxy, proxyHost.replace(0, 5, QString()), proxy.at(1).toInt()));
 
 			continue;
 		}
 
 		if (proxy.count() == 2 && proxyHost.indexOf(QLatin1String("SOCKS"), Qt::CaseInsensitive) == 0)
 		{
-			proxiesForQuery << QNetworkProxy(QNetworkProxy::Socks5Proxy, proxyHost.replace(0, 5, QString()), proxy.at(1).toInt());
+			proxiesForQuery.append(QNetworkProxy(QNetworkProxy::Socks5Proxy, proxyHost.replace(0, 5, QString()), proxy.at(1).toInt()));
 
 			continue;
 		}
 
 		if (proxy.count() == 1 && proxyHost.indexOf(QLatin1String("DIRECT"), Qt::CaseInsensitive) == 0)
 		{
-			proxiesForQuery << QNetworkProxy(QNetworkProxy::NoProxy);
+			proxiesForQuery.append(QNetworkProxy(QNetworkProxy::NoProxy));
 
 			continue;
 		}

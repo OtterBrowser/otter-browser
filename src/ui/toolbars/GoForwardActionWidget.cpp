@@ -74,15 +74,9 @@ void GoForwardActionWidget::updateMenu()
 
 bool GoForwardActionWidget::event(QEvent *event)
 {
-	if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel)
+	if ((event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel) && GesturesManager::startGesture(this, event, QList<GesturesManager::GesturesContext>({GesturesManager::ToolBarGesturesContext, GesturesManager::GenericGesturesContext})))
 	{
-		QList<GesturesManager::GesturesContext> contexts;
-		contexts << GesturesManager::ToolBarGesturesContext << GesturesManager::GenericGesturesContext;
-
-		if (GesturesManager::startGesture(this, event, contexts))
-		{
-			return true;
-		}
+		return true;
 	}
 
 	if (event->type() == QEvent::ContextMenu)

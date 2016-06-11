@@ -629,10 +629,11 @@ bool ToolBarWidget::event(QEvent *event)
 
 		if (m_identifier == ToolBarsManager::TabBar)
 		{
-			contexts << GesturesManager::NoTabHandleGesturesContext;
+			contexts.append(GesturesManager::NoTabHandleGesturesContext);
 		}
 
-		contexts << GesturesManager::ToolBarGesturesContext << GesturesManager::GenericGesturesContext;
+		contexts.append(GesturesManager::ToolBarGesturesContext);
+		contexts.append(GesturesManager::GenericGesturesContext);
 
 		GesturesManager::startGesture(this, event, contexts);
 	}

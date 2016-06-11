@@ -90,7 +90,7 @@ bool PlatformIntegration::installUpdate() const
 
 	if (Updater::isReadyToInstall(scriptPath) && QFileInfo(updaterPath).isExecutable())
 	{
-		if (QProcess::startDetached(updaterPath, QStringList() << QLatin1String("--install-dir") << QCoreApplication::applicationDirPath() << QLatin1String("--package-dir") << QFileInfo(scriptPath).absolutePath() << QLatin1String("--script") << scriptPath))
+		if (QProcess::startDetached(updaterPath, QStringList({QLatin1String("--install-dir"), QCoreApplication::applicationDirPath(), QLatin1String("--package-dir"), QFileInfo(scriptPath).absolutePath(), QLatin1String("--script"), scriptPath})))
 		{
 			Updater::clearUpdate();
 

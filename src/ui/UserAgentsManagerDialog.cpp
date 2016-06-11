@@ -33,11 +33,8 @@ UserAgentsManagerDialog::UserAgentsManagerDialog(QList<UserAgentInformation> use
 	m_ui->moveDownButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-down")));
 	m_ui->moveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-up")));
 
-	QStringList labels;
-	labels << tr("Title") << tr("Value");
-
 	QStandardItemModel *model(new QStandardItemModel(this));
-	model->setHorizontalHeaderLabels(labels);
+	model->setHorizontalHeaderLabels(QStringList({tr("Title"), tr("Value")}));
 
 	for (int i = 0; i < userAgents.count(); ++i)
 	{

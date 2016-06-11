@@ -137,19 +137,19 @@ void GesturesManager::createInstance(QObject *parent)
 	if (!m_instance)
 	{
 		QList<QList<GestureStep> > generic;
-		generic.append(QList<GestureStep>() << GestureStep(QEvent::MouseButtonDblClick, Qt::LeftButton));
-		generic.append(QList<GestureStep>() << GestureStep(QEvent::MouseButtonPress, Qt::LeftButton) << GestureStep(QEvent::MouseButtonRelease, Qt::LeftButton));
-		generic.append(QList<GestureStep>() << GestureStep(QEvent::MouseButtonPress, Qt::LeftButton) << GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction));
+		generic.append(QList<GestureStep>({GestureStep(QEvent::MouseButtonDblClick, Qt::LeftButton)}));
+		generic.append(QList<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::LeftButton), GestureStep(QEvent::MouseButtonRelease, Qt::LeftButton)}));
+		generic.append(QList<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::LeftButton), GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction)}));
 
 		QList<QList<GestureStep> > link;
-		link.append(QList<GestureStep>() << GestureStep(QEvent::MouseButtonPress, Qt::LeftButton) << GestureStep(QEvent::MouseButtonRelease, Qt::LeftButton));
-		link.append(QList<GestureStep>() << GestureStep(QEvent::MouseButtonPress, Qt::LeftButton) << GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction));
+		link.append(QList<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::LeftButton), GestureStep(QEvent::MouseButtonRelease, Qt::LeftButton)}));
+		link.append(QList<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::LeftButton), GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction)}));
 
 		QList<QList<GestureStep> > contentEditable;
-		contentEditable.append(QList<GestureStep>() << GestureStep(QEvent::MouseButtonPress, Qt::MiddleButton));
+		contentEditable.append(QList<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::MiddleButton)}));
 
 		QList<QList<GestureStep> > tabHandle;
-		tabHandle.append(QList<GestureStep>() << GestureStep(QEvent::MouseButtonPress, Qt::LeftButton) << GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction));
+		tabHandle.append(QList<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::LeftButton), GestureStep(QEvent::MouseMove, MouseGestures::UnknownMouseAction)}));
 
 		m_nativeGestures[GesturesManager::GenericGesturesContext] = generic;
 		m_nativeGestures[GesturesManager::LinkGesturesContext] = link;
@@ -187,7 +187,7 @@ void GesturesManager::loadProfiles()
 	m_gestures.clear();
 
 	MouseGesture contextMenuGestureDefinition;
-	contextMenuGestureDefinition.steps << GestureStep(QEvent::MouseButtonPress, Qt::RightButton) << GestureStep(QEvent::MouseButtonRelease, Qt::RightButton);
+	contextMenuGestureDefinition.steps = QList<GestureStep>({GestureStep(QEvent::MouseButtonPress, Qt::RightButton), GestureStep(QEvent::MouseButtonRelease, Qt::RightButton)});
 	contextMenuGestureDefinition.action = ActionsManager::ContextMenuAction;
 
 	for (int i = (UnknownGesturesContext + 1); i < OtherGesturesContext; ++i)

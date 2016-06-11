@@ -106,8 +106,7 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 	availableEntriesModel->appendRow(createEntry(QLatin1String("separator")));
 	availableEntriesModel->appendRow(createEntry(QLatin1String("spacer")));
 
-	QStringList widgets;
-	widgets << QLatin1String("CustomMenu") << QLatin1String("ClosedWindowsMenu") << QLatin1String("AddressWidget") << QLatin1String("MenuButtonWidget") << QLatin1String("PanelChooserWidget") << QLatin1String("SearchWidget") << QLatin1String("StatusMessageWidget") << QLatin1String("ZoomWidget");
+	const QStringList widgets({QLatin1String("CustomMenu"), QLatin1String("ClosedWindowsMenu"), QLatin1String("AddressWidget"), QLatin1String("MenuButtonWidget"), QLatin1String("PanelChooserWidget"), QLatin1String("SearchWidget"), QLatin1String("StatusMessageWidget"), QLatin1String("ZoomWidget")});
 
 	for (int i = 0; i < widgets.count(); ++i)
 	{

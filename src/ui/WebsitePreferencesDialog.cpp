@@ -42,8 +42,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	m_updateOverride(true),
 	m_ui(new Ui::WebsitePreferencesDialog)
 {
-	QList<int> textCodecs;
-	textCodecs << 106 << 1015 << 1017 << 4 << 5 << 6 << 7 << 8 << 82 << 10 << 85 << 12 << 13 << 109 << 110 << 112 << 2250 << 2251 << 2252 << 2253 << 2254 << 2255 << 2256 << 2257 << 2258 << 18 << 39 << 17 << 38 << 2026;
+	const QList<int> textCodecs({106, 1015, 1017, 4, 5, 6, 7, 8, 82, 10, 85, 12, 13, 109, 110, 112, 2250, 2251, 2252, 2253, 2254, 2255, 2256, 2257, 2258, 18, 39, 17, 38, 2026});
 
 	m_ui->setupUi(this);
 	m_ui->enableCookiesCheckBox->setChecked(true);
@@ -112,11 +111,8 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	m_ui->thirdPartyCookiesPolicyComboBox->addItem(tr("Only existing"), QLatin1String("acceptExisting"));
 	m_ui->thirdPartyCookiesPolicyComboBox->addItem(tr("Never"), QLatin1String("ignore"));
 
-	QStringList cookiesLabels;
-	cookiesLabels << tr("Domain") << tr("Name") << tr("Path") << tr("Value") << tr("Expiration date");
-
 	QStandardItemModel *cookiesModel(new QStandardItemModel(this));
-	cookiesModel->setHorizontalHeaderLabels(cookiesLabels);
+	cookiesModel->setHorizontalHeaderLabels(QStringList({tr("Domain"), tr("Name"), tr("Path"), tr("Value"), tr("Expiration date")}));
 
 	for (int i = 0; i < cookies.count(); ++i)
 	{
@@ -360,10 +356,7 @@ void WebsitePreferencesDialog::updateValues(bool checked)
 	const QStringList contentBlockingGlobalProfiles(SettingsManager::getValue(QLatin1String("Content/BlockingProfiles"), url).toStringList());
 	const QVector<ContentBlockingInformation> contentBlockingProfiles(ContentBlockingManager::getProfiles());
 	QStandardItemModel *contentBlockingProfilesModel(new QStandardItemModel(this));
-	QStringList contentBlockingLabels;
-	contentBlockingLabels << tr("Title") << tr("Update Interval") << tr("Last Update");
-
-	contentBlockingProfilesModel->setHorizontalHeaderLabels(contentBlockingLabels);
+	contentBlockingProfilesModel->setHorizontalHeaderLabels(QStringList({tr("Title"), tr("Update Interval"), tr("Last Update")}));
 
 	for (int i = 0; i < contentBlockingProfiles.count(); ++i)
 	{

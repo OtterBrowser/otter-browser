@@ -1044,8 +1044,7 @@ void MainWindow::updateShortcuts()
 	m_actionShortcuts.clear();
 
 	const QVector<ActionsManager::ActionDefinition> definitions(ActionsManager::getActionDefinitions());
-	QList<QKeySequence> standardShortcuts;
-	standardShortcuts << QKeySequence(QKeySequence::Copy) << QKeySequence(QKeySequence::Cut) << QKeySequence(QKeySequence::Delete) << QKeySequence(QKeySequence::Paste) << QKeySequence(QKeySequence::Redo) << QKeySequence(QKeySequence::SelectAll) << QKeySequence(QKeySequence::Undo);
+	const QList<QKeySequence> standardShortcuts({QKeySequence(QKeySequence::Copy), QKeySequence(QKeySequence::Cut), QKeySequence(QKeySequence::Delete), QKeySequence(QKeySequence::Paste), QKeySequence(QKeySequence::Redo), QKeySequence(QKeySequence::SelectAll), QKeySequence(QKeySequence::Undo)});
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{

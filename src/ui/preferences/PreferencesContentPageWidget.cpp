@@ -47,12 +47,8 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 
 	m_ui->popupsComboBox->setCurrentIndex((popupsPolicyIndex < 0) ? 0 : popupsPolicyIndex);
 
-	QList<QLatin1String> fonts;
-	fonts << QLatin1String("StandardFont") << QLatin1String("FixedFont") << QLatin1String("SerifFont") << QLatin1String("SansSerifFont") << QLatin1String("CursiveFont") << QLatin1String("FantasyFont");
-
-	QStringList fontCategories;
-	fontCategories << tr("Standard font") << tr("Fixed-width font") << tr("Serif font") << tr("Sans-serif font") << tr("Cursive font") << tr("Fantasy font");
-
+	const QList<QLatin1String> fonts({QLatin1String("StandardFont"), QLatin1String("FixedFont"), QLatin1String("SerifFont"), QLatin1String("SansSerifFont"), QLatin1String("CursiveFont"), QLatin1String("FantasyFont")});
+	const QStringList fontCategories({tr("Standard font"), tr("Fixed-width font"), tr("Serif font"), tr("Sans-serif font"), tr("Cursive font"), tr("Fantasy font")});
 	OptionDelegate *fontsDelegate(new OptionDelegate(true, this));
 
 	m_ui->fontsWidget->setRowCount(fonts.count());
@@ -73,12 +69,8 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 		m_ui->fontsWidget->setItem(i, 2, previewItem);
 	}
 
-	QList<QLatin1String> colors;
-	colors << QLatin1String("BackgroundColor") << QLatin1String("TextColor") << QLatin1String("LinkColor") << QLatin1String("VisitedLinkColor");
-
-	QStringList colorTypes;
-	colorTypes << tr("Background Color") << tr("Text Color") << tr("Link Color") << tr("Visited Link Color");
-
+	const QList<QLatin1String> colors({QLatin1String("BackgroundColor"), QLatin1String("TextColor"), QLatin1String("LinkColor"), QLatin1String("VisitedLinkColor")});
+	const QStringList colorTypes({tr("Background Color"), tr("Text Color"), tr("Link Color"), tr("Visited Link Color")});
 	OptionDelegate *colorsDelegate(new OptionDelegate(true, this));
 
 	m_ui->colorsWidget->setRowCount(colors.count());

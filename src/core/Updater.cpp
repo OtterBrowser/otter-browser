@@ -46,7 +46,7 @@ Updater::Updater(const UpdateInformation &information, QObject *parent) : QObjec
 	}
 	else if (directory.entryInfoList(QDir::NoDotAndDotDot | QDir::AllEntries).count() > 0)
 	{
-		directory.setNameFilters(QStringList() << QLatin1String("*.*"));
+		directory.setNameFilters(QStringList(QLatin1String("*.*")));
 		directory.setFilter(QDir::Files);
 
 		for (int i = 0; i < directory.entryList().count(); ++i)

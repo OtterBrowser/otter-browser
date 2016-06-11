@@ -82,19 +82,13 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 		m_model->appendRow(groupItem);
 	}
 
-	QStringList labels;
-	labels << tr("Name") << tr("Type") << tr("Value");
-
-	m_model->setHorizontalHeaderLabels(labels);
+	m_model->setHorizontalHeaderLabels(QStringList({tr("Name"), tr("Type"), tr("Value")}));
 	m_model->sort(0);
-
-	QSet<int> filterRoles;
-	filterRoles << Qt::DisplayRole << Qt::UserRole;
 
 	m_ui->configurationViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->configurationViewWidget->setModel(m_model);
 	m_ui->configurationViewWidget->setItemDelegateForColumn(2, new OptionDelegate(false, this));
-	m_ui->configurationViewWidget->setFilterRoles(filterRoles);
+	m_ui->configurationViewWidget->setFilterRoles(QSet<int>({Qt::DisplayRole, Qt::UserRole}));
 	m_ui->filterLineEdit->installEventFilter(this);
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));

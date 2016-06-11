@@ -615,10 +615,10 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (m_currentIndex.isValid())
 		{
-			contexts << GesturesManager::LinkGesturesContext;
+			contexts.append(GesturesManager::LinkGesturesContext);
 		}
 
-		contexts << GesturesManager::GenericGesturesContext;
+		contexts.append(GesturesManager::GenericGesturesContext);
 
 		if (GesturesManager::startGesture(object, event, contexts))
 		{

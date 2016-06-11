@@ -47,14 +47,11 @@ NotesContentsWidget::NotesContentsWidget(Window *window) : ContentsWidget(window
 	addMenu->addAction(tr("Add Note"), this, SLOT(addNote()));
 	addMenu->addAction(tr("Add Separator"), this, SLOT(addSeparator()));
 
-	QSet<int> filterRoles;
-	filterRoles << BookmarksModel::UrlRole << BookmarksModel::TitleRole << BookmarksModel::DescriptionRole << BookmarksModel::KeywordRole;
-
 	m_ui->addButton->setMenu(addMenu);
 	m_ui->notesViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->notesViewWidget->setModel(NotesManager::getModel());
 	m_ui->notesViewWidget->setExpanded(NotesManager::getModel()->getRootItem()->index(), true);
-	m_ui->notesViewWidget->setFilterRoles(filterRoles);
+	m_ui->notesViewWidget->setFilterRoles(QSet<int>({BookmarksModel::UrlRole, BookmarksModel::TitleRole, BookmarksModel::DescriptionRole, BookmarksModel::KeywordRole}));
 	m_ui->notesViewWidget->viewport()->installEventFilter(this);
 	m_ui->notesViewWidget->viewport()->setMouseTracking(true);
 	m_ui->filterLineEdit->installEventFilter(this);

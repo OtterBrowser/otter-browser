@@ -35,11 +35,8 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 {
 	m_ui->setupUi(this);
 
-	QStringList labels;
-	labels << tr("Name") << tr("Code");
-
 	m_model = new QStandardItemModel(this);
-	m_model->setHorizontalHeaderLabels(labels);
+	m_model->setHorizontalHeaderLabels(QStringList({tr("Name"), tr("Code")}));
 
 	m_ui->languagesViewWidget->setModel(m_model);
 
@@ -61,11 +58,11 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 		{
 			if (locale.nativeCountryName().isEmpty() || locale.nativeLanguageName().isEmpty())
 			{
-				allLanguages << qMakePair(tr("Unknown [%1]").arg(locale.bcp47Name()), locale.bcp47Name());
+				allLanguages.append(qMakePair(tr("Unknown [%1]").arg(locale.bcp47Name()), locale.bcp47Name()));
 			}
 			else
 			{
-				allLanguages << qMakePair(QStringLiteral("%1 - %2 [%3]").arg(locale.nativeLanguageName()).arg(locale.nativeCountryName()).arg(locale.bcp47Name()), locale.bcp47Name());
+				allLanguages.append(qMakePair(QStringLiteral("%1 - %2 [%3]").arg(locale.nativeLanguageName()).arg(locale.nativeCountryName()).arg(locale.bcp47Name()), locale.bcp47Name()));
 			}
 		}
 	}

@@ -242,11 +242,8 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 	}
 	else
 	{
-		QStringList sslErrorsLabels;
-		sslErrorsLabels << tr("Error Message") << tr("URL");
-
 		QStandardItemModel *sslErrorsModel(new QStandardItemModel(this));
-		sslErrorsModel->setHorizontalHeaderLabels(sslErrorsLabels);
+		sslErrorsModel->setHorizontalHeaderLabels(QStringList({tr("Error Message"), tr("URL")}));
 
 		for (int i = 0; i < m_sslInformation.errors.count(); ++i)
 		{

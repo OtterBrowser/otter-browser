@@ -59,9 +59,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->setupUi(this);
 
 	QStandardItemModel *navigationModel(new QStandardItemModel(this));
-	QStringList navigationTitles;
-	navigationTitles << tr("Browsing") << tr("Notifications") << tr("Appearance") << tr("Content") << QString() << tr("Downloads") << tr("Programs") << QString() << tr("History") << tr("Network") << tr("Security") << tr("Updates") << QString() << tr("Keyboard") << tr("Mouse");
-
+	const QStringList navigationTitles({tr("Browsing"), tr("Notifications"), tr("Appearance"), tr("Content"), QString(), tr("Downloads"), tr("Programs"), QString(), tr("History"), tr("Network"), tr("Security"), tr("Updates"), QString(), tr("Keyboard"), tr("Mouse")});
 	int navigationIndex(0);
 
 	for (int i = 0; i < navigationTitles.count(); ++i)
@@ -107,9 +105,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->notificationsPlaySoundButton->setIcon(ThemesManager::getIcon(QLatin1String("media-playback-start")));
 
-	QStringList notificationsLabels;
-	notificationsLabels << tr("Name") << tr("Description");
-
+	const QStringList notificationsLabels({tr("Name"), tr("Description")});
 	QStandardItemModel *notificationsModel(new QStandardItemModel(this));
 	notificationsModel->setHorizontalHeaderLabels(notificationsLabels);
 
@@ -166,9 +162,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->enablePluginsComboBox->setCurrentIndex((enablePluginsIndex < 0) ? 1 : enablePluginsIndex);
 	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Content/UserStyleSheet")).toString());
 
-	QStringList downloadsLabels;
-	downloadsLabels << tr("Name");
-
+	const QStringList downloadsLabels({tr("Name")});
 	QStandardItemModel *downloadsModel(new QStandardItemModel(this));
 	downloadsModel->setHorizontalHeaderLabels(downloadsLabels);
 
@@ -1242,8 +1236,7 @@ void PreferencesAdvancedPageWidget::updateJavaScriptOptions()
 
 	if (!isSet)
 	{
-		QStringList javaScriptOptions;
-		javaScriptOptions << QLatin1String("Browser/EnableFullScreen") << QLatin1String("Browser/JavaScriptCanAccessClipboard") << QLatin1String("Browser/JavaScriptCanChangeWindowGeometry") << QLatin1String("Browser/JavaScriptCanCloseWindows") << QLatin1String("Browser/JavaScriptCanDisableContextMenu") << QLatin1String("Browser/JavaScriptCanOpenWindows") << QLatin1String("Browser/JavaScriptCanShowStatusMessages");
+		const QStringList javaScriptOptions({QLatin1String("Browser/EnableFullScreen"), QLatin1String("Browser/JavaScriptCanAccessClipboard"), QLatin1String("Browser/JavaScriptCanChangeWindowGeometry"), QLatin1String("Browser/JavaScriptCanCloseWindows"), QLatin1String("Browser/JavaScriptCanDisableContextMenu"), QLatin1String("Browser/JavaScriptCanOpenWindows"), QLatin1String("Browser/JavaScriptCanShowStatusMessages")});
 
 		for (int i = 0; i < javaScriptOptions.count(); ++i)
 		{

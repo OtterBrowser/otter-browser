@@ -41,7 +41,7 @@ ClearHistoryDialog::ClearHistoryDialog(const QStringList &clearSettings, bool co
 
 	if (settings.isEmpty())
 	{
-		settings << QLatin1String("browsing") << QLatin1String("cookies") << QLatin1String("forms") << QLatin1String("downloads") << QLatin1String("caches");
+		settings = QStringList({QLatin1String("browsing"), QLatin1String("cookies"), QLatin1String("forms"), QLatin1String("downloads"), QLatin1String("caches")});
 	}
 
 	if (m_configureMode)

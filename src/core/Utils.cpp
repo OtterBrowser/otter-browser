@@ -157,10 +157,7 @@ QString createErrorPage(const QUrl &url, const QString &errorNumber, const QStri
 	QRegularExpression hintExpression(QLatin1String("<!--hint:begin-->(.*)<!--hint:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
 	const QString hintTemplate(hintExpression.match(mainTemplate).captured(1));
 	QString hintsHtml;
-	QStringList hints;
-	hints << QCoreApplication::translate("utils", "Make sure your internet connection is active and check whether other applications that rely on the same connection are working.")
-	<< QCoreApplication::translate("utils", "Check that the setup of any internet security software is correct and does not interfere with ordinary web browsing.")
-	<< QCoreApplication::translate("utils", "Try pressing the F12 key on your keyboard and disabling proxy servers, unless you know that you are required to use a proxy to connect to the internet, and then reload the page.");
+	const QStringList hints({QCoreApplication::translate("utils", "Make sure your internet connection is active and check whether other applications that rely on the same connection are working."), QCoreApplication::translate("utils", "Check that the setup of any internet security software is correct and does not interfere with ordinary web browsing."), QCoreApplication::translate("utils", "Try pressing the F12 key on your keyboard and disabling proxy servers, unless you know that you are required to use a proxy to connect to the internet, and then reload the page.")});
 
 	for (int i = 0; i < hints.count(); ++i)
 	{
@@ -311,11 +308,11 @@ SaveInformation getSavePath(const QString &fileName, QString path, QStringList f
 
 		if (!suffix.isEmpty())
 		{
-			filters << QCoreApplication::translate("utils", "%1 files (*.%2)").arg(suffix.toUpper()).arg(suffix);
+			filters.append(QCoreApplication::translate("utils", "%1 files (*.%2)").arg(suffix.toUpper()).arg(suffix));
 		}
 	}
 
-	filters << QCoreApplication::translate("utils", "All files (*)");
+	filters.append(QCoreApplication::translate("utils", "All files (*)"));
 
 	do
 	{

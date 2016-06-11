@@ -44,10 +44,8 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 	const QStringList globalProfiles(SettingsManager::getValue(QLatin1String("Content/BlockingProfiles")).toStringList());
 	const QVector<ContentBlockingInformation> profiles = ContentBlockingManager::getProfiles();
 	QStandardItemModel *model(new QStandardItemModel(this));
-	QStringList labels;
-	labels << tr("Title") << tr("Update Interval") << tr("Last Update");
 
-	model->setHorizontalHeaderLabels(labels);
+	model->setHorizontalHeaderLabels(QStringList({tr("Title"), tr("Update Interval"), tr("Last Update")}));
 
 	for (int i = 0; i < profiles.count(); ++i)
 	{

@@ -44,11 +44,8 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 {
 	m_ui->setupUi(this);
 
-	QStringList searchEnginesLabels;
-	searchEnginesLabels << tr("Name") << tr("Keyword");
-
 	QStandardItemModel *searchEnginesModel(new QStandardItemModel(this));
-	searchEnginesModel->setHorizontalHeaderLabels(searchEnginesLabels);
+	searchEnginesModel->setHorizontalHeaderLabels(QStringList({tr("Name"), tr("Keyword")}));
 
 	const QStringList searchEngines(SearchEnginesManager::getSearchEngines());
 

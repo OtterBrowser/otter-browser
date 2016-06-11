@@ -37,9 +37,6 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 
 	QStandardItemModel *model(new QStandardItemModel(this));
 	const QVector<ActionsManager::ActionDefinition> definitions(ActionsManager::getActionDefinitions());
-	QStringList labels;
-	labels << tr("Action");
-
 	for (int i = 0; i < definitions.count(); ++i)
 	{
 		QStandardItem *item(new QStandardItem(definitions.at(i).icon, QCoreApplication::translate("actions", (definitions.at(i).description.isEmpty() ? definitions.at(i).text : definitions.at(i).description).toUtf8().constData())));
@@ -62,7 +59,7 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 		model->appendRow(item);
 	}
 
-	model->setHorizontalHeaderLabels(labels);
+	model->setHorizontalHeaderLabels(QStringList({tr("Action")}));
 	model->sort(0);
 
 	m_ui->actionsViewWidget->setModel(model);
@@ -121,12 +118,9 @@ void KeyboardProfileDialog::updateActionsActions()
 
 	m_ui->shortcutsViewWidget->getSourceModel()->clear();
 
-	QStringList labels;
-	labels << tr("Shortcut");
-
 	m_currentAction = m_ui->actionsViewWidget->getIndex(m_ui->actionsViewWidget->getCurrentRow(), 0);
 
-	m_ui->shortcutsViewWidget->getSourceModel()->setHorizontalHeaderLabels(labels);
+	m_ui->shortcutsViewWidget->getSourceModel()->setHorizontalHeaderLabels(QStringList({tr("Shortcut")}));
 
 	if (!m_currentAction.isValid())
 	{

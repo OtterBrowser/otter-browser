@@ -1005,13 +1005,10 @@ bool AddressWidget::startDrag(QMouseEvent *event)
 		return false;
 	}
 
-	QList<QUrl> urls;
-	urls << getUrl();
-
 	QDrag *drag(new QDrag(this));
 	QMimeData *mimeData(new QMimeData());
 	mimeData->setText(getUrl().toString());
-	mimeData->setUrls(urls);
+	mimeData->setUrls(QList<QUrl>({getUrl()}));
 
 	if (m_window)
 	{
