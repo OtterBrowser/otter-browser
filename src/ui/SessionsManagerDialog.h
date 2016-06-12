@@ -44,7 +44,7 @@ protected:
 protected slots:
 	void openSession();
 	void deleteSession();
-	void currentChanged(int index);
+	void updateActions();
 
 private:
 	Ui::SessionsManagerDialog *m_ui;

@@ -45,11 +45,12 @@ SessionsManagerDialog::SessionsManagerDialog(QWidget *parent) : Dialog(parent),
 		information.insert((session.title.isEmpty() ? tr("(Untitled)") : session.title), session);
 	}
 
+	QStandardItemModel *model(new QStandardItemModel(this));
+	model->setHorizontalHeaderLabels(QStringList({tr("Title"), tr("Identifier"), tr("Windows")}));
+
 	const QList<SessionInformation> sorted(information.values());
 	const QString currentSession(SessionsManager::getCurrentSession());
-	int index(0);
-
-	m_ui->sessionsWidget->setRowCount(sorted.count());
+	int row(0);
 
 	for (int i = 0; i < sorted.count(); ++i)
 	{
@@ -62,19 +63,24 @@ SessionsManagerDialog::SessionsManagerDialog(QWidget *parent) : Dialog(parent),
 
 		if (sorted.at(i).path == currentSession)
 		{
-			index = i;
+			row = i;
 		}
 
-		m_ui->sessionsWidget->setItem(i, 0, new QTableWidgetItem(sorted.at(i).title.isEmpty() ? tr("(Untitled)") : sorted.at(i).title));
-		m_ui->sessionsWidget->setItem(i, 1, new QTableWidgetItem(sorted.at(i).path));
-		m_ui->sessionsWidget->setItem(i, 2, new QTableWidgetItem(QStringLiteral("%1 (%2)").arg(sorted.at(i).windows.count()).arg(windows)));
+		QList<QStandardItem*> items({new QStandardItem(sorted.at(i).title.isEmpty() ? tr("(Untitled)") : sorted.at(i).title), new QStandardItem(sorted.at(i).path), new QStandardItem(tr("%n window(s) (%1)", "", sorted.at(i).windows.count()).arg(tr("%n tab(s)", "", windows)))});
+		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+
+		model->appendRow(items);
 	}
+
+	m_ui->sessionsViewWidget->setModel(model);
 
 	connect(m_ui->openButton, SIGNAL(clicked()), this, SLOT(openSession()));
 	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(deleteSession()));
-	connect(m_ui->sessionsWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentChanged(int)));
+	connect(m_ui->sessionsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
 
-	m_ui->sessionsWidget->setCurrentCell(index, 0);
+	m_ui->sessionsViewWidget->setCurrentIndex(m_ui->sessionsViewWidget->getIndex(row, 0));
 }
 
 SessionsManagerDialog::~SessionsManagerDialog()
@@ -94,7 +100,7 @@ void SessionsManagerDialog::changeEvent(QEvent *event)
 
 void SessionsManagerDialog::openSession()
 {
-	const SessionInformation session(SessionsManager::getSession(m_ui->sessionsWidget->item(m_ui->sessionsWidget->currentRow(), 1)->data(Qt::DisplayRole).toString()));
+	const SessionInformation session(SessionsManager::getSession(m_ui->sessionsViewWidget->getIndex(m_ui->sessionsViewWidget->getCurrentRow(), 1).data(Qt::DisplayRole).toString()));
 
 	if (session.isClean || QMessageBox::warning(this, tr("Warning"), tr("This session was not saved correctly.\nAre you sure that you want to restore this session anyway?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
 	{
@@ -111,13 +117,13 @@ void SessionsManagerDialog::deleteSession()
 		return;
 	}
 
-	const int index(m_ui->sessionsWidget->currentRow());
+	const int row(m_ui->sessionsViewWidget->getCurrentRow());
 
-	if (QMessageBox::question(this, tr("Confirm"), tr("Are you sure that you want to delete session %1?").arg(m_ui->sessionsWidget->item(index, 0)->data(Qt::DisplayRole).toString()), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
+	if (QMessageBox::question(this, tr("Confirm"), tr("Are you sure that you want to delete session %1?").arg(m_ui->sessionsViewWidget->getIndex(row, 0).data(Qt::DisplayRole).toString()), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
 	{
-		if (SessionsManager::deleteSession(m_ui->sessionsWidget->item(index, 1)->data(Qt::DisplayRole).toString()))
+		if (SessionsManager::deleteSession(m_ui->sessionsViewWidget->getIndex(row, 1).data(Qt::DisplayRole).toString()))
 		{
-			m_ui->sessionsWidget->removeRow(index);
+			m_ui->sessionsViewWidget->removeRow();
 		}
 		else
 		{
@@ -126,9 +132,9 @@ void SessionsManagerDialog::deleteSession()
 	}
 }
 
-void SessionsManagerDialog::currentChanged(int index)
+void SessionsManagerDialog::updateActions()
 {
-	m_ui->deleteButton->setEnabled(m_ui->sessionsWidget->item(index, 1)->data(Qt::DisplayRole).toString() != QLatin1String("default"));
+	m_ui->deleteButton->setEnabled(m_ui->sessionsViewWidget->getIndex(m_ui->sessionsViewWidget->getCurrentRow(), 1).data(Qt::DisplayRole).toString() != QLatin1String("default"));
 }
 
 }
