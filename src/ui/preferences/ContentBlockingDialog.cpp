@@ -49,18 +49,13 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 
 	for (int i = 0; i < profiles.count(); ++i)
 	{
-		QList<QStandardItem*> items;
-		items.append(new QStandardItem(profiles.at(i).title));
-		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		QList<QStandardItem*> items({new QStandardItem(profiles.at(i).title), new QStandardItem(profilesSettings.value(profiles.at(i).name + QLatin1String("/updateInterval")).toString()), new QStandardItem(Utils::formatDateTime(profilesSettings.value(profiles.at(i).name + QLatin1String("/lastUpdate")).toDateTime()))});
 		items[0]->setData(profiles.at(i).name, Qt::UserRole);
 		items[0]->setData(profiles.at(i).updateUrl, (Qt::UserRole + 1));
+		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		items[0]->setCheckable(true);
 		items[0]->setCheckState(globalProfiles.contains(profiles.at(i).name) ? Qt::Checked : Qt::Unchecked);
-
-		items.append(new QStandardItem(profilesSettings.value(profiles.at(i).name + QLatin1String("/updateInterval")).toString()));
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
-
-		items.append(new QStandardItem(Utils::formatDateTime(profilesSettings.value(profiles.at(i).name + QLatin1String("/lastUpdate")).toDateTime())));
 		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
 		model->appendRow(items);

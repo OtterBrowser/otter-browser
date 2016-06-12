@@ -60,12 +60,10 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 
 		m_searchEngines[searchEngine.identifier] = qMakePair(false, searchEngine);
 
-		QList<QStandardItem*> items;
-		items.append(new QStandardItem(searchEngine.icon, searchEngine.title));
-		items[0]->setToolTip(searchEngine.description);
+		QList<QStandardItem*> items({new QStandardItem(searchEngine.icon, searchEngine.title), new QStandardItem(searchEngine.keyword)});
 		items[0]->setData(searchEngine.identifier, Qt::UserRole);
+		items[0]->setToolTip(searchEngine.description);
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
-		items.append(new QStandardItem(searchEngine.keyword));
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
 		searchEnginesModel->appendRow(items);
@@ -158,12 +156,10 @@ void PreferencesSearchPageWidget::addSearchEngine()
 		m_defaultSearchEngine = identifier;
 	}
 
-	QList<QStandardItem*> items;
-	items.append(new QStandardItem(searchEngine.icon, searchEngine.title));
-	items[0]->setToolTip(searchEngine.description);
+	QList<QStandardItem*> items({new QStandardItem(searchEngine.icon, searchEngine.title), new QStandardItem(searchEngine.keyword)});
 	items[0]->setData(identifier, Qt::UserRole);
+	items[0]->setToolTip(searchEngine.description);
 	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
-	items.append(new QStandardItem(searchEngine.keyword));
 	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
 	m_ui->searchViewWidget->insertRow(items);
@@ -197,12 +193,10 @@ void PreferencesSearchPageWidget::readdSearchEngine(QAction *action)
 
 	m_searchEngines[identifier] = qMakePair(false, searchEngine);
 
-	QList<QStandardItem*> items;
-	items.append(new QStandardItem(searchEngine.icon, searchEngine.title));
-	items[0]->setToolTip(searchEngine.description);
+	QList<QStandardItem*> items({new QStandardItem(searchEngine.icon, searchEngine.title), new QStandardItem(searchEngine.keyword)});
 	items[0]->setData(identifier, Qt::UserRole);
+	items[0]->setToolTip(searchEngine.description);
 	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
-	items.append(new QStandardItem(searchEngine.keyword));
 	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
 	m_ui->searchViewWidget->insertRow(items);

@@ -411,10 +411,7 @@ void ItemViewWidget::insertRow(const QList<QStandardItem*> &items)
 
 void ItemViewWidget::insertRow(QStandardItem *item)
 {
-	QList<QStandardItem*> items;
-	items.append(item);
-
-	insertRow(items);
+	insertRow(QList<QStandardItem*>({item}));
 }
 
 void ItemViewWidget::removeRow()

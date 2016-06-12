@@ -246,10 +246,10 @@ void TabSwitcherWidget::setIcon(const QIcon &icon)
 
 QList<QStandardItem*> TabSwitcherWidget::createRow(Window *window) const
 {
-	QList<QStandardItem*> items;
-	items.append(new QStandardItem(window->getIcon(), window->getTitle()));
-	items.append(new QStandardItem(QString::number(window->getLastActivity().toMSecsSinceEpoch())));
+	QList<QStandardItem*> items({new QStandardItem(window->getIcon(), window->getTitle()), new QStandardItem(QString::number(window->getLastActivity().toMSecsSinceEpoch()))});
 	items[0]->setData(window->getIdentifier(), Qt::UserRole);
+	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
 	connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));

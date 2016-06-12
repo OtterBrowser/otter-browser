@@ -39,11 +39,9 @@ UserAgentsManagerDialog::UserAgentsManagerDialog(QList<UserAgentInformation> use
 	for (int i = 0; i < userAgents.count(); ++i)
 	{
 		const QString title(userAgents.at(i).title);
-		QList<QStandardItem*> items;
-		items.append(new QStandardItem(title.isEmpty() ? tr("(Untitled)") : title));
+		QList<QStandardItem*> items({new QStandardItem(title.isEmpty() ? tr("(Untitled)") : title), new QStandardItem(userAgents.at(i).value)});
 		items[0]->setData(userAgents.at(i).identifier, Qt::UserRole);
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable);
-		items.append(new QStandardItem(userAgents.at(i).value));
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable);
 
 		model->appendRow(items);
@@ -77,10 +75,8 @@ void UserAgentsManagerDialog::changeEvent(QEvent *event)
 
 void UserAgentsManagerDialog::addUserAgent()
 {
-	QList<QStandardItem*> items;
-	items.append(new QStandardItem());
+	QList<QStandardItem*> items({new QStandardItem(), new QStandardItem()});
 	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable);
-	items.append(new QStandardItem());
 	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable);
 
 	m_ui->userAgentsView->insertRow(items);

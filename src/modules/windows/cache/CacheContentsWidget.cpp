@@ -190,12 +190,7 @@ void CacheContentsWidget::addEntry(const QUrl &entry)
 	}
 
 	const QMimeType mimeType((type.isEmpty() && device) ? QMimeDatabase().mimeTypeForData(device) : QMimeDatabase().mimeTypeForName(type));
-	QList<QStandardItem*> entryItems;
-	entryItems.append(new QStandardItem(entry.path()));
-	entryItems.append(new QStandardItem(mimeType.name()));
-	entryItems.append(new QStandardItem(device ? Utils::formatUnit(device->size()) : QString()));
-	entryItems.append(new QStandardItem(metaData.lastModified().toString()));
-	entryItems.append(new QStandardItem(metaData.expirationDate().toString()));
+	QList<QStandardItem*> entryItems({new QStandardItem(entry.path()), new QStandardItem(mimeType.name()), new QStandardItem(device ? Utils::formatUnit(device->size()) : QString()), new QStandardItem(metaData.lastModified().toString()), new QStandardItem(metaData.expirationDate().toString())});
 	entryItems[0]->setData(entry, Qt::UserRole);
 	entryItems[0]->setFlags(entryItems[0]->flags() | Qt::ItemNeverHasChildren);
 	entryItems[1]->setFlags(entryItems[1]->flags() | Qt::ItemNeverHasChildren);

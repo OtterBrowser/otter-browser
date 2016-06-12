@@ -247,10 +247,10 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 
 		for (int i = 0; i < m_sslInformation.errors.count(); ++i)
 		{
-			QList<QStandardItem*> items;
-			items.append(new QStandardItem(m_sslInformation.errors.at(i).second.errorString()));
+			QList<QStandardItem*> items({new QStandardItem(m_sslInformation.errors.at(i).second.errorString()), new QStandardItem(m_sslInformation.errors.at(i).first.toDisplayString())});
+			items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 			items[0]->setToolTip(items[0]->text());
-			items.append(new QStandardItem(m_sslInformation.errors.at(i).first.toDisplayString()));
+			items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 			items[1]->setToolTip(items[1]->text());
 
 			sslErrorsModel->appendRow(items);

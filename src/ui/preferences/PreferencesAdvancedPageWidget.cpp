@@ -105,22 +105,19 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->notificationsPlaySoundButton->setIcon(ThemesManager::getIcon(QLatin1String("media-playback-start")));
 
-	const QStringList notificationsLabels({tr("Name"), tr("Description")});
 	QStandardItemModel *notificationsModel(new QStandardItemModel(this));
-	notificationsModel->setHorizontalHeaderLabels(notificationsLabels);
+	notificationsModel->setHorizontalHeaderLabels(QStringList({tr("Name"), tr("Description")}));
 
 	const QVector<EventDefinition> events(NotificationsManager::getEventDefinitions());
 
 	for (int i = 0; i < events.count(); ++i)
 	{
-		QList<QStandardItem*> items;
-		items.append(new QStandardItem(QCoreApplication::translate("notifications", events.at(i).title.toUtf8())));
+		QList<QStandardItem*> items({new QStandardItem(QCoreApplication::translate("notifications", events.at(i).title.toUtf8())), new QStandardItem(QCoreApplication::translate("notifications", events.at(i).description.toUtf8()))});
 		items[0]->setData(events.at(i).identifier, Qt::UserRole);
 		items[0]->setData(events.at(i).playSound, (Qt::UserRole + 1));
 		items[0]->setData(events.at(i).showAlert, (Qt::UserRole + 2));
 		items[0]->setData(events.at(i).showNotification, (Qt::UserRole + 3));
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-		items.append(new QStandardItem(QCoreApplication::translate("notifications", events.at(i).description.toUtf8())));
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
 		notificationsModel->appendRow(items);
@@ -162,9 +159,8 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->enablePluginsComboBox->setCurrentIndex((enablePluginsIndex < 0) ? 1 : enablePluginsIndex);
 	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Content/UserStyleSheet")).toString());
 
-	const QStringList downloadsLabels({tr("Name")});
 	QStandardItemModel *downloadsModel(new QStandardItemModel(this));
-	downloadsModel->setHorizontalHeaderLabels(downloadsLabels);
+	downloadsModel->setHorizontalHeaderLabels(QStringList({tr("Name")}));
 
 	Settings handlersSettings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
 	const QStringList handlers(handlersSettings.getGroups());

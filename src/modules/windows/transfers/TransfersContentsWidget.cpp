@@ -99,21 +99,14 @@ void TransfersContentsWidget::changeEvent(QEvent *event)
 
 void TransfersContentsWidget::addTransfer(Transfer *transfer)
 {
-	QList<QStandardItem*> items;
-	QStandardItem *item(new QStandardItem());
-	item->setData(qVariantFromValue(static_cast<void*>(transfer)), Qt::UserRole);
-	item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
-
-	items.append(item);
-
-	item = new QStandardItem(QFileInfo(transfer->getTarget()).fileName());
-	item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
-
-	items.append(item);
+	QList<QStandardItem*> items({new QStandardItem(), new QStandardItem(QFileInfo(transfer->getTarget()).fileName())});
+	items[0]->setData(qVariantFromValue(static_cast<void*>(transfer)), Qt::UserRole);
+	items[0]->setFlags(items[0]->flags() | Qt::ItemNeverHasChildren);
+	items[1]->setFlags(items[1]->flags() | Qt::ItemNeverHasChildren);
 
 	for (int i = 2; i < m_model->columnCount(); ++i)
 	{
-		item = new QStandardItem();
+		QStandardItem *item(new QStandardItem());
 		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 		items.append(item);

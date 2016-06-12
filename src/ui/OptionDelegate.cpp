@@ -33,7 +33,7 @@ OptionDelegate::OptionDelegate(bool isSimple, QObject *parent) : QItemDelegate(p
 
 void OptionDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	const SettingsManager::OptionType type = SettingsManager::getDefinition(index.data(Qt::UserRole).toString()).type;
+	const SettingsManager::OptionType type(SettingsManager::getDefinition(index.data(Qt::UserRole).toString()).type);
 
 	if (type == SettingsManager::UnknownType)
 	{

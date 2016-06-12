@@ -54,10 +54,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 			const QString key(QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j)));
 			const QString type(defaults.value(QStringLiteral("%1/type").arg(keys.at(j))).toString());
 			const QVariant value(SettingsManager::getValue(key));
-			QList<QStandardItem*> optionItems;
-			optionItems.append(new QStandardItem(keys.at(j)));
-			optionItems.append(new QStandardItem(type));
-			optionItems.append(new QStandardItem(value.toString()));
+			QList<QStandardItem*> optionItems({new QStandardItem(keys.at(j)), new QStandardItem(type), new QStandardItem(value.toString())});
 			optionItems[0]->setFlags(optionItems[0]->flags() | Qt::ItemNeverHasChildren);
 			optionItems[1]->setFlags(optionItems[1]->flags() | Qt::ItemNeverHasChildren);
 			optionItems[2]->setData(QSize(-1, 30), Qt::SizeHintRole);

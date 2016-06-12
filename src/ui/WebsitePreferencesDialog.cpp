@@ -116,12 +116,12 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 
 	for (int i = 0; i < cookies.count(); ++i)
 	{
-		QList<QStandardItem*> items;
-		items.append(new QStandardItem(cookies.at(i).domain()));
-		items.append(new QStandardItem(QString(cookies.at(i).name())));
-		items.append(new QStandardItem(cookies.at(i).path()));
-		items.append(new QStandardItem(QString(cookies.at(i).value())));
-		items.append(new QStandardItem(Utils::formatDateTime(cookies.at(i).expirationDate())));
+		QList<QStandardItem*> items({new QStandardItem(cookies.at(i).domain()), new QStandardItem(QString(cookies.at(i).name())), new QStandardItem(cookies.at(i).path()), new QStandardItem(QString(cookies.at(i).value())), new QStandardItem(Utils::formatDateTime(cookies.at(i).expirationDate()))});
+		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		items[3]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		items[4]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
 		cookiesModel->appendRow(items);
 	}
@@ -360,18 +360,13 @@ void WebsitePreferencesDialog::updateValues(bool checked)
 
 	for (int i = 0; i < contentBlockingProfiles.count(); ++i)
 	{
-		QList<QStandardItem*> items;
-		items.append(new QStandardItem(contentBlockingProfiles.at(i).title));
-		items[0]->setFlags(Qt::ItemIsEnabled);
+		QList<QStandardItem*> items({new QStandardItem(contentBlockingProfiles.at(i).title), new QStandardItem(contentBlockingProfilesSettings.value(contentBlockingProfiles.at(i).name + QLatin1String("/updateInterval")).toString()), new QStandardItem(Utils::formatDateTime(contentBlockingProfilesSettings.value(contentBlockingProfiles.at(i).name + QLatin1String("/lastUpdate")).toDateTime()))});
 		items[0]->setData(contentBlockingProfiles.at(i).name, Qt::UserRole);
+		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		items[0]->setCheckable(true);
 		items[0]->setCheckState(contentBlockingGlobalProfiles.contains(contentBlockingProfiles.at(i).name) ? Qt::Checked : Qt::Unchecked);
-
-		items.append(new QStandardItem(contentBlockingProfilesSettings.value(contentBlockingProfiles.at(i).name + QLatin1String("/updateInterval")).toString()));
-		items[1]->setFlags(Qt::ItemIsEnabled);
-
-		items.append(new QStandardItem(Utils::formatDateTime(contentBlockingProfilesSettings.value(contentBlockingProfiles.at(i).name + QLatin1String("/lastUpdate")).toDateTime())));
-		items[2]->setFlags(Qt::ItemIsEnabled);
+		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
 		contentBlockingProfilesModel->appendRow(items);
 	}

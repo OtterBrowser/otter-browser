@@ -20,7 +20,6 @@
 
 #include "PreferencesContentPageWidget.h"
 #include "../../core/SettingsManager.h"
-#include "../../ui/ItemViewWidget.h"
 #include "../../ui/OptionDelegate.h"
 #include "../../ui/OptionWidget.h"
 

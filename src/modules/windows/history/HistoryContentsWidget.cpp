@@ -188,10 +188,7 @@ void HistoryContentsWidget::addEntry(HistoryEntryItem *entry)
 		return;
 	}
 
-	QList<QStandardItem*> entryItems;
-	entryItems.append(new QStandardItem((entry->icon().isNull() ? ThemesManager::getIcon(QLatin1String("text-html")) : entry->icon()), entry->data(HistoryModel::UrlRole).toUrl().toDisplayString().replace(QLatin1String("%23"), QString(QLatin1Char('#')))));
-	entryItems.append(new QStandardItem(entry->data(HistoryModel::TitleRole).isNull() ? tr("(Untitled)") : entry->data(HistoryModel::TitleRole).toString()));
-	entryItems.append(new QStandardItem(Utils::formatDateTime(entry->data(HistoryModel::TimeVisitedRole).toDateTime())));
+	QList<QStandardItem*> entryItems({new QStandardItem((entry->icon().isNull() ? ThemesManager::getIcon(QLatin1String("text-html")) : entry->icon()), entry->data(HistoryModel::UrlRole).toUrl().toDisplayString().replace(QLatin1String("%23"), QString(QLatin1Char('#')))), new QStandardItem(entry->data(HistoryModel::TitleRole).isNull() ? tr("(Untitled)") : entry->data(HistoryModel::TitleRole).toString()), new QStandardItem(Utils::formatDateTime(entry->data(HistoryModel::TimeVisitedRole).toDateTime()))});
 	entryItems[0]->setData(entry->data(HistoryModel::IdentifierRole).toULongLong(), Qt::UserRole);
 	entryItems[0]->setFlags(entryItems[0]->flags() | Qt::ItemNeverHasChildren);
 	entryItems[1]->setFlags(entryItems[1]->flags() | Qt::ItemNeverHasChildren);

@@ -50,10 +50,8 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 			for (iterator = profiles[profile].gestures[contexts.at(i).first].constBegin(); iterator != profiles[profile].gestures[contexts.at(i).first].constEnd(); ++iterator)
 			{
 				const ActionsManager::ActionDefinition action(ActionsManager::getActionDefinition(iterator.value()));
-				QList<QStandardItem*> items;
-				items.append(new QStandardItem(QString(iterator.key()).replace(QLatin1Char(','), QLatin1String(", "))));
+				QList<QStandardItem*> items({new QStandardItem(QString(iterator.key()).replace(QLatin1Char(','), QLatin1String(", "))), new QStandardItem(action.icon, QCoreApplication::translate("actions", (action.description.isEmpty() ? action.text : action.description).toUtf8().constData()))});
 				items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
-				items.append(new QStandardItem(action.icon, QCoreApplication::translate("actions", (action.description.isEmpty() ? action.text : action.description).toUtf8().constData())));
 				items[1]->setData(action.identifier, Qt::UserRole);
 				items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren | Qt::ItemIsEditable);
 
@@ -61,9 +59,7 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 			}
 		}
 
-		QList<QStandardItem*> items;
-		items.append(item);
-		items.append(new QStandardItem());
+		QList<QStandardItem*> items({item, new QStandardItem()});
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
 		gesturesModel->appendRow(items);
@@ -118,10 +114,8 @@ void MouseProfileDialog::addGesture()
 
 	if (item)
 	{
-		QList<QStandardItem*> items;
-		items.append(new QStandardItem());
+		QList<QStandardItem*> items({new QStandardItem(), new QStandardItem(tr("Select Action"))});
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
-		items.append(new QStandardItem(tr("Select Action")));
 		items[1]->setData(-1, Qt::UserRole);
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren | Qt::ItemIsEditable);
 

@@ -94,8 +94,7 @@ void KeyboardProfileDialog::changeEvent(QEvent *event)
 
 void KeyboardProfileDialog::addShortcut()
 {
-	QList<QStandardItem*> items;
-	items.append(new QStandardItem(QString()));
+	QList<QStandardItem*> items({new QStandardItem()});
 	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
 	m_ui->shortcutsViewWidget->insertRow(items);
@@ -142,8 +141,7 @@ void KeyboardProfileDialog::updateActionsActions()
 
 		if (!shortcut.isEmpty())
 		{
-			QList<QStandardItem*> items;
-			items.append(new QStandardItem(shortcut.toString()));
+			QList<QStandardItem*> items({new QStandardItem(shortcut.toString())});
 			items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
 			m_ui->shortcutsViewWidget->getSourceModel()->appendRow(items);
