@@ -261,7 +261,8 @@ void QtWebKitWebWidget::navigating(const QUrl &url, QWebFrame *frame, QWebPage::
 		}
 
 		m_networkManager->resetStatistics();
-		m_networkManager->updateOptions(url);
+
+		updateOptions(url);
 
 		m_isNavigating = true;
 
@@ -1061,6 +1062,8 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				if (hitResult.frame())
 				{
+					m_networkManager->addContentBlockingException(url, ContentBlockingManager::SubFrameType);
+
 					hitResult.frame()->setUrl(QUrl());
 					hitResult.frame()->setUrl(url);
 				}
@@ -1138,6 +1141,10 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::ReloadImageAction:
 			if (!getCurrentHitTestResult().imageUrl.isEmpty())
 			{
+				m_networkManager->addContentBlockingException(getCurrentHitTestResult().imageUrl, ContentBlockingManager::ImageType);
+
+				m_page->settings()->setAttribute(QWebSettings::AutoLoadImages, true);
+
 				if (getUrl().matches(getCurrentHitTestResult().imageUrl, (QUrl::NormalizePathSegments | QUrl::RemoveFragment | QUrl::StripTrailingSlash)))
 				{
 					triggerAction(ActionsManager::ReloadAndBypassCacheAction);

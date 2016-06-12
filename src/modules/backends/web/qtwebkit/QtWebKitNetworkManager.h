@@ -53,6 +53,7 @@ public:
 
 protected:
 	void timerEvent(QTimerEvent *event);
+	void addContentBlockingException(const QUrl &url, ContentBlockingManager::ResourceType resourceType);
 	void resetStatistics();
 	void registerTransfer(QNetworkReply *reply);
 	void updateStatus();
@@ -78,13 +79,14 @@ private:
 	QNetworkReply *m_baseReply;
 	QString m_acceptLanguage;
 	QString m_userAgent;
-	QStringList m_blockedElements;
 	QUrl m_formRequestUrl;
 	QDateTime m_dateDownloaded;
 	WebWidget::SslInformation m_sslInformation;
+	QStringList m_blockedElements;
 	QList<QNetworkReply*> m_transfers;
 	QList<ContentBlockingManager::CheckResult> m_blockedRequests;
 	QVector<int> m_contentBlockingProfiles;
+	QSet<QUrl> m_contentBlockingExceptions;
 	QHash<QNetworkReply*, QPair<qint64, bool> > m_replies;
 	WindowsManager::ContentStates m_contentState;
 	qint64 m_speed;
