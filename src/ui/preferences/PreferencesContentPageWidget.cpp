@@ -20,6 +20,7 @@
 
 #include "PreferencesContentPageWidget.h"
 #include "../../core/SettingsManager.h"
+#include "../../ui/ItemViewWidget.h"
 #include "../../ui/OptionDelegate.h"
 #include "../../ui/OptionWidget.h"
 
@@ -47,51 +48,54 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 
 	m_ui->popupsComboBox->setCurrentIndex((popupsPolicyIndex < 0) ? 0 : popupsPolicyIndex);
 
+	QStandardItemModel *fontsModel(new QStandardItemModel(this));
+	fontsModel->setHorizontalHeaderLabels(QStringList({tr("Style"), tr("Font"), tr("Preview")}));
+
 	const QList<QLatin1String> fonts({QLatin1String("StandardFont"), QLatin1String("FixedFont"), QLatin1String("SerifFont"), QLatin1String("SansSerifFont"), QLatin1String("CursiveFont"), QLatin1String("FantasyFont")});
 	const QStringList fontCategories({tr("Standard font"), tr("Fixed-width font"), tr("Serif font"), tr("Sans-serif font"), tr("Cursive font"), tr("Fantasy font")});
 	OptionDelegate *fontsDelegate(new OptionDelegate(true, this));
 
-	m_ui->fontsWidget->setRowCount(fonts.count());
-	m_ui->fontsWidget->setItemDelegateForColumn(1, fontsDelegate);
-
 	for (int i = 0; i < fonts.count(); ++i)
 	{
 		const QString family(SettingsManager::getValue(QLatin1String("Content/") + fonts.at(i)).toString());
-		QTableWidgetItem *familyItem(new QTableWidgetItem(family));
-		familyItem->setData(Qt::UserRole, QLatin1String("Content/") + fonts.at(i));
-		familyItem->setData((Qt::UserRole + 1), QLatin1String("font"));
+		QList<QStandardItem*> items({new QStandardItem(fontCategories.at(i)), new QStandardItem(family), new QStandardItem(tr("The quick brown fox jumps over the lazy dog"))});
+		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		items[1]->setData(QLatin1String("Content/") + fonts.at(i), Qt::UserRole);
+		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		items[2]->setData(QFont(family), Qt::FontRole);
+		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
-		QTableWidgetItem *previewItem(new QTableWidgetItem(tr("The quick brown fox jumps over the lazy dog")));
-		previewItem->setFont(QFont(family));
-
-		m_ui->fontsWidget->setItem(i, 0, new QTableWidgetItem(fontCategories.at(i)));
-		m_ui->fontsWidget->setItem(i, 1, familyItem);
-		m_ui->fontsWidget->setItem(i, 2, previewItem);
+		fontsModel->appendRow(items);
 	}
+
+	m_ui->fontsViewWidget->setModel(fontsModel);
+	m_ui->fontsViewWidget->setItemDelegateForColumn(1, fontsDelegate);
+
+	QStandardItemModel *colorsModel(new QStandardItemModel(this));
+	colorsModel->setHorizontalHeaderLabels(QStringList({tr("Type"), tr("Preview")}));
 
 	const QList<QLatin1String> colors({QLatin1String("BackgroundColor"), QLatin1String("TextColor"), QLatin1String("LinkColor"), QLatin1String("VisitedLinkColor")});
 	const QStringList colorTypes({tr("Background Color"), tr("Text Color"), tr("Link Color"), tr("Visited Link Color")});
 	OptionDelegate *colorsDelegate(new OptionDelegate(true, this));
 
-	m_ui->colorsWidget->setRowCount(colors.count());
-	m_ui->colorsWidget->setItemDelegateForColumn(1, colorsDelegate);
-
 	for (int i = 0; i < colors.count(); ++i)
 	{
 		const QString color(SettingsManager::getValue(QLatin1String("Content/") + colors.at(i)).toString());
-		QTableWidgetItem *previewItem(new QTableWidgetItem(color));
-		previewItem->setBackgroundColor(QColor(color));
-		previewItem->setTextColor(Qt::transparent);
-		previewItem->setData(Qt::UserRole, QLatin1String("Content/") + colors.at(i));
-		previewItem->setData((Qt::UserRole + 1), QLatin1String("color"));
+		QList<QStandardItem*> items({new QStandardItem(colorTypes.at(i)), new QStandardItem(color)});
+		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		items[1]->setData(QColor(color), Qt::BackgroundRole);
+		items[1]->setData(QLatin1String("Content/") + colors.at(i), Qt::UserRole);
+		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
-		m_ui->colorsWidget->setItem(i, 0, new QTableWidgetItem(colorTypes.at(i)));
-		m_ui->colorsWidget->setItem(i, 1, previewItem);
+		colorsModel->appendRow(items);
 	}
 
-	connect(m_ui->fontsWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentFontChanged(int,int,int,int)));
+	m_ui->colorsViewWidget->setModel(colorsModel);
+	m_ui->colorsViewWidget->setItemDelegateForColumn(1, colorsDelegate);
+
+	connect(m_ui->fontsViewWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(currentFontChanged(QModelIndex,QModelIndex)));
 	connect(fontsDelegate, SIGNAL(commitData(QWidget*)), this, SLOT(fontChanged(QWidget*)));
-	connect(m_ui->colorsWidget, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentColorChanged(int,int,int,int)));
+	connect(m_ui->colorsViewWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(currentColorChanged(QModelIndex,QModelIndex)));
 	connect(colorsDelegate, SIGNAL(commitData(QWidget*)), this, SLOT(colorChanged(QWidget*)));
 }
 
@@ -110,57 +114,47 @@ void PreferencesContentPageWidget::changeEvent(QEvent *event)
 	}
 }
 
-void PreferencesContentPageWidget::currentFontChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+void PreferencesContentPageWidget::currentFontChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex)
 {
-	Q_UNUSED(currentColumn)
-	Q_UNUSED(previousColumn)
+	m_ui->fontsViewWidget->closePersistentEditor(previousIndex.sibling(previousIndex.row(), 1));
 
-	QTableWidgetItem *previousItem(m_ui->fontsWidget->item(previousRow, 1));
-
-	m_ui->fontsWidget->closePersistentEditor(previousItem);
-
-	if (currentRow >= 0 && currentRow < m_ui->fontsWidget->rowCount())
+	if (currentIndex.isValid())
 	{
-		m_ui->fontsWidget->openPersistentEditor(m_ui->fontsWidget->item(currentRow, 1));
+		m_ui->fontsViewWidget->openPersistentEditor(currentIndex.sibling(currentIndex.row(), 1));
 	}
 }
 
 void PreferencesContentPageWidget::fontChanged(QWidget *editor)
 {
 	OptionWidget *widget(qobject_cast<OptionWidget*>(editor));
+	const QModelIndex index(widget ? widget->getIndex() : QModelIndex());
 
-	if (widget && widget->getIndex().row() >= 0 && widget->getIndex().row() < m_ui->fontsWidget->rowCount())
+	if (index.isValid())
 	{
-		m_ui->fontsWidget->item(widget->getIndex().row(), 1)->setText(m_ui->fontsWidget->item(widget->getIndex().row(), 1)->data(Qt::EditRole).toString());
-		m_ui->fontsWidget->item(widget->getIndex().row(), 2)->setFont(QFont(widget->getValue().toString()));
+		m_ui->fontsViewWidget->model()->setData(index.sibling(index.row(), 2), QFont(index.data(Qt::EditRole).toString()), Qt::FontRole);
 	}
 
 	emit settingsModified();
 }
 
-void PreferencesContentPageWidget::currentColorChanged(int currentRow, int currentColumn, int previousRow, int previousColumn)
+void PreferencesContentPageWidget::currentColorChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex)
 {
-	Q_UNUSED(currentColumn)
-	Q_UNUSED(previousColumn)
+	m_ui->colorsViewWidget->closePersistentEditor(previousIndex.sibling(previousIndex.row(), 1));
 
-	QTableWidgetItem *previousItem(m_ui->colorsWidget->item(previousRow, 1));
-
-	m_ui->colorsWidget->closePersistentEditor(previousItem);
-
-	if (currentRow >= 0 && currentRow < m_ui->colorsWidget->rowCount())
+	if (currentIndex.isValid())
 	{
-		m_ui->colorsWidget->openPersistentEditor(m_ui->colorsWidget->item(currentRow, 1));
+		m_ui->colorsViewWidget->openPersistentEditor(currentIndex.sibling(currentIndex.row(), 1));
 	}
 }
 
 void PreferencesContentPageWidget::colorChanged(QWidget *editor)
 {
 	OptionWidget *widget(qobject_cast<OptionWidget*>(editor));
+	const QModelIndex index(widget ? widget->getIndex() : QModelIndex());
 
-	if (widget && widget->getIndex().row() >= 0 && widget->getIndex().row() < m_ui->colorsWidget->rowCount())
+	if (index.isValid())
 	{
-		m_ui->colorsWidget->item(widget->getIndex().row(), 1)->setBackgroundColor(QColor(widget->getValue().toString()));
-		m_ui->colorsWidget->item(widget->getIndex().row(), 1)->setData(Qt::EditRole, widget->getValue());
+		m_ui->colorsViewWidget->model()->setData(index.sibling(index.row(), 1), QColor(index.data(Qt::EditRole).toString()), Qt::BackgroundRole);
 	}
 
 	emit settingsModified();
@@ -175,14 +169,14 @@ void PreferencesContentPageWidget::save()
 	SettingsManager::setValue(QLatin1String("Content/DefaultFixedFontSize"), m_ui->fixedFontSizeSpinBox->value());
 	SettingsManager::setValue(QLatin1String("Content/MinimumFontSize"), m_ui->minimumFontSizeSpinBox->value());
 
-	for (int i = 0; i < m_ui->fontsWidget->rowCount(); ++i)
+	for (int i = 0; i < m_ui->fontsViewWidget->getRowCount(); ++i)
 	{
-		SettingsManager::setValue(m_ui->fontsWidget->item(i, 1)->data(Qt::UserRole).toString() , m_ui->fontsWidget->item(i, 1)->data(Qt::DisplayRole));
+		SettingsManager::setValue(m_ui->fontsViewWidget->getIndex(i, 1).data(Qt::UserRole).toString(), m_ui->fontsViewWidget->getIndex(i, 1).data(Qt::DisplayRole));
 	}
 
-	for (int i = 0; i < m_ui->colorsWidget->rowCount(); ++i)
+	for (int i = 0; i < m_ui->colorsViewWidget->getRowCount(); ++i)
 	{
-		SettingsManager::setValue(m_ui->colorsWidget->item(i, 1)->data(Qt::UserRole).toString() , m_ui->colorsWidget->item(i, 1)->data(Qt::EditRole));
+		SettingsManager::setValue(m_ui->colorsViewWidget->getIndex(i, 1).data(Qt::UserRole).toString(), m_ui->colorsViewWidget->getIndex(i, 1).data(Qt::EditRole));
 	}
 }
 

@@ -43,9 +43,9 @@ protected:
 	void changeEvent(QEvent *event);
 
 protected slots:
-	void currentFontChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+	void currentFontChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex);
 	void fontChanged(QWidget *editor);
-	void currentColorChanged(int currentRow, int currentColumn, int previousRow, int previousColumn);
+	void currentColorChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex);
 	void colorChanged(QWidget *editor);
 	void save();
 
