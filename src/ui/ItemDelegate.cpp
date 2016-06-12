@@ -46,6 +46,13 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 		return;
 	}
 
+	QStyleOptionViewItem mutableOption(option);
+
+	if (index.data(Qt::FontRole).isValid())
+	{
+		mutableOption.font = index.data(Qt::FontRole).value<QFont>();
+	}
+
 	if (m_forceIcon && index.column() == 0)
 	{
 		if (!index.data(Qt::DecorationRole).value<QIcon>().isNull())
@@ -60,21 +67,26 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 		QRect titleRectangle(option.rect);
 		titleRectangle.setLeft(option.rect.left() + option.rect.height());
 
-		QStyleOptionViewItem titleOption(option);
-		titleOption.font = index.data(Qt::FontRole).value<QFont>();
-
-		drawDisplay(painter, titleOption, titleRectangle, index.data(Qt::DisplayRole).toString());
+		drawDisplay(painter, mutableOption, titleRectangle, index.data(Qt::DisplayRole).toString());
 	}
 	else
 	{
-		drawDisplay(painter, option, option.rect, index.data(Qt::DisplayRole).toString());
+		drawDisplay(painter, mutableOption, mutableOption.rect, index.data(Qt::DisplayRole).toString());
 	}
 }
 
 QSize ItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
 	QSize size(index.data(Qt::SizeHintRole).toSize());
-	size.setHeight(option.fontMetrics.height() * 1.25);
+
+	if (index.data(Qt::FontRole).isValid())
+	{
+		size.setHeight(QFontMetrics(index.data(Qt::FontRole).value<QFont>()).height() * 1.25);
+	}
+	else
+	{
+		size.setHeight(option.fontMetrics.height() * 1.25);
+	}
 
 	return size;
 }
