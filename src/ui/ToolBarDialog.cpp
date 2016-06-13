@@ -47,46 +47,30 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 	m_ui->titleLineEdit->setText(m_definition.title.isEmpty() ? tr("Custom Toolbar") : m_definition.title);
 	m_ui->iconSizeSpinBox->setValue(qMax(0, m_definition.iconSize));
 	m_ui->maximumButtonSizeSpinBox->setValue(qMax(0, m_definition.maximumButtonSize));
+	m_ui->normalVisibilityComboBox->addItem(tr("Always visible"), ToolBarsManager::AlwaysVisibleToolBar);
+	m_ui->normalVisibilityComboBox->addItem(tr("Always hidden"), ToolBarsManager::AlwaysHiddenToolBar);
+	m_ui->normalVisibilityComboBox->addItem(tr("Visible only when needed"), ToolBarsManager::AutoVisibilityToolBar);
 
-	switch (m_definition.normalVisibility)
-	{
-		case ToolBarsManager::AlwaysHiddenToolBar:
-			m_ui->visibilityComboBox->setCurrentIndex(1);
+	const int normalVisibilityIndex(m_ui->normalVisibilityComboBox->findData(m_definition.normalVisibility));
 
-			break;
-		case ToolBarsManager::AutoVisibilityToolBar:
-			m_ui->visibilityComboBox->setCurrentIndex(2);
+	m_ui->normalVisibilityComboBox->setCurrentIndex((normalVisibilityIndex < 0) ? 0 : normalVisibilityIndex);
+	m_ui->fullScreenVisibilityComboBox->addItem(tr("Always visible"), ToolBarsManager::AlwaysVisibleToolBar);
+	m_ui->fullScreenVisibilityComboBox->addItem(tr("Always hidden"), ToolBarsManager::AlwaysHiddenToolBar);
+	m_ui->fullScreenVisibilityComboBox->addItem(tr("Visible only when needed"), ToolBarsManager::AutoVisibilityToolBar);
+	m_ui->fullScreenVisibilityComboBox->addItem(tr("Visible only when cursor is close to screen edge"), ToolBarsManager::OnHoverVisibleToolBar);
 
-			break;
-		default:
-			m_ui->visibilityComboBox->setCurrentIndex(0);
+	const int fullScreenVisibilityIndex(m_ui->fullScreenVisibilityComboBox->findData(m_definition.fullScreenVisibility));
 
-			break;
-	}
+	m_ui->fullScreenVisibilityComboBox->setCurrentIndex((fullScreenVisibilityIndex < 0) ? 1 : fullScreenVisibilityIndex);
+	m_ui->buttonStyleComboBox->addItem(tr("Follow style"), Qt::ToolButtonFollowStyle);
+	m_ui->buttonStyleComboBox->addItem(tr("Icon only"), Qt::ToolButtonIconOnly);
+	m_ui->buttonStyleComboBox->addItem(tr("Text only"), Qt::ToolButtonTextOnly);
+	m_ui->buttonStyleComboBox->addItem(tr("Text beside icon"), Qt::ToolButtonTextBesideIcon);
+	m_ui->buttonStyleComboBox->addItem(tr("Text under icon"), Qt::ToolButtonTextUnderIcon);
 
-	switch (m_definition.buttonStyle)
-	{
-		case Qt::ToolButtonFollowStyle:
-			m_ui->buttonStyleComboBox->setCurrentIndex(0);
+	const int buttonStyleIndex(m_ui->buttonStyleComboBox->findData(m_definition.buttonStyle));
 
-			break;
-		case Qt::ToolButtonTextOnly:
-			m_ui->buttonStyleComboBox->setCurrentIndex(2);
-
-			break;
-		case Qt::ToolButtonTextBesideIcon:
-			m_ui->buttonStyleComboBox->setCurrentIndex(3);
-
-			break;
-		case Qt::ToolButtonTextUnderIcon:
-			m_ui->buttonStyleComboBox->setCurrentIndex(4);
-
-			break;
-		default:
-			m_ui->buttonStyleComboBox->setCurrentIndex(1);
-
-			break;
-	}
+	m_ui->buttonStyleComboBox->setCurrentIndex((buttonStyleIndex < 0) ? 1 : buttonStyleIndex);
 
 	if (m_definition.bookmarksPath.isEmpty())
 	{
@@ -526,48 +510,11 @@ ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition() const
 {
 	ToolBarsManager::ToolBarDefinition definition(m_definition);
 	definition.title = m_ui->titleLineEdit->text();
+	definition.normalVisibility = static_cast<ToolBarsManager::ToolBarVisibility>(m_ui->normalVisibilityComboBox->currentData().toInt());
+	definition.fullScreenVisibility = static_cast<ToolBarsManager::ToolBarVisibility>(m_ui->fullScreenVisibilityComboBox->currentData().toInt());
+	definition.buttonStyle = static_cast<Qt::ToolButtonStyle>(m_ui->buttonStyleComboBox->currentData().toInt());
 	definition.iconSize = m_ui->iconSizeSpinBox->value();
 	definition.maximumButtonSize = m_ui->maximumButtonSizeSpinBox->value();
-
-	switch (m_ui->visibilityComboBox->currentIndex())
-	{
-		case 1:
-			definition.normalVisibility = ToolBarsManager::AlwaysHiddenToolBar;
-
-			break;
-		case 2:
-			definition.normalVisibility = ToolBarsManager::AutoVisibilityToolBar;
-
-			break;
-		default:
-			definition.normalVisibility = ToolBarsManager::AlwaysVisibleToolBar;
-
-			break;
-	}
-
-	switch (m_ui->buttonStyleComboBox->currentIndex())
-	{
-		case 0:
-			definition.buttonStyle = Qt::ToolButtonFollowStyle;
-
-			break;
-		case 2:
-			definition.buttonStyle = Qt::ToolButtonTextOnly;
-
-			break;
-		case 3:
-			definition.buttonStyle = Qt::ToolButtonTextBesideIcon;
-
-			break;
-		case 4:
-			definition.buttonStyle = Qt::ToolButtonTextUnderIcon;
-
-			break;
-		default:
-			definition.buttonStyle = Qt::ToolButtonIconOnly;
-
-			break;
-	}
 
 	for (int i = 0; i < m_ui->currentEntriesItemView->model()->rowCount(); ++i)
 	{
