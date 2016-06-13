@@ -19,12 +19,11 @@
 
 #include "TextLabelWidget.h"
 
-#include <QtGui/QApplication>
 #include <QtGui/QClipboard>
 #include <QtGui/QDesktopServices>
-#include <QtGui/QGuiApplication>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QStyle>
+#include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
 
 namespace Otter
