@@ -323,7 +323,7 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 		menu.addAction(tr("Copy to Note"), m_lineEdit, SLOT(copyToNote()))->setEnabled(!m_lineEdit->text().isEmpty());
 		menu.addSeparator();
 		menu.addAction(tr("Clear All"), m_lineEdit, SLOT(clear()))->setEnabled(!m_lineEdit->text().isEmpty());
-		menu.addAction(tr("Select All"), m_lineEdit, SLOT(selectAll()))->setEnabled(!m_lineEdit->text().isEmpty());
+		menu.addAction(tr("Select All"), m_lineEdit, SLOT(selectAll()), QKeySequence(QKeySequence::SelectAll))->setEnabled(!m_lineEdit->text().isEmpty());
 	}
 
 	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));

@@ -20,10 +20,12 @@
 #include "TextLabelWidget.h"
 
 #include <QtGui/QApplication>
+#include <QtGui/QClipboard>
 #include <QtGui/QDesktopServices>
 #include <QtGui/QGuiApplication>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QStyle>
+#include <QtWidgets/QMenu>
 
 namespace Otter
 {
@@ -52,6 +54,26 @@ void TextLabelWidget::mouseReleaseEvent(QMouseEvent *event)
 	{
 		QDesktopServices::openUrl(m_url);
 	}
+}
+
+void TextLabelWidget::contextMenuEvent(QContextMenuEvent *event)
+{
+	QMenu menu(this);
+	menu.addAction(tr("Copy"), this, SLOT(copy()), QKeySequence(QKeySequence::Copy))->setEnabled(hasSelectedText());
+
+	if (m_url.isValid())
+	{
+		menu.addAction(tr("Copy Link Location"), this, SLOT(copyUrl()));
+	}
+
+	menu.addSeparator();
+	menu.addAction(tr("Select All"), this, SLOT(selectAll()), QKeySequence(QKeySequence::SelectAll))->setEnabled(!text().isEmpty());
+	menu.exec(event->globalPos());
+}
+
+void TextLabelWidget::copyUrl()
+{
+	QGuiApplication::clipboard()->setText(m_url.toString(QUrl::EncodeReserved | QUrl::EncodeSpaces));
 }
 
 void TextLabelWidget::clear()

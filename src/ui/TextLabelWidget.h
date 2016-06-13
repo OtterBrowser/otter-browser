@@ -43,7 +43,11 @@ public slots:
 protected:
 	void mousePressEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
+	void contextMenuEvent(QContextMenuEvent *event);
 	void updateStyle();
+
+protected slots:
+	void copyUrl();
 
 private:
 	QUrl m_url;
