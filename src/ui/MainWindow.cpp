@@ -382,6 +382,7 @@ void MainWindow::optionChanged(const QString &option, const QVariant &value)
 			m_sidebarToggle = new ActionWidget(ActionsManager::ShowSidebarAction, NULL, ActionsManager::ActionEntryDefinition(), this);
 			m_sidebarToggle->setFixedWidth(6);
 			m_sidebarToggle->setText(QString());
+			m_sidebarToggle->setVisible(!areControlsHidden());
 
 			placeSidebars();
 		}
@@ -1251,6 +1252,11 @@ bool MainWindow::event(QEvent *event)
 							m_menuBar->hide();
 						}
 
+						if (m_sidebarToggle)
+						{
+							m_sidebarToggle->hide();
+						}
+
 						m_workspace->installEventFilter(this);
 					}
 					else
@@ -1265,6 +1271,11 @@ bool MainWindow::event(QEvent *event)
 						if (m_menuBar)
 						{
 							m_menuBar->show();
+						}
+
+						if (m_sidebarToggle)
+						{
+							m_sidebarToggle->show();
 						}
 
 						m_workspace->removeEventFilter(this);
