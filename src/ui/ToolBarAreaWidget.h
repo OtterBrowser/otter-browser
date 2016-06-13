@@ -37,10 +37,10 @@ public:
 	explicit ToolBarAreaWidget(Qt::ToolBarArea area, MainWindow *parent);
 
 	Qt::ToolBarArea getArea() const;
-	bool eventFilter(QObject *object, QEvent *event);
 
 protected:
 	void paintEvent(QPaintEvent *event);
+	void leaveEvent(QEvent *event);
 	void dragEnterEvent(QDragEnterEvent *event);
 	void dragMoveEvent(QDragMoveEvent *event);
 	void dragLeaveEvent(QDragLeaveEvent *event);
@@ -51,13 +51,13 @@ protected:
 	void insertToolBar(ToolBarWidget *toolBar);
 
 protected slots:
-	void controlsHiddenChanged(bool hidden);
+	void activateToolBars(Qt::ToolBarAreas areas);
 	void toolBarAdded(int identifier);
 	void toolBarModified(int identifier);
+	void setControlsHidden(bool areHidden);
 
 private:
 	MainWindow *m_mainWindow;
-	ToolBarWidget *m_tabBarToolBar;
 	QBoxLayout *m_layout;
 	Qt::ToolBarArea m_area;
 	int m_dropRow;

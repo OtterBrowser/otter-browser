@@ -62,6 +62,7 @@ public:
 	WorkspaceWidget* getWorkspace();
 	TabBarWidget* getTabBar();
 	WindowsManager* getWindowsManager();
+	bool areControlsHidden() const;
 	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
@@ -119,12 +120,14 @@ private:
 	QVector<QPair<int, QVector<QShortcut*> > > m_actionShortcuts;
 	Qt::WindowStates m_previousState;
 	Qt::WindowStates m_previousRaisedState;
+	int m_mouseTrackerTimer;
 	int m_tabSwitcherTimer;
 	bool m_hasToolBars;
 	Ui::MainWindow *m_ui;
 
 signals:
 	void requestedNewWindow(bool isPrivate = false, bool inBackground = false, const QUrl &url = QUrl());
+	void requestedToolBarsActivation(Qt::ToolBarAreas areas);
 	void controlsHiddenChanged(bool hidden);
 	void statusMessageChanged(const QString &message);
 

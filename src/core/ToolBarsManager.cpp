@@ -69,6 +69,7 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 		if (!m_definitions.isEmpty())
 		{
 			QJsonArray definitions;
+			const QMap<ToolBarVisibility, QString> visibilityModes({{AlwaysVisibleToolBar, QLatin1String("visible")}, {OnHoverVisibleToolBar, QLatin1String("hover")}, {AutoVisibilityToolBar, QLatin1String("auto")}, {AlwaysHiddenToolBar, QLatin1String("hidden")}});
 
 			for (int i = 0; i < m_definitions.count(); ++i)
 			{
@@ -120,25 +121,8 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 					definition.insert(QLatin1String("bookmarksPath"), QJsonValue(m_definitions[i].bookmarksPath));
 				}
 
-				QString visibility;
-
-				switch (m_definitions[i].visibility)
-				{
-					case AlwaysHiddenToolBar:
-						visibility = QLatin1String("hidden");
-
-						break;
-					case AutoVisibilityToolBar:
-						visibility = QLatin1String("auto");
-
-						break;
-					default:
-						visibility = QLatin1String("visible");
-
-						break;
-				}
-
-				definition.insert(QLatin1String("visibility"), QJsonValue(visibility));
+				definition.insert(QLatin1String("normalVisibility"), QJsonValue(visibilityModes.value(m_definitions[i].normalVisibility)));
+				definition.insert(QLatin1String("fullScreenVisibility"), QJsonValue(visibilityModes.value(m_definitions[i].fullScreenVisibility)));
 
 				if (m_definitions[i].location != Qt::NoToolBarArea)
 				{
@@ -529,6 +513,7 @@ QHash<QString, ToolBarsManager::ToolBarDefinition> ToolBarsManager::loadToolBars
 	}
 
 	const QJsonArray toolBars(QJsonDocument::fromJson(file.readAll()).array());
+	const QMap<QString, ToolBarVisibility> visibilityModes({{QLatin1String("visible"), AlwaysVisibleToolBar}, {QLatin1String("hover"), OnHoverVisibleToolBar}, {QLatin1String("auto"), AutoVisibilityToolBar}, {QLatin1String("hidden"), AlwaysHiddenToolBar}});
 
 	file.close();
 
@@ -537,12 +522,13 @@ QHash<QString, ToolBarsManager::ToolBarDefinition> ToolBarsManager::loadToolBars
 		const QJsonObject toolBarObject(toolBars.at(i).toObject());
 		const QJsonArray actions(toolBarObject.value(QLatin1String("actions")).toArray());
 		const QString identifier(toolBarObject.value(QLatin1String("identifier")).toString());
-		const QString visibility(toolBarObject.value(QLatin1String("visibility")).toString());
 		const QString location(toolBarObject.value(QLatin1String("location")).toString());
 		const QString buttonStyle(toolBarObject.value(QLatin1String("buttonStyle")).toString());
 		ToolBarDefinition toolBar;
 		toolBar.title = toolBarObject.value(QLatin1String("title")).toString();
 		toolBar.bookmarksPath = toolBarObject.value(QLatin1String("bookmarksPath")).toString();
+		toolBar.normalVisibility = visibilityModes.value(toolBarObject.value(QLatin1String("normalVisibility")).toString(), OnHoverVisibleToolBar);
+		toolBar.fullScreenVisibility = visibilityModes.value(toolBarObject.value(QLatin1String("fullScreenVisibility")).toString(), OnHoverVisibleToolBar);
 		toolBar.iconSize = toolBarObject.value(QLatin1String("iconSize")).toInt();
 		toolBar.maximumButtonSize = toolBarObject.value(QLatin1String("maximumButtonSize")).toInt();
 		toolBar.row = toolBarObject.value(QLatin1String("row")).toInt();
@@ -551,15 +537,6 @@ QHash<QString, ToolBarsManager::ToolBarDefinition> ToolBarsManager::loadToolBars
 		if (isDefault)
 		{
 			toolBar.title = QCoreApplication::translate("actions", toolBar.title.toUtf8());
-		}
-
-		if (visibility == QLatin1String("hidden"))
-		{
-			toolBar.visibility = AlwaysHiddenToolBar;
-		}
-		else if (visibility == QLatin1String("auto"))
-		{
-			toolBar.visibility = AutoVisibilityToolBar;
 		}
 
 		if (location == QLatin1String("top"))

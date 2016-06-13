@@ -340,7 +340,7 @@ void ToolBarWidget::notifyWindowChanged(quint64 identifier)
 
 void ToolBarWidget::updateVisibility()
 {
-	if (m_identifier == ToolBarsManager::TabBar && ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar).visibility == ToolBarsManager::AutoVisibilityToolBar && m_mainWindow->getTabBar())
+	if (m_identifier == ToolBarsManager::TabBar && ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar).normalVisibility == ToolBarsManager::AutoVisibilityToolBar && m_mainWindow->getTabBar())
 	{
 		setVisible(m_mainWindow->getTabBar()->count() > 1);
 	}
@@ -367,7 +367,7 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 {
 	TabBarWidget *tabBar((m_identifier == ToolBarsManager::TabBar && m_mainWindow) ? m_mainWindow->getTabBar() : NULL);
 
-	setVisible(definition.visibility != ToolBarsManager::AlwaysHiddenToolBar);
+	setVisible(definition.normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
 	setOrientation((definition.location == Qt::LeftToolBarArea || definition.location == Qt::RightToolBarArea) ? Qt::Vertical : Qt::Horizontal);
 
 	m_dragArea = NULL;

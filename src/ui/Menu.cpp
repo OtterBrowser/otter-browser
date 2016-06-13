@@ -573,7 +573,7 @@ void Menu::populateToolBarsMenu()
 		QAction *toolBarAction(QMenu::addAction(definitions.at(i).title.isEmpty() ? tr("(Untitled)") : definitions.at(i).title));
 		toolBarAction->setData(definitions.at(i).identifier);
 		toolBarAction->setCheckable(true);
-		toolBarAction->setChecked(definitions.at(i).visibility != ToolBarsManager::AlwaysHiddenToolBar);
+		toolBarAction->setChecked(definitions.at(i).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
 
 		connect(toolBarAction, SIGNAL(toggled(bool)), this, SLOT(setToolBarVisibility(bool)));
 	}
@@ -860,7 +860,7 @@ void Menu::setToolBarVisibility(bool visible)
 	if (action)
 	{
 		ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(action->data().toInt()));
-		definition.visibility = (visible ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
+		definition.normalVisibility = (visible ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
 
 		ToolBarsManager::setToolBar(definition);
 	}

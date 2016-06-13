@@ -42,8 +42,9 @@ public:
 	enum ToolBarVisibility
 	{
 		AlwaysVisibleToolBar = 0,
-		AutoVisibilityToolBar = 1,
-		AlwaysHiddenToolBar = 2
+		OnHoverVisibleToolBar = 1,
+		AutoVisibilityToolBar = 2,
+		AlwaysHiddenToolBar = 3
 	};
 
 	struct ToolBarDefinition
@@ -51,7 +52,8 @@ public:
 		QString title;
 		QString bookmarksPath;
 		QList<ActionsManager::ActionEntryDefinition> entries;
-		ToolBarVisibility visibility;
+		ToolBarVisibility normalVisibility;
+		ToolBarVisibility fullScreenVisibility;
 		Qt::ToolBarArea location;
 		Qt::ToolButtonStyle buttonStyle;
 		int identifier;
@@ -62,7 +64,7 @@ public:
 		bool isDefault;
 		bool wasRemoved;
 
-		ToolBarDefinition() : visibility(AlwaysVisibleToolBar), location(Qt::NoToolBarArea), buttonStyle(Qt::ToolButtonIconOnly), identifier(-1), iconSize(-1), maximumButtonSize(-1), row(-1), canReset(false), isDefault(false), wasRemoved(false) {}
+		ToolBarDefinition() : normalVisibility(AlwaysVisibleToolBar), fullScreenVisibility(AlwaysHiddenToolBar), location(Qt::NoToolBarArea), buttonStyle(Qt::ToolButtonIconOnly), identifier(-1), iconSize(-1), maximumButtonSize(-1), row(-1), canReset(false), isDefault(false), wasRemoved(false) {}
 	};
 
 	static void createInstance(QObject *parent = NULL);

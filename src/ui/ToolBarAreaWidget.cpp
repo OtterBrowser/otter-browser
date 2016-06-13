@@ -35,7 +35,6 @@ namespace Otter
 
 ToolBarAreaWidget::ToolBarAreaWidget(Qt::ToolBarArea area, MainWindow *parent) : QWidget(parent),
 	m_mainWindow(parent),
-	m_tabBarToolBar(NULL),
 	m_area(area),
 	m_dropRow(-1)
 {
@@ -71,7 +70,8 @@ ToolBarAreaWidget::ToolBarAreaWidget(Qt::ToolBarArea area, MainWindow *parent) :
 		}
 	}
 
-	connect(m_mainWindow, SIGNAL(controlsHiddenChanged(bool)), this, SLOT(controlsHiddenChanged(bool)));
+	connect(m_mainWindow, SIGNAL(requestedToolBarsActivation(Qt::ToolBarAreas)), this, SLOT(activateToolBars(Qt::ToolBarAreas)));
+	connect(m_mainWindow, SIGNAL(controlsHiddenChanged(bool)), this, SLOT(setControlsHidden(bool)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarAdded(int)), this, SLOT(toolBarAdded(int)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
 }
@@ -143,6 +143,26 @@ void ToolBarAreaWidget::paintEvent(QPaintEvent *event)
 	{
 		painter.drawPoint(lineOffset, 0);
 		painter.drawPoint(lineOffset, height());
+	}
+}
+
+void ToolBarAreaWidget::leaveEvent(QEvent *event)
+{
+	QWidget::leaveEvent(event);
+
+	if (m_mainWindow->areControlsHidden())
+	{
+		const QList<ToolBarWidget*> toolBars(findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly));
+
+		for (int i = 0; i < toolBars.count(); ++i)
+		{
+			ToolBarsManager::ToolBarVisibility visibility(ToolBarsManager::getToolBarDefinition(toolBars.at(i)->getIdentifier()).fullScreenVisibility);
+
+			if (visibility == ToolBarsManager::OnHoverVisibleToolBar)
+			{
+				toolBars.at(i)->hide();
+			}
+		}
 	}
 }
 
@@ -246,58 +266,51 @@ void ToolBarAreaWidget::endToolBarDragging()
 	m_mainWindow->endToolBarDragging();
 }
 
-void ToolBarAreaWidget::controlsHiddenChanged(bool hidden)
+void ToolBarAreaWidget::setControlsHidden(bool areHidden)
 {
-	if (m_tabBarToolBar)
+	const QList<ToolBarWidget*> toolBars(findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly));
+	bool showToolBar(false);
+
+	for (int i = 0; i < toolBars.count(); ++i)
 	{
-		const QList<ToolBarWidget*> toolBars(findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly));
+		ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(toolBars.at(i)->getIdentifier()));
+		ToolBarsManager::ToolBarVisibility visibility(areHidden ? definition.fullScreenVisibility : definition.normalVisibility);
 
-		if (hidden)
+		if (visibility == ToolBarsManager::AlwaysVisibleToolBar)
 		{
-			if (m_area == Qt::LeftToolBarArea || m_area == Qt::RightToolBarArea)
-			{
-				m_tabBarToolBar->setMaximumWidth(1);
-			}
-			else
-			{
-				m_tabBarToolBar->setMaximumHeight(1);
-			}
-
-			m_tabBarToolBar->installEventFilter(this);
-
-			for (int i = 0; i < toolBars.count(); ++i)
-			{
-				if (toolBars.at(i) != m_tabBarToolBar)
-				{
-					toolBars.at(i)->hide();
-				}
-			}
+			toolBars.at(i)->show();
 		}
-		else
+		else if (visibility == ToolBarsManager::AlwaysHiddenToolBar || visibility == ToolBarsManager::OnHoverVisibleToolBar)
 		{
-			if (m_area == Qt::LeftToolBarArea || m_area == Qt::RightToolBarArea)
-			{
-				m_tabBarToolBar->setMaximumWidth(QWIDGETSIZE_MAX);
-			}
-			else
-			{
-				m_tabBarToolBar->setMaximumHeight(QWIDGETSIZE_MAX);
-			}
+			toolBars.at(i)->hide();
+		}
 
-			m_tabBarToolBar->removeEventFilter(this);
-
-			for (int i = 0; i < toolBars.count(); ++i)
-			{
-				if (toolBars.at(i) != m_tabBarToolBar && toolBars.at(i)->getIdentifier() >= 0 && ToolBarsManager::getToolBarDefinition(toolBars.at(i)->getIdentifier()).visibility == ToolBarsManager::AlwaysVisibleToolBar)
-				{
-					toolBars.at(i)->show();
-				}
-			}
+		if (visibility != ToolBarsManager::AlwaysHiddenToolBar)
+		{
+			showToolBar = true;
 		}
 	}
-	else
+
+	setVisible(showToolBar);
+}
+
+void ToolBarAreaWidget::activateToolBars(Qt::ToolBarAreas areas)
+{
+	if (!areas.testFlag(m_area) || isHidden())
 	{
-		setVisible(!hidden);
+		return;
+	}
+
+	const QList<ToolBarWidget*> toolBars(findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly));
+
+	for (int i = 0; i < toolBars.count(); ++i)
+	{
+		ToolBarsManager::ToolBarVisibility visibility(ToolBarsManager::getToolBarDefinition(toolBars.at(i)->getIdentifier()).fullScreenVisibility);
+
+		if (visibility == ToolBarsManager::OnHoverVisibleToolBar)
+		{
+			toolBars.at(i)->show();
+		}
 	}
 }
 
@@ -315,7 +328,7 @@ void ToolBarAreaWidget::toolBarAdded(int identifier)
 		return;
 	}
 
-	ToolBarWidget *toolBar = new ToolBarWidget(identifier, NULL, this);
+	ToolBarWidget *toolBar(new ToolBarWidget(identifier, NULL, this));
 
 	if (definition.row < 0)
 	{
@@ -328,8 +341,6 @@ void ToolBarAreaWidget::toolBarAdded(int identifier)
 
 	if (identifier == ToolBarsManager::TabBar)
 	{
-		m_tabBarToolBar = toolBar;
-
 		m_mainWindow->setTabBar(toolBar->findChild<TabBarWidget*>());
 	}
 }
@@ -420,35 +431,6 @@ void ToolBarAreaWidget::updateDropRow(const QPoint &position)
 Qt::ToolBarArea ToolBarAreaWidget::getArea() const
 {
 	return m_area;
-}
-
-bool ToolBarAreaWidget::eventFilter(QObject *object, QEvent *event)
-{
-	if (object == m_tabBarToolBar && event->type() == QEvent::Enter)
-	{
-		if (m_area == Qt::LeftToolBarArea || m_area == Qt::RightToolBarArea)
-		{
-			m_tabBarToolBar->setMaximumWidth(QWIDGETSIZE_MAX);
-		}
-		else
-		{
-			m_tabBarToolBar->setMaximumHeight(QWIDGETSIZE_MAX);
-		}
-	}
-
-	if (object == m_tabBarToolBar && event->type() == QEvent::Leave)
-	{
-		if (m_area == Qt::LeftToolBarArea || m_area == Qt::RightToolBarArea)
-		{
-			m_tabBarToolBar->setMaximumWidth(1);
-		}
-		else
-		{
-			m_tabBarToolBar->setMaximumHeight(1);
-		}
-	}
-
-	return QWidget::eventFilter(object, event);
 }
 
 }

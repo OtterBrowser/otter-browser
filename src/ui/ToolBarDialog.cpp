@@ -48,7 +48,7 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 	m_ui->iconSizeSpinBox->setValue(qMax(0, m_definition.iconSize));
 	m_ui->maximumButtonSizeSpinBox->setValue(qMax(0, m_definition.maximumButtonSize));
 
-	switch (m_definition.visibility)
+	switch (m_definition.normalVisibility)
 	{
 		case ToolBarsManager::AlwaysHiddenToolBar:
 			m_ui->visibilityComboBox->setCurrentIndex(1);
@@ -532,15 +532,15 @@ ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition() const
 	switch (m_ui->visibilityComboBox->currentIndex())
 	{
 		case 1:
-			definition.visibility = ToolBarsManager::AlwaysHiddenToolBar;
+			definition.normalVisibility = ToolBarsManager::AlwaysHiddenToolBar;
 
 			break;
 		case 2:
-			definition.visibility = ToolBarsManager::AutoVisibilityToolBar;
+			definition.normalVisibility = ToolBarsManager::AutoVisibilityToolBar;
 
 			break;
 		default:
-			definition.visibility = ToolBarsManager::AlwaysVisibleToolBar;
+			definition.normalVisibility = ToolBarsManager::AlwaysVisibleToolBar;
 
 			break;
 	}

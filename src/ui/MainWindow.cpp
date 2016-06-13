@@ -78,6 +78,7 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 	m_sidebar(NULL),
 	m_splitter(new QSplitter(this)),
 	m_currentWindow(NULL),
+	m_mouseTrackerTimer(0),
 	m_tabSwitcherTimer(0),
 	m_hasToolBars(!flags.testFlag(Application::NoToolBarsFlag)),
 	m_ui(new Ui::MainWindow)
@@ -139,7 +140,7 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 	SessionsManager::registerWindow(this);
 
 	getAction(ActionsManager::WorkOfflineAction)->setChecked(SettingsManager::getValue(QLatin1String("Network/WorkOffline")).toBool());
-	getAction(ActionsManager::ShowMenuBarAction)->setChecked(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).visibility != ToolBarsManager::AlwaysHiddenToolBar);
+	getAction(ActionsManager::ShowMenuBarAction)->setChecked(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
 	getAction(ActionsManager::ShowSidebarAction)->setChecked(SettingsManager::getValue(QLatin1String("Sidebar/Visible")).toBool());
 	getAction(ActionsManager::LockToolBarsAction)->setChecked(ToolBarsManager::areToolBarsLocked());
 	getAction(ActionsManager::ExitAction)->setMenuRole(QAction::QuitRole);
@@ -147,14 +148,14 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 	getAction(ActionsManager::AboutQtAction)->setMenuRole(QAction::AboutQtRole);
 	getAction(ActionsManager::AboutApplicationAction)->setMenuRole(QAction::AboutRole);
 
-	if (ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).visibility != ToolBarsManager::AlwaysHiddenToolBar)
+	if (ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar)
 	{
 		m_menuBar = new MenuBarWidget(this);
 
 		setMenuBar(m_menuBar);
 	}
 
-	if (ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).visibility != ToolBarsManager::AlwaysHiddenToolBar)
+	if (ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar)
 	{
 		m_statusBar = new StatusBarWidget(this);
 
@@ -197,7 +198,35 @@ MainWindow::~MainWindow()
 
 void MainWindow::timerEvent(QTimerEvent *event)
 {
-	if (event->timerId() == m_tabSwitcherTimer)
+	if (event->timerId() == m_mouseTrackerTimer)
+	{
+		Qt::ToolBarAreas areas(Qt::NoToolBarArea);
+		const QPoint position(mapFromGlobal(QCursor::pos()));
+
+		if (position.x() < 10)
+		{
+			areas |= (isLeftToRight() ? Qt::LeftToolBarArea : Qt::RightToolBarArea);
+		}
+		else if (position.x() > (contentsRect().width() - 10))
+		{
+			areas |= (isLeftToRight() ? Qt::RightToolBarArea : Qt::LeftToolBarArea);
+		}
+
+		if (position.y() < 10)
+		{
+			areas |= Qt::TopToolBarArea;
+		}
+		else if (position.y() > (contentsRect().height() - 10))
+		{
+			areas |= Qt::BottomToolBarArea;
+		}
+
+		if (areas != Qt::NoToolBarArea)
+		{
+			emit requestedToolBarsActivation(areas);
+		}
+	}
+	else if (event->timerId() == m_tabSwitcherTimer)
 	{
 		killTimer(m_tabSwitcherTimer);
 
@@ -536,7 +565,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::ShowMenuBarAction:
 			{
 				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar));
-				definition.visibility = (parameters.value(QLatin1String("isChecked")).toBool() ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
+				definition.normalVisibility = (parameters.value(QLatin1String("isChecked")).toBool() ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
 
 				ToolBarsManager::setToolBar(definition);
 			}
@@ -545,7 +574,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::ShowTabBarAction:
 			{
 				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar));
-				definition.visibility = (parameters.value(QLatin1String("isChecked")).toBool() ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
+				definition.normalVisibility = (parameters.value(QLatin1String("isChecked")).toBool() ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
 
 				ToolBarsManager::setToolBar(definition);
 			}
@@ -887,7 +916,7 @@ void MainWindow::toolBarModified(int identifier)
 {
 	if (identifier == ToolBarsManager::MenuBar)
 	{
-		const bool showMenuBar(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).visibility != ToolBarsManager::AlwaysHiddenToolBar);
+		const bool showMenuBar(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
 
 		if (m_menuBar && !showMenuBar)
 		{
@@ -907,7 +936,7 @@ void MainWindow::toolBarModified(int identifier)
 	}
 	else if (identifier == ToolBarsManager::StatusBar)
 	{
-		const bool showStatusBar(ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).visibility != ToolBarsManager::AlwaysHiddenToolBar);
+		const bool showStatusBar(ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
 
 		if (m_statusBar && !showStatusBar)
 		{
@@ -1185,6 +1214,11 @@ WindowsManager* MainWindow::getWindowsManager()
 	return m_windowsManager;
 }
 
+bool MainWindow::areControlsHidden() const
+{
+	return windowState().testFlag(Qt::WindowFullScreen);
+}
+
 bool MainWindow::event(QEvent *event)
 {
 	switch (event->type())
@@ -1234,6 +1268,17 @@ bool MainWindow::event(QEvent *event)
 						}
 
 						m_workspace->removeEventFilter(this);
+					}
+
+					if (!windowState().testFlag(Qt::WindowFullScreen))
+					{
+						killTimer(m_mouseTrackerTimer);
+
+						m_mouseTrackerTimer = 0;
+					}
+					else
+					{
+						m_mouseTrackerTimer = startTimer(250);
 					}
 
 					emit controlsHiddenChanged(windowState().testFlag(Qt::WindowFullScreen));

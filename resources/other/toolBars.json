@@ -11,6 +11,7 @@
 	{
 		"identifier": "TabBar",
 		"location": "top",
+		"fullScreenVisibility": "hover",
 		"title": "Tab Bar",
 		"actions":
 		[
