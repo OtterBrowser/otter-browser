@@ -430,7 +430,9 @@ void TransfersContentsWidget::updateActions()
 	if (transfer)
 	{
 		m_ui->sourceLabelWidget->setText(transfer->getSource().toDisplayString());
+		m_ui->sourceLabelWidget->setUrl(transfer->getSource());
 		m_ui->targetLabelWidget->setText(transfer->getTarget());
+		m_ui->targetLabelWidget->setUrl(QUrl(transfer->getTarget()));
 		m_ui->sizeLabelWidget->setText(Utils::formatUnit(transfer->getBytesTotal(), false, 1, true));
 		m_ui->downloadedLabelWidget->setText(Utils::formatUnit(transfer->getBytesReceived(), false, 1, true));
 		m_ui->progressLabelWidget->setText(QStringLiteral("%1%").arg(((transfer->getBytesTotal() > 0) ? ((static_cast<qreal>(transfer->getBytesReceived()) / transfer->getBytesTotal()) * 100) : 0.0), 0, 'f', 1));

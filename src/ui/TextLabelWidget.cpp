@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,15 +19,61 @@
 
 #include "TextLabelWidget.h"
 
+#include <QtGui/QApplication>
+#include <QtGui/QDesktopServices>
+#include <QtGui/QGuiApplication>
+#include <QtGui/QMouseEvent>
+#include <QtGui/QStyle>
+
 namespace Otter
 {
 
 TextLabelWidget::TextLabelWidget(QWidget *parent) : QLineEdit(parent)
 {
+	updateStyle();
 	setFrame(false);
-	setStyleSheet(QLatin1String("QLineEdit {background:transparent;}"));
-	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 	setReadOnly(true);
+	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+	setStyleSheet(QLatin1String("QLineEdit {background:transparent;}"));
+}
+
+void TextLabelWidget::mousePressEvent(QMouseEvent *event)
+{
+	QLineEdit::mousePressEvent(event);
+
+	m_dragStartPosition = event->pos();
+}
+
+void TextLabelWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+	QLineEdit::mouseReleaseEvent(event);
+
+	if (m_url.isValid() && (event->pos() - m_dragStartPosition).manhattanLength() < QApplication::startDragDistance())
+	{
+		QDesktopServices::openUrl(m_url);
+	}
+}
+
+void TextLabelWidget::clear()
+{
+	QLineEdit::clear();
+
+	m_url = QUrl();
+
+	updateStyle();
+}
+
+void TextLabelWidget::updateStyle()
+{
+	QFont font(this->font());
+	font.setUnderline(m_url.isValid() && style()->styleHint(QStyle::SH_UnderlineShortcut) > 0);
+
+	QPalette palette(this->palette());
+	palette.setColor(QPalette::Text, QGuiApplication::palette().color(m_url.isValid() ? QPalette::Link : QPalette::WindowText));
+
+	setCursor(m_url.isValid() ? Qt::PointingHandCursor : Qt::ArrowCursor);
+	setFont(font);
+	setPalette(palette);
 }
 
 void TextLabelWidget::setText(const QString &text)
@@ -39,6 +85,25 @@ void TextLabelWidget::setText(const QString &text)
 	}
 
 	setReadOnly(true);
+}
+
+void TextLabelWidget::setUrl(const QUrl &url)
+{
+	m_url = url;
+
+	updateStyle();
+}
+
+bool TextLabelWidget::event(QEvent *event)
+{
+	const bool result(QLineEdit::event(event));
+
+	if (event->type() == QEvent::ApplicationPaletteChange || event->type() == QEvent::StyleChange)
+	{
+		updateStyle();
+	}
+
+	return result;
 }
 
 }

@@ -33,6 +33,7 @@ ImagePropertiesDialog::ImagePropertiesDialog(const QUrl &url, const QVariantMap 
 {
 	m_ui->setupUi(this);
 	m_ui->addressLabelWidget->setText(url.toDisplayString());
+	m_ui->addressLabelWidget->setUrl(url);
 	m_ui->sizeLabelWidget->setText(tr("Unknown"));
 	m_ui->typeLabelWidget->setText(tr("Unknown"));
 	m_ui->fileSizeLabelWidget->setText(tr("Unknown"));

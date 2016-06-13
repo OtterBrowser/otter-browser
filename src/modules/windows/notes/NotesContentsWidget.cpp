@@ -259,6 +259,7 @@ void NotesContentsWidget::updateActions(bool updateText)
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
 
 	m_ui->addressLabelWidget->setText((type == BookmarksModel::UrlBookmark) ? index.data(BookmarksModel::UrlRole).toString() : QString());
+	m_ui->addressLabelWidget->setUrl((type == BookmarksModel::UrlBookmark) ? index.data(BookmarksModel::UrlRole).toUrl() : QUrl());
 	m_ui->dateLabelWidget->setText((type == BookmarksModel::UrlBookmark) ? Utils::formatDateTime(index.data(BookmarksModel::TimeAddedRole).toDateTime()) : QString());
 	m_ui->deleteButton->setEnabled(hasSelecion && type != BookmarksModel::RootBookmark && type != BookmarksModel::TrashBookmark);
 

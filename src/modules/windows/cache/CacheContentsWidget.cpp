@@ -363,19 +363,20 @@ void CacheContentsWidget::showContextMenu(const QPoint &point)
 void CacheContentsWidget::updateActions()
 {
 	const QModelIndex index(m_ui->cacheViewWidget->selectionModel()->hasSelection() ? m_ui->cacheViewWidget->selectionModel()->currentIndex() : QModelIndex());
-	const QUrl entry(getEntry(index));
-	const QString domain((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString() : entry.host());
+	const QUrl url(getEntry(index));
+	const QString domain((index.isValid() && index.parent() == m_model->invisibleRootItem()->index()) ? index.sibling(index.row(), 0).data(Qt::ToolTipRole).toString() : url.host());
 
 	m_ui->locationLabelWidget->setText(QString());
+	m_ui->locationLabelWidget->setUrl(QUrl());
 	m_ui->previewLabel->hide();
 	m_ui->previewLabel->setPixmap(QPixmap());
 	m_ui->deleteButton->setEnabled(!domain.isEmpty());
 
-	if (entry.isValid())
+	if (url.isValid())
 	{
 		NetworkCache *cache(NetworkManagerFactory::getCache());
-		QIODevice *device(cache->data(entry));
-		const QNetworkCacheMetaData metaData(cache->metaData(entry));
+		QIODevice *device(cache->data(url));
+		const QNetworkCacheMetaData metaData(cache->metaData(url));
 		const QList<QPair<QByteArray, QByteArray> > headers(metaData.rawHeaders());
 		QString type;
 
@@ -411,8 +412,12 @@ void CacheContentsWidget::updateActions()
 			preview = QIcon::fromTheme(mimeType.iconName(), ThemesManager::getIcon(QLatin1String("unknown"))).pixmap(64, 64);
 		}
 
-		m_ui->addressLabelWidget->setText(entry.toString(QUrl::FullyDecoded | QUrl::PreferLocalFile));
-		m_ui->locationLabelWidget->setText(cache->getPathForUrl(entry));
+		const QUrl localUrl(cache->getPathForUrl(url));
+
+		m_ui->addressLabelWidget->setText(url.toString(QUrl::FullyDecoded | QUrl::PreferLocalFile));
+		m_ui->addressLabelWidget->setUrl(url);
+		m_ui->locationLabelWidget->setText(localUrl.toString(QUrl::FullyDecoded | QUrl::PreferLocalFile));
+		m_ui->locationLabelWidget->setUrl(localUrl);
 		m_ui->typeLabelWidget->setText(mimeType.name());
 		m_ui->sizeLabelWidget->setText(device ? Utils::formatUnit(device->size(), false, 2) : tr("Unknown"));
 		m_ui->lastModifiedLabelWidget->setText(metaData.lastModified().toString());

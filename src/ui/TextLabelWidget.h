@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #ifndef OTTER_TEXTLABELWIDGET_H
 #define OTTER_TEXTLABELWIDGET_H
 
+#include <QtCore/QUrl>
 #include <QtWidgets/QLineEdit>
 
 namespace Otter
@@ -32,7 +33,21 @@ class TextLabelWidget : public QLineEdit
 public:
 	explicit TextLabelWidget(QWidget *parent = NULL);
 
+	bool event(QEvent *event);
+
+public slots:
+	void clear();
 	void setText(const QString &text);
+	void setUrl(const QUrl &url);
+
+protected:
+	void mousePressEvent(QMouseEvent *event);
+	void mouseReleaseEvent(QMouseEvent *event);
+	void updateStyle();
+
+private:
+	QUrl m_url;
+	QPoint m_dragStartPosition;
 };
 
 }
