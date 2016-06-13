@@ -22,9 +22,9 @@
 #include <QtGui/QClipboard>
 #include <QtGui/QDesktopServices>
 #include <QtGui/QMouseEvent>
-#include <QtGui/QStyle>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QStyle>
 
 namespace Otter
 {
