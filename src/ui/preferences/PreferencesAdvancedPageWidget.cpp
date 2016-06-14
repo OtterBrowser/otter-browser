@@ -160,7 +160,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Content/UserStyleSheet")).toString());
 
 	QStandardItemModel *downloadsModel(new QStandardItemModel(this));
-	downloadsModel->setHorizontalHeaderLabels(QStringList({tr("Name")}));
+	downloadsModel->setHorizontalHeaderLabels(QStringList(tr("Name")));
 
 	Settings handlersSettings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
 	const QStringList handlers(handlersSettings.getGroups());

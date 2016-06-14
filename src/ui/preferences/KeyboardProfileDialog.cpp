@@ -59,7 +59,7 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 		model->appendRow(item);
 	}
 
-	model->setHorizontalHeaderLabels(QStringList({tr("Action")}));
+	model->setHorizontalHeaderLabels(QStringList(tr("Action")));
 	model->sort(0);
 
 	m_ui->actionsViewWidget->setModel(model);
@@ -119,7 +119,7 @@ void KeyboardProfileDialog::updateActionsActions()
 
 	m_currentAction = m_ui->actionsViewWidget->getIndex(m_ui->actionsViewWidget->getCurrentRow(), 0);
 
-	m_ui->shortcutsViewWidget->getSourceModel()->setHorizontalHeaderLabels(QStringList({tr("Shortcut")}));
+	m_ui->shortcutsViewWidget->getSourceModel()->setHorizontalHeaderLabels(QStringList(tr("Shortcut")));
 
 	if (!m_currentAction.isValid())
 	{
