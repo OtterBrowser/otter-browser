@@ -36,14 +36,14 @@ MenuButtonWidget::MenuButtonWidget(const ActionsManager::ActionEntryDefinition &
 	setText(definition.options.value(QLatin1String("text"), tr("Menu")).toString());
 	setMenu(m_menu);
 	setPopupMode(QToolButton::InstantPopup);
-	updateToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+	setButtonStyle(Qt::ToolButtonTextBesideIcon);
 	toolBarModified(ToolBarsManager::MenuBar);
 
 	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
 	if (toolBar)
 	{
-		disconnect(toolBar, SIGNAL(toolButtonStyleChanged(Qt::ToolButtonStyle)), this, SLOT(setToolButtonStyle(Qt::ToolButtonStyle)));
+		disconnect(toolBar, SIGNAL(buttonStyleChanged(Qt::ToolButtonStyle)), this, SLOT(setButtonStyle(Qt::ToolButtonStyle)));
 	}
 
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));

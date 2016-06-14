@@ -48,8 +48,9 @@ protected:
 	bool event(QEvent *event);
 
 protected slots:
+	void setButtonStyle(Qt::ToolButtonStyle buttonStyle);
+	void setIconSize(int size);
 	void setMaximumButtonSize(int size);
-	void updateToolButtonStyle(Qt::ToolButtonStyle buttonStyle);
 
 private:
 	QVariantMap m_options;

@@ -62,7 +62,9 @@ public:
 	void reload();
 	void setDefinition(const ToolBarsManager::ToolBarDefinition &definition);
 	Qt::ToolBarArea getArea() const;
+	Qt::ToolButtonStyle getButtonStyle() const;
 	int getIdentifier() const;
+	int getIconSize() const;
 	int getMaximumButtonSize() const;
 	bool event(QEvent *event);
 
@@ -93,8 +95,10 @@ private:
 	int m_identifier;
 
 signals:
-	void areaChanged(Qt::ToolBarArea area);
 	void windowChanged(Window *window);
+	void areaChanged(Qt::ToolBarArea area);
+	void buttonStyleChanged(Qt::ToolButtonStyle buttonStyle);
+	void iconSizeChanged(int size);
 	void maximumButtonSizeChanged(int size);
 
 friend class ToolBarDragAreaWidget;

@@ -394,6 +394,9 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 		setIconSize(QSize(definition.iconSize, definition.iconSize));
 	}
 
+	emit buttonStyleChanged(definition.buttonStyle);
+	emit iconSizeChanged(definition.iconSize);
+
 	if (!definition.bookmarksPath.isEmpty())
 	{
 		m_bookmark = (definition.bookmarksPath.startsWith(QLatin1Char('#')) ? BookmarksManager::getBookmark(definition.bookmarksPath.mid(1).toULongLong()) : BookmarksManager::getModel()->getItem(definition.bookmarksPath));
@@ -602,9 +605,19 @@ Qt::ToolBarArea ToolBarWidget::getArea() const
 	return Qt::NoToolBarArea;
 }
 
+Qt::ToolButtonStyle ToolBarWidget::getButtonStyle() const
+{
+	return ToolBarsManager::getToolBarDefinition(m_identifier).buttonStyle;
+}
+
 int ToolBarWidget::getIdentifier() const
 {
 	return m_identifier;
+}
+
+int ToolBarWidget::getIconSize() const
+{
+	return ToolBarsManager::getToolBarDefinition(m_identifier).iconSize;
 }
 
 int ToolBarWidget::getMaximumButtonSize() const

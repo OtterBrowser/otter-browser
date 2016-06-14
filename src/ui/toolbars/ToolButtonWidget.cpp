@@ -63,13 +63,13 @@ ToolButtonWidget::ToolButtonWidget(const ActionsManager::ActionEntryDefinition &
 
 	if (toolBar)
 	{
-		setIconSize(toolBar->iconSize());
+		setButtonStyle(toolBar->getButtonStyle());
+		setIconSize(toolBar->getIconSize());
 		setMaximumButtonSize(toolBar->getMaximumButtonSize());
-		updateToolButtonStyle(toolBar->toolButtonStyle());
 
-		connect(toolBar, SIGNAL(iconSizeChanged(QSize)), this, SLOT(setIconSize(QSize)));
+		connect(toolBar, SIGNAL(buttonStyleChanged(Qt::ToolButtonStyle)), this, SLOT(setButtonStyle(Qt::ToolButtonStyle)));
+		connect(toolBar, SIGNAL(iconSizeChanged(int)), this, SLOT(setIconSize(int)));
 		connect(toolBar, SIGNAL(maximumButtonSizeChanged(int)), this, SLOT(setMaximumButtonSize(int)));
-		connect(toolBar, SIGNAL(toolButtonStyleChanged(Qt::ToolButtonStyle)), this, SLOT(updateToolButtonStyle(Qt::ToolButtonStyle)));
 	}
 }
 
@@ -146,23 +146,11 @@ void ToolButtonWidget::setOptions(const QVariantMap &options)
 		}
 	}
 
-	updateToolButtonStyle(toolButtonStyle());
+	setButtonStyle(toolButtonStyle());
 	update();
 }
 
-void ToolButtonWidget::setMaximumButtonSize(int size)
-{
-	if (size > 0)
-	{
-		setMaximumSize(size, size);
-	}
-	else
-	{
-		setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
-	}
-}
-
-void ToolButtonWidget::updateToolButtonStyle(Qt::ToolButtonStyle buttonStyle)
+void ToolButtonWidget::setButtonStyle(Qt::ToolButtonStyle buttonStyle)
 {
 	if (m_options.contains(QLatin1String("buttonStyle")))
 	{
@@ -191,6 +179,23 @@ void ToolButtonWidget::updateToolButtonStyle(Qt::ToolButtonStyle buttonStyle)
 	}
 
 	setToolButtonStyle(buttonStyle);
+}
+
+void ToolButtonWidget::setIconSize(int size)
+{
+	QToolButton::setIconSize(QSize(size, size));
+}
+
+void ToolButtonWidget::setMaximumButtonSize(int size)
+{
+	if (size > 0)
+	{
+		setMaximumSize(size, size);
+	}
+	else
+	{
+		setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
+	}
 }
 
 QVariantMap ToolButtonWidget::getOptions() const
