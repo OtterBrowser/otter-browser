@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -38,8 +38,8 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 	m_ui(new Ui::ToolBarDialog)
 {
 	m_ui->setupUi(this);
-	m_ui->removeButton->setIcon(ThemesManager::getIcon(QLatin1String("go-previous")));
-	m_ui->addButton->setIcon(ThemesManager::getIcon(QLatin1String("go-next")));
+	m_ui->removeButton->setIcon(ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-previous") : QLatin1String("go-next")));
+	m_ui->addButton->setIcon(ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-next") : QLatin1String("go-previous")));
 	m_ui->moveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("go-up")));
 	m_ui->moveDownButton->setIcon(ThemesManager::getIcon(QLatin1String("go-down")));
 	m_ui->addEntryButton->setMenu(new QMenu(m_ui->addEntryButton));
