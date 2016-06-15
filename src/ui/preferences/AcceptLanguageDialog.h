@@ -47,7 +47,6 @@ public:
 protected:
 	void changeEvent(QEvent *event);
 	void addLanguage(const QString &languageCode);
-	static bool compareLanguages(const QPair<QString, QString> &first, const QPair<QString, QString> &second);
 
 protected slots:
 	void addLanguage();

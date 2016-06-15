@@ -23,8 +23,7 @@
 
 #include "ui_AcceptLanguageDialog.h"
 
-#include <QtCore/QList>
-#include <QtCore/QLocale>
+#include <QtCore/QCollator>
 #include <QtGui/QKeyEvent>
 
 namespace Otter
@@ -47,34 +46,40 @@ AcceptLanguageDialog::AcceptLanguageDialog(const QString &languages, QWidget *pa
 		addLanguage(chosenLanguages.at(i).section(QLatin1Char(';'), 0, 0));
 	}
 
-	const QList<QLocale> allLocales(QLocale::matchingLocales(QLocale::AnyLanguage, QLocale::AnyScript, QLocale::AnyCountry));
-	QList<QPair<QString, QString> > allLanguages;
+	const QList<QLocale> locales(QLocale::matchingLocales(QLocale::AnyLanguage, QLocale::AnyScript, QLocale::AnyCountry));
+	QList<QPair<QString, QString> > entries;
 
-	for (int i = 0; i < allLocales.count(); ++i)
+	for (int i = 0; i < locales.count(); ++i)
 	{
-		const QLocale locale(allLocales.at(i));
+		const QLocale locale(locales.at(i));
 
 		if (locale != QLocale::c())
 		{
 			if (locale.nativeCountryName().isEmpty() || locale.nativeLanguageName().isEmpty())
 			{
-				allLanguages.append(qMakePair(tr("Unknown [%1]").arg(locale.bcp47Name()), locale.bcp47Name()));
+				entries.append(qMakePair(tr("Unknown [%1]").arg(locale.bcp47Name()), locale.bcp47Name()));
 			}
 			else
 			{
-				allLanguages.append(qMakePair(QStringLiteral("%1 - %2 [%3]").arg(locale.nativeLanguageName()).arg(locale.nativeCountryName()).arg(locale.bcp47Name()), locale.bcp47Name()));
+				entries.append(qMakePair(QStringLiteral("%1 - %2 [%3]").arg(locale.nativeLanguageName()).arg(locale.nativeCountryName()).arg(locale.bcp47Name()), locale.bcp47Name()));
 			}
 		}
 	}
 
-	qSort(allLanguages.begin(), allLanguages.end(), compareLanguages);
+	QCollator collator;
+	collator.setCaseSensitivity(Qt::CaseInsensitive);
 
-	allLanguages.prepend(QPair<QString, QString>(tr("Any other"), QLatin1String("*")));
-	allLanguages.prepend(QPair<QString, QString>(tr("System language (%1 - %2)").arg(QLocale::system().nativeLanguageName()).arg(QLocale::system().nativeCountryName()), QString("system")));
-
-	for (int i = 0; i < allLanguages.count(); ++i)
+	qSort(entries.begin(), entries.end(), [&](const QPair<QString, QString> &first, const QPair<QString, QString> &second)
 	{
-		m_ui->languagesComboBox->addItem(allLanguages.at(i).first, allLanguages.at(i).second);
+		return (collator.compare(first.first, second.first) < 0);
+	});
+
+	entries.prepend(QPair<QString, QString>(tr("Any other"), QLatin1String("*")));
+	entries.prepend(QPair<QString, QString>(tr("System language (%1 - %2)").arg(QLocale::system().nativeLanguageName()).arg(QLocale::system().nativeCountryName()), QString("system")));
+
+	for (int i = 0; i < entries.count(); ++i)
+	{
+		m_ui->languagesComboBox->addItem(entries.at(i).first, entries.at(i).second);
 	}
 
 	m_ui->moveDownButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-down")));
@@ -199,11 +204,6 @@ QString AcceptLanguageDialog::getLanguages()
 	}
 
 	return result;
-}
-
-bool AcceptLanguageDialog::compareLanguages(const QPair<QString, QString> &first, const QPair<QString, QString> &second)
-{
-	return (first.first.toLower() < second.first.toLower());
 }
 
 bool AcceptLanguageDialog::eventFilter(QObject *object, QEvent *event)
