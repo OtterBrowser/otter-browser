@@ -718,6 +718,11 @@ WebWidget::SslInformation QtWebKitNetworkManager::getSslInformation() const
 	return m_sslInformation;
 }
 
+QString QtWebKitNetworkManager::getUserAgent() const
+{
+	return m_userAgent;
+}
+
 QStringList QtWebKitNetworkManager::getBlockedElements() const
 {
 	return m_blockedElements;

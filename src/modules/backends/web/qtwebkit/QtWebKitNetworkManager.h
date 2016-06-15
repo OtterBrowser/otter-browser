@@ -62,6 +62,7 @@ protected:
 	void setWidget(QtWebKitWebWidget *widget);
 	QtWebKitNetworkManager *clone();
 	QNetworkReply* createRequest(Operation operation, const QNetworkRequest &request, QIODevice *outgoingData);
+	QString getUserAgent() const;
 
 protected slots:
 	void handleAuthenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator);

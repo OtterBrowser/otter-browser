@@ -325,9 +325,19 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 	return QWebPage::createWindow(type);
 }
 
+QString QtWebKitPage::userAgentForUrl(const QUrl &url) const
+{
+	if (m_networkManager)
+	{
+		return m_networkManager->getUserAgent();
+	}
+
+	return QWebPage::userAgentForUrl(url);
+}
+
 QString QtWebKitPage::getDefaultUserAgent() const
 {
-	return userAgentForUrl(QUrl());
+	return QWebPage::userAgentForUrl(QUrl());
 }
 
 bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, QWebPage::NavigationType type)
