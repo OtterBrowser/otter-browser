@@ -232,25 +232,37 @@ void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
 	}
 	else if (option == QLatin1String("Sidebar/Reverse"))
 	{
-		const bool isReversed(value.toBool());
+		Qt::ToolBarArea area(QGuiApplication::isLeftToRight() ? Qt::LeftToolBarArea : Qt::RightToolBarArea);
 
-		qobject_cast<QBoxLayout*>(layout())->setDirection(isReversed ? QBoxLayout::RightToLeft : QBoxLayout::LeftToRight);
+		if (value.toBool())
+		{
+			if (area == Qt::LeftToolBarArea)
+			{
+				area = Qt::RightToolBarArea;
+			}
+			else
+			{
+				area = Qt::LeftToolBarArea;
+			}
+		}
+
+		qobject_cast<QBoxLayout*>(layout())->setDirection(value.toBool() ? QBoxLayout::RightToLeft : QBoxLayout::LeftToRight);
 
 		QToolBar *toolbar(findChild<QToolBar*>());
 
 		if (toolbar)
 		{
-			toolbar->setLayoutDirection(isReversed ? Qt::RightToLeft : Qt::LeftToRight);
+			toolbar->setLayoutDirection((area == Qt::LeftToolBarArea) ? Qt::LeftToRight : Qt::RightToLeft);
 
 			QList<QWidget*> widgets(toolbar->findChildren<QWidget*>());
 
 			for (int i = 0; i < widgets.count(); ++i)
 			{
-				widgets[i]->setLayoutDirection(Qt::LeftToRight);
+				widgets[i]->setLayoutDirection(QGuiApplication::isLeftToRight() ? Qt::LeftToRight : Qt::RightToLeft);
 			}
 		}
 
-		ActionsManager::getAction(ActionsManager::OpenPanelAction, this)->setIcon(ThemesManager::getIcon(isReversed ? QLatin1String("arrow-left") : QLatin1String("arrow-right")));
+		ActionsManager::getAction(ActionsManager::OpenPanelAction, this)->setIcon(ThemesManager::getIcon((area == Qt::LeftToolBarArea) ? QLatin1String("arrow-right") : QLatin1String("arrow-left")));
 	}
 }
 
