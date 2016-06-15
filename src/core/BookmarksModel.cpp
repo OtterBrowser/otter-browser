@@ -698,8 +698,6 @@ void BookmarksModel::emptyTrash()
 
 BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, quint64 identifier, const QUrl &url, const QString &title, BookmarksItem *parent, int index)
 {
-	blockSignals(true);
-
 	BookmarksItem *bookmark(new BookmarksItem());
 
 	if (parent)
@@ -736,8 +734,6 @@ BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, quint64 identifier
 
 		m_identifiers[identifier] = bookmark;
 	}
-
-	blockSignals(false);
 
 	emit bookmarkAdded(bookmark);
 	emit modelModified();
