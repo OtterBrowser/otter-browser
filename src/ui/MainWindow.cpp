@@ -1116,7 +1116,9 @@ void MainWindow::setCurrentWindow(Window *window)
 				disconnect(previousAction, SIGNAL(changed()), m_standardActions[i], SLOT(setup()));
 			}
 
+			m_standardActions[i]->blockSignals(true);
 			m_standardActions[i]->setup(currentAction);
+			m_standardActions[i]->blockSignals(false);
 
 			if (currentAction)
 			{
