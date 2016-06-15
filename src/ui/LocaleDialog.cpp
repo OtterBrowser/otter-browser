@@ -23,6 +23,8 @@
 
 #include "ui_LocaleDialog.h"
 
+#include <QtCore/QCollator>
+
 namespace Otter
 {
 
@@ -32,6 +34,7 @@ LocaleDialog::LocaleDialog(QWidget *parent) : Dialog(parent),
 	m_ui->setupUi(this);
 
 	const QList<QFileInfo> locales(QDir(Application::getInstance()->getLocalePath()).entryInfoList(QStringList(QLatin1String("*.qm")), QDir::Files, QDir::Name));
+	QList<QPair<QString, QString> > entries;
 
 	for (int i = 0; i < locales.count(); ++i)
 	{
@@ -40,12 +43,25 @@ LocaleDialog::LocaleDialog(QWidget *parent) : Dialog(parent),
 
 		if (locale.nativeCountryName().isEmpty() || locale.nativeLanguageName().isEmpty())
 		{
-			m_ui->languageComboBox->addItem(name, name);
+			entries.append(qMakePair(tr("Unknown [%1]").arg(name), name));
 		}
 		else
 		{
-			m_ui->languageComboBox->addItem(QStringLiteral("%1 (%2) [%3]").arg(locale.nativeLanguageName()).arg(locale.nativeCountryName()).arg(name), name);
+			entries.append(qMakePair(QStringLiteral("%1 - %2 [%3]").arg(locale.nativeLanguageName()).arg(locale.nativeCountryName()).arg(name), name));
 		}
+	}
+
+	QCollator collator;
+	collator.setCaseSensitivity(Qt::CaseInsensitive);
+
+	qSort(entries.begin(), entries.end(), [&](const QPair<QString, QString> &first, const QPair<QString, QString> &second)
+	{
+		return (collator.compare(first.first, second.first) < 0);
+	});
+
+	for (int i = 0; i < entries.count(); ++i)
+	{
+		m_ui->languageComboBox->addItem(entries.at(i).first, entries.at(i).second);
 	}
 
 	const QString currentLocale(SettingsManager::getValue(QLatin1String("Browser/Locale")).toString());
