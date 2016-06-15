@@ -94,7 +94,30 @@ void Action::update(bool reset)
 		setEnabled(action.flags.testFlag(ActionsManager::IsEnabledFlag));
 		setCheckable(action.flags.testFlag(ActionsManager::IsCheckableFlag));
 		setChecked(action.flags.testFlag(ActionsManager::IsCheckedFlag));
-		setIcon(action.icon);
+
+		switch (m_identifier)
+		{
+			case ActionsManager::GoBackAction:
+				setIcon(ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-previous") : QLatin1String("go-next")));
+
+				break;
+			case ActionsManager::GoForwardAction:
+				setIcon(ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-next") : QLatin1String("go-previous")));
+
+				break;
+			case ActionsManager::RewindAction:
+				setIcon(ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-first") : QLatin1String("go-last")));
+
+				break;
+			case ActionsManager::FastForwardAction:
+				setIcon(ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-last") : QLatin1String("go-first")));
+
+				break;
+			default:
+				setIcon(action.icon);
+
+				break;
+		}
 	}
 }
 
@@ -123,9 +146,29 @@ int Action::getIdentifier() const
 
 bool Action::event(QEvent *event)
 {
-	if (event->type() == QEvent::LanguageChange)
+	switch (event->type())
 	{
-		update();
+		case QEvent::LanguageChange:
+			update();
+
+			break;
+		case QEvent::LayoutDirectionChange:
+			switch (m_identifier)
+			{
+				case ActionsManager::GoBackAction:
+				case ActionsManager::GoForwardAction:
+				case ActionsManager::RewindAction:
+				case ActionsManager::FastForwardAction:
+					update(true);
+
+					break;
+				default:
+					break;
+			}
+
+			break;
+		default:
+			break;
 	}
 
 	return QAction::event(event);
