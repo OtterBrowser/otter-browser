@@ -128,6 +128,7 @@ protected:
 	bool canGoForward() const;
 	bool canShowContextMenu(const QPoint &position) const;
 	bool canViewSource() const;
+	bool isInspecting() const;
 	bool isNavigating() const;
 	bool isScrollBar(const QPoint &position) const;
 

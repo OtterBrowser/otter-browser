@@ -246,7 +246,7 @@ void QtWebKitPage::javaScriptConsoleMessage(const QString &note, int line, const
 
 void QtWebKitPage::triggerAction(QWebPage::WebAction action, bool checked)
 {
-	if (action == InspectElement && m_widget)
+	if (action == InspectElement && m_widget && !m_widget->isInspecting())
 	{
 		QVariantMap parameters;
 		parameters[QLatin1String("isChecked")] = true;

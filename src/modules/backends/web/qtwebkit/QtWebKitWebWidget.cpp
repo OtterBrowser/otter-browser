@@ -2397,6 +2397,11 @@ bool QtWebKitWebWidget::isPrivate() const
 	return m_webView->settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled);
 }
 
+bool QtWebKitWebWidget::isInspecting() const
+{
+	return (m_inspector && m_inspector->isVisible());
+}
+
 bool QtWebKitWebWidget::isNavigating() const
 {
 	return m_isNavigating;
