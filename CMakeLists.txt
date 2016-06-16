@@ -400,6 +400,8 @@ endif (HUNSPELL_FOUND)
 if (WIN32)
 	add_definitions(-DUNICODE -D_UNICODE)
 
+	find_package(Qt5WinExtras 5.3.0 QUIET)
+
 	if (MSVC)
 		set(CMAKE_PREFIX_PATH $ENV{QTDIR})
 		set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MP")
@@ -451,11 +453,11 @@ add_executable(otter-browser WIN32 MACOSX_BUNDLE
 )
 
 if (Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
-	qt5_use_modules(otter-browser WebEngine WebEngineWidgets)
+	target_link_libraries(otter-browser Qt5::WebEngineCore Qt5::WebEngineWidgets)
 endif (Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
 
 if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
-	qt5_use_modules(otter-browser WebKit WebKitWidgets)
+	target_link_libraries(otter-browser Qt5::WebKit Qt5::WebKitWidgets)
 endif (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 
 if (GCRYPT_FOUND)
@@ -467,19 +469,17 @@ if (HUNSPELL_FOUND)
 endif (HUNSPELL_FOUND)
 
 if (WIN32)
-	qt5_use_modules(otter-browser WinExtras)
-
-	target_link_libraries(otter-browser ole32 shell32 advapi32 user32)
+	target_link_libraries(otter-browser Qt5::WinExtras ole32 shell32 advapi32 user32)
 elseif (APPLE)
 	find_library(FRAMEWORK_Cocoa Cocoa)
 	find_library(FRAMEWORK_Foundation Foundation)
 
 	target_link_libraries(otter-browser ${FRAMEWORK_Cocoa} ${FRAMEWORK_Foundation})
 elseif (UNIX)
-	qt5_use_modules(otter-browser DBus)
+	target_link_libraries(otter-browser Qt5::DBus)
 endif (WIN32)
 
-qt5_use_modules(otter-browser Core Gui Multimedia Network PrintSupport Qml Widgets XmlPatterns)
+target_link_libraries(otter-browser Qt5::Core Qt5::Gui Qt5::Multimedia Qt5::Network Qt5::PrintSupport Qt5::Qml Qt5::Widgets Qt5::XmlPatterns)
 
 set(OTTER_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 set(XDG_APPS_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/applications CACHE FILEPATH "Install path for .desktop files")
