@@ -537,7 +537,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 			break;
 		case ActionsManager::WorkOfflineAction:
-			SettingsManager::setValue(QLatin1String("Network/WorkOffline"), parameters.value(QLatin1String("isChecked")).toBool());
+			SettingsManager::setValue(QLatin1String("Network/WorkOffline"), Action::calculateCheckedState(parameters, getAction(ActionsManager::WorkOfflineAction)));
 
 			break;
 		case ActionsManager::FullScreenAction:
@@ -566,7 +566,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::ShowMenuBarAction:
 			{
 				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar));
-				definition.normalVisibility = (parameters.value(QLatin1String("isChecked")).toBool() ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
+				definition.normalVisibility = (Action::calculateCheckedState(parameters, getAction(ActionsManager::ShowMenuBarAction)) ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
 
 				ToolBarsManager::setToolBar(definition);
 			}
@@ -575,14 +575,14 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::ShowTabBarAction:
 			{
 				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar));
-				definition.normalVisibility = (parameters.value(QLatin1String("isChecked")).toBool() ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
+				definition.normalVisibility = (Action::calculateCheckedState(parameters, getAction(ActionsManager::ShowTabBarAction)) ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
 
 				ToolBarsManager::setToolBar(definition);
 			}
 
 			break;
 		case ActionsManager::ShowSidebarAction:
-			SettingsManager::setValue(QLatin1String("Sidebar/Visible"), parameters.value(QLatin1String("isChecked")).toBool());
+			SettingsManager::setValue(QLatin1String("Sidebar/Visible"), Action::calculateCheckedState(parameters, getAction(ActionsManager::ShowSidebarAction)));
 
 			break;
 		case ActionsManager::OpenPanelAction:
@@ -597,11 +597,11 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 			break;
 		case ActionsManager::ShowErrorConsoleAction:
-			m_ui->consoleDockWidget->setVisible(parameters.value(QLatin1String("isChecked")).toBool());
+			m_ui->consoleDockWidget->setVisible(Action::calculateCheckedState(parameters, getAction(ActionsManager::ShowErrorConsoleAction)));
 
 			break;
 		case ActionsManager::LockToolBarsAction:
-			ToolBarsManager::setToolBarsLocked(parameters.value(QLatin1String("isChecked")).toBool());
+			ToolBarsManager::setToolBarsLocked(Action::calculateCheckedState(parameters, getAction(ActionsManager::LockToolBarsAction)));
 
 			break;
 		case ActionsManager::ContentBlockingAction:

@@ -378,7 +378,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 		case ActionsManager::AlwaysOnTopTabAction:
 			if (subWindow)
 			{
-				if (parameters.value(QLatin1String("isChecked")).toBool())
+				if (Action::calculateCheckedState(parameters, m_mainWindow->getAction(ActionsManager::AlwaysOnTopTabAction)))
 				{
 					subWindow->setWindowFlags(subWindow->windowFlags() | Qt::WindowStaysOnTopHint);
 				}

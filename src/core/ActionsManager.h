@@ -40,6 +40,7 @@ public:
 	QList<QKeySequence> getShortcuts() const;
 	int getIdentifier() const;
 	bool event(QEvent *event);
+	static bool calculateCheckedState(const QVariantMap &parameters, Action *action = NULL);
 	static bool isLocal(int identifier);
 
 public slots:
