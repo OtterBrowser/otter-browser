@@ -1478,6 +1478,32 @@ int WebWidget::getAmountOfNotLoadedPlugins() const
 	return 0;
 }
 
+bool WebWidget::calculateCheckedState(int identifier, const QVariantMap &parameters)
+{
+	Action *action(getExistingAction(identifier));
+
+	if (action || parameters.contains(QLatin1String("isChecked")))
+	{
+		return Action::calculateCheckedState(parameters, action);
+	}
+
+	switch (identifier)
+	{
+		case ActionsManager::MediaControlsAction:
+			return !m_hitResult.flags.testFlag(MediaHasControlsTest);
+		case ActionsManager::MediaLoopAction:
+			return !m_hitResult.flags.testFlag(MediaIsLoopedTest);
+		case ActionsManager::CheckSpellingAction:
+			return !m_hitResult.flags.testFlag(IsSpellCheckEnabled);
+		case ActionsManager::InspectPageAction:
+			return !isInspecting();
+		default:
+			break;
+	}
+
+	return Action::calculateCheckedState(parameters, getAction(identifier));
+}
+
 bool WebWidget::canGoBack() const
 {
 	return false;
@@ -1498,6 +1524,11 @@ bool WebWidget::canShowContextMenu(const QPoint &position) const
 bool WebWidget::canViewSource() const
 {
 	return true;
+}
+
+bool WebWidget::isInspecting() const
+{
+	return false;
 }
 
 bool WebWidget::isScrollBar(const QPoint &position) const

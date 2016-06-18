@@ -570,11 +570,11 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			return;
 		case ActionsManager::MediaControlsAction:
-			m_webView->page()->triggerAction(QWebEnginePage::ToggleMediaControls, parameters.value(QLatin1String("isChecked")).toBool());
+			m_webView->page()->triggerAction(QWebEnginePage::ToggleMediaControls, calculateCheckedState(ActionsManager::MediaControlsAction, parameters));
 
 			return;
 		case ActionsManager::MediaLoopAction:
-			m_webView->page()->triggerAction(QWebEnginePage::ToggleMediaLoop, parameters.value(QLatin1String("isChecked")).toBool());
+			m_webView->page()->triggerAction(QWebEnginePage::ToggleMediaLoop, calculateCheckedState(ActionsManager::MediaLoopAction, parameters));
 
 			return;
 		case ActionsManager::MediaPlayPauseAction:

@@ -210,10 +210,12 @@ protected:
 	virtual QList<SpellCheckManager::DictionaryInformation> getDictionaries() const;
 	virtual SaveFormats getSupportedSaveFormats() const;
 	virtual int getAmountOfNotLoadedPlugins() const;
+	bool calculateCheckedState(int identifier, const QVariantMap &parameters = QVariantMap());
 	virtual bool canGoBack() const;
 	virtual bool canGoForward() const;
 	virtual bool canShowContextMenu(const QPoint &position) const;
 	virtual bool canViewSource() const;
+	virtual bool isInspecting() const;
 	virtual bool isScrollBar(const QPoint &position) const;
 
 protected slots:

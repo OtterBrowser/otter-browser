@@ -1217,11 +1217,11 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::MediaControlsAction:
-			m_webView->page()->triggerAction(QWebPage::ToggleMediaControls, parameters.value(QLatin1String("isChecked")).toBool());
+			m_webView->page()->triggerAction(QWebPage::ToggleMediaControls, calculateCheckedState(ActionsManager::MediaControlsAction, parameters));
 
 			return;
 		case ActionsManager::MediaLoopAction:
-			m_webView->page()->triggerAction(QWebPage::ToggleMediaLoop, parameters.value(QLatin1String("isChecked")).toBool());
+			m_webView->page()->triggerAction(QWebPage::ToggleMediaLoop, calculateCheckedState(ActionsManager::MediaLoopAction, parameters));
 
 			return;
 		case ActionsManager::MediaPlayPauseAction:
@@ -1370,7 +1370,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::CheckSpellingAction:
 			{
 				QWebElement element(m_page->mainFrame()->hitTestContent(getCurrentHitTestResult().position).element());
-				element.evaluateJavaScript(QStringLiteral("this.spellcheck = %1").arg(parameters.value(QLatin1String("isChecked")).toBool() ? QLatin1String("true") : QLatin1String("false")));
+				element.evaluateJavaScript(QStringLiteral("this.spellcheck = %1").arg(calculateCheckedState(ActionsManager::CheckSpellingAction, parameters) ? QLatin1String("true") : QLatin1String("false")));
 
 				resetSpellCheck(element);
 			}
@@ -1568,21 +1568,25 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::InspectPageAction:
-			if (!m_inspector)
 			{
-				m_inspector = new QtWebKitInspector(this);
-				m_inspector->setPage(m_webView->page());
+				if (!m_inspector)
+				{
+					m_inspector = new QtWebKitInspector(this);
+					m_inspector->setPage(m_webView->page());
 
-				m_splitter->addWidget(m_inspector);
+					m_splitter->addWidget(m_inspector);
+				}
+
+				const bool result(calculateCheckedState(ActionsManager::InspectPageAction, parameters));
+
+				m_inspector->setVisible(result);
+
+				getAction(ActionsManager::InspectPageAction)->setChecked(result);
+
+				emit progressBarGeometryChanged();
+
+				return;
 			}
-
-			m_inspector->setVisible(parameters.value(QLatin1String("isChecked")).toBool());
-
-			getAction(ActionsManager::InspectPageAction)->setChecked(parameters.value(QLatin1String("isChecked")).toBool());
-
-			emit progressBarGeometryChanged();
-
-			return;
 		case ActionsManager::InspectElementAction:
 			{
 				QVariantMap inspectPageParameters;
