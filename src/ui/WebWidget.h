@@ -281,7 +281,7 @@ signals:
 	void loadingStateChanged(WindowsManager::LoadingState state);
 	void zoomChanged(int zoom);
 	void loadProgress(int progress);
-	void loadStatusChanged(int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);
+	void loadStatusChanged(int elapsedTime, int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);
 };
 
 }

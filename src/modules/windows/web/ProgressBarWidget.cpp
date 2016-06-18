@@ -35,7 +35,6 @@ ProgressBarWidget::ProgressBarWidget(WebWidget *webWidget, QWidget *parent) : QF
 	m_speedLabel(new QLabel(this)),
 	m_elapsedLabel(new QLabel(this)),
 	m_messageLabel(new QLabel(this)),
-	m_time(NULL),
 	m_loadingState(WindowsManager::FinishedLoadingState),
 	m_geometryUpdateTimer(0)
 {
@@ -77,7 +76,7 @@ ProgressBarWidget::ProgressBarWidget(WebWidget *webWidget, QWidget *parent) : QF
 
 	connect(webWidget, SIGNAL(loadMessageChanged(QString)), m_messageLabel, SLOT(setText(QString)));
 	connect(webWidget, SIGNAL(loadProgress(int)), m_progressBar, SLOT(setValue(int)));
-	connect(webWidget, SIGNAL(loadStatusChanged(int,int,qint64,qint64,qint64)), this, SLOT(updateLoadStatus(int,int,qint64,qint64,qint64)));
+	connect(webWidget, SIGNAL(loadStatusChanged(int,int,int,qint64,qint64,qint64)), this, SLOT(updateLoadStatus(int,int,int,qint64,qint64,qint64)));
 	connect(webWidget, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateLoadingState(WindowsManager::LoadingState)));
 }
 
@@ -111,27 +110,6 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 			hide();
 		}
 	}
-	else
-	{
-		if (m_time)
-		{
-			int seconds(m_time->elapsed() / 1000);
-			int minutes(seconds / 60);
-
-			seconds = (seconds - (minutes * 60));
-
-			m_elapsedLabel->setText(tr("Time: %1").arg(QStringLiteral("%1:%2").arg(minutes).arg(seconds, 2, 10, QLatin1Char('0'))));
-		}
-		else
-		{
-			m_elapsedLabel->setText(QString());
-		}
-
-		if (m_webWidget->getLoadingState() != WindowsManager::OngoingLoadingState)
-		{
-			killTimer(event->timerId());
-		}
-	}
 }
 
 void ProgressBarWidget::updateLoadingState(WindowsManager::LoadingState state)
@@ -146,12 +124,7 @@ void ProgressBarWidget::updateLoadingState(WindowsManager::LoadingState state)
 		m_progressBar->setValue(0);
 		m_elapsedLabel->setText(tr("Time: %1").arg(QLatin1String("0:00")));
 
-		updateLoadStatus(0, 0, 0, 0, 0);
-
-		m_time = new QTime();
-		m_time->start();
-
-		startTimer(1000);
+		updateLoadStatus(0, 0, 0, 0, 0, 0);
 
 		if (!isVisible())
 		{
@@ -160,13 +133,6 @@ void ProgressBarWidget::updateLoadingState(WindowsManager::LoadingState state)
 	}
 	else
 	{
-		if (m_time)
-		{
-			delete m_time;
-
-			m_time = NULL;
-		}
-
 		disconnect(m_webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
 
 		hide();
@@ -183,13 +149,17 @@ void ProgressBarWidget::scheduleGeometryUpdate()
 	}
 }
 
-void ProgressBarWidget::updateLoadStatus(int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed)
+void ProgressBarWidget::updateLoadStatus(int elapsedTime, int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed)
 {
 	Q_UNUSED(bytesTotal)
 
-	m_elementsLabel->setText(tr("Elements: %1/%2").arg(finishedRequests).arg(startedReuests));
+	int minutes(elapsedTime / 60);
+	int seconds(elapsedTime - (minutes * 60));
+
+	m_elapsedLabel->setText(tr("Time: %1").arg(QStringLiteral("%1:%2").arg(minutes).arg(seconds, 2, 10, QLatin1Char('0'))));
 	m_totalLabel->setText(tr("Total: %1").arg(Utils::formatUnit(bytesReceived, false, 1)));
 	m_speedLabel->setText(tr("Speed: %1").arg(Utils::formatUnit(speed, true, 1)));
+	m_elementsLabel->setText(tr("Elements: %1/%2").arg(finishedRequests).arg(startedReuests));
 }
 
 }

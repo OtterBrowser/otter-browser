@@ -22,7 +22,6 @@
 
 #include "../../../core/WindowsManager.h"
 
-#include <QtCore/QTime>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QProgressBar>
@@ -47,7 +46,7 @@ protected:
 
 protected slots:
 	void updateLoadingState(WindowsManager::LoadingState state);
-	void updateLoadStatus(int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);
+	void updateLoadStatus(int elapsedTime, int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);
 
 private:
 	WebWidget *m_webWidget;
@@ -57,7 +56,6 @@ private:
 	QLabel *m_speedLabel;
 	QLabel *m_elapsedLabel;
 	QLabel *m_messageLabel;
-	QTime *m_time;
 	WindowsManager::LoadingState m_loadingState;
 	int m_geometryUpdateTimer;
 };

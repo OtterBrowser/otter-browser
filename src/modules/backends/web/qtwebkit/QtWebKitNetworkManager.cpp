@@ -53,11 +53,13 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar
 	m_cookieJar(NULL),
 	m_cookieJarProxy(cookieJarProxy),
 	m_baseReply(NULL),
+	m_loadingTime(NULL),
 	m_contentState(WindowsManager::UnknownContentState),
 	m_speed(0),
 	m_bytesReceivedDifference(0),
 	m_bytesReceived(0),
 	m_bytesTotal(0),
+	m_elapsedTime(0),
 	m_isSecure(0),
 	m_finishedRequests(0),
 	m_startedRequests(0),
@@ -261,9 +263,10 @@ void QtWebKitNetworkManager::resetStatistics()
 	m_bytesReceivedDifference = 0;
 	m_bytesReceived = 0;
 	m_bytesTotal = 0;
+	m_isSecure = 0;
+	m_elapsedTime = 0;
 	m_finishedRequests = 0;
 	m_startedRequests = 0;
-	m_isSecure = 0;
 
 	emit contentStateChanged(m_contentState);
 }
@@ -361,9 +364,14 @@ void QtWebKitNetworkManager::requestFinished(QNetworkReply *reply)
 		killTimer(m_updateTimer);
 
 		m_dateDownloaded = QDateTime::currentDateTime();
+		m_elapsedTime = (m_loadingTime ? (m_loadingTime->elapsed() / 1000) : 0);
 		m_updateTimer = 0;
 
 		updateStatus();
+
+		delete m_loadingTime;
+
+		m_loadingTime = NULL;
 
 		if ((m_isSecure == 1 || (m_isSecure == 0 && m_contentState.testFlag(WindowsManager::SecureContentState))) && m_sslInformation.errors.isEmpty())
 		{
@@ -417,7 +425,7 @@ void QtWebKitNetworkManager::updateStatus()
 	m_speed = (m_bytesReceivedDifference * 2);
 	m_bytesReceivedDifference = 0;
 
-	emit statusChanged(m_finishedRequests, m_startedRequests, m_bytesReceived, m_bytesTotal, m_speed);
+	emit statusChanged((m_loadingTime ? (m_loadingTime->elapsed() / 1000) : 0), m_finishedRequests, m_startedRequests, m_bytesReceived, m_bytesTotal, m_speed);
 }
 
 void QtWebKitNetworkManager::updateOptions(const QUrl &url)
@@ -703,6 +711,13 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 	if (m_updateTimer == 0)
 	{
 		m_updateTimer = startTimer(500);
+
+		if (!m_loadingTime)
+		{
+			m_loadingTime = new QTime();
+		}
+
+		m_loadingTime->start();
 	}
 
 	return reply;

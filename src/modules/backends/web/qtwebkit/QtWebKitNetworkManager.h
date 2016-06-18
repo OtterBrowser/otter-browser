@@ -78,6 +78,7 @@ private:
 	CookieJar *m_cookieJar;
 	QtWebKitCookieJar *m_cookieJarProxy;
 	QNetworkReply *m_baseReply;
+	QTime *m_loadingTime;
 	QString m_acceptLanguage;
 	QString m_userAgent;
 	QUrl m_formRequestUrl;
@@ -94,6 +95,7 @@ private:
 	qint64 m_bytesReceivedDifference;
 	qint64 m_bytesReceived;
 	qint64 m_bytesTotal;
+	int m_elapsedTime;
 	int m_isSecure;
 	int m_finishedRequests;
 	int m_startedRequests;
@@ -108,7 +110,7 @@ signals:
 	void messageChanged(const QString &message = QString());
 	void contentStateChanged(WindowsManager::ContentStates state);
 	void documentLoadProgressChanged(int progress);
-	void statusChanged(int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);
+	void statusChanged(int elapsedTime, int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);
 
 friend class QtWebKitPage;
 friend class QtWebKitWebWidget;
