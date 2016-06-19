@@ -203,6 +203,7 @@ set(otter_src
 	src/ui/WebsiteInformationDialog.cpp
 	src/ui/WebsitePreferencesDialog.cpp
 	src/ui/WebWidget.cpp
+	src/ui/WidgetFactory.cpp
 	src/ui/Window.cpp
 	src/ui/WorkspaceWidget.cpp
 	src/ui/preferences/AcceptLanguageDialog.cpp

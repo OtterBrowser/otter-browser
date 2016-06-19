@@ -73,7 +73,6 @@ protected:
 	void contextMenuEvent(QContextMenuEvent *event);
 	void startToolBarDragging();
 	void endToolBarDragging();
-	QWidget* createWidget(const ActionsManager::ActionEntryDefinition &definition);
 
 protected slots:
 	void toolBarModified(int identifier);

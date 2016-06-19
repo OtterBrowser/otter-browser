@@ -586,9 +586,14 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 			break;
 		case ActionsManager::OpenPanelAction:
-			if (m_sidebar && m_sidebar->getCurrentPanel())
+			if (m_sidebar)
 			{
-				m_windowsManager->open(m_sidebar->getCurrentPanel()->getUrl(), WindowsManager::NewTabOpen);
+				ContentsWidget *widget(qobject_cast<ContentsWidget*>(m_sidebar->getCurrentPanel()));
+
+				if (widget)
+				{
+					m_windowsManager->open(widget->getUrl(), WindowsManager::NewTabOpen);
+				}
 			}
 
 			break;

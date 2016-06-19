@@ -24,17 +24,9 @@
 #include "Menu.h"
 #include "TabBarWidget.h"
 #include "ToolBarAreaWidget.h"
+#include "WidgetFactory.h"
 #include "Window.h"
-#include "toolbars/ActionWidget.h"
-#include "toolbars/AddressWidget.h"
 #include "toolbars/BookmarkWidget.h"
-#include "toolbars/GoBackActionWidget.h"
-#include "toolbars/GoForwardActionWidget.h"
-#include "toolbars/MenuButtonWidget.h"
-#include "toolbars/PanelChooserWidget.h"
-#include "toolbars/SearchWidget.h"
-#include "toolbars/StatusMessageWidget.h"
-#include "toolbars/ZoomWidget.h"
 #include "../core/BookmarksManager.h"
 #include "../core/GesturesManager.h"
 #include "../core/ThemesManager.h"
@@ -45,6 +37,8 @@
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPainter>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QStyle>
+#include <QtWidgets/QStyleOption>
 
 namespace Otter
 {
@@ -433,129 +427,29 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 			}
 			else
 			{
-				QWidget *widget(createWidget(definition.entries.at(i)));
+				const bool isTabBar(definition.entries.at(i).action == QLatin1String("TabBarWidget"));
+
+				if (isTabBar && (m_identifier != ToolBarsManager::TabBar || !m_mainWindow || m_mainWindow->getTabBar()))
+				{
+					continue;
+				}
+
+				QWidget *widget(WidgetFactory::createToolBarItem(definition.entries.at(i), this, m_window));
 
 				if (widget)
 				{
 					addWidget(widget);
+
+					if (tabBar)
+					{
+						connect(widget, SIGNAL(tabsAmountChanged(int)), this, SLOT(updateVisibility()));
+
+						updateVisibility();
+					}
 				}
 			}
 		}
 	}
-}
-
-QWidget* ToolBarWidget::createWidget(const ActionsManager::ActionEntryDefinition &definition)
-{
-	if (definition.action == QLatin1String("spacer"))
-	{
-		QWidget *spacer(new QWidget(this));
-		spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-
-		return spacer;
-	}
-
-	if (!definition.entries.isEmpty())
-	{
-		return new ToolButtonWidget(definition, this);
-	}
-
-	if (definition.action == QLatin1String("AddressWidget"))
-	{
-		return new AddressWidget(m_window, this);
-	}
-
-	if (definition.action == QLatin1String("MenuButtonWidget"))
-	{
-		return new MenuButtonWidget(definition, this);
-	}
-
-	if (definition.action == QLatin1String("PanelChooserWidget"))
-	{
-		return new PanelChooserWidget(definition, this);
-	}
-
-	if (definition.action == QLatin1String("SearchWidget"))
-	{
-		SearchWidget *searchWidget(new SearchWidget(m_window, this));
-		searchWidget->setOptions(definition.options);
-
-		return searchWidget;
-	}
-
-	if (definition.action == QLatin1String("StatusMessageWidget"))
-	{
-		return new StatusMessageWidget(this);
-	}
-
-	if (definition.action == QLatin1String("TabBarWidget"))
-	{
-		if (m_identifier != ToolBarsManager::TabBar)
-		{
-			return NULL;
-		}
-
-		if (!m_mainWindow || m_mainWindow->getTabBar())
-		{
-			return NULL;
-		}
-
-		TabBarWidget *tabBar(new TabBarWidget(this));
-
-		connect(tabBar, SIGNAL(tabsAmountChanged(int)), this, SLOT(updateVisibility()));
-
-		updateVisibility();
-
-		return tabBar;
-	}
-
-	if (definition.action == QLatin1String("ZoomWidget"))
-	{
-		return new ZoomWidget(this);
-	}
-
-	if (definition.action.startsWith(QLatin1String("bookmarks:")))
-	{
-		BookmarksItem *bookmark(definition.action.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getItem(definition.action.mid(11)) : BookmarksManager::getBookmark(definition.action.mid(10).toULongLong()));
-
-		if (bookmark)
-		{
-			return new BookmarkWidget(bookmark, definition, this);
-		}
-	}
-
-	if (definition.action.endsWith(QLatin1String("Action")))
-	{
-		const int identifier(ActionsManager::getActionIdentifier(definition.action.left(definition.action.length() - 6)));
-
-		if (identifier >= 0)
-		{
-			ActionWidget *actionWidget(NULL);
-
-			if (identifier == ActionsManager::GoBackAction)
-			{
-				actionWidget = new GoBackActionWidget(m_window, definition, this);
-			}
-			else if (identifier == ActionsManager::GoForwardAction)
-			{
-				actionWidget = new GoForwardActionWidget(m_window, definition, this);
-			}
-			else
-			{
-				actionWidget = new ActionWidget(identifier, m_window, definition, this);;
-			}
-
-			actionWidget->setOptions(definition.options);
-
-			return actionWidget;
-		}
-	}
-
-	if (definition.action.endsWith(QLatin1String("Menu")))
-	{
-		return new ToolButtonWidget(definition, this);
-	}
-
-	return NULL;
 }
 
 QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QList<QAction*> actions, QWidget *parent)

@@ -43,7 +43,7 @@ public:
 	~SidebarWidget();
 
 	void selectPanel(const QString &identifier);
-	ContentsWidget* getCurrentPanel();
+	QWidget *getCurrentPanel();
 	static QString getPanelTitle(const QString &identifier);
 	QSize sizeHint() const;
 
@@ -63,7 +63,7 @@ protected slots:
 private:
 	QString m_currentPanel;
 	QHash<QString, QToolButton*> m_buttons;
-	QHash<QString, ContentsWidget*> m_panels;
+	QHash<QString, QWidget*> m_panels;
 	int m_resizeTimer;
 	Ui::SidebarWidget *m_ui;
 };

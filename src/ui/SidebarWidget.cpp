@@ -20,25 +20,18 @@
 
 #include "SidebarWidget.h"
 #include "MainWindow.h"
+#include "WidgetFactory.h"
 #include "toolbars/PanelChooserWidget.h"
 #include "../core/ActionsManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/ThemesManager.h"
 #include "../core/WindowsManager.h"
-#include "../modules/windows/addons/AddonsContentsWidget.h"
-#include "../modules/windows/bookmarks/BookmarksContentsWidget.h"
-#include "../modules/windows/cache/CacheContentsWidget.h"
-#include "../modules/windows/configuration/ConfigurationContentsWidget.h"
-#include "../modules/windows/cookies/CookiesContentsWidget.h"
-#include "../modules/windows/history/HistoryContentsWidget.h"
-#include "../modules/windows/notes/NotesContentsWidget.h"
-#include "../modules/windows/transfers/TransfersContentsWidget.h"
-#include "../modules/windows/web/WebContentsWidget.h"
 
 #include "ui_SidebarWidget.h"
 
 #include <QtGui/QIcon>
 #include <QtWidgets/QInputDialog>
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QToolBar>
 
 namespace Otter
@@ -341,51 +334,7 @@ void SidebarWidget::selectPanel(const QString &identifier)
 	}
 
 	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-	ContentsWidget *widget(NULL);
-
-	if (m_panels.contains(identifier) && m_panels[identifier])
-	{
-		widget = m_panels[identifier];
-	}
-	else if (identifier == QLatin1String("addons"))
-	{
-		widget = new AddonsContentsWidget(NULL);
-	}
-	else if (identifier == QLatin1String("bookmarks"))
-	{
-		widget = new BookmarksContentsWidget(NULL);
-	}
-	else if (identifier == QLatin1String("cache"))
-	{
-		widget = new CacheContentsWidget(NULL);
-	}
-	else if (identifier == QLatin1String("config"))
-	{
-		widget = new ConfigurationContentsWidget(NULL);
-	}
-	else if (identifier == QLatin1String("cookies"))
-	{
-		widget = new CookiesContentsWidget(NULL);
-	}
-	else if (identifier == QLatin1String("history"))
-	{
-		widget = new HistoryContentsWidget(NULL);
-	}
-	else if (identifier == QLatin1String("notes"))
-	{
-		widget = new NotesContentsWidget(NULL);
-	}
-	else if (identifier == QLatin1String("transfers"))
-	{
-		widget = new TransfersContentsWidget(NULL);
-	}
-	else if (identifier.startsWith(QLatin1String("web:")))
-	{
-		WebContentsWidget *webWidget(new WebContentsWidget((mainWindow ? mainWindow->getWindowsManager()->isPrivate() : true), NULL, NULL));
-		webWidget->setUrl(identifier.section(QLatin1Char(':'), 1, -1), false);
-
-		widget = webWidget;
-	}
+	QWidget *widget((m_panels.contains(identifier) && m_panels[identifier]) ? m_panels[identifier] : WidgetFactory::createSidebarPanel(identifier));
 
 	if (widget && mainWindow)
 	{
@@ -435,7 +384,7 @@ void SidebarWidget::selectPanel(const QString &identifier)
 	SettingsManager::setValue(QLatin1String("Sidebar/CurrentPanel"), identifier);
 }
 
-ContentsWidget* SidebarWidget::getCurrentPanel()
+QWidget* SidebarWidget::getCurrentPanel()
 {
 	return m_panels.value(m_currentPanel);
 }
