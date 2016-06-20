@@ -122,12 +122,15 @@ private:
 	QWebEngineView *m_webView;
 	QtWebEnginePage *m_page;
 	QNetworkReply *m_iconReply;
+	QTime *m_loadingTime;
 	QIcon m_icon;
 	QDateTime m_lastUrlClickTime;
 	HitTestResult m_hitResult;
 	QPoint m_scrollPosition;
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
 	WindowsManager::LoadingState m_loadingState;
+	int m_elapsedTime;
+	int m_elapsedTimer;
 	int m_scrollTimer;
 	bool m_isEditing;
 	bool m_isTyped;
