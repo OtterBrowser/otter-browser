@@ -228,6 +228,7 @@ set(otter_src
 	src/ui/toolbars/GoForwardActionWidget.cpp
 	src/ui/toolbars/MenuButtonWidget.cpp
 	src/ui/toolbars/PanelChooserWidget.cpp
+	src/ui/toolbars/ProgressInformationWidget.cpp
 	src/ui/toolbars/SearchWidget.cpp
 	src/ui/toolbars/StatusMessageWidget.cpp
 	src/ui/toolbars/ToolButtonWidget.cpp

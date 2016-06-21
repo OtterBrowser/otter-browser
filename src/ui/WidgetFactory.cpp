@@ -28,6 +28,7 @@
 #include "toolbars/GoForwardActionWidget.h"
 #include "toolbars/MenuButtonWidget.h"
 #include "toolbars/PanelChooserWidget.h"
+#include "toolbars/ProgressInformationWidget.h"
 #include "toolbars/SearchWidget.h"
 #include "toolbars/StatusMessageWidget.h"
 #include "toolbars/ZoomWidget.h"
@@ -76,6 +77,11 @@ QWidget* createToolBarItem(const ActionsManager::ActionEntryDefinition &definiti
 	if (definition.action == QLatin1String("PanelChooserWidget"))
 	{
 		return new PanelChooserWidget(definition, parent);
+	}
+
+	if (definition.action == QLatin1String("ProgressInformationDocumentPercentWidget") || definition.action == QLatin1String("ProgressInformationTotalSizeWidget") || definition.action == QLatin1String("ProgressInformationElementsWidget") || definition.action == QLatin1String("ProgressInformationSpeedWidget") || definition.action == QLatin1String("ProgressInformationElapsedTimeWidget") || definition.action == QLatin1String("ProgressInformationMessageWidget"))
+	{
+		return new ProgressInformationWidget(window, definition, parent);
 	}
 
 	if (definition.action == QLatin1String("SearchWidget"))

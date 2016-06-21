@@ -393,6 +393,30 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	{
 		item->setText(tr("Sidebar Panel Chooser"));
 	}
+	else if (identifier == QLatin1String("ProgressInformationDocumentPercentWidget"))
+	{
+		item->setText(tr("Progress Information (Document Progress)"));
+	}
+	else if (identifier == QLatin1String("ProgressInformationTotalSizeWidget"))
+	{
+		item->setText(tr("Progress Information (Total Progress)"));
+	}
+	else if (identifier == QLatin1String("ProgressInformationElementsWidget"))
+	{
+		item->setText(tr("Progress Information (Loaded Elements)"));
+	}
+	else if (identifier == QLatin1String("ProgressInformationSpeedWidget"))
+	{
+		item->setText(tr("Progress Information (Loading Speed)"));
+	}
+	else if (identifier == QLatin1String("ProgressInformationElapsedTimeWidget"))
+	{
+		item->setText(tr("Progress Information (Elapsed Time)"));
+	}
+	else if (identifier == QLatin1String("ProgressInformationMessageWidget"))
+	{
+		item->setText(tr("Progress Information (Status Message)"));
+	}
 	else if (identifier == QLatin1String("SearchWidget"))
 	{
 		if (options.contains(QLatin1String("searchEngine")))

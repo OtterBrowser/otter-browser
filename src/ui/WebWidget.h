@@ -272,7 +272,7 @@ signals:
 	void requestedAddPassword(const PasswordsManager::PasswordInformation &password);
 	void requestedGeometryChange(const QRect &geometry);
 	void progressBarGeometryChanged();
-	void loadMessageChanged(QString message);
+	void loadMessageChanged(const QString &message);
 	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url);

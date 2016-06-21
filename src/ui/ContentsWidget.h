@@ -94,6 +94,7 @@ signals:
 	void requestedGeometryChange(const QRect &geometry);
 	void webWidgetChanged();
 	void canZoomChanged(bool can);
+	void loadMessageChanged(const QString &message);
 	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url);
@@ -101,6 +102,8 @@ signals:
 	void contentStateChanged(WindowsManager::ContentStates state);
 	void loadingStateChanged(WindowsManager::LoadingState);
 	void zoomChanged(int zoom);
+	void loadProgress(int progress);
+	void loadStatusChanged(int elapsedTime, int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);
 };
 
 }
