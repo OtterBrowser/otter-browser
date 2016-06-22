@@ -49,7 +49,6 @@ public:
 	QStringList getBlockedElements() const;
 	QHash<QByteArray, QByteArray> getHeaders() const;
 	WindowsManager::ContentStates getContentState() const;
-	bool isLoading() const;
 
 protected:
 	void timerEvent(QTimerEvent *event);
@@ -66,20 +65,20 @@ protected:
 	QString getUserAgent() const;
 
 protected slots:
+	void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
+	void requestFinished(QNetworkReply *reply);
+	void transferFinished();
 	void handleAuthenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator);
 	void handleProxyAuthenticationRequired(const QNetworkProxy &proxy, QAuthenticator *authenticator);
 	void handleSslErrors(QNetworkReply *reply, const QList<QSslError> &errors);
 	void handleOnlineStateChanged(bool isOnline);
-	void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
-	void requestFinished(QNetworkReply *reply);
-	void transferFinished();
+	void handleLoadingFinished();
 
 private:
 	QtWebKitWebWidget *m_widget;
 	CookieJar *m_cookieJar;
 	QtWebKitCookieJar *m_cookieJarProxy;
 	QNetworkReply *m_baseReply;
-	QTime *m_loadingTime;
 	QString m_acceptLanguage;
 	QString m_userAgent;
 	QUrl m_formRequestUrl;

@@ -53,7 +53,6 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar
 	m_cookieJar(NULL),
 	m_cookieJarProxy(cookieJarProxy),
 	m_baseReply(NULL),
-	m_loadingTime(NULL),
 	m_contentState(WindowsManager::UnknownContentState),
 	m_doNotTrackPolicy(NetworkManagerFactory::SkipTrackPolicy),
 	m_bytesReceivedDifference(0),
@@ -112,6 +111,160 @@ void QtWebKitNetworkManager::addContentBlockingException(const QUrl &url, Conten
 	if (resourceType == ContentBlockingManager::ImageType && m_widget->getOption(QLatin1String("Browser/EnableImages"), m_widget->getUrl()).toString() == QLatin1String("onlyCached"))
 	{
 		m_areImagesEnabled = false;
+	}
+}
+
+void QtWebKitNetworkManager::resetStatistics()
+{
+	killTimer(m_loadingSpeedTimer);
+
+	const QList<WebWidget::PageInformation> keys(m_pageInformation.keys());
+
+	m_sslInformation = WebWidget::SslInformation();
+	m_loadingSpeedTimer = 0;
+	m_blockedElements.clear();
+	m_contentBlockingProfiles.clear();
+	m_contentBlockingExceptions.clear();
+	m_blockedRequests.clear();
+	m_replies.clear();
+	m_pageInformation.clear();
+	m_pageInformation[WebWidget::BytesReceivedInformation] = quint64(0);
+	m_pageInformation[WebWidget::BytesTotalInformation] = quint64(0);
+	m_pageInformation[WebWidget::RequestsFinishedInformation] = 0;
+	m_pageInformation[WebWidget::RequestsStartedInformation] = 0;
+	m_baseReply = NULL;
+	m_contentState = WindowsManager::UnknownContentState;
+	m_bytesReceivedDifference = 0;
+	m_isSecure = 0;
+
+	updateLoadingSpeed();
+
+	for (int i = 0; i < keys.count(); ++i)
+	{
+		emit pageInformationChanged(keys.at(i), m_pageInformation.value(keys.at(i)));
+	}
+
+	emit contentStateChanged(m_contentState);
+}
+
+void QtWebKitNetworkManager::registerTransfer(QNetworkReply *reply)
+{
+	if (reply && !reply->isFinished())
+	{
+		m_transfers.append(reply);
+
+		setParent(NULL);
+
+		connect(reply, SIGNAL(finished()), this, SLOT(transferFinished()));
+	}
+}
+
+void QtWebKitNetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
+{
+	QNetworkReply *reply(qobject_cast<QNetworkReply*>(sender()));
+
+	if (reply && reply == m_baseReply)
+	{
+		if (m_baseReply->hasRawHeader(QStringLiteral("Location").toLatin1()))
+		{
+			m_baseReply = NULL;
+		}
+		else
+		{
+			setPageInformation(WebWidget::DocumentLoadingProgressInformation, ((bytesTotal > 0) ? (((bytesReceived * 1.0) / bytesTotal) * 100) : -1));
+		}
+	}
+
+	if (!reply || !m_replies.contains(reply))
+	{
+		return;
+	}
+
+	const QUrl url(reply->url());
+
+	if (url.isValid() && url.scheme() != QLatin1String("data"))
+	{
+		setPageInformation(WebWidget::LoadingMessageInformation, tr("Receiving data from %1…").arg(reply->url().host().isEmpty() ? QLatin1String("localhost") : reply->url().host()));
+	}
+
+	const qint64 difference(bytesReceived - m_replies[reply].first);
+
+	m_replies[reply].first = bytesReceived;
+
+	if (!m_replies[reply].second && bytesTotal > 0)
+	{
+		m_replies[reply].second = true;
+
+		m_pageInformation[WebWidget::BytesTotalInformation] = (m_pageInformation[WebWidget::BytesTotalInformation].toULongLong() + bytesTotal);
+	}
+
+	if (difference <= 0)
+	{
+		return;
+	}
+
+	m_bytesReceivedDifference += difference;
+
+	setPageInformation(WebWidget::BytesReceivedInformation, (m_pageInformation[WebWidget::BytesReceivedInformation].toULongLong() + difference));
+}
+
+void QtWebKitNetworkManager::requestFinished(QNetworkReply *reply)
+{
+	if (reply)
+	{
+		if (reply == m_baseReply)
+		{
+			if (reply->sslConfiguration().isNull())
+			{
+				m_sslInformation.certificates = QList<QSslCertificate>();
+				m_sslInformation.cipher = QSslCipher();
+			}
+			else
+			{
+				m_sslInformation.certificates = reply->sslConfiguration().peerCertificateChain();
+				m_sslInformation.cipher = reply->sslConfiguration().sessionCipher();
+			}
+		}
+
+		m_replies.remove(reply);
+	}
+
+	setPageInformation(WebWidget::RequestsFinishedInformation, (m_pageInformation[WebWidget::RequestsFinishedInformation].toInt() + 1));
+
+	if (reply)
+	{
+		const QUrl url(reply->url());
+
+		if (url.isValid() && url.scheme() != QLatin1String("data"))
+		{
+			setPageInformation(WebWidget::LoadingMessageInformation, tr("Completed request to %1").arg(url.host().isEmpty() ? QLatin1String("localhost") : reply->url().host()));
+		}
+
+		disconnect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
+	}
+}
+
+void QtWebKitNetworkManager::transferFinished()
+{
+	QNetworkReply *reply(qobject_cast<QNetworkReply*>(sender()));
+
+	if (reply)
+	{
+		m_transfers.removeAll(reply);
+
+		reply->deleteLater();
+
+		if (m_transfers.isEmpty())
+		{
+			if (m_widget)
+			{
+				setParent(m_widget);
+			}
+			else
+			{
+				deleteLater();
+			}
+		}
 	}
 }
 
@@ -238,180 +391,21 @@ void QtWebKitNetworkManager::handleOnlineStateChanged(bool isOnline)
 	}
 }
 
-void QtWebKitNetworkManager::resetStatistics()
+void QtWebKitNetworkManager::handleLoadingFinished()
 {
+	setPageInformation(WebWidget::LoadingFinishedInformation, QDateTime::currentDateTime());
+	setPageInformation(WebWidget::LoadingMessageInformation, tr("Loading finished"));
+	setPageInformation(WebWidget::LoadingSpeedInformation, 0);
 	killTimer(m_loadingSpeedTimer);
 
-	const QList<WebWidget::PageInformation> keys(m_pageInformation.keys());
-
-	m_sslInformation = WebWidget::SslInformation();
 	m_loadingSpeedTimer = 0;
-	m_blockedElements.clear();
-	m_contentBlockingProfiles.clear();
-	m_contentBlockingExceptions.clear();
-	m_blockedRequests.clear();
-	m_replies.clear();
-	m_pageInformation.clear();
-	m_pageInformation[WebWidget::BytesReceivedInformation] = quint64(0);
-	m_pageInformation[WebWidget::BytesTotalInformation] = quint64(0);
-	m_pageInformation[WebWidget::RequestsFinishedInformation] = 0;
-	m_pageInformation[WebWidget::RequestsStartedInformation] = 0;
-	m_baseReply = NULL;
-	m_contentState = WindowsManager::UnknownContentState;
-	m_bytesReceivedDifference = 0;
-	m_isSecure = 0;
 
-	updateLoadingSpeed();
-
-	for (int i = 0; i < keys.count(); ++i)
+	if ((m_isSecure == 1 || (m_isSecure == 0 && m_contentState.testFlag(WindowsManager::SecureContentState))) && m_sslInformation.errors.isEmpty())
 	{
-		emit pageInformationChanged(keys.at(i), m_pageInformation.value(keys.at(i)));
+		m_contentState = WindowsManager::SecureContentState;
 	}
 
 	emit contentStateChanged(m_contentState);
-}
-
-void QtWebKitNetworkManager::registerTransfer(QNetworkReply *reply)
-{
-	if (reply && !reply->isFinished())
-	{
-		m_transfers.append(reply);
-
-		setParent(NULL);
-
-		connect(reply, SIGNAL(finished()), this, SLOT(transferFinished()));
-	}
-}
-
-void QtWebKitNetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
-{
-	QNetworkReply *reply(qobject_cast<QNetworkReply*>(sender()));
-
-	if (reply && reply == m_baseReply)
-	{
-		if (m_baseReply->hasRawHeader(QStringLiteral("Location").toLatin1()))
-		{
-			m_baseReply = NULL;
-		}
-		else
-		{
-			setPageInformation(WebWidget::DocumentLoadingProgressInformation, ((bytesTotal > 0) ? (((bytesReceived * 1.0) / bytesTotal) * 100) : -1));
-		}
-	}
-
-	if (!reply || !m_replies.contains(reply))
-	{
-		return;
-	}
-
-	const QUrl url(reply->url());
-
-	if (url.isValid() && url.scheme() != QLatin1String("data"))
-	{
-		setPageInformation(WebWidget::LoadingMessageInformation, tr("Receiving data from %1…").arg(reply->url().host().isEmpty() ? QLatin1String("localhost") : reply->url().host()));
-	}
-
-	const qint64 difference(bytesReceived - m_replies[reply].first);
-
-	m_replies[reply].first = bytesReceived;
-
-	if (!m_replies[reply].second && bytesTotal > 0)
-	{
-		m_replies[reply].second = true;
-
-		m_pageInformation[WebWidget::BytesTotalInformation] = (m_pageInformation[WebWidget::BytesTotalInformation].toULongLong() + bytesTotal);
-	}
-
-	if (difference <= 0)
-	{
-		return;
-	}
-
-	m_bytesReceivedDifference += difference;
-
-	setPageInformation(WebWidget::BytesReceivedInformation, (m_pageInformation[WebWidget::BytesReceivedInformation].toULongLong() + difference));
-}
-
-void QtWebKitNetworkManager::requestFinished(QNetworkReply *reply)
-{
-	if (reply)
-	{
-		if (reply == m_baseReply)
-		{
-			if (reply->sslConfiguration().isNull())
-			{
-				m_sslInformation.certificates = QList<QSslCertificate>();
-				m_sslInformation.cipher = QSslCipher();
-			}
-			else
-			{
-				m_sslInformation.certificates = reply->sslConfiguration().peerCertificateChain();
-				m_sslInformation.cipher = reply->sslConfiguration().sessionCipher();
-			}
-		}
-
-		m_replies.remove(reply);
-	}
-
-	if (m_replies.isEmpty())
-	{
-		killTimer(m_loadingSpeedTimer);
-
-		m_loadingSpeedTimer = 0;
-
-		updateLoadingSpeed();
-
-		delete m_loadingTime;
-
-		m_loadingTime = NULL;
-
-		if ((m_isSecure == 1 || (m_isSecure == 0 && m_contentState.testFlag(WindowsManager::SecureContentState))) && m_sslInformation.errors.isEmpty())
-		{
-			m_contentState = WindowsManager::SecureContentState;
-		}
-
-		setPageInformation(WebWidget::LoadingFinishedInformation, QDateTime::currentDateTime());
-
-		emit contentStateChanged(m_contentState);
-	}
-
-	setPageInformation(WebWidget::RequestsFinishedInformation, (m_pageInformation[WebWidget::RequestsFinishedInformation].toInt() + 1));
-
-	if (reply)
-	{
-		const QUrl url(reply->url());
-
-		if (url.isValid() && url.scheme() != QLatin1String("data"))
-		{
-			setPageInformation(WebWidget::LoadingMessageInformation, tr("Completed request to %1").arg(url.host().isEmpty() ? QLatin1String("localhost") : reply->url().host()));
-		}
-
-		disconnect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
-	}
-}
-
-void QtWebKitNetworkManager::transferFinished()
-{
-	QNetworkReply *reply(qobject_cast<QNetworkReply*>(sender()));
-
-	if (reply)
-	{
-		m_transfers.removeAll(reply);
-
-		reply->deleteLater();
-
-		if (m_transfers.isEmpty())
-		{
-			if (m_widget)
-			{
-				setParent(m_widget);
-			}
-			else
-			{
-				deleteLater();
-			}
-		}
-	}
 }
 
 void QtWebKitNetworkManager::updateLoadingSpeed()
@@ -508,9 +502,12 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 
 void QtWebKitNetworkManager::setPageInformation(WebWidget::PageInformation key, const QVariant &value)
 {
-	m_pageInformation[key] = value;
+	if (m_loadingSpeedTimer != 0 || key != WebWidget::LoadingMessageInformation)
+	{
+		m_pageInformation[key] = value;
 
-	emit pageInformationChanged(key, value);
+		emit pageInformationChanged(key, value);
+	}
 }
 
 void QtWebKitNetworkManager::setFormRequest(const QUrl &url)
@@ -711,13 +708,6 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 	if (m_loadingSpeedTimer == 0)
 	{
 		m_loadingSpeedTimer = startTimer(500);
-
-		if (!m_loadingTime)
-		{
-			m_loadingTime = new QTime();
-		}
-
-		m_loadingTime->start();
 	}
 
 	return reply;
@@ -773,11 +763,6 @@ QHash<QByteArray, QByteArray> QtWebKitNetworkManager::getHeaders() const
 WindowsManager::ContentStates QtWebKitNetworkManager::getContentState() const
 {
 	return m_contentState;
-}
-
-bool QtWebKitNetworkManager::isLoading() const
-{
-	return !m_replies.isEmpty();
 }
 
 }

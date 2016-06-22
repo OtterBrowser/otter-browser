@@ -145,7 +145,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(m_page, SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
 	connect(m_page, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 	connect(m_page, SIGNAL(viewingMediaChanged(bool)), this, SLOT(updateNavigationActions()));
-	connect(m_page->mainFrame(), SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 	connect(m_page->mainFrame(), SIGNAL(contentsSizeChanged(QSize)), this, SIGNAL(progressBarGeometryChanged()));
 	connect(m_page->mainFrame(), SIGNAL(initialLayoutCompleted()), this, SIGNAL(progressBarGeometryChanged()));
 	connect(m_webView, SIGNAL(titleChanged(QString)), this, SLOT(notifyTitleChanged()));
@@ -289,10 +288,12 @@ void QtWebKitWebWidget::pageLoadStarted()
 
 void QtWebKitWebWidget::pageLoadFinished()
 {
-	if (m_loadingState != WindowsManager::OngoingLoadingState || m_networkManager->isLoading())
+	if (m_loadingState != WindowsManager::OngoingLoadingState)
 	{
 		return;
 	}
+
+	m_networkManager->handleLoadingFinished();
 
 	m_loadingState = WindowsManager::FinishedLoadingState;
 	m_thumbnail = QPixmap();
@@ -757,8 +758,6 @@ void QtWebKitWebWidget::notifyAddPasswordRequested(const PasswordsManager::Passw
 
 void QtWebKitWebWidget::notifyContentStateChanged()
 {
-	pageLoadFinished();
-
 	emit contentStateChanged(getContentState());
 }
 
