@@ -29,8 +29,6 @@
 namespace Otter
 {
 
-class WebWidget;
-
 class ProgressBarWidget : public QFrame
 {
 	Q_OBJECT
@@ -48,8 +46,7 @@ protected slots:
 	void updateLoadingState(WindowsManager::LoadingState state);
 
 private:
-	WebWidget *m_webWidget;
-	WindowsManager::LoadingState m_loadingState;
+	Window *m_window;
 	int m_geometryUpdateTimer;
 };
 

@@ -105,6 +105,7 @@ public slots:
 
 protected:
 	void timerEvent(QTimerEvent *event);
+	void showEvent(QShowEvent *event);
 	void focusInEvent(QFocusEvent *event);
 	void resizeEvent(QResizeEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);

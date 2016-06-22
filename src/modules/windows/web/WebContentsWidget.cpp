@@ -163,6 +163,16 @@ void WebContentsWidget::timerEvent(QTimerEvent *event)
 	ContentsWidget::timerEvent(event);
 }
 
+void WebContentsWidget::showEvent(QShowEvent *event)
+{
+	ContentsWidget::showEvent(event);
+
+	if (m_window && ToolBarsManager::getToolBarDefinition(ToolBarsManager::ProgressBar).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar)
+	{
+		m_progressBarWidget = new ProgressBarWidget(m_window, this);
+	}
+}
+
 void WebContentsWidget::focusInEvent(QFocusEvent *event)
 {
 	QWidget::focusInEvent(event);
@@ -285,12 +295,7 @@ void WebContentsWidget::mouseMoveEvent(QMouseEvent *event)
 
 void WebContentsWidget::optionChanged(const QString &option, const QVariant &value)
 {
-	if (option == QLatin1String("Browser/ShowDetailedProgressBar") && !value.toBool() && m_progressBarWidget)
-	{
-		m_progressBarWidget->deleteLater();
-		m_progressBarWidget = NULL;
-	}
-	else if (option == QLatin1String("Search/EnableFindInPageAsYouType") && m_searchBarWidget)
+	if (option == QLatin1String("Search/EnableFindInPageAsYouType") && m_searchBarWidget)
 	{
 		if (value.toBool())
 		{
@@ -878,7 +883,7 @@ void WebContentsWidget::handleLoadingStateChange(WindowsManager::LoadingState st
 			m_window->close();
 		}
 	}
-	else if (state == WindowsManager::OngoingLoadingState && m_window && !m_progressBarWidget && SettingsManager::getValue(QLatin1String("Browser/ShowDetailedProgressBar")).toBool())
+	else if (state == WindowsManager::OngoingLoadingState && m_window && !m_progressBarWidget && ToolBarsManager::getToolBarDefinition(ToolBarsManager::ProgressBar).normalVisibility == ToolBarsManager::AutoVisibilityToolBar)
 	{
 		m_progressBarWidget = new ProgressBarWidget(m_window, this);
 	}

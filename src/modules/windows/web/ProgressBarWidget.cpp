@@ -30,17 +30,9 @@ namespace Otter
 {
 
 ProgressBarWidget::ProgressBarWidget(Window *window, QWidget *parent) : QFrame(parent),
-	m_webWidget(NULL),
-	m_loadingState(WindowsManager::FinishedLoadingState),
+	m_window(window),
 	m_geometryUpdateTimer(0)
 {
-	WebContentsWidget *contentsWidget(qobject_cast<WebContentsWidget*>(window->getContentsWidget()));
-
-	if (contentsWidget)
-	{
-		m_webWidget = contentsWidget->getWebWidget();
-	}
-
 	QHBoxLayout *layout(new QHBoxLayout(this));
 	layout->setContentsMargins(0, 0, 0, 0);
 	layout->setSpacing(0);
@@ -55,10 +47,9 @@ ProgressBarWidget::ProgressBarWidget(Window *window, QWidget *parent) : QFrame(p
 
 	palette.setColor(QPalette::Background, palette.color(QPalette::AlternateBase));
 
-	setAutoFillBackground(true);
-	scheduleGeometryUpdate();
-	updateLoadingState(window->getLoadingState());
 	hide();
+	updateLoadingState(window->getLoadingState());
+	setAutoFillBackground(true);
 
 	connect(window, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateLoadingState(WindowsManager::LoadingState)));
 }
@@ -71,16 +62,25 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 
 		m_geometryUpdateTimer = 0;
 
-		QRect geometry(m_webWidget->getProgressBarGeometry());
+		WebContentsWidget *contentsWidget(qobject_cast<WebContentsWidget*>(m_window->getContentsWidget()));
 
-		if (m_webWidget->getLoadingState() == WindowsManager::OngoingLoadingState)
+		if (!contentsWidget || !contentsWidget->getWebWidget())
+		{
+			return;
+		}
+
+		WebWidget *webWidget(contentsWidget->getWebWidget());
+		QRect geometry(webWidget->getProgressBarGeometry());
+		const ToolBarsManager::ToolBarVisibility visibility(ToolBarsManager::getToolBarDefinition(ToolBarsManager::ProgressBar).normalVisibility);
+
+		if (visibility == ToolBarsManager::AlwaysVisibleToolBar || (visibility == ToolBarsManager::AutoVisibilityToolBar && webWidget->getLoadingState() == WindowsManager::OngoingLoadingState))
 		{
 			if (!isVisible())
 			{
-				connect(m_webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
+				connect(webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
 			}
 
-			geometry.translate(0, m_webWidget->pos().y());
+			geometry.translate(0, webWidget->pos().y());
 
 			setGeometry(geometry);
 			show();
@@ -88,7 +88,7 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 		}
 		else
 		{
-			disconnect(m_webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
+			disconnect(webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
 
 			hide();
 		}
@@ -97,28 +97,28 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 
 void ProgressBarWidget::updateLoadingState(WindowsManager::LoadingState state)
 {
-	if (state == m_loadingState || !m_webWidget)
-	{
-		return;
-	}
+	const ToolBarsManager::ToolBarVisibility visibility(ToolBarsManager::getToolBarDefinition(ToolBarsManager::ProgressBar).normalVisibility);
 
-	if (state != WindowsManager::OngoingLoadingState)
-	{
-		disconnect(m_webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
-
-		hide();
-	}
-	else if (!isVisible())
+	if (visibility == ToolBarsManager::AlwaysVisibleToolBar || (visibility == ToolBarsManager::AutoVisibilityToolBar && state == WindowsManager::OngoingLoadingState))
 	{
 		scheduleGeometryUpdate();
 	}
+	else
+	{
+		hide();
 
-	m_loadingState = state;
+		WebContentsWidget *contentsWidget(qobject_cast<WebContentsWidget*>(m_window->getContentsWidget()));
+
+		if (contentsWidget && contentsWidget->getWebWidget())
+		{
+			disconnect(contentsWidget->getWebWidget(), SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
+		}
+	}
 }
 
 void ProgressBarWidget::scheduleGeometryUpdate()
 {
-	if (m_geometryUpdateTimer == 0 && m_webWidget)
+	if (m_geometryUpdateTimer == 0)
 	{
 		m_geometryUpdateTimer = startTimer(50);
 	}

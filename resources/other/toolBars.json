@@ -10,9 +10,9 @@
 	},
 	{
 		"identifier": "TabBar",
+		"title": "Tab Bar",
 		"location": "top",
 		"fullScreenVisibility": "hover",
-		"title": "Tab Bar",
 		"actions":
 		[
 			"MenuButtonWidget",
@@ -37,6 +37,8 @@
 	{
 		"identifier": "ProgressBar",
 		"title": "Progress Bar",
+		"fullScreenVisibility": "auto",
+		"normalVisibility": "auto",
 		"actions":
 		[
 			"ProgressInformationDocumentProgressWidget",
