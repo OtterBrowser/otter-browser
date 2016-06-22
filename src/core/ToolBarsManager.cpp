@@ -538,8 +538,8 @@ QHash<QString, ToolBarsManager::ToolBarDefinition> ToolBarsManager::loadToolBars
 		ToolBarDefinition toolBar;
 		toolBar.title = toolBarObject.value(QLatin1String("title")).toString();
 		toolBar.bookmarksPath = toolBarObject.value(QLatin1String("bookmarksPath")).toString();
-		toolBar.normalVisibility = visibilityModes.value(toolBarObject.value(QLatin1String("normalVisibility")).toString(), OnHoverVisibleToolBar);
-		toolBar.fullScreenVisibility = visibilityModes.value(toolBarObject.value(QLatin1String("fullScreenVisibility")).toString(), OnHoverVisibleToolBar);
+		toolBar.normalVisibility = visibilityModes.value(toolBarObject.value(QLatin1String("normalVisibility")).toString(), AlwaysVisibleToolBar);
+		toolBar.fullScreenVisibility = visibilityModes.value(toolBarObject.value(QLatin1String("fullScreenVisibility")).toString(), AlwaysHiddenToolBar);
 		toolBar.iconSize = toolBarObject.value(QLatin1String("iconSize")).toInt();
 		toolBar.maximumButtonSize = toolBarObject.value(QLatin1String("maximumButtonSize")).toInt();
 		toolBar.row = toolBarObject.value(QLatin1String("row")).toInt();
