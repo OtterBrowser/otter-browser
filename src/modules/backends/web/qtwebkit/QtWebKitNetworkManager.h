@@ -56,8 +56,9 @@ protected:
 	void addContentBlockingException(const QUrl &url, ContentBlockingManager::ResourceType resourceType);
 	void resetStatistics();
 	void registerTransfer(QNetworkReply *reply);
-	void updateStatus();
+	void updateLoadingSpeed();
 	void updateOptions(const QUrl &url);
+	void setPageInformation(WebWidget::PageInformation key, const QVariant &value);
 	void setFormRequest(const QUrl &url);
 	void setWidget(QtWebKitWebWidget *widget);
 	QtWebKitNetworkManager *clone();
@@ -94,7 +95,7 @@ private:
 	NetworkManagerFactory::DoNotTrackPolicy m_doNotTrackPolicy;
 	qint64 m_bytesReceivedDifference;
 	int m_isSecure;
-	int m_updateTimer;
+	int m_loadingSpeedTimer;
 	bool m_areImagesEnabled;
 	bool m_canSendReferrer;
 
