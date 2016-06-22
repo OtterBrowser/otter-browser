@@ -20,6 +20,7 @@
 #ifndef OTTER_CONTENTSWIDGET_H
 #define OTTER_CONTENTSWIDGET_H
 
+#include "WebWidget.h"
 #include "Window.h"
 
 #include <QtCore/QPointer>
@@ -45,6 +46,7 @@ public:
 	virtual QString getActiveStyleSheet() const;
 	virtual QString getStatusMessage() const;
 	virtual QLatin1String getType() const = 0;
+	virtual QVariant getPageInformation(WebWidget::PageInformation key) const;
 	virtual QUrl getUrl() const = 0;
 	virtual QIcon getIcon() const = 0;
 	virtual QPixmap getThumbnail() const;
@@ -101,6 +103,7 @@ signals:
 	void iconChanged(const QIcon &icon);
 	void contentStateChanged(WindowsManager::ContentStates state);
 	void loadingStateChanged(WindowsManager::LoadingState);
+	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
 	void zoomChanged(int zoom);
 	void loadProgress(int progress);
 	void loadStatusChanged(int elapsedTime, int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);

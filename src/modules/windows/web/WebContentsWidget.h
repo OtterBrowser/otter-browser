@@ -76,6 +76,7 @@ public:
 	QString getStatusMessage() const;
 	QLatin1String getType() const;
 	QVariant getOption(const QString &key) const;
+	QVariant getPageInformation(WebWidget::PageInformation key) const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 	QPixmap getThumbnail() const;

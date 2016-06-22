@@ -20,6 +20,7 @@
 #ifndef OTTER_PROGRESSINFORMATIONWIDGET_H
 #define OTTER_PROGRESSINFORMATIONWIDGET_H
 
+#include "../WebWidget.h"
 #include "../../core/ActionsManager.h"
 
 #include <QtWidgets/QLabel>
@@ -51,7 +52,7 @@ public:
 	QSize sizeHint() const;
 
 protected slots:
-	void updateLoadStatus(int elapsedTime, int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);
+	void updateStatus(WebWidget::PageInformation key, const QVariant &value = QVariant());
 	void setWindow(Window *window);
 
 private:

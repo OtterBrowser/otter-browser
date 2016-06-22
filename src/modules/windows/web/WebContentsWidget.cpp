@@ -1063,6 +1063,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 	connect(m_webWidget, SIGNAL(contentStateChanged(WindowsManager::ContentStates)), this, SIGNAL(contentStateChanged(WindowsManager::ContentStates)));
 	connect(m_webWidget, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)));
 	connect(m_webWidget, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(handleLoadingStateChange(WindowsManager::LoadingState)));
+	connect(m_webWidget, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)));
 	connect(m_webWidget, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
 	connect(m_webWidget, SIGNAL(loadProgress(int)), this, SIGNAL(loadProgress(int)));
 	connect(m_webWidget, SIGNAL(loadStatusChanged(int,int,int,qint64,qint64,qint64)), this, SIGNAL(loadStatusChanged(int,int,int,qint64,qint64,qint64)));
@@ -1184,6 +1185,11 @@ QVariant WebContentsWidget::getOption(const QString &key) const
 	}
 
 	return QVariant();
+}
+
+QVariant WebContentsWidget::getPageInformation(WebWidget::PageInformation key) const
+{
+	return m_webWidget->getPageInformation(key);
 }
 
 QUrl WebContentsWidget::getUrl() const

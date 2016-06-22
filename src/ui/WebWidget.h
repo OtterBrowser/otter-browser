@@ -287,7 +287,6 @@ signals:
 	void requestedAddPassword(const PasswordsManager::PasswordInformation &password);
 	void requestedGeometryChange(const QRect &geometry);
 	void progressBarGeometryChanged();
-	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
 	void loadMessageChanged(const QString &message);
 	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);
@@ -295,6 +294,7 @@ signals:
 	void iconChanged(const QIcon &icon);
 	void contentStateChanged(WindowsManager::ContentStates state);
 	void loadingStateChanged(WindowsManager::LoadingState state);
+	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
 	void zoomChanged(int zoom);
 	void loadProgress(int progress);
 	void loadStatusChanged(int elapsedTime, int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);

@@ -274,6 +274,13 @@ QString ContentsWidget::getStatusMessage() const
 	return QString();
 }
 
+QVariant ContentsWidget::getPageInformation(WebWidget::PageInformation key) const
+{
+	Q_UNUSED(key)
+
+	return QVariant();
+}
+
 QPixmap ContentsWidget::getThumbnail() const
 {
 	return QPixmap();

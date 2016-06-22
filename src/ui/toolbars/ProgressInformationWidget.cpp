@@ -94,31 +94,48 @@ ProgressInformationWidget::ProgressInformationWidget(Window *window, const Actio
 	}
 }
 
-void ProgressInformationWidget::updateLoadStatus(int elapsedTime, int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed)
+void ProgressInformationWidget::updateStatus(WebWidget::PageInformation key, const QVariant &value)
 {
 	switch (m_type)
 	{
 		case TotalBytesType:
-			m_label->setText(tr("Total: %1").arg(Utils::formatUnit(bytesReceived, false, 1)));
+			if (key == WebWidget::BytesReceivedInformation || key == WebWidget::UnknownInformation)
+			{
+				m_label->setText(tr("Total: %1").arg(Utils::formatUnit(value.toULongLong(), false, 1)));
+			}
 
 			break;
 		case ElementsType:
-			m_label->setText(tr("Elements: %1/%2").arg(finishedRequests).arg(startedReuests));
+			if (key == WebWidget::RequestsFinishedInformation || key == WebWidget::UnknownInformation)
+			{
+				m_label->setText(tr("Elements: %1/%2").arg(value.toInt()).arg(m_window ? m_window->getContentsWidget()->getPageInformation(WebWidget::RequestsStartedInformation).toInt() : 0));
+			}
 
 			break;
 		case SpeedType:
-			m_label->setText(tr("Speed: %1").arg(Utils::formatUnit(speed, true, 1)));
+			if (key == WebWidget::LoadingSpeedInformation || key == WebWidget::UnknownInformation)
+			{
+				m_label->setText(tr("Speed: %1").arg(Utils::formatUnit(value.toULongLong(), true, 1)));
+			}
 
 			break;
 		case ElapsedTimeType:
+			if (key == WebWidget::LoadingTimeInformation || key == WebWidget::UnknownInformation)
 			{
-				int minutes(elapsedTime / 60);
-				int seconds(elapsedTime - (minutes * 60));
+				int minutes(value.toInt() / 60);
+				int seconds(value.toInt() - (minutes * 60));
 
 				m_label->setText(tr("Time: %1").arg(QStringLiteral("%1:%2").arg(minutes).arg(seconds, 2, 10, QLatin1Char('0'))));
 
 				break;
 			}
+		case MessageType:
+			if (key == WebWidget::LoadingMessageInformation || key == WebWidget::UnknownInformation)
+			{
+				m_label->setText(value.toString());
+			}
+
+			break;
 		default:
 			break;
 	}
@@ -134,17 +151,11 @@ void ProgressInformationWidget::setWindow(Window *window)
 
 			m_progressBar->setValue(0);
 		}
-		else if (m_type == MessageType)
-		{
-			disconnect(m_window->getContentsWidget(), SIGNAL(loadMessageChanged(QString)), m_label, SLOT(setText(QString)));
-
-			m_label->setText(QString());
-		}
 		else
 		{
-			disconnect(m_window->getContentsWidget(), SIGNAL(loadStatusChanged(int,int,int,qint64,qint64,qint64)), this, SLOT(updateLoadStatus(int,int,int,qint64,qint64,qint64)));
+			disconnect(m_window->getContentsWidget(), SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SLOT(updateStatus(WebWidget::PageInformation,QVariant)));
 
-			updateLoadStatus(0, 0, 0, 0, 0, 0);
+			updateStatus(WebWidget::UnknownInformation);
 		}
 	}
 
@@ -154,15 +165,15 @@ void ProgressInformationWidget::setWindow(Window *window)
 	{
 		if (m_type == TotalPercentType)
 		{
-			connect(window->getContentsWidget(), SIGNAL(loadProgress(int)), m_progressBar, SLOT(setValue(int)));
-		}
-		else if (m_type == MessageType)
-		{
-			connect(window->getContentsWidget(), SIGNAL(loadMessageChanged(QString)), m_label, SLOT(setText(QString)));
+			connect(m_window->getContentsWidget(), SIGNAL(loadProgress(int)), m_progressBar, SLOT(setValue(int)));
+
+			m_progressBar->setValue(0);
 		}
 		else
 		{
-			connect(window->getContentsWidget(), SIGNAL(loadStatusChanged(int,int,int,qint64,qint64,qint64)), this, SLOT(updateLoadStatus(int,int,int,qint64,qint64,qint64)));
+			connect(m_window->getContentsWidget(), SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SLOT(updateStatus(WebWidget::PageInformation,QVariant)));
+
+			updateStatus(WebWidget::UnknownInformation);
 		}
 	}
 }
