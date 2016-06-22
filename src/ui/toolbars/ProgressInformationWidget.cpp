@@ -40,7 +40,7 @@ ProgressInformationWidget::ProgressInformationWidget(Window *window, const Actio
 
 	if (definition.action == QLatin1String("ProgressInformationDocumentPercentWidget"))
 	{
-		m_type = TotalPercentType;
+		m_type = DocumentPercentType;
 	}
 	else if (definition.action == QLatin1String("ProgressInformationTotalSizeWidget"))
 	{
@@ -63,7 +63,7 @@ ProgressInformationWidget::ProgressInformationWidget(Window *window, const Actio
 		m_type = MessageType;
 	}
 
-	if (m_type == TotalPercentType)
+	if (m_type == DocumentPercentType)
 	{
 		m_progressBar = new QProgressBar(this);
 		m_progressBar->setFormat(tr("Document: %p%"));
@@ -98,6 +98,13 @@ void ProgressInformationWidget::updateStatus(WebWidget::PageInformation key, con
 {
 	switch (m_type)
 	{
+		case DocumentPercentType:
+			if (key == WebWidget::DocumentLoadingProgressInformation || key == WebWidget::UnknownInformation)
+			{
+				m_progressBar->setValue(value.toInt());
+			}
+
+			break;
 		case TotalBytesType:
 			if (key == WebWidget::BytesReceivedInformation || key == WebWidget::UnknownInformation)
 			{
@@ -126,9 +133,9 @@ void ProgressInformationWidget::updateStatus(WebWidget::PageInformation key, con
 				int seconds(value.toInt() - (minutes * 60));
 
 				m_label->setText(tr("Time: %1").arg(QStringLiteral("%1:%2").arg(minutes).arg(seconds, 2, 10, QLatin1Char('0'))));
-
-				break;
 			}
+
+			break;
 		case MessageType:
 			if (key == WebWidget::LoadingMessageInformation || key == WebWidget::UnknownInformation)
 			{
@@ -145,36 +152,18 @@ void ProgressInformationWidget::setWindow(Window *window)
 {
 	if (m_window)
 	{
-		if (m_type == TotalPercentType)
-		{
-			disconnect(m_window->getContentsWidget(), SIGNAL(loadProgress(int)), m_progressBar, SLOT(setValue(int)));
+		disconnect(m_window->getContentsWidget(), SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SLOT(updateStatus(WebWidget::PageInformation,QVariant)));
 
-			m_progressBar->setValue(0);
-		}
-		else
-		{
-			disconnect(m_window->getContentsWidget(), SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SLOT(updateStatus(WebWidget::PageInformation,QVariant)));
-
-			updateStatus(WebWidget::UnknownInformation);
-		}
+		updateStatus(WebWidget::UnknownInformation);
 	}
 
 	m_window = window;
 
 	if (window)
 	{
-		if (m_type == TotalPercentType)
-		{
-			connect(m_window->getContentsWidget(), SIGNAL(loadProgress(int)), m_progressBar, SLOT(setValue(int)));
+		connect(m_window->getContentsWidget(), SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SLOT(updateStatus(WebWidget::PageInformation,QVariant)));
 
-			m_progressBar->setValue(0);
-		}
-		else
-		{
-			connect(m_window->getContentsWidget(), SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SLOT(updateStatus(WebWidget::PageInformation,QVariant)));
-
-			updateStatus(WebWidget::UnknownInformation);
-		}
+		updateStatus(WebWidget::UnknownInformation);
 	}
 }
 

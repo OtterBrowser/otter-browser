@@ -86,6 +86,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	m_iconReply(NULL),
 	m_loadingTime(NULL),
 	m_loadingState(WindowsManager::FinishedLoadingState),
+	m_documentLoadingProgress(0),
 #if QT_VERSION < 0x050700
 	m_scrollTimer(startTimer(1000)),
 #else
@@ -106,7 +107,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	setFocusPolicy(Qt::StrongFocus);
 
 	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(updateBookmarkActions()));
-	connect(m_page, SIGNAL(loadProgress(int)), this, SIGNAL(loadProgress(int)));
+	connect(m_page, SIGNAL(loadProgress(int)), this, SLOT(notifyDocumentLoadingProgress(int)));
 	connect(m_page, SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
 	connect(m_page, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 	connect(m_page, SIGNAL(linkHovered(QString)), this, SLOT(linkHovered(QString)));
@@ -186,8 +187,9 @@ void QtWebEngineWebWidget::print(QPrinter *printer)
 
 void QtWebEngineWebWidget::pageLoadStarted()
 {
-	m_loadingState = WindowsManager::OngoingLoadingState;
 	m_lastUrlClickTime = QDateTime();
+	m_loadingState = WindowsManager::OngoingLoadingState;
+	m_documentLoadingProgress = 0;
 
 	if (!m_loadingTime)
 	{
@@ -200,6 +202,7 @@ void QtWebEngineWebWidget::pageLoadStarted()
 
 	emit progressBarGeometryChanged();
 	emit loadingStateChanged(WindowsManager::OngoingLoadingState);
+	emit pageInformationChanged(DocumentLoadingProgressInformation, 0);
 }
 
 void QtWebEngineWebWidget::pageLoadFinished()
@@ -1145,6 +1148,13 @@ void QtWebEngineWebWidget::notifyRenderProcessTerminated(QWebEnginePage::RenderP
 	}
 }
 
+void QtWebEngineWebWidget::notifyDocumentLoadingProgress(int progress)
+{
+	m_documentLoadingProgress = progress;
+
+	emit pageInformationChanged(DocumentLoadingProgressInformation, progress);
+}
+
 void QtWebEngineWebWidget::updateUndo()
 {
 	Action *action(getExistingAction(ActionsManager::UndoAction));
@@ -1459,6 +1469,16 @@ QString QtWebEngineWebWidget::getTitle() const
 QString QtWebEngineWebWidget::getSelectedText() const
 {
 	return m_webView->selectedText();
+}
+
+QVariant QtWebEngineWebWidget::getPageInformation(WebWidget::PageInformation key) const
+{
+	if (key == DocumentLoadingProgressInformation)
+	{
+		return m_documentLoadingProgress;
+	}
+
+	return WebWidget::getPageInformation(key);
 }
 
 QUrl QtWebEngineWebWidget::getUrl() const

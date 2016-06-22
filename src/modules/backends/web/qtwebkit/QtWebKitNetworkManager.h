@@ -103,7 +103,6 @@ private:
 signals:
 	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
 	void contentStateChanged(WindowsManager::ContentStates state);
-	void documentLoadProgressChanged(int progress);
 
 friend class QtWebKitPage;
 friend class QtWebKitWebWidget;

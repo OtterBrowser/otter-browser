@@ -39,7 +39,7 @@ public:
 	enum ProgressInformationType
 	{
 		UnknownType = 0,
-		TotalPercentType,
+		DocumentPercentType,
 		TotalBytesType,
 		ElementsType,
 		SpeedType,

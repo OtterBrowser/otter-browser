@@ -104,7 +104,6 @@ signals:
 	void loadingStateChanged(WindowsManager::LoadingState);
 	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
 	void zoomChanged(int zoom);
-	void loadProgress(int progress);
 };
 
 }

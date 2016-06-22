@@ -299,14 +299,9 @@ void QtWebKitNetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytes
 		}
 		else
 		{
-			if (bytesTotal > 0)
-			{
-				emit documentLoadProgressChanged(((bytesReceived * 1.0) / bytesTotal) * 100);
-			}
-			else
-			{
-				emit documentLoadProgressChanged(-1);
-			}
+			m_pageInformation[WebWidget::DocumentLoadingProgressInformation] = ((bytesTotal > 0) ? (((bytesReceived * 1.0) / bytesTotal) * 100) : -1);
+
+			emit pageInformationChanged(WebWidget::DocumentLoadingProgressInformation, m_pageInformation[WebWidget::DocumentLoadingProgressInformation]);
 		}
 	}
 

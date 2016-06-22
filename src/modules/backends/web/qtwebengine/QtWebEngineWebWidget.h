@@ -44,6 +44,7 @@ public:
 	Action* getAction(int identifier);
 	QString getTitle() const;
 	QString getSelectedText() const;
+	QVariant getPageInformation(PageInformation key) const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 	QPixmap getThumbnail();
@@ -114,6 +115,7 @@ protected slots:
 	void notifyIconChanged();
 	void notifyPermissionRequested(const QUrl &url, QWebEnginePage::Feature feature, bool cancel);
 	void notifyRenderProcessTerminated(QWebEnginePage::RenderProcessTerminationStatus status);
+	void notifyDocumentLoadingProgress(int progress);
 	void updateUndo();
 	void updateRedo();
 
@@ -128,6 +130,7 @@ private:
 	QPoint m_scrollPosition;
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
 	WindowsManager::LoadingState m_loadingState;
+	int m_documentLoadingProgress;
 	int m_scrollTimer;
 	bool m_isEditing;
 	bool m_isTyped;
