@@ -243,6 +243,7 @@ protected slots:
 	void openInApplicationMenuAboutToShow();
 	void quickSearch(QAction *action);
 	void quickSearchMenuAboutToShow();
+	void handleLoadingStateChange(WindowsManager::LoadingState state);
 	void updateQuickSearch();
 	virtual void updatePageActions(const QUrl &url);
 	virtual void updateNavigationActions();
@@ -271,6 +272,8 @@ private:
 	QVariantHash m_options;
 	HitTestResult m_hitResult;
 	quint64 m_windowIdentifier;
+	int m_loadingTime;
+	int m_loadingTimer;
 	int m_reloadTimer;
 
 signals:

@@ -59,16 +59,25 @@ WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent
 	m_reloadTimeMenu(NULL),
 	m_quickSearchMenu(NULL),
 	m_windowIdentifier(0),
+	m_loadingTime(0),
+	m_loadingTimer(0),
 	m_reloadTimer(0)
 {
 	Q_UNUSED(isPrivate)
 
+	connect(this, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(handleLoadingStateChange(WindowsManager::LoadingState)));
 	connect(SearchEnginesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(updateQuickSearch()));
 }
 
 void WebWidget::timerEvent(QTimerEvent *event)
 {
-	if (event->timerId() == m_reloadTimer)
+	if (event->timerId() == m_loadingTimer)
+	{
+		++m_loadingTime;
+
+		emit pageInformationChanged(LoadingTimeInformation, m_loadingTime);
+	}
+	else if (event->timerId() == m_reloadTimer)
 	{
 		killTimer(m_reloadTimer);
 
@@ -404,6 +413,24 @@ void WebWidget::openUrl(const QUrl &url, WindowsManager::OpenHints hints)
 	widget->setRequestedUrl(url, false);
 
 	emit requestedNewWindow(widget, hints);
+}
+
+void WebWidget::handleLoadingStateChange(WindowsManager::LoadingState state)
+{
+	if (m_loadingTimer != 0)
+	{
+		killTimer(m_loadingTimer);
+
+		m_loadingTimer = 0;
+	}
+
+	if (state == WindowsManager::OngoingLoadingState)
+	{
+		m_loadingTime = 0;
+		m_loadingTimer = startTimer(1000);
+
+		emit pageInformationChanged(LoadingTimeInformation, 0);
+	}
 }
 
 void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
@@ -1386,7 +1413,10 @@ QVariant WebWidget::getOption(const QString &key, const QUrl &url) const
 
 QVariant WebWidget::getPageInformation(WebWidget::PageInformation key) const
 {
-	Q_UNUSED(key)
+	if (key == LoadingTimeInformation)
+	{
+		return m_loadingTime;
+	}
 
 	return QVariant();
 }

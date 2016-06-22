@@ -86,8 +86,6 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	m_iconReply(NULL),
 	m_loadingTime(NULL),
 	m_loadingState(WindowsManager::FinishedLoadingState),
-	m_elapsedTime(0),
-	m_elapsedTimer(0),
 #if QT_VERSION < 0x050700
 	m_scrollTimer(startTimer(1000)),
 #else
@@ -137,11 +135,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 
 void QtWebEngineWebWidget::timerEvent(QTimerEvent *event)
 {
-	if (event->timerId() == m_elapsedTimer)
-	{
-		emit loadStatusChanged((m_loadingTime ? (m_loadingTime->elapsed() / 1000) : 0), 0, 0, 0, 0, 0);
-	}
-	else if (event->timerId() == m_scrollTimer)
+	if (event->timerId() == m_scrollTimer)
 	{
 		m_webView->page()->runJavaScript(QLatin1String("[window.scrollX, window.scrollY]"), invoke(this, &QtWebEngineWebWidget::handleScroll));
 	}
@@ -201,11 +195,6 @@ void QtWebEngineWebWidget::pageLoadStarted()
 		m_loadingTime->start();
 	}
 
-	if (m_elapsedTimer == 0)
-	{
-		m_elapsedTimer = startTimer(1000);
-	}
-
 	setStatusMessage(QString());
 	setStatusMessage(QString(), true);
 
@@ -216,22 +205,6 @@ void QtWebEngineWebWidget::pageLoadStarted()
 void QtWebEngineWebWidget::pageLoadFinished()
 {
 	m_loadingState = WindowsManager::FinishedLoadingState;
-
-	if (m_loadingTime)
-	{
-		m_elapsedTime = (m_loadingTime->elapsed() / 1000);
-
-		delete m_loadingTime;
-
-		m_loadingTime = NULL;
-	}
-
-	if (m_elapsedTimer != 0)
-	{
-		killTimer(m_elapsedTimer);
-
-		m_elapsedTimer = 0;
-	}
 
 	updateNavigationActions();
 	startReloadTimer();
@@ -1486,16 +1459,6 @@ QString QtWebEngineWebWidget::getTitle() const
 QString QtWebEngineWebWidget::getSelectedText() const
 {
 	return m_webView->selectedText();
-}
-
-QVariant QtWebEngineWebWidget::getPageInformation(WebWidget::PageInformation key) const
-{
-	if (key == LoadingTimeInformation)
-	{
-		return (m_loadingTime ? (m_loadingTime->elapsed() / 1000) : 0);
-	}
-
-	return QVariant();
 }
 
 QUrl QtWebEngineWebWidget::getUrl() const

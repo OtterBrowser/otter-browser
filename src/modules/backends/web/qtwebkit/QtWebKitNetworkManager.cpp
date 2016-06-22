@@ -254,7 +254,6 @@ void QtWebKitNetworkManager::resetStatistics()
 	m_pageInformation.clear();
 	m_pageInformation[WebWidget::BytesReceivedInformation] = quint64(0);
 	m_pageInformation[WebWidget::BytesTotalInformation] = quint64(0);
-	m_pageInformation[WebWidget::LoadingTimeInformation] = 0;
 	m_pageInformation[WebWidget::RequestsFinishedInformation] = 0;
 	m_pageInformation[WebWidget::RequestsStartedInformation] = 0;
 	m_baseReply = NULL;
@@ -429,12 +428,10 @@ void QtWebKitNetworkManager::transferFinished()
 void QtWebKitNetworkManager::updateStatus()
 {
 	m_pageInformation[WebWidget::LoadingSpeedInformation] = (m_bytesReceivedDifference * 2);
-	m_pageInformation[WebWidget::LoadingTimeInformation] = (m_loadingTime ? (m_loadingTime->elapsed() / 1000) : 0);
 	m_bytesReceivedDifference = 0;
 
 	emit pageInformationChanged(WebWidget::LoadingSpeedInformation, m_pageInformation[WebWidget::LoadingSpeedInformation]);
-	emit pageInformationChanged(WebWidget::LoadingTimeInformation, m_pageInformation[WebWidget::LoadingTimeInformation]);
-	emit statusChanged(m_pageInformation[WebWidget::LoadingTimeInformation].toInt(), m_pageInformation[WebWidget::RequestsFinishedInformation].toInt(), m_pageInformation[WebWidget::RequestsStartedInformation].toInt(), m_pageInformation[WebWidget::BytesReceivedInformation].toLongLong(), m_pageInformation[WebWidget::BytesTotalInformation].toLongLong(), m_pageInformation[WebWidget::LoadingSpeedInformation].toLongLong());
+	emit statusChanged((m_widget ? m_widget->getPageInformation(WebWidget::LoadingTimeInformation).toInt() : 0), m_pageInformation[WebWidget::RequestsFinishedInformation].toInt(), m_pageInformation[WebWidget::RequestsStartedInformation].toInt(), m_pageInformation[WebWidget::BytesReceivedInformation].toLongLong(), m_pageInformation[WebWidget::BytesTotalInformation].toLongLong(), m_pageInformation[WebWidget::LoadingSpeedInformation].toLongLong());
 }
 
 void QtWebKitNetworkManager::updateOptions(const QUrl &url)

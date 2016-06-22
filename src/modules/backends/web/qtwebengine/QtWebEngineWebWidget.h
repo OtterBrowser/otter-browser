@@ -44,7 +44,6 @@ public:
 	Action* getAction(int identifier);
 	QString getTitle() const;
 	QString getSelectedText() const;
-	QVariant getPageInformation(WebWidget::PageInformation key) const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 	QPixmap getThumbnail();
@@ -129,8 +128,6 @@ private:
 	QPoint m_scrollPosition;
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
 	WindowsManager::LoadingState m_loadingState;
-	int m_elapsedTime;
-	int m_elapsedTimer;
 	int m_scrollTimer;
 	bool m_isEditing;
 	bool m_isTyped;

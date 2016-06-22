@@ -1966,14 +1966,19 @@ QString QtWebKitWebWidget::getPasswordToken() const
 	return m_passwordToken;
 }
 
-QVariant QtWebKitWebWidget::getPageInformation(WebWidget::PageInformation key) const
-{
-	return m_networkManager->getPageInformation(key);
-}
-
 QString QtWebKitWebWidget::getPluginToken() const
 {
 	return m_pluginToken;
+}
+
+QVariant QtWebKitWebWidget::getPageInformation(WebWidget::PageInformation key) const
+{
+	if (key == LoadingTimeInformation)
+	{
+		return WebWidget::getPageInformation(LoadingTimeInformation);
+	}
+
+	return m_networkManager->getPageInformation(key);
 }
 
 QUrl QtWebKitWebWidget::getUrl() const
