@@ -393,7 +393,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	{
 		item->setText(tr("Sidebar Panel Chooser"));
 	}
-	else if (identifier == QLatin1String("ProgressInformationDocumentPercentWidget"))
+	else if (identifier == QLatin1String("ProgressInformationDocumentProgressWidget"))
 	{
 		item->setText(tr("Progress Information (Document Progress)"));
 	}

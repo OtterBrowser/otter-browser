@@ -39,7 +39,7 @@
 		"title": "Progress Bar",
 		"actions":
 		[
-			"ProgressInformationDocumentPercentWidget",
+			"ProgressInformationDocumentProgressWidget",
 			"ProgressInformationTotalSizeWidget",
 			"ProgressInformationElementsWidget",
 			"ProgressInformationSpeedWidget",

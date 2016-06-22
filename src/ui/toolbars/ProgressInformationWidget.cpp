@@ -38,13 +38,13 @@ ProgressInformationWidget::ProgressInformationWidget(Window *window, const Actio
 	layout->setContentsMargins(0, 0, 0, 0);
 	layout->setSpacing(0);
 
-	if (definition.action == QLatin1String("ProgressInformationDocumentPercentWidget"))
+	if (definition.action == QLatin1String("ProgressInformationDocumentProgressWidget"))
 	{
-		m_type = DocumentPercentType;
+		m_type = DocumentProgressType;
 	}
 	else if (definition.action == QLatin1String("ProgressInformationTotalSizeWidget"))
 	{
-		m_type = TotalBytesType;
+		m_type = TotalSizeType;
 	}
 	else if (definition.action == QLatin1String("ProgressInformationElementsWidget"))
 	{
@@ -63,7 +63,7 @@ ProgressInformationWidget::ProgressInformationWidget(Window *window, const Actio
 		m_type = MessageType;
 	}
 
-	if (m_type == DocumentPercentType)
+	if (m_type == DocumentProgressType)
 	{
 		m_progressBar = new QProgressBar(this);
 		m_progressBar->setFormat(tr("Document: %p%"));
@@ -98,14 +98,14 @@ void ProgressInformationWidget::updateStatus(WebWidget::PageInformation key, con
 {
 	switch (m_type)
 	{
-		case DocumentPercentType:
+		case DocumentProgressType:
 			if (key == WebWidget::DocumentLoadingProgressInformation || key == WebWidget::UnknownInformation)
 			{
 				m_progressBar->setValue(value.toInt());
 			}
 
 			break;
-		case TotalBytesType:
+		case TotalSizeType:
 			if (key == WebWidget::BytesReceivedInformation || key == WebWidget::UnknownInformation)
 			{
 				m_label->setText(tr("Total: %1").arg(Utils::formatUnit(value.toULongLong(), false, 1)));

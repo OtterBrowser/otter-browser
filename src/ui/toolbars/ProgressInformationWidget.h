@@ -39,8 +39,8 @@ public:
 	enum ProgressInformationType
 	{
 		UnknownType = 0,
-		DocumentPercentType,
-		TotalBytesType,
+		DocumentProgressType,
+		TotalSizeType,
 		ElementsType,
 		SpeedType,
 		ElapsedTimeType,
