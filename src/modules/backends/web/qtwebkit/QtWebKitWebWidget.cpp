@@ -152,9 +152,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(m_webView, SIGNAL(urlChanged(QUrl)), this, SLOT(notifyUrlChanged(QUrl)));
 	connect(m_webView, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
 	connect(m_networkManager, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)));
-	connect(m_networkManager, SIGNAL(messageChanged(QString)), this, SIGNAL(loadMessageChanged(QString)));
 	connect(m_networkManager, SIGNAL(contentStateChanged(WindowsManager::ContentStates)), this, SLOT(notifyContentStateChanged()));
-	connect(m_networkManager, SIGNAL(statusChanged(int,int,int,qint64,qint64,qint64)), this, SIGNAL(loadStatusChanged(int,int,int,qint64,qint64,qint64)));
 	connect(m_networkManager, SIGNAL(documentLoadProgressChanged(int)), this, SIGNAL(loadProgress(int)));
 	connect(m_splitter, SIGNAL(splitterMoved(int,int)), this, SIGNAL(progressBarGeometryChanged()));
 	connect(selectAllShortcut, SIGNAL(activated()), getAction(ActionsManager::SelectAllAction), SLOT(trigger()));

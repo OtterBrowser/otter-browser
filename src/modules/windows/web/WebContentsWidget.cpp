@@ -1046,7 +1046,6 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 	connect(m_webWidget, SIGNAL(requestedPermission(QString,QUrl,bool)), this, SLOT(handlePermissionRequest(QString,QUrl,bool)));
 	connect(m_webWidget, SIGNAL(requestedAddPassword(PasswordsManager::PasswordInformation)), this, SLOT(handleAddPasswordRequest(PasswordsManager::PasswordInformation)));
 	connect(m_webWidget, SIGNAL(requestedGeometryChange(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
-	connect(m_webWidget, SIGNAL(loadMessageChanged(QString)), this, SIGNAL(loadMessageChanged(QString)));
 	connect(m_webWidget, SIGNAL(statusMessageChanged(QString)), this, SIGNAL(statusMessageChanged(QString)));
 	connect(m_webWidget, SIGNAL(titleChanged(QString)), this, SIGNAL(titleChanged(QString)));
 	connect(m_webWidget, SIGNAL(urlChanged(QUrl)), this, SIGNAL(urlChanged(QUrl)));
@@ -1058,7 +1057,6 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 	connect(m_webWidget, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)));
 	connect(m_webWidget, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
 	connect(m_webWidget, SIGNAL(loadProgress(int)), this, SIGNAL(loadProgress(int)));
-	connect(m_webWidget, SIGNAL(loadStatusChanged(int,int,int,qint64,qint64,qint64)), this, SIGNAL(loadStatusChanged(int,int,int,qint64,qint64,qint64)));
 
 	emit webWidgetChanged();
 }

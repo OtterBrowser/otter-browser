@@ -117,7 +117,9 @@ void QtWebKitNetworkManager::addContentBlockingException(const QUrl &url, Conten
 
 void QtWebKitNetworkManager::handleAuthenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator)
 {
-	emit messageChanged(tr("Waiting for authentication…"));
+	m_pageInformation[WebWidget::LoadingMessageInformation] = tr("Waiting for authentication…");
+
+	emit pageInformationChanged(WebWidget::LoadingMessageInformation, m_pageInformation[WebWidget::LoadingMessageInformation]);
 
 	AuthenticationDialog *authenticationDialog(new AuthenticationDialog(reply->url(), authenticator, m_widget));
 	authenticationDialog->setButtonsVisible(false);
@@ -142,7 +144,9 @@ void QtWebKitNetworkManager::handleProxyAuthenticationRequired(const QNetworkPro
 		return;
 	}
 
-	emit messageChanged(tr("Waiting for authentication…"));
+	m_pageInformation[WebWidget::LoadingMessageInformation] = tr("Waiting for authentication…");
+
+	emit pageInformationChanged(WebWidget::LoadingMessageInformation, m_pageInformation[WebWidget::LoadingMessageInformation]);
 
 	AuthenticationDialog *authenticationDialog(new AuthenticationDialog(proxy.hostName(), authenticator, m_widget));
 	authenticationDialog->setButtonsVisible(false);
@@ -315,7 +319,9 @@ void QtWebKitNetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytes
 
 	if (url.isValid() && url.scheme() != QLatin1String("data"))
 	{
-		emit messageChanged(tr("Receiving data from %1…").arg(reply->url().host().isEmpty() ? QLatin1String("localhost") : reply->url().host()));
+		m_pageInformation[WebWidget::LoadingMessageInformation] = tr("Receiving data from %1…").arg(reply->url().host().isEmpty() ? QLatin1String("localhost") : reply->url().host());
+
+		emit pageInformationChanged(WebWidget::LoadingMessageInformation, m_pageInformation[WebWidget::LoadingMessageInformation]);
 	}
 
 	const qint64 difference(bytesReceived - m_replies[reply].first);
@@ -394,7 +400,9 @@ void QtWebKitNetworkManager::requestFinished(QNetworkReply *reply)
 
 		if (url.isValid() && url.scheme() != QLatin1String("data"))
 		{
-			emit messageChanged(tr("Completed request to %1").arg(url.host().isEmpty() ? QLatin1String("localhost") : reply->url().host()));
+			m_pageInformation[WebWidget::LoadingMessageInformation] = tr("Completed request to %1").arg(url.host().isEmpty() ? QLatin1String("localhost") : reply->url().host());
+
+			emit pageInformationChanged(WebWidget::LoadingMessageInformation, m_pageInformation[WebWidget::LoadingMessageInformation]);
 		}
 
 		disconnect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
@@ -431,7 +439,6 @@ void QtWebKitNetworkManager::updateStatus()
 	m_bytesReceivedDifference = 0;
 
 	emit pageInformationChanged(WebWidget::LoadingSpeedInformation, m_pageInformation[WebWidget::LoadingSpeedInformation]);
-	emit statusChanged((m_widget ? m_widget->getPageInformation(WebWidget::LoadingTimeInformation).toInt() : 0), m_pageInformation[WebWidget::RequestsFinishedInformation].toInt(), m_pageInformation[WebWidget::RequestsStartedInformation].toInt(), m_pageInformation[WebWidget::BytesReceivedInformation].toLongLong(), m_pageInformation[WebWidget::BytesTotalInformation].toLongLong(), m_pageInformation[WebWidget::LoadingSpeedInformation].toLongLong());
 }
 
 void QtWebKitNetworkManager::updateOptions(const QUrl &url)
@@ -679,7 +686,6 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 	m_pageInformation[WebWidget::LoadingMessageInformation] = tr("Sending request to %1…").arg(request.url().host());
 
 	emit pageInformationChanged(WebWidget::LoadingMessageInformation, m_pageInformation[WebWidget::LoadingMessageInformation]);
-	emit messageChanged(m_pageInformation[WebWidget::LoadingMessageInformation].toString());
 
 	QNetworkReply *reply(NULL);
 
