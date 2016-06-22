@@ -51,6 +51,7 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	m_websiteInformationDialog(NULL),
 	m_layout(new QVBoxLayout(this)),
 	m_webWidget(NULL),
+	m_window(window),
 	m_startPageWidget(NULL),
 	m_searchBarWidget(NULL),
 	m_progressBarWidget(NULL),
@@ -754,9 +755,7 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 		closePasswordBar();
 	}
 
-	Window *window(qobject_cast<Window*>(parentWidget()));
-
-	if (!window)
+	if (!m_window)
 	{
 		return;
 	}
@@ -765,7 +764,7 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 
 	if (showStartPage && !m_startPageWidget)
 	{
-		m_startPageWidget = new StartPageWidget(window, m_webWidget);
+		m_startPageWidget = new StartPageWidget(m_window, m_webWidget);
 		m_startPageWidget->setGeometry(m_webWidget->geometry());
 		m_startPageWidget->show();
 	}
@@ -850,11 +849,7 @@ void WebContentsWidget::handlePermissionRequest(const QString &option, QUrl url,
 
 void WebContentsWidget::handleLoadingStateChange(WindowsManager::LoadingState state)
 {
-	if (state == WindowsManager::OngoingLoadingState && !m_progressBarWidget && SettingsManager::getValue(QLatin1String("Browser/ShowDetailedProgressBar")).toBool())
-	{
-		m_progressBarWidget = new ProgressBarWidget(m_webWidget, this);
-	}
-	else if (state == WindowsManager::CrashedLoadingState)
+	if (state == WindowsManager::CrashedLoadingState)
 	{
 		const QString tabCrashingAction(SettingsManager::getValue(QLatin1String("Browser/TabCrashingAction"), getUrl()).toString());
 		bool reloadTab(tabCrashingAction != QLatin1String("close"));
@@ -878,15 +873,14 @@ void WebContentsWidget::handleLoadingStateChange(WindowsManager::LoadingState st
 		{
 			triggerAction(ActionsManager::ReloadAction);
 		}
-		else
+		else if (m_window)
 		{
-			Window *window(qobject_cast<Window*>(parentWidget()));
-
-			if (window)
-			{
-				window->close();
-			}
+			m_window->close();
 		}
+	}
+	else if (state == WindowsManager::OngoingLoadingState && m_window && !m_progressBarWidget && SettingsManager::getValue(QLatin1String("Browser/ShowDetailedProgressBar")).toBool())
+	{
+		m_progressBarWidget = new ProgressBarWidget(m_window, this);
 	}
 }
 
@@ -1014,8 +1008,6 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 		handleLoadingStateChange(WindowsManager::FinishedLoadingState);
 	}
 
-	Window *window(qobject_cast<Window*>(parentWidget()));
-
 	if (widget)
 	{
 		widget->setParent(this);
@@ -1024,7 +1016,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 	{
 		widget = AddonsManager::getWebBackend()->createWidget(isPrivate, this);
 
-		if (window)
+		if (m_window)
 		{
 			m_startPageTimer = startTimer(50);
 		}
@@ -1034,11 +1026,11 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 
 	layout()->addWidget(m_webWidget);
 
-	if (window)
+	if (m_window)
 	{
-		widget->setWindowIdentifier(window->getIdentifier());
+		widget->setWindowIdentifier(m_window->getIdentifier());
 
-		connect(m_webWidget, SIGNAL(requestedCloseWindow()), window, SLOT(close()));
+		connect(m_webWidget, SIGNAL(requestedCloseWindow()), m_window, SLOT(close()));
 	}
 
 	handleLoadingStateChange(m_webWidget->getLoadingState());

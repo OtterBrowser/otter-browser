@@ -36,7 +36,7 @@ class ProgressBarWidget : public QFrame
 	Q_OBJECT
 
 public:
-	explicit ProgressBarWidget(WebWidget *webWidget, QWidget *parent = NULL);
+	explicit ProgressBarWidget(Window *window, QWidget *parent = NULL);
 
 public slots:
 	void scheduleGeometryUpdate();
@@ -46,16 +46,9 @@ protected:
 
 protected slots:
 	void updateLoadingState(WindowsManager::LoadingState state);
-	void updateLoadStatus(int elapsedTime, int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed);
 
 private:
 	WebWidget *m_webWidget;
-	QProgressBar *m_progressBar;
-	QLabel *m_elementsLabel;
-	QLabel *m_totalLabel;
-	QLabel *m_speedLabel;
-	QLabel *m_elapsedLabel;
-	QLabel *m_messageLabel;
 	WindowsManager::LoadingState m_loadingState;
 	int m_geometryUpdateTimer;
 };

@@ -35,6 +35,19 @@
 		]
 	},
 	{
+		"identifier": "ProgressBar",
+		"title": "Progress Bar",
+		"actions":
+		[
+			"ProgressInformationDocumentPercentWidget",
+			"ProgressInformationTotalSizeWidget",
+			"ProgressInformationElementsWidget",
+			"ProgressInformationSpeedWidget",
+			"ProgressInformationElapsedTimeWidget",
+			"ProgressInformationMessageWidget"
+		]
+	},
+	{
 		"identifier": "StatusBar",
 		"title": "Status Bar",
 		"iconSize": 20,

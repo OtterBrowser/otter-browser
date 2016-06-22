@@ -18,7 +18,9 @@
 **************************************************************************/
 
 #include "ProgressBarWidget.h"
+#include "WebContentsWidget.h"
 #include "../../../core/Utils.h"
+#include "../../../ui/ToolBarWidget.h"
 #include "../../../ui/WebWidget.h"
 
 #include <QtGui/QPalette>
@@ -27,28 +29,24 @@
 namespace Otter
 {
 
-ProgressBarWidget::ProgressBarWidget(WebWidget *webWidget, QWidget *parent) : QFrame(parent),
-	m_webWidget(webWidget),
-	m_progressBar(new QProgressBar(this)),
-	m_elementsLabel(new QLabel(this)),
-	m_totalLabel(new QLabel(this)),
-	m_speedLabel(new QLabel(this)),
-	m_elapsedLabel(new QLabel(this)),
-	m_messageLabel(new QLabel(this)),
+ProgressBarWidget::ProgressBarWidget(Window *window, QWidget *parent) : QFrame(parent),
+	m_webWidget(NULL),
 	m_loadingState(WindowsManager::FinishedLoadingState),
 	m_geometryUpdateTimer(0)
 {
-	QHBoxLayout *layout(new QHBoxLayout(this));
-	layout->addWidget(m_progressBar);
-	layout->addWidget(m_elementsLabel);
-	layout->addWidget(m_totalLabel);
-	layout->addWidget(m_speedLabel);
-	layout->addWidget(m_elapsedLabel);
-	layout->addWidget(m_messageLabel);
-	layout->setContentsMargins(0, 0, 0, 0);
-	layout->setSizeConstraint(QLayout::SetMinAndMaxSize);
+	WebContentsWidget *contentsWidget(qobject_cast<WebContentsWidget*>(window->getContentsWidget()));
 
-	QPalette palette(m_elementsLabel->palette());
+	if (contentsWidget)
+	{
+		m_webWidget = contentsWidget->getWebWidget();
+	}
+
+	QHBoxLayout *layout(new QHBoxLayout(this));
+	layout->setContentsMargins(0, 0, 0, 0);
+	layout->setSpacing(0);
+	layout->addWidget(new ToolBarWidget(ToolBarsManager::ProgressBar, window, this));
+
+	QPalette palette(this->palette());
 	palette.setColor(QPalette::Background, palette.color(QPalette::Base));
 
 	setPalette(palette);
@@ -57,27 +55,12 @@ ProgressBarWidget::ProgressBarWidget(WebWidget *webWidget, QWidget *parent) : QF
 
 	palette.setColor(QPalette::Background, palette.color(QPalette::AlternateBase));
 
-	m_progressBar->setFixedWidth(150);
-	m_progressBar->setFormat(tr("Document: %p%"));
-	m_progressBar->setAlignment(Qt::AlignHCenter);
-	m_elementsLabel->setFixedWidth(150);
-	m_totalLabel->setFixedWidth(150);
-	m_totalLabel->setAutoFillBackground(true);
-	m_totalLabel->setPalette(palette);
-	m_speedLabel->setFixedWidth(150);
-	m_elapsedLabel->setFixedWidth(150);
-	m_elapsedLabel->setAutoFillBackground(true);
-	m_elapsedLabel->setPalette(palette);
-
 	setAutoFillBackground(true);
 	scheduleGeometryUpdate();
-	updateLoadingState(webWidget->getLoadingState());
+	updateLoadingState(window->getLoadingState());
 	hide();
 
-	connect(webWidget, SIGNAL(loadMessageChanged(QString)), m_messageLabel, SLOT(setText(QString)));
-	connect(webWidget, SIGNAL(loadProgress(int)), m_progressBar, SLOT(setValue(int)));
-	connect(webWidget, SIGNAL(loadStatusChanged(int,int,int,qint64,qint64,qint64)), this, SLOT(updateLoadStatus(int,int,int,qint64,qint64,qint64)));
-	connect(webWidget, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateLoadingState(WindowsManager::LoadingState)));
+	connect(window, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateLoadingState(WindowsManager::LoadingState)));
 }
 
 void ProgressBarWidget::timerEvent(QTimerEvent *event)
@@ -114,28 +97,20 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 
 void ProgressBarWidget::updateLoadingState(WindowsManager::LoadingState state)
 {
-	if (state == m_loadingState)
+	if (state == m_loadingState || !m_webWidget)
 	{
 		return;
 	}
 
-	if (state == WindowsManager::OngoingLoadingState)
-	{
-		m_progressBar->setValue(0);
-		m_elapsedLabel->setText(tr("Time: %1").arg(QLatin1String("0:00")));
-
-		updateLoadStatus(0, 0, 0, 0, 0, 0);
-
-		if (!isVisible())
-		{
-			scheduleGeometryUpdate();
-		}
-	}
-	else
+	if (state != WindowsManager::OngoingLoadingState)
 	{
 		disconnect(m_webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
 
 		hide();
+	}
+	else if (!isVisible())
+	{
+		scheduleGeometryUpdate();
 	}
 
 	m_loadingState = state;
@@ -143,23 +118,10 @@ void ProgressBarWidget::updateLoadingState(WindowsManager::LoadingState state)
 
 void ProgressBarWidget::scheduleGeometryUpdate()
 {
-	if (m_geometryUpdateTimer == 0)
+	if (m_geometryUpdateTimer == 0 && m_webWidget)
 	{
 		m_geometryUpdateTimer = startTimer(50);
 	}
-}
-
-void ProgressBarWidget::updateLoadStatus(int elapsedTime, int finishedRequests, int startedReuests, qint64 bytesReceived, qint64 bytesTotal, qint64 speed)
-{
-	Q_UNUSED(bytesTotal)
-
-	int minutes(elapsedTime / 60);
-	int seconds(elapsedTime - (minutes * 60));
-
-	m_elapsedLabel->setText(tr("Time: %1").arg(QStringLiteral("%1:%2").arg(minutes).arg(seconds, 2, 10, QLatin1Char('0'))));
-	m_totalLabel->setText(tr("Total: %1").arg(Utils::formatUnit(bytesReceived, false, 1)));
-	m_speedLabel->setText(tr("Speed: %1").arg(Utils::formatUnit(speed, true, 1)));
-	m_elementsLabel->setText(tr("Elements: %1/%2").arg(finishedRequests).arg(startedReuests));
 }
 
 }

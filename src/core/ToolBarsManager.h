@@ -35,6 +35,7 @@ public:
 		MenuBar = 0,
 		TabBar,
 		NavigationBar,
+		ProgressBar,
 		StatusBar,
 		OtherToolBar
 	};

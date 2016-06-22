@@ -135,6 +135,7 @@ private:
 	QPointer<WebsiteInformationDialog> m_websiteInformationDialog;
 	QVBoxLayout *m_layout;
 	WebWidget *m_webWidget;
+	Window *m_window;
 	StartPageWidget *m_startPageWidget;
 	SearchBarWidget *m_searchBarWidget;
 	ProgressBarWidget *m_progressBarWidget;
