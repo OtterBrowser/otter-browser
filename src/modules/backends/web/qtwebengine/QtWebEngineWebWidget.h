@@ -44,6 +44,7 @@ public:
 	Action* getAction(int identifier);
 	QString getTitle() const;
 	QString getSelectedText() const;
+	QVariant getPageInformation(WebWidget::PageInformation key) const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 	QPixmap getThumbnail();
@@ -52,7 +53,6 @@ public:
 	WindowHistoryInformation getHistory() const;
 	HitTestResult getHitTestResult(const QPoint &position);
 	QHash<QByteArray, QByteArray> getHeaders() const;
-	QVariantHash getStatistics() const;
 	WindowsManager::LoadingState getLoadingState() const;
 	int getZoom() const;
 	bool hasSelection() const;

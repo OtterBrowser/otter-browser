@@ -55,16 +55,10 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar
 	m_baseReply(NULL),
 	m_loadingTime(NULL),
 	m_contentState(WindowsManager::UnknownContentState),
-	m_speed(0),
-	m_bytesReceivedDifference(0),
-	m_bytesReceived(0),
-	m_bytesTotal(0),
-	m_elapsedTime(0),
-	m_isSecure(0),
-	m_finishedRequests(0),
-	m_startedRequests(0),
-	m_updateTimer(0),
 	m_doNotTrackPolicy(NetworkManagerFactory::SkipTrackPolicy),
+	m_bytesReceivedDifference(0),
+	m_isSecure(0),
+	m_updateTimer(0),
 	m_areImagesEnabled(true),
 	m_canSendReferrer(true)
 {
@@ -247,9 +241,9 @@ void QtWebKitNetworkManager::handleOnlineStateChanged(bool isOnline)
 void QtWebKitNetworkManager::resetStatistics()
 {
 	killTimer(m_updateTimer);
-	updateStatus();
 
-	m_dateDownloaded = QDateTime();
+	const QList<WebWidget::PageInformation> keys(m_pageInformation.keys());
+
 	m_sslInformation = WebWidget::SslInformation();
 	m_updateTimer = 0;
 	m_blockedElements.clear();
@@ -257,16 +251,23 @@ void QtWebKitNetworkManager::resetStatistics()
 	m_contentBlockingExceptions.clear();
 	m_blockedRequests.clear();
 	m_replies.clear();
+	m_pageInformation.clear();
+	m_pageInformation[WebWidget::BytesReceivedInformation] = quint64(0);
+	m_pageInformation[WebWidget::BytesTotalInformation] = quint64(0);
+	m_pageInformation[WebWidget::LoadingTimeInformation] = 0;
+	m_pageInformation[WebWidget::RequestsFinishedInformation] = 0;
+	m_pageInformation[WebWidget::RequestsStartedInformation] = 0;
 	m_baseReply = NULL;
-	m_speed = 0;
 	m_contentState = WindowsManager::UnknownContentState;
 	m_bytesReceivedDifference = 0;
-	m_bytesReceived = 0;
-	m_bytesTotal = 0;
 	m_isSecure = 0;
-	m_elapsedTime = 0;
-	m_finishedRequests = 0;
-	m_startedRequests = 0;
+
+	updateStatus();
+
+	for (int i = 0; i < keys.count(); ++i)
+	{
+		emit pageInformationChanged(keys.at(i), m_pageInformation.value(keys.at(i)));
+	}
 
 	emit contentStateChanged(m_contentState);
 }
@@ -326,7 +327,7 @@ void QtWebKitNetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytes
 	{
 		m_replies[reply].second = true;
 
-		m_bytesTotal += bytesTotal;
+		m_pageInformation[WebWidget::BytesTotalInformation] = (m_pageInformation[WebWidget::BytesTotalInformation].toULongLong() + bytesTotal);
 	}
 
 	if (difference <= 0)
@@ -334,8 +335,10 @@ void QtWebKitNetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytes
 		return;
 	}
 
-	m_bytesReceived += difference;
 	m_bytesReceivedDifference += difference;
+	m_pageInformation[WebWidget::BytesReceivedInformation] = (m_pageInformation[WebWidget::BytesReceivedInformation].toULongLong() + difference);
+
+	emit pageInformationChanged(WebWidget::BytesReceivedInformation, m_pageInformation[WebWidget::BytesReceivedInformation]);
 }
 
 void QtWebKitNetworkManager::requestFinished(QNetworkReply *reply)
@@ -363,8 +366,6 @@ void QtWebKitNetworkManager::requestFinished(QNetworkReply *reply)
 	{
 		killTimer(m_updateTimer);
 
-		m_dateDownloaded = QDateTime::currentDateTime();
-		m_elapsedTime = (m_loadingTime ? (m_loadingTime->elapsed() / 1000) : 0);
 		m_updateTimer = 0;
 
 		updateStatus();
@@ -378,10 +379,15 @@ void QtWebKitNetworkManager::requestFinished(QNetworkReply *reply)
 			m_contentState = WindowsManager::SecureContentState;
 		}
 
+		m_pageInformation[WebWidget::LoadingFinishedInformation] = QDateTime::currentDateTime();
+
+		emit pageInformationChanged(WebWidget::LoadingFinishedInformation, m_pageInformation[WebWidget::LoadingFinishedInformation]);
 		emit contentStateChanged(m_contentState);
 	}
 
-	++m_finishedRequests;
+	m_pageInformation[WebWidget::RequestsFinishedInformation] = (m_pageInformation[WebWidget::RequestsFinishedInformation].toInt() + 1);
+
+	emit pageInformationChanged(WebWidget::RequestsFinishedInformation, m_pageInformation[WebWidget::RequestsFinishedInformation]);
 
 	if (reply)
 	{
@@ -422,10 +428,13 @@ void QtWebKitNetworkManager::transferFinished()
 
 void QtWebKitNetworkManager::updateStatus()
 {
-	m_speed = (m_bytesReceivedDifference * 2);
+	m_pageInformation[WebWidget::LoadingSpeedInformation] = (m_bytesReceivedDifference * 2);
+	m_pageInformation[WebWidget::LoadingTimeInformation] = (m_loadingTime ? (m_loadingTime->elapsed() / 1000) : 0);
 	m_bytesReceivedDifference = 0;
 
-	emit statusChanged((m_loadingTime ? (m_loadingTime->elapsed() / 1000) : 0), m_finishedRequests, m_startedRequests, m_bytesReceived, m_bytesTotal, m_speed);
+	emit pageInformationChanged(WebWidget::LoadingSpeedInformation, m_pageInformation[WebWidget::LoadingSpeedInformation]);
+	emit pageInformationChanged(WebWidget::LoadingTimeInformation, m_pageInformation[WebWidget::LoadingTimeInformation]);
+	emit statusChanged(m_pageInformation[WebWidget::LoadingTimeInformation].toInt(), m_pageInformation[WebWidget::RequestsFinishedInformation].toInt(), m_pageInformation[WebWidget::RequestsStartedInformation].toInt(), m_pageInformation[WebWidget::BytesReceivedInformation].toLongLong(), m_pageInformation[WebWidget::BytesTotalInformation].toLongLong(), m_pageInformation[WebWidget::LoadingSpeedInformation].toLongLong());
 }
 
 void QtWebKitNetworkManager::updateOptions(const QUrl &url)
@@ -642,7 +651,9 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 		}
 	}
 
-	++m_startedRequests;
+	m_pageInformation[WebWidget::RequestsStartedInformation] = (m_pageInformation[WebWidget::RequestsStartedInformation].toULongLong() + 1);
+
+	emit pageInformationChanged(WebWidget::RequestsStartedInformation, m_pageInformation[WebWidget::RequestsStartedInformation]);
 
 	QNetworkRequest mutableRequest(request);
 
@@ -668,7 +679,10 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 	mutableRequest.setRawHeader(QStringLiteral("Accept-Language").toLatin1(), (m_acceptLanguage.isEmpty() ? NetworkManagerFactory::getAcceptLanguage().toLatin1() : m_acceptLanguage.toLatin1()));
 	mutableRequest.setHeader(QNetworkRequest::UserAgentHeader, m_userAgent);
 
-	emit messageChanged(tr("Sending request to %1…").arg(request.url().host()));
+	m_pageInformation[WebWidget::LoadingMessageInformation] = tr("Sending request to %1…").arg(request.url().host());
+
+	emit pageInformationChanged(WebWidget::LoadingMessageInformation, m_pageInformation[WebWidget::LoadingMessageInformation]);
+	emit messageChanged(m_pageInformation[WebWidget::LoadingMessageInformation].toString());
 
 	QNetworkReply *reply(NULL);
 
@@ -728,6 +742,16 @@ CookieJar* QtWebKitNetworkManager::getCookieJar()
 	return m_cookieJar;
 }
 
+QVariant QtWebKitNetworkManager::getPageInformation(WebWidget::PageInformation key) const
+{
+	if (key == WebWidget::RequestsBlockedInformation)
+	{
+		return m_blockedRequests.count();
+	}
+
+	return m_pageInformation.value(key);
+}
+
 WebWidget::SslInformation QtWebKitNetworkManager::getSslInformation() const
 {
 	return m_sslInformation;
@@ -758,20 +782,6 @@ QHash<QByteArray, QByteArray> QtWebKitNetworkManager::getHeaders() const
 	}
 
 	return headers;
-}
-
-QVariantHash QtWebKitNetworkManager::getStatistics() const
-{
-	QVariantHash statistics;
-	statistics[QLatin1String("dateDownloaded")] = m_dateDownloaded;
-	statistics[QLatin1String("bytesReceived")] = m_bytesReceived;
-	statistics[QLatin1String("bytesTotal")] = m_bytesTotal;
-	statistics[QLatin1String("requestsBlocked")] = m_blockedRequests.count();
-	statistics[QLatin1String("requestsFinished")] = m_finishedRequests;
-	statistics[QLatin1String("requestsStarted")] = m_startedRequests;
-	statistics[QLatin1String("speed")] = m_speed;
-
-	return statistics;
 }
 
 WindowsManager::ContentStates QtWebKitNetworkManager::getContentState() const

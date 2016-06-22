@@ -93,6 +93,21 @@ public:
 
 	Q_DECLARE_FLAGS(SaveFormats, SaveFormat)
 
+	enum PageInformation
+	{
+		UnknownInformation = 0,
+		DocumentLoadingProgressInformation,
+		BytesReceivedInformation,
+		BytesTotalInformation,
+		RequestsBlockedInformation,
+		RequestsFinishedInformation,
+		RequestsStartedInformation,
+		LoadingSpeedInformation,
+		LoadingFinishedInformation,
+		LoadingTimeInformation,
+		LoadingMessageInformation
+	};
+
 	struct HitTestResult
 	{
 		QString title;
@@ -151,6 +166,7 @@ public:
 	virtual QString getSelectedText() const;
 	QString getStatusMessage() const;
 	QVariant getOption(const QString &key, const QUrl &url = QUrl()) const;
+	virtual QVariant getPageInformation(WebWidget::PageInformation key) const;
 	virtual QUrl getUrl() const = 0;
 	QUrl getRequestedUrl() const;
 	virtual QIcon getIcon() const = 0;
@@ -165,7 +181,6 @@ public:
 	virtual QList<LinkUrl> getFeeds() const;
 	virtual QList<LinkUrl> getSearchEngines() const;
 	QVariantHash getOptions() const;
-	virtual QVariantHash getStatistics() const;
 	virtual QHash<QByteArray, QByteArray> getHeaders() const;
 	virtual WindowsManager::ContentStates getContentState() const;
 	virtual WindowsManager::LoadingState getLoadingState() const = 0;
@@ -272,6 +287,7 @@ signals:
 	void requestedAddPassword(const PasswordsManager::PasswordInformation &password);
 	void requestedGeometryChange(const QRect &geometry);
 	void progressBarGeometryChanged();
+	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
 	void loadMessageChanged(const QString &message);
 	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);

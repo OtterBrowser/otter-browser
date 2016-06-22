@@ -1384,6 +1384,13 @@ QVariant WebWidget::getOption(const QString &key, const QUrl &url) const
 	return SettingsManager::getValue(key, (url.isEmpty() ? getUrl() : url));
 }
 
+QVariant WebWidget::getPageInformation(WebWidget::PageInformation key) const
+{
+	Q_UNUSED(key)
+
+	return QVariant();
+}
+
 QUrl WebWidget::getRequestedUrl() const
 {
 	return ((getUrl().isEmpty() || getLoadingState() == WindowsManager::OngoingLoadingState) ? m_requestedUrl : getUrl());
@@ -1422,11 +1429,6 @@ QList<LinkUrl> WebWidget::getSearchEngines() const
 QVariantHash WebWidget::getOptions() const
 {
 	return m_options;
-}
-
-QVariantHash WebWidget::getStatistics() const
-{
-	return QVariantHash();
 }
 
 QHash<QByteArray, QByteArray> WebWidget::getHeaders() const

@@ -1488,6 +1488,16 @@ QString QtWebEngineWebWidget::getSelectedText() const
 	return m_webView->selectedText();
 }
 
+QVariant QtWebEngineWebWidget::getPageInformation(WebWidget::PageInformation key) const
+{
+	if (key == LoadingTimeInformation)
+	{
+		return (m_loadingTime ? (m_loadingTime->elapsed() / 1000) : 0);
+	}
+
+	return QVariant();
+}
+
 QUrl QtWebEngineWebWidget::getUrl() const
 {
 	const QUrl url(m_webView->url());
@@ -1595,11 +1605,6 @@ QList<SpellCheckManager::DictionaryInformation> QtWebEngineWebWidget::getDiction
 QHash<QByteArray, QByteArray> QtWebEngineWebWidget::getHeaders() const
 {
 	return QHash<QByteArray, QByteArray>();
-}
-
-QVariantHash QtWebEngineWebWidget::getStatistics() const
-{
-	return QVariantHash();
 }
 
 WindowsManager::LoadingState QtWebEngineWebWidget::getLoadingState() const

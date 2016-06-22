@@ -33,7 +33,6 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 {
 	m_ui->setupUi(this);
 
-	const QVariantHash statistics(widget->getStatistics());
 	const WindowsManager::ContentStates state(widget->getContentState());
 	const QString characterEncoding(widget->getCharacterEncoding());
 	QString host(widget->getUrl().host());
@@ -83,9 +82,9 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 	m_ui->addressLabelWidget->setText(widget->getUrl().toString());
 	m_ui->titleLabelWidget->setText(widget->getTitle());
 	m_ui->encodingLabelWidget->setText(characterEncoding.isEmpty() ? tr("unknown") : characterEncoding);
-	m_ui->sizeLabelWidget->setText(Utils::formatUnit(statistics.value(QLatin1String("bytesTotal")).toLongLong(), false, 1, true));
-	m_ui->elementsLabelWidget->setText((statistics.value(QLatin1String("requestsBlocked")).toInt() > 0) ? tr("%1 (%n blocked)", "", statistics.value(QLatin1String("requestsBlocked")).toInt()).arg(statistics.value(QLatin1String("requestsStarted")).toInt()) : QString::number(statistics.value(QLatin1String("requestsStarted")).toInt()));
-	m_ui->downloadDateLabelWidget->setText(Utils::formatDateTime(statistics.value(QLatin1String("dateDownloaded")).toDateTime()));
+	m_ui->sizeLabelWidget->setText(Utils::formatUnit(widget->getPageInformation(WebWidget::BytesTotalInformation).toLongLong(), false, 1, true));
+	m_ui->elementsLabelWidget->setText((widget->getPageInformation(WebWidget::RequestsBlockedInformation).toInt() > 0) ? tr("%1 (%n blocked)", "", widget->getPageInformation(WebWidget::RequestsBlockedInformation).toInt()).arg(widget->getPageInformation(WebWidget::RequestsStartedInformation).toInt()) : QString::number(widget->getPageInformation(WebWidget::RequestsStartedInformation).toInt()));
+	m_ui->downloadDateLabelWidget->setText(Utils::formatDateTime(widget->getPageInformation(WebWidget::LoadingFinishedInformation).toDateTime()));
 
 	const QString cookiesPolicy(widget->getOption(QLatin1String("Network/CookiesPolicy")).toString());
 

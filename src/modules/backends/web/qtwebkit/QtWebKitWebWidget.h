@@ -58,6 +58,7 @@ public:
 	QString getTitle() const;
 	QString getActiveStyleSheet() const;
 	QString getSelectedText() const;
+	QVariant getPageInformation(WebWidget::PageInformation key) const;
 	QStringList getBlockedElements() const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
@@ -71,7 +72,6 @@ public:
 	QList<LinkUrl> getFeeds() const;
 	QList<LinkUrl> getSearchEngines() const;
 	QHash<QByteArray, QByteArray> getHeaders() const;
-	QVariantHash getStatistics() const;
 	WindowsManager::ContentStates getContentState() const;
 	WindowsManager::LoadingState getLoadingState() const;
 	int getZoom() const;

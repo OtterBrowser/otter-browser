@@ -44,10 +44,10 @@ public:
 	explicit QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar *cookieJarProxy, QtWebKitWebWidget *parent);
 
 	CookieJar* getCookieJar();
+	QVariant getPageInformation(WebWidget::PageInformation key) const;
 	WebWidget::SslInformation getSslInformation() const;
 	QStringList getBlockedElements() const;
 	QHash<QByteArray, QByteArray> getHeaders() const;
-	QVariantHash getStatistics() const;
 	WindowsManager::ContentStates getContentState() const;
 	bool isLoading() const;
 
@@ -82,7 +82,6 @@ private:
 	QString m_acceptLanguage;
 	QString m_userAgent;
 	QUrl m_formRequestUrl;
-	QDateTime m_dateDownloaded;
 	WebWidget::SslInformation m_sslInformation;
 	QStringList m_blockedElements;
 	QList<QNetworkReply*> m_transfers;
@@ -90,23 +89,19 @@ private:
 	QVector<int> m_contentBlockingProfiles;
 	QSet<QUrl> m_contentBlockingExceptions;
 	QHash<QNetworkReply*, QPair<qint64, bool> > m_replies;
+	QMap<WebWidget::PageInformation, QVariant> m_pageInformation;
 	WindowsManager::ContentStates m_contentState;
-	qint64 m_speed;
-	qint64 m_bytesReceivedDifference;
-	qint64 m_bytesReceived;
-	qint64 m_bytesTotal;
-	int m_elapsedTime;
-	int m_isSecure;
-	int m_finishedRequests;
-	int m_startedRequests;
-	int m_updateTimer;
 	NetworkManagerFactory::DoNotTrackPolicy m_doNotTrackPolicy;
+	qint64 m_bytesReceivedDifference;
+	int m_isSecure;
+	int m_updateTimer;
 	bool m_areImagesEnabled;
 	bool m_canSendReferrer;
 
 	static WebBackend *m_backend;
 
 signals:
+	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
 	void messageChanged(const QString &message = QString());
 	void contentStateChanged(WindowsManager::ContentStates state);
 	void documentLoadProgressChanged(int progress);

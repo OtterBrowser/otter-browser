@@ -151,6 +151,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(m_webView, SIGNAL(titleChanged(QString)), this, SLOT(notifyTitleChanged()));
 	connect(m_webView, SIGNAL(urlChanged(QUrl)), this, SLOT(notifyUrlChanged(QUrl)));
 	connect(m_webView, SIGNAL(iconChanged()), this, SLOT(notifyIconChanged()));
+	connect(m_networkManager, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)));
 	connect(m_networkManager, SIGNAL(messageChanged(QString)), this, SIGNAL(loadMessageChanged(QString)));
 	connect(m_networkManager, SIGNAL(contentStateChanged(WindowsManager::ContentStates)), this, SLOT(notifyContentStateChanged()));
 	connect(m_networkManager, SIGNAL(statusChanged(int,int,int,qint64,qint64,qint64)), this, SIGNAL(loadStatusChanged(int,int,int,qint64,qint64,qint64)));
@@ -1965,9 +1966,9 @@ QString QtWebKitWebWidget::getPasswordToken() const
 	return m_passwordToken;
 }
 
-QStringList QtWebKitWebWidget::getBlockedElements() const
+QVariant QtWebKitWebWidget::getPageInformation(WebWidget::PageInformation key) const
 {
-	return m_networkManager->getBlockedElements();
+	return m_networkManager->getPageInformation(key);
 }
 
 QString QtWebKitWebWidget::getPluginToken() const
@@ -2238,6 +2239,11 @@ WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &posit
 	return result;
 }
 
+QStringList QtWebKitWebWidget::getBlockedElements() const
+{
+	return m_networkManager->getBlockedElements();
+}
+
 QStringList QtWebKitWebWidget::getStyleSheets() const
 {
 	QStringList titles;
@@ -2325,11 +2331,6 @@ QList<LinkUrl> QtWebKitWebWidget::getSearchEngines() const
 QHash<QByteArray, QByteArray> QtWebKitWebWidget::getHeaders() const
 {
 	return m_networkManager->getHeaders();
-}
-
-QVariantHash QtWebKitWebWidget::getStatistics() const
-{
-	return m_networkManager->getStatistics();
 }
 
 WindowsManager::ContentStates QtWebKitWebWidget::getContentState() const
