@@ -28,6 +28,7 @@ namespace Otter
 class ToolBarsManager : public QObject
 {
 	Q_OBJECT
+	Q_ENUMS(ToolBarIdentifier)
 
 public:
 	enum ToolBarIdentifier
@@ -72,8 +73,10 @@ public:
 	static void setToolBar(ToolBarsManager::ToolBarDefinition definition);
 	static void setToolBarsLocked(bool locked);
 	static ToolBarsManager* getInstance();
+	static QString getToolBarName(int identifier);
 	static QVector<ToolBarsManager::ToolBarDefinition> getToolBarDefinitions();
 	static ToolBarsManager::ToolBarDefinition getToolBarDefinition(int identifier);
+	static int getToolBarIdentifier(const QString &name);
 	static bool areToolBarsLocked();
 
 public slots:
