@@ -35,9 +35,9 @@ struct UserAgentInformation
 	QString identifier;
 	QString title;
 	QString value;
+	QStringList children;
 };
 
-class ContentsWidget;
 class CookieJar;
 class NetworkCache;
 class NetworkManager;
