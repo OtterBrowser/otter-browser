@@ -87,7 +87,6 @@ private:
 	static NetworkCache *m_cache;
 	static CookieJar *m_cookieJar;
 	static QString m_acceptLanguage;
-	static QStringList m_userAgentsOrder;
 	static QMap<QString, UserAgentInformation> m_userAgents;
 	static QList<QSslCipher> m_defaultCiphers;
 	static DoNotTrackPolicy m_doNotTrackPolicy;

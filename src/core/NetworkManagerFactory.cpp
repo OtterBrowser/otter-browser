@@ -43,7 +43,6 @@ NetworkManager* NetworkManagerFactory::m_networkManager = NULL;
 NetworkCache* NetworkManagerFactory::m_cache = NULL;
 CookieJar* NetworkManagerFactory::m_cookieJar = NULL;
 QString NetworkManagerFactory::m_acceptLanguage;
-QStringList NetworkManagerFactory::m_userAgentsOrder;
 QMap<QString, UserAgentInformation> NetworkManagerFactory::m_userAgents;
 NetworkManagerFactory::DoNotTrackPolicy NetworkManagerFactory::m_doNotTrackPolicy = NetworkManagerFactory::SkipTrackPolicy;
 QList<QSslCipher> NetworkManagerFactory::m_defaultCiphers;
@@ -183,22 +182,23 @@ void NetworkManagerFactory::clearCache(int period)
 
 void NetworkManagerFactory::loadUserAgents()
 {
-	const QSettings settings(SessionsManager::getReadableDataPath(QLatin1String("userAgents.ini")), QSettings::IniFormat);
-	const QStringList userAgentsOrder(settings.childGroups());
-	QMap<QString, UserAgentInformation> userAgents;
+	m_userAgents.clear();
 
-	for (int i = 0; i < userAgentsOrder.count(); ++i)
+	const QSettings settings(SessionsManager::getReadableDataPath(QLatin1String("userAgents.ini")), QSettings::IniFormat);
+	UserAgentInformation root;
+	root.children = settings.childGroups();
+
+	for (int i = 0; i < root.children.count(); ++i)
 	{
 		UserAgentInformation userAgent;
-		userAgent.identifier = userAgentsOrder.at(i);
-		userAgent.title = settings.value(QString("%1/title").arg(userAgentsOrder.at(i))).toString();
-		userAgent.value = settings.value(QString("%1/value").arg(userAgentsOrder.at(i))).toString();
+		userAgent.identifier = root.children.at(i);
+		userAgent.title = settings.value(QString("%1/title").arg(root.children.at(i))).toString();
+		userAgent.value = settings.value(QString("%1/value").arg(root.children.at(i))).toString();
 
-		userAgents[userAgentsOrder.at(i)] = userAgent;
+		m_userAgents[root.children.at(i)] = userAgent;
 	}
 
-	m_userAgentsOrder = userAgentsOrder;
-	m_userAgents = userAgents;
+	m_userAgents[QLatin1String("root")] = root;
 }
 
 void NetworkManagerFactory::notifyAuthenticated(QAuthenticator *authenticator, bool wasAccepted)
@@ -258,7 +258,7 @@ QStringList NetworkManagerFactory::getUserAgents()
 		m_instance->initialize();
 	}
 
-	return m_userAgentsOrder;
+	return m_userAgents[QLatin1String("root")].children;
 }
 
 QList<QSslCipher> NetworkManagerFactory::getDefaultCiphers()
