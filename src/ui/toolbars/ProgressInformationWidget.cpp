@@ -99,35 +99,35 @@ void ProgressInformationWidget::updateStatus(WebWidget::PageInformation key, con
 	switch (m_type)
 	{
 		case DocumentProgressType:
-			if (key == WebWidget::DocumentLoadingProgressInformation || key == WebWidget::UnknownInformation)
+			if (key == WebWidget::DocumentLoadingProgressInformation)
 			{
 				m_progressBar->setValue(value.toInt());
 			}
 
 			break;
 		case TotalSizeType:
-			if (key == WebWidget::BytesReceivedInformation || key == WebWidget::UnknownInformation)
+			if (key == WebWidget::BytesReceivedInformation)
 			{
 				m_label->setText(tr("Total: %1").arg(Utils::formatUnit(value.toULongLong(), false, 1)));
 			}
 
 			break;
 		case ElementsType:
-			if (key == WebWidget::RequestsFinishedInformation || key == WebWidget::UnknownInformation)
+			if (key == WebWidget::RequestsFinishedInformation)
 			{
 				m_label->setText(tr("Elements: %1/%2").arg(value.toInt()).arg(m_window ? m_window->getContentsWidget()->getPageInformation(WebWidget::RequestsStartedInformation).toInt() : 0));
 			}
 
 			break;
 		case SpeedType:
-			if (key == WebWidget::LoadingSpeedInformation || key == WebWidget::UnknownInformation)
+			if (key == WebWidget::LoadingSpeedInformation)
 			{
 				m_label->setText(tr("Speed: %1").arg(Utils::formatUnit(value.toULongLong(), true, 1)));
 			}
 
 			break;
 		case ElapsedTimeType:
-			if (key == WebWidget::LoadingTimeInformation || key == WebWidget::UnknownInformation)
+			if (key == WebWidget::LoadingTimeInformation)
 			{
 				int minutes(value.toInt() / 60);
 				int seconds(value.toInt() - (minutes * 60));
@@ -137,7 +137,7 @@ void ProgressInformationWidget::updateStatus(WebWidget::PageInformation key, con
 
 			break;
 		case MessageType:
-			if (key == WebWidget::LoadingMessageInformation || key == WebWidget::UnknownInformation)
+			if (key == WebWidget::LoadingMessageInformation)
 			{
 				m_label->setText(value.toString());
 			}
@@ -150,20 +150,52 @@ void ProgressInformationWidget::updateStatus(WebWidget::PageInformation key, con
 
 void ProgressInformationWidget::setWindow(Window *window)
 {
+	WebWidget::PageInformation type(WebWidget::UnknownInformation);
+
+	switch (m_type)
+	{
+		case DocumentProgressType:
+			type = WebWidget::DocumentLoadingProgressInformation;
+
+			break;
+		case TotalSizeType:
+			type = WebWidget::BytesReceivedInformation;
+
+			break;
+		case ElementsType:
+			type = WebWidget::RequestsFinishedInformation;
+
+			break;
+		case SpeedType:
+			type = WebWidget::LoadingSpeedInformation;
+
+			break;
+		case ElapsedTimeType:
+			type = WebWidget::LoadingTimeInformation;
+
+			break;
+		case MessageType:
+			type = WebWidget::LoadingMessageInformation;
+
+			break;
+		default:
+			break;
+	}
+
 	if (m_window)
 	{
 		disconnect(m_window->getContentsWidget(), SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SLOT(updateStatus(WebWidget::PageInformation,QVariant)));
 
-		updateStatus(WebWidget::UnknownInformation);
+		updateStatus(type);
 	}
 
 	m_window = window;
 
 	if (window)
 	{
-		connect(m_window->getContentsWidget(), SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SLOT(updateStatus(WebWidget::PageInformation,QVariant)));
+		updateStatus(type, window->getContentsWidget()->getPageInformation(type));
 
-		updateStatus(WebWidget::UnknownInformation);
+		connect(m_window->getContentsWidget(), SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SLOT(updateStatus(WebWidget::PageInformation,QVariant)));
 	}
 }
 
