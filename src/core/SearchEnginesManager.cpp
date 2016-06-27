@@ -91,7 +91,7 @@ void SearchEnginesManager::loadSearchEngines()
 			continue;
 		}
 
-		const SearchEngineDefinition searchEngine = loadSearchEngine(&file, searchEnginesOrder.at(i));
+		SearchEngineDefinition searchEngine = loadSearchEngine(&file, searchEnginesOrder.at(i), true);
 
 		file.close();
 
@@ -275,7 +275,7 @@ void SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &sea
 	request->setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
 }
 
-SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::loadSearchEngine(QIODevice *device, const QString &identifier)
+SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::loadSearchEngine(QIODevice *device, const QString &identifier, bool checkKeyword)
 {
 	SearchEngineDefinition searchEngine;
 	searchEngine.identifier = identifier;
@@ -326,11 +326,18 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::loadSearchEng
 				{
 					const QString keyword = reader.readElementText();
 
-					if (!keyword.isEmpty() && !m_searchKeywords.contains(keyword))
+					if (!keyword.isEmpty())
 					{
-						searchEngine.keyword = keyword;
+						if (!m_searchKeywords.contains(keyword))
+						{
+							searchEngine.keyword = keyword;
 
-						m_searchKeywords.append(keyword);
+							m_searchKeywords.append(keyword);
+						}
+						else if (!checkKeyword)
+						{
+							searchEngine.keyword = keyword;
+						}
 					}
 				}
 				else if (reader.name() == QLatin1String("ShortName"))

@@ -182,13 +182,44 @@ void PreferencesSearchPageWidget::readdSearchEngine(QAction *action)
 		return;
 	}
 
-	const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::loadSearchEngine(&file, identifier));
+	SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::loadSearchEngine(&file, identifier, false));
 
 	file.close();
 
 	if (searchEngine.identifier.isEmpty() || m_searchEngines.contains(identifier))
 	{
 		return;
+	}
+
+	QStringList keywords;
+
+	for (int i = 0; i < m_ui->searchViewWidget->getRowCount(); ++i)
+	{
+		const QString keyword = m_ui->searchViewWidget->getIndex(i, 1).data(Qt::DisplayRole).toString();
+
+		if (!keyword.isEmpty())
+		{
+			keywords.append(keyword);
+		}
+	}
+
+	if (keywords.contains(searchEngine.keyword))
+	{
+		QMessageBox messageBox;
+		messageBox.setWindowTitle(tr("Question"));
+		messageBox.setText(tr("Keyword is already in use. Do you want to continue anyway?"));
+		messageBox.setIcon(QMessageBox::Question);
+		messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+		messageBox.setDefaultButton(QMessageBox::Cancel);
+
+		if (messageBox.exec() == QMessageBox::Yes)
+		{
+			searchEngine.keyword = QString();
+		}
+		else
+		{
+			return;
+		}
 	}
 
 	m_searchEngines[identifier] = qMakePair(false, searchEngine);
