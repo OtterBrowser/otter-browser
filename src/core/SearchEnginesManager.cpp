@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -78,7 +78,7 @@ void SearchEnginesManager::loadSearchEngines()
 
 	m_searchEnginesOrder = SettingsManager::getValue(QLatin1String("Search/SearchEnginesOrder")).toStringList();
 
-	const QStringList searchEnginesOrder = m_searchEnginesOrder;
+	const QStringList searchEnginesOrder(m_searchEnginesOrder);
 
 	for (int i = 0; i < searchEnginesOrder.count(); ++i)
 	{
@@ -91,7 +91,7 @@ void SearchEnginesManager::loadSearchEngines()
 			continue;
 		}
 
-		SearchEngineDefinition searchEngine = loadSearchEngine(&file, searchEnginesOrder.at(i), true);
+		SearchEngineDefinition searchEngine(loadSearchEngine(&file, searchEnginesOrder.at(i), true));
 
 		file.close();
 
@@ -143,15 +143,15 @@ void SearchEnginesManager::updateSearchEnginesModel()
 
 	m_searchEnginesModel->clear();
 
-	const QStringList searchEngines = getSearchEngines();
+	const QStringList searchEngines(getSearchEngines());
 
 	for (int i = 0; i < searchEngines.count(); ++i)
 	{
-		const SearchEngineDefinition search = getSearchEngine(searchEngines.at(i));
+		const SearchEngineDefinition search(getSearchEngine(searchEngines.at(i)));
 
 		if (!search.identifier.isEmpty())
 		{
-			QStandardItem *item = new QStandardItem((search.icon.isNull() ? ThemesManager::getIcon(QLatin1String("edit-find")) : search.icon), QString());
+			QStandardItem *item(new QStandardItem((search.icon.isNull() ? ThemesManager::getIcon(QLatin1String("edit-find")) : search.icon), QString()));
 			item->setData(search.title, Qt::UserRole);
 			item->setData(search.identifier, (Qt::UserRole + 1));
 			item->setData(search.keyword, (Qt::UserRole + 2));
@@ -162,11 +162,11 @@ void SearchEnginesManager::updateSearchEnginesModel()
 
 	if (searchEngines.count() > 0)
 	{
-		QStandardItem *separatorItem = new QStandardItem();
+		QStandardItem *separatorItem(new QStandardItem());
 		separatorItem->setData(QLatin1String("separator"), Qt::AccessibleDescriptionRole);
 		separatorItem->setData(QSize(-1, 10), Qt::SizeHintRole);
 
-		QStandardItem *manageItem = new QStandardItem(ThemesManager::getIcon(QLatin1String("configure")), tr("Manage Search Engines…"));
+		QStandardItem *manageItem(new QStandardItem(ThemesManager::getIcon(QLatin1String("configure")), tr("Manage Search Engines…")));
 		manageItem->setData(QLatin1String("configure"), Qt::AccessibleDescriptionRole);
 
 		m_searchEnginesModel->appendRow(separatorItem);
@@ -183,7 +183,7 @@ void SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &sea
 		return;
 	}
 
-	QString urlString = searchUrl.url;
+	QString urlString(searchUrl.url);
 	QHash<QString, QString> values;
 	values[QLatin1String("searchTerms")] = query;
 	values[QLatin1String("count")] = QString();
@@ -205,11 +205,11 @@ void SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &sea
 	QUrl url(urlString);
 	QUrlQuery getQuery(url);
 	QUrlQuery postQuery;
-	const QList<QPair<QString, QString> > parameters = searchUrl.parameters.queryItems(QUrl::FullyDecoded);
+	const QList<QPair<QString, QString> > parameters(searchUrl.parameters.queryItems(QUrl::FullyDecoded));
 
 	for (int i = 0; i < parameters.count(); ++i)
 	{
-		QString value = parameters.at(i).second;
+		QString value(parameters.at(i).second);
 
 		for (valuesIterator = values.begin(); valuesIterator != values.end(); ++valuesIterator)
 		{
@@ -229,12 +229,12 @@ void SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &sea
 			else if (searchUrl.enctype == QLatin1String("multipart/form-data"))
 			{
 				QString encodedValue;
-				QByteArray plainValue = value.toUtf8();
+				QByteArray plainValue(value.toUtf8());
 				const char hex[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
 				for (int j = 0; j < plainValue.length(); ++j)
 				{
-					const char character = plainValue[j];
+					const char character(plainValue[j]);
 
 					if (character == 32 || (character >= 33 && character <= 126 && character != 61))
 					{
@@ -284,7 +284,7 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::loadSearchEng
 
 	if (reader.readNextStartElement() && reader.name() == QLatin1String("OpenSearchDescription"))
 	{
-		SearchUrl *currentUrl = NULL;
+		SearchUrl *currentUrl(NULL);
 
 		while (!reader.atEnd())
 		{
@@ -324,7 +324,7 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::loadSearchEng
 				}
 				else if (reader.name() == QLatin1String("Shortcut"))
 				{
-					const QString keyword = reader.readElementText();
+					const QString keyword(reader.readElementText());
 
 					if (!keyword.isEmpty())
 					{
@@ -354,7 +354,7 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::loadSearchEng
 				}
 				else if (reader.name() == QLatin1String("Image"))
 				{
-					const QString data = reader.readElementText();
+					const QString data(reader.readElementText());
 
 					searchEngine.icon = QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8()), "png")));
 				}
@@ -483,7 +483,7 @@ bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &search
 
 	if (!searchEngine.icon.isNull())
 	{
-		const QSize size = searchEngine.icon.availableSizes().value(0, QSize(16, 16));
+		const QSize size(searchEngine.icon.availableSizes().value(0, QSize(16, 16)));
 		QByteArray data;
 		QBuffer buffer(&data);
 		buffer.open(QIODevice::WriteOnly);
@@ -516,7 +516,7 @@ bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &search
 		writer.writeAttribute(QLatin1String("enctype"), searchEngine.resultsUrl.enctype.toLower());
 		writer.writeAttribute(QLatin1String("template"), searchEngine.resultsUrl.url);
 
-		const QList<QPair<QString, QString> > parameters = searchEngine.resultsUrl.parameters.queryItems();
+		const QList<QPair<QString, QString> > parameters(searchEngine.resultsUrl.parameters.queryItems());
 
 		for (int i = 0; i < parameters.count(); ++i)
 		{
@@ -538,7 +538,7 @@ bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &search
 		writer.writeAttribute(QLatin1String("enctype"), searchEngine.suggestionsUrl.enctype.toLower());
 		writer.writeAttribute(QLatin1String("template"), searchEngine.suggestionsUrl.url);
 
-		const QList<QPair<QString, QString> > parameters = searchEngine.suggestionsUrl.parameters.queryItems();
+		const QList<QPair<QString, QString> > parameters(searchEngine.suggestionsUrl.parameters.queryItems());
 
 		for (int i = 0; i < parameters.count(); ++i)
 		{
@@ -564,7 +564,7 @@ bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &search
 
 bool SearchEnginesManager::setupSearchQuery(const QString &query, const QString &searchEngine, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body)
 {
-	const SearchEngineDefinition search = getSearchEngine(searchEngine);
+	const SearchEngineDefinition search(getSearchEngine(searchEngine));
 
 	if (search.identifier.isEmpty())
 	{
