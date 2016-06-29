@@ -112,7 +112,7 @@ void StartPageModel::reloadModel()
 
 		for (int i = 0; i < directories.count(); ++i)
 		{
-			bool found = false;
+			bool hasFound(false);
 
 			for (int j = 0; j < m_bookmark->rowCount(); ++j)
 			{
@@ -120,13 +120,13 @@ void StartPageModel::reloadModel()
 				{
 					m_bookmark = dynamic_cast<BookmarksItem*>(m_bookmark->child(j));
 
-					found = true;
+					hasFound = true;
 
 					break;
 				}
 			}
 
-			if (!found)
+			if (!hasFound)
 			{
 				disconnect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(reloadModel()));
 
