@@ -619,13 +619,20 @@ void Menu::populateUserAgentMenu()
 
 	for (int i = 0; i < userAgents.count(); ++i)
 	{
-		const QString title(NetworkManagerFactory::getUserAgent(userAgents.at(i)).title);
-		QAction *userAgentAction(QMenu::addAction((title.isEmpty() ? tr("(Untitled)") : Utils::elideText(title, this))));
-		userAgentAction->setData(userAgents.at(i));
-		userAgentAction->setCheckable(true);
-		userAgentAction->setChecked(userAgent == userAgents.at(i));
+		if (userAgents.at(i).isEmpty())
+		{
+			addSeparator();
+		}
+		else
+		{
+			const QString title(NetworkManagerFactory::getUserAgent(userAgents.at(i)).title);
+			QAction *userAgentAction(QMenu::addAction((title.isEmpty() ? tr("(Untitled)") : Utils::elideText(title, this))));
+			userAgentAction->setData(userAgents.at(i));
+			userAgentAction->setCheckable(true);
+			userAgentAction->setChecked(userAgent == userAgents.at(i));
 
-		m_actionGroup->addAction(userAgentAction);
+			m_actionGroup->addAction(userAgentAction);
+		}
 	}
 
 	addSeparator();
