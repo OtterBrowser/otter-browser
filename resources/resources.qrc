@@ -148,7 +148,6 @@
         <file>other/notifications.ini</file>
         <file>other/syntaxHighlighting.json</file>
         <file>other/toolBars.json</file>
-        <file>other/userAgents.ini</file>
         <file>other/userAgents.json</file>
         <file>schemas/options.ini</file>
         <file>schemas/update.xsd</file>

@@ -31,7 +31,9 @@
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QFile>
-#include <QtCore/QSettings>
+#include <QtCore/QJsonArray>
+#include <QtCore/QJsonDocument>
+#include <QtCore/QJsonObject>
 #include <QtNetwork/QNetworkConfigurationManager>
 #include <QtNetwork/QSslSocket>
 
@@ -184,21 +186,44 @@ void NetworkManagerFactory::loadUserAgents()
 {
 	m_userAgents.clear();
 
-	const QSettings settings(SessionsManager::getReadableDataPath(QLatin1String("userAgents.ini")), QSettings::IniFormat);
-	UserAgentInformation root;
-	root.children = settings.childGroups();
+	QFile file(SessionsManager::getReadableDataPath(QLatin1String("userAgents.json")));
 
-	for (int i = 0; i < root.children.count(); ++i)
+	if (!file.open(QIODevice::ReadOnly))
 	{
-		UserAgentInformation userAgent;
-		userAgent.identifier = root.children.at(i);
-		userAgent.title = settings.value(QString("%1/title").arg(root.children.at(i))).toString();
-		userAgent.value = settings.value(QString("%1/value").arg(root.children.at(i))).toString();
+		return;
+	}
 
-		m_userAgents[root.children.at(i)] = userAgent;
+	const QJsonArray userAgents(QJsonDocument::fromJson(file.readAll()).array());
+	UserAgentInformation root;
+
+	for (int i = 0; i < userAgents.count(); ++i)
+	{
+		if (userAgents.at(i).isObject())
+		{
+			const QJsonObject object(userAgents.at(i).toObject());
+			const QString identifier(object.value(QLatin1String("identifier")).toString());
+
+			if (!m_userAgents.contains(identifier))
+			{
+				UserAgentInformation userAgent;
+				userAgent.identifier = identifier;
+				userAgent.title = object.value(QLatin1String("title")).toString();
+				userAgent.value = object.value(QLatin1String("value")).toString();
+
+				m_userAgents[identifier] = userAgent;
+			}
+
+			root.children.append(identifier);
+		}
+		else if (userAgents.at(i).isString() && userAgents.at(i).toString() == QLatin1String("separator"))
+		{
+			root.children.append(QString());
+		}
 	}
 
 	m_userAgents[QLatin1String("root")] = root;
+
+	file.close();
 }
 
 void NetworkManagerFactory::notifyAuthenticated(QAuthenticator *authenticator, bool wasAccepted)
