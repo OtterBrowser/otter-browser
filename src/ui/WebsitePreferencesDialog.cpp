@@ -134,11 +134,18 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 
 	for (int i = 0; i < userAgents.count(); ++i)
 	{
-		const UserAgentInformation userAgent(NetworkManagerFactory::getUserAgent(userAgents.at(i)));
-		const QString title(userAgent.title);
+		if (userAgents.at(i).isEmpty())
+		{
+			m_ui->userAgentComboBox->insertSeparator(i);
+		}
+		else
+		{
+			const UserAgentInformation userAgent(NetworkManagerFactory::getUserAgent(userAgents.at(i)));
+			const QString title(userAgent.title);
 
-		m_ui->userAgentComboBox->addItem((title.isEmpty() ? tr("(Untitled)") : title), userAgents.at(i));
-		m_ui->userAgentComboBox->setItemData((i + 1), userAgent.value, (Qt::UserRole + 1));
+			m_ui->userAgentComboBox->addItem((title.isEmpty() ? tr("(Untitled)") : QCoreApplication::translate("userAgents", title.toUtf8())), userAgents.at(i));
+			m_ui->userAgentComboBox->setItemData((i + 1), userAgent.value, (Qt::UserRole + 1));
+		}
 	}
 
 	m_ui->encodingOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/DefaultEncoding")));

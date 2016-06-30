@@ -626,7 +626,7 @@ void Menu::populateUserAgentMenu()
 		else
 		{
 			const QString title(NetworkManagerFactory::getUserAgent(userAgents.at(i)).title);
-			QAction *userAgentAction(QMenu::addAction((title.isEmpty() ? tr("(Untitled)") : Utils::elideText(title, this))));
+			QAction *userAgentAction(QMenu::addAction((title.isEmpty() ? tr("(Untitled)") : Utils::elideText(QCoreApplication::translate("userAgents", title.toUtf8()), this))));
 			userAgentAction->setData(userAgents.at(i));
 			userAgentAction->setCheckable(true);
 			userAgentAction->setChecked(userAgent == userAgents.at(i));
@@ -637,7 +637,7 @@ void Menu::populateUserAgentMenu()
 
 	addSeparator();
 
-	QAction *customAction(QMenu::addAction(tr("Custom")));
+	QAction *customAction(QMenu::addAction(tr("Custom…")));
 	customAction->setData(QLatin1String("custom"));
 	customAction->setCheckable(true);
 	customAction->setChecked(userAgent.startsWith(QLatin1String("custom;")));

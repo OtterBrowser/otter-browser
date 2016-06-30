@@ -55,6 +55,13 @@ bool NetworkManagerFactory::m_isUsingSystemProxyAuthentication = false;
 
 NetworkManagerFactory::NetworkManagerFactory(QObject *parent) : QObject(parent)
 {
+	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Google Chrome 50 (Windows)"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Mozilla Firefox 45 (Windows)"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Microsoft Edge 25 (Windows)"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Internet Explorer 10.0 (Windows)"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Opera 12.16 (Windows)"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Safari 9.0 (MacOS)"))
+
 	QNetworkConfigurationManager *networkConfigurationManager(new QNetworkConfigurationManager(this));
 
 	connect(networkConfigurationManager, SIGNAL(onlineStateChanged(bool)), this, SIGNAL(onlineStateChanged(bool)));
