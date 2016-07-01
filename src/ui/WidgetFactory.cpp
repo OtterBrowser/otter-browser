@@ -129,7 +129,7 @@ QWidget* createToolBarItem(const ActionsManager::ActionEntryDefinition &definiti
 			{
 				actionWidget = new GoBackActionWidget(window, definition, parent);
 			}
-			if (identifier == ActionsManager::GoForwardAction)
+			else if (identifier == ActionsManager::GoForwardAction)
 			{
 				actionWidget = new GoForwardActionWidget(window, definition, parent);
 			}
