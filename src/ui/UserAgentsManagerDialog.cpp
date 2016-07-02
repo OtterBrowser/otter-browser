@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "UserAgentsManagerDialog.h"
+#include "ItemDelegate.h"
 #include "../core/NetworkManagerFactory.h"
 #include "../core/ThemesManager.h"
 
@@ -48,6 +49,7 @@ UserAgentsManagerDialog::UserAgentsManagerDialog(QList<UserAgentInformation> use
 	}
 
 	m_ui->userAgentsView->setModel(model);
+	m_ui->userAgentsView->setItemDelegate(new ItemDelegate(false, m_ui->userAgentsView));
 
 	connect(m_ui->userAgentsView, SIGNAL(canMoveDownChanged(bool)), m_ui->moveDownButton, SLOT(setEnabled(bool)));
 	connect(m_ui->userAgentsView, SIGNAL(canMoveUpChanged(bool)), m_ui->moveUpButton, SLOT(setEnabled(bool)));
