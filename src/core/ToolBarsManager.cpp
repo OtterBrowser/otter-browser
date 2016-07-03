@@ -499,6 +499,11 @@ QHash<QString, ToolBarsManager::ToolBarDefinition> ToolBarsManager::loadToolBars
 		toolBar.row = toolBarObject.value(QLatin1String("row")).toInt();
 		toolBar.isDefault = isDefault;
 
+		if (toolBar.normalVisibility == OnHoverVisibleToolBar)
+		{
+			toolBar.normalVisibility = AlwaysVisibleToolBar;
+		}
+
 		if (isDefault)
 		{
 			toolBar.title = QCoreApplication::translate("actions", toolBar.title.toUtf8());
