@@ -125,7 +125,7 @@ void NetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError
 		return;
 	}
 
-	if (QMessageBox::warning(SessionsManager::getActiveWindow(), tr("Warning"), tr("SSL errors occured:\n\n%1\n\nDo you want to continue?").arg(messages.join('\n')), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::Yes)
+	if (QMessageBox::warning(SessionsManager::getActiveWindow(), tr("Warning"), tr("SSL errors occured:\n\n%1\n\nDo you want to continue?").arg(messages.join(QLatin1Char('\n'))), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::Yes)
 	{
 		reply->ignoreSslErrors(errors);
 	}
@@ -160,7 +160,7 @@ QNetworkReply* NetworkManager::createRequest(QNetworkAccessManager::Operation op
 
 	if (operation == PostOperation && mutableRequest.header(QNetworkRequest::ContentTypeHeader).isNull())
 	{
-		mutableRequest.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/x-www-form-urlencoded"));
+		mutableRequest.setHeader(QNetworkRequest::ContentTypeHeader, QVariant(QLatin1String("application/x-www-form-urlencoded")));
 	}
 
 	if (NetworkManagerFactory::isWorkingOffline())

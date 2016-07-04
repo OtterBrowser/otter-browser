@@ -124,7 +124,7 @@ LocalListingNetworkReply::LocalListingNetworkReply(QObject *parent, const QNetwo
 
 	m_content = mainTemplate.toUtf8();
 
-	setHeader(QNetworkRequest::ContentTypeHeader, QVariant("text/html; charset=UTF-8"));
+	setHeader(QNetworkRequest::ContentTypeHeader, QVariant(QLatin1String("text/html; charset=UTF-8")));
 	setHeader(QNetworkRequest::ContentLengthHeader, QVariant(m_content.size()));
 
 	QTimer::singleShot(0, this, SIGNAL(readyRead()));

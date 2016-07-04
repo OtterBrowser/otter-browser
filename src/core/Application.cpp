@@ -128,7 +128,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 		if (argumentsFile.open(QIODevice::ReadOnly))
 		{
-			QStringList temporaryArguments = QString(argumentsFile.readAll()).trimmed().split(QLatin1Char(' '), QString::SkipEmptyParts);
+			QStringList temporaryArguments(QString(argumentsFile.readAll()).trimmed().split(QLatin1Char(' '), QString::SkipEmptyParts));
 
 			if (!temporaryArguments.isEmpty())
 			{
@@ -825,17 +825,17 @@ QString Application::createReport()
 	stream << QLatin1String("\n\t");
 	stream.setFieldWidth(20);
 	stream << QLatin1String("Bookmarks");
-	stream << SessionsManager::getWritableDataPath("bookmarks.xbel");
+	stream << SessionsManager::getWritableDataPath(QLatin1String("bookmarks.xbel"));
 	stream.setFieldWidth(0);
 	stream << QLatin1String("\n\t");
 	stream.setFieldWidth(20);
 	stream << QLatin1String("Notes");
-	stream << SessionsManager::getWritableDataPath("notes.xbel");
+	stream << SessionsManager::getWritableDataPath(QLatin1String("notes.xbel"));
 	stream.setFieldWidth(0);
 	stream << QLatin1String("\n\t");
 	stream.setFieldWidth(20);
 	stream << QLatin1String("History");
-	stream << SessionsManager::getWritableDataPath("browsingHistory.sqlite");
+	stream << SessionsManager::getWritableDataPath(QLatin1String("browsingHistory.sqlite"));
 	stream.setFieldWidth(0);
 	stream << QLatin1String("\n\t");
 	stream.setFieldWidth(20);
