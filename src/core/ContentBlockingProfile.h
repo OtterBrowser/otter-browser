@@ -92,7 +92,6 @@ protected:
 	void clear();
 	void load(bool onlyHeader = false);
 	void parseRuleLine(QString line);
-	void resolveRuleOptions(ContentBlockingRule *rule, ContentBlockingManager::ResourceType resourceType, bool &isBlocked);
 	void parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list);
 	void addRule(ContentBlockingRule *rule, const QString &ruleString);
 	void deleteNode(Node *node);
@@ -113,7 +112,6 @@ private:
 	QString m_baseUrlHost;
 	QRegularExpression m_domainExpression;
 	ContentBlockingInformation m_information;
-	QStringList m_requestSubdomainList;
 	QStringList m_styleSheet;
 	QMultiHash<QString, QString> m_styleSheetBlackList;
 	QMultiHash<QString, QString> m_styleSheetWhiteList;

@@ -106,7 +106,7 @@ void ContentBlockingProfile::load(bool onlyHeader)
 
 	while (!stream.atEnd())
 	{
-		QString line = stream.readLine().trimmed();
+		QString line(stream.readLine().trimmed());
 
 		if (!line.startsWith(QLatin1Char('!')))
 		{
@@ -135,8 +135,8 @@ void ContentBlockingProfile::load(bool onlyHeader)
 	file.close();
 
 	const QSettings profilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
-	const QDateTime lastUpdate = QDateTime::fromString(profilesSettings.value(m_information.name + QLatin1String("/lastUpdate")).toString(), Qt::ISODate);
-	const int updateInterval = profilesSettings.value(m_information.name + QLatin1String("/updateInterval")).toInt();
+	const QDateTime lastUpdate(QDateTime::fromString(profilesSettings.value(m_information.name + QLatin1String("/lastUpdate")).toString(), Qt::ISODate));
+	const int updateInterval(profilesSettings.value(m_information.name + QLatin1String("/updateInterval")).toInt());
 
 	if (!m_isUpdating && updateInterval > 0 && (!lastUpdate.isValid() || lastUpdate.daysTo(QDateTime::currentDateTime()) > updateInterval))
 	{
@@ -177,7 +177,7 @@ void ContentBlockingProfile::parseRuleLine(QString line)
 		return;
 	}
 
-	const int optionSeparator = line.indexOf(QLatin1Char('$'));
+	const int optionSeparator(line.indexOf(QLatin1Char('$')));
 	QStringList options;
 
 	if (optionSeparator >= 0)
@@ -203,7 +203,7 @@ void ContentBlockingProfile::parseRuleLine(QString line)
 		return;
 	}
 
-	ContentBlockingRule *rule = new ContentBlockingRule();
+	ContentBlockingRule *rule(new ContentBlockingRule());
 	rule->ruleOption = NoOption;
 	rule->exceptionRuleOption = NoOption;
 	rule->isException = false;
@@ -225,7 +225,7 @@ void ContentBlockingProfile::parseRuleLine(QString line)
 
 	for (int i = 0; i < options.count(); ++i)
 	{
-		const bool optionException = options.at(i).startsWith(QLatin1Char('~'));
+		const bool optionException(options.at(i).startsWith(QLatin1Char('~')));
 
 		if (options.at(i).contains(QLatin1String("third-party")))
 		{
@@ -277,7 +277,7 @@ void ContentBlockingProfile::parseRuleLine(QString line)
 		}
 		else if (options.at(i).contains(QLatin1String("domain")))
 		{
-			const QStringList parsedDomains = options.at(i).mid(options.at(i).indexOf(QLatin1Char('=')) + 1).split(QLatin1Char('|'), QString::SkipEmptyParts);
+			const QStringList parsedDomains(options.at(i).mid(options.at(i).indexOf(QLatin1Char('=')) + 1).split(QLatin1Char('|'), QString::SkipEmptyParts));
 
 			for (int j = 0; j < parsedDomains.count(); ++j)
 			{
@@ -307,7 +307,7 @@ void ContentBlockingProfile::parseRuleLine(QString line)
 
 void ContentBlockingProfile::parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list)
 {
-	const QStringList domains = line.at(0).split(QLatin1Char(','));
+	const QStringList domains(line.at(0).split(QLatin1Char(',')));
 
 	for (int i = 0; i < domains.count(); ++i)
 	{
@@ -315,109 +315,18 @@ void ContentBlockingProfile::parseStyleSheetRule(const QStringList &line, QMulti
 	}
 }
 
-void ContentBlockingProfile::resolveRuleOptions(ContentBlockingRule *rule, ContentBlockingManager::ResourceType resourceType, bool &isBlocked)
-{
-	const bool blockedDomains = !rule->blockedDomains.isEmpty();
-	const bool allowedDomains = !rule->allowedDomains.isEmpty();
-
-	isBlocked = ((blockedDomains) ? resolveDomainExceptions(m_baseUrlHost, rule->blockedDomains) : isBlocked);
-	isBlocked = ((allowedDomains) ? !resolveDomainExceptions(m_baseUrlHost, rule->allowedDomains) : isBlocked);
-
-	if (rule->ruleOption.testFlag(ThirdPartyOption))
-	{
-		if (m_baseUrlHost.isEmpty() || m_requestSubdomainList.contains(m_baseUrlHost))
-		{
-			isBlocked = rule->exceptionRuleOption.testFlag(ThirdPartyOption);
-		}
-		else if (!blockedDomains && !allowedDomains)
-		{
-			isBlocked = !rule->exceptionRuleOption.testFlag(ThirdPartyOption);
-		}
-	}
-
-	if (rule->ruleOption.testFlag(ImageOption))
-	{
-		if (resourceType == ContentBlockingManager::ImageType)
-		{
-			isBlocked = (isBlocked ? !rule->exceptionRuleOption.testFlag(ImageOption) : isBlocked);
-		}
-		else
-		{
-			isBlocked = (isBlocked ? rule->exceptionRuleOption.testFlag(ImageOption) : isBlocked);
-		}
-	}
-
-	if (rule->ruleOption.testFlag(ScriptOption))
-	{
-		if (resourceType == ContentBlockingManager::ScriptType)
-		{
-			isBlocked = (isBlocked ? !rule->exceptionRuleOption.testFlag(ScriptOption) : isBlocked);
-		}
-		else
-		{
-			isBlocked = (isBlocked ? rule->exceptionRuleOption.testFlag(ScriptOption) : isBlocked);
-		}
-	}
-
-	if (rule->ruleOption.testFlag(StyleSheetOption))
-	{
-		if (resourceType == ContentBlockingManager::StyleSheetType)
-		{
-			isBlocked = (isBlocked ? !rule->exceptionRuleOption.testFlag(StyleSheetOption) : isBlocked);
-		}
-		else
-		{
-			isBlocked = (isBlocked ? rule->exceptionRuleOption.testFlag(StyleSheetOption) : isBlocked);
-		}
-	}
-
-	if (rule->ruleOption.testFlag(ObjectOption))
-	{
-		if (resourceType == ContentBlockingManager::ObjectType)
-		{
-			isBlocked = (isBlocked ? !rule->exceptionRuleOption.testFlag(ObjectOption) : isBlocked);
-		}
-		else
-		{
-			isBlocked = (isBlocked ? rule->exceptionRuleOption.testFlag(ObjectOption) : isBlocked);
-		}
-	}
-
-	if (rule->ruleOption.testFlag(SubDocumentOption))
-	{
-		// TODO
-	}
-
-	if (rule->ruleOption.testFlag(ObjectSubRequestOption))
-	{
-		// TODO
-	}
-
-	if (rule->ruleOption.testFlag(XmlHttpRequestOption))
-	{
-		if (resourceType == ContentBlockingManager::XmlHttpRequestType)
-		{
-			isBlocked = (isBlocked ? !rule->exceptionRuleOption.testFlag(XmlHttpRequestOption) : isBlocked);
-		}
-		else
-		{
-			isBlocked = (isBlocked ? rule->exceptionRuleOption.testFlag(XmlHttpRequestOption) : isBlocked);
-		}
-	}
-}
-
 void ContentBlockingProfile::addRule(ContentBlockingRule *rule, const QString &ruleString)
 {
-	Node *node = m_root;
+	Node *node(m_root);
 
 	for (int i = 0; i < ruleString.length(); ++i)
 	{
-		const QChar value = ruleString.at(i);
-		bool childrenExists = false;
+		const QChar value(ruleString.at(i));
+		bool childrenExists(false);
 
 		for (int j = 0; j < node->children.count(); ++j)
 		{
-			Node *nextNode = node->children.at(j);
+			Node *nextNode(node->children.at(j));
 
 			if (nextNode->value == value)
 			{
@@ -431,7 +340,7 @@ void ContentBlockingProfile::addRule(ContentBlockingRule *rule, const QString &r
 
 		if (!childrenExists)
 		{
-			Node *newNode = new Node;
+			Node *newNode(new Node());
 			newNode->value = value;
 
 			node->children.append(newNode);
@@ -465,9 +374,9 @@ void ContentBlockingProfile::replyFinished()
 
 	m_networkReply->deleteLater();
 
-	const QByteArray downloadedDataHeader = m_networkReply->readLine();
-	const QByteArray downloadedDataChecksum = m_networkReply->readLine();
-	const QByteArray downloadedData = m_networkReply->readAll();
+	const QByteArray downloadedDataHeader(m_networkReply->readLine());
+	const QByteArray downloadedDataChecksum(m_networkReply->readLine());
+	const QByteArray downloadedData(m_networkReply->readAll());
 
 	if (m_networkReply->error() != QNetworkReply::NoError || !downloadedDataHeader.trimmed().startsWith(QByteArray("[Adblock Plus")))
 	{
@@ -478,8 +387,8 @@ void ContentBlockingProfile::replyFinished()
 
 	if (downloadedDataChecksum.contains(QByteArray("! Checksum: ")))
 	{
-		QByteArray checksum = downloadedDataChecksum;
-		const QByteArray verifiedChecksum = QCryptographicHash::hash(downloadedDataHeader + QString(downloadedData).replace(QRegExp("^*\n{2,}"), QString("\n")).toStdString().c_str(), QCryptographicHash::Md5);
+		QByteArray checksum(downloadedDataChecksum);
+		const QByteArray verifiedChecksum(QCryptographicHash::hash(downloadedDataHeader + QString(downloadedData).replace(QRegExp(QLatin1String("^*\n{2,}")), QLatin1String("\n")).toStdString().c_str(), QCryptographicHash::Md5));
 
 		if (verifiedChecksum.toBase64().replace(QByteArray("="), QByteArray()) != checksum.replace(QByteArray("! Checksum: "), QByteArray()).replace(QByteArray("\n"), QByteArray()))
 		{
@@ -544,13 +453,9 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrl(const QUrl 
 		m_requestUrl = m_requestUrl.mid(2);
 	}
 
-	const int urlLenght = m_requestUrl.length();
-
-	for (int i = 0; i < urlLenght; ++i)
+	for (int i = 0; i < m_requestUrl.length(); ++i)
 	{
-		const QString urlSubstring = m_requestUrl.right(urlLenght - i);
-
-		if (checkUrlSubstring(m_root, urlSubstring, QString(), resourceType))
+		if (checkUrlSubstring(m_root, m_requestUrl.right(m_requestUrl.length() - i), QString(), resourceType))
 		{
 			ContentBlockingManager::CheckResult result;
 			result.url = requestUrl;
@@ -682,22 +587,22 @@ bool ContentBlockingProfile::checkUrlSubstring(Node *node, const QString &subStr
 {
 	for (int i = 0; i < subString.length(); ++i)
 	{
-		const QChar treeChar = subString.at(i);
+		const QChar treeChar(subString.at(i));
 
 		if (node->rule && checkRuleMatch(node->rule, currentRule, resourceType))
 		{
 			return true;
 		}
 
-		bool childrenExists = false;
+		bool childrenExists(false);
 
 		for (int j = 0; j < node->children.count(); ++j)
 		{
-			Node *nextNode = node->children.at(j);
+			Node *nextNode(node->children.at(j));
 
 			if (nextNode->value == QLatin1Char('*'))
 			{
-				const QString wildcardSubString = subString.mid(i);
+				const QString wildcardSubString(subString.mid(i));
 
 				for (int k = 0; k < wildcardSubString.length(); ++k)
 				{
@@ -736,37 +641,54 @@ bool ContentBlockingProfile::checkUrlSubstring(Node *node, const QString &subStr
 
 bool ContentBlockingProfile::checkRuleMatch(ContentBlockingRule *rule, const QString &currentRule, ContentBlockingManager::ResourceType resourceType)
 {
-	bool isBlocked = false;
-
-	if (m_requestUrl.contains(currentRule))
+	if (!m_requestUrl.contains(currentRule))
 	{
-		m_requestSubdomainList = ContentBlockingManager::createSubdomainList(m_requestHost);
+		return false;
+	}
 
-		if (rule->needsDomainCheck)
+	const QStringList requestSubdomainList(ContentBlockingManager::createSubdomainList(m_requestHost));
+
+	if (rule->needsDomainCheck && !requestSubdomainList.contains(currentRule.left(currentRule.indexOf(m_domainExpression))))
+	{
+		return false;
+	}
+
+	const bool hasBlockedDomains(!rule->blockedDomains.isEmpty());
+	const bool hasAllowedDomains(!rule->allowedDomains.isEmpty());
+	bool isBlocked(hasBlockedDomains ? resolveDomainExceptions(m_baseUrlHost, rule->blockedDomains) : true);
+	isBlocked = (hasAllowedDomains ? !resolveDomainExceptions(m_baseUrlHost, rule->allowedDomains) : isBlocked);
+
+	if (rule->ruleOption.testFlag(ThirdPartyOption))
+	{
+		if (m_baseUrlHost.isEmpty() || requestSubdomainList.contains(m_baseUrlHost))
 		{
-			if (!m_requestSubdomainList.contains(currentRule.left(currentRule.indexOf(m_domainExpression))))
-			{
-				return false;
-			}
-			else
-			{
-				isBlocked = true;
-			}
+			isBlocked = rule->exceptionRuleOption.testFlag(ThirdPartyOption);
 		}
-		else
+		else if (!hasBlockedDomains && !hasAllowedDomains)
 		{
-			isBlocked = true;
-		}
-
-		resolveRuleOptions(rule, resourceType, isBlocked);
-
-		if (isBlocked)
-		{
-			isBlocked = !rule->isException;
+			isBlocked = !rule->exceptionRuleOption.testFlag(ThirdPartyOption);
 		}
 	}
 
-	return isBlocked;
+	QList<QPair<RuleOption, ContentBlockingManager::ResourceType> > options({qMakePair(ImageOption, ContentBlockingManager::ImageType), qMakePair(ScriptOption, ContentBlockingManager::ScriptType), qMakePair(StyleSheetOption, ContentBlockingManager::StyleSheetType), qMakePair(ObjectOption, ContentBlockingManager::ObjectType), qMakePair(XmlHttpRequestOption, ContentBlockingManager::XmlHttpRequestType)});
+///TODO SubDocumentOption and ObjectSubRequestOption
+
+	for (int i = 0; i < options.count(); ++i)
+	{
+		if (rule->ruleOption.testFlag(options.at(i).first))
+		{
+			if (resourceType == options.at(i).second)
+			{
+				isBlocked = (isBlocked ? !rule->exceptionRuleOption.testFlag(options.at(i).first) : isBlocked);
+			}
+			else
+			{
+				isBlocked = (isBlocked ? rule->exceptionRuleOption.testFlag(options.at(i).first) : isBlocked);
+			}
+		}
+	}
+
+	return (rule->isException ? !isBlocked : isBlocked);
 }
 
 }
