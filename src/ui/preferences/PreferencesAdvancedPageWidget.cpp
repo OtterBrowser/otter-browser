@@ -38,6 +38,9 @@
 
 #include "ui_PreferencesAdvancedPageWidget.h"
 
+#include <QtCore/QJsonArray>
+#include <QtCore/QJsonDocument>
+#include <QtCore/QJsonObject>
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QSettings>
 #include <QtCore/QTimer>
@@ -672,7 +675,6 @@ void PreferencesAdvancedPageWidget::manageUserAgents()
 	}
 
 	const QString selectedUserAgent(m_ui->userAgentComboBox->currentData().toString());
-
 	UserAgentsManagerDialog dialog(userAgents, this);
 
 	if (dialog.exec() == QDialog::Accepted)
@@ -1435,17 +1437,28 @@ void PreferencesAdvancedPageWidget::save()
 
 	if (m_userAgentsModified)
 	{
-		QSettings userAgents(SessionsManager::getWritableDataPath(QLatin1String("userAgents.ini")), QSettings::IniFormat);
-		userAgents.setIniCodec("UTF-8");
-		userAgents.clear();
+		QJsonDocument document;
+		QJsonArray userAgents;
 
 		for (int i = 1; i < m_ui->userAgentComboBox->count(); ++i)
 		{
-			userAgents.setValue(m_ui->userAgentComboBox->itemData(i, Qt::UserRole).toString() + "/title", m_ui->userAgentComboBox->itemText(i));
-			userAgents.setValue(m_ui->userAgentComboBox->itemData(i, Qt::UserRole).toString() + "/value", m_ui->userAgentComboBox->itemData(i, (Qt::UserRole + 1)).toString());
+			QJsonObject userAgent;
+			userAgent.insert(QLatin1String("identifier"), m_ui->userAgentComboBox->itemData(i, Qt::UserRole).toString());
+			userAgent.insert(QLatin1String("title"), m_ui->userAgentComboBox->itemText(i));
+			userAgent.insert(QLatin1String("value"), m_ui->userAgentComboBox->itemData(i, (Qt::UserRole + 1)).toString());
+
+			userAgents.append(userAgent);
 		}
 
-		userAgents.sync();
+		document.setArray(userAgents);
+
+		QFile file(SessionsManager::getWritableDataPath(QLatin1String("userAgents.json")));
+
+		if (file.open(QIODevice::WriteOnly))
+		{
+			file.write(document.toJson(QJsonDocument::Indented));
+			file.close();
+		}
 
 		NetworkManagerFactory::loadUserAgents();
 	}
