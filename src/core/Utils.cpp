@@ -119,10 +119,9 @@ QString createIdentifier(const QString &base, const QStringList &exclude, bool t
 		return identifier;
 	}
 
-	int number = 2;
-
 	const QRegularExpression expression(QLatin1String("_([0-9]+)$"));
 	const QRegularExpressionMatch match(expression.match(identifier));
+	int number(2);
 
 	if (match.hasMatch())
 	{

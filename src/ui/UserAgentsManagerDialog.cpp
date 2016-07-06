@@ -21,6 +21,7 @@
 #include "ItemDelegate.h"
 #include "../core/NetworkManagerFactory.h"
 #include "../core/ThemesManager.h"
+#include "../core/Utils.h"
 
 #include "ui_UserAgentsManagerDialog.h"
 
@@ -107,15 +108,7 @@ QList<UserAgentInformation> UserAgentsManagerDialog::getUserAgents() const
 
 		if (identifier.isEmpty() || identifiers.contains(identifier))
 		{
-			int number(1);
-
-			do
-			{
-				identifier = QString("custom_%1").arg(number);
-
-				++number;
-			}
-			while (identifiers.contains(identifier));
+			identifier = Utils::createIdentifier(QString(), identifiers);
 		}
 
 		identifiers.append(identifier);
