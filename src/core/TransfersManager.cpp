@@ -596,7 +596,14 @@ QString Transfer::getSuggestedFileName()
 
 	if (m_reply->hasRawHeader(QStringLiteral("Content-Disposition").toLatin1()))
 	{
-		url = QUrl(QRegularExpression(QLatin1String(" filename=\"?([^\"]+)\"?")).match(QString(m_reply->rawHeader(QStringLiteral("Content-Disposition").toLatin1()))).captured(1));
+		fileName = QRegularExpression(QLatin1String(" filename=[\"]?([^\"]+)[\"]?(; )?")).match(QString(m_reply->rawHeader(QStringLiteral("Content-Disposition").toLatin1()))).captured(1);
+
+		if (fileName.contains(QLatin1String("; ")))
+		{
+			fileName = fileName.section(QLatin1String("; "), 0, 0);
+		}
+
+		url = QUrl(fileName);
 
 		fileName = url.fileName();
 	}
