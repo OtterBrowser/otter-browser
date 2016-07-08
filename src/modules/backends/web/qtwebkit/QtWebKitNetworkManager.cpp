@@ -104,11 +104,11 @@ void QtWebKitNetworkManager::timerEvent(QTimerEvent *event)
 	updateLoadingSpeed();
 }
 
-void QtWebKitNetworkManager::addContentBlockingException(const QUrl &url, ContentBlockingManager::ResourceType resourceType)
+void QtWebKitNetworkManager::addContentBlockingException(const QUrl &url, NetworkManager::ResourceType resourceType)
 {
 	m_contentBlockingExceptions.insert(url);
 
-	if (resourceType == ContentBlockingManager::ImageType && m_widget->getOption(QLatin1String("Browser/EnableImages"), m_widget->getUrl()).toString() == QLatin1String("onlyCached"))
+	if (resourceType == NetworkManager::ImageType && m_widget->getOption(QLatin1String("Browser/EnableImages"), m_widget->getUrl()).toString() == QLatin1String("onlyCached"))
 	{
 		m_areImagesEnabled = false;
 	}
@@ -586,38 +586,38 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 			{
 				const QByteArray acceptHeader(request.rawHeader(QByteArray("Accept")));
 				const QString path(request.url().path());
-				ContentBlockingManager::ResourceType resourceType(ContentBlockingManager::OtherType);
+				NetworkManager::ResourceType resourceType(NetworkManager::OtherType);
 				bool storeBlockedUrl(true);
 
 				if (!m_baseReply)
 				{
-					resourceType = ContentBlockingManager::MainFrameType;
+					resourceType = NetworkManager::MainFrameType;
 				}
 				else if (acceptHeader.contains(QByteArray("text/html")) || acceptHeader.contains(QByteArray("application/xhtml+xml")) || acceptHeader.contains(QByteArray("application/xml")) || path.endsWith(QLatin1String(".htm")) || path.endsWith(QLatin1String(".html")))
 				{
-					resourceType = ContentBlockingManager::SubFrameType;
+					resourceType = NetworkManager::SubFrameType;
 				}
 				else if (acceptHeader.contains(QByteArray("image/")) || path.endsWith(QLatin1String(".png")) || path.endsWith(QLatin1String(".jpg")) || path.endsWith(QLatin1String(".gif")))
 				{
-					resourceType = ContentBlockingManager::ImageType;
+					resourceType = NetworkManager::ImageType;
 				}
 				else if (acceptHeader.contains(QByteArray("script/")) || path.endsWith(QLatin1String(".js")))
 				{
-					resourceType = ContentBlockingManager::ScriptType;
+					resourceType = NetworkManager::ScriptType;
 					storeBlockedUrl = false;
 				}
 				else if (acceptHeader.contains(QByteArray("text/css")) || path.endsWith(QLatin1String(".css")))
 				{
-					resourceType = ContentBlockingManager::StyleSheetType;
+					resourceType = NetworkManager::StyleSheetType;
 					storeBlockedUrl = false;
 				}
 				else if (acceptHeader.contains(QByteArray("object")))
 				{
-					resourceType = ContentBlockingManager::ObjectType;
+					resourceType = NetworkManager::ObjectType;
 				}
 				else if (request.rawHeader(QByteArray("X-Requested-With")) == QByteArray("XMLHttpRequest"))
 				{
-					resourceType = ContentBlockingManager::XmlHttpRequestType;
+					resourceType = NetworkManager::XmlHttpRequestType;
 				}
 
 				const ContentBlockingManager::CheckResult result(ContentBlockingManager::checkUrl(m_contentBlockingProfiles, m_widget->getUrl(), request.url(), resourceType));

@@ -32,6 +32,18 @@ class NetworkManager : public QNetworkAccessManager
 	Q_OBJECT
 
 public:
+	enum ResourceType
+	{
+		OtherType = 0,
+		MainFrameType,
+		SubFrameType,
+		StyleSheetType,
+		ScriptType,
+		ImageType,
+		ObjectType,
+		XmlHttpRequestType
+	};
+
 	explicit NetworkManager(bool isPrivate = false, QObject *parent = NULL);
 
 	CookieJar* getCookieJar();

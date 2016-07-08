@@ -24,10 +24,7 @@
 
 #include "ContentBlockingManager.h"
 
-#include <QtCore/QObject>
 #include <QtCore/QRegularExpression>
-#include <QtCore/QUrl>
-#include <QtNetwork/QNetworkReply>
 
 namespace Otter
 {
@@ -73,7 +70,7 @@ public:
 	explicit ContentBlockingProfile(const QString &path, QObject *parent = NULL);
 
 	ContentBlockingInformation getInformation() const;
-	ContentBlockingManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, ContentBlockingManager::ResourceType resourceType);
+	ContentBlockingManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType);
 	QStringList getStyleSheet();
 	QStringList getStyleSheetBlackList(const QString &domain);
 	QStringList getStyleSheetWhiteList(const QString &domain);
@@ -97,8 +94,8 @@ protected:
 	void deleteNode(Node *node);
 	bool loadRules();
 	bool resolveDomainExceptions(const QString &url, const QStringList &ruleList);
-	bool checkUrlSubstring(Node *node, const QString &subString, QString currentRule, ContentBlockingManager::ResourceType resourceType);
-	bool checkRuleMatch(ContentBlockingRule *rule, const QString &currentRule, ContentBlockingManager::ResourceType resourceType);
+	bool checkUrlSubstring(Node *node, const QString &subString, QString currentRule, NetworkManager::ResourceType resourceType);
+	bool checkRuleMatch(ContentBlockingRule *rule, const QString &currentRule, NetworkManager::ResourceType resourceType);
 
 protected slots:
 	void optionChanged(const QString &option);

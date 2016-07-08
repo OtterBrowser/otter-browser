@@ -92,40 +92,40 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 		return;
 	}
 
-	ContentBlockingManager::ResourceType resourceType(ContentBlockingManager::OtherType);
+	NetworkManager::ResourceType resourceType(NetworkManager::OtherType);
 	bool storeBlockedUrl(true);
 
 	switch (request.resourceType())
 	{
 		case QWebEngineUrlRequestInfo::ResourceTypeMainFrame:
-			resourceType = ContentBlockingManager::MainFrameType;
+			resourceType = NetworkManager::MainFrameType;
 
 			break;
 		case QWebEngineUrlRequestInfo::ResourceTypeSubFrame:
-			resourceType = ContentBlockingManager::SubFrameType;
+			resourceType = NetworkManager::SubFrameType;
 
 			break;
 		case QWebEngineUrlRequestInfo::ResourceTypeStylesheet:
-			resourceType = ContentBlockingManager::StyleSheetType;
+			resourceType = NetworkManager::StyleSheetType;
 			storeBlockedUrl = false;
 
 			break;
 		case QWebEngineUrlRequestInfo::ResourceTypeScript:
-			resourceType = ContentBlockingManager::ScriptType;
+			resourceType = NetworkManager::ScriptType;
 			storeBlockedUrl = false;
 
 			break;
 		case QWebEngineUrlRequestInfo::ResourceTypeImage:
-			resourceType = ContentBlockingManager::ImageType;
+			resourceType = NetworkManager::ImageType;
 
 			break;
 		case QWebEngineUrlRequestInfo::ResourceTypeObject:
 		case QWebEngineUrlRequestInfo::ResourceTypeMedia:
-			resourceType = ContentBlockingManager::ObjectType;
+			resourceType = NetworkManager::ObjectType;
 
 			break;
 		case QWebEngineUrlRequestInfo::ResourceTypeXhr:
-			resourceType = ContentBlockingManager::XmlHttpRequestType;
+			resourceType = NetworkManager::XmlHttpRequestType;
 
 			break;
 		default:

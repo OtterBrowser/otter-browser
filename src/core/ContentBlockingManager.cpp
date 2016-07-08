@@ -86,7 +86,7 @@ ContentBlockingManager* ContentBlockingManager::getInstance()
 	return m_instance;
 }
 
-ContentBlockingManager::CheckResult ContentBlockingManager::checkUrl(const QVector<int> &profiles, const QUrl &baseUrl, const QUrl &requestUrl, ResourceType resourceType)
+ContentBlockingManager::CheckResult ContentBlockingManager::checkUrl(const QVector<int> &profiles, const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType)
 {
 	if (profiles.isEmpty())
 	{

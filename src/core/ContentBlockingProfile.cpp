@@ -434,7 +434,7 @@ ContentBlockingInformation ContentBlockingProfile::getInformation() const
 	return m_information;
 }
 
-ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, ContentBlockingManager::ResourceType resourceType)
+ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType)
 {
 	if (!m_wasLoaded)
 	{
@@ -583,7 +583,7 @@ bool ContentBlockingProfile::resolveDomainExceptions(const QString &url, const Q
 	return false;
 }
 
-bool ContentBlockingProfile::checkUrlSubstring(Node *node, const QString &subString, QString currentRule, ContentBlockingManager::ResourceType resourceType)
+bool ContentBlockingProfile::checkUrlSubstring(Node *node, const QString &subString, QString currentRule, NetworkManager::ResourceType resourceType)
 {
 	for (int i = 0; i < subString.length(); ++i)
 	{
@@ -639,7 +639,7 @@ bool ContentBlockingProfile::checkUrlSubstring(Node *node, const QString &subStr
 	return false;
 }
 
-bool ContentBlockingProfile::checkRuleMatch(ContentBlockingRule *rule, const QString &currentRule, ContentBlockingManager::ResourceType resourceType)
+bool ContentBlockingProfile::checkRuleMatch(ContentBlockingRule *rule, const QString &currentRule, NetworkManager::ResourceType resourceType)
 {
 	if (!m_requestUrl.contains(currentRule))
 	{
@@ -670,7 +670,7 @@ bool ContentBlockingProfile::checkRuleMatch(ContentBlockingRule *rule, const QSt
 		}
 	}
 
-	QList<QPair<RuleOption, ContentBlockingManager::ResourceType> > options({qMakePair(ImageOption, ContentBlockingManager::ImageType), qMakePair(ScriptOption, ContentBlockingManager::ScriptType), qMakePair(StyleSheetOption, ContentBlockingManager::StyleSheetType), qMakePair(ObjectOption, ContentBlockingManager::ObjectType), qMakePair(XmlHttpRequestOption, ContentBlockingManager::XmlHttpRequestType)});
+	QList<QPair<RuleOption, NetworkManager::ResourceType> > options({qMakePair(ImageOption, NetworkManager::ImageType), qMakePair(ScriptOption, NetworkManager::ScriptType), qMakePair(StyleSheetOption, NetworkManager::StyleSheetType), qMakePair(ObjectOption, NetworkManager::ObjectType), qMakePair(XmlHttpRequestOption, NetworkManager::XmlHttpRequestType)});
 ///TODO SubDocumentOption and ObjectSubRequestOption
 
 	for (int i = 0; i < options.count(); ++i)

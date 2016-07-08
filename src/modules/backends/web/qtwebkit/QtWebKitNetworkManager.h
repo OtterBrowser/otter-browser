@@ -52,7 +52,7 @@ public:
 
 protected:
 	void timerEvent(QTimerEvent *event);
-	void addContentBlockingException(const QUrl &url, ContentBlockingManager::ResourceType resourceType);
+	void addContentBlockingException(const QUrl &url, NetworkManager::ResourceType resourceType);
 	void resetStatistics();
 	void registerTransfer(QNetworkReply *reply);
 	void updateLoadingSpeed();

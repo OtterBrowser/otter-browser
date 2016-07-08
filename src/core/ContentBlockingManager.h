@@ -21,8 +21,9 @@
 #ifndef OTTER_CONTENTBLOCKINGMANAGER_H
 #define OTTER_CONTENTBLOCKINGMANAGER_H
 
-#include <QtCore/QObject>
-#include <QtNetwork/QNetworkRequest>
+#include "NetworkManager.h"
+
+#include <QtCore/QUrl>
 
 namespace Otter
 {
@@ -35,31 +36,19 @@ class ContentBlockingManager : public QObject
 	Q_OBJECT
 
 public:
-	enum ResourceType
-	{
-		OtherType = 0,
-		MainFrameType,
-		SubFrameType,
-		StyleSheetType,
-		ScriptType,
-		ImageType,
-		ObjectType,
-		XmlHttpRequestType
-	};
-
 	struct CheckResult
 	{
 		QUrl url;
 		QString profile;
-		ResourceType resourceType;
+		NetworkManager::ResourceType resourceType;
 		bool isBlocked;
 
-		CheckResult() : resourceType(OtherType), isBlocked(false) {}
+		CheckResult() : resourceType(NetworkManager::OtherType), isBlocked(false) {}
 	};
 
 	static void createInstance(QObject *parent = NULL);
 	static ContentBlockingManager* getInstance();
-	static CheckResult checkUrl(const QVector<int> &profiles, const QUrl &baseUrl, const QUrl &requestUrl, ResourceType resourceType);
+	static CheckResult checkUrl(const QVector<int> &profiles, const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType);
 	static ContentBlockingInformation getProfile(const QString &profile);
 	static QStringList createSubdomainList(const QString &domain);
 	static QStringList getStyleSheet(const QVector<int> &profiles);

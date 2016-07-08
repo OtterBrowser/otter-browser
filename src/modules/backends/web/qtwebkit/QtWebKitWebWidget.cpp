@@ -1059,7 +1059,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				if (hitResult.frame())
 				{
-					m_networkManager->addContentBlockingException(url, ContentBlockingManager::SubFrameType);
+					m_networkManager->addContentBlockingException(url, NetworkManager::SubFrameType);
 
 					hitResult.frame()->setUrl(QUrl());
 					hitResult.frame()->setUrl(url);
@@ -1138,7 +1138,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 		case ActionsManager::ReloadImageAction:
 			if (!getCurrentHitTestResult().imageUrl.isEmpty())
 			{
-				m_networkManager->addContentBlockingException(getCurrentHitTestResult().imageUrl, ContentBlockingManager::ImageType);
+				m_networkManager->addContentBlockingException(getCurrentHitTestResult().imageUrl, NetworkManager::ImageType);
 
 				m_page->settings()->setAttribute(QWebSettings::AutoLoadImages, true);
 
