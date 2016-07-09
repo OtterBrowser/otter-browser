@@ -595,7 +595,7 @@ void TabBarWidget::optionChanged(const QString &option, const QVariant &value)
 	}
 	else if (option == QLatin1String("TabBar/MaximumTabSize"))
 	{
-		const int oldValue = m_maximumTabSize;
+		const int oldValue(m_maximumTabSize);
 
 		m_maximumTabSize = value.toInt();
 

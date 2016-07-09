@@ -472,7 +472,7 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 	}
 	else if (option == QLatin1String("AddressField/DropAction"))
 	{
-		const QString dropAction = value.toString();
+		const QString dropAction(value.toString());
 
 		if (dropAction == QLatin1String("pasteAndGo"))
 		{

@@ -50,8 +50,8 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 {
 	if (element.tagName().toLower() == QLatin1String("h3"))
 	{
-		BookmarksItem *bookmark = BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, QUrl(), element.toPlainText(), getCurrentFolder());
-		const QString keyword = element.attribute(QLatin1String("SHORTCUTURL"));
+		BookmarksItem *bookmark(BookmarksManager::addBookmark(BookmarksModel::FolderBookmark, QUrl(), element.toPlainText(), getCurrentFolder()));
+		const QString keyword(element.attribute(QLatin1String("SHORTCUTURL")));
 
 		if (!BookmarksManager::hasKeyword(keyword))
 		{
@@ -60,7 +60,7 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 
 		if (!element.attribute(QLatin1String("ADD_DATE")).isEmpty())
 		{
-			const QDateTime time = QDateTime::fromTime_t(element.attribute(QLatin1String("ADD_DATE")).toUInt());
+			const QDateTime time(QDateTime::fromTime_t(element.attribute(QLatin1String("ADD_DATE")).toUInt()));
 
 			bookmark->setData(time, BookmarksModel::TimeAddedRole);
 			bookmark->setData(time, BookmarksModel::TimeModifiedRole);
@@ -77,8 +77,8 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 			return;
 		}
 
-		BookmarksItem *bookmark = BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, url, element.toPlainText(), getCurrentFolder());
-		const QString keyword = element.attribute(QLatin1String("SHORTCUTURL"));
+		BookmarksItem *bookmark(BookmarksManager::addBookmark(BookmarksModel::UrlBookmark, url, element.toPlainText(), getCurrentFolder()));
+		const QString keyword(element.attribute(QLatin1String("SHORTCUTURL")));
 
 		if (!BookmarksManager::hasKeyword(keyword))
 		{
@@ -110,7 +110,7 @@ void HtmlBookmarksImporter::processElement(const QWebElement &element)
 		BookmarksManager::addBookmark(BookmarksModel::SeparatorBookmark, QUrl(), QString(), getCurrentFolder());
 	}
 
-	const QWebElementCollection descendants = element.findAll(QLatin1String("*"));
+	const QWebElementCollection descendants(element.findAll(QLatin1String("*")));
 
 	for (int i = 0; i < descendants.count(); ++i)
 	{

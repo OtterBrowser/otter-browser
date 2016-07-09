@@ -32,7 +32,7 @@ StartPagePreferencesDialog::StartPagePreferencesDialog(QWidget *parent) : Dialog
 {
 	m_ui->setupUi(this);
 
-	const QString backgroundModeString = SettingsManager::getValue(QLatin1String("StartPage/BackgroundMode")).toString();
+	const QString backgroundModeString(SettingsManager::getValue(QLatin1String("StartPage/BackgroundMode")).toString());
 
 	m_ui->customBackgroundCheckBox->setChecked(backgroundModeString != QLatin1String("standard"));
 	m_ui->backgroundFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("StartPage/BackgroundPath")).toString());
@@ -43,7 +43,7 @@ StartPagePreferencesDialog::StartPagePreferencesDialog(QWidget *parent) : Dialog
 	m_ui->backgroundModeComboBox->addItem(tr("Tile"), QLatin1String("tile"));
 	m_ui->backgroundColorWidget->setColor(SettingsManager::getValue(QLatin1String("StartPage/BackgroundColor")).toString());
 
-	const int backgroundModeIndex = m_ui->backgroundModeComboBox->findData(backgroundModeString);
+	const int backgroundModeIndex(m_ui->backgroundModeComboBox->findData(backgroundModeString));
 
 	m_ui->backgroundModeComboBox->setCurrentIndex((backgroundModeIndex < 0) ? 0 : backgroundModeIndex);
 	m_ui->backgroundWidget->setEnabled(m_ui->customBackgroundCheckBox->isChecked());
@@ -74,7 +74,7 @@ void StartPagePreferencesDialog::changeEvent(QEvent *event)
 
 void StartPagePreferencesDialog::save()
 {
-	const QString backgroundModeString = m_ui->backgroundModeComboBox->currentData().toString();
+	const QString backgroundModeString(m_ui->backgroundModeComboBox->currentData().toString());
 
 	SettingsManager::setValue(QLatin1String("StartPage/BackgroundColor"), (m_ui->backgroundColorWidget->getColor().isValid() ? m_ui->backgroundColorWidget->getColor().name() : QString()));
 	SettingsManager::setValue(QLatin1String("StartPage/BackgroundMode"), (m_ui->customBackgroundCheckBox->isChecked() ? backgroundModeString : QLatin1String("standard")));

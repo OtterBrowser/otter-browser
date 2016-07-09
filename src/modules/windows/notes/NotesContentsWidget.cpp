@@ -228,7 +228,7 @@ void NotesContentsWidget::triggerAction(int identifier, const QVariantMap &param
 		case ActionsManager::PasteAction:
 			if (!QGuiApplication::clipboard()->text().isEmpty())
 			{
-				BookmarksItem *bookmark = NotesManager::addNote(BookmarksModel::UrlBookmark, QUrl(), QString(), findFolder(m_ui->notesViewWidget->currentIndex()));
+				BookmarksItem *bookmark(NotesManager::addNote(BookmarksModel::UrlBookmark, QUrl(), QString(), findFolder(m_ui->notesViewWidget->currentIndex())));
 				bookmark->setData(QGuiApplication::clipboard()->text(), BookmarksModel::DescriptionRole);
 			}
 

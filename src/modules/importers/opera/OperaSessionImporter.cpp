@@ -116,7 +116,7 @@ bool OperaSessionImporter::import(const QString &path)
 	SessionInformation session;
 	session.title = QFileInfo(path).completeBaseName();
 
-	const int windowCount = originalSession.getValue(QLatin1String("window count")).toInt();
+	const int windowCount(originalSession.getValue(QLatin1String("window count")).toInt());
 
 	for (int i = 1; i <= windowCount; ++i)
 	{
@@ -124,7 +124,7 @@ bool OperaSessionImporter::import(const QString &path)
 
 		if (originalSession.getValue(QLatin1String("type")).toInt() == 0)
 		{
-			SessionMainWindow *mainWindow = new SessionMainWindow();
+			SessionMainWindow *mainWindow(new SessionMainWindow());
 
 			mainWindows.insert(originalSession.getValue(QLatin1String("id")).toInt(), mainWindow);
 
@@ -161,11 +161,11 @@ bool OperaSessionImporter::import(const QString &path)
 		window.historyIndex = (originalSession.getValue(QLatin1String("current history")).toInt() - 1);
 		window.isPinned = originalSession.getValue(QLatin1String("locked")).toInt();
 
-		const int zoom = originalSession.getValue(QLatin1String("scale")).toInt();
+		const int zoom(originalSession.getValue(QLatin1String("scale")).toInt());
 
 		originalSession.beginGroup(QString::number(i) + QLatin1String("history url"));
 
-		const int historyCount = originalSession.getValue(QLatin1String("count")).toInt();
+		const int historyCount(originalSession.getValue(QLatin1String("count")).toInt());
 
 		for (int j = 0; j < historyCount; ++j)
 		{
@@ -195,7 +195,7 @@ bool OperaSessionImporter::import(const QString &path)
 		{
 			originalSession.beginGroup(QString::number(i));
 
-			const QString panel = originalSession.getValue(QLatin1String("panel type")).toString();
+			const QString panel(originalSession.getValue(QLatin1String("panel type")).toString());
 
 			if (!panel.isEmpty())
 			{
@@ -237,7 +237,7 @@ bool OperaSessionImporter::import(const QString &path)
 			window.historyIndex = (window.historyIndex + 1);
 		}
 
-		const int parent = originalSession.getValue(QLatin1String("parent")).toInt();
+		const int parent(originalSession.getValue(QLatin1String("parent")).toInt());
 
 		if (parent > 0 && mainWindows.contains(parent))
 		{
@@ -257,7 +257,7 @@ bool OperaSessionImporter::import(const QString &path)
 		session.windows.append(**iterator);
 	}
 
-	const bool result = SessionsManager::saveSession(session);
+	const bool result(SessionsManager::saveSession(session));
 
 	qDeleteAll(mainWindows);
 

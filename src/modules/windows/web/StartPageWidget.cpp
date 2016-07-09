@@ -429,7 +429,7 @@ void StartPageWidget::openTile()
 		return;
 	}
 
-	const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(m_currentIndex.data(BookmarksModel::TypeRole).toInt());
+	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(m_currentIndex.data(BookmarksModel::TypeRole).toInt()));
 
 	if (type == BookmarksModel::FolderBookmark)
 	{

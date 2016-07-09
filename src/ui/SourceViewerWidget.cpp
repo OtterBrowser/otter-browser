@@ -54,7 +54,7 @@ SyntaxHighlighter::SyntaxHighlighter(QTextDocument *parent) : QSyntaxHighlighter
 
 			for (int j = 0; j < highlightingStateEnum.keyCount(); ++j)
 			{
-				QString state = highlightingStateEnum.valueToKey(j);
+				QString state(highlightingStateEnum.valueToKey(j));
 				state.chop(5);
 
 				const QJsonObject definition(definitions.value(state).toObject());

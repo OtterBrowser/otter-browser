@@ -387,47 +387,47 @@ void WebsitePreferencesDialog::updateValues(bool checked)
 
 void WebsitePreferencesDialog::valueChanged()
 {
-	QWidget *widget = qobject_cast<QWidget*>(sender());
+	QWidget *widget(qobject_cast<QWidget*>(sender()));
 
 	if (!widget || !m_updateOverride)
 	{
 		return;
 	}
 
-	QWidget *tab = qobject_cast<QWidget*>(widget->parent());
+	QWidget *tab(qobject_cast<QWidget*>(widget->parent()));
 
 	if (!tab)
 	{
 		return;
 	}
 
-	QGridLayout *layout = qobject_cast<QGridLayout*>(tab->layout());
+	QGridLayout *layout(qobject_cast<QGridLayout*>(tab->layout()));
 
 	if (!layout)
 	{
 		return;
 	}
 
-	const int index = layout->indexOf(widget);
+	const int index(layout->indexOf(widget));
 
 	if (index < 0)
 	{
 		return;
 	}
 
-	int row = 0;
-	int dummy = 0;
+	int row(0);
+	int dummy(0);
 
 	layout->getItemPosition(index, &row, &dummy, &dummy, &dummy);
 
-	QLayoutItem *item = layout->itemAtPosition(row, 0);
+	QLayoutItem *item(layout->itemAtPosition(row, 0));
 
 	if (!item)
 	{
 		return;
 	}
 
-	QCheckBox *overrideCheckBox = qobject_cast<QCheckBox*>(item->widget());
+	QCheckBox *overrideCheckBox(qobject_cast<QCheckBox*>(item->widget()));
 
 	if (!overrideCheckBox)
 	{

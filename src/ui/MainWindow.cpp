@@ -255,9 +255,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 		return;
 	}
 
-	Application *application = Application::getInstance();
-
-	if (application->getWindows().count() == 1)
+	if (Application::getInstance()->getWindows().count() == 1)
 	{
 		if (SessionsManager::getCurrentSession() == QLatin1String("default"))
 		{
@@ -271,7 +269,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 	m_windowsManager->closeAll();
 
-	application->removeWindow(this);
+	Application::getInstance()->removeWindow(this);
 
 	event->accept();
 }

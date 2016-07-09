@@ -60,7 +60,7 @@ CookieJar::CookieJar(bool isPrivate, QObject *parent) : QNetworkCookieJar(parent
 
 		stream >> value;
 
-		const QList<QNetworkCookie> cookies = QNetworkCookie::parseCookies(value);
+		const QList<QNetworkCookie> cookies(QNetworkCookie::parseCookies(value));
 
 		for (int j = 0; j < cookies.count(); ++j)
 		{
@@ -124,7 +124,7 @@ void CookieJar::clearCookies(int period)
 {
 	Q_UNUSED(period)
 
-	const QList<QNetworkCookie> cookies = allCookies();
+	const QList<QNetworkCookie> cookies(allCookies());
 
 	for (int i = 0; i < cookies.count(); ++i)
 	{
@@ -158,7 +158,7 @@ void CookieJar::save()
 		return;
 	}
 
-	const QList<QNetworkCookie> cookies = allCookies();
+	const QList<QNetworkCookie> cookies(allCookies());
 	QDataStream stream(&file);
 	stream << quint32(cookies.count());
 
@@ -175,7 +175,7 @@ void CookieJar::save()
 
 CookieJar* CookieJar::clone(QObject *parent)
 {
-	CookieJar *cookieJar = new CookieJar(m_isPrivate, parent);
+	CookieJar *cookieJar(new CookieJar(m_isPrivate, parent));
 	cookieJar->setAllCookies(allCookies());
 
 	return cookieJar;
@@ -200,7 +200,7 @@ QList<QNetworkCookie> CookieJar::getCookies(const QString &domain) const
 {
 	if (!domain.isEmpty())
 	{
-		const QList<QNetworkCookie> cookies = allCookies();
+		const QList<QNetworkCookie> cookies(allCookies());
 		QList<QNetworkCookie> domainCookies;
 
 		for (int i = 0; i < cookies.count(); ++i)
@@ -224,7 +224,7 @@ bool CookieJar::insertCookie(const QNetworkCookie &cookie)
 		return false;
 	}
 
-	const bool result = QNetworkCookieJar::insertCookie(cookie);
+	const bool result(QNetworkCookieJar::insertCookie(cookie));
 
 	if (result)
 	{
@@ -243,7 +243,7 @@ bool CookieJar::updateCookie(const QNetworkCookie &cookie)
 		return false;
 	}
 
-	const bool result = QNetworkCookieJar::updateCookie(cookie);
+	const bool result(QNetworkCookieJar::updateCookie(cookie));
 
 	if (result)
 	{
@@ -260,7 +260,7 @@ bool CookieJar::deleteCookie(const QNetworkCookie &cookie)
 		return false;
 	}
 
-	const bool result = QNetworkCookieJar::deleteCookie(cookie);
+	const bool result(QNetworkCookieJar::deleteCookie(cookie));
 
 	if (result)
 	{
@@ -274,7 +274,7 @@ bool CookieJar::deleteCookie(const QNetworkCookie &cookie)
 
 bool CookieJar::forceInsertCookie(const QNetworkCookie &cookie)
 {
-	const bool result = QNetworkCookieJar::insertCookie(cookie);
+	const bool result(QNetworkCookieJar::insertCookie(cookie));
 
 	if (result)
 	{
@@ -288,7 +288,7 @@ bool CookieJar::forceInsertCookie(const QNetworkCookie &cookie)
 
 bool CookieJar::forceUpdateCookie(const QNetworkCookie &cookie)
 {
-	const bool result = QNetworkCookieJar::updateCookie(cookie);
+	const bool result(QNetworkCookieJar::updateCookie(cookie));
 
 	if (result)
 	{
@@ -300,7 +300,7 @@ bool CookieJar::forceUpdateCookie(const QNetworkCookie &cookie)
 
 bool CookieJar::forceDeleteCookie(const QNetworkCookie &cookie)
 {
-	const bool result = QNetworkCookieJar::deleteCookie(cookie);
+	const bool result(QNetworkCookieJar::deleteCookie(cookie));
 
 	if (result)
 	{
@@ -319,7 +319,7 @@ bool CookieJar::hasCookie(const QNetworkCookie &cookie) const
 	url.setHost(cookie.domain().startsWith(QLatin1Char('.')) ? cookie.domain().mid(1) : cookie.domain());
 	url.setPath(cookie.path());
 
-	const QList<QNetworkCookie> cookies = getCookiesForUrl(url);
+	const QList<QNetworkCookie> cookies(getCookiesForUrl(url));
 
 	for (int i = 0; i < cookies.count(); ++i)
 	{
@@ -334,18 +334,18 @@ bool CookieJar::hasCookie(const QNetworkCookie &cookie) const
 
 bool CookieJar::isDomainTheSame(const QUrl &first, const QUrl &second)
 {
-	const QString firstTld = first.topLevelDomain();
-	const QString secondTld = second.topLevelDomain();
+	const QString firstTld(first.topLevelDomain());
+	const QString secondTld(second.topLevelDomain());
 
 	if (firstTld != secondTld)
 	{
 		return false;
 	}
 
-	QString firstDomain = QLatin1Char('.') + first.host().toLower();
+	QString firstDomain(QLatin1Char('.') + first.host().toLower());
 	firstDomain.remove((firstDomain.length() - firstTld.length()), firstTld.length());
 
-	QString secondDomain = QLatin1Char('.') + second.host().toLower();
+	QString secondDomain(QLatin1Char('.') + second.host().toLower());
 	secondDomain.remove((secondDomain.length() - secondTld.length()), secondTld.length());
 
 	if (firstDomain.section(QLatin1Char('.'), -1) == secondDomain.section(QLatin1Char('.'), -1))

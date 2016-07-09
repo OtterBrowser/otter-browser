@@ -54,10 +54,10 @@ LocalListingNetworkReply::LocalListingNetworkReply(QObject *parent, const QNetwo
 	QTextStream stream(&file);
 	stream.setCodec("UTF-8");
 
-	QString mainTemplate = stream.readAll();
-	const QString entryTemplate = entryExpression.match(mainTemplate).captured(1);
+	QString mainTemplate(stream.readAll());
+	const QString entryTemplate(entryExpression.match(mainTemplate).captured(1));
 	QDir directory(request.url().toLocalFile());
-	const QFileInfoList entries = directory.entryInfoList((QDir::AllEntries | QDir::Hidden), (QDir::Name | QDir::DirsFirst));
+	const QFileInfoList entries(directory.entryInfoList((QDir::AllEntries | QDir::Hidden), (QDir::Name | QDir::DirsFirst)));
 	QStringList navigation;
 
 	do
@@ -144,7 +144,7 @@ qint64 LocalListingNetworkReply::readData(char *data, qint64 maxSize)
 {
 	if (m_offset < m_content.size())
 	{
-		qint64 number = qMin(maxSize, m_content.size() - m_offset);
+		qint64 number(qMin(maxSize, m_content.size() - m_offset));
 
 		memcpy(data, (m_content.constData() + m_offset), number);
 

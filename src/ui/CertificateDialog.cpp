@@ -151,20 +151,20 @@ void CertificateDialog::updateCertificate()
 	createField(SignatureAlgorithmField);
 	createField(IssuerField);
 
-	QStandardItem *validityItem = createField(ValidityField);
+	QStandardItem *validityItem(createField(ValidityField));
 	validityItem->setFlags(Qt::ItemIsEnabled);
 
 	createField(ValidityNotBeforeField, validityItem);
 	createField(ValidityNotAfterField, validityItem);
 	createField(SubjectField);
 
-	QStandardItem *publicKeyItem = createField(PublicKeyField);
+	QStandardItem *publicKeyItem(createField(PublicKeyField));
 	publicKeyItem->setFlags(Qt::ItemIsEnabled);
 
 	createField(PublicKeyAlgorithmField, publicKeyItem);
 	createField(PublicKeyValueField, publicKeyItem);
 
-	QStandardItem *extensionsItem = createField(ExtensionsField);
+	QStandardItem *extensionsItem(createField(ExtensionsField));
 	extensionsItem->setFlags(Qt::ItemIsEnabled);
 	extensionsItem->setEnabled(certificate.extensions().count() > 0);
 

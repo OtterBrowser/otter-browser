@@ -64,7 +64,7 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 	QFont font(this->font());
 	font.setBold(true);
 
-	QLabel *titleLabel = new QLabel(title, m_headerWidget);
+	QLabel *titleLabel(new QLabel(title, m_headerWidget));
 	titleLabel->setToolTip(title);
 	titleLabel->setFont(font);
 

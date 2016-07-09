@@ -36,7 +36,7 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, QWid
 	m_index(-1),
 	m_ui(new Ui::BookmarkPropertiesDialog)
 {
-	const BookmarksModel::BookmarkType type = static_cast<BookmarksModel::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt());
+	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt()));
 
 	m_ui->setupUi(this);
 	m_ui->folderComboBox->setCurrentFolder(dynamic_cast<BookmarksItem*>(bookmark->parent()));

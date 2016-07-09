@@ -124,7 +124,7 @@ bool OperaBookmarksImporter::import(const QString &path)
 	QTextStream stream(&file);
 	stream.setCodec("UTF-8");
 
-	QString line = stream.readLine();
+	QString line(stream.readLine());
 
 	if (line != QLatin1String("Opera Hotlist version 2.0"))
 	{
@@ -153,9 +153,9 @@ bool OperaBookmarksImporter::import(const QString &path)
 		}
 	}
 
-	BookmarksItem *bookmark = NULL;
-	OperaBookmarkEntry type = NoEntry;
-	bool isHeader = true;
+	BookmarksItem *bookmark(NULL);
+	OperaBookmarkEntry type(NoEntry);
+	bool isHeader(true);
 
 	while (!stream.atEnd())
 	{
@@ -211,7 +211,7 @@ bool OperaBookmarksImporter::import(const QString &path)
 		}
 		else if (line.startsWith(QLatin1String("\tSHORT NAME=")) && bookmark)
 		{
-			const QString keyword = line.section(QLatin1Char('='), 1, -1);
+			const QString keyword(line.section(QLatin1Char('='), 1, -1));
 
 			if (!BookmarksManager::hasKeyword(keyword))
 			{

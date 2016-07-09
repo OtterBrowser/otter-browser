@@ -51,7 +51,7 @@ Settings::Settings(const QString &path, QObject *parent) : QObject(parent)
 
 	while (!stream.atEnd())
 	{
-		const QString line = stream.readLine();
+		const QString line(stream.readLine());
 
 		if (line.startsWith(QLatin1Char(';')))
 		{

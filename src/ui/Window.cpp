@@ -371,7 +371,7 @@ void Window::setOption(const QString &key, const QVariant &value)
 {
 	if (m_contentsWidget->getType() == QLatin1String("web"))
 	{
-		WebContentsWidget *webWidget = qobject_cast<WebContentsWidget*>(m_contentsWidget);
+		WebContentsWidget *webWidget(qobject_cast<WebContentsWidget*>(m_contentsWidget));
 
 		if (webWidget)
 		{
@@ -457,7 +457,7 @@ void Window::setUrl(const QUrl &url, bool typed)
 		}
 	}
 
-	const bool isRestoring = (!m_contentsWidget && m_session.historyIndex >= 0);
+	const bool isRestoring(!m_contentsWidget && m_session.historyIndex >= 0);
 
 	if (!newWidget && (!m_contentsWidget || m_contentsWidget->getType() != QLatin1String("web")))
 	{
@@ -698,7 +698,7 @@ SessionWindow Window::getSession() const
 
 	if (m_contentsWidget)
 	{
-		const WindowHistoryInformation history = m_contentsWidget->getHistory();
+		const WindowHistoryInformation history(m_contentsWidget->getHistory());
 
 		if (m_contentsWidget->getType() == QLatin1String("web"))
 		{

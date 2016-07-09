@@ -312,7 +312,7 @@ void Menu::populateModelMenu()
 		index = ((m_role == NotesMenuRole) ? NotesManager::getModel() : BookmarksManager::getModel())->getRootItem()->index();
 	}
 
-	const QAbstractItemModel *model = index.model();
+	const QAbstractItemModel *model(index.model());
 
 	if (!model)
 	{
@@ -395,7 +395,7 @@ void Menu::populateCharacterEncodingMenu()
 
 		for (int i = 0; i < textCodecs.count(); ++i)
 		{
-			QTextCodec *codec = QTextCodec::codecForMib(textCodecs.at(i));
+			QTextCodec *codec(QTextCodec::codecForMib(textCodecs.at(i)));
 
 			if (!codec)
 			{
@@ -460,7 +460,7 @@ void Menu::populateClosedWindowsMenu()
 
 	if (mainWindow)
 	{
-		const QList<ClosedWindow> tabs = mainWindow->getWindowsManager()->getClosedWindows();
+		const QList<ClosedWindow> tabs(mainWindow->getWindowsManager()->getClosedWindows());
 
 		for (int i = 0; i < tabs.count(); ++i)
 		{

@@ -36,7 +36,7 @@ void QtWebKitPluginWidget::paintEvent(QPaintEvent *event)
 {
 	Q_UNUSED(event)
 
-	int size = 0;
+	int size(0);
 
 	if (width() > height())
 	{

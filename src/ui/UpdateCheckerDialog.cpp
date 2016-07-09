@@ -49,7 +49,7 @@ UpdateCheckerDialog::UpdateCheckerDialog(QWidget *parent, const QList<UpdateInfo
 	{
 		m_ui->label->setText(tr("Checking for updates…"));
 
-		UpdateChecker *updateChecker = new UpdateChecker(this, false);
+		UpdateChecker *updateChecker(new UpdateChecker(this, false));
 
 		connect(updateChecker, SIGNAL(finished(QList<UpdateInformation>)), this, SLOT(updateCheckFinished(QList<UpdateInformation>)));
 	}

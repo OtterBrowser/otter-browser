@@ -68,7 +68,7 @@ GesturesManager::GestureStep::GestureStep(const QInputEvent *event) : type(event
 		case QEvent::MouseButtonRelease:
 		case QEvent::MouseButtonDblClick:
 			{
-				const QMouseEvent *mouseEvent = static_cast<const QMouseEvent*>(event);
+				const QMouseEvent *mouseEvent(static_cast<const QMouseEvent*>(event));
 
 				if (mouseEvent)
 				{

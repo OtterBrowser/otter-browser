@@ -134,7 +134,7 @@ void CookiesExceptionsDialog::updateAcceptedHostsActions()
 
 void CookiesExceptionsDialog::updateRejectedHostsActions()
 {
-	const bool isEditable = (m_ui->rejectedHostsItemView->getCurrentRow() >= 0);
+	const bool isEditable(m_ui->rejectedHostsItemView->getCurrentRow() >= 0);
 
 	m_ui->editRejectedHostsButton->setEnabled(isEditable);
 	m_ui->removeRejectedHostsButton->setEnabled(isEditable);

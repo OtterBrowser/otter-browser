@@ -68,7 +68,7 @@ void ZoomWidget::mousePressEvent(QMouseEvent *event)
 
 	const QRect handle(style()->subControlRect(QStyle::CC_Slider, &option, QStyle::SC_SliderHandle, this));
 	const QRect groove(style()->subControlRect(QStyle::CC_Slider, &option, QStyle::SC_SliderGroove, this));
-	int value = 0;
+	int value(0);
 
 	if (orientation() == Qt::Horizontal)
 	{

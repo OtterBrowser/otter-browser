@@ -114,7 +114,7 @@ void CacheContentsWidget::populateCache()
 	m_model->setHorizontalHeaderLabels(QStringList({tr("Address"), tr("Type"), tr("Size"), tr("Last Modified"), tr("Expires")}));
 	m_model->setSortRole(Qt::DisplayRole);
 
-	const QList<QUrl> entries = cache->getEntries();
+	const QList<QUrl> entries(cache->getEntries());
 
 	for (int i = 0; i < entries.count(); ++i)
 	{

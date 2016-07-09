@@ -97,7 +97,7 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 
 		if (m_types.testFlag(BookmarksCompletionType))
 		{
-			const QList<BookmarksModel::BookmarkMatch> bookmarks = BookmarksManager::findBookmarks(m_filter);
+			const QList<BookmarksModel::BookmarkMatch> bookmarks(BookmarksManager::findBookmarks(m_filter));
 
 			if (m_showCompletionCategories && !bookmarks.isEmpty())
 			{
@@ -147,7 +147,7 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 
 		if (m_types.testFlag(HistoryCompletionType))
 		{
-			const QList<HistoryModel::HistoryEntryMatch> entries = HistoryManager::findEntries(m_filter);
+			const QList<HistoryModel::HistoryEntryMatch> entries(HistoryManager::findEntries(m_filter));
 
 			if (m_showCompletionCategories && !entries.isEmpty())
 			{
@@ -162,12 +162,12 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 
 		if (m_types.testFlag(SpecialPagesCompletionType))
 		{
-			const QStringList specialPages = AddonsManager::getSpecialPages();
+			const QStringList specialPages(AddonsManager::getSpecialPages());
 			bool wasAdded(!m_showCompletionCategories);
 
 			for (int i = 0; i < specialPages.count(); ++i)
 			{
-				const AddonsManager::SpecialPageInformation information = AddonsManager::getSpecialPage(specialPages.at(i));
+				const AddonsManager::SpecialPageInformation information(AddonsManager::getSpecialPage(specialPages.at(i)));
 
 				if (information.url.toString().startsWith(m_filter))
 				{

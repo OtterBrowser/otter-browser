@@ -698,7 +698,7 @@ bool Transfer::resume()
 		return restart();
 	}
 
-	QFile *file = new QFile(m_target);
+	QFile *file(new QFile(m_target));
 
 	if (!file->open(QIODevice::WriteOnly | QIODevice::Append))
 	{
@@ -819,7 +819,7 @@ bool Transfer::setTarget(const QString &target)
 			return false;
 		}
 
-		const bool success = QFile::rename(m_target, mutableTarget);
+		const bool success(QFile::rename(m_target, mutableTarget));
 
 		if (success)
 		{

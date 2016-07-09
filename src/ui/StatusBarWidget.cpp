@@ -88,7 +88,7 @@ void StatusBarWidget::toolBarModified(int identifier)
 
 void StatusBarWidget::updateSize()
 {
-	int offset = 0;
+	int offset(0);
 
 	if (isSizeGripEnabled())
 	{

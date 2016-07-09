@@ -210,7 +210,7 @@ void ToolBarDialog::addEntry()
 
 		if (targetItem && targetItem->data(Qt::UserRole).toString() == QLatin1String("CustomMenu"))
 		{
-			int row = -1;
+			int row(-1);
 
 			if (targetItem->index() != m_ui->currentEntriesItemView->currentIndex())
 			{

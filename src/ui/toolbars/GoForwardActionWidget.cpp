@@ -99,7 +99,7 @@ bool GoForwardActionWidget::event(QEvent *event)
 			menu.addAction(window ? window->getContentsWidget()->getAction(ActionsManager::ClearTabHistoryAction) : ActionsManager::getAction(ActionsManager::ClearTabHistoryAction, this));
 			menu.addAction(window ? window->getContentsWidget()->getAction(ActionsManager::PurgeTabHistoryAction) : ActionsManager::getAction(ActionsManager::PurgeTabHistoryAction, this));
 
-			ToolBarWidget *toolBar = qobject_cast<ToolBarWidget*>(parentWidget());
+			ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
 
 			if (toolBar)
 			{

@@ -478,7 +478,7 @@ void Application::showNotification(Notification *notification)
 	}
 	else
 	{
-		NotificationDialog *dialog = new NotificationDialog(notification);
+		NotificationDialog *dialog(new NotificationDialog(notification));
 		dialog->show();
 	}
 }
@@ -604,7 +604,7 @@ void Application::periodicUpdateCheck()
 
 	connect(updateChecker, SIGNAL(finished(QList<UpdateInformation>)), this, SLOT(updateCheckFinished(QList<UpdateInformation>)));
 
-	const int interval = SettingsManager::getValue(QLatin1String("Updates/CheckInterval")).toInt();
+	const int interval(SettingsManager::getValue(QLatin1String("Updates/CheckInterval")).toInt());
 
 	if (interval > 0 && !SettingsManager::getValue(QLatin1String("Updates/ActiveChannels")).toStringList().isEmpty())
 	{

@@ -203,7 +203,7 @@ bool QtWebKitCookieJar::setCookiesFromUrl(const QList<QNetworkCookie> &cookieLis
 		return false;
 	}
 
-	bool added = false;
+	bool added(false);
 
 	for (int i = 0; i < cookieList.count(); ++i)
 	{

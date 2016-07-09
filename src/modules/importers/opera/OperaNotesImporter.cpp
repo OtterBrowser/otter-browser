@@ -87,7 +87,7 @@ QWidget* OperaNotesImporter::getOptionsWidget()
 	{
 		m_optionsWidget = new QWidget();
 
-		QFormLayout *layout = new QFormLayout(m_optionsWidget);
+		QFormLayout *layout(new QFormLayout(m_optionsWidget));
 		layout->setMargin(0);
 
 		m_optionsWidget->setLayout(layout);
@@ -178,7 +178,7 @@ bool OperaNotesImporter::import(const QString &path)
 	QTextStream stream(&file);
 	stream.setCodec("UTF-8");
 
-	QString line = stream.readLine();
+	QString line(stream.readLine());
 
 	if (line != QLatin1String("Opera Hotlist version 2.0"))
 	{
@@ -190,9 +190,9 @@ bool OperaNotesImporter::import(const QString &path)
 		setImportFolder(m_folderComboBox->getCurrentFolder());
 	}
 
-	BookmarksItem *note = NULL;
-	OperaNoteEntry type = NoEntry;
-	bool isHeader = true;
+	BookmarksItem *note(NULL);
+	OperaNoteEntry type(NoEntry);
+	bool isHeader(true);
 
 	while (!stream.atEnd())
 	{
