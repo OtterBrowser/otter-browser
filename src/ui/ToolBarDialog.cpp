@@ -84,6 +84,9 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 		m_ui->folderComboBox->setCurrentFolder(BookmarksManager::getModel()->getItem(m_definition.bookmarksPath));
 		m_ui->optionsHeader->hide();
 		m_ui->arrangementWidget->hide();
+
+		setObjectName(QLatin1String("BookmarkBar"));
+		adjustSize();
 	}
 
 	QStandardItemModel *availableEntriesModel(new QStandardItemModel(this));
