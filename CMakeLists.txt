@@ -224,6 +224,7 @@ set(otter_src
 	src/ui/toolbars/ActionWidget.cpp
 	src/ui/toolbars/AddressWidget.cpp
 	src/ui/toolbars/BookmarkWidget.cpp
+	src/ui/toolbars/ContentBlockingInformationWidget.cpp
 	src/ui/toolbars/GoBackActionWidget.cpp
 	src/ui/toolbars/GoForwardActionWidget.cpp
 	src/ui/toolbars/MenuButtonWidget.cpp

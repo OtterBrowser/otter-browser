@@ -24,6 +24,7 @@
 #include "toolbars/ActionWidget.h"
 #include "toolbars/AddressWidget.h"
 #include "toolbars/BookmarkWidget.h"
+#include "toolbars/ContentBlockingInformationWidget.h"
 #include "toolbars/GoBackActionWidget.h"
 #include "toolbars/GoForwardActionWidget.h"
 #include "toolbars/MenuButtonWidget.h"
@@ -67,6 +68,11 @@ QWidget* createToolBarItem(const ActionsManager::ActionEntryDefinition &definiti
 	if (definition.action == QLatin1String("AddressWidget"))
 	{
 		return new AddressWidget(window, parent);
+	}
+
+	if (definition.action == QLatin1String("ContentBlockingInformationWidget"))
+	{
+		return new ContentBlockingInformationWidget(definition, parent);
 	}
 
 	if (definition.action == QLatin1String("MenuButtonWidget"))
