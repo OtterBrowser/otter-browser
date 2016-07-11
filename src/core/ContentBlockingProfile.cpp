@@ -688,7 +688,7 @@ bool ContentBlockingProfile::checkRuleMatch(ContentBlockingRule *rule, const QSt
 		}
 	}
 
-	return (rule->isException ? !isBlocked : isBlocked);
+	return (isBlocked ? !rule->isException : false);
 }
 
 }
