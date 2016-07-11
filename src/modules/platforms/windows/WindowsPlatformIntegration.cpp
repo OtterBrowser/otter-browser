@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ QProcessEnvironment WindowsPlatformIntegration::m_environment;
 WindowsPlatformIntegration::WindowsPlatformIntegration(Application *parent) : PlatformIntegration(parent),
 	m_registrationIdentifier(QLatin1String("OtterBrowser")),
 	m_applicationFilePath(QDir::toNativeSeparators(QCoreApplication::applicationFilePath())),
-	m_applicationRegistration(QLatin1String("HKEY_LOCAL_MACHINE\\Software\\RegisteredApplications"), QSettings::NativeFormat),
+	m_applicationRegistration(QLatin1String("HKEY_CURRENT_USER\\Software\\RegisteredApplications"), QSettings::NativeFormat),
 	m_propertiesRegistration(QLatin1String("HKEY_CURRENT_USER\\Software\\Classes\\") + m_registrationIdentifier, QSettings::NativeFormat),
 	m_cleanupTimer(0)
 {
@@ -479,7 +479,7 @@ bool WindowsPlatformIntegration::registerToSystem()
 	m_propertiesRegistration.setValue(QLatin1String("shell/open/command/."), QLatin1String("\"") + m_applicationFilePath + QLatin1String("\" \"%1\""));
 	m_propertiesRegistration.sync();
 
-	QSettings capabilities(QLatin1String("HKEY_LOCAL_MACHINE\\Software\\Clients\\StartMenuInternet\\") + m_registrationIdentifier, QSettings::NativeFormat);
+	QSettings capabilities(QLatin1String("HKEY_CURRENT_USER\\Software\\Clients\\StartMenuInternet\\") + m_registrationIdentifier, QSettings::NativeFormat);
 	capabilities.setValue(QLatin1String("./"), QLatin1String("Otter Browser"));
 	capabilities.setValue(QLatin1String("Capabilities/ApplicationDescription"), QLatin1String("Web browser controlled by the user, not vice-versa"));
 	capabilities.setValue(QLatin1String("Capabilities/ApplicationIcon"), m_applicationFilePath + QLatin1String(",0"));
