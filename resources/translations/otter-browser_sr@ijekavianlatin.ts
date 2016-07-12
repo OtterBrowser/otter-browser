@@ -129,7 +129,7 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="64"/>
         <source>Unknown [%1]</source>
-        <translation type="unfinished"/>
+        <translation>nepoznat [%1]</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="75"/>
@@ -151,7 +151,7 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="152"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>nepoznat</translation>
     </message>
 </context>
 <context>
@@ -172,53 +172,53 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Traži…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="80"/>
         <source>User Scripts</source>
-        <translation type="unfinished"/>
+        <translation>Korisničke skripte</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="102"/>
         <source>Select File</source>
-        <translation type="unfinished"/>
+        <translation>Izaberi fajl</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="102"/>
         <source>User Script files (*.js)</source>
-        <translation type="unfinished"/>
+        <translation>Fajlovi korisničkih skripti (*.js)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="113"/>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="120"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Greška</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="113"/>
         <source>User Script with this name already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Korisnička skripta ovog naziva već postoji.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="120"/>
         <source>Failed to import User Script file.</source>
-        <translation type="unfinished"/>
+        <translation>Neuspjeh uvoza fajla korisničke skripte.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="233"/>
         <source>Remove Addon…</source>
-        <translation type="unfinished"/>
+        <translation>Ukloni dodatak…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="237"/>
         <source>Add Addon…</source>
-        <translation type="unfinished"/>
+        <translation>Dodaj dodatak…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="306"/>
         <source>Addons Manager</source>
-        <translation type="unfinished"/>
+        <translation>Menadžer dodataka</translation>
     </message>
 </context>
 <context>
@@ -226,7 +226,7 @@
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="76"/>
         <source>Addons Manager</source>
-        <translation type="unfinished"/>
+        <translation>Menadžer dodataka</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="77"/>
@@ -269,27 +269,27 @@
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="87"/>
         <source>Search with %1</source>
-        <translation type="unfinished"/>
+        <translation>Traži pomoću %1</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="104"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Obilježivači</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="138"/>
         <source>Local files</source>
-        <translation type="unfinished"/>
+        <translation>Lokalni fajlovi</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="154"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>Istorijat</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="176"/>
         <source>Special pages</source>
-        <translation type="unfinished"/>
+        <translation>Posebne stranice</translation>
     </message>
 </context>
 <context>
@@ -394,19 +394,21 @@
     <message>
         <location filename="../../src/core/Application.cpp" line="254"/>
         <source>Profile directory (%1) is not writable, application will be running in read-only mode.</source>
-        <translation type="unfinished"/>
+        <translation>Direktorijum profila (%1) nije upisiv, program je pokrenut u režimu čitanja.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="278"/>
         <source>Your profile directory (%1) ran out of free disk space.
 This may lead to malfunctions or even data loss.</source>
-        <translation type="unfinished"/>
+        <translation>Direktorijum vašeg profila (%1) je ostao bez slobodnog prostora.
+Ovo može da dovede do zastoja ili čak gubitka podataka.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="282"/>
         <source>Your profile directory (%1) is running low on free disk space (%2 remaining).
 This may lead to malfunctions or even data loss.</source>
-        <translation type="unfinished"/>
+        <translation>Direktorijumu vašeg profila (%1) ponestaje slobodnog prostora (%2 preostalo).
+Ovo može da dovede do zastoja ili čak gubitka podataka.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="288"/>
@@ -425,23 +427,24 @@ This may lead to malfunctions or even data loss.</source>
     <message>
         <location filename="../../src/core/Application.cpp" line="291"/>
         <source>Continue in Read-only Mode</source>
-        <translation type="unfinished"/>
+        <translation>Nastavi u režimu čitanja</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="293"/>
         <source>Ignore</source>
-        <translation type="unfinished"/>
+        <translation>Zanemari</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="294"/>
         <source>Quit</source>
-        <translation type="unfinished"/>
+        <translation>Napusti</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="360"/>
         <source>SSL support is not available or incomplete.
 Some websites may work incorrectly or do not work at all.</source>
-        <translation type="unfinished"/>
+        <translation>Podrška za SSL je nekompletna ili nedostupna.
+Neki vebsajtovi će raditi nepravilno ili neće raditi uopšte.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="527"/>
@@ -558,7 +561,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="71"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Nova…</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="96"/>
@@ -749,42 +752,42 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>naslov</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Address</source>
-        <translation type="unfinished"/>
+        <translation>adresa</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>opis</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Keyword</source>
-        <translation type="unfinished"/>
+        <translation>ključna riječ</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Added</source>
-        <translation type="unfinished"/>
+        <translation>dodat</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Modified</source>
-        <translation type="unfinished"/>
+        <translation>izmenjen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Visited</source>
-        <translation type="unfinished"/>
+        <translation>posećen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Visits</source>
-        <translation type="unfinished"/>
+        <translation>broj poseta</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
@@ -847,7 +850,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="70"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Nova…</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
@@ -1440,7 +1443,7 @@ Eksponent: %2</translation>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="31"/>
         <source>Scope</source>
-        <translation type="unfinished"/>
+        <translation>Obim</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="60"/>
@@ -1479,17 +1482,17 @@ Eksponent: %2</translation>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="43"/>
         <source>All Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Svi jezičci</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="48"/>
         <source>Current Tab Only</source>
-        <translation type="unfinished"/>
+        <translation>Samo tekući jezičak</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="54"/>
         <source>Other Sources</source>
-        <translation type="unfinished"/>
+        <translation>Ostali izvori</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="262"/>
@@ -1948,7 +1951,7 @@ Eksponent: %2</translation>
     <message>
         <location filename="../../src/core/HistoryModel.cpp" line="61"/>
         <source>Failed to open history file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Neuspjeh otvaranja fajla istorijata: %1</translation>
     </message>
 </context>
 <context>
@@ -2154,7 +2157,7 @@ Eksponent: %2</translation>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="95"/>
         <source>Allow to enter full screen mode:</source>
-        <translation type="unfinished"/>
+        <translation>Dozvoli režim cijelog ekrana:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="37"/>
@@ -2309,7 +2312,7 @@ Eksponent: %2</translation>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="677"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Oter %1&lt;/b&gt;&lt;br&gt;Veb pregledač kojim upravlja korisnik, a ne obrnuto.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="683"/>
@@ -2359,7 +2362,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="105"/>
         <source>Import Opera Search Engines…</source>
-        <translation type="unfinished"/>
+        <translation>Uvezi Operine motore pretrage…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="107"/>
@@ -2573,7 +2576,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
         <source>Any Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Bilo koja traka alatki</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="131"/>
@@ -2626,7 +2629,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/NetworkProxyFactory.cpp" line="92"/>
         <source>Failed to load proxy auto-config (PAC). Invalid URL: %1</source>
-        <translation>Neuspeh učitavanja auto-postavki proksija (PAC). Neispravan URL: %1</translation>
+        <translation>Neuspjeh učitavanja auto-postavki proksija (PAC). Neispravan URL: %1</translation>
     </message>
 </context>
 <context>
@@ -2852,7 +2855,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="34"/>
         <source>Do you want to save login data for %1?</source>
-        <translation type="unfinished"/>
+        <translation>Želite li da sačuvate podatke prijave za %1?</translation>
     </message>
 </context>
 <context>
@@ -2885,7 +2888,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="40"/>
         <source>%1 wants to enter full screen mode.</source>
-        <translation type="unfinished"/>
+        <translation>%1 želi da uđe u režim cijelog ekrana.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="45"/>
@@ -2910,7 +2913,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="65"/>
         <source>%1 wants to play audio.</source>
-        <translation type="unfinished"/>
+        <translation>%1 želi da pušta zvuk.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="70"/>
@@ -2938,7 +2941,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/PlatformIntegration.cpp" line="105"/>
         <source>Failed to install update.</source>
-        <translation>Neuspeh instaliranja nadogradnje.</translation>
+        <translation>Neuspjeh instaliranja nadogradnje.</translation>
     </message>
 </context>
 <context>
@@ -3014,17 +3017,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="96"/>
         <source>Address Completion</source>
-        <translation type="unfinished"/>
+        <translation>Dovršavanje adrese</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="105"/>
         <source>Show category headers</source>
-        <translation type="unfinished"/>
+        <translation>Prikaži zaglavlja kategorije</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="114"/>
         <source>Display mode:</source>
-        <translation type="unfinished"/>
+        <translation>Režim prikaza:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="152"/>
@@ -3390,12 +3393,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="100"/>
         <source>Compact</source>
-        <translation type="unfinished"/>
+        <translation>Kompaktno</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="101"/>
         <source>Columns</source>
-        <translation type="unfinished"/>
+        <translation>Kolone</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="110"/>
@@ -5849,7 +5852,7 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="471"/>
         <source>Block All Pop-Ups</source>
-        <translation>blokiraj sve</translation>
+        <translation>blokiraj sve iskačuće</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="475"/>
@@ -5899,22 +5902,22 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Pitanje</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
         <source>This tab has crashed.</source>
-        <translation type="unfinished"/>
+        <translation>Ovaj jezičak se srušio.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
         <source>Do you want to try to reload it?</source>
-        <translation type="unfinished"/>
+        <translation>Želite li pokušati ponovo da ga učitate?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="802"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Ne prikazuj više ovu poruku</translation>
     </message>
 </context>
 <context>
@@ -5967,7 +5970,7 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1135"/>
         <source>1 Minute</source>
-        <translation type="unfinished"/>
+        <translation>1 minuta</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1136"/>
@@ -6106,7 +6109,7 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="261"/>
         <source>Security</source>
-        <translation>Bezbednost</translation>
+        <translation>Bezbjednost</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="275"/>
@@ -6192,7 +6195,7 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="72"/>
         <source>You are viewing safe page from Otter Browser.</source>
-        <translation>Pregledate bezbednu stranicu sa Oter pregledača.</translation>
+        <translation>Pregledate bezbjednu stranicu sa Oter pregledača.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="77"/>
@@ -6434,7 +6437,7 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="609"/>
         <source>Allow to enter full screen mode:</source>
-        <translation type="unfinished"/>
+        <translation>Dozvoli režim cijelog ekrana:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="630"/>
@@ -6633,7 +6636,7 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>naziv</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
@@ -6832,7 +6835,7 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2349"/>
         <source>Changing directory failed:
 %1</source>
-        <translation>Promjena direktorijuma nije uspela:
+        <translation>Promjena direktorijuma nije uspjela:
 %1</translation>
     </message>
     <message>
@@ -7079,7 +7082,7 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="290"/>
         <source>Suspend Tab</source>
-        <translation type="unfinished"/>
+        <translation>Obustavi jezičak</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="291"/>
@@ -7410,7 +7413,7 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="351"/>
         <source>Stop All Pages</source>
-        <translation type="unfinished"/>
+        <translation>Zaustavi sve stranice</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="353"/>
@@ -7836,7 +7839,7 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="437"/>
         <source>Addons</source>
-        <translation type="unfinished"/>
+        <translation>Dodaci</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="438"/>
@@ -8046,7 +8049,7 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
     <message>
         <location filename="../../src/core/Application.cpp" line="120"/>
         <source>Tells application to avoid writing data to disk</source>
-        <translation type="unfinished"/>
+        <translation>Naredba programu da ne upisuje podatke na disk</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="121"/>
@@ -8134,17 +8137,17 @@ Greška: %2</translation>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="43"/>
         <source>Failed to open user script file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Neuspjeh otvaranja fajla korisničke skripte: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="116"/>
         <source>Invalid match rule for User Script: %1</source>
-        <translation type="unfinished"/>
+        <translation>Neispravno pravilo poklapanja za korisničku skriptu: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="162"/>
         <source>Failed to locate header of user script file</source>
-        <translation type="unfinished"/>
+        <translation>Neuspjeh nalaženja zaglavlja fajla korisničke skripte</translation>
     </message>
     <message>
         <location filename="../../src/main.cpp" line="125"/>

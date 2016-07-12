@@ -394,19 +394,21 @@
     <message>
         <location filename="../../src/core/Application.cpp" line="254"/>
         <source>Profile directory (%1) is not writable, application will be running in read-only mode.</source>
-        <translation>A diretoria de perfil (%1) não é gravável, a aplicação será executada apenas no modo de leitura.</translation>
+        <translation>O diretório de perfil (%1) não se encontra em modo de escrita, a aplicação será executada apenas no modo de leitura.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="278"/>
         <source>Your profile directory (%1) ran out of free disk space.
 This may lead to malfunctions or even data loss.</source>
-        <translation type="unfinished"/>
+        <translation>O seu diretório de perfil (%1) ficou sem espaço livre.
+Isto pode levar a problemas de funcionamento ou até mesmo perda de dados.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="282"/>
         <source>Your profile directory (%1) is running low on free disk space (%2 remaining).
 This may lead to malfunctions or even data loss.</source>
-        <translation type="unfinished"/>
+        <translation>O seu diretório de perfil (%1) está a ficar sem espaço livre (%2 livre).
+Isto pode levar a problemas de funcionamento ou até mesmo perda de dados.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="288"/>
@@ -441,7 +443,8 @@ This may lead to malfunctions or even data loss.</source>
         <location filename="../../src/core/Application.cpp" line="360"/>
         <source>SSL support is not available or incomplete.
 Some websites may work incorrectly or do not work at all.</source>
-        <translation type="unfinished"/>
+        <translation>O suporte SSL não se encontra disponível ou está incompleto.
+Alguns sites poderão não funcionar correctamente ou não funcionar de todo.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="527"/>
@@ -1145,7 +1148,7 @@ Tem a certeza que quer restaurar esta sessão?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="205"/>
         <source>Subject Directory Attributes</source>
-        <translation type="unfinished"/>
+        <translation>Atributos do Diretório do Sujeito</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="209"/>
@@ -2068,7 +2071,7 @@ Exponent: %2</source>
     <message numerus="yes">
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="95"/>
         <source>%1 x %2 pixels @ %3 bits per pixel in %n frame(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 x %2 pixeis @ %3 bits por pixel em %n frame</numerusform><numerusform>%1 x %2 pixeis @ %3 bits por pixel em %n frames</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="99"/>
@@ -4179,7 +4182,7 @@ Quer continuar?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="136"/>
         <source>Directory Contents</source>
-        <translation type="unfinished"/>
+        <translation>Conteúdos do Diretório</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="139"/>
@@ -6845,14 +6848,14 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2365"/>
         <source>Creating directory failed:
 %1</source>
-        <translation>Criação de diretoria falhou:
+        <translation>Criação do diretório falhou:
 %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2369"/>
         <source>Removing directory failed:
 %1</source>
-        <translation>Remoção de diretoria falhou:
+        <translation>Remoção do diretório falhou:
 %1</translation>
     </message>
     <message>
@@ -7370,7 +7373,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="346"/>
         <source>Go to Parent Directory</source>
-        <translation>Ir para o Directório Principal</translation>
+        <translation>Ir para o Diretório Principal</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="347"/>
@@ -8026,7 +8029,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/core/Application.cpp" line="119"/>
         <source>Sets profile and cache paths to directories inside the same directory as that of application binary</source>
-        <translation>Define o caminho de destino dos directórios perfil e cache no mesmo directório que o binário do aplicativo. </translation>
+        <translation>Define o caminho de destino dos diretórios perfil e cache no mesmo directório que o binário do aplicativo. </translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="120"/>

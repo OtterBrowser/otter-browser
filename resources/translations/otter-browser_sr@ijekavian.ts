@@ -129,7 +129,7 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="64"/>
         <source>Unknown [%1]</source>
-        <translation type="unfinished"/>
+        <translation>непознат [%1]</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="75"/>
@@ -151,7 +151,7 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="152"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>непознат</translation>
     </message>
 </context>
 <context>
@@ -172,53 +172,53 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Тражи…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="80"/>
         <source>User Scripts</source>
-        <translation type="unfinished"/>
+        <translation>Корисничке скрипте</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="102"/>
         <source>Select File</source>
-        <translation type="unfinished"/>
+        <translation>Изабери фајл</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="102"/>
         <source>User Script files (*.js)</source>
-        <translation type="unfinished"/>
+        <translation>Фајлови корисничких скрипти (*.js)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="113"/>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="120"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Грешка</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="113"/>
         <source>User Script with this name already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Корисничка скрипта овог назива већ постоји.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="120"/>
         <source>Failed to import User Script file.</source>
-        <translation type="unfinished"/>
+        <translation>Неуспјех увоза фајла корисничке скрипте.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="233"/>
         <source>Remove Addon…</source>
-        <translation type="unfinished"/>
+        <translation>Уклони додатак…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="237"/>
         <source>Add Addon…</source>
-        <translation type="unfinished"/>
+        <translation>Додај додатак…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="306"/>
         <source>Addons Manager</source>
-        <translation type="unfinished"/>
+        <translation>Менаџер додатака</translation>
     </message>
 </context>
 <context>
@@ -226,7 +226,7 @@
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="76"/>
         <source>Addons Manager</source>
-        <translation type="unfinished"/>
+        <translation>Менаџер додатака</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="77"/>
@@ -269,27 +269,27 @@
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="87"/>
         <source>Search with %1</source>
-        <translation type="unfinished"/>
+        <translation>Тражи помоћу %1</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="104"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Обиљеживачи</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="138"/>
         <source>Local files</source>
-        <translation type="unfinished"/>
+        <translation>Локални фајлови</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="154"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>Историјат</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="176"/>
         <source>Special pages</source>
-        <translation type="unfinished"/>
+        <translation>Посебне странице</translation>
     </message>
 </context>
 <context>
@@ -394,19 +394,21 @@
     <message>
         <location filename="../../src/core/Application.cpp" line="254"/>
         <source>Profile directory (%1) is not writable, application will be running in read-only mode.</source>
-        <translation type="unfinished"/>
+        <translation>Директоријум профила (%1) није уписив, програм је покренут у режиму читања.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="278"/>
         <source>Your profile directory (%1) ran out of free disk space.
 This may lead to malfunctions or even data loss.</source>
-        <translation type="unfinished"/>
+        <translation>Директоријум вашег профила (%1) је остао без слободног простора.
+Ово може да доведе до застоја или чак губитка података.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="282"/>
         <source>Your profile directory (%1) is running low on free disk space (%2 remaining).
 This may lead to malfunctions or even data loss.</source>
-        <translation type="unfinished"/>
+        <translation>Директоријуму вашег профила (%1) понестаје слободног простора (%2 преостало).
+Ово може да доведе до застоја или чак губитка података.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="288"/>
@@ -425,23 +427,24 @@ This may lead to malfunctions or even data loss.</source>
     <message>
         <location filename="../../src/core/Application.cpp" line="291"/>
         <source>Continue in Read-only Mode</source>
-        <translation type="unfinished"/>
+        <translation>Настави у режиму читања</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="293"/>
         <source>Ignore</source>
-        <translation type="unfinished"/>
+        <translation>Занемари</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="294"/>
         <source>Quit</source>
-        <translation type="unfinished"/>
+        <translation>Напусти</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="360"/>
         <source>SSL support is not available or incomplete.
 Some websites may work incorrectly or do not work at all.</source>
-        <translation type="unfinished"/>
+        <translation>Подршка за ССЛ је некомплетна или недоступна.
+Некi вебсајтови ће радити неправилно или неће радити уопште.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="527"/>
@@ -558,7 +561,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="71"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Нова…</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="96"/>
@@ -749,42 +752,42 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>наслов</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Address</source>
-        <translation type="unfinished"/>
+        <translation>адреса</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>опис</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Keyword</source>
-        <translation type="unfinished"/>
+        <translation>кључна ријеч</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Added</source>
-        <translation type="unfinished"/>
+        <translation>додат</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Modified</source>
-        <translation type="unfinished"/>
+        <translation>измењен</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Visited</source>
-        <translation type="unfinished"/>
+        <translation>посећен</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Visits</source>
-        <translation type="unfinished"/>
+        <translation>број посета</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
@@ -847,7 +850,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="70"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Нова…</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
@@ -1440,7 +1443,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="31"/>
         <source>Scope</source>
-        <translation type="unfinished"/>
+        <translation>Обим</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="60"/>
@@ -1479,17 +1482,17 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="43"/>
         <source>All Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Сви језичци</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="48"/>
         <source>Current Tab Only</source>
-        <translation type="unfinished"/>
+        <translation>Само текући језичак</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="54"/>
         <source>Other Sources</source>
-        <translation type="unfinished"/>
+        <translation>Остали извори</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="262"/>
@@ -1948,7 +1951,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/core/HistoryModel.cpp" line="61"/>
         <source>Failed to open history file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Неуспјех отварања фајла историјата: %1</translation>
     </message>
 </context>
 <context>
@@ -2154,7 +2157,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="95"/>
         <source>Allow to enter full screen mode:</source>
-        <translation type="unfinished"/>
+        <translation>Дозволи режим цијелог екрана:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="37"/>
@@ -2309,7 +2312,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="677"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Отер %1&lt;/b&gt;&lt;br&gt;Веб прегледач којим управља корисник, а не обрнуто.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="683"/>
@@ -2359,7 +2362,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="105"/>
         <source>Import Opera Search Engines…</source>
-        <translation type="unfinished"/>
+        <translation>Увези Оперине моторе претраге…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="107"/>
@@ -2573,7 +2576,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
         <source>Any Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Било која трака алатки</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="131"/>
@@ -2626,7 +2629,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/NetworkProxyFactory.cpp" line="92"/>
         <source>Failed to load proxy auto-config (PAC). Invalid URL: %1</source>
-        <translation>Неуспех учитавања ауто-поставки проксија (ПАЦ). Неисправан УРЛ: %1</translation>
+        <translation>Неуспјех учитавања ауто-поставки проксија (ПАЦ). Неисправан УРЛ: %1</translation>
     </message>
 </context>
 <context>
@@ -2852,7 +2855,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="34"/>
         <source>Do you want to save login data for %1?</source>
-        <translation type="unfinished"/>
+        <translation>Желите ли да сачувате податке пријаве за %1?</translation>
     </message>
 </context>
 <context>
@@ -2885,7 +2888,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="40"/>
         <source>%1 wants to enter full screen mode.</source>
-        <translation type="unfinished"/>
+        <translation>%1 жели да уђе у режим цијелог екрана.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="45"/>
@@ -2910,7 +2913,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="65"/>
         <source>%1 wants to play audio.</source>
-        <translation type="unfinished"/>
+        <translation>%1 жели да пушта звук.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="70"/>
@@ -2938,7 +2941,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/PlatformIntegration.cpp" line="105"/>
         <source>Failed to install update.</source>
-        <translation>Неуспех инсталирања надоградње.</translation>
+        <translation>Неуспјех инсталирања надоградње.</translation>
     </message>
 </context>
 <context>
@@ -3014,17 +3017,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="96"/>
         <source>Address Completion</source>
-        <translation type="unfinished"/>
+        <translation>Довршавање адресе</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="105"/>
         <source>Show category headers</source>
-        <translation type="unfinished"/>
+        <translation>Прикажи заглавља категорије</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="114"/>
         <source>Display mode:</source>
-        <translation type="unfinished"/>
+        <translation>Режим приказа:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="152"/>
@@ -3390,12 +3393,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="100"/>
         <source>Compact</source>
-        <translation type="unfinished"/>
+        <translation>Компактно</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="101"/>
         <source>Columns</source>
-        <translation type="unfinished"/>
+        <translation>Колоне</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="110"/>
@@ -5849,7 +5852,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="471"/>
         <source>Block All Pop-Ups</source>
-        <translation>блокирај све</translation>
+        <translation>блокирај све искачуће</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="475"/>
@@ -5899,22 +5902,22 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Питање</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
         <source>This tab has crashed.</source>
-        <translation type="unfinished"/>
+        <translation>Овај језичак се срушио.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
         <source>Do you want to try to reload it?</source>
-        <translation type="unfinished"/>
+        <translation>Желите ли покушати поново да га учитате?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="802"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Не приказуј више ову поруку</translation>
     </message>
 </context>
 <context>
@@ -5967,7 +5970,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1135"/>
         <source>1 Minute</source>
-        <translation type="unfinished"/>
+        <translation>1 минута</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1136"/>
@@ -6106,7 +6109,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="261"/>
         <source>Security</source>
-        <translation>Безбедност</translation>
+        <translation>Безбједност</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="275"/>
@@ -6192,7 +6195,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="72"/>
         <source>You are viewing safe page from Otter Browser.</source>
-        <translation>Прегледате безбедну страницу са Отер прегледача.</translation>
+        <translation>Прегледате безбједну страницу са Отер прегледача.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="77"/>
@@ -6434,7 +6437,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="609"/>
         <source>Allow to enter full screen mode:</source>
-        <translation type="unfinished"/>
+        <translation>Дозволи режим цијелог екрана:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="630"/>
@@ -6633,7 +6636,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>назив</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
@@ -6832,7 +6835,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2349"/>
         <source>Changing directory failed:
 %1</source>
-        <translation>Промјена директоријума није успела:
+        <translation>Промјена директоријума није успјела:
 %1</translation>
     </message>
     <message>
@@ -7079,7 +7082,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="290"/>
         <source>Suspend Tab</source>
-        <translation type="unfinished"/>
+        <translation>Обустави језичак</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="291"/>
@@ -7410,7 +7413,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="351"/>
         <source>Stop All Pages</source>
-        <translation type="unfinished"/>
+        <translation>Заустави све странице</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="353"/>
@@ -7836,7 +7839,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="437"/>
         <source>Addons</source>
-        <translation type="unfinished"/>
+        <translation>Додаци</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="438"/>
@@ -8046,7 +8049,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/Application.cpp" line="120"/>
         <source>Tells application to avoid writing data to disk</source>
-        <translation type="unfinished"/>
+        <translation>Наредба програму да не уписује податке на диск</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="121"/>
@@ -8134,17 +8137,17 @@ Error: %2</source>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="43"/>
         <source>Failed to open user script file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Неуспјех отварања фајла корисничке скрипте: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="116"/>
         <source>Invalid match rule for User Script: %1</source>
-        <translation type="unfinished"/>
+        <translation>Неисправно правило поклапања за корисничку скрипту: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="162"/>
         <source>Failed to locate header of user script file</source>
-        <translation type="unfinished"/>
+        <translation>Неуспјех налажења заглавља фајла корисничке скрипте</translation>
     </message>
     <message>
         <location filename="../../src/main.cpp" line="125"/>

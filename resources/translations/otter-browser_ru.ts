@@ -129,7 +129,7 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="64"/>
         <source>Unknown [%1]</source>
-        <translation type="unfinished"/>
+        <translation>Неизвестно [%1]</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="75"/>
@@ -151,7 +151,7 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="152"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Неизвестно</translation>
     </message>
 </context>
 <context>
@@ -172,53 +172,53 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Найти...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="80"/>
         <source>User Scripts</source>
-        <translation type="unfinished"/>
+        <translation>Пользовательские скрипты</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="102"/>
         <source>Select File</source>
-        <translation type="unfinished"/>
+        <translation>Выберите файл</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="102"/>
         <source>User Script files (*.js)</source>
-        <translation type="unfinished"/>
+        <translation>Файлы пользовательских скриптов (*.js)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="113"/>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="120"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="113"/>
         <source>User Script with this name already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Пользовательский скрипт с этим именем уже существует.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="120"/>
         <source>Failed to import User Script file.</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось импортировать пользовательский скрипт.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="233"/>
         <source>Remove Addon…</source>
-        <translation type="unfinished"/>
+        <translation>Удалить дополнение...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="237"/>
         <source>Add Addon…</source>
-        <translation type="unfinished"/>
+        <translation>Добавить дополнение...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="306"/>
         <source>Addons Manager</source>
-        <translation type="unfinished"/>
+        <translation>Менеджер дополнений</translation>
     </message>
 </context>
 <context>
@@ -226,7 +226,7 @@
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="76"/>
         <source>Addons Manager</source>
-        <translation type="unfinished"/>
+        <translation>Менеджер дополнений</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="77"/>
@@ -269,27 +269,27 @@
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="87"/>
         <source>Search with %1</source>
-        <translation type="unfinished"/>
+        <translation>Искать с %1</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="104"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Закладки</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="138"/>
         <source>Local files</source>
-        <translation type="unfinished"/>
+        <translation>Локальные файлы</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="154"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>История</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="176"/>
         <source>Special pages</source>
-        <translation type="unfinished"/>
+        <translation>Специальные страницы</translation>
     </message>
 </context>
 <context>
@@ -394,19 +394,21 @@
     <message>
         <location filename="../../src/core/Application.cpp" line="254"/>
         <source>Profile directory (%1) is not writable, application will be running in read-only mode.</source>
-        <translation type="unfinished"/>
+        <translation>Папка профиля (%1) недоступна для записи и будет запущена в режиме «только для чтения».</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="278"/>
         <source>Your profile directory (%1) ran out of free disk space.
 This may lead to malfunctions or even data loss.</source>
-        <translation type="unfinished"/>
+        <translation>Ваша папка профиля (%1) исчерпала свободное место на диске.
+Это может привести к сбоям в работе или даже потере данных.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="282"/>
         <source>Your profile directory (%1) is running low on free disk space (%2 remaining).
 This may lead to malfunctions or even data loss.</source>
-        <translation type="unfinished"/>
+        <translation>Ваша папка профиля (%1) запущена на переполненном диске (%2 осталось).
+Это может привести к сбоям в работе или даже потере данных.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="288"/>
@@ -425,23 +427,24 @@ This may lead to malfunctions or even data loss.</source>
     <message>
         <location filename="../../src/core/Application.cpp" line="291"/>
         <source>Continue in Read-only Mode</source>
-        <translation type="unfinished"/>
+        <translation>Продолжить в режиме «только для чтения»</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="293"/>
         <source>Ignore</source>
-        <translation type="unfinished"/>
+        <translation>Пропустить</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="294"/>
         <source>Quit</source>
-        <translation type="unfinished"/>
+        <translation>Выйти</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="360"/>
         <source>SSL support is not available or incomplete.
 Some websites may work incorrectly or do not work at all.</source>
-        <translation type="unfinished"/>
+        <translation>Поддержка SSL недоступна или не завершена.
+Некоторые веб-сайты могут работать некорректно или не работать вовсе.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="527"/>
@@ -558,7 +561,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="71"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Новая...</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="96"/>
@@ -749,42 +752,42 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Название</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Address</source>
-        <translation type="unfinished"/>
+        <translation>Адрес</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>Описание</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Keyword</source>
-        <translation type="unfinished"/>
+        <translation>Клавиша</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Added</source>
-        <translation type="unfinished"/>
+        <translation>Добавлено</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Modified</source>
-        <translation type="unfinished"/>
+        <translation>Изменена</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Visited</source>
-        <translation type="unfinished"/>
+        <translation>Посещалась</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
         <source>Visits</source>
-        <translation type="unfinished"/>
+        <translation>Посещения</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
@@ -847,7 +850,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="70"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Новая...</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
@@ -1110,12 +1113,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="177"/>
         <source>Authority Key Identifier</source>
-        <translation type="unfinished"/>
+        <translation>Идентификатор ключа доступа</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="181"/>
         <source>Subject Key Identifier</source>
-        <translation type="unfinished"/>
+        <translation>Идентификатор ключа субъекта</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="185"/>
@@ -1135,62 +1138,62 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="197"/>
         <source>Subject Alternative Name</source>
-        <translation type="unfinished"/>
+        <translation>Альтернативное имя субъекта</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="201"/>
         <source>Issuer Alternative Name</source>
-        <translation type="unfinished"/>
+        <translation>Альтернативное имя издателя</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="205"/>
         <source>Subject Directory Attributes</source>
-        <translation type="unfinished"/>
+        <translation>Атрибуты каталога субъекта</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="209"/>
         <source>Basic Constraints</source>
-        <translation type="unfinished"/>
+        <translation>Базовые ограничения</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="213"/>
         <source>Name Constraints</source>
-        <translation type="unfinished"/>
+        <translation>Ограничения наименований</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="217"/>
         <source>Policy Constraints</source>
-        <translation type="unfinished"/>
+        <translation>Ограничения политики</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="221"/>
         <source>Extended Key Usage</source>
-        <translation type="unfinished"/>
+        <translation>Расширенное использование ключа</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="225"/>
         <source>CRL Distribution Points</source>
-        <translation type="unfinished"/>
+        <translation>Точки распространения CRL</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="229"/>
         <source>Inhibit Any Policy</source>
-        <translation type="unfinished"/>
+        <translation>Блокировать любую политику</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="233"/>
         <source>Delta CRL Distribution Point</source>
-        <translation type="unfinished"/>
+        <translation>Дельта точки распространения CRL</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="237"/>
         <source>Authority Information Access</source>
-        <translation type="unfinished"/>
+        <translation>Полномочия доступа к информации</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="241"/>
         <source>Subject Information Access</source>
-        <translation type="unfinished"/>
+        <translation>Тема доступа к информации</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="323"/>
@@ -1198,7 +1201,10 @@ Are you sure that you want to restore this session anyway?</source>
 %1
 
 Exponent: %2</source>
-        <translation type="unfinished"/>
+        <translation>Модуль:
+%1
+
+Показатель: %2</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="336"/>
@@ -1213,7 +1219,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="337"/>
         <source>OID: %1</source>
-        <translation type="unfinished"/>
+        <translation>ОИД: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="341"/>
@@ -1233,7 +1239,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="403"/>
         <source>Certificate Signature Algorithm</source>
-        <translation type="unfinished"/>
+        <translation>Алгоритм подписи сертификатов</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="407"/>
@@ -1258,12 +1264,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="423"/>
         <source>Subject</source>
-        <translation type="unfinished"/>
+        <translation>Субъект</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="427"/>
         <source>Subject Public Key</source>
-        <translation type="unfinished"/>
+        <translation>Публичный ключ субъекта</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="431"/>
@@ -1283,17 +1289,17 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="447"/>
         <source>Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>Цифровой отпечаток</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="451"/>
         <source>SHA-1 Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>Отпечаток SHA-1</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="455"/>
         <source>SHA-256 Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>Отпечаток SHA-256</translation>
     </message>
 </context>
 <context>
@@ -1437,7 +1443,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="31"/>
         <source>Scope</source>
-        <translation type="unfinished"/>
+        <translation>Масштаб</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="60"/>
@@ -1476,17 +1482,17 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="43"/>
         <source>All Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Все вкладки</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="48"/>
         <source>Current Tab Only</source>
-        <translation type="unfinished"/>
+        <translation>Только текущая вкладка</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="54"/>
         <source>Other Sources</source>
-        <translation type="unfinished"/>
+        <translation>Другие источники</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.cpp" line="262"/>
@@ -1945,7 +1951,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/core/HistoryModel.cpp" line="61"/>
         <source>Failed to open history file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось открыть файл истории: %1</translation>
     </message>
 </context>
 <context>
@@ -2068,7 +2074,7 @@ Exponent: %2</source>
     <message numerus="yes">
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="95"/>
         <source>%1 x %2 pixels @ %3 bits per pixel in %n frame(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 x %2 пикс. @ %3 бит на пиксель в %n кадре(-ах)</numerusform><numerusform>%1 x %2 пикс. @ %3 бит на пиксель в %n кадре(-ах)</numerusform><numerusform>%1 x %2 пикс. @ %3 бит на пиксель в %n кадре(-ах)</numerusform><numerusform>%1 x %2 пикс. @ %3 бит на пиксель в %n кадре(-ах)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="99"/>
@@ -2151,7 +2157,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="95"/>
         <source>Allow to enter full screen mode:</source>
-        <translation type="unfinished"/>
+        <translation>Разрешить открывать в полноэкранном режиме:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="37"/>
@@ -2306,7 +2312,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="677"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Веб-браузер Otter %1&lt;/b&gt;&lt;br&gt;управляется пользователем, а не наоборот.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="683"/>
@@ -2355,7 +2361,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="105"/>
         <source>Import Opera Search Engines…</source>
-        <translation type="unfinished"/>
+        <translation>Импортировать поисковые движки Opera...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="107"/>
@@ -2569,7 +2575,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
         <source>Any Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Любая панель</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="131"/>
@@ -2848,7 +2854,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="34"/>
         <source>Do you want to save login data for %1?</source>
-        <translation type="unfinished"/>
+        <translation>Вы уверены, что хотите сохранить данные входа для %1?</translation>
     </message>
 </context>
 <context>
@@ -2881,7 +2887,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="40"/>
         <source>%1 wants to enter full screen mode.</source>
-        <translation type="unfinished"/>
+        <translation>%1 хочет использовать полноэкранный режим.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="45"/>
@@ -2906,7 +2912,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="65"/>
         <source>%1 wants to play audio.</source>
-        <translation type="unfinished"/>
+        <translation>%1 хочет воспроизвести аудио.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="70"/>
@@ -3010,17 +3016,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="96"/>
         <source>Address Completion</source>
-        <translation type="unfinished"/>
+        <translation>Завершение адреса</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="105"/>
         <source>Show category headers</source>
-        <translation type="unfinished"/>
+        <translation>Показывать заголовки категорий</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="114"/>
         <source>Display mode:</source>
-        <translation type="unfinished"/>
+        <translation>Режим отображения:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="152"/>
@@ -3386,12 +3392,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="100"/>
         <source>Compact</source>
-        <translation type="unfinished"/>
+        <translation>Компактный</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="101"/>
         <source>Columns</source>
-        <translation type="unfinished"/>
+        <translation>Колонки</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="110"/>
@@ -5246,7 +5252,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="388"/>
         <source>Arbitrary List of Actions</source>
-        <translation type="unfinished"/>
+        <translation>Произвольный список действий</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="395"/>
@@ -5895,22 +5901,22 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Вопрос</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
         <source>This tab has crashed.</source>
-        <translation type="unfinished"/>
+        <translation>Эта вкладка упала.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
         <source>Do you want to try to reload it?</source>
-        <translation type="unfinished"/>
+        <translation>Хотите ли вы перезагрузить её?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="802"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Не показывать это сообщение снова</translation>
     </message>
 </context>
 <context>
@@ -5963,7 +5969,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1135"/>
         <source>1 Minute</source>
-        <translation type="unfinished"/>
+        <translation>1 минута</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1136"/>
@@ -6152,7 +6158,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="368"/>
         <source>Key exchange method:</source>
-        <translation type="unfinished"/>
+        <translation>Метод обмена ключами:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="407"/>
@@ -6430,7 +6436,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="609"/>
         <source>Allow to enter full screen mode:</source>
-        <translation type="unfinished"/>
+        <translation>Разрешить открывать в полноэкранном режиме:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="630"/>
@@ -6629,7 +6635,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Имя</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
@@ -6798,7 +6804,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="1246"/>
         <source>Connection refused for data connection</source>
-        <translation type="unfinished"/>
+        <translation>В соединении для передачи данных отказано</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="1422"/>
@@ -7077,7 +7083,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="290"/>
         <source>Suspend Tab</source>
-        <translation type="unfinished"/>
+        <translation>Заморозить вкладку</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="291"/>
@@ -7408,7 +7414,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="351"/>
         <source>Stop All Pages</source>
-        <translation type="unfinished"/>
+        <translation>Остановить все страницы</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="353"/>
@@ -7834,7 +7840,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="437"/>
         <source>Addons</source>
-        <translation type="unfinished"/>
+        <translation>Дополнения</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="438"/>
@@ -8044,7 +8050,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/Application.cpp" line="120"/>
         <source>Tells application to avoid writing data to disk</source>
-        <translation type="unfinished"/>
+        <translation>Просит приложение позволить записать данные на диск</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="121"/>
@@ -8133,17 +8139,17 @@ Error: %2</source>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="43"/>
         <source>Failed to open user script file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось открыть пользовательский скрипт: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="116"/>
         <source>Invalid match rule for User Script: %1</source>
-        <translation type="unfinished"/>
+        <translation>Недопустимое соответствие правила в пользовательском скрипте: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="162"/>
         <source>Failed to locate header of user script file</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось найти заголовок пользовательского скрипта</translation>
     </message>
     <message>
         <location filename="../../src/main.cpp" line="125"/>
@@ -8211,17 +8217,17 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="156"/>
         <source>Make sure your internet connection is active and check whether other applications that rely on the same connection are working.</source>
-        <translation type="unfinished"/>
+        <translation>Убедитесь, что ваше подключение к Интернету активно и проверьте, работают ли от него другие приложения.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="157"/>
         <source>Check that the setup of any internet security software is correct and does not interfere with ordinary web browsing.</source>
-        <translation type="unfinished"/>
+        <translation>Убедитесь, что настройки антивирусного пакета правильны и не мешают работе веб-браузера.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="158"/>
         <source>Try pressing the F12 key on your keyboard and disabling proxy servers, unless you know that you are required to use a proxy to connect to the internet, and then reload the page.</source>
-        <translation type="unfinished"/>
+        <translation>Попробуйте нажать на кнопку F12 на вашей клавиатуре и отключите прокси-серверы, если не знаете точно, что они необходимы для вашей работы в Интернете, а затем перезагрузите страницу.</translation>
     </message>
 </context>
 </TS>
