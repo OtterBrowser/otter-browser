@@ -41,6 +41,7 @@ public:
 		ScriptType,
 		ImageType,
 		ObjectType,
+		ObjectSubrequestType,
 		XmlHttpRequestType
 	};
 

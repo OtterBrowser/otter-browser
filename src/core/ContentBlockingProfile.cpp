@@ -256,19 +256,11 @@ void ContentBlockingProfile::parseRuleLine(QString line)
 		{
 			rule->ruleOption |= ObjectSubRequestOption;
 			rule->exceptionRuleOption |= (optionException ? ObjectSubRequestOption : NoOption);
-			// TODO
-			delete rule;
-
-			return;
 		}
 		else if (options.at(i).contains(QLatin1String("subdocument")))
 		{
 			rule->ruleOption |= SubDocumentOption;
 			rule->exceptionRuleOption |= (optionException ? SubDocumentOption : NoOption);
-			// TODO
-			delete rule;
-
-			return;
 		}
 		else if (options.at(i).contains(QLatin1String("xmlhttprequest")))
 		{
@@ -670,8 +662,7 @@ bool ContentBlockingProfile::checkRuleMatch(ContentBlockingRule *rule, const QSt
 		}
 	}
 
-	QList<QPair<RuleOption, NetworkManager::ResourceType> > options({qMakePair(ImageOption, NetworkManager::ImageType), qMakePair(ScriptOption, NetworkManager::ScriptType), qMakePair(StyleSheetOption, NetworkManager::StyleSheetType), qMakePair(ObjectOption, NetworkManager::ObjectType), qMakePair(XmlHttpRequestOption, NetworkManager::XmlHttpRequestType)});
-///TODO SubDocumentOption and ObjectSubRequestOption
+	QList<QPair<RuleOption, NetworkManager::ResourceType> > options({qMakePair(ImageOption, NetworkManager::ImageType), qMakePair(ScriptOption, NetworkManager::ScriptType), qMakePair(StyleSheetOption, NetworkManager::StyleSheetType), qMakePair(ObjectOption, NetworkManager::ObjectType), qMakePair(XmlHttpRequestOption, NetworkManager::XmlHttpRequestType), qMakePair(SubDocumentOption, NetworkManager::SubFrameType), qMakePair(ObjectSubRequestOption, NetworkManager::ObjectSubrequestType)});
 
 	for (int i = 0; i < options.count(); ++i)
 	{

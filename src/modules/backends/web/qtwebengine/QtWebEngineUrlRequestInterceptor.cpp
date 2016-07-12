@@ -124,6 +124,13 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 			resourceType = NetworkManager::ObjectType;
 
 			break;
+#if QT_VERSION >= 0x050700
+		case QWebEngineUrlRequestInfo::ResourceTypePluginResource:
+			resourceType = NetworkManager::ObjectSubrequestType;
+			storeBlockedUrl = false;
+
+			break;
+#endif
 		case QWebEngineUrlRequestInfo::ResourceTypeXhr:
 			resourceType = NetworkManager::XmlHttpRequestType;
 
