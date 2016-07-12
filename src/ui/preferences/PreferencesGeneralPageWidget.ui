@@ -289,13 +289,6 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="systemDefaultLabel">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item>
       <spacer name="setDefaultSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>

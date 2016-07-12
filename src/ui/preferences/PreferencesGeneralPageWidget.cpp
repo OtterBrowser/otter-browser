@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -64,14 +64,9 @@ PreferencesGeneralPageWidget::PreferencesGeneralPageWidget(QWidget *parent) : QW
 
 	PlatformIntegration *integration(Application::getInstance()->getPlatformIntegration());
 
-	if (integration == NULL || integration->isDefaultBrowser())
+	if (integration == NULL || !integration->canSetAsDefaultBrowser())
 	{
 		m_ui->setDefaultButton->setEnabled(false);
-	}
-	else if (!integration->canSetAsDefaultBrowser())
-	{
-		m_ui->setDefaultButton->setVisible(false);
-		m_ui->systemDefaultLabel->setText(tr("Run Otter Browser with administrator rights to set it as a default browser."));
 	}
 	else
 	{
