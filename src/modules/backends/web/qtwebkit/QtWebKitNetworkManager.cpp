@@ -56,7 +56,7 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar
 	m_contentState(WindowsManager::UnknownContentState),
 	m_doNotTrackPolicy(NetworkManagerFactory::SkipTrackPolicy),
 	m_bytesReceivedDifference(0),
-	m_isSecure(0),
+	m_securityState(UnknownState),
 	m_loadingSpeedTimer(0),
 	m_areImagesEnabled(true),
 	m_canSendReferrer(true)
@@ -135,7 +135,7 @@ void QtWebKitNetworkManager::resetStatistics()
 	m_baseReply = NULL;
 	m_contentState = WindowsManager::UnknownContentState;
 	m_bytesReceivedDifference = 0;
-	m_isSecure = 0;
+	m_securityState = UnknownState;
 
 	updateLoadingSpeed();
 
@@ -400,7 +400,7 @@ void QtWebKitNetworkManager::handleLoadingFinished()
 
 	m_loadingSpeedTimer = 0;
 
-	if ((m_isSecure == 1 || (m_isSecure == 0 && m_contentState.testFlag(WindowsManager::SecureContentState))) && m_sslInformation.errors.isEmpty())
+	if ((m_securityState == SecureState || (m_securityState == UnknownState && m_contentState.testFlag(WindowsManager::SecureContentState))) && m_sslInformation.errors.isEmpty())
 	{
 		m_contentState = WindowsManager::SecureContentState;
 	}
@@ -687,17 +687,17 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 		m_baseReply = reply;
 	}
 
-	if (m_isSecure >= 0)
+	if (m_securityState != InsecureState)
 	{
 		const QString scheme(reply->url().scheme());
 
 		if (scheme == QLatin1String("https"))
 		{
-			m_isSecure = 1;
+			m_securityState = SecureState;
 		}
 		else if (scheme == QLatin1String("http"))
 		{
-			m_isSecure = -1;
+			m_securityState = InsecureState;
 		}
 	}
 

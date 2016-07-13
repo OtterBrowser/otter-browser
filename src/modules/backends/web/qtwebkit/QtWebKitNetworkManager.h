@@ -75,6 +75,13 @@ protected slots:
 	void handleLoadingFinished();
 
 private:
+	enum SecurityState
+	{
+		UnknownState = 0,
+		InsecureState,
+		SecureState
+	};
+
 	QtWebKitWebWidget *m_widget;
 	CookieJar *m_cookieJar;
 	QtWebKitCookieJar *m_cookieJarProxy;
@@ -93,7 +100,7 @@ private:
 	WindowsManager::ContentStates m_contentState;
 	NetworkManagerFactory::DoNotTrackPolicy m_doNotTrackPolicy;
 	qint64 m_bytesReceivedDifference;
-	int m_isSecure;
+	SecurityState m_securityState;
 	int m_loadingSpeedTimer;
 	bool m_areImagesEnabled;
 	bool m_canSendReferrer;
