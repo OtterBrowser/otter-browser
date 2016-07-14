@@ -117,8 +117,7 @@ void ToolBarAreaWidget::paintEvent(QPaintEvent *event)
 	{
 		lineOffset = (height() - lineOffset);
 	}
-
-	if (m_area == Qt::LeftToolBarArea)
+	else if (m_area == Qt::LeftToolBarArea)
 	{
 		lineOffset = (width() - lineOffset);
 	}
