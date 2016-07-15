@@ -113,10 +113,10 @@ protected:
 	void pasteText(const QString &text);
 	void startDelayedTransfer(Transfer *transfer);
 	void handleHistory();
-#ifdef OTTER_ENABLE_QTWEBKITNG
-	void setHistory(const QVariantMap &history);
-#else
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 	void setHistory(QDataStream &stream);
+#else
+	void setHistory(const QVariantMap &history);
 #endif
 	void setOptions(const QVariantHash &options);
 	QWebPage* getPage();

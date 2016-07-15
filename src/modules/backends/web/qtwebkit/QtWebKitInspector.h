@@ -37,7 +37,7 @@ public:
 
 protected:
 	void childEvent(QChildEvent *event);
-#ifndef OTTER_ENABLE_QTWEBKITNG
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 	void showEvent(QShowEvent *event);
 	void resizeEvent(QResizeEvent *event);
 
@@ -47,7 +47,9 @@ protected slots:
 
 private:
 	QtWebKitWebWidget *m_widget;
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 	QToolButton *m_closeButton;
+#endif
 };
 
 }

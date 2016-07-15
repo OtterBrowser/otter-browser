@@ -25,16 +25,14 @@ namespace Otter
 {
 
 QtWebKitInspector::QtWebKitInspector(QtWebKitWebWidget *parent) : QWebInspector(parent),
-	m_widget(parent),
-#ifdef OTTER_ENABLE_QTWEBKITNG
-	m_closeButton(NULL)
-#else
-	m_closeButton(new QToolButton(this))
+	m_widget(parent)
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
+	, m_closeButton(new QToolButton(this))
 #endif
 {
 	setMinimumHeight(200);
 
-#ifndef OTTER_ENABLE_QTWEBKITNG
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 	m_closeButton->setAutoFillBackground(false);
 	m_closeButton->setAutoRaise(true);
 	m_closeButton->setIcon(ThemesManager::getIcon(QLatin1String("window-close")));
@@ -63,7 +61,7 @@ void QtWebKitInspector::childEvent(QChildEvent *event)
 	}
 }
 
-#ifndef OTTER_ENABLE_QTWEBKITNG
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 void QtWebKitInspector::showEvent(QShowEvent *event)
 {
 	QWebInspector::showEvent(event);

@@ -1644,7 +1644,21 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 
 	const int index(qMin(history.index, (m_webView->history()->maximumItemCount() - 1)));
 
-#ifdef OTTER_ENABLE_QTWEBKITNG
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
+	qint64 documentSequence(0);
+	qint64 itemSequence(0);
+	QByteArray data;
+	QDataStream stream(&data, QIODevice::ReadWrite);
+	stream << int(2) << history.entries.count() << index;
+
+	for (int i = 0; i < history.entries.count(); ++i)
+	{
+		stream << QString(QUrl::toPercentEncoding(history.entries.at(i).url, QByteArray("!#$&'()*+,/:;=?@[]"))) << history.entries.at(i).title << history.entries.at(i).url << quint32(2) << quint64(0) << ++documentSequence << quint64(0) << QString() << false << ++itemSequence << QString() << qint32(history.entries.at(i).position.x()) << qint32(history.entries.at(i).position.y()) << qreal(1) << false << QString() << false;
+	}
+
+	stream.device()->reset();
+	stream >> *(m_webView->page()->history());
+#else
 	QVariantList entries;
 
 	for (int i = 0; i < history.entries.count(); ++i)
@@ -1667,20 +1681,6 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 	map[QLatin1String("history")] = entries;
 
 	m_webView->page()->history()->loadFromMap(map);
-#else
-	qint64 documentSequence(0);
-	qint64 itemSequence(0);
-	QByteArray data;
-	QDataStream stream(&data, QIODevice::ReadWrite);
-	stream << int(2) << history.entries.count() << index;
-
-	for (int i = 0; i < history.entries.count(); ++i)
-	{
-		stream << QString(QUrl::toPercentEncoding(history.entries.at(i).url, QByteArray("!#$&'()*+,/:;=?@[]"))) << history.entries.at(i).title << history.entries.at(i).url << quint32(2) << quint64(0) << ++documentSequence << quint64(0) << QString() << false << ++itemSequence << QString() << qint32(history.entries.at(i).position.x()) << qint32(history.entries.at(i).position.y()) << qreal(1) << false << QString() << false;
-	}
-
-	stream.device()->reset();
-	stream >> *(m_webView->page()->history());
 #endif
 
 	for (int i = 0; i < history.entries.count(); ++i)
@@ -1704,10 +1704,11 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 	m_webView->page()->triggerAction(QWebPage::Reload);
 }
 
-#ifdef OTTER_ENABLE_QTWEBKITNG
-void QtWebKitWebWidget::setHistory(const QVariantMap &history)
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
+void QtWebKitWebWidget::setHistory(QDataStream &stream)
 {
-	m_webView->page()->history()->loadFromMap(history);
+	stream.device()->reset();
+	stream >> *(m_webView->page()->history());
 
 	const QUrl url(m_webView->page()->history()->currentItem().url());
 
@@ -1718,10 +1719,9 @@ void QtWebKitWebWidget::setHistory(const QVariantMap &history)
 	m_webView->page()->triggerAction(QWebPage::Reload);
 }
 #else
-void QtWebKitWebWidget::setHistory(QDataStream &stream)
+void QtWebKitWebWidget::setHistory(const QVariantMap &history)
 {
-	stream.device()->reset();
-	stream >> *(m_webView->page()->history());
+	m_webView->page()->history()->loadFromMap(history);
 
 	const QUrl url(m_webView->page()->history()->currentItem().url());
 
@@ -1861,14 +1861,14 @@ WebWidget* QtWebKitWebWidget::clone(bool cloneHistory, bool isPrivate)
 
 	if (cloneHistory)
 	{
-#ifdef OTTER_ENABLE_QTWEBKITNG
-		widget->setHistory(m_webView->page()->history()->toMap());
-#else
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 		QByteArray data;
 		QDataStream stream(&data, QIODevice::ReadWrite);
 		stream << *(m_webView->page()->history());
 
 		widget->setHistory(stream);
+#else
+		widget->setHistory(m_webView->page()->history()->toMap());
 #endif
 	}
 
