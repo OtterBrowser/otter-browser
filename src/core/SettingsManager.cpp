@@ -219,7 +219,7 @@ QVariant SettingsManager::getValue(const QString &key, const QUrl &url)
 
 QStringList SettingsManager::getOptions()
 {
-	QStringList options;
+	QStringList options(m_options.keys());
 	QSettings settings(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat);
 	const QStringList groups(settings.childGroups());
 
@@ -240,6 +240,8 @@ QStringList SettingsManager::getOptions()
 
 		settings.endGroup();
 	}
+
+	options.sort();
 
 	return options;
 }
