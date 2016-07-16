@@ -233,7 +233,12 @@ QStringList SettingsManager::getOptions()
 		{
 			settings.beginGroup(children.at(j));
 
-			options.append(settings.group());
+			QString option(settings.group());
+
+			if (!options.contains(option))
+			{
+				options.append(option);
+			}
 
 			settings.endGroup();
 		}
