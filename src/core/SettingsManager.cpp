@@ -32,6 +32,7 @@ namespace Otter
 SettingsManager* SettingsManager::m_instance = NULL;
 QString SettingsManager::m_globalPath;
 QString SettingsManager::m_overridePath;
+QHash<QString, SettingsManager::OptionDefinition> SettingsManager::m_options;
 QHash<QString, QVariant> SettingsManager::m_defaults;
 
 SettingsManager::SettingsManager(QObject *parent) : QObject(parent)
@@ -78,6 +79,11 @@ void SettingsManager::removeOverride(const QUrl &url, const QString &key)
 	{
 		QSettings(m_overridePath, QSettings::IniFormat).remove(getHost(url) + QLatin1Char('/') + key);
 	}
+}
+
+void SettingsManager::setDefinition(const QString &key, const SettingsManager::OptionDefinition &definition)
+{
+	m_options[key] = definition;
 }
 
 void SettingsManager::setValue(const QString &key, const QVariant &value, const QUrl &url)
@@ -240,6 +246,11 @@ QStringList SettingsManager::getOptions()
 
 SettingsManager::OptionDefinition SettingsManager::getDefinition(const QString &key)
 {
+	if (m_options.contains(key))
+	{
+		return m_options[key];
+	}
+
 	QSettings settings(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat);
 	settings.beginGroup(key);
 

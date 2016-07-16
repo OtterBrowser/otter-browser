@@ -58,6 +58,7 @@ public:
 
 	static void createInstance(const QString &path, QObject *parent = NULL);
 	static void removeOverride(const QUrl &url, const QString &key = QString());
+	static void setDefinition(const QString &key, const OptionDefinition &definition);
 	static void setValue(const QString &key, const QVariant &value, const QUrl &url = QUrl());
 	static SettingsManager* getInstance();
 	static QString getReport();
@@ -75,6 +76,7 @@ private:
 	static SettingsManager *m_instance;
 	static QString m_globalPath;
 	static QString m_overridePath;
+	static QHash<QString, OptionDefinition> m_options;
 	static QHash<QString, QVariant> m_defaults;
 
 signals:
