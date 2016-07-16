@@ -24,6 +24,7 @@
 
 #include "ui_ConfigurationContentsWidget.h"
 
+#include <QtCore/QMetaEnum>
 #include <QtCore/QSettings>
 #include <QtGui/QClipboard>
 #include <QtGui/QKeyEvent>
@@ -38,45 +39,41 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 {
 	m_ui->setupUi(this);
 
-	QSettings defaults(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat, this);
-	const QStringList groups(defaults.childGroups());
+	const QStringList options(SettingsManager::getOptions());
+	QStandardItem *groupItem(NULL);
 
-	for (int i = 0; i < groups.count(); ++i)
+	for (int i = 0; i < options.count(); ++i)
 	{
-		QStandardItem *groupItem(new QStandardItem(ThemesManager::getIcon(QLatin1String("inode-directory")), groups.at(i)));
+		const QStringList option(options.at(i).split(QLatin1Char('/')));
+		const QVariant value(SettingsManager::getValue(options.at(i)));
+		const SettingsManager::OptionDefinition definition(SettingsManager::getDefinition(options.at(i)));
 
-		defaults.beginGroup(groups.at(i));
-
-		const QStringList keys(defaults.childGroups());
-
-		for (int j = 0; j < keys.count(); ++j)
+		if (!groupItem || groupItem->text() != option.first())
 		{
-			const QString key(QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j)));
-			const QString type(defaults.value(QStringLiteral("%1/type").arg(keys.at(j))).toString());
-			const QVariant value(SettingsManager::getValue(key));
-			QList<QStandardItem*> optionItems({new QStandardItem(keys.at(j)), new QStandardItem(type), new QStandardItem(value.toString())});
-			optionItems[0]->setFlags(optionItems[0]->flags() | Qt::ItemNeverHasChildren);
-			optionItems[1]->setFlags(optionItems[1]->flags() | Qt::ItemNeverHasChildren);
-			optionItems[2]->setData(QSize(-1, 30), Qt::SizeHintRole);
-			optionItems[2]->setData(key, Qt::UserRole);
-			optionItems[2]->setData(type, (Qt::UserRole + 1));
-			optionItems[2]->setData(((type == QLatin1String("enumeration")) ? defaults.value(QStringLiteral("%1/choices").arg(keys.at(j))).toStringList() : QVariant()), (Qt::UserRole + 2));
-			optionItems[2]->setFlags(optionItems[2]->flags() | Qt::ItemNeverHasChildren);
+			groupItem = new QStandardItem(ThemesManager::getIcon(QLatin1String("inode-directory")), option.first());
 
-			if (value != SettingsManager::getDefinition(key).defaultValue)
-			{
-				QFont font(optionItems[0]->font());
-				font.setBold(true);
-
-				optionItems[0]->setFont(font);
-			}
-
-			groupItem->appendRow(optionItems);
+			m_model->appendRow(groupItem);
 		}
 
-		defaults.endGroup();
+		QString type(SettingsManager::getInstance()->metaObject()->enumerator(SettingsManager::getInstance()->metaObject()->indexOfEnumerator(QLatin1String("OptionType").data())).valueToKey(definition.type));
+		type.chop(4);
 
-		m_model->appendRow(groupItem);
+		QList<QStandardItem*> optionItems({new QStandardItem(option.last()), new QStandardItem(type.toLower()), new QStandardItem(value.toString())});
+		optionItems[0]->setFlags(optionItems[0]->flags() | Qt::ItemNeverHasChildren);
+		optionItems[1]->setFlags(optionItems[1]->flags() | Qt::ItemNeverHasChildren);
+		optionItems[2]->setData(QSize(-1, 30), Qt::SizeHintRole);
+		optionItems[2]->setData(options.at(i), Qt::UserRole);
+		optionItems[2]->setFlags(optionItems[2]->flags() | Qt::ItemNeverHasChildren);
+
+		if (value != definition.defaultValue)
+		{
+			QFont font(optionItems[0]->font());
+			font.setBold(true);
+
+			optionItems[0]->setFont(font);
+		}
+
+		groupItem->appendRow(optionItems);
 	}
 
 	m_model->setHorizontalHeaderLabels(QStringList({tr("Name"), tr("Type"), tr("Value")}));

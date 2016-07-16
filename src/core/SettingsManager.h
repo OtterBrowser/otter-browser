@@ -32,6 +32,7 @@ namespace Otter
 class SettingsManager : public QObject
 {
 	Q_OBJECT
+	Q_ENUMS(OptionType)
 
 public:
 	enum OptionType
