@@ -113,7 +113,7 @@ QWidget* OptionDelegate::createEditor(QWidget *parent, const QStyleOptionViewIte
 {
 	Q_UNUSED(option)
 
-	const SettingsManager::OptionType type(SettingsManager::getDefinition(index.data(Qt::UserRole).toString()).type);
+	const SettingsManager::OptionDefinition definition(SettingsManager::getDefinition(index.data(Qt::UserRole).toString()));
 	QVariant value(index.data(Qt::EditRole));
 
 	if (value.isNull())
@@ -121,13 +121,13 @@ QWidget* OptionDelegate::createEditor(QWidget *parent, const QStyleOptionViewIte
 		value = SettingsManager::getValue(index.data(Qt::UserRole).toString());
 	}
 
-	OptionWidget *widget(new OptionWidget(index.data(Qt::UserRole).toString(), value, type, parent));
+	OptionWidget *widget(new OptionWidget(index.data(Qt::UserRole).toString(), value, definition.type, parent));
 	widget->setIndex(index);
 	widget->setControlsVisible(!m_isSimple);
 
-	if (type == SettingsManager::EnumerationType)
+	if (definition.type == SettingsManager::EnumerationType)
 	{
-		widget->setChoices(index.data(Qt::UserRole + 2).toStringList());
+		widget->setChoices(definition.choices);
 	}
 
 	connect(widget, SIGNAL(commitData(QWidget*)), this, SIGNAL(commitData(QWidget*)));
