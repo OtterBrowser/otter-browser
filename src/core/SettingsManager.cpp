@@ -300,10 +300,8 @@ bool SettingsManager::hasOverride(const QUrl &url, const QString &key)
 	{
 		return QSettings(m_overridePath, QSettings::IniFormat).childGroups().contains(getHost(url));
 	}
-	else
-	{
-		return QSettings(m_overridePath, QSettings::IniFormat).contains(getHost(url) + QLatin1Char('/') + key);
-	}
+
+	return QSettings(m_overridePath, QSettings::IniFormat).contains(getHost(url) + QLatin1Char('/') + key);
 }
 
 }
