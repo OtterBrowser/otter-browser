@@ -36,9 +36,8 @@ public:
 		SessionEntity = 1,
 		TrashEntity = 2,
 		MainWindowEntity = 3,
-		GroupEntity = 4,
-		WindowEntity = 5,
-		HistoryEntity = 6
+		WindowEntity = 4,
+		HistoryEntity = 5
 	};
 
 	enum EntityRole
