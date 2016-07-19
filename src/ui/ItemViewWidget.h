@@ -101,6 +101,7 @@ public slots:
 
 protected:
 	void showEvent(QShowEvent *event);
+	void keyPressEvent(QKeyEvent *event);
 	void dropEvent(QDropEvent *event);
 	void startDrag(Qt::DropActions supportedActions);
 	void moveRow(bool up);
