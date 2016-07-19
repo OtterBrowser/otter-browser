@@ -23,6 +23,7 @@
 #include "../AddressDelegate.h"
 #include "../BookmarkPropertiesDialog.h"
 #include "../ContentsWidget.h"
+#include "../ItemViewWidget.h"
 #include "../LineEditWidget.h"
 #include "../MainWindow.h"
 #include "../ToolBarWidget.h"
@@ -62,6 +63,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 	m_hints(WindowsManager::DefaultOpen),
 	m_removeModelTimer(0),
 	m_isHistoryDropdownEnabled(SettingsManager::getValue(QLatin1String("AddressField/EnableHistoryDropdown")).toBool()),
+	m_isNavigatingCompletion(false),
 	m_isUsingSimpleMode(false),
 	m_wasPopupVisible(false)
 {
@@ -817,20 +819,23 @@ void AddressWidget::setCompletion(const QString &filter)
 	{
 		if (!m_completionView)
 		{
-			m_completionView = new QListView();
+			m_completionView = new ItemViewWidget();
 			m_completionView->setWindowFlags(Qt::Popup);
 			m_completionView->setFocusPolicy(Qt::NoFocus);
 			m_completionView->setFocusProxy(m_lineEdit);
 			m_completionView->setModel(m_completionModel);
 			m_completionView->setItemDelegate(new AddressDelegate(true, this));
 			m_completionView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-			m_completionView->viewport()->setAttribute(Qt::WA_Hover);
-			m_completionView->viewport()->setMouseTracking(true);
 			m_completionView->setFixedWidth(width());
 			m_completionView->installEventFilter(this);
+			m_completionView->header()->setStretchLastSection(true);
+			m_completionView->header()->hide();
+			m_completionView->viewport()->setAttribute(Qt::WA_Hover);
+			m_completionView->viewport()->setMouseTracking(true);
 			m_completionView->viewport()->installEventFilter(this);
 
 			connect(m_completionView, SIGNAL(clicked(QModelIndex)), this, SLOT(openUrl(QModelIndex)));
+			connect(m_completionView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(setText(QModelIndex)));
 
 			m_completionView->move(mapToGlobal(contentsRect().bottomLeft()));
 			m_completionView->show();
@@ -893,7 +898,12 @@ void AddressWidget::setText(const QString &text)
 
 void AddressWidget::setText(const QModelIndex &index)
 {
-	m_lineEdit->setText(index.data(AddressCompletionModel::TextRole).toString());
+	if (m_isNavigatingCompletion)
+	{
+		m_isNavigatingCompletion = false;
+
+		m_lineEdit->setText(index.data(AddressCompletionModel::TextRole).toString());
+	}
 }
 
 void AddressWidget::setUrl(const QUrl &url, bool force)
@@ -1200,32 +1210,14 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 
 			switch (keyEvent->key())
 			{
-				case Qt::Key_End:
-				case Qt::Key_Home:
 				case Qt::Key_Up:
-					if (keyEvent->key() == Qt::Key_Up && m_completionModel->rowCount() > 1)
-					{
-						const QModelIndex index((m_completionView->currentIndex().row() == 0) ? m_completionModel->index(m_completionModel->rowCount() - 1) : m_completionModel->index(m_completionView->currentIndex().row() - 1));
-
-						m_completionView->setCurrentIndex(index);
-
-						setText(index);
-
-						return true;
-					}
 				case Qt::Key_Down:
-					if (keyEvent->key() == Qt::Key_Down && m_completionModel->rowCount() > 1)
-					{
-						const QModelIndex index((m_completionView->currentIndex().row() == (m_completionModel->rowCount() - 1)) ? m_completionModel->index(0) : m_completionModel->index(m_completionView->currentIndex().row() + 1));
-
-						m_completionView->setCurrentIndex(index);
-
-						setText(index);
-
-						return true;
-					}
 				case Qt::Key_PageUp:
 				case Qt::Key_PageDown:
+				case Qt::Key_End:
+				case Qt::Key_Home:
+					m_isNavigatingCompletion = true;
+
 					return false;
 				case Qt::Key_Return:
 				case Qt::Key_Enter:

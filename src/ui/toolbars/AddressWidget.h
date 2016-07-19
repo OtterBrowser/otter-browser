@@ -27,12 +27,12 @@
 #include <QtCore/QUrl>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QLabel>
-#include <QtWidgets/QListView>
 
 namespace Otter
 {
 
 class AddressCompletionModel;
+class ItemViewWidget;
 class LineEditWidget;
 class Window;
 
@@ -99,7 +99,7 @@ private:
 	QPointer<Window> m_window;
 	LineEditWidget *m_lineEdit;
 	AddressCompletionModel *m_completionModel;
-	QListView *m_completionView;
+	ItemViewWidget *m_completionView;
 	QLabel *m_bookmarkLabel;
 	QLabel *m_feedsLabel;
 	QLabel *m_loadPluginsLabel;
@@ -113,6 +113,7 @@ private:
 	WindowsManager::OpenHints m_hints;
 	int m_removeModelTimer;
 	bool m_isHistoryDropdownEnabled;
+	bool m_isNavigatingCompletion;
 	bool m_isUsingSimpleMode;
 	bool m_wasPopupVisible;
 
