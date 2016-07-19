@@ -155,6 +155,7 @@ void SearchEnginesManager::updateSearchEnginesModel()
 			item->setData(search.title, Qt::UserRole);
 			item->setData(search.identifier, (Qt::UserRole + 1));
 			item->setData(search.keyword, (Qt::UserRole + 2));
+			item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 			m_searchEnginesModel->appendRow(item);
 		}
@@ -165,9 +166,11 @@ void SearchEnginesManager::updateSearchEnginesModel()
 		QStandardItem *separatorItem(new QStandardItem());
 		separatorItem->setData(QLatin1String("separator"), Qt::AccessibleDescriptionRole);
 		separatorItem->setData(QSize(-1, 10), Qt::SizeHintRole);
+		separatorItem->setFlags(Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 
 		QStandardItem *manageItem(new QStandardItem(ThemesManager::getIcon(QLatin1String("configure")), tr("Manage Search Engines…")));
 		manageItem->setData(QLatin1String("configure"), Qt::AccessibleDescriptionRole);
+		manageItem->setFlags(manageItem->flags() | Qt::ItemNeverHasChildren);
 
 		m_searchEnginesModel->appendRow(separatorItem);
 		m_searchEnginesModel->appendRow(manageItem);
