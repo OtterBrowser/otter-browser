@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 - 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -114,7 +114,7 @@ void NetworkProxyFactory::optionChanged(const QString &option)
 
 			if (SettingsManager::getValue(QStringLiteral("Proxy/Use%1").arg(proxyTypes.at(i).second)).toBool())
 			{
-				m_proxies[proxyTypes.at(i).second] = QList<QNetworkProxy>({QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(QStringLiteral("Proxy/%1Servers").arg(proxyTypes.at(i).second)).toString(), SettingsManager::getValue(QStringLiteral("Proxy/%1Port").arg(proxyTypes.at(i).second)).toInt())});
+				m_proxies[proxyTypes.at(i).second] = QList<QNetworkProxy>({QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(QStringLiteral("Proxy/%1Servers").arg(proxyTypes.at(i).second.left(1).toUpper() + proxyTypes.at(i).second.mid(1))).toString(), SettingsManager::getValue(QStringLiteral("Proxy/%1Port").arg(proxyTypes.at(i).second.left(1).toUpper() + proxyTypes.at(i).second.mid(1))).toInt())});
 			}
 		}
 
