@@ -286,7 +286,7 @@ void BookmarksContentsWidget::triggerAction(int identifier, const QVariantMap &p
 void BookmarksContentsWidget::updateActions()
 {
 	const bool hasSelecion(!m_ui->bookmarksViewWidget->selectionModel()->selectedIndexes().isEmpty());
-	const QModelIndex index(m_ui->bookmarksViewWidget->selectionModel()->hasSelection() ? m_ui->bookmarksViewWidget->selectionModel()->currentIndex() : QModelIndex());
+	const QModelIndex index(hasSelecion ? m_ui->bookmarksViewWidget->selectionModel()->currentIndex().sibling(m_ui->bookmarksViewWidget->selectionModel()->currentIndex().row(), 0) : QModelIndex());
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
 
 	m_ui->addressLabelWidget->setText(index.data(BookmarksModel::UrlRole).toString());
