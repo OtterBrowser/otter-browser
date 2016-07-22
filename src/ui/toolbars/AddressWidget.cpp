@@ -1219,9 +1219,8 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 					m_isNavigatingCompletion = true;
 
 					return false;
-				case Qt::Key_Return:
 				case Qt::Key_Enter:
-					openUrl(m_lineEdit->text());
+				case Qt::Key_Return:
 				case Qt::Key_Tab:
 				case Qt::Key_Backtab:
 				case Qt::Key_Escape:
@@ -1236,6 +1235,11 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 					m_completionView = NULL;
 
 					m_lineEdit->setFocus();
+
+					if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return)
+					{
+						openUrl(m_lineEdit->text());
+					}
 
 					break;
 				default:
