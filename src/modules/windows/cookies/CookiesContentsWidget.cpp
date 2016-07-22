@@ -182,7 +182,7 @@ void CookiesContentsWidget::removeCookies()
 		return;
 	}
 
-	QNetworkCookieJar *cookieJar(NetworkManagerFactory::getCookieJar());
+	CookieJar *cookieJar(NetworkManagerFactory::getCookieJar());
 	QList<QNetworkCookie> cookies;
 
 	for (int i = 0; i < indexes.count(); ++i)
@@ -224,7 +224,7 @@ void CookiesContentsWidget::removeCookies()
 
 	for (int i = 0; i < cookies.count(); ++i)
 	{
-		cookieJar->deleteCookie(cookies.at(i));
+		cookieJar->forceDeleteCookie(cookies.at(i));
 	}
 }
 
@@ -237,7 +237,7 @@ void CookiesContentsWidget::removeDomainCookies()
 		return;
 	}
 
-	QNetworkCookieJar *cookieJar(NetworkManagerFactory::getCookieJar());
+	CookieJar *cookieJar(NetworkManagerFactory::getCookieJar());
 	QList<QNetworkCookie> cookies;
 
 	for (int i = 0; i < indexes.count(); ++i)
@@ -280,7 +280,7 @@ void CookiesContentsWidget::removeDomainCookies()
 	{
 		for (int i = 0; i < cookies.count(); ++i)
 		{
-			cookieJar->deleteCookie(cookies.at(i));
+			cookieJar->forceDeleteCookie(cookies.at(i));
 		}
 	}
 }
