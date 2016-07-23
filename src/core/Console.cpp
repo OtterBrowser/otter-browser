@@ -58,7 +58,7 @@ void Console::addMessage(const QString &note, MessageCategory category, MessageL
 	emit m_instance->messageAdded(message);
 }
 
-Console *Console::getInstance()
+Console* Console::getInstance()
 {
 	return m_instance;
 }

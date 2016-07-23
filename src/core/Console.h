@@ -37,9 +37,10 @@ enum MessageCategory
 enum MessageLevel
 {
 	UnknownMessageLevel = 0,
-	LogMessageLevel = 1,
-	WarningMessageLevel = 2,
-	ErrorMessageLevel = 3
+	DebugMessageLevel = 1,
+	LogMessageLevel = 2,
+	WarningMessageLevel = 3,
+	ErrorMessageLevel = 4
 };
 
 struct ConsoleMessage
