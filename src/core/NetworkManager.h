@@ -20,6 +20,7 @@
 #ifndef OTTER_NETWORKMANAGER_H
 #define OTTER_NETWORKMANAGER_H
 
+#include <QtCore/QUrl>
 #include <QtNetwork/QNetworkAccessManager>
 
 namespace Otter
@@ -32,6 +33,13 @@ class NetworkManager : public QNetworkAccessManager
 	Q_OBJECT
 
 public:
+	enum ResourceMetaData
+	{
+		UnknownMetaData = 0,
+		ContentBlockingProfileMetaData,
+		ContentBlockingRuleMetaData
+	};
+
 	enum ResourceType
 	{
 		OtherType = 0,
@@ -43,6 +51,15 @@ public:
 		ObjectType,
 		ObjectSubrequestType,
 		XmlHttpRequestType
+	};
+
+	struct ResourceInformation
+	{
+		QUrl url;
+		QMap<ResourceMetaData, QVariant> metaData;
+		NetworkManager::ResourceType resourceType;
+
+		ResourceInformation() : resourceType(NetworkManager::OtherType) {}
 	};
 
 	explicit NetworkManager(bool isPrivate = false, QObject *parent = NULL);

@@ -92,7 +92,7 @@ private:
 	WebWidget::SslInformation m_sslInformation;
 	QStringList m_blockedElements;
 	QList<QNetworkReply*> m_transfers;
-	QList<ContentBlockingManager::CheckResult> m_blockedRequests;
+	QList<NetworkManager::ResourceInformation> m_blockedRequests;
 	QVector<int> m_contentBlockingProfiles;
 	QSet<QUrl> m_contentBlockingExceptions;
 	QHash<QNetworkReply*, QPair<qint64, bool> > m_replies;

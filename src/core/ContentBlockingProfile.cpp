@@ -446,12 +446,11 @@ QUrl ContentBlockingProfile::getUpdateUrl() const
 
 ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType)
 {
-	if (!m_wasLoaded)
+	ContentBlockingManager::CheckResult result;
+
+	if (!m_wasLoaded && !loadRules())
 	{
-		if (!loadRules())
-		{
-			return ContentBlockingManager::CheckResult();
-		}
+		return result;
 	}
 
 	m_baseUrlHost = baseUrl.host();
@@ -467,17 +466,14 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrl(const QUrl 
 	{
 		if (checkUrlSubstring(m_root, m_requestUrl.right(m_requestUrl.length() - i), QString(), resourceType))
 		{
-			ContentBlockingManager::CheckResult result;
-			result.url = requestUrl;
 			result.profile = m_name;
-			result.resourceType = resourceType;
 			result.isBlocked = true;
 
 			return result;
 		}
 	}
 
-	return ContentBlockingManager::CheckResult();
+	return result;
 }
 
 QStringList ContentBlockingProfile::getStyleSheet()

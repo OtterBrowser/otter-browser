@@ -631,7 +631,12 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 						m_blockedElements.append(request.url().url());
 					}
 
-					m_blockedRequests.append(result);
+					NetworkManager::ResourceInformation resource;
+					resource.url = request.url();
+					resource.resourceType = resourceType;
+					resource.metaData[NetworkManager::ContentBlockingProfileMetaData] = result.profile;
+
+					m_blockedRequests.append(resource);
 
 					return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(QUrl()));
 				}

@@ -37,12 +37,10 @@ class ContentBlockingManager : public QObject
 public:
 	struct CheckResult
 	{
-		QUrl url;
 		QString profile;
-		NetworkManager::ResourceType resourceType;
 		bool isBlocked;
 
-		CheckResult() : resourceType(NetworkManager::OtherType), isBlocked(false) {}
+		CheckResult() : isBlocked(false) {}
 	};
 
 	static void createInstance(QObject *parent = NULL);
