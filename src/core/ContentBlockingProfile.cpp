@@ -36,18 +36,15 @@
 namespace Otter
 {
 
-ContentBlockingProfile::ContentBlockingProfile(const QString &path, QObject *parent) : QObject(parent),
+ContentBlockingProfile::ContentBlockingProfile(const QString &name, QObject *parent) : QObject(parent),
 	m_root(NULL),
 	m_networkReply(NULL),
+	m_name(name),
 	m_enableWildcards(SettingsManager::getValue(QLatin1String("ContentBlocking/EnableWildcards")).toBool()),
 	m_isUpdating(false),
 	m_isEmpty(true),
 	m_wasLoaded(false)
 {
-	m_information.name = QFileInfo(path).baseName();
-	m_information.title = tr("(Unknown)");
-	m_information.path = path;
-
 	load(true);
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
@@ -84,20 +81,20 @@ void ContentBlockingProfile::clear()
 
 void ContentBlockingProfile::load(bool onlyHeader)
 {
-	QFile file(m_information.path);
+	QFile file(getPath());
 
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
-		Console::addMessage(QCoreApplication::translate("main", "Failed to open content blocking profile file: %1").arg(file.errorString()), Otter::OtherMessageCategory, ErrorMessageLevel, m_information.path);
+		Console::addMessage(QCoreApplication::translate("main", "Failed to open content blocking profile file: %1").arg(file.errorString()), Otter::OtherMessageCategory, ErrorMessageLevel, file.fileName());
 
 		return;
 	}
 
 	QTextStream stream(&file);
 
-	if (!stream.readLine().trimmed().startsWith(QLatin1String("[Adblock Plus")))
+	if (!stream.readLine().trimmed().startsWith(QLatin1String("[Adblock Plus"), Qt::CaseInsensitive))
 	{
-		Console::addMessage(QCoreApplication::translate("main", "Failed to load content blocking profile file: invalid header"), Otter::OtherMessageCategory, ErrorMessageLevel, m_information.path);
+		Console::addMessage(QCoreApplication::translate("main", "Failed to load content blocking profile file: invalid header"), Otter::OtherMessageCategory, ErrorMessageLevel, file.fileName());
 
 		file.close();
 
@@ -117,7 +114,7 @@ void ContentBlockingProfile::load(bool onlyHeader)
 
 		if (line.startsWith(QLatin1String("! Title: ")))
 		{
-			m_information.title = line.remove(QLatin1String("! Title: "));
+			m_title = line.remove(QLatin1String("! Title: "));
 
 			continue;
 		}
@@ -126,7 +123,7 @@ void ContentBlockingProfile::load(bool onlyHeader)
 
 		if (line.startsWith(QLatin1String("!URL:")))
 		{
-			m_information.updateUrl = line.remove(QLatin1String("!URL:"));
+			m_updateUrl = QUrl(line.remove(QLatin1String("!URL:")));
 
 			continue;
 		}
@@ -135,8 +132,8 @@ void ContentBlockingProfile::load(bool onlyHeader)
 	file.close();
 
 	const QSettings profilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
-	const QDateTime lastUpdate(QDateTime::fromString(profilesSettings.value(m_information.name + QLatin1String("/lastUpdate")).toString(), Qt::ISODate));
-	const int updateInterval(profilesSettings.value(m_information.name + QLatin1String("/updateInterval")).toInt());
+	const QDateTime lastUpdate(QDateTime::fromString(profilesSettings.value(m_name + QLatin1String("/lastUpdate")).toString(), Qt::ISODate));
+	const int updateInterval(profilesSettings.value(m_name + QLatin1String("/updateInterval")).toInt());
 
 	if (!m_isUpdating && updateInterval > 0 && (!lastUpdate.isValid() || lastUpdate.daysTo(QDateTime::currentDateTime()) > updateInterval))
 	{
@@ -346,9 +343,9 @@ void ContentBlockingProfile::addRule(ContentBlockingRule *rule, const QString &r
 
 void ContentBlockingProfile::deleteNode(Node *node)
 {
-	for (int j = 0; j < node->children.count(); ++j)
+	for (int i = 0; i < node->children.count(); ++i)
 	{
-		deleteNode(node->children.at(j));
+		deleteNode(node->children.at(i));
 	}
 
 	delete node->rule;
@@ -372,7 +369,7 @@ void ContentBlockingProfile::replyFinished()
 
 	if (m_networkReply->error() != QNetworkReply::NoError || !downloadedDataHeader.trimmed().startsWith(QByteArray("[Adblock Plus")))
 	{
-		Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile: %1").arg(m_networkReply->errorString()), Otter::OtherMessageCategory, ErrorMessageLevel, m_information.path);
+		Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile: %1").arg(m_networkReply->errorString()), Otter::OtherMessageCategory, ErrorMessageLevel, getPath());
 
 		return;
 	}
@@ -384,26 +381,32 @@ void ContentBlockingProfile::replyFinished()
 
 		if (verifiedChecksum.toBase64().replace(QByteArray("="), QByteArray()) != checksum.replace(QByteArray("! Checksum: "), QByteArray()).replace(QByteArray("\n"), QByteArray()))
 		{
-			Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile: checksum mismatch"), Otter::OtherMessageCategory, ErrorMessageLevel, m_information.path);
+			Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile: checksum mismatch"), Otter::OtherMessageCategory, ErrorMessageLevel, getPath());
 
 			return;
 		}
 	}
 
-	QFile file(m_information.path);
+	const bool isFirstDownload(getPath().startsWith(QLatin1String(":/")));
+	QFile file(SessionsManager::getWritableDataPath(QLatin1String("blocking") + QLatin1String("/") + m_name + QLatin1String(".txt")));
 
 	if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate))
 	{
-		Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile: %1").arg(file.errorString()), Otter::OtherMessageCategory, ErrorMessageLevel, m_information.path);
+		Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile: %1").arg(file.errorString()), Otter::OtherMessageCategory, ErrorMessageLevel, file.fileName());
 
 		return;
 	}
 
 	QSettings profilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
-	profilesSettings.setValue(m_information.name + QLatin1String("/lastUpdate"), QDateTime::currentDateTime().toString(Qt::ISODate));
+	profilesSettings.setValue(m_name + QLatin1String("/lastUpdate"), QDateTime::currentDateTime().toString(Qt::ISODate));
 
 	file.write(downloadedDataHeader);
-	file.write(QStringLiteral("! URL: %1\n").arg(m_information.updateUrl.toString()).toUtf8());
+
+	if (!isFirstDownload)
+	{
+		file.write(QStringLiteral("! URL: %1\n").arg(m_updateUrl.toString()).toUtf8());
+	}
+
 	file.write(downloadedDataChecksum);
 	file.write(downloadedData);
 	file.close();
@@ -413,17 +416,32 @@ void ContentBlockingProfile::replyFinished()
 // TODO
 	}
 
-	const bool wasLoaded = m_wasLoaded;
+	const bool wasLoaded(m_wasLoaded);
 
 	clear();
 	load(wasLoaded);
 
-	emit profileModified(m_information.name);
+	emit profileModified(m_name);
 }
 
-ContentBlockingInformation ContentBlockingProfile::getInformation() const
+QString ContentBlockingProfile::getName() const
 {
-	return m_information;
+	return m_name;
+}
+
+QString ContentBlockingProfile::getTitle() const
+{
+	return (m_title.isEmpty() ? tr("(Unknown)") : m_title);
+}
+
+QString ContentBlockingProfile::getPath() const
+{
+	return SessionsManager::getReadableDataPath(QLatin1String("blocking") + QLatin1String("/") + m_name + QLatin1String(".txt"));
+}
+
+QUrl ContentBlockingProfile::getUpdateUrl() const
+{
+	return m_updateUrl;
 }
 
 ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType)
@@ -451,7 +469,7 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrl(const QUrl 
 		{
 			ContentBlockingManager::CheckResult result;
 			result.url = requestUrl;
-			result.profile = m_information.name;
+			result.profile = m_name;
 			result.resourceType = resourceType;
 			result.isBlocked = true;
 
@@ -499,26 +517,28 @@ bool ContentBlockingProfile::downloadRules()
 		return false;
 	}
 
-	if (!m_information.updateUrl.isValid())
+	if (!m_updateUrl.isValid())
 	{
-		if (m_information.updateUrl.isEmpty())
+		const QString path(getPath());
+
+		if (m_updateUrl.isEmpty())
 		{
-			Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile, update URL is empty"), Otter::OtherMessageCategory, ErrorMessageLevel, m_information.path);
+			Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile, update URL is empty"), Otter::OtherMessageCategory, ErrorMessageLevel, path);
 		}
 		else
 		{
-			Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile, update URL (%1) is invalid").arg(m_information.updateUrl.toString()), Otter::OtherMessageCategory, ErrorMessageLevel, m_information.path);
+			Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile, update URL (%1) is invalid").arg(m_updateUrl.toString()), Otter::OtherMessageCategory, ErrorMessageLevel, path);
 		}
 
 		return false;
 	}
 
-	QNetworkRequest request(m_information.updateUrl);
+	QNetworkRequest request(m_updateUrl);
 	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
 
 	m_networkReply = NetworkManagerFactory::getNetworkManager()->get(request);
 
-	connect(m_networkReply, SIGNAL(finished()), this, SLOT(replyFinished()));
+	connect(m_networkReply, SIGNAL(finished()), this, SLOT(updateReady()));
 
 	m_isUpdating = true;
 
@@ -544,7 +564,7 @@ bool ContentBlockingProfile::loadRules()
 #endif
 	}
 
-	QFile file(m_information.path);
+	QFile file(getPath());
 	file.open(QIODevice::ReadOnly | QIODevice::Text);
 
 	QTextStream stream(&file);

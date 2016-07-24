@@ -42,19 +42,19 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 
 	const QSettings profilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
 	const QStringList globalProfiles(SettingsManager::getValue(QLatin1String("Content/BlockingProfiles")).toStringList());
-	const QVector<ContentBlockingInformation> profiles(ContentBlockingManager::getProfiles());
+	const QVector<ContentBlockingProfile*> profiles(ContentBlockingManager::getProfiles());
 	QStandardItemModel *model(new QStandardItemModel(this));
 
 	model->setHorizontalHeaderLabels(QStringList({tr("Title"), tr("Update Interval"), tr("Last Update")}));
 
 	for (int i = 0; i < profiles.count(); ++i)
 	{
-		QList<QStandardItem*> items({new QStandardItem(profiles.at(i).title), new QStandardItem(profilesSettings.value(profiles.at(i).name + QLatin1String("/updateInterval")).toString()), new QStandardItem(Utils::formatDateTime(profilesSettings.value(profiles.at(i).name + QLatin1String("/lastUpdate")).toDateTime()))});
-		items[0]->setData(profiles.at(i).name, Qt::UserRole);
-		items[0]->setData(profiles.at(i).updateUrl, (Qt::UserRole + 1));
+		QList<QStandardItem*> items({new QStandardItem(profiles.at(i)->getTitle()), new QStandardItem(profilesSettings.value(profiles.at(i)->getName() + QLatin1String("/updateInterval")).toString()), new QStandardItem(Utils::formatDateTime(profilesSettings.value(profiles.at(i)->getName() + QLatin1String("/lastUpdate")).toDateTime()))});
+		items[0]->setData(profiles.at(i)->getName(), Qt::UserRole);
+		items[0]->setData(profiles.at(i)->getUpdateUrl(), (Qt::UserRole + 1));
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		items[0]->setCheckable(true);
-		items[0]->setCheckState(globalProfiles.contains(profiles.at(i).name) ? Qt::Checked : Qt::Unchecked);
+		items[0]->setCheckState(globalProfiles.contains(profiles.at(i)->getName()) ? Qt::Checked : Qt::Unchecked);
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
 		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
@@ -87,11 +87,11 @@ void ContentBlockingDialog::changeEvent(QEvent *event)
 	}
 }
 
-void ContentBlockingDialog::profileModified(const QString &profile)
+void ContentBlockingDialog::profileModified(const QString &name)
 {
-	const ContentBlockingInformation information(ContentBlockingManager::getProfile(profile));
+	ContentBlockingProfile *profile(ContentBlockingManager::getProfile(name));
 
-	if (information.name.isEmpty())
+	if (!profile)
 	{
 		return;
 	}
@@ -100,12 +100,12 @@ void ContentBlockingDialog::profileModified(const QString &profile)
 	{
 		const QModelIndex index(m_ui->profilesViewWidget->model()->index(i, 0));
 
-		if (index.data(Qt::UserRole).toString() == profile)
+		if (index.data(Qt::UserRole).toString() == name)
 		{
 			const QSettings profilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
 
-			m_ui->profilesViewWidget->model()->setData(index, information.title, Qt::DisplayRole);
-			m_ui->profilesViewWidget->model()->setData(index.sibling(i, 2), Utils::formatDateTime(profilesSettings.value(profile + QLatin1String("/lastUpdate")).toDateTime()), Qt::DisplayRole);
+			m_ui->profilesViewWidget->model()->setData(index, profile->getTitle(), Qt::DisplayRole);
+			m_ui->profilesViewWidget->model()->setData(index.sibling(i, 2), Utils::formatDateTime(profilesSettings.value(name + QLatin1String("/lastUpdate")).toDateTime()), Qt::DisplayRole);
 
 			break;
 		}

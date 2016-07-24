@@ -43,7 +43,7 @@ protected:
 	void changeEvent(QEvent *event);
 
 protected slots:
-	void profileModified(const QString &profile);
+	void profileModified(const QString &name);
 	void updateProfile();
 	void updateActions();
 	void save();

@@ -29,7 +29,6 @@ namespace Otter
 {
 
 class ContentBlockingProfile;
-struct ContentBlockingInformation;
 
 class ContentBlockingManager : public QObject
 {
@@ -48,20 +47,18 @@ public:
 
 	static void createInstance(QObject *parent = NULL);
 	static ContentBlockingManager* getInstance();
+	static ContentBlockingProfile* getProfile(const QString &profile);
 	static CheckResult checkUrl(const QVector<int> &profiles, const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType);
-	static ContentBlockingInformation getProfile(const QString &profile);
 	static QStringList createSubdomainList(const QString &domain);
 	static QStringList getStyleSheet(const QVector<int> &profiles);
 	static QStringList getStyleSheetBlackList(const QString &domain, const QVector<int> &profiles);
 	static QStringList getStyleSheetWhiteList(const QString &domain, const QVector<int> &profiles);
-	static QVector<ContentBlockingInformation> getProfiles();
+	static QVector<ContentBlockingProfile*> getProfiles();
 	static QVector<int> getProfileList(const QStringList &names);
 	static bool updateProfile(const QString &profile);
 
 protected:
 	explicit ContentBlockingManager(QObject *parent = NULL);
-
-	static void loadProfiles();
 
 private:
 	static ContentBlockingManager *m_instance;

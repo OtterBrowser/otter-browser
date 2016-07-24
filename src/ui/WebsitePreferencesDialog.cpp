@@ -272,11 +272,11 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 	}
 }
 
-void WebsitePreferencesDialog::updateContentBlockingProfile(const QString &profile)
+void WebsitePreferencesDialog::updateContentBlockingProfile(const QString &name)
 {
-	const ContentBlockingInformation information(ContentBlockingManager::getProfile(profile));
+	ContentBlockingProfile *profile(ContentBlockingManager::getProfile(name));
 
-	if (information.name.isEmpty())
+	if (!profile)
 	{
 		return;
 	}
@@ -285,12 +285,12 @@ void WebsitePreferencesDialog::updateContentBlockingProfile(const QString &profi
 	{
 		const QModelIndex index(m_ui->contentBlockingProfilesViewWidget->model()->index(i, 0));
 
-		if (index.data(Qt::UserRole).toString() == profile)
+		if (index.data(Qt::UserRole).toString() == name)
 		{
 			const QSettings profilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
 
-			m_ui->contentBlockingProfilesViewWidget->model()->setData(index, information.title, Qt::DisplayRole);
-			m_ui->contentBlockingProfilesViewWidget->model()->setData(index.sibling(i, 2), Utils::formatDateTime(profilesSettings.value(profile + QLatin1String("/lastUpdate")).toDateTime()), Qt::DisplayRole);
+			m_ui->contentBlockingProfilesViewWidget->model()->setData(index, profile->getTitle(), Qt::DisplayRole);
+			m_ui->contentBlockingProfilesViewWidget->model()->setData(index.sibling(i, 2), Utils::formatDateTime(profilesSettings.value(name + QLatin1String("/lastUpdate")).toDateTime()), Qt::DisplayRole);
 
 			break;
 		}
@@ -361,17 +361,17 @@ void WebsitePreferencesDialog::updateValues(bool checked)
 
 	const QSettings contentBlockingProfilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
 	const QStringList contentBlockingGlobalProfiles(SettingsManager::getValue(QLatin1String("Content/BlockingProfiles"), url).toStringList());
-	const QVector<ContentBlockingInformation> contentBlockingProfiles(ContentBlockingManager::getProfiles());
+	const QVector<ContentBlockingProfile*> contentBlockingProfiles(ContentBlockingManager::getProfiles());
 	QStandardItemModel *contentBlockingProfilesModel(new QStandardItemModel(this));
 	contentBlockingProfilesModel->setHorizontalHeaderLabels(QStringList({tr("Title"), tr("Update Interval"), tr("Last Update")}));
 
 	for (int i = 0; i < contentBlockingProfiles.count(); ++i)
 	{
-		QList<QStandardItem*> items({new QStandardItem(contentBlockingProfiles.at(i).title), new QStandardItem(contentBlockingProfilesSettings.value(contentBlockingProfiles.at(i).name + QLatin1String("/updateInterval")).toString()), new QStandardItem(Utils::formatDateTime(contentBlockingProfilesSettings.value(contentBlockingProfiles.at(i).name + QLatin1String("/lastUpdate")).toDateTime()))});
-		items[0]->setData(contentBlockingProfiles.at(i).name, Qt::UserRole);
+		QList<QStandardItem*> items({new QStandardItem(contentBlockingProfiles.at(i)->getTitle()), new QStandardItem(contentBlockingProfilesSettings.value(contentBlockingProfiles.at(i)->getName() + QLatin1String("/updateInterval")).toString()), new QStandardItem(Utils::formatDateTime(contentBlockingProfilesSettings.value(contentBlockingProfiles.at(i)->getName() + QLatin1String("/lastUpdate")).toDateTime()))});
+		items[0]->setData(contentBlockingProfiles.at(i)->getName(), Qt::UserRole);
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		items[0]->setCheckable(true);
-		items[0]->setCheckState(contentBlockingGlobalProfiles.contains(contentBlockingProfiles.at(i).name) ? Qt::Checked : Qt::Unchecked);
+		items[0]->setCheckState(contentBlockingGlobalProfiles.contains(contentBlockingProfiles.at(i)->getName()) ? Qt::Checked : Qt::Unchecked);
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 

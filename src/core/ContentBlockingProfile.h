@@ -29,14 +29,6 @@
 namespace Otter
 {
 
-struct ContentBlockingInformation
-{
-	QString name;
-	QString title;
-	QString path;
-	QUrl updateUrl;
-};
-
 class ContentBlockingProfile : public QObject
 {
 	Q_OBJECT
@@ -67,9 +59,11 @@ public:
 		bool needsDomainCheck;
 	};
 
-	explicit ContentBlockingProfile(const QString &path, QObject *parent = NULL);
+	explicit ContentBlockingProfile(const QString &name, QObject *parent = NULL);
 
-	ContentBlockingInformation getInformation() const;
+	QString getName() const;
+	QString getTitle() const;
+	QUrl getUpdateUrl() const;
 	ContentBlockingManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType);
 	QStringList getStyleSheet();
 	QStringList getStyleSheetBlackList(const QString &domain);
@@ -86,6 +80,7 @@ protected:
 		Node() : rule(NULL), value(0) {}
 	};
 
+	QString getPath() const;
 	void clear();
 	void load(bool onlyHeader = false);
 	void parseRuleLine(QString line);
@@ -107,8 +102,10 @@ private:
 	QString m_requestUrl;
 	QString m_requestHost;
 	QString m_baseUrlHost;
+	QString m_name;
+	QString m_title;
+	QUrl m_updateUrl;
 	QRegularExpression m_domainExpression;
-	ContentBlockingInformation m_information;
 	QStringList m_styleSheet;
 	QMultiHash<QString, QString> m_styleSheetBlackList;
 	QMultiHash<QString, QString> m_styleSheetWhiteList;

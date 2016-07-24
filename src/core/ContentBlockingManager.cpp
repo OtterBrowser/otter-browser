@@ -41,49 +41,25 @@ void ContentBlockingManager::createInstance(QObject *parent)
 	if (!m_instance)
 	{
 		m_instance = new ContentBlockingManager(parent);
-
-		loadProfiles();
-	}
-}
-
-void ContentBlockingManager::loadProfiles()
-{
-	const QString contentBlockingPath(SessionsManager::getWritableDataPath(QLatin1String("blocking")));
-	const QDir directory(contentBlockingPath);
-
-	if (!directory.exists())
-	{
-		QDir().mkpath(contentBlockingPath);
-	}
-
-	const QList<QFileInfo> availableProfiles(QDir(QLatin1String(":/blocking/")).entryInfoList(QStringList(QLatin1String("*.txt")), QDir::Files));
-
-	for (int i = 0; i < availableProfiles.count(); ++i)
-	{
-		const QString path(directory.filePath(availableProfiles.at(i).fileName()));
-
-		if (!QFile::exists(path))
-		{
-			QFile::copy(availableProfiles.at(i).filePath(), path);
-			QFile::setPermissions(path, (QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ReadGroup | QFileDevice::ReadOther));
-		}
-	}
-
-	const QList<QFileInfo> existingProfiles(directory.entryInfoList(QStringList(QLatin1String("*.txt")), QDir::Files));
-
-	for (int i = 0; i < existingProfiles.count(); ++i)
-	{
-		ContentBlockingProfile *profile(new ContentBlockingProfile(existingProfiles.at(i).absoluteFilePath(), m_instance));
-
-		m_profiles.append(profile);
-
-		connect(profile, SIGNAL(profileModified(QString)), m_instance, SIGNAL(profileModified(QString)));
 	}
 }
 
 ContentBlockingManager* ContentBlockingManager::getInstance()
 {
 	return m_instance;
+}
+
+ContentBlockingProfile* ContentBlockingManager::getProfile(const QString &profile)
+{
+	for (int i = 0; i < m_profiles.count(); ++i)
+	{
+		if (m_profiles[i]->getName() == profile)
+		{
+			return m_profiles[i];
+		}
+	}
+
+	return NULL;
 }
 
 ContentBlockingManager::CheckResult ContentBlockingManager::checkUrl(const QVector<int> &profiles, const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType)
@@ -114,19 +90,6 @@ ContentBlockingManager::CheckResult ContentBlockingManager::checkUrl(const QVect
 	}
 
 	return CheckResult();
-}
-
-ContentBlockingInformation ContentBlockingManager::getProfile(const QString &profile)
-{
-	for (int i = 0; i < m_profiles.count(); ++i)
-	{
-		if (m_profiles[i]->getInformation().name == profile)
-		{
-			return m_profiles[i]->getInformation();
-		}
-	}
-
-	return ContentBlockingInformation();
 }
 
 QStringList ContentBlockingManager::createSubdomainList(const QString &domain)
@@ -192,17 +155,39 @@ QStringList ContentBlockingManager::getStyleSheetWhiteList(const QString &domain
 	return data;
 }
 
-QVector<ContentBlockingInformation> ContentBlockingManager::getProfiles()
+QVector<ContentBlockingProfile*> ContentBlockingManager::getProfiles()
 {
-	QVector<ContentBlockingInformation> profiles;
-	profiles.reserve(m_profiles.count());
-
-	for (int i = 0; i < m_profiles.count(); ++i)
+	if (m_profiles.isEmpty())
 	{
-		profiles.append(m_profiles.at(i)->getInformation());
+		QStringList profiles;
+		QList<QFileInfo> allProfiles(QDir(QLatin1String(":/blocking/")).entryInfoList(QStringList(QLatin1String("*.txt")), QDir::Files));
+		allProfiles.append(QDir(SessionsManager::getWritableDataPath(QLatin1String("blocking"))).entryInfoList(QStringList(QLatin1String("*.txt")), QDir::Files));
+
+		for (int i = 0; i < allProfiles.count(); ++i)
+		{
+			const QString name(allProfiles.at(i).completeBaseName());
+
+			if (!profiles.contains(name))
+			{
+				profiles.append(name);
+			}
+		}
+
+		profiles.sort();
+
+		m_profiles.reserve(profiles.count());
+
+		for (int i = 0; i < profiles.count(); ++i)
+		{
+			ContentBlockingProfile *profile(new ContentBlockingProfile(profiles.at(i), m_instance));
+
+			m_profiles.append(profile);
+
+			connect(profile, SIGNAL(profileModified(QString)), m_instance, SIGNAL(profileModified(QString)));
+		}
 	}
 
-	return profiles;
+	return m_profiles;
 }
 
 QVector<int> ContentBlockingManager::getProfileList(const QStringList &names)
@@ -210,9 +195,14 @@ QVector<int> ContentBlockingManager::getProfileList(const QStringList &names)
 	QVector<int> profiles;
 	profiles.reserve(names.count());
 
+	if (m_profiles.isEmpty())
+	{
+		getProfiles();
+	}
+
 	for (int i = 0; i < m_profiles.count(); ++i)
 	{
-		if (names.contains(m_profiles.at(i)->getInformation().name))
+		if (names.contains(m_profiles.at(i)->getName()))
 		{
 			profiles.append(i);
 		}
@@ -225,7 +215,7 @@ bool ContentBlockingManager::updateProfile(const QString &profile)
 {
 	for (int i = 0; i < m_profiles.count(); ++i)
 	{
-		if (m_profiles.at(i)->getInformation().name == profile)
+		if (m_profiles.at(i)->getName() == profile)
 		{
 			return m_profiles[i]->downloadRules();
 		}
