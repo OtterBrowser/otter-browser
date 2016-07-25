@@ -21,16 +21,27 @@
 #define OTTER_CONTENTBLOCKINGINFORMATIONWIDGET_H
 
 #include "ToolButtonWidget.h"
+#include "../../core/NetworkManager.h"
 
 namespace Otter
 {
+
+class Window;
 
 class ContentBlockingInformationWidget : public ToolButtonWidget
 {
 	Q_OBJECT
 
 public:
-	ContentBlockingInformationWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = NULL);
+	explicit ContentBlockingInformationWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = NULL);
+
+protected slots:
+	void handleRequest(const NetworkManager::ResourceInformation &request);
+	void setWindow(Window *window);
+
+private:
+	Window *m_window;
+	int m_amount;
 };
 
 }

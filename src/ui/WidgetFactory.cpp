@@ -72,7 +72,7 @@ QWidget* createToolBarItem(const ActionsManager::ActionEntryDefinition &definiti
 
 	if (definition.action == QLatin1String("ContentBlockingInformationWidget"))
 	{
-		return new ContentBlockingInformationWidget(definition, parent);
+		return new ContentBlockingInformationWidget(window, definition, parent);
 	}
 
 	if (definition.action == QLatin1String("MenuButtonWidget"))

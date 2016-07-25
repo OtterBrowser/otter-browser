@@ -18,14 +18,56 @@
 **************************************************************************/
 
 #include "ContentBlockingInformationWidget.h"
+#include "../ContentsWidget.h"
+#include "../ToolBarWidget.h"
+#include "../Window.h"
 #include "../../core/ThemesManager.h"
 
 namespace Otter
 {
 
-ContentBlockingInformationWidget::ContentBlockingInformationWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent) : ToolButtonWidget(definition, parent)
+ContentBlockingInformationWidget::ContentBlockingInformationWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
+	m_window(window),
+	m_amount(0)
 {
 	setIcon(ThemesManager::getIcon(QLatin1String("content-blocking")));
+	setWindow(window);
+
+	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
+
+	if (toolBar && toolBar->getIdentifier() != ToolBarsManager::NavigationBar)
+	{
+		connect(toolBar, SIGNAL(windowChanged(Window*)), this, SLOT(setWindow(Window*)));
+	}
+}
+
+void ContentBlockingInformationWidget::handleRequest(const NetworkManager::ResourceInformation &request)
+{
+	Q_UNUSED(request)
+
+	++m_amount;
+
+	update();
+}
+
+void ContentBlockingInformationWidget::setWindow(Window *window)
+{
+	if (m_window)
+	{
+		disconnect(m_window->getContentsWidget(), SIGNAL(requestBlocked(NetworkManager::ResourceInformation)), this, SLOT(handleRequest(NetworkManager::ResourceInformation)));
+	}
+
+	m_window = window;
+	m_amount = 0;
+
+	if (window)
+	{
+		m_amount = window->getContentsWidget()->getBlockedRequests().count();
+
+		connect(m_window->getContentsWidget(), SIGNAL(requestBlocked(NetworkManager::ResourceInformation)), this, SLOT(handleRequest(NetworkManager::ResourceInformation)));
+	}
+
+	update();
 }
 
 }
