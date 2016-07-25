@@ -316,6 +316,11 @@ QList<LinkUrl> ContentsWidget::getSearchEngines() const
 	return QList<LinkUrl>();
 }
 
+QList<NetworkManager::ResourceInformation> ContentsWidget::getBlockedRequests() const
+{
+	return QList<NetworkManager::ResourceInformation>();
+}
+
 WindowsManager::ContentStates ContentsWidget::getContentState() const
 {
 	return WindowsManager::ApplicationContentState;

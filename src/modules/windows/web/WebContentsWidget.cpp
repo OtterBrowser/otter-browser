@@ -1060,6 +1060,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 	connect(m_webWidget, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)));
 	connect(m_webWidget, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(handleLoadingStateChange(WindowsManager::LoadingState)));
 	connect(m_webWidget, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)));
+	connect(m_webWidget, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)), this, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)));
 	connect(m_webWidget, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
 
 	emit webWidgetChanged();
@@ -1184,6 +1185,11 @@ QVariant WebContentsWidget::getOption(const QString &key) const
 QVariant WebContentsWidget::getPageInformation(WebWidget::PageInformation key) const
 {
 	return m_webWidget->getPageInformation(key);
+}
+
+QList<NetworkManager::ResourceInformation> WebContentsWidget::getBlockedRequests() const
+{
+	return m_webWidget->getBlockedRequests();
 }
 
 QUrl WebContentsWidget::getUrl() const

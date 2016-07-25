@@ -638,6 +638,8 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 					m_blockedRequests.append(resource);
 
+					emit requestBlocked(resource);
+
 					return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(QUrl()));
 				}
 			}
@@ -746,6 +748,11 @@ QString QtWebKitNetworkManager::getUserAgent() const
 QStringList QtWebKitNetworkManager::getBlockedElements() const
 {
 	return m_blockedElements;
+}
+
+QList<NetworkManager::ResourceInformation> QtWebKitNetworkManager::getBlockedRequests() const
+{
+	return m_blockedRequests;
 }
 
 QHash<QByteArray, QByteArray> QtWebKitNetworkManager::getHeaders() const

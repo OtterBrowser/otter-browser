@@ -71,6 +71,7 @@ public:
 	QStringList getStyleSheets() const;
 	QList<LinkUrl> getFeeds() const;
 	QList<LinkUrl> getSearchEngines() const;
+	QList<NetworkManager::ResourceInformation> getBlockedRequests() const;
 	QHash<QByteArray, QByteArray> getHeaders() const;
 	WindowsManager::ContentStates getContentState() const;
 	WindowsManager::LoadingState getLoadingState() const;

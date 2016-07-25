@@ -1456,6 +1456,11 @@ QList<LinkUrl> WebWidget::getSearchEngines() const
 	return QList<LinkUrl>();
 }
 
+QList<NetworkManager::ResourceInformation> WebWidget::getBlockedRequests() const
+{
+	return QList<NetworkManager::ResourceInformation>();
+}
+
 QVariantHash WebWidget::getOptions() const
 {
 	return m_options;

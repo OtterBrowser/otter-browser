@@ -77,6 +77,7 @@ public:
 	QLatin1String getType() const;
 	QVariant getOption(const QString &key) const;
 	QVariant getPageInformation(WebWidget::PageInformation key) const;
+	QList<NetworkManager::ResourceInformation> getBlockedRequests() const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 	QPixmap getThumbnail() const;

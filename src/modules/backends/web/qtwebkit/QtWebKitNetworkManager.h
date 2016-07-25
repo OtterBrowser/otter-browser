@@ -47,6 +47,7 @@ public:
 	QVariant getPageInformation(WebWidget::PageInformation key) const;
 	WebWidget::SslInformation getSslInformation() const;
 	QStringList getBlockedElements() const;
+	QList<NetworkManager::ResourceInformation> getBlockedRequests() const;
 	QHash<QByteArray, QByteArray> getHeaders() const;
 	WindowsManager::ContentStates getContentState() const;
 
@@ -109,6 +110,7 @@ private:
 
 signals:
 	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
+	void requestBlocked(const NetworkManager::ResourceInformation &request);
 	void contentStateChanged(WindowsManager::ContentStates state);
 
 friend class QtWebKitPage;

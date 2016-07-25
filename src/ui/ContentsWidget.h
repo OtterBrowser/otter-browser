@@ -54,6 +54,7 @@ public:
 	virtual QStringList getStyleSheets() const;
 	virtual QList<LinkUrl> getFeeds() const;
 	virtual QList<LinkUrl> getSearchEngines() const;
+	virtual QList<NetworkManager::ResourceInformation> getBlockedRequests() const;
 	virtual WindowsManager::ContentStates getContentState() const;
 	virtual WindowsManager::LoadingState getLoadingState() const;
 	virtual int getZoom() const;
@@ -103,6 +104,7 @@ signals:
 	void contentStateChanged(WindowsManager::ContentStates state);
 	void loadingStateChanged(WindowsManager::LoadingState);
 	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
+	void requestBlocked(const NetworkManager::ResourceInformation &request);
 	void zoomChanged(int zoom);
 };
 

@@ -22,6 +22,7 @@
 #ifndef OTTER_WEBWIDGET_H
 #define OTTER_WEBWIDGET_H
 
+#include "../core/NetworkManager.h"
 #include "../core/PasswordsManager.h"
 #include "../core/SessionsManager.h"
 #include "../core/SpellCheckManager.h"
@@ -180,6 +181,7 @@ public:
 	virtual QStringList getStyleSheets() const;
 	virtual QList<LinkUrl> getFeeds() const;
 	virtual QList<LinkUrl> getSearchEngines() const;
+	virtual QList<NetworkManager::ResourceInformation> getBlockedRequests() const;
 	QVariantHash getOptions() const;
 	virtual QHash<QByteArray, QByteArray> getHeaders() const;
 	virtual WindowsManager::ContentStates getContentState() const;
@@ -297,6 +299,7 @@ signals:
 	void contentStateChanged(WindowsManager::ContentStates state);
 	void loadingStateChanged(WindowsManager::LoadingState state);
 	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
+	void requestBlocked(const NetworkManager::ResourceInformation &request);
 	void zoomChanged(int zoom);
 };
 
