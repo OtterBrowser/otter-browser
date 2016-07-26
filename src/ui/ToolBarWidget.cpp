@@ -440,7 +440,7 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 				{
 					addWidget(widget);
 
-					if (tabBar)
+					if (isTabBar)
 					{
 						connect(widget, SIGNAL(tabsAmountChanged(int)), this, SLOT(updateVisibility()));
 
