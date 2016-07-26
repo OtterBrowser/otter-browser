@@ -209,6 +209,12 @@ void ContentsWidget::removeHistoryIndex(int index, bool purge)
 	Q_UNUSED(purge)
 }
 
+void ContentsWidget::setOption(const QString &key, const QVariant &value)
+{
+	Q_UNUSED(key)
+	Q_UNUSED(value)
+}
+
 void ContentsWidget::setActiveStyleSheet(const QString &styleSheet)
 {
 	Q_UNUSED(styleSheet)

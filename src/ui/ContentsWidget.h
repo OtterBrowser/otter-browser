@@ -69,6 +69,7 @@ public slots:
 	virtual void goToHistoryIndex(int index);
 	virtual void removeHistoryIndex(int index, bool purge = false);
 	void showDialog(ContentsDialog *dialog, bool lockEventLoop = true);
+	virtual void setOption(const QString &key, const QVariant &value);
 	virtual void setActiveStyleSheet(const QString &styleSheet);
 	virtual void setHistory(const WindowHistoryInformation &history);
 	virtual void setZoom(int zoom);
