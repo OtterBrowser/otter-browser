@@ -92,19 +92,21 @@ void QtWebKitPage::pageLoadFinished()
 
 	updateStyleSheets();
 
-	if (m_widget)
+	if (!m_widget || !m_widget->getOption(QLatin1String("ContentBlocking/EnableContentBlocking"), m_widget->getUrl()).toBool())
 	{
-		const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(QLatin1String("Content/BlockingProfiles"), m_widget->getUrl()).toStringList()));
+		return;
+	}
 
-		applyContentBlockingRules(ContentBlockingManager::getStyleSheet(profiles), true);
+	const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(QLatin1String("Content/BlockingProfiles"), m_widget->getUrl()).toStringList()));
 
-		const QStringList domainList(ContentBlockingManager::createSubdomainList(m_widget->getUrl().host()));
+	applyContentBlockingRules(ContentBlockingManager::getStyleSheet(profiles), true);
 
-		for (int i = 0; i < domainList.count(); ++i)
-		{
-			applyContentBlockingRules(ContentBlockingManager::getStyleSheetBlackList(domainList.at(i), profiles), true);
-			applyContentBlockingRules(ContentBlockingManager::getStyleSheetWhiteList(domainList.at(i), profiles), false);
-		}
+	const QStringList domainList(ContentBlockingManager::createSubdomainList(m_widget->getUrl().host()));
+
+	for (int i = 0; i < domainList.count(); ++i)
+	{
+		applyContentBlockingRules(ContentBlockingManager::getStyleSheetBlackList(domainList.at(i), profiles), true);
+		applyContentBlockingRules(ContentBlockingManager::getStyleSheetWhiteList(domainList.at(i), profiles), false);
 	}
 
 	const QStringList blockedRequests(m_widget->getBlockedElements());

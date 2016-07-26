@@ -427,7 +427,14 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 		m_backend = AddonsManager::getWebBackend(QLatin1String("qtwebkit"));
 	}
 
-	m_contentBlockingProfiles = ContentBlockingManager::getProfileList(m_widget->getOption(QLatin1String("Content/BlockingProfiles"), url).toStringList());
+	if (m_widget->getOption(QLatin1String("ContentBlocking/EnableContentBlocking"), url).toBool())
+	{
+		m_contentBlockingProfiles = ContentBlockingManager::getProfileList(m_widget->getOption(QLatin1String("Content/BlockingProfiles"), url).toStringList());
+	}
+	else
+	{
+		m_contentBlockingProfiles.clear();
+	}
 
 	QString acceptLanguage(m_widget->getOption(QLatin1String("Network/AcceptLanguage"), url).toString());
 	acceptLanguage = ((acceptLanguage.isEmpty()) ? QLatin1String(" ") : acceptLanguage.replace(QLatin1String("system"), QLocale::system().bcp47Name()));

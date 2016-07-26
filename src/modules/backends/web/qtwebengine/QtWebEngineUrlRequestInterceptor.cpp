@@ -75,7 +75,14 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 
 	if (!m_contentBlockingProfiles.contains(request.firstPartyUrl().host()))
 	{
-		m_contentBlockingProfiles[request.firstPartyUrl().host()] = ContentBlockingManager::getProfileList(SettingsManager::getValue(QLatin1String("Content/BlockingProfiles"), request.firstPartyUrl()).toStringList());
+		if (SettingsManager::getValue(QLatin1String("ContentBlocking/EnableContentBlocking"), request.firstPartyUrl()).toBool())
+		{
+			m_contentBlockingProfiles[request.firstPartyUrl().host()] = ContentBlockingManager::getProfileList(SettingsManager::getValue(QLatin1String("Content/BlockingProfiles"), request.firstPartyUrl()).toStringList());
+		}
+		else
+		{
+			m_contentBlockingProfiles[request.firstPartyUrl().host()] = QVector<int>();
+		}
 	}
 
 	const QVector<int> contentBlockingProfiles(m_contentBlockingProfiles.value(request.firstPartyUrl().host()));
