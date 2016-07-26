@@ -89,6 +89,7 @@ private:
 	int m_layerTimer;
 
 signals:
+	void aboutToNavigate();
 	void requestedOpenUrl(QUrl url, WindowsManager::OpenHints hints);
 	void requestedAddBookmark(QUrl url, QString title, QString description);
 	void requestedEditBookmark(QUrl url);

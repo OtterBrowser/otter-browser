@@ -1041,6 +1041,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 	handleLoadingStateChange(m_webWidget->getLoadingState());
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	connect(m_webWidget, SIGNAL(aboutToNavigate()), this, SIGNAL(aboutToNavigate()));
 	connect(m_webWidget, SIGNAL(aboutToNavigate()), this, SLOT(closePopupsBar()));
 	connect(m_webWidget, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString,QString)));
 	connect(m_webWidget, SIGNAL(requestedEditBookmark(QUrl)), this, SIGNAL(requestedEditBookmark(QUrl)));
