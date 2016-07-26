@@ -43,6 +43,7 @@ protected:
 protected slots:
 	void clear();
 	void openElement(QAction *action);
+	void toggleOption(QAction *action);
 	void populateElementsMenu();
 	void populateProfilesMenu();
 	void handleRequest(const NetworkManager::ResourceInformation &request);
