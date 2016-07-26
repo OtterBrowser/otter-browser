@@ -19,9 +19,11 @@
 
 #include "ContentBlockingInformationWidget.h"
 #include "../ContentsWidget.h"
+#include "../MainWindow.h"
 #include "../ToolBarWidget.h"
 #include "../Window.h"
 #include "../../core/ThemesManager.h"
+#include "../../core/Utils.h"
 
 #include <QtWidgets/QStyleOptionToolButton>
 #include <QtWidgets/QStylePainter>
@@ -31,8 +33,17 @@ namespace Otter
 
 ContentBlockingInformationWidget::ContentBlockingInformationWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
 	m_window(window),
+	m_elementsMenu(NULL),
+	m_profilesMenu(NULL),
 	m_amount(0)
 {
+	QMenu *menu(new QMenu(this));
+
+	m_elementsMenu = menu->addMenu(tr("Blocked Elements"));
+	m_profilesMenu = menu->addMenu(tr("Active Profiles"));
+
+	setMenu(menu);
+	setPopupMode(QToolButton::InstantPopup);
 	setIcon(ThemesManager::getIcon(QLatin1String("content-blocking")));
 	setWindow(window);
 
@@ -42,6 +53,10 @@ ContentBlockingInformationWidget::ContentBlockingInformationWidget(Window *windo
 	{
 		connect(toolBar, SIGNAL(windowChanged(Window*)), this, SLOT(setWindow(Window*)));
 	}
+
+	connect(m_elementsMenu, SIGNAL(aboutToShow()), this, SLOT(populateElementsMenu()));
+	connect(m_elementsMenu, SIGNAL(triggered(QAction*)), this, SLOT(openElement(QAction*)));
+	connect(m_profilesMenu, SIGNAL(aboutToShow()), this, SLOT(populateProfilesMenu()));
 }
 
 void ContentBlockingInformationWidget::paintEvent(QPaintEvent *event)
@@ -104,6 +119,81 @@ void ContentBlockingInformationWidget::clear()
 	updateState();
 }
 
+void ContentBlockingInformationWidget::openElement(QAction *action)
+{
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
+
+	if (action && mainWindow)
+	{
+		mainWindow->getWindowsManager()->open(QUrl(action->statusTip()), WindowsManager::calculateOpenHints());
+	}
+}
+
+void ContentBlockingInformationWidget::populateElementsMenu()
+{
+	m_elementsMenu->clear();
+
+	if (!m_window)
+	{
+		return;
+	}
+
+	const QList<NetworkManager::ResourceInformation> requests(m_window->getContentsWidget()->getBlockedRequests().mid(m_amount - 50));
+
+	for (int i = 0; i < requests.count(); ++i)
+	{
+		QString type;
+
+		switch (requests.at(i).resourceType)
+		{
+			case NetworkManager::MainFrameType:
+				type = tr("main frame");
+
+				break;
+			case NetworkManager::SubFrameType:
+				type = tr("subframe");
+
+				break;
+			case NetworkManager::StyleSheetType:
+				type = tr("stylesheet");
+
+				break;
+			case NetworkManager::ScriptType:
+				type = tr("script");
+
+				break;
+			case NetworkManager::ImageType:
+				type = tr("image");
+
+				break;
+			case NetworkManager::ObjectType:
+				type = tr("object");
+
+				break;
+			case NetworkManager::ObjectSubrequestType:
+				type = tr("object subrequest");
+
+				break;
+			case NetworkManager::XmlHttpRequestType:
+				type = tr("XHR");
+
+				break;
+			default:
+				type = tr("other");
+
+				break;
+		}
+
+		QAction *action(m_elementsMenu->addAction(QStringLiteral("%1\t [%2]").arg(Utils::elideText(requests.at(i).url.toString(), m_elementsMenu)).arg(type)));
+		action->setStatusTip(requests.at(i).url.toString());
+	}
+}
+
+void ContentBlockingInformationWidget::populateProfilesMenu()
+{
+	m_profilesMenu->clear();
+}
+
 void ContentBlockingInformationWidget::handleRequest(const NetworkManager::ResourceInformation &request)
 {
 	Q_UNUSED(request)
@@ -133,6 +223,8 @@ void ContentBlockingInformationWidget::updateState()
 
 	setText(text);
 	setToolTip(text);
+
+	m_elementsMenu->setEnabled(m_amount > 0);
 }
 
 void ContentBlockingInformationWidget::setWindow(Window *window)
@@ -155,6 +247,7 @@ void ContentBlockingInformationWidget::setWindow(Window *window)
 	}
 
 	updateState();
+	setEnabled(m_window);
 }
 
 }

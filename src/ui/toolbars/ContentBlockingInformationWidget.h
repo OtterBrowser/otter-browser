@@ -42,11 +42,16 @@ protected:
 
 protected slots:
 	void clear();
+	void openElement(QAction *action);
+	void populateElementsMenu();
+	void populateProfilesMenu();
 	void handleRequest(const NetworkManager::ResourceInformation &request);
 	void setWindow(Window *window);
 
 private:
 	Window *m_window;
+	QMenu *m_elementsMenu;
+	QMenu *m_profilesMenu;
 	QIcon m_icon;
 	int m_amount;
 };
