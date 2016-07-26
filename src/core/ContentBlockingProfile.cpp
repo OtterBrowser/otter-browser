@@ -534,7 +534,7 @@ bool ContentBlockingProfile::downloadRules()
 
 	m_networkReply = NetworkManagerFactory::getNetworkManager()->get(request);
 
-	connect(m_networkReply, SIGNAL(finished()), this, SLOT(updateReady()));
+	connect(m_networkReply, SIGNAL(finished()), this, SLOT(replyFinished()));
 
 	m_isUpdating = true;
 
