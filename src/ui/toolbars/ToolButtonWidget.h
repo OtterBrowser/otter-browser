@@ -38,6 +38,7 @@ public:
 	explicit ToolButtonWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = NULL);
 
 	QVariantMap getOptions() const;
+	bool isCustomized() const;
 
 public slots:
 	void setOptions(const QVariantMap &options);

@@ -203,6 +203,11 @@ QVariantMap ToolButtonWidget::getOptions() const
 	return m_options;
 }
 
+bool ToolButtonWidget::isCustomized() const
+{
+	return m_isCustomized;
+}
+
 bool ToolButtonWidget::event(QEvent *event)
 {
 	if (event->type() == QEvent::ContextMenu && contextMenuPolicy() == Qt::NoContextMenu)

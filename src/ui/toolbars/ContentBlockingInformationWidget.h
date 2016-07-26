@@ -35,12 +35,19 @@ class ContentBlockingInformationWidget : public ToolButtonWidget
 public:
 	explicit ContentBlockingInformationWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = NULL);
 
+protected:
+	void paintEvent(QPaintEvent *event);
+	void resizeEvent(QResizeEvent *event);
+	void updateState();
+
 protected slots:
+	void clear();
 	void handleRequest(const NetworkManager::ResourceInformation &request);
 	void setWindow(Window *window);
 
 private:
 	Window *m_window;
+	QIcon m_icon;
 	int m_amount;
 };
 
