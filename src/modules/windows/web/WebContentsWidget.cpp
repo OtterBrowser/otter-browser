@@ -1175,12 +1175,7 @@ QLatin1String WebContentsWidget::getType() const
 
 QVariant WebContentsWidget::getOption(const QString &key) const
 {
-	if (m_webWidget->hasOption(key))
-	{
-		return m_webWidget->getOptions().value(key, QVariant());
-	}
-
-	return QVariant();
+	return m_webWidget->getOption(key);
 }
 
 QVariant WebContentsWidget::getPageInformation(WebWidget::PageInformation key) const

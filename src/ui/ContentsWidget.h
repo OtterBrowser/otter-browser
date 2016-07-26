@@ -46,6 +46,7 @@ public:
 	virtual QString getActiveStyleSheet() const;
 	virtual QString getStatusMessage() const;
 	virtual QLatin1String getType() const = 0;
+	virtual QVariant getOption(const QString &key) const;
 	virtual QVariant getPageInformation(WebWidget::PageInformation key) const;
 	virtual QUrl getUrl() const = 0;
 	virtual QIcon getIcon() const = 0;

@@ -642,21 +642,6 @@ ContentsWidget* Window::getContentsWidget()
 	return m_contentsWidget;
 }
 
-QVariant Window::getOption(const QString &key) const
-{
-	if (m_contentsWidget && m_contentsWidget->getType() == QLatin1String("web"))
-	{
-		WebContentsWidget *webWidget(qobject_cast<WebContentsWidget*>(m_contentsWidget));
-
-		if (webWidget && webWidget->getWebWidget()->hasOption(key))
-		{
-			return webWidget->getWebWidget()->getOption(key);
-		}
-	}
-
-	return QVariant();
-}
-
 QString Window::getSearchEngine() const
 {
 	return m_searchEngine;

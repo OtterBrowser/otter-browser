@@ -925,7 +925,7 @@ QVariant WindowsManager::getOption(const QString &key) const
 {
 	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
 
-	return (window ? window->getOption(key) : QVariant());
+	return (window ? window->getContentsWidget()->getOption(key) : QVariant());
 }
 
 QString WindowsManager::getTitle() const
