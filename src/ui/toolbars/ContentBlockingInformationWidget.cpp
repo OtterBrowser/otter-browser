@@ -86,7 +86,21 @@ void ContentBlockingInformationWidget::paintEvent(QPaintEvent *event)
 		font.setBold(true);
 		font.setPixelSize(fontSize);
 
-		const QString text(QString::number(m_amount));
+		QString text;
+
+		if (m_amount > 999999)
+		{
+			text = QString::number(m_amount / 1000000) + QLatin1Char('M');
+		}
+		else if (m_amount > 999)
+		{
+			text = QString::number(m_amount / 1000) + QLatin1Char('K');
+		}
+		else
+		{
+			text = QString::number(m_amount);
+		}
+
 		const qreal textWidth(QFontMetricsF(font).width(text));
 
 		font.setPixelSize(fontSize * 0.8);
