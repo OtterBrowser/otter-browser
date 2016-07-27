@@ -210,38 +210,37 @@ void QtWebKitNetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytes
 
 void QtWebKitNetworkManager::requestFinished(QNetworkReply *reply)
 {
-	if (reply)
+	if (!reply || !m_replies.contains(reply))
 	{
-		if (reply == m_baseReply)
-		{
-			if (reply->sslConfiguration().isNull())
-			{
-				m_sslInformation.certificates = QList<QSslCertificate>();
-				m_sslInformation.cipher = QSslCipher();
-			}
-			else
-			{
-				m_sslInformation.certificates = reply->sslConfiguration().peerCertificateChain();
-				m_sslInformation.cipher = reply->sslConfiguration().sessionCipher();
-			}
-		}
-
-		m_replies.remove(reply);
+		return;
 	}
+
+	const QUrl url(reply->url());
+
+	m_replies.remove(reply);
 
 	setPageInformation(WebWidget::RequestsFinishedInformation, (m_pageInformation[WebWidget::RequestsFinishedInformation].toInt() + 1));
 
-	if (reply)
+	if (reply == m_baseReply)
 	{
-		const QUrl url(reply->url());
-
-		if (url.isValid() && url.scheme() != QLatin1String("data"))
+		if (reply->sslConfiguration().isNull())
 		{
-			setPageInformation(WebWidget::LoadingMessageInformation, tr("Completed request to %1").arg(url.host().isEmpty() ? QLatin1String("localhost") : reply->url().host()));
+			m_sslInformation.certificates = QList<QSslCertificate>();
+			m_sslInformation.cipher = QSslCipher();
 		}
-
-		disconnect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
+		else
+		{
+			m_sslInformation.certificates = reply->sslConfiguration().peerCertificateChain();
+			m_sslInformation.cipher = reply->sslConfiguration().sessionCipher();
+		}
 	}
+
+	if (url.isValid() && url.scheme() != QLatin1String("data"))
+	{
+		setPageInformation(WebWidget::LoadingMessageInformation, tr("Completed request to %1").arg(url.host().isEmpty() ? QLatin1String("localhost") : reply->url().host()));
+	}
+
+	disconnect(reply, SIGNAL(downloadProgress(qint64,qint64)), this, SLOT(downloadProgress(qint64,qint64)));
 }
 
 void QtWebKitNetworkManager::transferFinished()
