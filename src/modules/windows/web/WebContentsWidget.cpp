@@ -27,6 +27,7 @@
 #include "StartPageWidget.h"
 #include "../../../core/AddonsManager.h"
 #include "../../../core/InputInterpreter.h"
+#include "../../../core/NetworkManagerFactory.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/WebBackend.h"
@@ -40,6 +41,7 @@
 #include <QtGui/QGuiApplication>
 #include <QtGui/QMouseEvent>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QInputDialog>
 
 namespace Otter
 {
@@ -1069,7 +1071,20 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 
 void WebContentsWidget::setOption(const QString &key, const QVariant &value)
 {
-	m_webWidget->setOption(key, value);
+	if (key == QLatin1String("Network/UserAgent") && value.toString() == QLatin1String("custom"))
+	{
+		bool isConfirmed(false);
+		const QString userAgent(QInputDialog::getText(this, tr("Select User Agent"), tr("Enter User Agent:"), QLineEdit::Normal, NetworkManagerFactory::getUserAgent(m_webWidget->getOption(QLatin1String("Network/UserAgent")).toString()).value, &isConfirmed));
+
+		if (isConfirmed)
+		{
+			m_webWidget->setOption(QLatin1String("Network/UserAgent"), QLatin1String("custom;") + userAgent);
+		}
+	}
+	else
+	{
+		m_webWidget->setOption(key, value);
+	}
 }
 
 void WebContentsWidget::setOptions(const QVariantHash &options)

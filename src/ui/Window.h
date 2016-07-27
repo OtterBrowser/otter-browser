@@ -92,7 +92,6 @@ public slots:
 	void close();
 	void search(const QString &query, const QString &searchEngine);
 	void markActive();
-	void setOption(const QString &key, const QVariant &value);
 	void setSearchEngine(const QString &searchEngine);
 	void setUrl(const QUrl &url, bool typed = true);
 	void setControlsHidden(bool hidden);

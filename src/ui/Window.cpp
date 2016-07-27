@@ -26,7 +26,6 @@
 #include "toolbars/AddressWidget.h"
 #include "toolbars/SearchWidget.h"
 #include "../core/HistoryManager.h"
-#include "../core/NetworkManagerFactory.h"
 #include "../core/SettingsManager.h"
 #include "../core/Utils.h"
 #include "../modules/windows/addons/AddonsContentsWidget.h"
@@ -44,7 +43,6 @@
 #include <QtPrintSupport/QPrintPreviewDialog>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QBoxLayout>
-#include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMdiSubWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QToolButton>
@@ -364,32 +362,6 @@ void Window::setSession(const SessionWindow &session)
 	else
 	{
 		setUrl(session.getUrl(), false);
-	}
-}
-
-void Window::setOption(const QString &key, const QVariant &value)
-{
-	if (m_contentsWidget->getType() == QLatin1String("web"))
-	{
-		WebContentsWidget *webWidget(qobject_cast<WebContentsWidget*>(m_contentsWidget));
-
-		if (webWidget)
-		{
-			if (key == QLatin1String("Network/UserAgent") && value.toString() == QLatin1String("custom"))
-			{
-				bool confirmed(false);
-				const QString userAgent(QInputDialog::getText(this, tr("Select User Agent"), tr("Enter User Agent:"), QLineEdit::Normal, NetworkManagerFactory::getUserAgent(webWidget->getWebWidget()->getOption(QLatin1String("Network/UserAgent")).toString()).value, &confirmed));
-
-				if (confirmed)
-				{
-					webWidget->getWebWidget()->setOption(QLatin1String("Network/UserAgent"), QLatin1String("custom;") + userAgent);
-				}
-			}
-			else
-			{
-				webWidget->getWebWidget()->setOption(key, value);
-			}
-		}
 	}
 }
 

@@ -761,7 +761,7 @@ void WindowsManager::setOption(const QString &key, const QVariant &value)
 
 	if (window)
 	{
-		window->setOption(key, value);
+		window->getContentsWidget()->setOption(key, value);
 	}
 }
 
