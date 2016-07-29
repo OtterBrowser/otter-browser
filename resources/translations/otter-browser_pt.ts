@@ -2852,7 +2852,7 @@ Quer continuar?</translation>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="34"/>
         <source>Do you want to save login data for %1?</source>
-        <translation type="unfinished"/>
+        <translation>Deseja guardar os dados da sessão para %1?</translation>
     </message>
 </context>
 <context>
@@ -3019,7 +3019,7 @@ Quer continuar?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="105"/>
         <source>Show category headers</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar cabeçalhos de categoria</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="114"/>
@@ -3064,12 +3064,12 @@ Quer continuar?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="276"/>
         <source>Widget style:</source>
-        <translation type="unfinished"/>
+        <translation>Estilo da widget:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="286"/>
         <source>Style sheet:</source>
-        <translation type="unfinished"/>
+        <translation>Folha de estilo:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="310"/>
@@ -3115,7 +3115,7 @@ Quer continuar?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="406"/>
         <source>User style sheet:</source>
-        <translation type="unfinished"/>
+        <translation>Folha de estilo do utilizador:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="441"/>
@@ -4244,12 +4244,12 @@ Quer continuar?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="372"/>
         <source>Completed request to %1</source>
-        <translation type="unfinished"/>
+        <translation>Concluído o pedido para %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="639"/>
         <source>Sending request to %1…</source>
-        <translation type="unfinished"/>
+        <translation>A enviar pedido para %1...</translation>
     </message>
 </context>
 <context>
@@ -4552,12 +4552,12 @@ Quer substituí-lo?</translation>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="101"/>
         <source>Form address:</source>
-        <translation type="unfinished"/>
+        <translation>Do endereço:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="117"/>
         <source>Update address:</source>
-        <translation type="unfinished"/>
+        <translation>Atualizar endereço:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="129"/>
@@ -5901,12 +5901,12 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
         <source>Do you want to try to reload it?</source>
-        <translation type="unfinished"/>
+        <translation>Deseja tentar recarregá-lo?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="802"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Não voltar a mostrar esta mensagem</translation>
     </message>
 </context>
 <context>
@@ -6108,17 +6108,17 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="306"/>
         <source>Issued to:</source>
-        <translation type="unfinished"/>
+        <translation>Emitido para:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="313"/>
         <source>Issued by:</source>
-        <translation type="unfinished"/>
+        <translation>Emitido por:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="320"/>
         <source>Issued on:</source>
-        <translation type="unfinished"/>
+        <translation>Emitido em:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="327"/>
@@ -6270,7 +6270,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="236"/>
         <source>Information for %1</source>
-        <translation type="unfinished"/>
+        <translation>Informação para %1</translation>
     </message>
 </context>
 <context>
@@ -6306,7 +6306,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="100"/>
         <source>User style sheet:</source>
-        <translation type="unfinished"/>
+        <translation>Utilizar folha de estilo:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="107"/>
@@ -6426,7 +6426,7 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="609"/>
         <source>Allow to enter full screen mode:</source>
-        <translation type="unfinished"/>
+        <translation>Permitir entrar no modo de ecrã completo:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="630"/>
@@ -6777,17 +6777,17 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="917"/>
         <source>Connection refused to host %1</source>
-        <translation type="unfinished"/>
+        <translation>Ligação recusada para o hospedeiro %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="921"/>
         <source>Connection timed out to host %1</source>
-        <translation type="unfinished"/>
+        <translation>Ligação expirada para o hospedeiro %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="1027"/>
         <source>Connected to host %1</source>
-        <translation type="unfinished"/>
+        <translation>Ligado ao hospedeiro %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="1246"/>
@@ -6803,13 +6803,15 @@ Carregue no botão Instalar para reiniciar o navegador e instalar a atualizaçã
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2337"/>
         <source>Connecting to host failed:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Ligação ao hospedeiro falhou:
+%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2341"/>
         <source>Login failed:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Início de sessão falhou:
+%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2345"/>
