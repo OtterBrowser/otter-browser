@@ -58,7 +58,9 @@ protected:
 	void markAsPopup();
 	void applyContentBlockingRules(const QStringList &rules, bool remove);
 	void javaScriptAlert(QWebFrame *frame, const QString &message);
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 	void javaScriptConsoleMessage(const QString &note, int line, const QString &source);
+#endif
 	QWebPage* createWindow(WebWindowType type);
 	QString userAgentForUrl(const QUrl &url) const;
 	QString getDefaultUserAgent() const;
@@ -70,6 +72,9 @@ protected slots:
 	void optionChanged(const QString &option, const QVariant &value);
 	void pageLoadFinished();
 	void removePopup(const QUrl &url);
+#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
+	void handleConsoleMessage(QWebPage::MessageSource category, QWebPage::MessageLevel level, const QString &message, int line, const QString &source);
+#endif
 
 private:
 	QtWebKitWebWidget *m_widget;

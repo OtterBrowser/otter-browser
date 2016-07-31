@@ -57,6 +57,9 @@ QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWi
 	optionChanged(QLatin1String("Interface/ShowScrollBars"), SettingsManager::getValue(QLatin1String("Interface/ShowScrollBars")));
 
 	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
+#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
+	connect(this, SIGNAL(consoleMessageReceived(MessageSource,MessageLevel,QString,int,QString)), this, SLOT(handleConsoleMessage(MessageSource,MessageLevel,QString,int,QString)));
+#endif
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
 }
 
@@ -172,6 +175,57 @@ void QtWebKitPage::applyContentBlockingRules(const QStringList &rules, bool remo
 	}
 }
 
+#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
+void QtWebKitPage::handleConsoleMessage(QWebPage::MessageSource category, QWebPage::MessageLevel level, const QString &message, int line, const QString &source)
+{
+	Otter::MessageLevel mappedLevel(Otter::UnknownMessageLevel);
+
+	switch (level)
+	{
+		case QWebPage::LogMessageLevel:
+			mappedLevel = Otter::LogMessageLevel;
+
+			break;
+		case QWebPage::WarningMessageLevel:
+			mappedLevel = Otter::WarningMessageLevel;
+
+			break;
+		case QWebPage::ErrorMessageLevel:
+			mappedLevel = Otter::ErrorMessageLevel;
+
+			break;
+		default:
+			mappedLevel = Otter::DebugMessageLevel;
+
+			break;
+	}
+
+	MessageCategory mappedCategory(OtherMessageCategory);
+
+	switch (category)
+	{
+		case NetworkMessageSource:
+			mappedCategory = NetworkMessageCategory;
+
+			break;
+		case SecurityMessageSource:
+			mappedCategory = SecurityMessageCategory;
+
+			break;
+		case JSMessageSource:
+			mappedCategory = JavaScriptMessageCategory;
+
+			break;
+		default:
+			mappedCategory = OtherMessageCategory;
+
+			break;
+	}
+
+	Console::addMessage(message, mappedCategory, mappedLevel, source, line, (m_widget ? m_widget->getWindowIdentifier() : 0));
+}
+#endif
+
 void QtWebKitPage::updateStyleSheets(const QUrl &url)
 {
 	const QUrl currentUrl(url.isEmpty() ? mainFrame()->url() : url);
@@ -241,10 +295,12 @@ void QtWebKitPage::javaScriptAlert(QWebFrame *frame, const QString &message)
 	}
 }
 
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 void QtWebKitPage::javaScriptConsoleMessage(const QString &note, int line, const QString &source)
 {
 	Console::addMessage(note, JavaScriptMessageCategory, ErrorMessageLevel, source, line, (m_widget ? m_widget->getWindowIdentifier() : 0));
 }
+#endif
 
 void QtWebKitPage::triggerAction(QWebPage::WebAction action, bool checked)
 {
