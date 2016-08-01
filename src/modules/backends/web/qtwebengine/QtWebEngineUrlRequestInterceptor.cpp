@@ -155,7 +155,7 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 			m_blockedElements[request.firstPartyUrl().host()].append(request.requestUrl().url());
 		}
 
-		Console::addMessage(QCoreApplication::translate("main", "Blocked request"), Otter::NetworkMessageCategory, LogMessageLevel, request.requestUrl().toString(), -1);
+		Console::addMessage(QCoreApplication::translate("main", "Blocked request"), Console::NetworkCategory, Console::LogLevel, request.requestUrl().toString(), -1);
 
 		request.block(true);
 	}

@@ -176,48 +176,48 @@ void QtWebKitPage::applyContentBlockingRules(const QStringList &rules, bool remo
 }
 
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
-void QtWebKitPage::handleConsoleMessage(QWebPage::MessageSource category, QWebPage::MessageLevel level, const QString &message, int line, const QString &source)
+void QtWebKitPage::handleConsoleMessage(MessageSource category, MessageLevel level, const QString &message, int line, const QString &source)
 {
-	Otter::MessageLevel mappedLevel(Otter::UnknownMessageLevel);
+	Console::MessageLevel mappedLevel(Console::UnknownLevel);
 
 	switch (level)
 	{
 		case QWebPage::LogMessageLevel:
-			mappedLevel = Otter::LogMessageLevel;
+			mappedLevel = Console::LogLevel;
 
 			break;
 		case QWebPage::WarningMessageLevel:
-			mappedLevel = Otter::WarningMessageLevel;
+			mappedLevel = Console::WarningLevel;
 
 			break;
 		case QWebPage::ErrorMessageLevel:
-			mappedLevel = Otter::ErrorMessageLevel;
+			mappedLevel = Console::ErrorLevel;
 
 			break;
 		default:
-			mappedLevel = Otter::DebugMessageLevel;
+			mappedLevel = Console::DebugLevel;
 
 			break;
 	}
 
-	MessageCategory mappedCategory(OtherMessageCategory);
+	Console::MessageCategory mappedCategory(Console::OtherCategory);
 
 	switch (category)
 	{
 		case NetworkMessageSource:
-			mappedCategory = NetworkMessageCategory;
+			mappedCategory = Console::NetworkCategory;
 
 			break;
 		case SecurityMessageSource:
-			mappedCategory = SecurityMessageCategory;
+			mappedCategory = Console::SecurityCategory;
 
 			break;
 		case JSMessageSource:
-			mappedCategory = JavaScriptMessageCategory;
+			mappedCategory = Console::JavaScriptCategory;
 
 			break;
 		default:
-			mappedCategory = OtherMessageCategory;
+			mappedCategory = Console::OtherCategory;
 
 			break;
 	}
@@ -298,7 +298,7 @@ void QtWebKitPage::javaScriptAlert(QWebFrame *frame, const QString &message)
 #ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 void QtWebKitPage::javaScriptConsoleMessage(const QString &note, int line, const QString &source)
 {
-	Console::addMessage(note, JavaScriptMessageCategory, ErrorMessageLevel, source, line, (m_widget ? m_widget->getWindowIdentifier() : 0));
+	Console::addMessage(note, Console::JavaScriptCategory, Console::ErrorLevel, source, line, (m_widget ? m_widget->getWindowIdentifier() : 0));
 }
 #endif
 
@@ -592,7 +592,7 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 			domain = QLatin1String("HTTP");
 		}
 
-		Console::addMessage(tr("%1 error #%2: %3").arg(domain).arg(errorOption->error).arg(errorOption->errorString), NetworkMessageCategory, ErrorMessageLevel, errorOption->url.toString(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
+		Console::addMessage(tr("%1 error #%2: %3").arg(domain).arg(errorOption->error).arg(errorOption->errorString), Console::NetworkCategory, Console::ErrorLevel, errorOption->url.toString(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
 
 		if (errorOption->domain == QWebPage::WebKit && (errorOption->error == 102 || errorOption->error == 203))
 		{

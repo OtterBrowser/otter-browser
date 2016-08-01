@@ -38,7 +38,7 @@ PacUtils::PacUtils(QObject *parent) : QObject(parent)
 
 void PacUtils::alert(const QString &message) const
 {
-	Console::addMessage(message, NetworkMessageCategory, WarningMessageLevel);
+	Console::addMessage(message, Console::NetworkCategory, Console::WarningLevel);
 }
 
 QString PacUtils::dnsResolve(const QString &host) const
@@ -348,7 +348,7 @@ QList<QNetworkProxy> NetworkAutomaticProxy::getProxy(const QString &url, const Q
 			continue;
 		}
 
-		Console::addMessage(QCoreApplication::translate("main", "Failed to parse entry of proxy auto-config (PAC): %1").arg(proxies.at(i)), NetworkMessageCategory, ErrorMessageLevel);
+		Console::addMessage(QCoreApplication::translate("main", "Failed to parse entry of proxy auto-config (PAC): %1").arg(proxies.at(i)), Console::NetworkCategory, Console::ErrorLevel);
 
 		return m_proxies[QLatin1String("ERROR")];
 	}

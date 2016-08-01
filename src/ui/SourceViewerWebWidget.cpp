@@ -84,7 +84,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 					}
 					else
 					{
-						Console::addMessage(tr("Failed to save file: %1").arg(file.errorString()), OtherMessageCategory, ErrorMessageLevel, path);
+						Console::addMessage(tr("Failed to save file: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, path);
 
 						QMessageBox::warning(NULL, tr("Error"), tr("Failed to save file."), QMessageBox::Close);
 					}

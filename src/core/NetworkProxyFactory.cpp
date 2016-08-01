@@ -67,7 +67,7 @@ void NetworkProxyFactory::optionChanged(const QString &option)
 
 			if (!file.open(QIODevice::ReadOnly | QIODevice::Text) || !m_automaticProxy->setup(file.readAll()))
 			{
-				Console::addMessage(tr("Failed to load proxy auto-config (PAC): %1").arg(file.errorString()), NetworkMessageCategory, ErrorMessageLevel, path);
+				Console::addMessage(tr("Failed to load proxy auto-config (PAC): %1").arg(file.errorString()), Console::NetworkCategory, Console::ErrorLevel, path);
 
 				m_proxyMode = SystemProxy;
 			}
@@ -89,7 +89,7 @@ void NetworkProxyFactory::optionChanged(const QString &option)
 			}
 			else
 			{
-				Console::addMessage(tr("Failed to load proxy auto-config (PAC). Invalid URL: %1").arg(url.url()), NetworkMessageCategory, ErrorMessageLevel);
+				Console::addMessage(tr("Failed to load proxy auto-config (PAC). Invalid URL: %1").arg(url.url()), Console::NetworkCategory, Console::ErrorLevel);
 
 				m_proxyMode = SystemProxy;
 			}
@@ -142,7 +142,7 @@ void NetworkProxyFactory::setupAutomaticProxy()
 {
 	if (m_pacNetworkReply->error() != QNetworkReply::NoError || !m_automaticProxy->setup(m_pacNetworkReply->readAll()))
 	{
-		Console::addMessage(tr("Failed to load proxy auto-config (PAC): %1").arg(m_pacNetworkReply->errorString()), NetworkMessageCategory, ErrorMessageLevel, m_pacNetworkReply->url().url());
+		Console::addMessage(tr("Failed to load proxy auto-config (PAC): %1").arg(m_pacNetworkReply->errorString()), Console::NetworkCategory, Console::ErrorLevel, m_pacNetworkReply->url().url());
 
 		m_proxyMode = SystemProxy;
 	}

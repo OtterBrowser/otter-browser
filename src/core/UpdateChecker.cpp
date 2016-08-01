@@ -41,7 +41,7 @@ UpdateChecker::UpdateChecker(QObject *parent, bool inBackground) : QObject(paren
 
 	if (!url.isValid())
 	{
-		Console::addMessage(QCoreApplication::translate("main", "Unable to check for updates. Invalid URL: %1").arg(url.url()), OtherMessageCategory, ErrorMessageLevel);
+		Console::addMessage(QCoreApplication::translate("main", "Unable to check for updates. Invalid URL: %1").arg(url.url()), Console::OtherCategory, Console::ErrorLevel);
 
 		deleteLater();
 
@@ -62,7 +62,7 @@ void UpdateChecker::runUpdateCheck()
 
 	if (m_networkReply->error() != QNetworkReply::NoError)
 	{
-		Console::addMessage(QCoreApplication::translate("main", "Unable to check for updates: %1").arg(m_networkReply->errorString()), OtherMessageCategory, ErrorMessageLevel);
+		Console::addMessage(QCoreApplication::translate("main", "Unable to check for updates: %1").arg(m_networkReply->errorString()), Console::OtherCategory, Console::ErrorLevel);
 
 		deleteLater();
 
@@ -93,7 +93,7 @@ void UpdateChecker::runUpdateCheck()
 
 				if (channelMainVersion == 0)
 				{
-					Console::addMessage(QCoreApplication::translate("main", "Unable to parse version number: %1").arg(channelVersion), OtherMessageCategory, ErrorMessageLevel);
+					Console::addMessage(QCoreApplication::translate("main", "Unable to parse version number: %1").arg(channelVersion), Console::OtherCategory, Console::ErrorLevel);
 
 					continue;
 				}

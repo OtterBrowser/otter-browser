@@ -26,55 +26,55 @@
 namespace Otter
 {
 
-enum MessageCategory
-{
-	OtherMessageCategory = 0,
-	NetworkMessageCategory = 1,
-	SecurityMessageCategory = 2,
-	JavaScriptMessageCategory = 3
-};
-
-enum MessageLevel
-{
-	UnknownMessageLevel = 0,
-	DebugMessageLevel = 1,
-	LogMessageLevel = 2,
-	WarningMessageLevel = 3,
-	ErrorMessageLevel = 4
-};
-
-struct ConsoleMessage
-{
-	QDateTime time;
-	QString note;
-	QString source;
-	MessageCategory category;
-	MessageLevel level;
-	quint64 window;
-	int line;
-
-	ConsoleMessage() : category(OtherMessageCategory), level(UnknownMessageLevel), window(0), line(-1) {}
-};
-
 class Console : public QObject
 {
 	Q_OBJECT
 
 public:
+	enum MessageCategory
+	{
+		OtherCategory = 0,
+		NetworkCategory = 1,
+		SecurityCategory = 2,
+		JavaScriptCategory = 3
+	};
+
+	enum MessageLevel
+	{
+		UnknownLevel = 0,
+		DebugLevel = 1,
+		LogLevel = 2,
+		WarningLevel = 3,
+		ErrorLevel = 4
+	};
+
+	struct Message
+	{
+		QDateTime time;
+		QString note;
+		QString source;
+		MessageCategory category;
+		MessageLevel level;
+		quint64 window;
+		int line;
+
+		Message() : category(OtherCategory), level(UnknownLevel), window(0), line(-1) {}
+	};
+
 	static void createInstance(QObject *parent = NULL);
 	static void addMessage(const QString &note, MessageCategory category, MessageLevel level, const QString &source = QString(), int line = -1, quint64 window = 0);
 	static Console* getInstance();
-	static QList<ConsoleMessage> getMessages();
+	static QList<Message> getMessages();
 
 protected:
 	explicit Console(QObject *parent = NULL);
 
 private:
 	static Console *m_instance;
-	static QList<ConsoleMessage> m_messages;
+	static QList<Message> m_messages;
 
 signals:
-	void messageAdded(const ConsoleMessage &message);
+	void messageAdded(const Console::Message &message);
 };
 
 }

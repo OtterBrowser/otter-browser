@@ -92,7 +92,7 @@ void ConsoleWidget::showEvent(QShowEvent *event)
 		m_model = new QStandardItemModel(this);
 		m_model->setSortRole(Qt::UserRole);
 
-		const QList<ConsoleMessage> messages(Console::getMessages());
+		const QList<Console::Message> messages(Console::getMessages());
 
 		for (int i = 0; i < messages.count(); ++i)
 		{
@@ -101,13 +101,13 @@ void ConsoleWidget::showEvent(QShowEvent *event)
 
 		m_ui->consoleView->setModel(m_model);
 
-		connect(Console::getInstance(), SIGNAL(messageAdded(ConsoleMessage)), this, SLOT(addMessage(ConsoleMessage)));
+		connect(Console::getInstance(), SIGNAL(messageAdded(Console::Message)), this, SLOT(addMessage(Console::Message)));
 	}
 
 	QWidget::showEvent(event);
 }
 
-void ConsoleWidget::addMessage(const ConsoleMessage &message)
+void ConsoleWidget::addMessage(const Console::Message &message)
 {
 	if (!m_model)
 	{
@@ -119,11 +119,11 @@ void ConsoleWidget::addMessage(const ConsoleMessage &message)
 
 	switch (message.level)
 	{
-		case ErrorMessageLevel:
+		case Console::ErrorLevel:
 			icon = ThemesManager::getIcon(QLatin1String("dialog-error"));
 
 			break;
-		case WarningMessageLevel:
+		case Console::WarningLevel:
 			icon = ThemesManager::getIcon(QLatin1String("dialog-warning"));
 
 			break;
@@ -135,15 +135,15 @@ void ConsoleWidget::addMessage(const ConsoleMessage &message)
 
 	switch (message.category)
 	{
-		case NetworkMessageCategory:
+		case Console::NetworkCategory:
 			category = tr("Network");
 
 			break;
-		case SecurityMessageCategory:
+		case Console::SecurityCategory:
 			category = tr("Security");
 
 			break;
-		case JavaScriptMessageCategory:
+		case Console::JavaScriptCategory:
 			category = tr("JS");
 
 			break;
@@ -210,7 +210,7 @@ void ConsoleWidget::filterCategories()
 		m_messageScopes = messageScopes;
 	}
 
-	const QList<MessageCategory> categories(getCategories());
+	const QList<Console::MessageCategory> categories(getCategories());
 	const quint64 currentWindow(getCurrentWindow());
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
@@ -223,7 +223,7 @@ void ConsoleWidget::filterMessages(const QString &filter)
 {
 	if (m_model)
 	{
-		const QList<MessageCategory> categories(getCategories());
+		const QList<Console::MessageCategory> categories(getCategories());
 		const quint64 currentWindow(getCurrentWindow());
 
 		for (int i = 0; i < m_model->rowCount(); ++i)
@@ -233,7 +233,7 @@ void ConsoleWidget::filterMessages(const QString &filter)
 	}
 }
 
-void ConsoleWidget::applyFilters(QStandardItem *item, const QString &filter, const QList<MessageCategory> &categories, quint64 currentWindow)
+void ConsoleWidget::applyFilters(QStandardItem *item, const QString &filter, const QList<Console::MessageCategory> &categories, quint64 currentWindow)
 {
 	if (!item)
 	{
@@ -250,7 +250,7 @@ void ConsoleWidget::applyFilters(QStandardItem *item, const QString &filter, con
 	{
 		const quint64 window(item->data(Qt::UserRole + 3).toULongLong());
 
-		matched = (((window == 0 && m_messageScopes.testFlag(OtherSourcesScope)) || (window > 0 && ((window == currentWindow && m_messageScopes.testFlag(CurrentTabScope)) || m_messageScopes.testFlag(AllTabsScope)))) && categories.contains(static_cast<MessageCategory>(item->data(Qt::UserRole + 1).toInt())));
+		matched = (((window == 0 && m_messageScopes.testFlag(OtherSourcesScope)) || (window > 0 && ((window == currentWindow && m_messageScopes.testFlag(CurrentTabScope)) || m_messageScopes.testFlag(AllTabsScope)))) && categories.contains(static_cast<Console::MessageCategory>(item->data(Qt::UserRole + 1).toInt())));
 	}
 
 	m_ui->consoleView->setRowHidden(item->row(), m_ui->consoleView->rootIndex(), !matched);
@@ -263,28 +263,28 @@ void ConsoleWidget::showContextMenu(const QPoint position)
 	menu.exec(m_ui->consoleView->mapToGlobal(position));
 }
 
-QList<MessageCategory> ConsoleWidget::getCategories() const
+QList<Console::MessageCategory> ConsoleWidget::getCategories() const
 {
-	QList<MessageCategory> categories;
+	QList<Console::MessageCategory> categories;
 
 	if (m_ui->networkButton->isChecked())
 	{
-		categories.append(NetworkMessageCategory);
+		categories.append(Console::NetworkCategory);
 	}
 
 	if (m_ui->securityButton->isChecked())
 	{
-		categories.append(SecurityMessageCategory);
+		categories.append(Console::SecurityCategory);
 	}
 
 	if (m_ui->javaScriptButton->isChecked())
 	{
-		categories.append(JavaScriptMessageCategory);
+		categories.append(Console::JavaScriptCategory);
 	}
 
 	if (m_ui->otherButton->isChecked())
 	{
-		categories.append(OtherMessageCategory);
+		categories.append(Console::OtherCategory);
 	}
 
 	return categories;

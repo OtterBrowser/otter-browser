@@ -53,12 +53,12 @@ protected:
 	Q_DECLARE_FLAGS(MessagesScopes, MessagesScope)
 
 	void showEvent(QShowEvent *event);
-	void applyFilters(QStandardItem *item, const QString &filter, const QList<MessageCategory> &categories, quint64 currentWindow);
-	QList<MessageCategory> getCategories() const;
+	void applyFilters(QStandardItem *item, const QString &filter, const QList<Console::MessageCategory> &categories, quint64 currentWindow);
+	QList<Console::MessageCategory> getCategories() const;
 	quint64 getCurrentWindow();
 
 protected slots:
-	void addMessage(const ConsoleMessage &message);
+	void addMessage(const Console::Message &message);
 	void clear();
 	void copyText();
 	void filterCategories();

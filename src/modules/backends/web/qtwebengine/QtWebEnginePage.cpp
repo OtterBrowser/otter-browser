@@ -205,18 +205,18 @@ void QtWebEnginePage::javaScriptAlert(const QUrl &url, const QString &message)
 
 void QtWebEnginePage::javaScriptConsoleMessage(JavaScriptConsoleMessageLevel level, const QString &note, int line, const QString &source)
 {
-	MessageLevel mappedLevel(Otter::LogMessageLevel);
+	Console::MessageLevel mappedLevel(Console::LogLevel);
 
 	if (level == QWebEnginePage::WarningMessageLevel)
 	{
-		mappedLevel = Otter::WarningMessageLevel;
+		mappedLevel = Console::WarningLevel;
 	}
 	else if (level == QWebEnginePage::ErrorMessageLevel)
 	{
-		mappedLevel = Otter::ErrorMessageLevel;
+		mappedLevel = Console::ErrorLevel;
 	}
 
-	Console::addMessage(note, JavaScriptMessageCategory, mappedLevel, source, line, (m_widget ? m_widget->getWindowIdentifier() : 0));
+	Console::addMessage(note, Console::JavaScriptCategory, mappedLevel, source, line, (m_widget ? m_widget->getWindowIdentifier() : 0));
 }
 
 QWebEnginePage* QtWebEnginePage::createWindow(QWebEnginePage::WebWindowType type)

@@ -73,7 +73,7 @@ protected slots:
 	void pageLoadFinished();
 	void removePopup(const QUrl &url);
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
-	void handleConsoleMessage(QWebPage::MessageSource category, QWebPage::MessageLevel level, const QString &message, int line, const QString &source);
+	void handleConsoleMessage(MessageSource category, MessageLevel level, const QString &message, int line, const QString &source);
 #endif
 
 private:

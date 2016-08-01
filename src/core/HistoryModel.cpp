@@ -58,7 +58,7 @@ HistoryModel::HistoryModel(const QString &path, QObject *parent) : QStandardItem
 
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
-		Console::addMessage(tr("Failed to open history file: %1").arg(file.errorString()), OtherMessageCategory, ErrorMessageLevel, path);
+		Console::addMessage(tr("Failed to open history file: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, path);
 
 		return;
 	}

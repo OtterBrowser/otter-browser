@@ -81,7 +81,7 @@ void Updater::transferFinished()
 
 				if (!schema.load(QUrl::fromLocalFile(SessionsManager::getReadableDataPath(QLatin1String("schemas/update.xsd")))) || !QXmlSchemaValidator(schema).validate(QUrl::fromLocalFile(path)))
 				{
-					Console::addMessage(QCoreApplication::translate("main", "Downloaded update script is not valid: %1").arg(path), OtherMessageCategory, ErrorMessageLevel);
+					Console::addMessage(QCoreApplication::translate("main", "Downloaded update script is not valid: %1").arg(path), Console::OtherCategory, Console::ErrorLevel);
 
 					m_transfersSuccessful = false;
 				}
@@ -101,7 +101,7 @@ void Updater::transferFinished()
 		}
 		else
 		{
-			Console::addMessage(QCoreApplication::translate("main", "Unable to download update: %1\nError: %2").arg(transfer->getSource().url()).arg(transfer->getState()), OtherMessageCategory, ErrorMessageLevel);
+			Console::addMessage(QCoreApplication::translate("main", "Unable to download update: %1\nError: %2").arg(transfer->getSource().url()).arg(transfer->getState()), Console::OtherCategory, Console::ErrorLevel);
 
 			m_transfersSuccessful = false;
 		}
