@@ -62,6 +62,11 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 
 		m_geometryUpdateTimer = 0;
 
+		if (!m_window)
+		{
+			return;
+		}
+
 		WebContentsWidget *contentsWidget(qobject_cast<WebContentsWidget*>(m_window->getContentsWidget()));
 
 		if (!contentsWidget || !contentsWidget->getWebWidget())
