@@ -253,6 +253,7 @@ bool Action::isLocal(int identifier)
 		case ActionsManager::PasteNoteAction:
 		case ActionsManager::DeleteAction:
 		case ActionsManager::SelectAllAction:
+		case ActionsManager::UnselectAction:
 		case ActionsManager::ClearAllAction:
 		case ActionsManager::CheckSpellingAction:
 		case ActionsManager::SelectDictionaryAction:
@@ -427,6 +428,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(PasteNoteAction, QT_TRANSLATE_NOOP("actions", "Insert Note"), QString(), QIcon(), (IsEnabledFlag | IsMenuFlag));
 	registerAction(DeleteAction, QT_TRANSLATE_NOOP("actions", "Delete"), QString(), ThemesManager::getIcon(QLatin1String("edit-delete")));
 	registerAction(SelectAllAction, QT_TRANSLATE_NOOP("actions", "Select All"), QString(), ThemesManager::getIcon(QLatin1String("edit-select-all")));
+	registerAction(UnselectAction, QT_TRANSLATE_NOOP("actions", "Deselect"));
 	registerAction(ClearAllAction, QT_TRANSLATE_NOOP("actions", "Clear All"));
 	registerAction(CheckSpellingAction, QT_TRANSLATE_NOOP("actions", "Check Spelling"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag));
 	registerAction(SelectDictionaryAction, QT_TRANSLATE_NOOP("actions", "Dictionaries"), QString(), QIcon(), (IsEnabledFlag | IsMenuFlag));

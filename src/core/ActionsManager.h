@@ -158,6 +158,7 @@ public:
 		PasteNoteAction,
 		DeleteAction,
 		SelectAllAction,
+		UnselectAction,
 		ClearAllAction,
 		CheckSpellingAction,
 		SelectDictionaryAction,

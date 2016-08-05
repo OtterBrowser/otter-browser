@@ -57,7 +57,6 @@ public:
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
-	void clearSelection();
 	void goToHistoryIndex(int index);
 	void removeHistoryIndex(int index, bool purge = false);
 	void setOption(const QString &key, const QVariant &value);

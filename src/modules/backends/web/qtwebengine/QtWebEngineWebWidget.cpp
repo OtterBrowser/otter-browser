@@ -228,11 +228,6 @@ void QtWebEngineWebWidget::clearOptions()
 	updateOptions(getUrl());
 }
 
-void QtWebEngineWebWidget::clearSelection()
-{
-	m_webView->page()->runJavaScript(QLatin1String("window.getSelection().empty()"));
-}
-
 void QtWebEngineWebWidget::goToHistoryIndex(int index)
 {
 	m_webView->history()->goToItem(m_webView->history()->itemAt(index));
@@ -691,6 +686,12 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			m_webView->triggerPageAction(QWebEnginePage::SelectAll);
 
 			return;
+		case ActionsManager::UnselectAction:
+#if QT_VERSION >= 0x050700
+			m_webView->page()->triggerAction(QWebEnginePage::Unselect);
+#else
+			m_webView->page()->runJavaScript(QLatin1String("window.getSelection().empty()"));
+#endif
 		case ActionsManager::ClearAllAction:
 			triggerAction(ActionsManager::SelectAllAction);
 			triggerAction(ActionsManager::DeleteAction);

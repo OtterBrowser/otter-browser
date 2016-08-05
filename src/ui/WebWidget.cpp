@@ -684,6 +684,11 @@ void WebWidget::updateEditActions()
 		m_actions[ActionsManager::SelectAllAction]->setEnabled(!m_hitResult.flags.testFlag(IsEmptyTest));
 	}
 
+	if (m_actions.contains(ActionsManager::UnselectAction))
+	{
+		m_actions[ActionsManager::UnselectAction]->setEnabled(hasSelection);
+	}
+
 	if (m_actions.contains(ActionsManager::CheckSpellingAction))
 	{
 		m_actions[ActionsManager::CheckSpellingAction]->setChecked(m_hitResult.flags.testFlag(IsSpellCheckEnabled));

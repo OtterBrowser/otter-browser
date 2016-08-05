@@ -830,20 +830,6 @@ void QtWebKitWebWidget::clearOptions()
 	updateOptions(getUrl());
 }
 
-void QtWebKitWebWidget::clearSelection()
-{
-	const QWebElement element(m_page->mainFrame()->findFirstElement(QLatin1String(":focus")));
-
-	if (element.tagName().toLower() == QLatin1String("textarea") || element.tagName().toLower() == QLatin1String("input"))
-	{
-		m_page->triggerAction(QWebPage::MoveToPreviousChar);
-	}
-	else
-	{
-		m_page->mainFrame()->documentElement().evaluateJavaScript(QLatin1String("window.getSelection().empty()"));
-	}
-}
-
 void QtWebKitWebWidget::goToHistoryIndex(int index)
 {
 	m_page->history()->goToItem(m_webView->history()->itemAt(index));
@@ -1371,6 +1357,21 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			m_webView->page()->triggerAction(QWebPage::SelectAll);
 
 			return;
+		case ActionsManager::UnselectAction:
+			{
+				const QWebElement element(m_page->mainFrame()->findFirstElement(QLatin1String(":focus")));
+
+				if (element.tagName().toLower() == QLatin1String("textarea") || element.tagName().toLower() == QLatin1String("input"))
+				{
+					m_page->triggerAction(QWebPage::MoveToPreviousChar);
+				}
+				else
+				{
+					m_page->mainFrame()->documentElement().evaluateJavaScript(QLatin1String("window.getSelection().empty()"));
+				}
+			}
+
+			break;
 		case ActionsManager::ClearAllAction:
 			triggerAction(ActionsManager::SelectAllAction);
 			triggerAction(ActionsManager::DeleteAction);

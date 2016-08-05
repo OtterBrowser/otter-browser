@@ -222,6 +222,10 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 			m_sourceViewer->selectAll();
 
 			return;
+		case ActionsManager::UnselectAction:
+			m_sourceViewer->textCursor().clearSelection();
+
+			return;
 		case ActionsManager::ClearAllAction:
 			m_sourceViewer->selectAll();
 			m_sourceViewer->textCursor().removeSelectedText();
@@ -261,11 +265,6 @@ void SourceViewerWebWidget::viewSourceReplyFinished()
 
 		updateNavigationActions();
 	}
-}
-
-void SourceViewerWebWidget::clearSelection()
-{
-	m_sourceViewer->textCursor().clearSelection();
 }
 
 void SourceViewerWebWidget::goToHistoryIndex(int index)

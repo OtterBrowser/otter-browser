@@ -238,7 +238,7 @@ void WebContentsWidget::keyPressEvent(QKeyEvent *event)
 		}
 		else if (m_webWidget->hasSelection())
 		{
-			m_webWidget->clearSelection();
+			m_webWidget->triggerAction(ActionsManager::UnselectAction);
 
 			event->accept();
 		}
