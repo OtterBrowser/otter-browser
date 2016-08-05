@@ -114,6 +114,14 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	m_webView->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled, isPrivate);
 	m_webView->installEventFilter(this);
 
+#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
+	if (isPrivate)
+	{
+		m_webView->settings()->setAttribute(QWebSettings::LocalStorageEnabled, false);
+		m_webView->settings()->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, false);
+	}
+#endif
+
 	QShortcut *selectAllShortcut(new QShortcut(QKeySequence(QKeySequence::SelectAll), this, 0, 0, Qt::WidgetWithChildrenShortcut));
 
 	optionChanged(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages")));
@@ -782,6 +790,14 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 	settings->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, getOption(QLatin1String("Browser/EnableOfflineStorageDatabase"), url).toBool());
 	settings->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, getOption(QLatin1String("Browser/EnableOfflineWebApplicationCache"), url).toBool());
 	settings->setDefaultTextEncoding(getOption(QLatin1String("Content/DefaultCharacterEncoding"), url).toString());
+
+#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
+	if (settings->testAttribute(QWebSettings::PrivateBrowsingEnabled))
+	{
+		settings->setAttribute(QWebSettings::LocalStorageEnabled, false);
+		settings->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, false);
+	}
+#endif
 
 	disconnect(m_webView->page(), SIGNAL(geometryChangeRequested(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
 	disconnect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
