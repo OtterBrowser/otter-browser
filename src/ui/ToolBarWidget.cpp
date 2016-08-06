@@ -340,21 +340,11 @@ void ToolBarWidget::updateVisibility()
 	}
 }
 
-void ToolBarWidget::setToolBarLocked(bool locked)
+void ToolBarWidget::setWindow(Window *window)
 {
-	setMovable(!locked);
+	m_window = window;
 
-	if (locked && m_dragArea)
-	{
-		m_dragArea->deleteLater();
-		m_dragArea = NULL;
-	}
-	else if (!locked && !m_dragArea && qobject_cast<ToolBarAreaWidget*>(parentWidget()))
-	{
-		m_dragArea = new ToolBarDragAreaWidget(this);
-
-		insertWidget(((actions().count() > 0) ? actions().at(0) : NULL), m_dragArea);
-	}
+	emit windowChanged(m_window);
 }
 
 void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &definition)
@@ -449,6 +439,23 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 				}
 			}
 		}
+	}
+}
+
+void ToolBarWidget::setToolBarLocked(bool locked)
+{
+	setMovable(!locked);
+
+	if (locked && m_dragArea)
+	{
+		m_dragArea->deleteLater();
+		m_dragArea = NULL;
+	}
+	else if (!locked && !m_dragArea && qobject_cast<ToolBarAreaWidget*>(parentWidget()))
+	{
+		m_dragArea = new ToolBarDragAreaWidget(this);
+
+		insertWidget(((actions().count() > 0) ? actions().at(0) : NULL), m_dragArea);
 	}
 }
 

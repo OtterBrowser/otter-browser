@@ -68,6 +68,9 @@ public:
 	int getMaximumButtonSize() const;
 	bool event(QEvent *event);
 
+public slots:
+	void setWindow(Window *window);
+
 protected:
 	void paintEvent(QPaintEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
