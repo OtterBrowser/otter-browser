@@ -133,7 +133,7 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarsLockedChanged(bool)), this, SLOT(setToolBarLocked(bool)));
 	}
 
-	if (m_mainWindow && m_identifier != ToolBarsManager::NavigationBar)
+	if (m_mainWindow && m_identifier != ToolBarsManager::NavigationBar && m_identifier != ToolBarsManager::ProgressBar)
 	{
 		connect(m_mainWindow->getWindowsManager(), SIGNAL(currentWindowChanged(quint64)), this, SLOT(notifyWindowChanged(quint64)));
 	}
