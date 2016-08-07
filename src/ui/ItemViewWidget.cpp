@@ -320,6 +320,11 @@ void ItemViewWidget::keyPressEvent(QKeyEvent *event)
 
 			if (command != QItemSelectionModel::NoUpdate || style()->styleHint(QStyle::SH_ItemView_MovementWithoutUpdatingSelection, 0, this))
 			{
+				if (event->key() == Qt::Key_Down)
+				{
+					scrollTo(getIndex(0, 0));
+				}
+
 				selectionModel()->setCurrentIndex(newIndex, command);
 			}
 
