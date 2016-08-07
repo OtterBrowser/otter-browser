@@ -387,6 +387,8 @@ void ContentBlockingProfile::replyFinished()
 		}
 	}
 
+	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("blocking")));
+
 	const bool isFirstDownload(getPath().startsWith(QLatin1String(":/")));
 	QFile file(SessionsManager::getWritableDataPath(QLatin1String("blocking") + QLatin1String("/") + m_name + QLatin1String(".txt")));
 
