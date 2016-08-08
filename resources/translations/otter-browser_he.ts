@@ -117,39 +117,39 @@
         <translation>הזז מטה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="39"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="38"/>
         <source>Name</source>
         <translation>שם</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="39"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="38"/>
         <source>Code</source>
         <translation>קוד</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="64"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="60"/>
         <source>Unknown [%1]</source>
         <translation>לא מוכרת [%1]</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="75"/>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="136"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="77"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="138"/>
         <source>Any other</source>
         <translation>כל שפה אחרת</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="76"/>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="140"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="78"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="142"/>
         <source>System language (%1 - %2)</source>
         <translation>שפת מערכת (%1 - %2)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="148"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="150"/>
         <source>Custom</source>
         <translation>מותאמת</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="152"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="154"/>
         <source>Unknown</source>
         <translation>לא ידוע</translation>
     </message>
@@ -224,42 +224,42 @@
 <context>
     <name>Otter::AddonsManager</name>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="76"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="81"/>
         <source>Addons Manager</source>
         <translation>מנהל הרחבות</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="77"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="82"/>
         <source>Bookmarks Manager</source>
         <translation>מנהל סימניות</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="78"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="83"/>
         <source>Cache Manager</source>
         <translation>מנהל מטמון</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="79"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="84"/>
         <source>Configuration Manager</source>
         <translation>מנהל תצורה</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="80"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="85"/>
         <source>Cookies Manager</source>
         <translation>מנהל עוגיות</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="81"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="86"/>
         <source>History Manager</source>
         <translation>מנהל היסטוריה</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="82"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="87"/>
         <source>Notes Manager</source>
         <translation>מנהל פתקים</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="83"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="88"/>
         <source>Transfers Manager</source>
         <translation>מנהל העברות</translation>
     </message>
@@ -295,88 +295,88 @@
 <context>
     <name>Otter::AddressWidget</name>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="96"/>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="119"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="98"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="121"/>
         <source>Enter address or search…</source>
         <translation>הזן כתובת או חפש…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="309"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="311"/>
         <source>Undo</source>
         <translation>בטל</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="310"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="312"/>
         <source>Redo</source>
         <translation>בצע שוב</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="312"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="314"/>
         <source>Cut</source>
         <translation>גזור</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="313"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="315"/>
         <source>Copy</source>
         <translation>העתק</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="314"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="316"/>
         <source>Paste</source>
         <translation>הדבק</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="321"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="323"/>
         <source>Delete</source>
         <translation>מחק</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="323"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="325"/>
         <source>Copy to Note</source>
         <translation>העתק לפתק</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="325"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="327"/>
         <source>Clear All</source>
         <translation>טהר הכל</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="326"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="328"/>
         <source>Select All</source>
         <translation>בחר הכל</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="683"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="685"/>
         <source>Remove Bookmark</source>
         <translation>הסר סימנייה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="683"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="685"/>
         <source>Add Bookmark</source>
         <translation>הוסף סימנייה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="699"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="701"/>
         <source>Feed List</source>
         <translation>רשימת הזנות</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="728"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="730"/>
         <source>Click to load all plugins on the page</source>
         <translation>לחץ כדי לטעון את כל התוספים בעמוד</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1036"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1043"/>
         <source>Show Website Information</source>
         <translation>הצד מידע אתר רשת</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1132"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1139"/>
         <source>(Untitled)</source>
         <translation>(ללא כותרת)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1165"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1172"/>
         <source>Remove This Icon</source>
         <translation>הסר את סמל זה</translation>
     </message>
@@ -384,98 +384,98 @@
 <context>
     <name>Otter::Application</name>
     <message>
-        <location filename="../../src/core/Application.cpp" line="254"/>
-        <location filename="../../src/core/Application.cpp" line="286"/>
-        <location filename="../../src/core/Application.cpp" line="360"/>
-        <location filename="../../src/core/Application.cpp" line="527"/>
+        <location filename="../../src/core/Application.cpp" line="253"/>
+        <location filename="../../src/core/Application.cpp" line="285"/>
+        <location filename="../../src/core/Application.cpp" line="359"/>
+        <location filename="../../src/core/Application.cpp" line="526"/>
         <source>Warning</source>
         <translation>אזהרה</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="254"/>
+        <location filename="../../src/core/Application.cpp" line="253"/>
         <source>Profile directory (%1) is not writable, application will be running in read-only mode.</source>
         <translation>ספריית פרופיל (%1) אינה נתונה לכתיבה, יישום יורץ במצב קריאה-בלבד.</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="278"/>
+        <location filename="../../src/core/Application.cpp" line="277"/>
         <source>Your profile directory (%1) ran out of free disk space.
 This may lead to malfunctions or even data loss.</source>
         <translation>ספריית פרופיל (%1) אזלה מנפח כונן קשיח.
 זה יכול להוביל לשיבושים ואף לאיבוד מידע.</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="282"/>
+        <location filename="../../src/core/Application.cpp" line="281"/>
         <source>Your profile directory (%1) is running low on free disk space (%2 remaining).
 This may lead to malfunctions or even data loss.</source>
         <translation>ספריית פרופיל (%1) חולפת על פני נפח כונן קשיח דל (%2 נותרו).
 זה יכול להוביל לשיבושים ואף לאיבוד מידע.</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="288"/>
-        <location filename="../../src/core/Application.cpp" line="919"/>
-        <location filename="../../src/core/Application.cpp" line="968"/>
+        <location filename="../../src/core/Application.cpp" line="287"/>
+        <location filename="../../src/core/Application.cpp" line="918"/>
+        <location filename="../../src/core/Application.cpp" line="967"/>
         <source>Do you want to continue?</source>
         <translation>האם ברצונך להמשיך?</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="290"/>
-        <location filename="../../src/core/Application.cpp" line="923"/>
-        <location filename="../../src/core/Application.cpp" line="972"/>
+        <location filename="../../src/core/Application.cpp" line="289"/>
+        <location filename="../../src/core/Application.cpp" line="922"/>
+        <location filename="../../src/core/Application.cpp" line="971"/>
         <source>Do not show this message again</source>
         <translation>אל תציג את הודעה זו שוב</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="291"/>
+        <location filename="../../src/core/Application.cpp" line="290"/>
         <source>Continue in Read-only Mode</source>
         <translation>המשך במצב קריאה-בלבד</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="293"/>
+        <location filename="../../src/core/Application.cpp" line="292"/>
         <source>Ignore</source>
         <translation>התעלם</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="294"/>
+        <location filename="../../src/core/Application.cpp" line="293"/>
         <source>Quit</source>
         <translation>צא</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="360"/>
+        <location filename="../../src/core/Application.cpp" line="359"/>
         <source>SSL support is not available or incomplete.
 Some websites may work incorrectly or do not work at all.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="527"/>
+        <location filename="../../src/core/Application.cpp" line="526"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
         <translation>סשן זה לא נשמר כראוי.
 האם אתה בטוח כי ברצונך לשחזר את סשן זה בכל זאת?</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="631"/>
+        <location filename="../../src/core/Application.cpp" line="630"/>
         <source>New update %1 from %2 channel is available!</source>
         <translation>עדכון חדש %1 מתוך ערוץ %2 הינו זמין!</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="917"/>
-        <location filename="../../src/core/Application.cpp" line="966"/>
+        <location filename="../../src/core/Application.cpp" line="916"/>
+        <location filename="../../src/core/Application.cpp" line="965"/>
         <source>Question</source>
         <translation>שאלה</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/core/Application.cpp" line="918"/>
+        <location filename="../../src/core/Application.cpp" line="917"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
         <translation><numerusform>אתה עומד לצאת בעוד שישנם %n קבצים אשר עדיין מצויים בעיצומה של הורדה.</numerusform><numerusform>אתה עומד לצאת בעוד שישנו קובץ %n אשר עדיין מצוי בעיצומה של הורדה.</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="925"/>
-        <location filename="../../src/core/Application.cpp" line="974"/>
+        <location filename="../../src/core/Application.cpp" line="924"/>
+        <location filename="../../src/core/Application.cpp" line="973"/>
         <source>Hide</source>
         <translation>הסתר</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="967"/>
+        <location filename="../../src/core/Application.cpp" line="966"/>
         <source>You are about to quit the current Otter Browser session.</source>
         <translation>אתה עומד לצאת מתוך סשן דפדפן Otter הנוכחי.</translation>
     </message>
@@ -728,108 +728,108 @@ Are you sure that you want to restore this session anyway?</source>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="47"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="171"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="212"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="165"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="206"/>
         <source>Add Folder</source>
         <translation>הוסף תיקייה</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="48"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="172"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="211"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="213"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="166"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="205"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="207"/>
         <source>Add Bookmark</source>
         <translation>הוסף סימנייה</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="49"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="173"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="214"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="208"/>
         <source>Add Separator</source>
         <translation>הוסף חוצץ</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Title</source>
         <translation>כותרת</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Address</source>
         <translation>כתובת</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Description</source>
         <translation>תיאור</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Keyword</source>
         <translation>מילת מפתח</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Added</source>
         <translation>התווסף</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Modified</source>
         <translation>נשתנה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Visited</source>
         <translation>בוקר</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Visits</source>
         <translation>ביקורים</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="161"/>
         <source>Empty Trash</source>
         <translation>רוקן אשפה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="179"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="173"/>
         <source>Open</source>
         <translation>פתח</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="180"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="174"/>
         <source>Open in New Tab</source>
         <translation>פתח בתוך כרטיסייה חדשה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="181"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="175"/>
         <source>Open in New Background Tab</source>
         <translation>פתח בתוך כרטיסיית רקע חדשה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="183"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="177"/>
         <source>Open in New Window</source>
         <translation>פתח בתוך חלון חדש</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="184"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="178"/>
         <source>Open in New Background Window</source>
         <translation>פתח בתוך חלון רקע חדש</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="223"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="217"/>
         <source>Restore Bookmark</source>
         <translation>שחזר סימנייה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="231"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="225"/>
         <source>Properties…</source>
         <translation>מאפיינים…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="358"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="352"/>
         <source>Bookmarks Manager</source>
         <translation>מנהל סימניות</translation>
     </message>
@@ -1001,52 +1001,52 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>פג</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="351"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="341"/>
         <source>Open</source>
         <translation>פתח</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="352"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="342"/>
         <source>Open in New Tab</source>
         <translation>פתח בתוך כרטיסייה חדשה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="353"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="343"/>
         <source>Open in New Background Tab</source>
         <translation>פתח בתוך כרטיסיית רקע חדשה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="355"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="345"/>
         <source>Open in New Window</source>
         <translation>פתח בתוך חלון חדש</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="356"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="346"/>
         <source>Open in New Background Window</source>
         <translation>פתח בתוך חלון רקע חדש</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="358"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="348"/>
         <source>Copy Link to Clipboard</source>
         <translation>העתק קישור ללוח גזירה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="360"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="350"/>
         <source>Remove Entry</source>
         <translation>הסר רשומה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="365"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="355"/>
         <source>Remove All Entries from This Domain</source>
         <translation>הסר את כל הרשומות מתוך מתחם זה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="427"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="422"/>
         <source>Unknown</source>
         <translation>לא ידוע</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="558"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="555"/>
         <source>Cache</source>
         <translation>מטמון</translation>
     </message>
@@ -1399,37 +1399,37 @@ Exponent: %2</source>
         <translation>חפש…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="86"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="79"/>
         <source>Name</source>
         <translation>שם</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="86"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="79"/>
         <source>Type</source>
         <translation>טיפוס</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="86"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="79"/>
         <source>Value</source>
         <translation>ערך</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="227"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="215"/>
         <source>Copy Option Name</source>
         <translation>העתק שם אפשרות</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="228"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="216"/>
         <source>Copy Option Value</source>
         <translation>העתק ערך אפשרות</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="230"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="218"/>
         <source>Restore Default Value</source>
         <translation>שחזר ערך ברירת מחדל</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="237"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="225"/>
         <source>Configuration Manager</source>
         <translation>מנהל תצורה</translation>
     </message>
@@ -1545,6 +1545,74 @@ Exponent: %2</source>
     </message>
 </context>
 <context>
+    <name>Otter::ContentBlockingInformationWidget</name>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="44"/>
+        <source>Blocked Elements</source>
+        <translation>עצמים חסומים</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="45"/>
+        <source>Active Profiles</source>
+        <translation>פרופילים פעילים</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="194"/>
+        <source>main frame</source>
+        <translation>מסגרת ראשית</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="198"/>
+        <source>subframe</source>
+        <translation>מסגרת משנית</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="202"/>
+        <source>stylesheet</source>
+        <translation>גליון סגנון</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="206"/>
+        <source>script</source>
+        <translation>תסריט</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="210"/>
+        <source>image</source>
+        <translation>תמונה</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="214"/>
+        <source>object</source>
+        <translation>עצם</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="218"/>
+        <source>object subrequest</source>
+        <translation>בקשת משנה עצם</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="222"/>
+        <source>XHR</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="226"/>
+        <source>other</source>
+        <translation>אחרים</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="245"/>
+        <source>Enable Content Blocking</source>
+        <translation>אפשר חסימת תוכן</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="298"/>
+        <source>Blocked Elements: %1</source>
+        <translation>עצמים חסומים: %1</translation>
+    </message>
+</context>
+<context>
     <name>Otter::ContentBlockingIntervalDelegate</name>
     <message numerus="yes">
         <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="37"/>
@@ -1566,7 +1634,7 @@ Exponent: %2</source>
 <context>
     <name>Otter::ContentBlockingProfile</name>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="48"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="434"/>
         <source>(Unknown)</source>
         <translation>(לא מוכר)</translation>
     </message>
@@ -1638,44 +1706,44 @@ Exponent: %2</source>
         <translation>החל</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="273"/>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="292"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="272"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="291"/>
         <source>Question</source>
         <translation>שאלה</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="274"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="273"/>
         <source>You are about to delete %n cookie(s).</source>
         <translation><numerusform>אתה עומד למחוק עוגייה %n.</numerusform><numerusform>אתה עומד למחוק %n עוגיות.</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="275"/>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="294"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="274"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="293"/>
         <source>Do you want to continue?</source>
         <translation>האם ברצונך להמשיך?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="293"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="292"/>
         <source>You are about to delete all cookies.</source>
         <translation>אתה עומד למחוק את כל העוגיות.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="314"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="313"/>
         <source>Remove Cookie</source>
         <translation>הסר עוגייה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="317"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="316"/>
         <source>Remove All Cookies from This Domain…</source>
         <translation>הסר את כל העוגיות מתוך מתחם זה…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="320"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="319"/>
         <source>Remove All Cookies…</source>
         <translation>הסר את כל העוגיות…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="449"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="448"/>
         <source>Cookies Manager</source>
         <translation>מנהל עוגיות</translation>
     </message>
@@ -1761,17 +1829,17 @@ Exponent: %2</source>
     <name>Otter::GoBackActionWidget</name>
     <message>
         <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="69"/>
-        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="140"/>
+        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="134"/>
         <source>(Untitled)</source>
         <translation>(ללא כותרת)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="168"/>
+        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="162"/>
         <source>Remove Entry</source>
         <translation>הסר רשומה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="169"/>
+        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="163"/>
         <source>Purge Entry</source>
         <translation>טיהור רשומה</translation>
     </message>
@@ -1780,17 +1848,17 @@ Exponent: %2</source>
     <name>Otter::GoForwardActionWidget</name>
     <message>
         <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="69"/>
-        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="140"/>
+        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="134"/>
         <source>(Untitled)</source>
         <translation>(ללא כותרת)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="168"/>
+        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="162"/>
         <source>Remove Entry</source>
         <translation>הסר רשומה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="169"/>
+        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="163"/>
         <source>Purge Entry</source>
         <translation>טיהור רשומה</translation>
     </message>
@@ -1836,108 +1904,108 @@ Exponent: %2</source>
         <translation>חפש…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
         <source>Today</source>
         <translation>היום</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
         <source>Yesterday</source>
         <translation>אתמול</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
         <source>Earlier This Week</source>
         <translation>מוקדם יותר השבוע</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
         <source>Previous Week</source>
         <translation>שבוע שעבר</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
         <source>Earlier This Month</source>
         <translation>מוקדם יותר החודש</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
         <source>Earlier This Year</source>
         <translation>מוקדם יותר השנה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
         <source>Older</source>
         <translation>ישן יותר</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="49"/>
         <source>Address</source>
         <translation>כתובת</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="49"/>
         <source>Title</source>
         <translation>כותרת</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="49"/>
         <source>Date</source>
         <translation>תאריך</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="198"/>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="243"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="191"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="235"/>
         <source>(Untitled)</source>
         <translation>(ללא כותרת)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="363"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="355"/>
         <source>Open</source>
         <translation>פתח</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="364"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="356"/>
         <source>Open in New Tab</source>
         <translation>פתח בתוך כרטיסייה חדשה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="365"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="357"/>
         <source>Open in New Background Tab</source>
         <translation>פתח בתוך כרטיסיית רקע חדשה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="367"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="359"/>
         <source>Open in New Window</source>
         <translation>פתח בתוך חלון חדש</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="368"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="360"/>
         <source>Open in New Background Window</source>
         <translation>פתח בתוך חלון רקע חדש</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="370"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="362"/>
         <source>Add to Bookmarks…</source>
         <translation>הוסף לסימניות…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="371"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="363"/>
         <source>Copy Link to Clipboard</source>
         <translation>העתק קישור ללוח גזירה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="373"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="365"/>
         <source>Remove Entry</source>
         <translation>הסר רשומה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="374"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="366"/>
         <source>Remove All Entries from This Domain</source>
         <translation>הסר את כל הרשומות מתוך מתחם זה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="407"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="399"/>
         <source>History</source>
         <translation>היסטוריה</translation>
     </message>
@@ -1953,17 +2021,17 @@ Exponent: %2</source>
 <context>
     <name>Otter::HtmlBookmarksImporter</name>
     <message>
-        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="142"/>
+        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="151"/>
         <source>HTML Bookmarks</source>
         <translation>סימניות HTML</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="147"/>
+        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="156"/>
         <source>Imports bookmarks from HTML file (Netscape format).</source>
         <translation>מייבא סימניו מתוך קובץ HTML (פורמט Netscape).</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="157"/>
+        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="166"/>
         <source>HTML files (*.htm *.html)</source>
         <translation>קבצי HTML ‏‭(*.htm *.html)</translation>
     </message>
@@ -2041,45 +2109,45 @@ Exponent: %2</source>
         <translation>תיאור ארוך:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="36"/>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="37"/>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="38"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="39"/>
         <source>Unknown</source>
         <translation>לא ידוע</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="65"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="66"/>
         <source>%1 GB (%2 bytes)</source>
         <translation>%1 ג״ב (%2 בתים)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="69"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="70"/>
         <source>%1 MB (%2 bytes)</source>
         <translation>%1 מ״ב (%2 בתים)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="74"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="75"/>
         <source>%1 KB (%2 bytes)</source>
         <translation>%1 ק״ב (%2 בתים)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="79"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="80"/>
         <source>%1 B</source>
         <translation>%1 ב</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="95"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="96"/>
         <source>%1 x %2 pixels @ %3 bits per pixel in %n frame(s)</source>
         <translation><numerusform>‏%1 x %2 פיקסלים @ %3 סיביות לכל פיקסל בתוך מסגרת %n</numerusform><numerusform>%1 x %2 פיקסלים @ %3 סיביות לכל פיקסל בתוך %n מסגרות</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="99"/>
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="106"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="100"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="107"/>
         <source>%1 x %2 pixels @ %3 bits per pixel</source>
         <translation>‏%1 x %2 פיקסלים @ %3 סיביות לכל פיקסל</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="110"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="111"/>
         <source>%1 x %2 pixels</source>
         <translation>‏%1 x %2 פיקסלים</translation>
     </message>
@@ -2227,12 +2295,12 @@ Exponent: %2</source>
         <translation>מחבר:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="41"/>
+        <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="62"/>
         <source>Action</source>
         <translation>פעולה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="125"/>
+        <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="122"/>
         <source>Shortcut</source>
         <translation>קיצור דרך</translation>
     </message>
@@ -2240,27 +2308,27 @@ Exponent: %2</source>
 <context>
     <name>Otter::LocalListingNetworkReply</name>
     <message>
-        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="73"/>
+        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="72"/>
         <source>Directory Contents</source>
         <translation>תכני ספרייה</translation>
     </message>
     <message>
-        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="76"/>
+        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="75"/>
         <source>Name</source>
         <translation>שם</translation>
     </message>
     <message>
-        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="77"/>
+        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="76"/>
         <source>Type</source>
         <translation>טיפוס</translation>
     </message>
     <message>
-        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="78"/>
+        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="77"/>
         <source>Size</source>
         <translation>גודל</translation>
     </message>
     <message>
-        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="79"/>
+        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="78"/>
         <source>Date</source>
         <translation>תאריך</translation>
     </message>
@@ -2292,6 +2360,11 @@ Exponent: %2</source>
         <source>Custom</source>
         <translation>מותאמת</translation>
     </message>
+    <message>
+        <location filename="../../src/ui/LocaleDialog.cpp" line="46"/>
+        <source>Unknown [%1]</source>
+        <translation>לא מוכר [%1]</translation>
+    </message>
 </context>
 <context>
     <name>Otter::MainWindow</name>
@@ -2301,41 +2374,64 @@ Exponent: %2</source>
         <translation>קונסולה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="399"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="427"/>
         <source>Open File</source>
         <translation>פתיחת קובץ</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="677"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="710"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</source>
         <translation>&lt;b&gt;&amp;rlm;Otter %1&lt;/b&gt;&lt;br&gt;דפדפן בשליטת המשתמש, לא להיפך.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="683"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="716"/>
         <source>Web backend: %1 %2.</source>
         <translation>מגשר עורפי רשת: %1 %2.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="687"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="720"/>
         <source>SSL library not available.</source>
         <translation>ספריית SSL לא זמינה.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="691"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="724"/>
         <source>SSL library version: %1.</source>
         <translation>ספריית SSL גרסא: %1.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="866"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="899"/>
         <source>Warning</source>
         <translation>אזהרה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="866"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="899"/>
         <source>You already have this address in your bookmarks.
 Do you want to continue?</source>
         <translation>כבר יש לך את כתובת זו בתוך הסימניות שלך.
 האם ברצונך להמשיך?</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::MasterPasswordDialog</name>
+    <message>
+        <location filename="../../src/ui/MasterPasswordDialog.ui" line="14"/>
+        <source>Set Master Password</source>
+        <translation>קבע סיסמה ראשית</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/MasterPasswordDialog.ui" line="22"/>
+        <source>Current password:</source>
+        <translation>סיסמה נוכחית:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/MasterPasswordDialog.ui" line="32"/>
+        <source>New password:</source>
+        <translation>סיסמה חדשה:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/MasterPasswordDialog.ui" line="42"/>
+        <source>Confirm new password:</source>
+        <translation>אמת סיסמה חדשה:</translation>
     </message>
 </context>
 <context>
@@ -2402,64 +2498,64 @@ Do you want to continue?</source>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="351"/>
-        <location filename="../../src/ui/Menu.cpp" line="499"/>
-        <location filename="../../src/ui/Menu.cpp" line="514"/>
-        <location filename="../../src/ui/Menu.cpp" line="574"/>
-        <location filename="../../src/ui/Menu.cpp" line="624"/>
-        <location filename="../../src/ui/Menu.cpp" line="678"/>
+        <location filename="../../src/ui/Menu.cpp" line="498"/>
+        <location filename="../../src/ui/Menu.cpp" line="513"/>
+        <location filename="../../src/ui/Menu.cpp" line="573"/>
+        <location filename="../../src/ui/Menu.cpp" line="629"/>
+        <location filename="../../src/ui/Menu.cpp" line="684"/>
         <source>(Untitled)</source>
         <translation>(ללא כותרת)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="389"/>
+        <location filename="../../src/ui/Menu.cpp" line="388"/>
         <source>Auto Detect</source>
         <translation>אתר אוטומטית</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="444"/>
+        <location filename="../../src/ui/Menu.cpp" line="443"/>
         <source>Clear</source>
         <translation>טהר</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="454"/>
+        <location filename="../../src/ui/Menu.cpp" line="453"/>
         <source>Window - %1</source>
         <translation>חלון - %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/Menu.cpp" line="514"/>
+        <location filename="../../src/ui/Menu.cpp" line="513"/>
         <source>%1 (%n tab(s))</source>
         <translation><numerusform>%1 (כרטיסייה %n)</numerusform><numerusform>%1 (%n כרטיסיות)</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="528"/>
-        <location filename="../../src/ui/Menu.cpp" line="612"/>
+        <location filename="../../src/ui/Menu.cpp" line="527"/>
+        <location filename="../../src/ui/Menu.cpp" line="611"/>
         <source>Default</source>
         <translation>ברירת מחדל</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="586"/>
+        <location filename="../../src/ui/Menu.cpp" line="585"/>
         <source>Add New</source>
         <translation>הוסף חדש</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="587"/>
+        <location filename="../../src/ui/Menu.cpp" line="586"/>
         <source>Add Toolbar</source>
         <translation>הוסף סרגל כלים</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="588"/>
+        <location filename="../../src/ui/Menu.cpp" line="587"/>
         <source>Add Bookmarks Bar…</source>
         <translation>הוסף סרגל סימניות…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="593"/>
+        <location filename="../../src/ui/Menu.cpp" line="592"/>
         <source>Reset to Defaults…</source>
         <translation>אפס לברירות מחדל…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="634"/>
-        <source>Custom</source>
-        <translation>מותאם</translation>
+        <location filename="../../src/ui/Menu.cpp" line="640"/>
+        <source>Custom…</source>
+        <translation>מותאם…</translation>
     </message>
 </context>
 <context>
@@ -2525,57 +2621,57 @@ Do you want to continue?</source>
         <translation>מחבר:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="39"/>
-        <source>Context and Steps</source>
-        <translation>הקשר וצעדים</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="39"/>
-        <source>Action</source>
-        <translation>פעולה</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="42"/>
-        <source>Step</source>
-        <translation>צעד</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Generic</source>
         <translation>גנרי</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Link</source>
         <translation>קישור</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Editable Content</source>
         <translation>תוכן עריך</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Tab Handle</source>
         <translation>ידית כרטיסייה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Tab Handle of Active Tab</source>
         <translation>ידית כרטיסייה של כרטיסייה פעילה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Empty Area of Tab Bar</source>
         <translation>אזור ריק של סרגל כרטיסיות</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Any Toolbar</source>
         <translation>כל סרגל כלים</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="131"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="68"/>
+        <source>Context and Steps</source>
+        <translation>הקשר וצעדים</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="68"/>
+        <source>Action</source>
+        <translation>פעולה</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="72"/>
+        <source>Step</source>
+        <translation>צעד</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="117"/>
         <source>Select Action</source>
         <translation>בחר פעולה</translation>
     </message>
@@ -2604,12 +2700,12 @@ Do you want to continue?</source>
 <context>
     <name>Otter::NetworkManagerFactory</name>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="282"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="307"/>
         <source>Custom</source>
         <translation>מותאם</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="297"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="322"/>
         <source>Default</source>
         <translation>ברירת מחדל</translation>
     </message>
@@ -2618,7 +2714,7 @@ Do you want to continue?</source>
     <name>Otter::NetworkProxyFactory</name>
     <message>
         <location filename="../../src/core/NetworkProxyFactory.cpp" line="70"/>
-        <location filename="../../src/core/NetworkProxyFactory.cpp" line="146"/>
+        <location filename="../../src/core/NetworkProxyFactory.cpp" line="145"/>
         <source>Failed to load proxy auto-config (PAC): %1</source>
         <translation type="unfinished"/>
     </message>
@@ -2636,73 +2732,83 @@ Do you want to continue?</source>
         <translation>חפש…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="103"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="98"/>
+        <source>Address:</source>
+        <translation>כתובת:</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="105"/>
+        <source>Date:</source>
+        <translation>תאריך:</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="139"/>
         <source>Delete</source>
         <translation>מחק</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="110"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="146"/>
         <source>Add</source>
         <translation>הוסף</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="45"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="154"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="185"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="46"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="149"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="180"/>
         <source>Add Folder</source>
         <translation>הוסף תיקייה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="46"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="184"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="186"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="47"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="179"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="181"/>
         <source>Add Note</source>
         <translation>הוסף פתק</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="47"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="156"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="187"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="48"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="151"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="182"/>
         <source>Add Separator</source>
         <translation>הוסף חוצץ</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="62"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="58"/>
         <source>Add note…</source>
         <translation>הוסף פתק…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="102"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="97"/>
         <source>Select Folder Name</source>
         <translation>בחירת שם תיקייה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="102"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="97"/>
         <source>Enter folder name:</source>
         <translation>הזן שם תיקייה:</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="150"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="145"/>
         <source>Empty Trash</source>
         <translation>רוקן אשפה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="155"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="150"/>
         <source>Add Bookmark</source>
         <translation>הוסף סימנייה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="170"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="165"/>
         <source>Open source page</source>
         <translation>פתח עמוד מקוד</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="196"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="191"/>
         <source>Restore Note</source>
         <translation>שחזר פתק</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="371"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="370"/>
         <source>Notes Manager</source>
         <translation>מנהל פתקים</translation>
     </message>
@@ -3026,522 +3132,537 @@ Do you want to continue?</source>
         <translation>מצב תצוגה:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="152"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="151"/>
         <source>Events</source>
         <translation>אירועים</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="192"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="191"/>
         <source>Play sound:</source>
         <translation>נגן צליל:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="207"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="206"/>
         <source>Show notification</source>
         <translation>הצג התראה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="214"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="213"/>
         <source>Mark taskbar entry</source>
         <translation>סמן רשומות שורת משימות</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="230"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="229"/>
         <source>Options</source>
         <translation>אפשרויות</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="237"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="236"/>
         <source>Prefer native notifications</source>
         <translation>העדף התראות טבעיות</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="267"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="266"/>
         <source>Style</source>
         <translation>סגנון</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="276"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="275"/>
         <source>Widget style:</source>
         <translation>סגנון וידג׳ט:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="286"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="285"/>
         <source>Style sheet:</source>
         <translation>גיליון סגנון:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="310"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="309"/>
         <source>Other</source>
         <translation>אחר</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="319"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="318"/>
         <source>Show tray icon</source>
         <translation>הצג סמל מגש</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="351"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="674"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="350"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="686"/>
         <source>General</source>
         <translation>כללי</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="358"/>
-        <source>Enable images</source>
-        <translation>אפשר תמונות</translation>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="359"/>
+        <source>Images:</source>
+        <translation>תמונות:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="367"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="376"/>
         <source>Enable JavaScript</source>
         <translation>אפשר JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="374"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="383"/>
         <source>JavaScript Options…</source>
         <translation>אפשרויות JavaScript…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="383"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="392"/>
         <source>Enable Java</source>
         <translation>אפשר Java</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="392"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="401"/>
         <source>Plugins:</source>
         <translation>תוספים:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="406"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="418"/>
         <source>User style sheet:</source>
         <translation>גיליון סגנון משתמש:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="441"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="453"/>
         <source>MIME Types</source>
         <translation>טיפוסי MIME</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="465"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="999"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1115"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1335"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1488"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="477"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1011"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1127"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1347"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1500"/>
         <source>Add</source>
         <translation>הוסף</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="475"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1013"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1125"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1365"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1518"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="487"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1025"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1137"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1377"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1530"/>
         <source>Remove</source>
         <translation>הסר</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="517"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="529"/>
         <source>Show download dialog</source>
         <translation>הצג דוח שיח הורדות</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="527"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="539"/>
         <source>Save to disk</source>
         <translation>שמור לכונן</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="570"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="582"/>
         <source>Do not ask for folder, save directly to</source>
         <translation>אל תשאל עבור תיקייה, שמור היישר לתוך</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="585"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="597"/>
         <source>Open with application</source>
         <translation>פתח בעזרת יישום</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="631"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="643"/>
         <source>Pass web address directly to application</source>
         <translation>העבר כתובת רשת היישר לתוך יישום</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="681"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="693"/>
         <source>Send referrer information</source>
         <translation>שלח מידע referrer</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="690"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="702"/>
         <source>User Agent:</source>
         <translation>סוכן משתמש:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="703"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="715"/>
         <source>Manage…</source>
         <translation>נהל…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="718"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="730"/>
         <source>Proxy</source>
         <translation>פרוקסי</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="727"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="739"/>
         <source>Mode:</source>
         <translation>מצב:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="838"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="850"/>
         <source>Port</source>
         <translation>פורט</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="845"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="857"/>
         <source>Protocol</source>
         <translation>פרוטוקול</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="852"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="864"/>
         <source>Servers</source>
         <translation>שרתים</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="859"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="871"/>
         <source>FTP</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="866"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="878"/>
         <source>SOCKS5</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="873"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="885"/>
         <source>HTTP</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="887"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="899"/>
         <source>HTTPS</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="901"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="913"/>
         <source>All</source>
         <translation>כולם</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="939"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="951"/>
         <source>Path to PAC file:</source>
         <translation>נתיב לקובץ PAC:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="956"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="968"/>
         <source>Use system authentication</source>
         <translation>השתמש באימות מערכת</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="981"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="993"/>
         <source>Do not use proxy for:</source>
         <translation>אל תשתמש בפרוקסי עבור:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1006"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1018"/>
         <source>Edit</source>
         <translation>ערוך</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1037"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1049"/>
         <source>Example: domain.com, localhost, 127.0.0.1, 192.168.1.0/24</source>
         <translation>דוגמא: domain.com, localhost, 127.0.0.1, 192.168.1.0/24</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1070"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1082"/>
         <source>SSL ciphers</source>
         <translation>צופני SSL</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1150"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1390"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1543"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1162"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1402"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1555"/>
         <source>Move Up</source>
         <translation>הזז מעלה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1176"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1416"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1569"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1188"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1428"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1581"/>
         <source>Move Down</source>
         <translation>הזז מטה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1199"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1211"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Updates</source>
         <translation>עדכונים</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1206"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1218"/>
         <source>Select channels from which you want to receive updates:</source>
         <translation>בחר ערוצים אשר מתוכם ברצונך לקבל עדכונים:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1245"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1257"/>
         <source>Check for updates every</source>
         <translation>בדוק עדכונים כל</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1255"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1267"/>
         <source>day(s)</source>
         <translation>ימים</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1264"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1276"/>
         <source>Install updates automatically</source>
         <translation>התקן עדכונים אוטומטית</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1296"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1308"/>
         <source>Keyboard Shortcuts</source>
         <translation>קיצורי דרך מקלדת</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1345"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1498"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1357"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1510"/>
         <source>Edit…</source>
         <translation>ערוך…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1355"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1508"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1367"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1520"/>
         <source>Clone</source>
         <translation>שבט</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1429"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1441"/>
         <source>Enable single key shortcuts</source>
         <translation>אפשר קיצורי דרך בעלי קליד אחד</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1449"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1461"/>
         <source>Mouse Actions and Gestures</source>
         <translation>פעולות ורמזי עכבר</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1582"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1594"/>
         <source>Enable mouse gestures</source>
         <translation>אפשר רמזי עכבר</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Browsing</source>
         <translation>גלישה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Notifications</source>
         <translation>התראות</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Appearance</source>
         <translation>מראה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Content</source>
         <translation>תוכן</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Downloads</source>
         <translation>הורדות</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Programs</source>
         <translation>תוכניות</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>History</source>
         <translation>היסטוריה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Network</source>
         <translation>רשת</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Security</source>
         <translation>אבטחה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Keyboard</source>
         <translation>מילת מפתח</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Mouse</source>
         <translation>עכבר</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="100"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="102"/>
         <source>Compact</source>
         <translation>קומפקטי</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="101"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="103"/>
         <source>Columns</source>
         <translation>טורים</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="110"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="164"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="112"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="166"/>
         <source>Name</source>
         <translation>שם</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="110"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="112"/>
         <source>Description</source>
         <translation>תיאור</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="138"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="135"/>
         <source>System Style</source>
         <translation>סגנון מערכת</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="154"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="146"/>
+        <source>All images</source>
+        <translation>כל התמונות</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="147"/>
+        <source>Cached images</source>
+        <translation>תמונות מוטמנות</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="148"/>
+        <source>No images</source>
+        <translation>בלי תמונות</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="156"/>
         <source>Enabled</source>
         <translation>מאופשרים</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="155"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="157"/>
         <source>On demand</source>
         <translation>לפי דרישה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="156"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="158"/>
         <source>Disabled</source>
         <translation>מנוטרלים</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="202"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="679"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="201"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="688"/>
         <source>Default</source>
         <translation>ברירת מחדל</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="209"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="363"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="400"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="685"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="839"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="843"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="869"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="905"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="931"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1025"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1039"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1043"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1069"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1105"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1131"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1225"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1482"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1552"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="214"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="365"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="402"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="694"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="848"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="852"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="878"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="914"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="940"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1034"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1048"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1052"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1078"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1114"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1140"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1234"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1500"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1570"/>
         <source>(Untitled)</source>
         <translation>(ללא כותרת)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="226"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="232"/>
         <source>No proxy</source>
         <translation>בלי פרוקסי</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="227"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="233"/>
         <source>System configuration</source>
         <translation>תצורת מערכת</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="228"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="234"/>
         <source>Manual configuration</source>
         <translation>תצורה ידנית</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="229"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="235"/>
         <source>Automatic configuration (PAC)</source>
         <translation>תצורה אוטומטית (PAC)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="317"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="319"/>
         <source>Stable version</source>
         <translation>גרסא יציבה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="318"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="320"/>
         <source>Beta version</source>
         <translation>גרסא Beta</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="319"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="321"/>
         <source>Weekly development version</source>
         <translation>גרסת פיתוח שבועית</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="375"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="412"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="377"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="414"/>
         <source>New…</source>
         <translation>חדש…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="376"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="413"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="378"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="415"/>
         <source>Readd</source>
         <translation>הוסף שוב</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="516"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="526"/>
         <source>WAV files (*.wav)</source>
         <translation>קבצי WAV ‏‭(*.wav)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="545"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="555"/>
         <source>MIME Type Name</source>
         <translation>שם טיפוס MIME</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="545"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="555"/>
         <source>Select name of MIME Type:</source>
         <translation>בחר שם של טיפוס MIME:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="559"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="569"/>
         <source>Error</source>
         <translation>שגיאה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="559"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="569"/>
         <source>Invalid MIME Type name.</source>
         <translation>שם טיפוס MIME לא תקין.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="951"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1151"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="960"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1160"/>
         <source>Question</source>
         <translation>שאלה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="952"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1152"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="961"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1161"/>
         <source>Do you really want to remove this profile?</source>
         <translation>האם אתה באמת רוצה להסיר את פרופיל זה?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="961"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1161"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="970"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1170"/>
         <source>Delete profile permanently</source>
         <translation>מחק פרופיל לצמיתות</translation>
     </message>
@@ -3559,82 +3680,61 @@ Do you want to continue?</source>
         <translation>חלונות קופצים:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="57"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="56"/>
         <source>Zoom</source>
         <translation>זום</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="69"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="68"/>
         <source>Default zoom:</source>
         <translation>זום שגרתי:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="79"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="78"/>
         <source>%</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="97"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="96"/>
         <source>Zoom text only</source>
         <translation>זום לטקסט בלבד</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="110"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="109"/>
         <source>Fonts</source>
         <translation>גופנים</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="151"/>
-        <source>Style</source>
-        <translation>סגנון</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="156"/>
-        <source>Font</source>
-        <translation>גופן</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="161"/>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="300"/>
-        <source>Preview</source>
-        <translation>תצוגה מקדימה</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="171"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="143"/>
         <source>Default proportional font size:</source>
         <translation>גודל גופן שווה-יחס שגרתי:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="181"/>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="207"/>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="236"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="153"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="179"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="208"/>
         <source> px</source>
         <translation> פיקסלים</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="197"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="169"/>
         <source>Default fixed-width font size:</source>
         <translation>גודל גופן רוחב-קבוע שגרתי:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="223"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="195"/>
         <source>Minimum font size:</source>
         <translation>מידת גופן נומינלית:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="233"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="205"/>
         <source>None</source>
         <translation>אין</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="257"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="229"/>
         <source>Colors</source>
         <translation>צבעים</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="295"/>
-        <source>Type</source>
-        <translation>טיפוס</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="36"/>
@@ -3655,6 +3755,22 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="39"/>
         <source>Open all in background</source>
         <translation>פתח הכל ברקע</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="51"/>
+        <source>Style</source>
+        <translation>סגנון</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="51"/>
+        <source>Font</source>
+        <translation>גופן</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="51"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="74"/>
+        <source>Preview</source>
+        <translation>תצוגה מקדימה</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="54"/>
@@ -3687,27 +3803,32 @@ Do you want to continue?</source>
         <translation>גופן פנטזיה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="68"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="60"/>
         <source>The quick brown fox jumps over the lazy dog</source>
         <translation>אל תהיה טיפש, תעשה שיעורי בית</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="74"/>
+        <source>Type</source>
+        <translation>טיפוס</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="77"/>
         <source>Background Color</source>
         <translation>צבע רקע</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="77"/>
         <source>Text Color</source>
         <translation>צבע טקסט</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="77"/>
         <source>Link Color</source>
         <translation>צבע קישור</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="77"/>
         <source>Visited Link Color</source>
         <translation>צבע קישור שביקרתי</translation>
     </message>
@@ -3891,11 +4012,6 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="46"/>
         <source>Show empty page</source>
         <translation>הצג עמוד ריק</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="74"/>
-        <source>Run Otter Browser with administrator rights to set it as a default browser.</source>
-        <translation>הרץ את דפדפן Otter עם הרשאות מנהל כדי להגדירו כדפדפן ברירת מחדל.</translation>
     </message>
 </context>
 <context>
@@ -4107,68 +4223,73 @@ Do you want to continue?</source>
         <translation>מילת מפתח</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="82"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="77"/>
         <source>New…</source>
         <translation>חדש…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="83"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="78"/>
         <source>Readd</source>
         <translation>הוסף שוב</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="145"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="140"/>
         <source>New Search Engine</source>
         <translation>מנוע חיפוש חדש</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="279"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="209"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="301"/>
         <source>Question</source>
         <translation>שאלה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="280"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="210"/>
+        <source>Keyword is already in use. Do you want to continue anyway?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="302"/>
         <source>Do you really want to remove this search engine?</source>
         <translation>האם אתה באמת רוצה להסיר את מנוע חיפוש זה?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="289"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="311"/>
         <source>Delete search engine permanently</source>
         <translation>מחק מנוע חיפוש לצמיתות</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="359"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="381"/>
         <source>(Untitled)</source>
         <translation>(ללא כותרת)</translation>
     </message>
 </context>
 <context>
-    <name>Otter::ProgressBarWidget</name>
+    <name>Otter::ProgressInformationWidget</name>
     <message>
-        <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="62"/>
+        <location filename="../../src/ui/toolbars/ProgressInformationWidget.cpp" line="69"/>
         <source>Document: %p%</source>
         <translation>מסמך: %p%</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="123"/>
-        <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="147"/>
-        <source>Time: %1</source>
-        <translation>זמן: %1</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="190"/>
-        <source>Elements: %1/%2</source>
-        <translation>אלמנטים: %1/%2</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="191"/>
+        <location filename="../../src/ui/toolbars/ProgressInformationWidget.cpp" line="111"/>
         <source>Total: %1</source>
         <translation>סך הכל: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="192"/>
+        <location filename="../../src/ui/toolbars/ProgressInformationWidget.cpp" line="118"/>
+        <source>Elements: %1/%2</source>
+        <translation>אלמנטים: %1/%2</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ProgressInformationWidget.cpp" line="125"/>
         <source>Speed: %1</source>
         <translation>מהירות: %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ProgressInformationWidget.cpp" line="135"/>
+        <source>Time: %1</source>
+        <translation>זמן: %1</translation>
     </message>
 </context>
 <context>
@@ -4207,7 +4328,7 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitInspector</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitInspector.cpp" line="36"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitInspector.cpp" line="39"/>
         <source>Close</source>
         <translation>סגור</translation>
     </message>
@@ -4215,38 +4336,43 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitNetworkManager</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="113"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="138"/>
-        <source>Waiting for authentication…</source>
-        <translation>כעת ממתין לאימות…</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="194"/>
-        <source>Warning</source>
-        <translation>אזהרה</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="194"/>
-        <source>SSL errors occured, do you want to continue?</source>
-        <translation>אירעו שגיאות SSL, האם ברצונך להמשיך?</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="198"/>
-        <source>Do not show this message again</source>
-        <translation>אל תציג את הודעה זו שוב</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="303"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="187"/>
         <source>Receiving data from %1…</source>
         <translation>כעת מקבל מידע מתוך %1…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="372"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="240"/>
         <source>Completed request to %1</source>
         <translation>הושלמה בקשה אל %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="639"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="272"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="297"/>
+        <source>Waiting for authentication…</source>
+        <translation>כעת ממתין לאימות…</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="353"/>
+        <source>Warning</source>
+        <translation>אזהרה</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="353"/>
+        <source>SSL errors occured, do you want to continue?</source>
+        <translation>אירעו שגיאות SSL, האם ברצונך להמשיך?</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="357"/>
+        <source>Do not show this message again</source>
+        <translation>אל תציג את הודעה זו שוב</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="396"/>
+        <source>Loading finished</source>
+        <translation>טעינה הסתיימה!</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="681"/>
         <source>Sending request to %1…</source>
         <translation>כעת שולח בקשה אל %1…</translation>
     </message>
@@ -4254,61 +4380,61 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitPage</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="229"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="418"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="455"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="231"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="430"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="467"/>
         <source>JavaScript</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="230"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="419"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="456"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="232"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="431"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="468"/>
         <source>Disable JavaScript popups</source>
         <translation>נטרל חלונות קופצים JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="368"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="381"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="542"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="380"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="393"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="559"/>
         <source>Question</source>
         <translation>שאלה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="368"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="382"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="380"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="394"/>
         <source>Are you sure that you want to send form data again?</source>
         <translation>האם אתה בטוח כי ברצונך לשלוח שוב מידע טופס?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="368"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="383"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="380"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="395"/>
         <source>Do you want to resend data?</source>
         <translation>האם ברצונך לשלוח מידע שוב?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="369"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="387"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="381"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="399"/>
         <source>Do not show this message again</source>
         <translation>אל תציג את הודעה זו שוב</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="497"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="509"/>
         <source>Open File</source>
         <translation>פתיחת קובץ</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="530"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="539"/>
         <source>%1 error #%2: %3</source>
         <translation>%1 שגיאה #%2: %3</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="542"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="559"/>
         <source>The script on this page appears to have a problem.</source>
         <translation>נראה כי ישנה בעיה לתסריט שבעמוד זה.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="542"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="559"/>
         <source>Do you want to stop the script?</source>
         <translation>האם ברצונך להפסיק את התסריט?</translation>
     </message>
@@ -4324,12 +4450,12 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitWebBackend</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="206"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="207"/>
         <source>WebKit Backend</source>
         <translation>מגשר עורפי WebKit</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="211"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="212"/>
         <source>Backend utilizing QtWebKit module</source>
         <translation>מגשר עורפי אשר מפיק תועלת מתוך מודול QtWebKit</translation>
     </message>
@@ -4337,72 +4463,72 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitWebWidget</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="403"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="402"/>
         <source>Error</source>
         <translation>שגיאה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="403"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="402"/>
         <source>Failed to open file for writing.</source>
         <translation>נכשל לפתוח קובץ לצורך כתיבה.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="423"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="422"/>
         <source>file</source>
         <translation>קובץ</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="434"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="433"/>
         <source>Failed to save image: %1</source>
         <translation>נכשל לשמור תמונה: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="568"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="567"/>
         <source>Print Preview</source>
         <translation>תצוגה מקדימה להדפסה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="627"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="626"/>
         <source>JavaScript</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="627"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="626"/>
         <source>Webpage wants to close this tab, do you want to allow to close it?</source>
         <translation>עמוד רשת מנסה לסגור את כרטיסייה זו, האם ברצונך להתיר את סגירתו?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="628"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="627"/>
         <source>Do not show this message again</source>
         <translation>אל תציג את הודעה זו שוב</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="770"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="767"/>
         <source>Undo</source>
         <translation>בטל</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="770"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="767"/>
         <source>Undo: %1</source>
         <translation>בטל: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="775"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="772"/>
         <source>Redo</source>
         <translation>בצע שוב</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="775"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="772"/>
         <source>Redo: %1</source>
         <translation>בצע שוב: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1874"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1927"/>
         <source>Blank Page</source>
         <translation>עמוד ריק</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1887"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1940"/>
         <source>(Untitled)</source>
         <translation>(ללא כותרת)</translation>
     </message>
@@ -4616,7 +4742,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>Otter::SearchEnginesManager</name>
     <message>
-        <location filename="../../src/core/SearchEnginesManager.cpp" line="169"/>
+        <location filename="../../src/core/SearchEnginesManager.cpp" line="171"/>
         <source>Manage Search Engines…</source>
         <translation>נהל מנועי חיפוש…</translation>
     </message>
@@ -4702,70 +4828,80 @@ Do you want to overwrite it?</source>
         <translation>מנהל סשן</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.ui" line="62"/>
-        <source>Title</source>
-        <translation>כותרת</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/SessionsManagerDialog.ui" line="67"/>
-        <source>Identifier</source>
-        <translation>מזהה</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/SessionsManagerDialog.ui" line="72"/>
-        <source>Windows</source>
-        <translation>חלונות</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/SessionsManagerDialog.ui" line="82"/>
+        <location filename="../../src/ui/SessionsManagerDialog.ui" line="52"/>
         <source>Open</source>
         <translation>פתח</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.ui" line="89"/>
+        <location filename="../../src/ui/SessionsManagerDialog.ui" line="59"/>
         <source>Delete</source>
         <translation>מחק</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.ui" line="113"/>
+        <location filename="../../src/ui/SessionsManagerDialog.ui" line="77"/>
         <source>Open session in current window</source>
         <translation>פתח סשן בתוך חלון נוכחי</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="45"/>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="68"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
         <source>(Untitled)</source>
         <translation>(ללא כותרת)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="99"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="49"/>
+        <source>Title</source>
+        <translation>כותרת</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="49"/>
+        <source>Identifier</source>
+        <translation>מזהה</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="49"/>
+        <source>Windows</source>
+        <translation>חלונות</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
+        <source>%n window(s) (%1)</source>
+        <translation><numerusform>חלון %n (%1)</numerusform><numerusform>%n חלונות (%1)</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
+        <source>%n tab(s)</source>
+        <translation><numerusform>כרטיסייה %n</numerusform><numerusform>%n כרטיסיות</numerusform></translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="105"/>
         <source>Warning</source>
         <translation>אזהרה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="99"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="105"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
         <translation>סשן זה לא נשמר כראוי.
 האם אתה בטוח כי ברצונך לשחזר את סשן זה בכל זאת?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="116"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="122"/>
         <source>Confirm</source>
         <translation>אמת</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="116"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="122"/>
         <source>Are you sure that you want to delete session %1?</source>
         <translation>האם אתה בטוח כי ברצונך למחוק את סשן %1?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="124"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="130"/>
         <source>Error</source>
         <translation>שגיאה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="124"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="130"/>
         <source>Failed to delete session.</source>
         <translation>נכשל למחוק סשן.</translation>
     </message>
@@ -4773,52 +4909,52 @@ Are you sure that you want to restore this session anyway?</source>
 <context>
     <name>Otter::SidebarWidget</name>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="220"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="212"/>
         <source>Add Web Panel…</source>
         <translation>הוסף לוח רשת…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="281"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="285"/>
         <source>Add web panel</source>
         <translation>הוספת לוח רשת</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="281"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="285"/>
         <source>Input address of web page to be shown in panel:</source>
         <translation>קלוט כתובת עמוד רשת להצגה בתוך הלוח:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="435"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="396"/>
         <source>Bookmarks</source>
         <translation>סימניות</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="440"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="401"/>
         <source>Cache</source>
         <translation>מטמון</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="445"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="406"/>
         <source>Cookies</source>
         <translation>עוגיות</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="450"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="411"/>
         <source>Configuration</source>
         <translation>תצורה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="455"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="416"/>
         <source>History</source>
         <translation>היסטוריה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="460"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="421"/>
         <source>Notes</source>
         <translation>פתקים</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="465"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="426"/>
         <source>Transfers</source>
         <translation>העברות</translation>
     </message>
@@ -4826,39 +4962,39 @@ Are you sure that you want to restore this session anyway?</source>
 <context>
     <name>Otter::SourceViewerWebWidget</name>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="88"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="87"/>
         <source>Failed to save file: %1</source>
         <translation>נכשל לשמור קובץ: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="90"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="89"/>
         <source>Error</source>
         <translation>שגיאה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="90"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="89"/>
         <source>Failed to save file.</source>
         <translation>נכשל לשמור קובץ.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="117"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="116"/>
         <source>Warning</source>
         <translation>אזהרה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="117"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="116"/>
         <source>The document has been modified.
 Do you want to save your changes or discard them?</source>
         <translation>המסמך השתנה.
 האם ברצונך לשמור את השינויים שלך או לסלקם?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="298"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="297"/>
         <source>Show Line Numbers</source>
         <translation>הצג מספרי שורה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="487"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="486"/>
         <source>Source Viewer</source>
         <translation>מציג מקור</translation>
     </message>
@@ -5061,9 +5197,27 @@ Do you want to save your changes or discard them?</source>
         <translation>(ללא כותרת)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="1018"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="1024"/>
         <source>Close Tab</source>
         <translation>סגור כרטיסייה</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::TextLabelWidget</name>
+    <message>
+        <location filename="../../src/ui/TextLabelWidget.cpp" line="61"/>
+        <source>Copy</source>
+        <translation>העתק</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/TextLabelWidget.cpp" line="65"/>
+        <source>Copy Link Location</source>
+        <translation>העתק מיקום קישור</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/TextLabelWidget.cpp" line="69"/>
+        <source>Select All</source>
+        <translation>בחר הכל</translation>
     </message>
 </context>
 <context>
@@ -5089,109 +5243,74 @@ Do you want to save your changes or discard them?</source>
         <translation>נראות:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="63"/>
-        <source>Always visible</source>
-        <translation>תמיד נראה</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="68"/>
-        <source>Always hidden</source>
-        <translation>תמיד מוסתר</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="73"/>
-        <source>Visible only when needed</source>
-        <translation>נראה רק כשצריך</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="81"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="65"/>
         <source>Button style:</source>
         <translation>סגנון לחצן:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="92"/>
-        <source>Follow style</source>
-        <translation>סגנון נוכחי</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="97"/>
-        <source>Only icon</source>
-        <translation>רק סמל</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="102"/>
-        <source>Only text</source>
-        <translation>רק טקסט</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="107"/>
-        <source>Text beside icon</source>
-        <translation>טקסט לצד סמל</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="112"/>
-        <source>Text under icon</source>
-        <translation>טקסט תחת סמל</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="120"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="78"/>
         <source>Icon size:</source>
         <translation>גודל סמל:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="130"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="88"/>
         <source>Auto</source>
         <translation>אוטומטי</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="133"/>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="159"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="91"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="117"/>
         <source> px</source>
         <translation> פיקסלים</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="146"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="104"/>
         <source>Maximum size of item:</source>
         <translation>גודל פריט מירבי:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="156"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="114"/>
         <source>No limit</source>
         <translation>אין מגבלה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="169"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="127"/>
         <source>Folder:</source>
         <translation>תיקייה:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="208"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="143"/>
+        <source>Visibility in full screen mode:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="179"/>
         <source>Actions</source>
         <translation>פעולות</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="244"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="215"/>
         <source>Add</source>
         <translation>הוסף</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="254"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="225"/>
         <source>Edit…</source>
         <translation>ערוך…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="263"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="234"/>
         <source>Current entries:</source>
         <translation>רשומות נוכחיות:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="371"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="342"/>
         <source>Available entries:</source>
         <translation>רשומות זמינות:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="381"/>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="391"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="352"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="362"/>
         <source>Filter…</source>
         <translation>סנן…</translation>
     </message>
@@ -5201,119 +5320,202 @@ Do you want to save your changes or discard them?</source>
         <translation>סרגל כלים מותאם</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="269"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="50"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="57"/>
+        <source>Always visible</source>
+        <translation>תמיד נראה</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="51"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="58"/>
+        <source>Always hidden</source>
+        <translation>תמיד מוסתר</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="52"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="59"/>
+        <source>Visible only when needed</source>
+        <translation>נראה רק כשצריך</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="60"/>
+        <source>Visible only when cursor is close to screen edge</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="65"/>
+        <source>Follow style</source>
+        <translation>סגנון נוכחי</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="66"/>
+        <source>Icon only</source>
+        <translation>סמלים בלבד</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="67"/>
+        <source>Text only</source>
+        <translation>טקסט בלבד</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="68"/>
+        <source>Text beside icon</source>
+        <translation>טקסט לצד סמל</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="69"/>
+        <source>Text under icon</source>
+        <translation>טקסט תחת סמל</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="255"/>
         <source>All</source>
         <translation>הכל</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="277"/>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="419"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="263"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="433"/>
         <source>Unknown</source>
         <translation>לא ידוע</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="286"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="272"/>
         <source>Show search engine:</source>
         <translation>הצג מנוע חיפוש:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="287"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="273"/>
         <source>Show search button:</source>
         <translation>הצג לחצן חיפוש:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="291"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="277"/>
         <source>Custom icon:</source>
         <translation>סמל מותאם:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="292"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="278"/>
         <source>Custom text:</source>
         <translation>טקסט מותאם:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="301"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="287"/>
         <source>Edit Entry</source>
         <translation>עריכת רשומה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="380"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="366"/>
         <source>--- separator ---</source>
         <translation>--- חוצץ ---</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="384"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="370"/>
         <source>--- spacer ---</source>
         <translation>--- מרווח ---</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="388"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="374"/>
         <source>Arbitrary List of Actions</source>
         <translation>רשימת פעולות שרירותית</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="395"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="381"/>
         <source>List of Closed Windows and Tabs</source>
         <translation>רשימת חלונות וכרטיסיות סגורות</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="399"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="385"/>
         <source>Address Field</source>
         <translation>שדה כתובת</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="403"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="389"/>
+        <source>Content Blocking Details</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="393"/>
         <source>Menu Bar</source>
         <translation>שורת תפריט</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="407"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="397"/>
         <source>Menu Button</source>
         <translation>לחצן תפריט</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="411"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="401"/>
         <source>Sidebar Panel Chooser</source>
         <translation>סרגל צד בורר לוח</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="419"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="405"/>
+        <source>Progress Information (Document Progress)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="409"/>
+        <source>Progress Information (Total Progress)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="413"/>
+        <source>Progress Information (Loaded Elements)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="417"/>
+        <source>Progress Information (Loading Speed)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="421"/>
+        <source>Progress Information (Elapsed Time)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="425"/>
+        <source>Progress Information (Status Message)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="433"/>
         <source>Search Field (%1)</source>
         <translation>שדה חיפוש (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="424"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="438"/>
         <source>Search Field</source>
         <translation>שדה חיפוש</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="429"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="443"/>
         <source>Status Message Field</source>
         <translation>שדה הודעת מצב</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="433"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="447"/>
         <source>Tab Bar</source>
         <translation>סרגל כרטיסיות</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="437"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="451"/>
         <source>Zoom Slider</source>
         <translation>מחוון זום</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="445"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="459"/>
         <source>(Untitled)</source>
         <translation>(ללא כותרת)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="450"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="464"/>
         <source>Invalid Bookmark</source>
         <translation>סימנייה לא תקינה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="459"/>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="471"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="473"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="485"/>
         <source>Invalid Entry</source>
         <translation>רשומה לא תקינה</translation>
     </message>
@@ -5321,7 +5523,7 @@ Do you want to save your changes or discard them?</source>
 <context>
     <name>Otter::ToolBarDragAreaWidget</name>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="55"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="49"/>
         <source>Drag to move toolbar</source>
         <translation>גרור כדי להזיז סרגל כלים</translation>
     </message>
@@ -5329,42 +5531,42 @@ Do you want to save your changes or discard them?</source>
 <context>
     <name>Otter::ToolBarWidget</name>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="182"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="176"/>
         <source>Switch tabs using the mouse wheel</source>
         <translation>החלף כרטיסיות באמצעות גלגל עכבר</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="199"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="193"/>
         <source>Arrange</source>
         <translation>ארגן</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="563"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="459"/>
         <source>Customize</source>
         <translation>התאם</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="565"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="461"/>
         <source>(Untitled)</source>
         <translation>(ללא כותרת)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="566"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="462"/>
         <source>Configure…</source>
         <translation>הגדר…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="568"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="464"/>
         <source>Reset to Defaults…</source>
         <translation>אפס לברירות מחדל…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="585"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="481"/>
         <source>Remove…</source>
         <translation>הסר…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="589"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="485"/>
         <source>Toolbars</source>
         <translation>סרגלי כלים</translation>
     </message>
@@ -5372,32 +5574,32 @@ Do you want to save your changes or discard them?</source>
 <context>
     <name>Otter::ToolBarsManager</name>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="298"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="257"/>
         <source>Reset Toolbar</source>
         <translation>איפוס סרגל כלים</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="298"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="257"/>
         <source>Do you really want to reset this toolbar to default configuration?</source>
         <translation>האם אתה באמת רוצה לאפס את סרגל כלים זה לתצורה שגרתית?</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="338"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="276"/>
         <source>Remove Toolbar</source>
         <translation>הסר סרגל כלים</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="338"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="276"/>
         <source>Do you really want to remove this toolbar?</source>
         <translation>האם אתה באמת רוצה להסיר את סרגל כלים זה?</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="352"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="290"/>
         <source>Reset Toolbars</source>
         <translation>איפוס סרגלי כלים</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="352"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="290"/>
         <source>Do you really want to reset all toolbars to default configuration?</source>
         <translation>האם אתה באמת רוצה לאפס כל סרגל כלים לתצורה שגרתית?</translation>
     </message>
@@ -5414,25 +5616,25 @@ Do you want to save your changes or discard them?</source>
 <context>
     <name>Otter::Transfer</name>
     <message>
-        <location filename="../../src/core/Transfer.cpp" line="263"/>
-        <location filename="../../src/core/Transfer.cpp" line="782"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="265"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="791"/>
         <source>Question</source>
         <translation>שאלה</translation>
     </message>
     <message>
-        <location filename="../../src/core/Transfer.cpp" line="263"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="265"/>
         <source>File with that name already exists.
 Do you want to overwrite it?</source>
         <translation>קובץ בעל שם זה כבר קיים.
 האם ברצונך לכתוב עליו?</translation>
     </message>
     <message>
-        <location filename="../../src/core/Transfer.cpp" line="611"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="620"/>
         <source>file</source>
         <translation>קובץ</translation>
     </message>
     <message>
-        <location filename="../../src/core/Transfer.cpp" line="782"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="791"/>
         <source>File with the same name already exists.
 Do you want to overwrite it?
 
@@ -5481,27 +5683,27 @@ Do you want to overwrite it?
         <translation>זכור בחירה לטיפוס קובץ זה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="44"/>
+        <location filename="../../src/ui/TransferDialog.cpp" line="43"/>
         <source>unknown file</source>
         <translation>קובץ לא מוכר</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="64"/>
+        <location filename="../../src/ui/TransferDialog.cpp" line="63"/>
         <source>Opening %1</source>
         <translation>פתיחת %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="170"/>
+        <location filename="../../src/ui/TransferDialog.cpp" line="169"/>
         <source>unknown</source>
         <translation>לא מוכר</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="174"/>
+        <location filename="../../src/ui/TransferDialog.cpp" line="173"/>
         <source>%1 (download completed)</source>
         <translation>%1 (הורדה הושלמה)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="180"/>
+        <location filename="../../src/ui/TransferDialog.cpp" line="179"/>
         <source>%1 (%2% downloaded)</source>
         <translation>%1 (%2% הורדו)</translation>
     </message>
@@ -5540,66 +5742,66 @@ Do you want to overwrite it?
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="184"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="396"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="430"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="386"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="420"/>
         <source>Stop</source>
         <translation>עצור</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="194"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="397"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="387"/>
         <source>Redownload</source>
         <translation>הורד מחדש</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
         <source>Filename</source>
         <translation>שם קובץ</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
         <source>Size</source>
         <translation>גודל</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
         <source>Progress</source>
         <translation>התקדמות</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
         <source>Time</source>
         <translation>זמן</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
         <source>Speed</source>
         <translation>מהירות</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
         <source>Started</source>
         <translation>התחילה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
         <source>Finished</source>
         <translation>הסתיימה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="153"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="143"/>
         <source>Warning</source>
         <translation>אזהרה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="153"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="143"/>
         <source>This transfer is still running.
 Do you really want to remove it?</source>
         <translation>העברה זו עדיין מורצת.
 האם אתה באמת רוצה להסיר אותה?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="238"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="228"/>
         <source>&lt;div style=&quot;white-space:pre;&quot;&gt;Source: %1
 Target: %2
 Size: %3
@@ -5612,48 +5814,48 @@ Progress: %5&lt;/div&gt;</source>
 התקדמות: %5&lt;/div&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="373"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="363"/>
         <source>Open</source>
         <translation>פתח</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="379"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="369"/>
         <source>Open With</source>
         <translation>פתח בעזרת</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="383"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="373"/>
         <source>Unknown</source>
         <translation>לא מוכר</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="394"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="384"/>
         <source>Open Folder</source>
         <translation>פתח תיקייה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="396"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="425"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="386"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="415"/>
         <source>Resume</source>
         <translation>חזור</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="399"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="389"/>
         <source>Copy Transfer Information</source>
         <translation>העתק מידע העברה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="401"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="391"/>
         <source>Remove</source>
         <translation>הסר</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="415"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="405"/>
         <source>Clear Finished Transfers</source>
         <translation>טהר העברות שהושלמו</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="543"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="535"/>
         <source>Transfers Manager</source>
         <translation>מנהל העברות</translation>
     </message>
@@ -5661,44 +5863,11 @@ Progress: %5&lt;/div&gt;</source>
 <context>
     <name>Otter::TransfersManager</name>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="151"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="994"/>
         <source>Transfer completed:
 %1</source>
         <translation>העברה הושלמה:
 %1</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="273"/>
-        <source>%1 files (*.%2)</source>
-        <translation>קבצי %1 ‭(*.%2)</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="276"/>
-        <source>All files (*)</source>
-        <translation>כל הקבצים (*)</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="278"/>
-        <source>Save File</source>
-        <translation>שמירת קובץ</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="297"/>
-        <location filename="../../src/core/TransfersManager.cpp" line="306"/>
-        <source>Warning</source>
-        <translation>אזהרה</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="297"/>
-        <source>This path is already used by different download, pick another one.</source>
-        <translation>נתיב זה כבר נמצא בשימוש על ידי הורדה אחרת, בחר נתיב אחר.</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="306"/>
-        <source>Target path is not writable.
-Select another one.</source>
-        <translation>נתיב יעד אינו נתון לכתיבה.
-בחר נתיב אחר.</translation>
     </message>
 </context>
 <context>
@@ -5818,17 +5987,17 @@ Click Install button to restart browser and install the update or close this dia
         <translation>הסר</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="37"/>
+        <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="39"/>
         <source>Title</source>
         <translation>כותרת</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="37"/>
+        <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="39"/>
         <source>Value</source>
         <translation>ערך</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="46"/>
+        <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="44"/>
         <source>(Untitled)</source>
         <translation>(ללא כותרת)</translation>
     </message>
@@ -5836,170 +6005,215 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>Otter::WebContentsWidget</name>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="463"/>
-        <source>Open All Pop-Ups</source>
-        <translation>פתח את כל החלונות הקופצים</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="467"/>
-        <source>Open Pop-Ups in Background</source>
-        <translation>פתח חלונות קופצים ברקע</translation>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="470"/>
+        <source>Pop-Ups</source>
+        <translation>חלונות קופצים</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="471"/>
-        <source>Block All Pop-Ups</source>
-        <translation>חסום את כל החלונות הקופצים</translation>
+        <source>Open All</source>
+        <translation>פתח הכל</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="475"/>
+        <source>Open in Background</source>
+        <translation>פתח ברקע</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="479"/>
+        <source>Block All</source>
+        <translation>חסום הכל</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="483"/>
         <source>Ask What to Do</source>
         <translation>שאל מה לעשות</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="500"/>
-        <source>Enable Images</source>
-        <translation>אפשר תמונות</translation>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="511"/>
+        <source>Images</source>
+        <translation>תמונות</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="505"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="512"/>
+        <source>All Images</source>
+        <translation>כל התמונות</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="516"/>
+        <source>Cached Images</source>
+        <translation>תמונות מוטמנות</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="520"/>
+        <source>No Images</source>
+        <translation>בלי תמונות</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="547"/>
         <source>Enable JavaScript</source>
         <translation>אפשר JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="510"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="552"/>
         <source>Enable Java</source>
         <translation>אפשר Java</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="515"/>
-        <source>Enable Plugins</source>
-        <translation>אפשר תוספים</translation>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="557"/>
+        <source>Plugins</source>
+        <translation>תוספים</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="522"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="558"/>
+        <source>Enabled</source>
+        <translation>מאופשר</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="562"/>
+        <source>On Demand</source>
+        <translation>לפי דרישה</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="566"/>
+        <source>Disabled</source>
+        <translation>מנוטרל</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="595"/>
         <source>Enable Cookies</source>
         <translation>אפשר עוגיות</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="526"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="599"/>
         <source>Enable Referrer</source>
         <translation>אפשר Referrer</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="530"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="603"/>
         <source>Enable Proxy</source>
         <translation>אפשר פרוקסי</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="535"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="608"/>
         <source>Reset Options</source>
         <translation>אפס אפשרויות</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="866"/>
         <source>Question</source>
         <translation>שאלה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="866"/>
         <source>This tab has crashed.</source>
         <translation>כרטיסייה זו קרסה.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="866"/>
         <source>Do you want to try to reload it?</source>
         <translation>האם ברצונך לנסות להטעינה מחדש?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="802"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="867"/>
         <source>Do not show this message again</source>
         <translation>אל תציג את הודעה זו שוב</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1077"/>
+        <source>Select User Agent</source>
+        <translation>בחר סוכן משתמש</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1077"/>
+        <source>Enter User Agent:</source>
+        <translation>הזן סוכן משתמש:</translation>
     </message>
 </context>
 <context>
     <name>Otter::WebWidget</name>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="335"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="341"/>
         <source>Default Application</source>
         <translation>יישום שגרתי</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="341"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="347"/>
         <source>Unknown</source>
         <translation>לא ידוע</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="427"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="451"/>
         <source>Title: %1</source>
         <translation>כותרת: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="427"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="451"/>
         <source>Address: %1</source>
         <translation>כתובת: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="688"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="712"/>
         <source>No search engines defined</source>
         <translation>לא הוגדרו מנועי חיפוש</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="836"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="860"/>
         <source>Open Image in New Tab (Untitled)</source>
         <translation>פתח תמונה בתוך כרטיסייה חדשה (ללא כותרת)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="836"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="860"/>
         <source>Open Image in New Tab (%1)</source>
         <translation>פתח תמונה בתוך כרטיסייה חדשה (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="842"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="866"/>
         <source>Open Image in New Background Tab (Untitled)</source>
         <translation>פתח תמונה בתוך כרטיסיית רקע חדשה (ללא כותרת)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="842"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="866"/>
         <source>Open Image in New Background Tab (%1)</source>
         <translation>פתח תמונה בתוך כרטיסיית רקע חדשה (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1135"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1159"/>
         <source>1 Minute</source>
         <translation>דקה 1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1136"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1160"/>
         <source>30 Minutes</source>
         <translation>30 דקות</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1137"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1161"/>
         <source>1 Hour</source>
         <translation>שעה 1 </translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1138"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1162"/>
         <source>2 Hours</source>
         <translation>שעתיים</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1139"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1163"/>
         <source>6 Hours</source>
         <translation>6 שעות</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1140"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1164"/>
         <source>Never</source>
         <translation>אף פעם</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1141"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1165"/>
         <source>Custom…</source>
         <translation>מותאם…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1143"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1167"/>
         <source>Page Default</source>
         <translation>שגרת עמוד</translation>
     </message>
@@ -6058,7 +6272,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="171"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="297"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="307"/>
         <source>Details…</source>
         <translation>פרטים…</translation>
     </message>
@@ -6103,62 +6317,67 @@ Click Install button to restart browser and install the update or close this dia
         <translation>הצגת חלונות קופצים:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="261"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="260"/>
+        <source>Enter full screen mode:</source>
+        <translation>הפעל מצב מסך מלא:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="271"/>
         <source>Security</source>
         <translation>אבטחה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="275"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="285"/>
         <source>Certificate</source>
         <translation>תעודה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="306"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="316"/>
         <source>Issued to:</source>
         <translation>הונפקה לכבוד:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="313"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="323"/>
         <source>Issued by:</source>
         <translation>הונפקה על ידי:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="320"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="330"/>
         <source>Issued on:</source>
         <translation>הונפקה ביום:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="327"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="337"/>
         <source>Expires on:</source>
         <translation>פגה ביום:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="340"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="350"/>
         <source>Cipher</source>
         <translation>צופן</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="347"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="357"/>
         <source>Protocol:</source>
         <translation>פרוטוקול:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="354"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="364"/>
         <source>Authentication method:</source>
         <translation>שיטת אימות:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="361"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="371"/>
         <source>Encryption method:</source>
         <translation>שיטת הצפנה:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="368"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="378"/>
         <source>Key exchange method:</source>
         <translation>שיטת החלפת מפתח:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="407"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="417"/>
         <source>SSL Errors</source>
         <translation>שגיאות SSL</translation>
     </message>
@@ -6199,83 +6418,91 @@ Click Install button to restart browser and install the update or close this dia
         <translation>אין מידע.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="85"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="84"/>
         <source>unknown</source>
         <translation>לא מוכר</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="87"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="86"/>
         <source>%1 (%n blocked)</source>
         <translation><numerusform>%1 (נחסם %n)</numerusform><numerusform>%1 (%n נחסמו)</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="94"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="113"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="93"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="112"/>
         <source>Only existing</source>
         <translation>קיימות בלבד</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="98"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="97"/>
         <source>Only read existing</source>
         <translation>קרא קיימות בלבד</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="102"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="117"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="132"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="139"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="140"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="150"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="165"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="184"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="101"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="116"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="131"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="146"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="153"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="163"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="178"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="193"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="212"/>
         <source>Never</source>
         <translation>אף פעם</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="106"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="121"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="128"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="139"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="140"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="146"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="161"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="176"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="105"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="120"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="127"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="150"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="153"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="159"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="174"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="189"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="204"/>
         <source>Always</source>
         <translation>תמיד</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="136"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="135"/>
         <source>On demand</source>
         <translation>לפי דרישה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="154"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="169"/>
-        <source>Always Ask</source>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="142"/>
+        <source>Only cached</source>
+        <translation>רק מוטמנים</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="167"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="182"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="197"/>
+        <source>Always ask</source>
         <translation>שאל תמיד</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="180"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="208"/>
         <source>Always (open in backgound)</source>
         <translation>תמיד (פתח ברקע)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="188"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="216"/>
         <source>Ask</source>
         <translation>שאל</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="217"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="245"/>
         <source>Error Message</source>
         <translation>הודעת שגיאה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="217"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="245"/>
         <source>URL</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="236"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="261"/>
         <source>Information for %1</source>
         <translation>מידע עבור %1</translation>
     </message>
@@ -6299,9 +6526,9 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="53"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="267"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="537"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="660"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="276"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="546"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="669"/>
         <source>Override</source>
         <translation>דרוס</translation>
     </message>
@@ -6321,331 +6548,346 @@ Click Install button to restart browser and install the update or close this dia
         <translation>תוספים:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="114"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="117"/>
         <source>Pop-ups:</source>
         <translation>חלונות קופצים:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="138"/>
-        <source>Enable images</source>
-        <translation>אפשר תמונות</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="152"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="148"/>
         <source>Enable Java</source>
         <translation>אפשר Java</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="186"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="181"/>
+        <source>Images:</source>
+        <translation>תמונות:</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="195"/>
         <source>Privacy</source>
         <translation>פרטיות</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="210"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="219"/>
         <source>Keep until:</source>
         <translation>שמור עד:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="253"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="262"/>
         <source>Remember browsing history</source>
         <translation>זכור היסטוריית גלישה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="274"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="283"/>
         <source>Enable cookies</source>
         <translation>אפשר עוגיות</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="299"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="308"/>
         <source>Accept cookies:</source>
         <translation>קבל עוגיות:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="308"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="317"/>
         <source>Do Not Track:</source>
         <translation>אל תעקוב:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="345"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="354"/>
         <source>Add…</source>
         <translation>הוסף…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="355"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="364"/>
         <source>Edit…</source>
         <translation>ערוך…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="365"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="374"/>
         <source>Delete</source>
         <translation>מחק</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="407"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="416"/>
         <source>Accept third-party cookies:</source>
         <translation>קבל עוגיות צד שלישי:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="446"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="455"/>
         <source>Scripting</source>
         <translation>תסריטים</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="452"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="461"/>
         <source>Allow to disable context menu</source>
         <translation>התר נטרול תפריט הקשר</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="466"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="475"/>
         <source>Allow changing of status field</source>
         <translation>התר שינוי שדה מצב</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="493"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="502"/>
         <source>Allow to close windows:</source>
         <translation>התר סגירת חלונות:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="506"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="515"/>
         <source>Allow script to hide address bar</source>
         <translation>התר לתסריטים להסתיר שורת כתובת</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="513"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="522"/>
         <source>Allow moving and resizing of windows</source>
         <translation>התר הזזת ושינוי גודל חלונות</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="551"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="560"/>
         <source>Enable JavaScript</source>
         <translation>אפשר JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="579"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="588"/>
         <source>Allow to open windows</source>
         <translation>התר פתיחת חלונות</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="589"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="598"/>
         <source>Allow access to clipboard</source>
         <translation>התר גישה ללוח גזירה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="609"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="618"/>
         <source>Allow to enter full screen mode:</source>
         <translation>התר הפעלת מצב מסך מלא:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="630"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="639"/>
         <source>Network</source>
         <translation>רשת</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="643"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="652"/>
         <source>User Agent:</source>
         <translation>סוכן משתמש:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="683"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="692"/>
         <source>Proxy mode:</source>
         <translation>מצב פרוקסי:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="710"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="719"/>
         <source>No proxy</source>
         <translation>בלי פרוקסי</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="715"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="724"/>
         <source>System configuration</source>
         <translation>תצורת מערכת</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="720"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="729"/>
         <source>Manual configuration</source>
         <translation>תצורה ידנית</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="725"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="734"/>
         <source>Automatic configuration (PAC)</source>
         <translation>תצורה אוטומטית (PAC)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="838"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="847"/>
         <source>Port</source>
         <translation>פורט</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="845"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="854"/>
         <source>Servers</source>
         <translation>שרתים</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="852"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="861"/>
         <source>FTP</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="859"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="868"/>
         <source>SOCKS5</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="866"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="875"/>
         <source>HTTP</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="880"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="889"/>
         <source>HTTPS</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="894"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="903"/>
         <source>All</source>
         <translation>כולם</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="911"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="920"/>
         <source>Protocol</source>
         <translation>פרוטוקול</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="939"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="948"/>
         <source>Path to PAC file:</source>
         <translation>נתיב לקובץ PAC:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="956"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="965"/>
         <source>Send referrer information</source>
         <translation>שלח מידע referrer</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="964"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="973"/>
         <source>Content Blocking</source>
         <translation>חסימת תוכן</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="63"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="62"/>
         <source>Auto Detect</source>
         <translation>אתר אוטומטית</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="77"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="86"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="90"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="76"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="89"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="93"/>
         <source>Ask</source>
         <translation>שאל</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="78"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="77"/>
         <source>Block all</source>
         <translation>חסום הכל</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="79"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="78"/>
         <source>Open all</source>
         <translation>פתח הכל</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="80"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="79"/>
         <source>Open all in background</source>
         <translation>פתח הכל ברקע</translation>
     </message>
     <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="81"/>
+        <source>All images</source>
+        <translation>כל התמונות</translation>
+    </message>
+    <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="82"/>
+        <source>Cached images</source>
+        <translation>תמונות מוטמנות</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
+        <source>No images</source>
+        <translation>בלי תמונות</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="85"/>
         <source>Enabled</source>
         <translation>מאופשר</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="86"/>
         <source>On demand</source>
         <translation>לפי דרישה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="84"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="87"/>
         <source>Disabled</source>
         <translation>מנוטרל</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="87"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="91"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="98"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="107"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="90"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="94"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="101"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="110"/>
         <source>Always</source>
         <translation>תמיד</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="88"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="92"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="101"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="109"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="91"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="95"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="104"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
         <source>Never</source>
         <translation>אף פעם</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="94"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="97"/>
         <source>Inform websites that I do not want to be tracked</source>
         <translation>יידע אתרי רשת כי אין ברצוני להיות נתון למעקב</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="95"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="98"/>
         <source>Inform websites that I allow tracking</source>
         <translation>יידע אתרי רשת כי אני מתיר מעקב</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="96"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="99"/>
         <source>Do not inform websites about my preference</source>
         <translation>אל תיידע אתרי רשת אודות העדפתי</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="99"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="108"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="102"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="111"/>
         <source>Only existing</source>
         <translation>קיימות בלבד</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="100"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
         <source>Only read existing</source>
         <translation>קרא קיימות בלבד</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="106"/>
         <source>Expires</source>
         <translation>תפוגה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="104"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="107"/>
         <source>Current session is closed</source>
         <translation>סגירת סשן נוכחי</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="105"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="108"/>
         <source>Always ask</source>
         <translation>שאל תמיד</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="115"/>
         <source>Domain</source>
         <translation>מתחם</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="115"/>
         <source>Name</source>
         <translation>שם</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="115"/>
         <source>Path</source>
         <translation>נתיב</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="115"/>
         <source>Value</source>
         <translation>ערך</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="115"/>
         <source>Expiration date</source>
         <translation>תאריך תפוגה</translation>
     </message>
@@ -6655,22 +6897,22 @@ Click Install button to restart browser and install the update or close this dia
         <translation>ברירת מחדל</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="140"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="146"/>
         <source>(Untitled)</source>
         <translation>(ללא כותרת)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="358"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="366"/>
         <source>Title</source>
         <translation>כותרת</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="358"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="366"/>
         <source>Update Interval</source>
         <translation>תדירות עדכון</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="358"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="366"/>
         <source>Last Update</source>
         <translation>עדכון אחרון</translation>
     </message>
@@ -6678,24 +6920,14 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>Otter::Window</name>
     <message>
-        <location filename="../../src/ui/Window.cpp" line="177"/>
+        <location filename="../../src/ui/Window.cpp" line="175"/>
         <source>Print Page</source>
         <translation>הדפסת עמוד</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Window.cpp" line="193"/>
+        <location filename="../../src/ui/Window.cpp" line="191"/>
         <source>Print Preview</source>
         <translation>תצוגה מקדימה להדפסה</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/Window.cpp" line="381"/>
-        <source>Select User Agent</source>
-        <translation>בחירת סוכן משתמש</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/Window.cpp" line="381"/>
-        <source>Enter User Agent:</source>
-        <translation>הזן סוכן משתמש:</translation>
     </message>
 </context>
 <context>
@@ -6731,23 +6963,23 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>Otter::WindowsPlatformIntegration</name>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="156"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="155"/>
         <source>Failed to run command &quot;%1&quot;, file is not executable</source>
         <translation>נכשל להריץ פקודה &quot;%1&quot;, קובץ אינו נתון להרצה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="183"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="182"/>
         <source>Failed to run command &quot;%1&quot; (arguments: &quot;%2&quot;)</source>
         <translation>נכשל להריץ פקודה &quot;%1&quot; (ארגומנטים: &quot;%2&quot;)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="227"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="226"/>
         <source>No valid suffix for given MIME type: %1</source>
         <translation>אין סיומת תקינה עבור טיפוס MIME נתון: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="294"/>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="344"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="293"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="343"/>
         <source>Failed to load a valid application path for MIME type %1: %2</source>
         <translation>נכשל לטעון נתיב יישום תקין עבור טיפוס MIME %1: %2</translation>
     </message>
@@ -6763,8 +6995,8 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>Otter::ZoomWidget</name>
     <message>
-        <location filename="../../src/ui/toolbars/ZoomWidget.cpp" line="97"/>
-        <location filename="../../src/ui/toolbars/ZoomWidget.cpp" line="98"/>
+        <location filename="../../src/ui/toolbars/ZoomWidget.cpp" line="95"/>
+        <location filename="../../src/ui/toolbars/ZoomWidget.cpp" line="96"/>
         <source>Zoom %1%</source>
         <translation>זום %1%</translation>
     </message>
@@ -6878,1064 +7110,1069 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>actions</name>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="253"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="313"/>
         <source>File</source>
         <translation>קובץ</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="254"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="314"/>
         <source>Sessions</source>
         <translation>סשנים</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="255"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="315"/>
         <source>Import and Export</source>
         <translation>ייבוא וייצוא</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="256"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="316"/>
         <source>Edit</source>
         <translation>עריכה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="257"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="317"/>
         <source>View</source>
         <translation>תצוגה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="258"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="318"/>
         <source>Toolbars</source>
         <translation>סרגלי כלים</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="259"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="319"/>
         <source>User Agent</source>
         <translation>סוכן משתמש</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="260"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="320"/>
         <source>Style</source>
         <translation>סגנון</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="261"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="321"/>
         <source>Character Encoding</source>
         <translation>קידוד תווים</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="262"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="322"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="45"/>
         <source>History</source>
         <translation>היסטוריה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="263"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="323"/>
         <source>Closed Windows</source>
         <translation>חלונות סגורים</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="264"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="324"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="43"/>
         <source>Bookmarks</source>
         <translation>סימניות</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="265"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="325"/>
         <source>Tools</source>
         <translation>כלים</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="266"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="326"/>
         <source>Help</source>
         <translation>עזרה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="267"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="327"/>
         <source>Tabs and Windows</source>
         <translation>סימניות וחלונות</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="268"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="328"/>
         <source>Page</source>
         <translation>עמוד</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="269"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="329"/>
         <source>Print</source>
         <translation>הדפס</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="270"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="330"/>
         <source>Settings</source>
         <translation>הגדרות</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="271"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="331"/>
         <source>Frame</source>
         <translation>מסגרת</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="275"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="335"/>
         <source>New Tab</source>
         <translation>כרטיסייה חדשה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="276"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="336"/>
         <source>New Private Tab</source>
         <translation>כרטיסייה פרטית חדשה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="277"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="337"/>
         <source>New Window</source>
         <translation>חלון חדש</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="278"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="338"/>
         <source>New Private Window</source>
         <translation>חלון פרטי חדש</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="279"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="339"/>
         <source>Open…</source>
         <translation>פתח…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="280"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="340"/>
         <source>Save…</source>
         <translation>שמור…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="281"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="341"/>
         <source>Clone Tab</source>
         <translation>שבט כרטיסייה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="282"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="342"/>
         <location filename="../../src/ui/TabBarWidget.cpp" line="170"/>
         <source>Pin Tab</source>
         <translation>הצמד כרטיסייה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="283"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="343"/>
         <source>Detach Tab</source>
         <translation>נתק כרטיסייה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="284"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="344"/>
         <source>Maximize</source>
         <translation>הגדל</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="284"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="344"/>
         <source>Maximize Tab</source>
         <translation>הגדל כרטיסייה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="285"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="345"/>
         <source>Minimize</source>
         <translation>הקטן</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="285"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="345"/>
         <source>Minimize Tab</source>
         <translation>הקטן כרטיסייה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="286"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="346"/>
         <source>Restore</source>
         <translation>שחזר</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="286"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="346"/>
         <source>Restore Tab</source>
         <translation>שחזר כרטיסייה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="287"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="347"/>
         <source>Stay on Top</source>
         <translation>הישאר למעלה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="288"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="348"/>
         <source>Clear Tab History</source>
         <translation>טהר היסטוריית כרטיסייה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="288"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="348"/>
         <source>Remove Local Tab History</source>
         <translation>הסר היסטוריית כרטיסייה מקומית</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="289"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="349"/>
         <source>Purge Tab History</source>
         <translation>טהר היסטוריית כרטיסייה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="289"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="349"/>
         <source>Remove Local and Global Tab History</source>
         <translation>הסר היסטוריית כרטיסייה מקומית וגלובלית</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="290"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="350"/>
         <source>Suspend Tab</source>
         <translation>השהה כרטיסייה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="291"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="351"/>
         <source>Close Tab</source>
         <translation>סגור כרטיסייה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="292"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="352"/>
         <source>Close Other Tabs</source>
         <translation>סגור כרטסיות אחרות</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="293"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="353"/>
         <source>Close All Private Tabs</source>
         <translation>סגור את כל הכרטיסיות הפרטיות</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="293"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="353"/>
         <source>Close All Private Tabs in Current Window</source>
         <translation>סגור את כל הכרטיסיות הפרטיות בחלון נוכחי</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="294"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="354"/>
         <source>Close Private Tabs and Windows</source>
         <translation>סגור את כל הכרטיסיות והחלונות הפרטיים</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="295"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="355"/>
         <source>Reopen Previously Closed Tab</source>
         <translation>פתח שוב כרטיסייה סגורה קודמת</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="296"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="356"/>
         <source>Maximize All</source>
         <translation>הגדל הכל</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="297"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="357"/>
         <source>Minimize All</source>
         <translation>הקטן הכל</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="298"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="358"/>
         <source>Restore All</source>
         <translation>שחזר הכל</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="299"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="359"/>
         <source>Cascade</source>
         <translation>מדורג</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="300"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="360"/>
         <source>Tile</source>
         <translation>מרוצף</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="301"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="361"/>
         <source>Close Window</source>
         <translation>סגור חלון</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="302"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="362"/>
         <source>Manage Sessions…</source>
         <translation>נהל סשנים…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="303"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="363"/>
         <source>Save Current Session…</source>
         <translation>שמור סשן נוכחי…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="304"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="364"/>
         <source>Open URL</source>
         <translation>פתח URL</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="305"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="321"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="365"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="381"/>
         <source>Open</source>
         <translation>פתח</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="306"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="366"/>
         <source>Open in This Tab</source>
         <translation>פתח בתוך כרטיסייה זו</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="307"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="322"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="367"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="382"/>
         <source>Open in New Tab</source>
         <translation>פתח בתוך כרטיסייה חדשה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="308"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="323"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="368"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="383"/>
         <source>Open in New Background Tab</source>
         <translation>פתח בתוך כרטיסיית רקע חדשה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="309"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="369"/>
         <source>Open in New Window</source>
         <translation>פתח בתוך חלון חדש</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="310"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="370"/>
         <source>Open in New Background Window</source>
         <translation>פתח בתוך חלון רקע חדש</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="311"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="371"/>
         <source>Open in New Private Tab</source>
         <translation>פתח בתוך כרטיסייה פרטית חדשה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="312"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="372"/>
         <source>Open in New Private Background Tab</source>
         <translation>פתח בתוך כרטיסיית רקע פרטית חדשה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="313"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="373"/>
         <source>Open in New Private Window</source>
         <translation>פתח בתוך חלון פרטי חדש</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="314"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="374"/>
         <source>Open in New Private Background Window</source>
         <translation>פתח בתוך חלון רקע פרטי חדש</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="315"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="324"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="420"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="375"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="384"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="480"/>
         <source>Open with…</source>
         <translation>פתח בעזרת…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="315"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="375"/>
         <source>Open Link with External Application</source>
         <translation>פתח קישור בעזרת יישום חיצוני</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="316"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="376"/>
         <source>Copy Link to Clipboard</source>
         <translation>העתק קישור ללוח גזירה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="317"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="773"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="377"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="797"/>
         <source>Bookmark Link…</source>
         <translation>סמן קישור…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="318"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="378"/>
         <source>Save Link Target As…</source>
         <translation>שמור יעד קישור בתור…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="319"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="379"/>
         <source>Save to Downloads</source>
         <translation>שמור להורדות</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="320"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="380"/>
         <source>Go to This Address</source>
         <translation>עבור לכתובת זו</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="321"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="381"/>
         <source>Open Frame in This Tab</source>
         <translation>פתח מסגרת בתוך כרטיסייה זו</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="322"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="382"/>
         <source>Open Frame in New Tab</source>
         <translation>פתח מסגרת בתוך כרטיסייה חדשה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="323"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="383"/>
         <source>Open Frame in New Background Tab</source>
         <translation>פתח מסגרת בתוך כרטיסיית רקע חדשה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="324"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="384"/>
         <source>Open Frame with External Application</source>
         <translation>פתח מסגרת בעזרת יישום חיצוני</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="325"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="385"/>
         <source>Copy Frame Link to Clipboard</source>
         <translation>העתק קישור מסגרת ללוח גזירה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="326"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="352"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="353"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="386"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="412"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="413"/>
         <source>Reload</source>
         <translation>טען מחדש</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="326"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="386"/>
         <source>Reload Frame</source>
         <translation>טען מחדש מסגרת</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="327"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="387"/>
         <source>View Frame Source</source>
         <translation>הצג מקור מסגרת</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="328"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="388"/>
         <source>Open Image In New Tab</source>
         <translation>פתח תמונה בתוך כרטיסייה חדשה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="329"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="842"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="389"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="866"/>
         <source>Open Image in New Background Tab</source>
         <translation>פתח תמונה בתוך כרטיסיית רקע חדשה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="330"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="390"/>
         <source>Save Image…</source>
         <translation>שמור תמונה…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="331"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="391"/>
         <source>Copy Image to Clipboard</source>
         <translation>העתק תמונה ללוח גזירה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="332"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="392"/>
         <source>Copy Image Link to Clipboard</source>
         <translation>העתק קישור תמונה ללוח גזירה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="333"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="393"/>
         <source>Reload Image</source>
         <translation>טען מחדש תמונה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="334"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="394"/>
         <source>Image Properties…</source>
         <translation>מאפייני תמונה…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="335"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="395"/>
         <source>Save Media…</source>
         <translation>שמור מדיה…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="336"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="396"/>
         <source>Copy Media Link to Clipboard</source>
         <translation>העתק קישור מדיה ללוח גזירה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="337"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="397"/>
         <source>Show Controls</source>
         <translation>הצג בקרים</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="338"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="398"/>
         <source>Looping</source>
         <translation>לולאתיות</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="339"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="905"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="399"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="929"/>
         <source>Play</source>
         <translation>נגן</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="340"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="912"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="400"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="936"/>
         <source>Mute</source>
         <translation>השתק</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="341"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="401"/>
         <source>Go</source>
         <translation>עבור</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="342"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="402"/>
         <source>Back</source>
         <translation>אחורה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="343"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="403"/>
         <source>Forward</source>
         <translation>קדימה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="344"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="404"/>
         <source>Go to Page or Search</source>
         <translation>עבור לעמוד או חפש</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="345"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="405"/>
         <source>Go to Home Page</source>
         <translation>עבור לעמוד בית</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="346"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="406"/>
         <source>Go to Parent Directory</source>
         <translation>עבור לספריית הורה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="347"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="407"/>
         <source>Rewind</source>
         <translation>לפף מחדש</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="348"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="408"/>
         <source>Fast Forward</source>
         <translation>מעבר מהיר</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="349"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="409"/>
         <source>Stop</source>
         <translation>עצור</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="350"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="410"/>
         <source>Stop Scheduled Page Reload</source>
         <translation>הפסק הטענת עמוד מתוזמנת</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="351"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="411"/>
         <source>Stop All Pages</source>
         <translation>עצור את כל העמודים</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="353"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="413"/>
         <source>Reload or Stop</source>
         <translation>טען מחדש או עצור</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="354"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="414"/>
         <source>Reload and Bypass Cache</source>
         <translation>טען מחדש ודלג על מטמון</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="355"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="415"/>
         <source>Reload All Tabs</source>
         <translation>טען מחדש את כל הסימניות</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="356"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="416"/>
         <source>Reload Every</source>
         <translation>טען מחדש כל</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="357"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="417"/>
         <source>Show Context Menu</source>
         <translation>הצג תפריט הקשר</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="358"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="418"/>
         <source>Undo</source>
         <translation>בטל</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="359"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="419"/>
         <source>Redo</source>
         <translation>בצע שוב</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="360"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="420"/>
         <source>Cut</source>
         <translation>גזור</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="361"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="421"/>
         <source>Copy</source>
         <translation>העתק</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="362"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="422"/>
         <source>Copy as Plain Text</source>
         <translation>העתק בתור טקסט פשוט</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="363"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="423"/>
         <source>Copy Address</source>
         <translation>העתק כתובת</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="364"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="424"/>
         <source>Copy to Note</source>
         <translation>העתק לפתק</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="365"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="425"/>
         <source>Paste</source>
         <translation>הדבק</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="366"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="426"/>
         <source>Paste and Go</source>
         <translation>הדבק ועבור</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="367"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="427"/>
         <source>Insert Note</source>
         <translation>הכנס פתק</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="368"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="428"/>
         <source>Delete</source>
         <translation>מחק</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="369"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="429"/>
         <source>Select All</source>
         <translation>בחר הכל</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="370"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="430"/>
         <source>Clear All</source>
         <translation>טהר הכל</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="371"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="431"/>
         <source>Check Spelling</source>
         <translation>בדוק איות</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="372"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="432"/>
         <source>Dictionaries</source>
         <translation>מילונים</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="373"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="433"/>
         <source>Find…</source>
         <translation>חפש…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="374"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="434"/>
         <source>Find Next</source>
         <translation>הבא</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="375"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="435"/>
         <source>Find Previous</source>
         <translation>הקודם</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="376"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="436"/>
         <source>Quick Find</source>
         <translation>חיפוש מהיר</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="377"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="687"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="437"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="711"/>
         <source>Search</source>
         <translation>חפש</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="378"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="438"/>
         <source>Search Using</source>
         <translation>חפש באמצעות</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="379"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="439"/>
         <source>Create Search…</source>
         <translation>צור חיפוש…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="380"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="440"/>
         <source>Zoom In</source>
         <translation>זום פנימה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="381"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="441"/>
         <source>Zoom Out</source>
         <translation>זום החוצה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="382"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="442"/>
         <source>Zoom Original</source>
         <translation>זום מקורי</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="383"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="443"/>
         <source>Go to Start of the Page</source>
         <translation>עבור לתחילת העמוד</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="384"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="444"/>
         <source>Go to the End of the Page</source>
         <translation>עבור לסוף העמוד</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="385"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="445"/>
         <source>Page Up</source>
         <translation>עמוד מעלה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="386"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="446"/>
         <source>Page Down</source>
         <translation>עמוד מטה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="387"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="447"/>
         <source>Page Left</source>
         <translation>עמוד שמאלה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="388"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="448"/>
         <source>Page Right</source>
         <translation>עמוד ימינה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="389"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="449"/>
         <source>Enter Drag Scroll Mode</source>
         <translation>כנס למצב גלילת גרירה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="390"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="450"/>
         <source>Enter Move Scroll Mode</source>
         <translation>כנס למצב גלילת תזוזה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="391"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="451"/>
         <source>Exit Scroll Mode</source>
         <translation>צא מתוך מצב גלילה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="392"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="452"/>
         <source>Print…</source>
         <translation>הדפס…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="393"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="453"/>
         <source>Print Preview</source>
         <translation>תצוגה מקדימה להדפסה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="394"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="454"/>
         <source>Activate Address Field</source>
         <translation>הפעל שדה כתובת</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="395"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="455"/>
         <source>Activate Search Field</source>
         <translation>הפעל שדה חיפוש</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="396"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="456"/>
         <source>Activate Content</source>
         <translation>הפעל תוכן</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="397"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="457"/>
         <source>Go to Previously Used Tab</source>
         <translation>עבור לכרטיסייה שבשימוש קודמת</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="398"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="458"/>
         <source>Go to Least Recently Used Tab</source>
         <translation>עבור לכרטיסייה שהכי פחות בשימוש באחרונה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="399"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="459"/>
         <source>Activate Tab</source>
         <translation>הפעל כרטיסייה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="400"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="460"/>
         <source>Go to Tab on Left</source>
         <translation>עבור לכרטיסייה משמאל</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="401"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="461"/>
         <source>Go to Tab on Right</source>
         <translation>עבור לכרטיסייה מימין</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="402"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="462"/>
         <source>Manage Bookmarks</source>
         <translation>נהל סימניות</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="403"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="463"/>
         <source>Bookmark Page…</source>
         <translation>סמן עמוד…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="404"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="464"/>
         <source>Bookmark All Open Pages</source>
         <translation>סמן את כל העמודים הפתוחים</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="405"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="465"/>
         <source>Open Bookmark</source>
         <translation>פתח סימנייה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="406"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="466"/>
         <source>Quick Bookmark Access</source>
         <translation>גישת סימניות מהירה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="407"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="467"/>
         <source>Block pop-ups</source>
         <translation>חסום חלונות קופצים</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="408"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="468"/>
         <source>Load Images</source>
         <translation>טען תמונות</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="409"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="469"/>
         <source>Cookies</source>
         <translation>עוגיות</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="410"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="470"/>
         <source>Cookies Policy</source>
         <translation>מדיניות עוגיות</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="411"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="471"/>
         <source>Third-party Cookies Policy</source>
         <translation>מדיניות עוגיות צד שלישי</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="412"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="472"/>
         <source>Plugins</source>
         <translation>תוספים</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="413"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="473"/>
         <source>Load Plugins</source>
         <translation>טען תוספים</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="414"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="474"/>
         <source>Enable JavaScript</source>
         <translation>אפשר JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="415"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="475"/>
         <source>Enable Java</source>
         <translation>אפשר Java</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="416"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="476"/>
         <source>Enable Referrer</source>
         <translation>אפשר Referrer</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="417"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="477"/>
         <source>Proxy</source>
         <translation>פרוקסי</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="418"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="478"/>
         <source>Enable Proxy</source>
         <translation>אפשר פרוקסי</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="419"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="479"/>
         <source>View Source</source>
         <translation>הצג מקור</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="420"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="480"/>
         <source>Open Current Page with External Application</source>
         <translation>פתח עמוד נוכחי בעזרת יישום חיצוני</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="421"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="481"/>
         <source>Validate</source>
         <translation>תקף</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="422"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="482"/>
         <source>Inspect Page</source>
         <translation>חקור עמוד</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="423"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="483"/>
         <source>Inspect Element…</source>
         <translation>חקור אלמנט…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="424"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="484"/>
         <source>Work Offline</source>
         <translation>מצב לא מקוון</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="425"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="485"/>
         <source>Full Screen</source>
         <translation>מסך מלא</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="426"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="486"/>
         <source>Show Tab Switcher</source>
         <translation>הצג מחליף כרטיסיות</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="427"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="487"/>
         <source>Show Menubar</source>
         <translation>הצג שורת תפריט</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="428"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="488"/>
         <source>Show Tabbar</source>
         <translation>הצג סרגל כרטיסיות</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="429"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="489"/>
         <source>Show Sidebar</source>
         <translation>הצג סרגל צד</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="430"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="490"/>
         <source>Show Error Console</source>
         <translation>הצג קונסולת שגיאות</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="431"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="491"/>
         <source>Lock Toolbars</source>
         <translation>נעל סרגלי כלים</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="432"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="492"/>
         <source>Open Panel as Tab</source>
         <translation>פתח לוח בתור כרטיסייה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="433"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="493"/>
         <source>Close Panel</source>
         <translation>סגור לוח</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="434"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="494"/>
         <source>Content Blocking…</source>
         <translation>חסימת תוכן…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="435"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="495"/>
         <source>View History</source>
         <translation>הצג היסטוריה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="436"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="496"/>
         <source>Clear History…</source>
         <translation>טהר היסטוריה…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="437"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="497"/>
         <source>Addons</source>
         <translation>הרחבות</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="438"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="498"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="46"/>
         <source>Notes</source>
         <translation>פתקים</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="439"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="499"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="44"/>
         <source>Transfers</source>
         <translation>העברות</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="440"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="500"/>
         <source>Preferences…</source>
         <translation>העדפות…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="441"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="501"/>
         <source>Website Preferences…</source>
         <translation>העדפות אתר רשת…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="442"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="502"/>
         <source>Quick Preferences</source>
         <translation>העדפות מהירות</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="443"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="503"/>
         <source>Reset Options</source>
         <translation>אפס אפשרויות</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="444"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="504"/>
         <source>Website Information…</source>
         <translation>מידע אתר רשת…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="445"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="505"/>
         <source>Website Certificate Information…</source>
         <translation>מידע תעודת אתר רשת…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="446"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="506"/>
         <source>Switch Application Language…</source>
         <translation>החלף שפת יישום…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="447"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="507"/>
         <source>Check for Updates…</source>
         <translation>בדוק אם ישנם עדכונים…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="448"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="508"/>
         <source>Diagnostic Report…</source>
         <translation>דיווח דיאגנוסטיקה…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="449"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="509"/>
         <source>About Otter…</source>
         <translation>אודות Otter…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="450"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="510"/>
         <source>About Qt…</source>
         <translation>אודות Qt…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="451"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="511"/>
         <source>Exit</source>
         <translation>יציאה</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="46"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="47"/>
         <source>Menu Bar</source>
         <translation>שורת תפריט</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="47"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="48"/>
         <source>Tab Bar</source>
         <translation>סרגל כרטיסיות</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="48"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="49"/>
         <source>Navigation Bar</source>
         <translation>סרגל ניווט</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="49"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="50"/>
+        <source>Progress Bar</source>
+        <translation>שורת התקדמות</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="51"/>
         <source>Status Bar</source>
         <translation>שורת מצב</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="332"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="326"/>
         <source>Remove Bookmark</source>
         <translation>הסר סימנייה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="337"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="336"/>
         <source>Copy address of source page</source>
         <translation>העתק כתובת של עמוד מקור</translation>
     </message>
@@ -7950,52 +8187,52 @@ Click Install button to restart browser and install the update or close this dia
         <translation>הצג חלונות</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="555"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="579"/>
         <source>Edit Bookmark…</source>
         <translation>ערוך סימנייה…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="555"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="579"/>
         <source>Add Bookmark…</source>
         <translation>הוסף סימנייה…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="773"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="797"/>
         <source>Edit Link Bookmark…</source>
         <translation>ערוך קישור סימנייה…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="836"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="860"/>
         <source>Open Image in New Tab</source>
         <translation>פתח תמונה בתוך כרטיסייה חדשה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="881"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="905"/>
         <source>Save Video…</source>
         <translation>שמור וידאו…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="881"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="905"/>
         <source>Save Audio…</source>
         <translation>שמור אודיו…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="887"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="911"/>
         <source>Copy Video Link to Clipboard</source>
         <translation>העתק קישור וידאו ללוח גזירה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="887"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="911"/>
         <source>Copy Audio Link to Clipboard</source>
         <translation>העתק קישור אודיו ללוח גזירה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="905"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="929"/>
         <source>Pause</source>
         <translation>השהה</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="912"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="936"/>
         <source>Unmute</source>
         <translation>בטל השתקה</translation>
     </message>
@@ -8008,83 +8245,83 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>main</name>
     <message>
-        <location filename="../../src/core/Application.cpp" line="113"/>
+        <location filename="../../src/core/Application.cpp" line="112"/>
         <source>URL to open</source>
         <translation>‭החיתפל URL</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="114"/>
+        <location filename="../../src/core/Application.cpp" line="113"/>
         <source>Uses &lt;path&gt; as cache directory</source>
         <translation>‭ןומטמ ביתנ רותב &lt;path&gt; ביתנב שומיש</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="115"/>
+        <location filename="../../src/core/Application.cpp" line="114"/>
         <source>Uses &lt;path&gt; as profile directory</source>
         <translation>‭ליפורפ ביתנ רותב &lt;path&gt; ביתנב שומיש</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="116"/>
+        <location filename="../../src/core/Application.cpp" line="115"/>
         <source>Restores session &lt;session&gt; if it exists</source>
         <translation>‭םייק םא &lt;session&gt; ןשס רוזחש</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="117"/>
+        <location filename="../../src/core/Application.cpp" line="116"/>
         <source>Starts private session</source>
         <translation>‭יטרפ ןשס תלחתה</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="118"/>
+        <location filename="../../src/core/Application.cpp" line="117"/>
         <source>Forces session chooser dialog</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="119"/>
+        <location filename="../../src/core/Application.cpp" line="118"/>
         <source>Sets profile and cache paths to directories inside the same directory as that of application binary</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="120"/>
+        <location filename="../../src/core/Application.cpp" line="119"/>
         <source>Tells application to avoid writing data to disk</source>
         <translation>הורה ליישום להימנע מלרשום נתונים לכונן</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="121"/>
+        <location filename="../../src/core/Application.cpp" line="120"/>
         <source>Prints out diagnostic report and exits application</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="91"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="88"/>
         <source>Failed to open content blocking profile file: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="100"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="97"/>
         <source>Failed to load content blocking profile file: invalid header</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="474"/>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="496"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="372"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="395"/>
         <source>Failed to update content blocking profile: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="486"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="384"/>
         <source>Failed to update content blocking profile: checksum mismatch</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="609"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="522"/>
         <source>Failed to update content blocking profile, update URL is empty</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="613"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="526"/>
         <source>Failed to update content blocking profile, update URL (%1) is invalid</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="359"/>
+        <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="351"/>
         <source>Failed to parse entry of proxy auto-config (PAC): %1</source>
         <translation type="unfinished"/>
     </message>
@@ -8104,17 +8341,17 @@ Script: %2</source>
         <translation>‭(תרתוכ אלל)</translation>
     </message>
     <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="45"/>
+        <location filename="../../src/core/UpdateChecker.cpp" line="44"/>
         <source>Unable to check for updates. Invalid URL: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="66"/>
+        <location filename="../../src/core/UpdateChecker.cpp" line="65"/>
         <source>Unable to check for updates: %1</source>
         <translation>לא מסוגל לבדוק אם ישנם עדכונים: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="97"/>
+        <location filename="../../src/core/UpdateChecker.cpp" line="96"/>
         <source>Unable to parse version number: %1</source>
         <translation>לא מסוגל לפענח מספר גרסא: %1</translation>
     </message>
@@ -8151,23 +8388,23 @@ Error: %2</source>
         <translation>‭לדחמ תרירב</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="599"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="633"/>
         <source>Blocked request</source>
         <translation>בקשה חסומה</translation>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="440"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="439"/>
         <source>Failed to run File Associations Manager, error code: %1
 Application ID: %2</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="459"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="458"/>
         <source>Failed to run File Associations Manager, error code: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="514"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="513"/>
         <source>Failed to register application to system registry: %1, %2</source>
         <translation type="unfinished"/>
     </message>
@@ -8196,31 +8433,96 @@ Application ID: %2</source>
     </message>
 </context>
 <context>
+    <name>userAgents</name>
+    <message>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="58"/>
+        <source>Mask as Google Chrome 50 (Windows)</source>
+        <translation>התחפש בתור Google Chrome 50 (חלונות)</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="59"/>
+        <source>Mask as Mozilla Firefox 45 (Windows)</source>
+        <translation>התחפש אל Mozilla Firefox 45 (חלונות)</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="60"/>
+        <source>Mask as Microsoft Edge 25 (Windows)</source>
+        <translation>התחפש אל Microsoft Edge 25 (חלונות)</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="61"/>
+        <source>Mask as Internet Explorer 10.0 (Windows)</source>
+        <translation>התחפש אל Internet Explorer 10.0 (חלונות)</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="62"/>
+        <source>Mask as Opera 12.16 (Windows)</source>
+        <translation>התחפש אל Opera 12.16 (חלונות)</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="63"/>
+        <source>Mask as Safari 9.0 (MacOS)</source>
+        <translation>התחפש בתור Safari 9.0 (מקינטוש)</translation>
+    </message>
+</context>
+<context>
     <name>utils</name>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="147"/>
+        <location filename="../../src/core/Utils.cpp" line="151"/>
         <source>Error %1</source>
         <translation>שגיאה %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="149"/>
+        <location filename="../../src/core/Utils.cpp" line="153"/>
         <source>You tried to access the address &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, which is currently unavailable. Please make sure that the web address (URL) is correctly spelled and punctuated, then try reloading the page.</source>
         <translation>ניסית לגשת לכתובת &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, אשר לא זמינה עתה. אנא ודא כי הכתובת רשת (URL) מאויתת ומפוסקת כראוי, אחר כך נסה לטעון מחדש את העמוד.</translation>
     </message>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="156"/>
+        <location filename="../../src/core/Utils.cpp" line="159"/>
         <source>Make sure your internet connection is active and check whether other applications that rely on the same connection are working.</source>
         <translation>ודא כי חיבור האינטרנט הינו פעיל ובדוק אם יישומים אחרים אשר נסמכים על אותו חיבור מתפקדים.</translation>
     </message>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="157"/>
+        <location filename="../../src/core/Utils.cpp" line="159"/>
         <source>Check that the setup of any internet security software is correct and does not interfere with ordinary web browsing.</source>
         <translation>בדוק כי הגדרת תצורה של כל תוכנת אבטחת אינטרנט במערכתך מותקנת כראוי ולא מפריעה לדפדוף רשת רגיל.</translation>
     </message>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="158"/>
+        <location filename="../../src/core/Utils.cpp" line="159"/>
         <source>Try pressing the F12 key on your keyboard and disabling proxy servers, unless you know that you are required to use a proxy to connect to the internet, and then reload the page.</source>
         <translation>נסה ללחוץ על הקליד F12 במקלדת שלך ולנטרל שרתי פרוקסי, אלא אם כן אתה יודע כי עליך להשתמש בפרוקסי כדי להתחבר לאינטרנט, ואז תטעין מחדש את העמוד.</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/Utils.cpp" line="310"/>
+        <source>%1 files (*.%2)</source>
+        <translation>קבצי %1 ‏(*.%2)</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/Utils.cpp" line="314"/>
+        <source>All files (*)</source>
+        <translation>כל הקבצים (*)</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/Utils.cpp" line="320"/>
+        <source>Save File</source>
+        <translation>שמירת קובץ</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/Utils.cpp" line="341"/>
+        <location filename="../../src/core/Utils.cpp" line="350"/>
+        <source>Warning</source>
+        <translation>אזהרה</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/Utils.cpp" line="341"/>
+        <source>This path is already used by different download, pick another one.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/Utils.cpp" line="350"/>
+        <source>Target path is not writable.
+Select another one.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

@@ -117,39 +117,39 @@
         <translation>Pomjeri dolje</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="39"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="38"/>
         <source>Name</source>
         <translation>ime</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="39"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="38"/>
         <source>Code</source>
         <translation>kôd</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="64"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="60"/>
         <source>Unknown [%1]</source>
         <translation>nepoznat [%1]</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="75"/>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="136"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="77"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="138"/>
         <source>Any other</source>
         <translation>bilo koji</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="76"/>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="140"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="78"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="142"/>
         <source>System language (%1 - %2)</source>
         <translation>sistemski jezik (%1 - %2)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="148"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="150"/>
         <source>Custom</source>
         <translation>drugi</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="152"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="154"/>
         <source>Unknown</source>
         <translation>nepoznat</translation>
     </message>
@@ -224,42 +224,42 @@
 <context>
     <name>Otter::AddonsManager</name>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="76"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="81"/>
         <source>Addons Manager</source>
         <translation>Menadžer dodataka</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="77"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="82"/>
         <source>Bookmarks Manager</source>
         <translation>Menadžer obilježivača</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="78"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="83"/>
         <source>Cache Manager</source>
         <translation>Menadžer keša</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="79"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="84"/>
         <source>Configuration Manager</source>
         <translation>Menadžer postavki</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="80"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="85"/>
         <source>Cookies Manager</source>
         <translation>Menadžer kolačića</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="81"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="86"/>
         <source>History Manager</source>
         <translation>Menadžer istorijata</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="82"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="87"/>
         <source>Notes Manager</source>
         <translation>Menadžer bilješki</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="83"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="88"/>
         <source>Transfers Manager</source>
         <translation>Menadžer prenosa</translation>
     </message>
@@ -295,88 +295,88 @@
 <context>
     <name>Otter::AddressWidget</name>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="96"/>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="119"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="98"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="121"/>
         <source>Enter address or search…</source>
         <translation>Unesite adresu ili pojam za pretragu…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="309"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="311"/>
         <source>Undo</source>
         <translation>Opozovi</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="310"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="312"/>
         <source>Redo</source>
         <translation>Ponovi</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="312"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="314"/>
         <source>Cut</source>
         <translation>Isijeci</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="313"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="315"/>
         <source>Copy</source>
         <translation>Kopiraj</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="314"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="316"/>
         <source>Paste</source>
         <translation>Nalijepi</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="321"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="323"/>
         <source>Delete</source>
         <translation>Obriši</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="323"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="325"/>
         <source>Copy to Note</source>
         <translation>Kopiraj u bilješku</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="325"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="327"/>
         <source>Clear All</source>
         <translation>Očisti sve</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="326"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="328"/>
         <source>Select All</source>
         <translation>Izaberi sve</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="683"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="685"/>
         <source>Remove Bookmark</source>
         <translation>Ukloni obilježivač</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="683"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="685"/>
         <source>Add Bookmark</source>
         <translation>Dodaj obilježivač</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="699"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="701"/>
         <source>Feed List</source>
         <translation>Spisak dovoda</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="728"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="730"/>
         <source>Click to load all plugins on the page</source>
         <translation>Kliknite da učitate sve priključke na stranici</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1036"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1043"/>
         <source>Show Website Information</source>
         <translation>Prikaži podatke o vebsajtu</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1132"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1139"/>
         <source>(Untitled)</source>
         <translation>(Neimenovan)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1165"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1172"/>
         <source>Remove This Icon</source>
         <translation>Ukloni ovu ikonu</translation>
     </message>
@@ -384,99 +384,99 @@
 <context>
     <name>Otter::Application</name>
     <message>
-        <location filename="../../src/core/Application.cpp" line="254"/>
-        <location filename="../../src/core/Application.cpp" line="286"/>
-        <location filename="../../src/core/Application.cpp" line="360"/>
-        <location filename="../../src/core/Application.cpp" line="527"/>
+        <location filename="../../src/core/Application.cpp" line="253"/>
+        <location filename="../../src/core/Application.cpp" line="285"/>
+        <location filename="../../src/core/Application.cpp" line="359"/>
+        <location filename="../../src/core/Application.cpp" line="526"/>
         <source>Warning</source>
         <translation>Upozorenje</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="254"/>
+        <location filename="../../src/core/Application.cpp" line="253"/>
         <source>Profile directory (%1) is not writable, application will be running in read-only mode.</source>
         <translation>Direktorijum profila (%1) nije upisiv, program je pokrenut u režimu čitanja.</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="278"/>
+        <location filename="../../src/core/Application.cpp" line="277"/>
         <source>Your profile directory (%1) ran out of free disk space.
 This may lead to malfunctions or even data loss.</source>
         <translation>Direktorijum vašeg profila (%1) je ostao bez slobodnog prostora.
 Ovo može da dovede do zastoja ili čak gubitka podataka.</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="282"/>
+        <location filename="../../src/core/Application.cpp" line="281"/>
         <source>Your profile directory (%1) is running low on free disk space (%2 remaining).
 This may lead to malfunctions or even data loss.</source>
         <translation>Direktorijumu vašeg profila (%1) ponestaje slobodnog prostora (%2 preostalo).
 Ovo može da dovede do zastoja ili čak gubitka podataka.</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="288"/>
-        <location filename="../../src/core/Application.cpp" line="919"/>
-        <location filename="../../src/core/Application.cpp" line="968"/>
+        <location filename="../../src/core/Application.cpp" line="287"/>
+        <location filename="../../src/core/Application.cpp" line="918"/>
+        <location filename="../../src/core/Application.cpp" line="967"/>
         <source>Do you want to continue?</source>
         <translation>Želite li da nastavite?</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="290"/>
-        <location filename="../../src/core/Application.cpp" line="923"/>
-        <location filename="../../src/core/Application.cpp" line="972"/>
+        <location filename="../../src/core/Application.cpp" line="289"/>
+        <location filename="../../src/core/Application.cpp" line="922"/>
+        <location filename="../../src/core/Application.cpp" line="971"/>
         <source>Do not show this message again</source>
         <translation>Ne prikazuj više ovu poruku</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="291"/>
+        <location filename="../../src/core/Application.cpp" line="290"/>
         <source>Continue in Read-only Mode</source>
         <translation>Nastavi u režimu čitanja</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="293"/>
+        <location filename="../../src/core/Application.cpp" line="292"/>
         <source>Ignore</source>
         <translation>Zanemari</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="294"/>
+        <location filename="../../src/core/Application.cpp" line="293"/>
         <source>Quit</source>
         <translation>Napusti</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="360"/>
+        <location filename="../../src/core/Application.cpp" line="359"/>
         <source>SSL support is not available or incomplete.
 Some websites may work incorrectly or do not work at all.</source>
         <translation>Podrška za SSL je nekompletna ili nedostupna.
 Neki vebsajtovi će raditi nepravilno ili neće raditi uopšte.</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="527"/>
+        <location filename="../../src/core/Application.cpp" line="526"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
         <translation>Ova sesija nije pravilno sačuvana.
 Želite li zaista da vratite ovu sesiju?</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="631"/>
+        <location filename="../../src/core/Application.cpp" line="630"/>
         <source>New update %1 from %2 channel is available!</source>
         <translation>Nova nadogradnja %1 sa %2 kanala je dostupna!</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="917"/>
-        <location filename="../../src/core/Application.cpp" line="966"/>
+        <location filename="../../src/core/Application.cpp" line="916"/>
+        <location filename="../../src/core/Application.cpp" line="965"/>
         <source>Question</source>
         <translation>Pitanje</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/core/Application.cpp" line="918"/>
+        <location filename="../../src/core/Application.cpp" line="917"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
         <translation><numerusform>Napustićete program dok se %n fajl i dalje preuzima.</numerusform><numerusform>Napustićete program dok se %n fajla i dalje preuzimaju.</numerusform><numerusform>Napustićete program dok se %n fajlova i dalje preuzima.</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="925"/>
-        <location filename="../../src/core/Application.cpp" line="974"/>
+        <location filename="../../src/core/Application.cpp" line="924"/>
+        <location filename="../../src/core/Application.cpp" line="973"/>
         <source>Hide</source>
         <translation>Sakrij</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="967"/>
+        <location filename="../../src/core/Application.cpp" line="966"/>
         <source>You are about to quit the current Otter Browser session.</source>
         <translation>Napustićete tekuću sesiju Oter pregledača.</translation>
     </message>
@@ -729,108 +729,108 @@ Are you sure that you want to restore this session anyway?</source>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="47"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="171"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="212"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="165"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="206"/>
         <source>Add Folder</source>
         <translation>Dodaj fasciklu</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="48"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="172"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="211"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="213"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="166"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="205"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="207"/>
         <source>Add Bookmark</source>
         <translation>Dodaj obilježivač</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="49"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="173"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="214"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="208"/>
         <source>Add Separator</source>
         <translation>Dodaj razdvajač</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Title</source>
         <translation>naslov</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Address</source>
         <translation>adresa</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Description</source>
         <translation>opis</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Keyword</source>
         <translation>ključna riječ</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Added</source>
         <translation>dodat</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Modified</source>
         <translation>izmenjen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Visited</source>
         <translation>posećen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Visits</source>
         <translation>broj poseta</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="161"/>
         <source>Empty Trash</source>
         <translation>Isprazni otpad</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="179"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="173"/>
         <source>Open</source>
         <translation>Otvori</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="180"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="174"/>
         <source>Open in New Tab</source>
         <translation>Otvori u novom jezičku</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="181"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="175"/>
         <source>Open in New Background Tab</source>
         <translation>Otvori u jezičku u pozadini</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="183"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="177"/>
         <source>Open in New Window</source>
         <translation>Otvori u novom prozoru</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="184"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="178"/>
         <source>Open in New Background Window</source>
         <translation>Otvori u prozoru u pozadini</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="223"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="217"/>
         <source>Restore Bookmark</source>
         <translation>Vrati obilježivač</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="231"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="225"/>
         <source>Properties…</source>
         <translation>Svojstva…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="358"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="352"/>
         <source>Bookmarks Manager</source>
         <translation>Menadžer obilježivača</translation>
     </message>
@@ -1002,52 +1002,52 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>ističe</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="351"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="341"/>
         <source>Open</source>
         <translation>Otvori</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="352"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="342"/>
         <source>Open in New Tab</source>
         <translation>Otvori u novom jezičku</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="353"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="343"/>
         <source>Open in New Background Tab</source>
         <translation>Otvori u jezičku u pozadini</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="355"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="345"/>
         <source>Open in New Window</source>
         <translation>Otvori u novom prozoru</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="356"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="346"/>
         <source>Open in New Background Window</source>
         <translation>Otvori u prozoru u pozadini</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="358"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="348"/>
         <source>Copy Link to Clipboard</source>
         <translation>Kopiraj vezu na klipbord</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="360"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="350"/>
         <source>Remove Entry</source>
         <translation>Ukloni unos</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="365"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="355"/>
         <source>Remove All Entries from This Domain</source>
         <translation>Ukloni sve unose od ovog domena</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="427"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="422"/>
         <source>Unknown</source>
         <translation>nepoznata</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="558"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="555"/>
         <source>Cache</source>
         <translation>Keš</translation>
     </message>
@@ -1403,37 +1403,37 @@ Eksponent: %2</translation>
         <translation>Traži…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="86"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="79"/>
         <source>Name</source>
         <translation>naziv</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="86"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="79"/>
         <source>Type</source>
         <translation>tip</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="86"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="79"/>
         <source>Value</source>
         <translation>vrijednost</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="227"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="215"/>
         <source>Copy Option Name</source>
         <translation>Kopiraj naziv opcije</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="228"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="216"/>
         <source>Copy Option Value</source>
         <translation>Kopiraj vrijednost opcije</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="230"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="218"/>
         <source>Restore Default Value</source>
         <translation>Vrati podrazumijevano</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="237"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="225"/>
         <source>Configuration Manager</source>
         <translation>Menadžer postavki</translation>
     </message>
@@ -1549,6 +1549,74 @@ Eksponent: %2</translation>
     </message>
 </context>
 <context>
+    <name>Otter::ContentBlockingInformationWidget</name>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="44"/>
+        <source>Blocked Elements</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="45"/>
+        <source>Active Profiles</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="194"/>
+        <source>main frame</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="198"/>
+        <source>subframe</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="202"/>
+        <source>stylesheet</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="206"/>
+        <source>script</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="210"/>
+        <source>image</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="214"/>
+        <source>object</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="218"/>
+        <source>object subrequest</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="222"/>
+        <source>XHR</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="226"/>
+        <source>other</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="245"/>
+        <source>Enable Content Blocking</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="298"/>
+        <source>Blocked Elements: %1</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>Otter::ContentBlockingIntervalDelegate</name>
     <message numerus="yes">
         <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="37"/>
@@ -1570,7 +1638,7 @@ Eksponent: %2</translation>
 <context>
     <name>Otter::ContentBlockingProfile</name>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="48"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="434"/>
         <source>(Unknown)</source>
         <translation>(nepoznato)</translation>
     </message>
@@ -1642,44 +1710,44 @@ Eksponent: %2</translation>
         <translation>Primijeni</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="273"/>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="292"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="272"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="291"/>
         <source>Question</source>
         <translation>Pitanje</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="274"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="273"/>
         <source>You are about to delete %n cookie(s).</source>
         <translation><numerusform>Obrisaćete %n kolačić.</numerusform><numerusform>Obrisaćete %n kolačića.</numerusform><numerusform>Obrisaćete %n kolačića.</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="275"/>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="294"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="274"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="293"/>
         <source>Do you want to continue?</source>
         <translation>Želite li da nastavite?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="293"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="292"/>
         <source>You are about to delete all cookies.</source>
         <translation>Obrisaćete sve kolačiće.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="314"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="313"/>
         <source>Remove Cookie</source>
         <translation>Ukloni kolačić</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="317"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="316"/>
         <source>Remove All Cookies from This Domain…</source>
         <translation>Ukloni sve kolačiće od ovog domena…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="320"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="319"/>
         <source>Remove All Cookies…</source>
         <translation>Ukloni sve kolačiće…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="449"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="448"/>
         <source>Cookies Manager</source>
         <translation>Menadžer kolačića</translation>
     </message>
@@ -1765,17 +1833,17 @@ Eksponent: %2</translation>
     <name>Otter::GoBackActionWidget</name>
     <message>
         <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="69"/>
-        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="140"/>
+        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="134"/>
         <source>(Untitled)</source>
         <translation>(Neimenovana)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="168"/>
+        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="162"/>
         <source>Remove Entry</source>
         <translation>Ukloni unos</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="169"/>
+        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="163"/>
         <source>Purge Entry</source>
         <translation>Pročisti unos</translation>
     </message>
@@ -1784,17 +1852,17 @@ Eksponent: %2</translation>
     <name>Otter::GoForwardActionWidget</name>
     <message>
         <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="69"/>
-        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="140"/>
+        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="134"/>
         <source>(Untitled)</source>
         <translation>(Neimenovana)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="168"/>
+        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="162"/>
         <source>Remove Entry</source>
         <translation>Ukloni unos</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="169"/>
+        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="163"/>
         <source>Purge Entry</source>
         <translation>Pročisti unos</translation>
     </message>
@@ -1840,108 +1908,108 @@ Eksponent: %2</translation>
         <translation>Traži…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
         <source>Today</source>
         <translation>Danas</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
         <source>Yesterday</source>
         <translation>Juče</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
         <source>Earlier This Week</source>
         <translation>Ranije ove sedmice</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
         <source>Previous Week</source>
         <translation>Prethodne sedmice</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
         <source>Earlier This Month</source>
         <translation>Ranije ovog mjeseca</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
         <source>Earlier This Year</source>
         <translation>Ranije ove godine</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
         <source>Older</source>
         <translation>Starije</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="49"/>
         <source>Address</source>
         <translation>adresa</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="49"/>
         <source>Title</source>
         <translation>naslov</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="49"/>
         <source>Date</source>
         <translation>datum</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="198"/>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="243"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="191"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="235"/>
         <source>(Untitled)</source>
         <translation>(Neimenovan)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="363"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="355"/>
         <source>Open</source>
         <translation>Otvori</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="364"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="356"/>
         <source>Open in New Tab</source>
         <translation>Otvori u novom jezičku</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="365"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="357"/>
         <source>Open in New Background Tab</source>
         <translation>Otvori u jezičku u pozadini</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="367"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="359"/>
         <source>Open in New Window</source>
         <translation>Otvori u novom prozoru</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="368"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="360"/>
         <source>Open in New Background Window</source>
         <translation>Otvori u prozoru u pozadini</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="370"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="362"/>
         <source>Add to Bookmarks…</source>
         <translation>Dodaj u obilježivače…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="371"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="363"/>
         <source>Copy Link to Clipboard</source>
         <translation>Kopiraj vezu na klipbord</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="373"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="365"/>
         <source>Remove Entry</source>
         <translation>Ukloni unos</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="374"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="366"/>
         <source>Remove All Entries from This Domain</source>
         <translation>Ukloni sve unose od ovog domena</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="407"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="399"/>
         <source>History</source>
         <translation>Istorijat</translation>
     </message>
@@ -1957,17 +2025,17 @@ Eksponent: %2</translation>
 <context>
     <name>Otter::HtmlBookmarksImporter</name>
     <message>
-        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="142"/>
+        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="151"/>
         <source>HTML Bookmarks</source>
         <translation>HTML obilježivači</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="147"/>
+        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="156"/>
         <source>Imports bookmarks from HTML file (Netscape format).</source>
         <translation>Uvoz obilježivača iz HTML fajla (Netskejpov format).</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="157"/>
+        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="166"/>
         <source>HTML files (*.htm *.html)</source>
         <translation>HTML fajlovi (*.htm *.html)</translation>
     </message>
@@ -2045,45 +2113,45 @@ Eksponent: %2</translation>
         <translation>Dugi opis:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="36"/>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="37"/>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="38"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="39"/>
         <source>Unknown</source>
         <translation>Nepoznato</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="65"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="66"/>
         <source>%1 GB (%2 bytes)</source>
         <translation>%1 GB (%2 bajta)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="69"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="70"/>
         <source>%1 MB (%2 bytes)</source>
         <translation>%1 MB (%2 bajta)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="74"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="75"/>
         <source>%1 KB (%2 bytes)</source>
         <translation>%1 KB (%2 bajta)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="79"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="80"/>
         <source>%1 B</source>
         <translation>%1 B</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="95"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="96"/>
         <source>%1 x %2 pixels @ %3 bits per pixel in %n frame(s)</source>
         <translation><numerusform>%1 x %2 piksela @ %3 bita po pikselu u %n frejmu</numerusform><numerusform>%1 x %2 piksela @ %3 bita po pikselu u %n frejma</numerusform><numerusform>%1 x %2 piksela @ %3 bita po pikselu u %n frejmova</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="99"/>
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="106"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="100"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="107"/>
         <source>%1 x %2 pixels @ %3 bits per pixel</source>
         <translation>%1 x %2 piksela @ %3 bita po pikselu</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="110"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="111"/>
         <source>%1 x %2 pixels</source>
         <translation>%1 x %2 piksela</translation>
     </message>
@@ -2231,12 +2299,12 @@ Eksponent: %2</translation>
         <translation>Autor:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="41"/>
+        <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="62"/>
         <source>Action</source>
         <translation>radnja</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="125"/>
+        <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="122"/>
         <source>Shortcut</source>
         <translation>prečica</translation>
     </message>
@@ -2244,27 +2312,27 @@ Eksponent: %2</translation>
 <context>
     <name>Otter::LocalListingNetworkReply</name>
     <message>
-        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="73"/>
+        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="72"/>
         <source>Directory Contents</source>
         <translation>Sadržaj direktorijuma</translation>
     </message>
     <message>
-        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="76"/>
+        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="75"/>
         <source>Name</source>
         <translation>naziv</translation>
     </message>
     <message>
-        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="77"/>
+        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="76"/>
         <source>Type</source>
         <translation>tip</translation>
     </message>
     <message>
-        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="78"/>
+        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="77"/>
         <source>Size</source>
         <translation>veličina</translation>
     </message>
     <message>
-        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="79"/>
+        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="78"/>
         <source>Date</source>
         <translation>datum</translation>
     </message>
@@ -2296,6 +2364,11 @@ Eksponent: %2</translation>
         <source>Custom</source>
         <translation>drugi</translation>
     </message>
+    <message>
+        <location filename="../../src/ui/LocaleDialog.cpp" line="46"/>
+        <source>Unknown [%1]</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Otter::MainWindow</name>
@@ -2305,41 +2378,64 @@ Eksponent: %2</translation>
         <translation>Konzola</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="399"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="427"/>
         <source>Open File</source>
         <translation>Otvaranje fajla</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="677"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="710"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</source>
         <translation>&lt;b&gt;Oter %1&lt;/b&gt;&lt;br&gt;Veb pregledač kojim upravlja korisnik, a ne obrnuto.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="683"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="716"/>
         <source>Web backend: %1 %2.</source>
         <translation>Veb motor: %1 %2.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="687"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="720"/>
         <source>SSL library not available.</source>
         <translation>SSL biblioteka nije dostupna.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="691"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="724"/>
         <source>SSL library version: %1.</source>
         <translation>Izdanje SSL biblioteke: %1.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="866"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="899"/>
         <source>Warning</source>
         <translation>Upozorenje</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="866"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="899"/>
         <source>You already have this address in your bookmarks.
 Do you want to continue?</source>
         <translation>Već imate ovu adresu u vašim obilježivačima.
 Želite li da nastavite?</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::MasterPasswordDialog</name>
+    <message>
+        <location filename="../../src/ui/MasterPasswordDialog.ui" line="14"/>
+        <source>Set Master Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/MasterPasswordDialog.ui" line="22"/>
+        <source>Current password:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/MasterPasswordDialog.ui" line="32"/>
+        <source>New password:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/MasterPasswordDialog.ui" line="42"/>
+        <source>Confirm new password:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2406,64 +2502,64 @@ Do you want to continue?</source>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="351"/>
-        <location filename="../../src/ui/Menu.cpp" line="499"/>
-        <location filename="../../src/ui/Menu.cpp" line="514"/>
-        <location filename="../../src/ui/Menu.cpp" line="574"/>
-        <location filename="../../src/ui/Menu.cpp" line="624"/>
-        <location filename="../../src/ui/Menu.cpp" line="678"/>
+        <location filename="../../src/ui/Menu.cpp" line="498"/>
+        <location filename="../../src/ui/Menu.cpp" line="513"/>
+        <location filename="../../src/ui/Menu.cpp" line="573"/>
+        <location filename="../../src/ui/Menu.cpp" line="629"/>
+        <location filename="../../src/ui/Menu.cpp" line="684"/>
         <source>(Untitled)</source>
         <translation>(Neimenovana)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="389"/>
+        <location filename="../../src/ui/Menu.cpp" line="388"/>
         <source>Auto Detect</source>
         <translation>Automatsko</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="444"/>
+        <location filename="../../src/ui/Menu.cpp" line="443"/>
         <source>Clear</source>
         <translation>Očisti</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="454"/>
+        <location filename="../../src/ui/Menu.cpp" line="453"/>
         <source>Window - %1</source>
         <translation>Prozor — %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/Menu.cpp" line="514"/>
+        <location filename="../../src/ui/Menu.cpp" line="513"/>
         <source>%1 (%n tab(s))</source>
         <translation><numerusform>%1 (%n jezičak)</numerusform><numerusform>%1 (%n jezička)</numerusform><numerusform>%1 (%n jezičaka)</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="528"/>
-        <location filename="../../src/ui/Menu.cpp" line="612"/>
+        <location filename="../../src/ui/Menu.cpp" line="527"/>
+        <location filename="../../src/ui/Menu.cpp" line="611"/>
         <source>Default</source>
         <translation>Podrazumijevana</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="586"/>
+        <location filename="../../src/ui/Menu.cpp" line="585"/>
         <source>Add New</source>
         <translation>Dodaj novu</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="587"/>
+        <location filename="../../src/ui/Menu.cpp" line="586"/>
         <source>Add Toolbar</source>
         <translation>Traku alatki</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="588"/>
+        <location filename="../../src/ui/Menu.cpp" line="587"/>
         <source>Add Bookmarks Bar…</source>
         <translation>Traku obilježivača…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="593"/>
+        <location filename="../../src/ui/Menu.cpp" line="592"/>
         <source>Reset to Defaults…</source>
         <translation>Vrati podrazumijevano…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="634"/>
-        <source>Custom</source>
-        <translation>Prilagođena</translation>
+        <location filename="../../src/ui/Menu.cpp" line="640"/>
+        <source>Custom…</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2529,57 +2625,57 @@ Do you want to continue?</source>
         <translation>Autor:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="39"/>
-        <source>Context and Steps</source>
-        <translation>kontekst i koraci</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="39"/>
-        <source>Action</source>
-        <translation>radnja</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="42"/>
-        <source>Step</source>
-        <translation>korak</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Generic</source>
         <translation>Opšte</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Link</source>
         <translation>Veza</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Editable Content</source>
         <translation>Uredivi sadržaj</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Tab Handle</source>
         <translation>Rukovanje jezičkom</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Tab Handle of Active Tab</source>
         <translation>Rukovanje aktivnim jezičkom</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Empty Area of Tab Bar</source>
         <translation>Prazan prostor trake jezičaka</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Any Toolbar</source>
         <translation>Bilo koja traka alatki</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="131"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="68"/>
+        <source>Context and Steps</source>
+        <translation>kontekst i koraci</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="68"/>
+        <source>Action</source>
+        <translation>radnja</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="72"/>
+        <source>Step</source>
+        <translation>korak</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="117"/>
         <source>Select Action</source>
         <translation>Odredite radnju</translation>
     </message>
@@ -2608,12 +2704,12 @@ Do you want to continue?</source>
 <context>
     <name>Otter::NetworkManagerFactory</name>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="282"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="307"/>
         <source>Custom</source>
         <translation>Prilagođena</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="297"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="322"/>
         <source>Default</source>
         <translation>Podrazumijevana</translation>
     </message>
@@ -2622,7 +2718,7 @@ Do you want to continue?</source>
     <name>Otter::NetworkProxyFactory</name>
     <message>
         <location filename="../../src/core/NetworkProxyFactory.cpp" line="70"/>
-        <location filename="../../src/core/NetworkProxyFactory.cpp" line="146"/>
+        <location filename="../../src/core/NetworkProxyFactory.cpp" line="145"/>
         <source>Failed to load proxy auto-config (PAC): %1</source>
         <translation>Neuspjeh učitavanja auto-postavki proksija (PAC): %1</translation>
     </message>
@@ -2640,73 +2736,83 @@ Do you want to continue?</source>
         <translation>Traži…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="103"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="98"/>
+        <source>Address:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="105"/>
+        <source>Date:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="139"/>
         <source>Delete</source>
         <translation>Obriši</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="110"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="146"/>
         <source>Add</source>
         <translation>Dodaj</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="45"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="154"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="185"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="46"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="149"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="180"/>
         <source>Add Folder</source>
         <translation>Dodaj fasciklu</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="46"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="184"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="186"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="47"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="179"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="181"/>
         <source>Add Note</source>
         <translation>Dodaj bilješku</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="47"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="156"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="187"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="48"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="151"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="182"/>
         <source>Add Separator</source>
         <translation>Dodaj razdvajač</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="62"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="58"/>
         <source>Add note…</source>
         <translation>Dodaj bilješku…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="102"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="97"/>
         <source>Select Folder Name</source>
         <translation>Naziv fascikle</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="102"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="97"/>
         <source>Enter folder name:</source>
         <translation>Unesite naziv fascikle:</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="150"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="145"/>
         <source>Empty Trash</source>
         <translation>Isprazni otpad</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="155"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="150"/>
         <source>Add Bookmark</source>
         <translation>Dodaj obilježivač</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="170"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="165"/>
         <source>Open source page</source>
         <translation>Otvori izvornu stranicu</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="196"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="191"/>
         <source>Restore Note</source>
         <translation>Vrati bilješku</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="371"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="370"/>
         <source>Notes Manager</source>
         <translation>Menadžer bilješki</translation>
     </message>
@@ -3030,522 +3136,537 @@ Do you want to continue?</source>
         <translation>Režim prikaza:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="152"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="151"/>
         <source>Events</source>
         <translation>Događaji</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="192"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="191"/>
         <source>Play sound:</source>
         <translation>Pusti zvuk:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="207"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="206"/>
         <source>Show notification</source>
         <translation>Prikaži obavještenje</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="214"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="213"/>
         <source>Mark taskbar entry</source>
         <translation>Označi unos menadžera zadataka</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="230"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="229"/>
         <source>Options</source>
         <translation>Opcije</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="237"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="236"/>
         <source>Prefer native notifications</source>
         <translation>Preferiraj izvorna obavještenja</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="267"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="266"/>
         <source>Style</source>
         <translation>Stil</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="276"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="275"/>
         <source>Widget style:</source>
         <translation>Stil vidžeta:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="286"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="285"/>
         <source>Style sheet:</source>
         <translation>Opis stila:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="310"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="309"/>
         <source>Other</source>
         <translation>Ostalo</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="319"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="318"/>
         <source>Show tray icon</source>
         <translation>Ikona sistemske kasete</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="351"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="674"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="350"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="686"/>
         <source>General</source>
         <translation>Opšte</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="358"/>
-        <source>Enable images</source>
-        <translation>Omogući slike</translation>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="359"/>
+        <source>Images:</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="367"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="376"/>
         <source>Enable JavaScript</source>
         <translation>Omogući javaskripte</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="374"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="383"/>
         <source>JavaScript Options…</source>
         <translation>Opcije javaskripti…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="383"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="392"/>
         <source>Enable Java</source>
         <translation>Omogući javu</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="392"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="401"/>
         <source>Plugins:</source>
         <translation>Priključci:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="406"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="418"/>
         <source>User style sheet:</source>
         <translation>Korisnički opis stila:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="441"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="453"/>
         <source>MIME Types</source>
         <translation>MIME tipovi</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="465"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="999"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1115"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1335"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1488"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="477"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1011"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1127"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1347"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1500"/>
         <source>Add</source>
         <translation>Dodaj</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="475"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1013"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1125"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1365"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1518"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="487"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1025"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1137"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1377"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1530"/>
         <source>Remove</source>
         <translation>Ukloni</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="517"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="529"/>
         <source>Show download dialog</source>
         <translation>Prikaži dijalog preuzimanja</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="527"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="539"/>
         <source>Save to disk</source>
         <translation>Sačuvaj na disk</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="570"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="582"/>
         <source>Do not ask for folder, save directly to</source>
         <translation>Ne pitaj za fasciklu, sačuvaj direktno u</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="585"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="597"/>
         <source>Open with application</source>
         <translation>Otvori pomoću programa</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="631"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="643"/>
         <source>Pass web address directly to application</source>
         <translation>Proslijedi adresu direktno programu</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="681"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="693"/>
         <source>Send referrer information</source>
         <translation>Šalji zaglavlje pratioca serverima</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="690"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="702"/>
         <source>User Agent:</source>
         <translation>Identifikacija:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="703"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="715"/>
         <source>Manage…</source>
         <translation>Upravljaj…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="718"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="730"/>
         <source>Proxy</source>
         <translation>Proksi</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="727"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="739"/>
         <source>Mode:</source>
         <translation>Režim:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="838"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="850"/>
         <source>Port</source>
         <translation>Port</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="845"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="857"/>
         <source>Protocol</source>
         <translation>Protokoli</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="852"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="864"/>
         <source>Servers</source>
         <translation>Serveri</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="859"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="871"/>
         <source>FTP</source>
         <translation>FTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="866"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="878"/>
         <source>SOCKS5</source>
         <translation>SOCKS5</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="873"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="885"/>
         <source>HTTP</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="887"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="899"/>
         <source>HTTPS</source>
         <translation>HTTPS</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="901"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="913"/>
         <source>All</source>
         <translation>Svi</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="939"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="951"/>
         <source>Path to PAC file:</source>
         <translation>Putanja PAC fajla:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="956"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="968"/>
         <source>Use system authentication</source>
         <translation>Koristi sistemsku autentifikaciju</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="981"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="993"/>
         <source>Do not use proxy for:</source>
         <translation>Ne koristi proksi za:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1006"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1018"/>
         <source>Edit</source>
         <translation>Uredi</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1037"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1049"/>
         <source>Example: domain.com, localhost, 127.0.0.1, 192.168.1.0/24</source>
         <translation>Primjer: domen.com, localhost, 127.0.0.1, 192.168.1.0/24</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1070"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1082"/>
         <source>SSL ciphers</source>
         <translation>SSL šifrari</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1150"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1390"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1543"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1162"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1402"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1555"/>
         <source>Move Up</source>
         <translation>Pomjeri gore</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1176"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1416"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1569"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1188"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1428"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1581"/>
         <source>Move Down</source>
         <translation>Pomjeri dolje</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1199"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1211"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Updates</source>
         <translation>Nadogradnje</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1206"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1218"/>
         <source>Select channels from which you want to receive updates:</source>
         <translation>Izaberite kanale sa kojih želite nadogradnje:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1245"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1257"/>
         <source>Check for updates every</source>
         <translation>Potraži nadogradnje svakih</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1255"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1267"/>
         <source>day(s)</source>
         <translation>dan(a)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1264"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1276"/>
         <source>Install updates automatically</source>
         <translation>Instaliraj nadogradnje automatski</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1296"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1308"/>
         <source>Keyboard Shortcuts</source>
         <translation>Prečice tastature</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1345"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1498"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1357"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1510"/>
         <source>Edit…</source>
         <translation>Uredi…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1355"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1508"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1367"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1520"/>
         <source>Clone</source>
         <translation>Kloniraj</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1429"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1441"/>
         <source>Enable single key shortcuts</source>
         <translation>Jednotasterske prečice</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1449"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1461"/>
         <source>Mouse Actions and Gestures</source>
         <translation>Radnje miša i gestovi</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1582"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1594"/>
         <source>Enable mouse gestures</source>
         <translation>Omogući gestove mišem</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Browsing</source>
         <translation>Pregledanje</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Notifications</source>
         <translation>Obavještenja</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Appearance</source>
         <translation>Izgled</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Content</source>
         <translation>Sadržaj</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Downloads</source>
         <translation>Preuzimanja</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Programs</source>
         <translation>Programi</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>History</source>
         <translation>Istorijat</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Network</source>
         <translation>Mreža</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Security</source>
         <translation>Bezbjednost</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Keyboard</source>
         <translation>Tastatura</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Mouse</source>
         <translation>Miš</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="100"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="102"/>
         <source>Compact</source>
         <translation>Kompaktno</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="101"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="103"/>
         <source>Columns</source>
         <translation>Kolone</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="110"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="164"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="112"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="166"/>
         <source>Name</source>
         <translation>naziv</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="110"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="112"/>
         <source>Description</source>
         <translation>opis</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="138"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="135"/>
         <source>System Style</source>
         <translation>Stil sistema</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="154"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="146"/>
+        <source>All images</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="147"/>
+        <source>Cached images</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="148"/>
+        <source>No images</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="156"/>
         <source>Enabled</source>
         <translation>omogućeni</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="155"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="157"/>
         <source>On demand</source>
         <translation>po zahtjevu</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="156"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="158"/>
         <source>Disabled</source>
         <translation>onemogućeni</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="202"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="679"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="201"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="688"/>
         <source>Default</source>
         <translation>Podrazumijevana</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="209"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="363"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="400"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="685"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="839"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="843"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="869"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="905"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="931"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1025"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1039"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1043"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1069"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1105"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1131"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1225"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1482"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1552"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="214"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="365"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="402"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="694"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="848"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="852"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="878"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="914"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="940"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1034"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1048"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1052"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1078"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1114"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1140"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1234"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1500"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1570"/>
         <source>(Untitled)</source>
         <translation>(Neimenovana)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="226"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="232"/>
         <source>No proxy</source>
         <translation>bez proksija</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="227"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="233"/>
         <source>System configuration</source>
         <translation>sistemske postavke</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="228"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="234"/>
         <source>Manual configuration</source>
         <translation>ručna postavka</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="229"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="235"/>
         <source>Automatic configuration (PAC)</source>
         <translation>automatska postavka (PAC)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="317"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="319"/>
         <source>Stable version</source>
         <translation>Stabilno izdanje</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="318"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="320"/>
         <source>Beta version</source>
         <translation>Beta izdanje</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="319"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="321"/>
         <source>Weekly development version</source>
         <translation>Sedmično razvojno izdanje</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="375"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="412"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="377"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="414"/>
         <source>New…</source>
         <translation>Novi…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="376"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="413"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="378"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="415"/>
         <source>Readd</source>
         <translation>Ponovo dodaj</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="516"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="526"/>
         <source>WAV files (*.wav)</source>
         <translation>VAV fajlovi (*.wav)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="545"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="555"/>
         <source>MIME Type Name</source>
         <translation>Naziv MIME tipa</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="545"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="555"/>
         <source>Select name of MIME Type:</source>
         <translation>Unesite naziv MIME tipa:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="559"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="569"/>
         <source>Error</source>
         <translation>Greška</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="559"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="569"/>
         <source>Invalid MIME Type name.</source>
         <translation>Neispravan naziv MIME tipa.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="951"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1151"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="960"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1160"/>
         <source>Question</source>
         <translation>Pitanje</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="952"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1152"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="961"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1161"/>
         <source>Do you really want to remove this profile?</source>
         <translation>Želite li zaista da uklonite ovaj profil?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="961"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1161"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="970"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1170"/>
         <source>Delete profile permanently</source>
         <translation>Trajno obriši profil</translation>
     </message>
@@ -3563,82 +3684,61 @@ Do you want to continue?</source>
         <translation>Iskačući prozori:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="57"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="56"/>
         <source>Zoom</source>
         <translation>Uveličanje</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="69"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="68"/>
         <source>Default zoom:</source>
         <translation>Podrazumijevano:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="79"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="78"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="97"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="96"/>
         <source>Zoom text only</source>
         <translation>Uveličavaj samo tekst</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="110"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="109"/>
         <source>Fonts</source>
         <translation>Fontovi</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="151"/>
-        <source>Style</source>
-        <translation>stil</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="156"/>
-        <source>Font</source>
-        <translation>font</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="161"/>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="300"/>
-        <source>Preview</source>
-        <translation>pregled</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="171"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="143"/>
         <source>Default proportional font size:</source>
         <translation>Podrazumijevana proporcionalna veličina:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="181"/>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="207"/>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="236"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="153"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="179"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="208"/>
         <source> px</source>
         <translation> px</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="197"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="169"/>
         <source>Default fixed-width font size:</source>
         <translation>Podrazumijevana veličina fiksnog fonta:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="223"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="195"/>
         <source>Minimum font size:</source>
         <translation>Najmanja veličina fonta:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="233"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="205"/>
         <source>None</source>
         <translation>ništa</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="257"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="229"/>
         <source>Colors</source>
         <translation>Boje</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="295"/>
-        <source>Type</source>
-        <translation>tip</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="36"/>
@@ -3659,6 +3759,22 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="39"/>
         <source>Open all in background</source>
         <translation>otvori sve u pozadini</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="51"/>
+        <source>Style</source>
+        <translation>stil</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="51"/>
+        <source>Font</source>
+        <translation>font</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="51"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="74"/>
+        <source>Preview</source>
+        <translation>pregled</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="54"/>
@@ -3691,27 +3807,32 @@ Do you want to continue?</source>
         <translation>Fantazijski font</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="68"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="60"/>
         <source>The quick brown fox jumps over the lazy dog</source>
         <translation>Ljubazni fenjerdžija čađavog lica hoće da mi pokaže štos</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="74"/>
+        <source>Type</source>
+        <translation>tip</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="77"/>
         <source>Background Color</source>
         <translation>Boja pozadine</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="77"/>
         <source>Text Color</source>
         <translation>Boja teksta</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="77"/>
         <source>Link Color</source>
         <translation>Boja veze</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="77"/>
         <source>Visited Link Color</source>
         <translation>Boja posjećene veze</translation>
     </message>
@@ -3895,11 +4016,6 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="46"/>
         <source>Show empty page</source>
         <translation>prikaži praznu stranicu</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="74"/>
-        <source>Run Otter Browser with administrator rights to set it as a default browser.</source>
-        <translation>Pokrenite Oter Pregledač sa administratorskim pravima da biste ga postavili za podrazumijevanog pregledača.</translation>
     </message>
 </context>
 <context>
@@ -4111,68 +4227,73 @@ Do you want to continue?</source>
         <translation>ključna riječ</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="82"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="77"/>
         <source>New…</source>
         <translation>Novi…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="83"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="78"/>
         <source>Readd</source>
         <translation>Ponovo dodaj</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="145"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="140"/>
         <source>New Search Engine</source>
         <translation>Novi motor pretrage</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="279"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="209"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="301"/>
         <source>Question</source>
         <translation>Pitanje</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="280"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="210"/>
+        <source>Keyword is already in use. Do you want to continue anyway?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="302"/>
         <source>Do you really want to remove this search engine?</source>
         <translation>Želite li zaista da uklonite ovaj motor pretrage?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="289"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="311"/>
         <source>Delete search engine permanently</source>
         <translation>Trajno obriši motor pretrage</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="359"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="381"/>
         <source>(Untitled)</source>
         <translation>(Neimenovan)</translation>
     </message>
 </context>
 <context>
-    <name>Otter::ProgressBarWidget</name>
+    <name>Otter::ProgressInformationWidget</name>
     <message>
-        <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="62"/>
+        <location filename="../../src/ui/toolbars/ProgressInformationWidget.cpp" line="69"/>
         <source>Document: %p%</source>
-        <translation>Dokument: %p%</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="123"/>
-        <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="147"/>
-        <source>Time: %1</source>
-        <translation>Vrijeme: %1</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="190"/>
-        <source>Elements: %1/%2</source>
-        <translation>Elementi: %1/%2</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="191"/>
+        <location filename="../../src/ui/toolbars/ProgressInformationWidget.cpp" line="111"/>
         <source>Total: %1</source>
-        <translation>Ukupno: %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="192"/>
+        <location filename="../../src/ui/toolbars/ProgressInformationWidget.cpp" line="118"/>
+        <source>Elements: %1/%2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ProgressInformationWidget.cpp" line="125"/>
         <source>Speed: %1</source>
-        <translation>Brzina: %1</translation>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ProgressInformationWidget.cpp" line="135"/>
+        <source>Time: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4211,7 +4332,7 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitInspector</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitInspector.cpp" line="36"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitInspector.cpp" line="39"/>
         <source>Close</source>
         <translation>Zatvori</translation>
     </message>
@@ -4219,38 +4340,43 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitNetworkManager</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="113"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="138"/>
-        <source>Waiting for authentication…</source>
-        <translation>Čekam autentifikaciju…</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="194"/>
-        <source>Warning</source>
-        <translation>Upozorenje</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="194"/>
-        <source>SSL errors occured, do you want to continue?</source>
-        <translation>Došlo je do SSL grešaka, želite li da nastavite?</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="198"/>
-        <source>Do not show this message again</source>
-        <translation>Ne prikazuj više ovu poruku</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="303"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="187"/>
         <source>Receiving data from %1…</source>
         <translation>Primam podatke sa %1…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="372"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="240"/>
         <source>Completed request to %1</source>
         <translation>Završen zahtev za %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="639"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="272"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="297"/>
+        <source>Waiting for authentication…</source>
+        <translation>Čekam autentifikaciju…</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="353"/>
+        <source>Warning</source>
+        <translation>Upozorenje</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="353"/>
+        <source>SSL errors occured, do you want to continue?</source>
+        <translation>Došlo je do SSL grešaka, želite li da nastavite?</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="357"/>
+        <source>Do not show this message again</source>
+        <translation>Ne prikazuj više ovu poruku</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="396"/>
+        <source>Loading finished</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="681"/>
         <source>Sending request to %1…</source>
         <translation>Šaljem zahtev na %1…</translation>
     </message>
@@ -4258,61 +4384,61 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitPage</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="229"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="418"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="455"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="231"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="430"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="467"/>
         <source>JavaScript</source>
         <translation>Javaskripta</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="230"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="419"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="456"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="232"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="431"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="468"/>
         <source>Disable JavaScript popups</source>
         <translation>Onemogući iskačuće prozore javaskripte</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="368"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="381"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="542"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="380"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="393"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="559"/>
         <source>Question</source>
         <translation>Pitanje</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="368"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="382"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="380"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="394"/>
         <source>Are you sure that you want to send form data again?</source>
         <translation>Želite li zaista ponovo da pošaljete podatke formulara?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="368"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="383"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="380"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="395"/>
         <source>Do you want to resend data?</source>
         <translation>Želite li ponovo da pošaljete podatke?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="369"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="387"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="381"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="399"/>
         <source>Do not show this message again</source>
         <translation>Ne prikazuj više ovu poruku</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="497"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="509"/>
         <source>Open File</source>
         <translation>Otvaranje fajla</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="530"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="539"/>
         <source>%1 error #%2: %3</source>
         <translation>%1 greška #%2: %3</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="542"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="559"/>
         <source>The script on this page appears to have a problem.</source>
         <translation>Izgleda da skripta na ovoj stranici ima problem.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="542"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="559"/>
         <source>Do you want to stop the script?</source>
         <translation>Želite li da je zaustavite?</translation>
     </message>
@@ -4328,12 +4454,12 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitWebBackend</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="206"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="207"/>
         <source>WebKit Backend</source>
         <translation>Vebkit motor</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="211"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="212"/>
         <source>Backend utilizing QtWebKit module</source>
         <translation>Motor koji koristi Kutov Vebkit modul</translation>
     </message>
@@ -4341,72 +4467,72 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitWebWidget</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="403"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="402"/>
         <source>Error</source>
         <translation>Greška</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="403"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="402"/>
         <source>Failed to open file for writing.</source>
         <translation>Neuspjeh otvaranja fajla za upis.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="423"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="422"/>
         <source>file</source>
         <translation>fajl</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="434"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="433"/>
         <source>Failed to save image: %1</source>
         <translation>Neuspjeh upisa slike: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="568"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="567"/>
         <source>Print Preview</source>
         <translation>Pregled štampanja</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="627"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="626"/>
         <source>JavaScript</source>
         <translation>Javaskripta</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="627"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="626"/>
         <source>Webpage wants to close this tab, do you want to allow to close it?</source>
         <translation>Stranica hoće da zatvori ovaj jezičak, dozvoljavate li to?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="628"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="627"/>
         <source>Do not show this message again</source>
         <translation>Ne prikazuj više ovu poruku</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="770"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="767"/>
         <source>Undo</source>
         <translation>Opozovi</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="770"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="767"/>
         <source>Undo: %1</source>
         <translation>Opozovi: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="775"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="772"/>
         <source>Redo</source>
         <translation>Ponovi</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="775"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="772"/>
         <source>Redo: %1</source>
         <translation>Ponovi: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1874"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1927"/>
         <source>Blank Page</source>
         <translation>Prazna stranica</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1887"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1940"/>
         <source>(Untitled)</source>
         <translation>(Neimenovana)</translation>
     </message>
@@ -4620,7 +4746,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>Otter::SearchEnginesManager</name>
     <message>
-        <location filename="../../src/core/SearchEnginesManager.cpp" line="169"/>
+        <location filename="../../src/core/SearchEnginesManager.cpp" line="171"/>
         <source>Manage Search Engines…</source>
         <translation>Upravljaj motorima pretrage…</translation>
     </message>
@@ -4706,70 +4832,80 @@ Do you want to overwrite it?</source>
         <translation>Menadžer sesija</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.ui" line="62"/>
-        <source>Title</source>
-        <translation>naziv</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/SessionsManagerDialog.ui" line="67"/>
-        <source>Identifier</source>
-        <translation>identifikator</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/SessionsManagerDialog.ui" line="72"/>
-        <source>Windows</source>
-        <translation>prozori</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/SessionsManagerDialog.ui" line="82"/>
+        <location filename="../../src/ui/SessionsManagerDialog.ui" line="52"/>
         <source>Open</source>
         <translation>Otvori</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.ui" line="89"/>
+        <location filename="../../src/ui/SessionsManagerDialog.ui" line="59"/>
         <source>Delete</source>
         <translation>Obriši</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.ui" line="113"/>
+        <location filename="../../src/ui/SessionsManagerDialog.ui" line="77"/>
         <source>Open session in current window</source>
         <translation>Otvori sesiju u tekućem prozoru</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="45"/>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="68"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
         <source>(Untitled)</source>
         <translation>(Neimenovana)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="99"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="49"/>
+        <source>Title</source>
+        <translation>naziv</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="49"/>
+        <source>Identifier</source>
+        <translation>identifikator</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="49"/>
+        <source>Windows</source>
+        <translation>prozori</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
+        <source>%n window(s) (%1)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
+        <source>%n tab(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="105"/>
         <source>Warning</source>
         <translation>Upozorenje</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="99"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="105"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
         <translation>Ova sesija nije pravilno sačuvana.
 Želite li zaista da vratite ovu sesiju?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="116"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="122"/>
         <source>Confirm</source>
         <translation>Potvrda</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="116"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="122"/>
         <source>Are you sure that you want to delete session %1?</source>
         <translation>Želite li zaista da obrišete sesiju %1?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="124"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="130"/>
         <source>Error</source>
         <translation>Greška</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="124"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="130"/>
         <source>Failed to delete session.</source>
         <translation>Neuspjeh brisanja sesije.</translation>
     </message>
@@ -4777,52 +4913,52 @@ Are you sure that you want to restore this session anyway?</source>
 <context>
     <name>Otter::SidebarWidget</name>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="220"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="212"/>
         <source>Add Web Panel…</source>
         <translation>Dodaj veb panel…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="281"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="285"/>
         <source>Add web panel</source>
         <translation>Dodaj veb panel</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="281"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="285"/>
         <source>Input address of web page to be shown in panel:</source>
         <translation>Unesite adresu veb stranice za prikaz u panelu:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="435"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="396"/>
         <source>Bookmarks</source>
         <translation>Obilježivači</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="440"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="401"/>
         <source>Cache</source>
         <translation>Keš</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="445"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="406"/>
         <source>Cookies</source>
         <translation>Kolačići</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="450"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="411"/>
         <source>Configuration</source>
         <translation>Postavke</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="455"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="416"/>
         <source>History</source>
         <translation>Istorijat</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="460"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="421"/>
         <source>Notes</source>
         <translation>Bilješke</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="465"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="426"/>
         <source>Transfers</source>
         <translation>Prenosi</translation>
     </message>
@@ -4830,39 +4966,39 @@ Are you sure that you want to restore this session anyway?</source>
 <context>
     <name>Otter::SourceViewerWebWidget</name>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="88"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="87"/>
         <source>Failed to save file: %1</source>
         <translation>Neuspjeh upisa fajla: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="90"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="89"/>
         <source>Error</source>
         <translation>Greška</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="90"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="89"/>
         <source>Failed to save file.</source>
         <translation>Neuspjeh upisa fajla.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="117"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="116"/>
         <source>Warning</source>
         <translation>Upozorenje</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="117"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="116"/>
         <source>The document has been modified.
 Do you want to save your changes or discard them?</source>
         <translation>Dokument je izmijenjen.
 Želite li da sačuvate vaše izmjene ili da ih odbacite?</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="298"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="297"/>
         <source>Show Line Numbers</source>
         <translation>Prikaži brojeve linija</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="487"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="486"/>
         <source>Source Viewer</source>
         <translation>Pregledač izvornog kôda</translation>
     </message>
@@ -5065,9 +5201,27 @@ Do you want to save your changes or discard them?</source>
         <translation>(Neimenovana)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="1018"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="1024"/>
         <source>Close Tab</source>
         <translation>Zatvori jezičak</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::TextLabelWidget</name>
+    <message>
+        <location filename="../../src/ui/TextLabelWidget.cpp" line="61"/>
+        <source>Copy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/TextLabelWidget.cpp" line="65"/>
+        <source>Copy Link Location</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/TextLabelWidget.cpp" line="69"/>
+        <source>Select All</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5093,109 +5247,74 @@ Do you want to save your changes or discard them?</source>
         <translation>Vidljivost:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="63"/>
-        <source>Always visible</source>
-        <translation>uvijek vidljiva</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="68"/>
-        <source>Always hidden</source>
-        <translation>uvijek skrivena</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="73"/>
-        <source>Visible only when needed</source>
-        <translation>vidljiva samo po potrebi</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="81"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="65"/>
         <source>Button style:</source>
         <translation>Stil dugmadi:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="92"/>
-        <source>Follow style</source>
-        <translation>prati stil</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="97"/>
-        <source>Only icon</source>
-        <translation>samo ikone</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="102"/>
-        <source>Only text</source>
-        <translation>samo tekst</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="107"/>
-        <source>Text beside icon</source>
-        <translation>tekst pored ikona</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="112"/>
-        <source>Text under icon</source>
-        <translation>tekst ispod ikona</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="120"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="78"/>
         <source>Icon size:</source>
         <translation>Veličina ikona:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="130"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="88"/>
         <source>Auto</source>
         <translation>automatska</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="133"/>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="159"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="91"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="117"/>
         <source> px</source>
         <translation> px</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="146"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="104"/>
         <source>Maximum size of item:</source>
         <translation>Maks. veličina stavke:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="156"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="114"/>
         <source>No limit</source>
         <translation>bez ograničenja</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="169"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="127"/>
         <source>Folder:</source>
         <translation>Fascikla:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="208"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="143"/>
+        <source>Visibility in full screen mode:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="179"/>
         <source>Actions</source>
         <translation>Radnje</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="244"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="215"/>
         <source>Add</source>
         <translation>Dodaj</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="254"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="225"/>
         <source>Edit…</source>
         <translation>Uredi…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="263"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="234"/>
         <source>Current entries:</source>
         <translation>Trenutni unosi:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="371"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="342"/>
         <source>Available entries:</source>
         <translation>Dostupni unosi:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="381"/>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="391"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="352"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="362"/>
         <source>Filter…</source>
         <translation>Filter…</translation>
     </message>
@@ -5205,119 +5324,202 @@ Do you want to save your changes or discard them?</source>
         <translation>Prilagođena traka</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="269"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="50"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="57"/>
+        <source>Always visible</source>
+        <translation>uvijek vidljiva</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="51"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="58"/>
+        <source>Always hidden</source>
+        <translation>uvijek skrivena</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="52"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="59"/>
+        <source>Visible only when needed</source>
+        <translation>vidljiva samo po potrebi</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="60"/>
+        <source>Visible only when cursor is close to screen edge</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="65"/>
+        <source>Follow style</source>
+        <translation>prati stil</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="66"/>
+        <source>Icon only</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="67"/>
+        <source>Text only</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="68"/>
+        <source>Text beside icon</source>
+        <translation>tekst pored ikona</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="69"/>
+        <source>Text under icon</source>
+        <translation>tekst ispod ikona</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="255"/>
         <source>All</source>
         <translation>svi</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="277"/>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="419"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="263"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="433"/>
         <source>Unknown</source>
         <translation>nepoznat</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="286"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="272"/>
         <source>Show search engine:</source>
         <translation>Prikaži motor pretrage:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="287"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="273"/>
         <source>Show search button:</source>
         <translation>Prikaži dugme za pretragu:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="291"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="277"/>
         <source>Custom icon:</source>
         <translation>Posebna ikona:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="292"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="278"/>
         <source>Custom text:</source>
         <translation>Poseban tekst:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="301"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="287"/>
         <source>Edit Entry</source>
         <translation>Uredi unos</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="380"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="366"/>
         <source>--- separator ---</source>
         <translation>--- razdvajač ---</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="384"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="370"/>
         <source>--- spacer ---</source>
         <translation>--- razmak ---</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="388"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="374"/>
         <source>Arbitrary List of Actions</source>
         <translation>Proizvoljni spisak radnji</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="395"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="381"/>
         <source>List of Closed Windows and Tabs</source>
         <translation>Spisak zatvorenih prozora i jezičaka</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="399"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="385"/>
         <source>Address Field</source>
         <translation>Traka adrese</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="403"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="389"/>
+        <source>Content Blocking Details</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="393"/>
         <source>Menu Bar</source>
         <translation>Traka menija</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="407"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="397"/>
         <source>Menu Button</source>
         <translation>Dugme menija</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="411"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="401"/>
         <source>Sidebar Panel Chooser</source>
         <translation>Birač bočnog panela</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="419"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="405"/>
+        <source>Progress Information (Document Progress)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="409"/>
+        <source>Progress Information (Total Progress)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="413"/>
+        <source>Progress Information (Loaded Elements)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="417"/>
+        <source>Progress Information (Loading Speed)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="421"/>
+        <source>Progress Information (Elapsed Time)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="425"/>
+        <source>Progress Information (Status Message)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="433"/>
         <source>Search Field (%1)</source>
         <translation>Polje za pretragu (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="424"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="438"/>
         <source>Search Field</source>
         <translation>Polje za pretragu</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="429"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="443"/>
         <source>Status Message Field</source>
         <translation>Polje poruke stanja</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="433"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="447"/>
         <source>Tab Bar</source>
         <translation>Traka jezičaka</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="437"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="451"/>
         <source>Zoom Slider</source>
         <translation>Klizač uveličanja</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="445"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="459"/>
         <source>(Untitled)</source>
         <translation>(Neimenovan)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="450"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="464"/>
         <source>Invalid Bookmark</source>
         <translation>Neispravan obilježivač</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="459"/>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="471"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="473"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="485"/>
         <source>Invalid Entry</source>
         <translation>Neispravan unos</translation>
     </message>
@@ -5325,7 +5527,7 @@ Do you want to save your changes or discard them?</source>
 <context>
     <name>Otter::ToolBarDragAreaWidget</name>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="55"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="49"/>
         <source>Drag to move toolbar</source>
         <translation>Prevlačite za pomeranje</translation>
     </message>
@@ -5333,42 +5535,42 @@ Do you want to save your changes or discard them?</source>
 <context>
     <name>Otter::ToolBarWidget</name>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="182"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="176"/>
         <source>Switch tabs using the mouse wheel</source>
         <translation>Prebacuj jezičke točkićem miša</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="199"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="193"/>
         <source>Arrange</source>
         <translation>Rasporedi</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="563"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="459"/>
         <source>Customize</source>
         <translation>Prilagodi</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="565"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="461"/>
         <source>(Untitled)</source>
         <translation>(Neimenovana)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="566"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="462"/>
         <source>Configure…</source>
         <translation>Postavke…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="568"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="464"/>
         <source>Reset to Defaults…</source>
         <translation>Vrati podrazumijevano…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="585"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="481"/>
         <source>Remove…</source>
         <translation>Ukloni…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="589"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="485"/>
         <source>Toolbars</source>
         <translation>Trake alatki</translation>
     </message>
@@ -5376,32 +5578,32 @@ Do you want to save your changes or discard them?</source>
 <context>
     <name>Otter::ToolBarsManager</name>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="298"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="257"/>
         <source>Reset Toolbar</source>
         <translation>Vraćanje na podrazumijevano</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="298"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="257"/>
         <source>Do you really want to reset this toolbar to default configuration?</source>
         <translation>Želite li zaista da vratite ovu traku alatki na početne postavke?</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="338"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="276"/>
         <source>Remove Toolbar</source>
         <translation>Uklanjanje trake alatki</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="338"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="276"/>
         <source>Do you really want to remove this toolbar?</source>
         <translation>Želite li zaista da uklonite ovu traku alatki?</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="352"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="290"/>
         <source>Reset Toolbars</source>
         <translation>Vraćanje na podrazumijevano</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="352"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="290"/>
         <source>Do you really want to reset all toolbars to default configuration?</source>
         <translation>Želite li zaista da vratite sve trake alatki na početne postavke?</translation>
     </message>
@@ -5418,25 +5620,25 @@ Do you want to save your changes or discard them?</source>
 <context>
     <name>Otter::Transfer</name>
     <message>
-        <location filename="../../src/core/Transfer.cpp" line="263"/>
-        <location filename="../../src/core/Transfer.cpp" line="782"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="265"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="791"/>
         <source>Question</source>
         <translation>Pitanje</translation>
     </message>
     <message>
-        <location filename="../../src/core/Transfer.cpp" line="263"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="265"/>
         <source>File with that name already exists.
 Do you want to overwrite it?</source>
         <translation>Fajl istog naziva već postoji.
 Želite li da ga prebrišete?</translation>
     </message>
     <message>
-        <location filename="../../src/core/Transfer.cpp" line="611"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="620"/>
         <source>file</source>
         <translation>fajl</translation>
     </message>
     <message>
-        <location filename="../../src/core/Transfer.cpp" line="782"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="791"/>
         <source>File with the same name already exists.
 Do you want to overwrite it?
 
@@ -5485,27 +5687,27 @@ Do you want to overwrite it?
         <translation>Zapamti izbor za ovaj tip fajlova</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="44"/>
+        <location filename="../../src/ui/TransferDialog.cpp" line="43"/>
         <source>unknown file</source>
         <translation>nepoznat fajl</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="64"/>
+        <location filename="../../src/ui/TransferDialog.cpp" line="63"/>
         <source>Opening %1</source>
         <translation>Otvaram %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="170"/>
+        <location filename="../../src/ui/TransferDialog.cpp" line="169"/>
         <source>unknown</source>
         <translation>nepoznato</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="174"/>
+        <location filename="../../src/ui/TransferDialog.cpp" line="173"/>
         <source>%1 (download completed)</source>
         <translation>%1 (preuzimanje završeno)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="180"/>
+        <location filename="../../src/ui/TransferDialog.cpp" line="179"/>
         <source>%1 (%2% downloaded)</source>
         <translation>%1 (%2% preuzeto)</translation>
     </message>
@@ -5544,66 +5746,66 @@ Do you want to overwrite it?
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="184"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="396"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="430"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="386"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="420"/>
         <source>Stop</source>
         <translation>Zaustavi</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="194"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="397"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="387"/>
         <source>Redownload</source>
         <translation>Ponovo preuzmi</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
         <source>Filename</source>
         <translation>naziv fajla</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
         <source>Size</source>
         <translation>veličina</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
         <source>Progress</source>
         <translation>napredak</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
         <source>Time</source>
         <translation>vrijeme</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
         <source>Speed</source>
         <translation>brzina</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
         <source>Started</source>
         <translation>pokrenut</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
         <source>Finished</source>
         <translation>završen</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="153"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="143"/>
         <source>Warning</source>
         <translation>Upozorenje</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="153"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="143"/>
         <source>This transfer is still running.
 Do you really want to remove it?</source>
         <translation>Prenos je još u toku.
 Želite li zaista da ga uklonite?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="238"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="228"/>
         <source>&lt;div style=&quot;white-space:pre;&quot;&gt;Source: %1
 Target: %2
 Size: %3
@@ -5616,48 +5818,48 @@ Preuzeto: %4
 Napredak: %5&lt;/div&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="373"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="363"/>
         <source>Open</source>
         <translation>Otvori</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="379"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="369"/>
         <source>Open With</source>
         <translation>Otvori pomoću</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="383"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="373"/>
         <source>Unknown</source>
         <translation>Nepoznata</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="394"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="384"/>
         <source>Open Folder</source>
         <translation>Otvori fasciklu</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="396"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="425"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="386"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="415"/>
         <source>Resume</source>
         <translation>Nastavi</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="399"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="389"/>
         <source>Copy Transfer Information</source>
         <translation>Kopiraj podatke o prenosu</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="401"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="391"/>
         <source>Remove</source>
         <translation>Ukloni</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="415"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="405"/>
         <source>Clear Finished Transfers</source>
         <translation>Ukloni završene prenose</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="543"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="535"/>
         <source>Transfers Manager</source>
         <translation>Menadžer prenosa</translation>
     </message>
@@ -5665,44 +5867,11 @@ Napredak: %5&lt;/div&gt;</translation>
 <context>
     <name>Otter::TransfersManager</name>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="151"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="994"/>
         <source>Transfer completed:
 %1</source>
         <translation>Prenos završen:
 %1</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="273"/>
-        <source>%1 files (*.%2)</source>
-        <translation>%1 fajlovi (*.%2)</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="276"/>
-        <source>All files (*)</source>
-        <translation>Svi fajlovi (*)</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="278"/>
-        <source>Save File</source>
-        <translation>Upis fajla</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="297"/>
-        <location filename="../../src/core/TransfersManager.cpp" line="306"/>
-        <source>Warning</source>
-        <translation>Upozorenje</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="297"/>
-        <source>This path is already used by different download, pick another one.</source>
-        <translation>Odredišnu putanju već koristi jedno preuzimanje, odredite drugu.</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="306"/>
-        <source>Target path is not writable.
-Select another one.</source>
-        <translation>Odredišna putanja nije upisiva.
-Odredite novu.</translation>
     </message>
 </context>
 <context>
@@ -5822,17 +5991,17 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
         <translation>Ukloni</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="37"/>
+        <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="39"/>
         <source>Title</source>
         <translation>naziv</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="37"/>
+        <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="39"/>
         <source>Value</source>
         <translation>vrijednost</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="46"/>
+        <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="44"/>
         <source>(Untitled)</source>
         <translation>(Neimenovan)</translation>
     </message>
@@ -5840,170 +6009,215 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
 <context>
     <name>Otter::WebContentsWidget</name>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="463"/>
-        <source>Open All Pop-Ups</source>
-        <translation>otvori sve</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="467"/>
-        <source>Open Pop-Ups in Background</source>
-        <translation>otvori u pozadini</translation>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="470"/>
+        <source>Pop-Ups</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="471"/>
-        <source>Block All Pop-Ups</source>
-        <translation>blokiraj sve iskačuće</translation>
+        <source>Open All</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="475"/>
+        <source>Open in Background</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="479"/>
+        <source>Block All</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="483"/>
         <source>Ask What to Do</source>
         <translation>pitaj šta da radim</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="500"/>
-        <source>Enable Images</source>
-        <translation>Omogući slike</translation>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="511"/>
+        <source>Images</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="505"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="512"/>
+        <source>All Images</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="516"/>
+        <source>Cached Images</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="520"/>
+        <source>No Images</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="547"/>
         <source>Enable JavaScript</source>
         <translation>Omogući javaskripte</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="510"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="552"/>
         <source>Enable Java</source>
         <translation>Omogući javu</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="515"/>
-        <source>Enable Plugins</source>
-        <translation>Omogući priključke</translation>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="557"/>
+        <source>Plugins</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="522"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="558"/>
+        <source>Enabled</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="562"/>
+        <source>On Demand</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="566"/>
+        <source>Disabled</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="595"/>
         <source>Enable Cookies</source>
         <translation>Omogući kolačiće</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="526"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="599"/>
         <source>Enable Referrer</source>
         <translation>Omogući zaglavlje pratioca</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="530"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="603"/>
         <source>Enable Proxy</source>
         <translation>Omogući proksi</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="535"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="608"/>
         <source>Reset Options</source>
         <translation>Resetuj opcije</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="866"/>
         <source>Question</source>
         <translation>Pitanje</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="866"/>
         <source>This tab has crashed.</source>
         <translation>Ovaj jezičak se srušio.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="866"/>
         <source>Do you want to try to reload it?</source>
         <translation>Želite li pokušati ponovo da ga učitate?</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="802"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="867"/>
         <source>Do not show this message again</source>
         <translation>Ne prikazuj više ovu poruku</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1077"/>
+        <source>Select User Agent</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1077"/>
+        <source>Enter User Agent:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>Otter::WebWidget</name>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="335"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="341"/>
         <source>Default Application</source>
         <translation>Podrazumevani program</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="341"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="347"/>
         <source>Unknown</source>
         <translation>Nepoznat</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="427"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="451"/>
         <source>Title: %1</source>
         <translation>Naziv: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="427"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="451"/>
         <source>Address: %1</source>
         <translation>Adresa: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="688"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="712"/>
         <source>No search engines defined</source>
         <translation>Nema definisanih motora pretrage</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="836"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="860"/>
         <source>Open Image in New Tab (Untitled)</source>
         <translation>Otvori sliku u novom jezičku (neimenovana)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="836"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="860"/>
         <source>Open Image in New Tab (%1)</source>
         <translation>Otvori sliku u novom jezičku (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="842"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="866"/>
         <source>Open Image in New Background Tab (Untitled)</source>
         <translation>Otvori sliku u jezičku u pozadini (neimenovana)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="842"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="866"/>
         <source>Open Image in New Background Tab (%1)</source>
         <translation>Otvori sliku u jezičku u pozadini (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1135"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1159"/>
         <source>1 Minute</source>
         <translation>1 minuta</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1136"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1160"/>
         <source>30 Minutes</source>
         <translation>30 minuta</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1137"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1161"/>
         <source>1 Hour</source>
         <translation>1 sat</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1138"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1162"/>
         <source>2 Hours</source>
         <translation>2 sata</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1139"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1163"/>
         <source>6 Hours</source>
         <translation>6 sati</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1140"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1164"/>
         <source>Never</source>
         <translation>Nikad</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1141"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1165"/>
         <source>Custom…</source>
         <translation>Prilagodi…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1143"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1167"/>
         <source>Page Default</source>
         <translation>Podrazumevano</translation>
     </message>
@@ -6062,7 +6276,7 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="171"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="297"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="307"/>
         <source>Details…</source>
         <translation>Detalji…</translation>
     </message>
@@ -6107,62 +6321,67 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
         <translation>Iskačući prozori:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="261"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="260"/>
+        <source>Enter full screen mode:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="271"/>
         <source>Security</source>
         <translation>Bezbjednost</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="275"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="285"/>
         <source>Certificate</source>
         <translation>Sertifikat</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="306"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="316"/>
         <source>Issued to:</source>
         <translation>Izdat za:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="313"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="323"/>
         <source>Issued by:</source>
         <translation>Izdavač:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="320"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="330"/>
         <source>Issued on:</source>
         <translation>Izdat:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="327"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="337"/>
         <source>Expires on:</source>
         <translation>Ističe:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="340"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="350"/>
         <source>Cipher</source>
         <translation>Šifrar</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="347"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="357"/>
         <source>Protocol:</source>
         <translation>Protokol:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="354"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="364"/>
         <source>Authentication method:</source>
         <translation>Autentifikacija:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="361"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="371"/>
         <source>Encryption method:</source>
         <translation>Šifrovanje:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="368"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="378"/>
         <source>Key exchange method:</source>
         <translation>Razmena ključeva:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="407"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="417"/>
         <source>SSL Errors</source>
         <translation>SSL greške</translation>
     </message>
@@ -6203,83 +6422,91 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
         <translation>Nema podataka.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="85"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="84"/>
         <source>unknown</source>
         <translation>nepoznato</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="87"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="86"/>
         <source>%1 (%n blocked)</source>
         <translation><numerusform>%1 (%n blokiran)</numerusform><numerusform>%1 (%n blokirana)</numerusform><numerusform>%1 (%n blokiranih)</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="94"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="113"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="93"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="112"/>
         <source>Only existing</source>
         <translation>samo postojeće</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="98"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="97"/>
         <source>Only read existing</source>
         <translation>samo čitaj postojeće</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="102"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="117"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="132"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="139"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="140"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="150"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="165"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="184"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="101"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="116"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="131"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="146"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="153"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="163"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="178"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="193"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="212"/>
         <source>Never</source>
         <translation>nikad</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="106"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="121"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="128"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="139"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="140"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="146"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="161"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="176"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="105"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="120"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="127"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="150"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="153"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="159"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="174"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="189"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="204"/>
         <source>Always</source>
         <translation>uvijek</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="136"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="135"/>
         <source>On demand</source>
         <translation>po zahtjevu</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="154"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="169"/>
-        <source>Always Ask</source>
-        <translation>uvijek pitaj</translation>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="142"/>
+        <source>Only cached</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="180"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="167"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="182"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="197"/>
+        <source>Always ask</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="208"/>
         <source>Always (open in backgound)</source>
         <translation>uvijek (otvori u pozadini)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="188"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="216"/>
         <source>Ask</source>
         <translation>pitaj</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="217"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="245"/>
         <source>Error Message</source>
         <translation>poruka greške</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="217"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="245"/>
         <source>URL</source>
         <translation>URL</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="236"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="261"/>
         <source>Information for %1</source>
         <translation>Podaci o %1</translation>
     </message>
@@ -6303,9 +6530,9 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="53"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="267"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="537"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="660"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="276"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="546"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="669"/>
         <source>Override</source>
         <translation>Premosti</translation>
     </message>
@@ -6325,331 +6552,346 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
         <translation>Priključci:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="114"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="117"/>
         <source>Pop-ups:</source>
         <translation>Iskačući prozori:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="138"/>
-        <source>Enable images</source>
-        <translation>Omogući slike</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="152"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="148"/>
         <source>Enable Java</source>
         <translation>Omogući javu</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="186"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="181"/>
+        <source>Images:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="195"/>
         <source>Privacy</source>
         <translation>Privatnost</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="210"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="219"/>
         <source>Keep until:</source>
         <translation>Zadrži dok:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="253"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="262"/>
         <source>Remember browsing history</source>
         <translation>Pamti istorijat pregledanja</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="274"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="283"/>
         <source>Enable cookies</source>
         <translation>Omogući kolačiće</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="299"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="308"/>
         <source>Accept cookies:</source>
         <translation>Prihvataj kolačiće:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="308"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="317"/>
         <source>Do Not Track:</source>
         <translation>Ne prati:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="345"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="354"/>
         <source>Add…</source>
         <translation>Dodaj…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="355"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="364"/>
         <source>Edit…</source>
         <translation>Uredi…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="365"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="374"/>
         <source>Delete</source>
         <translation>Obriši</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="407"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="416"/>
         <source>Accept third-party cookies:</source>
         <translation>Prihvataj kolačiće koji nisu sa izvornog servera:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="446"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="455"/>
         <source>Scripting</source>
         <translation>Skripte</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="452"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="461"/>
         <source>Allow to disable context menu</source>
         <translation>Dozvoli onemogućavanje kontekstnog menija</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="466"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="475"/>
         <source>Allow changing of status field</source>
         <translation>Dozvoli mijenjanje polja stanja</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="493"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="502"/>
         <source>Allow to close windows:</source>
         <translation>Dozvoli zatvaranje prozora:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="506"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="515"/>
         <source>Allow script to hide address bar</source>
         <translation>Dozvoli skripti da sakrije traku adrese</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="513"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="522"/>
         <source>Allow moving and resizing of windows</source>
         <translation>Dozvoli pomijeranje i mijenjanje veličine prozora</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="551"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="560"/>
         <source>Enable JavaScript</source>
         <translation>Omogući javaskripte</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="579"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="588"/>
         <source>Allow to open windows</source>
         <translation>Dozvoli otvaranje prozora</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="589"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="598"/>
         <source>Allow access to clipboard</source>
         <translation>Dozvoli pristup klipbordu</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="609"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="618"/>
         <source>Allow to enter full screen mode:</source>
         <translation>Dozvoli režim cijelog ekrana:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="630"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="639"/>
         <source>Network</source>
         <translation>Mreža</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="643"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="652"/>
         <source>User Agent:</source>
         <translation>Identifikacija:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="683"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="692"/>
         <source>Proxy mode:</source>
         <translation>Režim proksija:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="710"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="719"/>
         <source>No proxy</source>
         <translation>bez proksija</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="715"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="724"/>
         <source>System configuration</source>
         <translation>sistemske postavke</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="720"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="729"/>
         <source>Manual configuration</source>
         <translation>ručna postavka</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="725"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="734"/>
         <source>Automatic configuration (PAC)</source>
         <translation>automatska postavka (PAC)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="838"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="847"/>
         <source>Port</source>
         <translation>Port</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="845"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="854"/>
         <source>Servers</source>
         <translation>Serveri</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="852"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="861"/>
         <source>FTP</source>
         <translation>FTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="859"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="868"/>
         <source>SOCKS5</source>
         <translation>SOCKS5</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="866"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="875"/>
         <source>HTTP</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="880"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="889"/>
         <source>HTTPS</source>
         <translation>HTTPS</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="894"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="903"/>
         <source>All</source>
         <translation>Svi</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="911"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="920"/>
         <source>Protocol</source>
         <translation>Protokoli</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="939"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="948"/>
         <source>Path to PAC file:</source>
         <translation>Putanja PAC fajla:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="956"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="965"/>
         <source>Send referrer information</source>
         <translation>Šalji zaglavlje pratioca serverima</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="964"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="973"/>
         <source>Content Blocking</source>
         <translation>Blokiranje sadržaja</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="63"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="62"/>
         <source>Auto Detect</source>
         <translation>Automatsko</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="77"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="86"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="90"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="76"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="89"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="93"/>
         <source>Ask</source>
         <translation>pitaj</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="78"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="77"/>
         <source>Block all</source>
         <translation>blokiraj sve</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="79"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="78"/>
         <source>Open all</source>
         <translation>otvori sve</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="80"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="79"/>
         <source>Open all in background</source>
         <translation>otvori sve u pozadini</translation>
     </message>
     <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="81"/>
+        <source>All images</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="82"/>
+        <source>Cached images</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
+        <source>No images</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="85"/>
         <source>Enabled</source>
         <translation>omogućeni</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="86"/>
         <source>On demand</source>
         <translation>po zahtjevu</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="84"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="87"/>
         <source>Disabled</source>
         <translation>onemogućeni</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="87"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="91"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="98"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="107"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="90"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="94"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="101"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="110"/>
         <source>Always</source>
         <translation>uvijek</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="88"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="92"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="101"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="109"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="91"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="95"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="104"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
         <source>Never</source>
         <translation>nikad</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="94"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="97"/>
         <source>Inform websites that I do not want to be tracked</source>
         <translation>obavijesti sajtove da ne želim da me prate</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="95"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="98"/>
         <source>Inform websites that I allow tracking</source>
         <translation>obavijesti sajtove da dopuštam da me prate</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="96"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="99"/>
         <source>Do not inform websites about my preference</source>
         <translation>ne obavještavaj sajtove o mojoj postavci</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="99"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="108"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="102"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="111"/>
         <source>Only existing</source>
         <translation>samo postojeće</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="100"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
         <source>Only read existing</source>
         <translation>samo čitaj postojeće</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="106"/>
         <source>Expires</source>
         <translation>ne isteknu</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="104"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="107"/>
         <source>Current session is closed</source>
         <translation>tekuća sesija ne okonča</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="105"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="108"/>
         <source>Always ask</source>
         <translation>uvijek pitaj</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="115"/>
         <source>Domain</source>
         <translation>domen</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="115"/>
         <source>Name</source>
         <translation>naziv</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="115"/>
         <source>Path</source>
         <translation>putanja</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="115"/>
         <source>Value</source>
         <translation>vrijednost</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="115"/>
         <source>Expiration date</source>
         <translation>ističe</translation>
     </message>
@@ -6659,22 +6901,22 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
         <translation>podrazumijevana</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="140"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="146"/>
         <source>(Untitled)</source>
         <translation>(neimenovana)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="358"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="366"/>
         <source>Title</source>
         <translation>naziv</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="358"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="366"/>
         <source>Update Interval</source>
         <translation>interval ažuriranja</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="358"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="366"/>
         <source>Last Update</source>
         <translation>posljednje ažuriranje</translation>
     </message>
@@ -6682,24 +6924,14 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
 <context>
     <name>Otter::Window</name>
     <message>
-        <location filename="../../src/ui/Window.cpp" line="177"/>
+        <location filename="../../src/ui/Window.cpp" line="175"/>
         <source>Print Page</source>
         <translation>Štampanje stranice</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Window.cpp" line="193"/>
+        <location filename="../../src/ui/Window.cpp" line="191"/>
         <source>Print Preview</source>
         <translation>Pregled štampanja</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/Window.cpp" line="381"/>
-        <source>Select User Agent</source>
-        <translation>Identifikacija pregledača</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/Window.cpp" line="381"/>
-        <source>Enter User Agent:</source>
-        <translation>Identifikacija pregledača:</translation>
     </message>
 </context>
 <context>
@@ -6735,23 +6967,23 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
 <context>
     <name>Otter::WindowsPlatformIntegration</name>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="156"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="155"/>
         <source>Failed to run command &quot;%1&quot;, file is not executable</source>
         <translation>Neuspjeh pokretanja naredbe „%1“, fajl nije izvršni</translation>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="183"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="182"/>
         <source>Failed to run command &quot;%1&quot; (arguments: &quot;%2&quot;)</source>
         <translation>Neuspjeh pokretanja naredbe „%1“ (argumenti: „%2“)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="227"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="226"/>
         <source>No valid suffix for given MIME type: %1</source>
         <translation>Nema ispravnog nastavka za dati MIME tip: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="294"/>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="344"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="293"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="343"/>
         <source>Failed to load a valid application path for MIME type %1: %2</source>
         <translation>Neuspjeh učitavanja ispravne putanje programa za MIME tip %1: %2</translation>
     </message>
@@ -6767,8 +6999,8 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
 <context>
     <name>Otter::ZoomWidget</name>
     <message>
-        <location filename="../../src/ui/toolbars/ZoomWidget.cpp" line="97"/>
-        <location filename="../../src/ui/toolbars/ZoomWidget.cpp" line="98"/>
+        <location filename="../../src/ui/toolbars/ZoomWidget.cpp" line="95"/>
+        <location filename="../../src/ui/toolbars/ZoomWidget.cpp" line="96"/>
         <source>Zoom %1%</source>
         <translation>Uveličanje %1%</translation>
     </message>
@@ -6882,1064 +7114,1069 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
 <context>
     <name>actions</name>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="253"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="313"/>
         <source>File</source>
         <translation>Fajl</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="254"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="314"/>
         <source>Sessions</source>
         <translation>Sesije</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="255"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="315"/>
         <source>Import and Export</source>
         <translation>Uvoz i izvoz</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="256"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="316"/>
         <source>Edit</source>
         <translation>Uredi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="257"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="317"/>
         <source>View</source>
         <translation>Prikaz</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="258"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="318"/>
         <source>Toolbars</source>
         <translation>Trake alatki</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="259"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="319"/>
         <source>User Agent</source>
         <translation>Identifikacija</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="260"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="320"/>
         <source>Style</source>
         <translation>Stil</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="261"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="321"/>
         <source>Character Encoding</source>
         <translation>Kodiranje</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="262"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="322"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="45"/>
         <source>History</source>
         <translation>Istorijat</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="263"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="323"/>
         <source>Closed Windows</source>
         <translation>Zatvoreni prozori</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="264"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="324"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="43"/>
         <source>Bookmarks</source>
         <translation>Obilježivači</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="265"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="325"/>
         <source>Tools</source>
         <translation>Alatke</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="266"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="326"/>
         <source>Help</source>
         <translation>Pomoć</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="267"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="327"/>
         <source>Tabs and Windows</source>
         <translation>Jezičci i prozori</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="268"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="328"/>
         <source>Page</source>
         <translation>Stranica</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="269"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="329"/>
         <source>Print</source>
         <translation>Štampanje</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="270"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="330"/>
         <source>Settings</source>
         <translation>Postavke</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="271"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="331"/>
         <source>Frame</source>
         <translation>Okvir</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="275"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="335"/>
         <source>New Tab</source>
         <translation>Novi jezičak</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="276"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="336"/>
         <source>New Private Tab</source>
         <translation>Novi privatni jezičak</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="277"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="337"/>
         <source>New Window</source>
         <translation>Novi prozor</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="278"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="338"/>
         <source>New Private Window</source>
         <translation>Novi privatni prozor</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="279"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="339"/>
         <source>Open…</source>
         <translation>Otvori…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="280"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="340"/>
         <source>Save…</source>
         <translation>Sačuvaj…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="281"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="341"/>
         <source>Clone Tab</source>
         <translation>Kloniraj jezičak</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="282"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="342"/>
         <location filename="../../src/ui/TabBarWidget.cpp" line="170"/>
         <source>Pin Tab</source>
         <translation>Zakači jezičak</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="283"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="343"/>
         <source>Detach Tab</source>
         <translation>Odvoji jezičak</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="284"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="344"/>
         <source>Maximize</source>
         <translation>Maksimizuj</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="284"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="344"/>
         <source>Maximize Tab</source>
         <translation>Maksimizuj jezičak</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="285"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="345"/>
         <source>Minimize</source>
         <translation>Minimizuj</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="285"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="345"/>
         <source>Minimize Tab</source>
         <translation>Minimizuj jezičak</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="286"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="346"/>
         <source>Restore</source>
         <translation>Vrati</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="286"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="346"/>
         <source>Restore Tab</source>
         <translation>Vrati jezičak</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="287"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="347"/>
         <source>Stay on Top</source>
         <translation>Drži iznad ostalih</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="288"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="348"/>
         <source>Clear Tab History</source>
         <translation>Očisti istorijat jezička</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="288"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="348"/>
         <source>Remove Local Tab History</source>
         <translation>Ukloni lokalni istorijat jezička</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="289"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="349"/>
         <source>Purge Tab History</source>
         <translation>Pročisti istorijat jezička</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="289"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="349"/>
         <source>Remove Local and Global Tab History</source>
         <translation>Ukloni lokalni i globalni istorijat jezička</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="290"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="350"/>
         <source>Suspend Tab</source>
         <translation>Obustavi jezičak</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="291"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="351"/>
         <source>Close Tab</source>
         <translation>Zatvori jezičak</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="292"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="352"/>
         <source>Close Other Tabs</source>
         <translation>Zatvori ostale jezičke</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="293"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="353"/>
         <source>Close All Private Tabs</source>
         <translation>Zatvori sve privatne jezičke</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="293"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="353"/>
         <source>Close All Private Tabs in Current Window</source>
         <translation>Zatvori sve privatne jezičke u tekućem prozoru</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="294"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="354"/>
         <source>Close Private Tabs and Windows</source>
         <translation>Zatvori privatne jezičke i prozore</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="295"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="355"/>
         <source>Reopen Previously Closed Tab</source>
         <translation>Otvori ranije zatvoren jezičak</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="296"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="356"/>
         <source>Maximize All</source>
         <translation>Maksimizuj sve</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="297"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="357"/>
         <source>Minimize All</source>
         <translation>Minimizuj sve</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="298"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="358"/>
         <source>Restore All</source>
         <translation>Vrati sve</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="299"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="359"/>
         <source>Cascade</source>
         <translation>Kaskadno</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="300"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="360"/>
         <source>Tile</source>
         <translation>Popločano</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="301"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="361"/>
         <source>Close Window</source>
         <translation>Zatvori prozor</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="302"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="362"/>
         <source>Manage Sessions…</source>
         <translation>Upravljaj sesijama…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="303"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="363"/>
         <source>Save Current Session…</source>
         <translation>Sačuvaj tekuću sesiju…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="304"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="364"/>
         <source>Open URL</source>
         <translation>Otvori URL</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="305"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="321"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="365"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="381"/>
         <source>Open</source>
         <translation>Otvori</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="306"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="366"/>
         <source>Open in This Tab</source>
         <translation>Otvori u ovom jezičku</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="307"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="322"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="367"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="382"/>
         <source>Open in New Tab</source>
         <translation>Otvori u novom jezičku</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="308"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="323"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="368"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="383"/>
         <source>Open in New Background Tab</source>
         <translation>Otvori u jezičku u pozadini</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="309"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="369"/>
         <source>Open in New Window</source>
         <translation>Otvori u novom prozoru</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="310"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="370"/>
         <source>Open in New Background Window</source>
         <translation>Otvori u prozoru u pozadini</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="311"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="371"/>
         <source>Open in New Private Tab</source>
         <translation>Otvori u novom privatnom jezičku</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="312"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="372"/>
         <source>Open in New Private Background Tab</source>
         <translation>Otvori u novom privatnom jezičku u pozadini</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="313"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="373"/>
         <source>Open in New Private Window</source>
         <translation>Otvori u novom privatnom prozoru</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="314"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="374"/>
         <source>Open in New Private Background Window</source>
         <translation>Otvori u novom privatnom prozoru u pozadini</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="315"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="324"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="420"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="375"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="384"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="480"/>
         <source>Open with…</source>
         <translation>Otvori pomoću…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="315"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="375"/>
         <source>Open Link with External Application</source>
         <translation>Otvori vezu vanjskim programom</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="316"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="376"/>
         <source>Copy Link to Clipboard</source>
         <translation>Kopiraj vezu na klipbord</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="317"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="773"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="377"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="797"/>
         <source>Bookmark Link…</source>
         <translation>Obilježi vezu…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="318"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="378"/>
         <source>Save Link Target As…</source>
         <translation>Sačuvaj vezu kao…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="319"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="379"/>
         <source>Save to Downloads</source>
         <translation>Sačuvaj u Preuzimanja</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="320"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="380"/>
         <source>Go to This Address</source>
         <translation>Idi na ovu adresu</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="321"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="381"/>
         <source>Open Frame in This Tab</source>
         <translation>Otvori okvir u ovom jezičku</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="322"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="382"/>
         <source>Open Frame in New Tab</source>
         <translation>Otvori okvir u novom jezičku</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="323"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="383"/>
         <source>Open Frame in New Background Tab</source>
         <translation>Otvori okvir u jezičku u pozadini</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="324"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="384"/>
         <source>Open Frame with External Application</source>
         <translation>Otvori okvir vanjskim programom</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="325"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="385"/>
         <source>Copy Frame Link to Clipboard</source>
         <translation>Kopiraj vezu okvira na klipbord</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="326"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="352"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="353"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="386"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="412"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="413"/>
         <source>Reload</source>
         <translation>Ponovo učitaj</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="326"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="386"/>
         <source>Reload Frame</source>
         <translation>Ponovo učitaj okvir</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="327"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="387"/>
         <source>View Frame Source</source>
         <translation>Izvorni kôd okvira</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="328"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="388"/>
         <source>Open Image In New Tab</source>
         <translation>Otvori sliku u novom jezičku</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="329"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="842"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="389"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="866"/>
         <source>Open Image in New Background Tab</source>
         <translation>Otvori sliku u jezičku u pozadini</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="330"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="390"/>
         <source>Save Image…</source>
         <translation>Sačuvaj sliku…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="331"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="391"/>
         <source>Copy Image to Clipboard</source>
         <translation>Kopiraj sliku na klipbord</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="332"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="392"/>
         <source>Copy Image Link to Clipboard</source>
         <translation>Kopiraj vezu slike na klipbord</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="333"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="393"/>
         <source>Reload Image</source>
         <translation>Ponovo učitaj sliku</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="334"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="394"/>
         <source>Image Properties…</source>
         <translation>Svojstva slike…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="335"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="395"/>
         <source>Save Media…</source>
         <translation>Sačuvaj medij…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="336"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="396"/>
         <source>Copy Media Link to Clipboard</source>
         <translation>Kopiraj vezu medija na klipbord</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="337"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="397"/>
         <source>Show Controls</source>
         <translation>Prikaži kontrole</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="338"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="398"/>
         <source>Looping</source>
         <translation>U krug</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="339"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="905"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="399"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="929"/>
         <source>Play</source>
         <translation>Pusti</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="340"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="912"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="400"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="936"/>
         <source>Mute</source>
         <translation>Isključi zvuk</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="341"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="401"/>
         <source>Go</source>
         <translation>Idi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="342"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="402"/>
         <source>Back</source>
         <translation>Nazad</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="343"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="403"/>
         <source>Forward</source>
         <translation>Naprijed</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="344"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="404"/>
         <source>Go to Page or Search</source>
         <translation>Idi na stranicu ili traži</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="345"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="405"/>
         <source>Go to Home Page</source>
         <translation>Idi na početnu</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="346"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="406"/>
         <source>Go to Parent Directory</source>
         <translation>Idi u roditeljski direktorijum</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="347"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="407"/>
         <source>Rewind</source>
         <translation>Brzo nazad</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="348"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="408"/>
         <source>Fast Forward</source>
         <translation>Brzo naprijed</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="349"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="409"/>
         <source>Stop</source>
         <translation>Zaustavi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="350"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="410"/>
         <source>Stop Scheduled Page Reload</source>
         <translation>Zaustavi automatsko osvježavanje stranice</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="351"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="411"/>
         <source>Stop All Pages</source>
         <translation>Zaustavi sve stranice</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="353"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="413"/>
         <source>Reload or Stop</source>
         <translation>Ponovo učitaj ili zaustavi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="354"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="414"/>
         <source>Reload and Bypass Cache</source>
         <translation>Osvježi i premosti keš</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="355"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="415"/>
         <source>Reload All Tabs</source>
         <translation>Ponovo učitaj sve jezičke</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="356"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="416"/>
         <source>Reload Every</source>
         <translation>Osvježi svakih</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="357"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="417"/>
         <source>Show Context Menu</source>
         <translation>Prikaži kontekstni meni</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="358"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="418"/>
         <source>Undo</source>
         <translation>Opozovi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="359"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="419"/>
         <source>Redo</source>
         <translation>Ponovi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="360"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="420"/>
         <source>Cut</source>
         <translation>Isijeci</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="361"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="421"/>
         <source>Copy</source>
         <translation>Kopiraj</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="362"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="422"/>
         <source>Copy as Plain Text</source>
         <translation>Kopiraj obični tekst</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="363"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="423"/>
         <source>Copy Address</source>
         <translation>Kopiraj adresu</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="364"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="424"/>
         <source>Copy to Note</source>
         <translation>Kopiraj u bilješku</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="365"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="425"/>
         <source>Paste</source>
         <translation>Nalijepi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="366"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="426"/>
         <source>Paste and Go</source>
         <translation>Nalijepi i idi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="367"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="427"/>
         <source>Insert Note</source>
         <translation>Umetni bilješku</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="368"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="428"/>
         <source>Delete</source>
         <translation>Obriši</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="369"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="429"/>
         <source>Select All</source>
         <translation>Izaberi sve</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="370"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="430"/>
         <source>Clear All</source>
         <translation>Očisti sve</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="371"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="431"/>
         <source>Check Spelling</source>
         <translation>Provjera pravopisa</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="372"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="432"/>
         <source>Dictionaries</source>
         <translation>Rječnici</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="373"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="433"/>
         <source>Find…</source>
         <translation>Nađi…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="374"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="434"/>
         <source>Find Next</source>
         <translation>Nađi sljedeće</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="375"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="435"/>
         <source>Find Previous</source>
         <translation>Nađi prethodno</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="376"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="436"/>
         <source>Quick Find</source>
         <translation>Brza pretraga</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="377"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="687"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="437"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="711"/>
         <source>Search</source>
         <translation>Traži</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="378"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="438"/>
         <source>Search Using</source>
         <translation>Traži koristeći</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="379"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="439"/>
         <source>Create Search…</source>
         <translation>Napravi pretragu…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="380"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="440"/>
         <source>Zoom In</source>
         <translation>Uveličaj</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="381"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="441"/>
         <source>Zoom Out</source>
         <translation>Umanji</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="382"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="442"/>
         <source>Zoom Original</source>
         <translation>Izvorna veličina</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="383"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="443"/>
         <source>Go to Start of the Page</source>
         <translation>Idi na početak stranice</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="384"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="444"/>
         <source>Go to the End of the Page</source>
         <translation>Idi na kraj stranice</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="385"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="445"/>
         <source>Page Up</source>
         <translation>Stranica gore</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="386"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="446"/>
         <source>Page Down</source>
         <translation>Stranica dolje</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="387"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="447"/>
         <source>Page Left</source>
         <translation>Stranica lijevo</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="388"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="448"/>
         <source>Page Right</source>
         <translation>Stranica desno</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="389"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="449"/>
         <source>Enter Drag Scroll Mode</source>
         <translation>Režim klizanja prevlačenjem</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="390"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="450"/>
         <source>Enter Move Scroll Mode</source>
         <translation>Režim klizanja pomjeranjem</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="391"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="451"/>
         <source>Exit Scroll Mode</source>
         <translation>Napusti režim klizanja</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="392"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="452"/>
         <source>Print…</source>
         <translation>Štampaj…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="393"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="453"/>
         <source>Print Preview</source>
         <translation>Pregled štampanja</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="394"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="454"/>
         <source>Activate Address Field</source>
         <translation>Aktiviraj polje adrese</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="395"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="455"/>
         <source>Activate Search Field</source>
         <translation>Aktiviraj polje pretrage</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="396"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="456"/>
         <source>Activate Content</source>
         <translation>Aktivni sadržaj</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="397"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="457"/>
         <source>Go to Previously Used Tab</source>
         <translation>Idi na najskoriji jezičak</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="398"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="458"/>
         <source>Go to Least Recently Used Tab</source>
         <translation>Idi na najmanje korišćeni jezičak</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="399"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="459"/>
         <source>Activate Tab</source>
         <translation>Aktiviraj jezičak</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="400"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="460"/>
         <source>Go to Tab on Left</source>
         <translation>Idi na jezičak lijevo</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="401"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="461"/>
         <source>Go to Tab on Right</source>
         <translation>Idi na jezičak desno</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="402"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="462"/>
         <source>Manage Bookmarks</source>
         <translation>Menadžer obilježivača</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="403"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="463"/>
         <source>Bookmark Page…</source>
         <translation>Obilježi stranicu…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="404"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="464"/>
         <source>Bookmark All Open Pages</source>
         <translation>Obilježi sve otvorene stranice</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="405"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="465"/>
         <source>Open Bookmark</source>
         <translation>Otvori obilježivač</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="406"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="466"/>
         <source>Quick Bookmark Access</source>
         <translation>Brzi pristup obilježivačima</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="407"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="467"/>
         <source>Block pop-ups</source>
         <translation>Blokiraj iskačuće prozore</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="408"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="468"/>
         <source>Load Images</source>
         <translation>Učitavaj slike</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="409"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="469"/>
         <source>Cookies</source>
         <translation>Kolačići</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="410"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="470"/>
         <source>Cookies Policy</source>
         <translation>Kolačići</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="411"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="471"/>
         <source>Third-party Cookies Policy</source>
         <translation>Kolačići treće strane</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="412"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="472"/>
         <source>Plugins</source>
         <translation>Priključci</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="413"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="473"/>
         <source>Load Plugins</source>
         <translation>Učitaj priključke</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="414"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="474"/>
         <source>Enable JavaScript</source>
         <translation>Omogući javaskripte</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="415"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="475"/>
         <source>Enable Java</source>
         <translation>Omogući javu</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="416"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="476"/>
         <source>Enable Referrer</source>
         <translation>Omogući zaglavlje pratioca</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="417"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="477"/>
         <source>Proxy</source>
         <translation>Proksi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="418"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="478"/>
         <source>Enable Proxy</source>
         <translation>Omogući proksi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="419"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="479"/>
         <source>View Source</source>
         <translation>Izvorni kôd</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="420"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="480"/>
         <source>Open Current Page with External Application</source>
         <translation>Otvori tekuću stranicu vanjskim programom</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="421"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="481"/>
         <source>Validate</source>
         <translation>Ovjeri</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="422"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="482"/>
         <source>Inspect Page</source>
         <translation>Ispitaj stranicu</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="423"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="483"/>
         <source>Inspect Element…</source>
         <translation>Ispitaj element…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="424"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="484"/>
         <source>Work Offline</source>
         <translation>Rad van mreže</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="425"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="485"/>
         <source>Full Screen</source>
         <translation>Cio ekran</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="426"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="486"/>
         <source>Show Tab Switcher</source>
         <translation>Prebacivač jezičaka</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="427"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="487"/>
         <source>Show Menubar</source>
         <translation>Traka menija</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="428"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="488"/>
         <source>Show Tabbar</source>
         <translation>Traka alatki</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="429"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="489"/>
         <source>Show Sidebar</source>
         <translation>Bočna traka</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="430"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="490"/>
         <source>Show Error Console</source>
         <translation>Konzola grešaka</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="431"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="491"/>
         <source>Lock Toolbars</source>
         <translation>Zaključaj trake alatki</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="432"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="492"/>
         <source>Open Panel as Tab</source>
         <translation>Otvori panel kao jezičak</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="433"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="493"/>
         <source>Close Panel</source>
         <translation>Zatvori panel</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="434"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="494"/>
         <source>Content Blocking…</source>
         <translation>Blokiranje sadržaja…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="435"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="495"/>
         <source>View History</source>
         <translation>Pogledaj istorijat</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="436"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="496"/>
         <source>Clear History…</source>
         <translation>Očisti istorijat…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="437"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="497"/>
         <source>Addons</source>
         <translation>Dodaci</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="438"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="498"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="46"/>
         <source>Notes</source>
         <translation>Bilješke</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="439"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="499"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="44"/>
         <source>Transfers</source>
         <translation>Prenosi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="440"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="500"/>
         <source>Preferences…</source>
         <translation>Postavke…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="441"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="501"/>
         <source>Website Preferences…</source>
         <translation>Postavke za vebsajt…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="442"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="502"/>
         <source>Quick Preferences</source>
         <translation>Brze postavke</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="443"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="503"/>
         <source>Reset Options</source>
         <translation>Resetuj opcije</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="444"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="504"/>
         <source>Website Information…</source>
         <translation>Podaci o vebsajtu…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="445"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="505"/>
         <source>Website Certificate Information…</source>
         <translation>Podaci o sertifikatu vebsajta…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="446"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="506"/>
         <source>Switch Application Language…</source>
         <translation>Promijeni jezik programa…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="447"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="507"/>
         <source>Check for Updates…</source>
         <translation>Potraži nadogradnje…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="448"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="508"/>
         <source>Diagnostic Report…</source>
         <translation>Dijagnostički izvještaj…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="449"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="509"/>
         <source>About Otter…</source>
         <translation>O Oteru…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="450"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="510"/>
         <source>About Qt…</source>
         <translation>O Kutu…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="451"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="511"/>
         <source>Exit</source>
         <translation>Izađi</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="46"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="47"/>
         <source>Menu Bar</source>
         <translation>Traka menija</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="47"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="48"/>
         <source>Tab Bar</source>
         <translation>Traka jezičaka</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="48"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="49"/>
         <source>Navigation Bar</source>
         <translation>Traka navigacije</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="49"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="50"/>
+        <source>Progress Bar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="51"/>
         <source>Status Bar</source>
         <translation>Traka stanja</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="332"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="326"/>
         <source>Remove Bookmark</source>
         <translation>Ukloni obilježivač</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="337"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="336"/>
         <source>Copy address of source page</source>
         <translation>Kopiraj adresu izvorne stranice</translation>
     </message>
@@ -7954,52 +8191,52 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
         <translation>Prikaži prozore</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="555"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="579"/>
         <source>Edit Bookmark…</source>
         <translation>Uredi obilježivač…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="555"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="579"/>
         <source>Add Bookmark…</source>
         <translation>Dodaj obilježivač…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="773"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="797"/>
         <source>Edit Link Bookmark…</source>
         <translation>Uredi vezu obilježivača…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="836"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="860"/>
         <source>Open Image in New Tab</source>
         <translation>Otvori sliku u novom jezičku</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="881"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="905"/>
         <source>Save Video…</source>
         <translation>Sačuvaj video…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="881"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="905"/>
         <source>Save Audio…</source>
         <translation>Sačuvaj zvuk…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="887"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="911"/>
         <source>Copy Video Link to Clipboard</source>
         <translation>Kopiraj vezu videa na klipbord</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="887"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="911"/>
         <source>Copy Audio Link to Clipboard</source>
         <translation>Kopiraj vezu zvuka na klipbord</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="905"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="929"/>
         <source>Pause</source>
         <translation>Pauziraj</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="912"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="936"/>
         <source>Unmute</source>
         <translation>Uključi zvuk</translation>
     </message>
@@ -8012,83 +8249,83 @@ Kliknite na dugme Instaliraj za ponovno pokretanje i instalaciju nadogradnje ili
 <context>
     <name>main</name>
     <message>
-        <location filename="../../src/core/Application.cpp" line="113"/>
+        <location filename="../../src/core/Application.cpp" line="112"/>
         <source>URL to open</source>
         <translation>URL za otvaranje</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="114"/>
+        <location filename="../../src/core/Application.cpp" line="113"/>
         <source>Uses &lt;path&gt; as cache directory</source>
         <translation>Koristi &lt;path&gt; za direktorijum keša</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="115"/>
+        <location filename="../../src/core/Application.cpp" line="114"/>
         <source>Uses &lt;path&gt; as profile directory</source>
         <translation>Koristi &lt;path&gt; za direktorijum profila</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="116"/>
+        <location filename="../../src/core/Application.cpp" line="115"/>
         <source>Restores session &lt;session&gt; if it exists</source>
         <translation>Vraća sesiju &lt;session&gt; ako postoji</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="117"/>
+        <location filename="../../src/core/Application.cpp" line="116"/>
         <source>Starts private session</source>
         <translation>Pokreće privatnu sesiju</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="118"/>
+        <location filename="../../src/core/Application.cpp" line="117"/>
         <source>Forces session chooser dialog</source>
         <translation>Prisiljava dijalog izbora sesije</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="119"/>
+        <location filename="../../src/core/Application.cpp" line="118"/>
         <source>Sets profile and cache paths to directories inside the same directory as that of application binary</source>
         <translation>Postavlja putanje profila i keša na isti direktorijum u kom je izvršna</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="120"/>
+        <location filename="../../src/core/Application.cpp" line="119"/>
         <source>Tells application to avoid writing data to disk</source>
         <translation>Naredba programu da ne upisuje podatke na disk</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="121"/>
+        <location filename="../../src/core/Application.cpp" line="120"/>
         <source>Prints out diagnostic report and exits application</source>
         <translation>Ispis dijagnostičkog izveštaja i napuštanje programa</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="91"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="88"/>
         <source>Failed to open content blocking profile file: %1</source>
         <translation>Neuspjeh otvaranja fajla profila blokiranja sadržaja: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="100"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="97"/>
         <source>Failed to load content blocking profile file: invalid header</source>
         <translation>Neuspjeh ažuriranja profila blokiranja sadržaja: Neispravno zaglavlje</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="474"/>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="496"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="372"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="395"/>
         <source>Failed to update content blocking profile: %1</source>
         <translation>Neuspjeh ažuriranja profila blokiranja sadržaja: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="486"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="384"/>
         <source>Failed to update content blocking profile: checksum mismatch</source>
         <translation>Neuspjeh ažuriranja profila blokiranja sadržaja: Kontrolne sume se ne poklapaju</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="609"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="522"/>
         <source>Failed to update content blocking profile, update URL is empty</source>
         <translation>Neuspjeh ažuriranja profila blokiranja sadržaja, URL ažuriranja je prazan</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="613"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="526"/>
         <source>Failed to update content blocking profile, update URL (%1) is invalid</source>
         <translation>Neuspjeh ažuriranja profila blokiranja sadržaja, URL ažuriranja (%1) nije ispravan</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="359"/>
+        <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="351"/>
         <source>Failed to parse entry of proxy auto-config (PAC): %1</source>
         <translation>Neuspjeh raščlanjivanja auto-postavki proksija (PAC): %1</translation>
     </message>
@@ -8108,17 +8345,17 @@ Skripta: %2</translation>
         <translation>(Neimenovana)</translation>
     </message>
     <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="45"/>
+        <location filename="../../src/core/UpdateChecker.cpp" line="44"/>
         <source>Unable to check for updates. Invalid URL: %1</source>
         <translation>Ne mogu da potražim nadogradnje. Neispravan URL: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="66"/>
+        <location filename="../../src/core/UpdateChecker.cpp" line="65"/>
         <source>Unable to check for updates: %1</source>
         <translation>Ne mogu da potražim nadogradnje: %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="97"/>
+        <location filename="../../src/core/UpdateChecker.cpp" line="96"/>
         <source>Unable to parse version number: %1</source>
         <translation>Ne mogu da raščlanim broj izdanja: %1</translation>
     </message>
@@ -8155,24 +8392,24 @@ Greška: %2</translation>
         <translation>Podrazumijevana</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="599"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="633"/>
         <source>Blocked request</source>
         <translation>Blokirani zahtjev</translation>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="440"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="439"/>
         <source>Failed to run File Associations Manager, error code: %1
 Application ID: %2</source>
         <translation>Neuspjeh pokretanja menadžera pridruživanja fajlova, kôd greške: %1
 ID programa: %2</translation>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="459"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="458"/>
         <source>Failed to run File Associations Manager, error code: %1</source>
         <translation>Neuspjeh pokretanja menadžera pridruživanja fajlova, kôd greške: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="514"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="513"/>
         <source>Failed to register application to system registry: %1, %2</source>
         <translation>Neuspjeh upisa programa u sistemski registar: %1, %2</translation>
     </message>
@@ -8201,31 +8438,96 @@ ID programa: %2</translation>
     </message>
 </context>
 <context>
+    <name>userAgents</name>
+    <message>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="58"/>
+        <source>Mask as Google Chrome 50 (Windows)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="59"/>
+        <source>Mask as Mozilla Firefox 45 (Windows)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="60"/>
+        <source>Mask as Microsoft Edge 25 (Windows)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="61"/>
+        <source>Mask as Internet Explorer 10.0 (Windows)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="62"/>
+        <source>Mask as Opera 12.16 (Windows)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="63"/>
+        <source>Mask as Safari 9.0 (MacOS)</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>utils</name>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="147"/>
+        <location filename="../../src/core/Utils.cpp" line="151"/>
         <source>Error %1</source>
         <translation>Greška %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="149"/>
+        <location filename="../../src/core/Utils.cpp" line="153"/>
         <source>You tried to access the address &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, which is currently unavailable. Please make sure that the web address (URL) is correctly spelled and punctuated, then try reloading the page.</source>
         <translation>Pokušali ste da otvorite adresu &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, koje je trenutno nedostupna. Provjerite da li je veb adresa (URL) tačno napisana pa ponovo učitajte stranicu.</translation>
     </message>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="156"/>
+        <location filename="../../src/core/Utils.cpp" line="159"/>
         <source>Make sure your internet connection is active and check whether other applications that rely on the same connection are working.</source>
         <translation>Uvjerite se da je vaša veza sa internetom aktivna i provjerite da li rade ostali programi koji se oslanjaju na istu vezu.</translation>
     </message>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="157"/>
+        <location filename="../../src/core/Utils.cpp" line="159"/>
         <source>Check that the setup of any internet security software is correct and does not interfere with ordinary web browsing.</source>
         <translation>Provjerite da li su postavke nekog softvera za bezbjednost na internetu ispravne i ne ometaju obično veb-pregledanje.</translation>
     </message>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="158"/>
+        <location filename="../../src/core/Utils.cpp" line="159"/>
         <source>Try pressing the F12 key on your keyboard and disabling proxy servers, unless you know that you are required to use a proxy to connect to the internet, and then reload the page.</source>
         <translation>Pritisnite taster F12 na vašoj tastaturi pa isključite proksi servere, ako znate da oni nisu neophodni za vezu sa internetom, pa ponovo učitajte stranicu.</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/Utils.cpp" line="310"/>
+        <source>%1 files (*.%2)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/Utils.cpp" line="314"/>
+        <source>All files (*)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/Utils.cpp" line="320"/>
+        <source>Save File</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/Utils.cpp" line="341"/>
+        <location filename="../../src/core/Utils.cpp" line="350"/>
+        <source>Warning</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/Utils.cpp" line="341"/>
+        <source>This path is already used by different download, pick another one.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/Utils.cpp" line="350"/>
+        <source>Target path is not writable.
+Select another one.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

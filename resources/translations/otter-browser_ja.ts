@@ -117,39 +117,39 @@
         <translation>下に移動</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="39"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="38"/>
         <source>Name</source>
         <translation>名前</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="39"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="38"/>
         <source>Code</source>
         <translation>コード</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="64"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="60"/>
         <source>Unknown [%1]</source>
         <translation>未知 [%1]</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="75"/>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="136"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="77"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="138"/>
         <source>Any other</source>
         <translation>その他の</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="76"/>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="140"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="78"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="142"/>
         <source>System language (%1 - %2)</source>
         <translation>システム言語(%1 - %2)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="148"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="150"/>
         <source>Custom</source>
         <translation>カスタム</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="152"/>
+        <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="154"/>
         <source>Unknown</source>
         <translation>未知</translation>
     </message>
@@ -182,28 +182,28 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="102"/>
         <source>Select File</source>
-        <translation type="unfinished"/>
+        <translation>ファイルを選択</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="102"/>
         <source>User Script files (*.js)</source>
-        <translation type="unfinished"/>
+        <translation>ユーザースクリプト (*.js)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="113"/>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="120"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>エラー</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="113"/>
         <source>User Script with this name already exists.</source>
-        <translation type="unfinished"/>
+        <translation>同じ名前のユーザースクリプトがすでに存在しています。</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="120"/>
         <source>Failed to import User Script file.</source>
-        <translation type="unfinished"/>
+        <translation>ユーザースクリプトファイルのインポートに失敗しました。</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="233"/>
@@ -224,42 +224,42 @@
 <context>
     <name>Otter::AddonsManager</name>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="76"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="81"/>
         <source>Addons Manager</source>
-        <translation type="unfinished"/>
+        <translation>アドオンマネージャー</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="77"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="82"/>
         <source>Bookmarks Manager</source>
         <translation>ブックマークマネージャー</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="78"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="83"/>
         <source>Cache Manager</source>
         <translation>キャッシュを管理</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="79"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="84"/>
         <source>Configuration Manager</source>
         <translation>構成管理</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="80"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="85"/>
         <source>Cookies Manager</source>
         <translation>クッキーを管理</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="81"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="86"/>
         <source>History Manager</source>
         <translation>履歴マネージャー</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="82"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="87"/>
         <source>Notes Manager</source>
         <translation>ノートマネージャー</translation>
     </message>
     <message>
-        <location filename="../../src/core/AddonsManager.cpp" line="83"/>
+        <location filename="../../src/core/AddonsManager.cpp" line="88"/>
         <source>Transfers Manager</source>
         <translation>ダウンロードマネージャー</translation>
     </message>
@@ -274,17 +274,17 @@
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="104"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>ブックマーク</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="138"/>
         <source>Local files</source>
-        <translation type="unfinished"/>
+        <translation>ローカルファイル</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="154"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>履歴</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="176"/>
@@ -295,88 +295,88 @@
 <context>
     <name>Otter::AddressWidget</name>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="96"/>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="119"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="98"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="121"/>
         <source>Enter address or search…</source>
         <translation>検索キーワードあるいはウェブアドレスを入力...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="309"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="311"/>
         <source>Undo</source>
         <translation>取り消す</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="310"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="312"/>
         <source>Redo</source>
         <translation>やり直し</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="312"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="314"/>
         <source>Cut</source>
         <translation>切り取り</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="313"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="315"/>
         <source>Copy</source>
         <translation>コピー</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="314"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="316"/>
         <source>Paste</source>
         <translation>貼り付け</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="321"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="323"/>
         <source>Delete</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="323"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="325"/>
         <source>Copy to Note</source>
         <translation>ノートにコピー</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="325"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="327"/>
         <source>Clear All</source>
         <translation>全件削除</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="326"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="328"/>
         <source>Select All</source>
         <translation>全て選択</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="683"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="685"/>
         <source>Remove Bookmark</source>
         <translation>ブックマークを削除</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="683"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="685"/>
         <source>Add Bookmark</source>
         <translation>ブックマークを追加</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="699"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="701"/>
         <source>Feed List</source>
         <translation>フィードリスト</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="728"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="730"/>
         <source>Click to load all plugins on the page</source>
         <translation>クリックするとページ上の全てのプラグインを読み込みます。</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1036"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1043"/>
         <source>Show Website Information</source>
         <translation>ウェブサイト情報を表示</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1132"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1139"/>
         <source>(Untitled)</source>
         <translation>(無題)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1165"/>
+        <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="1172"/>
         <source>Remove This Icon</source>
         <translation>このアイコンを削除</translation>
     </message>
@@ -384,96 +384,96 @@
 <context>
     <name>Otter::Application</name>
     <message>
-        <location filename="../../src/core/Application.cpp" line="254"/>
-        <location filename="../../src/core/Application.cpp" line="286"/>
-        <location filename="../../src/core/Application.cpp" line="360"/>
-        <location filename="../../src/core/Application.cpp" line="527"/>
+        <location filename="../../src/core/Application.cpp" line="253"/>
+        <location filename="../../src/core/Application.cpp" line="285"/>
+        <location filename="../../src/core/Application.cpp" line="359"/>
+        <location filename="../../src/core/Application.cpp" line="526"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="254"/>
+        <location filename="../../src/core/Application.cpp" line="253"/>
         <source>Profile directory (%1) is not writable, application will be running in read-only mode.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="278"/>
+        <location filename="../../src/core/Application.cpp" line="277"/>
         <source>Your profile directory (%1) ran out of free disk space.
 This may lead to malfunctions or even data loss.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="282"/>
+        <location filename="../../src/core/Application.cpp" line="281"/>
         <source>Your profile directory (%1) is running low on free disk space (%2 remaining).
 This may lead to malfunctions or even data loss.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="288"/>
-        <location filename="../../src/core/Application.cpp" line="919"/>
-        <location filename="../../src/core/Application.cpp" line="968"/>
+        <location filename="../../src/core/Application.cpp" line="287"/>
+        <location filename="../../src/core/Application.cpp" line="918"/>
+        <location filename="../../src/core/Application.cpp" line="967"/>
         <source>Do you want to continue?</source>
         <translation>続けますか？</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="290"/>
-        <location filename="../../src/core/Application.cpp" line="923"/>
-        <location filename="../../src/core/Application.cpp" line="972"/>
+        <location filename="../../src/core/Application.cpp" line="289"/>
+        <location filename="../../src/core/Application.cpp" line="922"/>
+        <location filename="../../src/core/Application.cpp" line="971"/>
         <source>Do not show this message again</source>
         <translation>今後このメッセージを表示しない</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="291"/>
+        <location filename="../../src/core/Application.cpp" line="290"/>
         <source>Continue in Read-only Mode</source>
         <translation>読み取り専用モードで続行</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="293"/>
+        <location filename="../../src/core/Application.cpp" line="292"/>
         <source>Ignore</source>
         <translation>無視</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="294"/>
+        <location filename="../../src/core/Application.cpp" line="293"/>
         <source>Quit</source>
         <translation>終了</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="360"/>
+        <location filename="../../src/core/Application.cpp" line="359"/>
         <source>SSL support is not available or incomplete.
 Some websites may work incorrectly or do not work at all.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="527"/>
+        <location filename="../../src/core/Application.cpp" line="526"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
         <translation>残念ながらこのセッションは正しく保存されませんでした。
 セッションを復元しますか？</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="631"/>
+        <location filename="../../src/core/Application.cpp" line="630"/>
         <source>New update %1 from %2 channel is available!</source>
         <translation>%2チャンネルからの新しい更新%1が利用可能です！</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="917"/>
-        <location filename="../../src/core/Application.cpp" line="966"/>
+        <location filename="../../src/core/Application.cpp" line="916"/>
+        <location filename="../../src/core/Application.cpp" line="965"/>
         <source>Question</source>
         <translation>質問</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/core/Application.cpp" line="918"/>
+        <location filename="../../src/core/Application.cpp" line="917"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
         <translation><numerusform>あなたは、%n個のファイルがダウンロードされている間に終了しようとしています。</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="925"/>
-        <location filename="../../src/core/Application.cpp" line="974"/>
+        <location filename="../../src/core/Application.cpp" line="924"/>
+        <location filename="../../src/core/Application.cpp" line="973"/>
         <source>Hide</source>
         <translation>非表示</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="967"/>
+        <location filename="../../src/core/Application.cpp" line="966"/>
         <source>You are about to quit the current Otter Browser session.</source>
         <translation>あなたは現在のOtter Browserのセッションを終了しようとしています。</translation>
     </message>
@@ -726,108 +726,108 @@ Are you sure that you want to restore this session anyway?</source>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="47"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="171"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="212"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="165"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="206"/>
         <source>Add Folder</source>
         <translation>フォルダーを追加</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="48"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="172"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="211"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="213"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="166"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="205"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="207"/>
         <source>Add Bookmark</source>
         <translation>ブックマークを追加</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="49"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="173"/>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="214"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="208"/>
         <source>Add Separator</source>
         <translation>区切り線を追加</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Title</source>
         <translation>タイトル</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Address</source>
         <translation>アドレス</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Description</source>
         <translation>説明文</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Keyword</source>
         <translation>キーワード</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Added</source>
         <translation>追加されました</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Modified</source>
         <translation>修正されました</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Visited</source>
         <translation>訪問済み</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="55"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Visits</source>
         <translation>訪問</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="161"/>
         <source>Empty Trash</source>
         <translation>空のゴミ箱</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="179"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="173"/>
         <source>Open</source>
         <translation>開く</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="180"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="174"/>
         <source>Open in New Tab</source>
         <translation>新しいタブで開く</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="181"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="175"/>
         <source>Open in New Background Tab</source>
         <translation>新しいバックグラウンドタブで開く</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="183"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="177"/>
         <source>Open in New Window</source>
         <translation>新しいウィンドウで開く</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="184"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="178"/>
         <source>Open in New Background Window</source>
         <translation>新しいバックグラウンドウィンドウで開く</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="223"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="217"/>
         <source>Restore Bookmark</source>
         <translation>ブックマークを復元</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="231"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="225"/>
         <source>Properties…</source>
         <translation>プロパティ...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="358"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="352"/>
         <source>Bookmarks Manager</source>
         <translation>ブックマークマネージャー</translation>
     </message>
@@ -999,52 +999,52 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>有効期限</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="351"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="341"/>
         <source>Open</source>
         <translation>開く</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="352"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="342"/>
         <source>Open in New Tab</source>
         <translation>新しいタブで開く</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="353"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="343"/>
         <source>Open in New Background Tab</source>
         <translation>新しいバックグラウンドタブで開く</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="355"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="345"/>
         <source>Open in New Window</source>
         <translation>新しいウィンドウで開く</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="356"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="346"/>
         <source>Open in New Background Window</source>
         <translation>新しいバックグラウンドウィンドウで開く</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="358"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="348"/>
         <source>Copy Link to Clipboard</source>
         <translation>クリップボードにリンクをコピー</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="360"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="350"/>
         <source>Remove Entry</source>
         <translation>エントリーを削除</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="365"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="355"/>
         <source>Remove All Entries from This Domain</source>
         <translation>このドメインから全てのエントリーを削除</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="427"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="422"/>
         <source>Unknown</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="558"/>
+        <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="555"/>
         <source>Cache</source>
         <translation>キャッシュ</translation>
     </message>
@@ -1400,37 +1400,37 @@ Exponent: %2</source>
         <translation>検索</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="86"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="79"/>
         <source>Name</source>
         <translation>名前</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="86"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="79"/>
         <source>Type</source>
         <translation>種類</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="86"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="79"/>
         <source>Value</source>
         <translation>Value</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="227"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="215"/>
         <source>Copy Option Name</source>
         <translation>オプション名をコピー</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="228"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="216"/>
         <source>Copy Option Value</source>
         <translation>オプション値をコピー</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="230"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="218"/>
         <source>Restore Default Value</source>
         <translation>初期値に戻す</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="237"/>
+        <location filename="../../src/modules/windows/configuration/ConfigurationContentsWidget.cpp" line="225"/>
         <source>Configuration Manager</source>
         <translation>構成管理</translation>
     </message>
@@ -1546,6 +1546,74 @@ Exponent: %2</source>
     </message>
 </context>
 <context>
+    <name>Otter::ContentBlockingInformationWidget</name>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="44"/>
+        <source>Blocked Elements</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="45"/>
+        <source>Active Profiles</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="194"/>
+        <source>main frame</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="198"/>
+        <source>subframe</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="202"/>
+        <source>stylesheet</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="206"/>
+        <source>script</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="210"/>
+        <source>image</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="214"/>
+        <source>object</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="218"/>
+        <source>object subrequest</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="222"/>
+        <source>XHR</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="226"/>
+        <source>other</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="245"/>
+        <source>Enable Content Blocking</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="298"/>
+        <source>Blocked Elements: %1</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>Otter::ContentBlockingIntervalDelegate</name>
     <message numerus="yes">
         <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="37"/>
@@ -1567,7 +1635,7 @@ Exponent: %2</source>
 <context>
     <name>Otter::ContentBlockingProfile</name>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="48"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="434"/>
         <source>(Unknown)</source>
         <translation>(未知)</translation>
     </message>
@@ -1639,44 +1707,44 @@ Exponent: %2</source>
         <translation>適用</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="273"/>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="292"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="272"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="291"/>
         <source>Question</source>
         <translation>質問</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="274"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="273"/>
         <source>You are about to delete %n cookie(s).</source>
         <translation><numerusform>あなたは、%n個のクッキーを削除しようとしています(s)。</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="275"/>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="294"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="274"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="293"/>
         <source>Do you want to continue?</source>
         <translation>続けますか？</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="293"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="292"/>
         <source>You are about to delete all cookies.</source>
         <translation>あなたは全てのクッキーを削除しようとしています。</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="314"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="313"/>
         <source>Remove Cookie</source>
         <translation>クッキーを削除</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="317"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="316"/>
         <source>Remove All Cookies from This Domain…</source>
         <translation>このドメインから全てのクッキーを削除...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="320"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="319"/>
         <source>Remove All Cookies…</source>
         <translation>全てのクッキーを削除...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="449"/>
+        <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="448"/>
         <source>Cookies Manager</source>
         <translation>クッキーを管理</translation>
     </message>
@@ -1762,17 +1830,17 @@ Exponent: %2</source>
     <name>Otter::GoBackActionWidget</name>
     <message>
         <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="69"/>
-        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="140"/>
+        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="134"/>
         <source>(Untitled)</source>
         <translation>(無題)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="168"/>
+        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="162"/>
         <source>Remove Entry</source>
         <translation>エントリーを削除</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="169"/>
+        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="163"/>
         <source>Purge Entry</source>
         <translation>エントリーを切り離す</translation>
     </message>
@@ -1781,17 +1849,17 @@ Exponent: %2</source>
     <name>Otter::GoForwardActionWidget</name>
     <message>
         <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="69"/>
-        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="140"/>
+        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="134"/>
         <source>(Untitled)</source>
         <translation>(無題)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="168"/>
+        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="162"/>
         <source>Remove Entry</source>
         <translation>エントリーを削除する</translation>
     </message>
     <message>
-        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="169"/>
+        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="163"/>
         <source>Purge Entry</source>
         <translation>エントリーを切り離す</translation>
     </message>
@@ -1837,108 +1905,108 @@ Exponent: %2</source>
         <translation>検索</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
         <source>Today</source>
         <translation>今日</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
         <source>Yesterday</source>
         <translation>昨日</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
         <source>Earlier This Week</source>
         <translation>週明け</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
         <source>Previous Week</source>
         <translation>前の週</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
         <source>Earlier This Month</source>
         <translation>今月</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
         <source>Earlier This Year</source>
         <translation>今年の初め</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="43"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
         <source>Older</source>
         <translation>古い</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="49"/>
         <source>Address</source>
         <translation>アドレス</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="49"/>
         <source>Title</source>
         <translation>タイトル</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="51"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="49"/>
         <source>Date</source>
         <translation>日</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="198"/>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="243"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="191"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="235"/>
         <source>(Untitled)</source>
         <translation>(無題)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="363"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="355"/>
         <source>Open</source>
         <translation>開く</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="364"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="356"/>
         <source>Open in New Tab</source>
         <translation>新しいタブで開く</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="365"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="357"/>
         <source>Open in New Background Tab</source>
         <translation>新しいバックグラウンドタブで開く</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="367"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="359"/>
         <source>Open in New Window</source>
         <translation>新しいウィンドウで開く</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="368"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="360"/>
         <source>Open in New Background Window</source>
         <translation>新しいバックグラウンドウィンドウで開く</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="370"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="362"/>
         <source>Add to Bookmarks…</source>
         <translation>ブックマークに追加...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="371"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="363"/>
         <source>Copy Link to Clipboard</source>
         <translation>クリップボードにリンクをコピー</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="373"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="365"/>
         <source>Remove Entry</source>
         <translation>エントリーを削除</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="374"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="366"/>
         <source>Remove All Entries from This Domain</source>
         <translation>このドメインからすべてのエントリーを削除</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="407"/>
+        <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="399"/>
         <source>History</source>
         <translation>履歴</translation>
     </message>
@@ -1954,17 +2022,17 @@ Exponent: %2</source>
 <context>
     <name>Otter::HtmlBookmarksImporter</name>
     <message>
-        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="142"/>
+        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="151"/>
         <source>HTML Bookmarks</source>
         <translation>HTMLブックマーク</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="147"/>
+        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="156"/>
         <source>Imports bookmarks from HTML file (Netscape format).</source>
         <translation>HTMLファイルからブックマークをインポート(Netscape形式)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="157"/>
+        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="166"/>
         <source>HTML files (*.htm *.html)</source>
         <translation>HTMLファイル(*.htm; *.html)</translation>
     </message>
@@ -2042,45 +2110,45 @@ Exponent: %2</source>
         <translation>長い説明文:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="36"/>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="37"/>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="38"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="39"/>
         <source>Unknown</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="65"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="66"/>
         <source>%1 GB (%2 bytes)</source>
         <translation>%1 GB (%2 bytes)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="69"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="70"/>
         <source>%1 MB (%2 bytes)</source>
         <translation>%1 MB (%2 bytes)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="74"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="75"/>
         <source>%1 KB (%2 bytes)</source>
         <translation>%1 KB (%2 bytes)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="79"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="80"/>
         <source>%1 B</source>
         <translation>%1 B</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="95"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="96"/>
         <source>%1 x %2 pixels @ %3 bits per pixel in %n frame(s)</source>
         <translation><numerusform>%1 x %2 pixels @ %3 bits per pixel in %n frames(s)</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="99"/>
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="106"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="100"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="107"/>
         <source>%1 x %2 pixels @ %3 bits per pixel</source>
         <translation>%1 x %2 pixels @ %3 bits per pixel</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="110"/>
+        <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="111"/>
         <source>%1 x %2 pixels</source>
         <translation>%1 x %2 ピクセル</translation>
     </message>
@@ -2228,12 +2296,12 @@ Exponent: %2</source>
         <translation>著者：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="41"/>
+        <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="62"/>
         <source>Action</source>
         <translation>動作</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="125"/>
+        <location filename="../../src/ui/preferences/KeyboardProfileDialog.cpp" line="122"/>
         <source>Shortcut</source>
         <translation>ショートカット</translation>
     </message>
@@ -2241,27 +2309,27 @@ Exponent: %2</source>
 <context>
     <name>Otter::LocalListingNetworkReply</name>
     <message>
-        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="73"/>
+        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="72"/>
         <source>Directory Contents</source>
         <translation>ディレクトリ内容</translation>
     </message>
     <message>
-        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="76"/>
+        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="75"/>
         <source>Name</source>
         <translation>名前</translation>
     </message>
     <message>
-        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="77"/>
+        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="76"/>
         <source>Type</source>
         <translation>種類</translation>
     </message>
     <message>
-        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="78"/>
+        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="77"/>
         <source>Size</source>
         <translation>サイズ</translation>
     </message>
     <message>
-        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="79"/>
+        <location filename="../../src/core/LocalListingNetworkReply.cpp" line="78"/>
         <source>Date</source>
         <translation>日</translation>
     </message>
@@ -2293,6 +2361,11 @@ Exponent: %2</source>
         <source>Custom</source>
         <translation>カスタム</translation>
     </message>
+    <message>
+        <location filename="../../src/ui/LocaleDialog.cpp" line="46"/>
+        <source>Unknown [%1]</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Otter::MainWindow</name>
@@ -2302,41 +2375,64 @@ Exponent: %2</source>
         <translation>コンソール</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="399"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="427"/>
         <source>Open File</source>
         <translation>ファイルを開く</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="677"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="710"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="683"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="716"/>
         <source>Web backend: %1 %2.</source>
         <translation>ウェブバックエンド: %1 %2.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="687"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="720"/>
         <source>SSL library not available.</source>
         <translation>SSLライブラリは利用できません。</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="691"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="724"/>
         <source>SSL library version: %1.</source>
         <translation>SSLライブラリバージョン: %1.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="866"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="899"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../../src/ui/MainWindow.cpp" line="866"/>
+        <location filename="../../src/ui/MainWindow.cpp" line="899"/>
         <source>You already have this address in your bookmarks.
 Do you want to continue?</source>
         <translation>あなたは既にこのアドレスのブックマークを持っています。
 続けますか？</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::MasterPasswordDialog</name>
+    <message>
+        <location filename="../../src/ui/MasterPasswordDialog.ui" line="14"/>
+        <source>Set Master Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/MasterPasswordDialog.ui" line="22"/>
+        <source>Current password:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/MasterPasswordDialog.ui" line="32"/>
+        <source>New password:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/MasterPasswordDialog.ui" line="42"/>
+        <source>Confirm new password:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2403,64 +2499,64 @@ Do you want to continue?</source>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="351"/>
-        <location filename="../../src/ui/Menu.cpp" line="499"/>
-        <location filename="../../src/ui/Menu.cpp" line="514"/>
-        <location filename="../../src/ui/Menu.cpp" line="574"/>
-        <location filename="../../src/ui/Menu.cpp" line="624"/>
-        <location filename="../../src/ui/Menu.cpp" line="678"/>
+        <location filename="../../src/ui/Menu.cpp" line="498"/>
+        <location filename="../../src/ui/Menu.cpp" line="513"/>
+        <location filename="../../src/ui/Menu.cpp" line="573"/>
+        <location filename="../../src/ui/Menu.cpp" line="629"/>
+        <location filename="../../src/ui/Menu.cpp" line="684"/>
         <source>(Untitled)</source>
         <translation>(無題)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="389"/>
+        <location filename="../../src/ui/Menu.cpp" line="388"/>
         <source>Auto Detect</source>
         <translation>自動検出</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="444"/>
+        <location filename="../../src/ui/Menu.cpp" line="443"/>
         <source>Clear</source>
         <translation>クリア</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="454"/>
+        <location filename="../../src/ui/Menu.cpp" line="453"/>
         <source>Window - %1</source>
         <translation>Window - %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/Menu.cpp" line="514"/>
+        <location filename="../../src/ui/Menu.cpp" line="513"/>
         <source>%1 (%n tab(s))</source>
         <translation><numerusform>%1 (%n tab(s))</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="528"/>
-        <location filename="../../src/ui/Menu.cpp" line="612"/>
+        <location filename="../../src/ui/Menu.cpp" line="527"/>
+        <location filename="../../src/ui/Menu.cpp" line="611"/>
         <source>Default</source>
         <translation>デフォルト</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="586"/>
+        <location filename="../../src/ui/Menu.cpp" line="585"/>
         <source>Add New</source>
         <translation>新規追加</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="587"/>
+        <location filename="../../src/ui/Menu.cpp" line="586"/>
         <source>Add Toolbar</source>
         <translation>ツールバーを追加</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="588"/>
+        <location filename="../../src/ui/Menu.cpp" line="587"/>
         <source>Add Bookmarks Bar…</source>
         <translation>ブックマークバーを追加...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="593"/>
+        <location filename="../../src/ui/Menu.cpp" line="592"/>
         <source>Reset to Defaults…</source>
         <translation>下書きを初期化...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Menu.cpp" line="634"/>
-        <source>Custom</source>
-        <translation>カスタム</translation>
+        <location filename="../../src/ui/Menu.cpp" line="640"/>
+        <source>Custom…</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2526,57 +2622,57 @@ Do you want to continue?</source>
         <translation>著者：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="39"/>
-        <source>Context and Steps</source>
-        <translation>コンテキストと手順</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="39"/>
-        <source>Action</source>
-        <translation>動作</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="42"/>
-        <source>Step</source>
-        <translation>ステップ</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Generic</source>
         <translation>一般</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Link</source>
         <translation>リンク</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Editable Content</source>
         <translation>編集可能なコンテンツ</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Tab Handle</source>
         <translation>タブの処理</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Tab Handle of Active Tab</source>
         <translation>アクティブなタブのタブハンドル</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Empty Area of Tab Bar</source>
         <translation>タブバーの空白の領域</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="45"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Any Toolbar</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="131"/>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="68"/>
+        <source>Context and Steps</source>
+        <translation>コンテキストと手順</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="68"/>
+        <source>Action</source>
+        <translation>動作</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="72"/>
+        <source>Step</source>
+        <translation>ステップ</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="117"/>
         <source>Select Action</source>
         <translation>動作を選択</translation>
     </message>
@@ -2605,12 +2701,12 @@ Do you want to continue?</source>
 <context>
     <name>Otter::NetworkManagerFactory</name>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="282"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="307"/>
         <source>Custom</source>
         <translation>カスタム</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkManagerFactory.cpp" line="297"/>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="322"/>
         <source>Default</source>
         <translation>デフォルト</translation>
     </message>
@@ -2619,7 +2715,7 @@ Do you want to continue?</source>
     <name>Otter::NetworkProxyFactory</name>
     <message>
         <location filename="../../src/core/NetworkProxyFactory.cpp" line="70"/>
-        <location filename="../../src/core/NetworkProxyFactory.cpp" line="146"/>
+        <location filename="../../src/core/NetworkProxyFactory.cpp" line="145"/>
         <source>Failed to load proxy auto-config (PAC): %1</source>
         <translation>プロキシ自動設定の読み込みに失敗しました (PAC): %1</translation>
     </message>
@@ -2637,73 +2733,83 @@ Do you want to continue?</source>
         <translation>検索</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="103"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="98"/>
+        <source>Address:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="105"/>
+        <source>Date:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="139"/>
         <source>Delete</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="110"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="146"/>
         <source>Add</source>
         <translation>追加</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="45"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="154"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="185"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="46"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="149"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="180"/>
         <source>Add Folder</source>
         <translation>フォルダーを追加</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="46"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="184"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="186"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="47"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="179"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="181"/>
         <source>Add Note</source>
         <translation>ノートを追加</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="47"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="156"/>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="187"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="48"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="151"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="182"/>
         <source>Add Separator</source>
         <translation>区切り線を追加</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="62"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="58"/>
         <source>Add note…</source>
         <translation>ノートを追加...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="102"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="97"/>
         <source>Select Folder Name</source>
         <translation>フォルダー名を選択</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="102"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="97"/>
         <source>Enter folder name:</source>
         <translation>フォルダー名を入力:</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="150"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="145"/>
         <source>Empty Trash</source>
         <translation>空のゴミ箱</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="155"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="150"/>
         <source>Add Bookmark</source>
         <translation>ブックマークを追加</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="170"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="165"/>
         <source>Open source page</source>
         <translation>ソースページを開く</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="196"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="191"/>
         <source>Restore Note</source>
         <translation>ノートを元に戻す</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="371"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="370"/>
         <source>Notes Manager</source>
         <translation>ノートマネージャー</translation>
     </message>
@@ -3027,522 +3133,537 @@ Do you want to continue?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="152"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="151"/>
         <source>Events</source>
         <translation>イベント</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="192"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="191"/>
         <source>Play sound:</source>
         <translation>音を再生する：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="207"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="206"/>
         <source>Show notification</source>
         <translation>通知を表示</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="214"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="213"/>
         <source>Mark taskbar entry</source>
         <translation>タスクバーのエントリーにマーク</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="230"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="229"/>
         <source>Options</source>
         <translation>オプション</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="237"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="236"/>
         <source>Prefer native notifications</source>
         <translation>ネイティブ通知を好む</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="267"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="266"/>
         <source>Style</source>
         <translation>スタイル</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="276"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="275"/>
         <source>Widget style:</source>
         <translation>ウィケットのスタイル:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="286"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="285"/>
         <source>Style sheet:</source>
         <translation>スタイルシート:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="310"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="309"/>
         <source>Other</source>
         <translation>その他</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="319"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="318"/>
         <source>Show tray icon</source>
         <translation>通知領域アイコンに表示</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="351"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="674"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="350"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="686"/>
         <source>General</source>
         <translation>一般</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="358"/>
-        <source>Enable images</source>
-        <translation>画像を有効にする</translation>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="359"/>
+        <source>Images:</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="367"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="376"/>
         <source>Enable JavaScript</source>
         <translation>JavaScriptを有効にする</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="374"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="383"/>
         <source>JavaScript Options…</source>
         <translation>JavaScriptのオプション...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="383"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="392"/>
         <source>Enable Java</source>
         <translation>Javaを有効にする</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="392"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="401"/>
         <source>Plugins:</source>
         <translation>プラグイン:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="406"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="418"/>
         <source>User style sheet:</source>
         <translation>ユーザースタイルシート:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="441"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="453"/>
         <source>MIME Types</source>
         <translation>MIMEタイプ</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="465"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="999"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1115"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1335"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1488"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="477"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1011"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1127"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1347"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1500"/>
         <source>Add</source>
         <translation>追加</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="475"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1013"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1125"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1365"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1518"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="487"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1025"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1137"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1377"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1530"/>
         <source>Remove</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="517"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="529"/>
         <source>Show download dialog</source>
         <translation>ダウンロードダイアログを表示</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="527"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="539"/>
         <source>Save to disk</source>
         <translation>ディスクに保存</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="570"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="582"/>
         <source>Do not ask for folder, save directly to</source>
         <translation>フォルダー要求せず、ディレクトリに保存</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="585"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="597"/>
         <source>Open with application</source>
         <translation>アプリケーションで開く</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="631"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="643"/>
         <source>Pass web address directly to application</source>
         <translation>アプリケーションに直接ウェブアドレスを渡します。</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="681"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="693"/>
         <source>Send referrer information</source>
         <translation>リファラー情報を送信</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="690"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="702"/>
         <source>User Agent:</source>
         <translation>ユーザーエージェント:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="703"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="715"/>
         <source>Manage…</source>
         <translation>管理...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="718"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="730"/>
         <source>Proxy</source>
         <translation>プロキシ</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="727"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="739"/>
         <source>Mode:</source>
         <translation>モード:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="838"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="850"/>
         <source>Port</source>
         <translation>ポート</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="845"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="857"/>
         <source>Protocol</source>
         <translation>プロトコル</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="852"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="864"/>
         <source>Servers</source>
         <translation>サーバー</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="859"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="871"/>
         <source>FTP</source>
         <translation>FTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="866"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="878"/>
         <source>SOCKS5</source>
         <translation>接続5</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="873"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="885"/>
         <source>HTTP</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="887"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="899"/>
         <source>HTTPS</source>
         <translation>HTTPS</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="901"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="913"/>
         <source>All</source>
         <translation>全て</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="939"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="951"/>
         <source>Path to PAC file:</source>
         <translation>PACファイルへのパス：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="956"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="968"/>
         <source>Use system authentication</source>
         <translation>システム認証を使用</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="981"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="993"/>
         <source>Do not use proxy for:</source>
         <translation>プロキシを使用しない:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1006"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1018"/>
         <source>Edit</source>
         <translation>編集...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1037"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1049"/>
         <source>Example: domain.com, localhost, 127.0.0.1, 192.168.1.0/24</source>
         <translation>例:domain.com, localhost, 127.0.0.1, 192.168.1.0/24</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1070"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1082"/>
         <source>SSL ciphers</source>
         <translation>SSL暗号</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1150"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1390"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1543"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1162"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1402"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1555"/>
         <source>Move Up</source>
         <translation>上に移動</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1176"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1416"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1569"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1188"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1428"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1581"/>
         <source>Move Down</source>
         <translation>下に移動</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1199"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1211"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Updates</source>
         <translation>更新</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1206"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1218"/>
         <source>Select channels from which you want to receive updates:</source>
         <translation>アップデートを受信する元のチャンネルを選択します:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1245"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1257"/>
         <source>Check for updates every</source>
         <translation>常に更新を確認</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1255"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1267"/>
         <source>day(s)</source>
         <translation>日(s)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1264"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1276"/>
         <source>Install updates automatically</source>
         <translation>自動でアップデートをインストール</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1296"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1308"/>
         <source>Keyboard Shortcuts</source>
         <translation>キーボードショートカット</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1345"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1498"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1357"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1510"/>
         <source>Edit…</source>
         <translation>編集...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1355"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1508"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1367"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1520"/>
         <source>Clone</source>
         <translation>複製</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1429"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1441"/>
         <source>Enable single key shortcuts</source>
         <translation>単一ショートカットキーを有効にする</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1449"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1461"/>
         <source>Mouse Actions and Gestures</source>
         <translation>マウス動作とジェスチャー</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1582"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1594"/>
         <source>Enable mouse gestures</source>
         <translation>マウスジェスチャーを有効にする</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Browsing</source>
         <translation>ブラウジング</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Notifications</source>
         <translation>通知</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Appearance</source>
         <translation>外観</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Content</source>
         <translation>コンテンツ</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Downloads</source>
         <translation>ダウンロード</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Programs</source>
         <translation>プログラム</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>History</source>
         <translation>履歴</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Network</source>
         <translation>ネットワーク</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Security</source>
         <translation>セキュリティ</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Keyboard</source>
         <translation>キーボード</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
         <source>Mouse</source>
         <translation>マウス</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="100"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="102"/>
         <source>Compact</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="101"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="103"/>
         <source>Columns</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="110"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="164"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="112"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="166"/>
         <source>Name</source>
         <translation>名前</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="110"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="112"/>
         <source>Description</source>
         <translation>説明文</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="138"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="135"/>
         <source>System Style</source>
         <translation>システムスタイル</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="154"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="146"/>
+        <source>All images</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="147"/>
+        <source>Cached images</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="148"/>
+        <source>No images</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="156"/>
         <source>Enabled</source>
         <translation>有効です</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="155"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="157"/>
         <source>On demand</source>
         <translation>任意</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="156"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="158"/>
         <source>Disabled</source>
         <translation>無効</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="202"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="679"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="201"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="688"/>
         <source>Default</source>
         <translation>デフォルト</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="209"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="363"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="400"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="685"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="839"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="843"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="869"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="905"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="931"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1025"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1039"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1043"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1069"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1105"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1131"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1225"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1482"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1552"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="214"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="365"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="402"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="694"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="848"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="852"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="878"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="914"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="940"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1034"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1048"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1052"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1078"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1114"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1140"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1234"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1500"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1570"/>
         <source>(Untitled)</source>
         <translation>(無題)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="226"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="232"/>
         <source>No proxy</source>
         <translation>プロキシなし</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="227"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="233"/>
         <source>System configuration</source>
         <translation>システム構成</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="228"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="234"/>
         <source>Manual configuration</source>
         <translation>手動構成</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="229"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="235"/>
         <source>Automatic configuration (PAC)</source>
         <translation>自動構成(PAC)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="317"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="319"/>
         <source>Stable version</source>
         <translation>安定版</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="318"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="320"/>
         <source>Beta version</source>
         <translation>ベータ版</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="319"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="321"/>
         <source>Weekly development version</source>
         <translation>週刊開発版</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="375"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="412"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="377"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="414"/>
         <source>New…</source>
         <translation>新規...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="376"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="413"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="378"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="415"/>
         <source>Readd</source>
         <translation>再度追加</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="516"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="526"/>
         <source>WAV files (*.wav)</source>
         <translation>WAV ファイル (*.wav)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="545"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="555"/>
         <source>MIME Type Name</source>
         <translation>MIMEタイプ名</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="545"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="555"/>
         <source>Select name of MIME Type:</source>
         <translation>MIMEタイプの名前を選択:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="559"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="569"/>
         <source>Error</source>
         <translation>エラー</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="559"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="569"/>
         <source>Invalid MIME Type name.</source>
         <translation>不正なMIMEタイプ名です。</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="951"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1151"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="960"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1160"/>
         <source>Question</source>
         <translation>質問</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="952"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1152"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="961"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1161"/>
         <source>Do you really want to remove this profile?</source>
         <translation>このプロファイルを本当に削除しますか？</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="961"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1161"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="970"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1170"/>
         <source>Delete profile permanently</source>
         <translation>完全にプロファイルを削除する</translation>
     </message>
@@ -3560,82 +3681,61 @@ Do you want to continue?</source>
         <translation>ポップアップ:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="57"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="56"/>
         <source>Zoom</source>
         <translation>拡大</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="69"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="68"/>
         <source>Default zoom:</source>
         <translation>拡大率の初期値:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="79"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="78"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="97"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="96"/>
         <source>Zoom text only</source>
         <translation>テキストのみ拡大</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="110"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="109"/>
         <source>Fonts</source>
         <translation>フォント</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="151"/>
-        <source>Style</source>
-        <translation>スタイル</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="156"/>
-        <source>Font</source>
-        <translation>フォント</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="161"/>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="300"/>
-        <source>Preview</source>
-        <translation>プレビュー</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="171"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="143"/>
         <source>Default proportional font size:</source>
         <translation>標準の可変幅フォントサイズ:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="181"/>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="207"/>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="236"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="153"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="179"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="208"/>
         <source> px</source>
         <translation>px</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="197"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="169"/>
         <source>Default fixed-width font size:</source>
         <translation>標準の等幅フォントサイズ:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="223"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="195"/>
         <source>Minimum font size:</source>
         <translation>最小フォントサイズ：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="233"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="205"/>
         <source>None</source>
         <translation>なし</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="257"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="229"/>
         <source>Colors</source>
         <translation>色</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="295"/>
-        <source>Type</source>
-        <translation>タイプ</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="36"/>
@@ -3656,6 +3756,22 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="39"/>
         <source>Open all in background</source>
         <translation>全てバックグラウンドで開く</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="51"/>
+        <source>Style</source>
+        <translation>スタイル</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="51"/>
+        <source>Font</source>
+        <translation>フォント</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="51"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="74"/>
+        <source>Preview</source>
+        <translation>プレビュー</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="54"/>
@@ -3688,27 +3804,32 @@ Do you want to continue?</source>
         <translation>装飾体フォント</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="68"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="60"/>
         <source>The quick brown fox jumps over the lazy dog</source>
         <translation>色はにほへど 散りぬるを 我が世たれぞ 常ならむ 有為の奥山 今日越えて 浅き夢見じ 酔ひもせず</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="74"/>
+        <source>Type</source>
+        <translation>タイプ</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="77"/>
         <source>Background Color</source>
         <translation>背景色</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="77"/>
         <source>Text Color</source>
         <translation>テキスト色</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="77"/>
         <source>Link Color</source>
         <translation>リンク色</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="80"/>
+        <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="77"/>
         <source>Visited Link Color</source>
         <translation>訪問済みリンク色</translation>
     </message>
@@ -3892,11 +4013,6 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="46"/>
         <source>Show empty page</source>
         <translation>空のページを表示</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="74"/>
-        <source>Run Otter Browser with administrator rights to set it as a default browser.</source>
-        <translation>デフォルトのブラウザーとして設定するには、管理者権限でOtterを実行する必要があります。</translation>
     </message>
 </context>
 <context>
@@ -4108,68 +4224,73 @@ Do you want to continue?</source>
         <translation>キーワード</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="82"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="77"/>
         <source>New…</source>
         <translation>新規...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="83"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="78"/>
         <source>Readd</source>
         <translation>再度追加</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="145"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="140"/>
         <source>New Search Engine</source>
         <translation>新しい検索エンジン</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="279"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="209"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="301"/>
         <source>Question</source>
         <translation>質問</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="280"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="210"/>
+        <source>Keyword is already in use. Do you want to continue anyway?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="302"/>
         <source>Do you really want to remove this search engine?</source>
         <translation>本当にこの検索エンジンを削除しますか？</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="289"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="311"/>
         <source>Delete search engine permanently</source>
         <translation>永久に検索エンジンを削除</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="359"/>
+        <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="381"/>
         <source>(Untitled)</source>
         <translation>(無題)</translation>
     </message>
 </context>
 <context>
-    <name>Otter::ProgressBarWidget</name>
+    <name>Otter::ProgressInformationWidget</name>
     <message>
-        <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="62"/>
+        <location filename="../../src/ui/toolbars/ProgressInformationWidget.cpp" line="69"/>
         <source>Document: %p%</source>
-        <translation>ドキュメント: %p%</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="123"/>
-        <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="147"/>
-        <source>Time: %1</source>
-        <translation>時間: %1</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="190"/>
-        <source>Elements: %1/%2</source>
-        <translation>要素: %1/%2</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="191"/>
+        <location filename="../../src/ui/toolbars/ProgressInformationWidget.cpp" line="111"/>
         <source>Total: %1</source>
-        <translation>総合: %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/ProgressBarWidget.cpp" line="192"/>
+        <location filename="../../src/ui/toolbars/ProgressInformationWidget.cpp" line="118"/>
+        <source>Elements: %1/%2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ProgressInformationWidget.cpp" line="125"/>
         <source>Speed: %1</source>
-        <translation>スピード: %1</translation>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/ProgressInformationWidget.cpp" line="135"/>
+        <source>Time: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4208,7 +4329,7 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitInspector</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitInspector.cpp" line="36"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitInspector.cpp" line="39"/>
         <source>Close</source>
         <translation>閉じる</translation>
     </message>
@@ -4216,38 +4337,43 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitNetworkManager</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="113"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="138"/>
-        <source>Waiting for authentication…</source>
-        <translation>認証中です。しばらくお待ち下さい...</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="194"/>
-        <source>Warning</source>
-        <translation>警告</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="194"/>
-        <source>SSL errors occured, do you want to continue?</source>
-        <translation>SSLエラーが起こりました。このまま続行しますか？</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="198"/>
-        <source>Do not show this message again</source>
-        <translation>今後このメッセージを表示しない</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="303"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="187"/>
         <source>Receiving data from %1…</source>
         <translation>%1からデータを受信する…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="372"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="240"/>
         <source>Completed request to %1</source>
         <translation>%1に完了した要求</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="639"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="272"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="297"/>
+        <source>Waiting for authentication…</source>
+        <translation>認証中です。しばらくお待ち下さい...</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="353"/>
+        <source>Warning</source>
+        <translation>警告</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="353"/>
+        <source>SSL errors occured, do you want to continue?</source>
+        <translation>SSLエラーが起こりました。このまま続行しますか？</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="357"/>
+        <source>Do not show this message again</source>
+        <translation>今後このメッセージを表示しない</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="396"/>
+        <source>Loading finished</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="681"/>
         <source>Sending request to %1…</source>
         <translation>%1に要求を送信しています...</translation>
     </message>
@@ -4255,61 +4381,61 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitPage</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="229"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="418"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="455"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="231"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="430"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="467"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="230"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="419"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="456"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="232"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="431"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="468"/>
         <source>Disable JavaScript popups</source>
         <translation>JavaScriptのポップアップを無効に</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="368"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="381"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="542"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="380"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="393"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="559"/>
         <source>Question</source>
         <translation>質問</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="368"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="382"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="380"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="394"/>
         <source>Are you sure that you want to send form data again?</source>
         <translation>本当にフォームデータを再送信しますか？</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="368"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="383"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="380"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="395"/>
         <source>Do you want to resend data?</source>
         <translation>データを再送信しますか？</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="369"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="387"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="381"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="399"/>
         <source>Do not show this message again</source>
         <translation>今後このメッセージを表示しない</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="497"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="509"/>
         <source>Open File</source>
         <translation>ファイルを開く</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="530"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="539"/>
         <source>%1 error #%2: %3</source>
         <translation>%1 エラー #%2: %3</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="542"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="559"/>
         <source>The script on this page appears to have a problem.</source>
         <translation>このページのスクリプトは、問題を持っていると思われます。</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="542"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="559"/>
         <source>Do you want to stop the script?</source>
         <translation>スクリプトを停止しますか？</translation>
     </message>
@@ -4325,12 +4451,12 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitWebBackend</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="206"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="207"/>
         <source>WebKit Backend</source>
         <translation>WebKitエンジンのバックエンド</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="211"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="212"/>
         <source>Backend utilizing QtWebKit module</source>
         <translation>QtWebKitモジュールを利用したバックエンド</translation>
     </message>
@@ -4338,72 +4464,72 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitWebWidget</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="403"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="402"/>
         <source>Error</source>
         <translation>エラー</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="403"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="402"/>
         <source>Failed to open file for writing.</source>
         <translation>書き込み用にファイルを開けませんでした。</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="423"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="422"/>
         <source>file</source>
         <translation>ファイル</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="434"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="433"/>
         <source>Failed to save image: %1</source>
         <translation>画像の保存に失敗しました： %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="568"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="567"/>
         <source>Print Preview</source>
         <translation>プリント表示</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="627"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="626"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="627"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="626"/>
         <source>Webpage wants to close this tab, do you want to allow to close it?</source>
         <translation>ウェブページがこのタブを閉じようとしています。閉じても構いませんか？</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="628"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="627"/>
         <source>Do not show this message again</source>
         <translation>今後このメッセージを表示しない</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="770"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="767"/>
         <source>Undo</source>
         <translation>取り消す</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="770"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="767"/>
         <source>Undo: %1</source>
         <translation>取り消す: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="775"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="772"/>
         <source>Redo</source>
         <translation>やり直し</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="775"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="772"/>
         <source>Redo: %1</source>
         <translation>やり直し: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1874"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1927"/>
         <source>Blank Page</source>
         <translation>空白ページ</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1887"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1940"/>
         <source>(Untitled)</source>
         <translation>(無題)</translation>
     </message>
@@ -4617,7 +4743,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>Otter::SearchEnginesManager</name>
     <message>
-        <location filename="../../src/core/SearchEnginesManager.cpp" line="169"/>
+        <location filename="../../src/core/SearchEnginesManager.cpp" line="171"/>
         <source>Manage Search Engines…</source>
         <translation>検索エンジンを管理...</translation>
     </message>
@@ -4703,70 +4829,80 @@ Do you want to overwrite it?</source>
         <translation>セッション管理</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.ui" line="62"/>
-        <source>Title</source>
-        <translation>タイトル</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/SessionsManagerDialog.ui" line="67"/>
-        <source>Identifier</source>
-        <translation>処理</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/SessionsManagerDialog.ui" line="72"/>
-        <source>Windows</source>
-        <translation>Window</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/SessionsManagerDialog.ui" line="82"/>
+        <location filename="../../src/ui/SessionsManagerDialog.ui" line="52"/>
         <source>Open</source>
         <translation>開く</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.ui" line="89"/>
+        <location filename="../../src/ui/SessionsManagerDialog.ui" line="59"/>
         <source>Delete</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.ui" line="113"/>
+        <location filename="../../src/ui/SessionsManagerDialog.ui" line="77"/>
         <source>Open session in current window</source>
         <translation>現在のウィンドウで開くセッション</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="45"/>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="68"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
         <source>(Untitled)</source>
         <translation>(無題)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="99"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="49"/>
+        <source>Title</source>
+        <translation>タイトル</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="49"/>
+        <source>Identifier</source>
+        <translation>処理</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="49"/>
+        <source>Windows</source>
+        <translation>Window</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
+        <source>%n window(s) (%1)</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
+        <source>%n tab(s)</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="105"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="99"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="105"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
         <translation>残念ながらこのセッションは正しく保存されませんでした。
 セッションを復元しますか？</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="116"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="122"/>
         <source>Confirm</source>
         <translation>確認</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="116"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="122"/>
         <source>Are you sure that you want to delete session %1?</source>
         <translation>本当にセッション%1を削除しますか？</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="124"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="130"/>
         <source>Error</source>
         <translation>エラー</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="124"/>
+        <location filename="../../src/ui/SessionsManagerDialog.cpp" line="130"/>
         <source>Failed to delete session.</source>
         <translation>セッションの削除に失敗しました。</translation>
     </message>
@@ -4774,52 +4910,52 @@ Are you sure that you want to restore this session anyway?</source>
 <context>
     <name>Otter::SidebarWidget</name>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="220"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="212"/>
         <source>Add Web Panel…</source>
         <translation>ウェブパネルを追加</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="281"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="285"/>
         <source>Add web panel</source>
         <translation>ウェブパネルを追加</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="281"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="285"/>
         <source>Input address of web page to be shown in panel:</source>
         <translation>パネルに表示するウェブページのアドレスを入力して下さい：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="435"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="396"/>
         <source>Bookmarks</source>
         <translation>ブックマーク</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="440"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="401"/>
         <source>Cache</source>
         <translation>キャッシュ</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="445"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="406"/>
         <source>Cookies</source>
         <translation>クッキー</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="450"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="411"/>
         <source>Configuration</source>
         <translation>設定</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="455"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="416"/>
         <source>History</source>
         <translation>履歴</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="460"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="421"/>
         <source>Notes</source>
         <translation>ノート</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SidebarWidget.cpp" line="465"/>
+        <location filename="../../src/ui/SidebarWidget.cpp" line="426"/>
         <source>Transfers</source>
         <translation>ダウンロード</translation>
     </message>
@@ -4827,39 +4963,39 @@ Are you sure that you want to restore this session anyway?</source>
 <context>
     <name>Otter::SourceViewerWebWidget</name>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="88"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="87"/>
         <source>Failed to save file: %1</source>
         <translation>ファイルの保存に失敗しました： %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="90"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="89"/>
         <source>Error</source>
         <translation>エラー</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="90"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="89"/>
         <source>Failed to save file.</source>
         <translation>ファイルの保存に失敗しました。</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="117"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="116"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="117"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="116"/>
         <source>The document has been modified.
 Do you want to save your changes or discard them?</source>
         <translation>ドキュメントが変更されました。
 変更を保存するか、それらを破棄しますか？</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="298"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="297"/>
         <source>Show Line Numbers</source>
         <translation>行のナンバーを表示</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="487"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="486"/>
         <source>Source Viewer</source>
         <translation>ソースビューアー</translation>
     </message>
@@ -5062,9 +5198,27 @@ Do you want to save your changes or discard them?</source>
         <translation>(無題)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TabBarWidget.cpp" line="1018"/>
+        <location filename="../../src/ui/TabBarWidget.cpp" line="1024"/>
         <source>Close Tab</source>
         <translation>タブを閉じる</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::TextLabelWidget</name>
+    <message>
+        <location filename="../../src/ui/TextLabelWidget.cpp" line="61"/>
+        <source>Copy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/TextLabelWidget.cpp" line="65"/>
+        <source>Copy Link Location</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/TextLabelWidget.cpp" line="69"/>
+        <source>Select All</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5090,109 +5244,74 @@ Do you want to save your changes or discard them?</source>
         <translation>表示/非表示の設定：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="63"/>
-        <source>Always visible</source>
-        <translation>常に表示</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="68"/>
-        <source>Always hidden</source>
-        <translation>常に非表示</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="73"/>
-        <source>Visible only when needed</source>
-        <translation>必要な時だけ表示</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="81"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="65"/>
         <source>Button style:</source>
         <translation>ボタンのスタイル:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="92"/>
-        <source>Follow style</source>
-        <translation>スタイルをフォロー</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="97"/>
-        <source>Only icon</source>
-        <translation>アイコンのみ</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="102"/>
-        <source>Only text</source>
-        <translation>テキストのみ</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="107"/>
-        <source>Text beside icon</source>
-        <translation>アイコンの横にテキスト表示</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="112"/>
-        <source>Text under icon</source>
-        <translation>アイコンの下にテキスト表示</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="120"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="78"/>
         <source>Icon size:</source>
         <translation>アイコンのサイズ:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="130"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="88"/>
         <source>Auto</source>
         <translation>自動</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="133"/>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="159"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="91"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="117"/>
         <source> px</source>
         <translation>px</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="146"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="104"/>
         <source>Maximum size of item:</source>
         <translation>アイテムの最大サイズ:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="156"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="114"/>
         <source>No limit</source>
         <translation>制限なし</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="169"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="127"/>
         <source>Folder:</source>
         <translation>フォルダ:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="208"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="143"/>
+        <source>Visibility in full screen mode:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="179"/>
         <source>Actions</source>
         <translation>動作</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="244"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="215"/>
         <source>Add</source>
         <translation>追加</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="254"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="225"/>
         <source>Edit…</source>
         <translation>編集...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="263"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="234"/>
         <source>Current entries:</source>
         <translation>現在のエントリー：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="371"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="342"/>
         <source>Available entries:</source>
         <translation>利用可能なエントリ：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="381"/>
-        <location filename="../../src/ui/ToolBarDialog.ui" line="391"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="352"/>
+        <location filename="../../src/ui/ToolBarDialog.ui" line="362"/>
         <source>Filter…</source>
         <translation>フィルター...</translation>
     </message>
@@ -5202,119 +5321,202 @@ Do you want to save your changes or discard them?</source>
         <translation>カスタムツールバー</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="269"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="50"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="57"/>
+        <source>Always visible</source>
+        <translation>常に表示</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="51"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="58"/>
+        <source>Always hidden</source>
+        <translation>常に非表示</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="52"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="59"/>
+        <source>Visible only when needed</source>
+        <translation>必要な時だけ表示</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="60"/>
+        <source>Visible only when cursor is close to screen edge</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="65"/>
+        <source>Follow style</source>
+        <translation>スタイルをフォロー</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="66"/>
+        <source>Icon only</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="67"/>
+        <source>Text only</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="68"/>
+        <source>Text beside icon</source>
+        <translation>アイコンの横にテキスト表示</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="69"/>
+        <source>Text under icon</source>
+        <translation>アイコンの下にテキスト表示</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="255"/>
         <source>All</source>
         <translation>全て</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="277"/>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="419"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="263"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="433"/>
         <source>Unknown</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="286"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="272"/>
         <source>Show search engine:</source>
         <translation>検索エンジンを表示:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="287"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="273"/>
         <source>Show search button:</source>
         <translation>検索ボタンを表示:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="291"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="277"/>
         <source>Custom icon:</source>
         <translation>カスタムアイコン:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="292"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="278"/>
         <source>Custom text:</source>
         <translation>カスタムテキスト:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="301"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="287"/>
         <source>Edit Entry</source>
         <translation>エントリを編集</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="380"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="366"/>
         <source>--- separator ---</source>
         <translation>--- 区切り線 ---</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="384"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="370"/>
         <source>--- spacer ---</source>
         <translation>--- スペーサー ---</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="388"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="374"/>
         <source>Arbitrary List of Actions</source>
         <translation>動作の任意の一覧</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="395"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="381"/>
         <source>List of Closed Windows and Tabs</source>
         <translation>閉じたウィンドウとタブのリスト</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="399"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="385"/>
         <source>Address Field</source>
         <translation>アドレス欄</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="403"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="389"/>
+        <source>Content Blocking Details</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="393"/>
         <source>Menu Bar</source>
         <translation>メニューバー</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="407"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="397"/>
         <source>Menu Button</source>
         <translation>メニューボタン</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="411"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="401"/>
         <source>Sidebar Panel Chooser</source>
         <translation>サイドバーパネルセレクタ</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="419"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="405"/>
+        <source>Progress Information (Document Progress)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="409"/>
+        <source>Progress Information (Total Progress)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="413"/>
+        <source>Progress Information (Loaded Elements)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="417"/>
+        <source>Progress Information (Loading Speed)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="421"/>
+        <source>Progress Information (Elapsed Time)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="425"/>
+        <source>Progress Information (Status Message)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="433"/>
         <source>Search Field (%1)</source>
         <translation>検索欄 (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="424"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="438"/>
         <source>Search Field</source>
         <translation>検索欄</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="429"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="443"/>
         <source>Status Message Field</source>
         <translation>ステータスメッセージフィールド</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="433"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="447"/>
         <source>Tab Bar</source>
         <translation>タブバー</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="437"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="451"/>
         <source>Zoom Slider</source>
         <translation>ズームスライダー</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="445"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="459"/>
         <source>(Untitled)</source>
         <translation>(無題)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="450"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="464"/>
         <source>Invalid Bookmark</source>
         <translation>無効なブックマーク</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="459"/>
-        <location filename="../../src/ui/ToolBarDialog.cpp" line="471"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="473"/>
+        <location filename="../../src/ui/ToolBarDialog.cpp" line="485"/>
         <source>Invalid Entry</source>
         <translation>無効なエントリ</translation>
     </message>
@@ -5322,7 +5524,7 @@ Do you want to save your changes or discard them?</source>
 <context>
     <name>Otter::ToolBarDragAreaWidget</name>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="55"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="49"/>
         <source>Drag to move toolbar</source>
         <translation>ツールバーを移動するためにドラッグします</translation>
     </message>
@@ -5330,42 +5532,42 @@ Do you want to save your changes or discard them?</source>
 <context>
     <name>Otter::ToolBarWidget</name>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="182"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="176"/>
         <source>Switch tabs using the mouse wheel</source>
         <translation>マウスホイールを使用してタブを切り替える</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="199"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="193"/>
         <source>Arrange</source>
         <translation>アレンジ</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="563"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="459"/>
         <source>Customize</source>
         <translation>カスタマイズ</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="565"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="461"/>
         <source>(Untitled)</source>
         <translation>(無題)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="566"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="462"/>
         <source>Configure…</source>
         <translation>設定...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="568"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="464"/>
         <source>Reset to Defaults…</source>
         <translation>下書きをリセット...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="585"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="481"/>
         <source>Remove…</source>
         <translation>削除...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ToolBarWidget.cpp" line="589"/>
+        <location filename="../../src/ui/ToolBarWidget.cpp" line="485"/>
         <source>Toolbars</source>
         <translation>ツールバー</translation>
     </message>
@@ -5373,32 +5575,32 @@ Do you want to save your changes or discard them?</source>
 <context>
     <name>Otter::ToolBarsManager</name>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="298"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="257"/>
         <source>Reset Toolbar</source>
         <translation>ツールバーを初期化</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="298"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="257"/>
         <source>Do you really want to reset this toolbar to default configuration?</source>
         <translation>本当にこのツールバーを初期化しますか？</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="338"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="276"/>
         <source>Remove Toolbar</source>
         <translation>ツールバーを削除</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="338"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="276"/>
         <source>Do you really want to remove this toolbar?</source>
         <translation>本当にこのツールバーを削除しますか？</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="352"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="290"/>
         <source>Reset Toolbars</source>
         <translation>ツールバーを初期化</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="352"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="290"/>
         <source>Do you really want to reset all toolbars to default configuration?</source>
         <translation>本当に全てのツールバーを初期化しますか？</translation>
     </message>
@@ -5415,25 +5617,25 @@ Do you want to save your changes or discard them?</source>
 <context>
     <name>Otter::Transfer</name>
     <message>
-        <location filename="../../src/core/Transfer.cpp" line="263"/>
-        <location filename="../../src/core/Transfer.cpp" line="782"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="265"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="791"/>
         <source>Question</source>
         <translation>質問</translation>
     </message>
     <message>
-        <location filename="../../src/core/Transfer.cpp" line="263"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="265"/>
         <source>File with that name already exists.
 Do you want to overwrite it?</source>
         <translation>その名前のファイルが既に存在しています。
 上書きしますか？</translation>
     </message>
     <message>
-        <location filename="../../src/core/Transfer.cpp" line="611"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="620"/>
         <source>file</source>
         <translation>ファイル</translation>
     </message>
     <message>
-        <location filename="../../src/core/Transfer.cpp" line="782"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="791"/>
         <source>File with the same name already exists.
 Do you want to overwrite it?
 
@@ -5482,27 +5684,27 @@ Do you want to overwrite it?
         <translation>この種類のファイルを開くときの選択を記憶する</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="44"/>
+        <location filename="../../src/ui/TransferDialog.cpp" line="43"/>
         <source>unknown file</source>
         <translation>未知のファイル</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="64"/>
+        <location filename="../../src/ui/TransferDialog.cpp" line="63"/>
         <source>Opening %1</source>
         <translation>イメージを開く %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="170"/>
+        <location filename="../../src/ui/TransferDialog.cpp" line="169"/>
         <source>unknown</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="174"/>
+        <location filename="../../src/ui/TransferDialog.cpp" line="173"/>
         <source>%1 (download completed)</source>
         <translation>%1 (ダウンロード完了)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/TransferDialog.cpp" line="180"/>
+        <location filename="../../src/ui/TransferDialog.cpp" line="179"/>
         <source>%1 (%2% downloaded)</source>
         <translation>%1 (%2% ダウンロードしました)</translation>
     </message>
@@ -5541,66 +5743,66 @@ Do you want to overwrite it?
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="184"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="396"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="430"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="386"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="420"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.ui" line="194"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="397"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="387"/>
         <source>Redownload</source>
         <translation>再ダウンロード</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
         <source>Filename</source>
         <translation>ファイル名</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
         <source>Size</source>
         <translation>サイズ</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
         <source>Progress</source>
         <translation>進捗状況</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
         <source>Time</source>
         <translation>時間</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
         <source>Speed</source>
         <translation>スピード</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
         <source>Started</source>
         <translation>開始</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="50"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
         <source>Finished</source>
         <translation>終了しました</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="153"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="143"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="153"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="143"/>
         <source>This transfer is still running.
 Do you really want to remove it?</source>
         <translation>このダウンロードはまだ実行されています。
 本当に削除しますか？</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="238"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="228"/>
         <source>&lt;div style=&quot;white-space:pre;&quot;&gt;Source: %1
 Target: %2
 Size: %3
@@ -5613,48 +5815,48 @@ Progress: %5&lt;/div&gt;</source>
 進捗状況: %5&lt;/div&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="373"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="363"/>
         <source>Open</source>
         <translation>開く</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="379"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="369"/>
         <source>Open With</source>
         <translation>で開く</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="383"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="373"/>
         <source>Unknown</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="394"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="384"/>
         <source>Open Folder</source>
         <translation>フォルダーを開く</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="396"/>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="425"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="386"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="415"/>
         <source>Resume</source>
         <translation>レジュメ</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="399"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="389"/>
         <source>Copy Transfer Information</source>
         <translation>ダウンロード情報をコピー</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="401"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="391"/>
         <source>Remove</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="415"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="405"/>
         <source>Clear Finished Transfers</source>
         <translation>ダウンロードをクリア</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="543"/>
+        <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="535"/>
         <source>Transfers Manager</source>
         <translation>ダウンロードマネージャー</translation>
     </message>
@@ -5662,45 +5864,11 @@ Progress: %5&lt;/div&gt;</source>
 <context>
     <name>Otter::TransfersManager</name>
     <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="151"/>
+        <location filename="../../src/core/TransfersManager.cpp" line="994"/>
         <source>Transfer completed:
 %1</source>
         <translation>ダウンロード完了:
 %1</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="273"/>
-        <source>%1 files (*.%2)</source>
-        <translation>%1 ファイル (*.%2)</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="276"/>
-        <source>All files (*)</source>
-        <translation>全てのファイル(*)</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="278"/>
-        <source>Save File</source>
-        <translation>ファイルを保存</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="297"/>
-        <location filename="../../src/core/TransfersManager.cpp" line="306"/>
-        <source>Warning</source>
-        <translation>警告</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="297"/>
-        <source>This path is already used by different download, pick another one.</source>
-        <translation>このパスは、すでに別のダウンロードで使用されています。
-別のものを選択してください。</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/TransfersManager.cpp" line="306"/>
-        <source>Target path is not writable.
-Select another one.</source>
-        <translation>ターゲットパスは、書き込み可能ではありません。
-別のものを選択してください。</translation>
     </message>
 </context>
 <context>
@@ -5820,17 +5988,17 @@ Click Install button to restart browser and install the update or close this dia
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="37"/>
+        <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="39"/>
         <source>Title</source>
         <translation>タイトル</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="37"/>
+        <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="39"/>
         <source>Value</source>
         <translation>Value</translation>
     </message>
     <message>
-        <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="46"/>
+        <location filename="../../src/ui/UserAgentsManagerDialog.cpp" line="44"/>
         <source>(Untitled)</source>
         <translation>(無題)</translation>
     </message>
@@ -5838,170 +6006,215 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>Otter::WebContentsWidget</name>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="463"/>
-        <source>Open All Pop-Ups</source>
-        <translation>全てのポップアップを開く</translation>
-    </message>
-    <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="467"/>
-        <source>Open Pop-Ups in Background</source>
-        <translation>ポップアップをバックグラウンドで開く</translation>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="470"/>
+        <source>Pop-Ups</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="471"/>
-        <source>Block All Pop-Ups</source>
-        <translation>全てのポップアップをブロック</translation>
+        <source>Open All</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="475"/>
+        <source>Open in Background</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="479"/>
+        <source>Block All</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="483"/>
         <source>Ask What to Do</source>
         <translation>動作を尋ねる</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="500"/>
-        <source>Enable Images</source>
-        <translation>画像を有効にする</translation>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="511"/>
+        <source>Images</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="505"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="512"/>
+        <source>All Images</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="516"/>
+        <source>Cached Images</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="520"/>
+        <source>No Images</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="547"/>
         <source>Enable JavaScript</source>
         <translation>JavaScriptを有効にする</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="510"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="552"/>
         <source>Enable Java</source>
         <translation>Javaを有効にする</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="515"/>
-        <source>Enable Plugins</source>
-        <translation>プラグインを有効にする</translation>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="557"/>
+        <source>Plugins</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="522"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="558"/>
+        <source>Enabled</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="562"/>
+        <source>On Demand</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="566"/>
+        <source>Disabled</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="595"/>
         <source>Enable Cookies</source>
         <translation>クッキーを有効にする</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="526"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="599"/>
         <source>Enable Referrer</source>
         <translation>リファラーを有効にする</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="530"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="603"/>
         <source>Enable Proxy</source>
         <translation>プロキシを有効にする</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="535"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="608"/>
         <source>Reset Options</source>
         <translation>オプションを初期化</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="866"/>
         <source>Question</source>
         <translation>質問</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="866"/>
         <source>This tab has crashed.</source>
         <translation>このタブはクラッシュしました</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="801"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="866"/>
         <source>Do you want to try to reload it?</source>
         <translation>もう一度再読み込みしますか？</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="802"/>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="867"/>
         <source>Do not show this message again</source>
         <translation>このメッセージを以後表示しない</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1077"/>
+        <source>Select User Agent</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1077"/>
+        <source>Enter User Agent:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>Otter::WebWidget</name>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="335"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="341"/>
         <source>Default Application</source>
         <translation>標準アプリケーション</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="341"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="347"/>
         <source>Unknown</source>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="427"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="451"/>
         <source>Title: %1</source>
         <translation>タイトル: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="427"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="451"/>
         <source>Address: %1</source>
         <translation>アドレス: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="688"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="712"/>
         <source>No search engines defined</source>
         <translation>検索エンジンが定義されていません。</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="836"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="860"/>
         <source>Open Image in New Tab (Untitled)</source>
         <translation>新しいタブで画像を開く(無題)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="836"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="860"/>
         <source>Open Image in New Tab (%1)</source>
         <translation>新しいタブで画像を開く(%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="842"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="866"/>
         <source>Open Image in New Background Tab (Untitled)</source>
         <translation>新しいバックグラウンドタブで画像を開く(無題)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="842"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="866"/>
         <source>Open Image in New Background Tab (%1)</source>
         <translation>新しいバックグラウンドタブで画像を開く(%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1135"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1159"/>
         <source>1 Minute</source>
         <translation>1分</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1136"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1160"/>
         <source>30 Minutes</source>
         <translation>30分</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1137"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1161"/>
         <source>1 Hour</source>
         <translation>1時間</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1138"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1162"/>
         <source>2 Hours</source>
         <translation>2時間</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1139"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1163"/>
         <source>6 Hours</source>
         <translation>6時間</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1140"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1164"/>
         <source>Never</source>
         <translation>無制限</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1141"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1165"/>
         <source>Custom…</source>
         <translation>カスタム...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1143"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1167"/>
         <source>Page Default</source>
         <translation>ページの初期値</translation>
     </message>
@@ -6060,7 +6273,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="171"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="297"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="307"/>
         <source>Details…</source>
         <translation>詳細...</translation>
     </message>
@@ -6105,62 +6318,67 @@ Click Install button to restart browser and install the update or close this dia
         <translation>ポップアップウィンドウを表示:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="261"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="260"/>
+        <source>Enter full screen mode:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="271"/>
         <source>Security</source>
         <translation>セキュリティ</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="275"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="285"/>
         <source>Certificate</source>
         <translation>証明書</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="306"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="316"/>
         <source>Issued to:</source>
         <translation>発行先:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="313"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="323"/>
         <source>Issued by:</source>
         <translation>発行元:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="320"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="330"/>
         <source>Issued on:</source>
         <translation>発行場所:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="327"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="337"/>
         <source>Expires on:</source>
         <translation>有効期限：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="340"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="350"/>
         <source>Cipher</source>
         <translation>暗号文</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="347"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="357"/>
         <source>Protocol:</source>
         <translation>プロトコル:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="354"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="364"/>
         <source>Authentication method:</source>
         <translation>認証が必要です</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="361"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="371"/>
         <source>Encryption method:</source>
         <translation>暗号化方式：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="368"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="378"/>
         <source>Key exchange method:</source>
         <translation>キーエクスチェンジ方式：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="407"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.ui" line="417"/>
         <source>SSL Errors</source>
         <translation>SSLエラー</translation>
     </message>
@@ -6201,83 +6419,91 @@ Click Install button to restart browser and install the update or close this dia
         <translation>情報がありません。</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="85"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="84"/>
         <source>unknown</source>
         <translation>未知</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="87"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="86"/>
         <source>%1 (%n blocked)</source>
         <translation><numerusform>%1 (%n ブロック)</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="94"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="113"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="93"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="112"/>
         <source>Only existing</source>
         <translation>現存のみ</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="98"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="97"/>
         <source>Only read existing</source>
         <translation>既存の読み取り専用</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="102"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="117"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="132"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="139"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="140"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="150"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="165"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="184"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="101"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="116"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="131"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="146"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="153"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="163"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="178"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="193"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="212"/>
         <source>Never</source>
         <translation>無制限</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="106"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="121"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="128"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="139"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="140"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="146"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="161"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="176"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="105"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="120"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="127"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="150"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="153"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="159"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="174"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="189"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="204"/>
         <source>Always</source>
         <translation>常に</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="136"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="135"/>
         <source>On demand</source>
         <translation>任意</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="154"/>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="169"/>
-        <source>Always Ask</source>
-        <translation>常に尋ねる</translation>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="142"/>
+        <source>Only cached</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="180"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="167"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="182"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="197"/>
+        <source>Always ask</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="208"/>
         <source>Always (open in backgound)</source>
         <translation>常に(バックグラウンドで開く)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="188"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="216"/>
         <source>Ask</source>
         <translation>尋ねる</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="217"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="245"/>
         <source>Error Message</source>
         <translation>エラーメッセージ:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="217"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="245"/>
         <source>URL</source>
         <translation>URL</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="236"/>
+        <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="261"/>
         <source>Information for %1</source>
         <translation>情報 %1</translation>
     </message>
@@ -6301,9 +6527,9 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="53"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="267"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="537"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="660"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="276"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="546"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="669"/>
         <source>Override</source>
         <translation>上書き</translation>
     </message>
@@ -6323,331 +6549,346 @@ Click Install button to restart browser and install the update or close this dia
         <translation>プラグイン:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="114"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="117"/>
         <source>Pop-ups:</source>
         <translation>ポップアップ:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="138"/>
-        <source>Enable images</source>
-        <translation>画像を有効にする</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="152"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="148"/>
         <source>Enable Java</source>
         <translation>Javaを有効にする</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="186"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="181"/>
+        <source>Images:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="195"/>
         <source>Privacy</source>
         <translation>プライバシー</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="210"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="219"/>
         <source>Keep until:</source>
         <translation>キープし続ける：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="253"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="262"/>
         <source>Remember browsing history</source>
         <translation>閲覧履歴を記憶</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="274"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="283"/>
         <source>Enable cookies</source>
         <translation>クッキーを有効にする</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="299"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="308"/>
         <source>Accept cookies:</source>
         <translation>クッキーを受け付ける:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="308"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="317"/>
         <source>Do Not Track:</source>
         <translation>追跡しない:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="345"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="354"/>
         <source>Add…</source>
         <translation>追加...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="355"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="364"/>
         <source>Edit…</source>
         <translation>編集...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="365"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="374"/>
         <source>Delete</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="407"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="416"/>
         <source>Accept third-party cookies:</source>
         <translation>第三者のクッキーを受け入れる：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="446"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="455"/>
         <source>Scripting</source>
         <translation>スクリプト記述</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="452"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="461"/>
         <source>Allow to disable context menu</source>
         <translation>コンテキストメニューを無効にすることを許可する</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="466"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="475"/>
         <source>Allow changing of status field</source>
         <translation>ステータス欄の変更を許可する</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="493"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="502"/>
         <source>Allow to close windows:</source>
         <translation>ウィンドウを閉じることを有効にする</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="506"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="515"/>
         <source>Allow script to hide address bar</source>
         <translation>アドレスバーをスプリクトが非表示にすることを許可</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="513"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="522"/>
         <source>Allow moving and resizing of windows</source>
         <translation>ウインドウの移動とリサイズを有効にする</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="551"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="560"/>
         <source>Enable JavaScript</source>
         <translation>JavaScriptを有効にする</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="579"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="588"/>
         <source>Allow to open windows</source>
         <translation>ウィンドウを開くことを有効にする</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="589"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="598"/>
         <source>Allow access to clipboard</source>
         <translation>クリップボードへのアクセスを許可</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="609"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="618"/>
         <source>Allow to enter full screen mode:</source>
         <translation>フルスクリーンモードを有効に：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="630"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="639"/>
         <source>Network</source>
         <translation>ネットワーク</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="643"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="652"/>
         <source>User Agent:</source>
         <translation>ユーザーエージェント:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="683"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="692"/>
         <source>Proxy mode:</source>
         <translation>プロキシ</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="710"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="719"/>
         <source>No proxy</source>
         <translation>プロキシなし</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="715"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="724"/>
         <source>System configuration</source>
         <translation>システム構成</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="720"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="729"/>
         <source>Manual configuration</source>
         <translation>手動構成</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="725"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="734"/>
         <source>Automatic configuration (PAC)</source>
         <translation>自動構成(PAC)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="838"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="847"/>
         <source>Port</source>
         <translation>ポート</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="845"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="854"/>
         <source>Servers</source>
         <translation>サーバー</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="852"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="861"/>
         <source>FTP</source>
         <translation>FTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="859"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="868"/>
         <source>SOCKS5</source>
         <translation>接続5</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="866"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="875"/>
         <source>HTTP</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="880"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="889"/>
         <source>HTTPS</source>
         <translation>HTTPS</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="894"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="903"/>
         <source>All</source>
         <translation>全て</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="911"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="920"/>
         <source>Protocol</source>
         <translation>プロトコル</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="939"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="948"/>
         <source>Path to PAC file:</source>
         <translation>PACファイルへのパス：</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="956"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="965"/>
         <source>Send referrer information</source>
         <translation>リファラー情報を送信</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="964"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="973"/>
         <source>Content Blocking</source>
         <translation>コンテンツブロック</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="63"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="62"/>
         <source>Auto Detect</source>
         <translation>自動検出</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="77"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="86"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="90"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="76"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="89"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="93"/>
         <source>Ask</source>
         <translation>尋ねる</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="78"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="77"/>
         <source>Block all</source>
         <translation>全てブロック</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="79"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="78"/>
         <source>Open all</source>
         <translation>全て開く</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="80"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="79"/>
         <source>Open all in background</source>
         <translation>全てバックグラウンドで開く</translation>
     </message>
     <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="81"/>
+        <source>All images</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="82"/>
+        <source>Cached images</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
+        <source>No images</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="85"/>
         <source>Enabled</source>
         <translation>有効です</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="86"/>
         <source>On demand</source>
         <translation>任意</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="84"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="87"/>
         <source>Disabled</source>
         <translation>無効</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="87"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="91"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="98"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="107"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="90"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="94"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="101"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="110"/>
         <source>Always</source>
         <translation>常に</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="88"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="92"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="101"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="109"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="91"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="95"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="104"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
         <source>Never</source>
         <translation>決して</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="94"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="97"/>
         <source>Inform websites that I do not want to be tracked</source>
         <translation>ウェブサイトに追跡されたくない事を通知する</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="95"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="98"/>
         <source>Inform websites that I allow tracking</source>
         <translation>ウェブサイトに追跡できる事を通知する</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="96"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="99"/>
         <source>Do not inform websites about my preference</source>
         <translation>任意のウェブサイトを通知しない(Do not inform websites about my preference)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="99"/>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="108"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="102"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="111"/>
         <source>Only existing</source>
         <translation>現存のみ</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="100"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
         <source>Only read existing</source>
         <translation>既存の読み取り専用</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="103"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="106"/>
         <source>Expires</source>
         <translation>有効期限</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="104"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="107"/>
         <source>Current session is closed</source>
         <translation>現在のセッションが閉じられました。</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="105"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="108"/>
         <source>Always ask</source>
         <translation>常に尋ねる</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="115"/>
         <source>Domain</source>
         <translation>ドメイン</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="115"/>
         <source>Name</source>
         <translation>名前</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="115"/>
         <source>Path</source>
         <translation>パス</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="115"/>
         <source>Value</source>
         <translation>Value</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="112"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="115"/>
         <source>Expiration date</source>
         <translation>有効期限</translation>
     </message>
@@ -6657,22 +6898,22 @@ Click Install button to restart browser and install the update or close this dia
         <translation>デフォルト</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="140"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="146"/>
         <source>(Untitled)</source>
         <translation>(無題)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="358"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="366"/>
         <source>Title</source>
         <translation>タイトル</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="358"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="366"/>
         <source>Update Interval</source>
         <translation>更新間隔</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="358"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="366"/>
         <source>Last Update</source>
         <translation>最後の更新</translation>
     </message>
@@ -6680,24 +6921,14 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>Otter::Window</name>
     <message>
-        <location filename="../../src/ui/Window.cpp" line="177"/>
+        <location filename="../../src/ui/Window.cpp" line="175"/>
         <source>Print Page</source>
         <translation>ページを印刷</translation>
     </message>
     <message>
-        <location filename="../../src/ui/Window.cpp" line="193"/>
+        <location filename="../../src/ui/Window.cpp" line="191"/>
         <source>Print Preview</source>
         <translation>プリント表示</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/Window.cpp" line="381"/>
-        <source>Select User Agent</source>
-        <translation>ユーザーエージェントを選択</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/Window.cpp" line="381"/>
-        <source>Enter User Agent:</source>
-        <translation>ユーザーエージェントを入力</translation>
     </message>
 </context>
 <context>
@@ -6733,23 +6964,23 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>Otter::WindowsPlatformIntegration</name>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="156"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="155"/>
         <source>Failed to run command &quot;%1&quot;, file is not executable</source>
         <translation>コマンドの実行に失敗しました。&quot;%1&quot;。 ファイルは実行ファイルではありません。</translation>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="183"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="182"/>
         <source>Failed to run command &quot;%1&quot; (arguments: &quot;%2&quot;)</source>
         <translation>コマンドの実行に失敗しました。&quot;%1&quot;(因数: &quot;%2&quot;)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="227"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="226"/>
         <source>No valid suffix for given MIME type: %1</source>
         <translation>指定されたMIMEタイプのための有効な接尾語はありません。 %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="294"/>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="344"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="293"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="343"/>
         <source>Failed to load a valid application path for MIME type %1: %2</source>
         <translation>MIMEタイプの有効なアプリケーションのパスの読み込みに失敗しました %1:
 %2</translation>
@@ -6766,8 +6997,8 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>Otter::ZoomWidget</name>
     <message>
-        <location filename="../../src/ui/toolbars/ZoomWidget.cpp" line="97"/>
-        <location filename="../../src/ui/toolbars/ZoomWidget.cpp" line="98"/>
+        <location filename="../../src/ui/toolbars/ZoomWidget.cpp" line="95"/>
+        <location filename="../../src/ui/toolbars/ZoomWidget.cpp" line="96"/>
         <source>Zoom %1%</source>
         <translation>拡大 %1%</translation>
     </message>
@@ -6881,1064 +7112,1069 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>actions</name>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="253"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="313"/>
         <source>File</source>
         <translation>ファイル</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="254"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="314"/>
         <source>Sessions</source>
         <translation>セッション</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="255"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="315"/>
         <source>Import and Export</source>
         <translation>インポートとエクスポート</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="256"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="316"/>
         <source>Edit</source>
         <translation>編集</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="257"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="317"/>
         <source>View</source>
         <translation>表示</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="258"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="318"/>
         <source>Toolbars</source>
         <translation>ツールバー</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="259"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="319"/>
         <source>User Agent</source>
         <translation>ユーザーエージェント:</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="260"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="320"/>
         <source>Style</source>
         <translation>スタイル</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="261"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="321"/>
         <source>Character Encoding</source>
         <translation>文字コード</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="262"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="322"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="45"/>
         <source>History</source>
         <translation>履歴</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="263"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="323"/>
         <source>Closed Windows</source>
         <translation>ウィンドウを隠す</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="264"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="324"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="43"/>
         <source>Bookmarks</source>
         <translation>ブックマーク</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="265"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="325"/>
         <source>Tools</source>
         <translation>ツール</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="266"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="326"/>
         <source>Help</source>
         <translation>ヘルプ</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="267"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="327"/>
         <source>Tabs and Windows</source>
         <translation>タブとウィンドウ</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="268"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="328"/>
         <source>Page</source>
         <translation>ページ</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="269"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="329"/>
         <source>Print</source>
         <translation>印刷</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="270"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="330"/>
         <source>Settings</source>
         <translation>設定</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="271"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="331"/>
         <source>Frame</source>
         <translation>フレーム</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="275"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="335"/>
         <source>New Tab</source>
         <translation>新しいタブ</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="276"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="336"/>
         <source>New Private Tab</source>
         <translation>新しいプライベートタブ</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="277"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="337"/>
         <source>New Window</source>
         <translation>新しいウィンドウ</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="278"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="338"/>
         <source>New Private Window</source>
         <translation>新しいプライベートウィンドウ</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="279"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="339"/>
         <source>Open…</source>
         <translation>開く</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="280"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="340"/>
         <source>Save…</source>
         <translation>保存...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="281"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="341"/>
         <source>Clone Tab</source>
         <translation>タブの複製</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="282"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="342"/>
         <location filename="../../src/ui/TabBarWidget.cpp" line="170"/>
         <source>Pin Tab</source>
         <translation>タブをピン留めする</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="283"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="343"/>
         <source>Detach Tab</source>
         <translation>タブを切り離す</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="284"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="344"/>
         <source>Maximize</source>
         <translation>最大化</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="284"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="344"/>
         <source>Maximize Tab</source>
         <translation>タブを最大化</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="285"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="345"/>
         <source>Minimize</source>
         <translation>最小化</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="285"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="345"/>
         <source>Minimize Tab</source>
         <translation>タブを最小化</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="286"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="346"/>
         <source>Restore</source>
         <translation>元に戻す</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="286"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="346"/>
         <source>Restore Tab</source>
         <translation>タブを元に戻す</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="287"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="347"/>
         <source>Stay on Top</source>
         <translation>上に滞在</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="288"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="348"/>
         <source>Clear Tab History</source>
         <translation>タブ履歴を削除</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="288"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="348"/>
         <source>Remove Local Tab History</source>
         <translation>ローカルのタブ履歴を削除</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="289"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="349"/>
         <source>Purge Tab History</source>
         <translation>タブ履歴を切り離す</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="289"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="349"/>
         <source>Remove Local and Global Tab History</source>
         <translation>ローカルとグローバルのタブ履歴を削除</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="290"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="350"/>
         <source>Suspend Tab</source>
         <translation>タブを休止状態に</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="291"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="351"/>
         <source>Close Tab</source>
         <translation>タブを閉じる</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="292"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="352"/>
         <source>Close Other Tabs</source>
         <translation>他のタブを閉じる</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="293"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="353"/>
         <source>Close All Private Tabs</source>
         <translation>全ての新しいプライベートタブを閉じる</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="293"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="353"/>
         <source>Close All Private Tabs in Current Window</source>
         <translation>現在のウィンドウで全てのプライベートタブを閉じる</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="294"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="354"/>
         <source>Close Private Tabs and Windows</source>
         <translation>プライベートタブとウィンドウを閉じる</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="295"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="355"/>
         <source>Reopen Previously Closed Tab</source>
         <translation>閉じたタブをもう一度開く</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="296"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="356"/>
         <source>Maximize All</source>
         <translation>全て最大化</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="297"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="357"/>
         <source>Minimize All</source>
         <translation>全て最小化</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="298"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="358"/>
         <source>Restore All</source>
         <translation>全て元に戻す</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="299"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="359"/>
         <source>Cascade</source>
         <translation>切り離す</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="300"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="360"/>
         <source>Tile</source>
         <translation>タイル</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="301"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="361"/>
         <source>Close Window</source>
         <translation>ウィンドウを閉じる</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="302"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="362"/>
         <source>Manage Sessions…</source>
         <translation>セッション管理</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="303"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="363"/>
         <source>Save Current Session…</source>
         <translation>現在のセッションを保存...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="304"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="364"/>
         <source>Open URL</source>
         <translation>URLを開く</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="305"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="321"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="365"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="381"/>
         <source>Open</source>
         <translation>開く</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="306"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="366"/>
         <source>Open in This Tab</source>
         <translation>このタブで開く</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="307"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="322"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="367"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="382"/>
         <source>Open in New Tab</source>
         <translation>新しいタブで開く</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="308"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="323"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="368"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="383"/>
         <source>Open in New Background Tab</source>
         <translation>新しいバックグラウンドタブで開く</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="309"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="369"/>
         <source>Open in New Window</source>
         <translation>新しいウィンドウで開く</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="310"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="370"/>
         <source>Open in New Background Window</source>
         <translation>新しいバックグラウンドウィンドウで開く</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="311"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="371"/>
         <source>Open in New Private Tab</source>
         <translation>新しいプライベートタブを開く</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="312"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="372"/>
         <source>Open in New Private Background Tab</source>
         <translation>新しいプライベートのバックグラウンドタブで開く</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="313"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="373"/>
         <source>Open in New Private Window</source>
         <translation>新しいプライベートウィンドウを開く</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="314"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="374"/>
         <source>Open in New Private Background Window</source>
         <translation>新しいプライベートバックグラウンドウィンドウで開く</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="315"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="324"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="420"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="375"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="384"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="480"/>
         <source>Open with…</source>
         <translation>開く...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="315"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="375"/>
         <source>Open Link with External Application</source>
         <translation>外部アプリケーションでリンクを開く</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="316"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="376"/>
         <source>Copy Link to Clipboard</source>
         <translation>クリップボードにリンクをコピー</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="317"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="773"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="377"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="797"/>
         <source>Bookmark Link…</source>
         <translation>ブックマークリンク...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="318"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="378"/>
         <source>Save Link Target As…</source>
         <translation>リンク対象をファイルに保存...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="319"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="379"/>
         <source>Save to Downloads</source>
         <translation>ダウンロードに保存</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="320"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="380"/>
         <source>Go to This Address</source>
         <translation>このアドレスへ移動</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="321"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="381"/>
         <source>Open Frame in This Tab</source>
         <translation>このタブでフレームを開く</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="322"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="382"/>
         <source>Open Frame in New Tab</source>
         <translation>新規タブでフレームを開く</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="323"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="383"/>
         <source>Open Frame in New Background Tab</source>
         <translation>新しいバックグラウンドタブでフレームを開く</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="324"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="384"/>
         <source>Open Frame with External Application</source>
         <translation>外部アプリケーションでフレームを開く</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="325"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="385"/>
         <source>Copy Frame Link to Clipboard</source>
         <translation>クリップボードにフレームリンクをコピー</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="326"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="352"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="353"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="386"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="412"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="413"/>
         <source>Reload</source>
         <translation>再読み込み</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="326"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="386"/>
         <source>Reload Frame</source>
         <translation>フレームを再読み込み</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="327"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="387"/>
         <source>View Frame Source</source>
         <translation>フレームのソースを表示</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="328"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="388"/>
         <source>Open Image In New Tab</source>
         <translation>新しいタブで画像を開く</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="329"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="842"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="389"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="866"/>
         <source>Open Image in New Background Tab</source>
         <translation>新しい背景タブで画像を開く</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="330"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="390"/>
         <source>Save Image…</source>
         <translation>画像を保存...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="331"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="391"/>
         <source>Copy Image to Clipboard</source>
         <translation>クリップボードに画像をコピー</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="332"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="392"/>
         <source>Copy Image Link to Clipboard</source>
         <translation>クリップボードに画像リンクをコピー</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="333"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="393"/>
         <source>Reload Image</source>
         <translation>画像を再読み込み</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="334"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="394"/>
         <source>Image Properties…</source>
         <translation>イメージのプロパティ...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="335"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="395"/>
         <source>Save Media…</source>
         <translation>メディアを保存...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="336"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="396"/>
         <source>Copy Media Link to Clipboard</source>
         <translation>メディアリンクをクリップボードにコピー</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="337"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="397"/>
         <source>Show Controls</source>
         <translation>コントロールを表示</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="338"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="398"/>
         <source>Looping</source>
         <translation>ルーピング</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="339"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="905"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="399"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="929"/>
         <source>Play</source>
         <translation>再生</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="340"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="912"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="400"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="936"/>
         <source>Mute</source>
         <translation>ミュート</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="341"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="401"/>
         <source>Go</source>
         <translation>移動</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="342"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="402"/>
         <source>Back</source>
         <translation>戻る</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="343"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="403"/>
         <source>Forward</source>
         <translation>進む</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="344"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="404"/>
         <source>Go to Page or Search</source>
         <translation>ページへ移動するか、検索するか</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="345"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="405"/>
         <source>Go to Home Page</source>
         <translation>ホームページへ移動</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="346"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="406"/>
         <source>Go to Parent Directory</source>
         <translation>親階層へ移動</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="347"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="407"/>
         <source>Rewind</source>
         <translation>巻き戻し</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="348"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="408"/>
         <source>Fast Forward</source>
         <translation>早送り</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="349"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="409"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="350"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="410"/>
         <source>Stop Scheduled Page Reload</source>
         <translation>ページの読み込みを停止</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="351"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="411"/>
         <source>Stop All Pages</source>
         <translation>すべてのページをストップ</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="353"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="413"/>
         <source>Reload or Stop</source>
         <translation>読み込むか、停止するか</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="354"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="414"/>
         <source>Reload and Bypass Cache</source>
         <translation>リロードし、キャッシュに留める</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="355"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="415"/>
         <source>Reload All Tabs</source>
         <translation>全てのタブを再読み込み</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="356"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="416"/>
         <source>Reload Every</source>
         <translation>常に更新</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="357"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="417"/>
         <source>Show Context Menu</source>
         <translation>コンテキストメニューを表示</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="358"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="418"/>
         <source>Undo</source>
         <translation>取り消す</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="359"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="419"/>
         <source>Redo</source>
         <translation>やり直し</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="360"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="420"/>
         <source>Cut</source>
         <translation>切り取り</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="361"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="421"/>
         <source>Copy</source>
         <translation>コピー</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="362"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="422"/>
         <source>Copy as Plain Text</source>
         <translation>テキストとしてコピー</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="363"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="423"/>
         <source>Copy Address</source>
         <translation>アドレスをコピー</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="364"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="424"/>
         <source>Copy to Note</source>
         <translation>ノートにコピー</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="365"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="425"/>
         <source>Paste</source>
         <translation>貼り付け</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="366"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="426"/>
         <source>Paste and Go</source>
         <translation>貼り付けて移動</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="367"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="427"/>
         <source>Insert Note</source>
         <translation>ノートを挿入</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="368"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="428"/>
         <source>Delete</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="369"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="429"/>
         <source>Select All</source>
         <translation>全て選択</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="370"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="430"/>
         <source>Clear All</source>
         <translation>全件削除</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="371"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="431"/>
         <source>Check Spelling</source>
         <translation>スペルチェック中</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="372"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="432"/>
         <source>Dictionaries</source>
         <translation>辞書</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="373"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="433"/>
         <source>Find…</source>
         <translation>検索...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="374"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="434"/>
         <source>Find Next</source>
         <translation>次を検索</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="375"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="435"/>
         <source>Find Previous</source>
         <translation>前を検索</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="376"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="436"/>
         <source>Quick Find</source>
         <translation>クイック検索</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="377"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="687"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="437"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="711"/>
         <source>Search</source>
         <translation>検索</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="378"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="438"/>
         <source>Search Using</source>
         <translation>使用した検索</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="379"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="439"/>
         <source>Create Search…</source>
         <translation>検索を作成...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="380"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="440"/>
         <source>Zoom In</source>
         <translation>拡大</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="381"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="441"/>
         <source>Zoom Out</source>
         <translation>縮小</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="382"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="442"/>
         <source>Zoom Original</source>
         <translation>ズーム自動調整</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="383"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="443"/>
         <source>Go to Start of the Page</source>
         <translation>ページ先頭へ移動</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="384"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="444"/>
         <source>Go to the End of the Page</source>
         <translation>ページ末尾へ移動</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="385"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="445"/>
         <source>Page Up</source>
         <translation>ページ上部</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="386"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="446"/>
         <source>Page Down</source>
         <translation>ページ下部</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="387"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="447"/>
         <source>Page Left</source>
         <translation>ページ左</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="388"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="448"/>
         <source>Page Right</source>
         <translation>ページ右</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="389"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="449"/>
         <source>Enter Drag Scroll Mode</source>
         <translation>ドラッグスクロールモードに入る</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="390"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="450"/>
         <source>Enter Move Scroll Mode</source>
         <translation>動くスクロールモードに入る</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="391"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="451"/>
         <source>Exit Scroll Mode</source>
         <translation>スクロールモードから退出</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="392"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="452"/>
         <source>Print…</source>
         <translation>印刷...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="393"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="453"/>
         <source>Print Preview</source>
         <translation>プリント表示</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="394"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="454"/>
         <source>Activate Address Field</source>
         <translation>アドレス欄をアクティブに</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="395"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="455"/>
         <source>Activate Search Field</source>
         <translation>検索窓をアクティブに</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="396"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="456"/>
         <source>Activate Content</source>
         <translation>コンテンツをアクティブに</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="397"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="457"/>
         <source>Go to Previously Used Tab</source>
         <translation>以前に使用したタブに移動します</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="398"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="458"/>
         <source>Go to Least Recently Used Tab</source>
         <translation>最近使用したタブに移動します</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="399"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="459"/>
         <source>Activate Tab</source>
         <translation>アクティブタブ</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="400"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="460"/>
         <source>Go to Tab on Left</source>
         <translation>タブを左に移動</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="401"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="461"/>
         <source>Go to Tab on Right</source>
         <translation>タブを右に移動</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="402"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="462"/>
         <source>Manage Bookmarks</source>
         <translation>ブックマーク管理</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="403"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="463"/>
         <source>Bookmark Page…</source>
         <translation>ページをブックマークする...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="404"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="464"/>
         <source>Bookmark All Open Pages</source>
         <translation>全てのページをブックマークする</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="405"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="465"/>
         <source>Open Bookmark</source>
         <translation>ブックマークを開く</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="406"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="466"/>
         <source>Quick Bookmark Access</source>
         <translation>クイックブックマークアクセス</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="407"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="467"/>
         <source>Block pop-ups</source>
         <translation>ポップアップをブロック</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="408"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="468"/>
         <source>Load Images</source>
         <translation>画像を読み込む</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="409"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="469"/>
         <source>Cookies</source>
         <translation>クッキー</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="410"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="470"/>
         <source>Cookies Policy</source>
         <translation>クッキーのポリシー</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="411"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="471"/>
         <source>Third-party Cookies Policy</source>
         <translation>第三者のクッキーのポリシー</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="412"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="472"/>
         <source>Plugins</source>
         <translation>プラグイン</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="413"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="473"/>
         <source>Load Plugins</source>
         <translation>プラグインを読み込み</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="414"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="474"/>
         <source>Enable JavaScript</source>
         <translation>JavaScriptを有効にする</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="415"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="475"/>
         <source>Enable Java</source>
         <translation>Javaを有効にする</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="416"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="476"/>
         <source>Enable Referrer</source>
         <translation>リファラーを有効にする</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="417"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="477"/>
         <source>Proxy</source>
         <translation>プロキシ</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="418"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="478"/>
         <source>Enable Proxy</source>
         <translation>プロキシを有効にする</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="419"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="479"/>
         <source>View Source</source>
         <translation>ソースを表示</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="420"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="480"/>
         <source>Open Current Page with External Application</source>
         <translation>外部アプリケーションで現在のページを開きます。</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="421"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="481"/>
         <source>Validate</source>
         <translation>有効にする</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="422"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="482"/>
         <source>Inspect Page</source>
         <translation>ページを調査</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="423"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="483"/>
         <source>Inspect Element…</source>
         <translation>要素を調査...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="424"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="484"/>
         <source>Work Offline</source>
         <translation>オフライン作業</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="425"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="485"/>
         <source>Full Screen</source>
         <translation>フルスクリーン</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="426"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="486"/>
         <source>Show Tab Switcher</source>
         <translation>タブスイッチャーを表示</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="427"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="487"/>
         <source>Show Menubar</source>
         <translation>メニューバーを表示</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="428"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="488"/>
         <source>Show Tabbar</source>
         <translation>タブバーを表示</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="429"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="489"/>
         <source>Show Sidebar</source>
         <translation>サイドバーを表示</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="430"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="490"/>
         <source>Show Error Console</source>
         <translation>エラーコンソールを表示</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="431"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="491"/>
         <source>Lock Toolbars</source>
         <translation>ツールバーを固定</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="432"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="492"/>
         <source>Open Panel as Tab</source>
         <translation>タブとして開くパネル</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="433"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="493"/>
         <source>Close Panel</source>
         <translation>パネルを閉じる</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="434"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="494"/>
         <source>Content Blocking…</source>
         <translation>コンテンツブロック...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="435"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="495"/>
         <source>View History</source>
         <translation>履歴を表示</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="436"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="496"/>
         <source>Clear History…</source>
         <translation>履歴を削除</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="437"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="497"/>
         <source>Addons</source>
         <translation>アドオン</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="438"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="498"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="46"/>
         <source>Notes</source>
         <translation>ノート</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="439"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="499"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="44"/>
         <source>Transfers</source>
         <translation>ダウンロード</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="440"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="500"/>
         <source>Preferences…</source>
         <translation>環境設定...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="441"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="501"/>
         <source>Website Preferences…</source>
         <translation>ウェブサイトの環境設定...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="442"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="502"/>
         <source>Quick Preferences</source>
         <translation>簡易設定</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="443"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="503"/>
         <source>Reset Options</source>
         <translation>オプションを初期化</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="444"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="504"/>
         <source>Website Information…</source>
         <translation>ウェブサイト情報...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="445"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="505"/>
         <source>Website Certificate Information…</source>
         <translation>ウェブサイト証明書情報...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="446"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="506"/>
         <source>Switch Application Language…</source>
         <translation>アプリケーション言語の切り替え...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="447"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="507"/>
         <source>Check for Updates…</source>
         <translation>更新を確認...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="448"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="508"/>
         <source>Diagnostic Report…</source>
         <translation>診断レポート</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="449"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="509"/>
         <source>About Otter…</source>
         <translation>Otterについて...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="450"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="510"/>
         <source>About Qt…</source>
         <translation>Qtについて...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="451"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="511"/>
         <source>Exit</source>
         <translation>終了</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="46"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="47"/>
         <source>Menu Bar</source>
         <translation>メニューバー</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="47"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="48"/>
         <source>Tab Bar</source>
         <translation>タブバー</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="48"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="49"/>
         <source>Navigation Bar</source>
         <translation>ナビゲーションバー</translation>
     </message>
     <message>
-        <location filename="../../src/core/ToolBarsManager.cpp" line="49"/>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="50"/>
+        <source>Progress Bar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/ToolBarsManager.cpp" line="51"/>
         <source>Status Bar</source>
         <translation>ステータスバー</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="332"/>
+        <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="326"/>
         <source>Remove Bookmark</source>
         <translation>ブックマークを削除</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="337"/>
+        <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="336"/>
         <source>Copy address of source page</source>
         <translation>ソースページのアドレスをコピー</translation>
     </message>
@@ -7953,52 +8189,52 @@ Click Install button to restart browser and install the update or close this dia
         <translation>ウィンドウを表示</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="555"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="579"/>
         <source>Edit Bookmark…</source>
         <translation>ブックマークを編集...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="555"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="579"/>
         <source>Add Bookmark…</source>
         <translation>ブックマークを追加...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="773"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="797"/>
         <source>Edit Link Bookmark…</source>
         <translation>ブックマークのリンク先を編集...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="836"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="860"/>
         <source>Open Image in New Tab</source>
         <translation>新しいタブで画像を開く</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="881"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="905"/>
         <source>Save Video…</source>
         <translation>ビデオを保存...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="881"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="905"/>
         <source>Save Audio…</source>
         <translation>オーディオを保存...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="887"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="911"/>
         <source>Copy Video Link to Clipboard</source>
         <translation>クリップボードにビデオリンクをコピー</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="887"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="911"/>
         <source>Copy Audio Link to Clipboard</source>
         <translation>クリップボードにオーディオリンクをコピー</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="905"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="929"/>
         <source>Pause</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="912"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="936"/>
         <source>Unmute</source>
         <translation>ミュートを解除する</translation>
     </message>
@@ -8011,83 +8247,83 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>main</name>
     <message>
-        <location filename="../../src/core/Application.cpp" line="113"/>
+        <location filename="../../src/core/Application.cpp" line="112"/>
         <source>URL to open</source>
         <translation>開くためのURL</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="114"/>
+        <location filename="../../src/core/Application.cpp" line="113"/>
         <source>Uses &lt;path&gt; as cache directory</source>
         <translation>キャッシュディレクトリとして使用する&lt;path&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="115"/>
+        <location filename="../../src/core/Application.cpp" line="114"/>
         <source>Uses &lt;path&gt; as profile directory</source>
         <translation>プロファイルディレクトリとして使用する&lt;path&gt;</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="116"/>
+        <location filename="../../src/core/Application.cpp" line="115"/>
         <source>Restores session &lt;session&gt; if it exists</source>
         <translation>存在する場合は、セッション&lt;session&gt;を復元する</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="117"/>
+        <location filename="../../src/core/Application.cpp" line="116"/>
         <source>Starts private session</source>
         <translation>プライベートセッションをスタート</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="118"/>
+        <location filename="../../src/core/Application.cpp" line="117"/>
         <source>Forces session chooser dialog</source>
         <translation>選択したダイアログの強制セッション</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="119"/>
+        <location filename="../../src/core/Application.cpp" line="118"/>
         <source>Sets profile and cache paths to directories inside the same directory as that of application binary</source>
         <translation>アプリケーションのバイナリと同じディレクトリ内のディレクトリにプロファイルやキャッシュパスを設定します。</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="120"/>
+        <location filename="../../src/core/Application.cpp" line="119"/>
         <source>Tells application to avoid writing data to disk</source>
         <translation>ディスクへの書き込みを回避するために、アプリケーションに指示します</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="121"/>
+        <location filename="../../src/core/Application.cpp" line="120"/>
         <source>Prints out diagnostic report and exits application</source>
         <translation>診断レポートを出力し、アプリケーションを終了します。</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="91"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="88"/>
         <source>Failed to open content blocking profile file: %1</source>
         <translation>コンテンツブロックに関するファイルを開けませんでした：%1</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="100"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="97"/>
         <source>Failed to load content blocking profile file: invalid header</source>
         <translation>コンテンツブロックに関するプロファイルのファイルの読み込みに失敗しました。:無効なヘッダーです。</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="474"/>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="496"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="372"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="395"/>
         <source>Failed to update content blocking profile: %1</source>
         <translation>コンテンツブロッキング用プロファイルの更新に失敗しました。::%1</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="486"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="384"/>
         <source>Failed to update content blocking profile: checksum mismatch</source>
         <translation>コンテンツブロッキング用プロファイルの更新に失敗しました。:チェックサムの不一致です。</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="609"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="522"/>
         <source>Failed to update content blocking profile, update URL is empty</source>
         <translation>コンテンツブロッキング用プロファイルの更新に失敗しました。URLが空です。</translation>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="613"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="526"/>
         <source>Failed to update content blocking profile, update URL (%1) is invalid</source>
         <translation>コンテンツブロッキング用プロファイルの更新に失敗しました。更新URL (%1) が無効です</translation>
     </message>
     <message>
-        <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="359"/>
+        <location filename="../../src/core/NetworkAutomaticProxy.cpp" line="351"/>
         <source>Failed to parse entry of proxy auto-config (PAC): %1</source>
         <translation>プロキシ自動設定(PAC)のエントリの解析に失敗しました:
 %1</translation>
@@ -8108,17 +8344,17 @@ Script: %2</source>
         <translation>(無題)</translation>
     </message>
     <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="45"/>
+        <location filename="../../src/core/UpdateChecker.cpp" line="44"/>
         <source>Unable to check for updates. Invalid URL: %1</source>
         <translation>更新を確認することができません。無効なURL：%1</translation>
     </message>
     <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="66"/>
+        <location filename="../../src/core/UpdateChecker.cpp" line="65"/>
         <source>Unable to check for updates: %1</source>
         <translation>更新を確認することができません： %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/UpdateChecker.cpp" line="97"/>
+        <location filename="../../src/core/UpdateChecker.cpp" line="96"/>
         <source>Unable to parse version number: %1</source>
         <translation>バージョン番号を解析できません：%1</translation>
     </message>
@@ -8155,24 +8391,24 @@ Error: %2</source>
         <translation>デフォルト</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="599"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="633"/>
         <source>Blocked request</source>
         <translation>ブロックされた要求</translation>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="440"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="439"/>
         <source>Failed to run File Associations Manager, error code: %1
 Application ID: %2</source>
         <translation>ファイルの関連付けマネージャを実行できませんでした。エラーコード:%1
 アプリケーションID：%2</translation>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="459"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="458"/>
         <source>Failed to run File Associations Manager, error code: %1</source>
         <translation>ファイルの関連付けマネージャを実行できませんでした。エラーコード：%1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="514"/>
+        <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="513"/>
         <source>Failed to register application to system registry: %1, %2</source>
         <translation>システムレジストリへのアプリケーション登録に失敗しました： %1, %2</translation>
     </message>
@@ -8201,31 +8437,96 @@ Application ID: %2</source>
     </message>
 </context>
 <context>
+    <name>userAgents</name>
+    <message>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="58"/>
+        <source>Mask as Google Chrome 50 (Windows)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="59"/>
+        <source>Mask as Mozilla Firefox 45 (Windows)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="60"/>
+        <source>Mask as Microsoft Edge 25 (Windows)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="61"/>
+        <source>Mask as Internet Explorer 10.0 (Windows)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="62"/>
+        <source>Mask as Opera 12.16 (Windows)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/NetworkManagerFactory.cpp" line="63"/>
+        <source>Mask as Safari 9.0 (MacOS)</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>utils</name>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="147"/>
+        <location filename="../../src/core/Utils.cpp" line="151"/>
         <source>Error %1</source>
         <translation>エラー %1</translation>
     </message>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="149"/>
+        <location filename="../../src/core/Utils.cpp" line="153"/>
         <source>You tried to access the address &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, which is currently unavailable. Please make sure that the web address (URL) is correctly spelled and punctuated, then try reloading the page.</source>
         <translation>あなたがアクセスしようとした&lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;のアドレスは、現在使用できません。本当に現在のウェブアドレス(URL)が正しいか、スペルチェックするか中断し、ページを再読み込みしてください。</translation>
     </message>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="156"/>
+        <location filename="../../src/core/Utils.cpp" line="159"/>
         <source>Make sure your internet connection is active and check whether other applications that rely on the same connection are working.</source>
         <translation>あなたのインターネット接続がアクティブであることを確認して、同じ接続に依存している他のアプリケーションが動作しているかどうかを確認してください。</translation>
     </message>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="157"/>
+        <location filename="../../src/core/Utils.cpp" line="159"/>
         <source>Check that the setup of any internet security software is correct and does not interfere with ordinary web browsing.</source>
         <translation>任意のインターネットセキュリティソフトウェアのセットアップが正しく、通常のウェブブラウジングに干渉しないことを確認してください。</translation>
     </message>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="158"/>
+        <location filename="../../src/core/Utils.cpp" line="159"/>
         <source>Try pressing the F12 key on your keyboard and disabling proxy servers, unless you know that you are required to use a proxy to connect to the internet, and then reload the page.</source>
         <translation>あなたは、インターネットに接続するためにプロキシを使用し、ページをリロードする必要がある場合は、プロキシサーバーをキーボードのF12キーを押して無効にしてみてください。</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/Utils.cpp" line="310"/>
+        <source>%1 files (*.%2)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/Utils.cpp" line="314"/>
+        <source>All files (*)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/Utils.cpp" line="320"/>
+        <source>Save File</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/Utils.cpp" line="341"/>
+        <location filename="../../src/core/Utils.cpp" line="350"/>
+        <source>Warning</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/Utils.cpp" line="341"/>
+        <source>This path is already used by different download, pick another one.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/core/Utils.cpp" line="350"/>
+        <source>Target path is not writable.
+Select another one.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>
