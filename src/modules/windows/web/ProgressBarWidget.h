@@ -46,7 +46,7 @@ protected slots:
 	void updateLoadingState(WindowsManager::LoadingState state);
 
 private:
-	QPointer<Window> m_window;
+	Window *m_window;
 	int m_geometryUpdateTimer;
 };
 

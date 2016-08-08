@@ -1137,8 +1137,21 @@ void WebContentsWidget::setParent(Window *window)
 {
 	ContentsWidget::setParent(window);
 
+	m_window = window;
+
+	if (m_progressBarWidget)
+	{
+		m_progressBarWidget->deleteLater();
+		m_progressBarWidget = NULL;
+	}
+
 	if (window && m_webWidget)
 	{
+		if (m_webWidget->getLoadingState() == WindowsManager::OngoingLoadingState)
+		{
+			handleLoadingStateChange(WindowsManager::OngoingLoadingState);
+		}
+
 		m_webWidget->setWindowIdentifier(window->getIdentifier());
 
 		connect(m_webWidget, SIGNAL(requestedCloseWindow()), window, SLOT(close()));

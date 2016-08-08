@@ -340,13 +340,6 @@ void ToolBarWidget::updateVisibility()
 	}
 }
 
-void ToolBarWidget::setWindow(Window *window)
-{
-	m_window = window;
-
-	emit windowChanged(m_window);
-}
-
 void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &definition)
 {
 	TabBarWidget *tabBar((m_identifier == ToolBarsManager::TabBar && m_mainWindow) ? m_mainWindow->getTabBar() : NULL);
