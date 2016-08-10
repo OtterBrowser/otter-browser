@@ -169,7 +169,7 @@ void WebContentsWidget::showEvent(QShowEvent *event)
 {
 	ContentsWidget::showEvent(event);
 
-	if (m_window && ToolBarsManager::getToolBarDefinition(ToolBarsManager::ProgressBar).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar)
+	if (m_window && !m_progressBarWidget && getLoadingState() == WindowsManager::OngoingLoadingState && ToolBarsManager::getToolBarDefinition(ToolBarsManager::ProgressBar).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar)
 	{
 		m_progressBarWidget = new ProgressBarWidget(m_window, this);
 	}
@@ -885,7 +885,7 @@ void WebContentsWidget::handleLoadingStateChange(WindowsManager::LoadingState st
 			m_window->close();
 		}
 	}
-	else if (state == WindowsManager::OngoingLoadingState && m_window && !m_progressBarWidget && ToolBarsManager::getToolBarDefinition(ToolBarsManager::ProgressBar).normalVisibility == ToolBarsManager::AutoVisibilityToolBar)
+	else if (m_window && !m_progressBarWidget && state == WindowsManager::OngoingLoadingState && ToolBarsManager::getToolBarDefinition(ToolBarsManager::ProgressBar).normalVisibility == ToolBarsManager::AutoVisibilityToolBar)
 	{
 		m_progressBarWidget = new ProgressBarWidget(m_window, this);
 	}
