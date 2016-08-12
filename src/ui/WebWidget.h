@@ -281,13 +281,13 @@ signals:
 	void aboutToNavigate();
 	void aboutToReload();
 	void requestedCloseWindow();
-	void requestedOpenUrl(QUrl url, WindowsManager::OpenHints hints);
-	void requestedAddBookmark(QUrl url, QString title, QString description);
-	void requestedEditBookmark(QUrl url);
+	void requestedOpenUrl(const QUrl &url, WindowsManager::OpenHints hints);
+	void requestedAddBookmark(const QUrl &url, const QString &title, const QString &description);
+	void requestedEditBookmark(const QUrl &url);
 	void requestedNewWindow(WebWidget *widget, WindowsManager::OpenHints hints);
-	void requestedSearch(QString query, QString search, WindowsManager::OpenHints hints);
+	void requestedSearch(const QString &query, const QString &search, WindowsManager::OpenHints hints);
 	void requestedPopupWindow(const QUrl &parentUrl, const QUrl &popupUrl);
-	void requestedPermission(QString option, QUrl url, bool cancel);
+	void requestedPermission(const QString &option, const QUrl &url, bool cancel);
 	void requestedAddPassword(const PasswordsManager::PasswordInformation &password);
 	void requestedGeometryChange(const QRect &geometry);
 	void progressBarGeometryChanged();

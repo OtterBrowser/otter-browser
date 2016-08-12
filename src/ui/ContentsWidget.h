@@ -92,11 +92,11 @@ private:
 
 signals:
 	void aboutToNavigate();
-	void requestedOpenUrl(QUrl url, WindowsManager::OpenHints hints);
-	void requestedAddBookmark(QUrl url, QString title, QString description);
-	void requestedEditBookmark(QUrl url);
+	void requestedOpenUrl(const QUrl &url, WindowsManager::OpenHints hints);
+	void requestedAddBookmark(const QUrl &url, const QString &title, const QString &description);
+	void requestedEditBookmark(const QUrl &url);
 	void requestedNewWindow(ContentsWidget *widget, WindowsManager::OpenHints hints);
-	void requestedSearch(QString query, QString search, WindowsManager::OpenHints hints);
+	void requestedSearch(const QString &query, const QString &search, WindowsManager::OpenHints hints);
 	void requestedGeometryChange(const QRect &geometry);
 	void webWidgetChanged();
 	void canZoomChanged(bool can);
