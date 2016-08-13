@@ -19,7 +19,6 @@
 **************************************************************************/
 
 #include "SearchWidget.h"
-#include "../ItemViewWidget.h"
 #include "../LineEditWidget.h"
 #include "../MainWindow.h"
 #include "../PreferencesDialog.h"
@@ -41,7 +40,7 @@
 namespace Otter
 {
 
-SearchWidget::SearchWidget(Window *window, QWidget *parent) : QComboBox(parent),
+SearchWidget::SearchWidget(Window *window, QWidget *parent) : ComboBoxWidget(parent),
 	m_window(NULL),
 	m_lineEdit(new LineEditWidget(this)),
 	m_completer(new QCompleter(this)),
@@ -56,15 +55,10 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : QComboBox(parent),
 	m_completer->setCompletionMode(QCompleter::PopupCompletion);
 	m_completer->setCompletionRole(Qt::DisplayRole);
 
-	ItemViewWidget *view(new ItemViewWidget(this));
-	view->header()->setStretchLastSection(true);
-	view->header()->hide();
-
 	setEditable(true);
 	setLineEdit(m_lineEdit);
 	setMinimumWidth(100);
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-	setView(view);
 	setItemDelegate(new SearchDelegate(this));
 	setModel(SearchEnginesManager::getSearchEnginesModel());
 	setInsertPolicy(QComboBox::NoInsert);

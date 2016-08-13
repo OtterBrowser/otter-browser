@@ -21,11 +21,11 @@
 #ifndef OTTER_ADDRESSWIDGET_H
 #define OTTER_ADDRESSWIDGET_H
 
+#include "../ComboBoxWidget.h"
 #include "../../core/WindowsManager.h"
 
 #include <QtCore/QTime>
 #include <QtCore/QUrl>
-#include <QtWidgets/QComboBox>
 #include <QtWidgets/QLabel>
 
 namespace Otter
@@ -36,7 +36,7 @@ class ItemViewWidget;
 class LineEditWidget;
 class Window;
 
-class AddressWidget : public QComboBox
+class AddressWidget : public ComboBoxWidget
 {
 	Q_OBJECT
 

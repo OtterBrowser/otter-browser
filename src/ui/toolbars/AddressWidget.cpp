@@ -50,7 +50,7 @@
 namespace Otter
 {
 
-AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent),
+AddressWidget::AddressWidget(Window *window, QWidget *parent) : ComboBoxWidget(parent),
 	m_window(NULL),
 	m_lineEdit(new LineEditWidget(this)),
 	m_completionModel(new AddressCompletionModel(this)),
@@ -74,15 +74,10 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : QComboBox(parent
 		m_isUsingSimpleMode = true;
 	}
 
-	ItemViewWidget *view(new ItemViewWidget(this));
-	view->header()->setStretchLastSection(true);
-	view->header()->hide();
-
 	setEditable(true);
 	setLineEdit(m_lineEdit);
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	setMinimumWidth(100);
-	setView(view);
 	setItemDelegate(new AddressDelegate(true, this));
 	setInsertPolicy(QComboBox::NoInsert);
 	setMouseTracking(true);

@@ -154,6 +154,7 @@ set(otter_src
 	src/ui/CertificateDialog.cpp
 	src/ui/ClearHistoryDialog.cpp
 	src/ui/ColorWidget.cpp
+	src/ui/ComboBoxWidget.cpp
 	src/ui/ConsoleWidget.cpp
 	src/ui/ContentsDialog.cpp
 	src/ui/ContentsWidget.cpp

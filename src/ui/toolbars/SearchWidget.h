@@ -21,10 +21,10 @@
 #ifndef OTTER_SEARCHWIDGET_H
 #define OTTER_SEARCHWIDGET_H
 
+#include "../ComboBoxWidget.h"
 #include "../../core/WindowsManager.h"
 
 #include <QtCore/QTime>
-#include <QtWidgets/QComboBox>
 #include <QtWidgets/QCompleter>
 
 namespace Otter
@@ -34,7 +34,7 @@ class LineEditWidget;
 class SearchSuggester;
 class Window;
 
-class SearchWidget : public QComboBox
+class SearchWidget : public ComboBoxWidget
 {
 	Q_OBJECT
 
