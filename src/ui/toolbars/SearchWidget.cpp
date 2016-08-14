@@ -89,7 +89,7 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : ComboBoxWidget(par
 
 void SearchWidget::changeEvent(QEvent *event)
 {
-	QComboBox::changeEvent(event);
+	ComboBoxWidget::changeEvent(event);
 
 	if (event->type() == QEvent::LanguageChange && itemData(currentIndex(), Qt::AccessibleDescriptionRole).toString().isEmpty())
 	{
@@ -126,7 +126,7 @@ void SearchWidget::paintEvent(QPaintEvent *event)
 
 void SearchWidget::resizeEvent(QResizeEvent *event)
 {
-	QComboBox::resizeEvent(event);
+	ComboBoxWidget::resizeEvent(event);
 
 	QStyleOptionFrame panel;
 	panel.initFrom(m_lineEdit);
@@ -169,7 +169,7 @@ void SearchWidget::resizeEvent(QResizeEvent *event)
 
 void SearchWidget::focusInEvent(QFocusEvent *event)
 {
-	QComboBox::focusInEvent(event);
+	ComboBoxWidget::focusInEvent(event);
 
 	m_lineEdit->activate(event->reason());
 }
@@ -194,7 +194,7 @@ void SearchWidget::keyPressEvent(QKeyEvent *event)
 		m_isIgnoringActivation = true;
 	}
 
-	QComboBox::keyPressEvent(event);
+	ComboBoxWidget::keyPressEvent(event);
 
 	if (event->key() == Qt::Key_Down || event->key() == Qt::Key_Up)
 	{
@@ -280,7 +280,7 @@ void SearchWidget::wheelEvent(QWheelEvent *event)
 
 	m_isIgnoringActivation = true;
 
-	QComboBox::wheelEvent(event);
+	ComboBoxWidget::wheelEvent(event);
 
 	m_isIgnoringActivation = false;
 
@@ -298,7 +298,7 @@ void SearchWidget::hidePopup()
 
 	m_popupHideTime = QTime::currentTime();
 
-	QComboBox::hidePopup();
+	ComboBoxWidget::hidePopup();
 }
 
 void SearchWidget::optionChanged(const QString &option, const QVariant &value)

@@ -30,7 +30,6 @@ ComboBoxWidget::ComboBoxWidget(QWidget *parent) : QComboBox(parent)
 	view->header()->hide();
 
 	setView(view);
-
 }
 
 }

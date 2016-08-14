@@ -114,7 +114,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : ComboBoxWidget(p
 
 void AddressWidget::changeEvent(QEvent *event)
 {
-	QComboBox::changeEvent(event);
+	ComboBoxWidget::changeEvent(event);
 
 	if (event->type() == QEvent::LanguageChange && !m_isUsingSimpleMode)
 	{
@@ -226,7 +226,7 @@ void AddressWidget::paintEvent(QPaintEvent *event)
 
 void AddressWidget::resizeEvent(QResizeEvent *event)
 {
-	QComboBox::resizeEvent(event);
+	ComboBoxWidget::resizeEvent(event);
 
 	updateLineEdit();
 
@@ -251,14 +251,14 @@ void AddressWidget::focusInEvent(QFocusEvent *event)
 		return;
 	}
 
-	QComboBox::focusInEvent(event);
+	ComboBoxWidget::focusInEvent(event);
 
 	activate(event->reason());
 }
 
 void AddressWidget::keyPressEvent(QKeyEvent *event)
 {
-	QComboBox::keyPressEvent(event);
+	ComboBoxWidget::keyPressEvent(event);
 
 	if (event->key() == Qt::Key_Down && !view()->isVisible())
 	{
@@ -368,7 +368,7 @@ void AddressWidget::mouseMoveEvent(QMouseEvent *event)
 
 	if (!startDrag(event))
 	{
-		QComboBox::mouseMoveEvent(event);
+		ComboBoxWidget::mouseMoveEvent(event);
 	}
 }
 
@@ -434,14 +434,14 @@ void AddressWidget::showPopup()
 
 	m_lineEdit->setText(text);
 
-	QComboBox::showPopup();
+	ComboBoxWidget::showPopup();
 }
 
 void AddressWidget::hidePopup()
 {
 	m_popupHideTime = QTime::currentTime();
 
-	QComboBox::hidePopup();
+	ComboBoxWidget::hidePopup();
 
 	m_removeModelTimer = startTimer(250);
 }
@@ -1046,7 +1046,7 @@ bool AddressWidget::event(QEvent *event)
 		}
 	}
 
-	return QComboBox::event(event);
+	return ComboBoxWidget::event(event);
 }
 
 bool AddressWidget::eventFilter(QObject *object, QEvent *event)
