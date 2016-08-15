@@ -135,15 +135,15 @@ private:
 	bool m_isRestored;
 
 signals:
-	void requestedAddBookmark(QUrl url, QString title, QString description);
-	void requestedEditBookmark(QUrl url);
-	void requestedNewWindow(bool isPrivate, bool inBackground, QUrl url);
+	void requestedAddBookmark(const QUrl &url, const QString &title, const QString &description);
+	void requestedEditBookmark(const QUrl &url);
+	void requestedNewWindow(bool isPrivate, bool inBackground, const QUrl &url);
 	void canZoomChanged(bool can);
 	void zoomChanged(int zoom);
 	void windowAdded(qint64 identifier);
 	void windowRemoved(qint64 identifier);
 	void currentWindowChanged(quint64 identifier);
-	void windowTitleChanged(QString title);
+	void windowTitleChanged(const QString &title);
 	void closedWindowsAvailableChanged(bool available);
 };
 
