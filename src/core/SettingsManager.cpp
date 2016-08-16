@@ -261,55 +261,55 @@ SettingsManager::OptionDefinition SettingsManager::getDefinition(const QString &
 	QSettings settings(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat);
 	settings.beginGroup(key);
 
-	OptionDefinition options;
-	options.name = key;
-	options.defaultValue = m_defaults[key];
+	OptionDefinition definition;
+	definition.name = key;
+	definition.defaultValue = m_defaults[key];
 
 	const QString type(settings.value(QLatin1String("type")).toString());
 
 	if (type == QLatin1String("bool"))
 	{
-		options.type = BooleanType;
+		definition.type = BooleanType;
 	}
 	else if (type == QLatin1String("color"))
 	{
-		options.type = ColorType;
+		definition.type = ColorType;
 	}
 	else if (type == QLatin1String("enumeration"))
 	{
-		options.type = EnumerationType;
-		options.choices = settings.value(QLatin1String("choices")).toStringList();
+		definition.type = EnumerationType;
+		definition.choices = settings.value(QLatin1String("choices")).toStringList();
 	}
 	else if (type == QLatin1String("font"))
 	{
-		options.type = FontType;
+		definition.type = FontType;
 	}
 	else if (type == QLatin1String("icon"))
 	{
-		options.type = IconType;
+		definition.type = IconType;
 	}
 	else if (type == QLatin1String("integer"))
 	{
-		options.type = IntegerType;
+		definition.type = IntegerType;
 	}
 	else if (type == QLatin1String("list"))
 	{
-		options.type = ListType;
+		definition.type = ListType;
 	}
 	else if (type == QLatin1String("path"))
 	{
-		options.type = PathType;
+		definition.type = PathType;
 	}
 	else if (type == QLatin1String("string"))
 	{
-		options.type = StringType;
+		definition.type = StringType;
 	}
 	else
 	{
-		options.type = UnknownType;
+		definition.type = UnknownType;
 	}
 
-	return options;
+	return definition;
 }
 
 bool SettingsManager::hasOverride(const QUrl &url, const QString &key)
