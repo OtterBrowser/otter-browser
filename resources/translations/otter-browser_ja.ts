@@ -269,7 +269,7 @@
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="87"/>
         <source>Search with %1</source>
-        <translation type="unfinished"/>
+        <translation>%1で検索</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="104"/>
@@ -289,7 +289,7 @@
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="176"/>
         <source>Special pages</source>
-        <translation type="unfinished"/>
+        <translation>特殊ページ</translation>
     </message>
 </context>
 <context>
@@ -394,19 +394,21 @@
     <message>
         <location filename="../../src/core/Application.cpp" line="253"/>
         <source>Profile directory (%1) is not writable, application will be running in read-only mode.</source>
-        <translation type="unfinished"/>
+        <translation>プロファイル階層(%1)は書き込み可能ではありません。アプリケーションは読み取り専用モードになっています。</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="277"/>
         <source>Your profile directory (%1) ran out of free disk space.
 This may lead to malfunctions or even data loss.</source>
-        <translation type="unfinished"/>
+        <translation>あなたのプロファイル階層(%1)は、ディスク領域をがありません。
+誤動作や、データ消失の恐れがあります。</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="281"/>
         <source>Your profile directory (%1) is running low on free disk space (%2 remaining).
 This may lead to malfunctions or even data loss.</source>
-        <translation type="unfinished"/>
+        <translation>あなたのプロファイル階層(%1)は空き容量が少ない状況です。(残り%2)。
+誤動作や、データ消失の恐れがあります。</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="287"/>
@@ -441,7 +443,8 @@ This may lead to malfunctions or even data loss.</source>
         <location filename="../../src/core/Application.cpp" line="359"/>
         <source>SSL support is not available or incomplete.
 Some websites may work incorrectly or do not work at all.</source>
-        <translation type="unfinished"/>
+        <translation>SSLサポートが不完全、または利用不可能です。
+一部のWebサイトは正しく動作しないか、あるいはまったく動作しなくなります</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="526"/>
@@ -1550,67 +1553,67 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="44"/>
         <source>Blocked Elements</source>
-        <translation type="unfinished"/>
+        <translation>ブロックされた要素</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="45"/>
         <source>Active Profiles</source>
-        <translation type="unfinished"/>
+        <translation>プロファイルをアクティブに</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="194"/>
         <source>main frame</source>
-        <translation type="unfinished"/>
+        <translation>メインフレーム</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="198"/>
         <source>subframe</source>
-        <translation type="unfinished"/>
+        <translation>サブフレーム</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="202"/>
         <source>stylesheet</source>
-        <translation type="unfinished"/>
+        <translation>スタイルシート</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="206"/>
         <source>script</source>
-        <translation type="unfinished"/>
+        <translation>スクリプト</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="210"/>
         <source>image</source>
-        <translation type="unfinished"/>
+        <translation>画像</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="214"/>
         <source>object</source>
-        <translation type="unfinished"/>
+        <translation>オブジェクト</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="218"/>
         <source>object subrequest</source>
-        <translation type="unfinished"/>
+        <translation>オブジェクトのサブリクエスト</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="222"/>
         <source>XHR</source>
-        <translation type="unfinished"/>
+        <translation>XHR</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="226"/>
         <source>other</source>
-        <translation type="unfinished"/>
+        <translation>その他</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="245"/>
         <source>Enable Content Blocking</source>
-        <translation type="unfinished"/>
+        <translation>コンテンツのブロックを有効にします</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="298"/>
         <source>Blocked Elements: %1</source>
-        <translation type="unfinished"/>
+        <translation>ブロックされた要素： %1</translation>
     </message>
 </context>
 <context>
@@ -2364,7 +2367,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/LocaleDialog.cpp" line="46"/>
         <source>Unknown [%1]</source>
-        <translation type="unfinished"/>
+        <translation>未知 [%1]</translation>
     </message>
 </context>
 <context>
@@ -2382,7 +2385,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="710"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web ブラウザを支えるのは、ユーザーでありその逆はありません。.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="716"/>
@@ -2417,22 +2420,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/MasterPasswordDialog.ui" line="14"/>
         <source>Set Master Password</source>
-        <translation type="unfinished"/>
+        <translation>マスターパスワードを設定</translation>
     </message>
     <message>
         <location filename="../../src/ui/MasterPasswordDialog.ui" line="22"/>
         <source>Current password:</source>
-        <translation type="unfinished"/>
+        <translation>現在ノパスワード:</translation>
     </message>
     <message>
         <location filename="../../src/ui/MasterPasswordDialog.ui" line="32"/>
         <source>New password:</source>
-        <translation type="unfinished"/>
+        <translation>新しいパスワード:</translation>
     </message>
     <message>
         <location filename="../../src/ui/MasterPasswordDialog.ui" line="42"/>
         <source>Confirm new password:</source>
-        <translation type="unfinished"/>
+        <translation>新しいパスワードの確認:</translation>
     </message>
 </context>
 <context>
@@ -2455,7 +2458,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="105"/>
         <source>Import Opera Search Engines…</source>
-        <translation type="unfinished"/>
+        <translation>Operaの検索エンジンをインポート...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="107"/>
@@ -2556,7 +2559,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="640"/>
         <source>Custom…</source>
-        <translation type="unfinished"/>
+        <translation>カスタム...</translation>
     </message>
 </context>
 <context>
@@ -2654,7 +2657,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Any Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>任意のツールバー</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="68"/>
@@ -2735,12 +2738,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="98"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>アドレス:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="105"/>
         <source>Date:</source>
-        <translation type="unfinished"/>
+        <translation>日</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="139"/>
@@ -3016,7 +3019,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="65"/>
         <source>%1 wants to play audio.</source>
-        <translation type="unfinished"/>
+        <translation>%1がオーディオを再生しようとしています。</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="70"/>
@@ -3120,17 +3123,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="96"/>
         <source>Address Completion</source>
-        <translation type="unfinished"/>
+        <translation>アドレス補完</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="105"/>
         <source>Show category headers</source>
-        <translation type="unfinished"/>
+        <translation>カテゴリーヘッダーを表示</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="114"/>
         <source>Display mode:</source>
-        <translation type="unfinished"/>
+        <translation>表示モード:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="151"/>
@@ -3196,7 +3199,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="359"/>
         <source>Images:</source>
-        <translation type="unfinished"/>
+        <translation>画像:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="376"/>
@@ -3496,12 +3499,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="102"/>
         <source>Compact</source>
-        <translation type="unfinished"/>
+        <translation>コンパクト</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="103"/>
         <source>Columns</source>
-        <translation type="unfinished"/>
+        <translation>列</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="112"/>
@@ -3522,17 +3525,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="146"/>
         <source>All images</source>
-        <translation type="unfinished"/>
+        <translation>全ての画像</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="147"/>
         <source>Cached images</source>
-        <translation type="unfinished"/>
+        <translation>キャッシュ画像</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="148"/>
         <source>No images</source>
-        <translation type="unfinished"/>
+        <translation>画像なし</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="156"/>
@@ -4247,7 +4250,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="210"/>
         <source>Keyword is already in use. Do you want to continue anyway?</source>
-        <translation type="unfinished"/>
+        <translation>既にこのキーワードは使用されていますが、続行しますか？</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="302"/>
@@ -4270,27 +4273,27 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/toolbars/ProgressInformationWidget.cpp" line="69"/>
         <source>Document: %p%</source>
-        <translation type="unfinished"/>
+        <translation>ドキュメント: %p%</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/ProgressInformationWidget.cpp" line="111"/>
         <source>Total: %1</source>
-        <translation type="unfinished"/>
+        <translation>総合: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/ProgressInformationWidget.cpp" line="118"/>
         <source>Elements: %1/%2</source>
-        <translation type="unfinished"/>
+        <translation>要素: %1/%2</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/ProgressInformationWidget.cpp" line="125"/>
         <source>Speed: %1</source>
-        <translation type="unfinished"/>
+        <translation>スピード: %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/ProgressInformationWidget.cpp" line="135"/>
         <source>Time: %1</source>
-        <translation type="unfinished"/>
+        <translation>時間: %1</translation>
     </message>
 </context>
 <context>
@@ -4370,7 +4373,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="396"/>
         <source>Loading finished</source>
-        <translation type="unfinished"/>
+        <translation>読み込みが完了しました!</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="681"/>
@@ -4867,12 +4870,12 @@ Do you want to overwrite it?</source>
     <message numerus="yes">
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
         <source>%n window(s) (%1)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n window(s) (%1)</numerusform></translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
         <source>%n tab(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n 件のタブ(s)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="105"/>
@@ -5208,17 +5211,17 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/TextLabelWidget.cpp" line="61"/>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>コピー</translation>
     </message>
     <message>
         <location filename="../../src/ui/TextLabelWidget.cpp" line="65"/>
         <source>Copy Link Location</source>
-        <translation type="unfinished"/>
+        <translation>リンクのURLをコピー</translation>
     </message>
     <message>
         <location filename="../../src/ui/TextLabelWidget.cpp" line="69"/>
         <source>Select All</source>
-        <translation type="unfinished"/>
+        <translation>全て選択</translation>
     </message>
 </context>
 <context>
@@ -5282,7 +5285,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="143"/>
         <source>Visibility in full screen mode:</source>
-        <translation type="unfinished"/>
+        <translation>フルスクリーンモードの時の可視性:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="179"/>
@@ -5341,7 +5344,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="60"/>
         <source>Visible only when cursor is close to screen edge</source>
-        <translation type="unfinished"/>
+        <translation>カーソルが画面端に近い時だけ表示</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="65"/>
@@ -5351,12 +5354,12 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="66"/>
         <source>Icon only</source>
-        <translation type="unfinished"/>
+        <translation>アイコンのみ</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="67"/>
         <source>Text only</source>
-        <translation type="unfinished"/>
+        <translation>テキストのみ</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="68"/>
@@ -5432,7 +5435,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="389"/>
         <source>Content Blocking Details</source>
-        <translation type="unfinished"/>
+        <translation>コンテンツブロックの詳細</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="393"/>
@@ -5452,32 +5455,32 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="405"/>
         <source>Progress Information (Document Progress)</source>
-        <translation type="unfinished"/>
+        <translation>進捗情報(ドキュメントの進捗状況)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="409"/>
         <source>Progress Information (Total Progress)</source>
-        <translation type="unfinished"/>
+        <translation>進捗状況(総合的な進捗状況)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="413"/>
         <source>Progress Information (Loaded Elements)</source>
-        <translation type="unfinished"/>
+        <translation>進捗状況(要素の読み込み)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="417"/>
         <source>Progress Information (Loading Speed)</source>
-        <translation type="unfinished"/>
+        <translation>進捗状況(読み込み速度)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="421"/>
         <source>Progress Information (Elapsed Time)</source>
-        <translation type="unfinished"/>
+        <translation>進捗状況(時間経過)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="425"/>
         <source>Progress Information (Status Message)</source>
-        <translation type="unfinished"/>
+        <translation>進捗情報(状況メッセージ)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="433"/>
@@ -6008,22 +6011,22 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="470"/>
         <source>Pop-Ups</source>
-        <translation type="unfinished"/>
+        <translation>ポップアップ</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="471"/>
         <source>Open All</source>
-        <translation type="unfinished"/>
+        <translation>全て開く</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="475"/>
         <source>Open in Background</source>
-        <translation type="unfinished"/>
+        <translation>バックグラウンドで開く</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="479"/>
         <source>Block All</source>
-        <translation type="unfinished"/>
+        <translation>全てブロック</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="483"/>
@@ -6033,22 +6036,22 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="511"/>
         <source>Images</source>
-        <translation type="unfinished"/>
+        <translation>画像</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="512"/>
         <source>All Images</source>
-        <translation type="unfinished"/>
+        <translation>全ての画像</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="516"/>
         <source>Cached Images</source>
-        <translation type="unfinished"/>
+        <translation>キャッシュ画像</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="520"/>
         <source>No Images</source>
-        <translation type="unfinished"/>
+        <translation>画像なし</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="547"/>
@@ -6063,22 +6066,22 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="557"/>
         <source>Plugins</source>
-        <translation type="unfinished"/>
+        <translation>プラグイン</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="558"/>
         <source>Enabled</source>
-        <translation type="unfinished"/>
+        <translation>有効です</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="562"/>
         <source>On Demand</source>
-        <translation type="unfinished"/>
+        <translation>任意</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="566"/>
         <source>Disabled</source>
-        <translation type="unfinished"/>
+        <translation>無効</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="595"/>
@@ -6123,12 +6126,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1077"/>
         <source>Select User Agent</source>
-        <translation type="unfinished"/>
+        <translation>ユーザーエージェントを選択</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1077"/>
         <source>Enter User Agent:</source>
-        <translation type="unfinished"/>
+        <translation>ユーザーエージェントを入力</translation>
     </message>
 </context>
 <context>
@@ -6320,7 +6323,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="260"/>
         <source>Enter full screen mode:</source>
-        <translation type="unfinished"/>
+        <translation>フルスクリーンモードに入る：</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="271"/>
@@ -6473,14 +6476,14 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="142"/>
         <source>Only cached</source>
-        <translation type="unfinished"/>
+        <translation>キャッシュのみ</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="167"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="182"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="197"/>
         <source>Always ask</source>
-        <translation type="unfinished"/>
+        <translation>常に尋ねる</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="208"/>
@@ -6561,7 +6564,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="181"/>
         <source>Images:</source>
-        <translation type="unfinished"/>
+        <translation>画像:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="195"/>
@@ -6783,17 +6786,17 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="81"/>
         <source>All images</source>
-        <translation type="unfinished"/>
+        <translation>全ての画像</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="82"/>
         <source>Cached images</source>
-        <translation type="unfinished"/>
+        <translation>キャッシュ画像</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
         <source>No images</source>
-        <translation type="unfinished"/>
+        <translation>画像なし</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="85"/>
@@ -8161,7 +8164,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="50"/>
         <source>Progress Bar</source>
-        <translation type="unfinished"/>
+        <translation>プログレスバー</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="51"/>
@@ -8378,7 +8381,7 @@ Error: %2</source>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="116"/>
         <source>Invalid match rule for User Script: %1</source>
-        <translation type="unfinished"/>
+        <translation>無効なルールのユーザースクリプトです。:%1</translation>
     </message>
     <message>
         <location filename="../../src/core/UserScript.cpp" line="162"/>
@@ -8441,32 +8444,32 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="58"/>
         <source>Mask as Google Chrome 50 (Windows)</source>
-        <translation type="unfinished"/>
+        <translation>Google Chrome50として実装(Windows)</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="59"/>
         <source>Mask as Mozilla Firefox 45 (Windows)</source>
-        <translation type="unfinished"/>
+        <translation>Mozilla Firefox 45として実装(Windows)</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="60"/>
         <source>Mask as Microsoft Edge 25 (Windows)</source>
-        <translation type="unfinished"/>
+        <translation>Microsoft Edge 25として実装(Windows)</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="61"/>
         <source>Mask as Internet Explorer 10.0 (Windows)</source>
-        <translation type="unfinished"/>
+        <translation>Internet Explorer 10.0として実装(Windows)</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="62"/>
         <source>Mask as Opera 12.16 (Windows)</source>
-        <translation type="unfinished"/>
+        <translation>Mask as Opera 12.16として実装(Windows)</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="63"/>
         <source>Mask as Safari 9.0 (MacOS)</source>
-        <translation type="unfinished"/>
+        <translation>Mask as Safari 9.0として実装(Windows)</translation>
     </message>
 </context>
 <context>
@@ -8499,34 +8502,36 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="310"/>
         <source>%1 files (*.%2)</source>
-        <translation type="unfinished"/>
+        <translation>%1 ファイル (*.%2)</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="314"/>
         <source>All files (*)</source>
-        <translation type="unfinished"/>
+        <translation>全てのファイル(*)</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="320"/>
         <source>Save File</source>
-        <translation type="unfinished"/>
+        <translation>ファイルを保存</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="341"/>
         <location filename="../../src/core/Utils.cpp" line="350"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="341"/>
         <source>This path is already used by different download, pick another one.</source>
-        <translation type="unfinished"/>
+        <translation>このパスは、すでに別のダウンロードで使用されています。
+別のものを選択してください。</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="350"/>
         <source>Target path is not writable.
 Select another one.</source>
-        <translation type="unfinished"/>
+        <translation>ターゲットパスは、書き込み可能ではありません。
+別のものを選択してください。</translation>
     </message>
 </context>
 </TS>

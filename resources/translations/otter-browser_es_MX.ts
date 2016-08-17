@@ -1568,7 +1568,7 @@ Exponente: %2</translation>
     <message>
         <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="198"/>
         <source>subframe</source>
-        <translation type="unfinished"/>
+        <translation>submarco</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="202"/>
@@ -1593,7 +1593,7 @@ Exponente: %2</translation>
     <message>
         <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="218"/>
         <source>object subrequest</source>
-        <translation type="unfinished"/>
+        <translation>object subrequest</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="222"/>
