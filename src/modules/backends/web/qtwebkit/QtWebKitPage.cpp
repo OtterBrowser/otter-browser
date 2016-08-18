@@ -182,15 +182,15 @@ void QtWebKitPage::handleConsoleMessage(MessageSource category, MessageLevel lev
 
 	switch (level)
 	{
-		case QWebPage::LogMessageLevel:
+		case LogMessageLevel:
 			mappedLevel = Console::LogLevel;
 
 			break;
-		case QWebPage::WarningMessageLevel:
+		case WarningMessageLevel:
 			mappedLevel = Console::WarningLevel;
 
 			break;
-		case QWebPage::ErrorMessageLevel:
+		case ErrorMessageLevel:
 			mappedLevel = Console::ErrorLevel;
 
 			break;
@@ -208,8 +208,16 @@ void QtWebKitPage::handleConsoleMessage(MessageSource category, MessageLevel lev
 			mappedCategory = Console::NetworkCategory;
 
 			break;
+		case ContentBlockerMessageSource:
+			mappedCategory = Console::ContentBlockingCategory;
+
+			break;
 		case SecurityMessageSource:
 			mappedCategory = Console::SecurityCategory;
+
+			break;
+		case CSSMessageSource:
+			mappedCategory = Console::CssCategory;
 
 			break;
 		case JSMessageSource:

@@ -35,8 +35,10 @@ public:
 	{
 		OtherCategory = 0,
 		NetworkCategory = 1,
-		SecurityCategory = 2,
-		JavaScriptCategory = 3
+		ContentBlockingCategory = 2,
+		SecurityCategory = 3,
+		CssCategory = 4,
+		JavaScriptCategory = 5
 	};
 
 	enum MessageLevel
