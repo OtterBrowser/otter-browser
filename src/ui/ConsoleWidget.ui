@@ -87,6 +87,22 @@
       </widget>
      </item>
      <item>
+      <widget class="QToolButton" name="cssButton">
+       <property name="text">
+        <string>CSS</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonTextBesideIcon</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QToolButton" name="javaScriptButton">
        <property name="text">
         <string>JS</string>

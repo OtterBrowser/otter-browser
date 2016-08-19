@@ -66,6 +66,7 @@ ConsoleWidget::ConsoleWidget(QWidget *parent) : QWidget(parent),
 	connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(filterCategories()));
 	connect(m_ui->networkButton, SIGNAL(clicked()), this, SLOT(filterCategories()));
 	connect(m_ui->securityButton, SIGNAL(clicked()), this, SLOT(filterCategories()));
+	connect(m_ui->cssButton, SIGNAL(clicked()), this, SLOT(filterCategories()));
 	connect(m_ui->javaScriptButton, SIGNAL(clicked()), this, SLOT(filterCategories()));
 	connect(m_ui->otherButton, SIGNAL(clicked()), this, SLOT(filterCategories()));
 	connect(m_ui->clearButton, SIGNAL(clicked()), this, SLOT(clear()));
@@ -275,6 +276,11 @@ QList<Console::MessageCategory> ConsoleWidget::getCategories() const
 	if (m_ui->securityButton->isChecked())
 	{
 		categories.append(Console::SecurityCategory);
+	}
+
+	if (m_ui->cssButton->isChecked())
+	{
+		categories.append(Console::CssCategory);
 	}
 
 	if (m_ui->javaScriptButton->isChecked())
