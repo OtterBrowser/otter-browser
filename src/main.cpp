@@ -28,6 +28,7 @@
 
 using namespace Otter;
 
+#if QT_VERSION >= 0x050400
 void otterMessageHander(QtMsgType type, const QMessageLogContext &context, const QString &message)
 {
 	if (message.trimmed().startsWith(QLatin1String("OpenType support missing")) || message.startsWith(QLatin1String("libpng warning: iCCP:")) || message.startsWith(QLatin1String("OpenType support missing for script")) || message.startsWith(QLatin1String("QNetworkReplyImplPrivate::error: Internal problem, this method must only be called once")) || message.startsWith(QLatin1String("QBasicTimer::start: QBasicTimer can only be used with threads started with QThread")) || message.startsWith(QLatin1String("QNetworkReplyImpl::_q_startOperation was called more than once")))
@@ -35,35 +36,20 @@ void otterMessageHander(QtMsgType type, const QMessageLogContext &context, const
 		return;
 	}
 
-	switch (type)
+	fputs(qFormatLogMessage(type, context, message).toLocal8Bit().constData(), stderr);
+
+	if (type == QtFatalMsg)
 	{
-		case QtDebugMsg:
-			fprintf(stderr, "Debug: %s (%s:%u, %s)\n", message.toLocal8Bit().constData(), context.file, context.line, context.function);
-
-			break;
-#if QT_VERSION >= 0x050500
-		case QtInfoMsg:
-			fprintf(stderr, "Info: %s (%s:%u, %s)\n", message.toLocal8Bit().constData(), context.file, context.line, context.function);
-
-			break;
-#endif
-		case QtWarningMsg:
-			fprintf(stderr, "Warning: %s (%s:%u, %s)\n", message.toLocal8Bit().constData(), context.file, context.line, context.function);
-
-			break;
-		case QtCriticalMsg:
-			fprintf(stderr, "Critical: %s (%s:%u, %s)\n", message.toLocal8Bit().constData(), context.file, context.line, context.function);
-
-			break;
-		case QtFatalMsg:
-			fprintf(stderr, "Fatal: %s (%s:%u, %s)\n", message.toLocal8Bit().constData(), context.file, context.line, context.function);
-			abort();
+		abort();
 	}
 }
+#endif
 
 int main(int argc, char *argv[])
 {
+#if QT_VERSION >= 0x050400
 	qInstallMessageHandler(otterMessageHander);
+#endif
 
 	Application application(argc, argv);
 	application.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
