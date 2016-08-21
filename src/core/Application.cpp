@@ -790,7 +790,6 @@ QString Application::createReport()
 		stream << OTTER_VERSION_WEEKLY;
 	}
 
-	stream << OTTER_VERSION_WEEKLY;
 	stream.setFieldWidth(0);
 	stream << QLatin1String("\n\t");
 	stream.setFieldWidth(20);
