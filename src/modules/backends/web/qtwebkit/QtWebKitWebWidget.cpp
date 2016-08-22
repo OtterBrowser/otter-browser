@@ -1683,7 +1683,7 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 		QVariantMap entry;
 		entry[QLatin1String("pageScaleFactor")] = (history.entries.at(i).zoom / qreal(100));
 		entry[QLatin1String("title")] = history.entries.at(i).title;
-		entry[QLatin1String("urlString")] = history.entries.at(i).url;
+		entry[QLatin1String("urlString")] = QString(QUrl::toPercentEncoding(history.entries.at(i).url, QByteArray("!#$&'()*+,/:;=?@[]")));
 		entry[QLatin1String("scrollPosition")] = position;
 
 		entries.append(entry);
