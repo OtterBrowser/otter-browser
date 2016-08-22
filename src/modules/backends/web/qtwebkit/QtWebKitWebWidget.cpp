@@ -1666,7 +1666,7 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 
 	for (int i = 0; i < history.entries.count(); ++i)
 	{
-		stream << QString(QUrl::toPercentEncoding(history.entries.at(i).url, QByteArray("!#$&'()*+,/:;=?@[]"))) << history.entries.at(i).title << history.entries.at(i).url << quint32(2) << quint64(0) << ++documentSequence << quint64(0) << QString() << false << ++itemSequence << QString() << qint32(history.entries.at(i).position.x()) << qint32(history.entries.at(i).position.y()) << qreal(1) << false << QString() << false;
+		stream << QString(QUrl::fromUserInput(history.entries.at(i).url).toEncoded()) << history.entries.at(i).title << history.entries.at(i).url << quint32(2) << quint64(0) << ++documentSequence << quint64(0) << QString() << false << ++itemSequence << QString() << qint32(history.entries.at(i).position.x()) << qint32(history.entries.at(i).position.y()) << qreal(1) << false << QString() << false;
 	}
 
 	stream.device()->reset();
@@ -1683,7 +1683,7 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 		QVariantMap entry;
 		entry[QLatin1String("pageScaleFactor")] = (history.entries.at(i).zoom / qreal(100));
 		entry[QLatin1String("title")] = history.entries.at(i).title;
-		entry[QLatin1String("urlString")] = QString(QUrl::toPercentEncoding(history.entries.at(i).url, QByteArray("!#$&'()*+,/:;=?@[]")));
+		entry[QLatin1String("urlString")] = QString(QUrl::fromUserInput(history.entries.at(i).url).toEncoded());
 		entry[QLatin1String("scrollPosition")] = position;
 
 		entries.append(entry);
