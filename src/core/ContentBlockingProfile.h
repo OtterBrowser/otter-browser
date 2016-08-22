@@ -61,6 +61,7 @@ public:
 
 	explicit ContentBlockingProfile(const QString &name, QObject *parent = NULL);
 
+	void clear();
 	QString getName() const;
 	QString getTitle() const;
 	QUrl getUpdateUrl() const;
@@ -81,7 +82,6 @@ protected:
 	};
 
 	QString getPath() const;
-	void clear();
 	void load(bool onlyHeader = false);
 	void parseRuleLine(QString line);
 	void parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list);

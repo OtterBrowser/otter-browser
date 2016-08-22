@@ -2,7 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -170,6 +170,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	m_ui->enableFullScreenOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Browser/EnableFullScreen")));
 	m_ui->sendReferrerOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Network/EnableReferrer")));
 	m_ui->userAgentOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Network/UserAgent")));
+	m_ui->contentBlockingProfilesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, QLatin1String("Content/BlockingProfiles")));
 
 	updateValues();
 
@@ -245,15 +246,23 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 			SettingsManager::setValue(QLatin1String("Network/EnableReferrer"), (m_ui->sendReferrerOverrideCheckBox->isChecked() ? m_ui->sendReferrerCheckBox->isChecked() : QVariant()), url);
 			SettingsManager::setValue(QLatin1String("Network/UserAgent"), (m_ui->userAgentOverrideCheckBox->isChecked() ? ((m_ui->userAgentComboBox->currentIndex() == 0) ? QString() : m_ui->userAgentComboBox->currentData(Qt::UserRole).toString()) : QVariant()), url);
 
-			for (int i = 0; i < m_ui->contentBlockingProfilesViewWidget->getRowCount(); ++i)
+			if (m_ui->contentBlockingProfilesOverrideCheckBox->isChecked())
 			{
-				if (m_ui->contentBlockingProfilesViewWidget->getIndex(i, 0).data(Qt::CheckStateRole).toBool())
+				for (int i = 0; i < m_ui->contentBlockingProfilesViewWidget->getRowCount(); ++i)
 				{
-					contentBlockingProfiles.append(m_ui->contentBlockingProfilesViewWidget->getIndex(i, 0).data(Qt::UserRole).toString());
+					if (m_ui->contentBlockingProfilesViewWidget->getIndex(i, 0).data(Qt::CheckStateRole).toBool())
+					{
+						contentBlockingProfiles.append(m_ui->contentBlockingProfilesViewWidget->getIndex(i, 0).data(Qt::UserRole).toString());
+					}
+				}
+
+				if (m_ui->enableCustomRulesCheckBox->isChecked())
+				{
+					contentBlockingProfiles.append(QLatin1String("custom"));
 				}
 			}
 
-			SettingsManager::setValue(QLatin1String("Content/BlockingProfiles"), contentBlockingProfiles, url);
+			SettingsManager::setValue(QLatin1String("Content/BlockingProfiles"), (contentBlockingProfiles.isEmpty() ? QVariant() : contentBlockingProfiles), url);
 
 			accept();
 
@@ -281,16 +290,16 @@ void WebsitePreferencesDialog::updateContentBlockingProfile(const QString &name)
 		return;
 	}
 
-	for (int i = 0; i < m_ui->contentBlockingProfilesViewWidget->model()->rowCount(); ++i)
+	for (int i = 0; i < m_ui->contentBlockingProfilesViewWidget->getRowCount(); ++i)
 	{
-		const QModelIndex index(m_ui->contentBlockingProfilesViewWidget->model()->index(i, 0));
+		const QModelIndex index(m_ui->contentBlockingProfilesViewWidget->getIndex(i, 0));
 
 		if (index.data(Qt::UserRole).toString() == name)
 		{
 			const QSettings profilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
 
-			m_ui->contentBlockingProfilesViewWidget->model()->setData(index, profile->getTitle(), Qt::DisplayRole);
-			m_ui->contentBlockingProfilesViewWidget->model()->setData(index.sibling(i, 2), Utils::formatDateTime(profilesSettings.value(name + QLatin1String("/lastUpdate")).toDateTime()), Qt::DisplayRole);
+			m_ui->contentBlockingProfilesViewWidget->setData(index, profile->getTitle(), Qt::DisplayRole);
+			m_ui->contentBlockingProfilesViewWidget->setData(index.sibling(i, 2), Utils::formatDateTime(profilesSettings.value(name + QLatin1String("/lastUpdate")).toDateTime()), Qt::DisplayRole);
 
 			break;
 		}
@@ -360,27 +369,38 @@ void WebsitePreferencesDialog::updateValues(bool checked)
 	m_ui->userAgentComboBox->setCurrentIndex(m_ui->userAgentComboBox->findData(SettingsManager::getValue(QLatin1String("Network/UserAgent"), (m_ui->userAgentOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
 
 	const QSettings contentBlockingProfilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
-	const QStringList contentBlockingGlobalProfiles(SettingsManager::getValue(QLatin1String("Content/BlockingProfiles"), url).toStringList());
+	const QStringList contentBlockingGlobalProfiles(SettingsManager::getValue(QLatin1String("Content/BlockingProfiles"), (m_ui->contentBlockingProfilesOverrideCheckBox->isChecked() ? url : QUrl())).toStringList());
 	const QVector<ContentBlockingProfile*> contentBlockingProfiles(ContentBlockingManager::getProfiles());
 	QStandardItemModel *contentBlockingProfilesModel(new QStandardItemModel(this));
 	contentBlockingProfilesModel->setHorizontalHeaderLabels(QStringList({tr("Title"), tr("Update Interval"), tr("Last Update")}));
 
 	for (int i = 0; i < contentBlockingProfiles.count(); ++i)
 	{
-		QList<QStandardItem*> items({new QStandardItem(contentBlockingProfiles.at(i)->getTitle()), new QStandardItem(contentBlockingProfilesSettings.value(contentBlockingProfiles.at(i)->getName() + QLatin1String("/updateInterval")).toString()), new QStandardItem(Utils::formatDateTime(contentBlockingProfilesSettings.value(contentBlockingProfiles.at(i)->getName() + QLatin1String("/lastUpdate")).toDateTime()))});
-		items[0]->setData(contentBlockingProfiles.at(i)->getName(), Qt::UserRole);
+		const QString name(contentBlockingProfiles.at(i)->getName());
+
+		if (name == QLatin1String("custom"))
+		{
+			continue;
+		}
+
+		QList<QStandardItem*> items({new QStandardItem(contentBlockingProfiles.at(i)->getTitle()), new QStandardItem(contentBlockingProfilesSettings.value(name + QLatin1String("/updateInterval")).toString()), new QStandardItem(Utils::formatDateTime(contentBlockingProfilesSettings.value(name + QLatin1String("/lastUpdate")).toDateTime()))});
+		items[0]->setData(contentBlockingProfiles.at(i)->getTitle(), Qt::UserRole);
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		items[0]->setData(name, Qt::UserRole);
+		items[0]->setData(contentBlockingProfiles.at(i)->getUpdateUrl(), (Qt::UserRole + 1));
 		items[0]->setCheckable(true);
-		items[0]->setCheckState(contentBlockingGlobalProfiles.contains(contentBlockingProfiles.at(i)->getName()) ? Qt::Checked : Qt::Unchecked);
+		items[0]->setCheckState(contentBlockingGlobalProfiles.contains(name) ? Qt::Checked : Qt::Unchecked);
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
 		contentBlockingProfilesModel->appendRow(items);
 	}
 
+	m_ui->enableCustomRulesCheckBox->setChecked(contentBlockingGlobalProfiles.contains("custom"));
 	m_ui->contentBlockingProfilesViewWidget->setModel(contentBlockingProfilesModel);
 	m_ui->contentBlockingProfilesViewWidget->setItemDelegate(new OptionDelegate(true, this));
 	m_ui->contentBlockingProfilesViewWidget->setItemDelegateForColumn(1, new ContentBlockingIntervalDelegate(this));
+	m_ui->contentBlockingProfilesViewWidget->header()->setSectionResizeMode(0, QHeaderView::Stretch);
 
 	m_updateOverride = true;
 }

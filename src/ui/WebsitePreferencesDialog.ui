@@ -972,30 +972,50 @@
       <attribute name="title">
        <string>Content Blocking</string>
       </attribute>
-      <layout class="QVBoxLayout" name="contentBlockingVerticalLayout">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <layout class="QVBoxLayout" name="profliesLayout">
-           <item>
-            <widget class="Otter::ItemViewWidget" name="contentBlockingProfilesViewWidget">
-             <property name="editTriggers">
-              <set>QAbstractItemView::CurrentChanged|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
-             </property>
-             <property name="alternatingRowColors">
-              <bool>true</bool>
-             </property>
-             <property name="selectionMode">
-              <enum>QAbstractItemView::SingleSelection</enum>
-             </property>
-             <property name="selectionBehavior">
-              <enum>QAbstractItemView::SelectRows</enum>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="contentBlockingOverrideLabel">
+         <property name="text">
+          <string>Override</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="contentBlockingProfilesLabel">
+         <property name="text">
+          <string>Profiles</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="Otter::ItemViewWidget" name="contentBlockingProfilesViewWidget">
+         <property name="sizeAdjustPolicy">
+          <enum>QAbstractScrollArea::AdjustIgnored</enum>
+         </property>
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SingleSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="contentBlockingProfilesOverrideCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QCheckBox" name="enableCustomRulesCheckBox">
+         <property name="text">
+          <string>Enable custom rules</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
