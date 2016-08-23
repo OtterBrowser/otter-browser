@@ -48,6 +48,7 @@ void otterMessageHander(QtMsgType type, const QMessageLogContext &context, const
 int main(int argc, char *argv[])
 {
 #if QT_VERSION >= 0x050400
+	qSetMessagePattern(QLatin1String("%{if-category}%{category}: %{endif}%{message}\n"));
 	qInstallMessageHandler(otterMessageHander);
 #endif
 
