@@ -120,7 +120,7 @@ void ContentBlockingDialog::updateProfile()
 
 void ContentBlockingDialog::updateProfilesActions()
 {
-	const QModelIndex index(m_ui->profilesViewWidget->currentIndex());
+	const QModelIndex index(m_ui->profilesViewWidget->currentIndex().sibling(m_ui->profilesViewWidget->currentIndex().row(), 0));
 
 	m_ui->updateProfileButton->setEnabled(index.isValid() && index.data(Qt::UserRole + 1).toUrl().isValid());
 }
