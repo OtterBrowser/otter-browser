@@ -39,7 +39,9 @@ namespace Otter
 ContentBlockingProfile::ContentBlockingProfile(const QString &name, QObject *parent) : QObject(parent),
 	m_root(NULL),
 	m_networkReply(NULL),
+	m_category(OtherCategory),
 	m_name(name),
+	m_languages({QLocale::AnyLanguage}),
 	m_enableWildcards(SettingsManager::getValue(QLatin1String("ContentBlocking/EnableWildcards")).toBool()),
 	m_isUpdating(false),
 	m_isEmpty(true),
@@ -506,6 +508,16 @@ QStringList ContentBlockingProfile::getStyleSheetWhiteList(const QString &domain
 	}
 
 	return m_styleSheetWhiteList.values(domain);
+}
+
+QList<QLocale::Language> ContentBlockingProfile::getLanguages() const
+{
+	return m_languages;
+}
+
+ContentBlockingProfile::ProfileCategory ContentBlockingProfile::getCategory() const
+{
+	return m_category;
 }
 
 bool ContentBlockingProfile::downloadRules()

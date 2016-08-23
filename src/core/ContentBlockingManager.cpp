@@ -23,8 +23,11 @@
 #include "ContentBlockingProfile.h"
 #include "SettingsManager.h"
 #include "SessionsManager.h"
+#include "Utils.h"
 
 #include <QtCore/QDir>
+#include <QtCore/QSettings>
+#include <QtGui/QStandardItemModel>
 
 namespace Otter
 {
@@ -42,6 +45,79 @@ void ContentBlockingManager::createInstance(QObject *parent)
 	{
 		m_instance = new ContentBlockingManager(parent);
 	}
+}
+
+QStandardItemModel* ContentBlockingManager::createModel(QObject *parent, const QStringList &profiles)
+{
+	const QSettings profilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
+	QHash<ContentBlockingProfile::ProfileCategory, QMultiMap<QString, QList<QStandardItem*> > > categoryEntries;
+	QStandardItemModel *model(new QStandardItemModel(parent));
+	model->setHorizontalHeaderLabels(QStringList({tr("Title"), tr("Update Interval"), tr("Last Update")}));
+
+	for (int i = 0; i < m_profiles.count(); ++i)
+	{
+		const QString name(m_profiles.at(i)->getName());
+
+		if (name == QLatin1String("custom"))
+		{
+			continue;
+		}
+
+		ContentBlockingProfile::ProfileCategory category(m_profiles.at(i)->getCategory());
+		QString title(m_profiles.at(i)->getTitle());
+
+		if (category == ContentBlockingProfile::RegionalCategory)
+		{
+			const QList<QLocale::Language> languages(m_profiles.at(i)->getLanguages());
+			QStringList languageNames;
+
+			for (int j = 0; j < languages.count(); ++j)
+			{
+				languageNames.append(QLocale::languageToString(languages.at(j)));
+			}
+
+			title = QStringLiteral("%1 [%2]").arg(title).arg(languageNames.join(QLatin1String(", ")));
+		}
+
+		QList<QStandardItem*> profileItems({new QStandardItem(title), new QStandardItem(profilesSettings.value(name + QLatin1String("/updateInterval")).toString()), new QStandardItem(Utils::formatDateTime(profilesSettings.value(name + QLatin1String("/lastUpdate")).toDateTime()))});
+		profileItems[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		profileItems[0]->setData(name, Qt::UserRole);
+		profileItems[0]->setData(m_profiles.at(i)->getUpdateUrl(), (Qt::UserRole + 1));
+		profileItems[0]->setCheckable(true);
+		profileItems[0]->setCheckState(profiles.contains(name) ? Qt::Checked : Qt::Unchecked);
+		profileItems[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
+		profileItems[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+
+		if (!categoryEntries.contains(category))
+		{
+			categoryEntries[category] = QMultiMap<QString, QList<QStandardItem*> >();
+		}
+
+		categoryEntries[category].insert(title, profileItems);
+	}
+
+	QList<QPair<ContentBlockingProfile::ProfileCategory, QString> > categoryTitles({qMakePair(ContentBlockingProfile::AdsCategory, tr("Ads")), qMakePair(ContentBlockingProfile::PrivacyCategory, tr("Privacy")), qMakePair(ContentBlockingProfile::RegionalCategory, tr("Regional")), qMakePair(ContentBlockingProfile::OtherCategory, tr("Other"))});
+
+	for (int i = 0; i < categoryTitles.count(); ++i)
+	{
+		if (!categoryEntries.contains(categoryTitles.at(i).first))
+		{
+			continue;
+		}
+
+		const QList<QList<QStandardItem*> > profileItems(categoryEntries[categoryTitles.at(i).first].values());
+		QStandardItem* categoryItem(new QStandardItem(categoryTitles.at(i).second));
+		categoryItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+
+		for (int j = 0; j < profileItems.count(); ++j)
+		{
+			categoryItem->appendRow(profileItems.at(j));
+		}
+
+		model->appendRow(categoryItem);
+	}
+
+	return model;
 }
 
 ContentBlockingManager* ContentBlockingManager::getInstance()

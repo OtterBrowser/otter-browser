@@ -32,7 +32,6 @@
 
 #include <QtCore/QDir>
 #include <QtCore/QSettings>
-#include <QtGui/QStandardItemModel>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
@@ -43,39 +42,16 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 {
 	m_ui->setupUi(this);
 
-	const QSettings profilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
 	const QStringList globalProfiles(SettingsManager::getValue(QLatin1String("Content/BlockingProfiles")).toStringList());
-	const QVector<ContentBlockingProfile*> profiles(ContentBlockingManager::getProfiles());
-	QStandardItemModel *model(new QStandardItemModel(this));
 
-	model->setHorizontalHeaderLabels(QStringList({tr("Title"), tr("Update Interval"), tr("Last Update")}));
-
-	for (int i = 0; i < profiles.count(); ++i)
-	{
-		const QString name(profiles.at(i)->getName());
-
-		if (name == QLatin1String("custom"))
-		{
-			continue;
-		}
-
-		QList<QStandardItem*> items({new QStandardItem(profiles.at(i)->getTitle()), new QStandardItem(profilesSettings.value(name + QLatin1String("/updateInterval")).toString()), new QStandardItem(Utils::formatDateTime(profilesSettings.value(name + QLatin1String("/lastUpdate")).toDateTime()))});
-		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-		items[0]->setData(name, Qt::UserRole);
-		items[0]->setData(profiles.at(i)->getUpdateUrl(), (Qt::UserRole + 1));
-		items[0]->setCheckable(true);
-		items[0]->setCheckState(globalProfiles.contains(name) ? Qt::Checked : Qt::Unchecked);
-		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
-		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-
-		model->appendRow(items);
-	}
-
-	m_ui->enableCustomRulesCheckBox->setChecked(globalProfiles.contains("custom"));
-	m_ui->profilesViewWidget->setModel(model);
+	m_ui->profilesViewWidget->setModel(ContentBlockingManager::createModel(this, globalProfiles));
 	m_ui->profilesViewWidget->setItemDelegate(new OptionDelegate(true, this));
 	m_ui->profilesViewWidget->setItemDelegateForColumn(1, new ContentBlockingIntervalDelegate(this));
+	m_ui->profilesViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->profilesViewWidget->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+	m_ui->profilesViewWidget->expandAll();
+
+	m_ui->enableCustomRulesCheckBox->setChecked(globalProfiles.contains("custom"));
 
 	QStandardItemModel *customRulesModel(new QStandardItemModel(this));
 	QFile file(SessionsManager::getWritableDataPath("blocking/custom.txt"));

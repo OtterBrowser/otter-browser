@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -31,10 +32,14 @@ ContentBlockingIntervalDelegate::ContentBlockingIntervalDelegate(QObject *parent
 
 void ContentBlockingIntervalDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	const int updateInterval(index.data(Qt::EditRole).toInt());
-
 	drawBackground(painter, option, index);
-	drawDisplay(painter, option, option.rect, ((updateInterval > 0) ? QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", "%n day(s)", "", updateInterval) : QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", "Never")));
+
+	if (index.sibling(index.row(), 0).parent().isValid())
+	{
+		const int updateInterval(index.data(Qt::EditRole).toInt());
+
+		drawDisplay(painter, option, option.rect, ((updateInterval > 0) ? QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", "%n day(s)", "", updateInterval) : QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", "Never")));
+	}
 }
 
 void ContentBlockingIntervalDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const

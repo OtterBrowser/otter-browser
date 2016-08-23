@@ -368,39 +368,16 @@ void WebsitePreferencesDialog::updateValues(bool checked)
 	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Network/EnableReferrer"), (m_ui->sendReferrerOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 	m_ui->userAgentComboBox->setCurrentIndex(m_ui->userAgentComboBox->findData(SettingsManager::getValue(QLatin1String("Network/UserAgent"), (m_ui->userAgentOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
 
-	const QSettings contentBlockingProfilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
-	const QStringList contentBlockingGlobalProfiles(SettingsManager::getValue(QLatin1String("Content/BlockingProfiles"), (m_ui->contentBlockingProfilesOverrideCheckBox->isChecked() ? url : QUrl())).toStringList());
-	const QVector<ContentBlockingProfile*> contentBlockingProfiles(ContentBlockingManager::getProfiles());
-	QStandardItemModel *contentBlockingProfilesModel(new QStandardItemModel(this));
-	contentBlockingProfilesModel->setHorizontalHeaderLabels(QStringList({tr("Title"), tr("Update Interval"), tr("Last Update")}));
+	const QStringList contentBlockingProfiles(SettingsManager::getValue(QLatin1String("Content/BlockingProfiles"), url).toStringList());
 
-	for (int i = 0; i < contentBlockingProfiles.count(); ++i)
-	{
-		const QString name(contentBlockingProfiles.at(i)->getName());
-
-		if (name == QLatin1String("custom"))
-		{
-			continue;
-		}
-
-		QList<QStandardItem*> items({new QStandardItem(contentBlockingProfiles.at(i)->getTitle()), new QStandardItem(contentBlockingProfilesSettings.value(name + QLatin1String("/updateInterval")).toString()), new QStandardItem(Utils::formatDateTime(contentBlockingProfilesSettings.value(name + QLatin1String("/lastUpdate")).toDateTime()))});
-		items[0]->setData(contentBlockingProfiles.at(i)->getTitle(), Qt::UserRole);
-		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-		items[0]->setData(name, Qt::UserRole);
-		items[0]->setData(contentBlockingProfiles.at(i)->getUpdateUrl(), (Qt::UserRole + 1));
-		items[0]->setCheckable(true);
-		items[0]->setCheckState(contentBlockingGlobalProfiles.contains(name) ? Qt::Checked : Qt::Unchecked);
-		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-
-		contentBlockingProfilesModel->appendRow(items);
-	}
-
-	m_ui->enableCustomRulesCheckBox->setChecked(contentBlockingGlobalProfiles.contains("custom"));
-	m_ui->contentBlockingProfilesViewWidget->setModel(contentBlockingProfilesModel);
+	m_ui->contentBlockingProfilesViewWidget->setModel(ContentBlockingManager::createModel(this, contentBlockingProfiles));
 	m_ui->contentBlockingProfilesViewWidget->setItemDelegate(new OptionDelegate(true, this));
 	m_ui->contentBlockingProfilesViewWidget->setItemDelegateForColumn(1, new ContentBlockingIntervalDelegate(this));
+	m_ui->contentBlockingProfilesViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->contentBlockingProfilesViewWidget->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+	m_ui->contentBlockingProfilesViewWidget->expandAll();
+
+	m_ui->enableCustomRulesCheckBox->setChecked(contentBlockingProfiles.contains("custom"));
 
 	m_updateOverride = true;
 }

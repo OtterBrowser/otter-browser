@@ -24,6 +24,7 @@
 #include "NetworkManager.h"
 
 #include <QtCore/QUrl>
+#include <QtGui/QStandardItemModel>
 
 namespace Otter
 {
@@ -44,6 +45,7 @@ public:
 	};
 
 	static void createInstance(QObject *parent = NULL);
+	static QStandardItemModel* createModel(QObject *parent, const QStringList &profiles);
 	static ContentBlockingManager* getInstance();
 	static ContentBlockingProfile* getProfile(const QString &profile);
 	static CheckResult checkUrl(const QVector<int> &profiles, const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType);

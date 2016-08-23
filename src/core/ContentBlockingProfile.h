@@ -49,6 +49,14 @@ public:
 
 	Q_DECLARE_FLAGS(RuleOptions, RuleOption)
 
+	enum ProfileCategory
+	{
+		OtherCategory = 0,
+		AdsCategory = 1,
+		PrivacyCategory = 2,
+		RegionalCategory = 4
+	};
+
 	struct ContentBlockingRule
 	{
 		QStringList blockedDomains;
@@ -69,6 +77,8 @@ public:
 	QStringList getStyleSheet();
 	QStringList getStyleSheetBlackList(const QString &domain);
 	QStringList getStyleSheetWhiteList(const QString &domain);
+	QList<QLocale::Language> getLanguages() const;
+	ProfileCategory getCategory() const;
 	bool downloadRules();
 
 protected:
@@ -107,6 +117,8 @@ private:
 	QUrl m_updateUrl;
 	QRegularExpression m_domainExpression;
 	QStringList m_styleSheet;
+	QList<QLocale::Language> m_languages;
+	ProfileCategory m_category;
 	QMultiHash<QString, QString> m_styleSheetBlackList;
 	QMultiHash<QString, QString> m_styleSheetWhiteList;
 	bool m_enableWildcards;
