@@ -105,6 +105,8 @@ protected:
 	explicit QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebKitNetworkManager *networkManager = NULL, ContentsWidget *parent = NULL);
 
 	void timerEvent(QTimerEvent *event);
+	void showEvent(QShowEvent *event);
+	void hideEvent(QHideEvent *event);
 	void focusInEvent(QFocusEvent *event);
 	void clearPluginToken();
 	void resetSpellCheck(QWebElement element);

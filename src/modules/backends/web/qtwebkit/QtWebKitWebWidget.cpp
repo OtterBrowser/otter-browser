@@ -107,6 +107,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	m_page = new QtWebKitPage(m_networkManager, this);
 	m_page->setParent(m_webView);
 	m_page->setPluginFactory(m_pluginFactory);
+	m_page->setVisibilityState(isVisible() ? QWebPage::VisibilityStateVisible : QWebPage::VisibilityStateHidden);
 
 	m_webView->setPage(m_page);
 	m_webView->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -192,6 +193,20 @@ void QtWebKitWebWidget::timerEvent(QTimerEvent *event)
 	{
 		WebWidget::timerEvent(event);
 	}
+}
+
+void QtWebKitWebWidget::showEvent(QShowEvent *event)
+{
+	WebWidget::showEvent(event);
+
+	m_page->setVisibilityState(QWebPage::VisibilityStateVisible);
+}
+
+void QtWebKitWebWidget::hideEvent(QHideEvent *event)
+{
+	WebWidget::hideEvent(event);
+
+	m_page->setVisibilityState(QWebPage::VisibilityStateHidden);
 }
 
 void QtWebKitWebWidget::focusInEvent(QFocusEvent *event)
