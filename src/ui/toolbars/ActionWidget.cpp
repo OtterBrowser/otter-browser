@@ -128,6 +128,11 @@ Window* ActionWidget::getWindow() const
 	return m_window;
 }
 
+int ActionWidget::getIdentifier() const
+{
+	return m_identifier;
+}
+
 bool ActionWidget::event(QEvent *event)
 {
 	if (event->type() == QEvent::ToolTip)

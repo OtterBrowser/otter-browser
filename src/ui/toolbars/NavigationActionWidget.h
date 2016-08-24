@@ -17,24 +17,26 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_GOFORWARDACTIONWIDGET_H
-#define OTTER_GOFORWARDACTIONWIDGET_H
+#ifndef OTTER_NAVIGATIONACTIONWIDGET_H
+#define OTTER_NAVIGATIONACTIONWIDGET_H
 
 #include "ActionWidget.h"
+#include "../../core/SessionsManager.h"
 
 namespace Otter
 {
 
-class GoForwardActionWidget : public ActionWidget
+class NavigationActionWidget : public ActionWidget
 {
 	Q_OBJECT
 
 public:
-	explicit GoForwardActionWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = NULL);
+	explicit NavigationActionWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = NULL);
 
 	bool eventFilter(QObject *object, QEvent *event);
 
 protected:
+	void addMenuEntry(int index, const WindowHistoryEntry &entry);
 	bool event(QEvent *event);
 
 protected slots:

@@ -42,6 +42,7 @@ public:
 protected:
 	void actionEvent(QActionEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
+	int getIdentifier() const;
 	bool event(QEvent *event);
 
 protected slots:

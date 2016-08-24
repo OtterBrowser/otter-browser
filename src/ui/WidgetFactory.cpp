@@ -25,9 +25,8 @@
 #include "toolbars/AddressWidget.h"
 #include "toolbars/BookmarkWidget.h"
 #include "toolbars/ContentBlockingInformationWidget.h"
-#include "toolbars/GoBackActionWidget.h"
-#include "toolbars/GoForwardActionWidget.h"
 #include "toolbars/MenuButtonWidget.h"
+#include "toolbars/NavigationActionWidget.h"
 #include "toolbars/PanelChooserWidget.h"
 #include "toolbars/ProgressInformationWidget.h"
 #include "toolbars/SearchWidget.h"
@@ -131,13 +130,9 @@ QWidget* createToolBarItem(const ActionsManager::ActionEntryDefinition &definiti
 		{
 			ActionWidget *actionWidget(NULL);
 
-			if (identifier == ActionsManager::GoBackAction)
+			if (identifier == ActionsManager::GoBackAction || identifier == ActionsManager::GoForwardAction)
 			{
-				actionWidget = new GoBackActionWidget(window, definition, parent);
-			}
-			else if (identifier == ActionsManager::GoForwardAction)
-			{
-				actionWidget = new GoForwardActionWidget(window, definition, parent);
+				actionWidget = new NavigationActionWidget(window, definition, parent);
 			}
 			else
 			{

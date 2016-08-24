@@ -18,7 +18,7 @@
 *
 **************************************************************************/
 
-#include "GoForwardActionWidget.h"
+#include "NavigationActionWidget.h"
 #include "../ContentsWidget.h"
 #include "../ToolBarWidget.h"
 #include "../Window.h"
@@ -32,7 +32,7 @@
 namespace Otter
 {
 
-GoForwardActionWidget::GoForwardActionWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent) : ActionWidget(ActionsManager::GoForwardAction, window, definition, parent)
+NavigationActionWidget::NavigationActionWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent) : ActionWidget(((definition.action == QLatin1String("GoBackAction")) ? ActionsManager::GoBackAction : ActionsManager::GoForwardAction), window, definition, parent)
 {
 	setMenu(new QMenu(this));
 	setPopupMode(QToolButton::DelayedPopup);
@@ -44,7 +44,7 @@ GoForwardActionWidget::GoForwardActionWidget(Window *window, const ActionsManage
 	connect(menu(), SIGNAL(triggered(QAction*)), this, SLOT(goToHistoryIndex(QAction*)));
 }
 
-void GoForwardActionWidget::goToHistoryIndex(QAction *action)
+void NavigationActionWidget::goToHistoryIndex(QAction *action)
 {
 	if (getWindow() && action && action->data().type() == QVariant::Int)
 	{
@@ -52,7 +52,15 @@ void GoForwardActionWidget::goToHistoryIndex(QAction *action)
 	}
 }
 
-void GoForwardActionWidget::updateMenu()
+void NavigationActionWidget::addMenuEntry(int index, const WindowHistoryEntry &entry)
+{
+	QString title(entry.title);
+	QAction *action(menu()->addAction(HistoryManager::getIcon(QUrl(entry.url)), (title.isEmpty() ? tr("(Untitled)") : title.replace(QLatin1Char('&'), QLatin1String("&&")))));
+	action->setData(index);
+	action->setStatusTip(entry.url);
+}
+
+void NavigationActionWidget::updateMenu()
 {
 	if (!menu() || !getWindow())
 	{
@@ -63,16 +71,23 @@ void GoForwardActionWidget::updateMenu()
 
 	const WindowHistoryInformation history(getWindow()->getContentsWidget()->getHistory());
 
-	for (int i = (history.index + 1); i < history.entries.count(); ++i)
+	if (getIdentifier() == ActionsManager::GoBackAction)
 	{
-		QString title(history.entries.at(i).title);
-		QAction *action(menu()->addAction(HistoryManager::getIcon(QUrl(history.entries.at(i).url)), (title.isEmpty() ? tr("(Untitled)") : title.replace(QLatin1Char('&'), QLatin1String("&&")))));
-		action->setData(i);
-		action->setStatusTip(history.entries.at(i).url);
+		for (int i = (history.index - 1); i >= 0; --i)
+		{
+			addMenuEntry(i, history.entries.at(i));
+		}
+	}
+	else
+	{
+		for (int i = (history.index + 1); i < history.entries.count(); ++i)
+		{
+			addMenuEntry(i, history.entries.at(i));
+		}
 	}
 }
 
-bool GoForwardActionWidget::event(QEvent *event)
+bool NavigationActionWidget::event(QEvent *event)
 {
 	if ((event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel) && GesturesManager::startGesture(this, event, QList<GesturesManager::GesturesContext>({GesturesManager::ToolBarGesturesContext, GesturesManager::GenericGesturesContext})))
 	{
@@ -121,19 +136,33 @@ bool GoForwardActionWidget::event(QEvent *event)
 
 		if (helpEvent)
 		{
-			const QVector<QKeySequence> shortcuts(ActionsManager::getActionDefinition(ActionsManager::GoForwardAction).shortcuts);
+			const QVector<QKeySequence> shortcuts(ActionsManager::getActionDefinition(getIdentifier()).shortcuts);
 			QString toolTip(text() + (shortcuts.isEmpty() ? QString() : QLatin1String(" (") + shortcuts.at(0).toString(QKeySequence::NativeText) + QLatin1Char(')')));
 
 			if (getWindow())
 			{
 				const WindowHistoryInformation history(getWindow()->getContentsWidget()->getHistory());
 
-				if (!history.entries.isEmpty() && history.index < (history.entries.count() - 1))
+				if (!history.entries.isEmpty())
 				{
-					QString title(history.entries.at(history.index + 1).title);
-					title = (title.isEmpty() ? tr("(Untitled)") : title.replace(QLatin1Char('&'), QLatin1String("&&")));
+					int index(-1);
 
-					toolTip = title + QLatin1String(" (") + text() + (shortcuts.isEmpty() ? QString() : QLatin1String(" - ") + shortcuts.at(0).toString(QKeySequence::NativeText)) + QLatin1Char(')');
+					if (getIdentifier() == ActionsManager::GoBackAction && history.index > 0)
+					{
+						index = (history.index - 1);
+					}
+					else if (getIdentifier() == ActionsManager::GoForwardAction && history.index < (history.entries.count() - 1))
+					{
+						index = (history.index + 1);
+					}
+
+					if (index >= 0)
+					{
+						QString title(history.entries.at(index).title);
+						title = (title.isEmpty() ? tr("(Untitled)") : title.replace(QLatin1Char('&'), QLatin1String("&&")));
+
+						toolTip = title + QLatin1String(" (") + text() + (shortcuts.isEmpty() ? QString() : QLatin1String(" - ") + shortcuts.at(0).toString(QKeySequence::NativeText)) + QLatin1Char(')');
+					}
 				}
 			}
 
@@ -146,7 +175,7 @@ bool GoForwardActionWidget::event(QEvent *event)
 	return ActionWidget::event(event);
 }
 
-bool GoForwardActionWidget::eventFilter(QObject *object, QEvent *event)
+bool NavigationActionWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (event->type() == QEvent::ContextMenu)
 	{
