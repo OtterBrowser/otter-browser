@@ -45,6 +45,18 @@ QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent),
 {
 	m_instance = this;
 
+	const QString cachePath(SessionsManager::getCachePath());
+
+	if (!cachePath.isEmpty())
+	{
+		QDir().mkpath(cachePath);
+
+		QWebSettings::setIconDatabasePath(cachePath);
+		QWebSettings::setOfflineStoragePath(cachePath + QLatin1String("/offlineStorage/"));
+		QWebSettings::setOfflineWebApplicationCachePath(cachePath + QLatin1String("/offlineWebApplicationCache/"));
+		QWebSettings::globalSettings()->setLocalStoragePath(cachePath + QLatin1String("/localStorage/"));
+	}
+
 	QtWebKitPage *page(new QtWebKitPage());
 	QRegularExpression platformExpression(QLatin1String("(\\([^\\)]+\\))"));
 
@@ -170,18 +182,6 @@ WebWidget* QtWebKitWebBackend::createWidget(bool isPrivate, ContentsWidget *pare
 		QWebSettings::setMaximumPagesInCache(SettingsManager::getValue(QLatin1String("Cache/PagesInMemoryLimit")).toInt());
 		QWebSettings::globalSettings()->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
 		QWebSettings::globalSettings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
-
-		const QString cachePath(SessionsManager::getCachePath());
-
-		if (!cachePath.isEmpty())
-		{
-			QDir().mkpath(cachePath);
-
-			QWebSettings::setIconDatabasePath(cachePath);
-			QWebSettings::setOfflineStoragePath(cachePath + QLatin1String("/offlineStorage/"));
-			QWebSettings::setOfflineWebApplicationCachePath(cachePath + QLatin1String("/offlineWebApplicationCache/"));
-			QWebSettings::globalSettings()->setLocalStoragePath(cachePath + QLatin1String("/localStorage/"));
-		}
 
 		optionChanged(QLatin1String("Browser/"));
 
