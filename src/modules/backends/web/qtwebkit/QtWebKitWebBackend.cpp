@@ -202,7 +202,11 @@ QtWebKitWebBackend* QtWebKitWebBackend::getInstance()
 
 QString QtWebKitWebBackend::getTitle() const
 {
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
+	return tr("WebKit Backend (legacy)");
+#else
 	return tr("WebKit Backend");
+#endif
 }
 
 QString QtWebKitWebBackend::getDescription() const
