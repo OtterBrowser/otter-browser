@@ -805,8 +805,9 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 	settings->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, getOption(QLatin1String("Browser/EnableOfflineStorageDatabase"), url).toBool());
 	settings->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, getOption(QLatin1String("Browser/EnableOfflineWebApplicationCache"), url).toBool());
 	settings->setDefaultTextEncoding(getOption(QLatin1String("Content/DefaultCharacterEncoding"), url).toString());
-
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
+	settings->setAttribute(QWebSettings::MediaSourceEnabled, getOption(QLatin1String("QtWebKitBackend/EnableMediaSource"), url).toBool());
+
 	if (settings->testAttribute(QWebSettings::PrivateBrowsingEnabled))
 	{
 		settings->setAttribute(QWebSettings::LocalStorageEnabled, false);
