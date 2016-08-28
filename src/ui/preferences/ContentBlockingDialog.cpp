@@ -179,7 +179,7 @@ void ContentBlockingDialog::updateProfile(const QString &name)
 				m_ui->profilesViewWidget->setData(entryIndex, profile->getTitle(), Qt::DisplayRole);
 				m_ui->profilesViewWidget->setData(entryIndex.sibling(j, 2), Utils::formatDateTime(profilesSettings.value(name + QLatin1String("/lastUpdate")).toDateTime()), Qt::DisplayRole);
 
-				break;
+				return;
 			}
 		}
 	}

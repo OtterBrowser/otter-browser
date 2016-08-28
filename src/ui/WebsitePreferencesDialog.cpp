@@ -250,9 +250,16 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 			{
 				for (int i = 0; i < m_ui->contentBlockingProfilesViewWidget->getRowCount(); ++i)
 				{
-					if (m_ui->contentBlockingProfilesViewWidget->getIndex(i, 0).data(Qt::CheckStateRole).toBool())
+					const QModelIndex categoryIndex(m_ui->contentBlockingProfilesViewWidget->getIndex(i));
+
+					for (int j = 0; j < m_ui->contentBlockingProfilesViewWidget->getRowCount(categoryIndex); ++j)
 					{
-						contentBlockingProfiles.append(m_ui->contentBlockingProfilesViewWidget->getIndex(i, 0).data(Qt::UserRole).toString());
+						const QModelIndex entryIndex(m_ui->contentBlockingProfilesViewWidget->getIndex(j, 0, categoryIndex));
+
+						if (entryIndex.data(Qt::CheckStateRole).toBool())
+						{
+							contentBlockingProfiles.append(entryIndex.data(Qt::UserRole).toString());
+						}
 					}
 				}
 
@@ -292,16 +299,21 @@ void WebsitePreferencesDialog::updateContentBlockingProfile(const QString &name)
 
 	for (int i = 0; i < m_ui->contentBlockingProfilesViewWidget->getRowCount(); ++i)
 	{
-		const QModelIndex index(m_ui->contentBlockingProfilesViewWidget->getIndex(i, 0));
+		const QModelIndex categoryIndex(m_ui->contentBlockingProfilesViewWidget->getIndex(i));
 
-		if (index.data(Qt::UserRole).toString() == name)
+		for (int j = 0; j < m_ui->contentBlockingProfilesViewWidget->getRowCount(categoryIndex); ++j)
 		{
-			const QSettings profilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
+			const QModelIndex entryIndex(m_ui->contentBlockingProfilesViewWidget->getIndex(j, 0, categoryIndex));
 
-			m_ui->contentBlockingProfilesViewWidget->setData(index, profile->getTitle(), Qt::DisplayRole);
-			m_ui->contentBlockingProfilesViewWidget->setData(index.sibling(i, 2), Utils::formatDateTime(profilesSettings.value(name + QLatin1String("/lastUpdate")).toDateTime()), Qt::DisplayRole);
+			if (entryIndex.data(Qt::UserRole).toString() == name)
+			{
+				const QSettings profilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
 
-			break;
+				m_ui->contentBlockingProfilesViewWidget->setData(entryIndex, profile->getTitle(), Qt::DisplayRole);
+				m_ui->contentBlockingProfilesViewWidget->setData(entryIndex.sibling(j, 2), Utils::formatDateTime(profilesSettings.value(name + QLatin1String("/lastUpdate")).toDateTime()), Qt::DisplayRole);
+
+				return;
+			}
 		}
 	}
 }
