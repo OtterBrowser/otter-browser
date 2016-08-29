@@ -49,10 +49,10 @@ public:
 	explicit Importer(QObject *parent = NULL);
 
 	virtual QWidget* getOptionsWidget() = 0;
-	virtual QString getFileFilter() const = 0;
 	virtual QString getSuggestedPath(const QString &path = QString()) const = 0;
 	virtual QString getBrowser() const = 0;
 	QUrl getUpdateUrl() const;
+	virtual QStringList getFileFilters() const = 0;
 	AddonType getType() const;
 	virtual ImportType getImportType() const = 0;
 

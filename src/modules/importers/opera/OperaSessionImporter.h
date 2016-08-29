@@ -37,11 +37,11 @@ public:
 	QString getTitle() const;
 	QString getDescription() const;
 	QString getVersion() const;
-	QString getFileFilter() const;
 	QString getSuggestedPath(const QString &path = QString()) const;
 	QString getBrowser() const;
 	QUrl getHomePage() const;
 	QIcon getIcon() const;
+	QStringList getFileFilters() const;
 	ImportType getImportType() const;
 
 public slots:

@@ -67,11 +67,6 @@ QString OperaBookmarksImporter::getVersion() const
 	return QLatin1String("0.8");
 }
 
-QString OperaBookmarksImporter::getFileFilter() const
-{
-	return tr("Opera bookmarks files (bookmarks.adr)");
-}
-
 QString OperaBookmarksImporter::getSuggestedPath(const QString &path) const
 {
 	if (!path.isEmpty())
@@ -110,6 +105,11 @@ QUrl OperaBookmarksImporter::getHomePage() const
 QIcon OperaBookmarksImporter::getIcon() const
 {
 	return QIcon();
+}
+
+QStringList OperaBookmarksImporter::getFileFilters() const
+{
+	return QStringList(tr("Opera bookmarks files (bookmarks.adr)"));
 }
 
 bool OperaBookmarksImporter::import(const QString &path)

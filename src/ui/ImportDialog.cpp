@@ -37,7 +37,7 @@ ImportDialog::ImportDialog(Importer *importer, QWidget *parent) : Dialog(parent)
 	m_ui(new Ui::ImportDialog)
 {
 	m_ui->setupUi(this);
-	m_ui->importPathWidget->setFilters(QStringList(importer->getFileFilter()));
+	m_ui->importPathWidget->setFilters(importer->getFileFilters());
 	m_ui->importPathWidget->setPath(importer->getSuggestedPath());
 
 	m_importer->setParent(this);

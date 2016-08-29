@@ -116,11 +116,6 @@ QString OperaNotesImporter::getVersion() const
 	return QLatin1String("0.8");
 }
 
-QString OperaNotesImporter::getFileFilter() const
-{
-	return tr("Opera notes files (notes.adr)");
-}
-
 QString OperaNotesImporter::getSuggestedPath(const QString &path) const
 {
 	if (!path.isEmpty())
@@ -159,6 +154,11 @@ QUrl OperaNotesImporter::getHomePage() const
 QIcon OperaNotesImporter::getIcon() const
 {
 	return QIcon();
+}
+
+QStringList OperaNotesImporter::getFileFilters() const
+{
+	return QStringList(tr("Opera notes files (notes.adr)"));
 }
 
 ImportType OperaNotesImporter::getImportType() const

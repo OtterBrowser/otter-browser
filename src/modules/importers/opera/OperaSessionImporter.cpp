@@ -52,11 +52,6 @@ QString OperaSessionImporter::getVersion() const
 	return QLatin1String("0.2");
 }
 
-QString OperaSessionImporter::getFileFilter() const
-{
-	return tr("Opera session files (*.win)");
-}
-
 QString OperaSessionImporter::getSuggestedPath(const QString &path) const
 {
 	if (!path.isEmpty())
@@ -95,6 +90,11 @@ QUrl OperaSessionImporter::getHomePage() const
 QIcon OperaSessionImporter::getIcon() const
 {
 	return QIcon();
+}
+
+QStringList OperaSessionImporter::getFileFilters() const
+{
+	return QStringList(tr("Opera session files (*.win)"));
 }
 
 ImportType OperaSessionImporter::getImportType() const

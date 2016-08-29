@@ -72,11 +72,6 @@ QString OperaSearchEnginesImporter::getVersion() const
 	return QLatin1String("0.8");
 }
 
-QString OperaSearchEnginesImporter::getFileFilter() const
-{
-	return tr("Opera search engines files (search.ini)");
-}
-
 QString OperaSearchEnginesImporter::getSuggestedPath(const QString &path) const
 {
 	if (!path.isEmpty() && QFileInfo(path).isDir())
@@ -108,6 +103,11 @@ QUrl OperaSearchEnginesImporter::getHomePage() const
 QIcon OperaSearchEnginesImporter::getIcon() const
 {
 	return QIcon();
+}
+
+QStringList OperaSearchEnginesImporter::getFileFilters() const
+{
+	return QStringList(tr("Opera search engines files (search.ini)"));
 }
 
 ImportType OperaSearchEnginesImporter::getImportType() const

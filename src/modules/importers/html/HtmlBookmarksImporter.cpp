@@ -161,11 +161,6 @@ QString HtmlBookmarksImporter::getVersion() const
 	return QLatin1String("1.0");
 }
 
-QString HtmlBookmarksImporter::getFileFilter() const
-{
-	return tr("HTML files (*.htm *.html)");
-}
-
 QString HtmlBookmarksImporter::getSuggestedPath(const QString &path) const
 {
 	if (!path.isEmpty() && QFileInfo(path).isDir())
@@ -189,6 +184,11 @@ QUrl HtmlBookmarksImporter::getHomePage() const
 QIcon HtmlBookmarksImporter::getIcon() const
 {
 	return QIcon();
+}
+
+QStringList HtmlBookmarksImporter::getFileFilters() const
+{
+	return QStringList(tr("HTML files (*.htm *.html)"));
 }
 
 bool HtmlBookmarksImporter::import(const QString &path)
