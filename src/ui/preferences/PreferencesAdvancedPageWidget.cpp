@@ -97,6 +97,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->browsingSuggestBookmarksCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/SuggestBookmarks")).toBool());
 	m_ui->browsingSuggestHistoryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/SuggestHistory")).toBool());
+	m_ui->browsingSuggestLocalPathsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/SuggestLocalPaths")).toBool());
 	m_ui->browsingCategoriesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/ShowCompletionCategories")).toBool());
 
 	m_ui->browsingDisplayModeComboBox->addItem(tr("Compact"), QLatin1String("compact"));
@@ -1289,6 +1290,7 @@ void PreferencesAdvancedPageWidget::save()
 
 	SettingsManager::setValue(QLatin1String("AddressField/SuggestBookmarks"), m_ui->browsingSuggestBookmarksCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("AddressField/SuggestHistory"), m_ui->browsingSuggestHistoryCheckBox->isChecked());
+	SettingsManager::setValue(QLatin1String("AddressField/SuggestLocalPaths"), m_ui->browsingSuggestLocalPathsCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("AddressField/ShowCompletionCategories"), m_ui->browsingCategoriesCheckBox->isChecked());
 	SettingsManager::setValue(QLatin1String("AddressField/CompletionDisplayMode"), m_ui->browsingDisplayModeComboBox->currentData(Qt::UserRole).toString());
 

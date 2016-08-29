@@ -82,6 +82,13 @@
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QCheckBox" name="browsingSuggestLocalPathsCheckBox">
+           <property name="text">
+            <string>Local paths</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
        <item>
