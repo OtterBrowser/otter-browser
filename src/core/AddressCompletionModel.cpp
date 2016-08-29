@@ -221,7 +221,7 @@ void AddressCompletionModel::setFilter(const QString &filter)
 			m_types |= SpecialPagesCompletionType;
 		}
 
-		if (SettingsManager::getValue(QLatin1String("AddressField/SuggestLocalFiles")).toBool())
+		if (SettingsManager::getValue(QLatin1String("AddressField/SuggestLocalPaths")).toBool())
 		{
 			m_types |= LocalPathSuggestionsCompletionType;
 		}
