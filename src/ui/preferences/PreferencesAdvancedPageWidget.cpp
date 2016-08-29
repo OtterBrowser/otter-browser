@@ -2,6 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -142,6 +143,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->appearranceWidgetStyleComboBox->setCurrentIndex(qMax(0, m_ui->appearranceWidgetStyleComboBox->findData(SettingsManager::getValue(QLatin1String("Interface/WidgetStyle")).toString(), Qt::DisplayRole)));
 	m_ui->appearranceStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Interface/StyleSheet")).toString());
+	m_ui->appearranceStyleSheetFilePathWidget->setFilters(QStringList(tr("Style sheets (*.css)")));
 	m_ui->enableTrayIconCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableTrayIcon")).toBool());
 
 	m_ui->enableImagesComboBox->addItem(tr("All images"), QLatin1String("enabled"));
@@ -162,6 +164,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->enablePluginsComboBox->setCurrentIndex((enablePluginsIndex < 0) ? 1 : enablePluginsIndex);
 	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Content/UserStyleSheet")).toString());
+	m_ui->userStyleSheetFilePathWidget->setFilters(QStringList(tr("Style sheets (*.css)")));
 
 	QStandardItemModel *downloadsModel(new QStandardItemModel(this));
 	downloadsModel->setHorizontalHeaderLabels(QStringList(tr("Name")));
@@ -260,6 +263,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->ftpProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/FtpPort")).toInt());
 	m_ui->socksProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/SocksPort")).toInt());
 	m_ui->automaticProxyConfigurationFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Proxy/AutomaticConfigurationPath")).toString());
+	m_ui->automaticProxyConfigurationFilePathWidget->setFilters(QStringList(tr("Proxy configuration files (*.pac)")));
 	m_ui->proxySystemAuthentication->setChecked(SettingsManager::getValue(QLatin1String("Proxy/UseSystemAuthentication")).toBool());
 
 	m_ui->ciphersAddButton->setMenu(new QMenu(m_ui->ciphersAddButton));
@@ -524,7 +528,7 @@ void PreferencesAdvancedPageWidget::updateNotificationsActions()
 
 	m_ui->notificationOptionsWidget->setEnabled(index.isValid());
 	m_ui->notificationsPlaySoundFilePathWidget->setPath(index.data(Qt::UserRole + 1).toString());
-	m_ui->notificationsPlaySoundFilePathWidget->setFilter(tr("WAV files (*.wav)"));
+	m_ui->notificationsPlaySoundFilePathWidget->setFilters(QStringList(tr("WAV files (*.wav)")));
 	m_ui->notificationsShowAlertCheckBox->setChecked(index.data(Qt::UserRole + 2).toBool());
 	m_ui->notificationsShowNotificationCheckBox->setChecked(index.data(Qt::UserRole + 3).toBool());
 

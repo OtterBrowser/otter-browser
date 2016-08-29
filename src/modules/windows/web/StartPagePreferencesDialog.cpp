@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -36,7 +37,7 @@ StartPagePreferencesDialog::StartPagePreferencesDialog(QWidget *parent) : Dialog
 
 	m_ui->customBackgroundCheckBox->setChecked(backgroundModeString != QLatin1String("standard"));
 	m_ui->backgroundFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("StartPage/BackgroundPath")).toString());
-	m_ui->backgroundFilePathWidget->setFilter(tr("Images (*.png *.jpg *.bmp *.gif)"));
+	m_ui->backgroundFilePathWidget->setFilters(QStringList(tr("Images (*.png *.jpg *.bmp *.gif)")));
 	m_ui->backgroundModeComboBox->addItem(tr("Best fit"), QLatin1String("bestFit"));
 	m_ui->backgroundModeComboBox->addItem(tr("Center"), QLatin1String("center"));
 	m_ui->backgroundModeComboBox->addItem(tr("Stretch"), QLatin1String("stretch"));

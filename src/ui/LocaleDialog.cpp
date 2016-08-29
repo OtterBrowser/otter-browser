@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -68,6 +69,7 @@ LocaleDialog::LocaleDialog(QWidget *parent) : Dialog(parent),
 
 	m_ui->languageComboBox->setCurrentIndex((currentLocale.endsWith(QLatin1String(".qm"))) ? 1 : qMax(0, m_ui->languageComboBox->findData(currentLocale)));
 	m_ui->customFilePathWidget->setEnabled(m_ui->languageComboBox->currentIndex() == 1);
+	m_ui->customFilePathWidget->setFilters(QStringList(tr("Translation files (*.qm)")));
 
 	if (m_ui->languageComboBox->currentIndex() == 1)
 	{

@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,6 +19,7 @@
 **************************************************************************/
 
 #include "CertificateDialog.h"
+#include "../core/Utils.h"
 
 #include "ui_CertificateDialog.h"
 
@@ -109,7 +111,7 @@ void CertificateDialog::exportCertificate()
 	}
 
 	QString filter;
-	const QString path(QFileDialog::getSaveFileName(this, tr("Select File"), QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), tr("DER encoded X509 certificates (*.der);;PEM encoded X509 certificates (*.pem);;Text files (*.txt)"), &filter));
+	const QString path(QFileDialog::getSaveFileName(this, tr("Select File"), QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), Utils::formatFileTypes({tr("DER encoded X509 certificates (*.der)"), tr("PEM encoded X509 certificates (*.pem)"), tr("Text files (*.txt)")}), &filter));
 
 	if (!path.isEmpty())
 	{

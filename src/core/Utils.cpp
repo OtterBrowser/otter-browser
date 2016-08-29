@@ -248,6 +248,23 @@ QString formatUnit(qint64 value, bool isSpeed, int precision, bool appendRaw)
 	return QCoreApplication::translate("utils", (isSpeed ? "%1 B/s" : "%1 B")).arg(value);
 }
 
+QString formatFileTypes(const QStringList &filters)
+{
+	if (filters.isEmpty())
+	{
+		return QCoreApplication::translate("utils", "All files (*)");
+	}
+
+	QString result(filters.join(QLatin1String(";;")));
+
+	if (!result.contains(QLatin1String("(*)")))
+	{
+		result.append(QLatin1String(";;") + QCoreApplication::translate("utils", "All files (*)"));
+	}
+
+	return result;
+}
+
 QString normalizePath(const QString &path)
 {
 	if (path == QString(QLatin1Char('~')) || path.startsWith(QLatin1Char('~') + QDir::separator()))

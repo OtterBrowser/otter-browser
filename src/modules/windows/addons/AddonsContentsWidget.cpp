@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -22,6 +23,7 @@
 #include "../../../core/SessionsManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/UserScript.h"
+#include "../../../core/Utils.h"
 #include "../../../ui/OptionDelegate.h"
 
 #include "ui_AddonsContentsWidget.h"
@@ -99,7 +101,7 @@ void AddonsContentsWidget::populateAddons()
 
 void AddonsContentsWidget::addAddon()
 {
-	const QString sourcePath(QFileDialog::getOpenFileName(this, tr("Select File"),  QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), tr("User Script files (*.js)")));
+	const QString sourcePath(QFileDialog::getOpenFileName(this, tr("Select File"),  QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), Utils::formatFileTypes(QStringList(tr("User Script files (*.js)")))));
 
 	if (sourcePath.isEmpty())
 	{

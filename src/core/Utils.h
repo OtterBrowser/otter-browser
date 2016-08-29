@@ -55,6 +55,7 @@ QString formatConfigurationEntry(const QLatin1String &key, const QString &value,
 QString formatTime(int value);
 QString formatDateTime(const QDateTime &dateTime, const QString &format = QString());
 QString formatUnit(qint64 value, bool isSpeed = false, int precision = 1, bool appendRaw = false);
+QString formatFileTypes(const QStringList &filters = QStringList());
 QString normalizePath(const QString &path);
 QUrl normalizeUrl(QUrl url);
 SaveInformation getSavePath(const QString &fileName, QString path = QString(), QStringList filters = QStringList(), bool forceAsk = false);

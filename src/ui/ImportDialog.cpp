@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2014 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -37,7 +37,7 @@ ImportDialog::ImportDialog(Importer *importer, QWidget *parent) : Dialog(parent)
 	m_ui(new Ui::ImportDialog)
 {
 	m_ui->setupUi(this);
-	m_ui->importPathWidget->setFilter(importer->getFileFilter());
+	m_ui->importPathWidget->setFilters(QStringList(importer->getFileFilter()));
 	m_ui->importPathWidget->setPath(importer->getSuggestedPath());
 
 	m_importer->setParent(this);

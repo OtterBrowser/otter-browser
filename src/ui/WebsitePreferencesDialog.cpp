@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2014, 2016 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -347,6 +347,7 @@ void WebsitePreferencesDialog::updateValues(bool checked)
 
 	m_ui->enablePluginsComboBox->setCurrentIndex((enablePluginsIndex < 0) ? 1 : enablePluginsIndex);
 	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Content/UserStyleSheet"), (m_ui->userStyleSheetOverrideCheckBox->isChecked() ? url : QUrl())).toString());
+	m_ui->userStyleSheetFilePathWidget->setFilters(QStringList(tr("Style sheets (*.css)")));
 	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJavaScript"), (m_ui->enableJavaScriptOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 	m_ui->canChangeWindowGeometryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanChangeWindowGeometry"), (m_ui->canChangeWindowGeometryOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 	m_ui->canShowStatusMessagesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanShowStatusMessages"), (m_ui->canShowStatusMessagesOverrideCheckBox->isChecked() ? url : QUrl())).toBool());

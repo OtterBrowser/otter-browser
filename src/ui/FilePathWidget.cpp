@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,6 +20,7 @@
 
 #include "FilePathWidget.h"
 #include "../core/FileSystemCompleterModel.h"
+#include "../core/Utils.h"
 
 #include <QtCore/QStandardPaths>
 #include <QtWidgets/QCompleter>
@@ -85,9 +87,9 @@ void FilePathWidget::updateCompleter()
 	}
 }
 
-void FilePathWidget::setFilter(const QString &filter)
+void FilePathWidget::setFilters(const QStringList &filters)
 {
-	m_filter = filter;
+	m_filter = Utils::formatFileTypes(filters);
 }
 
 void FilePathWidget::setSelectFile(bool mode)
