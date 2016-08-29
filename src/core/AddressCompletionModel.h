@@ -41,8 +41,8 @@ public:
 		BookmarksCompletionType = 1,
 		HistoryCompletionType = 2,
 		SearchSuggestionsCompletionType = 4,
-		SpecialPagesCompletionType = 4,
-		LocalPathSuggestionsCompletionType = 5
+		SpecialPagesCompletionType = 8,
+		LocalPathSuggestionsCompletionType = 16
 	};
 
 	Q_DECLARE_FLAGS(CompletionTypes, CompletionType)
