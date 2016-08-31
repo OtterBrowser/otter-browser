@@ -302,6 +302,7 @@ private:
 
 	static ActionsManager *m_instance;
 	static QVector<ActionDefinition> m_definitions;
+	static int m_actionIdentifierEnumerator;
 };
 
 }

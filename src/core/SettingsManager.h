@@ -268,6 +268,7 @@ private:
 	static QString m_overridePath;
 	static QHash<QString, OptionDefinition> m_options;
 	static QHash<QString, QVariant> m_defaults;
+	static int m_optionIdentifierEnumerator;
 
 signals:
 	void valueChanged(const QString &key, const QVariant &value);

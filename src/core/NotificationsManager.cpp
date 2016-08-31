@@ -35,6 +35,7 @@ namespace Otter
 NotificationsManager* NotificationsManager::m_instance = NULL;
 QMap<int, QString> NotificationsManager::m_identifiers;
 QVector<EventDefinition> NotificationsManager::m_definitions;
+int NotificationsManager::m_eventIdentifierEnumerator = 0;
 
 Notification::Notification(const QString &message, NotificationLevel level, int event, QObject *parent) : QObject(parent),
 	m_message(message),
@@ -94,6 +95,7 @@ void NotificationsManager::createInstance(QObject *parent)
 	if (!m_instance)
 	{
 		m_instance = new NotificationsManager(parent);
+		m_eventIdentifierEnumerator = m_instance->metaObject()->indexOfEnumerator(QLatin1String("EventIdentifier").data());
 	}
 }
 
@@ -141,7 +143,7 @@ QString NotificationsManager::getEventName(int identifier)
 		return m_identifiers[identifier];
 	}
 
-	QString name(m_instance->metaObject()->enumerator(m_instance->metaObject()->indexOfEnumerator(QLatin1String("EventIdentifier").data())).valueToKey(identifier));
+	QString name(m_instance->metaObject()->enumerator(m_eventIdentifierEnumerator).valueToKey(identifier));
 
 	if (!name.isEmpty())
 	{

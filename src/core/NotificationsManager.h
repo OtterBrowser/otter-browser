@@ -105,6 +105,7 @@ private:
 	static NotificationsManager *m_instance;
 	static QMap<int, QString> m_identifiers;
 	static QVector<EventDefinition> m_definitions;
+	static int m_eventIdentifierEnumerator;
 };
 
 }

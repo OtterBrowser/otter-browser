@@ -35,6 +35,7 @@ QString SettingsManager::m_globalPath;
 QString SettingsManager::m_overridePath;
 QHash<QString, SettingsManager::OptionDefinition> SettingsManager::m_options;
 QHash<QString, QVariant> SettingsManager::m_defaults;
+int SettingsManager::m_optionIdentifierEnumerator = 0;
 
 SettingsManager::SettingsManager(QObject *parent) : QObject(parent)
 {
@@ -45,6 +46,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	if (!m_instance)
 	{
 		m_instance = new SettingsManager(parent);
+		m_optionIdentifierEnumerator = m_instance->metaObject()->indexOfEnumerator(QLatin1String("OptionIdentifier").data());
 		m_globalPath = path + QLatin1String("/otter.conf");
 		m_overridePath = path + QLatin1String("/override.ini");
 
@@ -120,7 +122,7 @@ SettingsManager* SettingsManager::getInstance()
 
 QString SettingsManager::getActionName(int identifier)
 {
-	QString name(m_instance->metaObject()->enumerator(m_instance->metaObject()->indexOfEnumerator(QLatin1String("OptionIdentifier").data())).valueToKey(identifier));
+	QString name(m_instance->metaObject()->enumerator(m_optionIdentifierEnumerator).valueToKey(identifier));
 
 	if (!name.isEmpty())
 	{
@@ -329,14 +331,12 @@ SettingsManager::OptionDefinition SettingsManager::getDefinition(const QString &
 
 int SettingsManager::getOptionIdentifier(const QString &name)
 {
-	const int enumerator(m_instance->metaObject()->indexOfEnumerator(QLatin1String("OptionIdentifier").data()));
-
 	if (!name.endsWith(QLatin1String("Option")))
 	{
-		return m_instance->metaObject()->enumerator(enumerator).keyToValue(QString(name + QLatin1String("Option")).toLatin1());
+		return m_instance->metaObject()->enumerator(m_optionIdentifierEnumerator).keyToValue(QString(name + QLatin1String("Option")).toLatin1());
 	}
 
-	return m_instance->metaObject()->enumerator(enumerator).keyToValue(name.toLatin1());
+	return m_instance->metaObject()->enumerator(m_optionIdentifierEnumerator).keyToValue(name.toLatin1());
 }
 
 bool SettingsManager::hasOverride(const QUrl &url, const QString &key)

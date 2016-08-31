@@ -106,6 +106,7 @@ private:
 	static ToolBarsManager *m_instance;
 	static QMap<int, QString> m_identifiers;
 	static QVector<ToolBarsManager::ToolBarDefinition> m_definitions;
+	static int m_toolBarIdentifierEnumerator;
 	static bool m_areToolBarsLocked;
 
 signals:

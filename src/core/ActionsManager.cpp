@@ -34,7 +34,7 @@ namespace Otter
 
 ActionsManager* ActionsManager::m_instance = NULL;
 QVector<ActionsManager::ActionDefinition> ActionsManager::m_definitions;
-
+int ActionsManager::m_actionIdentifierEnumerator = 0;
 
 Action::Action(int identifier, QObject *parent) : QAction(parent),
 	m_identifier(identifier),
@@ -520,6 +520,7 @@ void ActionsManager::createInstance(QObject *parent)
 	if (!m_instance)
 	{
 		m_instance = new ActionsManager(parent);
+		m_actionIdentifierEnumerator = m_instance->metaObject()->indexOfEnumerator(QLatin1String("ActionIdentifier").data());
 
 		loadProfiles();
 	}
@@ -657,7 +658,7 @@ QString ActionsManager::getReport()
 
 QString ActionsManager::getActionName(int identifier)
 {
-	QString name(m_instance->metaObject()->enumerator(m_instance->metaObject()->indexOfEnumerator(QLatin1String("ActionIdentifier").data())).valueToKey(identifier));
+	QString name(m_instance->metaObject()->enumerator(m_actionIdentifierEnumerator).valueToKey(identifier));
 
 	if (!name.isEmpty())
 	{
@@ -700,14 +701,12 @@ int ActionsManager::registerAction(int identifier, const QString &text, const QS
 
 int ActionsManager::getActionIdentifier(const QString &name)
 {
-	const int enumerator(m_instance->metaObject()->indexOfEnumerator(QLatin1String("ActionIdentifier").data()));
-
 	if (!name.endsWith(QLatin1String("Action")))
 	{
-		return m_instance->metaObject()->enumerator(enumerator).keyToValue(QString(name + QLatin1String("Action")).toLatin1());
+		return m_instance->metaObject()->enumerator(m_actionIdentifierEnumerator).keyToValue(QString(name + QLatin1String("Action")).toLatin1());
 	}
 
-	return m_instance->metaObject()->enumerator(enumerator).keyToValue(name.toLatin1());
+	return m_instance->metaObject()->enumerator(m_actionIdentifierEnumerator).keyToValue(name.toLatin1());
 }
 
 }

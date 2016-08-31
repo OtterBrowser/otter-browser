@@ -39,6 +39,7 @@ namespace Otter
 ToolBarsManager* ToolBarsManager::m_instance = NULL;
 QMap<int, QString> ToolBarsManager::m_identifiers;
 QVector<ToolBarsManager::ToolBarDefinition> ToolBarsManager::m_definitions;
+int ToolBarsManager::m_toolBarIdentifierEnumerator = 0;
 bool ToolBarsManager::m_areToolBarsLocked = false;
 
 ToolBarsManager::ToolBarsManager(QObject *parent) : QObject(parent),
@@ -56,6 +57,7 @@ void ToolBarsManager::createInstance(QObject *parent)
 	if (!m_instance)
 	{
 		m_instance = new ToolBarsManager(parent);
+		m_toolBarIdentifierEnumerator = m_instance->metaObject()->indexOfEnumerator(QLatin1String("ToolBarIdentifier").data());
 		m_areToolBarsLocked = SettingsManager::getValue(QLatin1String("Interface/LockToolBars")).toBool();
 	}
 }
@@ -376,7 +378,7 @@ QString ToolBarsManager::getToolBarName(int identifier)
 {
 	if (identifier < OtherToolBar)
 	{
-		return m_instance->metaObject()->enumerator(m_instance->metaObject()->indexOfEnumerator(QLatin1String("ToolBarIdentifier").data())).valueToKey(identifier);
+		return m_instance->metaObject()->enumerator(m_toolBarIdentifierEnumerator).valueToKey(identifier);
 	}
 
 	return m_identifiers.value(identifier);
@@ -671,7 +673,7 @@ int ToolBarsManager::getToolBarIdentifier(const QString &name)
 		return identifier;
 	}
 
-	return m_instance->metaObject()->enumerator(m_instance->metaObject()->indexOfEnumerator(QLatin1String("ToolBarIdentifier").data())).keyToValue(name.toLatin1());
+	return m_instance->metaObject()->enumerator(m_toolBarIdentifierEnumerator).keyToValue(name.toLatin1());
 }
 
 bool ToolBarsManager::areToolBarsLocked()

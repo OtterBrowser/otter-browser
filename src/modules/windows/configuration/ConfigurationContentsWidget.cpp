@@ -39,6 +39,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 {
 	m_ui->setupUi(this);
 
+	const QMetaEnum metaEnum(SettingsManager::getInstance()->metaObject()->enumerator(SettingsManager::getInstance()->metaObject()->indexOfEnumerator(QLatin1String("OptionType").data())));
 	const QStringList options(SettingsManager::getOptions());
 	QStandardItem *groupItem(NULL);
 
@@ -55,7 +56,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 			m_model->appendRow(groupItem);
 		}
 
-		QString type(SettingsManager::getInstance()->metaObject()->enumerator(SettingsManager::getInstance()->metaObject()->indexOfEnumerator(QLatin1String("OptionType").data())).valueToKey(definition.type));
+		QString type(metaEnum.valueToKey(definition.type));
 		type.chop(4);
 
 		QList<QStandardItem*> optionItems({new QStandardItem(option.last()), new QStandardItem(type.toLower()), new QStandardItem(value.toString())});
