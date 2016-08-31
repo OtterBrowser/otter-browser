@@ -22,6 +22,7 @@
 #include "SettingsManager.h"
 
 #include <QtCore/QFileInfo>
+#include <QtCore/QMetaEnum>
 #include <QtCore/QSettings>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QTextStream>
@@ -115,6 +116,20 @@ void SettingsManager::setValue(const QString &key, const QVariant &value, const 
 SettingsManager* SettingsManager::getInstance()
 {
 	return m_instance;
+}
+
+QString SettingsManager::getActionName(int identifier)
+{
+	QString name(m_instance->metaObject()->enumerator(m_instance->metaObject()->indexOfEnumerator(QLatin1String("OptionIdentifier").data())).valueToKey(identifier));
+
+	if (!name.isEmpty())
+	{
+		name.chop(6);
+
+		return name.replace(QLatin1Char('_'), QLatin1Char('/'));
+	}
+
+	return QString();
 }
 
 QString SettingsManager::getHost(const QUrl &url)
@@ -310,6 +325,18 @@ SettingsManager::OptionDefinition SettingsManager::getDefinition(const QString &
 	}
 
 	return definition;
+}
+
+int SettingsManager::getOptionIdentifier(const QString &name)
+{
+	const int enumerator(m_instance->metaObject()->indexOfEnumerator(QLatin1String("OptionIdentifier").data()));
+
+	if (!name.endsWith(QLatin1String("Option")))
+	{
+		return m_instance->metaObject()->enumerator(enumerator).keyToValue(QString(name + QLatin1String("Option")).toLatin1());
+	}
+
+	return m_instance->metaObject()->enumerator(enumerator).keyToValue(name.toLatin1());
 }
 
 bool SettingsManager::hasOverride(const QUrl &url, const QString &key)

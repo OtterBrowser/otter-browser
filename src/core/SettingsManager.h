@@ -249,10 +249,12 @@ public:
 	static void setDefinition(const QString &key, const OptionDefinition &definition);
 	static void setValue(const QString &key, const QVariant &value, const QUrl &url = QUrl());
 	static SettingsManager* getInstance();
+	static QString getActionName(int identifier);
 	static QString getReport();
 	static QVariant getValue(const QString &key, const QUrl &url = QUrl());
 	static QStringList getOptions();
 	static OptionDefinition getDefinition(const QString &key);
+	static int getOptionIdentifier(const QString &name);
 	static bool hasOverride(const QUrl &url, const QString &key = QString());
 
 protected:
