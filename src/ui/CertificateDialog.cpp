@@ -111,7 +111,7 @@ void CertificateDialog::exportCertificate()
 	}
 
 	QString filter;
-	const QString path(QFileDialog::getSaveFileName(this, tr("Select File"), QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), Utils::formatFileTypes({tr("DER encoded X509 certificates (*.der)"), tr("PEM encoded X509 certificates (*.pem)"), tr("Text files (*.txt)")}), &filter));
+	const QString path(QFileDialog::getSaveFileName(this, tr("Select File"), QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), Utils::formatFileTypes({tr("DER encoded X.509 certificates (*.der)"), tr("PEM encoded X.509 certificates (*.pem)"), tr("Text files (*.txt)")}), &filter));
 
 	if (!path.isEmpty())
 	{
