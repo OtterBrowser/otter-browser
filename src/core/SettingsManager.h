@@ -246,10 +246,10 @@ public:
 
 	static void createInstance(const QString &path, QObject *parent = NULL);
 	static void removeOverride(const QUrl &url, const QString &key = QString());
-	static void setDefinition(const QString &key, const OptionDefinition &definition);
+	static void setOptionDefinition(const QString &key, const OptionDefinition &definition);
 	static void setValue(const QString &key, const QVariant &value, const QUrl &url = QUrl());
 	static SettingsManager* getInstance();
-	static QString getActionName(int identifier);
+	static QString getOptionName(int identifier);
 	static QString getReport();
 	static QVariant getValue(const QString &key, const QUrl &url = QUrl());
 	static QStringList getOptions();
@@ -266,7 +266,7 @@ private:
 	static SettingsManager *m_instance;
 	static QString m_globalPath;
 	static QString m_overridePath;
-	static QHash<QString, OptionDefinition> m_options;
+	static QHash<QString, OptionDefinition> m_definitions;
 	static QHash<QString, QVariant> m_defaults;
 	static int m_optionIdentifierEnumerator;
 

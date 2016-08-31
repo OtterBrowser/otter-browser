@@ -33,7 +33,7 @@ namespace Otter
 SettingsManager* SettingsManager::m_instance = NULL;
 QString SettingsManager::m_globalPath;
 QString SettingsManager::m_overridePath;
-QHash<QString, SettingsManager::OptionDefinition> SettingsManager::m_options;
+QHash<QString, SettingsManager::OptionDefinition> SettingsManager::m_definitions;
 QHash<QString, QVariant> SettingsManager::m_defaults;
 int SettingsManager::m_optionIdentifierEnumerator = 0;
 
@@ -84,9 +84,9 @@ void SettingsManager::removeOverride(const QUrl &url, const QString &key)
 	}
 }
 
-void SettingsManager::setDefinition(const QString &key, const SettingsManager::OptionDefinition &definition)
+void SettingsManager::setOptionDefinition(const QString &key, const SettingsManager::OptionDefinition &definition)
 {
-	m_options[key] = definition;
+	m_definitions[key] = definition;
 }
 
 void SettingsManager::setValue(const QString &key, const QVariant &value, const QUrl &url)
@@ -120,7 +120,7 @@ SettingsManager* SettingsManager::getInstance()
 	return m_instance;
 }
 
-QString SettingsManager::getActionName(int identifier)
+QString SettingsManager::getOptionName(int identifier)
 {
 	QString name(m_instance->metaObject()->enumerator(m_optionIdentifierEnumerator).valueToKey(identifier));
 
@@ -236,7 +236,7 @@ QVariant SettingsManager::getValue(const QString &key, const QUrl &url)
 
 QStringList SettingsManager::getOptions()
 {
-	QStringList options(m_options.keys());
+	QStringList options(m_definitions.keys());
 	QSettings settings(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat);
 	const QStringList groups(settings.childGroups());
 
@@ -270,9 +270,9 @@ QStringList SettingsManager::getOptions()
 
 SettingsManager::OptionDefinition SettingsManager::getDefinition(const QString &key)
 {
-	if (m_options.contains(key))
+	if (m_definitions.contains(key))
 	{
-		return m_options[key];
+		return m_definitions[key];
 	}
 
 	QSettings settings(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat);
