@@ -64,7 +64,7 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	m_scrollTimer(0),
 	m_startPageTimer(0),
 	m_isTabPreferencesMenuVisible(false),
-	m_showStartPage(SettingsManager::getValue(QLatin1String("StartPage/EnableStartPage")).toBool()),
+	m_showStartPage(SettingsManager::getValue(SettingsManager::StartPage_EnableStartPageOption).toBool()),
 	m_ignoreRelease(false)
 {
 	m_layout->setContentsMargins(0, 0, 0, 0);
@@ -295,9 +295,9 @@ void WebContentsWidget::mouseMoveEvent(QMouseEvent *event)
 	}
 }
 
-void WebContentsWidget::optionChanged(const QString &option, const QVariant &value)
+void WebContentsWidget::optionChanged(int identifier, const QVariant &value)
 {
-	if (option == QLatin1String("Search/EnableFindInPageAsYouType") && m_searchBarWidget)
+	if (identifier == SettingsManager::Search_EnableFindInPageAsYouTypeOption && m_searchBarWidget)
 	{
 		if (value.toBool())
 		{
@@ -308,7 +308,7 @@ void WebContentsWidget::optionChanged(const QString &option, const QVariant &val
 			disconnect(m_searchBarWidget, SIGNAL(queryChanged(QString)), this, SLOT(findInPage()));
 		}
 	}
-	else if (option == QLatin1String("StartPage/EnableStartPage"))
+	else if (identifier == SettingsManager::StartPage_EnableStartPageOption)
 	{
 		m_showStartPage = value.toBool();
 	}
@@ -377,7 +377,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)));
 				connect(interpreter, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
 
-				interpreter->interpret(QGuiApplication::clipboard()->text().trimmed(), (SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool() ? WindowsManager::NewTabOpen : WindowsManager::CurrentTabOpen), true);
+				interpreter->interpret(QGuiApplication::clipboard()->text().trimmed(), (SettingsManager::getValue(SettingsManager::Browser_OpenLinksInNewTabOption).toBool() ? WindowsManager::NewTabOpen : WindowsManager::CurrentTabOpen), true);
 			}
 
 			break;
@@ -393,7 +393,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				connect(m_searchBarWidget, SIGNAL(requestedSearch(WebWidget::FindFlags)), this, SLOT(findInPage(WebWidget::FindFlags)));
 				connect(m_searchBarWidget, SIGNAL(flagsChanged(WebWidget::FindFlags)), this, SLOT(updateFindHighlight(WebWidget::FindFlags)));
 
-				if (SettingsManager::getValue(QLatin1String("Search/EnableFindInPageAsYouType")).toBool())
+				if (SettingsManager::getValue(SettingsManager::Search_EnableFindInPageAsYouTypeOption).toBool())
 				{
 					connect(m_searchBarWidget, SIGNAL(queryChanged()), this, SLOT(findInPage()));
 				}
@@ -408,7 +408,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 					m_quickFindTimer = startTimer(2000);
 				}
 
-				if (SettingsManager::getValue(QLatin1String("Search/ReuseLastQuickFindQuery")).toBool())
+				if (SettingsManager::getValue(SettingsManager::Search_ReuseLastQuickFindQueryOption).toBool())
 				{
 					m_searchBarWidget->setQuery(m_sharedQuickFindQuery);
 				}
@@ -491,7 +491,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				popupsPolicyGroup.addAction(blockAllPopupsAction);
 				popupsPolicyGroup.addAction(popupsAskAction);
 
-				const QString popupsPolicy(m_webWidget->getOption(QLatin1String("Content/PopupsPolicy")).toString());
+				const QString popupsPolicy(m_webWidget->getOption(SettingsManager::Content_PopupsPolicyOption).toString());
 
 				for (int i = 0; i < popupsPolicyGroup.actions().count(); ++i)
 				{
@@ -527,7 +527,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				enableImagesGroup.addAction(showCachedImagesAction);
 				enableImagesGroup.addAction(noImagesAction);
 
-				const QString enableImagesPolicy(m_webWidget->getOption(QLatin1String("Browser/EnableImages")).toString());
+				const QString enableImagesPolicy(m_webWidget->getOption(SettingsManager::Browser_EnableImagesOption).toString());
 
 				for (int i = 0; i < enableImagesGroup.actions().count(); ++i)
 				{
@@ -546,12 +546,12 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				QAction *enableJavaScriptAction(menu.addAction(tr("Enable JavaScript")));
 				enableJavaScriptAction->setCheckable(true);
-				enableJavaScriptAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnableJavaScript")).toBool());
+				enableJavaScriptAction->setChecked(m_webWidget->getOption(SettingsManager::Browser_EnableJavaScriptOption).toBool());
 				enableJavaScriptAction->setData(QLatin1String("Browser/EnableJavaScript"));
 
 				QAction *enableJavaAction(menu.addAction(tr("Enable Java")));
 				enableJavaAction->setCheckable(true);
-				enableJavaAction->setChecked(m_webWidget->getOption(QLatin1String("Browser/EnableJava")).toBool());
+				enableJavaAction->setChecked(m_webWidget->getOption(SettingsManager::Browser_EnableJavaOption).toBool());
 				enableJavaAction->setData(QLatin1String("Browser/EnableJava"));
 
 				QMenu *enablePluginsMenu(menu.addMenu(tr("Plugins")));
@@ -573,7 +573,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				enablePluginsGroup.addAction(onDemandPluginsAction);
 				enablePluginsGroup.addAction(disablePluginsAction);
 
-				const QString enablePluginsPolicy(m_webWidget->getOption(QLatin1String("Browser/EnablePlugins")).toString());
+				const QString enablePluginsPolicy(m_webWidget->getOption(SettingsManager::Browser_EnablePluginsOption).toString());
 
 				for (int i = 0; i < enablePluginsGroup.actions().count(); ++i)
 				{
@@ -617,11 +617,11 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 					{
 						QVariantList actionData(triggeredAction->data().toList());
 
-						m_webWidget->setOption(actionData.value(0).toString(), actionData.value(1).toString());
+						m_webWidget->setOption(SettingsManager::getOptionIdentifier(actionData.value(0).toString()), actionData.value(1).toString());
 					}
 					else
 					{
-						m_webWidget->setOption(triggeredAction->data().toString(), triggeredAction->isChecked());
+						m_webWidget->setOption(SettingsManager::getOptionIdentifier(triggeredAction->data().toString()), triggeredAction->isChecked());
 					}
 				}
 
@@ -712,7 +712,7 @@ void WebContentsWidget::findInPage(WebWidget::FindFlags flags)
 
 	const bool hasFound(m_webWidget->findInPage(m_quickFindQuery, flags));
 
-	if (!m_quickFindQuery.isEmpty() && !isPrivate() && SettingsManager::getValue(QLatin1String("Search/ReuseLastQuickFindQuery")).toBool())
+	if (!m_quickFindQuery.isEmpty() && !isPrivate() && SettingsManager::getValue(SettingsManager::Search_ReuseLastQuickFindQueryOption).toBool())
 	{
 		m_sharedQuickFindQuery = m_quickFindQuery;
 	}
@@ -858,7 +858,7 @@ void WebContentsWidget::handleLoadingStateChange(WindowsManager::LoadingState st
 {
 	if (state == WindowsManager::CrashedLoadingState)
 	{
-		const QString tabCrashingAction(SettingsManager::getValue(QLatin1String("Browser/TabCrashingAction"), getUrl()).toString());
+		const QString tabCrashingAction(SettingsManager::getValue(SettingsManager::Browser_TabCrashingActionOption, getUrl()).toString());
 		bool reloadTab(tabCrashingAction != QLatin1String("close"));
 
 		if (tabCrashingAction == QLatin1String("ask"))
@@ -870,7 +870,7 @@ void WebContentsWidget::handleLoadingStateChange(WindowsManager::LoadingState st
 
 			if (dialog.getCheckBoxState())
 			{
-				SettingsManager::setValue(QLatin1String("Browser/TabCrashingAction"), (dialog.isAccepted() ? QLatin1String("reload") : QLatin1String("close")));
+				SettingsManager::setValue(SettingsManager::Browser_TabCrashingActionOption, (dialog.isAccepted() ? QLatin1String("reload") : QLatin1String("close")));
 			}
 
 			reloadTab = dialog.isAccepted();
@@ -1042,7 +1042,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 
 	handleLoadingStateChange(m_webWidget->getLoadingState());
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
 	connect(m_webWidget, SIGNAL(aboutToNavigate()), this, SIGNAL(aboutToNavigate()));
 	connect(m_webWidget, SIGNAL(aboutToNavigate()), this, SLOT(closePopupsBar()));
 	connect(m_webWidget, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString,QString)));
@@ -1069,25 +1069,25 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 	emit webWidgetChanged();
 }
 
-void WebContentsWidget::setOption(const QString &key, const QVariant &value)
+void WebContentsWidget::setOption(int identifier, const QVariant &value)
 {
-	if (key == QLatin1String("Network/UserAgent") && value.toString() == QLatin1String("custom"))
+	if (identifier == SettingsManager::Network_UserAgentOption && value.toString() == QLatin1String("custom"))
 	{
 		bool isConfirmed(false);
-		const QString userAgent(QInputDialog::getText(this, tr("Select User Agent"), tr("Enter User Agent:"), QLineEdit::Normal, NetworkManagerFactory::getUserAgent(m_webWidget->getOption(QLatin1String("Network/UserAgent")).toString()).value, &isConfirmed));
+		const QString userAgent(QInputDialog::getText(this, tr("Select User Agent"), tr("Enter User Agent:"), QLineEdit::Normal, NetworkManagerFactory::getUserAgent(m_webWidget->getOption(SettingsManager::Network_UserAgentOption).toString()).value, &isConfirmed));
 
 		if (isConfirmed)
 		{
-			m_webWidget->setOption(QLatin1String("Network/UserAgent"), QLatin1String("custom;") + userAgent);
+			m_webWidget->setOption(SettingsManager::Network_UserAgentOption, QLatin1String("custom;") + userAgent);
 		}
 	}
 	else
 	{
-		m_webWidget->setOption(key, value);
+		m_webWidget->setOption(identifier, value);
 	}
 }
 
-void WebContentsWidget::setOptions(const QVariantHash &options)
+void WebContentsWidget::setOptions(const QHash<int, QVariant> &options)
 {
 	m_webWidget->setOptions(options);
 }
@@ -1201,9 +1201,9 @@ QLatin1String WebContentsWidget::getType() const
 	return QLatin1String("web");
 }
 
-QVariant WebContentsWidget::getOption(const QString &key) const
+QVariant WebContentsWidget::getOption(int identifier) const
 {
-	return m_webWidget->getOption(key);
+	return m_webWidget->getOption(identifier);
 }
 
 QVariant WebContentsWidget::getPageInformation(WebWidget::PageInformation key) const
@@ -1251,7 +1251,7 @@ QList<LinkUrl> WebContentsWidget::getSearchEngines() const
 	return m_webWidget->getSearchEngines();
 }
 
-QVariantHash WebContentsWidget::getOptions() const
+QHash<int, QVariant> WebContentsWidget::getOptions() const
 {
 	return m_webWidget->getOptions();
 }

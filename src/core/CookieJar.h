@@ -75,7 +75,7 @@ protected:
 	void save();
 
 protected slots:
-	void optionChanged(const QString &option, const QVariant &value);
+	void optionChanged(int identifier, const QVariant &value);
 
 private:
 	CookiesPolicy m_generalCookiesPolicy;

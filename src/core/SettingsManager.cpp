@@ -33,8 +33,8 @@ namespace Otter
 SettingsManager* SettingsManager::m_instance = NULL;
 QString SettingsManager::m_globalPath;
 QString SettingsManager::m_overridePath;
-QHash<QString, SettingsManager::OptionDefinition> SettingsManager::m_definitions;
-QHash<QString, QVariant> SettingsManager::m_defaults;
+QHash<int, SettingsManager::OptionDefinition> SettingsManager::m_definitions;
+QHash<int, QVariant> SettingsManager::m_defaults;
 int SettingsManager::m_optionIdentifierEnumerator = 0;
 
 SettingsManager::SettingsManager(QObject *parent) : QObject(parent)
@@ -61,14 +61,14 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 
 			for (int j = 0; j < keys.count(); ++j)
 			{
-				m_defaults[QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j))] = defaults.value(QStringLiteral("%1/value").arg(keys.at(j)));
+				m_defaults[getOptionIdentifier(QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j)))] = defaults.value(QStringLiteral("%1/value").arg(keys.at(j)));
 			}
 
 			defaults.endGroup();
 		}
 
-		m_defaults[QLatin1String("Paths/Downloads")] = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
-		m_defaults[QLatin1String("Paths/SaveFile")] = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
+		m_defaults[Paths_DownloadsOption] = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
+		m_defaults[Paths_SaveFileOption] = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
 	}
 }
 
@@ -84,34 +84,36 @@ void SettingsManager::removeOverride(const QUrl &url, const QString &key)
 	}
 }
 
-void SettingsManager::setOptionDefinition(const QString &key, const SettingsManager::OptionDefinition &definition)
+void SettingsManager::setOptionDefinition(int identifier, const SettingsManager::OptionDefinition &definition)
 {
-	m_definitions[key] = definition;
+	m_definitions[identifier] = definition;
 }
 
-void SettingsManager::setValue(const QString &key, const QVariant &value, const QUrl &url)
+void SettingsManager::setValue(int identifier, const QVariant &value, const QUrl &url)
 {
+	const QString name(getOptionName(identifier));
+
 	if (!url.isEmpty())
 	{
 		if (value.isNull())
 		{
-			QSettings(m_overridePath, QSettings::IniFormat).remove(getHost(url) + QLatin1Char('/') + key);
+			QSettings(m_overridePath, QSettings::IniFormat).remove(getHost(url) + QLatin1Char('/') + name);
 		}
 		else
 		{
-			QSettings(m_overridePath, QSettings::IniFormat).setValue(getHost(url) + QLatin1Char('/') + key, value);
+			QSettings(m_overridePath, QSettings::IniFormat).setValue(getHost(url) + QLatin1Char('/') + name, value);
 		}
 
-		emit m_instance->valueChanged(key, value, url);
+		emit m_instance->valueChanged(identifier, value, url);
 
 		return;
 	}
 
-	if (getValue(key) != value)
+	if (getValue(identifier) != value)
 	{
-		QSettings(m_globalPath, QSettings::IniFormat).setValue(key, value);
+		QSettings(m_globalPath, QSettings::IniFormat).setValue(name, value);
 
-		emit m_instance->valueChanged(key, value);
+		emit m_instance->valueChanged(identifier, value);
 	}
 }
 
@@ -194,27 +196,36 @@ QString SettingsManager::getReport()
 		overrides.endGroup();
 	}
 
-	QStringList keys(m_defaults.keys());
-	keys.sort();
+	const QList<int> options(m_definitions.keys());
+	QStringList optionNames;
 
-	for (int i = 0; i < keys.count(); ++i)
+	for (int i = 0; i < options.count(); ++i)
 	{
+		optionNames.append(getOptionName(options.at(i)));
+	}
+
+	optionNames.sort();
+
+	for (int i = 0; i < optionNames.count(); ++i)
+	{
+		const int identifier(getOptionIdentifier(optionNames.at(i)));
+
 		stream << QLatin1Char('\t');
 		stream.setFieldWidth(50);
-		stream << keys.at(i);
+		stream << optionNames.at(i);
 		stream.setFieldWidth(20);
 
-		if (excludeValues.contains(keys.at(i)))
+		if (excludeValues.contains(optionNames.at(i)))
 		{
 			stream << QLatin1Char('-');
 		}
 		else
 		{
-			stream << m_defaults[keys.at(i)].toString();
+			stream << m_defaults[identifier].toString();
 		}
 
-		stream << ((m_defaults[keys.at(i)] == getValue(keys.at(i))) ? QLatin1String("default") : QLatin1String("non default"));
-		stream << (overridenValues.contains(keys.at(i)) ? QStringLiteral("%1 override(s)").arg(overridenValues[keys.at(i)]) : QLatin1String("no overrides"));
+		stream << ((m_defaults[identifier] == getValue(identifier)) ? QLatin1String("default") : QLatin1String("non default"));
+		stream << (overridenValues.contains(optionNames.at(i)) ? QStringLiteral("%1 override(s)").arg(overridenValues[optionNames.at(i)]) : QLatin1String("no overrides"));
 		stream.setFieldWidth(0);
 		stream << QLatin1Char('\n');
 	}
@@ -224,63 +235,46 @@ QString SettingsManager::getReport()
 	return report;
 }
 
-QVariant SettingsManager::getValue(const QString &key, const QUrl &url)
+QVariant SettingsManager::getValue(int identifier, const QUrl &url)
 {
+	const QString name(getOptionName(identifier));
+
 	if (!url.isEmpty())
 	{
-		return QSettings(m_overridePath, QSettings::IniFormat).value(getHost(url) + QLatin1Char('/') + key, getValue(key));
+		return QSettings(m_overridePath, QSettings::IniFormat).value(getHost(url) + QLatin1Char('/') + name, getValue(identifier));
 	}
 
-	return QSettings(m_globalPath, QSettings::IniFormat).value(key, m_defaults[key]);
+	return QSettings(m_globalPath, QSettings::IniFormat).value(name, m_defaults[identifier]);
 }
 
 QStringList SettingsManager::getOptions()
 {
-	QStringList options(m_definitions.keys());
-	QSettings settings(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat);
-	const QStringList groups(settings.childGroups());
+	const QList<int> options(m_definitions.keys());
+	QStringList optionNames;
 
-	for (int i = 0; i < groups.count(); ++i)
+	for (int i = 0; i < options.count(); ++i)
 	{
-		settings.beginGroup(groups.at(i));
-
-		const QStringList children(settings.childGroups());
-
-		for (int j = 0; j < children.count(); ++j)
-		{
-			settings.beginGroup(children.at(j));
-
-			QString option(settings.group());
-
-			if (!options.contains(option))
-			{
-				options.append(option);
-			}
-
-			settings.endGroup();
-		}
-
-		settings.endGroup();
+		optionNames.append(getOptionName(options.at(i)));
 	}
 
-	options.sort();
+	optionNames.sort();
 
-	return options;
+	return optionNames;
 }
 
-SettingsManager::OptionDefinition SettingsManager::getDefinition(const QString &key)
+SettingsManager::OptionDefinition SettingsManager::getOptionDefinition(int identifier)
 {
-	if (m_definitions.contains(key))
+	if (m_definitions.contains(identifier))
 	{
-		return m_definitions[key];
+		return m_definitions[identifier];
 	}
 
 	QSettings settings(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat);
-	settings.beginGroup(key);
+	settings.beginGroup(getOptionName(identifier));
 
 	OptionDefinition definition;
-	definition.name = key;
-	definition.defaultValue = m_defaults[key];
+	definition.name = identifier;
+	definition.defaultValue = m_defaults[identifier];
 
 	const QString type(settings.value(QLatin1String("type")).toString());
 
@@ -331,12 +325,15 @@ SettingsManager::OptionDefinition SettingsManager::getDefinition(const QString &
 
 int SettingsManager::getOptionIdentifier(const QString &name)
 {
+	QString mutableName(name);
+	mutableName.replace(QLatin1Char('/'), QLatin1Char('_'));
+
 	if (!name.endsWith(QLatin1String("Option")))
 	{
-		return m_instance->metaObject()->enumerator(m_optionIdentifierEnumerator).keyToValue(QString(name + QLatin1String("Option")).toLatin1());
+		mutableName.append(QLatin1String("Option"));
 	}
 
-	return m_instance->metaObject()->enumerator(m_optionIdentifierEnumerator).keyToValue(name.toLatin1());
+	return m_instance->metaObject()->enumerator(m_optionIdentifierEnumerator).keyToValue(mutableName.toLatin1());
 }
 
 bool SettingsManager::hasOverride(const QUrl &url, const QString &key)

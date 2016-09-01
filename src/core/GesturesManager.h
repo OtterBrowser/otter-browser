@@ -92,7 +92,7 @@ protected:
 	bool eventFilter(QObject *object, QEvent *event);
 
 protected slots:
-	void optionChanged(const QString &option);
+	void optionChanged(int identifier);
 	void endGesture();
 
 private:

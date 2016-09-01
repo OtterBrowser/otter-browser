@@ -55,7 +55,7 @@ protected:
 	void scheduleSave();
 
 protected slots:
-	void optionChanged(const QString &option);
+	void optionChanged(int identifier);
 
 private:
 	int m_dayTimer;

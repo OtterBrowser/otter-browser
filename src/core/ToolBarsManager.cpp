@@ -58,7 +58,7 @@ void ToolBarsManager::createInstance(QObject *parent)
 	{
 		m_instance = new ToolBarsManager(parent);
 		m_toolBarIdentifierEnumerator = m_instance->metaObject()->indexOfEnumerator(QLatin1String("ToolBarIdentifier").data());
-		m_areToolBarsLocked = SettingsManager::getValue(QLatin1String("Interface/LockToolBars")).toBool();
+		m_areToolBarsLocked = SettingsManager::getValue(SettingsManager::Interface_LockToolBarsOption).toBool();
 	}
 }
 
@@ -364,7 +364,7 @@ void ToolBarsManager::scheduleSave()
 
 void ToolBarsManager::setToolBarsLocked(bool locked)
 {
-	SettingsManager::setValue(QLatin1String("Interface/LockToolBars"), locked);
+	SettingsManager::setValue(SettingsManager::Interface_LockToolBarsOption, locked);
 
 	emit m_instance->toolBarsLockedChanged(locked);
 }

@@ -51,7 +51,7 @@ public:
 	bool requestThumbnail(const QUrl &url, const QSize &size);
 
 protected slots:
-	void optionChanged(const QString &option);
+	void optionChanged(int identifier);
 	void downloadFile(QWebEngineDownloadItem *item);
 
 private:

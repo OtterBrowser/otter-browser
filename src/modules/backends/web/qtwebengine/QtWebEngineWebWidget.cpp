@@ -446,7 +446,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 				if (!defaultEncoding.isEmpty())
 				{
-					sourceViewer->setOption(QLatin1String("Content/DefaultCharacterEncoding"), defaultEncoding);
+					sourceViewer->setOption(SettingsManager::Content_DefaultCharacterEncodingOption, defaultEncoding);
 				}
 
 				m_viewSourceReplies[reply] = sourceViewer;
@@ -772,7 +772,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 				if (!defaultEncoding.isEmpty())
 				{
-					sourceViewer->setOption(QLatin1String("Content/DefaultCharacterEncoding"), defaultEncoding);
+					sourceViewer->setOption(SettingsManager::Content_DefaultCharacterEncodingOption, defaultEncoding);
 				}
 
 				m_viewSourceReplies[reply] = sourceViewer;
@@ -973,7 +973,7 @@ void QtWebEngineWebWidget::handleFullScreenRequest(QWebEngineFullScreenRequest r
 
 	if (request.toggleOn())
 	{
-		const QString value(SettingsManager::getValue(QLatin1String("Browser/EnableFullScreen"), request.origin()).toString());
+		const QString value(SettingsManager::getValue(SettingsManager::Browser_EnableFullScreenOption, request.origin()).toString());
 
 		if (value == QLatin1String("allow"))
 		{
@@ -1030,7 +1030,7 @@ void QtWebEngineWebWidget::handleScrollToAnchor(const QVariant &result)
 
 void QtWebEngineWebWidget::handleWindowCloseRequest()
 {
-	const QString mode(SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanCloseWindows"), getUrl()).toString());
+	const QString mode(SettingsManager::getValue(SettingsManager::Browser_JavaScriptCanCloseWindowsOption, getUrl()).toString());
 
 	if (mode != QLatin1String("ask"))
 	{
@@ -1051,7 +1051,7 @@ void QtWebEngineWebWidget::handleWindowCloseRequest()
 
 	if (dialog.getCheckBoxState())
 	{
-		SettingsManager::setValue(QLatin1String("Browser/JavaScriptCanCloseWindows"), (dialog.isAccepted() ? QLatin1String("allow") : QLatin1String("disallow")));
+		SettingsManager::setValue(SettingsManager::Browser_JavaScriptCanCloseWindowsOption, (dialog.isAccepted() ? QLatin1String("allow") : QLatin1String("disallow")));
 	}
 
 	if (dialog.isAccepted())
@@ -1121,7 +1121,7 @@ void QtWebEngineWebWidget::notifyPermissionRequested(const QUrl &url, QWebEngine
 		}
 		else
 		{
-			const QString value(SettingsManager::getValue(option, url).toString());
+			const QString value(SettingsManager::getValue(SettingsManager::getOptionIdentifier(option), url).toString());
 
 			if (value == QLatin1String("allow"))
 			{
@@ -1181,21 +1181,21 @@ void QtWebEngineWebWidget::updateRedo()
 void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 {
 	QWebEngineSettings *settings(m_webView->page()->settings());
-	settings->setAttribute(QWebEngineSettings::AutoLoadImages, (getOption(QLatin1String("Browser/EnableImages"), url).toString() != QLatin1String("onlyCached")));
-	settings->setAttribute(QWebEngineSettings::JavascriptEnabled, getOption(QLatin1String("Browser/EnableJavaScript"), url).toBool());
-	settings->setAttribute(QWebEngineSettings::JavascriptCanAccessClipboard, getOption(QLatin1String("Browser/JavaScriptCanAccessClipboard"), url).toBool());
-	settings->setAttribute(QWebEngineSettings::JavascriptCanOpenWindows, getOption(QLatin1String("Browser/JavaScriptCanOpenWindows"), url).toBool());
+	settings->setAttribute(QWebEngineSettings::AutoLoadImages, (getOption(SettingsManager::Browser_EnableImagesOption, url).toString() != QLatin1String("onlyCached")));
+	settings->setAttribute(QWebEngineSettings::JavascriptEnabled, getOption(SettingsManager::Browser_EnableJavaScriptOption, url).toBool());
+	settings->setAttribute(QWebEngineSettings::JavascriptCanAccessClipboard, getOption(SettingsManager::Browser_JavaScriptCanAccessClipboardOption, url).toBool());
+	settings->setAttribute(QWebEngineSettings::JavascriptCanOpenWindows, getOption(SettingsManager::Browser_JavaScriptCanOpenWindowsOption, url).toBool());
 #if QT_VERSION >= 0x050700
-	settings->setAttribute(QWebEngineSettings::WebGLEnabled, getOption(QLatin1String("Browser/EnableWebgl"), url).toBool());
+	settings->setAttribute(QWebEngineSettings::WebGLEnabled, getOption(SettingsManager::Browser_EnableWebglOption, url).toBool());
 #endif
-	settings->setAttribute(QWebEngineSettings::LocalStorageEnabled, getOption(QLatin1String("Browser/EnableLocalStorage"), url).toBool());
-	settings->setDefaultTextEncoding(getOption(QLatin1String("Content/DefaultCharacterEncoding"), url).toString());
+	settings->setAttribute(QWebEngineSettings::LocalStorageEnabled, getOption(SettingsManager::Browser_EnableLocalStorageOption, url).toBool());
+	settings->setDefaultTextEncoding(getOption(SettingsManager::Content_DefaultCharacterEncodingOption, url).toString());
 
-	m_webView->page()->profile()->setHttpUserAgent(getBackend()->getUserAgent(NetworkManagerFactory::getUserAgent(getOption(QLatin1String("Network/UserAgent"), url).toString()).value));
+	m_webView->page()->profile()->setHttpUserAgent(getBackend()->getUserAgent(NetworkManagerFactory::getUserAgent(getOption(SettingsManager::Network_UserAgentOption, url).toString()).value));
 
 	disconnect(m_webView->page(), SIGNAL(geometryChangeRequested(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
 
-	if (getOption(QLatin1String("Browser/JavaScriptCanChangeWindowGeometry"), url).toBool())
+	if (getOption(SettingsManager::Browser_JavaScriptCanChangeWindowGeometryOption, url).toBool())
 	{
 		connect(m_webView->page(), SIGNAL(geometryChangeRequested(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
 	}
@@ -1360,19 +1360,19 @@ void QtWebEngineWebWidget::setPermission(const QString &key, const QUrl &url, We
 	m_webView->page()->setFeaturePermission(url, feature, (policies.testFlag(GrantedPermission) ? QWebEnginePage::PermissionGrantedByUser : QWebEnginePage::PermissionDeniedByUser));
 }
 
-void QtWebEngineWebWidget::setOption(const QString &key, const QVariant &value)
+void QtWebEngineWebWidget::setOption(int identifier, const QVariant &value)
 {
-	WebWidget::setOption(key, value);
+	WebWidget::setOption(identifier, value);
 
 	updateOptions(getUrl());
 
-	if (key == QLatin1String("Content/DefaultCharacterEncoding"))
+	if (identifier == SettingsManager::Content_DefaultCharacterEncodingOption)
 	{
 		m_webView->reload();
 	}
 }
 
-void QtWebEngineWebWidget::setOptions(const QVariantHash &options)
+void QtWebEngineWebWidget::setOptions(const QHash<int, QVariant> &options)
 {
 	WebWidget::setOptions(options);
 
@@ -1704,7 +1704,7 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 			return true;
 		}
 
-		if (event->type() == QEvent::MouseButtonDblClick && mouseEvent->button() == Qt::LeftButton && SettingsManager::getValue(QLatin1String("Browser/ShowSelectionContextMenuOnDoubleClick")).toBool())
+		if (event->type() == QEvent::MouseButtonDblClick && mouseEvent->button() == Qt::LeftButton && SettingsManager::getValue(SettingsManager::Browser_ShowSelectionContextMenuOnDoubleClickOption).toBool())
 		{
 			const WebWidget::HitTestResult hitResult(getHitTestResult(mouseEvent->pos()));
 

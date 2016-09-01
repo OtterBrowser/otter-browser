@@ -62,9 +62,9 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : ComboBoxWidget(par
 	setItemDelegate(new SearchDelegate(this));
 	setModel(SearchEnginesManager::getSearchEnginesModel());
 	setInsertPolicy(QComboBox::NoInsert);
-	optionChanged(QLatin1String("AddressField/DropAction"), SettingsManager::getValue(QLatin1String("AddressField/DropAction")));
-	optionChanged(QLatin1String("AddressField/SelectAllOnFocus"), SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")));
-	optionChanged(QLatin1String("Search/SearchEnginesSuggestions"), SettingsManager::getValue(QLatin1String("Search/SearchEnginesSuggestions")));
+	optionChanged(SettingsManager::AddressField_DropActionOption, SettingsManager::getValue(SettingsManager::AddressField_DropActionOption));
+	optionChanged(SettingsManager::AddressField_SelectAllOnFocusOption, SettingsManager::getValue(SettingsManager::AddressField_SelectAllOnFocusOption));
+	optionChanged(SettingsManager::Search_SearchEnginesSuggestionsOption, SettingsManager::getValue(SettingsManager::Search_SearchEnginesSuggestionsOption));
 
 	m_lineEdit->setCompleter(m_completer);
 	m_lineEdit->setStyleSheet(QLatin1String("QLineEdit {background:transparent;}"));
@@ -78,7 +78,7 @@ SearchWidget::SearchWidget(Window *window, QWidget *parent) : ComboBoxWidget(par
 
 	connect(SearchEnginesManager::getInstance(), SIGNAL(searchEnginesModified()), this, SLOT(storeCurrentSearchEngine()));
 	connect(SearchEnginesManager::getInstance(), SIGNAL(searchEnginesModelModified()), this, SLOT(restoreCurrentSearchEngine()));
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
 	connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentIndexChanged(int)));
 	connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(queryChanged(QString)));
 	connect(m_lineEdit, SIGNAL(textDropped(QString)), this, SLOT(sendRequest(QString)));
@@ -301,9 +301,9 @@ void SearchWidget::hidePopup()
 	ComboBoxWidget::hidePopup();
 }
 
-void SearchWidget::optionChanged(const QString &option, const QVariant &value)
+void SearchWidget::optionChanged(int identifier, const QVariant &value)
 {
-	if (option == QLatin1String("AddressField/DropAction"))
+	if (identifier == SettingsManager::AddressField_DropActionOption)
 	{
 		const QString dropAction(value.toString());
 
@@ -320,11 +320,11 @@ void SearchWidget::optionChanged(const QString &option, const QVariant &value)
 			m_lineEdit->setDropMode(LineEditWidget::PasteDropMode);
 		}
 	}
-	else if (option == QLatin1String("AddressField/SelectAllOnFocus"))
+	else if (identifier == SettingsManager::AddressField_SelectAllOnFocusOption)
 	{
 		m_lineEdit->setSelectAllOnFocus(value.toBool());
 	}
-	else if (option == QLatin1String("Search/SearchEnginesSuggestions"))
+	else if (identifier == SettingsManager::Search_SearchEnginesSuggestionsOption)
 	{
 		if (value.toBool() && !m_suggester)
 		{
@@ -491,7 +491,7 @@ void SearchWidget::setSearchEngine(const QString &searchEngine)
 		return;
 	}
 
-	const int index(qMax(0, searchEngines.indexOf(searchEngine.isEmpty() ? SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString() : searchEngine)));
+	const int index(qMax(0, searchEngines.indexOf(searchEngine.isEmpty() ? SettingsManager::getValue(SettingsManager::Search_DefaultSearchEngineOption).toString() : searchEngine)));
 
 	if (index == currentIndex())
 	{

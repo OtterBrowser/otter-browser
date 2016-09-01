@@ -209,9 +209,9 @@ void ContentsWidget::removeHistoryIndex(int index, bool purge)
 	Q_UNUSED(purge)
 }
 
-void ContentsWidget::setOption(const QString &key, const QVariant &value)
+void ContentsWidget::setOption(int identifier, const QVariant &value)
 {
-	Q_UNUSED(key)
+	Q_UNUSED(identifier)
 	Q_UNUSED(value)
 }
 
@@ -280,9 +280,9 @@ QString ContentsWidget::getStatusMessage() const
 	return QString();
 }
 
-QVariant ContentsWidget::getOption(const QString &key) const
+QVariant ContentsWidget::getOption(int identifier) const
 {
-	Q_UNUSED(key)
+	Q_UNUSED(identifier)
 
 	return QVariant();
 }

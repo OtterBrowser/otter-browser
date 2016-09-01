@@ -253,14 +253,14 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 		QString path;
 		QString fileName(getSuggestedFileName());
 
-		if (!SettingsManager::getValue(QLatin1String("Browser/AlwaysAskWhereToSaveDownload")).toBool())
+		if (!SettingsManager::getValue(SettingsManager::Browser_AlwaysAskWhereToSaveDownloadOption).toBool())
 		{
 			m_options |= IsQuickTransferOption;
 		}
 
 		if (m_options.testFlag(IsQuickTransferOption))
 		{
-			path = SettingsManager::getValue(QLatin1String("Paths/Downloads")).toString();
+			path = SettingsManager::getValue(SettingsManager::Paths_DownloadsOption).toString();
 
 			if (QFile::exists(path + QDir::separator() + fileName) && QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with that name already exists.\nDo you want to overwrite it?"), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::No)
 			{
@@ -940,7 +940,7 @@ void TransfersManager::addTransfer(Transfer *transfer)
 
 void TransfersManager::save()
 {
-	if (SessionsManager::isReadOnly() || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool() || !SettingsManager::getValue(QLatin1String("History/RememberDownloads")).toBool())
+	if (SessionsManager::isReadOnly() || SettingsManager::getValue(SettingsManager::Browser_PrivateModeOption).toBool() || !SettingsManager::getValue(SettingsManager::History_RememberDownloadsOption).toBool())
 	{
 		return;
 	}
@@ -948,7 +948,7 @@ void TransfersManager::save()
 	QSettings history(SessionsManager::getWritableDataPath(QLatin1String("transfers.ini")), QSettings::IniFormat);
 	history.clear();
 
-	const int limit(SettingsManager::getValue(QLatin1String("History/DownloadsLimitPeriod")).toInt());
+	const int limit(SettingsManager::getValue(SettingsManager::History_DownloadsLimitPeriodOption).toInt());
 	int entry(1);
 
 	for (int i = 0; i < m_transfers.count(); ++i)

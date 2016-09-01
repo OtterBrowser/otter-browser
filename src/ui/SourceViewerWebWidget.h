@@ -59,7 +59,7 @@ public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void goToHistoryIndex(int index);
 	void removeHistoryIndex(int index, bool purge = false);
-	void setOption(const QString &key, const QVariant &value);
+	void setOption(int identifier, const QVariant &value);
 	void setScrollPosition(const QPoint &position);
 	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);
@@ -68,7 +68,7 @@ public slots:
 
 protected:
 	void pasteText(const QString &text);
-	void setOptions(const QVariantHash &options);
+	void setOptions(const QHash<int, QVariant> &options);
 
 protected slots:
 	void viewSourceReplyFinished();

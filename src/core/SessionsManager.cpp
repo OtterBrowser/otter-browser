@@ -224,7 +224,7 @@ SessionInformation SessionsManager::getSession(const QString &path)
 	session.isClean = sessionData.value(QLatin1String("Session/clean"), true).toBool();
 
 	const int windows(sessionData.value(QLatin1String("Session/windows"), 0).toInt());
-	const int defaultZoom(SettingsManager::getValue(QLatin1String("Content/DefaultZoom")).toInt());
+	const int defaultZoom(SettingsManager::getValue(SettingsManager::Content_DefaultZoomOption).toInt());
 
 	for (int i = 1; i <= windows; ++i)
 	{
@@ -251,17 +251,17 @@ SessionInformation SessionsManager::getSession(const QString &path)
 
 			if (!searchEngine.isEmpty())
 			{
-				sessionWindow.overrides[QLatin1String("Search/DefaultSearchEngine")] = searchEngine;
+				sessionWindow.overrides[SettingsManager::Search_DefaultSearchEngineOption] = searchEngine;
 			}
 
 			if (!userAgent.isEmpty())
 			{
-				sessionWindow.overrides[QLatin1String("Network/UserAgent")] = userAgent;
+				sessionWindow.overrides[SettingsManager::Network_UserAgentOption] = userAgent;
 			}
 
 			if (reloadTime >= 0)
 			{
-				sessionWindow.overrides[QLatin1String("Content/PageReloadTime")] = reloadTime;
+				sessionWindow.overrides[SettingsManager::Content_PageReloadTimeOption] = reloadTime;
 			}
 
 			for (int k = 1; k <= history; ++k)
@@ -445,8 +445,8 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 		return false;
 	}
 
-	const QString defaultSearchEngine(SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString());
-	const QString defaultUserAgent(SettingsManager::getValue(QLatin1String("Network/UserAgent")).toString());
+	const QString defaultSearchEngine(SettingsManager::getValue(SettingsManager::Search_DefaultSearchEngineOption).toString());
+	const QString defaultUserAgent(SettingsManager::getValue(SettingsManager::Network_UserAgentOption).toString());
 	QTextStream stream(&file);
 	stream.setCodec("UTF-8");
 	stream << QLatin1String("[Session]\n");
@@ -483,19 +483,19 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 				stream << Utils::formatConfigurationEntry(QLatin1String("state"), ((sessionEntry.windows.at(j).state == MaximizedWindowState) ? QLatin1String("maximized") : QLatin1String("minimized")));
 			}
 
-			if (sessionEntry.windows.at(j).overrides.value(QLatin1String("Search/DefaultSearchEngine"), QString()).toString() != defaultSearchEngine)
+			if (sessionEntry.windows.at(j).overrides.value(SettingsManager::Search_DefaultSearchEngineOption, QString()).toString() != defaultSearchEngine)
 			{
-				stream << Utils::formatConfigurationEntry(QLatin1String("searchEngine"), sessionEntry.windows.at(j).overrides[QLatin1String("Search/DefaultSearchEngine")].toString());
+				stream << Utils::formatConfigurationEntry(QLatin1String("searchEngine"), sessionEntry.windows.at(j).overrides[SettingsManager::Search_DefaultSearchEngineOption].toString());
 			}
 
-			if (sessionEntry.windows.at(j).overrides.value(QLatin1String("Network/UserAgent"), QString()).toString() != defaultUserAgent)
+			if (sessionEntry.windows.at(j).overrides.value(SettingsManager::Network_UserAgentOption, QString()).toString() != defaultUserAgent)
 			{
-				stream << Utils::formatConfigurationEntry(QLatin1String("userAgent"), sessionEntry.windows.at(j).overrides[QLatin1String("Network/UserAgent")].toString(), true);
+				stream << Utils::formatConfigurationEntry(QLatin1String("userAgent"), sessionEntry.windows.at(j).overrides[SettingsManager::Network_UserAgentOption].toString(), true);
 			}
 
-			if (sessionEntry.windows.at(j).overrides.value(QLatin1String("Content/PageReloadTime"), -1).toInt() != -1)
+			if (sessionEntry.windows.at(j).overrides.value(SettingsManager::Content_PageReloadTimeOption, -1).toInt() != -1)
 			{
-				stream << Utils::formatConfigurationEntry(QLatin1String("reloadTime"), QString::number(sessionEntry.windows.at(j).overrides[QLatin1String("Content/PageReloadTime")].toInt()));
+				stream << Utils::formatConfigurationEntry(QLatin1String("reloadTime"), QString::number(sessionEntry.windows.at(j).overrides[SettingsManager::Content_PageReloadTimeOption].toInt()));
 			}
 
 			if (sessionEntry.windows.at(j).isAlwaysOnTop)

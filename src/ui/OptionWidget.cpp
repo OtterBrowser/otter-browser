@@ -153,7 +153,7 @@ void OptionWidget::markModified()
 {
 	if (m_resetButton)
 	{
-		m_resetButton->setEnabled(getValue() != SettingsManager::getDefinition(m_option).defaultValue);
+		m_resetButton->setEnabled(getValue() != SettingsManager::getOptionDefinition(SettingsManager::getOptionIdentifier(m_option)).defaultValue);
 	}
 	else
 	{
@@ -163,7 +163,7 @@ void OptionWidget::markModified()
 
 void OptionWidget::reset()
 {
-	const QVariant value(SettingsManager::getDefinition(m_option).defaultValue);
+	const QVariant value(SettingsManager::getOptionDefinition(SettingsManager::getOptionIdentifier(m_option)).defaultValue);
 
 	setValue(value);
 
@@ -172,7 +172,7 @@ void OptionWidget::reset()
 
 void OptionWidget::save()
 {
-	SettingsManager::setValue(m_option, getValue());
+	SettingsManager::setValue(SettingsManager::getOptionIdentifier(m_option), getValue());
 }
 
 void OptionWidget::setIndex(const QModelIndex &index)
@@ -260,7 +260,7 @@ void OptionWidget::setControlsVisible(bool isVisible)
 	if (isVisible && !m_resetButton)
 	{
 		m_resetButton = new QPushButton(tr("Defaults"), this);
-		m_resetButton->setEnabled(getValue() != SettingsManager::getDefinition(m_option).defaultValue);
+		m_resetButton->setEnabled(getValue() != SettingsManager::getOptionDefinition(SettingsManager::getOptionIdentifier(m_option)).defaultValue);
 
 		m_saveButton = new QPushButton(tr("Save"), this);
 

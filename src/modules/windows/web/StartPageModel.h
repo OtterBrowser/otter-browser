@@ -46,7 +46,7 @@ public slots:
 	void reloadTile(const QModelIndex &index, bool full = false);
 
 protected slots:
-	void optionChanged(const QString &option);
+	void optionChanged(int identifier);
 	void dragEnded();
 	void thumbnailCreated(const QUrl &url, const QPixmap &thumbnail, const QString &title);
 

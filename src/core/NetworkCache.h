@@ -40,7 +40,7 @@ public:
 	bool remove(const QUrl &url);
 
 protected slots:
-	void optionChanged(const QString &option, const QVariant &value);
+	void optionChanged(int identifier, const QVariant &value);
 
 private:
 	QHash<QIODevice*, QUrl> m_devices;

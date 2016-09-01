@@ -103,7 +103,7 @@ protected:
 	bool checkRuleMatch(ContentBlockingRule *rule, const QString &currentRule, NetworkManager::ResourceType resourceType);
 
 protected slots:
-	void optionChanged(const QString &option);
+	void optionChanged(int identifier, const QVariant &value);
 	void replyFinished();
 
 private:

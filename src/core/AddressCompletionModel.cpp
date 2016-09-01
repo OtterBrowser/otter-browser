@@ -199,36 +199,36 @@ void AddressCompletionModel::setFilter(const QString &filter)
 	{
 		m_types = UnknownCompletionType;
 
-		if (SettingsManager::getValue(QLatin1String("AddressField/SuggestBookmarks")).toBool())
+		if (SettingsManager::getValue(SettingsManager::AddressField_SuggestBookmarksOption).toBool())
 		{
 			m_types |= BookmarksCompletionType;
 		}
 
-		if (SettingsManager::getValue(QLatin1String("AddressField/SuggestHistory")).toBool())
+		if (SettingsManager::getValue(SettingsManager::AddressField_SuggestHistoryOption).toBool())
 		{
 			m_types |= HistoryCompletionType;
 		}
 
-		if (SettingsManager::getValue(QLatin1String("AddressField/SuggestSearch")).toBool())
+		if (SettingsManager::getValue(SettingsManager::AddressField_SuggestSearchOption).toBool())
 		{
 			m_types |= SearchSuggestionsCompletionType;
 
 			m_defaultSearchEngine = SearchEnginesManager::getSearchEngine();
 		}
 
-		if (SettingsManager::getValue(QLatin1String("AddressField/SuggestSpecialPages")).toBool())
+		if (SettingsManager::getValue(SettingsManager::AddressField_SuggestSpecialPagesOption).toBool())
 		{
 			m_types |= SpecialPagesCompletionType;
 		}
 
-		if (SettingsManager::getValue(QLatin1String("AddressField/SuggestLocalPaths")).toBool())
+		if (SettingsManager::getValue(SettingsManager::AddressField_SuggestLocalPathsOption).toBool())
 		{
 			m_types |= LocalPathSuggestionsCompletionType;
 		}
 	}
 
 	m_filter = filter;
-	m_showCompletionCategories = SettingsManager::getValue(QLatin1String("AddressField/ShowCompletionCategories")).toBool();
+	m_showCompletionCategories = SettingsManager::getValue(SettingsManager::AddressField_ShowCompletionCategoriesOption).toBool();
 
 	if (m_filter.isEmpty())
 	{

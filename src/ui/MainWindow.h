@@ -88,7 +88,7 @@ protected:
 	bool event(QEvent *event);
 
 protected slots:
-	void optionChanged(const QString &option, const QVariant &value);
+	void optionChanged(int identifier, const QVariant &value);
 	void triggerAction();
 	void triggerAction(bool checked);
 	void addBookmark(const QUrl &url = QUrl(), const QString &title = QString(), const QString &description = QString(), bool warn = false);

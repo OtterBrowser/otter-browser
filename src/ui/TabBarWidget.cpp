@@ -58,9 +58,9 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_clickedTab(-1),
 	m_hoveredTab(-1),
 	m_previewTimer(0),
-	m_showCloseButton(SettingsManager::getValue(QLatin1String("TabBar/ShowCloseButton")).toBool()),
-	m_showUrlIcon(SettingsManager::getValue(QLatin1String("TabBar/ShowUrlIcon")).toBool()),
-	m_enablePreviews(SettingsManager::getValue(QLatin1String("TabBar/EnablePreviews")).toBool())
+	m_showCloseButton(SettingsManager::getValue(SettingsManager::TabBar_ShowCloseButtonOption).toBool()),
+	m_showUrlIcon(SettingsManager::getValue(SettingsManager::TabBar_ShowUrlIconOption).toBool()),
+	m_enablePreviews(SettingsManager::getValue(SettingsManager::TabBar_EnablePreviewsOption).toBool())
 {
 	qRegisterMetaType<WindowsManager::LoadingState>("WindowsManager::LoadingState");
 	setDrawBase(false);
@@ -73,8 +73,8 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	setMaximumSize(0, 0);
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	setStyle(new TabBarStyle());
-	optionChanged(QLatin1String("TabBar/MaximumTabSize"), SettingsManager::getValue(QLatin1String("TabBar/MaximumTabSize")));
-	optionChanged(QLatin1String("TabBar/MinimumTabSize"), SettingsManager::getValue(QLatin1String("TabBar/MinimumTabSize")));
+	optionChanged(SettingsManager::TabBar_MaximumTabSizeOption, SettingsManager::getValue(SettingsManager::TabBar_MaximumTabSizeOption));
+	optionChanged(SettingsManager::TabBar_MinimumTabSizeOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabSizeOption));
 
 	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
@@ -85,7 +85,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 		connect(toolBar, SIGNAL(areaChanged(Qt::ToolBarArea)), this, SLOT(setArea(Qt::ToolBarArea)));
 	}
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
 	connect(this, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
 }
 
@@ -226,7 +226,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	QAction *cycleAction(new QAction(tr("Switch tabs using the mouse wheel"), this));
 	cycleAction->setCheckable(true);
-	cycleAction->setChecked(!SettingsManager::getValue(QLatin1String("TabBar/RequireModifierToSwitchTabOnScroll")).toBool());
+	cycleAction->setChecked(!SettingsManager::getValue(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption).toBool());
 
 	connect(cycleAction, SIGNAL(toggled(bool)), this, SLOT(setCycle(bool)));
 	connect(restoreTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
@@ -283,7 +283,7 @@ void TabBarWidget::wheelEvent(QWheelEvent *event)
 {
 	QWidget::wheelEvent(event);
 
-	if (!(event->modifiers().testFlag(Qt::ControlModifier)) && SettingsManager::getValue(QLatin1String("TabBar/RequireModifierToSwitchTabOnScroll")).toBool())
+	if (!(event->modifiers().testFlag(Qt::ControlModifier)) && SettingsManager::getValue(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption).toBool())
 	{
 		return;
 	}
@@ -529,9 +529,9 @@ void TabBarWidget::hidePreview()
 	}
 }
 
-void TabBarWidget::optionChanged(const QString &option, const QVariant &value)
+void TabBarWidget::optionChanged(int identifier, const QVariant &value)
 {
-	if (option == QLatin1String("TabBar/ShowCloseButton"))
+	if (identifier == SettingsManager::TabBar_ShowCloseButtonOption)
 	{
 		const bool showCloseButton(value.toBool());
 
@@ -563,7 +563,7 @@ void TabBarWidget::optionChanged(const QString &option, const QVariant &value)
 
 		m_showCloseButton = showCloseButton;
 	}
-	else if (option == QLatin1String("TabBar/ShowUrlIcon"))
+	else if (identifier == SettingsManager::TabBar_ShowUrlIconOption)
 	{
 		const bool showUrlIcon(value.toBool());
 
@@ -589,11 +589,11 @@ void TabBarWidget::optionChanged(const QString &option, const QVariant &value)
 
 		m_showUrlIcon = showUrlIcon;
 	}
-	else if (option == QLatin1String("TabBar/EnablePreviews"))
+	else if (identifier == SettingsManager::TabBar_EnablePreviewsOption)
 	{
 		m_enablePreviews = value.toBool();
 	}
-	else if (option == QLatin1String("TabBar/MaximumTabSize"))
+	else if (identifier == SettingsManager::TabBar_MaximumTabSizeOption)
 	{
 		const int oldValue(m_maximumTabSize);
 
@@ -610,7 +610,7 @@ void TabBarWidget::optionChanged(const QString &option, const QVariant &value)
 			updateTabs();
 		}
 	}
-	else if (option == QLatin1String("TabBar/MinimumTabSize") && value.toInt() != m_minimumTabSize)
+	else if (identifier == SettingsManager::TabBar_MinimumTabSizeOption && value.toInt() != m_minimumTabSize)
 	{
 		const int oldValue(m_minimumTabSize);
 
@@ -820,7 +820,7 @@ void TabBarWidget::updateTabs(int index)
 
 void TabBarWidget::setCycle(bool enable)
 {
-	SettingsManager::setValue(QLatin1String("TabBar/RequireModifierToSwitchTabOnScroll"), !enable);
+	SettingsManager::setValue(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption, !enable);
 }
 
 void TabBarWidget::setArea(Qt::ToolBarArea area)

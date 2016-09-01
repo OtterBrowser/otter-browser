@@ -36,10 +36,10 @@ class JavaScriptPreferencesDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit JavaScriptPreferencesDialog(const QVariantMap &options, QWidget *parent = 0);
+	explicit JavaScriptPreferencesDialog(const QHash<int, QVariant> &options, QWidget *parent = 0);
 	~JavaScriptPreferencesDialog();
 
-	QVariantMap getOptions() const;
+	QHash<int, QVariant>  getOptions() const;
 
 protected:
 	void changeEvent(QEvent *event);

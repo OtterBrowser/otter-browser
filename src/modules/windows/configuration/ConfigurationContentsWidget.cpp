@@ -45,9 +45,10 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 
 	for (int i = 0; i < options.count(); ++i)
 	{
+		const int identifier(SettingsManager::getOptionIdentifier(options.at(i)));
 		const QStringList option(options.at(i).split(QLatin1Char('/')));
-		const QVariant value(SettingsManager::getValue(options.at(i)));
-		const SettingsManager::OptionDefinition definition(SettingsManager::getDefinition(options.at(i)));
+		const QVariant value(SettingsManager::getValue(identifier));
+		const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(identifier));
 
 		if (!groupItem || groupItem->text() != option.first())
 		{
@@ -86,7 +87,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 	m_ui->configurationViewWidget->setFilterRoles(QSet<int>({Qt::DisplayRole, Qt::UserRole}));
 	m_ui->filterLineEdit->installEventFilter(this);
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
 	connect(m_ui->configurationViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_ui->configurationViewWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(currentChanged(QModelIndex,QModelIndex)));
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->configurationViewWidget, SLOT(setFilterString(QString)));
@@ -107,25 +108,27 @@ void ConfigurationContentsWidget::changeEvent(QEvent *event)
 	}
 }
 
-void ConfigurationContentsWidget::optionChanged(const QString &option, const QVariant &value)
+void ConfigurationContentsWidget::optionChanged(int identifier, const QVariant &value)
 {
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
 		QStandardItem *groupItem(m_model->item(i, 0));
 
-		if (!groupItem || !QString(option).startsWith(groupItem->text()))
+		if (!groupItem || !QString(identifier).startsWith(groupItem->text()))
 		{
 			continue;
 		}
+
+		const QString name(SettingsManager::getOptionName(identifier));
 
 		for (int j = 0; j < groupItem->rowCount(); ++j)
 		{
 			QStandardItem *optionItem(groupItem->child(j, 0));
 
-			if (optionItem && option == QStringLiteral("%1/%2").arg(groupItem->text()).arg(optionItem->text()))
+			if (optionItem && name == QStringLiteral("%1/%2").arg(groupItem->text()).arg(optionItem->text()))
 			{
 				QFont font(optionItem->font());
-				font.setBold(value != SettingsManager::getDefinition(option).defaultValue);
+				font.setBold(value != SettingsManager::getOptionDefinition(identifier).defaultValue);
 
 				optionItem->setFont(font);
 
@@ -199,7 +202,9 @@ void ConfigurationContentsWidget::restoreDefaults()
 
 	if (index.isValid())
 	{
-		SettingsManager::setValue(index.data(Qt::UserRole).toString(), SettingsManager::getDefinition(index.data(Qt::UserRole).toString()).defaultValue);
+		const int identifier(SettingsManager::getOptionIdentifier(index.data(Qt::UserRole).toString()));
+
+		SettingsManager::setValue(identifier, SettingsManager::getOptionDefinition(identifier).defaultValue);
 
 		m_ui->configurationViewWidget->setCurrentIndex(QModelIndex());
 		m_ui->configurationViewWidget->setCurrentIndex(index);
@@ -216,7 +221,7 @@ void ConfigurationContentsWidget::showContextMenu(const QPoint &point)
 		menu.addAction(tr("Copy Option Name"), this, SLOT(copyOptionName()));
 		menu.addAction(tr("Copy Option Value"), this, SLOT(copyOptionValue()));
 		menu.addSeparator();
-		menu.addAction(tr("Restore Default Value"), this, SLOT(restoreDefaults()))->setEnabled(index.sibling(index.row(), 2).data(Qt::EditRole) != SettingsManager::getDefinition(index.sibling(index.row(), 2).data(Qt::UserRole).toString()).defaultValue);
+		menu.addAction(tr("Restore Default Value"), this, SLOT(restoreDefaults()))->setEnabled(index.sibling(index.row(), 2).data(Qt::EditRole) != SettingsManager::getOptionDefinition(SettingsManager::getOptionIdentifier(index.sibling(index.row(), 2).data(Qt::UserRole).toString())).defaultValue);
 		menu.exec(m_ui->configurationViewWidget->mapToGlobal(point));
 	}
 }

@@ -91,7 +91,7 @@ void QtWebEnginePage::handlePageLoaded(const QString &result)
 {
 	if (m_widget)
 	{
-		const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(QLatin1String("Content/BlockingProfiles"), url()).toStringList()));
+		const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::Content_BlockingProfilesOption, url()).toStringList()));
 
 		if (!profiles.isEmpty())
 		{
@@ -227,7 +227,7 @@ QWebEnginePage* QtWebEnginePage::createWindow(QWebEnginePage::WebWindowType type
 
 		if (!m_widget || m_widget->getLastUrlClickTime().isNull() || m_widget->getLastUrlClickTime().secsTo(QDateTime::currentDateTime()) > 1)
 		{
-			const QString popupsPolicy(SettingsManager::getValue(QLatin1String("Content/PopupsPolicy"), (m_widget ? m_widget->getRequestedUrl() : QUrl())).toString());
+			const QString popupsPolicy(SettingsManager::getValue(SettingsManager::Content_PopupsPolicyOption, (m_widget ? m_widget->getRequestedUrl() : QUrl())).toString());
 
 			if (popupsPolicy == QLatin1String("blockAll"))
 			{
@@ -302,7 +302,7 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::N
 		return false;
 	}
 
-	if (isMainFrame && type == QWebEnginePage::NavigationTypeReload && m_previousNavigationType == QWebEnginePage::NavigationTypeFormSubmitted && SettingsManager::getValue(QLatin1String("Choices/WarnFormResend")).toBool())
+	if (isMainFrame && type == QWebEnginePage::NavigationTypeReload && m_previousNavigationType == QWebEnginePage::NavigationTypeFormSubmitted && SettingsManager::getValue(SettingsManager::Choices_WarnFormResendOption).toBool())
 	{
 		bool cancel(false);
 		bool warn(true);
@@ -334,7 +334,7 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::N
 			warn = !dialog.checkBox()->isChecked();
 		}
 
-		SettingsManager::setValue(QLatin1String("Choices/WarnFormResend"), warn);
+		SettingsManager::setValue(SettingsManager::Choices_WarnFormResendOption, warn);
 
 		if (cancel)
 		{

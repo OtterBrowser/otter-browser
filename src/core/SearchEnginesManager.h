@@ -80,7 +80,7 @@ protected:
 	static void updateSearchEnginesModel();
 
 protected slots:
-	void optionChanged(const QString &key);
+	void optionChanged(int identifier);
 
 private:
 	static SearchEnginesManager *m_instance;

@@ -121,7 +121,7 @@ bool OperaSearchEnginesImporter::import(const QString &path)
 
 	if (m_optionsWidget->isChecked())
 	{
-		SettingsManager::setValue(QLatin1String("Search/SearchEnginesOrder"), QStringList());
+		SettingsManager::setValue(SettingsManager::Search_SearchEnginesOrderOption, QStringList());
 	}
 
 	const QStringList groups(settings.getGroups());

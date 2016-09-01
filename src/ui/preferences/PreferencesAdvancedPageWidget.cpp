@@ -96,15 +96,15 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	updatePageSwitcher();
 
-	m_ui->browsingSuggestBookmarksCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/SuggestBookmarks")).toBool());
-	m_ui->browsingSuggestHistoryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/SuggestHistory")).toBool());
-	m_ui->browsingSuggestLocalPathsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/SuggestLocalPaths")).toBool());
-	m_ui->browsingCategoriesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("AddressField/ShowCompletionCategories")).toBool());
+	m_ui->browsingSuggestBookmarksCheckBox->setChecked(SettingsManager::getValue(SettingsManager::AddressField_SuggestBookmarksOption).toBool());
+	m_ui->browsingSuggestHistoryCheckBox->setChecked(SettingsManager::getValue(SettingsManager::AddressField_SuggestHistoryOption).toBool());
+	m_ui->browsingSuggestLocalPathsCheckBox->setChecked(SettingsManager::getValue(SettingsManager::AddressField_SuggestLocalPathsOption).toBool());
+	m_ui->browsingCategoriesCheckBox->setChecked(SettingsManager::getValue(SettingsManager::AddressField_ShowCompletionCategoriesOption).toBool());
 
 	m_ui->browsingDisplayModeComboBox->addItem(tr("Compact"), QLatin1String("compact"));
 	m_ui->browsingDisplayModeComboBox->addItem(tr("Columns"), QLatin1String("columns"));
 
-	const int displayModeIndex(m_ui->browsingDisplayModeComboBox->findData(SettingsManager::getValue(QLatin1String("AddressField/CompletionDisplayMode")).toString()));
+	const int displayModeIndex(m_ui->browsingDisplayModeComboBox->findData(SettingsManager::getValue(SettingsManager::AddressField_CompletionDisplayModeOption).toString()));
 
 	m_ui->browsingDisplayModeComboBox->setCurrentIndex((displayModeIndex < 0) ? 1 : displayModeIndex);
 
@@ -130,7 +130,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->notificationsItemView->setModel(notificationsModel);
 	m_ui->notificationsItemView->setItemDelegate(new ItemDelegate(false, this));
-	m_ui->preferNativeNotificationsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Interface/UseNativeNotifications")).toBool());
+	m_ui->preferNativeNotificationsCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Interface_UseNativeNotificationsOption).toBool());
 
 	const QStringList widgetStyles(QStyleFactory::keys());
 
@@ -141,29 +141,29 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 		m_ui->appearranceWidgetStyleComboBox->addItem(widgetStyles.at(i));
 	}
 
-	m_ui->appearranceWidgetStyleComboBox->setCurrentIndex(qMax(0, m_ui->appearranceWidgetStyleComboBox->findData(SettingsManager::getValue(QLatin1String("Interface/WidgetStyle")).toString(), Qt::DisplayRole)));
-	m_ui->appearranceStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Interface/StyleSheet")).toString());
+	m_ui->appearranceWidgetStyleComboBox->setCurrentIndex(qMax(0, m_ui->appearranceWidgetStyleComboBox->findData(SettingsManager::getValue(SettingsManager::Interface_WidgetStyleOption).toString(), Qt::DisplayRole)));
+	m_ui->appearranceStyleSheetFilePathWidget->setPath(SettingsManager::getValue(SettingsManager::Interface_StyleSheetOption).toString());
 	m_ui->appearranceStyleSheetFilePathWidget->setFilters(QStringList(tr("Style sheets (*.css)")));
-	m_ui->enableTrayIconCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableTrayIcon")).toBool());
+	m_ui->enableTrayIconCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_EnableTrayIconOption).toBool());
 
 	m_ui->enableImagesComboBox->addItem(tr("All images"), QLatin1String("enabled"));
 	m_ui->enableImagesComboBox->addItem(tr("Cached images"), QLatin1String("onlyCached"));
 	m_ui->enableImagesComboBox->addItem(tr("No images"), QLatin1String("disabled"));
 
-	const int enableImagesIndex(m_ui->enableImagesComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/EnableImages")).toString()));
+	const int enableImagesIndex(m_ui->enableImagesComboBox->findData(SettingsManager::getValue(SettingsManager::Browser_EnableImagesOption).toString()));
 
 	m_ui->enableImagesComboBox->setCurrentIndex((enableImagesIndex < 0) ? 0 : enableImagesIndex);
-	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJavaScript")).toBool());
+	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_EnableJavaScriptOption).toBool());
 	m_ui->javaScriptOptionsButton->setEnabled(m_ui->enableJavaScriptCheckBox->isChecked());
-	m_ui->enableJavaCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableJava")).toBool());
+	m_ui->enableJavaCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_EnableJavaOption).toBool());
 	m_ui->enablePluginsComboBox->addItem(tr("Enabled"), QLatin1String("enabled"));
 	m_ui->enablePluginsComboBox->addItem(tr("On demand"), QLatin1String("onDemand"));
 	m_ui->enablePluginsComboBox->addItem(tr("Disabled"), QLatin1String("disabled"));
 
-	const int enablePluginsIndex(m_ui->enablePluginsComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/EnablePlugins")).toString()));
+	const int enablePluginsIndex(m_ui->enablePluginsComboBox->findData(SettingsManager::getValue(SettingsManager::Browser_EnablePluginsOption).toString()));
 
 	m_ui->enablePluginsComboBox->setCurrentIndex((enablePluginsIndex < 0) ? 1 : enablePluginsIndex);
-	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Content/UserStyleSheet")).toString());
+	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(SettingsManager::Content_UserStyleSheetOption).toString());
 	m_ui->userStyleSheetFilePathWidget->setFilters(QStringList(tr("Style sheets (*.css)")));
 
 	QStandardItemModel *downloadsModel(new QStandardItemModel(this));
@@ -198,7 +198,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->downloadsFilePathWidget->setSelectFile(false);
 	m_ui->downloadsApplicationComboBoxWidget->setAlwaysShowDefaultApplication(true);
 
-	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Network/EnableReferrer")).toBool());
+	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Network_EnableReferrerOption).toBool());
 
 	const QStringList userAgents(NetworkManagerFactory::getUserAgents());
 
@@ -220,10 +220,10 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 		}
 	}
 
-	m_ui->userAgentComboBox->setCurrentIndex(m_ui->userAgentComboBox->findData(SettingsManager::getValue(QLatin1String("Network/UserAgent")).toString()));
+	m_ui->userAgentComboBox->setCurrentIndex(m_ui->userAgentComboBox->findData(SettingsManager::getValue(SettingsManager::Network_UserAgentOption).toString()));
 
 	QStandardItemModel *proxyExceptionsModel(new QStandardItemModel(this));
-	const QStringList currentProxyExceptions(SettingsManager::getValue(QLatin1String("Proxy/Exceptions")).toStringList());
+	const QStringList currentProxyExceptions(SettingsManager::getValue(SettingsManager::Proxy_ExceptionsOption).toStringList());
 
 	for (int i = 0; i < currentProxyExceptions.count(); ++i)
 	{
@@ -238,7 +238,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->proxyModeComboBox->addItem(tr("Manual configuration"), QLatin1String("manual"));
 	m_ui->proxyModeComboBox->addItem(tr("Automatic configuration (PAC)"), QLatin1String("automatic"));
 
-	const int proxyIndex(m_ui->proxyModeComboBox->findData(SettingsManager::getValue(QLatin1String("Network/ProxyMode")).toString()));
+	const int proxyIndex(m_ui->proxyModeComboBox->findData(SettingsManager::getValue(SettingsManager::Network_ProxyModeOption).toString()));
 
 	m_ui->proxyModeComboBox->setCurrentIndex((proxyIndex < 0) ? 1 : proxyIndex);
 
@@ -247,32 +247,32 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 		proxyModeChanged(proxyIndex);
 	}
 
-	m_ui->allProxyCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Proxy/UseCommon")).toBool());
-	m_ui->httpProxyCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Proxy/UseHttp")).toBool());
-	m_ui->httpsProxyCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Proxy/UseHttps")).toBool());
-	m_ui->ftpProxyCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Proxy/UseFtp")).toBool());
-	m_ui->socksProxyCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Proxy/UseSocks")).toBool());
-	m_ui->allProxyServersLineEdit->setText(SettingsManager::getValue(QLatin1String("Proxy/CommonServers")).toString());
-	m_ui->httpProxyServersLineEdit->setText(SettingsManager::getValue(QLatin1String("Proxy/HttpServers")).toString());
-	m_ui->httpsProxyServersLineEdit->setText(SettingsManager::getValue(QLatin1String("Proxy/HttpsServers")).toString());
-	m_ui->ftpProxyServersLineEdit->setText(SettingsManager::getValue(QLatin1String("Proxy/FtpServers")).toString());
-	m_ui->socksProxyServersLineEdit->setText(SettingsManager::getValue(QLatin1String("Proxy/SocksServers")).toString());
-	m_ui->allProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/CommonPort")).toInt());
-	m_ui->httpProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/HttpPort")).toInt());
-	m_ui->httpsProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/HttpsPort")).toInt());
-	m_ui->ftpProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/FtpPort")).toInt());
-	m_ui->socksProxyPortSpinBox->setValue(SettingsManager::getValue(QLatin1String("Proxy/SocksPort")).toInt());
-	m_ui->automaticProxyConfigurationFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Proxy/AutomaticConfigurationPath")).toString());
+	m_ui->allProxyCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Proxy_UseCommonOption).toBool());
+	m_ui->httpProxyCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Proxy_UseHttpOption).toBool());
+	m_ui->httpsProxyCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Proxy_UseHttpsOption).toBool());
+	m_ui->ftpProxyCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Proxy_UseFtpOption).toBool());
+	m_ui->socksProxyCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Proxy_UseSocksOption).toBool());
+	m_ui->allProxyServersLineEdit->setText(SettingsManager::getValue(SettingsManager::Proxy_CommonServersOption).toString());
+	m_ui->httpProxyServersLineEdit->setText(SettingsManager::getValue(SettingsManager::Proxy_HttpServersOption).toString());
+	m_ui->httpsProxyServersLineEdit->setText(SettingsManager::getValue(SettingsManager::Proxy_HttpsServersOption).toString());
+	m_ui->ftpProxyServersLineEdit->setText(SettingsManager::getValue(SettingsManager::Proxy_FtpServersOption).toString());
+	m_ui->socksProxyServersLineEdit->setText(SettingsManager::getValue(SettingsManager::Proxy_SocksServersOption).toString());
+	m_ui->allProxyPortSpinBox->setValue(SettingsManager::getValue(SettingsManager::Proxy_CommonPortOption).toInt());
+	m_ui->httpProxyPortSpinBox->setValue(SettingsManager::getValue(SettingsManager::Proxy_HttpPortOption).toInt());
+	m_ui->httpsProxyPortSpinBox->setValue(SettingsManager::getValue(SettingsManager::Proxy_HttpsPortOption).toInt());
+	m_ui->ftpProxyPortSpinBox->setValue(SettingsManager::getValue(SettingsManager::Proxy_FtpPortOption).toInt());
+	m_ui->socksProxyPortSpinBox->setValue(SettingsManager::getValue(SettingsManager::Proxy_SocksPortOption).toInt());
+	m_ui->automaticProxyConfigurationFilePathWidget->setPath(SettingsManager::getValue(SettingsManager::Proxy_AutomaticConfigurationPathOption).toString());
 	m_ui->automaticProxyConfigurationFilePathWidget->setFilters(QStringList(tr("Proxy configuration files (*.pac)")));
-	m_ui->proxySystemAuthentication->setChecked(SettingsManager::getValue(QLatin1String("Proxy/UseSystemAuthentication")).toBool());
+	m_ui->proxySystemAuthentication->setChecked(SettingsManager::getValue(SettingsManager::Proxy_UseSystemAuthenticationOption).toBool());
 
 	m_ui->ciphersAddButton->setMenu(new QMenu(m_ui->ciphersAddButton));
 
 	if (QSslSocket::supportsSsl())
 	{
 		QStandardItemModel *ciphersModel(new QStandardItemModel(this));
-		const bool useDefaultCiphers(SettingsManager::getValue(QLatin1String("Security/Ciphers")).toString() == QLatin1String("default"));
-		const QStringList selectedCiphers(useDefaultCiphers ? QStringList() : SettingsManager::getValue(QLatin1String("Security/Ciphers")).toStringList());
+		const bool useDefaultCiphers(SettingsManager::getValue(SettingsManager::Security_CiphersOption).toString() == QLatin1String("default"));
+		const QStringList selectedCiphers(useDefaultCiphers ? QStringList() : SettingsManager::getValue(SettingsManager::Security_CiphersOption).toStringList());
 
 		for (int i = 0; i < selectedCiphers.count(); ++i)
 		{
@@ -318,7 +318,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->ciphersMoveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-up")));
 
 	QStandardItemModel *updateChannelsModel(new QStandardItemModel(this));
-	const QStringList availableUpdateChannels(SettingsManager::getValue(QLatin1String("Updates/ActiveChannels")).toStringList());
+	const QStringList availableUpdateChannels(SettingsManager::getValue(SettingsManager::Updates_ActiveChannelsOption).toStringList());
 
 	QMap<QString, QString> defaultChannels;
 	defaultChannels[QLatin1String("release")] = tr("Stable version");
@@ -345,8 +345,8 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->updateChannelsItemView->setItemDelegate(new OptionDelegate(true, this));
 	m_ui->updateChannelsItemView->setHeaderHidden(true);
 
-	m_ui->autoInstallCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Updates/AutomaticInstall")).toBool());
-	m_ui->intervalSpinBox->setValue(SettingsManager::getValue(QLatin1String("Updates/CheckInterval")).toInt());
+	m_ui->autoInstallCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Updates_AutomaticInstallOption).toBool());
+	m_ui->intervalSpinBox->setValue(SettingsManager::getValue(SettingsManager::Updates_CheckIntervalOption).toInt());
 
 	updateUpdateChannelsActions();
 
@@ -354,7 +354,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->keyboardMoveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-up")));
 
 	QStandardItemModel *keyboardProfilesModel(new QStandardItemModel(this));
-	const QStringList keyboardProfiles(SettingsManager::getValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder")).toStringList());
+	const QStringList keyboardProfiles(SettingsManager::getValue(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption).toStringList());
 
 	for (int i = 0; i < keyboardProfiles.count(); ++i)
 	{
@@ -383,7 +383,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	addKeyboardProfileMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->keyboardAddButton));
 
 	m_ui->keyboardAddButton->setMenu(addKeyboardProfileMenu);
-	m_ui->keyboardEnableSingleKeyShortcutsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableSingleKeyShortcuts")).toBool());
+	m_ui->keyboardEnableSingleKeyShortcutsCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool());
 
 	updateReaddKeyboardProfileMenu();
 
@@ -391,7 +391,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->mouseMoveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-up")));
 
 	QStandardItemModel *mouseProfilesModel(new QStandardItemModel(this));
-	const QStringList mouseProfiles(SettingsManager::getValue(QLatin1String("Browser/MouseProfilesOrder")).toStringList());
+	const QStringList mouseProfiles(SettingsManager::getValue(SettingsManager::Browser_MouseProfilesOrderOption).toStringList());
 
 	for (int i = 0; i < mouseProfiles.count(); ++i)
 	{
@@ -420,7 +420,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	addMouseProfileMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->mouseAddButton));
 
 	m_ui->mouseAddButton->setMenu(addMouseProfileMenu);
-	m_ui->mouseEnableGesturesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/EnableMouseGestures")).toBool());
+	m_ui->mouseEnableGesturesCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_EnableMouseGesturesOption).toBool());
 
 	updateReaddMouseProfileMenu();
 
@@ -1246,7 +1246,7 @@ void PreferencesAdvancedPageWidget::updateJavaScriptOptions()
 
 	if (!isSet)
 	{
-		const QStringList javaScriptOptions({QLatin1String("Browser/EnableFullScreen"), QLatin1String("Browser/JavaScriptCanAccessClipboard"), QLatin1String("Browser/JavaScriptCanChangeWindowGeometry"), QLatin1String("Browser/JavaScriptCanCloseWindows"), QLatin1String("Browser/JavaScriptCanDisableContextMenu"), QLatin1String("Browser/JavaScriptCanOpenWindows"), QLatin1String("Browser/JavaScriptCanShowStatusMessages")});
+		const QList<int> javaScriptOptions({SettingsManager::Browser_EnableFullScreenOption, SettingsManager::Browser_JavaScriptCanAccessClipboardOption, SettingsManager::Browser_JavaScriptCanChangeWindowGeometryOption, SettingsManager::Browser_JavaScriptCanCloseWindowsOption, SettingsManager::Browser_JavaScriptCanDisableContextMenuOption, SettingsManager::Browser_JavaScriptCanOpenWindowsOption, SettingsManager::Browser_JavaScriptCanShowStatusMessagesOption});
 
 		for (int i = 0; i < javaScriptOptions.count(); ++i)
 		{
@@ -1292,11 +1292,11 @@ void PreferencesAdvancedPageWidget::save()
 
 	m_filesToRemove.clear();
 
-	SettingsManager::setValue(QLatin1String("AddressField/SuggestBookmarks"), m_ui->browsingSuggestBookmarksCheckBox->isChecked());
-	SettingsManager::setValue(QLatin1String("AddressField/SuggestHistory"), m_ui->browsingSuggestHistoryCheckBox->isChecked());
-	SettingsManager::setValue(QLatin1String("AddressField/SuggestLocalPaths"), m_ui->browsingSuggestLocalPathsCheckBox->isChecked());
-	SettingsManager::setValue(QLatin1String("AddressField/ShowCompletionCategories"), m_ui->browsingCategoriesCheckBox->isChecked());
-	SettingsManager::setValue(QLatin1String("AddressField/CompletionDisplayMode"), m_ui->browsingDisplayModeComboBox->currentData(Qt::UserRole).toString());
+	SettingsManager::setValue(SettingsManager::AddressField_SuggestBookmarksOption, m_ui->browsingSuggestBookmarksCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::AddressField_SuggestHistoryOption, m_ui->browsingSuggestHistoryCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::AddressField_SuggestLocalPathsOption, m_ui->browsingSuggestLocalPathsCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::AddressField_ShowCompletionCategoriesOption, m_ui->browsingCategoriesCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::AddressField_CompletionDisplayModeOption, m_ui->browsingDisplayModeComboBox->currentData(Qt::UserRole).toString());
 
 	QSettings notificationsSettings(SessionsManager::getWritableDataPath(QLatin1String("notifications.ini")), QSettings::IniFormat);
 	notificationsSettings.setIniCodec("UTF-8");
@@ -1319,13 +1319,13 @@ void PreferencesAdvancedPageWidget::save()
 		notificationsSettings.endGroup();
 	}
 
-	SettingsManager::setValue(QLatin1String("Interface/UseNativeNotifications"), m_ui->preferNativeNotificationsCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::Interface_UseNativeNotificationsOption, m_ui->preferNativeNotificationsCheckBox->isChecked());
 
 	const QString widgetStyle((m_ui->appearranceWidgetStyleComboBox->currentIndex() == 0) ? QString() : m_ui->appearranceWidgetStyleComboBox->currentText());
 
-	SettingsManager::setValue(QLatin1String("Interface/WidgetStyle"), widgetStyle);
-	SettingsManager::setValue(QLatin1String("Interface/StyleSheet"), m_ui->appearranceStyleSheetFilePathWidget->getPath());
-	SettingsManager::setValue(QLatin1String("Browser/EnableTrayIcon"), m_ui->enableTrayIconCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::Interface_WidgetStyleOption, widgetStyle);
+	SettingsManager::setValue(SettingsManager::Interface_StyleSheetOption, m_ui->appearranceStyleSheetFilePathWidget->getPath());
+	SettingsManager::setValue(SettingsManager::Browser_EnableTrayIconOption, m_ui->enableTrayIconCheckBox->isChecked());
 
 	Application::setStyle(widgetStyle);
 
@@ -1349,11 +1349,11 @@ void PreferencesAdvancedPageWidget::save()
 		}
 	}
 
-	SettingsManager::setValue(QLatin1String("Browser/EnableImages"), m_ui->enableImagesComboBox->currentData(Qt::UserRole).toString());
-	SettingsManager::setValue(QLatin1String("Browser/EnableJavaScript"), m_ui->enableJavaScriptCheckBox->isChecked());
-	SettingsManager::setValue(QLatin1String("Browser/EnableJava"), m_ui->enableJavaCheckBox->isChecked());
-	SettingsManager::setValue(QLatin1String("Browser/EnablePlugins"), m_ui->enablePluginsComboBox->currentData(Qt::UserRole).toString());
-	SettingsManager::setValue(QLatin1String("Content/UserStyleSheet"), m_ui->userStyleSheetFilePathWidget->getPath());
+	SettingsManager::setValue(SettingsManager::Browser_EnableImagesOption, m_ui->enableImagesComboBox->currentData(Qt::UserRole).toString());
+	SettingsManager::setValue(SettingsManager::Browser_EnableJavaScriptOption, m_ui->enableJavaScriptCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::Browser_EnableJavaOption, m_ui->enableJavaCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::Browser_EnablePluginsOption, m_ui->enablePluginsComboBox->currentData(Qt::UserRole).toString());
+	SettingsManager::setValue(SettingsManager::Content_UserStyleSheetOption, m_ui->userStyleSheetFilePathWidget->getPath());
 
 	Settings handlersSettings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
 	const QStringList handlers(handlersSettings.getGroups());
@@ -1384,47 +1384,47 @@ void PreferencesAdvancedPageWidget::save()
 
 	handlersSettings.save(SessionsManager::getWritableDataPath(QLatin1String("handlers.ini")));
 
-	SettingsManager::setValue(QLatin1String("Network/EnableReferrer"), m_ui->sendReferrerCheckBox->isChecked());
-	SettingsManager::setValue(QLatin1String("Network/UserAgent"), m_ui->userAgentComboBox->currentData().toString());
-	SettingsManager::setValue(QLatin1String("Network/ProxyMode"), m_ui->proxyModeComboBox->currentData(Qt::UserRole).toString());
+	SettingsManager::setValue(SettingsManager::Network_EnableReferrerOption, m_ui->sendReferrerCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::Network_UserAgentOption, m_ui->userAgentComboBox->currentData().toString());
+	SettingsManager::setValue(SettingsManager::Network_ProxyModeOption, m_ui->proxyModeComboBox->currentData(Qt::UserRole).toString());
 
 	if (!m_ui->allProxyServersLineEdit->text().isEmpty())
 	{
-		SettingsManager::setValue(QLatin1String("Proxy/UseCommon"), m_ui->allProxyCheckBox->isChecked());
+		SettingsManager::setValue(SettingsManager::Proxy_UseCommonOption, m_ui->allProxyCheckBox->isChecked());
 	}
 
 	if (!m_ui->httpProxyServersLineEdit->text().isEmpty())
 	{
-		SettingsManager::setValue(QLatin1String("Proxy/UseHttp"), m_ui->httpProxyCheckBox->isChecked());
+		SettingsManager::setValue(SettingsManager::Proxy_UseHttpOption, m_ui->httpProxyCheckBox->isChecked());
 	}
 
 	if (!m_ui->httpsProxyServersLineEdit->text().isEmpty())
 	{
-		SettingsManager::setValue(QLatin1String("Proxy/UseHttps"), m_ui->httpsProxyCheckBox->isChecked());
+		SettingsManager::setValue(SettingsManager::Proxy_UseHttpsOption, m_ui->httpsProxyCheckBox->isChecked());
 	}
 
 	if (!m_ui->ftpProxyServersLineEdit->text().isEmpty())
 	{
-		SettingsManager::setValue(QLatin1String("Proxy/UseFtp"), m_ui->ftpProxyCheckBox->isChecked());
+		SettingsManager::setValue(SettingsManager::Proxy_UseFtpOption, m_ui->ftpProxyCheckBox->isChecked());
 	}
 
 	if (!m_ui->socksProxyServersLineEdit->text().isEmpty())
 	{
-		SettingsManager::setValue(QLatin1String("Proxy/UseSocks"), m_ui->socksProxyCheckBox->isChecked());
+		SettingsManager::setValue(SettingsManager::Proxy_UseSocksOption, m_ui->socksProxyCheckBox->isChecked());
 	}
 
-	SettingsManager::setValue(QLatin1String("Proxy/CommonServers"), m_ui->allProxyServersLineEdit->text());
-	SettingsManager::setValue(QLatin1String("Proxy/HttpServers"), m_ui->httpProxyServersLineEdit->text());
-	SettingsManager::setValue(QLatin1String("Proxy/HttpsServers"), m_ui->httpsProxyServersLineEdit->text());
-	SettingsManager::setValue(QLatin1String("Proxy/FtpServers"), m_ui->ftpProxyServersLineEdit->text());
-	SettingsManager::setValue(QLatin1String("Proxy/SocksServers"), m_ui->socksProxyServersLineEdit->text());
-	SettingsManager::setValue(QLatin1String("Proxy/CommonPort"), m_ui->allProxyPortSpinBox->value());
-	SettingsManager::setValue(QLatin1String("Proxy/HttpPort"), m_ui->httpProxyPortSpinBox->value());
-	SettingsManager::setValue(QLatin1String("Proxy/HttpsPort"), m_ui->httpsProxyPortSpinBox->value());
-	SettingsManager::setValue(QLatin1String("Proxy/FtpPort"), m_ui->ftpProxyPortSpinBox->value());
-	SettingsManager::setValue(QLatin1String("Proxy/SocksPort"), m_ui->socksProxyPortSpinBox->value());
-	SettingsManager::setValue(QLatin1String("Proxy/AutomaticConfigurationPath"), m_ui->automaticProxyConfigurationFilePathWidget->getPath());
-	SettingsManager::setValue(QLatin1String("Proxy/UseSystemAuthentication"), m_ui->proxySystemAuthentication->isChecked());
+	SettingsManager::setValue(SettingsManager::Proxy_CommonServersOption, m_ui->allProxyServersLineEdit->text());
+	SettingsManager::setValue(SettingsManager::Proxy_HttpServersOption, m_ui->httpProxyServersLineEdit->text());
+	SettingsManager::setValue(SettingsManager::Proxy_HttpsServersOption, m_ui->httpsProxyServersLineEdit->text());
+	SettingsManager::setValue(SettingsManager::Proxy_FtpServersOption, m_ui->ftpProxyServersLineEdit->text());
+	SettingsManager::setValue(SettingsManager::Proxy_SocksServersOption, m_ui->socksProxyServersLineEdit->text());
+	SettingsManager::setValue(SettingsManager::Proxy_CommonPortOption, m_ui->allProxyPortSpinBox->value());
+	SettingsManager::setValue(SettingsManager::Proxy_HttpPortOption, m_ui->httpProxyPortSpinBox->value());
+	SettingsManager::setValue(SettingsManager::Proxy_HttpsPortOption, m_ui->httpsProxyPortSpinBox->value());
+	SettingsManager::setValue(SettingsManager::Proxy_FtpPortOption, m_ui->ftpProxyPortSpinBox->value());
+	SettingsManager::setValue(SettingsManager::Proxy_SocksPortOption, m_ui->socksProxyPortSpinBox->value());
+	SettingsManager::setValue(SettingsManager::Proxy_AutomaticConfigurationPathOption, m_ui->automaticProxyConfigurationFilePathWidget->getPath());
+	SettingsManager::setValue(SettingsManager::Proxy_UseSystemAuthenticationOption, m_ui->proxySystemAuthentication->isChecked());
 
 	QStandardItemModel *proxyListModel(m_ui->proxyExceptionsItemView->getSourceModel());
 	QStringList proxyExceptions;
@@ -1439,7 +1439,7 @@ void PreferencesAdvancedPageWidget::save()
 		}
 	}
 
-	SettingsManager::setValue(QLatin1String("Proxy/Exceptions"), proxyExceptions);
+	SettingsManager::setValue(SettingsManager::Proxy_ExceptionsOption, proxyExceptions);
 
 	if (m_userAgentsModified)
 	{
@@ -1478,12 +1478,12 @@ void PreferencesAdvancedPageWidget::save()
 			ciphers.append(m_ui->ciphersViewWidget->getIndex(i, 0).data(Qt::DisplayRole).toString());
 		}
 
-		SettingsManager::setValue(QLatin1String("Security/Ciphers"), ciphers);
+		SettingsManager::setValue(SettingsManager::Security_CiphersOption, ciphers);
 	}
 
-	SettingsManager::setValue(QLatin1String("Updates/ActiveChannels"), getSelectedUpdateChannels());
-	SettingsManager::setValue(QLatin1String("Updates/AutomaticInstall"), m_ui->autoInstallCheckBox->isChecked());
-	SettingsManager::setValue(QLatin1String("Updates/CheckInterval"), m_ui->intervalSpinBox->value());
+	SettingsManager::setValue(SettingsManager::Updates_ActiveChannelsOption, getSelectedUpdateChannels());
+	SettingsManager::setValue(SettingsManager::Updates_AutomaticInstallOption, m_ui->autoInstallCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::Updates_CheckIntervalOption, m_ui->intervalSpinBox->value());
 
 	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("keyboard")));
 
@@ -1547,13 +1547,13 @@ void PreferencesAdvancedPageWidget::save()
 		}
 	}
 
-	if (needsKeyboardProfilesReload && SettingsManager::getValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder")).toStringList().join(QLatin1Char(',')) == keyboardProfiles.join(QLatin1Char(',')) && SettingsManager::getValue(QLatin1String("Browser/EnableSingleKeyShortcuts")).toBool() == m_ui->keyboardEnableSingleKeyShortcutsCheckBox->isChecked())
+	if (needsKeyboardProfilesReload && SettingsManager::getValue(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption).toStringList().join(QLatin1Char(',')) == keyboardProfiles.join(QLatin1Char(',')) && SettingsManager::getValue(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool() == m_ui->keyboardEnableSingleKeyShortcutsCheckBox->isChecked())
 	{
 		ActionsManager::loadProfiles();
 	}
 
-	SettingsManager::setValue(QLatin1String("Browser/KeyboardShortcutsProfilesOrder"), keyboardProfiles);
-	SettingsManager::setValue(QLatin1String("Browser/EnableSingleKeyShortcuts"), m_ui->keyboardEnableSingleKeyShortcutsCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption, keyboardProfiles);
+	SettingsManager::setValue(SettingsManager::Browser_EnableSingleKeyShortcutsOption, m_ui->keyboardEnableSingleKeyShortcutsCheckBox->isChecked());
 
 	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("mouse")));
 
@@ -1614,17 +1614,17 @@ void PreferencesAdvancedPageWidget::save()
 		}
 	}
 
-	if (needsMouseProfilesReload && SettingsManager::getValue(QLatin1String("Browser/MouseProfilesOrder")).toStringList().join(QLatin1Char(',')) == mouseProfiles.join(QLatin1Char(',')) && SettingsManager::getValue(QLatin1String("Browser/EnableMouseGestures")).toBool() == m_ui->mouseEnableGesturesCheckBox->isChecked())
+	if (needsMouseProfilesReload && SettingsManager::getValue(SettingsManager::Browser_MouseProfilesOrderOption).toStringList().join(QLatin1Char(',')) == mouseProfiles.join(QLatin1Char(',')) && SettingsManager::getValue(SettingsManager::Browser_EnableMouseGesturesOption).toBool() == m_ui->mouseEnableGesturesCheckBox->isChecked())
 	{
 		GesturesManager::loadProfiles();
 	}
 
-	SettingsManager::setValue(QLatin1String("Browser/MouseProfilesOrder"), mouseProfiles);
-	SettingsManager::setValue(QLatin1String("Browser/EnableMouseGestures"), m_ui->mouseEnableGesturesCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::Browser_MouseProfilesOrderOption, mouseProfiles);
+	SettingsManager::setValue(SettingsManager::Browser_EnableMouseGesturesOption, m_ui->mouseEnableGesturesCheckBox->isChecked());
 
 	if (!m_javaScriptOptions.isEmpty())
 	{
-		QVariantMap::iterator javaScriptOptionsIterator;
+		QHash<int, QVariant>::iterator javaScriptOptionsIterator;
 
 		for (javaScriptOptionsIterator = m_javaScriptOptions.begin(); javaScriptOptionsIterator != m_javaScriptOptions.end(); ++javaScriptOptionsIterator)
 		{

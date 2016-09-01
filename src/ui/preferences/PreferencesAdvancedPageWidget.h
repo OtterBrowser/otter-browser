@@ -92,9 +92,9 @@ protected slots:
 
 private:
 	QStringList m_filesToRemove;
-	QVariantMap m_javaScriptOptions;
 	QHash<QString, KeyboardProfile> m_keyboardProfiles;
 	QHash<QString, MouseProfile> m_mouseProfiles;
+	QHash<int, QVariant> m_javaScriptOptions;
 	bool m_userAgentsModified;
 	Ui::PreferencesAdvancedPageWidget *m_ui;
 

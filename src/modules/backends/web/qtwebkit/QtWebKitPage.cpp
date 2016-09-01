@@ -54,13 +54,13 @@ QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWi
 	setNetworkAccessManager(m_networkManager);
 	setForwardUnsupportedContent(true);
 	updateStyleSheets();
-	optionChanged(QLatin1String("Interface/ShowScrollBars"), SettingsManager::getValue(QLatin1String("Interface/ShowScrollBars")));
+	optionChanged(SettingsManager::Interface_ShowScrollBarsOption);
 
 	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	connect(this, SIGNAL(consoleMessageReceived(MessageSource,MessageLevel,QString,int,QString)), this, SLOT(handleConsoleMessage(MessageSource,MessageLevel,QString,int,QString)));
 #endif
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
 }
 
 QtWebKitPage::QtWebKitPage() : QWebPage(),
@@ -79,11 +79,9 @@ QtWebKitPage::~QtWebKitPage()
 	m_popups.clear();
 }
 
-void QtWebKitPage::optionChanged(const QString &option, const QVariant &value)
+void QtWebKitPage::optionChanged(int identifier)
 {
-	Q_UNUSED(value)
-
-	if (option.startsWith(QLatin1String("Content/")) || option == QLatin1String("Interface/ShowScrollBars"))
+	if (SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Content/")) || identifier == SettingsManager::Interface_ShowScrollBarsOption)
 	{
 		updateStyleSheets();
 	}
@@ -95,12 +93,12 @@ void QtWebKitPage::pageLoadFinished()
 
 	updateStyleSheets();
 
-	if (!m_widget || !m_widget->getOption(QLatin1String("ContentBlocking/EnableContentBlocking"), m_widget->getUrl()).toBool())
+	if (!m_widget || !m_widget->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, m_widget->getUrl()).toBool())
 	{
 		return;
 	}
 
-	const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(QLatin1String("Content/BlockingProfiles"), m_widget->getUrl()).toStringList()));
+	const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::Content_BlockingProfilesOption, m_widget->getUrl()).toStringList()));
 
 	applyContentBlockingRules(ContentBlockingManager::getStyleSheet(profiles), true);
 
@@ -237,7 +235,7 @@ void QtWebKitPage::handleConsoleMessage(MessageSource category, MessageLevel lev
 void QtWebKitPage::updateStyleSheets(const QUrl &url)
 {
 	const QUrl currentUrl(url.isEmpty() ? mainFrame()->url() : url);
-	QString styleSheet((QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}")).arg(SettingsManager::getValue(QLatin1String("Content/TextColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/LinkColor")).toString()).arg(SettingsManager::getValue(QLatin1String("Content/VisitedLinkColor")).toString()).toUtf8());
+	QString styleSheet((QStringLiteral("html {color: %1;} a {color: %2;} a:visited {color: %3;}")).arg(SettingsManager::getValue(SettingsManager::Content_TextColorOption).toString()).arg(SettingsManager::getValue(SettingsManager::Content_LinkColorOption).toString()).arg(SettingsManager::getValue(SettingsManager::Content_VisitedLinkColorOption).toString()).toUtf8());
 	QWebElement media(mainFrame()->findFirstElement(QLatin1String("img, audio source, video source")));
 	const bool isViewingMedia(!media.isNull() && QUrl(media.attribute(QLatin1String("src"))) == currentUrl);
 
@@ -258,12 +256,12 @@ void QtWebKitPage::updateStyleSheets(const QUrl &url)
 		emit viewingMediaChanged(m_isViewingMedia);
 	}
 
-	if (!SettingsManager::getValue(QLatin1String("Interface/ShowScrollBars")).toBool())
+	if (!SettingsManager::getValue(SettingsManager::Interface_ShowScrollBarsOption).toBool())
 	{
 		styleSheet.append(QLatin1String("body::-webkit-scrollbar {display:none;}"));
 	}
 
-	const QString userSyleSheet(m_widget ? m_widget->getOption(QLatin1String("Content/UserStyleSheet"), currentUrl).toString() : QString());
+	const QString userSyleSheet(m_widget ? m_widget->getOption(SettingsManager::Content_UserStyleSheetOption, currentUrl).toString() : QString());
 
 	if (!userSyleSheet.isEmpty())
 	{
@@ -345,12 +343,12 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 	if (type == QWebPage::WebBrowserWindow)
 	{
 		QtWebKitWebWidget *widget(NULL);
-		QString popupsPolicy(SettingsManager::getValue(QLatin1String("Content/PopupsPolicy")).toString());
+		QString popupsPolicy(SettingsManager::getValue(SettingsManager::Content_PopupsPolicyOption).toString());
 		bool isPopup(true);
 
 		if (m_widget)
 		{
-			popupsPolicy = m_widget->getOption(QLatin1String("Content/PopupsPolicy"), (m_widget ? m_widget->getRequestedUrl() : QUrl())).toString();
+			popupsPolicy = m_widget->getOption(SettingsManager::Content_PopupsPolicyOption, (m_widget ? m_widget->getRequestedUrl() : QUrl())).toString();
 			isPopup = currentFrame()->hitTestContent(m_widget->getClickPosition()).linkUrl().isEmpty();
 		}
 
@@ -434,7 +432,7 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 		m_networkManager->setFormRequest(request.url());
 	}
 
-	if (type == QWebPage::NavigationTypeFormResubmitted && SettingsManager::getValue(QLatin1String("Choices/WarnFormResend")).toBool())
+	if (type == QWebPage::NavigationTypeFormResubmitted && SettingsManager::getValue(SettingsManager::Choices_WarnFormResendOption).toBool())
 	{
 		bool cancel(false);
 		bool warn(true);
@@ -466,7 +464,7 @@ bool QtWebKitPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkReque
 			warn = !dialog.checkBox()->isChecked();
 		}
 
-		SettingsManager::setValue(QLatin1String("Choices/WarnFormResend"), warn);
+		SettingsManager::setValue(SettingsManager::Choices_WarnFormResendOption, warn);
 
 		if (cancel)
 		{

@@ -65,7 +65,7 @@ LocaleDialog::LocaleDialog(QWidget *parent) : Dialog(parent),
 		m_ui->languageComboBox->addItem(entries.at(i).first, entries.at(i).second);
 	}
 
-	const QString currentLocale(SettingsManager::getValue(QLatin1String("Browser/Locale")).toString());
+	const QString currentLocale(SettingsManager::getValue(SettingsManager::Browser_LocaleOption).toString());
 
 	m_ui->languageComboBox->setCurrentIndex((currentLocale.endsWith(QLatin1String(".qm"))) ? 1 : qMax(0, m_ui->languageComboBox->findData(currentLocale)));
 	m_ui->customFilePathWidget->setEnabled(m_ui->languageComboBox->currentIndex() == 1);
@@ -117,7 +117,7 @@ void LocaleDialog::save()
 		locale = m_ui->languageComboBox->currentData(Qt::UserRole).toString();
 	}
 
-	SettingsManager::setValue(QLatin1String("Browser/Locale"), locale);
+	SettingsManager::setValue(SettingsManager::Browser_LocaleOption, locale);
 
 	Application::getInstance()->setLocale(locale);
 }

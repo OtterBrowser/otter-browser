@@ -140,7 +140,7 @@ void WebWidget::search(const QString &query, const QString &searchEngine)
 
 void WebWidget::startReloadTimer()
 {
-	const int reloadTime(getOption(QLatin1String("Content/PageReloadTime")).toInt());
+	const int reloadTime(getOption(SettingsManager::Content_PageReloadTimeOption).toInt());
 
 	if (reloadTime >= 0)
 	{
@@ -239,7 +239,7 @@ void WebWidget::selectDictionary(QAction *action)
 {
 	if (action)
 	{
-		setOption(QLatin1String("Browser/SpellCheckDictionary"), action->data().toString());
+		setOption(SettingsManager::Browser_SpellCheckDictionaryOption, action->data().toString());
 	}
 }
 
@@ -252,7 +252,7 @@ void WebWidget::selectDictionaryMenuAboutToShow()
 		return;
 	}
 
-	QString dictionary(getOption(QLatin1String("Browser/SpellCheckDictionary"), getUrl()).toString());
+	QString dictionary(getOption(SettingsManager::Browser_SpellCheckDictionaryOption, getUrl()).toString());
 
 	if (dictionary.isEmpty())
 	{
@@ -272,7 +272,7 @@ void WebWidget::selectDictionaryMenuAboutToShow()
 
 void WebWidget::reloadTimeMenuAboutToShow()
 {
-	switch (getOption(QLatin1String("Content/PageReloadTime")).toInt())
+	switch (getOption(SettingsManager::Content_PageReloadTimeOption).toInt())
 	{
 		case 60:
 			m_reloadTimeMenu->actions().at(0)->setChecked(true);
@@ -365,9 +365,9 @@ void WebWidget::quickSearch(QAction *action)
 		return;
 	}
 
-	if (searchEngine.identifier != m_options.value(QLatin1String("Search/DefaultQuickSearchEngine")).toString())
+	if (searchEngine.identifier != m_options.value(SettingsManager::Search_DefaultQuickSearchEngineOption).toString())
 	{
-		setOption(QLatin1String("Search/DefaultQuickSearchEngine"), searchEngine.identifier);
+		setOption(SettingsManager::Search_DefaultQuickSearchEngineOption, searchEngine.identifier);
 	}
 
 	const WindowsManager::OpenHints hints(WindowsManager::calculateOpenHints());
@@ -436,7 +436,7 @@ void WebWidget::handleLoadingStateChange(WindowsManager::LoadingState state)
 void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 {
 	const HitTestResult hitResult(getHitTestResult(event->pos()));
-	const QString toolTipsMode(SettingsManager::getValue(QLatin1String("Browser/ToolTipsMode")).toString());
+	const QString toolTipsMode(SettingsManager::getValue(SettingsManager::Browser_ToolTipsModeOption).toString());
 	const QString link((hitResult.linkUrl.isValid() ? hitResult.linkUrl : hitResult.formUrl).toString());
 	QString text;
 
@@ -497,7 +497,7 @@ void WebWidget::showContextMenu(const QPoint &position)
 
 	const QPoint hitPosition(position.isNull() ? m_clickPosition : position);
 
-	if (isScrollBar(hitPosition) || (SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanDisableContextMenu")).toBool() && !canShowContextMenu(hitPosition)))
+	if (isScrollBar(hitPosition) || (SettingsManager::getValue(SettingsManager::Browser_JavaScriptCanDisableContextMenuOption).toBool() && !canShowContextMenu(hitPosition)))
 	{
 		return;
 	}
@@ -636,7 +636,7 @@ void WebWidget::updateNavigationActions()
 void WebWidget::updateEditActions()
 {
 	const bool canPaste(QApplication::clipboard()->mimeData() && QApplication::clipboard()->mimeData()->hasText());
-	const bool canSpellCheck(getOption(QLatin1String("Browser/EnableSpellCheck"), getUrl()).toBool() && !getDictionaries().isEmpty());
+	const bool canSpellCheck(getOption(SettingsManager::Browser_EnableSpellCheckOption, getUrl()).toBool() && !getDictionaries().isEmpty());
 	const bool hasSelection(this->hasSelection() && !getSelectedText().trimmed().isEmpty());
 
 	if (m_actions.contains(ActionsManager::CutAction))
@@ -707,7 +707,7 @@ void WebWidget::updateEditActions()
 
 	if (m_actions.contains(ActionsManager::SearchAction))
 	{
-		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(getOption(QLatin1String("Search/DefaultQuickSearchEngine")).toString()));
+		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(getOption(SettingsManager::Search_DefaultQuickSearchEngineOption).toString()));
 		const bool isValid(!searchEngine.identifier.isEmpty());
 
 		m_actions[ActionsManager::SearchAction]->setEnabled(isValid);
@@ -987,31 +987,31 @@ void WebWidget::setPermission(const QString &key, const QUrl &url, PermissionPol
 	{
 		if (key == QLatin1String("Browser/EnableMediaCaptureAudioVideo"))
 		{
-			SettingsManager::setValue(QLatin1String("Browser/EnableMediaAudioVideo"), policies.testFlag(GrantedPermission), url);
-			SettingsManager::setValue(QLatin1String("Browser/EnableMediaCaptureVideo"), policies.testFlag(GrantedPermission), url);
+			SettingsManager::setValue(SettingsManager::Browser_EnableMediaCaptureAudioOption, policies.testFlag(GrantedPermission), url);
+			SettingsManager::setValue(SettingsManager::Browser_EnableMediaCaptureVideoOption, policies.testFlag(GrantedPermission), url);
 		}
 		else
 		{
-			SettingsManager::setValue(key, (policies.testFlag(GrantedPermission) ? QLatin1String("allow") : QLatin1String("disallow")), url);
+			SettingsManager::setValue(SettingsManager::getOptionIdentifier(key), (policies.testFlag(GrantedPermission) ? QLatin1String("allow") : QLatin1String("disallow")), url);
 		}
 	}
 }
 
-void WebWidget::setOption(const QString &key, const QVariant &value)
+void WebWidget::setOption(int identifier, const QVariant &value)
 {
-	if (key == QLatin1String("Search/DefaultQuickSearchEngine"))
+	if (identifier == SettingsManager::Search_DefaultQuickSearchEngineOption)
 	{
 		const QString quickSearchEngine(value.toString());
 
-		if (quickSearchEngine != m_options.value(QLatin1String("Search/DefaultQuickSearchEngine")).toString())
+		if (quickSearchEngine != m_options.value(SettingsManager::Search_DefaultQuickSearchEngineOption).toString())
 		{
 			if (value.isNull())
 			{
-				m_options.remove(key);
+				m_options.remove(identifier);
 			}
 			else
 			{
-				m_options[key] = value;
+				m_options[identifier] = value;
 			}
 
 			updateQuickSearch();
@@ -1020,11 +1020,11 @@ void WebWidget::setOption(const QString &key, const QVariant &value)
 		return;
 	}
 
-	if (key == QLatin1String("Content/PageReloadTime"))
+	if (identifier == SettingsManager::Content_PageReloadTimeOption)
 	{
 		const int reloadTime(value.toInt());
 
-		if (reloadTime == m_options.value(QLatin1String("Content/PageReloadTime"), -1).toInt())
+		if (reloadTime == m_options.value(SettingsManager::Content_PageReloadTimeOption, -1).toInt())
 		{
 			return;
 		}
@@ -1049,15 +1049,15 @@ void WebWidget::setOption(const QString &key, const QVariant &value)
 
 	if (value.isNull())
 	{
-		m_options.remove(key);
+		m_options.remove(identifier);
 	}
 	else
 	{
-		m_options[key] = value;
+		m_options[identifier] = value;
 	}
 }
 
-void WebWidget::setOptions(const QVariantHash &options)
+void WebWidget::setOptions(const QHash<int, QVariant> &options)
 {
 	m_options = options;
 }
@@ -1078,16 +1078,16 @@ void WebWidget::setReloadTime(QAction *action)
 
 	if (reloadTime == -2)
 	{
-		ReloadTimeDialog dialog(qMax(0, getOption(QLatin1String("Content/PageReloadTime")).toInt()), this);
+		ReloadTimeDialog dialog(qMax(0, getOption(SettingsManager::Content_PageReloadTimeOption).toInt()), this);
 
 		if (dialog.exec() == QDialog::Accepted)
 		{
-			setOption(QLatin1String("Content/PageReloadTime"), dialog.getReloadTime());
+			setOption(SettingsManager::Content_PageReloadTimeOption, dialog.getReloadTime());
 		}
 	}
 	else
 	{
-		setOption(QLatin1String("Content/PageReloadTime"), reloadTime);
+		setOption(SettingsManager::Content_PageReloadTimeOption, reloadTime);
 	}
 }
 
@@ -1304,7 +1304,7 @@ Action* WebWidget::getAction(int identifier)
 			{
 				const QList<SpellCheckManager::DictionaryInformation> dictionaries(getDictionaries());
 
-				action->setEnabled(getOption(QLatin1String("Browser/EnableSpellCheck"), getUrl()).toBool() && !dictionaries.isEmpty());
+				action->setEnabled(getOption(SettingsManager::Browser_EnableSpellCheckOption, getUrl()).toBool() && !dictionaries.isEmpty());
 
 				QMenu *menu(new QMenu(this));
 				QActionGroup *dictionariesGroup(new QActionGroup(menu));
@@ -1406,14 +1406,14 @@ QString WebWidget::getStatusMessage() const
 	return (m_overridingStatusMessage.isEmpty() ? m_javaScriptStatusMessage : m_overridingStatusMessage);
 }
 
-QVariant WebWidget::getOption(const QString &key, const QUrl &url) const
+QVariant WebWidget::getOption(int identifier, const QUrl &url) const
 {
-	if (m_options.contains(key))
+	if (m_options.contains(identifier))
 	{
-		return m_options[key];
+		return m_options[identifier];
 	}
 
-	return SettingsManager::getValue(key, (url.isEmpty() ? getUrl() : url));
+	return SettingsManager::getValue(identifier, (url.isEmpty() ? getUrl() : url));
 }
 
 QVariant WebWidget::getPageInformation(WebWidget::PageInformation key) const
@@ -1466,7 +1466,7 @@ QList<NetworkManager::ResourceInformation> WebWidget::getBlockedRequests() const
 	return QList<NetworkManager::ResourceInformation>();
 }
 
-QVariantHash WebWidget::getOptions() const
+QHash<int, QVariant> WebWidget::getOptions() const
 {
 	return m_options;
 }
@@ -1580,9 +1580,9 @@ bool WebWidget::isScrollBar(const QPoint &position) const
 	return false;
 }
 
-bool WebWidget::hasOption(const QString &key) const
+bool WebWidget::hasOption(int identifier) const
 {
-	return m_options.contains(key);
+	return m_options.contains(identifier);
 }
 
 bool WebWidget::hasSelection() const

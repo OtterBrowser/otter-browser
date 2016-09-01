@@ -108,7 +108,7 @@ protected:
 	bool applyFilter(const QModelIndex &index);
 
 protected slots:
-	void optionChanged(const QString &option, const QVariant &value);
+	void optionChanged(int identifier, const QVariant &value);
 	void currentChanged(const QModelIndex &current, const QModelIndex &previous);
 	void saveState();
 	void notifySelectionChanged();

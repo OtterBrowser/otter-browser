@@ -30,9 +30,9 @@ bool ThemesManager::m_useSystemIconTheme = false;
 
 ThemesManager::ThemesManager(QObject *parent) : QObject(parent)
 {
-	m_useSystemIconTheme = SettingsManager::getValue(QLatin1String("Interface/UseSystemIconTheme")).toBool();
+	m_useSystemIconTheme = SettingsManager::getValue(SettingsManager::Interface_UseSystemIconThemeOption).toBool();
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
 }
 
 void ThemesManager::createInstance(QObject *parent)
@@ -43,9 +43,9 @@ void ThemesManager::createInstance(QObject *parent)
 	}
 }
 
-void ThemesManager::optionChanged(const QString &option, const QVariant &value)
+void ThemesManager::optionChanged(int identifier, const QVariant &value)
 {
-	if (option == QLatin1String("Interface/UseSystemIconTheme"))
+	if (identifier == SettingsManager::Interface_UseSystemIconThemeOption)
 	{
 		m_useSystemIconTheme = value.toBool();
 	}

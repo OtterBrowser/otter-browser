@@ -42,7 +42,7 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 {
 	m_ui->setupUi(this);
 
-	const QStringList globalProfiles(SettingsManager::getValue(QLatin1String("Content/BlockingProfiles")).toStringList());
+	const QStringList globalProfiles(SettingsManager::getValue(SettingsManager::Content_BlockingProfilesOption).toStringList());
 
 	m_ui->profilesViewWidget->setModel(ContentBlockingManager::createModel(this, globalProfiles));
 	m_ui->profilesViewWidget->setItemDelegate(new OptionDelegate(true, this));
@@ -77,7 +77,7 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 
 	m_ui->customRulesViewWidget->setModel(customRulesModel);
 	m_ui->customRulesViewWidget->setItemDelegate(new OptionDelegate(true, this));
-	m_ui->enableWildcardsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("ContentBlocking/EnableWildcards")).toBool());
+	m_ui->enableWildcardsCheckBox->setChecked(SettingsManager::getValue(SettingsManager::ContentBlocking_EnableWildcardsOption).toBool());
 
 	connect(ContentBlockingManager::getInstance(), SIGNAL(profileModified(QString)), this, SLOT(updateProfile(QString)));
 	connect(m_ui->profilesViewWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(updateProfilesActions()));
@@ -241,8 +241,8 @@ void ContentBlockingDialog::save()
 		}
 	}
 
-	SettingsManager::setValue(QLatin1String("Content/BlockingProfiles"), profiles);
-	SettingsManager::setValue(QLatin1String("ContentBlocking/EnableWildcards"), m_ui->enableWildcardsCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::Content_BlockingProfilesOption, profiles);
+	SettingsManager::setValue(SettingsManager::ContentBlocking_EnableWildcardsOption, m_ui->enableWildcardsCheckBox->isChecked());
 
 	close();
 }

@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 	}
 
 	const QString session(application.getCommandLineParser()->value(QLatin1String("session")).isEmpty() ? QLatin1String("default") : application.getCommandLineParser()->value(QLatin1String("session")));
-	const QString startupBehavior(SettingsManager::getValue(QLatin1String("Browser/StartupBehavior")).toString());
+	const QString startupBehavior(SettingsManager::getValue(SettingsManager::Browser_StartupBehaviorOption).toString());
 	const bool isPrivate(application.getCommandLineParser()->isSet(QLatin1String("privatesession")));
 
 	if (!application.getCommandLineParser()->value(QLatin1String("session")).isEmpty() && SessionsManager::getSession(session).isClean)
@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
 
 		if (startupBehavior == QLatin1String("startHomePage"))
 		{
-			entry.url = SettingsManager::getValue(QLatin1String("Browser/HomePage")).toString();
+			entry.url = SettingsManager::getValue(SettingsManager::Browser_HomePageOption).toString();
 		}
 		else if (startupBehavior == QLatin1String("startStartPage"))
 		{

@@ -42,21 +42,21 @@ ContentBlockingProfile::ContentBlockingProfile(const QString &name, QObject *par
 	m_category(OtherCategory),
 	m_name(name),
 	m_languages({QLocale::AnyLanguage}),
-	m_enableWildcards(SettingsManager::getValue(QLatin1String("ContentBlocking/EnableWildcards")).toBool()),
+	m_enableWildcards(SettingsManager::getValue(SettingsManager::ContentBlocking_EnableWildcardsOption).toBool()),
 	m_isUpdating(false),
 	m_isEmpty(true),
 	m_wasLoaded(false)
 {
 	load(true);
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
 }
 
-void ContentBlockingProfile::optionChanged(const QString &option)
+void ContentBlockingProfile::optionChanged(int identifier, const QVariant &value)
 {
-	if (option == QLatin1String("ContentBlocking/EnableWildcards"))
+	if (identifier == SettingsManager::ContentBlocking_EnableWildcardsOption)
 	{
-		m_enableWildcards = SettingsManager::getValue(QLatin1String("ContentBlocking/EnableWildcards")).toBool();
+		m_enableWildcards = value.toBool();
 
 		clear();
 	}

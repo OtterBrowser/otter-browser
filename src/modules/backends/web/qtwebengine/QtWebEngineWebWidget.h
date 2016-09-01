@@ -66,7 +66,7 @@ public slots:
 	void removeHistoryIndex(int index, bool purge = false);
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void setPermission(const QString &key, const QUrl &url, PermissionPolicies policies);
-	void setOption(const QString &key, const QVariant &value);
+	void setOption(int identifier, const QVariant &value);
 	void setScrollPosition(const QPoint &position);
 	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);
@@ -86,7 +86,7 @@ protected:
 	void handleScrollToAnchor(const QVariant &result);
 	void updateOptions(const QUrl &url);
 	void setHistory(QDataStream &stream);
-	void setOptions(const QVariantHash &options);
+	void setOptions(const QHash<int, QVariant> &options);
 	QWebEnginePage* getPage();
 	QList<SpellCheckManager::DictionaryInformation> getDictionaries() const;
 	QDateTime getLastUrlClickTime() const;

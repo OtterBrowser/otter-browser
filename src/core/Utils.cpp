@@ -334,7 +334,7 @@ SaveInformation getSavePath(const QString &fileName, QString path, QStringList f
 	{
 		if (path.isEmpty() || forceAsk)
 		{
-			QFileDialog dialog(SessionsManager::getActiveWindow(), QCoreApplication::translate("utils", "Save File"), SettingsManager::getValue(QLatin1String("Paths/SaveFile")).toString() + QDir::separator() + fileName);
+			QFileDialog dialog(SessionsManager::getActiveWindow(), QCoreApplication::translate("utils", "Save File"), SettingsManager::getValue(SettingsManager::Paths_SaveFileOption).toString() + QDir::separator() + fileName);
 			dialog.setNameFilters(filters);
 			dialog.setFileMode(QFileDialog::AnyFile);
 			dialog.setAcceptMode(QFileDialog::AcceptSave);
@@ -378,7 +378,7 @@ SaveInformation getSavePath(const QString &fileName, QString path, QStringList f
 
 	if (!path.isEmpty())
 	{
-		SettingsManager::setValue(QLatin1String("Paths/SaveFile"), QFileInfo(path).dir().canonicalPath());
+		SettingsManager::setValue(SettingsManager::Paths_SaveFileOption, QFileInfo(path).dir().canonicalPath());
 	}
 
 	information.path = path;

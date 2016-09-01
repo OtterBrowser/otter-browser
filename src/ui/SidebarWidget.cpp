@@ -58,11 +58,11 @@ SidebarWidget::SidebarWidget(QWidget *parent) : QWidget(parent),
 	m_ui->panelsButton->setPopupMode(QToolButton::InstantPopup);
 	m_ui->panelsButton->setIcon(ThemesManager::getIcon(QLatin1String("list-add")));
 
-	optionChanged(QLatin1String("Sidebar/CurrentPanel"), SettingsManager::getValue(QLatin1String("Sidebar/CurrentPanel")));
-	optionChanged(QLatin1String("Sidebar/Panels"), SettingsManager::getValue(QLatin1String("Sidebar/Panels")));
-	optionChanged(QLatin1String("Sidebar/Reverse"), SettingsManager::getValue(QLatin1String("Sidebar/Reverse")));
+	optionChanged(SettingsManager::Sidebar_CurrentPanelOption, SettingsManager::getValue(SettingsManager::Sidebar_CurrentPanelOption));
+	optionChanged(SettingsManager::Sidebar_PanelsOption, SettingsManager::getValue(SettingsManager::Sidebar_PanelsOption));
+	optionChanged(SettingsManager::Sidebar_ReverseOption, SettingsManager::getValue(SettingsManager::Sidebar_ReverseOption));
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
 }
 
 SidebarWidget::~SidebarWidget()
@@ -74,7 +74,7 @@ void SidebarWidget::timerEvent(QTimerEvent *event)
 {
 	if (event->timerId() == m_resizeTimer)
 	{
-		SettingsManager::setValue(QString("Sidebar/Width"), width());
+		SettingsManager::setValue(SettingsManager::Sidebar_WidthOption, width());
 
 		killTimer(m_resizeTimer);
 
@@ -112,13 +112,13 @@ void SidebarWidget::changeEvent(QEvent *event)
 	}
 }
 
-void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
+void SidebarWidget::optionChanged(int identifier, const QVariant &value)
 {
-	if (option == QLatin1String("Sidebar/CurrentPanel"))
+	if (identifier == SettingsManager::Sidebar_CurrentPanelOption)
 	{
 		selectPanel(value.toString());
 	}
-	else if (option == QLatin1String("Sidebar/Panels"))
+	else if (identifier == SettingsManager::Sidebar_PanelsOption)
 	{
 		qDeleteAll(m_buttons.begin(), m_buttons.end());
 
@@ -223,7 +223,7 @@ void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
 
 		m_ui->panelsButton->setMenu(menu);
 	}
-	else if (option == QLatin1String("Sidebar/Reverse"))
+	else if (identifier == SettingsManager::Sidebar_ReverseOption)
 	{
 		Qt::ToolBarArea area(QGuiApplication::isLeftToRight() ? Qt::LeftToolBarArea : Qt::RightToolBarArea);
 
@@ -261,7 +261,7 @@ void SidebarWidget::optionChanged(const QString &option, const QVariant &value)
 
 void SidebarWidget::scheduleSizeSave()
 {
-	if (isVisible() && !SettingsManager::getValue(QLatin1String("Sidebar/CurrentPanel")).toString().isEmpty())
+	if (isVisible() && !SettingsManager::getValue(SettingsManager::Sidebar_CurrentPanelOption).toString().isEmpty())
 	{
 		if (m_resizeTimer > 0)
 		{
@@ -286,10 +286,10 @@ void SidebarWidget::addWebPanel()
 
 	if (!url.isEmpty())
 	{
-		QStringList panels(SettingsManager::getValue(QLatin1String("Sidebar/Panels")).toStringList());
+		QStringList panels(SettingsManager::getValue(SettingsManager::Sidebar_PanelsOption).toStringList());
 		panels.append(QLatin1String("web:") + url);
 
-		SettingsManager::setValue(QLatin1String("Sidebar/Panels"), panels);
+		SettingsManager::setValue(SettingsManager::Sidebar_PanelsOption, panels);
 	}
 }
 
@@ -302,7 +302,7 @@ void SidebarWidget::choosePanel(bool checked)
 		return;
 	}
 
-	QStringList chosenPanels(SettingsManager::getValue(QLatin1String("Sidebar/Panels")).toStringList());
+	QStringList chosenPanels(SettingsManager::getValue(SettingsManager::Sidebar_PanelsOption).toStringList());
 
 	if (checked)
 	{
@@ -313,7 +313,7 @@ void SidebarWidget::choosePanel(bool checked)
 		chosenPanels.removeAll(action->data().toString());
 	}
 
-	SettingsManager::setValue(QLatin1String("Sidebar/Panels"), chosenPanels);
+	SettingsManager::setValue(SettingsManager::Sidebar_PanelsOption, chosenPanels);
 }
 
 void SidebarWidget::selectPanel()
@@ -381,7 +381,7 @@ void SidebarWidget::selectPanel(const QString &identifier)
 
 	m_currentPanel = identifier;
 
-	SettingsManager::setValue(QLatin1String("Sidebar/CurrentPanel"), identifier);
+	SettingsManager::setValue(SettingsManager::Sidebar_CurrentPanelOption, identifier);
 }
 
 QWidget* SidebarWidget::getCurrentPanel()
@@ -436,12 +436,12 @@ QString SidebarWidget::getPanelTitle(const QString &identifier)
 
 QSize SidebarWidget::sizeHint() const
 {
-	if (SettingsManager::getValue(QLatin1String("Sidebar/CurrentPanel")).toString().isEmpty())
+	if (SettingsManager::getValue(SettingsManager::Sidebar_CurrentPanelOption).toString().isEmpty())
 	{
 		return m_ui->buttonsLayout->sizeHint();
 	}
 
-	return QSize(SettingsManager::getValue(QLatin1String("Sidebar/Width")).toInt(), m_ui->buttonsLayout->sizeHint().height());
+	return QSize(SettingsManager::getValue(SettingsManager::Sidebar_WidthOption).toInt(), m_ui->buttonsLayout->sizeHint().height());
 }
 
 }

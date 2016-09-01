@@ -266,7 +266,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 		if (storageInformation.bytesAvailable() > -1 && storageInformation.bytesAvailable() < 10000000)
 		{
-			QString warnLowDiskSpaceMode(SettingsManager::getValue(QLatin1String("Choices/WarnLowDiskSpace")).toString());
+			QString warnLowDiskSpaceMode(SettingsManager::getValue(SettingsManager::Choices_WarnLowDiskSpaceOption).toString());
 
 			if (warnLowDiskSpaceMode == QLatin1String("warn"))
 			{
@@ -305,7 +305,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 				if (messageBox.checkBox()->isChecked())
 				{
-					SettingsManager::setValue(QLatin1String("Choices/WarnLowDiskSpace"), warnLowDiskSpaceMode);
+					SettingsManager::setValue(SettingsManager::Choices_WarnLowDiskSpaceOption, warnLowDiskSpaceMode);
 				}
 			}
 
@@ -349,7 +349,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 
 	TransfersManager::createInstance(this);
 
-	setLocale(SettingsManager::getValue(QLatin1String("Browser/Locale")).toString());
+	setLocale(SettingsManager::getValue(SettingsManager::Browser_LocaleOption).toString());
 	setQuitOnLastWindowClosed(true);
 
 	WebBackend *webBackend(AddonsManager::getWebBackend());
@@ -359,7 +359,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		QMessageBox::warning(NULL, tr("Warning"), tr("SSL support is not available or incomplete.\nSome websites may work incorrectly or do not work at all."), QMessageBox::Close);
 	}
 
-	if (SettingsManager::getValue(QLatin1String("Browser/EnableTrayIcon")).toBool())
+	if (SettingsManager::getValue(SettingsManager::Browser_EnableTrayIconOption).toBool())
 	{
 		m_trayIcon = new TrayIcon(this);
 	}
@@ -382,10 +382,10 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		}
 	}
 
-	const QDate lastUpdate(QDate::fromString(SettingsManager::getValue(QLatin1String("Updates/LastCheck")).toString(), Qt::ISODate));
-	const int interval(SettingsManager::getValue(QLatin1String("Updates/CheckInterval")).toInt());
+	const QDate lastUpdate(QDate::fromString(SettingsManager::getValue(SettingsManager::Updates_LastCheckOption).toString(), Qt::ISODate));
+	const int interval(SettingsManager::getValue(SettingsManager::Updates_CheckIntervalOption).toInt());
 
-	if (interval > 0 && (lastUpdate.isNull() ? interval : lastUpdate.daysTo(QDate::currentDate())) >= interval && !SettingsManager::getValue(QLatin1String("Updates/ActiveChannels")).toStringList().isEmpty())
+	if (interval > 0 && (lastUpdate.isNull() ? interval : lastUpdate.daysTo(QDate::currentDate())) >= interval && !SettingsManager::getValue(SettingsManager::Updates_ActiveChannelsOption).toStringList().isEmpty())
 	{
 		UpdateChecker *updateChecker(new UpdateChecker(this));
 
@@ -394,9 +394,9 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 		LongTermTimer::runTimer((interval * SECONDS_IN_DAY), this, SLOT(periodicUpdateCheck()));
 	}
 
-	setStyle(SettingsManager::getValue(QLatin1String("Interface/WidgetStyle")).toString());
+	setStyle(SettingsManager::getValue(SettingsManager::Interface_WidgetStyleOption).toString());
 
-	const QString styleSheet(SettingsManager::getValue(QLatin1String("Interface/StyleSheet")).toString());
+	const QString styleSheet(SettingsManager::getValue(SettingsManager::Interface_StyleSheetOption).toString());
 
 	if (!styleSheet.isEmpty())
 	{
@@ -413,7 +413,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	QDesktopServices::setUrlHandler(QLatin1String("http"), this, "openUrl");
 	QDesktopServices::setUrlHandler(QLatin1String("https"), this, "openUrl");
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
 	connect(this, SIGNAL(aboutToQuit()), this, SLOT(clearHistory()));
 }
 
@@ -425,9 +425,9 @@ Application::~Application()
 	}
 }
 
-void Application::optionChanged(const QString &option, const QVariant &value)
+void Application::optionChanged(int identifier, const QVariant &value)
 {
-	if (option == QLatin1String("Browser/EnableTrayIcon"))
+	if (identifier == SettingsManager::Browser_EnableTrayIconOption)
 	{
 		if (!m_trayIcon && value.toBool())
 		{
@@ -472,7 +472,7 @@ void Application::removeWindow(MainWindow *window)
 
 void Application::showNotification(Notification *notification)
 {
-	if (SettingsManager::getValue(QLatin1String("Interface/UseNativeNotifications")).toBool() && m_platformIntegration && m_platformIntegration->canShowNotifications())
+	if (SettingsManager::getValue(SettingsManager::Interface_UseNativeNotificationsOption).toBool() && m_platformIntegration && m_platformIntegration->canShowNotifications())
 	{
 		m_platformIntegration->showNotification(notification);
 	}
@@ -514,7 +514,7 @@ void Application::newConnection()
 
 	if (session.isEmpty())
 	{
-		if (!window || !SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool() || (isPrivate && !window->getWindowsManager()->isPrivate()))
+		if (!window || !SettingsManager::getValue(SettingsManager::Browser_OpenLinksInNewTabOption).toBool() || (isPrivate && !window->getWindowsManager()->isPrivate()))
 		{
 			window = createWindow(isPrivate ? PrivateFlag : NoFlags);
 		}
@@ -569,7 +569,7 @@ void Application::newConnection()
 
 void Application::clearHistory()
 {
-	QStringList clearSettings(SettingsManager::getValue(QLatin1String("History/ClearOnClose")).toStringList());
+	QStringList clearSettings(SettingsManager::getValue(SettingsManager::History_ClearOnCloseOption).toStringList());
 	clearSettings.removeAll(QString());
 
 	if (!clearSettings.isEmpty())
@@ -604,9 +604,9 @@ void Application::periodicUpdateCheck()
 
 	connect(updateChecker, SIGNAL(finished(QList<UpdateInformation>)), this, SLOT(updateCheckFinished(QList<UpdateInformation>)));
 
-	const int interval(SettingsManager::getValue(QLatin1String("Updates/CheckInterval")).toInt());
+	const int interval(SettingsManager::getValue(SettingsManager::Updates_CheckIntervalOption).toInt());
 
-	if (interval > 0 && !SettingsManager::getValue(QLatin1String("Updates/ActiveChannels")).toStringList().isEmpty())
+	if (interval > 0 && !SettingsManager::getValue(SettingsManager::Updates_ActiveChannelsOption).toStringList().isEmpty())
 	{
 		LongTermTimer::runTimer((interval * SECONDS_IN_DAY), this, SLOT(periodicUpdateCheck()));
 	}
@@ -621,7 +621,7 @@ void Application::updateCheckFinished(const QList<UpdateInformation> &availableU
 
 	const int latestVersion(availableUpdates.count() - 1);
 
-	if (SettingsManager::getValue(QLatin1String("Updates/AutomaticInstall")).toBool())
+	if (SettingsManager::getValue(SettingsManager::Updates_AutomaticInstallOption).toBool())
 	{
 		new Updater(availableUpdates.at(latestVersion), this);
 	}
@@ -909,7 +909,7 @@ bool Application::canClose()
 		}
 	}
 
-	if (runningTransfers > 0 && SettingsManager::getValue(QLatin1String("Choices/WarnQuitTransfers")).toBool())
+	if (runningTransfers > 0 && SettingsManager::getValue(SettingsManager::Choices_WarnQuitTransfersOption).toBool())
 	{
 		QMessageBox messageBox;
 		messageBox.setWindowTitle(tr("Question"));
@@ -923,7 +923,7 @@ bool Application::canClose()
 		QPushButton *hideButton(messageBox.addButton(tr("Hide"), QMessageBox::ActionRole));
 		const int result(messageBox.exec());
 
-		SettingsManager::setValue(QLatin1String("Choices/WarnQuitTransfers"), !messageBox.checkBox()->isChecked());
+		SettingsManager::setValue(SettingsManager::Choices_WarnQuitTransfersOption, !messageBox.checkBox()->isChecked());
 
 		if (messageBox.clickedButton() == hideButton)
 		{
@@ -944,7 +944,7 @@ bool Application::canClose()
 		}
 	}
 
-	const QString warnQuitMode(SettingsManager::getValue(QLatin1String("Choices/WarnQuit")).toString());
+	const QString warnQuitMode(SettingsManager::getValue(SettingsManager::Choices_WarnQuitOption).toString());
 
 	if (!transfersDialog && warnQuitMode != QLatin1String("noWarn"))
 	{
@@ -974,7 +974,7 @@ bool Application::canClose()
 
 			if (messageBox.checkBox()->isChecked())
 			{
-				SettingsManager::setValue(QLatin1String("Choices/WarnQuit"), QLatin1String("noWarn"));
+				SettingsManager::setValue(SettingsManager::Choices_WarnQuitOption, QLatin1String("noWarn"));
 			}
 
 			if (result == QMessageBox::Cancel)

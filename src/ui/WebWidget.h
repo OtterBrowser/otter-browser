@@ -156,7 +156,7 @@ public:
 	virtual void search(const QString &query, const QString &searchEngine);
 	virtual void print(QPrinter *printer) = 0;
 	void showDialog(ContentsDialog *dialog, bool lockEventLoop = true);
-	virtual void setOptions(const QVariantHash &options);
+	virtual void setOptions(const QHash<int, QVariant> &options);
 	void setWindowIdentifier(quint64 identifier);
 	virtual WebWidget* clone(bool cloneHistory = true, bool isPrivate = false) = 0;
 	virtual Action* getAction(int identifier);
@@ -166,7 +166,7 @@ public:
 	virtual QString getCharacterEncoding() const;
 	virtual QString getSelectedText() const;
 	QString getStatusMessage() const;
-	QVariant getOption(const QString &key, const QUrl &url = QUrl()) const;
+	QVariant getOption(int identifier, const QUrl &url = QUrl()) const;
 	virtual QVariant getPageInformation(WebWidget::PageInformation key) const;
 	virtual QUrl getUrl() const = 0;
 	QUrl getRequestedUrl() const;
@@ -182,13 +182,13 @@ public:
 	virtual QList<LinkUrl> getFeeds() const;
 	virtual QList<LinkUrl> getSearchEngines() const;
 	virtual QList<NetworkManager::ResourceInformation> getBlockedRequests() const;
-	QVariantHash getOptions() const;
+	QHash<int, QVariant> getOptions() const;
 	virtual QHash<QByteArray, QByteArray> getHeaders() const;
 	virtual WindowsManager::ContentStates getContentState() const;
 	virtual WindowsManager::LoadingState getLoadingState() const = 0;
 	quint64 getWindowIdentifier() const;
 	virtual int getZoom() const = 0;
-	bool hasOption(const QString &key) const;
+	bool hasOption(int identifier) const;
 	virtual bool hasSelection() const;
 	virtual bool isPrivate() const = 0;
 	virtual bool findInPage(const QString &text, FindFlags flags = NoFlagsFind) = 0;
@@ -201,7 +201,7 @@ public slots:
 	virtual void showContextMenu(const QPoint &position = QPoint());
 	virtual void setActiveStyleSheet(const QString &styleSheet);
 	virtual void setPermission(const QString &key, const QUrl &url, PermissionPolicies policies);
-	virtual void setOption(const QString &key, const QVariant &value);
+	virtual void setOption(int identifier, const QVariant &value);
 	virtual void setScrollPosition(const QPoint &position) = 0;
 	virtual void setHistory(const WindowHistoryInformation &history) = 0;
 	virtual void setZoom(int zoom) = 0;
@@ -270,7 +270,7 @@ private:
 	QString m_overridingStatusMessage;
 	QPoint m_clickPosition;
 	QHash<int, Action*> m_actions;
-	QVariantHash m_options;
+	QHash<int, QVariant> m_options;
 	HitTestResult m_hitResult;
 	quint64 m_windowIdentifier;
 	int m_loadingTime;

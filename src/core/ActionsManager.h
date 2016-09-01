@@ -292,7 +292,7 @@ protected:
 	void timerEvent(QTimerEvent *event);
 
 protected slots:
-	void optionChanged(const QString &option);
+	void optionChanged(int identifier);
 
 signals:
 	void shortcutsChanged();

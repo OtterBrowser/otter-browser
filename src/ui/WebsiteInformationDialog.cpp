@@ -86,7 +86,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 	m_ui->elementsLabelWidget->setText((widget->getPageInformation(WebWidget::RequestsBlockedInformation).toInt() > 0) ? tr("%1 (%n blocked)", "", widget->getPageInformation(WebWidget::RequestsBlockedInformation).toInt()).arg(widget->getPageInformation(WebWidget::RequestsStartedInformation).toInt()) : QString::number(widget->getPageInformation(WebWidget::RequestsStartedInformation).toInt()));
 	m_ui->downloadDateLabelWidget->setText(Utils::formatDateTime(widget->getPageInformation(WebWidget::LoadingFinishedInformation).toDateTime()));
 
-	const QString cookiesPolicy(widget->getOption(QLatin1String("Network/CookiesPolicy")).toString());
+	const QString cookiesPolicy(widget->getOption(SettingsManager::Network_CookiesPolicyOption).toString());
 
 	if (cookiesPolicy == QLatin1String("acceptExisting"))
 	{
@@ -105,7 +105,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		m_ui->cookiesValueLabel->setText(tr("Always"));
 	}
 
-	const QString thirdPartyCookiesPolicy(widget->getOption(QLatin1String("Network/ThirdPartyCookiesPolicy")).toString());
+	const QString thirdPartyCookiesPolicy(widget->getOption(SettingsManager::Network_ThirdPartyCookiesPolicyOption).toString());
 
 	if (thirdPartyCookiesPolicy == QLatin1String("acceptExisting"))
 	{
@@ -120,7 +120,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		m_ui->thirdPartyCookiesValueLabel->setText(tr("Always"));
 	}
 
-	const QString pluginsPolicy(widget->getOption(QLatin1String("Browser/EnablePlugins")).toString());
+	const QString pluginsPolicy(widget->getOption(SettingsManager::Browser_EnablePluginsOption).toString());
 
 	if (pluginsPolicy == QLatin1String("enabled"))
 	{
@@ -135,7 +135,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		m_ui->pluginsValueLabel->setText(tr("On demand"));
 	}
 
-	const QString imagesPolicy(widget->getOption(QLatin1String("Browser/EnableImages")).toString());
+	const QString imagesPolicy(widget->getOption(SettingsManager::Browser_EnableImagesOption).toString());
 
 	if (imagesPolicy == QLatin1String("onlyCached"))
 	{
@@ -150,9 +150,9 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		m_ui->imagesValueLabel->setText(tr("Always"));
 	}
 
-	m_ui->javascriptValueLabel->setText(widget->getOption(QLatin1String("Browser/EnableJavaScript")).toBool() ? tr("Always") : tr("Never"));
+	m_ui->javascriptValueLabel->setText(widget->getOption(SettingsManager::Browser_EnableJavaScriptOption).toBool() ? tr("Always") : tr("Never"));
 
-	const QString geolocationPolicy(widget->getOption(QLatin1String("Browser/EnableGeolocation")).toString());
+	const QString geolocationPolicy(widget->getOption(SettingsManager::Browser_EnableGeolocationOption).toString());
 
 	if (geolocationPolicy == QLatin1String("enabled"))
 	{
@@ -167,7 +167,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		m_ui->geolocationValueLabel->setText(tr("Always ask"));
 	}
 
-	const QString fullScreenPolicy(widget->getOption(QLatin1String("Browser/EnableFullScreen")).toString());
+	const QString fullScreenPolicy(widget->getOption(SettingsManager::Browser_EnableFullScreenOption).toString());
 
 	if (fullScreenPolicy == QLatin1String("enabled"))
 	{
@@ -182,7 +182,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		m_ui->fullScreenValueLabel->setText(tr("Always ask"));
 	}
 
-	const QString notificationsPolicy(widget->getOption(QLatin1String("Browser/EnableNotifications")).toString());
+	const QString notificationsPolicy(widget->getOption(SettingsManager::Browser_EnableNotificationsOption).toString());
 
 	if (notificationsPolicy == QLatin1String("enabled"))
 	{
@@ -197,7 +197,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		m_ui->notificationsValueLabel->setText(tr("Always ask"));
 	}
 
-	const QString popupsPolicy(widget->getOption(QLatin1String("Content/PopupsPolicy")).toString());
+	const QString popupsPolicy(widget->getOption(SettingsManager::Content_PopupsPolicyOption).toString());
 
 	if (popupsPolicy == QLatin1String("openAll"))
 	{

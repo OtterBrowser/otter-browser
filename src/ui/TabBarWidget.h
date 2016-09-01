@@ -66,7 +66,7 @@ protected:
 	bool event(QEvent *event);
 
 protected slots:
-	void optionChanged(const QString &option, const QVariant &value);
+	void optionChanged(int identifier, const QVariant &value);
 	void currentTabChanged(int index);
 	void isPinnedChanged(Window *window = NULL);
 	void updateButtons();

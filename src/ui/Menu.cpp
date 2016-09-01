@@ -411,7 +411,7 @@ void Menu::populateCharacterEncodingMenu()
 	}
 
 	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-	const QString encoding(mainWindow ? mainWindow->getWindowsManager()->getOption(QLatin1String("Content/DefaultCharacterEncoding")).toString().toLower() : QString());
+	const QString encoding(mainWindow ? mainWindow->getWindowsManager()->getOption(SettingsManager::Content_DefaultCharacterEncodingOption).toString().toLower() : QString());
 
 	for (int i = 2; i < actions().count(); ++i)
 	{
@@ -603,7 +603,7 @@ void Menu::populateUserAgentMenu()
 
 	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
 	const QStringList userAgents(NetworkManagerFactory::getUserAgents());
-	const QString userAgent(mainWindow ? mainWindow->getWindowsManager()->getOption(QLatin1String("Network/UserAgent")).toString() : QString());
+	const QString userAgent(mainWindow ? mainWindow->getWindowsManager()->getOption(SettingsManager::Network_UserAgentOption).toString() : QString());
 
 	m_actionGroup = new QActionGroup(this);
 	m_actionGroup->setExclusive(true);
@@ -787,7 +787,7 @@ void Menu::openSession(QAction *action)
 {
 	if (!action->data().isNull())
 	{
-		SessionsManager::restoreSession(SessionsManager::getSession(action->data().toString()), (SettingsManager::getValue(QLatin1String("Sessions/OpenInExistingWindow")).toBool() ? SessionsManager::getActiveWindow() : NULL));
+		SessionsManager::restoreSession(SessionsManager::getSession(action->data().toString()), (SettingsManager::getValue(SettingsManager::Sessions_OpenInExistingWindowOption).toBool() ? SessionsManager::getActiveWindow() : NULL));
 	}
 }
 
@@ -812,7 +812,7 @@ void Menu::selectCharacterEncoding(QAction *action)
 		}
 	}
 
-	mainWindow->getWindowsManager()->setOption(QLatin1String("Content/DefaultCharacterEncoding"), encoding.toLower());
+	mainWindow->getWindowsManager()->setOption(SettingsManager::Content_DefaultCharacterEncodingOption, encoding.toLower());
 }
 
 void Menu::selectStyleSheet(QAction *action)
@@ -838,7 +838,7 @@ void Menu::selectUserAgent(QAction *action)
 
 	if (action && mainWindow)
 	{
-		mainWindow->getWindowsManager()->setOption(QLatin1String("Network/UserAgent"), action->data().toString());
+		mainWindow->getWindowsManager()->setOption(SettingsManager::Network_UserAgentOption, action->data().toString());
 	}
 }
 

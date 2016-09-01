@@ -87,7 +87,7 @@ protected:
 	void createMdi();
 
 protected slots:
-	void optionChanged(const QString &option, const QVariant &value);
+	void optionChanged(int identifier, const QVariant &value);
 	void activeSubWindowChanged(QMdiSubWindow *subWindow);
 
 private:

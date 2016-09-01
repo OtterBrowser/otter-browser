@@ -32,11 +32,11 @@ PanelChooserWidget::PanelChooserWidget(const ActionsManager::ActionEntryDefiniti
 	setMenu(new QMenu(this));
 	setPopupMode(QToolButton::InstantPopup);
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-	optionChanged(QLatin1String("Sidebar/CurrentPanel"), SettingsManager::getValue(QLatin1String("Sidebar/CurrentPanel")));
+	optionChanged(SettingsManager::Sidebar_CurrentPanelOption, SettingsManager::getValue(SettingsManager::Sidebar_CurrentPanelOption));
 
 	connect(menu(), SIGNAL(aboutToShow()), this, SLOT(menuAboutToShow()));
 	connect(menu(), SIGNAL(triggered(QAction*)), this, SLOT(selectPanel(QAction*)));
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
 }
 
 void PanelChooserWidget::changeEvent(QEvent *event)
@@ -45,13 +45,13 @@ void PanelChooserWidget::changeEvent(QEvent *event)
 
 	if (event->type() ==  QEvent::LanguageChange)
 	{
-		setText(SidebarWidget::getPanelTitle(SettingsManager::getValue(QLatin1String("Sidebar/CurrentPanel")).toString()));
+		setText(SidebarWidget::getPanelTitle(SettingsManager::getValue(SettingsManager::Sidebar_CurrentPanelOption).toString()));
 	}
 }
 
-void PanelChooserWidget::optionChanged(const QString &option, const QVariant &value)
+void PanelChooserWidget::optionChanged(int identifier, const QVariant &value)
 {
-	if (option == QLatin1String("Sidebar/CurrentPanel"))
+	if (identifier == SettingsManager::Sidebar_CurrentPanelOption)
 	{
 		setText(SidebarWidget::getPanelTitle(value.toString()));
 	}
@@ -61,7 +61,7 @@ void PanelChooserWidget::menuAboutToShow()
 {
 	menu()->clear();
 
-	const QStringList panels(SettingsManager::getValue(QLatin1String("Sidebar/Panels")).toStringList());
+	const QStringList panels(SettingsManager::getValue(SettingsManager::Sidebar_PanelsOption).toStringList());
 
 	for (int i = 0; i < panels.count(); ++i)
 	{
@@ -71,7 +71,7 @@ void PanelChooserWidget::menuAboutToShow()
 
 void PanelChooserWidget::selectPanel(QAction *action)
 {
-	SettingsManager::setValue(QLatin1String("Sidebar/CurrentPanel"), action->data());
+	SettingsManager::setValue(SettingsManager::Sidebar_CurrentPanelOption, action->data());
 }
 
 QSize PanelChooserWidget::minimumSizeHint() const

@@ -41,7 +41,7 @@ protected:
 	void contextMenuEvent(QContextMenuEvent *event);
 
 protected slots:
-	void optionChanged(const QString &option, const QVariant &value);
+	void optionChanged(int identifier, const QVariant &value);
 	void toolBarModified(int identifier);
 	void updateSize();
 

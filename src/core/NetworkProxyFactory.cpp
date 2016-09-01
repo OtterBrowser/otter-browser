@@ -35,9 +35,9 @@ NetworkProxyFactory::NetworkProxyFactory() : QObject(), QNetworkProxyFactory(),
 	m_pacNetworkReply(NULL),
 	m_proxyMode(SystemProxy)
 {
-	optionChanged(QLatin1String("Network/ProxyMode"));
+	optionChanged(SettingsManager::Network_ProxyModeOption);
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
 }
 
 NetworkProxyFactory::~NetworkProxyFactory()
@@ -48,9 +48,9 @@ NetworkProxyFactory::~NetworkProxyFactory()
 	}
 }
 
-void NetworkProxyFactory::optionChanged(const QString &option)
+void NetworkProxyFactory::optionChanged(int identifier)
 {
-	if ((option == QLatin1String("Network/ProxyMode") && SettingsManager::getValue(option) == QLatin1String("automatic")) || (option == QLatin1String("Proxy/AutomaticConfigurationPath") && m_proxyMode == AutomaticProxy))
+	if ((identifier == SettingsManager::Network_ProxyModeOption && SettingsManager::getValue(identifier) == QLatin1String("automatic")) || (identifier == SettingsManager::Proxy_AutomaticConfigurationPathOption && m_proxyMode == AutomaticProxy))
 	{
 		m_proxyMode = AutomaticProxy;
 
@@ -59,7 +59,7 @@ void NetworkProxyFactory::optionChanged(const QString &option)
 			m_automaticProxy = new NetworkAutomaticProxy();
 		}
 
-		const QString path(SettingsManager::getValue(QLatin1String("Proxy/AutomaticConfigurationPath")).toString());
+		const QString path(SettingsManager::getValue(SettingsManager::Proxy_AutomaticConfigurationPathOption).toString());
 
 		if (QFile::exists(path))
 		{
@@ -95,36 +95,36 @@ void NetworkProxyFactory::optionChanged(const QString &option)
 			}
 		}
 	}
-	else if ((option == QLatin1String("Network/ProxyMode") && SettingsManager::getValue(option) == QLatin1String("manual")) || (option.startsWith(QLatin1String("Proxy/")) && m_proxyMode == ManualProxy))
+	else if ((identifier == SettingsManager::Network_ProxyModeOption && SettingsManager::getValue(identifier) == QLatin1String("manual")) || (SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Proxy/")) && m_proxyMode == ManualProxy))
 	{
 		m_proxyMode = ManualProxy;
 
 		m_proxies.clear();
 		m_proxies[QLatin1String("NoProxy")] = QList<QNetworkProxy>({QNetworkProxy(QNetworkProxy::NoProxy)});
 
-		const bool useCommon(SettingsManager::getValue(QLatin1String("Proxy/UseCommon")).toBool());
+		const bool useCommon(SettingsManager::getValue(SettingsManager::Proxy_UseCommonOption).toBool());
 		const QList<QPair<QNetworkProxy::ProxyType, QString> > proxyTypes({qMakePair(QNetworkProxy::HttpProxy, QLatin1String("http")), qMakePair(QNetworkProxy::HttpProxy, QLatin1String("https")), qMakePair(QNetworkProxy::FtpCachingProxy, QLatin1String("ftp")), qMakePair(QNetworkProxy::Socks5Proxy, QLatin1String("socks"))});
 
 		for (int i = 0; i < proxyTypes.count(); ++i)
 		{
 			if (useCommon && proxyTypes.at(i).first != QNetworkProxy::Socks5Proxy)
 			{
-				m_proxies[proxyTypes.at(i).second] = QList<QNetworkProxy>({QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(QStringLiteral("Proxy/CommonServers")).toString(), SettingsManager::getValue(QStringLiteral("Proxy/CommonPort")).toInt())});
+				m_proxies[proxyTypes.at(i).second] = QList<QNetworkProxy>({QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(SettingsManager::Proxy_CommonServersOption).toString(), SettingsManager::getValue(SettingsManager::Proxy_CommonPortOption).toInt())});
 			}
 
-			if (SettingsManager::getValue(QStringLiteral("Proxy/Use%1").arg(proxyTypes.at(i).second)).toBool())
+			if (SettingsManager::getValue(SettingsManager::getOptionIdentifier(QStringLiteral("Proxy/Use%1").arg(proxyTypes.at(i).second))).toBool())
 			{
-				m_proxies[proxyTypes.at(i).second] = QList<QNetworkProxy>({QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(QStringLiteral("Proxy/%1Servers").arg(proxyTypes.at(i).second.left(1).toUpper() + proxyTypes.at(i).second.mid(1))).toString(), SettingsManager::getValue(QStringLiteral("Proxy/%1Port").arg(proxyTypes.at(i).second.left(1).toUpper() + proxyTypes.at(i).second.mid(1))).toInt())});
+				m_proxies[proxyTypes.at(i).second] = QList<QNetworkProxy>({QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(SettingsManager::getOptionIdentifier(QStringLiteral("Proxy/%1Servers").arg(proxyTypes.at(i).second.left(1).toUpper() + proxyTypes.at(i).second.mid(1)))).toString(), SettingsManager::getValue(SettingsManager::getOptionIdentifier(QStringLiteral("Proxy/%1Port").arg(proxyTypes.at(i).second.left(1).toUpper() + proxyTypes.at(i).second.mid(1)))).toInt())});
 			}
 		}
 
-		m_proxyExceptions = SettingsManager::getValue(QLatin1String("Proxy/Exceptions")).toStringList();
+		m_proxyExceptions = SettingsManager::getValue(SettingsManager::Proxy_ExceptionsOption).toStringList();
 	}
-	else if (option == QLatin1String("Network/ProxyMode"))
+	else if (identifier == SettingsManager::Network_ProxyModeOption)
 	{
 		m_proxies.clear();
 
-		const QString value(SettingsManager::getValue(option).toString());
+		const QString value(SettingsManager::getValue(identifier).toString());
 
 		if (value == QLatin1String("system"))
 		{

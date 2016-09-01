@@ -19,21 +19,22 @@
 **************************************************************************/
 
 #include "JavaScriptPreferencesDialog.h"
+#include "../../core/SettingsManager.h"
 
 #include "ui_JavaScriptPreferencesDialog.h"
 
 namespace Otter
 {
 
-JavaScriptPreferencesDialog::JavaScriptPreferencesDialog(const QVariantMap &options, QWidget *parent) : Dialog(parent),
+JavaScriptPreferencesDialog::JavaScriptPreferencesDialog(const QHash<int, QVariant> &options, QWidget *parent) : Dialog(parent),
 	m_ui(new Ui::JavaScriptPreferencesDialog)
 {
 	m_ui->setupUi(this);
-	m_ui->canChangeWindowGeometryCheckBox->setChecked(options.value(QLatin1String("Browser/JavaScriptCanChangeWindowGeometry")).toBool());
-	m_ui->canShowStatusMessagesCheckBox->setChecked(options.value(QLatin1String("Browser/JavaScriptCanShowStatusMessages")).toBool());
-	m_ui->canAccessClipboardCheckBox->setChecked(options.value(QLatin1String("Browser/JavaScriptCanAccessClipboard")).toBool());
-	m_ui->canDisableContextMenuCheckBox->setChecked(options.value(QLatin1String("Browser/JavaScriptCanDisableContextMenu")).toBool());
-	m_ui->canOpenWindowsCheckBox->setChecked(options.value(QLatin1String("Browser/JavaScriptCanOpenWindows")).toBool());
+	m_ui->canChangeWindowGeometryCheckBox->setChecked(options.value(SettingsManager::Browser_JavaScriptCanChangeWindowGeometryOption).toBool());
+	m_ui->canShowStatusMessagesCheckBox->setChecked(options.value(SettingsManager::Browser_JavaScriptCanShowStatusMessagesOption).toBool());
+	m_ui->canAccessClipboardCheckBox->setChecked(options.value(SettingsManager::Browser_JavaScriptCanAccessClipboardOption).toBool());
+	m_ui->canDisableContextMenuCheckBox->setChecked(options.value(SettingsManager::Browser_JavaScriptCanDisableContextMenuOption).toBool());
+	m_ui->canOpenWindowsCheckBox->setChecked(options.value(SettingsManager::Browser_JavaScriptCanOpenWindowsOption).toBool());
 	m_ui->canCloseWindowsComboBox->addItem(tr("Ask"), QLatin1String("ask"));
 	m_ui->canCloseWindowsComboBox->addItem(tr("Always"), QLatin1String("allow"));
 	m_ui->canCloseWindowsComboBox->addItem(tr("Never"), QLatin1String("disallow"));
@@ -41,11 +42,11 @@ JavaScriptPreferencesDialog::JavaScriptPreferencesDialog(const QVariantMap &opti
 	m_ui->enableFullScreenComboBox->addItem(tr("Always"), QLatin1String("allow"));
 	m_ui->enableFullScreenComboBox->addItem(tr("Never"), QLatin1String("disallow"));
 
-	const int canCloseWindowsIndex(m_ui->canCloseWindowsComboBox->findData(options.value(QLatin1String("Browser/JavaScriptCanCloseWindows")).toString()));
+	const int canCloseWindowsIndex(m_ui->canCloseWindowsComboBox->findData(options.value(SettingsManager::Browser_JavaScriptCanCloseWindowsOption).toString()));
 
 	m_ui->canCloseWindowsComboBox->setCurrentIndex((canCloseWindowsIndex < 0) ? 0 : canCloseWindowsIndex);
 
-	const int enableFullScreenIndex(m_ui->enableFullScreenComboBox->findData(options.value(QLatin1String("Browser/EnableFullScreen")).toString()));
+	const int enableFullScreenIndex(m_ui->enableFullScreenComboBox->findData(options.value(SettingsManager::Browser_EnableFullScreenOption).toString()));
 
 	m_ui->enableFullScreenComboBox->setCurrentIndex((enableFullScreenIndex < 0) ? 0 : enableFullScreenIndex);
 
@@ -68,16 +69,16 @@ void JavaScriptPreferencesDialog::changeEvent(QEvent *event)
 	}
 }
 
-QVariantMap JavaScriptPreferencesDialog::getOptions() const
+QHash<int, QVariant> JavaScriptPreferencesDialog::getOptions() const
 {
-	QVariantMap options;
-	options[QLatin1String("Browser/JavaScriptCanChangeWindowGeometry")] = m_ui->canChangeWindowGeometryCheckBox->isChecked();
-	options[QLatin1String("Browser/JavaScriptCanShowStatusMessages")] = m_ui->canShowStatusMessagesCheckBox->isChecked();
-	options[QLatin1String("Browser/JavaScriptCanAccessClipboard")] = m_ui->canAccessClipboardCheckBox->isChecked();
-	options[QLatin1String("Browser/JavaScriptCanDisableContextMenu")] = m_ui->canDisableContextMenuCheckBox->isChecked();
-	options[QLatin1String("Browser/JavaScriptCanOpenWindows")] = m_ui->canOpenWindowsCheckBox->isChecked();
-	options[QLatin1String("Browser/JavaScriptCanCloseWindows")] = m_ui->canCloseWindowsComboBox->currentData().toString();
-	options[QLatin1String("Browser/EnableFullScreen")] = m_ui->enableFullScreenComboBox->currentData().toString();
+	QHash<int, QVariant> options;
+	options[SettingsManager::Browser_JavaScriptCanChangeWindowGeometryOption] = m_ui->canChangeWindowGeometryCheckBox->isChecked();
+	options[SettingsManager::Browser_JavaScriptCanShowStatusMessagesOption] = m_ui->canShowStatusMessagesCheckBox->isChecked();
+	options[SettingsManager::Browser_JavaScriptCanAccessClipboardOption] = m_ui->canAccessClipboardCheckBox->isChecked();
+	options[SettingsManager::Browser_JavaScriptCanDisableContextMenuOption] = m_ui->canDisableContextMenuCheckBox->isChecked();
+	options[SettingsManager::Browser_JavaScriptCanOpenWindowsOption] = m_ui->canOpenWindowsCheckBox->isChecked();
+	options[SettingsManager::Browser_JavaScriptCanCloseWindowsOption] = m_ui->canCloseWindowsComboBox->currentData().toString();
+	options[SettingsManager::Browser_EnableFullScreenOption] = m_ui->enableFullScreenComboBox->currentData().toString();
 
 	return options;
 }

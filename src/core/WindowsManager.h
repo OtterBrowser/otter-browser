@@ -86,7 +86,7 @@ public:
 	Action* getAction(int identifier);
 	Window* getWindowByIndex(int index) const;
 	Window* getWindowByIdentifier(quint64 identifier) const;
-	QVariant getOption(const QString &key) const;
+	QVariant getOption(int identifier) const;
 	QString getTitle() const;
 	QUrl getUrl() const;
 	SessionMainWindow getSession() const;
@@ -111,7 +111,7 @@ public slots:
 	void clearClosedWindows();
 	void setActiveWindowByIndex(int index);
 	void setActiveWindowByIdentifier(quint64 identifier);
-	void setOption(const QString &key, const QVariant &value);
+	void setOption(int identifier, const QVariant &value);
 	void setZoom(int zoom);
 
 protected:

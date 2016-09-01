@@ -33,25 +33,25 @@ StartPagePreferencesDialog::StartPagePreferencesDialog(QWidget *parent) : Dialog
 {
 	m_ui->setupUi(this);
 
-	const QString backgroundModeString(SettingsManager::getValue(QLatin1String("StartPage/BackgroundMode")).toString());
+	const QString backgroundModeString(SettingsManager::getValue(SettingsManager::StartPage_BackgroundModeOption).toString());
 
 	m_ui->customBackgroundCheckBox->setChecked(backgroundModeString != QLatin1String("standard"));
-	m_ui->backgroundFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("StartPage/BackgroundPath")).toString());
+	m_ui->backgroundFilePathWidget->setPath(SettingsManager::getValue(SettingsManager::StartPage_BackgroundPathOption).toString());
 	m_ui->backgroundFilePathWidget->setFilters(QStringList(tr("Images (*.png *.jpg *.bmp *.gif)")));
 	m_ui->backgroundModeComboBox->addItem(tr("Best fit"), QLatin1String("bestFit"));
 	m_ui->backgroundModeComboBox->addItem(tr("Center"), QLatin1String("center"));
 	m_ui->backgroundModeComboBox->addItem(tr("Stretch"), QLatin1String("stretch"));
 	m_ui->backgroundModeComboBox->addItem(tr("Tile"), QLatin1String("tile"));
-	m_ui->backgroundColorWidget->setColor(SettingsManager::getValue(QLatin1String("StartPage/BackgroundColor")).toString());
+	m_ui->backgroundColorWidget->setColor(SettingsManager::getValue(SettingsManager::StartPage_BackgroundColorOption).toString());
 
 	const int backgroundModeIndex(m_ui->backgroundModeComboBox->findData(backgroundModeString));
 
 	m_ui->backgroundModeComboBox->setCurrentIndex((backgroundModeIndex < 0) ? 0 : backgroundModeIndex);
 	m_ui->backgroundWidget->setEnabled(m_ui->customBackgroundCheckBox->isChecked());
-	m_ui->columnsPerRowSpinBox->setValue(SettingsManager::getValue(QLatin1String("StartPage/TilesPerRow")).toInt());
-	m_ui->zoomLevelSpinBox->setValue(SettingsManager::getValue(QLatin1String("StartPage/ZoomLevel")).toInt());
-	m_ui->showSearchFieldCheckBox->setChecked(SettingsManager::getValue(QLatin1String("StartPage/ShowSearchField")).toBool());
-	m_ui->showAddTileCheckBox->setChecked(SettingsManager::getValue(QLatin1String("StartPage/ShowAddTile")).toBool());
+	m_ui->columnsPerRowSpinBox->setValue(SettingsManager::getValue(SettingsManager::StartPage_TilesPerRowOption).toInt());
+	m_ui->zoomLevelSpinBox->setValue(SettingsManager::getValue(SettingsManager::StartPage_ZoomLevelOption).toInt());
+	m_ui->showSearchFieldCheckBox->setChecked(SettingsManager::getValue(SettingsManager::StartPage_ShowSearchFieldOption).toBool());
+	m_ui->showAddTileCheckBox->setChecked(SettingsManager::getValue(SettingsManager::StartPage_ShowAddTileOption).toBool());
 
 	connect(this, SIGNAL(accepted()), this, SLOT(save()));
 	connect(m_ui->customBackgroundCheckBox, SIGNAL(toggled(bool)), m_ui->backgroundWidget, SLOT(setEnabled(bool)));
@@ -77,13 +77,13 @@ void StartPagePreferencesDialog::save()
 {
 	const QString backgroundModeString(m_ui->backgroundModeComboBox->currentData().toString());
 
-	SettingsManager::setValue(QLatin1String("StartPage/BackgroundColor"), (m_ui->backgroundColorWidget->getColor().isValid() ? m_ui->backgroundColorWidget->getColor().name() : QString()));
-	SettingsManager::setValue(QLatin1String("StartPage/BackgroundMode"), (m_ui->customBackgroundCheckBox->isChecked() ? backgroundModeString : QLatin1String("standard")));
-	SettingsManager::setValue(QLatin1String("StartPage/BackgroundPath"), m_ui->backgroundFilePathWidget->getPath());
-	SettingsManager::setValue(QLatin1String("StartPage/TilesPerRow"), m_ui->columnsPerRowSpinBox->value());
-	SettingsManager::setValue(QLatin1String("StartPage/ZoomLevel"), m_ui->zoomLevelSpinBox->value());
-	SettingsManager::setValue(QLatin1String("StartPage/ShowSearchField"), m_ui->showSearchFieldCheckBox->isChecked());
-	SettingsManager::setValue(QLatin1String("StartPage/ShowAddTile"), m_ui->showAddTileCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::StartPage_BackgroundColorOption, (m_ui->backgroundColorWidget->getColor().isValid() ? m_ui->backgroundColorWidget->getColor().name() : QString()));
+	SettingsManager::setValue(SettingsManager::StartPage_BackgroundModeOption, (m_ui->customBackgroundCheckBox->isChecked() ? backgroundModeString : QLatin1String("standard")));
+	SettingsManager::setValue(SettingsManager::StartPage_BackgroundPathOption, m_ui->backgroundFilePathWidget->getPath());
+	SettingsManager::setValue(SettingsManager::StartPage_TilesPerRowOption, m_ui->columnsPerRowSpinBox->value());
+	SettingsManager::setValue(SettingsManager::StartPage_ZoomLevelOption, m_ui->zoomLevelSpinBox->value());
+	SettingsManager::setValue(SettingsManager::StartPage_ShowSearchFieldOption, m_ui->showSearchFieldCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::StartPage_ShowAddTileOption, m_ui->showAddTileCheckBox->isChecked());
 }
 
 }

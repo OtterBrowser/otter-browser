@@ -295,7 +295,7 @@ void SourceViewerWebWidget::showContextMenu(const QPoint &position)
 	{
 		QAction *showLineNumbersAction(menu.addAction(tr("Show Line Numbers")));
 		showLineNumbersAction->setCheckable(true);
-		showLineNumbersAction->setChecked(SettingsManager::getValue(QLatin1String("SourceViewer/ShowLineNumbers")).toBool());
+		showLineNumbersAction->setChecked(SettingsManager::getValue(SettingsManager::SourceViewer_ShowLineNumbersOption).toBool());
 
 		connect(showLineNumbersAction, SIGNAL(triggered(bool)), this, SLOT(setShowLineNumbers(bool)));
 	}
@@ -318,14 +318,14 @@ void SourceViewerWebWidget::showContextMenu(const QPoint &position)
 
 void SourceViewerWebWidget::setShowLineNumbers(bool show)
 {
-	SettingsManager::setValue(QLatin1String("SourceViewer/ShowLineNumbers"), show);
+	SettingsManager::setValue(SettingsManager::SourceViewer_ShowLineNumbersOption, show);
 }
 
-void SourceViewerWebWidget::setOption(const QString &key, const QVariant &value)
+void SourceViewerWebWidget::setOption(int identifier, const QVariant &value)
 {
-	const bool needsReload(key == QLatin1String("Content/DefaultCharacterEncoding") && getOption(key).toString() != value.toString());
+	const bool needsReload(identifier == SettingsManager::Content_DefaultCharacterEncodingOption && getOption(identifier).toString() != value.toString());
 
-	WebWidget::setOption(key, value);
+	WebWidget::setOption(identifier, value);
 
 	if (needsReload)
 	{
@@ -333,13 +333,13 @@ void SourceViewerWebWidget::setOption(const QString &key, const QVariant &value)
 	}
 }
 
-void SourceViewerWebWidget::setOptions(const QVariantHash &options)
+void SourceViewerWebWidget::setOptions(const QHash<int, QVariant> &options)
 {
 	WebWidget::setOptions(options);
 
-	if (options.contains(QLatin1String("Content/DefaultCharacterEncoding")))
+	if (options.contains(SettingsManager::Content_DefaultCharacterEncodingOption))
 	{
-		setOption(QLatin1String("Content/DefaultCharacterEncoding"), options[QLatin1String("Content/DefaultCharacterEncoding")]);
+		setOption(SettingsManager::Content_DefaultCharacterEncodingOption, options[SettingsManager::Content_DefaultCharacterEncodingOption]);
 	}
 }
 
@@ -383,9 +383,9 @@ void SourceViewerWebWidget::setContents(const QByteArray &contents, const QStrin
 
 	QTextCodec *codec(NULL);
 
-	if (hasOption(QLatin1String("Content/DefaultCharacterEncoding")))
+	if (hasOption(SettingsManager::Content_DefaultCharacterEncodingOption))
 	{
-		codec = QTextCodec::codecForName(getOption(QLatin1String("Content/DefaultCharacterEncoding")).toByteArray());
+		codec = QTextCodec::codecForName(getOption(SettingsManager::Content_DefaultCharacterEncodingOption).toByteArray());
 	}
 
 	if (!codec && !contentType.isEmpty() && contentType.contains(QLatin1String("charset=")))

@@ -39,7 +39,7 @@ namespace Otter
 {
 
 PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWidget(parent),
-	m_defaultSearchEngine(SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString()),
+	m_defaultSearchEngine(SettingsManager::getValue(SettingsManager::Search_DefaultSearchEngineOption).toString()),
 	m_ui(new Ui::PreferencesSearchPageWidget)
 {
 	m_ui->setupUi(this);
@@ -71,7 +71,7 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 
 	m_ui->searchViewWidget->setModel(searchEnginesModel);
 	m_ui->searchViewWidget->setItemDelegateForColumn(1, new SearchKeywordDelegate(this));
-	m_ui->searchSuggestionsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Search/SearchEnginesSuggestions")).toBool());
+	m_ui->searchSuggestionsCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Search_SearchEnginesSuggestionsOption).toBool());
 
 	QMenu *addSearchMenu(new QMenu(m_ui->addSearchButton));
 	addSearchMenu->addAction(tr("New…"));
@@ -420,17 +420,17 @@ void PreferencesSearchPageWidget::save()
 		}
 	}
 
-	if (SettingsManager::getValue(QLatin1String("Search/SearchEnginesOrder")).toStringList().join(QLatin1Char(',')) == searchEnginesOrder.join(QLatin1Char(',')))
+	if (SettingsManager::getValue(SettingsManager::Search_SearchEnginesOrderOption).toStringList().join(QLatin1Char(',')) == searchEnginesOrder.join(QLatin1Char(',')))
 	{
 		SearchEnginesManager::loadSearchEngines();
 	}
 	else
 	{
-		SettingsManager::setValue(QLatin1String("Search/SearchEnginesOrder"), searchEnginesOrder);
+		SettingsManager::setValue(SettingsManager::Search_SearchEnginesOrderOption, searchEnginesOrder);
 	}
 
-	SettingsManager::setValue(QLatin1String("Search/DefaultSearchEngine"), m_defaultSearchEngine);
-	SettingsManager::setValue(QLatin1String("Search/SearchEnginesSuggestions"), m_ui->searchSuggestionsCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::Search_DefaultSearchEngineOption, m_defaultSearchEngine);
+	SettingsManager::setValue(SettingsManager::Search_SearchEnginesSuggestionsOption, m_ui->searchSuggestionsCheckBox->isChecked());
 
 	updateReaddSearchMenu();
 }

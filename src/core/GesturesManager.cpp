@@ -129,7 +129,7 @@ bool GesturesManager::m_afterScroll = false;
 GesturesManager::GesturesManager(QObject *parent) : QObject(parent),
 	m_reloadTimer(0)
 {
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
 }
 
 void GesturesManager::createInstance(QObject *parent)
@@ -174,9 +174,9 @@ void GesturesManager::timerEvent(QTimerEvent *event)
 	}
 }
 
-void GesturesManager::optionChanged(const QString &option)
+void GesturesManager::optionChanged(int identifier)
 {
-	if ((option == QLatin1String("Browser/MouseProfilesOrder") || option == QLatin1String("Browser/EnableMouseGestures")) && m_reloadTimer == 0)
+	if ((identifier == SettingsManager::Browser_MouseProfilesOrderOption || identifier == SettingsManager::Browser_EnableMouseGesturesOption) && m_reloadTimer == 0)
 	{
 		m_reloadTimer = startTimer(250);
 	}
@@ -198,8 +198,8 @@ void GesturesManager::loadProfiles()
 		m_gestures[context].append(contextMenuGestureDefinition);
 	}
 
-	const QStringList gestureProfiles(SettingsManager::getValue(QLatin1String("Browser/MouseProfilesOrder")).toStringList());
-	const bool areMouseGesturesEnabled(SettingsManager::getValue(QLatin1String("Browser/EnableMouseGestures")).toBool());
+	const QStringList gestureProfiles(SettingsManager::getValue(SettingsManager::Browser_MouseProfilesOrderOption).toStringList());
+	const bool areMouseGesturesEnabled(SettingsManager::getValue(SettingsManager::Browser_EnableMouseGesturesOption).toBool());
 
 	for (int i = 0; i < gestureProfiles.count(); ++i)
 	{

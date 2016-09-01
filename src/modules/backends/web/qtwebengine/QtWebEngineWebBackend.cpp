@@ -57,40 +57,40 @@ QtWebEngineWebBackend::QtWebEngineWebBackend(QObject *parent) : WebBackend(paren
 	m_engineVersion = engineExpression.match(userAgent).captured(1);
 }
 
-void QtWebEngineWebBackend::optionChanged(const QString &option)
+void QtWebEngineWebBackend::optionChanged(int identifier)
 {
-	if (option == QLatin1String("Network/AcceptLanguage"))
+	if (identifier == SettingsManager::Network_AcceptLanguageOption)
 	{
 		QWebEngineProfile::defaultProfile()->setHttpAcceptLanguage(NetworkManagerFactory::getAcceptLanguage());
 	}
-	else if (option == QLatin1String("Network/UserAgent"))
+	else if (identifier == SettingsManager::Network_UserAgentOption)
 	{
 		QWebEngineProfile::defaultProfile()->setHttpUserAgent(getUserAgent());
 	}
-	else if (!(option.startsWith(QLatin1String("Browser/")) || option.startsWith(QLatin1String("Content/"))))
+	else if (!(SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Browser/")) || SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Content/"))))
 	{
 		return;
 	}
 
 	QWebEngineSettings *globalSettings(QWebEngineSettings::globalSettings());
-	globalSettings->setAttribute(QWebEngineSettings::AutoLoadImages, (SettingsManager::getValue(QLatin1String("Browser/EnableImages")).toString() != QLatin1String("onlyCached")));
-	globalSettings->setAttribute(QWebEngineSettings::PluginsEnabled, SettingsManager::getValue(QLatin1String("Browser/EnablePlugins")).toString() != QLatin1String("disabled"));
-	globalSettings->setAttribute(QWebEngineSettings::JavascriptEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableJavaScript")).toBool());
-	globalSettings->setAttribute(QWebEngineSettings::JavascriptCanAccessClipboard, SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanAccessClipboard")).toBool());
-	globalSettings->setAttribute(QWebEngineSettings::JavascriptCanOpenWindows, SettingsManager::getValue(QLatin1String("Browser/JavaScriptCanOpenWindows")).toBool());
+	globalSettings->setAttribute(QWebEngineSettings::AutoLoadImages, (SettingsManager::getValue(SettingsManager::Browser_EnableImagesOption).toString() != QLatin1String("onlyCached")));
+	globalSettings->setAttribute(QWebEngineSettings::PluginsEnabled, SettingsManager::getValue(SettingsManager::Browser_EnablePluginsOption).toString() != QLatin1String("disabled"));
+	globalSettings->setAttribute(QWebEngineSettings::JavascriptEnabled, SettingsManager::getValue(SettingsManager::Browser_EnableJavaScriptOption).toBool());
+	globalSettings->setAttribute(QWebEngineSettings::JavascriptCanAccessClipboard, SettingsManager::getValue(SettingsManager::Browser_JavaScriptCanAccessClipboardOption).toBool());
+	globalSettings->setAttribute(QWebEngineSettings::JavascriptCanOpenWindows, SettingsManager::getValue(SettingsManager::Browser_JavaScriptCanOpenWindowsOption).toBool());
 #if QT_VERSION >= 0x050700
-	globalSettings->setAttribute(QWebEngineSettings::WebGLEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableWebgl")).toBool());
+	globalSettings->setAttribute(QWebEngineSettings::WebGLEnabled, SettingsManager::getValue(SettingsManager::Browser_EnableWebglOption).toBool());
 #endif
-	globalSettings->setAttribute(QWebEngineSettings::LocalStorageEnabled, SettingsManager::getValue(QLatin1String("Browser/EnableLocalStorage")).toBool());
-	globalSettings->setFontSize(QWebEngineSettings::DefaultFontSize, SettingsManager::getValue(QLatin1String("Content/DefaultFontSize")).toInt());
-	globalSettings->setFontSize(QWebEngineSettings::DefaultFixedFontSize, SettingsManager::getValue(QLatin1String("Content/DefaultFixedFontSize")).toInt());
-	globalSettings->setFontSize(QWebEngineSettings::MinimumFontSize, SettingsManager::getValue(QLatin1String("Content/MinimumFontSize")).toInt());
-	globalSettings->setFontFamily(QWebEngineSettings::StandardFont, SettingsManager::getValue(QLatin1String("Content/StandardFont")).toString());
-	globalSettings->setFontFamily(QWebEngineSettings::FixedFont, SettingsManager::getValue(QLatin1String("Content/FixedFont")).toString());
-	globalSettings->setFontFamily(QWebEngineSettings::SerifFont, SettingsManager::getValue(QLatin1String("Content/SerifFont")).toString());
-	globalSettings->setFontFamily(QWebEngineSettings::SansSerifFont, SettingsManager::getValue(QLatin1String("Content/SansSerifFont")).toString());
-	globalSettings->setFontFamily(QWebEngineSettings::CursiveFont, SettingsManager::getValue(QLatin1String("Content/CursiveFont")).toString());
-	globalSettings->setFontFamily(QWebEngineSettings::FantasyFont, SettingsManager::getValue(QLatin1String("Content/FantasyFont")).toString());
+	globalSettings->setAttribute(QWebEngineSettings::LocalStorageEnabled, SettingsManager::getValue(SettingsManager::Browser_EnableLocalStorageOption).toBool());
+	globalSettings->setFontSize(QWebEngineSettings::DefaultFontSize, SettingsManager::getValue(SettingsManager::Content_DefaultFontSizeOption).toInt());
+	globalSettings->setFontSize(QWebEngineSettings::DefaultFixedFontSize, SettingsManager::getValue(SettingsManager::Content_DefaultFixedFontSizeOption).toInt());
+	globalSettings->setFontSize(QWebEngineSettings::MinimumFontSize, SettingsManager::getValue(SettingsManager::Content_MinimumFontSizeOption).toInt());
+	globalSettings->setFontFamily(QWebEngineSettings::StandardFont, SettingsManager::getValue(SettingsManager::Content_StandardFontOption).toString());
+	globalSettings->setFontFamily(QWebEngineSettings::FixedFont, SettingsManager::getValue(SettingsManager::Content_FixedFontOption).toString());
+	globalSettings->setFontFamily(QWebEngineSettings::SerifFont, SettingsManager::getValue(SettingsManager::Content_SerifFontOption).toString());
+	globalSettings->setFontFamily(QWebEngineSettings::SansSerifFont, SettingsManager::getValue(SettingsManager::Content_SansSerifFontOption).toString());
+	globalSettings->setFontFamily(QWebEngineSettings::CursiveFont, SettingsManager::getValue(SettingsManager::Content_CursiveFontOption).toString());
+	globalSettings->setFontFamily(QWebEngineSettings::FantasyFont, SettingsManager::getValue(SettingsManager::Content_FantasyFontOption).toString());
 }
 
 void QtWebEngineWebBackend::downloadFile(QWebEngineDownloadItem *item)
@@ -218,14 +218,14 @@ WebWidget* QtWebEngineWebBackend::createWidget(bool isPrivate, ContentsWidget *p
 			QDir().mkpath(cachePath);
 
 			QWebEngineProfile::defaultProfile()->setHttpCacheType(QWebEngineProfile::DiskHttpCache);
-			QWebEngineProfile::defaultProfile()->setHttpCacheMaximumSize(SettingsManager::getValue(QLatin1String("Cache/DiskCacheLimit")).toInt() * 1024);
+			QWebEngineProfile::defaultProfile()->setHttpCacheMaximumSize(SettingsManager::getValue(SettingsManager::Cache_DiskCacheLimitOption).toInt() * 1024);
 			QWebEngineProfile::defaultProfile()->setCachePath(cachePath);
 			QWebEngineProfile::defaultProfile()->setPersistentStoragePath(cachePath  + QLatin1String("/persistentStorage/"));
 		}
 
-		optionChanged(QLatin1String("Browser/"));
+		optionChanged(SettingsManager::Browser_EnableFullScreenOption);
 
-		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
+		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
 		connect(QWebEngineProfile::defaultProfile(), SIGNAL(downloadRequested(QWebEngineDownloadItem*)), this, SLOT(downloadFile(QWebEngineDownloadItem*)));
 	}
 
@@ -279,7 +279,7 @@ QString QtWebEngineWebBackend::getUserAgent(const QString &pattern) const
 		return userAgent;
 	}
 
-	const UserAgentInformation userAgent(NetworkManagerFactory::getUserAgent(SettingsManager::getValue(QLatin1String("Network/UserAgent")).toString()));
+	const UserAgentInformation userAgent(NetworkManagerFactory::getUserAgent(SettingsManager::getValue(SettingsManager::Network_UserAgentOption).toString()));
 
 	return ((userAgent.value.isEmpty()) ? QString() : getUserAgent(userAgent.value));
 }

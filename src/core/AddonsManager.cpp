@@ -73,10 +73,10 @@ AddonsManager::AddonsManager(QObject *parent) : QObject(parent)
 	registerWebBackend(new QtWebKitWebBackend(this), QLatin1String("qtwebkit"));
 #endif
 
-	SettingsManager::OptionDefinition backends(SettingsManager::getDefinition(QLatin1String("Backends/Web")));
+	SettingsManager::OptionDefinition backends(SettingsManager::getOptionDefinition(SettingsManager::Backends_WebOption));
 	backends.choices = m_webBackends.keys();
 
-	SettingsManager::setOptionDefinition(QLatin1String("Backends/Web"), backends);
+	SettingsManager::setOptionDefinition(SettingsManager::Backends_WebOption, backends);
 
 	registerSpecialPage(SpecialPageInformation(tr("Addons Manager"), QString(), QUrl(QLatin1String("about:addons")), ThemesManager::getIcon(QLatin1String("preferences-plugin"), false)), QLatin1String("addons"));
 	registerSpecialPage(SpecialPageInformation(tr("Bookmarks Manager"), QString(), QUrl(QLatin1String("about:bookmarks")), ThemesManager::getIcon(QLatin1String("bookmarks"), false)), QLatin1String("bookmarks"));
@@ -170,7 +170,7 @@ WebBackend* AddonsManager::getWebBackend(const QString &name)
 
 	if (name.isEmpty() && !m_webBackends.isEmpty())
 	{
-		const QString defaultName = SettingsManager::getValue(QLatin1String("Backends/Web")).toString();
+		const QString defaultName(SettingsManager::getValue(SettingsManager::Backends_WebOption).toString());
 
 		if (m_webBackends.contains(defaultName))
 		{

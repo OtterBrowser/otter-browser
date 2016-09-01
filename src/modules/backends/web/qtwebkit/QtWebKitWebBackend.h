@@ -53,7 +53,7 @@ protected:
 	static QString getActiveDictionary();
 
 protected slots:
-	void optionChanged(const QString &option);
+	void optionChanged(int identifier);
 	void pageLoaded(bool success);
 	void setActiveWidget(WebWidget *widget);
 

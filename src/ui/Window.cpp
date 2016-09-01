@@ -352,10 +352,10 @@ void Window::setSession(const SessionWindow &session)
 {
 	m_session = session;
 
-	setSearchEngine(session.overrides.value(QLatin1String("Search/DefaultSearchEngine"), QString()).toString());
+	setSearchEngine(session.overrides.value(SettingsManager::Search_DefaultSearchEngineOption, QString()).toString());
 	setPinned(session.isPinned);
 
-	if (SettingsManager::getValue(QLatin1String("Browser/DelayRestoringOfBackgroundTabs")).toBool())
+	if (SettingsManager::getValue(SettingsManager::Browser_DelayRestoringOfBackgroundTabsOption).toBool())
 	{
 		setWindowTitle(session.getTitle());
 	}
@@ -667,7 +667,7 @@ SessionWindow Window::getSession() const
 			}
 		}
 
-		session.overrides[QLatin1String("Search/DefaultSearchEngine")] = getSearchEngine();
+		session.overrides[SettingsManager::Search_DefaultSearchEngineOption] = getSearchEngine();
 		session.history = history.entries;
 		session.parentGroup = 0;
 		session.historyIndex = history.index;

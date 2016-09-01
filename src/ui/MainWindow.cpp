@@ -91,7 +91,7 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 
 	SessionsManager::setActiveWindow(this);
 
-	m_windowsManager = new WindowsManager((flags.testFlag(Application::PrivateFlag) || SessionsManager::isPrivate() || SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool()), this);
+	m_windowsManager = new WindowsManager((flags.testFlag(Application::PrivateFlag) || SessionsManager::isPrivate() || SettingsManager::getValue(SettingsManager::Browser_PrivateModeOption).toBool()), this);
 
 	m_workspace->updateActions();
 
@@ -139,9 +139,9 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 
 	SessionsManager::registerWindow(this);
 
-	getAction(ActionsManager::WorkOfflineAction)->setChecked(SettingsManager::getValue(QLatin1String("Network/WorkOffline")).toBool());
+	getAction(ActionsManager::WorkOfflineAction)->setChecked(SettingsManager::getValue(SettingsManager::Network_WorkOfflineOption).toBool());
 	getAction(ActionsManager::ShowMenuBarAction)->setChecked(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
-	getAction(ActionsManager::ShowSidebarAction)->setChecked(SettingsManager::getValue(QLatin1String("Sidebar/Visible")).toBool());
+	getAction(ActionsManager::ShowSidebarAction)->setChecked(SettingsManager::getValue(SettingsManager::Sidebar_VisibleOption).toBool());
 	getAction(ActionsManager::LockToolBarsAction)->setChecked(ToolBarsManager::areToolBarsLocked());
 	getAction(ActionsManager::ExitAction)->setMenuRole(QAction::QuitRole);
 	getAction(ActionsManager::PreferencesAction)->setMenuRole(QAction::PreferencesRole);
@@ -162,11 +162,11 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 		setStatusBar(m_statusBar);
 	}
 
-	optionChanged(QLatin1String("Sidebar/ShowToggleEdge"), SettingsManager::getValue(QLatin1String("Sidebar/ShowToggleEdge")));
-	optionChanged(QLatin1String("Sidebar/Visible"), SettingsManager::getValue(QLatin1String("Sidebar/Visible")));
+	optionChanged(SettingsManager::Sidebar_ShowToggleEdgeOption, SettingsManager::getValue(SettingsManager::Sidebar_ShowToggleEdgeOption));
+	optionChanged(SettingsManager::Sidebar_VisibleOption, SettingsManager::getValue(SettingsManager::Sidebar_VisibleOption));
 
 	connect(ActionsManager::getInstance(), SIGNAL(shortcutsChanged()), this, SLOT(updateShortcuts()));
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(transferStarted()));
 	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SLOT(addBookmark(QUrl,QString,QString)));
@@ -185,7 +185,7 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 	{
 		restoreGeometry(session.geometry);
 	}
-	else if (SettingsManager::getValue(QLatin1String("Interface/MaximizeNewWindows")).toBool())
+	else if (SettingsManager::getValue(SettingsManager::Interface_MaximizeNewWindowsOption).toBool())
 	{
 		showMaximized();
 	}
@@ -352,21 +352,21 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 	QMainWindow::mouseReleaseEvent(event);
 }
 
-void MainWindow::optionChanged(const QString &option, const QVariant &value)
+void MainWindow::optionChanged(int identifier, const QVariant &value)
 {
-	if (option == QLatin1String("Network/WorkOffline"))
+	if (identifier == SettingsManager::Network_WorkOfflineOption)
 	{
 		getAction(ActionsManager::WorkOfflineAction)->setChecked(value.toBool());
 	}
-	else if (option == QLatin1String("Interface/LockToolBars"))
+	else if (identifier == SettingsManager::Interface_LockToolBarsOption)
 	{
 		getAction(ActionsManager::LockToolBarsAction)->setChecked(value.toBool());
 	}
-	else if (option == QLatin1String("Sidebar/CurrentPanel") || option == QLatin1String("Sidebar/Reverse"))
+	else if (identifier == SettingsManager::Sidebar_CurrentPanelOption || identifier == SettingsManager::Sidebar_ReverseOption)
 	{
 		placeSidebars();
 	}
-	else if (option == QLatin1String("Sidebar/ShowToggleEdge"))
+	else if (identifier == SettingsManager::Sidebar_ShowToggleEdgeOption)
 	{
 		if (m_sidebarToggle && !value.toBool())
 		{
@@ -385,7 +385,7 @@ void MainWindow::optionChanged(const QString &option, const QVariant &value)
 			placeSidebars();
 		}
 	}
-	else if (option == QLatin1String("Sidebar/Visible"))
+	else if (identifier == SettingsManager::Sidebar_VisibleOption)
 	{
 		if (m_sidebar && !value.toBool())
 		{
@@ -500,7 +500,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			break;
 		case ActionsManager::GoToHomePageAction:
 			{
-				const QString homePage(SettingsManager::getValue(QLatin1String("Browser/HomePage")).toString());
+				const QString homePage(SettingsManager::getValue(SettingsManager::Browser_HomePageOption).toString());
 
 				if (!homePage.isEmpty())
 				{
@@ -535,7 +535,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 			break;
 		case ActionsManager::WorkOfflineAction:
-			SettingsManager::setValue(QLatin1String("Network/WorkOffline"), Action::calculateCheckedState(parameters, getAction(ActionsManager::WorkOfflineAction)));
+			SettingsManager::setValue(SettingsManager::Network_WorkOfflineOption, Action::calculateCheckedState(parameters, getAction(ActionsManager::WorkOfflineAction)));
 
 			break;
 		case ActionsManager::FullScreenAction:
@@ -580,7 +580,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 			break;
 		case ActionsManager::ShowSidebarAction:
-			SettingsManager::setValue(QLatin1String("Sidebar/Visible"), Action::calculateCheckedState(parameters, getAction(ActionsManager::ShowSidebarAction)));
+			SettingsManager::setValue(SettingsManager::Sidebar_VisibleOption, Action::calculateCheckedState(parameters, getAction(ActionsManager::ShowSidebarAction)));
 
 			break;
 		case ActionsManager::OpenPanelAction:
@@ -596,7 +596,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 			break;
 		case ActionsManager::ClosePanelAction:
-			SettingsManager::setValue(QLatin1String("Sidebar/CurrentPanel"), QString());
+			SettingsManager::setValue(SettingsManager::Sidebar_CurrentPanelOption, QString());
 
 			break;
 		case ActionsManager::ShowErrorConsoleAction:
@@ -627,7 +627,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			break;
 		case ActionsManager::ClearHistoryAction:
 			{
-				ClearHistoryDialog dialog(SettingsManager::getValue(QLatin1String("History/ManualClearOptions")).toStringList(), false, this);
+				ClearHistoryDialog dialog(SettingsManager::getValue(SettingsManager::History_ManualClearOptionsOption).toStringList(), false, this);
 				dialog.exec();
 			}
 
@@ -960,7 +960,7 @@ void MainWindow::toolBarModified(int identifier)
 
 void MainWindow::transferStarted()
 {
-	const QString action(SettingsManager::getValue(QLatin1String("Browser/TransferStartingAction")).toString());
+	const QString action(SettingsManager::getValue(SettingsManager::Browser_TransferStartingActionOption).toString());
 
 	if (action == QLatin1String("openTab"))
 	{
@@ -1005,7 +1005,7 @@ void MainWindow::placeSidebars()
 
 	m_splitter->addWidget(m_workspace);
 
-	if (SettingsManager::getValue(QLatin1String("Sidebar/Reverse")).toBool())
+	if (SettingsManager::getValue(SettingsManager::Sidebar_ReverseOption).toBool())
 	{
 		for (int i = m_splitter->count() - 1; i >= 0; --i)
 		{
@@ -1021,7 +1021,7 @@ void MainWindow::updateSidebars()
 	QList<int> sizes;
 	const int sidebarSize((m_sidebar && m_sidebar->isVisible()) ? m_sidebar->sizeHint().width() : 0);
 	const int sidebarToggleSize(m_sidebarToggle ? m_sidebarToggle->width() : 0);
-	const bool isReversed(SettingsManager::getValue(QLatin1String("Sidebar/Reverse")).toBool());
+	const bool isReversed(SettingsManager::getValue(SettingsManager::Sidebar_ReverseOption).toBool());
 
 	if (m_sidebarToggle)
 	{

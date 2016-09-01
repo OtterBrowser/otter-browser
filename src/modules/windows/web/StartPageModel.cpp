@@ -35,22 +35,22 @@ namespace Otter
 StartPageModel::StartPageModel(QObject *parent) : QStandardItemModel(parent),
 	m_bookmark(NULL)
 {
-	optionChanged(QLatin1String("Backends/Web"));
+	optionChanged(SettingsManager::Backends_WebOption);
 	reloadModel();
 
 	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(reloadModel()));
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
 }
 
-void StartPageModel::optionChanged(const QString &option)
+void StartPageModel::optionChanged(int identifier)
 {
-	if (option == QLatin1String("StartPage/BookmarksFolder") || option == QLatin1String("StartPage/ShowAddTile"))
-	{
-		reloadModel();
-	}
-	else if (option == QLatin1String("Backends/Web"))
+	if (identifier == SettingsManager::Backends_WebOption)
 	{
 		connect(AddonsManager::getWebBackend(), SIGNAL(thumbnailAvailable(QUrl,QPixmap,QString)), this, SLOT(thumbnailCreated(QUrl,QPixmap,QString)));
+	}
+	else if (identifier == SettingsManager::StartPage_BookmarksFolderOption || identifier == SettingsManager::StartPage_ShowAddTileOption)
+	{
+		reloadModel();
 	}
 }
 
@@ -100,7 +100,7 @@ void StartPageModel::thumbnailCreated(const QUrl &url, const QPixmap &thumbnail,
 
 void StartPageModel::reloadModel()
 {
-	const QString path(SettingsManager::getValue(QLatin1String("StartPage/BookmarksFolder")).toString());
+	const QString path(SettingsManager::getValue(SettingsManager::StartPage_BookmarksFolderOption).toString());
 
 	m_bookmark = BookmarksManager::getModel()->getItem(path);
 
@@ -157,11 +157,11 @@ void StartPageModel::reloadModel()
 				QStandardItem *item(m_bookmark->child(i)->clone());
 				item->setData(identifier, BookmarksModel::IdentifierRole);
 
-				if (url.isValid() && SettingsManager::getValue(QLatin1String("StartPage/TileBackgroundMode")) == QLatin1String("thumbnail") && !QFile::exists(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")) + QString::number(identifier) + QLatin1String(".png")))
+				if (url.isValid() && SettingsManager::getValue(SettingsManager::StartPage_TileBackgroundModeOption) == QLatin1String("thumbnail") && !QFile::exists(SessionsManager::getWritableDataPath(QLatin1String("thumbnails/")) + QString::number(identifier) + QLatin1String(".png")))
 				{
 					m_reloads[url] = qMakePair(identifier, false);
 
-					AddonsManager::getWebBackend()->requestThumbnail(url, QSize(SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt(), SettingsManager::getValue(QLatin1String("StartPage/TileHeight")).toInt()));
+					AddonsManager::getWebBackend()->requestThumbnail(url, QSize(SettingsManager::getValue(SettingsManager::StartPage_TileWidthOption).toInt(), SettingsManager::getValue(SettingsManager::StartPage_TileHeightOption).toInt()));
 				}
 
 				appendRow(item);
@@ -169,7 +169,7 @@ void StartPageModel::reloadModel()
 		}
 	}
 
-	if (SettingsManager::getValue(QLatin1String("StartPage/ShowAddTile")).toBool())
+	if (SettingsManager::getValue(SettingsManager::StartPage_ShowAddTileOption).toBool())
 	{
 		QStandardItem *item(new QStandardItem());
 		item->setData(tr("Add Tile…"), Qt::ToolTipRole);
@@ -192,10 +192,10 @@ void StartPageModel::reloadTile(const QModelIndex &index, bool full)
 	{
 		QSize size;
 
-		if (SettingsManager::getValue(QLatin1String("StartPage/TileBackgroundMode")) == QLatin1String("thumbnail"))
+		if (SettingsManager::getValue(SettingsManager::StartPage_TileBackgroundModeOption) == QLatin1String("thumbnail"))
 		{
-			size.setWidth(SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt());
-			size.setHeight(SettingsManager::getValue(QLatin1String("StartPage/TileHeight")).toInt());
+			size.setWidth(SettingsManager::getValue(SettingsManager::StartPage_TileWidthOption).toInt());
+			size.setHeight(SettingsManager::getValue(SettingsManager::StartPage_TileHeightOption).toInt());
 		}
 		else if (!full)
 		{

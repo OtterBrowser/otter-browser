@@ -30,7 +30,7 @@ namespace Otter
 {
 
 AddressDelegate::AddressDelegate(bool isAddressField, QObject *parent) : QItemDelegate(parent),
-	m_displayMode((SettingsManager::getValue(QLatin1String("AddressField/CompletionDisplayMode")).toString() == QLatin1String("columns")) ? ColumnsMode : CompactMode),
+	m_displayMode((SettingsManager::getValue(SettingsManager::AddressField_CompletionDisplayModeOption).toString() == QLatin1String("columns")) ? ColumnsMode : CompactMode),
 	m_isAddressField(isAddressField)
 {
 }

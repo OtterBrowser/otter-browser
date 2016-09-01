@@ -175,7 +175,7 @@ SessionInformation StartupDialog::getSession() const
 
 		if (m_ui->homePageButton->isChecked())
 		{
-			entry.url = SettingsManager::getValue(QLatin1String("Browser/HomePage")).toString();
+			entry.url = SettingsManager::getValue(SettingsManager::Browser_HomePageOption).toString();
 		}
 		else if (m_ui->startPageRadioButton->isChecked())
 		{

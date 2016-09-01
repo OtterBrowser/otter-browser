@@ -330,14 +330,14 @@ SourceViewerWidget::SourceViewerWidget(QWidget *parent) : QPlainTextEdit(parent)
 {
 	new SyntaxHighlighter(document());
 
-	setZoom(SettingsManager::getValue(QLatin1String("Content/DefaultZoom")).toInt());
-	optionChanged(QLatin1String("Interface/ShowScrollBars"), SettingsManager::getValue(QLatin1String("Interface/ShowScrollBars")));
-	optionChanged(QLatin1String("SourceViewer/ShowLineNumbers"), SettingsManager::getValue(QLatin1String("SourceViewer/ShowLineNumbers")));
-	optionChanged(QLatin1String("SourceViewer/WrapLines"), SettingsManager::getValue(QLatin1String("SourceViewer/WrapLines")));
+	setZoom(SettingsManager::getValue(SettingsManager::Content_DefaultZoomOption).toInt());
+	optionChanged(SettingsManager::Interface_ShowScrollBarsOption, SettingsManager::getValue(SettingsManager::Interface_ShowScrollBarsOption));
+	optionChanged(SettingsManager::SourceViewer_ShowLineNumbersOption, SettingsManager::getValue(SettingsManager::SourceViewer_ShowLineNumbersOption));
+	optionChanged(SettingsManager::SourceViewer_WrapLinesOption, SettingsManager::getValue(SettingsManager::SourceViewer_WrapLinesOption));
 
 	connect(this, SIGNAL(textChanged()), this, SLOT(updateSelection()));
 	connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(updateTextCursor()));
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
 }
 
 void SourceViewerWidget::resizeEvent(QResizeEvent *event)
@@ -374,14 +374,14 @@ void SourceViewerWidget::wheelEvent(QWheelEvent *event)
 	QPlainTextEdit::wheelEvent(event);
 }
 
-void SourceViewerWidget::optionChanged(const QString &option, const QVariant &value)
+void SourceViewerWidget::optionChanged(int identifier, const QVariant &value)
 {
-	if (option == QLatin1String("Interface/ShowScrollBars"))
+	if (identifier == SettingsManager::Interface_ShowScrollBarsOption)
 	{
 		setHorizontalScrollBarPolicy(value.toBool() ? Qt::ScrollBarAsNeeded : Qt::ScrollBarAlwaysOff);
 		setVerticalScrollBarPolicy(value.toBool() ? Qt::ScrollBarAsNeeded : Qt::ScrollBarAlwaysOff);
 	}
-	else if (option == QLatin1String("SourceViewer/ShowLineNumbers"))
+	else if (identifier == SettingsManager::SourceViewer_ShowLineNumbersOption)
 	{
 		if (value.toBool() && !m_marginWidget)
 		{
@@ -397,7 +397,7 @@ void SourceViewerWidget::optionChanged(const QString &option, const QVariant &va
 			setViewportMargins(0, 0, 0, 0);
 		}
 	}
-	else if (option == QLatin1String("SourceViewer/WrapLines"))
+	else if (identifier == SettingsManager::SourceViewer_WrapLinesOption)
 	{
 		setLineWrapMode(value.toBool() ? QPlainTextEdit::WidgetWidth : QPlainTextEdit::NoWrap);
 	}

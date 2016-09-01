@@ -37,13 +37,13 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 	m_ui->popupsComboBox->addItem(tr("Block all"), QLatin1String("blockAll"));
 	m_ui->popupsComboBox->addItem(tr("Open all"), QLatin1String("openAll"));
 	m_ui->popupsComboBox->addItem(tr("Open all in background"), QLatin1String("openAllInBackground"));
-	m_ui->defaultZoomSpinBox->setValue(SettingsManager::getValue(QLatin1String("Content/DefaultZoom")).toInt());
-	m_ui->zoomTextOnlyCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Content/ZoomTextOnly")).toBool());
-	m_ui->proportionalFontSizeSpinBox->setValue(SettingsManager::getValue(QLatin1String("Content/DefaultFontSize")).toInt());
-	m_ui->fixedFontSizeSpinBox->setValue(SettingsManager::getValue(QLatin1String("Content/DefaultFixedFontSize")).toInt());
-	m_ui->minimumFontSizeSpinBox->setValue(SettingsManager::getValue(QLatin1String("Content/MinimumFontSize")).toInt());
+	m_ui->defaultZoomSpinBox->setValue(SettingsManager::getValue(SettingsManager::Content_DefaultZoomOption).toInt());
+	m_ui->zoomTextOnlyCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Content_ZoomTextOnlyOption).toBool());
+	m_ui->proportionalFontSizeSpinBox->setValue(SettingsManager::getValue(SettingsManager::Content_DefaultFontSizeOption).toInt());
+	m_ui->fixedFontSizeSpinBox->setValue(SettingsManager::getValue(SettingsManager::Content_DefaultFixedFontSizeOption).toInt());
+	m_ui->minimumFontSizeSpinBox->setValue(SettingsManager::getValue(SettingsManager::Content_MinimumFontSizeOption).toInt());
 
-	const int popupsPolicyIndex(m_ui->popupsComboBox->findData(SettingsManager::getValue(QLatin1String("Content/PopupsPolicy")).toString()));
+	const int popupsPolicyIndex(m_ui->popupsComboBox->findData(SettingsManager::getValue(SettingsManager::Content_PopupsPolicyOption).toString()));
 
 	m_ui->popupsComboBox->setCurrentIndex((popupsPolicyIndex < 0) ? 0 : popupsPolicyIndex);
 
@@ -56,7 +56,7 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 
 	for (int i = 0; i < fonts.count(); ++i)
 	{
-		const QString family(SettingsManager::getValue(QLatin1String("Content/") + fonts.at(i)).toString());
+		const QString family(SettingsManager::getValue(SettingsManager::getOptionIdentifier((QLatin1String("Content/") + fonts.at(i)))).toString());
 		QList<QStandardItem*> items({new QStandardItem(fontCategories.at(i)), new QStandardItem(family), new QStandardItem(tr("The quick brown fox jumps over the lazy dog"))});
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		items[1]->setData(QLatin1String("Content/") + fonts.at(i), Qt::UserRole);
@@ -79,7 +79,7 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 
 	for (int i = 0; i < colors.count(); ++i)
 	{
-		const QString color(SettingsManager::getValue(QLatin1String("Content/") + colors.at(i)).toString());
+		const QString color(SettingsManager::getValue(SettingsManager::getOptionIdentifier(QLatin1String("Content/") + colors.at(i))).toString());
 		QList<QStandardItem*> items({new QStandardItem(colorTypes.at(i)), new QStandardItem(color)});
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		items[1]->setData(QColor(color), Qt::BackgroundRole);
@@ -161,21 +161,21 @@ void PreferencesContentPageWidget::colorChanged(QWidget *editor)
 
 void PreferencesContentPageWidget::save()
 {
-	SettingsManager::setValue(QLatin1String("Content/PopupsPolicy"), m_ui->popupsComboBox->currentData().toString());
-	SettingsManager::setValue(QLatin1String("Content/DefaultZoom"), m_ui->defaultZoomSpinBox->value());
-	SettingsManager::setValue(QLatin1String("Content/ZoomTextOnly"), m_ui->zoomTextOnlyCheckBox->isChecked());
-	SettingsManager::setValue(QLatin1String("Content/DefaultFontSize"), m_ui->proportionalFontSizeSpinBox->value());
-	SettingsManager::setValue(QLatin1String("Content/DefaultFixedFontSize"), m_ui->fixedFontSizeSpinBox->value());
-	SettingsManager::setValue(QLatin1String("Content/MinimumFontSize"), m_ui->minimumFontSizeSpinBox->value());
+	SettingsManager::setValue(SettingsManager::Content_PopupsPolicyOption, m_ui->popupsComboBox->currentData().toString());
+	SettingsManager::setValue(SettingsManager::Content_DefaultZoomOption, m_ui->defaultZoomSpinBox->value());
+	SettingsManager::setValue(SettingsManager::Content_ZoomTextOnlyOption, m_ui->zoomTextOnlyCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::Content_DefaultFontSizeOption, m_ui->proportionalFontSizeSpinBox->value());
+	SettingsManager::setValue(SettingsManager::Content_DefaultFixedFontSizeOption, m_ui->fixedFontSizeSpinBox->value());
+	SettingsManager::setValue(SettingsManager::Content_MinimumFontSizeOption, m_ui->minimumFontSizeSpinBox->value());
 
 	for (int i = 0; i < m_ui->fontsViewWidget->getRowCount(); ++i)
 	{
-		SettingsManager::setValue(m_ui->fontsViewWidget->getIndex(i, 1).data(Qt::UserRole).toString(), m_ui->fontsViewWidget->getIndex(i, 1).data(Qt::DisplayRole));
+		SettingsManager::setValue(SettingsManager::getOptionIdentifier(m_ui->fontsViewWidget->getIndex(i, 1).data(Qt::UserRole).toString()), m_ui->fontsViewWidget->getIndex(i, 1).data(Qt::DisplayRole));
 	}
 
 	for (int i = 0; i < m_ui->colorsViewWidget->getRowCount(); ++i)
 	{
-		SettingsManager::setValue(m_ui->colorsViewWidget->getIndex(i, 1).data(Qt::UserRole).toString(), m_ui->colorsViewWidget->getIndex(i, 1).data(Qt::EditRole));
+		SettingsManager::setValue(SettingsManager::getOptionIdentifier(m_ui->colorsViewWidget->getIndex(i, 1).data(Qt::UserRole).toString()), m_ui->colorsViewWidget->getIndex(i, 1).data(Qt::EditRole));
 	}
 }
 

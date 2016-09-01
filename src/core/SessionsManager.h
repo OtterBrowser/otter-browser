@@ -43,7 +43,7 @@ struct WindowHistoryEntry
 	QPoint position;
 	int zoom;
 
-	WindowHistoryEntry() : zoom(SettingsManager::getValue(QLatin1String("Content/DefaultZoom")).toInt()) {}
+	WindowHistoryEntry() : zoom(SettingsManager::getValue(SettingsManager::Content_DefaultZoomOption).toInt()) {}
 };
 
 struct WindowHistoryInformation
@@ -57,7 +57,7 @@ struct WindowHistoryInformation
 struct SessionWindow
 {
 	QRect geometry;
-	QVariantHash overrides;
+	QHash<int, QVariant> overrides;
 	QList<WindowHistoryEntry> history;
 	WindowState state;
 	int parentGroup;
@@ -65,7 +65,7 @@ struct SessionWindow
 	bool isAlwaysOnTop;
 	bool isPinned;
 
-	SessionWindow() : state((SettingsManager::getValue(QLatin1String("Interface/NewTabOpeningAction")).toString() == QLatin1String("maximizeTab")) ? MaximizedWindowState : NormalWindowState), parentGroup(0), historyIndex(-1), isAlwaysOnTop(false), isPinned(false) {}
+	SessionWindow() : state((SettingsManager::getValue(SettingsManager::Interface_NewTabOpeningActionOption).toString() == QLatin1String("maximizeTab")) ? MaximizedWindowState : NormalWindowState), parentGroup(0), historyIndex(-1), isAlwaysOnTop(false), isPinned(false) {}
 
 	QString getUrl() const
 	{
@@ -94,7 +94,7 @@ struct SessionWindow
 			return history.at(historyIndex).zoom;
 		}
 
-		return SettingsManager::getValue(QLatin1String("Content/DefaultZoom")).toInt();
+		return SettingsManager::getValue(SettingsManager::Content_DefaultZoomOption).toInt();
 	}
 };
 

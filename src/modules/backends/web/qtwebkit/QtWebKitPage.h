@@ -69,7 +69,7 @@ protected:
 	bool javaScriptPrompt(QWebFrame *frame, const QString &message, const QString &defaultValue, QString *result);
 
 protected slots:
-	void optionChanged(const QString &option, const QVariant &value);
+	void optionChanged(int identifier);
 	void pageLoadFinished();
 	void removePopup(const QUrl &url);
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY

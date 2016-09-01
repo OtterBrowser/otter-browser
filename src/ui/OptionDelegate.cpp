@@ -33,7 +33,7 @@ OptionDelegate::OptionDelegate(bool isSimple, QObject *parent) : QItemDelegate(p
 
 void OptionDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	const SettingsManager::OptionType type(SettingsManager::getDefinition(index.data(Qt::UserRole).toString()).type);
+	const SettingsManager::OptionType type(SettingsManager::getOptionDefinition(SettingsManager::getOptionIdentifier(index.data(Qt::UserRole).toString())).type);
 
 	if (type == SettingsManager::UnknownType)
 	{
@@ -113,15 +113,17 @@ QWidget* OptionDelegate::createEditor(QWidget *parent, const QStyleOptionViewIte
 {
 	Q_UNUSED(option)
 
-	const SettingsManager::OptionDefinition definition(SettingsManager::getDefinition(index.data(Qt::UserRole).toString()));
+	const QString name(index.data(Qt::UserRole).toString());
+	const int identifier(SettingsManager::getOptionIdentifier(name));
+	const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(identifier));
 	QVariant value(index.data(Qt::EditRole));
 
 	if (value.isNull())
 	{
-		value = SettingsManager::getValue(index.data(Qt::UserRole).toString());
+		value = SettingsManager::getValue(identifier);
 	}
 
-	OptionWidget *widget(new OptionWidget(index.data(Qt::UserRole).toString(), value, definition.type, parent));
+	OptionWidget *widget(new OptionWidget(name, value, definition.type, parent));
 	widget->setIndex(index);
 	widget->setControlsVisible(!m_isSimple);
 

@@ -175,7 +175,7 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	QList<QAction*> actions;
 	QAction *cycleAction(new QAction(tr("Switch tabs using the mouse wheel"), this));
 	cycleAction->setCheckable(true);
-	cycleAction->setChecked(!SettingsManager::getValue(QLatin1String("TabBar/RequireModifierToSwitchTabOnScroll")).toBool());
+	cycleAction->setChecked(!SettingsManager::getValue(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption).toBool());
 	cycleAction->setEnabled(m_mainWindow->getTabBar());
 
 	actions.append(cycleAction);

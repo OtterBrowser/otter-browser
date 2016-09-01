@@ -100,23 +100,23 @@ void NetworkManagerFactory::initialize()
 
 	loadUserAgents();
 
-	m_instance->optionChanged(QLatin1String("Network/AcceptLanguage"), SettingsManager::getValue(QLatin1String("Network/AcceptLanguage")));
-	m_instance->optionChanged(QLatin1String("Network/DoNotTrackPolicy"), SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy")));
-	m_instance->optionChanged(QLatin1String("Network/EnableReferrer"), SettingsManager::getValue(QLatin1String("Network/EnableReferrer")));
-	m_instance->optionChanged(QLatin1String("Network/WorkOffline"), SettingsManager::getValue(QLatin1String("Network/WorkOffline")));
-	m_instance->optionChanged(QLatin1String("Proxy/UseSystemAuthentication"), SettingsManager::getValue(QLatin1String("Proxy/UseSystemAuthentication")));
-	m_instance->optionChanged(QLatin1String("Security/Ciphers"), SettingsManager::getValue(QLatin1String("Security/Ciphers")));
+	m_instance->optionChanged(SettingsManager::Network_AcceptLanguageOption, SettingsManager::getValue(SettingsManager::Network_AcceptLanguageOption));
+	m_instance->optionChanged(SettingsManager::Network_DoNotTrackPolicyOption, SettingsManager::getValue(SettingsManager::Network_DoNotTrackPolicyOption));
+	m_instance->optionChanged(SettingsManager::Network_EnableReferrerOption, SettingsManager::getValue(SettingsManager::Network_EnableReferrerOption));
+	m_instance->optionChanged(SettingsManager::Network_WorkOfflineOption, SettingsManager::getValue(SettingsManager::Network_WorkOfflineOption));
+	m_instance->optionChanged(SettingsManager::Proxy_UseSystemAuthenticationOption, SettingsManager::getValue(SettingsManager::Proxy_UseSystemAuthenticationOption));
+	m_instance->optionChanged(SettingsManager::Security_CiphersOption, SettingsManager::getValue(SettingsManager::Security_CiphersOption));
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), m_instance, SLOT(optionChanged(QString,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), m_instance, SLOT(optionChanged(int,QVariant)));
 }
 
-void NetworkManagerFactory::optionChanged(const QString &option, const QVariant &value)
+void NetworkManagerFactory::optionChanged(int identifier, const QVariant &value)
 {
-	if (option == QLatin1String("Network/AcceptLanguage"))
+	if (identifier == SettingsManager::Network_AcceptLanguageOption)
 	{
 		m_acceptLanguage = ((value.toString().isEmpty()) ? QLatin1String(" ") : value.toString().replace(QLatin1String("system"), QLocale::system().bcp47Name()));
 	}
-	else if (option == QLatin1String("Network/DoNotTrackPolicy"))
+	else if (identifier == SettingsManager::Network_DoNotTrackPolicyOption)
 	{
 		const QString policyValue(value.toString());
 
@@ -133,19 +133,19 @@ void NetworkManagerFactory::optionChanged(const QString &option, const QVariant 
 			m_doNotTrackPolicy = SkipTrackPolicy;
 		}
 	}
-	else if (option == QLatin1String("Network/EnableReferrer"))
+	else if (identifier == SettingsManager::Network_EnableReferrerOption)
 	{
 		m_canSendReferrer = value.toBool();
 	}
-	else if (option == QLatin1String("Network/WorkOffline"))
+	else if (identifier == SettingsManager::Network_WorkOfflineOption)
 	{
 		m_isWorkingOffline = value.toBool();
 	}
-	else if (option == QLatin1String("Proxy/UseSystemAuthentication"))
+	else if (identifier == SettingsManager::Proxy_UseSystemAuthenticationOption)
 	{
 		m_isUsingSystemProxyAuthentication = value.toBool();
 	}
-	else if (option == QLatin1String("Security/Ciphers"))
+	else if (identifier == SettingsManager::Security_CiphersOption)
 	{
 		if (value.toString() == QLatin1String("default"))
 		{

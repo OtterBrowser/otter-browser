@@ -37,7 +37,7 @@ UpdateChecker::UpdateChecker(QObject *parent, bool inBackground) : QObject(paren
 	m_networkReply(NULL),
 	m_isInBackground(inBackground)
 {
-	const QUrl url(SettingsManager::getValue(QLatin1String("Updates/ServerUrl")).toString());
+	const QUrl url(SettingsManager::getValue(SettingsManager::Updates_ServerUrlOption).toString());
 
 	if (!url.isValid())
 	{
@@ -69,7 +69,7 @@ void UpdateChecker::runUpdateCheck()
 		return;
 	}
 
-	QStringList activeChannels(SettingsManager::getValue(QLatin1String("Updates/ActiveChannels")).toStringList());
+	QStringList activeChannels(SettingsManager::getValue(SettingsManager::Updates_ActiveChannelsOption).toStringList());
 	activeChannels.removeAll(QString());
 
 	const QJsonObject updateData(QJsonDocument::fromJson(m_networkReply->readAll()).object());
@@ -121,7 +121,7 @@ void UpdateChecker::runUpdateCheck()
 		}
 	}
 
-	SettingsManager::setValue(QLatin1String("Updates/LastCheck"), QDate::currentDate().toString(Qt::ISODate));
+	SettingsManager::setValue(SettingsManager::Updates_LastCheckOption, QDate::currentDate().toString(Qt::ISODate));
 
 	emit finished(availableUpdates);
 

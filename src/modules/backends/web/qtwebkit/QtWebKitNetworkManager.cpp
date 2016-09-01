@@ -108,7 +108,7 @@ void QtWebKitNetworkManager::addContentBlockingException(const QUrl &url, Networ
 {
 	m_contentBlockingExceptions.insert(url);
 
-	if (resourceType == NetworkManager::ImageType && m_widget->getOption(QLatin1String("Browser/EnableImages"), m_widget->getUrl()).toString() == QLatin1String("onlyCached"))
+	if (resourceType == NetworkManager::ImageType && m_widget->getOption(SettingsManager::Browser_EnableImagesOption, m_widget->getUrl()).toString() == QLatin1String("onlyCached"))
 	{
 		m_areImagesEnabled = false;
 	}
@@ -319,7 +319,7 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 		return;
 	}
 
-	QStringList ignoredErrors(m_widget->getOption(QLatin1String("Security/IgnoreSslErrors"), m_widget->getUrl()).toStringList());
+	QStringList ignoredErrors(m_widget->getOption(SettingsManager::Security_IgnoreSslErrorsOption, m_widget->getUrl()).toStringList());
 	QStringList messages;
 	QList<QSslError> errorsToIgnore;
 
@@ -377,7 +377,7 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 				}
 			}
 
-			SettingsManager::setValue(QLatin1String("Security/IgnoreSslErrors"), ignoredErrors, m_widget->getUrl());
+			SettingsManager::setValue(SettingsManager::Security_IgnoreSslErrorsOption, ignoredErrors, m_widget->getUrl());
 		}
 	}
 }
@@ -426,22 +426,22 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 		m_backend = AddonsManager::getWebBackend(QLatin1String("qtwebkit"));
 	}
 
-	if (m_widget->getOption(QLatin1String("ContentBlocking/EnableContentBlocking"), url).toBool())
+	if (m_widget->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, url).toBool())
 	{
-		m_contentBlockingProfiles = ContentBlockingManager::getProfileList(m_widget->getOption(QLatin1String("Content/BlockingProfiles"), url).toStringList());
+		m_contentBlockingProfiles = ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::Content_BlockingProfilesOption, url).toStringList());
 	}
 	else
 	{
 		m_contentBlockingProfiles.clear();
 	}
 
-	QString acceptLanguage(m_widget->getOption(QLatin1String("Network/AcceptLanguage"), url).toString());
+	QString acceptLanguage(m_widget->getOption(SettingsManager::Network_AcceptLanguageOption, url).toString());
 	acceptLanguage = ((acceptLanguage.isEmpty()) ? QLatin1String(" ") : acceptLanguage.replace(QLatin1String("system"), QLocale::system().bcp47Name()));
 
 	m_acceptLanguage = ((acceptLanguage == NetworkManagerFactory::getAcceptLanguage()) ? QString() : acceptLanguage);
-	m_userAgent = m_backend->getUserAgent(NetworkManagerFactory::getUserAgent(m_widget->getOption(QLatin1String("Network/UserAgent"), url).toString()).value);
+	m_userAgent = m_backend->getUserAgent(NetworkManagerFactory::getUserAgent(m_widget->getOption(SettingsManager::Network_UserAgentOption, url).toString()).value);
 
-	const QString doNotTrackPolicyValue(m_widget->getOption(QLatin1String("Network/DoNotTrackPolicy"), url).toString());
+	const QString doNotTrackPolicyValue(m_widget->getOption(SettingsManager::Network_DoNotTrackPolicyOption, url).toString());
 
 	if (doNotTrackPolicyValue == QLatin1String("allow"))
 	{
@@ -456,10 +456,10 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 		m_doNotTrackPolicy = NetworkManagerFactory::SkipTrackPolicy;
 	}
 
-	m_areImagesEnabled = (m_widget->getOption(QLatin1String("Browser/EnableImages"), url).toString() != QLatin1String("disabled"));
-	m_canSendReferrer = m_widget->getOption(QLatin1String("Network/EnableReferrer"), url).toBool();
+	m_areImagesEnabled = (m_widget->getOption(SettingsManager::Browser_EnableImagesOption, url).toString() != QLatin1String("disabled"));
+	m_canSendReferrer = m_widget->getOption(SettingsManager::Network_EnableReferrerOption, url).toBool();
 
-	const QString generalCookiesPolicyValue(m_widget->getOption(QLatin1String("Network/CookiesPolicy"), url).toString());
+	const QString generalCookiesPolicyValue(m_widget->getOption(SettingsManager::Network_CookiesPolicyOption, url).toString());
 	CookieJar::CookiesPolicy generalCookiesPolicy(CookieJar::AcceptAllCookies);
 
 	if (generalCookiesPolicyValue == QLatin1String("ignore"))
@@ -475,7 +475,7 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 		generalCookiesPolicy = CookieJar::AcceptExistingCookies;
 	}
 
-	const QString thirdPartyCookiesPolicyValue(m_widget->getOption(QLatin1String("Network/ThirdPartyCookiesPolicy"), url).toString());
+	const QString thirdPartyCookiesPolicyValue(m_widget->getOption(SettingsManager::Network_ThirdPartyCookiesPolicyOption, url).toString());
 	CookieJar::CookiesPolicy thirdPartyCookiesPolicy(CookieJar::AcceptAllCookies);
 
 	if (thirdPartyCookiesPolicyValue == QLatin1String("ignore"))
@@ -491,7 +491,7 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 		thirdPartyCookiesPolicy = CookieJar::AcceptExistingCookies;
 	}
 
-	const QString keepModeValue(m_widget->getOption(QLatin1String("Network/CookiesKeepMode"), url).toString());
+	const QString keepModeValue(m_widget->getOption(SettingsManager::Network_CookiesKeepModeOption, url).toString());
 	CookieJar::KeepMode keepMode(CookieJar::KeepUntilExpiresMode);
 
 	if (keepModeValue == QLatin1String("keepUntilExit"))
@@ -503,7 +503,7 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 		keepMode = CookieJar::AskIfKeepMode;
 	}
 
-	m_cookieJarProxy->setup(m_widget->getOption(QLatin1String("Network/ThirdPartyCookiesAcceptedHosts"), url).toStringList(), m_widget->getOption(QLatin1String("Network/ThirdPartyCookiesRejectedHosts"), url).toStringList(), generalCookiesPolicy, thirdPartyCookiesPolicy, keepMode);
+	m_cookieJarProxy->setup(m_widget->getOption(SettingsManager::Network_ThirdPartyCookiesAcceptedHostsOption, url).toStringList(), m_widget->getOption(SettingsManager::Network_ThirdPartyCookiesRejectedHostsOption, url).toStringList(), generalCookiesPolicy, thirdPartyCookiesPolicy, keepMode);
 }
 
 void QtWebKitNetworkManager::setPageInformation(WebWidget::PageInformation key, const QVariant &value)

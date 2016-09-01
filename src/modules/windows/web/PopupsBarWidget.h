@@ -44,7 +44,7 @@ protected:
 	void changeEvent(QEvent *event);
 
 protected slots:
-	void optionChanged(const QString &option);
+	void optionChanged(int identifier);
 	void openUrl(QAction *action);
 	void setPolicy(QAction *action);
 

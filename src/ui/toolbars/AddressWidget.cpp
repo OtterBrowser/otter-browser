@@ -62,7 +62,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : ComboBoxWidget(p
 	m_completionModes(NoCompletionMode),
 	m_hints(WindowsManager::DefaultOpen),
 	m_removeModelTimer(0),
-	m_isHistoryDropdownEnabled(SettingsManager::getValue(QLatin1String("AddressField/EnableHistoryDropdown")).toBool()),
+	m_isHistoryDropdownEnabled(SettingsManager::getValue(SettingsManager::AddressField_EnableHistoryDropdownOption).toBool()),
 	m_isNavigatingCompletion(false),
 	m_isUsingSimpleMode(false),
 	m_wasPopupVisible(false)
@@ -82,22 +82,22 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : ComboBoxWidget(p
 	setInsertPolicy(QComboBox::NoInsert);
 	setMouseTracking(true);
 	setWindow(window);
-	optionChanged(QLatin1String("AddressField/CompletionMode"), SettingsManager::getValue(QLatin1String("AddressField/CompletionMode")));
-	optionChanged(QLatin1String("AddressField/DropAction"), SettingsManager::getValue(QLatin1String("AddressField/DropAction")));
-	optionChanged(QLatin1String("AddressField/SelectAllOnFocus"), SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")));
+	optionChanged(SettingsManager::AddressField_CompletionModeOption, SettingsManager::getValue(SettingsManager::AddressField_CompletionModeOption));
+	optionChanged(SettingsManager::AddressField_DropActionOption, SettingsManager::getValue(SettingsManager::AddressField_DropActionOption));
+	optionChanged(SettingsManager::AddressField_SelectAllOnFocusOption, SettingsManager::getValue(SettingsManager::AddressField_SelectAllOnFocusOption));
 
 	m_lineEdit->setStyleSheet(QLatin1String("QLineEdit {background:transparent;}"));
 	m_lineEdit->installEventFilter(this);
 
 	if (toolBar)
 	{
-		optionChanged(QLatin1String("AddressField/ShowBookmarkIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowBookmarkIcon")));
-		optionChanged(QLatin1String("AddressField/ShowFeedsIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowFeedsIcon")));
-		optionChanged(QLatin1String("AddressField/ShowUrlIcon"), SettingsManager::getValue(QLatin1String("AddressField/ShowUrlIcon")));
+		optionChanged(SettingsManager::AddressField_ShowBookmarkIconOption, SettingsManager::getValue(SettingsManager::AddressField_ShowBookmarkIconOption));
+		optionChanged(SettingsManager::AddressField_ShowFeedsIconOption, SettingsManager::getValue(SettingsManager::AddressField_ShowFeedsIconOption));
+		optionChanged(SettingsManager::AddressField_ShowUrlIconOption, SettingsManager::getValue(SettingsManager::AddressField_ShowUrlIconOption));
 
 		m_lineEdit->setPlaceholderText(tr("Enter address or search…"));
 
-		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
 
 		if (toolBar->getIdentifier() != ToolBarsManager::NavigationBar)
 		{
@@ -272,7 +272,7 @@ void AddressWidget::keyPressEvent(QKeyEvent *event)
 		{
 			setText(Utils::isUrlEmpty(url) ? QString() : url.toString());
 
-			if (!m_lineEdit->text().trimmed().isEmpty() && SettingsManager::getValue(QLatin1String("AddressField/SelectAllOnFocus")).toBool())
+			if (!m_lineEdit->text().trimmed().isEmpty() && SettingsManager::getValue(SettingsManager::AddressField_SelectAllOnFocusOption).toBool())
 			{
 				m_lineEdit->selectAll();
 			}
@@ -446,9 +446,9 @@ void AddressWidget::hidePopup()
 	m_removeModelTimer = startTimer(250);
 }
 
-void AddressWidget::optionChanged(const QString &option, const QVariant &value)
+void AddressWidget::optionChanged(int identifier, const QVariant &value)
 {
-	if (option == QLatin1String("AddressField/CompletionMode"))
+	if (identifier == SettingsManager::AddressField_CompletionModeOption)
 	{
 		const QString completionMode = value.toString();
 
@@ -472,7 +472,7 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 			connect(m_lineEdit, SIGNAL(textEdited(QString)), m_completionModel, SLOT(setFilter(QString)));
 		}
 	}
-	else if (option == QLatin1String("AddressField/DropAction"))
+	else if (identifier == SettingsManager::AddressField_DropActionOption)
 	{
 		const QString dropAction(value.toString());
 
@@ -489,11 +489,11 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 			m_lineEdit->setDropMode(LineEditWidget::PasteDropMode);
 		}
 	}
-	else if (option == QLatin1String("AddressField/SelectAllOnFocus"))
+	else if (identifier == SettingsManager::AddressField_SelectAllOnFocusOption)
 	{
 		m_lineEdit->setSelectAllOnFocus(value.toBool());
 	}
-	else if (option == QLatin1String("AddressField/EnableHistoryDropdown"))
+	else if (identifier == SettingsManager::AddressField_EnableHistoryDropdownOption)
 	{
 		m_isHistoryDropdownEnabled = value.toBool();
 
@@ -510,7 +510,7 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 
 		updateIcons();
 	}
-	else if (option == QLatin1String("AddressField/ShowBookmarkIcon"))
+	else if (identifier == SettingsManager::AddressField_ShowBookmarkIconOption)
 	{
 		if (value.toBool() && !m_bookmarkLabel)
 		{
@@ -533,11 +533,11 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 			updateIcons();
 		}
 	}
-	else if (option == QLatin1String("AddressField/ShowFeedsIcon"))
+	else if (identifier == SettingsManager::AddressField_ShowFeedsIconOption)
 	{
 		updateFeeds();
 	}
-	else if (option == QLatin1String("AddressField/ShowUrlIcon"))
+	else if (identifier == SettingsManager::AddressField_ShowUrlIconOption)
 	{
 		if (value.toBool() && !m_urlIconLabel)
 		{
@@ -573,7 +573,7 @@ void AddressWidget::optionChanged(const QString &option, const QVariant &value)
 
 		updateIcons();
 	}
-	else if (option == QLatin1String("AddressField/ShowLoadPluginsIcon") && m_window)
+	else if (identifier == SettingsManager::AddressField_ShowLoadPluginsIconOption && m_window)
 	{
 		if (value.toBool())
 		{
@@ -637,7 +637,7 @@ void AddressWidget::removeIcon()
 
 	if (action)
 	{
-		SettingsManager::setValue(QStringLiteral("AddressField/Show%1Icon").arg(action->data().toString()), false);
+		SettingsManager::setValue(SettingsManager::getOptionIdentifier(QStringLiteral("AddressField/Show%1Icon").arg(action->data().toString())), false);
 	}
 }
 
@@ -687,7 +687,7 @@ void AddressWidget::updateBookmark(const QUrl &url)
 
 void AddressWidget::updateFeeds()
 {
-	const QList<LinkUrl> feeds((SettingsManager::getValue(QLatin1String("AddressField/ShowFeedsIcon")).toBool() && m_window && m_window->getLoadingState() == WindowsManager::FinishedLoadingState) ? m_window->getContentsWidget()->getFeeds() : QList<LinkUrl>());
+	const QList<LinkUrl> feeds((SettingsManager::getValue(SettingsManager::AddressField_ShowFeedsIconOption).toBool() && m_window && m_window->getLoadingState() == WindowsManager::FinishedLoadingState) ? m_window->getContentsWidget()->getFeeds() : QList<LinkUrl>());
 
 	if (!feeds.isEmpty() && !m_feedsLabel)
 	{
@@ -716,7 +716,7 @@ void AddressWidget::updateFeeds()
 
 void AddressWidget::updateLoadPlugins()
 {
-	const bool canLoadPlugins(SettingsManager::getValue(QLatin1String("AddressField/ShowLoadPluginsIcon")).toBool() && m_window && !m_window->isAboutToClose() && m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction) && m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction)->isEnabled());
+	const bool canLoadPlugins(SettingsManager::getValue(SettingsManager::AddressField_ShowLoadPluginsIconOption).toBool() && m_window && !m_window->isAboutToClose() && m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction) && m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction)->isEnabled());
 
 	if (canLoadPlugins && !m_loadPluginsLabel)
 	{
@@ -1055,7 +1055,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
-		if (mouseEvent && mouseEvent->button() == Qt::MiddleButton && m_lineEdit->text().isEmpty() && !QApplication::clipboard()->text().isEmpty() && SettingsManager::getValue(QLatin1String("AddressField/PasteAndGoOnMiddleClick")).toBool())
+		if (mouseEvent && mouseEvent->button() == Qt::MiddleButton && m_lineEdit->text().isEmpty() && !QApplication::clipboard()->text().isEmpty() && SettingsManager::getValue(SettingsManager::AddressField_PasteAndGoOnMiddleClickOption).toBool())
 		{
 			handleUserInput(QApplication::clipboard()->text().trimmed(), WindowsManager::CurrentTabOpen);
 

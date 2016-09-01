@@ -152,12 +152,12 @@ void ContentBlockingInformationWidget::toggleOption(QAction *action)
 	{
 		if (action->data().isNull())
 		{
-			m_window->getContentsWidget()->setOption(QLatin1String("ContentBlocking/EnableContentBlocking"), action->isChecked());
+			m_window->getContentsWidget()->setOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, action->isChecked());
 		}
 		else
 		{
 			const QString profile(action->data().toString());
-			QStringList profiles(m_window->getContentsWidget()->getOption(QLatin1String("Content/BlockingProfiles")).toStringList());
+			QStringList profiles(m_window->getContentsWidget()->getOption(SettingsManager::Content_BlockingProfilesOption).toStringList());
 
 			if (!action->isChecked())
 			{
@@ -168,7 +168,7 @@ void ContentBlockingInformationWidget::toggleOption(QAction *action)
 				profiles.append(profile);
 			}
 
-			m_window->getContentsWidget()->setOption(QLatin1String("Content/BlockingProfiles"), profiles);
+			m_window->getContentsWidget()->setOption(SettingsManager::Content_BlockingProfilesOption, profiles);
 		}
 	}
 }
@@ -244,7 +244,7 @@ void ContentBlockingInformationWidget::populateProfilesMenu()
 
 	QAction *enableContentBlockingAction(m_profilesMenu->addAction(tr("Enable Content Blocking")));
 	enableContentBlockingAction->setCheckable(true);
-	enableContentBlockingAction->setChecked(m_window->getContentsWidget()->getOption(QLatin1String("ContentBlocking/EnableContentBlocking")).toBool());
+	enableContentBlockingAction->setChecked(m_window->getContentsWidget()->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption).toBool());
 
 	m_profilesMenu->addSeparator();
 
@@ -266,7 +266,7 @@ void ContentBlockingInformationWidget::populateProfilesMenu()
 	}
 
 	const QVector<ContentBlockingProfile*> profiles(ContentBlockingManager::getProfiles());
-	const QStringList enabledProfiles(m_window->getContentsWidget()->getOption(QLatin1String("Content/BlockingProfiles")).toStringList());
+	const QStringList enabledProfiles(m_window->getContentsWidget()->getOption(SettingsManager::Content_BlockingProfilesOption).toStringList());
 
 	for (int i = 0; i < profiles.count(); ++i)
 	{

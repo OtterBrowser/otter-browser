@@ -28,9 +28,9 @@ namespace Otter
 {
 
 PreferencesPrivacyPageWidget::PreferencesPrivacyPageWidget(QWidget *parent) : QWidget(parent),
-	m_thirdPartyCookiesAcceptedHosts(SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesAcceptedHosts")).toStringList()),
-	m_thirdPartyCookiesRejectedHosts(SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesRejectedHosts")).toStringList()),
-	m_clearHisorySettings(SettingsManager::getValue(QLatin1String("History/ClearOnClose")).toStringList()),
+	m_thirdPartyCookiesAcceptedHosts(SettingsManager::getValue(SettingsManager::Network_ThirdPartyCookiesAcceptedHostsOption).toStringList()),
+	m_thirdPartyCookiesRejectedHosts(SettingsManager::getValue(SettingsManager::Network_ThirdPartyCookiesRejectedHostsOption).toStringList()),
+	m_clearHisorySettings(SettingsManager::getValue(SettingsManager::History_ClearOnCloseOption).toStringList()),
 	m_ui(new Ui::PreferencesPrivacyPageWidget)
 {
 	m_clearHisorySettings.removeAll(QString());
@@ -40,35 +40,35 @@ PreferencesPrivacyPageWidget::PreferencesPrivacyPageWidget(QWidget *parent) : QW
 	m_ui->doNotTrackComboBox->addItem(tr("Inform websites that I allow tracking"), QLatin1String("allow"));
 	m_ui->doNotTrackComboBox->addItem(tr("Do not inform websites about my preference"), QLatin1String("skip"));
 
-	const int doNotTrackPolicyIndex(m_ui->doNotTrackComboBox->findData(SettingsManager::getValue(QLatin1String("Network/DoNotTrackPolicy")).toString()));
+	const int doNotTrackPolicyIndex(m_ui->doNotTrackComboBox->findData(SettingsManager::getValue(SettingsManager::Network_DoNotTrackPolicyOption).toString()));
 
 	m_ui->doNotTrackComboBox->setCurrentIndex((doNotTrackPolicyIndex < 0) ? 2 : doNotTrackPolicyIndex);
-	m_ui->privateModeCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool());
+	m_ui->privateModeCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_PrivateModeOption).toBool());
 	m_ui->historyWidget->setDisabled(m_ui->privateModeCheckBox->isChecked());
-	m_ui->rememberBrowsingHistoryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("History/RememberBrowsing")).toBool());
-	m_ui->rememberDownloadsHistoryCheckBox->setChecked(SettingsManager::getValue(QLatin1String("History/RememberDownloads")).toBool());
-	m_ui->enableCookiesCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Network/CookiesPolicy")).toString() != QLatin1String("ignore"));
+	m_ui->rememberBrowsingHistoryCheckBox->setChecked(SettingsManager::getValue(SettingsManager::History_RememberBrowsingOption).toBool());
+	m_ui->rememberDownloadsHistoryCheckBox->setChecked(SettingsManager::getValue(SettingsManager::History_RememberDownloadsOption).toBool());
+	m_ui->enableCookiesCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Network_CookiesPolicyOption).toString() != QLatin1String("ignore"));
 	m_ui->cookiesWidget->setEnabled(m_ui->enableCookiesCheckBox->isChecked());
 	m_ui->cookiesPolicyComboBox->addItem(tr("Always"), QLatin1String("acceptAll"));
 	m_ui->cookiesPolicyComboBox->addItem(tr("Only existing"), QLatin1String("acceptExisting"));
 	m_ui->cookiesPolicyComboBox->addItem(tr("Only read existing"), QLatin1String("readOnly"));
 	m_ui->cookiesPolicyComboBox->addItem(tr("Never"), QLatin1String("ignore"));
 
-	const int cookiesPolicyIndex(m_ui->cookiesPolicyComboBox->findData(SettingsManager::getValue(QLatin1String("Network/CookiesPolicy")).toString()));
+	const int cookiesPolicyIndex(m_ui->cookiesPolicyComboBox->findData(SettingsManager::getValue(SettingsManager::Network_CookiesPolicyOption).toString()));
 
 	m_ui->cookiesPolicyComboBox->setCurrentIndex((cookiesPolicyIndex < 0) ? 0 : cookiesPolicyIndex);
 	m_ui->keepCookiesModeComboBox->addItem(tr("Expires"), QLatin1String("keepUntilExpires"));
 	m_ui->keepCookiesModeComboBox->addItem(tr("Current session is closed"), QLatin1String("keepUntilExit"));
 	m_ui->keepCookiesModeComboBox->addItem(tr("Always ask"), QLatin1String("ask"));
 
-	const int cookiesKeepModeIndex(m_ui->keepCookiesModeComboBox->findData(SettingsManager::getValue(QLatin1String("Network/CookiesKeepMode")).toString()));
+	const int cookiesKeepModeIndex(m_ui->keepCookiesModeComboBox->findData(SettingsManager::getValue(SettingsManager::Network_CookiesKeepModeOption).toString()));
 
 	m_ui->keepCookiesModeComboBox->setCurrentIndex((cookiesKeepModeIndex < 0) ? 0 : cookiesKeepModeIndex);
 	m_ui->thirdPartyCookiesPolicyComboBox->addItem(tr("Always"), QLatin1String("acceptAll"));
 	m_ui->thirdPartyCookiesPolicyComboBox->addItem(tr("Only existing"), QLatin1String("acceptExisting"));
 	m_ui->thirdPartyCookiesPolicyComboBox->addItem(tr("Never"), QLatin1String("ignore"));
 
-	const int thirdPartyCookiesIndex(m_ui->thirdPartyCookiesPolicyComboBox->findData(SettingsManager::getValue(QLatin1String("Network/ThirdPartyCookiesPolicy")).toString()));
+	const int thirdPartyCookiesIndex(m_ui->thirdPartyCookiesPolicyComboBox->findData(SettingsManager::getValue(SettingsManager::Network_ThirdPartyCookiesPolicyOption).toString()));
 
 	m_ui->thirdPartyCookiesPolicyComboBox->setCurrentIndex((thirdPartyCookiesIndex < 0) ? 0 : thirdPartyCookiesIndex);
 	m_ui->clearHistoryCheckBox->setChecked(!m_clearHisorySettings.isEmpty());
@@ -126,16 +126,16 @@ void PreferencesPrivacyPageWidget::setupClearHistory()
 
 void PreferencesPrivacyPageWidget::save()
 {
-	SettingsManager::setValue(QLatin1String("Network/DoNotTrackPolicy"), m_ui->doNotTrackComboBox->currentData().toString());
-	SettingsManager::setValue(QLatin1String("Browser/PrivateMode"), m_ui->privateModeCheckBox->isChecked());
-	SettingsManager::setValue(QLatin1String("History/RememberBrowsing"), m_ui->rememberBrowsingHistoryCheckBox->isChecked());
-	SettingsManager::setValue(QLatin1String("History/RememberDownloads"), m_ui->rememberDownloadsHistoryCheckBox->isChecked());
-	SettingsManager::setValue(QLatin1String("Network/CookiesPolicy"), (m_ui->enableCookiesCheckBox->isChecked() ? m_ui->cookiesPolicyComboBox->currentData().toString() : QLatin1String("ignore")));
-	SettingsManager::setValue(QLatin1String("Network/CookiesKeepMode"), m_ui->keepCookiesModeComboBox->currentData().toString());
-	SettingsManager::setValue(QLatin1String("Network/ThirdPartyCookiesPolicy"), m_ui->thirdPartyCookiesPolicyComboBox->currentData().toString());
-	SettingsManager::setValue(QLatin1String("Network/ThirdPartyCookiesAcceptedHosts"), m_thirdPartyCookiesAcceptedHosts);
-	SettingsManager::setValue(QLatin1String("Network/ThirdPartyCookiesRejectedHosts"), m_thirdPartyCookiesRejectedHosts);
-	SettingsManager::setValue(QLatin1String("History/ClearOnClose"), (m_ui->clearHistoryCheckBox->isChecked() ? m_clearHisorySettings : QStringList()));
+	SettingsManager::setValue(SettingsManager::Network_DoNotTrackPolicyOption, m_ui->doNotTrackComboBox->currentData().toString());
+	SettingsManager::setValue(SettingsManager::Browser_PrivateModeOption, m_ui->privateModeCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::History_RememberBrowsingOption, m_ui->rememberBrowsingHistoryCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::History_RememberDownloadsOption, m_ui->rememberDownloadsHistoryCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::Network_CookiesPolicyOption, (m_ui->enableCookiesCheckBox->isChecked() ? m_ui->cookiesPolicyComboBox->currentData().toString() : QLatin1String("ignore")));
+	SettingsManager::setValue(SettingsManager::Network_CookiesKeepModeOption, m_ui->keepCookiesModeComboBox->currentData().toString());
+	SettingsManager::setValue(SettingsManager::Network_ThirdPartyCookiesPolicyOption, m_ui->thirdPartyCookiesPolicyComboBox->currentData().toString());
+	SettingsManager::setValue(SettingsManager::Network_ThirdPartyCookiesAcceptedHostsOption, m_thirdPartyCookiesAcceptedHosts);
+	SettingsManager::setValue(SettingsManager::Network_ThirdPartyCookiesRejectedHostsOption, m_thirdPartyCookiesRejectedHosts);
+	SettingsManager::setValue(SettingsManager::History_ClearOnCloseOption, (m_ui->clearHistoryCheckBox->isChecked() ? m_clearHisorySettings : QStringList()));
 }
 
 }

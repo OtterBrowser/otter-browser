@@ -103,7 +103,7 @@ NotificationDialog::NotificationDialog(Notification *notification, QWidget *pare
 	m_animation->setEndValue(1.0);
 	m_animation->start();
 
-	const int visibilityDuration(SettingsManager::getValue(QLatin1String("Interface/NotificationVisibilityDuration")).toInt());
+	const int visibilityDuration(SettingsManager::getValue(SettingsManager::Interface_NotificationVisibilityDurationOption).toInt());
 
 	if (visibilityDuration > 0)
 	{

@@ -39,7 +39,7 @@ public:
 	void interceptRequest(QWebEngineUrlRequestInfo &request);
 
 protected slots:
-	void optionChanged(const QString &option);
+	void optionChanged(int identifier);
 	void clearContentBlockingInformation();
 
 private:

@@ -88,7 +88,7 @@ public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void setActiveStyleSheet(const QString &styleSheet);
 	void setPermission(const QString &key, const QUrl &url, PermissionPolicies policies);
-	void setOption(const QString &key, const QVariant &value);
+	void setOption(int identifier, const QVariant &value);
 	void setScrollPosition(const QPoint &position);
 	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);
@@ -120,7 +120,7 @@ protected:
 #else
 	void setHistory(const QVariantMap &history);
 #endif
-	void setOptions(const QVariantHash &options);
+	void setOptions(const QHash<int, QVariant> &options);
 	QWebPage* getPage();
 	QString getPasswordToken() const;
 	QString getPluginToken() const;
@@ -135,7 +135,7 @@ protected:
 	bool isScrollBar(const QPoint &position) const;
 
 protected slots:
-	void optionChanged(const QString &option, const QVariant &value);
+	void optionChanged(int identifier, const QVariant &value);
 	void navigating(const QUrl &url, QWebFrame *frame, QWebPage::NavigationType type);
 	void pageLoadStarted();
 	void pageLoadFinished();

@@ -66,7 +66,7 @@ public:
 
 	void search(const QString &search, const QString &query);
 	void print(QPrinter *printer);
-	void setOptions(const QVariantHash &options);
+	void setOptions(const QHash<int, QVariant> &options);
 	void setParent(Window *window);
 	WebContentsWidget* clone(bool cloneHistory = true);
 	Action* getAction(int identifier);
@@ -75,7 +75,7 @@ public:
 	QString getActiveStyleSheet() const;
 	QString getStatusMessage() const;
 	QLatin1String getType() const;
-	QVariant getOption(const QString &key) const;
+	QVariant getOption(int identifier) const;
 	QVariant getPageInformation(WebWidget::PageInformation key) const;
 	QList<NetworkManager::ResourceInformation> getBlockedRequests() const;
 	QUrl getUrl() const;
@@ -85,7 +85,7 @@ public:
 	QStringList getStyleSheets() const;
 	QList<LinkUrl> getFeeds() const;
 	QList<LinkUrl> getSearchEngines() const;
-	QVariantHash getOptions() const;
+	QHash<int, QVariant> getOptions() const;
 	WindowsManager::ContentStates getContentState() const;
 	WindowsManager::LoadingState getLoadingState() const;
 	int getZoom() const;
@@ -98,7 +98,7 @@ public slots:
 	void goToHistoryIndex(int index);
 	void removeHistoryIndex(int index, bool purge = false);
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
-	void setOption(const QString &key, const QVariant &value);
+	void setOption(int identifier, const QVariant &value);
 	void setActiveStyleSheet(const QString &styleSheet);
 	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);
@@ -119,7 +119,7 @@ protected:
 	void setWidget(WebWidget *widget, bool isPrivate);
 
 protected slots:
-	void optionChanged(const QString &option, const QVariant &value);
+	void optionChanged(int identifier, const QVariant &value);
 	void findInPage(WebWidget::FindFlags flags = WebWidget::NoFlagsFind);
 	void closePasswordBar();
 	void closePopupsBar();

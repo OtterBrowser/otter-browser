@@ -144,9 +144,9 @@ void StartPageContentsWidget::paintEvent(QPaintEvent *event)
 
 void StartPageContentsWidget::setBackgroundMode(StartPageContentsWidget::BackgroundMode mode)
 {
-	const QString color(SettingsManager::getValue(QLatin1String("StartPage/BackgroundColor")).toString());
+	const QString color(SettingsManager::getValue(SettingsManager::StartPage_BackgroundColorOption).toString());
 
-	m_path = ((mode == NoCustomBackground) ? QString() : SettingsManager::getValue(QLatin1String("StartPage/BackgroundPath")).toString());
+	m_path = ((mode == NoCustomBackground) ? QString() : SettingsManager::getValue(SettingsManager::StartPage_BackgroundPathOption).toString());
 	m_color = (color.isEmpty() ? QColor(Qt::transparent) : QColor(color));
 	m_mode = mode;
 
@@ -188,12 +188,12 @@ StartPageWidget::StartPageWidget(Window *window, QWidget *parent) : QScrollArea(
 	setWidgetResizable(true);
 	setAlignment(Qt::AlignHCenter);
 	updateTiles();
-	optionChanged(QLatin1String("StartPage/BackgroundPath"), SettingsManager::getValue(QLatin1String("StartPage/BackgroundPath")));
-	optionChanged(QLatin1String("StartPage/ShowSearchField"), SettingsManager::getValue(QLatin1String("StartPage/ShowSearchField")));
+	optionChanged(SettingsManager::StartPage_BackgroundPathOption, SettingsManager::getValue(SettingsManager::StartPage_BackgroundPathOption));
+	optionChanged(SettingsManager::StartPage_ShowSearchFieldOption, SettingsManager::getValue(SettingsManager::StartPage_ShowSearchFieldOption));
 
 	connect(m_model, SIGNAL(modelModified()), this, SLOT(updateTiles()));
 	connect(m_model, SIGNAL(isReloadingTileChanged(QModelIndex)), this, SLOT(updateTile(QModelIndex)));
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
 }
 
 void StartPageWidget::resizeEvent(QResizeEvent *event)
@@ -226,15 +226,15 @@ void StartPageWidget::wheelEvent(QWheelEvent *event)
 	}
 }
 
-void StartPageWidget::optionChanged(const QString &option, const QVariant &value)
+void StartPageWidget::optionChanged(int identifier, const QVariant &value)
 {
-	if (option == QLatin1String("StartPage/TilesPerRow") || option == QLatin1String("StartPage/TileHeight") || option == QLatin1String("StartPage/TileWidth") || option == QLatin1String("StartPage/ZoomLevel"))
+	if (identifier == SettingsManager::StartPage_TilesPerRowOption || identifier == SettingsManager::StartPage_TileHeightOption || identifier == SettingsManager::StartPage_TileWidthOption || identifier == SettingsManager::StartPage_ZoomLevelOption)
 	{
 		updateSize();
 	}
-	else if (option == QLatin1String("StartPage/BackgroundColor") || option == QLatin1String("StartPage/BackgroundMode") || option == QLatin1String("StartPage/BackgroundPath"))
+	else if (identifier == SettingsManager::StartPage_BackgroundColorOption || identifier == SettingsManager::StartPage_BackgroundModeOption || identifier == SettingsManager::StartPage_BackgroundPathOption)
 	{
-		const QString backgroundMode(SettingsManager::getValue(QLatin1String("StartPage/BackgroundMode")).toString());
+		const QString backgroundMode(SettingsManager::getValue(SettingsManager::StartPage_BackgroundModeOption).toString());
 
 		if (backgroundMode == QLatin1String("bestFit"))
 		{
@@ -257,7 +257,7 @@ void StartPageWidget::optionChanged(const QString &option, const QVariant &value
 			m_contentsWidget->setBackgroundMode(StartPageContentsWidget::NoCustomBackground);
 		}
 	}
-	else if (option == QLatin1String("StartPage/ShowSearchField"))
+	else if (identifier == SettingsManager::StartPage_ShowSearchFieldOption)
 	{
 		QGridLayout *layout(NULL);
 		const bool needsInitialization(m_contentsWidget->layout() == NULL);
@@ -412,7 +412,7 @@ void StartPageWidget::addTile()
 
 void StartPageWidget::addTile(const QUrl &url)
 {
-	BookmarksItem *bookmark(BookmarksManager::getModel()->addBookmark(BookmarksModel::UrlBookmark, 0, url, QString(), BookmarksManager::getModel()->getItem(SettingsManager::getValue(QLatin1String("StartPage/BookmarksFolder")).toString())));
+	BookmarksItem *bookmark(BookmarksManager::getModel()->addBookmark(BookmarksModel::UrlBookmark, 0, url, QString(), BookmarksManager::getModel()->getItem(SettingsManager::getValue(SettingsManager::StartPage_BookmarksFolderOption).toString())));
 
 	if (bookmark)
 	{
@@ -507,9 +507,9 @@ void StartPageWidget::updateTile(const QModelIndex &index)
 
 void StartPageWidget::updateSize()
 {
-	const qreal zoom(SettingsManager::getValue(QLatin1String("StartPage/ZoomLevel")).toInt() / qreal(100));
-	const int tileHeight(SettingsManager::getValue(QLatin1String("StartPage/TileHeight")).toInt() * zoom);
-	const int tileWidth(SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt() * zoom);
+	const qreal zoom(SettingsManager::getValue(SettingsManager::StartPage_ZoomLevelOption).toInt() / qreal(100));
+	const int tileHeight(SettingsManager::getValue(SettingsManager::StartPage_TileHeightOption).toInt() * zoom);
+	const int tileWidth(SettingsManager::getValue(SettingsManager::StartPage_TileWidthOption).toInt() * zoom);
 	const int amount(m_model->rowCount());
 	const int columns(getTilesPerRow());
 	const int rows(qCeil(amount / qreal(columns)));
@@ -559,7 +559,7 @@ void StartPageWidget::showContextMenu(const QPoint &position)
 		menu.addSeparator();
 		menu.addAction(tr("Edit…"), this, SLOT(editTile()));
 
-		if (SettingsManager::getValue(QLatin1String("StartPage/TileBackgroundMode")) == QLatin1String("thumbnail"))
+		if (SettingsManager::getValue(SettingsManager::StartPage_TileBackgroundModeOption) == QLatin1String("thumbnail"))
 		{
 			menu.addAction(tr("Reload"), this, SLOT(reloadTile()))->setEnabled(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()) == BookmarksModel::UrlBookmark);
 		}
@@ -578,14 +578,14 @@ void StartPageWidget::showContextMenu(const QPoint &position)
 
 int StartPageWidget::getTilesPerRow() const
 {
-	const int tilesPerRow(SettingsManager::getValue(QLatin1String("StartPage/TilesPerRow")).toInt());
+	const int tilesPerRow(SettingsManager::getValue(SettingsManager::StartPage_TilesPerRowOption).toInt());
 
 	if (tilesPerRow > 0)
 	{
 		return tilesPerRow;
 	}
 
-	return qMax(1, int((width() - 50) / (SettingsManager::getValue(QLatin1String("StartPage/TileWidth")).toInt() * (SettingsManager::getValue(QLatin1String("StartPage/ZoomLevel")).toInt() / qreal(100)))));
+	return qMax(1, int((width() - 50) / (SettingsManager::getValue(SettingsManager::StartPage_TileWidthOption).toInt() * (SettingsManager::getValue(SettingsManager::StartPage_ZoomLevelOption).toInt() / qreal(100)))));
 }
 
 bool StartPageWidget::eventFilter(QObject *object, QEvent *event)

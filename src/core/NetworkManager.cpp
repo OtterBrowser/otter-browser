@@ -96,7 +96,7 @@ void NetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError
 		return;
 	}
 
-	QStringList ignoredErrors(SettingsManager::getValue(QLatin1String("Security/IgnoreSslErrors"), reply->url()).toStringList());
+	QStringList ignoredErrors(SettingsManager::getValue(SettingsManager::Security_IgnoreSslErrorsOption, reply->url()).toStringList());
 	QStringList messages;
 	QList<QSslError> errorsToIgnore;
 

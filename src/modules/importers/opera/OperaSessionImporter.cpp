@@ -139,7 +139,7 @@ bool OperaSessionImporter::import(const QString &path)
 
 		if (originalSession.getValue(QLatin1String("user auto reload enable")).toInt() == 1)
 		{
-			window.overrides[QLatin1String("Content/PageReloadTime")] = originalSession.getValue(QLatin1String("user auto reload sec user setting")).toInt();
+			window.overrides[SettingsManager::Content_PageReloadTimeOption] = originalSession.getValue(QLatin1String("user auto reload sec user setting")).toInt();
 		}
 
 		switch (originalSession.getValue(QLatin1String("state")).toInt())

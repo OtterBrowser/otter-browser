@@ -41,10 +41,10 @@ HistoryManager::HistoryManager(QObject *parent) : QObject(parent),
 {
 	m_dayTimer = startTimer(QTime::currentTime().msecsTo(QTime(23, 59, 59, 999)));
 
-	optionChanged(QLatin1String("History/RememberBrowsing"));
-	optionChanged(QLatin1String("History/StoreFavicons"));
+	optionChanged(SettingsManager::History_RememberBrowsingOption);
+	optionChanged(SettingsManager::History_StoreFaviconsOption);
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
 }
 
 void HistoryManager::createInstance(QObject *parent)
@@ -87,7 +87,7 @@ void HistoryManager::timerEvent(QTimerEvent *event)
 			getTypedHistoryModel();
 		}
 
-		const int period(SettingsManager::getValue(QLatin1String("History/BrowsingLimitPeriod")).toInt());
+		const int period(SettingsManager::getValue(SettingsManager::History_BrowsingLimitPeriodOption).toInt());
 
 		m_browsingHistoryModel->clearOldestEntries(period);
 		m_typedHistoryModel->clearOldestEntries(period);
@@ -100,17 +100,17 @@ void HistoryManager::timerEvent(QTimerEvent *event)
 	}
 }
 
-void HistoryManager::optionChanged(const QString &option)
+void HistoryManager::optionChanged(int identifier)
 {
-	if (option == QLatin1String("History/RememberBrowsing") || option == QLatin1String("Browser/PrivateMode"))
+	if (identifier == SettingsManager::History_RememberBrowsingOption || identifier == SettingsManager::Browser_PrivateModeOption)
 	{
-		m_isEnabled =  (SettingsManager::getValue(QLatin1String("History/RememberBrowsing")).toBool() && !SettingsManager::getValue(QLatin1String("Browser/PrivateMode")).toBool());
+		m_isEnabled =  (SettingsManager::getValue(SettingsManager::History_RememberBrowsingOption).toBool() && !SettingsManager::getValue(SettingsManager::Browser_PrivateModeOption).toBool());
 	}
-	else if (option == QLatin1String("History/StoreFavicons"))
+	else if (identifier == SettingsManager::History_StoreFaviconsOption)
 	{
-		m_isStoringFavicons = SettingsManager::getValue(option).toBool();
+		m_isStoringFavicons = SettingsManager::getValue(identifier).toBool();
 	}
-	else if (option == QLatin1String("History/BrowsingLimitAmountGlobal"))
+	else if (identifier == SettingsManager::History_BrowsingLimitAmountGlobalOption)
 	{
 		if (!m_browsingHistoryModel)
 		{
@@ -122,14 +122,14 @@ void HistoryManager::optionChanged(const QString &option)
 			getTypedHistoryModel();
 		}
 
-		const int limit(SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountGlobal")).toInt());
+		const int limit(SettingsManager::getValue(SettingsManager::History_BrowsingLimitAmountGlobalOption).toInt());
 
 		m_browsingHistoryModel->clearExcessEntries(limit);
 		m_typedHistoryModel->clearExcessEntries(limit);
 
 		scheduleSave();
 	}
-	else if (option == QLatin1String("History/BrowsingLimitPeriod"))
+	else if (identifier == SettingsManager::History_BrowsingLimitPeriodOption)
 	{
 		if (!m_browsingHistoryModel)
 		{
@@ -141,7 +141,7 @@ void HistoryManager::optionChanged(const QString &option)
 			getTypedHistoryModel();
 		}
 
-		const int period(SettingsManager::getValue(QLatin1String("History/BrowsingLimitPeriod")).toInt());
+		const int period(SettingsManager::getValue(SettingsManager::History_BrowsingLimitPeriodOption).toInt());
 
 		m_browsingHistoryModel->clearOldestEntries(period);
 		m_typedHistoryModel->clearOldestEntries(period);
@@ -220,7 +220,7 @@ void HistoryManager::updateEntry(quint64 identifier, const QUrl &url, const QStr
 		return;
 	}
 
-	if (!SettingsManager::getValue(QLatin1String("History/RememberBrowsing"), url).toBool())
+	if (!SettingsManager::getValue(SettingsManager::History_RememberBrowsingOption, url).toBool())
 	{
 		removeEntry(identifier);
 
@@ -347,7 +347,7 @@ QList<HistoryModel::HistoryEntryMatch> HistoryManager::findEntries(const QString
 
 quint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QIcon &icon, bool isTypedIn)
 {
-	if (!m_isEnabled || !url.isValid() || !SettingsManager::getValue(QLatin1String("History/RememberBrowsing"), url).toBool())
+	if (!m_isEnabled || !url.isValid() || !SettingsManager::getValue(SettingsManager::History_RememberBrowsingOption, url).toBool())
 	{
 		return 0;
 	}
@@ -369,7 +369,7 @@ quint64 HistoryManager::addEntry(const QUrl &url, const QString &title, const QI
 		m_typedHistoryModel->addEntry(url, title, icon, QDateTime::currentDateTime());
 	}
 
-	const int limit(SettingsManager::getValue(QLatin1String("History/BrowsingLimitAmountGlobal")).toInt());
+	const int limit(SettingsManager::getValue(SettingsManager::History_BrowsingLimitAmountGlobalOption).toInt());
 
 	if (limit > 0 && m_browsingHistoryModel->rowCount() > limit)
 	{

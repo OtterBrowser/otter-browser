@@ -110,6 +110,7 @@ public:
 		Content_BackgroundColorOption,
 		Content_BlockingProfilesOption,
 		Content_CursiveFontOption,
+		Content_DefaultCharacterEncodingOption,
 		Content_DefaultFixedFontSizeOption,
 		Content_DefaultFontSizeOption,
 		Content_DefaultZoomOption,
@@ -181,12 +182,14 @@ public:
 		Proxy_UseHttpsOption,
 		Proxy_UseSocksOption,
 		Proxy_UseSystemAuthenticationOption,
+		Search_DefaultQuickSearchEngineOption,
 		Search_DefaultSearchEngineOption,
 		Search_EnableFindInPageAsYouTypeOption,
 		Search_ReuseLastQuickFindQueryOption,
 		Search_SearchEnginesOrderOption,
 		Search_SearchEnginesSuggestionsOption,
 		Security_CiphersOption,
+		Security_IgnoreSslErrorsOption,
 		Sessions_OpenInExistingWindowOption,
 		Sidebar_CurrentPanelOption,
 		Sidebar_PanelsOption,
@@ -246,14 +249,14 @@ public:
 
 	static void createInstance(const QString &path, QObject *parent = NULL);
 	static void removeOverride(const QUrl &url, const QString &key = QString());
-	static void setOptionDefinition(const QString &key, const OptionDefinition &definition);
-	static void setValue(const QString &key, const QVariant &value, const QUrl &url = QUrl());
+	static void setOptionDefinition(int identifier, const OptionDefinition &definition);
+	static void setValue(int identifier, const QVariant &value, const QUrl &url = QUrl());
 	static SettingsManager* getInstance();
 	static QString getOptionName(int identifier);
 	static QString getReport();
-	static QVariant getValue(const QString &key, const QUrl &url = QUrl());
+	static QVariant getValue(int identifier, const QUrl &url = QUrl());
 	static QStringList getOptions();
-	static OptionDefinition getDefinition(const QString &key);
+	static OptionDefinition getOptionDefinition(int identifier);
 	static int getOptionIdentifier(const QString &name);
 	static bool hasOverride(const QUrl &url, const QString &key = QString());
 
@@ -266,13 +269,13 @@ private:
 	static SettingsManager *m_instance;
 	static QString m_globalPath;
 	static QString m_overridePath;
-	static QHash<QString, OptionDefinition> m_definitions;
-	static QHash<QString, QVariant> m_defaults;
+	static QHash<int, OptionDefinition> m_definitions;
+	static QHash<int, QVariant> m_defaults;
 	static int m_optionIdentifierEnumerator;
 
 signals:
-	void valueChanged(const QString &key, const QVariant &value);
-	void valueChanged(const QString &key, const QVariant &value, const QUrl &url);
+	void valueChanged(int identifier, const QVariant &value);
+	void valueChanged(int identifier, const QVariant &value, const QUrl &url);
 };
 
 }

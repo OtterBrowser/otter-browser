@@ -49,7 +49,7 @@ public:
 	QList<QNetworkProxy> queryProxy(const QNetworkProxyQuery &query);
 
 protected slots:
-	void optionChanged(const QString &option);
+	void optionChanged(int identifier);
 	void setupAutomaticProxy();
 
 private:

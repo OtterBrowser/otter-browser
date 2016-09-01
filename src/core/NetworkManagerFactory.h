@@ -79,7 +79,7 @@ protected:
 	explicit NetworkManagerFactory(QObject *parent = NULL);
 
 protected slots:
-	void optionChanged(const QString &option, const QVariant &value);
+	void optionChanged(int identifier, const QVariant &value);
 
 private:
 	static NetworkManagerFactory *m_instance;

@@ -221,11 +221,11 @@ WorkspaceWidget::WorkspaceWidget(MainWindow *parent) : QWidget(parent),
 	layout->setContentsMargins(0, 0, 0, 0);
 	layout->setSpacing(0);
 
-	optionChanged(QLatin1String("Interface/NewTabOpeningAction"), SettingsManager::getValue(QLatin1String("Interface/NewTabOpeningAction")));
+	optionChanged(SettingsManager::Interface_NewTabOpeningActionOption, SettingsManager::getValue(SettingsManager::Interface_NewTabOpeningActionOption));
 
 	if (!m_mdi)
 	{
-		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
 	}
 }
 
@@ -251,9 +251,9 @@ void WorkspaceWidget::resizeEvent(QResizeEvent *event)
 	}
 }
 
-void WorkspaceWidget::optionChanged(const QString &option, const QVariant &value)
+void WorkspaceWidget::optionChanged(int identifier, const QVariant &value)
 {
-	if (!m_mdi && option == QLatin1String("Interface/NewTabOpeningAction") && value.toString() != QLatin1String("maximizeTab"))
+	if (!m_mdi && identifier == SettingsManager::Interface_NewTabOpeningActionOption && value.toString() != QLatin1String("maximizeTab"))
 	{
 		createMdi();
 	}
@@ -266,7 +266,7 @@ void WorkspaceWidget::createMdi()
 		return;
 	}
 
-	disconnect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	disconnect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
 
 	Window *activeWindow(m_activeWindow);
 

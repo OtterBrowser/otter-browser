@@ -69,9 +69,9 @@ PopupsBarWidget::PopupsBarWidget(const QUrl &parentUrl, QWidget *parent) : QWidg
 	m_popupsMenu->addAction(tr("Open All"));
 	m_popupsMenu->addSeparator();
 
-	optionChanged(QLatin1String("Content/PopupsPolicy"));
+	optionChanged(SettingsManager::Content_PopupsPolicyOption);
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString, QVariant)), this, SLOT(optionChanged(QString)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
 	connect(m_popupsGroup, SIGNAL(triggered(QAction*)), this, SLOT(setPolicy(QAction*)));
 	connect(m_popupsMenu, SIGNAL(triggered(QAction*)), this, SLOT(openUrl(QAction*)));
 	connect(m_ui->closeButton, SIGNAL(clicked()), this, SIGNAL(requestedClose()));
@@ -92,11 +92,11 @@ void PopupsBarWidget::changeEvent(QEvent *event)
 	}
 }
 
-void PopupsBarWidget::optionChanged(const QString &option)
+void PopupsBarWidget::optionChanged(int identifier)
 {
-	if (option == QLatin1String("Content/PopupsPolicy"))
+	if (identifier == SettingsManager::Content_PopupsPolicyOption)
 	{
-		const QString popupsPolicy(SettingsManager::getValue(QLatin1String("Content/PopupsPolicy"), m_parentUrl).toString());
+		const QString popupsPolicy(SettingsManager::getValue(identifier, m_parentUrl).toString());
 
 		for (int i = 0; i < m_popupsGroup->actions().count(); ++i)
 		{
@@ -147,7 +147,7 @@ void PopupsBarWidget::setPolicy(QAction *action)
 {
 	if (action)
 	{
-		SettingsManager::setValue(QLatin1String("Content/PopupsPolicy"), action->data(), m_parentUrl);
+		SettingsManager::setValue(SettingsManager::Content_PopupsPolicyOption, action->data(), m_parentUrl);
 	}
 }
 

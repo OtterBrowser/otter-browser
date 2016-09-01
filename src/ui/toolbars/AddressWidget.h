@@ -81,7 +81,7 @@ protected:
 	bool startDrag(QMouseEvent *event);
 
 protected slots:
-	void optionChanged(const QString &option, const QVariant &value);
+	void optionChanged(int identifier, const QVariant &value);
 	void openFeed(QAction *action);
 	void openUrl(const QString &url);
 	void openUrl(const QModelIndex &index);

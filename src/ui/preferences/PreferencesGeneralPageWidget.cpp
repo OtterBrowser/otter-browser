@@ -35,7 +35,7 @@ namespace Otter
 {
 
 PreferencesGeneralPageWidget::PreferencesGeneralPageWidget(QWidget *parent) : QWidget(parent),
-	m_acceptLanguage(SettingsManager::getValue(QLatin1String("Network/AcceptLanguage")).toString()),
+	m_acceptLanguage(SettingsManager::getValue(SettingsManager::Network_AcceptLanguageOption).toString()),
 	m_ui(new Ui::PreferencesGeneralPageWidget)
 {
 	m_ui->setupUi(this);
@@ -45,22 +45,22 @@ PreferencesGeneralPageWidget::PreferencesGeneralPageWidget(QWidget *parent) : QW
 	m_ui->startupBehaviorComboBox->addItem(tr("Show start page"), QLatin1String("startStartPage"));
 	m_ui->startupBehaviorComboBox->addItem(tr("Show empty page"), QLatin1String("startEmpty"));
 
-	const int startupBehaviorIndex(m_ui->startupBehaviorComboBox->findData(SettingsManager::getValue(QLatin1String("Browser/StartupBehavior")).toString()));
+	const int startupBehaviorIndex(m_ui->startupBehaviorComboBox->findData(SettingsManager::getValue(SettingsManager::Browser_StartupBehaviorOption).toString()));
 
 	m_ui->startupBehaviorComboBox->setCurrentIndex((startupBehaviorIndex < 0) ? 0 : startupBehaviorIndex);
-	m_ui->homePageLineEdit->setText(SettingsManager::getValue(QLatin1String("Browser/HomePage")).toString());
+	m_ui->homePageLineEdit->setText(SettingsManager::getValue(SettingsManager::Browser_HomePageOption).toString());
 
 	Menu *bookmarksMenu(new Menu(Menu::BookmarkSelectorMenuRole, m_ui->useBookmarkAsHomePageButton));
 
 	m_ui->useBookmarkAsHomePageButton->setMenu(bookmarksMenu);
 	m_ui->useBookmarkAsHomePageButton->setEnabled(BookmarksManager::getModel()->getRootItem()->rowCount() > 0);
 	m_ui->downloadsFilePathWidget->setSelectFile(false);
-	m_ui->downloadsFilePathWidget->setPath(SettingsManager::getValue(QLatin1String("Paths/Downloads")).toString());
-	m_ui->alwaysAskCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/AlwaysAskWhereToSaveDownload")).toBool());
-	m_ui->tabsInsteadOfWindowsCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/OpenLinksInNewTab")).toBool());
-	m_ui->delayTabsLoadingCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/DelayRestoringOfBackgroundTabs")).toBool());
-	m_ui->reuseCurrentTabCheckBox->setChecked(SettingsManager::getValue(QLatin1String("Browser/ReuseCurrentTab")).toBool());
-	m_ui->openNextToActiveheckBox->setChecked(SettingsManager::getValue(QLatin1String("TabBar/OpenNextToActive")).toBool());
+	m_ui->downloadsFilePathWidget->setPath(SettingsManager::getValue(SettingsManager::Paths_DownloadsOption).toString());
+	m_ui->alwaysAskCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_AlwaysAskWhereToSaveDownloadOption).toBool());
+	m_ui->tabsInsteadOfWindowsCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_OpenLinksInNewTabOption).toBool());
+	m_ui->delayTabsLoadingCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_DelayRestoringOfBackgroundTabsOption).toBool());
+	m_ui->reuseCurrentTabCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_ReuseCurrentTabOption).toBool());
+	m_ui->openNextToActiveheckBox->setChecked(SettingsManager::getValue(SettingsManager::TabBar_OpenNextToActiveOption).toBool());
 
 	PlatformIntegration *integration(Application::getInstance()->getPlatformIntegration());
 
@@ -123,7 +123,7 @@ void PreferencesGeneralPageWidget::useBookmarkAsHomePage(QAction *action)
 
 void PreferencesGeneralPageWidget::restoreHomePage()
 {
-	m_ui->homePageLineEdit->setText(SettingsManager::getDefinition(QLatin1String("Browser/HomePage")).defaultValue.toString());
+	m_ui->homePageLineEdit->setText(SettingsManager::getOptionDefinition(SettingsManager::Browser_HomePageOption).defaultValue.toString());
 }
 
 void PreferencesGeneralPageWidget::setupAcceptLanguage()
@@ -140,15 +140,15 @@ void PreferencesGeneralPageWidget::setupAcceptLanguage()
 
 void PreferencesGeneralPageWidget::save()
 {
-	SettingsManager::setValue(QLatin1String("Browser/StartupBehavior"), m_ui->startupBehaviorComboBox->currentData().toString());
-	SettingsManager::setValue(QLatin1String("Browser/HomePage"), m_ui->homePageLineEdit->text());
-	SettingsManager::setValue(QLatin1String("Paths/Downloads"), m_ui->downloadsFilePathWidget->getPath());
-	SettingsManager::setValue(QLatin1String("Browser/AlwaysAskWhereToSaveDownload"), m_ui->alwaysAskCheckBox->isChecked());
-	SettingsManager::setValue(QLatin1String("Browser/OpenLinksInNewTab"), m_ui->tabsInsteadOfWindowsCheckBox->isChecked());
-	SettingsManager::setValue(QLatin1String("Browser/DelayRestoringOfBackgroundTabs"), m_ui->delayTabsLoadingCheckBox->isChecked());
-	SettingsManager::setValue(QLatin1String("Browser/ReuseCurrentTab"), m_ui->reuseCurrentTabCheckBox->isChecked());
-	SettingsManager::setValue(QLatin1String("TabBar/OpenNextToActive"), m_ui->openNextToActiveheckBox->isChecked());
-	SettingsManager::setValue(QLatin1String("Network/AcceptLanguage"), m_acceptLanguage);
+	SettingsManager::setValue(SettingsManager::Browser_StartupBehaviorOption, m_ui->startupBehaviorComboBox->currentData().toString());
+	SettingsManager::setValue(SettingsManager::Browser_HomePageOption, m_ui->homePageLineEdit->text());
+	SettingsManager::setValue(SettingsManager::Paths_DownloadsOption, m_ui->downloadsFilePathWidget->getPath());
+	SettingsManager::setValue(SettingsManager::Browser_AlwaysAskWhereToSaveDownloadOption, m_ui->alwaysAskCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::Browser_OpenLinksInNewTabOption, m_ui->tabsInsteadOfWindowsCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::Browser_DelayRestoringOfBackgroundTabsOption, m_ui->delayTabsLoadingCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::Browser_ReuseCurrentTabOption, m_ui->reuseCurrentTabCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::TabBar_OpenNextToActiveOption, m_ui->openNextToActiveheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::Network_AcceptLanguageOption, m_acceptLanguage);
 }
 
 }

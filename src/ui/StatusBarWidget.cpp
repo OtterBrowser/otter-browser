@@ -35,12 +35,12 @@ namespace Otter
 StatusBarWidget::StatusBarWidget(MainWindow *parent) : QStatusBar(parent),
 	m_toolBar(new ToolBarWidget(ToolBarsManager::StatusBar, NULL, this))
 {
-	optionChanged(QLatin1String("Interface/ShowSizeGrip"), SettingsManager::getValue(QLatin1String("Interface/ShowSizeGrip")));
+	optionChanged(SettingsManager::Interface_ShowSizeGripOption, SettingsManager::getValue(SettingsManager::Interface_ShowSizeGripOption));
 	setFixedHeight(ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).iconSize);
 
 	QTimer::singleShot(100, this, SLOT(updateSize()));
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), this, SLOT(optionChanged(QString,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
 }
 
@@ -69,9 +69,9 @@ void StatusBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	menu->deleteLater();
 }
 
-void StatusBarWidget::optionChanged(const QString &option, const QVariant &value)
+void StatusBarWidget::optionChanged(int identifier, const QVariant &value)
 {
-	if (option == QLatin1String("Interface/ShowSizeGrip"))
+	if (identifier == SettingsManager::Interface_ShowSizeGripOption)
 	{
 		setSizeGripEnabled(value.toBool());
 		updateSize();

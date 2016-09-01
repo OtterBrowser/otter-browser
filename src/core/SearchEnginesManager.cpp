@@ -59,13 +59,13 @@ void SearchEnginesManager::initialize()
 
 		loadSearchEngines();
 
-		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(QString,QVariant)), m_instance, SLOT(optionChanged(QString)));
+		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), m_instance, SLOT(optionChanged(int)));
 	}
 }
 
-void SearchEnginesManager::optionChanged(const QString &key)
+void SearchEnginesManager::optionChanged(int identifier)
 {
-	if (key == QLatin1String("Search/SearchEnginesOrder"))
+	if (identifier == SettingsManager::Search_SearchEnginesOrderOption)
 	{
 		loadSearchEngines();
 	}
@@ -76,7 +76,7 @@ void SearchEnginesManager::loadSearchEngines()
 	m_searchEngines.clear();
 	m_searchKeywords.clear();
 
-	m_searchEnginesOrder = SettingsManager::getValue(QLatin1String("Search/SearchEnginesOrder")).toStringList();
+	m_searchEnginesOrder = SettingsManager::getValue(SettingsManager::Search_SearchEnginesOrderOption).toStringList();
 
 	const QStringList searchEnginesOrder(m_searchEnginesOrder);
 
@@ -116,7 +116,7 @@ void SearchEnginesManager::addSearchEngine(const SearchEngineDefinition &searchE
 	{
 		if (isDefault)
 		{
-			SettingsManager::setValue(QLatin1String("Search/DefaultSearchEngine"), searchEngine.identifier);
+			SettingsManager::setValue(SettingsManager::Search_DefaultSearchEngineOption, searchEngine.identifier);
 		}
 
 		if (m_searchEnginesOrder.contains(searchEngine.identifier))
@@ -129,7 +129,7 @@ void SearchEnginesManager::addSearchEngine(const SearchEngineDefinition &searchE
 		{
 			m_searchEnginesOrder.append(searchEngine.identifier);
 
-			SettingsManager::setValue(QLatin1String("Search/SearchEnginesOrder"), m_searchEnginesOrder);
+			SettingsManager::setValue(SettingsManager::Search_SearchEnginesOrderOption, m_searchEnginesOrder);
 		}
 	}
 }
@@ -425,7 +425,7 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::getSearchEngi
 
 	if (identifier.isEmpty())
 	{
-		return m_searchEngines.value(SettingsManager::getValue(QLatin1String("Search/DefaultSearchEngine")).toString(), SearchEngineDefinition());
+		return m_searchEngines.value(SettingsManager::getValue(SettingsManager::Search_DefaultSearchEngineOption).toString(), SearchEngineDefinition());
 	}
 
 	return m_searchEngines.value(identifier, SearchEngineDefinition());
