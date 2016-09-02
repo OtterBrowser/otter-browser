@@ -23,6 +23,7 @@
 #include "toolbars/AddressWidget.h"
 #include "../core/AddressCompletionModel.h"
 #include "../core/ThemesManager.h"
+#include "../core/Utils.h"
 
 #include <QtGui/QPainter>
 
@@ -86,6 +87,17 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 			linkOption.palette.setColor(QPalette::Text, option.palette.color(QPalette::Link));
 		}
 
+		QString description;
+
+		if (index.data(Qt::UserRole + 1).type() == QVariant::DateTime)
+		{
+			description = Utils::formatDateTime(index.data(Qt::UserRole + 1).toDateTime());
+		}
+		else
+		{
+			description = index.data(Qt::UserRole + 1).toString();
+		}
+
 		if (m_displayMode == ColumnsMode)
 		{
 			const int maxUrlWidth(option.rect.width() / 2);
@@ -94,11 +106,11 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 
 			drawDisplay(painter, linkOption, titleRectangle, url);
 
-			if (!index.data(Qt::UserRole + 1).isNull())
+			if (!description.isEmpty())
 			{
 				titleRectangle.setLeft(maxUrlWidth);
 
-				drawDisplay(painter, option, titleRectangle, index.data(Qt::UserRole + 1).toString());
+				drawDisplay(painter, option, titleRectangle, description);
 			}
 
 			return;
@@ -106,7 +118,7 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 
 		drawDisplay(painter, linkOption, titleRectangle, url);
 
-		if (!index.data(Qt::UserRole + 1).isNull())
+		if (!description.isEmpty())
 		{
 			const int urlLength(option.fontMetrics.width(url + QLatin1Char(' ')));
 
@@ -114,7 +126,7 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 			{
 				titleRectangle.setLeft(titleRectangle.left() + urlLength);
 
-				drawDisplay(painter, option, titleRectangle, QLatin1String("- ") + index.data(Qt::UserRole + 1).toString());
+				drawDisplay(painter, option, titleRectangle, QLatin1String("- ") + description);
 			}
 		}
 
