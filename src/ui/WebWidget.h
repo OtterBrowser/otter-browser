@@ -49,6 +49,19 @@ class WebWidget : public QWidget
 	Q_OBJECT
 
 public:
+	enum FeaturePermission
+	{
+		UnknownPermission = 0,
+		FullScreenPermission,
+		GeolocationPermission,
+		NotificationsPermission,
+		PointerLockPermission,
+		CaptureAudioPermission,
+		CaptureVideoPermission,
+		CaptureAudioVideoPermission,
+		PlaybackAudioPermission
+	};
+
 	enum PermissionPolicy
 	{
 		DeniedPermission = 0,
