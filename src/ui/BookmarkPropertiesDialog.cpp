@@ -129,11 +129,6 @@ void BookmarkPropertiesDialog::changeEvent(QEvent *event)
 
 void BookmarkPropertiesDialog::saveBookmark()
 {
-	if (m_ui->titleLineEdit->text().isEmpty())
-	{
-		return;
-	}
-
 	if (m_ui->folderComboBox->isEnabled())
 	{
 		if (!m_bookmark)
