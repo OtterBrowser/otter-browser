@@ -26,6 +26,7 @@
 #include "../../../core/GesturesManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/Utils.h"
+#include "../../../core/WindowsManager.h"
 #include "../../../ui/BookmarkPropertiesDialog.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/Menu.h"
@@ -450,15 +451,11 @@ void StartPageWidget::openTile()
 	}
 
 	const QUrl url(m_currentIndex.data(BookmarksModel::UrlRole).toUrl());
+	WindowsManager *manager(SessionsManager::getWindowsManager());
 
-	if (url.isValid() && parentWidget() && parentWidget()->parentWidget())
+	if (manager && url.isValid())
 	{
-		WebContentsWidget *contentsWidget(qobject_cast<WebContentsWidget*>(parentWidget()->parentWidget()));
-
-		if (contentsWidget)
-		{
-			contentsWidget->setUrl(url);
-		}
+		manager->open(url, WindowsManager::CurrentTabOpen);
 	}
 }
 
@@ -755,11 +752,11 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 					}
 					else if (parentWidget() && parentWidget()->parentWidget() && mouseEvent->button() != Qt::MiddleButton)
 					{
-						WebContentsWidget *contentsWidget(qobject_cast<WebContentsWidget*>(parentWidget()->parentWidget()));
+						WindowsManager *manager(SessionsManager::getWindowsManager());
 
-						if (contentsWidget)
+						if (manager && url.isValid())
 						{
-							contentsWidget->setUrl(url);
+							manager->open(url, WindowsManager::CurrentTabOpen);
 						}
 					}
 				}
