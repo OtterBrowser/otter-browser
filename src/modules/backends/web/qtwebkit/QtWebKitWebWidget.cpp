@@ -731,41 +731,44 @@ void QtWebKitWebWidget::notifyIconChanged()
 	emit iconChanged(getIcon());
 }
 
-void QtWebKitWebWidget::notifyPermissionRequested(QWebFrame *frame, QWebPage::Feature feature, bool cancel)
+void QtWebKitWebWidget::notifyPermissionRequested(QWebFrame *frame, QWebPage::Feature nativeFeature, bool cancel)
 {
-	QString option;
+	FeaturePermission feature(UnknownFeature);
 
-	if (feature == QWebPage::Geolocation)
+	switch (nativeFeature)
 	{
-		option = QLatin1String("Browser/EnableGeolocation");
+		case QWebPage::Geolocation:
+			feature = GeolocationFeature;
+
+			break;
+		case QWebPage::Notifications:
+			feature = NotificationsFeature;
+
+			break;
+		default:
+			return;
 	}
-	else if (feature == QWebPage::Notifications)
+
+	if (cancel)
 	{
-		option = QLatin1String("Browser/EnableNotifications");
+		emit requestedPermission(feature, frame->url(), true);
 	}
-
-	if (!option.isEmpty())
+	else
 	{
-		if (cancel)
+		switch (getPermission(feature, frame->url()))
 		{
-			emit requestedPermission(option, frame->url(), true);
-		}
-		else
-		{
-			const QString value(SettingsManager::getValue(SettingsManager::getOptionIdentifier(option), frame->url()).toString());
+			case GrantedPermission:
+				m_webView->page()->setFeaturePermission(frame, nativeFeature, QWebPage::PermissionGrantedByUser);
 
-			if (value == QLatin1String("allow"))
-			{
-				m_page->setFeaturePermission(frame, feature, QWebPage::PermissionGrantedByUser);
-			}
-			else if (value == QLatin1String("disallow"))
-			{
-				m_page->setFeaturePermission(frame, feature, QWebPage::PermissionDeniedByUser);
-			}
-			else
-			{
-				emit requestedPermission(option, frame->requestedUrl(), false);
-			}
+				break;
+			case DeniedPermission:
+				m_webView->page()->setFeaturePermission(frame, nativeFeature, QWebPage::PermissionDeniedByUser);
+
+				break;
+			default:
+				emit requestedPermission(feature, frame->url(), false);
+
+				break;
 		}
 	}
 }
@@ -1819,23 +1822,24 @@ void QtWebKitWebWidget::setUrl(const QUrl &url, bool typed)
 	notifyIconChanged();
 }
 
-void QtWebKitWebWidget::setPermission(const QString &key, const QUrl &url, WebWidget::PermissionPolicies policies)
+void QtWebKitWebWidget::setPermission(FeaturePermission feature, const QUrl &url, WebWidget::PermissionPolicies policies)
 {
-	WebWidget::setPermission(key, url, policies);
+	WebWidget::setPermission(feature, url, policies);
 
-	QWebPage::Feature feature(QWebPage::Geolocation);
+	QWebPage::Feature nativeFeature(QWebPage::Geolocation);
 
-	if (key == QLatin1String("Browser/EnableGeolocation"))
+	switch (feature)
 	{
-		feature = QWebPage::Geolocation;
-	}
-	else if (key == QLatin1String("Browser/EnableNotifications"))
-	{
-		feature = QWebPage::Notifications;
-	}
-	else
-	{
-		return;
+		case GeolocationFeature:
+			nativeFeature = QWebPage::Geolocation;
+
+			break;
+		case NotificationsFeature:
+			nativeFeature = QWebPage::Notifications;
+
+			break;
+		default:
+			return;
 	}
 
 	QList<QWebFrame*> frames;
@@ -1847,7 +1851,7 @@ void QtWebKitWebWidget::setPermission(const QString &key, const QUrl &url, WebWi
 
 		if (frame->requestedUrl() == url)
 		{
-			m_page->setFeaturePermission(frame, feature, (policies.testFlag(GrantedPermission) ? QWebPage::PermissionGrantedByUser : QWebPage::PermissionDeniedByUser));
+			m_page->setFeaturePermission(frame, nativeFeature, (policies.testFlag(GrantedPermission) ? QWebPage::PermissionGrantedByUser : QWebPage::PermissionDeniedByUser));
 		}
 
 		frames.append(frame->childFrames());

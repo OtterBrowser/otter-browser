@@ -87,7 +87,7 @@ public slots:
 	void removeHistoryIndex(int index, bool purge = false);
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void setActiveStyleSheet(const QString &styleSheet);
-	void setPermission(const QString &key, const QUrl &url, PermissionPolicies policies);
+	void setPermission(FeaturePermission feature, const QUrl &url, PermissionPolicies policies);
 	void setOption(int identifier, const QVariant &value);
 	void setScrollPosition(const QPoint &position);
 	void setHistory(const WindowHistoryInformation &history);
@@ -153,7 +153,7 @@ protected slots:
 	void notifyTitleChanged();
 	void notifyUrlChanged(const QUrl &url);
 	void notifyIconChanged();
-	void notifyPermissionRequested(QWebFrame *frame, QWebPage::Feature feature, bool cancel);
+	void notifyPermissionRequested(QWebFrame *frame, QWebPage::Feature nativeFeature, bool cancel);
 	void notifyAddPasswordRequested(const PasswordsManager::PasswordInformation &password);
 	void notifyContentStateChanged();
 	void updateUndoText(const QString &text);

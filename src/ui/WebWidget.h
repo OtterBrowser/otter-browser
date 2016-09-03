@@ -51,22 +51,22 @@ class WebWidget : public QWidget
 public:
 	enum FeaturePermission
 	{
-		UnknownPermission = 0,
-		FullScreenPermission,
-		GeolocationPermission,
-		NotificationsPermission,
-		PointerLockPermission,
-		CaptureAudioPermission,
-		CaptureVideoPermission,
-		CaptureAudioVideoPermission,
-		PlaybackAudioPermission
+		UnknownFeature = 0,
+		FullScreenFeature,
+		GeolocationFeature,
+		NotificationsFeature,
+		PointerLockFeature,
+		CaptureAudioFeature,
+		CaptureVideoFeature,
+		CaptureAudioVideoFeature,
+		PlaybackAudioFeature
 	};
 
 	enum PermissionPolicy
 	{
 		DeniedPermission = 0,
 		GrantedPermission = 1,
-		RememberPermission = 2
+		KeepAskingPermission = 2
 	};
 
 	Q_DECLARE_FLAGS(PermissionPolicies, PermissionPolicy)
@@ -213,7 +213,7 @@ public slots:
 	virtual void removeHistoryIndex(int index, bool purge = false) = 0;
 	virtual void showContextMenu(const QPoint &position = QPoint());
 	virtual void setActiveStyleSheet(const QString &styleSheet);
-	virtual void setPermission(const QString &key, const QUrl &url, PermissionPolicies policies);
+	virtual void setPermission(FeaturePermission feature, const QUrl &url, PermissionPolicies policies);
 	virtual void setOption(int identifier, const QVariant &value);
 	virtual void setScrollPosition(const QPoint &position) = 0;
 	virtual void setHistory(const WindowHistoryInformation &history) = 0;
@@ -237,6 +237,7 @@ protected:
 	QString suggestSaveFileName(SaveFormat format) const;
 	HitTestResult getCurrentHitTestResult() const;
 	virtual QList<SpellCheckManager::DictionaryInformation> getDictionaries() const;
+	PermissionPolicy getPermission(FeaturePermission feature, const QUrl &url) const;
 	virtual SaveFormats getSupportedSaveFormats() const;
 	virtual int getAmountOfNotLoadedPlugins() const;
 	bool calculateCheckedState(int identifier, const QVariantMap &parameters = QVariantMap());
@@ -300,7 +301,7 @@ signals:
 	void requestedNewWindow(WebWidget *widget, WindowsManager::OpenHints hints);
 	void requestedSearch(const QString &query, const QString &search, WindowsManager::OpenHints hints);
 	void requestedPopupWindow(const QUrl &parentUrl, const QUrl &popupUrl);
-	void requestedPermission(const QString &option, const QUrl &url, bool cancel);
+	void requestedPermission(WebWidget::FeaturePermission feature, const QUrl &url, bool cancel);
 	void requestedAddPassword(const PasswordsManager::PasswordInformation &password);
 	void requestedGeometryChange(const QRect &geometry);
 	void progressBarGeometryChanged();
@@ -316,5 +317,7 @@ signals:
 };
 
 }
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::WebWidget::PermissionPolicies)
 
 #endif

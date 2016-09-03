@@ -814,13 +814,13 @@ void WebContentsWidget::handlePopupWindowRequest(const QUrl &parentUrl, const QU
 	m_popupsBarWidget->addPopup(popupUrl);
 }
 
-void WebContentsWidget::handlePermissionRequest(const QString &option, QUrl url, bool cancel)
+void WebContentsWidget::handlePermissionRequest(WebWidget::FeaturePermission feature, const QUrl &url, bool cancel)
 {
 	if (cancel)
 	{
 		for (int i = 0; i < m_permissionBarWidgets.count(); ++i)
 		{
-			if (m_permissionBarWidgets.at(i)->getOption() == option && m_permissionBarWidgets.at(i)->getUrl() == url)
+			if (m_permissionBarWidgets.at(i)->getFeature() == feature && m_permissionBarWidgets.at(i)->getUrl() == url)
 			{
 				m_layout->removeWidget(m_permissionBarWidgets.at(i));
 
@@ -836,13 +836,13 @@ void WebContentsWidget::handlePermissionRequest(const QString &option, QUrl url,
 	{
 		for (int i = 0; i < m_permissionBarWidgets.count(); ++i)
 		{
-			if (m_permissionBarWidgets.at(i)->getOption() == option && m_permissionBarWidgets.at(i)->getUrl() == url)
+			if (m_permissionBarWidgets.at(i)->getFeature() == feature && m_permissionBarWidgets.at(i)->getUrl() == url)
 			{
 				return;
 			}
 		}
 
-		PermissionBarWidget *widget(new PermissionBarWidget(option, url, this));
+		PermissionBarWidget *widget(new PermissionBarWidget(feature, url, this));
 
 		m_layout->insertWidget((m_permissionBarWidgets.count() + (m_searchBarWidget ? 1 : 0)), widget);
 
@@ -897,7 +897,7 @@ void WebContentsWidget::notifyPermissionChanged(WebWidget::PermissionPolicies po
 
 	if (widget)
 	{
-		m_webWidget->setPermission(widget->getOption(), widget->getUrl(), policies);
+		m_webWidget->setPermission(widget->getFeature(), widget->getUrl(), policies);
 
 		m_permissionBarWidgets.removeAll(widget);
 
@@ -1051,7 +1051,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 	connect(m_webWidget, SIGNAL(requestedNewWindow(WebWidget*,WindowsManager::OpenHints)), this, SLOT(notifyRequestedNewWindow(WebWidget*,WindowsManager::OpenHints)));
 	connect(m_webWidget, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
 	connect(m_webWidget, SIGNAL(requestedPopupWindow(QUrl,QUrl)), this, SLOT(handlePopupWindowRequest(QUrl,QUrl)));
-	connect(m_webWidget, SIGNAL(requestedPermission(QString,QUrl,bool)), this, SLOT(handlePermissionRequest(QString,QUrl,bool)));
+	connect(m_webWidget, SIGNAL(requestedPermission(WebWidget::FeaturePermission,QUrl,bool)), this, SLOT(handlePermissionRequest(WebWidget::FeaturePermission,QUrl,bool)));
 	connect(m_webWidget, SIGNAL(requestedAddPassword(PasswordsManager::PasswordInformation)), this, SLOT(handleAddPasswordRequest(PasswordsManager::PasswordInformation)));
 	connect(m_webWidget, SIGNAL(requestedGeometryChange(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
 	connect(m_webWidget, SIGNAL(statusMessageChanged(QString)), this, SIGNAL(statusMessageChanged(QString)));

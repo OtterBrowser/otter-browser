@@ -35,11 +35,11 @@ class PermissionBarWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit PermissionBarWidget(const QString &option, const QUrl &url, QWidget *parent = NULL);
+	explicit PermissionBarWidget(WebWidget::FeaturePermission feature, const QUrl &url, QWidget *parent = NULL);
 	~PermissionBarWidget();
 
-	QString getOption() const;
 	QUrl getUrl() const;
+	WebWidget::FeaturePermission getFeature() const;
 
 protected:
 	void changeEvent(QEvent *event);
@@ -49,8 +49,8 @@ protected slots:
 	void rejected();
 
 private:
-	QString m_option;
 	QUrl m_url;
+	WebWidget::FeaturePermission m_feature;
 	Ui::PermissionBarWidget *m_ui;
 
 signals:

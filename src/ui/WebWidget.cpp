@@ -981,19 +981,52 @@ void WebWidget::setStatusMessage(const QString &message, bool override)
 	}
 }
 
-void WebWidget::setPermission(const QString &key, const QUrl &url, PermissionPolicies policies)
+void WebWidget::setPermission(FeaturePermission feature, const QUrl &url, PermissionPolicies policies)
 {
-	if (policies.testFlag(RememberPermission))
+	if (policies.testFlag(KeepAskingPermission))
 	{
-		if (key == QLatin1String("Browser/EnableMediaCaptureAudioVideo"))
-		{
-			SettingsManager::setValue(SettingsManager::Browser_EnableMediaCaptureAudioOption, policies.testFlag(GrantedPermission), url);
-			SettingsManager::setValue(SettingsManager::Browser_EnableMediaCaptureVideoOption, policies.testFlag(GrantedPermission), url);
-		}
-		else
-		{
-			SettingsManager::setValue(SettingsManager::getOptionIdentifier(key), (policies.testFlag(GrantedPermission) ? QLatin1String("allow") : QLatin1String("disallow")), url);
-		}
+		return;
+	}
+
+	const QString value(policies.testFlag(GrantedPermission) ? QLatin1String("allow") : QLatin1String("disallow"));
+
+	switch (feature)
+	{
+		case FullScreenFeature:
+			SettingsManager::setValue(SettingsManager::Browser_EnableFullScreenOption, value, url);
+
+			return;
+		case GeolocationFeature:
+			SettingsManager::setValue(SettingsManager::Browser_EnableGeolocationOption, value, url);
+
+			return;
+		case NotificationsFeature:
+			SettingsManager::setValue(SettingsManager::Browser_EnableNotificationsOption, value, url);
+
+			return;
+		case PointerLockFeature:
+			SettingsManager::setValue(SettingsManager::Browser_EnablePointerLockOption, value, url);
+
+			return;
+		case CaptureAudioFeature:
+			SettingsManager::setValue(SettingsManager::Browser_EnableMediaCaptureAudioOption, value, url);
+
+			return;
+		case CaptureVideoFeature:
+			SettingsManager::setValue(SettingsManager::Browser_EnableMediaCaptureVideoOption, value, url);
+
+			return;
+		case CaptureAudioVideoFeature:
+			SettingsManager::setValue(SettingsManager::Browser_EnableMediaCaptureAudioOption, value, url);
+			SettingsManager::setValue(SettingsManager::Browser_EnableMediaCaptureVideoOption, value, url);
+
+			return;
+		case PlaybackAudioFeature:
+			SettingsManager::setValue(SettingsManager::Browser_EnableMediaPlaybackAudioOption, value, url);
+
+			return;
+		default:
+			return;
 	}
 }
 
@@ -1503,6 +1536,77 @@ WindowsManager::ContentStates WebWidget::getContentState() const
 	}
 
 	return WindowsManager::RemoteContentState;
+}
+
+WebWidget::PermissionPolicy WebWidget::getPermission(WebWidget::FeaturePermission feature, const QUrl &url) const
+{
+	QString value;
+
+	switch (feature)
+	{
+		case FullScreenFeature:
+			value = getOption(SettingsManager::Browser_EnableFullScreenOption, url).toString();
+
+			break;
+		case GeolocationFeature:
+			value = getOption(SettingsManager::Browser_EnableGeolocationOption, url).toString();
+
+			break;
+		case NotificationsFeature:
+			value = getOption(SettingsManager::Browser_EnableNotificationsOption, url).toString();
+
+			break;
+		case PointerLockFeature:
+			value = getOption(SettingsManager::Browser_EnablePointerLockOption, url).toString();
+
+			break;
+		case CaptureAudioFeature:
+			value = getOption(SettingsManager::Browser_EnableMediaCaptureAudioOption, url).toString();
+
+			break;
+		case CaptureVideoFeature:
+			value = getOption(SettingsManager::Browser_EnableMediaCaptureVideoOption, url).toString();
+
+			break;
+		case CaptureAudioVideoFeature:
+			{
+				const QString valueCaptureAudio(getOption(SettingsManager::Browser_EnableMediaCaptureAudioOption, url).toString());
+				const QString valueCaptureVideo(getOption(SettingsManager::Browser_EnableMediaCaptureVideoOption, url).toString());
+
+				if (valueCaptureAudio == QLatin1String("allow") && valueCaptureVideo == QLatin1String("allow"))
+				{
+					value = QLatin1String("allow");
+				}
+				else if (valueCaptureAudio == QLatin1String("disallow") || valueCaptureVideo == QLatin1String("disallow"))
+				{
+					value = QLatin1String("disallow");
+				}
+				else
+				{
+					value = QLatin1String("ask");
+				}
+			}
+
+			break;
+		case PlaybackAudioFeature:
+			value = getOption(SettingsManager::Browser_EnableMediaPlaybackAudioOption, url).toString();
+
+			break;
+		default:
+			return DeniedPermission;
+	}
+
+	if (value == QLatin1String("allow"))
+	{
+		return GrantedPermission;
+	}
+
+	if (value == QLatin1String("disallow"))
+	{
+		return DeniedPermission;
+	}
+
+	return KeepAskingPermission;
 }
 
 WebWidget::SaveFormats WebWidget::getSupportedSaveFormats() const

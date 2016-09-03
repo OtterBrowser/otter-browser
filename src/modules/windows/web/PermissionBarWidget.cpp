@@ -25,61 +25,64 @@
 namespace Otter
 {
 
-PermissionBarWidget::PermissionBarWidget(const QString &option, const QUrl &url, QWidget *parent) : QWidget(parent),
-	m_option(option),
+PermissionBarWidget::PermissionBarWidget(WebWidget::FeaturePermission feature, const QUrl &url, QWidget *parent) : QWidget(parent),
 	m_url(url),
+	m_feature(feature),
 	m_ui(new Ui::PermissionBarWidget)
 {
 	const QString domain(url.host());
 
 	m_ui->setupUi(this);
 
-	if (option == QLatin1String("Browser/EnableFullScreen"))
+	switch (feature)
 	{
-		m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-fullscreen"), false).pixmap(m_ui->iconLabel->size()));
-		m_ui->messageLabel->setText(tr("%1 wants to enter full screen mode.").arg(domain));
-	}
-	else if (option == QLatin1String("Browser/EnableGeolocation"))
-	{
-		m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-geolocation"), false).pixmap(m_ui->iconLabel->size()));
-		m_ui->messageLabel->setText(tr("%1 wants access to your location.").arg(domain));
-	}
-	else if (option == QLatin1String("Browser/EnableMediaCaptureAudio"))
-	{
-		m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-capture-audio"), false).pixmap(m_ui->iconLabel->size()));
-		m_ui->messageLabel->setText(tr("%1 wants to access your microphone.").arg(domain));
-	}
-	else if (option == QLatin1String("Browser/EnableMediaCaptureVideo"))
-	{
-		m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-capture-video"), false).pixmap(m_ui->iconLabel->size()));
-		m_ui->messageLabel->setText(tr("%1 wants to access your camera.").arg(domain));
-	}
-	else if (option == QLatin1String("Browser/EnableMediaCaptureAudioVideo"))
-	{
-		m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-capture-audio-video"), false).pixmap(m_ui->iconLabel->size()));
-		m_ui->messageLabel->setText(tr("%1 wants to access your microphone and camera.").arg(domain));
-	}
-	else if (option == QLatin1String("Browser/EnableMediaPlaybackAudio"))
-	{
-		m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-playback-audio"), false).pixmap(m_ui->iconLabel->size()));
-		m_ui->messageLabel->setText(tr("%1 wants to play audio.").arg(domain));
-	}
-	else if (option == QLatin1String("Browser/EnableNotifications"))
-	{
-		m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-notifications"), false).pixmap(m_ui->iconLabel->size()));
-		m_ui->messageLabel->setText(tr("%1 wants to show notifications.").arg(domain));
-	}
-	else if (option == QLatin1String("Browser/EnablePointerLock"))
-	{
-		m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-pointer-lock"), false).pixmap(m_ui->iconLabel->size()));
-		m_ui->messageLabel->setText(tr("%1 wants to lock mouse pointer.").arg(domain));
-	}
-	else
-	{
-		m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("dialog-error"), false).pixmap(m_ui->iconLabel->size()));
-		m_ui->messageLabel->setText(tr("Invalid permission request from %1.").arg(domain));
-		m_ui->permissionComboBox->hide();
-		m_ui->okButton->hide();
+		case WebWidget::FullScreenFeature:
+			m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-fullscreen"), false).pixmap(m_ui->iconLabel->size()));
+			m_ui->messageLabel->setText(tr("%1 wants to enter full screen mode.").arg(domain));
+
+			break;
+		case WebWidget::GeolocationFeature:
+			m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-geolocation"), false).pixmap(m_ui->iconLabel->size()));
+			m_ui->messageLabel->setText(tr("%1 wants access to your location.").arg(domain));
+
+			break;
+		case WebWidget::NotificationsFeature:
+			m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-notifications"), false).pixmap(m_ui->iconLabel->size()));
+			m_ui->messageLabel->setText(tr("%1 wants to show notifications.").arg(domain));
+
+			break;
+		case WebWidget::PointerLockFeature:
+			m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-pointer-lock"), false).pixmap(m_ui->iconLabel->size()));
+			m_ui->messageLabel->setText(tr("%1 wants to lock mouse pointer.").arg(domain));
+
+			break;
+		case WebWidget::CaptureAudioFeature:
+			m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-capture-audio"), false).pixmap(m_ui->iconLabel->size()));
+			m_ui->messageLabel->setText(tr("%1 wants to access your microphone.").arg(domain));
+
+			break;
+		case WebWidget::CaptureVideoFeature:
+			m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-capture-video"), false).pixmap(m_ui->iconLabel->size()));
+			m_ui->messageLabel->setText(tr("%1 wants to access your camera.").arg(domain));
+
+			break;
+		case WebWidget::CaptureAudioVideoFeature:
+			m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-capture-audio-video"), false).pixmap(m_ui->iconLabel->size()));
+			m_ui->messageLabel->setText(tr("%1 wants to access your microphone and camera.").arg(domain));
+
+			break;
+		case WebWidget::PlaybackAudioFeature:
+			m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("permission-playback-audio"), false).pixmap(m_ui->iconLabel->size()));
+			m_ui->messageLabel->setText(tr("%1 wants to play audio.").arg(domain));
+
+			break;
+		default:
+			m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("dialog-error"), false).pixmap(m_ui->iconLabel->size()));
+			m_ui->messageLabel->setText(tr("Invalid permission request from %1.").arg(domain));
+			m_ui->permissionComboBox->hide();
+			m_ui->okButton->hide();
+
+			break;
 	}
 
 	connect(m_ui->okButton, SIGNAL(clicked()), this, SLOT(accepted()));
@@ -107,22 +110,11 @@ void PermissionBarWidget::accepted()
 
 	if (m_ui->permissionComboBox->currentIndex() == 0)
 	{
-		emit permissionChanged(WebWidget::GrantedPermission);
+		emit permissionChanged(WebWidget::GrantedPermission | WebWidget::KeepAskingPermission);
 	}
 	else
 	{
-		WebWidget::PermissionPolicies policies(WebWidget::RememberPermission);
-
-		if (m_ui->permissionComboBox->currentIndex() == 1)
-		{
-			policies |= WebWidget::GrantedPermission;
-		}
-		else
-		{
-			policies |= WebWidget::DeniedPermission;
-		}
-
-		emit permissionChanged(policies);
+		emit permissionChanged((m_ui->permissionComboBox->currentIndex() == 1) ? WebWidget::GrantedPermission : WebWidget::DeniedPermission);
 	}
 }
 
@@ -133,14 +125,14 @@ void PermissionBarWidget::rejected()
 	emit permissionChanged(WebWidget::DeniedPermission);
 }
 
-QString PermissionBarWidget::getOption() const
-{
-	return m_option;
-}
-
 QUrl PermissionBarWidget::getUrl() const
 {
 	return m_url;
+}
+
+WebWidget::FeaturePermission PermissionBarWidget::getFeature() const
+{
+	return m_feature;
 }
 
 }

@@ -986,7 +986,7 @@ void QtWebEngineWebWidget::handleFullScreenRequest(QWebEngineFullScreenRequest r
 		}
 		else if (value == QLatin1String("ask"))
 		{
-			emit requestedPermission(QLatin1String("Browser/EnableFullScreen"), request.origin(), false);
+			emit requestedPermission(FullScreenFeature, request.origin(), false);
 		}
 	}
 	else
@@ -998,7 +998,7 @@ void QtWebEngineWebWidget::handleFullScreenRequest(QWebEngineFullScreenRequest r
 			mainWindow->triggerAction(ActionsManager::FullScreenAction);
 		}
 
-		emit requestedPermission(QLatin1String("Browser/EnableFullScreen"), request.origin(), true);
+		emit requestedPermission(FullScreenFeature, request.origin(), true);
 	}
 }
 
@@ -1084,57 +1084,60 @@ void QtWebEngineWebWidget::notifyIconChanged()
 	emit iconChanged(getIcon());
 }
 
-void QtWebEngineWebWidget::notifyPermissionRequested(const QUrl &url, QWebEnginePage::Feature feature, bool cancel)
+void QtWebEngineWebWidget::notifyPermissionRequested(const QUrl &url, QWebEnginePage::Feature nativeFeature, bool cancel)
 {
-	QString option;
+	FeaturePermission feature(UnknownFeature);
 
-	if (feature == QWebEnginePage::Geolocation)
+	switch (nativeFeature)
 	{
-		option = QLatin1String("Browser/EnableGeolocation");
-	}
-	else if (feature == QWebEnginePage::MediaAudioCapture)
-	{
-		option = QLatin1String("Browser/EnableMediaCaptureAudio");
-	}
-	else if (feature == QWebEnginePage::MediaVideoCapture)
-	{
-		option = QLatin1String("Browser/EnableMediaCaptureVideo");
-	}
-	else if (feature == QWebEnginePage::MediaAudioVideoCapture)
-	{
-		option = QLatin1String("Browser/EnableMediaCaptureAudioVideo");
-	}
-	else if (feature == QWebEnginePage::Notifications)
-	{
-		option = QLatin1String("Browser/EnableNotifications");
-	}
-	else if (feature == QWebEnginePage::MouseLock)
-	{
-		option = QLatin1String("Browser/EnablePointerLock");
+		case QWebEnginePage::Geolocation:
+			feature = GeolocationFeature;
+
+			break;
+		case QWebEnginePage::MediaAudioCapture:
+			feature = CaptureAudioFeature;
+
+			break;
+		case QWebEnginePage::MediaVideoCapture:
+			feature = CaptureVideoFeature;
+
+			break;
+		case QWebEnginePage::MediaAudioVideoCapture:
+			feature = CaptureAudioVideoFeature;
+
+			break;
+		case QWebEnginePage::Notifications:
+			feature = NotificationsFeature;
+
+			break;
+		case QWebEnginePage::MouseLock:
+			feature = PointerLockFeature;
+
+			break;
+		default:
+			return;
 	}
 
-	if (!option.isEmpty())
+	if (cancel)
 	{
-		if (cancel)
+		emit requestedPermission(feature, url, true);
+	}
+	else
+	{
+		switch (getPermission(feature, url))
 		{
-			emit requestedPermission(option, url, true);
-		}
-		else
-		{
-			const QString value(SettingsManager::getValue(SettingsManager::getOptionIdentifier(option), url).toString());
+			case GrantedPermission:
+				m_webView->page()->setFeaturePermission(url, nativeFeature, QWebEnginePage::PermissionGrantedByUser);
 
-			if (value == QLatin1String("allow"))
-			{
-				m_webView->page()->setFeaturePermission(url, feature, QWebEnginePage::PermissionGrantedByUser);
-			}
-			else if (value == QLatin1String("disallow"))
-			{
-				m_webView->page()->setFeaturePermission(url, feature, QWebEnginePage::PermissionDeniedByUser);
-			}
-			else
-			{
-				emit requestedPermission(option, url, false);
-			}
+				break;
+			case DeniedPermission:
+				m_webView->page()->setFeaturePermission(url, nativeFeature, QWebEnginePage::PermissionDeniedByUser);
+
+				break;
+			default:
+				emit requestedPermission(feature, url, false);
+
+				break;
 		}
 	}
 }
@@ -1307,11 +1310,11 @@ void QtWebEngineWebWidget::setUrl(const QUrl &url, bool typed)
 	notifyIconChanged();
 }
 
-void QtWebEngineWebWidget::setPermission(const QString &key, const QUrl &url, WebWidget::PermissionPolicies policies)
+void QtWebEngineWebWidget::setPermission(FeaturePermission feature, const QUrl &url, WebWidget::PermissionPolicies policies)
 {
-	WebWidget::setPermission(key, url, policies);
+	WebWidget::setPermission(feature, url, policies);
 
-	if (key == QLatin1String("Browser/EnableFullScreen"))
+	if (feature == FullScreenFeature)
 	{
 		if (policies.testFlag(GrantedPermission))
 		{
@@ -1326,38 +1329,39 @@ void QtWebEngineWebWidget::setPermission(const QString &key, const QUrl &url, We
 		return;
 	}
 
-	QWebEnginePage::Feature feature(QWebEnginePage::Geolocation);
+	QWebEnginePage::Feature nativeFeature(QWebEnginePage::Geolocation);
 
-	if (key == QLatin1String("Browser/EnableGeolocation"))
+	switch (feature)
 	{
-		feature = QWebEnginePage::Geolocation;
-	}
-	else if (key == QLatin1String("Browser/EnableMediaCaptureAudio"))
-	{
-		feature = QWebEnginePage::MediaAudioCapture;
-	}
-	else if (key == QLatin1String("Browser/EnableMediaCaptureVideo"))
-	{
-		feature = QWebEnginePage::MediaVideoCapture;
-	}
-	else if (key == QLatin1String("Browser/EnableMediaCaptureAudioVideo"))
-	{
-		feature = QWebEnginePage::MediaAudioVideoCapture;
-	}
-	else if (key == QLatin1String("Browser/EnableNotifications"))
-	{
-		feature = QWebEnginePage::Notifications;
-	}
-	else if (key == QLatin1String("Browser/EnablePointerLock"))
-	{
-		feature = QWebEnginePage::MouseLock;
-	}
-	else
-	{
-		return;
+		case GeolocationFeature:
+			nativeFeature = QWebEnginePage::Geolocation;
+
+			break;
+		case NotificationsFeature:
+			nativeFeature = QWebEnginePage::Notifications;
+
+			break;
+		case PointerLockFeature:
+			nativeFeature = QWebEnginePage::MouseLock;
+
+			break;
+		case CaptureAudioFeature:
+			nativeFeature = QWebEnginePage::MediaAudioCapture;
+
+			break;
+		case CaptureVideoFeature:
+			nativeFeature = QWebEnginePage::MediaVideoCapture;
+
+			break;
+		case CaptureAudioVideoFeature:
+			nativeFeature = QWebEnginePage::MediaAudioVideoCapture;
+
+			break;
+		default:
+			return;
 	}
 
-	m_webView->page()->setFeaturePermission(url, feature, (policies.testFlag(GrantedPermission) ? QWebEnginePage::PermissionGrantedByUser : QWebEnginePage::PermissionDeniedByUser));
+	m_webView->page()->setFeaturePermission(url, nativeFeature, (policies.testFlag(GrantedPermission) ? QWebEnginePage::PermissionGrantedByUser : QWebEnginePage::PermissionDeniedByUser));
 }
 
 void QtWebEngineWebWidget::setOption(int identifier, const QVariant &value)
