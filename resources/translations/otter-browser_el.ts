@@ -4,7 +4,7 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="14"/>
         <source>Accept Cookie</source>
-        <translation>Αποδοχή cookie</translation>
+        <translation>Αποδοχή του θυμήματος</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="35"/>
@@ -39,17 +39,17 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="47"/>
         <source>Website %1 requested to add new cookie.</source>
-        <translation>Η ιστοσελίδα %1 ζήτησε να προσθέσει ένα νέο cookie.</translation>
+        <translation>Η ιστοσελίδα %1 ζήτησε να προσθέσει ένα νέο θύμημα.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="51"/>
         <source>Website %1 requested to update existing cookie.</source>
-        <translation>Η ιστοσελίδα ζήτησε να ανανεώσει ένα ήδη υπάρχων cookie.</translation>
+        <translation>Η ιστοσελίδα %1 ζήτησε να ανανεώσει ένα υπάρχον θύμημα.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="55"/>
         <source>Website %1 requested to remove existing cookie.</source>
-        <translation>Η ιστοσελίδα %1 ζήτησε να αφαιρέσει ένα ήδη υπάρχων cookie.</translation>
+        <translation>Η ιστοσελίδα %1 ζήτησε να αφαιρέσει ένα ήδη υπάρχον θύμημα.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="61"/>
@@ -94,7 +94,7 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="20"/>
         <source>To add language, please choose one from list or type its code.</source>
-        <translation>Για να προσθέσετε μία γλώσσα, επιλέξτε τη από την λίστα η πληκτρολόγηστε τον κωδικό της.</translation>
+        <translation>Για να προσθέσετε μία γλώσσα, επιλέξτε τη από την λίστα η πληκτρολογήστε τον κωδικό της.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="39"/>
@@ -175,48 +175,48 @@
         <translation>Αναζήτηση…</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="80"/>
+        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="82"/>
         <source>User Scripts</source>
-        <translation>Σενάρια χρήστη</translation>
+        <translation>Μακροεντολές χρήστη</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="102"/>
+        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="104"/>
         <source>Select File</source>
         <translation>Επιλογή αρχείου</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="102"/>
+        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="104"/>
         <source>User Script files (*.js)</source>
-        <translation>Αρχεία σεναρίων χρήστη (*.js)</translation>
+        <translation>Αρχεία μακροεντολών χρήστη (*.js)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="113"/>
-        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="120"/>
+        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="115"/>
+        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="122"/>
         <source>Error</source>
         <translation>Σφάλμα</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="113"/>
+        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="115"/>
         <source>User Script with this name already exists.</source>
-        <translation>Ένα σενάριο χρήστη με αυτό το όνομα υπάρχει ήδη.</translation>
+        <translation>Μια μακροεντολή χρήστη με αυτό το όνομα υπάρχει ήδη.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="120"/>
+        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="122"/>
         <source>Failed to import User Script file.</source>
-        <translation>Αποτυχία εισαγωγής του αρχείου σεναρίου χρήστη.</translation>
+        <translation>Αποτυχία εισαγωγής του αρχείου μακροεντολής χρήστη.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="233"/>
+        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="235"/>
         <source>Remove Addon…</source>
         <translation>Αφαίρεση πρόσθετου...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="237"/>
+        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="239"/>
         <source>Add Addon…</source>
         <translation>Προσθήκη πρόσθετου...</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="306"/>
+        <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="308"/>
         <source>Addons Manager</source>
         <translation>Διαχειριστής πρόσθετων</translation>
     </message>
@@ -246,7 +246,7 @@
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="85"/>
         <source>Cookies Manager</source>
-        <translation>Διαχειριστής cookies</translation>
+        <translation>Διαχειριστής θυμημάτων</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="86"/>
@@ -298,7 +298,7 @@
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="98"/>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="121"/>
         <source>Enter address or search…</source>
-        <translation>Εισάγετε διεύθυνση ή αρχίστε αναζήτηση.......</translation>
+        <translation>Εισαγάγετε την διεύθυνση ή ξεκινήστε την αναζήτηση...</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/AddressWidget.cpp" line="311"/>
@@ -410,15 +410,15 @@ This may lead to malfunctions or even data loss.</source>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="287"/>
-        <location filename="../../src/core/Application.cpp" line="918"/>
-        <location filename="../../src/core/Application.cpp" line="967"/>
+        <location filename="../../src/core/Application.cpp" line="917"/>
+        <location filename="../../src/core/Application.cpp" line="966"/>
         <source>Do you want to continue?</source>
         <translation>Θέλετε να συνεχίσετε;</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="289"/>
-        <location filename="../../src/core/Application.cpp" line="922"/>
-        <location filename="../../src/core/Application.cpp" line="971"/>
+        <location filename="../../src/core/Application.cpp" line="921"/>
+        <location filename="../../src/core/Application.cpp" line="970"/>
         <source>Do not show this message again</source>
         <translation>Να μην εμφανιστεί ξανά αυτό το μήνυμα</translation>
     </message>
@@ -457,26 +457,26 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>Νέα αναβάθμιση %1 από %2 κανάλι είναι διαθέσιμη!</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="916"/>
-        <location filename="../../src/core/Application.cpp" line="965"/>
+        <location filename="../../src/core/Application.cpp" line="915"/>
+        <location filename="../../src/core/Application.cpp" line="964"/>
         <source>Question</source>
         <translation>Ερώτηση</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../src/core/Application.cpp" line="917"/>
+        <location filename="../../src/core/Application.cpp" line="916"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
         <translation><numerusform>Ενώ εγκαταλείπετε την εφαρμογή υπάρχουν %n αρχεία σε διαδικασία λήψης.</numerusform><numerusform>Ενώ εγκαταλείπετε την εφαρμογή υπάρχουν %n αρχεία σε διαδικασία λήψης.</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="924"/>
-        <location filename="../../src/core/Application.cpp" line="973"/>
+        <location filename="../../src/core/Application.cpp" line="923"/>
+        <location filename="../../src/core/Application.cpp" line="972"/>
         <source>Hide</source>
         <translation>Απόκρυψη</translation>
     </message>
     <message>
-        <location filename="../../src/core/Application.cpp" line="966"/>
+        <location filename="../../src/core/Application.cpp" line="965"/>
         <source>You are about to quit the current Otter Browser session.</source>
-        <translation>Πρόκειται να εξέλθετε από την τρέχουσα συνεδρία του Otter Browser.</translation>
+        <translation>Πρόκειται να εξέλθετε από την τρέχουσα συνεδρία του φυλλομετρητή Otter.</translation>
     </message>
 </context>
 <context>
@@ -624,7 +624,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/toolbars/BookmarkWidget.cpp" line="83"/>
         <source>(Untitled)</source>
-        <translation>(Χωρίς τίτλο)</translation>
+        <translation>(Άτιτλο)</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/BookmarkWidget.cpp" line="99"/>
@@ -680,7 +680,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksComboBoxWidget.cpp" line="50"/>
         <source>Select name of new folder:</source>
-        <translation>Επιλέξτε όνομα νέου φακέλου:</translation>
+        <translation>Επιλέξτε το όνομα του νέου φακέλου:</translation>
     </message>
 </context>
 <context>
@@ -1068,233 +1068,246 @@ Are you sure that you want to restore this session anyway?</source>
         <translation>Τιμή πεδίου:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="42"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="44"/>
         <source>Export…</source>
         <translation>Εξαγωγή…</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="46"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="48"/>
         <source>Invalid Certificate</source>
         <translation>Μη έγκυρο πιστοποιητικό</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="51"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="53"/>
         <source>View Certificate for %1</source>
         <translation>Προβολή του πιστοποιητικού για %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="60"/>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="443"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="62"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="445"/>
         <source>Unknown</source>
         <translation>Άγνωστο</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="112"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
         <source>Select File</source>
         <translation>Επιλογή αρχείου</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="112"/>
-        <source>DER encoded X509 certificates (*.der);;PEM encoded X509 certificates (*.pem);;Text files (*.txt)</source>
-        <translation type="unfinished"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
+        <source>DER encoded X509 certificates (*.der)</source>
+        <translation>Πιστοποιητικό DER κωδικοποιημένο X509 (*.der)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="120"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
+        <source>PEM encoded X509 certificates (*.pem)</source>
+        <translation>Πιστοποιητικό PEM κωδικοποιημένο X509 (*.pem)</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
+        <source>Text files (*.txt)</source>
+        <translation>Αρχεία κειμένου (*.txt)</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="122"/>
         <source>Error</source>
         <translation>Σφάλμα</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="120"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="122"/>
         <source>Failed to open file for writing.</source>
         <translation>Αποτυχία ανοίγματος του αρχείου για εγγραφή.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="177"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="179"/>
         <source>Authority Key Identifier</source>
-        <translation type="unfinished"/>
+        <translation>Αναγνωριστικό κλειδιού της αρχής</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="181"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="183"/>
         <source>Subject Key Identifier</source>
-        <translation type="unfinished"/>
+        <translation>Αναγνωριστικό κλειδιού του θέματος</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="185"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="187"/>
         <source>Key Usage</source>
-        <translation type="unfinished"/>
+        <translation>Χρήση του κλειδιού</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="189"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="191"/>
         <source>Certificate Policies</source>
         <translation>Πολιτικές πιστοποιητικού</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="193"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="195"/>
         <source>Policy Mappings</source>
-        <translation type="unfinished"/>
+        <translation>Πολιτική κανόνων</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="197"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="199"/>
         <source>Subject Alternative Name</source>
-        <translation type="unfinished"/>
+        <translation>Εναλλακτικό όνομα του θέματος</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="201"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="203"/>
         <source>Issuer Alternative Name</source>
-        <translation type="unfinished"/>
+        <translation>Εναλλακτικό όνομα της αρχής</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="205"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="207"/>
         <source>Subject Directory Attributes</source>
-        <translation type="unfinished"/>
+        <translation>Ιδιοχαρακτηριστικά καταλόγου του θέματος</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="209"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="211"/>
         <source>Basic Constraints</source>
-        <translation type="unfinished"/>
+        <translation>Βασικοί κανόνες</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="213"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="215"/>
         <source>Name Constraints</source>
-        <translation type="unfinished"/>
+        <translation>Κανόνες ονόματος</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="217"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="219"/>
         <source>Policy Constraints</source>
-        <translation type="unfinished"/>
+        <translation>Πολιτικοί κανόνων</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="221"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="223"/>
         <source>Extended Key Usage</source>
-        <translation type="unfinished"/>
+        <translation>Χρήση του εκτεταμένου κλειδιού</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="225"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="227"/>
         <source>CRL Distribution Points</source>
-        <translation type="unfinished"/>
+        <translation>Σημεία διανομής CRL</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="229"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="231"/>
         <source>Inhibit Any Policy</source>
-        <translation type="unfinished"/>
+        <translation>Αναστολή όλων των κανόνων</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="233"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="235"/>
         <source>Delta CRL Distribution Point</source>
-        <translation type="unfinished"/>
+        <translation>Σημείο διανομής Δέλτα CRL</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="237"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="239"/>
         <source>Authority Information Access</source>
-        <translation type="unfinished"/>
+        <translation>Πρόσβαση στις πληροφορίες της αρχής</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="241"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="243"/>
         <source>Subject Information Access</source>
-        <translation type="unfinished"/>
+        <translation>Πρόσβαση στις πληροφορίες του θέματος</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="323"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="325"/>
         <source>Modulus:
 %1
 
 Exponent: %2</source>
-        <translation type="unfinished"/>
+        <translation>Υπόλοιπο:
+%1
+
+Εκθέτης: %2</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="336"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="338"/>
         <source>Critical</source>
         <translation>Κρίσιμο</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="336"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="338"/>
         <source>Not Critical</source>
         <translation>Μη κρίσιμο</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="337"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="339"/>
         <source>OID: %1</source>
-        <translation type="unfinished"/>
+        <translation>Αναγνωριστικό του αντικειμένου (OID): %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="341"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="343"/>
         <source>Value:</source>
         <translation>Τιμή:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="395"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="397"/>
         <source>Version</source>
         <translation>Έκδοση</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="399"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="401"/>
         <source>Serial Number</source>
         <translation>Σειραϊκός αριθμός</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="403"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="405"/>
         <source>Certificate Signature Algorithm</source>
         <translation>Αλγόριθμος υπογραφής πιστοποιητικού</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="407"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="409"/>
         <source>Issuer</source>
         <translation>Εκδότης</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="411"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="413"/>
         <source>Validity</source>
         <translation>Εγκυρότητα</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="415"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="417"/>
         <source>Not Before</source>
         <translation>Όχι πριν</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="419"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="421"/>
         <source>Not After</source>
         <translation>Όχι μετά</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="423"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="425"/>
         <source>Subject</source>
         <translation>Θέμα</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="427"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="429"/>
         <source>Subject Public Key</source>
-        <translation type="unfinished"/>
+        <translation>Δημόσιο κλειδί του θέματος</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="431"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="433"/>
         <source>Algorithm</source>
         <translation>Αλγόριθμος</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="435"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="437"/>
         <source>Public Key</source>
         <translation>Δημόσιο κλειδί</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="439"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="441"/>
         <source>Extensions</source>
         <translation>Επεκτάσεις</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="447"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="449"/>
         <source>Fingerprint</source>
         <translation>Αποτύπωμα</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="451"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="453"/>
         <source>SHA-1 Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>Αποτύπωμα SHA-1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/CertificateDialog.cpp" line="455"/>
+        <location filename="../../src/ui/CertificateDialog.cpp" line="457"/>
         <source>SHA-256 Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>Αποτύπωμα SHA-256</translation>
     </message>
 </context>
 <context>
@@ -1442,35 +1455,40 @@ Exponent: %2</source>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="60"/>
-        <location filename="../../src/ui/ConsoleWidget.cpp" line="139"/>
+        <location filename="../../src/ui/ConsoleWidget.cpp" line="140"/>
         <source>Network</source>
         <translation>Δίκτυο</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="76"/>
-        <location filename="../../src/ui/ConsoleWidget.cpp" line="143"/>
+        <location filename="../../src/ui/ConsoleWidget.cpp" line="144"/>
         <source>Security</source>
         <translation>Ασφάλεια</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="92"/>
-        <location filename="../../src/ui/ConsoleWidget.cpp" line="147"/>
+        <source>CSS</source>
+        <translation>CSS</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/ConsoleWidget.ui" line="108"/>
+        <location filename="../../src/ui/ConsoleWidget.cpp" line="148"/>
         <source>JS</source>
         <translation>JS</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ConsoleWidget.ui" line="108"/>
-        <location filename="../../src/ui/ConsoleWidget.cpp" line="151"/>
+        <location filename="../../src/ui/ConsoleWidget.ui" line="124"/>
+        <location filename="../../src/ui/ConsoleWidget.cpp" line="152"/>
         <source>Other</source>
         <translation>Άλλα</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ConsoleWidget.ui" line="140"/>
+        <location filename="../../src/ui/ConsoleWidget.ui" line="156"/>
         <source>Clear</source>
         <translation>Εκκαθάριση</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ConsoleWidget.ui" line="169"/>
+        <location filename="../../src/ui/ConsoleWidget.ui" line="185"/>
         <source>Filter…</source>
         <translation>Φίλτρο...</translation>
     </message>
@@ -1490,7 +1508,7 @@ Exponent: %2</source>
         <translation>Άλλες πηγές</translation>
     </message>
     <message>
-        <location filename="../../src/ui/ConsoleWidget.cpp" line="262"/>
+        <location filename="../../src/ui/ConsoleWidget.cpp" line="263"/>
         <source>Copy</source>
         <translation>Αντιγραφή</translation>
     </message>
@@ -1503,44 +1521,77 @@ Exponent: %2</source>
         <translation>Αποκλεισμός Περιεχομένου</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="26"/>
-        <source>Profiles (AdBlock Plus compatible)</source>
-        <translation>Προφίλ (συμβατά με το AdBlock Plus)</translation>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="24"/>
+        <source>General</source>
+        <translation>Γενικά</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="60"/>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="36"/>
+        <source>Profiles</source>
+        <translation>Ταυτότητες</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="43"/>
+        <source>Select lists which you want to use for content blocking (AdBlock Plus compatible):</source>
+        <translation>Επιλέξτε τους καταλόγους τους οποίους επιθυμείτε να χρησιμοποιήσετε για την φραγή του περιεχομένου (συμβατοί με το AdBlock):</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="73"/>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="185"/>
         <source>Add</source>
         <translation>Προσθήκη</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="70"/>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="83"/>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="192"/>
         <source>Edit</source>
         <translation>Επεξεργασία</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="80"/>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="93"/>
         <source>Update</source>
         <translation>Ενημέρωση</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="90"/>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="103"/>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="199"/>
         <source>Remove</source>
         <translation>Αφαίρεση</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="48"/>
-        <source>Title</source>
-        <translation>Τίτλος</translation>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="133"/>
+        <source>Settings</source>
+        <translation>Ρυθμίσεις</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="48"/>
-        <source>Update Interval</source>
-        <translation>Χρονικό διάστημα ενημέρωσης</translation>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="143"/>
+        <source>Enable cosmetic filters</source>
+        <translation>Ενεργοποίηση κοσμητικών φίλτρων</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="48"/>
-        <source>Last Update</source>
-        <translation>Τελευταία ενημέρωση</translation>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="150"/>
+        <source>Enable wildcard expressions</source>
+        <translation>Ενεργοποίηση των συμβόλων υποκατάστασης</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="157"/>
+        <source>Enable custom rules</source>
+        <translation>Ενεργοποίηση των προσαρμοσμένων κανόνων</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="165"/>
+        <source>Custom Rules</source>
+        <translation>Προσαρμοσμένοι κανόνες</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="220"/>
+        <source>Error</source>
+        <translation>Σφάλμα</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="220"/>
+        <source>Failed to create a file with custom rules!</source>
+        <translation>Αποτυχία δημιουργίας ενός αρχείου προσαρμοσμένων κανόνων!</translation>
     </message>
 </context>
 <context>
@@ -1553,7 +1604,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="45"/>
         <source>Active Profiles</source>
-        <translation>Ενεργά προφίλ</translation>
+        <translation>Ενεργές ταυτότητες</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="194"/>
@@ -1588,12 +1639,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="218"/>
         <source>object subrequest</source>
-        <translation type="unfinished"/>
+        <translation>υποαίτημα αντικειμένου</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="222"/>
         <source>XHR</source>
-        <translation type="unfinished"/>
+        <translation>XHR</translation>
     </message>
     <message>
         <location filename="../../src/ui/toolbars/ContentBlockingInformationWidget.cpp" line="226"/>
@@ -1614,26 +1665,64 @@ Exponent: %2</source>
 <context>
     <name>Otter::ContentBlockingIntervalDelegate</name>
     <message numerus="yes">
-        <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="37"/>
+        <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="41"/>
         <source>%n day(s)</source>
         <translation><numerusform>%n ημέρα-ες</numerusform><numerusform>%n ημέρα-ες</numerusform></translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="37"/>
-        <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="64"/>
+        <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="41"/>
+        <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="69"/>
         <source>Never</source>
         <translation>Ποτέ</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="63"/>
+        <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="68"/>
         <source> day(s)</source>
         <translation> μέρα(ες)</translation>
     </message>
 </context>
 <context>
+    <name>Otter::ContentBlockingManager</name>
+    <message>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="55"/>
+        <source>Title</source>
+        <translation>Τίτλος</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="55"/>
+        <source>Update Interval</source>
+        <translation>Χρονικό διάστημα ενημέρωσης</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="55"/>
+        <source>Last Update</source>
+        <translation>Τελευταία ενημέρωση</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="99"/>
+        <source>Ads</source>
+        <translation>Διαφημίσεις</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="99"/>
+        <source>Privacy</source>
+        <translation>Ιδιωτικό απόρρητο</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="99"/>
+        <source>Regional</source>
+        <translation>Τοπικό</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ContentBlockingManager.cpp" line="99"/>
+        <source>Other</source>
+        <translation>Άλλο</translation>
+    </message>
+</context>
+<context>
     <name>Otter::ContentBlockingProfile</name>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="434"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="438"/>
         <source>(Unknown)</source>
         <translation>(Άγνωστο)</translation>
     </message>
@@ -1724,7 +1813,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="292"/>
         <source>You are about to delete all cookies.</source>
-        <translation>Πρόκειται να διαγράψετε όλα τα cookies.</translation>
+        <translation>Πρόκειται να διαγράψετε όλα τα θυμήματα.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="313"/>
@@ -1734,12 +1823,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="316"/>
         <source>Remove All Cookies from This Domain…</source>
-        <translation>Αφαίρεση Όλων των Cookies από Αυτό τον Τομέα....</translation>
+        <translation>Αφαίρεση όλων των θυμημάτων του τομέα...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="319"/>
         <source>Remove All Cookies…</source>
-        <translation>Αφαίρεση όλων των Cookies</translation>
+        <translation>Αφαίρεση όλων των θυμημάτων...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="448"/>
@@ -1786,17 +1875,17 @@ Exponent: %2</source>
 <context>
     <name>Otter::FilePathWidget</name>
     <message>
-        <location filename="../../src/ui/FilePathWidget.cpp" line="36"/>
+        <location filename="../../src/ui/FilePathWidget.cpp" line="38"/>
         <source>Browse…</source>
         <translation>Περιήγηση...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/FilePathWidget.cpp" line="61"/>
+        <location filename="../../src/ui/FilePathWidget.cpp" line="63"/>
         <source>Select File</source>
         <translation>Επιλέξτε Αρχείο</translation>
     </message>
     <message>
-        <location filename="../../src/ui/FilePathWidget.cpp" line="61"/>
+        <location filename="../../src/ui/FilePathWidget.cpp" line="63"/>
         <source>Select Directory</source>
         <translation>Επιλέξτε Κατάλογο</translation>
     </message>
@@ -1822,44 +1911,6 @@ Exponent: %2</source>
         <location filename="../../src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp" line="216"/>
         <source>Notification</source>
         <translation>Ειδοποίηση</translation>
-    </message>
-</context>
-<context>
-    <name>Otter::GoBackActionWidget</name>
-    <message>
-        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="69"/>
-        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="134"/>
-        <source>(Untitled)</source>
-        <translation>(Χωρίς τίτλο)</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="162"/>
-        <source>Remove Entry</source>
-        <translation>Αφαίρεση της καταχώρησης</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/toolbars/GoBackActionWidget.cpp" line="163"/>
-        <source>Purge Entry</source>
-        <translation>Καθαρισμός της καταχώρησης</translation>
-    </message>
-</context>
-<context>
-    <name>Otter::GoForwardActionWidget</name>
-    <message>
-        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="69"/>
-        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="134"/>
-        <source>(Untitled)</source>
-        <translation>(Χωρίς τίτλο)</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="162"/>
-        <source>Remove Entry</source>
-        <translation>Αφαίρεση της καταχώρησης</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/toolbars/GoForwardActionWidget.cpp" line="163"/>
-        <source>Purge Entry</source>
-        <translation>Καθαρισμός της καταχώρησης</translation>
     </message>
 </context>
 <context>
@@ -2030,7 +2081,7 @@ Exponent: %2</source>
         <translation>Εισαγωγή σελιδοδεικτών από αρχείο HTML (Μορφή netscape).</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="166"/>
+        <location filename="../../src/modules/importers/html/HtmlBookmarksImporter.cpp" line="191"/>
         <source>HTML files (*.htm *.html)</source>
         <translation>HTML αρχεία (*.htm *.html)</translation>
     </message>
@@ -2038,34 +2089,34 @@ Exponent: %2</source>
 <context>
     <name>Otter::IconWidget</name>
     <message>
-        <location filename="../../src/ui/IconWidget.cpp" line="34"/>
+        <location filename="../../src/ui/IconWidget.cpp" line="36"/>
         <source>Select From File…</source>
         <translation>Επιλογή από αρχείο...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/IconWidget.cpp" line="35"/>
+        <location filename="../../src/ui/IconWidget.cpp" line="37"/>
         <source>Select From Theme…</source>
         <translation>Επιλογή από θέμα...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/IconWidget.cpp" line="37"/>
+        <location filename="../../src/ui/IconWidget.cpp" line="39"/>
         <source>Clear</source>
         <translation>Εκκαθάριση</translation>
     </message>
     <message>
-        <location filename="../../src/ui/IconWidget.cpp" line="40"/>
-        <location filename="../../src/ui/IconWidget.cpp" line="68"/>
-        <location filename="../../src/ui/IconWidget.cpp" line="95"/>
+        <location filename="../../src/ui/IconWidget.cpp" line="42"/>
+        <location filename="../../src/ui/IconWidget.cpp" line="70"/>
+        <location filename="../../src/ui/IconWidget.cpp" line="97"/>
         <source>Select Icon</source>
         <translation>Επιλογή εικονιδίου</translation>
     </message>
     <message>
-        <location filename="../../src/ui/IconWidget.cpp" line="68"/>
+        <location filename="../../src/ui/IconWidget.cpp" line="70"/>
         <source>Images (*.png *.jpg *.bmp *.gif *.ico)</source>
         <translation>Εικόνες (*.png *.jpg *.bmp *.gif *.ico)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/IconWidget.cpp" line="95"/>
+        <location filename="../../src/ui/IconWidget.cpp" line="97"/>
         <source>Icon Name:</source>
         <translation>Όνομα του εικονιδίου:</translation>
     </message>
@@ -2137,7 +2188,7 @@ Exponent: %2</source>
     <message numerus="yes">
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="96"/>
         <source>%1 x %2 pixels @ %3 bits per pixel in %n frame(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 x %2 εικονοστοιχεία @ %3 bit ανά εικονοστοιχείο σε %n πλαίσιο(α)</numerusform><numerusform>%1 x %2 εικονοστοιχεία @ %3 bit ανά εικονοστοιχείο σε %n πλαίσιο(α)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="100"/>
@@ -2190,12 +2241,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="39"/>
         <source>Allow changing of status field</source>
-        <translation type="unfinished"/>
+        <translation>Να επιτρέπεται η αλλαγή του πεδίου κατάστασης</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="49"/>
         <source>Allow script to hide address bar</source>
-        <translation type="unfinished"/>
+        <translation>Να επιτρέπεται στην μακροεντολή να αποκρύπτει την γραμμή διευθύνσεων</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="56"/>
@@ -2205,7 +2256,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="63"/>
         <source>Allow to disable context menu</source>
-        <translation type="unfinished"/>
+        <translation>Να επιτρέπεται η απενεργοποίηση του σχετικού μενού</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="70"/>
@@ -2215,12 +2266,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="79"/>
         <source>Allow to close windows:</source>
-        <translation>Να επιτρέπεται το κλείσιμο παραθύρων</translation>
+        <translation>Να επιτρέπεται το κλείσιμο παραθύρων:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="95"/>
         <source>Allow to enter full screen mode:</source>
-        <translation type="unfinished"/>
+        <translation>Να επιτρέπεται η εναλλαγή σε λειτουργία πλήρους οθόνης:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.cpp" line="37"/>
@@ -2246,7 +2297,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="14"/>
         <source>Profile Configuration</source>
-        <translation>Διαμόρφωση του προφίλ</translation>
+        <translation>Διαμόρφωση της ταυτότητας</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="24"/>
@@ -2360,9 +2411,14 @@ Exponent: %2</source>
         <translation>Προσαρμοσμένο</translation>
     </message>
     <message>
-        <location filename="../../src/ui/LocaleDialog.cpp" line="46"/>
+        <location filename="../../src/ui/LocaleDialog.cpp" line="47"/>
         <source>Unknown [%1]</source>
         <translation>Άγνωστο [%1]</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/LocaleDialog.cpp" line="72"/>
+        <source>Translation files (*.qm)</source>
+        <translation>Αρχεία μετάφρασης (*.qm)</translation>
     </message>
 </context>
 <context>
@@ -2380,7 +2436,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="710"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Φυλλομετρητής ιστού ελεγχόμενος από τον χρήστη, και όχι το αντίστροφο.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="716"/>
@@ -2503,7 +2559,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/Menu.cpp" line="629"/>
         <location filename="../../src/ui/Menu.cpp" line="684"/>
         <source>(Untitled)</source>
-        <translation>(Χωρίς τίτλο)</translation>
+        <translation>(Άτιτλο)</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="388"/>
@@ -2529,12 +2585,12 @@ Do you want to continue?</source>
         <location filename="../../src/ui/Menu.cpp" line="527"/>
         <location filename="../../src/ui/Menu.cpp" line="611"/>
         <source>Default</source>
-        <translation>Προεπιλογή</translation>
+        <translation>Εξ ορισμού</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="585"/>
         <source>Add New</source>
-        <translation>Πρόσθεση νέου</translation>
+        <translation>Προσθήκη νέου</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="586"/>
@@ -2570,7 +2626,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="14"/>
         <source>Profile Configuration</source>
-        <translation>Διαμόρφωση του προφίλ</translation>
+        <translation>Διαμόρφωση της ταυτότητας</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="24"/>
@@ -2632,22 +2688,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Editable Content</source>
-        <translation type="unfinished"/>
+        <translation>Επεξεργάσιμο περιεχόμενο</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Tab Handle</source>
-        <translation type="unfinished"/>
+        <translation>Χειρισμός καρτέλας</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Tab Handle of Active Tab</source>
-        <translation type="unfinished"/>
+        <translation>Χειρισμός καρτέλας της ενεργού καρτέλας</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Empty Area of Tab Bar</source>
-        <translation type="unfinished"/>
+        <translation>Κενή περιοχή της γραμμής καρτελών</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
@@ -2657,7 +2713,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="68"/>
         <source>Context and Steps</source>
-        <translation type="unfinished"/>
+        <translation>Σχετικό περιεχόμενο και βήματα</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="68"/>
@@ -2673,6 +2729,25 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="117"/>
         <source>Select Action</source>
         <translation>Επιλογή ενέργειας</translation>
+    </message>
+</context>
+<context>
+    <name>Otter::NavigationActionWidget</name>
+    <message>
+        <location filename="../../src/ui/toolbars/NavigationActionWidget.cpp" line="58"/>
+        <location filename="../../src/ui/toolbars/NavigationActionWidget.cpp" line="162"/>
+        <source>(Untitled)</source>
+        <translation>(Άτιτλο)</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/NavigationActionWidget.cpp" line="191"/>
+        <source>Remove Entry</source>
+        <translation>Αφαίρεση της καταχώρησης</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/toolbars/NavigationActionWidget.cpp" line="192"/>
+        <source>Purge Entry</source>
+        <translation>Καθαρισμός της καταχώρησης</translation>
     </message>
 </context>
 <context>
@@ -2859,7 +2934,7 @@ Do you want to continue?</source>
         <translation>Εισάγει σελιδοδείκτες από τον Περιηγητή Opera έκδοση 12 ή παλαιότερη</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="72"/>
+        <location filename="../../src/modules/importers/opera/OperaBookmarksImporter.cpp" line="112"/>
         <source>Opera bookmarks files (bookmarks.adr)</source>
         <translation>Αρχεία σελιδοδεικτών Opera (bookmarks.adr)</translation>
     </message>
@@ -2879,10 +2954,10 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="111"/>
         <source>Imports notes from Opera Browser version 12 or earlier</source>
-        <translation>Εισάγει σημειώσεις από τον περιηγητή Opera έκδοση 12 ή παλαιότερη</translation>
+        <translation>Εισάγει σημειώσεις από τον φυλλομετρητή Opera έκδοση 12 ή παλαιότερη</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="121"/>
+        <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="161"/>
         <source>Opera notes files (notes.adr)</source>
         <translation>Αρχεία σημειώσεων Opera (notes.adr)</translation>
     </message>
@@ -2897,10 +2972,10 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="47"/>
         <source>Imports session from Opera Browser version 12 or earlier</source>
-        <translation>Εισάγει μια συνεδρία από τον περιηγητή Opera έκδοση 12 ή παλαιότερη</translation>
+        <translation>Εισάγει μια συνεδρία από τον φυλλομετρητή Opera έκδοση 12 ή παλαιότερη</translation>
     </message>
     <message>
-        <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="57"/>
+        <location filename="../../src/modules/importers/opera/OperaSessionImporter.cpp" line="97"/>
         <source>Opera session files (*.win)</source>
         <translation>Αρχεία συνεδρίας του Opera (*.win)</translation>
     </message>
@@ -2999,17 +3074,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="50"/>
         <source>%1 wants to access your microphone.</source>
-        <translation>%1 θέλει πρόσβαση στο μικρόφωνο σας</translation>
+        <translation>Το %1 θέλει πρόσβαση στο μικρόφωνο σας.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="55"/>
         <source>%1 wants to access your camera.</source>
-        <translation>%1 θέλει πρόσβαση στην καμερά σας</translation>
+        <translation>Το %1 θέλει πρόσβαση στην καμερά σας.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="60"/>
         <source>%1 wants to access your microphone and camera.</source>
-        <translation>%1 θέλει πρόσβαση στο μικρόφωνο και στην καμερά σας</translation>
+        <translation>Το %1 θέλει πρόσβαση στο μικρόφωνο και στην καμερά σας.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="65"/>
@@ -3042,7 +3117,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/core/PlatformIntegration.cpp" line="105"/>
         <source>Failed to install update.</source>
-        <translation>Αποτυχία εγκατάστασης αναβάθμισης</translation>
+        <translation>Αποτυχία εγκατάστασης της αναβάθμισης.</translation>
     </message>
 </context>
 <context>
@@ -3090,7 +3165,7 @@ Do you want to continue?</source>
     <message numerus="yes">
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="118"/>
         <source>%1 wants to open %n pop-up window(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Το %1 θέλει να ανοίξει %n αναδυόμενο-α παράθυρο-α.</numerusform><numerusform>Το %1 θέλει να ανοίξει %n αναδυόμενο-α παράθυρο-α.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3116,552 +3191,568 @@ Do you want to continue?</source>
         <translation>Πρόταση αποτελεσμάτων αναζήτησης</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="96"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="88"/>
+        <source>Local paths</source>
+        <translation>Τοπικές διαδρομές</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="103"/>
         <source>Address Completion</source>
         <translation>Συμπλήρωση των διευθύνσεων</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="105"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="112"/>
         <source>Show category headers</source>
         <translation>Εμφάνιση των επικεφαλίδων των κατηγοριών</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="114"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="121"/>
         <source>Display mode:</source>
         <translation>Λειτουργία προβολής:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="151"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="158"/>
         <source>Events</source>
         <translation>Γεγονότα</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="191"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="198"/>
         <source>Play sound:</source>
         <translation>Αναπαραγωγή ήχου:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="206"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="213"/>
         <source>Show notification</source>
         <translation>Εμφάνιση ειδοποίησης</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="213"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="220"/>
         <source>Mark taskbar entry</source>
-        <translation type="unfinished"/>
+        <translation>Σήμανση της καταχώρησης της γραμμής εργασιών</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="229"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="236"/>
         <source>Options</source>
         <translation>Προτιμήσεις</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="236"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="243"/>
         <source>Prefer native notifications</source>
         <translation>Προτίμηση των εγγενών ειδοποιήσεων </translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="266"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="273"/>
         <source>Style</source>
         <translation>Ύφος</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="275"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="282"/>
         <source>Widget style:</source>
         <translation>Ύφος συστατικού:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="285"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="292"/>
         <source>Style sheet:</source>
-        <translation>Φύλλο αισθητικής επικάλυψης</translation>
+        <translation>Φύλλο αισθητικής επικάλυψης:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="309"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="316"/>
         <source>Other</source>
         <translation>Άλλα</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="318"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="325"/>
         <source>Show tray icon</source>
         <translation>Εμφάνιση του εικονιδίου στο πλαίσιο συστήματος</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="350"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="686"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="357"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="693"/>
         <source>General</source>
         <translation>Γενικές</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="359"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="366"/>
         <source>Images:</source>
         <translation>Εικόνες:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="376"/>
-        <source>Enable JavaScript</source>
-        <translation>Ενεργοποίηση Javascript</translation>
-    </message>
-    <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="383"/>
+        <source>Enable JavaScript</source>
+        <translation>Ενεργοποίηση της JavaScript</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="390"/>
         <source>JavaScript Options…</source>
-        <translation>Επιλογές Javascript....</translation>
+        <translation>Επιλογές JavaScript....</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="392"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="399"/>
         <source>Enable Java</source>
-        <translation>Ενεργοποίηση Java</translation>
+        <translation>Ενεργοποίηση της Java</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="401"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="408"/>
         <source>Plugins:</source>
         <translation>Πρόσθετα:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="418"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="425"/>
         <source>User style sheet:</source>
         <translation>Φύλλα αισθητικής επικάλυψης χρήστη:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="453"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="460"/>
         <source>MIME Types</source>
-        <translation>Τύποι MIME:</translation>
+        <translation>Τύποι MIME</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="477"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1011"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1127"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1347"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1500"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="484"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1018"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1134"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1354"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1507"/>
         <source>Add</source>
         <translation>Προσθήκη</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="487"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1025"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1137"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1377"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1530"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="494"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1032"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1144"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1384"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1537"/>
         <source>Remove</source>
         <translation>Αφαίρεση</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="529"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="536"/>
         <source>Show download dialog</source>
         <translation>Εμφάνιση του διαλόγου λήψεων</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="539"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="546"/>
         <source>Save to disk</source>
         <translation>Αποθήκευση στον δίσκο</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="582"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="589"/>
         <source>Do not ask for folder, save directly to</source>
         <translation>Να μην τίθεται η ερώτηση για τον φάκελο προορισμού· άμεση αποθήκευση στο</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="597"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="604"/>
         <source>Open with application</source>
         <translation>Άνοιγμα με την εφαρμογή</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="643"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="650"/>
         <source>Pass web address directly to application</source>
-        <translation type="unfinished"/>
+        <translation>Προώθηση των διευθύνσεων ιστού άμεσα στην εφαρμογή</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="693"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="700"/>
         <source>Send referrer information</source>
-        <translation type="unfinished"/>
+        <translation>Αποστολή πληροφοριών παραπομπής</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="702"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="709"/>
         <source>User Agent:</source>
         <translation>Πράκτορας χρήστη:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="715"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="722"/>
         <source>Manage…</source>
         <translation>Διαχείριση...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="730"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="737"/>
         <source>Proxy</source>
         <translation>Διαμεσολαβητής</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="739"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="746"/>
         <source>Mode:</source>
         <translation>Λειτουργία:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="850"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="857"/>
         <source>Port</source>
         <translation>Θύρα</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="857"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="864"/>
         <source>Protocol</source>
         <translation>Πρωτόκολλο</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="864"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="871"/>
         <source>Servers</source>
         <translation>Εξυπηρετητές</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="871"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="878"/>
         <source>FTP</source>
         <translation>FTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="878"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="885"/>
         <source>SOCKS5</source>
         <translation>SOCKS5</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="885"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="892"/>
         <source>HTTP</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="899"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="906"/>
         <source>HTTPS</source>
         <translation>HTTPS</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="913"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="920"/>
         <source>All</source>
         <translation>Όλα</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="951"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="958"/>
         <source>Path to PAC file:</source>
-        <translation>Διαδρομή του αρχείου PAC</translation>
+        <translation>Διαδρομή του αρχείου PAC:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="968"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="975"/>
         <source>Use system authentication</source>
         <translation>Χρήση της ταυτοποίησης του συστήματος</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="993"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1000"/>
         <source>Do not use proxy for:</source>
         <translation>Να μην γίνεται χρήση διαμεσολαβητή για:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1018"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1025"/>
         <source>Edit</source>
         <translation>Επεξεργασία</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1049"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1056"/>
         <source>Example: domain.com, localhost, 127.0.0.1, 192.168.1.0/24</source>
         <translation>Παράδειγμα: domain.com, localhost, 127.0.0.1, 192.168.1.0/24</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1082"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1089"/>
         <source>SSL ciphers</source>
-        <translation type="unfinished"/>
+        <translation>Κρυπτογραφήσεις SSL</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1162"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1402"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1555"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1169"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1409"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1562"/>
         <source>Move Up</source>
         <translation>Μετακίνηση προς τα πάνω</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1188"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1428"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1581"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1195"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1435"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1588"/>
         <source>Move Down</source>
         <translation>Μετακίνηση προς τα κάτω</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1211"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1218"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
         <source>Updates</source>
         <translation>Ενημερώσεις</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1218"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1225"/>
         <source>Select channels from which you want to receive updates:</source>
-        <translation type="unfinished"/>
+        <translation>Επιλέξτε τα κανάλια λήψης ενημερώσεων:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1257"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1264"/>
         <source>Check for updates every</source>
-        <translation type="unfinished"/>
+        <translation>Έλεγχος για ενημερώσεις κάθε</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1267"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1274"/>
         <source>day(s)</source>
         <translation>ημέρα(ες)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1276"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1283"/>
         <source>Install updates automatically</source>
-        <translation type="unfinished"/>
+        <translation>Αυτόματη εγκατάσταση των ενημερώσεων</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1308"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1315"/>
         <source>Keyboard Shortcuts</source>
         <translation>Συντομεύσεις πληκτρολογίου</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1357"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1510"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1364"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1517"/>
         <source>Edit…</source>
         <translation>Επεξεργασία...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1367"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1520"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1374"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1527"/>
         <source>Clone</source>
         <translation>Κλώνος</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1441"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1448"/>
         <source>Enable single key shortcuts</source>
         <translation>Ενεργοποίηση των συντομεύσεων ενός πλήκτρου</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1461"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1468"/>
         <source>Mouse Actions and Gestures</source>
         <translation>Ενέργειες και χειρονομίες του ποντικιού</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1594"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1601"/>
         <source>Enable mouse gestures</source>
         <translation>Ενεργοποίηση των χειρονομιών του ποντικιού</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
         <source>Browsing</source>
-        <translation>Εξερεύνηση</translation>
+        <translation>Περιήγηση</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
         <source>Notifications</source>
         <translation>Ειδοποιήσεις</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
         <source>Appearance</source>
         <translation>Εμφάνιση</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
         <source>Content</source>
         <translation>Περιεχόμενο</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
         <source>Downloads</source>
         <translation>Λήψεις</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
         <source>Programs</source>
         <translation>Προγράμματα</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
         <source>History</source>
         <translation>Ιστορικό</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
         <source>Network</source>
         <translation>Δίκτυο</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
         <source>Security</source>
         <translation>Ασφάλεια</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
         <source>Keyboard</source>
         <translation>Πληκτρολόγιο</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="65"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
         <source>Mouse</source>
         <translation>Ποντίκι</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="102"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="104"/>
         <source>Compact</source>
         <translation>Συμπαγής</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="103"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="105"/>
         <source>Columns</source>
         <translation>Στήλες</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="112"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="166"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="114"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="170"/>
         <source>Name</source>
         <translation>Όνομα</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="112"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="114"/>
         <source>Description</source>
         <translation>Περιγραφή</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="135"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="137"/>
         <source>System Style</source>
         <translation>Ύφος συστήματος</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="146"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="167"/>
+        <source>Style sheets (*.css)</source>
+        <translation>Φύλλα αισθητικής επικάλυψης (*.css)</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="149"/>
         <source>All images</source>
         <translation>Όλες οι εικόνες</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="147"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="150"/>
         <source>Cached images</source>
         <translation>Εικόνες στην προσωρινή μνήμη</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="148"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="151"/>
         <source>No images</source>
         <translation>Χωρίς εικόνες</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="156"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="159"/>
         <source>Enabled</source>
         <translation>Ενεργοποιημένο</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="157"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="160"/>
         <source>On demand</source>
         <translation>Όταν ζητηθεί</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="158"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="161"/>
         <source>Disabled</source>
         <translation>Απενεργοποιημένο</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="201"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="688"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="205"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="693"/>
         <source>Default</source>
         <translation>Προεπιλογή</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="214"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="365"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="402"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="694"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="848"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="852"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="878"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="914"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="940"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1034"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1048"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1052"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1078"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1114"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1140"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1234"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1500"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1570"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="218"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="370"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="407"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="699"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="853"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="857"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="883"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="919"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="945"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1039"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1053"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1057"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1083"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1119"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1145"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1239"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1506"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1576"/>
         <source>(Untitled)</source>
         <translation>(Χωρίς τίτλο)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="232"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="236"/>
         <source>No proxy</source>
         <translation>Χωρίς διαμεσολαβητή</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="233"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="237"/>
         <source>System configuration</source>
         <translation>Παραμετροποίηση συστήματος</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="234"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="238"/>
         <source>Manual configuration</source>
         <translation>Χειροκίνητη παραμετροποίηση</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="235"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="239"/>
         <source>Automatic configuration (PAC)</source>
         <translation>Αυτόματη παραμετροποίηση (PAC)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="319"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="266"/>
+        <source>Proxy configuration files (*.pac)</source>
+        <translation>Αρχεία διαμόρφωσης διαμεσολαβητή (*.pac)</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="324"/>
         <source>Stable version</source>
         <translation>Σταθερή έκδοση</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="320"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="325"/>
         <source>Beta version</source>
         <translation>Βήτα έκδοση</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="321"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="326"/>
         <source>Weekly development version</source>
         <translation>Εβδομαδιαία έκδοση σε ανάπτυξη</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="377"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="414"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="382"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="419"/>
         <source>New…</source>
         <translation>Νέο...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="378"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="415"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="383"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="420"/>
         <source>Readd</source>
-        <translation type="unfinished"/>
+        <translation>Προσθήκη εκ νέου</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="526"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="531"/>
         <source>WAV files (*.wav)</source>
         <translation>αρχεία WAV (*.wav)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="555"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="560"/>
         <source>MIME Type Name</source>
         <translation>Όνομα τύπου MIME</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="555"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="560"/>
         <source>Select name of MIME Type:</source>
         <translation>Επιλογή ονόματος τύπου MIME:</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="569"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="574"/>
         <source>Error</source>
         <translation>Σφάλμα</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="569"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="574"/>
         <source>Invalid MIME Type name.</source>
         <translation>Μη έγκυρο όνομα τύπου MIME.</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="960"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1160"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="965"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1165"/>
         <source>Question</source>
         <translation>Ερώτηση</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="961"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1161"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="966"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1166"/>
         <source>Do you really want to remove this profile?</source>
         <translation>Θέλετε πραγματικά να διαγράψετε αυτό το προφιλ;</translation>
     </message>
     <message>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="970"/>
-        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1170"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="975"/>
+        <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1175"/>
         <source>Delete profile permanently</source>
         <translation>Διαγραφή του προφίλ μόνιμα</translation>
     </message>
@@ -3804,7 +3895,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="60"/>
         <source>The quick brown fox jumps over the lazy dog</source>
-        <translation>Η γρήγορη καφέ αλεπού πηδάει πάνω από τον οκνηρό σκύλο</translation>
+        <translation>Η γρήγορη καφέ αλεπού πηδά πάνω από τον οκνηρό σκύλο</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="74"/>
@@ -3890,7 +3981,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="76"/>
         <source>Use Current Page</source>
-        <translation>Χρήση της τρέχουσας σελίδας</translation>
+        <translation>Τρέχουσα σελίδα</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="83"/>
@@ -3900,7 +3991,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="90"/>
         <source>Restore to Default</source>
-        <translation>Επαναφορά στην προεπιλογή</translation>
+        <translation>Εξ ορισμού</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="107"/>
@@ -3985,7 +4076,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="287"/>
         <source>Set as a default browser</source>
-        <translation>Ορισμός ως προεπιλεγμένου περιηγητή</translation>
+        <translation>Ορισμός ως προεπιλεγμένου φυλλομετρητή</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="42"/>
@@ -4063,12 +4154,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="170"/>
         <source>Enable cookies</source>
-        <translation>Ενεργοποίηση των cookies</translation>
+        <translation>Ενεργοποίηση των θυμημάτων</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="215"/>
         <source>Accept cookies:</source>
-        <translation>Αποδοχή cookies:</translation>
+        <translation>Αποδοχή θυμημάτων:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="228"/>
@@ -4078,7 +4169,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="241"/>
         <source>Accept third-party cookies:</source>
-        <translation>Αποδοχή cookies από τριτούς:</translation>
+        <translation>Αποδοχή θυμημάτων τρίτων:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="263"/>
@@ -4171,7 +4262,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.cpp" line="62"/>
         <source>Always ask</source>
-        <translation>Πάντα να γίνεται ερώτηση</translation>
+        <translation>Να ερωτάται πάντα</translation>
     </message>
 </context>
 <context>
@@ -4229,7 +4320,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="78"/>
         <source>Readd</source>
-        <translation type="unfinished"/>
+        <translation>Προσθήκη εκ νέου</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="140"/>
@@ -4245,7 +4336,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="210"/>
         <source>Keyword is already in use. Do you want to continue anyway?</source>
-        <translation type="unfinished"/>
+        <translation>Η λέξη-κλειδί είναι ήδη εν χρήσει. Θέλετε να συνεχίσετε ούτως ή άλλως;</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="302"/>
@@ -4260,7 +4351,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="381"/>
         <source>(Untitled)</source>
-        <translation>(Χωρίς τίτλο)</translation>
+        <translation>(Άτιτλο)</translation>
     </message>
 </context>
 <context>
@@ -4301,7 +4392,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="136"/>
         <source>Directory Contents</source>
-        <translation>Περιεχόμενα Καταλόγου</translation>
+        <translation>Περιεχόμενα καταλόγου</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="139"/>
@@ -4379,63 +4470,63 @@ Do you want to continue?</source>
 <context>
     <name>Otter::QtWebKitPage</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="231"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="430"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="467"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="293"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="494"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="531"/>
         <source>JavaScript</source>
         <translation>JavaScript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="232"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="431"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="468"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="294"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="495"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="532"/>
         <source>Disable JavaScript popups</source>
         <translation>Απενεργοποίηση αναδυόμενων Javascript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="380"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="393"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="559"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="444"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="457"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="623"/>
         <source>Question</source>
         <translation>Ερώτηση</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="380"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="394"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="444"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="458"/>
         <source>Are you sure that you want to send form data again?</source>
-        <translation>Είστε σίγουρος ότι θέλετε να σταλούν τα δεδομένα της φόρμας ξανά;</translation>
+        <translation>Είστε σίγουρος-η ότι θέλετε να σταλούν τα δεδομένα του εντύπου ξανά;</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="380"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="395"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="444"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="459"/>
         <source>Do you want to resend data?</source>
         <translation>Θέλετε να αποσταλούν ξανά τα δεδομένα;</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="381"/>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="399"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="445"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="463"/>
         <source>Do not show this message again</source>
         <translation>Να μην εμφανιστεί ξανά αυτό το μήνυμα</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="509"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="573"/>
         <source>Open File</source>
-        <translation>Άνοιγμα Αρχείου</translation>
+        <translation>Άνοιγμα αρχείου</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="539"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="603"/>
         <source>%1 error #%2: %3</source>
         <translation>%1  σφάλμα #%2: %3</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="559"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="623"/>
         <source>The script on this page appears to have a problem.</source>
-        <translation>Το σενάριο στη σελίδα αυτή φαίνεται να έχει πρόβλημα.</translation>
+        <translation>Η μακροεντολή στη σελίδα αυτή φαίνεται να έχει πρόβλημα.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="559"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="623"/>
         <source>Do you want to stop the script?</source>
-        <translation>Θέλετε να το διακόψετε;</translation>
+        <translation>Θέλετε να την διακόψετε;</translation>
     </message>
 </context>
 <context>
@@ -4443,91 +4534,96 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPluginWidget.cpp" line="32"/>
         <source>Click to load content (%1) handled by plugin from: %2</source>
-        <translation type="unfinished"/>
+        <translation>Κάντε κλικ για την φόρτωση του περιεχομένου (%1) μέσω του πρόσθετου: %2</translation>
     </message>
 </context>
 <context>
     <name>Otter::QtWebKitWebBackend</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="207"/>
-        <source>WebKit Backend</source>
-        <translation>Σύστημα υποστήριξης του WebKit</translation>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="206"/>
+        <source>WebKit Backend (legacy)</source>
+        <translation>Σύστημα υποστήριξης WebKit (παλαιού τύπου)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="212"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="208"/>
+        <source>WebKit Backend</source>
+        <translation>Σύστημα υποστήριξης WebKit</translation>
+    </message>
+    <message>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="214"/>
         <source>Backend utilizing QtWebKit module</source>
-        <translation type="unfinished"/>
+        <translation>Σύστημα υποστήριξης χρησιμοποιώντας το άρθρωμα QtWebKit</translation>
     </message>
 </context>
 <context>
     <name>Otter::QtWebKitWebWidget</name>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="402"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="420"/>
         <source>Error</source>
         <translation>Σφάλμα</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="402"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="420"/>
         <source>Failed to open file for writing.</source>
         <translation>Αποτυχία ανοίγματος αρχείου για γράψιμο.</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="422"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="440"/>
         <source>file</source>
         <translation>αρχείο</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="433"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="451"/>
         <source>Failed to save image: %1</source>
         <translation>Αποτυχία αποθήκευσης φωτογραφίας: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="567"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="585"/>
         <source>Print Preview</source>
         <translation>Προεπισκόπηση της εκτύπωσης</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="626"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="644"/>
         <source>JavaScript</source>
         <translation>Javascript</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="626"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="644"/>
         <source>Webpage wants to close this tab, do you want to allow to close it?</source>
         <translation>Η ιστοσελίδα θέλει να κλείσει την καρτέλα, εσείς θέλετε να την κλείσετε;</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="627"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="645"/>
         <source>Do not show this message again</source>
         <translation>Να μην εμφανιστεί ξανά αυτό το μήνυμα</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="767"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="785"/>
         <source>Undo</source>
         <translation>Αναίρεση</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="767"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="785"/>
         <source>Undo: %1</source>
         <translation>Αναίρεση: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="772"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="790"/>
         <source>Redo</source>
         <translation>Επανάληψη</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="772"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="790"/>
         <source>Redo: %1</source>
         <translation>Επανάληψη: %1</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1927"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1955"/>
         <source>Blank Page</source>
         <translation>Κενή σελίδα</translation>
     </message>
     <message>
-        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1940"/>
+        <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="1968"/>
         <source>(Untitled)</source>
         <translation>(Χωρίς τίτλο)</translation>
     </message>
@@ -4594,7 +4690,8 @@ Do you want to continue?</source>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="68"/>
         <source>Session with specified indentifier already exists.
 Do you want to overwrite it?</source>
-        <translation type="unfinished"/>
+        <translation>Η συνεδρία με το καθορισμένο αναγνωριστικό υπάρχει ήδη.
+Θέλετε να την αντικαταστήσετε;</translation>
     </message>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="81"/>
@@ -4604,7 +4701,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SaveSessionDialog.cpp" line="81"/>
         <source>Failed to save session.</source>
-        <translation>Αποτυχία αποθήκευσης συνεδρίας</translation>
+        <translation>Αποτυχία αποθήκευσης συνεδρίας.</translation>
     </message>
 </context>
 <context>
@@ -4675,7 +4772,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="101"/>
         <source>Form address:</source>
-        <translation type="unfinished"/>
+        <translation>Διεύθυνση του εντύπου:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="117"/>
@@ -4685,12 +4782,12 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="129"/>
         <source>Set as default search engine</source>
-        <translation type="unfinished"/>
+        <translation>Ορισμός ως την εξ ορισμού μηχανή αναζήτησης</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="140"/>
         <source>Results Query</source>
-        <translation type="unfinished"/>
+        <translation>Αποτελέσματα αιτήματος</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="148"/>
@@ -4714,12 +4811,12 @@ Do you want to overwrite it?</source>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="217"/>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="325"/>
         <source>Data encoding (enctype):</source>
-        <translation type="unfinished"/>
+        <translation>Κωδικοποίηση δεδομένων (enctype):</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="245"/>
         <source>Suggestions Query</source>
-        <translation type="unfinished"/>
+        <translation>Αιτήματα συστάσεων</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.cpp" line="133"/>
@@ -4864,12 +4961,12 @@ Do you want to overwrite it?</source>
     <message numerus="yes">
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
         <source>%n window(s) (%1)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n παράθυρο(α) (%1)</numerusform><numerusform>%n παράθυρο(α) (%1)</numerusform></translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
         <source>%n tab(s)</source>
-        <translation><numerusform>%n καρτέλα(ες))</numerusform><numerusform>%n καρτέλα(ες))</numerusform></translation>
+        <translation><numerusform>%n καρτέλα(ες)</numerusform><numerusform>%n καρτέλα(ες)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="105"/>
@@ -4901,7 +4998,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="130"/>
         <source>Failed to delete session.</source>
-        <translation>Αποτυχία διαγραφής συνεδρίας</translation>
+        <translation>Αποτυχία διαγραφής συνεδρίας.</translation>
     </message>
 </context>
 <context>
@@ -4919,7 +5016,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="285"/>
         <source>Input address of web page to be shown in panel:</source>
-        <translation type="unfinished"/>
+        <translation>Εισαγάγετε την διεύθυνση της ιστοσελίδας του πίνακα:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="396"/>
@@ -4934,7 +5031,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="406"/>
         <source>Cookies</source>
-        <translation>Cookies</translation>
+        <translation>Θυμήματα</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="411"/>
@@ -4984,17 +5081,17 @@ Are you sure that you want to restore this session anyway?</source>
         <source>The document has been modified.
 Do you want to save your changes or discard them?</source>
         <translation>Αυτό το έγγραφο έχει τροποποιηθεί.
-Θέλετε να αποθηκεύσετε τις αλλαγές ή να τις απορίψετε;</translation>
+Θέλετε να αποθηκεύσετε τις αλλαγές ή να τις απορρίψετε;</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="297"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="296"/>
         <source>Show Line Numbers</source>
         <translation>Εμφάνιση αριθμών γραμμής</translation>
     </message>
     <message>
-        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="486"/>
+        <location filename="../../src/ui/SourceViewerWebWidget.cpp" line="485"/>
         <source>Source Viewer</source>
-        <translation type="unfinished"/>
+        <translation>Προβολέας πηγής</translation>
     </message>
 </context>
 <context>
@@ -5003,7 +5100,7 @@ Do you want to save your changes or discard them?</source>
         <location filename="../../src/modules/windows/web/StartPageModel.cpp" line="175"/>
         <location filename="../../src/modules/windows/web/StartPageModel.cpp" line="176"/>
         <source>Add Tile…</source>
-        <translation>Προσθήκη παράθεσης...</translation>
+        <translation>Προσθήκη πλακιδίου...</translation>
     </message>
 </context>
 <context>
@@ -5061,32 +5158,32 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.ui" line="161"/>
         <source>Show tile to add new entries</source>
-        <translation type="unfinished"/>
+        <translation>Εμφάνιση του πλακιδίου προσθήκης νέων καταχωρήσεων</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="39"/>
+        <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="40"/>
         <source>Images (*.png *.jpg *.bmp *.gif)</source>
         <translation>Εικόνες (*.png *.jpg *.bmp *.gif)</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="40"/>
+        <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="41"/>
         <source>Best fit</source>
         <translation>Βέλτιστη προσαρμογή</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="41"/>
+        <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="42"/>
         <source>Center</source>
         <translation>Κέντρο</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="42"/>
+        <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="43"/>
         <source>Stretch</source>
         <translation>Έκταση</translation>
     </message>
     <message>
-        <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="43"/>
+        <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="44"/>
         <source>Tile</source>
-        <translation>Παράθεση</translation>
+        <translation>Πλακίδιο</translation>
     </message>
 </context>
 <context>
@@ -5094,7 +5191,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="404"/>
         <source>Add Tile</source>
-        <translation>Προσθήκη παράθεσης</translation>
+        <translation>Προσθήκη πλακιδίου</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="558"/>
@@ -5124,7 +5221,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPageWidget.cpp" line="573"/>
         <source>Add Tile…</source>
-        <translation>Προσθήκη παράθεσης...</translation>
+        <translation>Προσθήκη πλακιδίου...</translation>
     </message>
 </context>
 <context>
@@ -5133,7 +5230,7 @@ Do you want to save your changes or discard them?</source>
         <location filename="../../src/ui/StartupDialog.ui" line="14"/>
         <location filename="../../src/ui/StartupDialog.ui" line="27"/>
         <source>Welcome to Otter</source>
-        <translation>Καλωσήρθατε στον Otter</translation>
+        <translation>Καλωσορίσατε στον Otter</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="34"/>
@@ -5182,7 +5279,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="227"/>
         <source>Switch tabs using the mouse wheel</source>
-        <translation>Αλλαγή καρτελών με την ροδέλα του ποντικιού</translation>
+        <translation>Αλλαγή καρτελών με τον τροχό του ποντικιού</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="247"/>
@@ -5243,7 +5340,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="65"/>
         <source>Button style:</source>
-        <translation>Ύφος του πλήκτρου:</translation>
+        <translation>Τεχνοτροπία κουμπιών:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="78"/>
@@ -5279,7 +5376,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="143"/>
         <source>Visibility in full screen mode:</source>
-        <translation type="unfinished"/>
+        <translation>Ορατότητα σε λειτουργία πλήρους οθόνης:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="179"/>
@@ -5338,22 +5435,22 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="60"/>
         <source>Visible only when cursor is close to screen edge</source>
-        <translation type="unfinished"/>
+        <translation>Ορατό μόνον όταν ο δρομέας είναι κοντά στην άκρη της οθόνης</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="65"/>
         <source>Follow style</source>
-        <translation type="unfinished"/>
+        <translation>Βάσει τεχνοτροπίας</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="66"/>
         <source>Icon only</source>
-        <translation type="unfinished"/>
+        <translation>Μόνο εικονίδιο</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="67"/>
         <source>Text only</source>
-        <translation type="unfinished"/>
+        <translation>Μόνο κείμενο</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="68"/>
@@ -5368,7 +5465,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="255"/>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation>Όλα</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="263"/>
@@ -5379,22 +5476,22 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="272"/>
         <source>Show search engine:</source>
-        <translation type="unfinished"/>
+        <translation>Εμφάνιση της μηχανής αναζήτησης:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="273"/>
         <source>Show search button:</source>
-        <translation type="unfinished"/>
+        <translation>Εμφάνιση του κουμπιού αναζήτησης:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="277"/>
         <source>Custom icon:</source>
-        <translation type="unfinished"/>
+        <translation>Προσαρμοσμένο εικονίδιο:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="278"/>
         <source>Custom text:</source>
-        <translation type="unfinished"/>
+        <translation>Προσαρμοσμένο κείμενο:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="287"/>
@@ -5414,7 +5511,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="374"/>
         <source>Arbitrary List of Actions</source>
-        <translation type="unfinished"/>
+        <translation>Κατάλογος αυθαίρετων ενεργειών</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="381"/>
@@ -5429,12 +5526,12 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="389"/>
         <source>Content Blocking Details</source>
-        <translation type="unfinished"/>
+        <translation>Λεπτομέρειες φραγής περιεχομένου</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="393"/>
         <source>Menu Bar</source>
-        <translation type="unfinished"/>
+        <translation>Γραμμή μενού</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="397"/>
@@ -5444,37 +5541,37 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="401"/>
         <source>Sidebar Panel Chooser</source>
-        <translation type="unfinished"/>
+        <translation>Επιλογέας πλευρική στήλης</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="405"/>
         <source>Progress Information (Document Progress)</source>
-        <translation type="unfinished"/>
+        <translation>Πληροφορίες προόδου (Πρόοδος του εγγράφου)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="409"/>
         <source>Progress Information (Total Progress)</source>
-        <translation type="unfinished"/>
+        <translation>Πληροφορίες προόδου (Ολική πρόοδος)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="413"/>
         <source>Progress Information (Loaded Elements)</source>
-        <translation type="unfinished"/>
+        <translation>Πληροφορίες προόδου (Φορτωμένα στοιχεία)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="417"/>
         <source>Progress Information (Loading Speed)</source>
-        <translation type="unfinished"/>
+        <translation>Πληροφορίες προόδου (Ταχύτητα φόρτωσης)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="421"/>
         <source>Progress Information (Elapsed Time)</source>
-        <translation type="unfinished"/>
+        <translation>Πληροφορίες προόδου (Διανυθείς χρόνος)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="425"/>
         <source>Progress Information (Status Message)</source>
-        <translation type="unfinished"/>
+        <translation>Πληροφορίες προόδου (Μήνυμα κατάστασης)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="433"/>
@@ -5489,7 +5586,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="443"/>
         <source>Status Message Field</source>
-        <translation type="unfinished"/>
+        <translation>Πεδίο του μηνύματος κατάστασης</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="447"/>
@@ -5499,12 +5596,12 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="451"/>
         <source>Zoom Slider</source>
-        <translation type="unfinished"/>
+        <translation>Ολισθητής εστίασης</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="459"/>
         <source>(Untitled)</source>
-        <translation>(Χωρίς τίτλο)</translation>
+        <translation>(Άτιτλο)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="464"/>
@@ -5546,7 +5643,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="461"/>
         <source>(Untitled)</source>
-        <translation>(Χωρίς τίτλο)</translation>
+        <translation>(Άτιτλο)</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="462"/>
@@ -5599,7 +5696,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="290"/>
         <source>Do you really want to reset all toolbars to default configuration?</source>
-        <translation type="unfinished"/>
+        <translation>Θέλετε πραγματικά να επαναφέρετε όλες τις εργαλειοθήκες στην αρχική τους διαμόρφωση;</translation>
     </message>
 </context>
 <context>
@@ -5623,7 +5720,9 @@ Do you want to save your changes or discard them?</source>
         <location filename="../../src/core/TransfersManager.cpp" line="265"/>
         <source>File with that name already exists.
 Do you want to overwrite it?</source>
-        <translation type="unfinished"/>
+        <translation>Ένα αρχείο με αυτό το όνομα υπάρχει ήδη.
+Θέλετε να το αντικαταστήσετε;
+</translation>
     </message>
     <message>
         <location filename="../../src/core/TransfersManager.cpp" line="620"/>
@@ -5803,7 +5902,11 @@ Target: %2
 Size: %3
 Downloaded: %4
 Progress: %5&lt;/div&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;div style=&quot;white-space:pre;&quot;&gt;Πηγή: %1
+Προορισμός: %2
+Μέγεθος: %3
+Ειλημμένα: %4
+Πρόοδος: %5&lt;/div&gt;</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="363"/>
@@ -5868,12 +5971,12 @@ Progress: %5&lt;/div&gt;</source>
         <location filename="../../src/ui/TrayIcon.cpp" line="52"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="128"/>
         <source>Otter Browser</source>
-        <translation>Περιηγητής Otter</translation>
+        <translation>Φυλλομετρητής Otter</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="119"/>
         <source>Show Windows</source>
-        <translation>Εμφάνιση Παραθύρων</translation>
+        <translation>Εμφάνιση παραθύρων</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="119"/>
@@ -5891,7 +5994,7 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="20"/>
         <source>Checking for update…</source>
-        <translation>Έλεγχος για αναβαθμίση</translation>
+        <translation>Έλεγχος ενημερώσεων...</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="50"/>
@@ -5901,7 +6004,7 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="93"/>
         <source>There are no new updates.</source>
-        <translation>Δεν υπάρχουν νέες ενημερώσεις</translation>
+        <translation>Δεν υπάρχουν νέες ενημερώσεις.</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="99"/>
@@ -5921,12 +6024,12 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="119"/>
         <source>Version %1 from %2 channel</source>
-        <translation type="unfinished"/>
+        <translation>Έκδοση %1 από το κανάλι %2</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="129"/>
         <source>Some of the updates do not contain packages for your platform. Try to check for updates later or visit details page for more info.</source>
-        <translation type="unfinished"/>
+        <translation>Μερικές από τις ενημερώσεις δεν διαθέτουν πακέτα για το πλατύβαθρό σας. Προσπαθήστε να ελέγξετε για ενημερώσεις αργότερα ή επισκεφθείτε την σελίδα λεπτομερειών για περισσότερες πληροφορίες. </translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="173"/>
@@ -5947,8 +6050,8 @@ Progress: %5&lt;/div&gt;</source>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="191"/>
         <source>New version of Otter Browser is ready to install.
 Click Install button to restart browser and install the update or close this dialog to install the update during next browser restart.</source>
-        <translation>Μία καινούργια έκδοση του περιηγητή Otter είναι έτοιμη για εγκατάσταση.
-Επιλέξτε το κουμπί της εγκατάστασης για να επανεκκινήσετε τον περιηγητή και να εγκατασταθεί η αναβάθμιση ή κλείστε αυτό το παράθυρο για να εγκατασταθεί η αναβάθμιση κατα την διάρκεια της επόμενης επανακκίνησης του περιηγητή.</translation>
+        <translation>Μία καινούργια έκδοση του φυλλομετρητή Otter είναι έτοιμη για εγκατάσταση.
+Επιλέξτε το κουμπί της εγκατάστασης για να επανεκκινήσετε τον φυλλομετρητή και να εγκατασταθεί η αναβάθμιση ή κλείστε αυτό το παράθυρο για να εγκατασταθεί η αναβάθμιση κατά την διάρκεια της επόμενης επανεκκίνησης του φυλλομετρητή.</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="213"/>
@@ -5958,7 +6061,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="215"/>
         <source>Check Error Console for more information.</source>
-        <translation type="unfinished"/>
+        <translation>Ανατρέξτε στο τερματικό σφαλμάτων για περισσότερες πληροφορίες.</translation>
     </message>
 </context>
 <context>
@@ -5966,7 +6069,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/UserAgentsManagerDialog.ui" line="14"/>
         <source>Manage User Agents</source>
-        <translation type="unfinished"/>
+        <translation>Διαχείριση των πρακτόρων χρήστη</translation>
     </message>
     <message>
         <location filename="../../src/ui/UserAgentsManagerDialog.ui" line="61"/>
@@ -6019,7 +6122,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="483"/>
         <source>Ask What to Do</source>
-        <translation type="unfinished"/>
+        <translation>Να γίνεται ερώτηση</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="511"/>
@@ -6044,12 +6147,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="547"/>
         <source>Enable JavaScript</source>
-        <translation>Ενεργοποίηση Javascript</translation>
+        <translation>Ενεργοποίηση της JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="552"/>
         <source>Enable Java</source>
-        <translation>Ενεργοποίηση Java</translation>
+        <translation>Ενεργοποίηση της Java</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="557"/>
@@ -6074,12 +6177,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="595"/>
         <source>Enable Cookies</source>
-        <translation>Ενεργοποίηση των cookies</translation>
+        <translation>Ενεργοποίηση των θυμημάτων</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="599"/>
         <source>Enable Referrer</source>
-        <translation type="unfinished"/>
+        <translation>Ενεργοποίηση της παραπομπής</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="603"/>
@@ -6089,7 +6192,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="608"/>
         <source>Reset Options</source>
-        <translation>Επαναφορά προτιμήσεων</translation>
+        <translation>Επαναφορά των προτιμήσεων</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="866"/>
@@ -6099,12 +6202,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="866"/>
         <source>This tab has crashed.</source>
-        <translation type="unfinished"/>
+        <translation>Η καρτέλα έχει καταρρεύσει.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="866"/>
         <source>Do you want to try to reload it?</source>
-        <translation type="unfinished"/>
+        <translation>Να γίνει προσπάθεια επαναφόρτωσης;</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="867"/>
@@ -6119,7 +6222,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="1077"/>
         <source>Enter User Agent:</source>
-        <translation>Εισαγωγή του πράκτορα χρήστη</translation>
+        <translation>Εισαγωγή του πράκτορα χρήστη:</translation>
     </message>
 </context>
 <context>
@@ -6145,67 +6248,67 @@ Click Install button to restart browser and install the update or close this dia
         <translation>Διεύθυνση: %1</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="712"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="717"/>
         <source>No search engines defined</source>
         <translation>Δεν έχουν οριστεί μηχανές αναζήτησης</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="860"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="865"/>
         <source>Open Image in New Tab (Untitled)</source>
         <translation>Άνοιγμα εικόνας σε νέα καρτέλα ( χώρις τίτλο)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="860"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="865"/>
         <source>Open Image in New Tab (%1)</source>
         <translation>Άνοιγμα εικόνας σε νέα καρτέλα (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="866"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="871"/>
         <source>Open Image in New Background Tab (Untitled)</source>
         <translation>Άνοιγμα εικόνας σε καρτέλα στο παρασκήνιο ( χωρίς τίτλο)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="866"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="871"/>
         <source>Open Image in New Background Tab (%1)</source>
         <translation>Άνοιγμα εικόνας σε καρτέλα στο παρασκήνιο (%1)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1159"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1164"/>
         <source>1 Minute</source>
-        <translation type="unfinished"/>
+        <translation>1 minute</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1160"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1165"/>
         <source>30 Minutes</source>
         <translation>30 λεπτά</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1161"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1166"/>
         <source>1 Hour</source>
         <translation>1 ώρα</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1162"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1167"/>
         <source>2 Hours</source>
         <translation>2 ώρες</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1163"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1168"/>
         <source>6 Hours</source>
         <translation>6 ώρες</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1164"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1169"/>
         <source>Never</source>
         <translation>Ποτέ</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1165"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1170"/>
         <source>Custom…</source>
         <translation>Προσαρμοσμένο...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="1167"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="1172"/>
         <source>Page Default</source>
         <translation>Προεπιλογή σελίδας</translation>
     </message>
@@ -6271,37 +6374,37 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="180"/>
         <source>Set cookies:</source>
-        <translation type="unfinished"/>
+        <translation>Ορισμός θυμημάτων:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="187"/>
         <source>Set third-party cookies:</source>
-        <translation type="unfinished"/>
+        <translation>Ορισμός θυμημάτων τρίτων:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="194"/>
         <source>Show notifications:</source>
-        <translation type="unfinished"/>
+        <translation>Εμφάνιση ειδοποιήσεων: </translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="201"/>
         <source>Access your location:</source>
-        <translation type="unfinished"/>
+        <translation>Πρόσβαση στην τοποθεσία σας:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="208"/>
         <source>Load plugins:</source>
-        <translation>Φόρτωση πρόσθετων:</translation>
+        <translation>Φόρτωση των πρόσθετων:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="215"/>
         <source>Load images:</source>
-        <translation>Φόρτωση εικόνων:</translation>
+        <translation>Φόρτωση των εικόνων:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="222"/>
         <source>Use JavaScript:</source>
-        <translation>Χρήση JavaScript:</translation>
+        <translation>Χρήση της JavaScript:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="250"/>
@@ -6366,7 +6469,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="378"/>
         <source>Key exchange method:</source>
-        <translation type="unfinished"/>
+        <translation>Μέθοδος ανταλλαγής κλειδιού:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.ui" line="417"/>
@@ -6381,33 +6484,33 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="47"/>
         <source>This website was marked as fraud.</source>
-        <translation type="unfinished"/>
+        <translation>Ο ιστοχώρος σημειώθηκε ως απάτη.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="52"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="57"/>
         <source>Your connection with this website is private.</source>
-        <translation type="unfinished"/>
+        <translation>Η σύνδεσή σας με τον ιστοχώρο είναι ιδιωτική.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="62"/>
         <source>Your connection with this website is not private.</source>
-        <translation type="unfinished"/>
+        <translation>Η σύνδεσή σας με τον ιστοχώρο δεν είναι ιδιωτική.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="67"/>
         <source>You are viewing content from your local filesystem.</source>
-        <translation type="unfinished"/>
+        <translation>Βλέπετε περιεχόμενο από το τοπικό σας σύστημα αρχείων.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="72"/>
         <source>You are viewing safe page from Otter Browser.</source>
-        <translation type="unfinished"/>
+        <translation>Βλέπετε μια ασφαλή σελίδα από τον φυλλομετρητή Otter.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="77"/>
         <source>No information.</source>
-        <translation type="unfinished"/>
+        <translation>Καμιά πληροφορία.</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="84"/>
@@ -6417,18 +6520,18 @@ Click Install button to restart browser and install the update or close this dia
     <message numerus="yes">
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="86"/>
         <source>%1 (%n blocked)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%n σε φραγή)</numerusform><numerusform>%1 (%n σε φραγή)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="93"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="112"/>
         <source>Only existing</source>
-        <translation type="unfinished"/>
+        <translation>Μόνο τα υπάρχοντα</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="97"/>
         <source>Only read existing</source>
-        <translation type="unfinished"/>
+        <translation>Ανάγνωση των υπαρχόντων μόνο</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="101"/>
@@ -6464,19 +6567,19 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="142"/>
         <source>Only cached</source>
-        <translation type="unfinished"/>
+        <translation>Μόνο της προσωρινής μνήμης</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="167"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="182"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="197"/>
         <source>Always ask</source>
-        <translation type="unfinished"/>
+        <translation>Να ερωτάται πάντα</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="208"/>
         <source>Always (open in backgound)</source>
-        <translation type="unfinished"/>
+        <translation>Πάντα (άνοιγμα στο παρασκήνιο)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="216"/>
@@ -6521,6 +6624,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="276"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="546"/>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="669"/>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="979"/>
         <source>Override</source>
         <translation>Αντικατάσταση</translation>
     </message>
@@ -6572,12 +6676,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="283"/>
         <source>Enable cookies</source>
-        <translation>Ενεργοποίηση των cookies</translation>
+        <translation>Ενεργοποίηση των θυμημάτων</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="308"/>
         <source>Accept cookies:</source>
-        <translation>Αποδοχή cookies:</translation>
+        <translation>Αποδοχή θυμημάτων:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="317"/>
@@ -6602,32 +6706,32 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="416"/>
         <source>Accept third-party cookies:</source>
-        <translation>Αποδοχή cookies από τριτούς:</translation>
+        <translation>Αποδοχή θυμημάτων τρίτων:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="455"/>
         <source>Scripting</source>
-        <translation type="unfinished"/>
+        <translation>Συγγραφή μακροεντολών</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="461"/>
         <source>Allow to disable context menu</source>
-        <translation type="unfinished"/>
+        <translation>Να επιτρέπεται η απενεργοποίηση του σχετικού μενού</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="475"/>
         <source>Allow changing of status field</source>
-        <translation type="unfinished"/>
+        <translation>Να επιτρέπεται η αλλαγή του πεδίου κατάστασης</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="502"/>
         <source>Allow to close windows:</source>
-        <translation>Να επιτρέπεται το κλείσιμο παραθύρων</translation>
+        <translation>Να επιτρέπεται το κλείσιμο παραθύρων:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="515"/>
         <source>Allow script to hide address bar</source>
-        <translation type="unfinished"/>
+        <translation>Να επιτρέπεται στην μακροεντολή να αποκρύπτει την γραμμή διευθύνσεων</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="522"/>
@@ -6652,7 +6756,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="618"/>
         <source>Allow to enter full screen mode:</source>
-        <translation type="unfinished"/>
+        <translation>Να επιτρέπεται η εναλλαγή σε λειτουργία πλήρους οθόνης:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="639"/>
@@ -6732,17 +6836,27 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="948"/>
         <source>Path to PAC file:</source>
-        <translation>Διαδρομή του αρχείου PAC</translation>
+        <translation>Διαδρομή του αρχείου PAC:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="965"/>
         <source>Send referrer information</source>
-        <translation type="unfinished"/>
+        <translation>Αποστολή των πληροφοριών παραπομπής</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="973"/>
         <source>Content Blocking</source>
         <translation>Αποκλεισμός περιεχομένου</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="986"/>
+        <source>Profiles</source>
+        <translation>Προφίλ</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="1016"/>
+        <source>Enable custom rules</source>
+        <translation>Ενεργοποίηση των προσαρμοσμένων κανόνων</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="62"/>
@@ -6856,7 +6970,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="108"/>
         <source>Always ask</source>
-        <translation>Πάντα να γίνεται ερώτηση</translation>
+        <translation>Να ερωτάται πάντα</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="115"/>
@@ -6894,19 +7008,9 @@ Click Install button to restart browser and install the update or close this dia
         <translation>(Χωρίς τίτλο)</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="366"/>
-        <source>Title</source>
-        <translation>Τίτλος</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="366"/>
-        <source>Update Interval</source>
-        <translation>Χρονικό διάστημα ενημέρωσης</translation>
-    </message>
-    <message>
-        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="366"/>
-        <source>Last Update</source>
-        <translation>Τελευταία ενημέρωση</translation>
+        <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="350"/>
+        <source>Style sheets (*.css)</source>
+        <translation>Φύλλα αισθητικής επικάλυψης (*.css)</translation>
     </message>
 </context>
 <context>
@@ -6932,7 +7036,7 @@ Click Install button to restart browser and install the update or close this dia
     <message numerus="yes">
         <location filename="../../src/core/WindowsManager.cpp" line="343"/>
         <source>You are about to open %n bookmark(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Πρόκειται να ανοίξετε %n σελιδοδείκτη(ες).</numerusform><numerusform>Πρόκειται να ανοίξετε %n σελιδοδείκτη(ες).</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="344"/>
@@ -6957,23 +7061,23 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="155"/>
         <source>Failed to run command &quot;%1&quot;, file is not executable</source>
-        <translation>Αποτυχία εκτέλεσης εντολής &quot;%!&quot;, το αρχείο δεν είναι εκτελέσιμο</translation>
+        <translation>Αποτυχία εκτέλεσης της εντολής «%1»· το αρχείο δεν είναι εκτελέσιμο</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="182"/>
         <source>Failed to run command &quot;%1&quot; (arguments: &quot;%2&quot;)</source>
-        <translation type="unfinished"/>
+        <translation>Αποτυχία εκτέλεσης της εντολής «%1» (ορίσματα: «%2»)</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="226"/>
         <source>No valid suffix for given MIME type: %1</source>
-        <translation type="unfinished"/>
+        <translation>Μη έγκυρο επίθημα για τον δοθέντα τύπο MIME: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="293"/>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="343"/>
         <source>Failed to load a valid application path for MIME type %1: %2</source>
-        <translation type="unfinished"/>
+        <translation>Αποτυχία φόρτωσης μιας έγκυρης διαδρομής εφαρμογής για τον τύπο MIME %1: %2</translation>
     </message>
 </context>
 <context>
@@ -7102,1041 +7206,1048 @@ Click Install button to restart browser and install the update or close this dia
 <context>
     <name>actions</name>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="313"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="314"/>
         <source>File</source>
         <translation>Αρχείο</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="314"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="315"/>
         <source>Sessions</source>
         <translation>Συνεδρίες</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="315"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="316"/>
         <source>Import and Export</source>
         <translation>Εισαγωγή και εξαγωγή</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="316"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="317"/>
         <source>Edit</source>
         <translation>Επεξεργασία</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="317"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="318"/>
         <source>View</source>
         <translation>Προβολή</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="318"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="319"/>
         <source>Toolbars</source>
         <translation>Εργαλειοθήκες</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="319"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="320"/>
         <source>User Agent</source>
         <translation>Πράκτορας χρήστη</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="320"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="321"/>
         <source>Style</source>
         <translation>Ύφος</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="321"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="322"/>
         <source>Character Encoding</source>
         <translation>Κρυπτογράφηση χαρακτήρων</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="322"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="323"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="45"/>
         <source>History</source>
         <translation>Ιστορικό</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="323"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="324"/>
         <source>Closed Windows</source>
         <translation>Κλειστά παράθυρα</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="324"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="325"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="43"/>
         <source>Bookmarks</source>
         <translation>Σελιδοδείκτες</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="325"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="326"/>
         <source>Tools</source>
         <translation>Εργαλεία</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="326"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="327"/>
         <source>Help</source>
         <translation>Βοήθεια</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="327"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="328"/>
         <source>Tabs and Windows</source>
         <translation>Καρτέλες και παράθυρα</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="328"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="329"/>
         <source>Page</source>
         <translation>Σελίδα</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="329"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="330"/>
         <source>Print</source>
         <translation>Εκτύπωση</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="330"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="331"/>
         <source>Settings</source>
         <translation>Ρυθμίσεις</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="331"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="332"/>
         <source>Frame</source>
         <translation>Πλαίσιο</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="335"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="336"/>
         <source>New Tab</source>
         <translation>Νέα καρτέλα</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="336"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="337"/>
         <source>New Private Tab</source>
         <translation>Νέα ιδιωτική καρτέλα</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="337"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="338"/>
         <source>New Window</source>
         <translation>Νέο παράθυρο</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="338"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="339"/>
         <source>New Private Window</source>
         <translation>Νέο ιδιωτικό παράθυρο</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="339"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="340"/>
         <source>Open…</source>
         <translation>Άνοιγμα...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="340"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="341"/>
         <source>Save…</source>
         <translation>Αποθήκευση...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="341"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="342"/>
         <source>Clone Tab</source>
         <translation>Κλωνοποίηση της καρτέλας</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="342"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="343"/>
         <location filename="../../src/ui/TabBarWidget.cpp" line="170"/>
         <source>Pin Tab</source>
         <translation>Καρφίτσωμα της καρτέλας</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="343"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="344"/>
         <source>Detach Tab</source>
         <translation>Απαγκίστρωση της καρτέλας</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="344"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="345"/>
         <source>Maximize</source>
         <translation>Μεγιστοποίηση</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="344"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="345"/>
         <source>Maximize Tab</source>
         <translation>Μεγιστοποίηση της καρτέλας</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="345"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="346"/>
         <source>Minimize</source>
         <translation>Ελαχιστοποίηση</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="345"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="346"/>
         <source>Minimize Tab</source>
         <translation>Ελαχιστοποίηση της καρτέλας</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="346"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="347"/>
         <source>Restore</source>
         <translation>Επαναφορά</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="346"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="347"/>
         <source>Restore Tab</source>
         <translation>Επαναφορά της καρτέλας</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="347"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="348"/>
         <source>Stay on Top</source>
         <translation>Πάντα στην κορυφή</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="348"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="349"/>
         <source>Clear Tab History</source>
-        <translation type="unfinished"/>
+        <translation>Εκκαθάριση του ιστορικού καρτελών
+</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="348"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="349"/>
         <source>Remove Local Tab History</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="349"/>
-        <source>Purge Tab History</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="349"/>
-        <source>Remove Local and Global Tab History</source>
-        <translation type="unfinished"/>
+        <translation>Αφαίρεση του τοπικού ιστορικού καρτελών</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="350"/>
-        <source>Suspend Tab</source>
-        <translation type="unfinished"/>
+        <source>Purge Tab History</source>
+        <translation>Εκκαθάριση του ιστορικού καρτελών
+</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="350"/>
+        <source>Remove Local and Global Tab History</source>
+        <translation>Αφαίρεση του τοπικού και καθολικού ιστορικού καρτελών</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="351"/>
+        <source>Suspend Tab</source>
+        <translation>Αναστολή της καρτέλας</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="352"/>
         <source>Close Tab</source>
         <translation>Κλείσιμο της καρτέλας</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="352"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="353"/>
         <source>Close Other Tabs</source>
         <translation>Κλείσιμο των άλλων καρτελών</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="353"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="354"/>
         <source>Close All Private Tabs</source>
         <translation>Κλείσιμο όλων των ιδιωτικών καρτελών</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="353"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="354"/>
         <source>Close All Private Tabs in Current Window</source>
         <translation>Κλείσιμο όλων των ιδιωτικών καρτελών στο τρέχον παράθυρο</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="354"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="355"/>
         <source>Close Private Tabs and Windows</source>
         <translation>Κλείσιμο των ιδιωτικών καρτελών και παραθύρων</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="355"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="356"/>
         <source>Reopen Previously Closed Tab</source>
         <translation>Άνοιγμα της προηγουμένως κλειστής καρτέλας</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="356"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="357"/>
         <source>Maximize All</source>
         <translation>Μεγιστοποίηση όλων</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="357"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="358"/>
         <source>Minimize All</source>
         <translation>Ελαχιστοποίηση όλων</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="358"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="359"/>
         <source>Restore All</source>
         <translation>Επαναφορά όλων</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="359"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="360"/>
         <source>Cascade</source>
         <translation>Διαδοχική</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="360"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="361"/>
         <source>Tile</source>
-        <translation>Παράθεση</translation>
+        <translation>Πλακίδιο</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="361"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="362"/>
         <source>Close Window</source>
         <translation>Κλείσιμο του παραθύρου</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="362"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="363"/>
         <source>Manage Sessions…</source>
         <translation>Διαχείριση των συνεδριών...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="363"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="364"/>
         <source>Save Current Session…</source>
         <translation>Αποθήκευση της τρέχουσας συνεδρίας...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="364"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="365"/>
         <source>Open URL</source>
         <translation>Άνοιγμα URL</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="365"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="381"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="366"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="382"/>
         <source>Open</source>
         <translation>Άνοιγμα</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="366"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="367"/>
         <source>Open in This Tab</source>
         <translation>Άνοιγμα σε αυτήν την καρτέλα</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="367"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="382"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="368"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="383"/>
         <source>Open in New Tab</source>
         <translation>Άνοιγμα σε νέα καρτέλα</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="368"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="383"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="369"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="384"/>
         <source>Open in New Background Tab</source>
         <translation>Άνοιγμα σε νέα καρτέλα παρασκηνίου</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="369"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="370"/>
         <source>Open in New Window</source>
         <translation>Άνοιγμα σε νέο παράθυρο</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="370"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="371"/>
         <source>Open in New Background Window</source>
         <translation>Άνοιγμα σε νέο παράθυρο παρασκηνίου</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="371"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="372"/>
         <source>Open in New Private Tab</source>
         <translation>Άνοιγμα σε νέα ιδιωτική καρτέλα</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="372"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="373"/>
         <source>Open in New Private Background Tab</source>
         <translation>Άνοιγμα σε νέα ιδιωτική καρτέλα παρασκηνίου</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="373"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="374"/>
         <source>Open in New Private Window</source>
         <translation>Άνοιγμα σε νέο ιδιωτικό παράθυρο</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="374"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="375"/>
         <source>Open in New Private Background Window</source>
         <translation>Άνοιγμα σε νέο ιδιωτικό παράθυρο παρασκηνίου</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="375"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="384"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="480"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="376"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="385"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="482"/>
         <source>Open with…</source>
         <translation>Άνοιγμα με....</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="375"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="376"/>
         <source>Open Link with External Application</source>
-        <translation type="unfinished"/>
+        <translation>Άνοιγμα του συνδέσμου με μια εξωτερική εφαρμογή</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="376"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="377"/>
         <source>Copy Link to Clipboard</source>
         <translation>Αντιγραφή του συνδέσμου στο Πρόχειρο</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="377"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="797"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="378"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="802"/>
         <source>Bookmark Link…</source>
         <translation>Σελιδοδείκτης στον δεσμό...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="378"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="379"/>
         <source>Save Link Target As…</source>
         <translation>Αποθήκευση του στόχου του συνδέσμου ως...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="379"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="380"/>
         <source>Save to Downloads</source>
         <translation>Αποθήκευση στις Λήψεις</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="380"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="381"/>
         <source>Go to This Address</source>
         <translation>Μετάβαση σε αυτήν την διεύθυνση</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="381"/>
-        <source>Open Frame in This Tab</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../../src/core/ActionsManager.cpp" line="382"/>
-        <source>Open Frame in New Tab</source>
-        <translation type="unfinished"/>
+        <source>Open Frame in This Tab</source>
+        <translation>Άνοιγμα του πλαισίου σε αυτήν την καρτέλα</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="383"/>
-        <source>Open Frame in New Background Tab</source>
-        <translation type="unfinished"/>
+        <source>Open Frame in New Tab</source>
+        <translation>Άνοιγμα του πλαισίου σε μια νέα καρτέλα</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="384"/>
-        <source>Open Frame with External Application</source>
-        <translation type="unfinished"/>
+        <source>Open Frame in New Background Tab</source>
+        <translation>Άνοιγμα του πλαισίου σε μια νέα καρτέλα παρασκηνίου</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="385"/>
-        <source>Copy Frame Link to Clipboard</source>
-        <translation type="unfinished"/>
+        <source>Open Frame with External Application</source>
+        <translation>Άνοιγμα του πλαισίου με μια εξωτερική εφαρμογή</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="386"/>
-        <location filename="../../src/core/ActionsManager.cpp" line="412"/>
+        <source>Copy Frame Link to Clipboard</source>
+        <translation>Αντιγραφή του συνδέσμου του πλαισίου στο Πρόχειρο</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="387"/>
         <location filename="../../src/core/ActionsManager.cpp" line="413"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="414"/>
         <source>Reload</source>
         <translation>Επαναφόρτωση</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="386"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="387"/>
         <source>Reload Frame</source>
         <translation>Επαναφόρτωση πλαισίου</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="387"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="388"/>
         <source>View Frame Source</source>
         <translation>Προβολή πηγαίου κώδικα πλαισίου</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="388"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="389"/>
         <source>Open Image In New Tab</source>
         <translation>Άνοιγμα εικόνας σε νέα καρτέλα</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="389"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="866"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="390"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="871"/>
         <source>Open Image in New Background Tab</source>
         <translation>Άνοιγμα εικόνας σε καρτέλα στο παρασκήνιο</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="390"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="391"/>
         <source>Save Image…</source>
         <translation>Αποθήκευση εικόνας…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="391"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="392"/>
         <source>Copy Image to Clipboard</source>
         <translation>Αντιγραφή της εικόνας στο Πρόχειρο</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="392"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="393"/>
         <source>Copy Image Link to Clipboard</source>
         <translation>Αντιγραφή του συνδέσμου εικόνας στο Πρόχειρο</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="393"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="394"/>
         <source>Reload Image</source>
         <translation>Επαναφόρτωση της εικόνας</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="394"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="395"/>
         <source>Image Properties…</source>
         <translation>Ιδιότητες της εικόνας...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="395"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="396"/>
         <source>Save Media…</source>
         <translation>Αποθήκευση του πολυμέσου...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="396"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="397"/>
         <source>Copy Media Link to Clipboard</source>
         <translation>Αντιγραφή του συνδέσμου του πολυμέσου στο Πρόχειρο</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="397"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="398"/>
         <source>Show Controls</source>
         <translation>Εμφάνιση των πλήκτρων ελέγχου</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="398"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="399"/>
         <source>Looping</source>
         <translation>Επανάληψη</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="399"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="929"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="400"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="934"/>
         <source>Play</source>
         <translation>Αναπαραγωγή</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="400"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="936"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="401"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="941"/>
         <source>Mute</source>
         <translation>Σίγαση</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="401"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="402"/>
         <source>Go</source>
         <translation>Μετάβαση</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="402"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="403"/>
         <source>Back</source>
         <translation>Πίσω</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="403"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="404"/>
         <source>Forward</source>
         <translation>Εμπρός</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="404"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="405"/>
         <source>Go to Page or Search</source>
         <translation>Μετάβαση σε σελίδα ή αναζήτηση</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="405"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="406"/>
         <source>Go to Home Page</source>
         <translation>Μετάβαση στην αρχική σελίδα</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="406"/>
-        <source>Go to Parent Directory</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../../src/core/ActionsManager.cpp" line="407"/>
-        <source>Rewind</source>
-        <translation type="unfinished"/>
+        <source>Go to Parent Directory</source>
+        <translation>Μετάβαση στον γονικό κατάλογο</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="408"/>
-        <source>Fast Forward</source>
-        <translation>Γρήγορη προώθηση</translation>
+        <source>Rewind</source>
+        <translation>Οπισθοδρόμηση</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="409"/>
+        <source>Fast Forward</source>
+        <translation>Γρήγορη εμπροσθιοδρόμηση</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="410"/>
         <source>Stop</source>
         <translation>Διακοπή</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="410"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="411"/>
         <source>Stop Scheduled Page Reload</source>
         <translation>Διακοπή της προγραμματισμένης μεταφόρτωσης της σελίδας</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="411"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="412"/>
         <source>Stop All Pages</source>
         <translation>Διακοπή όλων των σελίδων</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="413"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="414"/>
         <source>Reload or Stop</source>
         <translation>Επαναφόρτωση ή διακοπή</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="414"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="415"/>
         <source>Reload and Bypass Cache</source>
-        <translation type="unfinished"/>
+        <translation>Επαναφόρτωση και παράκαμψη της κρυφής μνήμης</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="415"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="416"/>
         <source>Reload All Tabs</source>
         <translation>Επαναφόρτωση όλων των καρτελών</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="416"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="417"/>
         <source>Reload Every</source>
         <translation>Επαναφόρτωση κάθε</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="417"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="418"/>
         <source>Show Context Menu</source>
         <translation>Εμφάνιση σχετικού μενού</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="418"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="419"/>
         <source>Undo</source>
         <translation>Αναίρεση</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="419"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="420"/>
         <source>Redo</source>
         <translation>Επανάληψη</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="420"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="421"/>
         <source>Cut</source>
         <translation>Αποκοπή</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="421"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="422"/>
         <source>Copy</source>
         <translation>Αντιγραφή</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="422"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="423"/>
         <source>Copy as Plain Text</source>
         <translation>Αντιγραφή ως απλό κείμενο</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="423"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="424"/>
         <source>Copy Address</source>
         <translation>Αντιγραφή της διεύθυνσης</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="424"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="425"/>
         <source>Copy to Note</source>
         <translation>Αντιγραφή σε σημείωση</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="425"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="426"/>
         <source>Paste</source>
         <translation>Επικόλληση</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="426"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="427"/>
         <source>Paste and Go</source>
         <translation>Επικόλληση και μετάβαση</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="427"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="428"/>
         <source>Insert Note</source>
         <translation>Είσοδος σημείωσης</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="428"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="429"/>
         <source>Delete</source>
         <translation>Διαγραφή</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="429"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="430"/>
         <source>Select All</source>
         <translation>Επιλογή όλων</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="430"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="431"/>
+        <source>Deselect</source>
+        <translation>Αποεπιλογή</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="432"/>
         <source>Clear All</source>
         <translation>Εκκαθάριση όλων</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="431"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="433"/>
         <source>Check Spelling</source>
         <translation>Ορθογραφικός έλεγχος</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="432"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="434"/>
         <source>Dictionaries</source>
         <translation>Λεξικά</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="433"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="435"/>
         <source>Find…</source>
         <translation>Εύρεση...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="434"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="436"/>
         <source>Find Next</source>
         <translation>Εύρεση επόμενου</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="435"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="437"/>
         <source>Find Previous</source>
         <translation>Εύρεση προηγούμενου</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="436"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="438"/>
         <source>Quick Find</source>
         <translation>Γρήγορη εύρεση</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="437"/>
-        <location filename="../../src/ui/WebWidget.cpp" line="711"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="439"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="716"/>
         <source>Search</source>
         <translation>Αναζήτηση</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="438"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="440"/>
         <source>Search Using</source>
         <translation>Αναζήτηση χρησιμοποιώντας</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="439"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="441"/>
         <source>Create Search…</source>
         <translation>Δημιουργία αναζήτησης...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="440"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="442"/>
         <source>Zoom In</source>
         <translation>Μεγέθυνση</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="441"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="443"/>
         <source>Zoom Out</source>
         <translation>Σμίκρυνση</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="442"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="444"/>
         <source>Zoom Original</source>
         <translation>Αρχική εστίαση</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="443"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="445"/>
         <source>Go to Start of the Page</source>
         <translation>Μετακίνηση στην αρχή της σελίδας</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="444"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="446"/>
         <source>Go to the End of the Page</source>
         <translation>Μετακίνηση στο τέλος της σελίδας</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="445"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="447"/>
         <source>Page Up</source>
         <translation>Μετακίνη σελίδας προς τα πάνω</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="446"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="448"/>
         <source>Page Down</source>
         <translation>Μετακίνηση σελίδας προς τα κάτω</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="447"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="449"/>
         <source>Page Left</source>
         <translation>Μετακίνηση σελίδας προς τα αριστερά</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="448"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="450"/>
         <source>Page Right</source>
         <translation>Μετακίνηση σελίδας προς τα δεξιά</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="449"/>
-        <source>Enter Drag Scroll Mode</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="450"/>
-        <source>Enter Move Scroll Mode</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../../src/core/ActionsManager.cpp" line="451"/>
-        <source>Exit Scroll Mode</source>
-        <translation type="unfinished"/>
+        <source>Enter Drag Scroll Mode</source>
+        <translation>Εισαγωγή στην λειτουργία συρσίματος ολίσθησης</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="452"/>
+        <source>Enter Move Scroll Mode</source>
+        <translation>Εισαγωγή στην λειτουργία μετακίνησης ολίσθησης</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="453"/>
+        <source>Exit Scroll Mode</source>
+        <translation>Έξοδος από της λειτουργία ολίσθησης</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="454"/>
         <source>Print…</source>
         <translation>Εκτύπωση...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="453"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="455"/>
         <source>Print Preview</source>
         <translation>Προεπισκόπηση της εκτύπωσης</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="454"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="456"/>
         <source>Activate Address Field</source>
         <translation>Ενεργοποίηση του πεδίου διευθύνσεων</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="455"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="457"/>
         <source>Activate Search Field</source>
         <translation>Ενεργοποίηση πεδίου αναζήτησης</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="456"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="458"/>
         <source>Activate Content</source>
         <translation>Ενεργοποίηση του περιεχομένου</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="457"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="459"/>
         <source>Go to Previously Used Tab</source>
         <translation>Μετακίνηση στην πιο πρόσφατη χρησιμοποιούμενη καρτέλα</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="458"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="460"/>
         <source>Go to Least Recently Used Tab</source>
-        <translation type="unfinished"/>
+        <translation>Μετάβαση στην τελευταία χρησιμοποιούμενη καρτέλα</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="459"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="461"/>
         <source>Activate Tab</source>
         <translation>Ενεργοποίηση της καρτέλας</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="460"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="462"/>
         <source>Go to Tab on Left</source>
         <translation>Μετάβαση στην καρτέλα στα αριστερά</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="461"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="463"/>
         <source>Go to Tab on Right</source>
         <translation>Μετάβαση στην καρτέλα στα δεξιά</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="462"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="464"/>
         <source>Manage Bookmarks</source>
         <translation>Διαχείριση των σελιδοδεικτών</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="463"/>
-        <source>Bookmark Page…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="464"/>
-        <source>Bookmark All Open Pages</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../../src/core/ActionsManager.cpp" line="465"/>
-        <source>Open Bookmark</source>
-        <translation type="unfinished"/>
+        <source>Bookmark Page…</source>
+        <translation>Προσθήκη σελιδοδείκτη...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="466"/>
+        <source>Bookmark All Open Pages</source>
+        <translation>Προσθήκη σελιδοδείκτη σε όλες τις ανοιχτές σελίδες</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="467"/>
+        <source>Open Bookmark</source>
+        <translation>Άνοιγμα σελιδοδείκτη</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="468"/>
         <source>Quick Bookmark Access</source>
         <translation>Γρήγορη πρόσβαση στους σελιδοδείκτες</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="467"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="469"/>
         <source>Block pop-ups</source>
-        <translation type="unfinished"/>
+        <translation>Φραγή των αναδυόμενων</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="468"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="470"/>
         <source>Load Images</source>
         <translation>Φόρτωση εικόνων</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="469"/>
-        <source>Cookies</source>
-        <translation>Cookies</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="470"/>
-        <source>Cookies Policy</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../../src/core/ActionsManager.cpp" line="471"/>
-        <source>Third-party Cookies Policy</source>
-        <translation type="unfinished"/>
+        <source>Cookies</source>
+        <translation>Θυμήματα</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="472"/>
+        <source>Cookies Policy</source>
+        <translation>Πολιτική θυμημάτων</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="473"/>
+        <source>Third-party Cookies Policy</source>
+        <translation>Πολιτική θυμημάτων τρίτων</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="474"/>
         <source>Plugins</source>
         <translation>Πρόσθετα</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="473"/>
-        <source>Load Plugins</source>
-        <translation>Φόρτωση πρόσθετων</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="474"/>
-        <source>Enable JavaScript</source>
-        <translation>Ενεργοποίηση Javascript</translation>
-    </message>
-    <message>
         <location filename="../../src/core/ActionsManager.cpp" line="475"/>
-        <source>Enable Java</source>
-        <translation>Ενεργοποίηση Java</translation>
+        <source>Load Plugins</source>
+        <translation>Φόρτωση των πρόσθετων</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="476"/>
-        <source>Enable Referrer</source>
-        <translation type="unfinished"/>
+        <source>Enable JavaScript</source>
+        <translation>Ενεργοποίηση της JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="477"/>
+        <source>Enable Java</source>
+        <translation>Ενεργοποίηση της Java</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="478"/>
+        <source>Enable Referrer</source>
+        <translation>Ενεργοποίηση της παραπομπής</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="479"/>
         <source>Proxy</source>
         <translation>Διαμεσολαβητής</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="478"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="480"/>
         <source>Enable Proxy</source>
         <translation>Ενεργοποίηση του διαμεσολαβητή</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="479"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="481"/>
         <source>View Source</source>
         <translation>Προβολή του πηγαίου κώδικα</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="480"/>
-        <source>Open Current Page with External Application</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="481"/>
-        <source>Validate</source>
-        <translation>Επαλήθευση</translation>
-    </message>
-    <message>
         <location filename="../../src/core/ActionsManager.cpp" line="482"/>
+        <source>Open Current Page with External Application</source>
+        <translation>Άνοιγμα της τρεχούσης σελίδας με μια εξωτερική εφαρμογή</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="483"/>
+        <source>Validate</source>
+        <translation>Επικύρωση</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="484"/>
         <source>Inspect Page</source>
         <translation>Επιθεώρηση της σελίδας</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="483"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="485"/>
         <source>Inspect Element…</source>
         <translation>Επιθεώρηση του στοιχείου...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="484"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="486"/>
         <source>Work Offline</source>
         <translation>Εργασία χωρίς σύνδεση</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="485"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="487"/>
         <source>Full Screen</source>
         <translation>Πλήρης οθόνη</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="486"/>
-        <source>Show Tab Switcher</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="487"/>
-        <source>Show Menubar</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../../src/core/ActionsManager.cpp" line="488"/>
-        <source>Show Tabbar</source>
-        <translation type="unfinished"/>
+        <source>Show Tab Switcher</source>
+        <translation>Εμφάνιση του εναλλαγέα καρτελών</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="489"/>
-        <source>Show Sidebar</source>
-        <translation type="unfinished"/>
+        <source>Show Menubar</source>
+        <translation>Εμφάνιση της γραμμής μενού</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="490"/>
-        <source>Show Error Console</source>
-        <translation type="unfinished"/>
+        <source>Show Tabbar</source>
+        <translation>Εμφάνιση της γραμμής καρτελών</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="491"/>
+        <source>Show Sidebar</source>
+        <translation>Εμφάνιση της πλευρικής στήλης</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="492"/>
+        <source>Show Error Console</source>
+        <translation>Εμφάνιση του τερματικού σφαλμάτων</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="493"/>
         <source>Lock Toolbars</source>
         <translation>Κλείδωμα των εργαλειοθηκών</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="492"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="494"/>
         <source>Open Panel as Tab</source>
         <translation>Άνοιγμα πίνακα σαν καρτέλα</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="493"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="495"/>
         <source>Close Panel</source>
         <translation>Κλείσιμο του πίνακα</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="494"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="496"/>
         <source>Content Blocking…</source>
         <translation>Αποκλεισμός περιεχομένου...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="495"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="497"/>
         <source>View History</source>
         <translation>Προβολή του ιστορικού</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="496"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="498"/>
         <source>Clear History…</source>
         <translation>Εκκαθάριση του ιστορικού....</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="497"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="499"/>
         <source>Addons</source>
         <translation>Πρόσθετα</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="498"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="500"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="46"/>
         <source>Notes</source>
         <translation>Σημειώσεις</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="499"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="501"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="44"/>
         <source>Transfers</source>
         <translation>Μεταφορτώσεις</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="500"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="502"/>
         <source>Preferences…</source>
         <translation>Προτιμήσεις...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="501"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="503"/>
         <source>Website Preferences…</source>
         <translation>Προτιμήσεις ιστοσελίδας...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="502"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="504"/>
         <source>Quick Preferences</source>
         <translation>Γρήγορες προτιμήσεις</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="503"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="505"/>
         <source>Reset Options</source>
         <translation>Επαναφορά προτιμήσεων</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="504"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="506"/>
         <source>Website Information…</source>
         <translation>Πληροφορίες για την ιστοσελίδα...</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="505"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="507"/>
         <source>Website Certificate Information…</source>
-        <translation type="unfinished"/>
+        <translation>Πληροφορίες πιστοποιητικού ιστοχώρου…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="506"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="508"/>
         <source>Switch Application Language…</source>
         <translation>Αλλαγή της γλώσσας της εφαρμογής…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="507"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="509"/>
         <source>Check for Updates…</source>
         <translation>Έλεγχος για αναβαθμίσεις....</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="508"/>
+        <location filename="../../src/core/ActionsManager.cpp" line="510"/>
         <source>Diagnostic Report…</source>
         <translation>Αναφορά διάγνωσης…</translation>
     </message>
     <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="509"/>
-        <source>About Otter…</source>
-        <translation>Σχετικά με το Otter...</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/ActionsManager.cpp" line="510"/>
-        <source>About Qt…</source>
-        <translation>Σχετικά με το Qt...</translation>
-    </message>
-    <message>
         <location filename="../../src/core/ActionsManager.cpp" line="511"/>
+        <source>About Otter…</source>
+        <translation>Σχετικά με τον Otter...</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="512"/>
+        <source>About Qt…</source>
+        <translation>Σχετικά με την Qt...</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/ActionsManager.cpp" line="513"/>
         <source>Exit</source>
         <translation>Έξοδος</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="47"/>
         <source>Menu Bar</source>
-        <translation type="unfinished"/>
+        <translation>Γραμμή μενού</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="48"/>
@@ -8166,7 +8277,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="336"/>
         <source>Copy address of source page</source>
-        <translation type="unfinished"/>
+        <translation>Αντιγραφή της διεύθυνσης της σελίδας από την πηγή</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="170"/>
@@ -8189,42 +8300,42 @@ Click Install button to restart browser and install the update or close this dia
         <translation>Προσθήκη σελιδοδείκτη...</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="797"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="802"/>
         <source>Edit Link Bookmark…</source>
-        <translation type="unfinished"/>
+        <translation>Επεξεργασία συνδέσμου του σελιδοδείκτη....</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="860"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="865"/>
         <source>Open Image in New Tab</source>
         <translation>Άνοιγμα εικόνας σε νέα καρτέλα</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="905"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="910"/>
         <source>Save Video…</source>
-        <translation>Αποθήκευση του βίντεο....</translation>
+        <translation>Αποθήκευση της ταινίας....</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="905"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="910"/>
         <source>Save Audio…</source>
         <translation>Αποθήκευση του ήχου.....</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="911"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="916"/>
         <source>Copy Video Link to Clipboard</source>
-        <translation>Αντιγραφή του συνδέσμου του βίντεο στο πρόχειρο</translation>
+        <translation>Αντιγραφή του συνδέσμου της ταινίας στο πρόχειρο</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="911"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="916"/>
         <source>Copy Audio Link to Clipboard</source>
         <translation>Αντιγραφή του συνδέσμου του ήχου στο πρόχειρο</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="929"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="934"/>
         <source>Pause</source>
         <translation>Παύση</translation>
     </message>
     <message>
-        <location filename="../../src/ui/WebWidget.cpp" line="936"/>
+        <location filename="../../src/ui/WebWidget.cpp" line="941"/>
         <source>Unmute</source>
         <translation>Αναίρεση σίγασης</translation>
     </message>
@@ -8282,33 +8393,33 @@ Click Install button to restart browser and install the update or close this dia
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="88"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="90"/>
         <source>Failed to open content blocking profile file: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="97"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="99"/>
         <source>Failed to load content blocking profile file: invalid header</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="372"/>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="395"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="374"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="399"/>
         <source>Failed to update content blocking profile: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="384"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="386"/>
         <source>Failed to update content blocking profile: checksum mismatch</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="522"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="536"/>
         <source>Failed to update content blocking profile, update URL is empty</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/ContentBlockingProfile.cpp" line="526"/>
+        <location filename="../../src/core/ContentBlockingProfile.cpp" line="540"/>
         <source>Failed to update content blocking profile, update URL (%1) is invalid</source>
         <translation type="unfinished"/>
     </message>
@@ -8373,7 +8484,7 @@ Error: %2</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/main.cpp" line="125"/>
+        <location filename="../../src/main.cpp" line="112"/>
         <source>Default</source>
         <translation>Προεπιλογή</translation>
     </message>
@@ -8397,6 +8508,16 @@ Application ID: %2</source>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="513"/>
         <source>Failed to register application to system registry: %1, %2</source>
         <translation>Απότυχια εγγραφής εφαρμογής στο μητρώο στου συστήματος: %1, %2</translation>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="72"/>
+        <source>Failed to load custom rules: invalid adblock header</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="218"/>
+        <source>Failed to create a file with custom rules: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8427,32 +8548,32 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="58"/>
         <source>Mask as Google Chrome 50 (Windows)</source>
-        <translation type="unfinished"/>
+        <translation>Ταυτοποίηση ως Google Chrome 50 (Windows)</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="59"/>
         <source>Mask as Mozilla Firefox 45 (Windows)</source>
-        <translation type="unfinished"/>
+        <translation>Ταυτοποίηση ως Mozilla Firefox 45 (Windows)</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="60"/>
         <source>Mask as Microsoft Edge 25 (Windows)</source>
-        <translation type="unfinished"/>
+        <translation>Ταυτοποίηση ως Microsoft Edge 25 (Windows)</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="61"/>
         <source>Mask as Internet Explorer 10.0 (Windows)</source>
-        <translation type="unfinished"/>
+        <translation>Ταυτοποίηση ως Internet Explorer 10.0 (Windows)</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="62"/>
         <source>Mask as Opera 12.16 (Windows)</source>
-        <translation type="unfinished"/>
+        <translation>Ταυτοποίηση ως Opera 12.16 (Windows)</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.cpp" line="63"/>
         <source>Mask as Safari 9.0 (MacOS)</source>
-        <translation type="unfinished"/>
+        <translation>Ταυτοποίηση ως Safari 9.0 (MacOS)</translation>
     </message>
 </context>
 <context>
@@ -8465,7 +8586,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="153"/>
         <source>You tried to access the address &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, which is currently unavailable. Please make sure that the web address (URL) is correctly spelled and punctuated, then try reloading the page.</source>
-        <translation type="unfinished"/>
+        <translation>Η διεύθυνση που προσπαθήσατε να προσπελάσετε &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;, δεν είναι διαθέσιμη αυτήν τη στιγμή. Παρακαλώ σιγουρευτείτε ότι έχετε πληκτρολογήσει σωστά την διεύθυνση ιστού (URL), και προσπαθήστε να επαναφορτώσετε την σελίδα.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="159"/>
@@ -8483,36 +8604,39 @@ Application ID: %2</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="310"/>
-        <source>%1 files (*.%2)</source>
-        <translation>%1 αρχεία (*.%2)</translation>
-    </message>
-    <message>
-        <location filename="../../src/core/Utils.cpp" line="314"/>
+        <location filename="../../src/core/Utils.cpp" line="255"/>
+        <location filename="../../src/core/Utils.cpp" line="262"/>
+        <location filename="../../src/core/Utils.cpp" line="331"/>
         <source>All files (*)</source>
         <translation>Όλα τα αρχεία (*)</translation>
     </message>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="320"/>
+        <location filename="../../src/core/Utils.cpp" line="327"/>
+        <source>%1 files (*.%2)</source>
+        <translation>%1 αρχεία (*.%2)</translation>
+    </message>
+    <message>
+        <location filename="../../src/core/Utils.cpp" line="337"/>
         <source>Save File</source>
         <translation>Αποθήκευση του αρχείου</translation>
     </message>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="341"/>
-        <location filename="../../src/core/Utils.cpp" line="350"/>
+        <location filename="../../src/core/Utils.cpp" line="358"/>
+        <location filename="../../src/core/Utils.cpp" line="367"/>
         <source>Warning</source>
         <translation>Προειδοποίηση</translation>
     </message>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="341"/>
+        <location filename="../../src/core/Utils.cpp" line="358"/>
         <source>This path is already used by different download, pick another one.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../src/core/Utils.cpp" line="350"/>
+        <location filename="../../src/core/Utils.cpp" line="367"/>
         <source>Target path is not writable.
 Select another one.</source>
-        <translation type="unfinished"/>
+        <translation>Η διαδρομή του προορισμού δεν είναι εγγράψιμη.
+Επιλέξτε μια άλλη.</translation>
     </message>
 </context>
 </TS>
