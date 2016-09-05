@@ -1472,7 +1472,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					searchEngine.title = getTitle();
 					searchEngine.formUrl = getUrl();
 					searchEngine.icon = (icon.isNull() ? ThemesManager::getIcon(QLatin1String("edit-find")) : icon);
-					searchEngine.resultsUrl.url = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
+					searchEngine.resultsUrl.url = (url.isEmpty() ? getUrl() : resolveUrl(parentElement.webFrame(), url)).toString();
 					searchEngine.resultsUrl.enctype = parentElement.attribute(QLatin1String("enctype"));
 					searchEngine.resultsUrl.method = ((parentElement.attribute(QLatin1String("method"), QLatin1String("get")).toLower() == QLatin1String("post")) ? QLatin1String("post") : QLatin1String("get"));
 					searchEngine.resultsUrl.parameters = parameters;
@@ -2013,6 +2013,16 @@ QVariant QtWebKitWebWidget::getPageInformation(WebWidget::PageInformation key) c
 	return m_networkManager->getPageInformation(key);
 }
 
+QUrl QtWebKitWebWidget::resolveUrl(QWebFrame *frame, const QUrl &url) const
+{
+	if (url.isRelative())
+	{
+		return ((frame ? frame->baseUrl() : getUrl()).resolved(url));
+	}
+
+	return url;
+}
+
 QUrl QtWebKitWebWidget::getUrl() const
 {
 	const QUrl url(m_webView->url());
@@ -2208,7 +2218,7 @@ WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &posit
 			{
 				const QUrl url(parentElement.attribute(QLatin1String("action")));
 
-				result.formUrl = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
+				result.formUrl = (url.isEmpty() ? getUrl() : resolveUrl(parentElement.webFrame(), url)).toString();
 			}
 
 			if (parentElement.findAll(QLatin1String("input:not([disabled])[name], select:not([disabled])[name], textarea:not([disabled])[name]")).count() > 0)
@@ -2307,12 +2317,7 @@ QList<LinkUrl> QtWebKitWebWidget::getFeeds() const
 
 	for (int i = 0; i < elements.count(); ++i)
 	{
-		QUrl url(elements.at(i).attribute(QLatin1String("href")));
-
-		if (url.isRelative())
-		{
-			url = getUrl().resolved(url);
-		}
+		QUrl url(resolveUrl(m_webView->page()->mainFrame(), QUrl(elements.at(i).attribute(QLatin1String("href")))));
 
 		if (urls.contains(url))
 		{
@@ -2340,12 +2345,7 @@ QList<LinkUrl> QtWebKitWebWidget::getSearchEngines() const
 
 	for (int i = 0; i < elements.count(); ++i)
 	{
-		QUrl url(elements.at(i).attribute(QLatin1String("href")));
-
-		if (url.isRelative())
-		{
-			url = getUrl().resolved(url);
-		}
+		QUrl url(resolveUrl(m_webView->page()->mainFrame(), QUrl(elements.at(i).attribute(QLatin1String("href")))));
 
 		if (urls.contains(url))
 		{

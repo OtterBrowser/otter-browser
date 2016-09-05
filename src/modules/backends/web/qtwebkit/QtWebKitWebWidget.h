@@ -124,6 +124,7 @@ protected:
 	QWebPage* getPage();
 	QString getPasswordToken() const;
 	QString getPluginToken() const;
+	QUrl resolveUrl(QWebFrame *frame, const QUrl &url) const;
 	int getAmountOfNotLoadedPlugins() const;
 	bool canLoadPlugins() const;
 	bool canGoBack() const;
