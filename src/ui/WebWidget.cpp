@@ -1540,6 +1540,11 @@ WindowsManager::ContentStates WebWidget::getContentState() const
 
 WebWidget::PermissionPolicy WebWidget::getPermission(WebWidget::FeaturePermission feature, const QUrl &url) const
 {
+	if (!url.isValid())
+	{
+		return DeniedPermission;
+	}
+
 	QString value;
 
 	switch (feature)

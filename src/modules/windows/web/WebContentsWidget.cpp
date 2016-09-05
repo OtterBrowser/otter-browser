@@ -816,6 +816,11 @@ void WebContentsWidget::handlePopupWindowRequest(const QUrl &parentUrl, const QU
 
 void WebContentsWidget::handlePermissionRequest(WebWidget::FeaturePermission feature, const QUrl &url, bool cancel)
 {
+	if (!url.isValid())
+	{
+		return;
+	}
+
 	if (cancel)
 	{
 		for (int i = 0; i < m_permissionBarWidgets.count(); ++i)
