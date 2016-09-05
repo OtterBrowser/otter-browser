@@ -749,13 +749,15 @@ void QtWebKitWebWidget::notifyPermissionRequested(QWebFrame *frame, QWebPage::Fe
 			return;
 	}
 
+	const QUrl url(frame->url().isValid() ? frame->url() : frame->requestedUrl());
+
 	if (cancel)
 	{
-		emit requestedPermission(feature, frame->url(), true);
+		emit requestedPermission(feature, url, true);
 	}
 	else
 	{
-		switch (getPermission(feature, frame->url()))
+		switch (getPermission(feature, url))
 		{
 			case GrantedPermission:
 				m_webView->page()->setFeaturePermission(frame, nativeFeature, QWebPage::PermissionGrantedByUser);
@@ -766,7 +768,7 @@ void QtWebKitWebWidget::notifyPermissionRequested(QWebFrame *frame, QWebPage::Fe
 
 				break;
 			default:
-				emit requestedPermission(feature, frame->url(), false);
+				emit requestedPermission(feature, url, false);
 
 				break;
 		}
