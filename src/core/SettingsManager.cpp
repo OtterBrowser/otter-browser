@@ -84,9 +84,13 @@ void SettingsManager::removeOverride(const QUrl &url, const QString &key)
 	}
 }
 
-void SettingsManager::setOptionDefinition(int identifier, const SettingsManager::OptionDefinition &definition)
+void SettingsManager::updateOptionDefinition(int identifier, const SettingsManager::OptionDefinition &definition)
 {
-	m_definitions[identifier] = definition;
+	if (m_definitions.contains(identifier))
+	{
+		m_definitions[identifier].defaultValue = definition.defaultValue;
+		m_definitions[identifier].choices = definition.choices;
+	}
 }
 
 void SettingsManager::setValue(int identifier, const QVariant &value, const QUrl &url)

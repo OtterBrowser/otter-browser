@@ -76,7 +76,7 @@ AddonsManager::AddonsManager(QObject *parent) : QObject(parent)
 	SettingsManager::OptionDefinition backends(SettingsManager::getOptionDefinition(SettingsManager::Backends_WebOption));
 	backends.choices = m_webBackends.keys();
 
-	SettingsManager::setOptionDefinition(SettingsManager::Backends_WebOption, backends);
+	SettingsManager::updateOptionDefinition(SettingsManager::Backends_WebOption, backends);
 
 	registerSpecialPage(SpecialPageInformation(tr("Addons Manager"), QString(), QUrl(QLatin1String("about:addons")), ThemesManager::getIcon(QLatin1String("preferences-plugin"), false)), QLatin1String("addons"));
 	registerSpecialPage(SpecialPageInformation(tr("Bookmarks Manager"), QString(), QUrl(QLatin1String("about:bookmarks")), ThemesManager::getIcon(QLatin1String("bookmarks"), false)), QLatin1String("bookmarks"));
