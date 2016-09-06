@@ -34,7 +34,6 @@ SettingsManager* SettingsManager::m_instance = NULL;
 QString SettingsManager::m_globalPath;
 QString SettingsManager::m_overridePath;
 QHash<int, SettingsManager::OptionDefinition> SettingsManager::m_definitions;
-QHash<int, QVariant> SettingsManager::m_defaults;
 int SettingsManager::m_optionIdentifierEnumerator = 0;
 
 SettingsManager::SettingsManager(QObject *parent) : QObject(parent)
@@ -61,14 +60,65 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 
 			for (int j = 0; j < keys.count(); ++j)
 			{
-				m_defaults[getOptionIdentifier(QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j)))] = defaults.value(QStringLiteral("%1/value").arg(keys.at(j)));
+				defaults.beginGroup(keys.at(j));
+
+				const QString type(defaults.value(QLatin1String("type")).toString());
+				OptionDefinition definition;
+				definition.name = QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j));
+				definition.defaultValue = defaults.value(QLatin1String("value"));
+
+				if (type == QLatin1String("bool"))
+				{
+					definition.type = BooleanType;
+				}
+				else if (type == QLatin1String("color"))
+				{
+					definition.type = ColorType;
+				}
+				else if (type == QLatin1String("enumeration"))
+				{
+					definition.type = EnumerationType;
+					definition.choices = defaults.value(QLatin1String("choices")).toStringList();
+				}
+				else if (type == QLatin1String("font"))
+				{
+					definition.type = FontType;
+				}
+				else if (type == QLatin1String("icon"))
+				{
+					definition.type = IconType;
+				}
+				else if (type == QLatin1String("integer"))
+				{
+					definition.type = IntegerType;
+				}
+				else if (type == QLatin1String("list"))
+				{
+					definition.type = ListType;
+				}
+				else if (type == QLatin1String("path"))
+				{
+					definition.type = PathType;
+				}
+				else if (type == QLatin1String("string"))
+				{
+					definition.type = StringType;
+				}
+				else
+				{
+					definition.type = UnknownType;
+				}
+
+				m_definitions[getOptionIdentifier(definition.name)] = definition;
+
+				defaults.endGroup();
 			}
 
 			defaults.endGroup();
 		}
 
-		m_defaults[Paths_DownloadsOption] = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
-		m_defaults[Paths_SaveFileOption] = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
+		m_definitions[Paths_DownloadsOption].defaultValue = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
+		m_definitions[Paths_SaveFileOption].defaultValue = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
 	}
 }
 
@@ -213,6 +263,7 @@ QString SettingsManager::getReport()
 	for (int i = 0; i < optionNames.count(); ++i)
 	{
 		const int identifier(getOptionIdentifier(optionNames.at(i)));
+		const QVariant defaultValue(m_definitions.contains(identifier) ? m_definitions[identifier].defaultValue : QVariant());
 
 		stream << QLatin1Char('\t');
 		stream.setFieldWidth(50);
@@ -225,10 +276,10 @@ QString SettingsManager::getReport()
 		}
 		else
 		{
-			stream << m_defaults[identifier].toString();
+			stream << defaultValue.toString();
 		}
 
-		stream << ((m_defaults[identifier] == getValue(identifier)) ? QLatin1String("default") : QLatin1String("non default"));
+		stream << ((defaultValue == getValue(identifier)) ? QLatin1String("default") : QLatin1String("non default"));
 		stream << (overridenValues.contains(optionNames.at(i)) ? QStringLiteral("%1 override(s)").arg(overridenValues[optionNames.at(i)]) : QLatin1String("no overrides"));
 		stream.setFieldWidth(0);
 		stream << QLatin1Char('\n');
@@ -241,6 +292,11 @@ QString SettingsManager::getReport()
 
 QVariant SettingsManager::getValue(int identifier, const QUrl &url)
 {
+	if (!m_definitions.contains(identifier))
+	{
+		return QVariant();
+	}
+
 	const QString name(getOptionName(identifier));
 
 	if (!url.isEmpty())
@@ -248,7 +304,7 @@ QVariant SettingsManager::getValue(int identifier, const QUrl &url)
 		return QSettings(m_overridePath, QSettings::IniFormat).value(getHost(url) + QLatin1Char('/') + name, getValue(identifier));
 	}
 
-	return QSettings(m_globalPath, QSettings::IniFormat).value(name, m_defaults[identifier]);
+	return QSettings(m_globalPath, QSettings::IniFormat).value(name, m_definitions[identifier].defaultValue);
 }
 
 QStringList SettingsManager::getOptions()
@@ -273,58 +329,7 @@ SettingsManager::OptionDefinition SettingsManager::getOptionDefinition(int ident
 		return m_definitions[identifier];
 	}
 
-	QSettings settings(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat);
-	settings.beginGroup(getOptionName(identifier));
-
-	OptionDefinition definition;
-	definition.name = identifier;
-	definition.defaultValue = m_defaults[identifier];
-
-	const QString type(settings.value(QLatin1String("type")).toString());
-
-	if (type == QLatin1String("bool"))
-	{
-		definition.type = BooleanType;
-	}
-	else if (type == QLatin1String("color"))
-	{
-		definition.type = ColorType;
-	}
-	else if (type == QLatin1String("enumeration"))
-	{
-		definition.type = EnumerationType;
-		definition.choices = settings.value(QLatin1String("choices")).toStringList();
-	}
-	else if (type == QLatin1String("font"))
-	{
-		definition.type = FontType;
-	}
-	else if (type == QLatin1String("icon"))
-	{
-		definition.type = IconType;
-	}
-	else if (type == QLatin1String("integer"))
-	{
-		definition.type = IntegerType;
-	}
-	else if (type == QLatin1String("list"))
-	{
-		definition.type = ListType;
-	}
-	else if (type == QLatin1String("path"))
-	{
-		definition.type = PathType;
-	}
-	else if (type == QLatin1String("string"))
-	{
-		definition.type = StringType;
-	}
-	else
-	{
-		definition.type = UnknownType;
-	}
-
-	return definition;
+	return OptionDefinition();
 }
 
 int SettingsManager::getOptionIdentifier(const QString &name)

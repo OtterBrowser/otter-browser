@@ -270,7 +270,6 @@ private:
 	static QString m_globalPath;
 	static QString m_overridePath;
 	static QHash<int, OptionDefinition> m_definitions;
-	static QHash<int, QVariant> m_defaults;
 	static int m_optionIdentifierEnumerator;
 
 signals:
