@@ -64,8 +64,8 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 
 				const QString type(defaults.value(QLatin1String("type")).toString());
 				OptionDefinition definition;
-				definition.name = QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j));
 				definition.defaultValue = defaults.value(QLatin1String("value"));
+				definition.identifier = getOptionIdentifier(QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j)));
 
 				if (type == QLatin1String("bool"))
 				{
@@ -109,7 +109,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 					definition.type = UnknownType;
 				}
 
-				m_definitions[getOptionIdentifier(definition.name)] = definition;
+				m_definitions[definition.identifier] = definition;
 
 				defaults.endGroup();
 			}

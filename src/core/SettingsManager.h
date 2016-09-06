@@ -241,10 +241,12 @@ public:
 
 	struct OptionDefinition
 	{
-		QString name;
 		QVariant defaultValue;
 		QStringList choices;
 		OptionType type;
+		int identifier;
+
+		OptionDefinition() : identifier(-1) {}
 	};
 
 	static void createInstance(const QString &path, QObject *parent = NULL);
