@@ -65,6 +65,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 				const QString type(defaults.value(QLatin1String("type")).toString());
 				OptionDefinition definition;
 				definition.defaultValue = defaults.value(QLatin1String("value"));
+				definition.flags = (IsEnabledFlag | IsVisibleFlag | IsBuiltInFlag);
 				definition.identifier = getOptionIdentifier(QStringLiteral("%1/%2").arg(groups.at(i)).arg(keys.at(j)));
 
 				if (type == QLatin1String("bool"))

@@ -239,14 +239,25 @@ public:
 		StringType
 	};
 
+	enum OptionFlag
+	{
+		NoFlags = 0,
+		IsEnabledFlag = 1,
+		IsVisibleFlag = 2,
+		IsBuiltInFlag = 4
+	};
+
+	Q_DECLARE_FLAGS(OptionFlags, OptionFlag)
+
 	struct OptionDefinition
 	{
 		QVariant defaultValue;
 		QStringList choices;
 		OptionType type;
+		OptionFlags flags;
 		int identifier;
 
-		OptionDefinition() : identifier(-1) {}
+		OptionDefinition() : flags(IsEnabledFlag | IsVisibleFlag), identifier(-1) {}
 	};
 
 	static void createInstance(const QString &path, QObject *parent = NULL);
@@ -280,5 +291,7 @@ signals:
 };
 
 }
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::SettingsManager::OptionFlags)
 
 #endif
