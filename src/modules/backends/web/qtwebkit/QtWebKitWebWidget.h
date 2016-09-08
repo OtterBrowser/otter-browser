@@ -77,8 +77,9 @@ public:
 	WindowsManager::LoadingState getLoadingState() const;
 	int getZoom() const;
 	bool hasSelection() const;
-#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
+#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	bool isAudible() const;
+	bool isAudioMuted() const;
 #endif
 	bool isPrivate() const;
 	bool findInPage(const QString &text, FindFlags flags = NoFlagsFind);
@@ -113,6 +114,9 @@ protected:
 	void focusInEvent(QFocusEvent *event);
 	void clearPluginToken();
 	void resetSpellCheck(QWebElement element);
+#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
+	void muteAudio(QWebFrame *frame, bool isMuted);
+#endif
 	void openRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
 	void openFormRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
 	void pasteText(const QString &text);
@@ -182,6 +186,7 @@ private:
 	WindowsManager::LoadingState m_loadingState;
 	int m_transfersTimer;
 	bool m_canLoadPlugins;
+	bool m_isAudioMuted;
 	bool m_isTyped;
 	bool m_isNavigating;
 
