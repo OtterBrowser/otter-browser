@@ -203,6 +203,8 @@ public:
 	virtual int getZoom() const = 0;
 	bool hasOption(int identifier) const;
 	virtual bool hasSelection() const;
+	virtual bool isAudible() const;
+	virtual bool isAudioMuted() const;
 	virtual bool isPrivate() const = 0;
 	virtual bool findInPage(const QString &text, FindFlags flags = NoFlagsFind) = 0;
 
@@ -259,6 +261,7 @@ protected slots:
 	void quickSearch(QAction *action);
 	void quickSearchMenuAboutToShow();
 	void handleLoadingStateChange(WindowsManager::LoadingState state);
+	void handleAudibleStateChange(bool isAudible);
 	void updateQuickSearch();
 	virtual void updatePageActions(const QUrl &url);
 	virtual void updateNavigationActions();

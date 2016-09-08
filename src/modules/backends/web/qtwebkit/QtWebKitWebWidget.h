@@ -77,6 +77,9 @@ public:
 	WindowsManager::LoadingState getLoadingState() const;
 	int getZoom() const;
 	bool hasSelection() const;
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
+	bool isAudible() const;
+#endif
 	bool isPrivate() const;
 	bool findInPage(const QString &text, FindFlags flags = NoFlagsFind);
 	bool eventFilter(QObject *object, QEvent *event);

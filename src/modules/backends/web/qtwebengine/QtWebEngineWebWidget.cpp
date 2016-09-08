@@ -125,6 +125,9 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	connect(m_page, SIGNAL(fullScreenRequested(QWebEngineFullScreenRequest)), this, SLOT(handleFullScreenRequest(QWebEngineFullScreenRequest)));
 	connect(m_page, SIGNAL(featurePermissionRequested(QUrl,QWebEnginePage::Feature)), this, SLOT(handlePermissionRequest(QUrl,QWebEnginePage::Feature)));
 	connect(m_page, SIGNAL(featurePermissionRequestCanceled(QUrl,QWebEnginePage::Feature)), this, SLOT(handlePermissionCancel(QUrl,QWebEnginePage::Feature)));
+#if QT_VERSION >= 0x050700
+	connect(m_page, SIGNAL(recentlyAudibleChanged(bool)), this, SLOT(handleAudibleStateChange(bool)));
+#endif
 	connect(m_page, SIGNAL(viewingMediaChanged(bool)), this, SLOT(updateNavigationActions()));
 	connect(m_webView, SIGNAL(titleChanged(QString)), this, SLOT(notifyTitleChanged()));
 	connect(m_webView, SIGNAL(urlChanged(QUrl)), this, SLOT(notifyUrlChanged(QUrl)));
@@ -292,6 +295,12 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			updateNavigationActions();
 
 			return;
+#if QT_VERSION >= 0x050700
+		case ActionsManager::MuteTabMediaAction:
+			m_page->setAudioMuted(!m_page->isAudioMuted());
+
+			return;
+#endif
 		case ActionsManager::OpenLinkAction:
 			{
 				QMouseEvent mousePressEvent(QEvent::MouseButtonPress, QPointF(getClickPosition()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
@@ -1631,6 +1640,18 @@ bool QtWebEngineWebWidget::hasSelection() const
 {
 	return m_webView->hasSelection();
 }
+
+#if QT_VERSION >= 0x050700
+bool QtWebEngineWebWidget::isAudible() const
+{
+	return m_page->recentlyAudible();
+}
+
+bool QtWebEngineWebWidget::isAudioMuted() const
+{
+	return m_page->isAudioMuted();
+}
+#endif
 
 bool QtWebEngineWebWidget::isPrivate() const
 {

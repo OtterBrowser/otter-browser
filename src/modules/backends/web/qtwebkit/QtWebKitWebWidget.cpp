@@ -148,6 +148,9 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(m_page, SIGNAL(featurePermissionRequestCanceled(QWebFrame*,QWebPage::Feature)), this, SLOT(handlePermissionCancel(QWebFrame*,QWebPage::Feature)));
 	connect(m_page, SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
 	connect(m_page, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
+#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
+	connect(m_page, SIGNAL(recentlyAudibleChanged(bool)), this, SLOT(handleAudibleStateChange(bool)));
+#endif
 	connect(m_page, SIGNAL(viewingMediaChanged(bool)), this, SLOT(updateNavigationActions()));
 	connect(m_page->mainFrame(), SIGNAL(contentsSizeChanged(QSize)), this, SIGNAL(progressBarGeometryChanged()));
 	connect(m_page->mainFrame(), SIGNAL(initialLayoutCompleted()), this, SIGNAL(progressBarGeometryChanged()));
@@ -2438,6 +2441,13 @@ bool QtWebKitWebWidget::hasSelection() const
 {
 	return m_page->hasSelection();
 }
+
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
+bool QtWebKitWebWidget::isAudible() const
+{
+	return m_page->recentlyAudible();
+}
+#endif
 
 bool QtWebKitWebWidget::isPrivate() const
 {

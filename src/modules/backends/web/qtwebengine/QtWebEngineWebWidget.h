@@ -56,6 +56,10 @@ public:
 	WindowsManager::LoadingState getLoadingState() const;
 	int getZoom() const;
 	bool hasSelection() const;
+#if QT_VERSION >= 0x050700
+	bool isAudible() const;
+	bool isAudioMuted() const;
+#endif
 	bool isPrivate() const;
 	bool findInPage(const QString &text, FindFlags flags = NoFlagsFind);
 	bool eventFilter(QObject *object, QEvent *event);

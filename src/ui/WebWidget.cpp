@@ -433,6 +433,16 @@ void WebWidget::handleLoadingStateChange(WindowsManager::LoadingState state)
 	}
 }
 
+void WebWidget::handleAudibleStateChange(bool isAudible)
+{
+	if (m_actions.contains(ActionsManager::MuteTabMediaAction))
+	{
+		m_actions[ActionsManager::MuteTabMediaAction]->setEnabled(isAudible || isAudioMuted());
+		m_actions[ActionsManager::MuteTabMediaAction]->setIcon(ThemesManager::getIcon(isAudioMuted() ? QLatin1String("audio-volume-muted") : QLatin1String("audio-volume-medium")));
+		m_actions[ActionsManager::MuteTabMediaAction]->setOverrideText(isAudioMuted() ? QT_TRANSLATE_NOOP("actions", "Unmute Tab Media") : QT_TRANSLATE_NOOP("actions", "Mute Tab Media"));
+	}
+}
+
 void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 {
 	const HitTestResult hitResult(getHitTestResult(event->pos()));
@@ -1149,6 +1159,10 @@ Action* WebWidget::getAction(int identifier)
 
 	switch (identifier)
 	{
+		case ActionsManager::MuteTabMediaAction:
+			handleAudibleStateChange(isAudible());
+
+			break;
 		case ActionsManager::BookmarkPageAction:
 		case ActionsManager::WebsitePreferencesAction:
 			updatePageActions(getUrl());
@@ -1695,6 +1709,16 @@ bool WebWidget::hasOption(int identifier) const
 }
 
 bool WebWidget::hasSelection() const
+{
+	return false;
+}
+
+bool WebWidget::isAudible() const
+{
+	return false;
+}
+
+bool WebWidget::isAudioMuted() const
 {
 	return false;
 }
