@@ -299,6 +299,8 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 		case ActionsManager::MuteTabMediaAction:
 			m_page->setAudioMuted(!m_page->isAudioMuted());
 
+			handleAudibleStateChange(m_page->recentlyAudible());
+
 			return;
 #endif
 		case ActionsManager::OpenLinkAction:
