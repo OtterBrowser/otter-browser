@@ -549,6 +549,7 @@ void QtWebKitWebWidget::resetSpellCheck(QWebElement element)
 	}
 }
 
+#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 void QtWebKitWebWidget::muteAudio(QWebFrame *frame, bool isMuted)
 {
 	if (!frame)
@@ -570,6 +571,7 @@ void QtWebKitWebWidget::muteAudio(QWebFrame *frame, bool isMuted)
 		muteAudio(frames.at(i), isMuted);
 	}
 }
+#endif
 
 void QtWebKitWebWidget::openRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData)
 {
