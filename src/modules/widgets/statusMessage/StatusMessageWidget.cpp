@@ -18,7 +18,7 @@
 **************************************************************************/
 
 #include "StatusMessageWidget.h"
-#include "../MainWindow.h"
+#include "../../../ui/MainWindow.h"
 
 #include <QtGui/QGuiApplication>
 #include <QtWidgets/QStyle>

@@ -18,10 +18,10 @@
 **************************************************************************/
 
 #include "ToolButtonWidget.h"
-#include "../Menu.h"
-#include "../ToolBarWidget.h"
-#include "../../core/ActionsManager.h"
-#include "../../core/ThemesManager.h"
+#include "Menu.h"
+#include "ToolBarWidget.h"
+#include "../core/ActionsManager.h"
+#include "../core/ThemesManager.h"
 
 #include <QtCore/QEvent>
 #include <QtWidgets/QStyleOptionToolButton>

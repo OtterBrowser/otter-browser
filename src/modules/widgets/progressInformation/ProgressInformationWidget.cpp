@@ -18,10 +18,10 @@
 **************************************************************************/
 
 #include "ProgressInformationWidget.h"
-#include "../ContentsWidget.h"
-#include "../ToolBarWidget.h"
-#include "../Window.h"
-#include "../../core/Utils.h"
+#include "../../../core/Utils.h"
+#include "../../../ui/ContentsWidget.h"
+#include "../../../ui/ToolBarWidget.h"
+#include "../../../ui/Window.h"
 
 #include <QtWidgets/QHBoxLayout>
 

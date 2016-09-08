@@ -18,10 +18,10 @@
 **************************************************************************/
 
 #include "ActionWidget.h"
-#include "../ContentsWidget.h"
-#include "../MainWindow.h"
-#include "../ToolBarWidget.h"
-#include "../Window.h"
+#include "../../../ui/ContentsWidget.h"
+#include "../../../ui/MainWindow.h"
+#include "../../../ui/ToolBarWidget.h"
+#include "../../../ui/Window.h"
 
 #include <QtGui/QMouseEvent>
 #include <QtWidgets/QToolTip>

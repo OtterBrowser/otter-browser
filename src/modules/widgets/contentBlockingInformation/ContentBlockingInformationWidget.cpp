@@ -18,14 +18,14 @@
 **************************************************************************/
 
 #include "ContentBlockingInformationWidget.h"
-#include "../ContentsWidget.h"
-#include "../MainWindow.h"
-#include "../ToolBarWidget.h"
-#include "../Window.h"
-#include "../../core/ContentBlockingManager.h"
-#include "../../core/ContentBlockingProfile.h"
-#include "../../core/ThemesManager.h"
-#include "../../core/Utils.h"
+#include "../../../core/ContentBlockingManager.h"
+#include "../../../core/ContentBlockingProfile.h"
+#include "../../../core/ThemesManager.h"
+#include "../../../core/Utils.h"
+#include "../../../ui/ContentsWidget.h"
+#include "../../../ui/MainWindow.h"
+#include "../../../ui/ToolBarWidget.h"
+#include "../../../ui/Window.h"
 
 #include <QtWidgets/QStyleOptionToolButton>
 #include <QtWidgets/QStylePainter>

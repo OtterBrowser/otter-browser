@@ -41,7 +41,6 @@
 #include "UpdateCheckerDialog.h"
 #include "Window.h"
 #include "preferences/ContentBlockingDialog.h"
-#include "toolbars/ActionWidget.h"
 #include "../core/ActionsManager.h"
 #include "../core/AddonsManager.h"
 #include "../core/BookmarksManager.h"
@@ -52,6 +51,7 @@
 #include "../core/TransfersManager.h"
 #include "../core/Utils.h"
 #include "../core/WebBackend.h"
+#include "../modules/widgets/action/ActionWidget.h"
 
 #include "ui_MainWindow.h"
 

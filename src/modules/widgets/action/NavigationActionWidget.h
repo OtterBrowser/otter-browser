@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,45 +17,31 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_TOOLBUTTONWIDGET_H
-#define OTTER_TOOLBUTTONWIDGET_H
+#ifndef OTTER_NAVIGATIONACTIONWIDGET_H
+#define OTTER_NAVIGATIONACTIONWIDGET_H
 
-#include "../../core/ToolBarsManager.h"
-
-#include <QtCore/QVariantMap>
-#include <QtWidgets/QToolButton>
+#include "ActionWidget.h"
+#include "../../../core/SessionsManager.h"
 
 namespace Otter
 {
 
-class Menu;
-
-class ToolButtonWidget : public QToolButton
+class NavigationActionWidget : public ActionWidget
 {
 	Q_OBJECT
 
 public:
-	explicit ToolButtonWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = NULL);
+	explicit NavigationActionWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = NULL);
 
-	QVariantMap getOptions() const;
-	bool isCustomized() const;
-
-public slots:
-	void setOptions(const QVariantMap &options);
+	bool eventFilter(QObject *object, QEvent *event);
 
 protected:
-	void paintEvent(QPaintEvent *event);
-	void addMenu(Menu *menu, const QList<ActionsManager::ActionEntryDefinition> &entries);
+	void addMenuEntry(int index, const WindowHistoryEntry &entry);
 	bool event(QEvent *event);
 
 protected slots:
-	void setButtonStyle(Qt::ToolButtonStyle buttonStyle);
-	void setIconSize(int size);
-	void setMaximumButtonSize(int size);
-
-private:
-	QVariantMap m_options;
-	bool m_isCustomized;
+	void goToHistoryIndex(QAction *action);
+	void updateMenu();
 };
 
 }

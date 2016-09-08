@@ -26,11 +26,11 @@
 #include "ToolBarAreaWidget.h"
 #include "WidgetFactory.h"
 #include "Window.h"
-#include "toolbars/BookmarkWidget.h"
 #include "../core/BookmarksManager.h"
 #include "../core/GesturesManager.h"
 #include "../core/ThemesManager.h"
 #include "../core/WindowsManager.h"
+#include "../modules/widgets/bookmark/BookmarkWidget.h"
 
 #include <QtCore/QMimeData>
 #include <QtGui/QDrag>

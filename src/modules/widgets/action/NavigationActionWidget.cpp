@@ -19,11 +19,11 @@
 **************************************************************************/
 
 #include "NavigationActionWidget.h"
-#include "../ContentsWidget.h"
-#include "../ToolBarWidget.h"
-#include "../Window.h"
-#include "../../core/GesturesManager.h"
-#include "../../core/HistoryManager.h"
+#include "../../../core/GesturesManager.h"
+#include "../../../core/HistoryManager.h"
+#include "../../../ui/ContentsWidget.h"
+#include "../../../ui/ToolBarWidget.h"
+#include "../../../ui/Window.h"
 
 #include <QtGui/QHelpEvent>
 #include <QtWidgets/QMenu>

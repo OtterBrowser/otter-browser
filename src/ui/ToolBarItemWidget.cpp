@@ -17,46 +17,14 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_CONTENTBLOCKINGINFORMATIONWIDGET_H
-#define OTTER_CONTENTBLOCKINGINFORMATIONWIDGET_H
-
-#include "ToolButtonWidget.h"
-#include "../../core/NetworkManager.h"
+#include "ToolBarItemWidget.h"
 
 namespace Otter
 {
 
-class Window;
-
-class ContentBlockingInformationWidget : public ToolButtonWidget
+ToolBarItemWidget::ToolBarItemWidget(QWidget *parent) : QWidget(parent)
 {
-	Q_OBJECT
-
-public:
-	explicit ContentBlockingInformationWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = NULL);
-
-protected:
-	void paintEvent(QPaintEvent *event);
-	void resizeEvent(QResizeEvent *event);
-	void updateState();
-
-protected slots:
-	void clear();
-	void openElement(QAction *action);
-	void toggleOption(QAction *action);
-	void populateElementsMenu();
-	void populateProfilesMenu();
-	void handleRequest(const NetworkManager::ResourceInformation &request);
-	void setWindow(Window *window);
-
-private:
-	Window *m_window;
-	QMenu *m_elementsMenu;
-	QMenu *m_profilesMenu;
-	QIcon m_icon;
-	int m_amount;
-};
 
 }
 
-#endif
+}

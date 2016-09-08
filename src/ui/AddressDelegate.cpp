@@ -20,10 +20,10 @@
 
 #include "AddressDelegate.h"
 
-#include "toolbars/AddressWidget.h"
 #include "../core/AddressCompletionModel.h"
 #include "../core/ThemesManager.h"
 #include "../core/Utils.h"
+#include "../modules/widgets/address/AddressWidget.h"
 
 #include <QtGui/QPainter>
 

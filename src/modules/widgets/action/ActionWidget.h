@@ -17,31 +17,41 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_NAVIGATIONACTIONWIDGET_H
-#define OTTER_NAVIGATIONACTIONWIDGET_H
+#ifndef OTTER_ACTIONWIDGET_H
+#define OTTER_ACTIONWIDGET_H
 
-#include "ActionWidget.h"
-#include "../../core/SessionsManager.h"
+#include "../../../core/ActionsManager.h"
+#include "../../../ui/ToolButtonWidget.h"
+
+#include <QtCore/QPointer>
 
 namespace Otter
 {
 
-class NavigationActionWidget : public ActionWidget
+class Window;
+
+class ActionWidget : public ToolButtonWidget
 {
 	Q_OBJECT
 
 public:
-	explicit NavigationActionWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = NULL);
+	explicit ActionWidget(int identifier, Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = NULL);
 
-	bool eventFilter(QObject *object, QEvent *event);
+	Window* getWindow() const;
 
 protected:
-	void addMenuEntry(int index, const WindowHistoryEntry &entry);
+	void actionEvent(QActionEvent *event);
+	void mouseReleaseEvent(QMouseEvent *event);
+	int getIdentifier() const;
 	bool event(QEvent *event);
 
 protected slots:
-	void goToHistoryIndex(QAction *action);
-	void updateMenu();
+	void resetAction();
+	void setWindow(Window *window);
+
+private:
+	QPointer<Window> m_window;
+	int m_identifier;
 };
 
 }

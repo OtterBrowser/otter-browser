@@ -21,8 +21,8 @@
 #ifndef OTTER_ADDRESSWIDGET_H
 #define OTTER_ADDRESSWIDGET_H
 
-#include "../ComboBoxWidget.h"
-#include "../../core/WindowsManager.h"
+#include "../../../core/WindowsManager.h"
+#include "../../../ui/ComboBoxWidget.h"
 
 #include <QtCore/QTime>
 #include <QtCore/QUrl>

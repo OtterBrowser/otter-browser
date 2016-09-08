@@ -18,8 +18,8 @@
 **************************************************************************/
 
 #include "ZoomWidget.h"
-#include "../MainWindow.h"
-#include "../../core/WindowsManager.h"
+#include "../../../core/WindowsManager.h"
+#include "../../../ui/MainWindow.h"
 
 #include <QtGui/QMouseEvent>
 #include <QtWidgets/QApplication>

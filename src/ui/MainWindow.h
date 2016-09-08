@@ -23,10 +23,10 @@
 #define OTTER_MAINWINDOW_H
 
 #include "SidebarWidget.h"
-#include "toolbars/ActionWidget.h"
 #include "../core/Application.h"
 #include "../core/SessionsManager.h"
 #include "../core/WindowsManager.h"
+#include "../modules/widgets/action/ActionWidget.h"
 
 #include <QtWidgets/QShortcut>
 #include <QtWidgets/QMainWindow>

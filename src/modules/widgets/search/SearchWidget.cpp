@@ -19,17 +19,17 @@
 **************************************************************************/
 
 #include "SearchWidget.h"
-#include "../LineEditWidget.h"
-#include "../MainWindow.h"
-#include "../PreferencesDialog.h"
-#include "../SearchDelegate.h"
-#include "../ToolBarWidget.h"
-#include "../Window.h"
-#include "../../core/SearchEnginesManager.h"
-#include "../../core/SearchSuggester.h"
-#include "../../core/SessionsManager.h"
-#include "../../core/SettingsManager.h"
-#include "../../core/ThemesManager.h"
+#include "../../../core/SearchEnginesManager.h"
+#include "../../../core/SearchSuggester.h"
+#include "../../../core/SessionsManager.h"
+#include "../../../core/SettingsManager.h"
+#include "../../../core/ThemesManager.h"
+#include "../../../ui/LineEditWidget.h"
+#include "../../../ui/MainWindow.h"
+#include "../../../ui/PreferencesDialog.h"
+#include "../../../ui/SearchDelegate.h"
+#include "../../../ui/ToolBarWidget.h"
+#include "../../../ui/Window.h"
 
 #include <QtGui/QClipboard>
 #include <QtGui/QMouseEvent>

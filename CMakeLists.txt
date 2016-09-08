@@ -195,6 +195,7 @@ set(otter_src
 	src/ui/ToolBarAreaWidget.cpp
 	src/ui/ToolBarDialog.cpp
 	src/ui/ToolBarWidget.cpp
+	src/ui/ToolButtonWidget.cpp
 	src/ui/TransferDialog.cpp
 	src/ui/TrayIcon.cpp
 	src/ui/UpdateCheckerDialog.cpp
@@ -220,23 +221,22 @@ set(otter_src
 	src/ui/preferences/PreferencesPrivacyPageWidget.cpp
 	src/ui/preferences/PreferencesSearchPageWidget.cpp
 	src/ui/preferences/SearchKeywordDelegate.cpp
-	src/ui/toolbars/ActionWidget.cpp
-	src/ui/toolbars/AddressWidget.cpp
-	src/ui/toolbars/BookmarkWidget.cpp
-	src/ui/toolbars/ContentBlockingInformationWidget.cpp
-	src/ui/toolbars/NavigationActionWidget.cpp
-	src/ui/toolbars/MenuButtonWidget.cpp
-	src/ui/toolbars/PanelChooserWidget.cpp
-	src/ui/toolbars/ProgressInformationWidget.cpp
-	src/ui/toolbars/SearchWidget.cpp
-	src/ui/toolbars/StatusMessageWidget.cpp
-	src/ui/toolbars/ToolButtonWidget.cpp
-	src/ui/toolbars/ZoomWidget.cpp
 	src/modules/importers/html/HtmlBookmarksImporter.cpp
 	src/modules/importers/opera/OperaBookmarksImporter.cpp
 	src/modules/importers/opera/OperaNotesImporter.cpp
 	src/modules/importers/opera/OperaSearchEnginesImporter.cpp
 	src/modules/importers/opera/OperaSessionImporter.cpp
+	src/modules/widgets/action/ActionWidget.cpp
+	src/modules/widgets/action/NavigationActionWidget.cpp
+	src/modules/widgets/address/AddressWidget.cpp
+	src/modules/widgets/bookmark/BookmarkWidget.cpp
+	src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp
+	src/modules/widgets/menuButton/MenuButtonWidget.cpp
+	src/modules/widgets/panelChooser/PanelChooserWidget.cpp
+	src/modules/widgets/progressInformation/ProgressInformationWidget.cpp
+	src/modules/widgets/search/SearchWidget.cpp
+	src/modules/widgets/statusMessage/StatusMessageWidget.cpp
+	src/modules/widgets/zoom/ZoomWidget.cpp
 	src/modules/windows/addons/AddonsContentsWidget.cpp
 	src/modules/windows/bookmarks/BookmarksContentsWidget.cpp
 	src/modules/windows/cache/CacheContentsWidget.cpp

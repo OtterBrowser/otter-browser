@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,41 +17,45 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_ACTIONWIDGET_H
-#define OTTER_ACTIONWIDGET_H
+#ifndef OTTER_TOOLBUTTONWIDGET_H
+#define OTTER_TOOLBUTTONWIDGET_H
 
-#include "ToolButtonWidget.h"
-#include "../../core/ActionsManager.h"
+#include "../core/ToolBarsManager.h"
 
-#include <QtCore/QPointer>
+#include <QtCore/QVariantMap>
+#include <QtWidgets/QToolButton>
 
 namespace Otter
 {
 
-class Window;
+class Menu;
 
-class ActionWidget : public ToolButtonWidget
+class ToolButtonWidget : public QToolButton
 {
 	Q_OBJECT
 
 public:
-	explicit ActionWidget(int identifier, Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = NULL);
+	explicit ToolButtonWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = NULL);
 
-	Window* getWindow() const;
+	QVariantMap getOptions() const;
+	bool isCustomized() const;
+
+public slots:
+	void setOptions(const QVariantMap &options);
 
 protected:
-	void actionEvent(QActionEvent *event);
-	void mouseReleaseEvent(QMouseEvent *event);
-	int getIdentifier() const;
+	void paintEvent(QPaintEvent *event);
+	void addMenu(Menu *menu, const QList<ActionsManager::ActionEntryDefinition> &entries);
 	bool event(QEvent *event);
 
 protected slots:
-	void resetAction();
-	void setWindow(Window *window);
+	void setButtonStyle(Qt::ToolButtonStyle buttonStyle);
+	void setIconSize(int size);
+	void setMaximumButtonSize(int size);
 
 private:
-	QPointer<Window> m_window;
-	int m_identifier;
+	QVariantMap m_options;
+	bool m_isCustomized;
 };
 
 }

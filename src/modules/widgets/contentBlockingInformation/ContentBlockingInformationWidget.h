@@ -17,49 +17,44 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_PROGRESSINFORMATIONWIDGET_H
-#define OTTER_PROGRESSINFORMATIONWIDGET_H
+#ifndef OTTER_CONTENTBLOCKINGINFORMATIONWIDGET_H
+#define OTTER_CONTENTBLOCKINGINFORMATIONWIDGET_H
 
-#include "../WebWidget.h"
-#include "../../core/ActionsManager.h"
-
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QProgressBar>
+#include "../../../core/NetworkManager.h"
+#include "../../../ui/ToolButtonWidget.h"
 
 namespace Otter
 {
 
 class Window;
 
-class ProgressInformationWidget : public QWidget
+class ContentBlockingInformationWidget : public ToolButtonWidget
 {
 	Q_OBJECT
 
 public:
-	enum ProgressInformationType
-	{
-		UnknownType = 0,
-		DocumentProgressType,
-		TotalSizeType,
-		ElementsType,
-		SpeedType,
-		ElapsedTimeType,
-		MessageType
-	};
+	explicit ContentBlockingInformationWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = NULL);
 
-	explicit ProgressInformationWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = NULL);
-
-	QSize sizeHint() const;
+protected:
+	void paintEvent(QPaintEvent *event);
+	void resizeEvent(QResizeEvent *event);
+	void updateState();
 
 protected slots:
-	void updateStatus(WebWidget::PageInformation key, const QVariant &value = QVariant());
+	void clear();
+	void openElement(QAction *action);
+	void toggleOption(QAction *action);
+	void populateElementsMenu();
+	void populateProfilesMenu();
+	void handleRequest(const NetworkManager::ResourceInformation &request);
 	void setWindow(Window *window);
 
 private:
 	Window *m_window;
-	QLabel *m_label;
-	QProgressBar *m_progressBar;
-	ProgressInformationType m_type;
+	QMenu *m_elementsMenu;
+	QMenu *m_profilesMenu;
+	QIcon m_icon;
+	int m_amount;
 };
 
 }

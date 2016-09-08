@@ -18,11 +18,11 @@
 **************************************************************************/
 
 #include "BookmarkWidget.h"
-#include "../MainWindow.h"
-#include "../Menu.h"
-#include "../../core/BookmarksManager.h"
-#include "../../core/Utils.h"
-#include "../../core/WindowsManager.h"
+#include "../../../core/BookmarksManager.h"
+#include "../../../core/Utils.h"
+#include "../../../core/WindowsManager.h"
+#include "../../../ui/MainWindow.h"
+#include "../../../ui/Menu.h"
 
 #include <QtCore/QDateTime>
 #include <QtGui/QMouseEvent>

@@ -27,11 +27,11 @@
 #include "../../../core/SettingsManager.h"
 #include "../../../core/Utils.h"
 #include "../../../core/WindowsManager.h"
+#include "../../../modules/widgets/search/SearchWidget.h"
 #include "../../../ui/BookmarkPropertiesDialog.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/Menu.h"
 #include "../../../ui/OpenAddressDialog.h"
-#include "../../../ui/toolbars/SearchWidget.h"
 
 #include <QtGui/QGuiApplication>
 #include <QtGui/QMouseEvent>

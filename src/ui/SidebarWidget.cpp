@@ -21,11 +21,11 @@
 #include "SidebarWidget.h"
 #include "MainWindow.h"
 #include "WidgetFactory.h"
-#include "toolbars/PanelChooserWidget.h"
 #include "../core/ActionsManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/ThemesManager.h"
 #include "../core/WindowsManager.h"
+#include "../modules/widgets/panelChooser/PanelChooserWidget.h"
 
 #include "ui_SidebarWidget.h"
 

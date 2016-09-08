@@ -18,8 +18,8 @@
 **************************************************************************/
 
 #include "OpenAddressDialog.h"
-#include "toolbars/AddressWidget.h"
 #include "../core/InputInterpreter.h"
+#include "../modules/widgets/address/AddressWidget.h"
 
 #include "ui_OpenAddressDialog.h"
 

@@ -18,10 +18,10 @@
 **************************************************************************/
 
 #include "MenuButtonWidget.h"
-#include "../Menu.h"
-#include "../ToolBarWidget.h"
-#include "../../core/SessionsManager.h"
-#include "../../core/ThemesManager.h"
+#include "../../../core/SessionsManager.h"
+#include "../../../core/ThemesManager.h"
+#include "../../../ui/Menu.h"
+#include "../../../ui/ToolBarWidget.h"
 
 #include <QtCore/QFile>
 #include <QtCore/QJsonDocument>

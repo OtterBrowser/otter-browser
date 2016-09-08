@@ -19,8 +19,8 @@
 **************************************************************************/
 
 #include "PanelChooserWidget.h"
-#include "../SidebarWidget.h"
-#include "../../core/SettingsManager.h"
+#include "../../../core/SettingsManager.h"
+#include "../../../ui/SidebarWidget.h"
 
 #include <QtWidgets/QMenu>
 
