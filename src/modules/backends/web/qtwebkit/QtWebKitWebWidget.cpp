@@ -1647,6 +1647,8 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			{
 				if (!m_inspector)
 				{
+					m_page->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
+
 					m_inspector = new QtWebKitInspector(this);
 					m_inspector->setPage(m_webView->page());
 

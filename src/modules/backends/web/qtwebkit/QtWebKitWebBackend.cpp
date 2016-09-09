@@ -87,7 +87,6 @@ void QtWebKitWebBackend::optionChanged(int identifier)
 
 	QWebSettings *globalSettings(QWebSettings::globalSettings());
 	globalSettings->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
-	globalSettings->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
 	globalSettings->setAttribute(QWebSettings::AutoLoadImages, (SettingsManager::getValue(SettingsManager::Browser_EnableImagesOption).toString() != QLatin1String("onlyCached")));
 	globalSettings->setAttribute(QWebSettings::PluginsEnabled, SettingsManager::getValue(SettingsManager::Browser_EnablePluginsOption).toString() != QLatin1String("disabled"));
 	globalSettings->setAttribute(QWebSettings::JavaEnabled, SettingsManager::getValue(SettingsManager::Browser_EnableJavaOption).toBool());
@@ -180,7 +179,6 @@ WebWidget* QtWebKitWebBackend::createWidget(bool isPrivate, ContentsWidget *pare
 
 		QWebSettings::setMaximumPagesInCache(SettingsManager::getValue(SettingsManager::Cache_PagesInMemoryLimitOption).toInt());
 		QWebSettings::globalSettings()->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
-		QWebSettings::globalSettings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
 
 		optionChanged(SettingsManager::Browser_EnableFullScreenOption);
 

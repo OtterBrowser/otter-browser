@@ -315,6 +315,8 @@ void QtWebKitPage::triggerAction(QWebPage::WebAction action, bool checked)
 		QVariantMap parameters;
 		parameters[QLatin1String("isChecked")] = true;
 
+		settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
+
 		m_widget->triggerAction(ActionsManager::InspectPageAction, parameters);
 	}
 
