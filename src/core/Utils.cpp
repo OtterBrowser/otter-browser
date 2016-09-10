@@ -222,7 +222,7 @@ QString formatDateTime(const QDateTime &dateTime, QString format)
 {
 	if (format.isEmpty())
 	{
-		format = SettingsManager::getValue(SettingsManager::Interface_DateTimeFormat).toString();
+		format = SettingsManager::getValue(SettingsManager::Interface_DateTimeFormatOption).toString();
 	}
 
 	return (format.isEmpty() ? QLocale().toString(dateTime, QLocale::ShortFormat) : QLocale().toString(dateTime, format));
