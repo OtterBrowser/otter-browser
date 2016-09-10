@@ -218,8 +218,13 @@ QString formatTime(int value)
 	return time.toString(QLatin1String("mm:ss"));
 }
 
-QString formatDateTime(const QDateTime &dateTime, const QString &format)
+QString formatDateTime(const QDateTime &dateTime, QString format)
 {
+	if (format.isEmpty())
+	{
+		format = SettingsManager::getValue(SettingsManager::Interface_DateTimeFormat).toString();
+	}
+
 	return (format.isEmpty() ? QLocale().toString(dateTime, QLocale::ShortFormat) : QLocale().toString(dateTime, format));
 }
 
