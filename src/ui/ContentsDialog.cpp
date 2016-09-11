@@ -91,6 +91,7 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 		QLabel *textLabel(new QLabel(text, this));
 		textLabel->setTextFormat(Qt::PlainText);
 		textLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
+		textLabel->setWordWrap(true);
 
 		m_contentsLayout->addWidget(textLabel);
 	}
