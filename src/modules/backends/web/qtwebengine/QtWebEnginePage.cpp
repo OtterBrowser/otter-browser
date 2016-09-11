@@ -426,6 +426,7 @@ bool QtWebEnginePage::javaScriptPrompt(const QUrl &url, const QString &message, 
 	label->setTextFormat(Qt::PlainText);
 
 	QVBoxLayout *layout(new QVBoxLayout(widget));
+	layout->setContentsMargins(0, 0, 0, 0);
 	layout->addWidget(label);
 	layout->addWidget(lineEdit);
 
