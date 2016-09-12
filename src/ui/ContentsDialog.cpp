@@ -21,6 +21,7 @@
 #include "../core/ThemesManager.h"
 
 #include <QtGui/QMouseEvent>
+#include <QtGui/QStyle>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QScrollBar>
 
@@ -30,8 +31,9 @@ namespace Otter
 ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QString &text, const QString &details, QDialogButtonBox::StandardButtons buttons, QWidget *payload, QWidget *parent) : QFrame(parent),
 	m_contentsLayout(new QBoxLayout(QBoxLayout::TopToBottom)),
 	m_headerWidget(new QWidget(this)),
-	m_payload(payload),
+	m_payloadWidget(payload),
 	m_closeLabel(new QLabel(m_headerWidget)),
+	m_detailsLabel(NULL),
 	m_scrollArea(NULL),
 	m_checkBox(NULL),
 	m_buttonBox(NULL),
@@ -46,6 +48,7 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 	setStyleSheet(QStringLiteral("#contentsDialog {border:1px solid #CCC;border-radius:4px;background:%1;}").arg(palette().color(QPalette::Window).name()));
 
 	m_headerWidget->setAutoFillBackground(true);
+	m_headerWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	m_headerWidget->setObjectName(QLatin1String("headerWidget"));
 	m_headerWidget->setStyleSheet(QStringLiteral("#headerWidget {border-bottom:1px solid #CCC;border-top-left-radius:4px;border-top-right-radius:4px;background:%1;}").arg(palette().color(QPalette::Window).darker(50).name()));
 
@@ -77,12 +80,6 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 	headerLayout->addWidget(titleLabel, 1);
 	headerLayout->addWidget(m_closeLabel);
 
-	if (!payload || buttons != QDialogButtonBox::NoButton)
-	{
-		m_contentsLayout->setContentsMargins(9, 9, 9, 9);
-		m_contentsLayout->setSpacing(6);
-	}
-
 	mainLayout->addWidget(m_headerWidget);
 	mainLayout->addLayout(m_contentsLayout);
 
@@ -93,13 +90,27 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 		textLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
 		textLabel->setWordWrap(true);
 
-		m_contentsLayout->addWidget(textLabel);
+		if (m_payloadWidget)
+		{
+			m_contentsLayout->addWidget(textLabel);
+		}
+		else
+		{
+			m_payloadWidget = textLabel;
+		}
 	}
 
-	if (payload || !details.isEmpty())
+	if (!m_payloadWidget || buttons != QDialogButtonBox::NoButton)
+	{
+		m_contentsLayout->setContentsMargins(9, 9, 9, 9);
+		m_contentsLayout->setSpacing(6);
+	}
+
+	if (m_payloadWidget || !details.isEmpty())
 	{
 		m_scrollArea = new QScrollArea(this);
-		m_scrollArea->setWidgetResizable(true);
+		m_scrollArea->setAlignment(Qt::AlignTop);
+		m_scrollArea->setFrameStyle(QFrame::NoFrame);
 
 		QWidget *scrollWidget(new QWidget(m_scrollArea));
 		scrollWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -107,28 +118,34 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 		QBoxLayout *scrollLayout(new QBoxLayout(QBoxLayout::TopToBottom, scrollWidget));
 		scrollLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
 		scrollLayout->setContentsMargins(3, 3, 3, 3);
+		scrollLayout->setSpacing(3);
 
 		m_scrollArea->setWidget(scrollWidget);
 
 		if (!details.isEmpty())
 		{
-			QLabel *label(new QLabel(details, scrollWidget));
-			label->setTextFormat(Qt::PlainText);
-			label->setTextInteractionFlags(Qt::TextBrowserInteraction);
+			m_detailsLabel = new QLabel(details, scrollWidget);
+			m_detailsLabel->setTextFormat(Qt::PlainText);
+			m_detailsLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
 
-			scrollLayout->addWidget(label);
+			scrollLayout->addWidget(m_detailsLabel);
 		}
 
-		if (payload)
+		if (m_payloadWidget)
 		{
-			payload->setParent(this);
-			payload->setObjectName(QLatin1String("payloadWidget"));
-			payload->setStyleSheet(QLatin1String("#payloadWidget {border-radius:4px;}"));
-			payload->installEventFilter(this);
+			m_payloadWidget->setParent(this);
+			m_payloadWidget->setObjectName(QLatin1String("payloadWidget"));
+			m_payloadWidget->setStyleSheet(QLatin1String("#payloadWidget {border-radius:4px;}"));
+			m_payloadWidget->installEventFilter(this);
 
-			scrollLayout->addWidget(payload);
+			if (m_payloadWidget->sizeHint().width() < 250)
+			{
+				m_payloadWidget->setMinimumWidth(250);
+			}
 
-			QDialog *dialog(qobject_cast<QDialog*>(payload));
+			scrollLayout->addWidget(m_payloadWidget);
+
+			QDialog *dialog(qobject_cast<QDialog*>(m_payloadWidget));
 
 			if (dialog)
 			{
@@ -153,13 +170,38 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 		connect(m_buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(clicked(QAbstractButton*)));
 	}
 
-	adjustSize();
 	setContextMenuPolicy(Qt::PreventContextMenu);
 	setFocusPolicy(Qt::StrongFocus);
 	setWindowFlags(Qt::Widget);
 	setWindowTitle(title);
 	setLayout(mainLayout);
 	installEventFilter(this);
+}
+
+void ContentsDialog::showEvent(QShowEvent *event)
+{
+	if (m_scrollArea)
+	{
+		m_scrollArea->setMaximumHeight(6 + style()->pixelMetric(QStyle::PM_ScrollBarExtent) + (m_payloadWidget ? (m_payloadWidget->sizeHint().height() + 3) : 0) + (m_detailsLabel ? (m_detailsLabel->sizeHint().height() + 3) : 0));
+	}
+
+	adjustSize();
+	resize(sizeHint());
+
+	if (parentWidget())
+	{
+		if (height() >= parentWidget()->height())
+		{
+			resize(width(), qMax(100, parentWidget()->height() - 20));
+		}
+
+		if (width() >= parentWidget()->width())
+		{
+			resize(qMax(100, parentWidget()->width() - 20), height());
+		}
+	}
+
+	QFrame::showEvent(event);
 }
 
 void ContentsDialog::closeEvent(QCloseEvent *event)
@@ -176,34 +218,6 @@ void ContentsDialog::closeEvent(QCloseEvent *event)
 	emit finished();
 
 	event->accept();
-}
-
-void ContentsDialog::resizeEvent(QResizeEvent *event)
-{
-	QWidget::resizeEvent(event);
-
-	if (m_scrollArea)
-	{
-		m_scrollArea->setFrameShape(((m_scrollArea->horizontalScrollBar() && m_scrollArea->horizontalScrollBar()->isVisible()) || (m_scrollArea->verticalScrollBar() && m_scrollArea->verticalScrollBar()->isVisible())) ? QFrame::StyledPanel : QFrame::NoFrame);
-	}
-}
-
-void ContentsDialog::adjustSize()
-{
-	QWidget::adjustSize();
-
-	if (parentWidget())
-	{
-		if (height() >= parentWidget()->height())
-		{
-			resize(width(), qMax(100, parentWidget()->height() - 20));
-		}
-
-		if (width() >= parentWidget()->width())
-		{
-			resize(qMax(100, parentWidget()->width() - 20), height());
-		}
-	}
 }
 
 void ContentsDialog::clicked(QAbstractButton *button)

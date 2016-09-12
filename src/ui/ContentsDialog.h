@@ -37,15 +37,14 @@ class ContentsDialog : public QFrame
 public:
 	explicit ContentsDialog(const QIcon &icon, const QString &title, const QString &text, const QString &details, QDialogButtonBox::StandardButtons buttons, QWidget *payload, QWidget *parent);
 
-	void adjustSize();
 	void setCheckBox(const QString &text, bool state);
 	bool getCheckBoxState() const;
 	bool isAccepted() const;
 	bool eventFilter(QObject *object, QEvent *event);
 
 protected:
+	void showEvent(QShowEvent *event);
 	void closeEvent(QCloseEvent *event);
-	void resizeEvent(QResizeEvent *event);
 
 protected slots:
 	void clicked(QAbstractButton *button);
@@ -54,8 +53,9 @@ protected slots:
 private:
 	QBoxLayout *m_contentsLayout;
 	QWidget *m_headerWidget;
-	QWidget *m_payload;
+	QWidget *m_payloadWidget;
 	QLabel *m_closeLabel;
+	QLabel *m_detailsLabel;
 	QScrollArea *m_scrollArea;
 	QCheckBox *m_checkBox;
 	QDialogButtonBox *m_buttonBox;
