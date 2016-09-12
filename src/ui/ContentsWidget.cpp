@@ -82,6 +82,7 @@ void ContentsWidget::resizeEvent(QResizeEvent *event)
 		{
 			if (m_dialogs.at(i))
 			{
+				m_dialogs.at(i)->updateSize();
 				m_dialogs.at(i)->raise();
 				m_dialogs.at(i)->move(geometry().center() - QRect(QPoint(0, 0), m_dialogs.at(i)->size()).center());
 			}

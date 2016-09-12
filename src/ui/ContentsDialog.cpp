@@ -185,21 +185,7 @@ void ContentsDialog::showEvent(QShowEvent *event)
 		m_scrollArea->setMaximumHeight(6 + style()->pixelMetric(QStyle::PM_ScrollBarExtent) + (m_payloadWidget ? (m_payloadWidget->sizeHint().height() + 3) : 0) + (m_detailsLabel ? (m_detailsLabel->sizeHint().height() + 3) : 0));
 	}
 
-	adjustSize();
-	resize(sizeHint());
-
-	if (parentWidget())
-	{
-		if (height() >= parentWidget()->height())
-		{
-			resize(width(), qMax(100, parentWidget()->height() - 20));
-		}
-
-		if (width() >= parentWidget()->width())
-		{
-			resize(qMax(100, parentWidget()->width() - 20), height());
-		}
-	}
+	updateSize();
 
 	QFrame::showEvent(event);
 }
@@ -246,6 +232,25 @@ void ContentsDialog::finished(int result)
 	m_isAccepted = (result == QDialog::Accepted);
 
 	close();
+}
+
+void ContentsDialog::updateSize()
+{
+	adjustSize();
+	resize(sizeHint());
+
+	if (parentWidget())
+	{
+		if (height() >= parentWidget()->height())
+		{
+			resize(width(), qMax(100, parentWidget()->height() - 20));
+		}
+
+		if (width() >= parentWidget()->width())
+		{
+			resize(qMax(100, parentWidget()->width() - 20), height());
+		}
+	}
 }
 
 void ContentsDialog::setCheckBox(const QString &text, bool state)

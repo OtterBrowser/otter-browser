@@ -37,6 +37,7 @@ class ContentsDialog : public QFrame
 public:
 	explicit ContentsDialog(const QIcon &icon, const QString &title, const QString &text, const QString &details, QDialogButtonBox::StandardButtons buttons, QWidget *payload, QWidget *parent);
 
+	void updateSize();
 	void setCheckBox(const QString &text, bool state);
 	bool getCheckBoxState() const;
 	bool isAccepted() const;
