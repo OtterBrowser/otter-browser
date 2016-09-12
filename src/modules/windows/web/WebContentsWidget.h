@@ -148,9 +148,10 @@ private:
 	QPoint m_lastCursorPosition;
 	QList<PermissionBarWidget*> m_permissionBarWidgets;
 	ScrollMode m_scrollMode;
+	int m_createStartPageTimer;
+	int m_deleteStartPageTimer;
 	int m_quickFindTimer;
 	int m_scrollTimer;
-	int m_startPageTimer;
 	bool m_isTabPreferencesMenuVisible;
 	bool m_showStartPage;
 	bool m_ignoreRelease;

@@ -38,6 +38,7 @@
 #include "../../../ui/WebsiteInformationDialog.h"
 
 #include <QtGui/QClipboard>
+#include <QtGui/QDrag>
 #include <QtGui/QGuiApplication>
 #include <QtGui/QMouseEvent>
 #include <QtWidgets/QApplication>
@@ -60,9 +61,10 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	m_passwordBarWidget(NULL),
 	m_popupsBarWidget(NULL),
 	m_scrollMode(NoScroll),
+	m_createStartPageTimer(0),
+	m_deleteStartPageTimer(0),
 	m_quickFindTimer(0),
 	m_scrollTimer(0),
-	m_startPageTimer(0),
 	m_isTabPreferencesMenuVisible(false),
 	m_showStartPage(SettingsManager::getValue(SettingsManager::StartPage_EnableStartPageOption).toBool()),
 	m_ignoreRelease(false)
@@ -78,7 +80,24 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 
 void WebContentsWidget::timerEvent(QTimerEvent *event)
 {
-	if (event->timerId() == m_quickFindTimer && m_searchBarWidget)
+	if (event->timerId() == m_createStartPageTimer)
+	{
+		killTimer(m_createStartPageTimer);
+
+		m_createStartPageTimer = 0;
+
+		handleUrlChange(m_webWidget->getRequestedUrl());
+	}
+	else if (event->timerId() == m_deleteStartPageTimer && m_startPageWidget && m_startPageWidget->findChildren<QDrag*>().isEmpty())
+	{
+		killTimer(m_deleteStartPageTimer);
+
+		m_deleteStartPageTimer = 0;
+
+		m_startPageWidget->deleteLater();
+		m_startPageWidget = NULL;
+	}
+	else if (event->timerId() == m_quickFindTimer && m_searchBarWidget)
 	{
 		killTimer(m_quickFindTimer);
 
@@ -152,14 +171,6 @@ void WebContentsWidget::timerEvent(QTimerEvent *event)
 		scrollContents(scrollDelta);
 
 		QApplication::changeOverrideCursor(m_scrollCursors[directions]);
-	}
-	else if (event->timerId() == m_startPageTimer)
-	{
-		killTimer(m_startPageTimer);
-
-		m_startPageTimer = 0;
-
-		handleUrlChange(m_webWidget->getRequestedUrl());
 	}
 
 	ContentsWidget::timerEvent(event);
@@ -660,7 +671,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 		default:
 			if (!parameters.contains(QLatin1String("isBounced")))
 			{
-				if (m_startPageWidget)
+				if (m_startPageWidget && m_deleteStartPageTimer == 0)
 				{
 					switch (identifier)
 					{
@@ -745,7 +756,7 @@ void WebContentsWidget::closePopupsBar()
 
 void WebContentsWidget::scrollContents(const QPoint &delta)
 {
-	if (m_startPageWidget)
+	if (m_startPageWidget && m_deleteStartPageTimer == 0)
 	{
 		m_startPageWidget->scrollContents(delta);
 	}
@@ -769,17 +780,27 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 
 	const bool showStartPage((url.isEmpty() && m_showStartPage) || url == QUrl(QLatin1String("about:start")));
 
-	if (showStartPage && !m_startPageWidget)
+	if (showStartPage)
 	{
-		m_startPageWidget = new StartPageWidget(m_window, m_webWidget);
-		m_startPageWidget->setGeometry(m_webWidget->geometry());
+		if (!m_startPageWidget)
+		{
+			m_startPageWidget = new StartPageWidget(m_window, m_webWidget);
+			m_startPageWidget->setGeometry(m_webWidget->geometry());
+		}
+		else if (m_deleteStartPageTimer != 0)
+		{
+			killTimer(m_deleteStartPageTimer);
+
+			m_deleteStartPageTimer = 0;
+		}
+
 		m_startPageWidget->show();
 	}
-	else if (!showStartPage && m_startPageWidget)
+	else if (!showStartPage && m_startPageWidget && m_deleteStartPageTimer == 0)
 	{
 		m_startPageWidget->hide();
-		m_startPageWidget->deleteLater();
-		m_startPageWidget = NULL;
+
+		m_deleteStartPageTimer = startTimer(250);
 	}
 }
 
@@ -1030,7 +1051,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 
 		if (m_window)
 		{
-			m_startPageTimer = startTimer(50);
+			m_createStartPageTimer = startTimer(50);
 		}
 	}
 
