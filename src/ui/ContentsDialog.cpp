@@ -21,9 +21,9 @@
 #include "../core/ThemesManager.h"
 
 #include <QtGui/QMouseEvent>
-#include <QtGui/QStyle>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QScrollBar>
+#include <QtWidgets/QStyle>
 
 namespace Otter
 {
