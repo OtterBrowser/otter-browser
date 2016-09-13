@@ -258,7 +258,7 @@ public:
 		OptionFlags flags;
 		int identifier;
 
-		OptionDefinition() : flags(IsEnabledFlag | IsVisibleFlag), identifier(-1) {}
+		OptionDefinition() : type(UnknownType), flags(IsEnabledFlag | IsVisibleFlag), identifier(-1) {}
 	};
 
 	static void createInstance(const QString &path, QObject *parent = NULL);
