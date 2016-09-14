@@ -1105,13 +1105,13 @@ void WebWidget::setOptions(const QHash<int, QVariant> &options)
 	m_options = options;
 }
 
-void WebWidget::setRequestedUrl(const QUrl &url, bool typed, bool onlyUpdate)
+void WebWidget::setRequestedUrl(const QUrl &url, bool isTyped, bool onlyUpdate)
 {
 	m_requestedUrl = url;
 
 	if (!onlyUpdate)
 	{
-		setUrl(url, typed);
+		setUrl(url, isTyped);
 	}
 }
 

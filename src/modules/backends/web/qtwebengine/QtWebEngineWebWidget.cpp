@@ -1278,7 +1278,7 @@ void QtWebEngineWebWidget::setZoom(int zoom)
 	}
 }
 
-void QtWebEngineWebWidget::setUrl(const QUrl &url, bool typed)
+void QtWebEngineWebWidget::setUrl(const QUrl &url, bool isTyped)
 {
 	if (url.scheme() == QLatin1String("javascript"))
 	{
@@ -1294,7 +1294,7 @@ void QtWebEngineWebWidget::setUrl(const QUrl &url, bool typed)
 		return;
 	}
 
-	m_isTyped = typed;
+	m_isTyped = isTyped;
 
 	QUrl targetUrl(url);
 

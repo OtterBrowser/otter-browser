@@ -220,8 +220,8 @@ public slots:
 	virtual void setScrollPosition(const QPoint &position) = 0;
 	virtual void setHistory(const WindowHistoryInformation &history) = 0;
 	virtual void setZoom(int zoom) = 0;
-	virtual void setUrl(const QUrl &url, bool typed = true) = 0;
-	void setRequestedUrl(const QUrl &url, bool typed = true, bool onlyUpdate = false);
+	virtual void setUrl(const QUrl &url, bool isTyped = true) = 0;
+	void setRequestedUrl(const QUrl &url, bool isTyped = true, bool onlyUpdate = false);
 
 protected:
 	explicit WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent = NULL);

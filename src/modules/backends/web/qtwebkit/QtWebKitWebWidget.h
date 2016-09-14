@@ -96,7 +96,7 @@ public slots:
 	void setScrollPosition(const QPoint &position);
 	void setHistory(const WindowHistoryInformation &history);
 	void setZoom(int zoom);
-	void setUrl(const QUrl &url, bool typed = true);
+	void setUrl(const QUrl &url, bool isTyped = true);
 
 protected:
 	enum HistoryEntryData
