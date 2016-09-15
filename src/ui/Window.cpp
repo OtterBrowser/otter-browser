@@ -377,7 +377,7 @@ void Window::setSearchEngine(const QString &searchEngine)
 	emit searchEngineChanged(searchEngine);
 }
 
-void Window::setUrl(const QUrl &url, bool typed)
+void Window::setUrl(const QUrl &url, bool isTyped)
 {
 	ContentsWidget *newWidget(NULL);
 
@@ -445,7 +445,7 @@ void Window::setUrl(const QUrl &url, bool typed)
 	{
 		if (!isRestoring)
 		{
-			m_contentsWidget->setUrl(url, typed);
+			m_contentsWidget->setUrl(url, isTyped);
 		}
 
 		if (!Utils::isUrlEmpty(getUrl()) || m_contentsWidget->getLoadingState() == WindowsManager::OngoingLoadingState)
