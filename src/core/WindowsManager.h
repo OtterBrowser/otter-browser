@@ -137,7 +137,6 @@ private:
 signals:
 	void requestedAddBookmark(const QUrl &url, const QString &title, const QString &description);
 	void requestedEditBookmark(const QUrl &url);
-	void requestedNewWindow(bool isPrivate, bool inBackground, const QUrl &url);
 	void canZoomChanged(bool can);
 	void zoomChanged(int zoom);
 	void windowAdded(qint64 identifier);

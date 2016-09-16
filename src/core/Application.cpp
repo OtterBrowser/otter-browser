@@ -78,6 +78,7 @@ namespace Otter
 {
 
 Application* Application::m_instance = NULL;
+QList<MainWindow*> Application::m_windows;
 
 Application::Application(int &argc, char **argv) : QApplication(argc, argv),
 	m_platformIntegration(NULL),
@@ -461,13 +462,23 @@ void Application::close()
 	}
 }
 
+void Application::openWindow(bool isPrivate, bool inBackground, const QUrl &url)
+{
+	MainWindow *window(createWindow((isPrivate ? PrivateFlag : NoFlags), inBackground));
+
+	if (url.isValid() && window)
+	{
+		window->openUrl(url.toString());
+	}
+}
+
 void Application::removeWindow(MainWindow *window)
 {
 	m_windows.removeAll(window);
 
 	window->deleteLater();
 
-	emit windowRemoved(window);
+	emit m_instance->windowRemoved(window);
 }
 
 void Application::showNotification(Notification *notification)
@@ -645,16 +656,6 @@ void Application::showUpdateDetails()
 	}
 }
 
-void Application::newWindow(bool isPrivate, bool inBackground, const QUrl &url)
-{
-	MainWindow *window(createWindow((isPrivate ? PrivateFlag : NoFlags), inBackground));
-
-	if (url.isValid() && window)
-	{
-		window->openUrl(url.toString());
-	}
-}
-
 void Application::setHidden(bool hidden)
 {
 	if (hidden == m_isHidden)
@@ -725,9 +726,9 @@ MainWindow* Application::createWindow(MainWindowFlags flags, bool inBackground, 
 		window->setAttribute(Qt::WA_ShowWithoutActivating, false);
 	}
 
-	connect(window, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SLOT(newWindow(bool,bool,QUrl)));
+	connect(window, SIGNAL(requestedNewWindow(bool,bool,QUrl)), m_instance, SLOT(openWindow(bool,bool,QUrl)));
 
-	emit windowAdded(window);
+	emit m_instance->windowAdded(window);
 
 	return window;
 }

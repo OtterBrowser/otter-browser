@@ -289,7 +289,7 @@ void WindowsManager::open(const QUrl &url, OpenHints hints)
 
 	if (hints.testFlag(NewWindowOpen))
 	{
-		emit requestedNewWindow(hints.testFlag(PrivateOpen), hints.testFlag(BackgroundOpen), url);
+		Application::openWindow(hints.testFlag(PrivateOpen), hints.testFlag(BackgroundOpen), url);
 	}
 	else if (hints.testFlag(CurrentTabOpen) && window && window->getType() == QLatin1String("web"))
 	{

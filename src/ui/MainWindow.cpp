@@ -171,7 +171,6 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(transferStarted()));
 	connect(m_windowsManager, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SLOT(addBookmark(QUrl,QString,QString)));
 	connect(m_windowsManager, SIGNAL(requestedEditBookmark(QUrl)), this, SLOT(editBookmark(QUrl)));
-	connect(m_windowsManager, SIGNAL(requestedNewWindow(bool,bool,QUrl)), this, SIGNAL(requestedNewWindow(bool,bool,QUrl)));
 	connect(m_windowsManager, SIGNAL(windowTitleChanged(QString)), this, SLOT(updateWindowTitle(QString)));
 	connect(m_ui->consoleDockWidget, SIGNAL(visibilityChanged(bool)), getAction(ActionsManager::ShowErrorConsoleAction), SLOT(setChecked(bool)));
 
@@ -269,7 +268,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 	m_windowsManager->closeAll();
 
-	Application::getInstance()->removeWindow(this);
+	Application::removeWindow(this);
 
 	event->accept();
 }
@@ -415,11 +414,11 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 	switch (identifier)
 	{
 		case ActionsManager::NewWindowAction:
-			emit requestedNewWindow(false, false, QUrl());
+			emit Application::openWindow();
 
 			break;
 		case ActionsManager::NewWindowPrivateAction:
-			emit requestedNewWindow(true, false, QUrl());
+			emit Application::openWindow(true);
 
 			break;
 		case ActionsManager::OpenAction:

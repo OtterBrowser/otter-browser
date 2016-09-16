@@ -55,10 +55,11 @@ public:
 	explicit Application(int &argc, char **argv);
 	~Application();
 
-	void removeWindow(MainWindow* window);
+	static void openWindow(bool isPrivate = false, bool inBackground = false, const QUrl &url = QUrl());
+	static void removeWindow(MainWindow* window);
 	void showNotification(Notification *notification);
 	void setLocale(const QString &locale);
-	MainWindow* createWindow(MainWindowFlags flags = NoFlags, bool inBackground = false, const SessionMainWindow &windows = SessionMainWindow());
+	static MainWindow* createWindow(MainWindowFlags flags = NoFlags, bool inBackground = false, const SessionMainWindow &windows = SessionMainWindow());
 	static Application* getInstance();
 	MainWindow* getWindow();
 	TrayIcon* getTrayIcon();
@@ -75,7 +76,6 @@ public:
 
 public slots:
 	void close();
-	void newWindow(bool isPrivate = false, bool inBackground = false, const QUrl &url = QUrl());
 	void setHidden(bool hidden);
 
 protected slots:
@@ -95,11 +95,11 @@ private:
 	QLocalServer *m_localServer;
 	QString m_localePath;
 	QCommandLineParser m_commandLineParser;
-	QList<MainWindow*> m_windows;
 	bool m_isHidden;
 	bool m_isUpdating;
 
 	static Application *m_instance;
+	static QList<MainWindow*> m_windows;
 
 signals:
 	void windowAdded(MainWindow *window);
