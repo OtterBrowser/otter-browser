@@ -34,6 +34,23 @@ ProxyModel::ProxyModel(QStandardItemModel *model, const QList<QPair<QString, int
 	setSourceModel(model);
 }
 
+QMimeData* ProxyModel::mimeData(const QModelIndexList &indexes) const
+{
+	QModelIndexList sourceIndexes;
+
+	for (int i = 0; i < indexes.count(); ++i)
+	{
+		QModelIndex index(mapToSource(indexes.at(i).sibling(indexes.at(i).row(), 0)));
+
+		if (!sourceIndexes.contains(index))
+		{
+			sourceIndexes.append(index);
+		}
+	}
+
+	return m_model->mimeData(sourceIndexes);
+}
+
 QVariant ProxyModel::data(const QModelIndex &index, int role) const
 {
 	if (role == Qt::DisplayRole && index.column() < m_mapping.count())

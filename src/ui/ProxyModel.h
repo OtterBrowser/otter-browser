@@ -34,6 +34,7 @@ class ProxyModel : public QIdentityProxyModel
 public:
 	explicit ProxyModel(QStandardItemModel *model, const QList<QPair<QString, int> > &mapping, QObject *parent = NULL);
 
+	QMimeData* mimeData(const QModelIndexList &indexes) const;
 	QVariant data(const QModelIndex &index, int role) const;
 	QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 	QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
