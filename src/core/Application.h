@@ -57,18 +57,18 @@ public:
 
 	static void openWindow(bool isPrivate = false, bool inBackground = false, const QUrl &url = QUrl());
 	static void removeWindow(MainWindow* window);
-	void showNotification(Notification *notification);
-	void setLocale(const QString &locale);
+	static void showNotification(Notification *notification);
+	static void setLocale(const QString &locale);
 	static MainWindow* createWindow(MainWindowFlags flags = NoFlags, bool inBackground = false, const SessionMainWindow &windows = SessionMainWindow());
 	static Application* getInstance();
-	MainWindow* getWindow();
-	TrayIcon* getTrayIcon();
-	PlatformIntegration* getPlatformIntegration();
+	static MainWindow* getWindow();
+	static TrayIcon* getTrayIcon();
+	static PlatformIntegration* getPlatformIntegration();
 	QCommandLineParser* getCommandLineParser();
 	static QString createReport();
-	QString getFullVersion() const;
-	QString getLocalePath() const;
-	QList<MainWindow*> getWindows() const;
+	static QString getFullVersion();
+	static QString getLocalePath();
+	static QList<MainWindow*> getWindows();
 	bool canClose();
 	bool isHidden() const;
 	bool isUpdating() const;
@@ -88,18 +88,17 @@ protected slots:
 	void showUpdateDetails();
 
 private:
-	PlatformIntegration *m_platformIntegration;
-	TrayIcon *m_trayIcon;
-	QTranslator *m_qtTranslator;
-	QTranslator *m_applicationTranslator;
-	QLocalServer *m_localServer;
-	QString m_localePath;
-	QCommandLineParser m_commandLineParser;
-	bool m_isHidden;
-	bool m_isUpdating;
-
 	static Application *m_instance;
+	static PlatformIntegration *m_platformIntegration;
+	static TrayIcon *m_trayIcon;
+	static QTranslator *m_qtTranslator;
+	static QTranslator *m_applicationTranslator;
+	static QLocalServer *m_localServer;
+	static QString m_localePath;
+	static QCommandLineParser m_commandLineParser;
 	static QList<MainWindow*> m_windows;
+	static bool m_isHidden;
+	static bool m_isUpdating;
 
 signals:
 	void windowAdded(MainWindow *window);

@@ -34,7 +34,7 @@ LocaleDialog::LocaleDialog(QWidget *parent) : Dialog(parent),
 {
 	m_ui->setupUi(this);
 
-	const QList<QFileInfo> locales(QDir(Application::getInstance()->getLocalePath()).entryInfoList(QStringList(QLatin1String("*.qm")), QDir::Files, QDir::Name));
+	const QList<QFileInfo> locales(QDir(Application::getLocalePath()).entryInfoList(QStringList(QLatin1String("*.qm")), QDir::Files, QDir::Name));
 	QList<QPair<QString, QString> > entries;
 
 	for (int i = 0; i < locales.count(); ++i)
@@ -119,7 +119,7 @@ void LocaleDialog::save()
 
 	SettingsManager::setValue(SettingsManager::Browser_LocaleOption, locale);
 
-	Application::getInstance()->setLocale(locale);
+	Application::setLocale(locale);
 }
 
 }

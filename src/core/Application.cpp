@@ -78,16 +78,18 @@ namespace Otter
 {
 
 Application* Application::m_instance = NULL;
+PlatformIntegration* Application::m_platformIntegration = NULL;
+TrayIcon* Application::m_trayIcon = NULL;
+QTranslator* Application::m_qtTranslator = NULL;
+QTranslator* Application::m_applicationTranslator = NULL;
+QLocalServer* Application::m_localServer = NULL;
+QString Application::m_localePath;
+QCommandLineParser Application::m_commandLineParser;
 QList<MainWindow*> Application::m_windows;
+bool Application::m_isHidden = false;
+bool Application::m_isUpdating = false;
 
-Application::Application(int &argc, char **argv) : QApplication(argc, argv),
-	m_platformIntegration(NULL),
-	m_trayIcon(NULL),
-	m_qtTranslator(NULL),
-	m_applicationTranslator(NULL),
-	m_localServer(NULL),
-	m_isHidden(false),
-	m_isUpdating(false)
+Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 {
 	setApplicationName(QLatin1String("Otter"));
 	setApplicationDisplayName(QLatin1String("Otter Browser"));
@@ -692,8 +694,8 @@ void Application::setLocale(const QString &locale)
 {
 	if (!m_qtTranslator)
 	{
-		m_qtTranslator = new QTranslator(this);
-		m_applicationTranslator = new QTranslator(this);
+		m_qtTranslator = new QTranslator(m_instance);
+		m_applicationTranslator = new QTranslator(m_instance);
 
 		installTranslator(m_qtTranslator);
 		installTranslator(m_applicationTranslator);
@@ -725,8 +727,6 @@ MainWindow* Application::createWindow(MainWindowFlags flags, bool inBackground, 
 		window->lower();
 		window->setAttribute(Qt::WA_ShowWithoutActivating, false);
 	}
-
-	connect(window, SIGNAL(requestedNewWindow(bool,bool,QUrl)), m_instance, SLOT(openWindow(bool,bool,QUrl)));
 
 	emit m_instance->windowAdded(window);
 
@@ -881,17 +881,17 @@ QString Application::createReport()
 	return report.remove(QRegularExpression(QLatin1String(" +$"), QRegularExpression::MultilineOption));
 }
 
-QString Application::getFullVersion() const
+QString Application::getFullVersion()
 {
 	return QStringLiteral("%1%2").arg(OTTER_VERSION_MAIN).arg(OTTER_VERSION_CONTEXT);
 }
 
-QString Application::getLocalePath() const
+QString Application::getLocalePath()
 {
 	return m_localePath;
 }
 
-QList<MainWindow*> Application::getWindows() const
+QList<MainWindow*> Application::getWindows()
 {
 	return m_windows;
 }

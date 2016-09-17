@@ -126,7 +126,6 @@ private:
 	Ui::MainWindow *m_ui;
 
 signals:
-	void requestedNewWindow(bool isPrivate = false, bool inBackground = false, const QUrl &url = QUrl());
 	void requestedToolBarsActivation(Qt::ToolBarAreas areas);
 	void controlsHiddenChanged(bool hidden);
 	void statusMessageChanged(const QString &message);

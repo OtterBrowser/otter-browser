@@ -157,7 +157,7 @@ QString Updater::getScriptPath()
 
 bool Updater::installUpdate()
 {
-	return Application::getInstance()->getPlatformIntegration()->installUpdate();
+	return Application::getPlatformIntegration()->installUpdate();
 }
 
 bool Updater::isReadyToInstall(QString path)

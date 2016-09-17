@@ -97,7 +97,7 @@ void WindowsPlatformIntegration::updateTaskbarButtons()
 		}
 	}
 
-	const QList<MainWindow*> windows(Application::getInstance()->getWindows());
+	const QList<MainWindow*> windows(Application::getWindows());
 
 	for (int i = 0; i < windows.count(); ++i)
 	{
@@ -126,7 +126,7 @@ void WindowsPlatformIntegration::updateTaskbarButtons()
 
 void WindowsPlatformIntegration::showNotification(Notification *notification)
 {
-	TrayIcon *trayIcon(Application::getInstance()->getTrayIcon());
+	TrayIcon *trayIcon(Application::getTrayIcon());
 
 	if (trayIcon && QSystemTrayIcon::supportsMessages())
 	{

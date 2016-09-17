@@ -169,7 +169,7 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::PrintAction:
 			{
 				QPrinter printer;
-				printer.setCreator(QStringLiteral("Otter Browser %1").arg(Application::getInstance()->getFullVersion()));
+				printer.setCreator(QStringLiteral("Otter Browser %1").arg(Application::getFullVersion()));
 
 				QPrintDialog printDialog(&printer, this);
 				printDialog.setWindowTitle(tr("Print Page"));
@@ -186,7 +186,7 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 		case ActionsManager::PrintPreviewAction:
 			{
 				QPrintPreviewDialog printPreviewDialog(this);
-				printPreviewDialog.printer()->setCreator(QStringLiteral("Otter Browser %1").arg(Application::getInstance()->getFullVersion()));
+				printPreviewDialog.printer()->setCreator(QStringLiteral("Otter Browser %1").arg(Application::getFullVersion()));
 				printPreviewDialog.setWindowFlags(printPreviewDialog.windowFlags() | Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint);
 				printPreviewDialog.setWindowTitle(tr("Print Preview"));
 

@@ -52,7 +52,7 @@ void runApplication(const QString &command, const QUrl &url)
 		return;
 	}
 
-	PlatformIntegration *integration(Application::getInstance()->getPlatformIntegration());
+	PlatformIntegration *integration(Application::getPlatformIntegration());
 
 	if (integration)
 	{
@@ -299,7 +299,7 @@ QUrl normalizeUrl(QUrl url)
 
 QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType)
 {
-	PlatformIntegration *integration(Application::getInstance()->getPlatformIntegration());
+	PlatformIntegration *integration(Application::getPlatformIntegration());
 
 	if (integration)
 	{

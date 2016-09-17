@@ -336,7 +336,7 @@ bool SessionsManager::restoreClosedWindow(int index)
 		index = 0;
 	}
 
-	Application::getInstance()->createWindow(Application::NoFlags, false, m_closedWindows.value(index, SessionMainWindow()));
+	Application::createWindow(Application::NoFlags, false, m_closedWindows.value(index, SessionMainWindow()));
 
 	m_closedWindows.removeAt(index);
 
@@ -371,7 +371,7 @@ bool SessionsManager::restoreSession(const SessionInformation &session, MainWind
 		}
 		else
 		{
-			Application::getInstance()->createWindow((isPrivate ? Application::PrivateFlag : Application::NoFlags), false, session.windows.at(i));
+			Application::createWindow((isPrivate ? Application::PrivateFlag : Application::NoFlags), false, session.windows.at(i));
 		}
 	}
 
@@ -398,7 +398,7 @@ bool SessionsManager::saveSession(const QString &path, const QString &title, Mai
 	}
 	else
 	{
-		windows = Application::getInstance()->getWindows();
+		windows = Application::getWindows();
 	}
 
 	for (int i = 0; i < windows.count(); ++i)

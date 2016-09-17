@@ -62,7 +62,7 @@ PreferencesGeneralPageWidget::PreferencesGeneralPageWidget(QWidget *parent) : QW
 	m_ui->reuseCurrentTabCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_ReuseCurrentTabOption).toBool());
 	m_ui->openNextToActiveheckBox->setChecked(SettingsManager::getValue(SettingsManager::TabBar_OpenNextToActiveOption).toBool());
 
-	PlatformIntegration *integration(Application::getInstance()->getPlatformIntegration());
+	PlatformIntegration *integration(Application::getPlatformIntegration());
 
 	if (integration == NULL || !integration->canSetAsDefaultBrowser())
 	{

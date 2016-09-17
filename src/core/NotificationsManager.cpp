@@ -130,7 +130,7 @@ Notification* NotificationsManager::createNotification(int event, const QString 
 
 	if (definition.showNotification)
 	{
-		Application::getInstance()->showNotification(notification);
+		Application::showNotification(notification);
 	}
 
 	return notification;

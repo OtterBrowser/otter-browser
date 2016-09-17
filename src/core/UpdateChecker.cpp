@@ -74,7 +74,7 @@ void UpdateChecker::runUpdateCheck()
 
 	const QJsonObject updateData(QJsonDocument::fromJson(m_networkReply->readAll()).object());
 	const QJsonArray channels(updateData.value(QLatin1String("channels")).toArray());
-	const QString platform(Application::getInstance()->getPlatformIntegration()->getPlatform());
+	const QString platform(Application::getPlatformIntegration()->getPlatform());
 	const int mainVersion(QCoreApplication::applicationVersion().remove(QChar('.')).toInt());
 	const int subVersion(QString(OTTER_VERSION_WEEKLY).toInt());
 	QList<UpdateInformation> availableUpdates;

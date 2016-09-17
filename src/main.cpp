@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
 
 	if (!application.getCommandLineParser()->positionalArguments().isEmpty())
 	{
-		MainWindow *window(application.getWindow());
+		MainWindow *window(Application::getWindow());
 
 		if (window)
 		{
