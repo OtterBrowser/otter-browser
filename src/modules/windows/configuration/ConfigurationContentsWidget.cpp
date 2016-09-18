@@ -50,6 +50,11 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 		const QVariant value(SettingsManager::getValue(identifier));
 		const SettingsManager::OptionDefinition definition(SettingsManager::getOptionDefinition(identifier));
 
+		if (!definition.flags.testFlag(SettingsManager::IsEnabledFlag) || !definition.flags.testFlag(SettingsManager::IsVisibleFlag))
+		{
+			continue;
+		}
+
 		if (!groupItem || groupItem->text() != option.first())
 		{
 			groupItem = new QStandardItem(ThemesManager::getIcon(QLatin1String("inode-directory")), option.first());
