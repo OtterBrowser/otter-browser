@@ -55,10 +55,10 @@ const GUID IID_IApplicationAssociationRegistrationUI = {0x1f76a169,0xf994,0x40ac
 #if !defined(IApplicationActivationManager)
 enum ACTIVATEOPTIONS
 {
-        AO_NONE = 0,
-        AO_DESIGNMODE = 1,
-        AO_NOERRORUI = 2,
-        AO_NOSPLASHSCREEN = 4,
+	AO_NONE = 0,
+	AO_DESIGNMODE = 1,
+	AO_NOERRORUI = 2,
+	AO_NOSPLASHSCREEN = 4
 };
 
 MIDL_INTERFACE("2e941141-7f97-4756-ba1d-9decde894a3d")
@@ -66,11 +66,11 @@ IApplicationActivationManager : public IUnknown
 {
 public:
 
-    virtual HRESULT STDMETHODCALLTYPE ActivateApplication(
-        /* [in] */ __RPC__in LPCWSTR appUserModelId,
-        /* [unique][in] */ __RPC__in_opt LPCWSTR arguments,
-        /* [in] */ ACTIVATEOPTIONS options,
-        /* [out] */ __RPC__out DWORD *processId) = 0;
+	virtual HRESULT STDMETHODCALLTYPE ActivateApplication(
+		/* [in] */ __RPC__in LPCWSTR appUserModelId,
+		/* [unique][in] */ __RPC__in_opt LPCWSTR arguments,
+		/* [in] */ ACTIVATEOPTIONS options,
+		/* [out] */ __RPC__out DWORD *processId) = 0;
 };
 
 const GUID IID_IApplicationActivationManager = {0x2e941141,0x7f97,0x4756, {0xba,0x1d,0x9d,0xec,0xde,0x89,0x4a,0x3d}};

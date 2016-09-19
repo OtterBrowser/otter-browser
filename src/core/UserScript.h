@@ -68,7 +68,7 @@ private:
 	QString m_version;
 	QUrl m_homePage;
 	QUrl m_updateUrl;
-	QIcon  m_icon;
+	QIcon m_icon;
 	QStringList m_excludeRules;
 	QStringList m_includeRules;
 	QStringList m_matchRules;

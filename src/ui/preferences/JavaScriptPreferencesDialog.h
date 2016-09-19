@@ -39,7 +39,7 @@ public:
 	explicit JavaScriptPreferencesDialog(const QHash<int, QVariant> &options, QWidget *parent = 0);
 	~JavaScriptPreferencesDialog();
 
-	QHash<int, QVariant>  getOptions() const;
+	QHash<int, QVariant> getOptions() const;
 
 protected:
 	void changeEvent(QEvent *event);

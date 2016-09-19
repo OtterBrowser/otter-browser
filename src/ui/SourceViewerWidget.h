@@ -28,7 +28,7 @@
 namespace Otter
 {
 
-class SyntaxHighlighter : public  QSyntaxHighlighter
+class SyntaxHighlighter : public QSyntaxHighlighter
 {
 	Q_OBJECT
 	Q_ENUMS(HighlightingSyntax)

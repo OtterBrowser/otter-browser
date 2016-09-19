@@ -520,7 +520,7 @@ WindowHistoryInformation SourceViewerWebWidget::getHistory() const
 	WindowHistoryEntry entry;
 	entry.url = getUrl().toString();
 	entry.title = getTitle();
-	entry.zoom  = getZoom();
+	entry.zoom = getZoom();
 
 	WindowHistoryInformation information;
 	information.entries.append(entry);

@@ -75,7 +75,7 @@ void TransferDialog::changeEvent(QEvent *event)
 {
 	QWidget::changeEvent(event);
 
-	if (event->type() ==  QEvent::LanguageChange)
+	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
 	}

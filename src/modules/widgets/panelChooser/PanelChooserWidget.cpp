@@ -43,7 +43,7 @@ void PanelChooserWidget::changeEvent(QEvent *event)
 {
 	QToolButton::changeEvent(event);
 
-	if (event->type() ==  QEvent::LanguageChange)
+	if (event->type() == QEvent::LanguageChange)
 	{
 		setText(SidebarWidget::getPanelTitle(SettingsManager::getValue(SettingsManager::Sidebar_CurrentPanelOption).toString()));
 	}

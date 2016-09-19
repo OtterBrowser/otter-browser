@@ -104,7 +104,7 @@ void HistoryManager::optionChanged(int identifier)
 {
 	if (identifier == SettingsManager::History_RememberBrowsingOption || identifier == SettingsManager::Browser_PrivateModeOption)
 	{
-		m_isEnabled =  (SettingsManager::getValue(SettingsManager::History_RememberBrowsingOption).toBool() && !SettingsManager::getValue(SettingsManager::Browser_PrivateModeOption).toBool());
+		m_isEnabled = (SettingsManager::getValue(SettingsManager::History_RememberBrowsingOption).toBool() && !SettingsManager::getValue(SettingsManager::Browser_PrivateModeOption).toBool());
 	}
 	else if (identifier == SettingsManager::History_StoreFaviconsOption)
 	{

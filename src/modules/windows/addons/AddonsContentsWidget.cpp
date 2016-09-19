@@ -101,7 +101,7 @@ void AddonsContentsWidget::populateAddons()
 
 void AddonsContentsWidget::addAddon()
 {
-	const QString sourcePath(QFileDialog::getOpenFileName(this, tr("Select File"),  QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), Utils::formatFileTypes(QStringList(tr("User Script files (*.js)")))));
+	const QString sourcePath(QFileDialog::getOpenFileName(this, tr("Select File"), QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), Utils::formatFileTypes(QStringList(tr("User Script files (*.js)")))));
 
 	if (sourcePath.isEmpty())
 	{
@@ -151,7 +151,7 @@ void AddonsContentsWidget::addAddon(Addon *addon)
 		return;
 	}
 
-	QStandardItem *item(new QStandardItem(addon->getIcon(), (addon->getVersion().isEmpty() ? addon->getTitle() : QStringLiteral("%1  %2").arg(addon->getTitle()).arg(addon->getVersion()))));
+	QStandardItem *item(new QStandardItem(addon->getIcon(), (addon->getVersion().isEmpty() ? addon->getTitle() : QStringLiteral("%1 %2").arg(addon->getTitle()).arg(addon->getVersion()))));
 	item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 	item->setCheckable(true);
 	item->setCheckState(addon->isEnabled() ? Qt::Checked : Qt::Unchecked);

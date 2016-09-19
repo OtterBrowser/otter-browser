@@ -150,7 +150,7 @@ void HeaderViewWidget::toggleSort(QAction *action)
 
 			if (view)
 			{
-				setSort(view->getSortColumn(), ((value == -2) ?  Qt::AscendingOrder : Qt::DescendingOrder));
+				setSort(view->getSortColumn(), ((value == -2) ? Qt::AscendingOrder : Qt::DescendingOrder));
 			}
 		}
 		else

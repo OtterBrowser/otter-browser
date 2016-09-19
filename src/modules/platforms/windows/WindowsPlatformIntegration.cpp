@@ -152,7 +152,7 @@ void WindowsPlatformIntegration::runApplication(const QString &command, const QU
 
 	if (indexOfExecutable == -1)
 	{
-        Console::addMessage(tr("Failed to run command \"%1\", file is not executable").arg(command), Console::OtherCategory, Console::ErrorLevel);
+		Console::addMessage(tr("Failed to run command \"%1\", file is not executable").arg(command), Console::OtherCategory, Console::ErrorLevel);
 
 		return;
 	}
@@ -179,7 +179,7 @@ void WindowsPlatformIntegration::runApplication(const QString &command, const QU
 
 	if (!QProcess::startDetached(application, arguments))
 	{
-        Console::addMessage(tr("Failed to run command \"%1\" (arguments: \"%2\")").arg(command).arg(arguments.join(QLatin1Char(' '))), Console::OtherCategory, Console::ErrorLevel);
+		Console::addMessage(tr("Failed to run command \"%1\" (arguments: \"%2\")").arg(command).arg(arguments.join(QLatin1Char(' '))), Console::OtherCategory, Console::ErrorLevel);
 	}
 }
 
@@ -223,7 +223,7 @@ QList<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMime
 
 	if (suffix.isEmpty())
 	{
-        Console::addMessage(tr("No valid suffix for given MIME type: %1").arg(mimeType.name()), Console::OtherCategory, Console::ErrorLevel);
+		Console::addMessage(tr("No valid suffix for given MIME type: %1").arg(mimeType.name()), Console::OtherCategory, Console::ErrorLevel);
 
 		return QList<ApplicationInformation>();
 	}
@@ -290,7 +290,7 @@ QList<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMime
 
 		if (information.command.isEmpty())
 		{
-            Console::addMessage(tr("Failed to load a valid application path for MIME type %1: %2").arg(suffix).arg(value), Console::OtherCategory, Console::ErrorLevel);
+			Console::addMessage(tr("Failed to load a valid application path for MIME type %1: %2").arg(suffix).arg(value), Console::OtherCategory, Console::ErrorLevel);
 
 			continue;
 		}
@@ -340,7 +340,7 @@ QList<ApplicationInformation> WindowsPlatformIntegration::getApplicationsForMime
 				}
 				else
 				{
-                    Console::addMessage(tr("Failed to load a valid application path for MIME type %1: %2").arg(suffix).arg(value), Console::OtherCategory, Console::ErrorLevel);
+					Console::addMessage(tr("Failed to load a valid application path for MIME type %1: %2").arg(suffix).arg(value), Console::OtherCategory, Console::ErrorLevel);
 
 					continue;
 				}
@@ -436,7 +436,7 @@ bool WindowsPlatformIntegration::setAsDefaultBrowser()
 			}
 		}
 
-        Console::addMessage(QCoreApplication::translate("main", "Failed to run File Associations Manager, error code: %1\nApplication ID: %2").arg(result).arg(pid), Otter::Console::OtherCategory, Console::ErrorLevel);
+		Console::addMessage(QCoreApplication::translate("main", "Failed to run File Associations Manager, error code: %1\nApplication ID: %2").arg(result).arg(pid), Otter::Console::OtherCategory, Console::ErrorLevel);
 	}
 	else if (QSysInfo::windowsVersion() >= QSysInfo::WV_VISTA)
 	{
@@ -455,7 +455,7 @@ bool WindowsPlatformIntegration::setAsDefaultBrowser()
 			}
 		}
 
-        Console::addMessage(QCoreApplication::translate("main", "Failed to run File Associations Manager, error code: %1").arg(result), Otter::Console::OtherCategory, Console::ErrorLevel);
+		Console::addMessage(QCoreApplication::translate("main", "Failed to run File Associations Manager, error code: %1").arg(result), Otter::Console::OtherCategory, Console::ErrorLevel);
 	}
 	else
 	{
@@ -510,7 +510,7 @@ bool WindowsPlatformIntegration::registerToSystem()
 
 	if (m_applicationRegistration.status() != QSettings::NoError || capabilities.status() != QSettings::NoError)
 	{
-        Console::addMessage(QCoreApplication::translate("main", "Failed to register application to system registry: %1, %2").arg(m_applicationRegistration.status(), capabilities.status()), Otter::Console::OtherCategory, Console::ErrorLevel);
+		Console::addMessage(QCoreApplication::translate("main", "Failed to register application to system registry: %1, %2").arg(m_applicationRegistration.status(), capabilities.status()), Otter::Console::OtherCategory, Console::ErrorLevel);
 
 		return false;
 	}

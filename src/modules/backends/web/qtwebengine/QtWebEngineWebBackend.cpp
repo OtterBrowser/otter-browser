@@ -220,7 +220,7 @@ WebWidget* QtWebEngineWebBackend::createWidget(bool isPrivate, ContentsWidget *p
 			QWebEngineProfile::defaultProfile()->setHttpCacheType(QWebEngineProfile::DiskHttpCache);
 			QWebEngineProfile::defaultProfile()->setHttpCacheMaximumSize(SettingsManager::getValue(SettingsManager::Cache_DiskCacheLimitOption).toInt() * 1024);
 			QWebEngineProfile::defaultProfile()->setCachePath(cachePath);
-			QWebEngineProfile::defaultProfile()->setPersistentStoragePath(cachePath  + QLatin1String("/persistentStorage/"));
+			QWebEngineProfile::defaultProfile()->setPersistentStoragePath(cachePath + QLatin1String("/persistentStorage/"));
 		}
 
 		optionChanged(SettingsManager::Browser_EnableFullScreenOption);
