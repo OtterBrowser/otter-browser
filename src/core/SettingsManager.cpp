@@ -33,7 +33,9 @@ namespace Otter
 SettingsManager* SettingsManager::m_instance = NULL;
 QString SettingsManager::m_globalPath;
 QString SettingsManager::m_overridePath;
+QHash<QString, int> SettingsManager::m_customOptions;
 QHash<int, SettingsManager::OptionDefinition> SettingsManager::m_definitions;
+int SettingsManager::m_identifierCounter = -1;
 int SettingsManager::m_optionIdentifierEnumerator = 0;
 
 SettingsManager::SettingsManager(QObject *parent) : QObject(parent)
@@ -121,6 +123,8 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 		m_definitions[Paths_DownloadsOption].defaultValue = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
 		m_definitions[Paths_SaveFileOption].defaultValue = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
 	}
+
+	m_identifierCounter = m_instance->metaObject()->enumerator(m_optionIdentifierEnumerator).keyCount();
 }
 
 void SettingsManager::removeOverride(const QUrl &url, const QString &key)
@@ -188,7 +192,7 @@ QString SettingsManager::getOptionName(int identifier)
 		return name.replace(QLatin1Char('_'), QLatin1Char('/'));
 	}
 
-	return QString();
+	return m_customOptions.key(identifier);
 }
 
 QString SettingsManager::getHost(const QUrl &url)
@@ -333,6 +337,25 @@ SettingsManager::OptionDefinition SettingsManager::getOptionDefinition(int ident
 	return OptionDefinition();
 }
 
+int SettingsManager::registerOption(const QString &name, const OptionDefinition &definition)
+{
+	if (name.isEmpty() || getOptionIdentifier(name) >= 0)
+	{
+		return -1;
+	}
+
+	const int identifier(m_identifierCounter);
+
+	++m_identifierCounter;
+
+	m_customOptions[name] = identifier;
+
+	m_definitions[identifier] = definition;
+	m_definitions[identifier].flags &= ~IsBuiltInFlag;
+
+	return identifier;
+}
+
 int SettingsManager::getOptionIdentifier(const QString &name)
 {
 	QString mutableName(name);
@@ -341,6 +364,11 @@ int SettingsManager::getOptionIdentifier(const QString &name)
 	if (!name.endsWith(QLatin1String("Option")))
 	{
 		mutableName.append(QLatin1String("Option"));
+	}
+
+	if (m_customOptions.contains(name))
+	{
+		return m_customOptions[name];
 	}
 
 	return m_instance->metaObject()->enumerator(m_optionIdentifierEnumerator).keyToValue(mutableName.toLatin1());

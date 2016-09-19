@@ -271,6 +271,7 @@ public:
 	static QVariant getValue(int identifier, const QUrl &url = QUrl());
 	static QStringList getOptions();
 	static OptionDefinition getOptionDefinition(int identifier);
+	static int registerOption(const QString &name, const OptionDefinition &definition);
 	static int getOptionIdentifier(const QString &name);
 	static bool hasOverride(const QUrl &url, const QString &key = QString());
 
@@ -283,7 +284,9 @@ private:
 	static SettingsManager *m_instance;
 	static QString m_globalPath;
 	static QString m_overridePath;
+	static QHash<QString, int> m_customOptions;
 	static QHash<int, OptionDefinition> m_definitions;
+	static int m_identifierCounter;
 	static int m_optionIdentifierEnumerator;
 
 signals:
