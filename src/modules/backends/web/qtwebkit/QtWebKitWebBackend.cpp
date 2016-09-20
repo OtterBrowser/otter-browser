@@ -175,6 +175,13 @@ WebWidget* QtWebKitWebBackend::createWidget(bool isPrivate, ContentsWidget *pare
 	{
 		m_isInitialized = true;
 
+#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
+		QStringList pluginSearchPaths(QWebSettings::pluginSearchPaths());
+		pluginSearchPaths.append(QCoreApplication::applicationDirPath());
+
+		QWebSettings::setPluginSearchPaths(pluginSearchPaths);
+#endif
+
 		QWebHistoryInterface::setDefaultInterface(new QtWebKitHistoryInterface(this));
 
 		QWebSettings::setMaximumPagesInCache(SettingsManager::getValue(SettingsManager::Cache_PagesInMemoryLimitOption).toInt());
