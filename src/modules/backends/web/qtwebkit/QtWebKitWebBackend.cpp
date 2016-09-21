@@ -46,18 +46,8 @@ QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent),
 	m_isInitialized(false)
 {
 	m_instance = this;
-
-	SettingsManager::OptionDefinition enableMediaOption;
-	enableMediaOption.defaultValue = true;
-	enableMediaOption.type = SettingsManager::BooleanType;
-
-	m_enableMediaOption = SettingsManager::registerOption(QLatin1String("QtWebKitBackend/EnableMedia"), enableMediaOption);
-
-	SettingsManager::OptionDefinition enableMediaSourceOption;
-	enableMediaSourceOption.defaultValue = false;
-	enableMediaSourceOption.type = SettingsManager::BooleanType;
-
-	m_enableMediaSourceOption = SettingsManager::registerOption(QLatin1String("QtWebKitBackend/EnableMediaSource"), enableMediaSourceOption);
+	m_enableMediaOption = SettingsManager::registerOption(QLatin1String("QtWebKitBackend/EnableMedia"), true, SettingsManager::BooleanType);
+	m_enableMediaSourceOption = SettingsManager::registerOption(QLatin1String("QtWebKitBackend/EnableMediaSource"), false, SettingsManager::BooleanType);
 
 	const QString cachePath(SessionsManager::getCachePath());
 

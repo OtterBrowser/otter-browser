@@ -271,7 +271,7 @@ public:
 	static QVariant getValue(int identifier, const QUrl &url = QUrl());
 	static QStringList getOptions();
 	static OptionDefinition getOptionDefinition(int identifier);
-	static int registerOption(const QString &name, const OptionDefinition &definition);
+	static int registerOption(const QString &name, const QVariant &defaultValue, OptionType type, const QStringList &choices = QStringList());
 	static int getOptionIdentifier(const QString &name);
 	static bool hasOverride(const QUrl &url, const QString &key = QString());
 
