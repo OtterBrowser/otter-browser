@@ -21,9 +21,10 @@
 #include "QtWebKitWebWidget.h"
 #include "QtWebKitInspector.h"
 #include "QtWebKitNetworkManager.h"
+#include "QtWebKitPage.h"
 #include "QtWebKitPluginFactory.h"
 #include "QtWebKitPluginWidget.h"
-#include "QtWebKitPage.h"
+#include "QtWebKitWebBackend.h"
 #include "../../../../core/ActionsManager.h"
 #include "../../../../core/AddonsManager.h"
 #include "../../../../core/BookmarksManager.h"
@@ -846,8 +847,8 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 	settings->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, getOption(SettingsManager::Browser_EnableOfflineWebApplicationCacheOption, url).toBool());
 	settings->setDefaultTextEncoding(getOption(SettingsManager::Content_DefaultCharacterEncodingOption, url).toString());
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
-//TODO Use registerOption()
-//	settings->setAttribute(QWebSettings::MediaSourceEnabled, getOption(SettingsManager::QtWebKitBackend_EnableMediaSourceOption, url).toBool());
+	settings->setAttribute(QWebSettings::MediaEnabled, getOption(QtWebKitWebBackend::getOptionIdentifier(QtWebKitWebBackend::QtWebKitBackend_EnableMediaOption), url).toBool());
+	settings->setAttribute(QWebSettings::MediaSourceEnabled, getOption(QtWebKitWebBackend::getOptionIdentifier(QtWebKitWebBackend::QtWebKitBackend_EnableMediaSourceOption), url).toBool());
 
 	if (settings->testAttribute(QWebSettings::PrivateBrowsingEnabled))
 	{

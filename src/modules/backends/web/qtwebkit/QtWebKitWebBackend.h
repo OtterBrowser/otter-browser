@@ -33,6 +33,12 @@ class QtWebKitWebBackend : public WebBackend
 	Q_OBJECT
 
 public:
+	enum OptionIdentifier
+	{
+		QtWebKitBackend_EnableMediaOption = 0,
+		QtWebKitBackend_EnableMediaSourceOption
+	};
+
 	explicit QtWebKitWebBackend(QObject *parent = NULL);
 	~QtWebKitWebBackend();
 
@@ -46,6 +52,7 @@ public:
 	QUrl getHomePage() const;
 	QIcon getIcon() const;
 	QList<SpellCheckManager::DictionaryInformation> getDictionaries() const;
+	static int getOptionIdentifier(OptionIdentifier identifier);
 	bool requestThumbnail(const QUrl &url, const QSize &size);
 
 protected:
@@ -65,6 +72,8 @@ private:
 	static QPointer<WebWidget> m_activeWidget;
 	static QMap<QString, QString> m_userAgentComponents;
 	static QMap<QString, QString> m_userAgents;
+	static int m_enableMediaOption;
+	static int m_enableMediaSourceOption;
 
 signals:
 	void activeDictionaryChanged(const QString &dictionary);
