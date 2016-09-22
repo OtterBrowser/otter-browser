@@ -284,13 +284,13 @@ public:
 	static QString getActionName(int identifier);
 	static QVector<ActionDefinition> getActionDefinitions();
 	static ActionDefinition getActionDefinition(int identifier);
-	static int registerAction(int identifier, const QString &text, const QString &description = QString(), const QIcon &icon = QIcon(), ActionFlags flags = IsEnabledFlag);
 	static int getActionIdentifier(const QString &name);
 
 protected:
 	explicit ActionsManager(QObject *parent);
 
 	void timerEvent(QTimerEvent *event);
+	static void registerAction(int identifier, const QString &text, const QString &description = QString(), const QIcon &icon = QIcon(), ActionFlags flags = IsEnabledFlag);
 
 protected slots:
 	void optionChanged(int identifier);

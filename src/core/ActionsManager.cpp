@@ -613,6 +613,18 @@ void ActionsManager::triggerAction(int identifier, QObject *parent, const QVaria
 	}
 }
 
+void ActionsManager::registerAction(int identifier, const QString &text, const QString &description, const QIcon &icon, ActionFlags flags)
+{
+	ActionsManager::ActionDefinition action;
+	action.text = text;
+	action.description = description;
+	action.icon = icon;
+	action.identifier = identifier;
+	action.flags = flags;
+
+	m_definitions.append(action);
+}
+
 ActionsManager* ActionsManager::getInstance()
 {
 	return m_instance;
@@ -685,20 +697,6 @@ ActionsManager::ActionDefinition ActionsManager::getActionDefinition(int identif
 	}
 
 	return m_definitions[identifier];
-}
-
-int ActionsManager::registerAction(int identifier, const QString &text, const QString &description, const QIcon &icon, ActionFlags flags)
-{
-	ActionsManager::ActionDefinition action;
-	action.text = text;
-	action.description = description;
-	action.icon = icon;
-	action.identifier = identifier;
-	action.flags = flags;
-
-	m_definitions.append(action);
-
-	return (m_definitions.count() - 1);
 }
 
 int ActionsManager::getActionIdentifier(const QString &name)
