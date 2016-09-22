@@ -139,6 +139,18 @@ void SettingsManager::removeOverride(const QUrl &url, const QString &key)
 	}
 }
 
+void SettingsManager::registerOption(int identifier, const QVariant &defaultValue, SettingsManager::OptionType type, const QStringList &choices)
+{
+	OptionDefinition definition;
+	definition.defaultValue = defaultValue;
+	definition.choices = choices;
+	definition.type = type;
+	definition.flags = (IsEnabledFlag | IsVisibleFlag | IsBuiltInFlag);
+	definition.identifier = identifier;
+
+	m_definitions[identifier] = definition;
+}
+
 void SettingsManager::updateOptionDefinition(int identifier, const SettingsManager::OptionDefinition &definition)
 {
 	if (m_definitions.contains(identifier))
@@ -344,14 +356,15 @@ int SettingsManager::registerOption(const QString &name, const QVariant &default
 		return -1;
 	}
 
+	const int identifier(m_identifierCounter);
+
+	++m_identifierCounter;
+
 	OptionDefinition definition;
 	definition.defaultValue = defaultValue;
 	definition.choices = choices;
 	definition.type = type;
-
-	const int identifier(m_identifierCounter);
-
-	++m_identifierCounter;
+	definition.identifier = identifier;
 
 	m_customOptions[name] = identifier;
 

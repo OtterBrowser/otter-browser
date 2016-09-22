@@ -279,6 +279,7 @@ protected:
 	explicit SettingsManager(QObject *parent = NULL);
 
 	static QString getHost(const QUrl &url);
+	static void registerOption(int identifier, const QVariant &defaultValue, OptionType type, const QStringList &choices = QStringList());
 
 private:
 	static SettingsManager *m_instance;
