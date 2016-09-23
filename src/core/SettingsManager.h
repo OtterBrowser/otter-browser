@@ -285,8 +285,8 @@ private:
 	static SettingsManager *m_instance;
 	static QString m_globalPath;
 	static QString m_overridePath;
+	static QVector<OptionDefinition> m_definitions;
 	static QHash<QString, int> m_customOptions;
-	static QHash<int, OptionDefinition> m_definitions;
 	static int m_identifierCounter;
 	static int m_optionIdentifierEnumerator;
 

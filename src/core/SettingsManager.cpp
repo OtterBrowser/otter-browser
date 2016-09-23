@@ -26,6 +26,7 @@
 #include <QtCore/QSettings>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QTextStream>
+#include <QtCore/QVector>
 
 namespace Otter
 {
@@ -33,8 +34,8 @@ namespace Otter
 SettingsManager* SettingsManager::m_instance = NULL;
 QString SettingsManager::m_globalPath;
 QString SettingsManager::m_overridePath;
+QVector<SettingsManager::OptionDefinition> SettingsManager::m_definitions;
 QHash<QString, int> SettingsManager::m_customOptions;
-QHash<int, SettingsManager::OptionDefinition> SettingsManager::m_definitions;
 int SettingsManager::m_identifierCounter = -1;
 int SettingsManager::m_optionIdentifierEnumerator = 0;
 
@@ -50,9 +51,12 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 		m_optionIdentifierEnumerator = m_instance->metaObject()->indexOfEnumerator(QLatin1String("OptionIdentifier").data());
 		m_globalPath = path + QLatin1String("/otter.conf");
 		m_overridePath = path + QLatin1String("/override.ini");
+		m_identifierCounter = m_instance->metaObject()->enumerator(m_optionIdentifierEnumerator).keyCount();
 
 		QSettings defaults(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat);
 		const QStringList groups(defaults.childGroups());
+
+		m_definitions.reserve(m_identifierCounter);
 
 		for (int i = 0; i < groups.count(); ++i)
 		{
@@ -112,7 +116,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 					definition.type = UnknownType;
 				}
 
-				m_definitions[definition.identifier] = definition;
+				m_definitions.append(definition);
 
 				defaults.endGroup();
 			}
@@ -123,8 +127,6 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 		m_definitions[Paths_DownloadsOption].defaultValue = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
 		m_definitions[Paths_SaveFileOption].defaultValue = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
 	}
-
-	m_identifierCounter = m_instance->metaObject()->enumerator(m_optionIdentifierEnumerator).keyCount();
 }
 
 void SettingsManager::removeOverride(const QUrl &url, const QString &key)
@@ -148,12 +150,12 @@ void SettingsManager::registerOption(int identifier, const QVariant &defaultValu
 	definition.flags = (IsEnabledFlag | IsVisibleFlag | IsBuiltInFlag);
 	definition.identifier = identifier;
 
-	m_definitions[identifier] = definition;
+	m_definitions.append(definition);
 }
 
 void SettingsManager::updateOptionDefinition(int identifier, const SettingsManager::OptionDefinition &definition)
 {
-	if (m_definitions.contains(identifier))
+	if (identifier >= 0 && identifier < m_definitions.count())
 	{
 		m_definitions[identifier].defaultValue = definition.defaultValue;
 		m_definitions[identifier].choices = definition.choices;
@@ -267,27 +269,26 @@ QString SettingsManager::getReport()
 		overrides.endGroup();
 	}
 
-	const QList<int> options(m_definitions.keys());
-	QStringList optionNames;
+	QStringList options;
+
+	for (int i = 0; i < m_definitions.count(); ++i)
+	{
+		options.append(getOptionName(i));
+	}
+
+	options.sort();
 
 	for (int i = 0; i < options.count(); ++i)
 	{
-		optionNames.append(getOptionName(options.at(i)));
-	}
-
-	optionNames.sort();
-
-	for (int i = 0; i < optionNames.count(); ++i)
-	{
-		const int identifier(getOptionIdentifier(optionNames.at(i)));
-		const QVariant defaultValue(m_definitions.contains(identifier) ? m_definitions[identifier].defaultValue : QVariant());
+		const int identifier(getOptionIdentifier(options.at(i)));
+		const QVariant defaultValue((identifier >= 0 && identifier < m_definitions.count()) ? m_definitions.at(identifier).defaultValue : QVariant());
 
 		stream << QLatin1Char('\t');
 		stream.setFieldWidth(50);
-		stream << optionNames.at(i);
+		stream << options.at(i);
 		stream.setFieldWidth(20);
 
-		if (excludeValues.contains(optionNames.at(i)))
+		if (excludeValues.contains(options.at(i)))
 		{
 			stream << QLatin1Char('-');
 		}
@@ -297,7 +298,7 @@ QString SettingsManager::getReport()
 		}
 
 		stream << ((defaultValue == getValue(identifier)) ? QLatin1String("default") : QLatin1String("non default"));
-		stream << (overridenValues.contains(optionNames.at(i)) ? QStringLiteral("%1 override(s)").arg(overridenValues[optionNames.at(i)]) : QLatin1String("no overrides"));
+		stream << (overridenValues.contains(options.at(i)) ? QStringLiteral("%1 override(s)").arg(overridenValues[options.at(i)]) : QLatin1String("no overrides"));
 		stream.setFieldWidth(0);
 		stream << QLatin1Char('\n');
 	}
@@ -309,7 +310,7 @@ QString SettingsManager::getReport()
 
 QVariant SettingsManager::getValue(int identifier, const QUrl &url)
 {
-	if (!m_definitions.contains(identifier))
+	if (identifier < 0 || identifier >= m_definitions.count())
 	{
 		return QVariant();
 	}
@@ -321,29 +322,28 @@ QVariant SettingsManager::getValue(int identifier, const QUrl &url)
 		return QSettings(m_overridePath, QSettings::IniFormat).value(getHost(url) + QLatin1Char('/') + name, getValue(identifier));
 	}
 
-	return QSettings(m_globalPath, QSettings::IniFormat).value(name, m_definitions[identifier].defaultValue);
+	return QSettings(m_globalPath, QSettings::IniFormat).value(name, m_definitions.at(identifier).defaultValue);
 }
 
 QStringList SettingsManager::getOptions()
 {
-	const QList<int> options(m_definitions.keys());
-	QStringList optionNames;
+	QStringList options;
 
-	for (int i = 0; i < options.count(); ++i)
+	for (int i = 0; i < m_definitions.count(); ++i)
 	{
-		optionNames.append(getOptionName(options.at(i)));
+		options.append(getOptionName(i));
 	}
 
-	optionNames.sort();
+	options.sort();
 
-	return optionNames;
+	return options;
 }
 
 SettingsManager::OptionDefinition SettingsManager::getOptionDefinition(int identifier)
 {
-	if (m_definitions.contains(identifier))
+	if (identifier >= 0 && identifier < m_definitions.count())
 	{
-		return m_definitions[identifier];
+		return m_definitions.at(identifier);
 	}
 
 	return OptionDefinition();
@@ -368,7 +368,7 @@ int SettingsManager::registerOption(const QString &name, const QVariant &default
 
 	m_customOptions[name] = identifier;
 
-	m_definitions[identifier] = definition;
+	m_definitions.append(definition);
 
 	return identifier;
 }
