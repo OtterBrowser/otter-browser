@@ -221,29 +221,6 @@ QString SettingsManager::getReport()
 	stream.setFieldAlignment(QTextStream::AlignLeft);
 	stream << QLatin1String("Settings:\n");
 
-	QStringList excludeValues;
-	QSettings defaults(QLatin1String(":/schemas/options.ini"), QSettings::IniFormat);
-	const QStringList defaultsGroups(defaults.childGroups());
-
-	for (int i = 0; i < defaultsGroups.count(); ++i)
-	{
-		defaults.beginGroup(defaultsGroups.at(i));
-
-		const QStringList keys(defaults.childGroups());
-
-		for (int j = 0; j < keys.count(); ++j)
-		{
-			const QString type(defaults.value(QStringLiteral("%1/type").arg(keys.at(j))).toString());
-
-			if (type == QLatin1String("string") || type == QLatin1String("path"))
-			{
-				excludeValues.append(QStringLiteral("%1/%2").arg(defaultsGroups.at(i)).arg(keys.at(j)));
-			}
-		}
-
-		defaults.endGroup();
-	}
-
 	QHash<QString, int> overridenValues;
 	QSettings overrides(m_overridePath, QSettings::IniFormat);
 	const QStringList overridesGroups(overrides.childGroups());
@@ -280,24 +257,23 @@ QString SettingsManager::getReport()
 
 	for (int i = 0; i < options.count(); ++i)
 	{
-		const int identifier(getOptionIdentifier(options.at(i)));
-		const QVariant defaultValue((identifier >= 0 && identifier < m_definitions.count()) ? m_definitions.at(identifier).defaultValue : QVariant());
+		const OptionDefinition definition(getOptionDefinition(getOptionIdentifier(options.at(i))));
 
 		stream << QLatin1Char('\t');
 		stream.setFieldWidth(50);
 		stream << options.at(i);
 		stream.setFieldWidth(20);
 
-		if (excludeValues.contains(options.at(i)))
+		if (definition.type == StringType || definition.type == PathType)
 		{
 			stream << QLatin1Char('-');
 		}
 		else
 		{
-			stream << defaultValue.toString();
+			stream << definition.defaultValue.toString();
 		}
 
-		stream << ((defaultValue == getValue(identifier)) ? QLatin1String("default") : QLatin1String("non default"));
+		stream << ((definition.defaultValue == getValue(definition.identifier)) ? QLatin1String("default") : QLatin1String("non default"));
 		stream << (overridenValues.contains(options.at(i)) ? QStringLiteral("%1 override(s)").arg(overridenValues[options.at(i)]) : QLatin1String("no overrides"));
 		stream.setFieldWidth(0);
 		stream << QLatin1Char('\n');
