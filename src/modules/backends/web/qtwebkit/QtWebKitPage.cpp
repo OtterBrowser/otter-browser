@@ -98,7 +98,7 @@ void QtWebKitPage::pageLoadFinished()
 		return;
 	}
 
-	const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::Content_BlockingProfilesOption, m_widget->getUrl()).toStringList()));
+	const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption, m_widget->getUrl()).toStringList()));
 
 	applyContentBlockingRules(ContentBlockingManager::getStyleSheet(profiles), true);
 

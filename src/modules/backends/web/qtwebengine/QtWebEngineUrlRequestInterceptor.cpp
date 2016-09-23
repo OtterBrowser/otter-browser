@@ -45,7 +45,7 @@ void QtWebEngineUrlRequestInterceptor::optionChanged(int identifier)
 	{
 		m_areImagesEnabled = (SettingsManager::getValue(SettingsManager::Browser_EnableImagesOption).toString() != QLatin1String("disabled"));
 	}
-	else if (identifier == SettingsManager::Content_BlockingProfilesOption)
+	else if (identifier == SettingsManager::ContentBlocking_ProfilesOption)
 	{
 		clearContentBlockingInformation();
 	}
@@ -77,7 +77,7 @@ void QtWebEngineUrlRequestInterceptor::interceptRequest(QWebEngineUrlRequestInfo
 	{
 		if (SettingsManager::getValue(SettingsManager::ContentBlocking_EnableContentBlockingOption, request.firstPartyUrl()).toBool())
 		{
-			m_contentBlockingProfiles[request.firstPartyUrl().host()] = ContentBlockingManager::getProfileList(SettingsManager::getValue(SettingsManager::Content_BlockingProfilesOption, request.firstPartyUrl()).toStringList());
+			m_contentBlockingProfiles[request.firstPartyUrl().host()] = ContentBlockingManager::getProfileList(SettingsManager::getValue(SettingsManager::ContentBlocking_ProfilesOption, request.firstPartyUrl()).toStringList());
 		}
 		else
 		{

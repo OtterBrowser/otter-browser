@@ -42,7 +42,7 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 {
 	m_ui->setupUi(this);
 
-	const QStringList globalProfiles(SettingsManager::getValue(SettingsManager::Content_BlockingProfilesOption).toStringList());
+	const QStringList globalProfiles(SettingsManager::getValue(SettingsManager::ContentBlocking_ProfilesOption).toStringList());
 
 	m_ui->profilesViewWidget->setModel(ContentBlockingManager::createModel(this, globalProfiles));
 	m_ui->profilesViewWidget->setItemDelegate(new OptionDelegate(true, this));
@@ -241,7 +241,7 @@ void ContentBlockingDialog::save()
 		}
 	}
 
-	SettingsManager::setValue(SettingsManager::Content_BlockingProfilesOption, profiles);
+	SettingsManager::setValue(SettingsManager::ContentBlocking_ProfilesOption, profiles);
 	SettingsManager::setValue(SettingsManager::ContentBlocking_EnableWildcardsOption, m_ui->enableWildcardsCheckBox->isChecked());
 
 	close();

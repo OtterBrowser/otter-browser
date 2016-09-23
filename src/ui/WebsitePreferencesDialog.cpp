@@ -270,7 +270,7 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 				}
 			}
 
-			SettingsManager::setValue(SettingsManager::Content_BlockingProfilesOption, (contentBlockingProfiles.isEmpty() ? QVariant() : contentBlockingProfiles), url);
+			SettingsManager::setValue(SettingsManager::ContentBlocking_ProfilesOption, (contentBlockingProfiles.isEmpty() ? QVariant() : contentBlockingProfiles), url);
 
 			accept();
 
@@ -382,7 +382,7 @@ void WebsitePreferencesDialog::updateValues(bool checked)
 	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Network_EnableReferrerOption, (m_ui->sendReferrerOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 	m_ui->userAgentComboBox->setCurrentIndex(m_ui->userAgentComboBox->findData(SettingsManager::getValue(SettingsManager::Network_UserAgentOption, (m_ui->userAgentOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
 
-	const QStringList contentBlockingProfiles(SettingsManager::getValue(SettingsManager::Content_BlockingProfilesOption, url).toStringList());
+	const QStringList contentBlockingProfiles(SettingsManager::getValue(SettingsManager::ContentBlocking_ProfilesOption, url).toStringList());
 
 	m_ui->contentBlockingProfilesViewWidget->setModel(ContentBlockingManager::createModel(this, contentBlockingProfiles));
 	m_ui->contentBlockingProfilesViewWidget->setItemDelegate(new OptionDelegate(true, this));

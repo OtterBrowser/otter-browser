@@ -157,7 +157,7 @@ void ContentBlockingInformationWidget::toggleOption(QAction *action)
 		else
 		{
 			const QString profile(action->data().toString());
-			QStringList profiles(m_window->getContentsWidget()->getOption(SettingsManager::Content_BlockingProfilesOption).toStringList());
+			QStringList profiles(m_window->getContentsWidget()->getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList());
 
 			if (!action->isChecked())
 			{
@@ -168,7 +168,7 @@ void ContentBlockingInformationWidget::toggleOption(QAction *action)
 				profiles.append(profile);
 			}
 
-			m_window->getContentsWidget()->setOption(SettingsManager::Content_BlockingProfilesOption, profiles);
+			m_window->getContentsWidget()->setOption(SettingsManager::ContentBlocking_ProfilesOption, profiles);
 		}
 	}
 }
@@ -266,7 +266,7 @@ void ContentBlockingInformationWidget::populateProfilesMenu()
 	}
 
 	const QVector<ContentBlockingProfile*> profiles(ContentBlockingManager::getProfiles());
-	const QStringList enabledProfiles(m_window->getContentsWidget()->getOption(SettingsManager::Content_BlockingProfilesOption).toStringList());
+	const QStringList enabledProfiles(m_window->getContentsWidget()->getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList());
 
 	for (int i = 0; i < profiles.count(); ++i)
 	{

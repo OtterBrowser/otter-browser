@@ -91,7 +91,7 @@ void QtWebEnginePage::handlePageLoaded(const QString &result)
 {
 	if (m_widget)
 	{
-		const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::Content_BlockingProfilesOption, url()).toStringList()));
+		const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption, url()).toStringList()));
 
 		if (!profiles.isEmpty())
 		{

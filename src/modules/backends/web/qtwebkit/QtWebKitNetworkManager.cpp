@@ -428,7 +428,7 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 
 	if (m_widget->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, url).toBool())
 	{
-		m_contentBlockingProfiles = ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::Content_BlockingProfilesOption, url).toStringList());
+		m_contentBlockingProfiles = ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption, url).toStringList());
 	}
 	else
 	{
