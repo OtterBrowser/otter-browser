@@ -163,7 +163,6 @@
         <file>other/syntaxHighlighting.json</file>
         <file>other/toolBars.json</file>
         <file>other/userAgents.json</file>
-        <file>schemas/options.ini</file>
         <file>schemas/update.xsd</file>
         <file>searches/bing.xml</file>
         <file>searches/duckduckgo.xml</file>
