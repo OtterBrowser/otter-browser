@@ -108,29 +108,33 @@ void SearchEnginesManager::loadSearchEngines()
 	emit m_instance->searchEnginesModified();
 
 	updateSearchEnginesModel();
+	updateSearchEnginesOptions();
 }
 
 void SearchEnginesManager::addSearchEngine(const SearchEngineDefinition &searchEngine, bool isDefault)
 {
-	if (saveSearchEngine(searchEngine))
+	if (!saveSearchEngine(searchEngine))
 	{
-		if (isDefault)
-		{
-			SettingsManager::setValue(SettingsManager::Search_DefaultSearchEngineOption, searchEngine.identifier);
-		}
+		return;
+	}
 
-		if (m_searchEnginesOrder.contains(searchEngine.identifier))
-		{
-			emit m_instance->searchEnginesModified();
+	if (isDefault)
+	{
+		SettingsManager::setValue(SettingsManager::Search_DefaultSearchEngineOption, searchEngine.identifier);
+	}
 
-			updateSearchEnginesModel();
-		}
-		else
-		{
-			m_searchEnginesOrder.append(searchEngine.identifier);
+	if (m_searchEnginesOrder.contains(searchEngine.identifier))
+	{
+		emit m_instance->searchEnginesModified();
 
-			SettingsManager::setValue(SettingsManager::Search_SearchEnginesOrderOption, m_searchEnginesOrder);
-		}
+		updateSearchEnginesModel();
+		updateSearchEnginesOptions();
+	}
+	else
+	{
+		m_searchEnginesOrder.append(searchEngine.identifier);
+
+		SettingsManager::setValue(SettingsManager::Search_SearchEnginesOrderOption, m_searchEnginesOrder);
 	}
 }
 
@@ -177,6 +181,19 @@ void SearchEnginesManager::updateSearchEnginesModel()
 	}
 
 	emit m_instance->searchEnginesModelModified();
+}
+
+void SearchEnginesManager::updateSearchEnginesOptions()
+{
+	const QStringList searchEngines(m_searchEngines.keys());
+	SettingsManager::OptionDefinition defaultQuickSearchEngineOption(SettingsManager::getOptionDefinition(SettingsManager::Search_DefaultQuickSearchEngineOption));
+	defaultQuickSearchEngineOption.choices = searchEngines;
+
+	SettingsManager::OptionDefinition defaultSearchEngineOption(SettingsManager::getOptionDefinition(SettingsManager::Search_DefaultSearchEngineOption));
+	defaultSearchEngineOption.choices = searchEngines;
+
+	SettingsManager::updateOptionDefinition(SettingsManager::Search_DefaultQuickSearchEngineOption, defaultQuickSearchEngineOption);
+	SettingsManager::updateOptionDefinition(SettingsManager::Search_DefaultSearchEngineOption, defaultSearchEngineOption);
 }
 
 void SearchEnginesManager::setupQuery(const QString &query, const SearchUrl &searchUrl, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body)

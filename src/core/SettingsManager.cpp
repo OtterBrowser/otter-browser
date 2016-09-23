@@ -205,8 +205,8 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Proxy_UseHttpsOption, false, BooleanType);
 	registerOption(Proxy_UseSocksOption, false, BooleanType);
 	registerOption(Proxy_UseSystemAuthenticationOption, false, BooleanType);
-	registerOption(Search_DefaultQuickSearchEngineOption, QLatin1String("duckduckgo"), StringType);
-	registerOption(Search_DefaultSearchEngineOption, QLatin1String("duckduckgo"), StringType);
+	registerOption(Search_DefaultQuickSearchEngineOption, QLatin1String("duckduckgo"), EnumerationType, QStringList({QLatin1String("duckduckgo")}));
+	registerOption(Search_DefaultSearchEngineOption, QLatin1String("duckduckgo"), EnumerationType, QStringList({QLatin1String("duckduckgo")}));
 	registerOption(Search_EnableFindInPageAsYouTypeOption, true, BooleanType);
 	registerOption(Search_ReuseLastQuickFindQueryOption, false, BooleanType);
 	registerOption(Search_SearchEnginesOrderOption, QStringList(), ListType);

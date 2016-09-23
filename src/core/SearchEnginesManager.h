@@ -78,6 +78,7 @@ protected:
 
 	static void initialize();
 	static void updateSearchEnginesModel();
+	static void updateSearchEnginesOptions();
 
 protected slots:
 	void optionChanged(int identifier);
