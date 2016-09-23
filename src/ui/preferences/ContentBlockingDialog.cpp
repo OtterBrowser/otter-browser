@@ -54,7 +54,7 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 	m_ui->enableCustomRulesCheckBox->setChecked(globalProfiles.contains("custom"));
 
 	QStandardItemModel *customRulesModel(new QStandardItemModel(this));
-	QFile file(SessionsManager::getWritableDataPath("blocking/custom.txt"));
+	QFile file(SessionsManager::getWritableDataPath("contentBlocking/custom.txt"));
 
 	if (file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
@@ -211,7 +211,7 @@ void ContentBlockingDialog::save()
 
 	if (m_ui->enableCustomRulesCheckBox->isChecked())
 	{
-		QFile file(SessionsManager::getWritableDataPath("blocking/custom.txt"));
+		QFile file(SessionsManager::getWritableDataPath("contentBlocking/custom.txt"));
 
 		if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text))
 		{

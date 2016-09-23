@@ -1,0 +1,3 @@
+[Adblock Plus 2.0]
+! URL: https://raw.githubusercontent.com/szpeter80/hufilter/master/hufilter.txt
+! Title: hufilter

@@ -389,10 +389,10 @@ void ContentBlockingProfile::replyFinished()
 		}
 	}
 
-	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("blocking")));
+	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking")));
 
 	const bool isFirstDownload(getPath().startsWith(QLatin1String(":/")));
-	QFile file(SessionsManager::getWritableDataPath(QLatin1String("blocking") + QLatin1String("/") + m_name + QLatin1String(".txt")));
+	QFile file(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking") + QLatin1String("/") + m_name + QLatin1String(".txt")));
 
 	if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate))
 	{
@@ -440,7 +440,7 @@ QString ContentBlockingProfile::getTitle() const
 
 QString ContentBlockingProfile::getPath() const
 {
-	return SessionsManager::getReadableDataPath(QLatin1String("blocking") + QLatin1String("/") + m_name + QLatin1String(".txt"));
+	return SessionsManager::getReadableDataPath(QLatin1String("contentBlocking") + QLatin1String("/") + m_name + QLatin1String(".txt"));
 }
 
 QUrl ContentBlockingProfile::getUpdateUrl() const

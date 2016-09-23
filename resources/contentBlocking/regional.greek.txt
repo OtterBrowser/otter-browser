@@ -1,0 +1,3 @@
+[Adblock Plus 1.1]
+! URL: https://www.void.gr/kargig/void-gr-filters.txt
+! Title: Greek AdBlock Filter

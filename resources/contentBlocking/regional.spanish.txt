@@ -1,0 +1,3 @@
+[Adblock Plus 2.0]
+! URL: https://easylist-downloads.adblockplus.org/easylistspanish.txt
+! Title: EasyList Spanish

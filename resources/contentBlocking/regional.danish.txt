@@ -1,0 +1,3 @@
+[Adblock Plus 1.1]
+! URL: https://adblock.dk/block.csv
+! Title: Schacks Adblock Plus liste

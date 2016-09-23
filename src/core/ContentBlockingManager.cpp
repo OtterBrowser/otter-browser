@@ -236,8 +236,8 @@ QVector<ContentBlockingProfile*> ContentBlockingManager::getProfiles()
 	if (m_profiles.isEmpty())
 	{
 		QStringList profiles;
-		QList<QFileInfo> allProfiles(QDir(QLatin1String(":/blocking/")).entryInfoList(QStringList(QLatin1String("*.txt")), QDir::Files));
-		allProfiles.append(QDir(SessionsManager::getWritableDataPath(QLatin1String("blocking"))).entryInfoList(QStringList(QLatin1String("*.txt")), QDir::Files));
+		QList<QFileInfo> allProfiles(QDir(QLatin1String(":/contentBlocking/")).entryInfoList(QStringList(QLatin1String("*.txt")), QDir::Files));
+		allProfiles.append(QDir(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking"))).entryInfoList(QStringList(QLatin1String("*.txt")), QDir::Files));
 
 		for (int i = 0; i < allProfiles.count(); ++i)
 		{

@@ -1,0 +1,3 @@
+[Adblock Plus 2.0]
+! URL: https://www.certyficate.it/adblock/adblock.txt
+! Title: Adblock & uBlock polish filters

@@ -1,0 +1,3 @@
+[Adblock Plus 2.0]
+! URL: https://raw.githubusercontent.com/reek/anti-adblock-killer/master/anti-adblock-killer-filters.txt
+! Title: AakList (Anti-Adblock Killer)

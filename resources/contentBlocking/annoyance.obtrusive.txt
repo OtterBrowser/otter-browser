@@ -1,0 +1,3 @@
+[Adblock Plus 1.1]
+! URL: https://raw.githubusercontent.com/liamja/Prebake/master/obtrusive.txt
+! Title: Prebake - Filter Obtrusive Cookie Notices
