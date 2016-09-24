@@ -41,8 +41,8 @@ ContentBlockingInformationWidget::ContentBlockingInformationWidget(Window *windo
 {
 	QMenu *menu(new QMenu(this));
 
-	m_elementsMenu = menu->addMenu(tr("Blocked Elements"));
 	m_profilesMenu = menu->addMenu(tr("Active Profiles"));
+	m_elementsMenu = menu->addMenu(tr("Blocked Elements"));
 
 	setMenu(menu);
 	setPopupMode(QToolButton::InstantPopup);
