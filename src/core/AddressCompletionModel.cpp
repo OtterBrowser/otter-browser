@@ -51,146 +51,149 @@ void AddressCompletionModel::timerEvent(QTimerEvent *event)
 
 		m_updateTimer = 0;
 
-		if (m_filter.isEmpty())
+		if (!m_filter.isEmpty())
 		{
-			return;
+			updateModel();
+
+			emit completionReady(m_filter);
+		}
+	}
+}
+
+void AddressCompletionModel::updateModel()
+{
+	QList<CompletionEntry> completions;
+
+	if (m_types.testFlag(SearchSuggestionsCompletionType))
+	{
+		const QString keyword(m_filter.section(QLatin1Char(' '), 0, 0));
+		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(keyword, true));
+		QString title(m_defaultSearchEngine.title);
+		QString text(m_filter);
+		QIcon icon(m_defaultSearchEngine.icon);
+
+		if (!searchEngine.identifier.isEmpty())
+		{
+			title = searchEngine.title;
+			text = m_filter.section(QLatin1Char(' '), 1, -1);
+			icon = searchEngine.icon;
+		}
+		else if (keyword == QLatin1String("?"))
+		{
+			text = m_filter.section(QLatin1Char(' '), 1, -1);
 		}
 
-		QList<CompletionEntry> completions;
-
-		if (m_types.testFlag(SearchSuggestionsCompletionType))
+		if (icon.isNull())
 		{
-			const QString keyword(m_filter.section(QLatin1Char(' '), 0, 0));
-			const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(keyword, true));
-			QString title(m_defaultSearchEngine.title);
-			QString text(m_filter);
-			QIcon icon(m_defaultSearchEngine.icon);
+			icon = ThemesManager::getIcon(QLatin1String("edit-find"));
+		}
 
-			if (!searchEngine.identifier.isEmpty())
+		if (m_showCompletionCategories)
+		{
+			completions.append(CompletionEntry(QUrl(), tr("Search with %1").arg(title), QString(), QIcon(), HeaderType));
+
+			title = QString();
+		}
+
+		CompletionEntry completionEntry(QUrl(), title, QString(), icon, SearchSuggestionType);
+		completionEntry.text = text;
+
+		completions.append(completionEntry);
+	}
+
+	if (m_types.testFlag(BookmarksCompletionType))
+	{
+		const QList<BookmarksModel::BookmarkMatch> bookmarks(BookmarksManager::findBookmarks(m_filter));
+
+		if (m_showCompletionCategories && !bookmarks.isEmpty())
+		{
+			completions.append(CompletionEntry(QUrl(), tr("Bookmarks"), QString(), QIcon(), HeaderType));
+		}
+
+		for (int i = 0; i < bookmarks.count(); ++i)
+		{
+			CompletionEntry completionEntry(bookmarks.at(i).bookmark->data(BookmarksModel::UrlRole).toUrl(), bookmarks.at(i).bookmark->data(BookmarksModel::TitleRole).toString(), bookmarks.at(i).match, bookmarks.at(i).bookmark->data(Qt::DecorationRole).value<QIcon>(), BookmarkType);
+			completionEntry.keyword = bookmarks.at(i).bookmark->data(BookmarksModel::KeywordRole).toString();
+
+			if (completionEntry.keyword.startsWith(m_filter))
 			{
-				title = searchEngine.title;
-				text = m_filter.section(QLatin1Char(' '), 1, -1);
-				icon = searchEngine.icon;
+				completionEntry.match = completionEntry.keyword;
 			}
-			else if (keyword == QLatin1String("?"))
-			{
-				text = m_filter.section(QLatin1Char(' '), 1, -1);
-			}
-
-			if (icon.isNull())
-			{
-				icon = ThemesManager::getIcon(QLatin1String("edit-find"));
-			}
-
-			if (m_showCompletionCategories)
-			{
-				completions.append(CompletionEntry(QUrl(), tr("Search with %1").arg(title), QString(), QIcon(), HeaderType));
-
-				title = QString();
-			}
-
-			CompletionEntry completionEntry(QUrl(), title, QString(), icon, SearchSuggestionType);
-			completionEntry.text = text;
 
 			completions.append(completionEntry);
 		}
-
-		if (m_types.testFlag(BookmarksCompletionType))
-		{
-			const QList<BookmarksModel::BookmarkMatch> bookmarks(BookmarksManager::findBookmarks(m_filter));
-
-			if (m_showCompletionCategories && !bookmarks.isEmpty())
-			{
-				completions.append(CompletionEntry(QUrl(), tr("Bookmarks"), QString(), QIcon(), HeaderType));
-			}
-
-			for (int i = 0; i < bookmarks.count(); ++i)
-			{
-				CompletionEntry completionEntry(bookmarks.at(i).bookmark->data(BookmarksModel::UrlRole).toUrl(), bookmarks.at(i).bookmark->data(BookmarksModel::TitleRole).toString(), bookmarks.at(i).match, bookmarks.at(i).bookmark->data(Qt::DecorationRole).value<QIcon>(), BookmarkType);
-				completionEntry.keyword = bookmarks.at(i).bookmark->data(BookmarksModel::KeywordRole).toString();
-
-				if (completionEntry.keyword.startsWith(m_filter))
-				{
-					completionEntry.match = completionEntry.keyword;
-				}
-
-				completions.append(completionEntry);
-			}
-		}
-
-		if (m_types.testFlag(LocalPathSuggestionsCompletionType) && m_filter.contains(QDir::separator()))
-		{
-			const QString directory(m_filter.section(QDir::separator(), 0, -2) + QDir::separator());
-			const QString prefix(m_filter.section(QDir::separator(), -1, -1));
-			const QList<QFileInfo> entries(QDir(Utils::normalizePath(directory)).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot));
-			const QFileIconProvider iconProvider;
-			bool wasAdded(!m_showCompletionCategories);
-
-			for (int i = 0; i < entries.count(); ++i)
-			{
-				if (entries.at(i).fileName().startsWith(prefix, Qt::CaseInsensitive))
-				{
-					const QString path(directory + entries.at(i).fileName());
-					const QMimeType type(QMimeDatabase().mimeTypeForFile(entries.at(i), QMimeDatabase::MatchExtension));
-
-					if (!wasAdded)
-					{
-						completions.append(CompletionEntry(QUrl(), tr("Local files"), QString(), QIcon(), HeaderType));
-
-						wasAdded = true;
-					}
-
-					completions.append(CompletionEntry(path, path, QString(), QIcon::fromTheme(type.iconName(), iconProvider.icon(entries.at(i))), LocalPathType));
-				}
-			}
-		}
-
-		if (m_types.testFlag(HistoryCompletionType))
-		{
-			const QList<HistoryModel::HistoryEntryMatch> entries(HistoryManager::findEntries(m_filter));
-
-			if (m_showCompletionCategories && !entries.isEmpty())
-			{
-				completions.append(CompletionEntry(QUrl(), tr("History"), QString(), QIcon(), HeaderType));
-			}
-
-			for (int i = 0; i < entries.count(); ++i)
-			{
-				completions.append(CompletionEntry(entries.at(i).entry->data(HistoryModel::UrlRole).toUrl(), entries.at(i).entry->data(HistoryModel::TitleRole).toString(), entries.at(i).match, entries.at(i).entry->data(Qt::DecorationRole).value<QIcon>(), (entries.at(i).isTypedIn ? TypedInHistoryType : HistoryType)));
-			}
-		}
-
-		if (m_types.testFlag(SpecialPagesCompletionType))
-		{
-			const QStringList specialPages(AddonsManager::getSpecialPages());
-			bool wasAdded(!m_showCompletionCategories);
-
-			for (int i = 0; i < specialPages.count(); ++i)
-			{
-				const AddonsManager::SpecialPageInformation information(AddonsManager::getSpecialPage(specialPages.at(i)));
-
-				if (information.url.toString().startsWith(m_filter))
-				{
-					if (!wasAdded)
-					{
-						completions.append(CompletionEntry(QUrl(), tr("Special pages"), QString(), QIcon(), HeaderType));
-
-						wasAdded = true;
-					}
-
-					completions.append(CompletionEntry(information.url, information.getTitle(), QString(), information.icon, SpecialPageType));
-				}
-			}
-		}
-
-		beginResetModel();
-
-		m_completions = completions;
-
-		endResetModel();
-
-		emit completionReady(m_filter);
 	}
+
+	if (m_types.testFlag(LocalPathSuggestionsCompletionType) && m_filter.contains(QDir::separator()))
+	{
+		const QString directory(m_filter.section(QDir::separator(), 0, -2) + QDir::separator());
+		const QString prefix(m_filter.section(QDir::separator(), -1, -1));
+		const QList<QFileInfo> entries(QDir(Utils::normalizePath(directory)).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot));
+		const QFileIconProvider iconProvider;
+		bool wasAdded(!m_showCompletionCategories);
+
+		for (int i = 0; i < entries.count(); ++i)
+		{
+			if (entries.at(i).fileName().startsWith(prefix, Qt::CaseInsensitive))
+			{
+				const QString path(directory + entries.at(i).fileName());
+				const QMimeType type(QMimeDatabase().mimeTypeForFile(entries.at(i), QMimeDatabase::MatchExtension));
+
+				if (!wasAdded)
+				{
+					completions.append(CompletionEntry(QUrl(), tr("Local files"), QString(), QIcon(), HeaderType));
+
+					wasAdded = true;
+				}
+
+				completions.append(CompletionEntry(path, path, QString(), QIcon::fromTheme(type.iconName(), iconProvider.icon(entries.at(i))), LocalPathType));
+			}
+		}
+	}
+
+	if (m_types.testFlag(HistoryCompletionType))
+	{
+		const QList<HistoryModel::HistoryEntryMatch> entries(HistoryManager::findEntries(m_filter));
+
+		if (m_showCompletionCategories && !entries.isEmpty())
+		{
+			completions.append(CompletionEntry(QUrl(), tr("History"), QString(), QIcon(), HeaderType));
+		}
+
+		for (int i = 0; i < entries.count(); ++i)
+		{
+			completions.append(CompletionEntry(entries.at(i).entry->data(HistoryModel::UrlRole).toUrl(), entries.at(i).entry->data(HistoryModel::TitleRole).toString(), entries.at(i).match, entries.at(i).entry->data(Qt::DecorationRole).value<QIcon>(), (entries.at(i).isTypedIn ? TypedInHistoryType : HistoryType)));
+		}
+	}
+
+	if (m_types.testFlag(SpecialPagesCompletionType))
+	{
+		const QStringList specialPages(AddonsManager::getSpecialPages());
+		bool wasAdded(!m_showCompletionCategories);
+
+		for (int i = 0; i < specialPages.count(); ++i)
+		{
+			const AddonsManager::SpecialPageInformation information(AddonsManager::getSpecialPage(specialPages.at(i)));
+
+			if (information.url.toString().startsWith(m_filter))
+			{
+				if (!wasAdded)
+				{
+					completions.append(CompletionEntry(QUrl(), tr("Special pages"), QString(), QIcon(), HeaderType));
+
+					wasAdded = true;
+				}
+
+				completions.append(CompletionEntry(information.url, information.getTitle(), QString(), information.icon, SpecialPageType));
+			}
+		}
+	}
+
+	beginResetModel();
+
+	m_completions = completions;
+
+	endResetModel();
 }
 
 void AddressCompletionModel::setFilter(const QString &filter)
@@ -302,6 +305,16 @@ Qt::ItemFlags AddressCompletionModel::flags(const QModelIndex &index) const
 int AddressCompletionModel::rowCount(const QModelIndex &index) const
 {
 	return (index.isValid() ? 0 : m_completions.count());
+}
+
+bool AddressCompletionModel::event(QEvent *event)
+{
+	if (event->type() == QEvent::LanguageChange && m_completions.count() > 0)
+	{
+		updateModel();
+	}
+
+	return QAbstractListModel::event(event);
 }
 
 }

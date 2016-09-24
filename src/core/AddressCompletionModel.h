@@ -88,12 +88,14 @@ public:
 	QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
 	Qt::ItemFlags flags(const QModelIndex &index) const;
 	int rowCount(const QModelIndex &index = QModelIndex()) const;
+	bool event(QEvent *event);
 
 public slots:
 	void setFilter(const QString &filter = QString());
 
 protected:
 	void timerEvent(QTimerEvent *event);
+	void updateModel();
 
 private:
 	QList<CompletionEntry> m_completions;
