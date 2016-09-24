@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "TabBarWidget.h"
+#include "ContentsWidget.h"
 #include "MainWindow.h"
 #include "PreviewWidget.h"
 #include "TabBarStyle.h"
@@ -184,6 +185,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 		menu.addAction(cloneTabAction);
 		menu.addAction(pinTabAction);
+		menu.addAction(window ? window->getContentsWidget()->getAction(ActionsManager::MuteTabMediaAction) : new Action(ActionsManager::MuteTabMediaAction, &menu));
 		menu.addSeparator();
 		menu.addAction(detachTabAction);
 		menu.addSeparator();
