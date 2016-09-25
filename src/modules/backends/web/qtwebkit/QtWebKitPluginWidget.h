@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Martin Rejda <rejdi@otter.ksp.sk>
-* Copyright (C) 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -35,11 +35,14 @@ public:
 	explicit QtWebKitPluginWidget(const QString &mimeType, const QUrl &url, QWidget *parent = NULL);
 
 protected:
+	void changeEvent(QEvent *event);
 	void paintEvent(QPaintEvent *event);
 	void enterEvent(QEvent *event);
 	void leaveEvent(QEvent *event);
 
 private:
+	QString m_mimeType;
+	QString m_url;
 	bool m_isHovered;
 };
 

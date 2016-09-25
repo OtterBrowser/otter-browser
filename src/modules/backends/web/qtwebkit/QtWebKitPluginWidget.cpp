@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Martin Rejda <rejdi@otter.ksp.sk>
-* Copyright (C) 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -27,9 +27,21 @@ namespace Otter
 {
 
 QtWebKitPluginWidget::QtWebKitPluginWidget(const QString &mimeType, const QUrl &url, QWidget *parent) : QWidget(parent),
+	m_mimeType(mimeType),
+	m_url(url.toDisplayString()),
 	m_isHovered(false)
 {
 	setToolTip(tr("Click to load content (%1) handled by plugin from: %2").arg(mimeType).arg(url.toDisplayString()));
+}
+
+void QtWebKitPluginWidget::changeEvent(QEvent *event)
+{
+	QWidget::changeEvent(event);
+
+	if (event->type() == QEvent::LanguageChange)
+	{
+		setToolTip(tr("Click to load content (%1) handled by plugin from: %2").arg(m_mimeType).arg(m_url));
+	}
 }
 
 void QtWebKitPluginWidget::paintEvent(QPaintEvent *event)
