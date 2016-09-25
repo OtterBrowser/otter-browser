@@ -527,14 +527,32 @@ void QtWebKitWebWidget::linkHovered(const QString &link)
 
 void QtWebKitWebWidget::clearPluginToken()
 {
-	m_pluginToken = QString();
+	QList<QWebFrame*> frames;
+	frames.append(m_page->mainFrame());
+
+	while (!frames.isEmpty())
+	{
+		QWebFrame *frame(frames.takeFirst());
+		QWebElement element(frame->documentElement().findFirst(QStringLiteral("object[data-otter-browser=\"%1\"], embed[data-otter-browser=\"%1\"]").arg(m_pluginToken)));
+
+		if (!element.isNull())
+		{
+			element.removeAttribute(QLatin1String("data-otter-browser"));
+
+			break;
+		}
+
+		frames.append(frame->childFrames());
+	}
 
 	Action *loadPluginsAction(getExistingAction(ActionsManager::LoadPluginsAction));
 
 	if (loadPluginsAction)
 	{
-		loadPluginsAction->setEnabled(true);
+		loadPluginsAction->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
 	}
+
+	m_pluginToken = QString();
 }
 
 void QtWebKitWebWidget::resetSpellCheck(QWebElement element)
@@ -2557,20 +2575,10 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 			{
 				m_pluginToken = QUuid::createUuid().toString();
 
-				hitResult.element().setAttribute(QLatin1String("data-otter-browser"), m_pluginToken);
-
 				QWebElement element(hitResult.element().clone());
+				element.setAttribute(QLatin1String("data-otter-browser"), m_pluginToken);
 
 				hitResult.element().replace(element);
-
-				element.removeAttribute(QLatin1String("data-otter-browser"));
-
-				Action *loadPluginsAction(getExistingAction(ActionsManager::LoadPluginsAction));
-
-				if (loadPluginsAction)
-				{
-					loadPluginsAction->setEnabled(findChildren<QtWebKitPluginWidget*>().count() > 0);
-				}
 
 				return true;
 			}

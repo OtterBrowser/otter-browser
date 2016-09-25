@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Martin Rejda <rejdi@otter.ksp.sk>
-* Copyright (C) 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -32,12 +32,17 @@ QtWebKitPluginFactory::QtWebKitPluginFactory(QtWebKitWebWidget *parent) : QWebPl
 
 QObject* QtWebKitPluginFactory::create(const QString &mimeType, const QUrl &url, const QStringList &argumentNames, const QStringList &argumentValues) const
 {
-	if (m_widget->canLoadPlugins() || (argumentNames.contains(QLatin1String("data-otter-browser")) && argumentValues.value(argumentNames.indexOf(QLatin1String("data-otter-browser"))) == m_widget->getPluginToken()))
+	const bool isActivatingPlugin(argumentNames.contains(QLatin1String("data-otter-browser")) && argumentValues.value(argumentNames.indexOf(QLatin1String("data-otter-browser"))) == m_widget->getPluginToken());
+
+	if (m_widget->canLoadPlugins() || isActivatingPlugin)
 	{
+		if (isActivatingPlugin)
+		{
+			m_widget->clearPluginToken();
+		}
+
 		return NULL;
 	}
-
-	m_widget->clearPluginToken();
 
 	return new QtWebKitPluginWidget(mimeType, url, m_widget);
 }
