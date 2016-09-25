@@ -560,7 +560,8 @@ QVector<ToolBarsManager::ToolBarDefinition> ToolBarsManager::getToolBarDefinitio
 {
 	if (m_definitions.isEmpty())
 	{
-		const QHash<QString, ToolBarsManager::ToolBarDefinition> defaultDefinitions(loadToolBars(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"), true), true));
+		const QString bundledToolBarsPath(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json"), true));
+		const QHash<QString, ToolBarsManager::ToolBarDefinition> defaultDefinitions(loadToolBars(bundledToolBarsPath, true));
 
 		m_definitions.reserve(OtherToolBar);
 
@@ -571,7 +572,7 @@ QVector<ToolBarsManager::ToolBarDefinition> ToolBarsManager::getToolBarDefinitio
 
 		const QString customToolBarsPath(SessionsManager::getReadableDataPath(QLatin1String("toolBars.json")));
 
-		if (QFile::exists(customToolBarsPath))
+		if (QFile::exists(customToolBarsPath) && bundledToolBarsPath != customToolBarsPath)
 		{
 			const QHash<QString, ToolBarDefinition> customDefinitions(loadToolBars(customToolBarsPath, false));
 
