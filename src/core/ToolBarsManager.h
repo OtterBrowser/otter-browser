@@ -22,6 +22,8 @@
 
 #include "ActionsManager.h"
 
+#include <QtCore/QCoreApplication>
+
 namespace Otter
 {
 
@@ -67,6 +69,11 @@ public:
 		bool wasRemoved;
 
 		ToolBarDefinition() : normalVisibility(AlwaysVisibleToolBar), fullScreenVisibility(AlwaysHiddenToolBar), location(Qt::NoToolBarArea), buttonStyle(Qt::ToolButtonIconOnly), identifier(-1), iconSize(-1), maximumButtonSize(-1), row(-1), canReset(false), isDefault(false), wasRemoved(false) {}
+
+		QString getTitle() const
+		{
+			return (isDefault ? QCoreApplication::translate("actions", title.toUtf8()) : title);
+		}
 	};
 
 	static void createInstance(QObject *parent = NULL);

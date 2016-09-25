@@ -506,11 +506,6 @@ QHash<QString, ToolBarsManager::ToolBarDefinition> ToolBarsManager::loadToolBars
 			toolBar.normalVisibility = AlwaysVisibleToolBar;
 		}
 
-		if (isDefault)
-		{
-			toolBar.title = QCoreApplication::translate("actions", toolBar.title.toUtf8());
-		}
-
 		if (location == QLatin1String("top"))
 		{
 			toolBar.location = Qt::TopToolBarArea;
