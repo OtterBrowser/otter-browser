@@ -509,7 +509,7 @@ void Menu::populateClosedWindowsMenu()
 		}
 	}
 
-	connect(clearAction, SIGNAL(trigerred()), this, SLOT(clearClosedWindows()));
+	connect(clearAction, SIGNAL(triggered()), this, SLOT(clearClosedWindows()));
 }
 
 void Menu::populateSessionsMenu()
