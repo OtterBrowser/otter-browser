@@ -175,7 +175,7 @@ QString SessionsManager::getReadableDataPath(const QString &path, bool forceBund
 {
 	const QString writablePath(getWritableDataPath(path));
 
-	return ((!forceBundled && QFile::exists(writablePath)) ? writablePath : QLatin1String(":/") + (path.contains(QLatin1Char('/')) ? QString() : QLatin1String("other/")) + QDir::separator() + path);
+	return ((!forceBundled && QFile::exists(writablePath)) ? writablePath : QLatin1String(":/") + (path.contains(QLatin1Char('/')) ? QString() : QLatin1String("other")) + QDir::separator() + path);
 }
 
 QString SessionsManager::getWritableDataPath(const QString &path)
