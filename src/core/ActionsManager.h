@@ -222,6 +222,7 @@ public:
 		ShowSidebarAction,
 		ShowErrorConsoleAction,
 		LockToolBarsAction,
+		ResetToolBarsAction,
 		OpenPanelAction,
 		ClosePanelAction,
 		ContentBlockingAction,

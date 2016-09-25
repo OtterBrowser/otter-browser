@@ -35,7 +35,7 @@ TrayIcon::TrayIcon(Application *parent) : QObject(parent),
 	m_autoHideTimer(0)
 {
 	Menu *menu(new Menu());
-	menu->addAction(-1)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Show Windows"));
+	menu->addAction()->setOverrideText(QT_TRANSLATE_NOOP("actions", "Show Windows"));
 	menu->addSeparator();
 	menu->addAction(ActionsManager::NewTabAction);
 	menu->addAction(ActionsManager::NewTabPrivateAction);

@@ -77,6 +77,7 @@ public:
 	};
 
 	static void createInstance(QObject *parent = NULL);
+	static void resetToolBars();
 	static void setToolBar(ToolBarsManager::ToolBarDefinition definition);
 	static void setToolBarsLocked(bool locked);
 	static ToolBarsManager* getInstance();
@@ -92,7 +93,6 @@ public slots:
 	void configureToolBar(int identifier = -1);
 	void resetToolBar(int identifier = -1);
 	void removeToolBar(int identifier = -1);
-	void resetToolBars();
 
 protected:
 	void timerEvent(QTimerEvent *event);

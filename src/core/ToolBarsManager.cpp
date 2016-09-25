@@ -298,7 +298,7 @@ void ToolBarsManager::resetToolBars()
 
 	for (int i = 0; i < customToolBars.count(); ++i)
 	{
-		emit toolBarRemoved(customToolBars.at(i));
+		emit m_instance->toolBarRemoved(customToolBars.at(i));
 	}
 
 	m_definitions.clear();
@@ -314,7 +314,7 @@ void ToolBarsManager::resetToolBars()
 
 	for (int i = 0; i < m_definitions.count(); ++i)
 	{
-		emit toolBarModified(i);
+		emit m_instance->toolBarModified(i);
 	}
 
 	m_instance->scheduleSave();

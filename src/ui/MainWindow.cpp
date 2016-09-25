@@ -606,6 +606,10 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			ToolBarsManager::setToolBarsLocked(Action::calculateCheckedState(parameters, getAction(ActionsManager::LockToolBarsAction)));
 
 			break;
+		case ActionsManager::ResetToolBarsAction:
+			ToolBarsManager::resetToolBars();
+
+			break;
 		case ActionsManager::ContentBlockingAction:
 			{
 				ContentBlockingDialog dialog(this);
