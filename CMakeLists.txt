@@ -80,6 +80,7 @@ endif (COMPILER_SUPPORTS_CXX11)
 
 option(ENABLE_QTWEBENGINE "Enable QtWebEngine backend (requires Qt 5.6)" ON)
 option(ENABLE_QTWEBKIT "Enable QtWebKit backend (requires Qt 5.3)" ON)
+option(ENABLE_CRASHREPORTS "Enable built-in crash reporting (only for official builds)" OFF)
 
 find_package(Qt5 5.3.0 REQUIRED COMPONENTS Core DBus Gui Multimedia Network PrintSupport Qml Widgets XmlPatterns)
 find_package(Qt5WebEngineWidgets 5.6.0 QUIET)
@@ -370,6 +371,46 @@ if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 	)
 endif (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 
+if (ENABLE_CRASHREPORTS)
+	add_definitions(-DOTTER_ENABLE_CRASHREPORTS)
+	include_directories(${CMAKE_SOURCE_DIR}/3rdparty/breakpad/src/)
+
+	if (WIN32)
+		set(otter_src
+			${otter_src}
+			3rdparty/breakpad/src/common/windows/guid_string.cc
+			3rdparty/breakpad/src/client/windows/crash_generation/crash_generation_client.cc
+			3rdparty/breakpad/src/client/windows/handler/exception_handler.cc
+		)
+	elseif (CMAKE_SYSTEM_NAME MATCHES "Linux")
+		set(otter_src
+			${otter_src}
+			3rdparty/breakpad/src/client/minidump_file_writer.cc
+			3rdparty/breakpad/src/client/linux/crash_generation/crash_generation_client.cc
+			3rdparty/breakpad/src/client/linux/dump_writer_common/thread_info.cc
+			3rdparty/breakpad/src/client/linux/dump_writer_common/ucontext_reader.cc
+			3rdparty/breakpad/src/client/linux/handler/exception_handler.cc
+			3rdparty/breakpad/src/client/linux/handler/minidump_descriptor.cc
+			3rdparty/breakpad/src/client/linux/log/log.cc
+			3rdparty/breakpad/src/client/linux/microdump_writer/microdump_writer.cc
+			3rdparty/breakpad/src/client/linux/minidump_writer/linux_core_dumper.cc
+			3rdparty/breakpad/src/client/linux/minidump_writer/linux_dumper.cc
+			3rdparty/breakpad/src/client/linux/minidump_writer/linux_ptrace_dumper.cc
+			3rdparty/breakpad/src/client/linux/minidump_writer/minidump_writer.cc
+			3rdparty/breakpad/src/common/convert_UTF.c
+			3rdparty/breakpad/src/common/md5.cc
+			3rdparty/breakpad/src/common/string_conversion.cc
+			3rdparty/breakpad/src/common/linux/elf_core_dump.cc
+			3rdparty/breakpad/src/common/linux/elfutils.cc
+			3rdparty/breakpad/src/common/linux/file_id.cc
+			3rdparty/breakpad/src/common/linux/guid_creator.cc
+			3rdparty/breakpad/src/common/linux/linux_libc_support.cc
+			3rdparty/breakpad/src/common/linux/memory_mapped_file.cc
+			3rdparty/breakpad/src/common/linux/safe_readlink.cc
+		)
+	endif (WIN32)
+endif (ENABLE_CRASHREPORTS)
+
 if (HUNSPELL_FOUND)
 	add_definitions(-DOTTER_ENABLE_SPELLCHECK)
 	add_definitions(-DSONNET_STATIC)
@@ -479,9 +520,13 @@ elseif (APPLE)
 	target_link_libraries(otter-browser ${FRAMEWORK_Cocoa} ${FRAMEWORK_Foundation})
 elseif (UNIX)
 	target_link_libraries(otter-browser Qt5::DBus)
+
+	if (ENABLE_CRASHREPORTS)
+		target_link_libraries(otter-browser -lpthread)
+	endif (ENABLE_CRASHREPORTS)
 endif (WIN32)
 
-target_link_libraries(otter-browser Qt5::Core Qt5::Gui Qt5::Multimedia Qt5::Network Qt5::PrintSupport Qt5::Qml Qt5::Widgets Qt5::XmlPatterns)
+target_link_libraries(otter-browser Qt5::Core Qt5::Gui Qt5::Multimedia Qt5::Network Qt5::PrintSupport Qt5::Qml Qt5::Widgets Qt5::XmlPatterns -lpthread)
 
 set(OTTER_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 set(XDG_APPS_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/applications CACHE FILEPATH "Install path for .desktop files")
