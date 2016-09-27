@@ -28,7 +28,6 @@
 #include "../../../../core/UserScript.h"
 #include "../../../../ui/ContentsDialog.h"
 
-#include <QtCore/QEventLoop>
 #include <QtCore/QFile>
 #include <QtCore/QRegularExpression>
 #include <QtGui/QDesktopServices>
