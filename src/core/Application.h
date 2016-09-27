@@ -52,6 +52,18 @@ public:
 
 	Q_DECLARE_FLAGS(MainWindowFlags, MainWindowFlag)
 
+	enum ReportOption
+	{
+		BasicReport = 0,
+		EnvironmentReport = 1,
+		KeyboardShortcutsReport = 2,
+		PathsReport = 4,
+		SettingsReport = 8,
+		FullReport = (EnvironmentReport | KeyboardShortcutsReport | PathsReport | SettingsReport)
+	};
+
+	Q_DECLARE_FLAGS(ReportOptions, ReportOption)
+
 	explicit Application(int &argc, char **argv);
 	~Application();
 
@@ -65,7 +77,7 @@ public:
 	static TrayIcon* getTrayIcon();
 	static PlatformIntegration* getPlatformIntegration();
 	QCommandLineParser* getCommandLineParser();
-	static QString createReport();
+	static QString createReport(ReportOptions options = FullReport);
 	static QString getFullVersion();
 	static QString getLocalePath();
 	static QList<MainWindow*> getWindows();
@@ -108,5 +120,6 @@ signals:
 }
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::Application::MainWindowFlags)
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::Application::ReportOptions)
 
 #endif

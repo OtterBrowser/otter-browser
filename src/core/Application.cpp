@@ -193,15 +193,54 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 
 		SettingsManager::createInstance(profilePath, this);
 
-		SessionsManager::createInstance(profilePath, cachePath, isPrivate, true, this);
+		SessionsManager::createInstance(profilePath, cachePath, isPrivate, false, this);
+
+		QStringList rawReportOptions(m_commandLineParser.positionalArguments());
+		ReportOptions reportOptions(BasicReport);
+
+		if (rawReportOptions.isEmpty() || rawReportOptions.contains(QLatin1String("full")))
+		{
+			reportOptions = FullReport;
+		}
+		else
+		{
+			if (rawReportOptions.contains("environment"))
+			{
+				reportOptions |= EnvironmentReport;
+			}
+
+			if (rawReportOptions.contains("keyboardShortcuts"))
+			{
+				reportOptions |= KeyboardShortcutsReport;
+			}
+
+			if (rawReportOptions.contains("paths"))
+			{
+				reportOptions |= PathsReport;
+			}
+
+			if (rawReportOptions.contains("settings"))
+			{
+				reportOptions |= SettingsReport;
+			}
+		}
 
 #ifdef Q_OS_WIN
-		ReportDialog dialog;
-		dialog.exec();
-#else
-		QTextStream stream(stdout);
-		stream << createReport();
+		if (!rawReportOptions.contains(QLatin1String("noDialog")))
+		{
+			rawReportOptions.append(QLatin1String("dialog"));
+		}
 #endif
+		if (rawReportOptions.contains(QLatin1String("dialog")))
+		{
+			ReportDialog dialog(reportOptions);
+			dialog.exec();
+		}
+		else
+		{
+			QTextStream stream(stdout);
+			stream << createReport(reportOptions);
+		}
 
 		return;
 	}
@@ -763,7 +802,7 @@ QCommandLineParser* Application::getCommandLineParser()
 	return &m_commandLineParser;
 }
 
-QString Application::createReport()
+QString Application::createReport(ReportOptions options)
 {
 	ActionsManager::createInstance(getInstance());
 	AddonsManager::createInstance(getInstance());
@@ -802,81 +841,99 @@ QString Application::createReport()
 	stream << QLatin1String("Web Backend");
 	stream << (webBackend ? QStringLiteral("%1 %2").arg(webBackend->getTitle()).arg(webBackend->getEngineVersion()) : QLatin1String("none"));
 	stream.setFieldWidth(0);
-	stream << QLatin1String("\n\nPaths:\n\t");
-	stream.setFieldWidth(20);
-	stream << QLatin1String("Profile");
-	stream << SessionsManager::getProfilePath();
-	stream.setFieldWidth(0);
-	stream << QLatin1String("\n\t");
-	stream.setFieldWidth(20);
-	stream << QLatin1String("Configuration");
-	stream << SessionsManager::getWritableDataPath(QLatin1String("otter.conf"));
-	stream.setFieldWidth(0);
-	stream << QLatin1String("\n\t");
-	stream.setFieldWidth(20);
-	stream << QLatin1String("Session");
-	stream << SessionsManager::getSessionPath(SessionsManager::getCurrentSession());
-	stream.setFieldWidth(0);
-	stream << QLatin1String("\n\t");
-	stream.setFieldWidth(20);
-	stream << QLatin1String("Overrides");
-	stream << SessionsManager::getWritableDataPath(QLatin1String("override.ini"));
-	stream.setFieldWidth(0);
-	stream << QLatin1String("\n\t");
-	stream.setFieldWidth(20);
-	stream << QLatin1String("Bookmarks");
-	stream << SessionsManager::getWritableDataPath(QLatin1String("bookmarks.xbel"));
-	stream.setFieldWidth(0);
-	stream << QLatin1String("\n\t");
-	stream.setFieldWidth(20);
-	stream << QLatin1String("Notes");
-	stream << SessionsManager::getWritableDataPath(QLatin1String("notes.xbel"));
-	stream.setFieldWidth(0);
-	stream << QLatin1String("\n\t");
-	stream.setFieldWidth(20);
-	stream << QLatin1String("History");
-	stream << SessionsManager::getWritableDataPath(QLatin1String("browsingHistory.sqlite"));
-	stream.setFieldWidth(0);
-	stream << QLatin1String("\n\t");
-	stream.setFieldWidth(20);
-	stream << QLatin1String("Cache");
-	stream << SessionsManager::getCachePath();
-	stream.setFieldWidth(0);
-	stream << QLatin1String("\n\nEnvironment:\n\t");
-#if QT_VERSION >= 0x050400
-	stream.setFieldWidth(30);
-	stream << QLatin1String("System Name");
-	stream << QSysInfo::prettyProductName();
-	stream.setFieldWidth(0);
-	stream << QLatin1String("\n\t");
-	stream.setFieldWidth(30);
-	stream << QLatin1String("Build ABI");
-	stream << QSysInfo::buildAbi();
-	stream.setFieldWidth(0);
-	stream << QLatin1String("\n\t");
-	stream.setFieldWidth(30);
-	stream << QLatin1String("Build CPU Architecture");
-	stream << QSysInfo::buildCpuArchitecture();
-	stream.setFieldWidth(0);
-	stream << QLatin1String("\n\t");
-	stream.setFieldWidth(30);
-	stream << QLatin1String("Current CPU Architecture");
-	stream << QSysInfo::currentCpuArchitecture();
-	stream.setFieldWidth(0);
-	stream << QLatin1String("\n\t");
-#endif
-	stream.setFieldWidth(30);
-	stream << QLatin1String("Locale");
-	stream << QLocale::system().name();
-	stream.setFieldWidth(0);
-	stream << QLatin1String("\n\t");
-	stream.setFieldWidth(30);
-	stream << QLatin1String("Qt Version");
-	stream << QT_VERSION_STR;
-	stream.setFieldWidth(0);
 	stream << QLatin1String("\n\n");
-	stream << SettingsManager::getReport();
-	stream << ActionsManager::getReport();
+
+	if (options.testFlag(EnvironmentReport))
+	{
+		stream << QLatin1String("Environment:\n\t");
+#if QT_VERSION >= 0x050400
+		stream.setFieldWidth(30);
+		stream << QLatin1String("System Name");
+		stream << QSysInfo::prettyProductName();
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\t");
+		stream.setFieldWidth(30);
+		stream << QLatin1String("Build ABI");
+		stream << QSysInfo::buildAbi();
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\t");
+		stream.setFieldWidth(30);
+		stream << QLatin1String("Build CPU Architecture");
+		stream << QSysInfo::buildCpuArchitecture();
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\t");
+		stream.setFieldWidth(30);
+		stream << QLatin1String("Current CPU Architecture");
+		stream << QSysInfo::currentCpuArchitecture();
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\t");
+#endif
+		stream.setFieldWidth(30);
+		stream << QLatin1String("Locale");
+		stream << QLocale::system().name();
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\t");
+		stream.setFieldWidth(30);
+		stream << QLatin1String("Qt Version");
+		stream << QT_VERSION_STR;
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\n");
+	}
+
+	if (options.testFlag(PathsReport))
+	{
+		stream << QLatin1String("Paths:\n\t");
+		stream.setFieldWidth(20);
+		stream << QLatin1String("Profile");
+		stream << SessionsManager::getProfilePath();
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\t");
+		stream.setFieldWidth(20);
+		stream << QLatin1String("Configuration");
+		stream << SessionsManager::getWritableDataPath(QLatin1String("otter.conf"));
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\t");
+		stream.setFieldWidth(20);
+		stream << QLatin1String("Session");
+		stream << SessionsManager::getSessionPath(SessionsManager::getCurrentSession());
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\t");
+		stream.setFieldWidth(20);
+		stream << QLatin1String("Overrides");
+		stream << SessionsManager::getWritableDataPath(QLatin1String("override.ini"));
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\t");
+		stream.setFieldWidth(20);
+		stream << QLatin1String("Bookmarks");
+		stream << SessionsManager::getWritableDataPath(QLatin1String("bookmarks.xbel"));
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\t");
+		stream.setFieldWidth(20);
+		stream << QLatin1String("Notes");
+		stream << SessionsManager::getWritableDataPath(QLatin1String("notes.xbel"));
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\t");
+		stream.setFieldWidth(20);
+		stream << QLatin1String("History");
+		stream << SessionsManager::getWritableDataPath(QLatin1String("browsingHistory.json"));
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\t");
+		stream.setFieldWidth(20);
+		stream << QLatin1String("Cache");
+		stream << SessionsManager::getCachePath();
+		stream.setFieldWidth(0);
+		stream << QLatin1String("\n\n");
+	}
+
+	if (options.testFlag(SettingsReport))
+	{
+		stream << SettingsManager::getReport();
+	}
+
+	if (options.testFlag(KeyboardShortcutsReport))
+	{
+		stream << ActionsManager::getReport();
+	}
 
 	return report.remove(QRegularExpression(QLatin1String(" +$"), QRegularExpression::MultilineOption));
 }

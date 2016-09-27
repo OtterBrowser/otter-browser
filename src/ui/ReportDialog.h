@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 #define OTTER_REPORTDIALOG_H
 
 #include "Dialog.h"
+#include "../core/Application.h"
 
 namespace Otter
 {
@@ -35,7 +36,7 @@ class ReportDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit ReportDialog(QWidget *parent = NULL);
+	explicit ReportDialog(Application::ReportOptions options = Application::FullReport, QWidget *parent = NULL);
 	~ReportDialog();
 
 protected:

@@ -702,7 +702,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			break;
 		case ActionsManager::DiagnosticReportAction:
 			{
-				ReportDialog *dialog(new ReportDialog(this));
+				ReportDialog *dialog(new ReportDialog(Application::FullReport, this));
 				dialog->show();
 			}
 
