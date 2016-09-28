@@ -52,9 +52,11 @@ public:
 	enum ProfileCategory
 	{
 		OtherCategory = 0,
-		AdsCategory = 1,
-		PrivacyCategory = 2,
-		RegionalCategory = 4
+		AdvertisementsCategory = 1,
+		AnnoyanceCategory = 2,
+		PrivacyCategory = 4,
+		SocialCategory = 8,
+		RegionalCategory = 16
 	};
 
 	struct ContentBlockingRule

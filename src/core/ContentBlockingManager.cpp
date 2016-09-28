@@ -96,7 +96,7 @@ QStandardItemModel* ContentBlockingManager::createModel(QObject *parent, const Q
 		categoryEntries[category].insert(title, profileItems);
 	}
 
-	QList<QPair<ContentBlockingProfile::ProfileCategory, QString> > categoryTitles({qMakePair(ContentBlockingProfile::AdsCategory, tr("Ads")), qMakePair(ContentBlockingProfile::PrivacyCategory, tr("Privacy")), qMakePair(ContentBlockingProfile::RegionalCategory, tr("Regional")), qMakePair(ContentBlockingProfile::OtherCategory, tr("Other"))});
+	QList<QPair<ContentBlockingProfile::ProfileCategory, QString> > categoryTitles({qMakePair(ContentBlockingProfile::AdvertisementsCategory, tr("Advertisements")), qMakePair(ContentBlockingProfile::AnnoyanceCategory, tr("Annoyance")), qMakePair(ContentBlockingProfile::PrivacyCategory, tr("Privacy")), qMakePair(ContentBlockingProfile::SocialCategory, tr("Social")), qMakePair(ContentBlockingProfile::RegionalCategory, tr("Regional")), qMakePair(ContentBlockingProfile::OtherCategory, tr("Other"))});
 
 	for (int i = 0; i < categoryTitles.count(); ++i)
 	{
