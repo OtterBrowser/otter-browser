@@ -66,7 +66,7 @@ bool otterCrashDumpHandler(const wchar_t *dumpDirectory, const wchar_t *dumpIden
 
 	if (succeeded)
 	{
-		const QString dumpPath(QDir::toNativeSeparators(QString::fromWCharArray(dumpDirectory) + QDir::separator() + QString::fromWCharArray(dumpIdentifier)));
+		const QString dumpPath(QDir::toNativeSeparators(QString::fromWCharArray(dumpDirectory) + QDir::separator() + QString::fromWCharArray(dumpIdentifier) + QLatin1String(".dmp")));
 
 		qDebug("Crash dump saved to: %s", dumpPath.toLocal8Bit().constData());
 
