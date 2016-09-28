@@ -77,7 +77,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(AddressField_SuggestLocalPathsOption, true, BooleanType);
 	registerOption(AddressField_SuggestSearchOption, true, BooleanType);
 	registerOption(AddressField_SuggestSpecialPagesOption, true, BooleanType);
-	registerOption(Backends_WebOption, QLatin1String("qtwebkit"), EnumerationType, QStringList({QLatin1String("qtwebkit")}));
+	registerOption(Backends_WebOption, QLatin1String("qtwebkit"), EnumerationType, QStringList(QLatin1String("qtwebkit")));
 	registerOption(Browser_AlwaysAskWhereToSaveDownloadOption, true, BooleanType);
 	registerOption(Browser_AskToSavePasswordOption, true, BooleanType);
 	registerOption(Browser_DelayRestoringOfBackgroundTabsOption, false, BooleanType);
@@ -108,9 +108,9 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Browser_JavaScriptCanDisableContextMenuOption, true, BooleanType);
 	registerOption(Browser_JavaScriptCanOpenWindowsOption, true, BooleanType);
 	registerOption(Browser_JavaScriptCanShowStatusMessagesOption, false, BooleanType);
-	registerOption(Browser_KeyboardShortcutsProfilesOrderOption, QStringList(), ListType);
+	registerOption(Browser_KeyboardShortcutsProfilesOrderOption, QStringList(QLatin1String("default")), ListType);
 	registerOption(Browser_LocaleOption, QLatin1String("system"), StringType);
-	registerOption(Browser_MouseProfilesOrderOption, QStringList(), ListType);
+	registerOption(Browser_MouseProfilesOrderOption, QStringList(QLatin1String("default")), ListType);
 	registerOption(Browser_OfflineStorageLimitOption, 10240, IntegerType);
 	registerOption(Browser_OfflineWebApplicationCacheLimitOption, 10240, IntegerType);
 	registerOption(Browser_OpenLinksInNewTabOption, true, BooleanType);
@@ -205,13 +205,13 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Proxy_UseHttpsOption, false, BooleanType);
 	registerOption(Proxy_UseSocksOption, false, BooleanType);
 	registerOption(Proxy_UseSystemAuthenticationOption, false, BooleanType);
-	registerOption(Search_DefaultQuickSearchEngineOption, QLatin1String("duckduckgo"), EnumerationType, QStringList({QLatin1String("duckduckgo")}));
-	registerOption(Search_DefaultSearchEngineOption, QLatin1String("duckduckgo"), EnumerationType, QStringList({QLatin1String("duckduckgo")}));
+	registerOption(Search_DefaultQuickSearchEngineOption, QLatin1String("duckduckgo"), EnumerationType, QStringList(QLatin1String("duckduckgo")));
+	registerOption(Search_DefaultSearchEngineOption, QLatin1String("duckduckgo"), EnumerationType, QStringList(QLatin1String("duckduckgo")));
 	registerOption(Search_EnableFindInPageAsYouTypeOption, true, BooleanType);
 	registerOption(Search_ReuseLastQuickFindQueryOption, false, BooleanType);
 	registerOption(Search_SearchEnginesOrderOption, QStringList(), ListType);
 	registerOption(Search_SearchEnginesSuggestionsOption, false, BooleanType);
-	registerOption(Security_CiphersOption, QStringList({QLatin1String("default")}), ListType);
+	registerOption(Security_CiphersOption, QStringList(QLatin1String("default")), ListType);
 	registerOption(Security_IgnoreSslErrorsOption, QStringList(), ListType);
 	registerOption(Sessions_OpenInExistingWindowOption, false, BooleanType);
 	registerOption(Sidebar_CurrentPanelOption, QString(), StringType);
