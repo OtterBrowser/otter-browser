@@ -148,7 +148,7 @@ void StartPageContentsWidget::setBackgroundMode(StartPageContentsWidget::Backgro
 	const QString color(SettingsManager::getValue(SettingsManager::StartPage_BackgroundColorOption).toString());
 
 	m_path = ((mode == NoCustomBackground) ? QString() : SettingsManager::getValue(SettingsManager::StartPage_BackgroundPathOption).toString());
-	m_color = (color.isEmpty() ? QColor(Qt::transparent) : QColor(color));
+	m_color = ((mode == NoCustomBackground || color.isEmpty()) ? QColor(Qt::transparent) : QColor(color));
 	m_mode = mode;
 
 	update();
