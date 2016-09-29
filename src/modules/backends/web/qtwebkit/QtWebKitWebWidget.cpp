@@ -121,6 +121,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	if (isPrivate)
 	{
 		m_webView->settings()->setAttribute(QWebSettings::LocalStorageEnabled, false);
+		m_webView->settings()->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, false);
 		m_webView->settings()->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, false);
 	}
 #endif
@@ -871,6 +872,7 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 	if (settings->testAttribute(QWebSettings::PrivateBrowsingEnabled))
 	{
 		settings->setAttribute(QWebSettings::LocalStorageEnabled, false);
+		settings->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, false);
 		settings->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, false);
 	}
 #endif
