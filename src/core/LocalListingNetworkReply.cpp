@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2014 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -20,6 +20,7 @@
 
 #include "LocalListingNetworkReply.h"
 #include "SessionsManager.h"
+#include "ThemesManager.h"
 #include "Utils.h"
 
 #include <QtCore/QBuffer>
@@ -88,8 +89,14 @@ LocalListingNetworkReply::LocalListingNetworkReply(QObject *parent, const QNetwo
 		{
 			QByteArray byteArray;
 			QBuffer buffer(&byteArray);
+			QPixmap pixmap(QIcon::fromTheme(mimeType.iconName(), iconProvider.icon(entries.at(i))).pixmap(16, 16));
+			
+			if (pixmap.isNull())
+			{
+				pixmap = ThemesManager::getIcon((entries.at(i).isDir() ? QLatin1String("inode-directory") : QLatin1String("unknown")), false).pixmap(16, 16);
+			}
 
-			QIcon::fromTheme(mimeType.iconName(), iconProvider.icon(entries.at(i))).pixmap(16, 16).save(&buffer, "PNG");
+			pixmap.save(&buffer, "PNG");
 
 			icons[mimeType.name()] = QString(byteArray.toBase64());
 		}
