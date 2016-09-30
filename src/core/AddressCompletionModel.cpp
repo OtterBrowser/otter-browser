@@ -146,7 +146,7 @@ void AddressCompletionModel::updateModel()
 					wasAdded = true;
 				}
 
-				completions.append(CompletionEntry(path, path, QString(), QIcon::fromTheme(type.iconName(), iconProvider.icon(entries.at(i))), LocalPathType));
+				completions.append(CompletionEntry(QUrl::fromLocalFile(QDir::toNativeSeparators(path)), path, path, QIcon::fromTheme(type.iconName(), iconProvider.icon(entries.at(i))), LocalPathType));
 			}
 		}
 	}
