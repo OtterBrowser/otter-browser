@@ -173,7 +173,7 @@ QIcon FilePasswordsStorageBackend::getIcon() const
 	return QIcon();
 }
 
-QList<PasswordsManager::PasswordInformation> FilePasswordsStorageBackend::getPasswords(const QUrl &url)
+QList<PasswordsManager::PasswordInformation> FilePasswordsStorageBackend::getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types)
 {
 	if (!m_isInitialized)
 	{
@@ -184,20 +184,56 @@ QList<PasswordsManager::PasswordInformation> FilePasswordsStorageBackend::getPas
 
 	if (m_passwords.contains(host))
 	{
-		return m_passwords[host];
+		if (types == PasswordsManager::AnyPassword)
+		{
+			return m_passwords[host];
+		}
+
+		const QList<PasswordsManager::PasswordInformation> passwords(m_passwords[host]);
+		QList<PasswordsManager::PasswordInformation> matchingPasswords;
+
+		for (int i = 0; i < passwords.count(); ++i)
+		{
+			if (types.testFlag(passwords.at(i).type))
+			{
+				matchingPasswords.append(passwords.at(i));
+			}
+		}
+
+		return matchingPasswords;
 	}
 
 	return QList<PasswordsManager::PasswordInformation>();
 }
 
-bool FilePasswordsStorageBackend::hasPasswords(const QUrl &url)
+bool FilePasswordsStorageBackend::hasPasswords(const QUrl &url, PasswordsManager::PasswordTypes types)
 {
 	if (!m_isInitialized)
 	{
 		initialize();
 	}
 
-	return m_passwords.contains(url.host().isEmpty() ? QLatin1String("localhost") : url.host());
+	const QString host(url.host().isEmpty() ? QLatin1String("localhost") : url.host());
+
+	if (types == PasswordsManager::AnyPassword)
+	{
+		return m_passwords.contains(host);
+	}
+
+	if (m_passwords.contains(host))
+	{
+		const QList<PasswordsManager::PasswordInformation> passwords(m_passwords[host]);
+
+		for (int i = 0; i < passwords.count(); ++i)
+		{
+			if (types.testFlag(passwords.at(i).type))
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
 }
 
 }

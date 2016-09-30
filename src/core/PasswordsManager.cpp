@@ -53,14 +53,14 @@ PasswordsManager* PasswordsManager::getInstance()
 	return m_instance;
 }
 
-QList<PasswordsManager::PasswordInformation> PasswordsManager::getPasswords(const QUrl &url)
+QList<PasswordsManager::PasswordInformation> PasswordsManager::getPasswords(const QUrl &url, PasswordTypes types)
 {
-	return (m_backend ? m_backend->getPasswords(url) : QList<PasswordsManager::PasswordInformation>());
+	return (m_backend ? m_backend->getPasswords(url, types) : QList<PasswordsManager::PasswordInformation>());
 }
 
-bool PasswordsManager::hasPasswords(const QUrl &url)
+bool PasswordsManager::hasPasswords(const QUrl &url, PasswordTypes types)
 {
-	return (m_backend ? m_backend->hasPasswords(url) : false);
+	return (m_backend ? m_backend->hasPasswords(url, types) : false);
 }
 
 }

@@ -37,9 +37,13 @@ class PasswordsManager : public QObject
 public:
 	enum PasswordType
 	{
-		FormPassword = 0,
-		AuthPassword = 1
+		UnknownPassword = 0,
+		FormPassword = 1,
+		AuthPassword = 2,
+		AnyPassword = (FormPassword | AuthPassword)
 	};
+
+	Q_DECLARE_FLAGS(PasswordTypes, PasswordType)
 
 	struct PasswordInformation
 	{
@@ -54,8 +58,8 @@ public:
 	static void createInstance(QObject *parent = NULL);
 	static void addPassword(const PasswordInformation &password);
 	static PasswordsManager* getInstance();
-	static QList<PasswordInformation> getPasswords(const QUrl &url);
-	static bool hasPasswords(const QUrl &url);
+	static QList<PasswordInformation> getPasswords(const QUrl &url, PasswordTypes types = AnyPassword);
+	static bool hasPasswords(const QUrl &url, PasswordTypes types = AnyPassword);
 
 protected:
 	explicit PasswordsManager(QObject *parent = NULL);
@@ -66,5 +70,7 @@ private:
 };
 
 }
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::PasswordsManager::PasswordTypes)
 
 #endif

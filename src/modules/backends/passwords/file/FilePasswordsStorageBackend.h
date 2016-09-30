@@ -38,8 +38,8 @@ public:
 	QString getVersion() const;
 	QUrl getHomePage() const;
 	QIcon getIcon() const;
-	QList<PasswordsManager::PasswordInformation> getPasswords(const QUrl &url);
-	bool hasPasswords(const QUrl &url);
+	QList<PasswordsManager::PasswordInformation> getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types = PasswordsManager::AnyPassword);
+	bool hasPasswords(const QUrl &url, PasswordsManager::PasswordTypes types = PasswordsManager::AnyPassword);
 
 protected:
 	void initialize();

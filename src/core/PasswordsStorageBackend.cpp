@@ -36,9 +36,10 @@ QUrl PasswordsStorageBackend::getUpdateUrl() const
 	return QUrl();
 }
 
-QList<PasswordsManager::PasswordInformation> PasswordsStorageBackend::getPasswords(const QUrl &url)
+QList<PasswordsManager::PasswordInformation> PasswordsStorageBackend::getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types)
 {
 	Q_UNUSED(url)
+	Q_UNUSED(types)
 
 	return QList<PasswordsManager::PasswordInformation>();
 }
@@ -48,9 +49,10 @@ Addon::AddonType PasswordsStorageBackend::getType() const
 	return PasswordsStorageBackendType;
 }
 
-bool PasswordsStorageBackend::hasPasswords(const QUrl &url)
+bool PasswordsStorageBackend::hasPasswords(const QUrl &url, PasswordsManager::PasswordTypes types)
 {
 	Q_UNUSED(url)
+	Q_UNUSED(types)
 
 	return false;
 }

@@ -35,9 +35,9 @@ public:
 
 	virtual void addPassword(const PasswordsManager::PasswordInformation &password);
 	QUrl getUpdateUrl() const;
-	virtual QList<PasswordsManager::PasswordInformation> getPasswords(const QUrl &url);
+	virtual QList<PasswordsManager::PasswordInformation> getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types = PasswordsManager::AnyPassword);
 	AddonType getType() const;
-	virtual bool hasPasswords(const QUrl &url);
+	virtual bool hasPasswords(const QUrl &url, PasswordsManager::PasswordTypes types = PasswordsManager::AnyPassword);
 };
 
 }
