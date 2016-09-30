@@ -48,4 +48,11 @@ Addon::AddonType PasswordsStorageBackend::getType() const
 	return PasswordsStorageBackendType;
 }
 
+bool PasswordsStorageBackend::hasPasswords(const QUrl &url)
+{
+	Q_UNUSED(url)
+
+	return false;
+}
+
 }

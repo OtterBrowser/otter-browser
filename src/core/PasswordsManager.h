@@ -55,6 +55,7 @@ public:
 	static void addPassword(const PasswordInformation &password);
 	static PasswordsManager* getInstance();
 	static QList<PasswordInformation> getPasswords(const QUrl &url);
+	static bool hasPasswords(const QUrl &url);
 
 protected:
 	explicit PasswordsManager(QObject *parent = NULL);

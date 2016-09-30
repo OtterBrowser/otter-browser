@@ -190,4 +190,14 @@ QList<PasswordsManager::PasswordInformation> FilePasswordsStorageBackend::getPas
 	return QList<PasswordsManager::PasswordInformation>();
 }
 
+bool FilePasswordsStorageBackend::hasPasswords(const QUrl &url)
+{
+	if (!m_isInitialized)
+	{
+		initialize();
+	}
+
+	return m_passwords.contains(url.host().isEmpty() ? QLatin1String("localhost") : url.host());
+}
+
 }

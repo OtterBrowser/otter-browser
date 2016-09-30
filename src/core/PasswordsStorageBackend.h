@@ -37,6 +37,7 @@ public:
 	QUrl getUpdateUrl() const;
 	virtual QList<PasswordsManager::PasswordInformation> getPasswords(const QUrl &url);
 	AddonType getType() const;
+	virtual bool hasPasswords(const QUrl &url);
 };
 
 }

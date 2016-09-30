@@ -39,6 +39,7 @@ public:
 	QUrl getHomePage() const;
 	QIcon getIcon() const;
 	QList<PasswordsManager::PasswordInformation> getPasswords(const QUrl &url);
+	bool hasPasswords(const QUrl &url);
 
 protected:
 	void initialize();
