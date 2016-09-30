@@ -28,7 +28,6 @@
 #include <QtConcurrent/QtConcurrentRun>
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
-#include <QtCore/QSettings>
 #include <QtCore/QTextStream>
 #include <QtNetwork/QNetworkReply>
 #include <QtNetwork/QNetworkRequest>
@@ -36,18 +35,31 @@
 namespace Otter
 {
 
-ContentBlockingProfile::ContentBlockingProfile(const QString &name, QObject *parent) : QObject(parent),
+ContentBlockingProfile::ContentBlockingProfile(const QList<QString> languages, const QUrl updateUrl, const QDateTime lastUpdate, const QString &name, int updateInterval, const ProfileCategory &category, QObject *parent) : QObject(parent),
 	m_root(NULL),
 	m_networkReply(NULL),
-	m_category(OtherCategory),
+	m_category(category),
 	m_name(name),
+	m_updateUrl(updateUrl, true),
+	m_lastUpdate(lastUpdate),
 	m_languages({QLocale::AnyLanguage}),
 	m_enableWildcards(SettingsManager::getValue(SettingsManager::ContentBlocking_EnableWildcardsOption).toBool()),
+	m_updateInterval(updateInterval),
 	m_isUpdating(false),
 	m_isEmpty(true),
 	m_wasLoaded(false)
 {
-	load(true);
+	if (!languages.isEmpty())
+	{
+		m_languages.clear();
+
+		for (int i = 0; i < languages.count(); ++i)
+		{
+			m_languages.append(QLocale(languages.at(i)).language());
+		}
+	}
+
+	loadHeader(getPath());
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
 }
@@ -81,9 +93,16 @@ void ContentBlockingProfile::clear()
 	m_wasLoaded = false;
 }
 
-void ContentBlockingProfile::load(bool onlyHeader)
+void ContentBlockingProfile::loadHeader(const QString &path)
 {
-	QFile file(getPath());
+	const bool isBundled(path.startsWith(QLatin1String(":/")));
+
+	if (!isBundled)
+	{
+		loadHeader(getPath(true));
+	}
+
+	QFile file(path);
 
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
@@ -123,9 +142,9 @@ void ContentBlockingProfile::load(bool onlyHeader)
 
 		line.remove(QLatin1Char(' '));
 
-		if (line.startsWith(QLatin1String("!URL:")))
+		if (line.startsWith(QLatin1String("!URL:")) && m_updateUrl.first.isEmpty())
 		{
-			m_updateUrl = QUrl(line.remove(QLatin1String("!URL:")));
+			m_updateUrl = QPair<QUrl,bool>(QUrl(line.remove(QLatin1String("!URL:"))), !isBundled);
 
 			continue;
 		}
@@ -133,18 +152,9 @@ void ContentBlockingProfile::load(bool onlyHeader)
 
 	file.close();
 
-	const QSettings profilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
-	const QDateTime lastUpdate(QDateTime::fromString(profilesSettings.value(m_name + QLatin1String("/lastUpdate")).toString(), Qt::ISODate));
-	const int updateInterval(profilesSettings.value(m_name + QLatin1String("/updateInterval")).toInt());
-
-	if (!m_isUpdating && updateInterval > 0 && (!lastUpdate.isValid() || lastUpdate.daysTo(QDateTime::currentDateTime()) > updateInterval))
+	if (!isBundled && !m_isUpdating && m_updateInterval > 0 && (!m_lastUpdate.isValid() || m_lastUpdate.daysTo(QDateTime::currentDateTime()) > m_updateInterval))
 	{
 		downloadRules();
-	}
-
-	if (!onlyHeader)
-	{
-		loadRules();
 	}
 }
 
@@ -391,8 +401,7 @@ void ContentBlockingProfile::replyFinished()
 
 	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking")));
 
-	const bool isFirstDownload(getPath().startsWith(QLatin1String(":/")));
-	QFile file(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking") + QLatin1String("/") + m_name + QLatin1String(".txt")));
+	QFile file(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking") + QLatin1Char('/') + m_name + QLatin1String(".txt")));
 
 	if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate))
 	{
@@ -401,31 +410,37 @@ void ContentBlockingProfile::replyFinished()
 		return;
 	}
 
-	QSettings profilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
-	profilesSettings.setValue(m_name + QLatin1String("/lastUpdate"), QDateTime::currentDateTime().toString(Qt::ISODate));
-
 	file.write(downloadedDataHeader);
-
-	if (!isFirstDownload)
-	{
-		file.write(QStringLiteral("! URL: %1\n").arg(m_updateUrl.toString()).toUtf8());
-	}
-
 	file.write(downloadedDataChecksum);
 	file.write(downloadedData);
 	file.close();
+
+	m_lastUpdate = QDateTime::currentDateTime();
 
 	if (file.error() != QFile::NoError)
 	{
 // TODO
 	}
 
-	const bool wasLoaded(m_wasLoaded);
-
 	clear();
-	load(wasLoaded);
+	loadHeader(getPath());
+
+	if (m_wasLoaded)
+	{
+		loadRules();
+	}
 
 	emit profileModified(m_name);
+}
+
+void ContentBlockingProfile::setUpdateInterval(int interval)
+{
+	if (interval != m_updateInterval)
+	{
+		m_updateInterval = interval;
+
+		emit profileModified(m_name);
+	}
 }
 
 QString ContentBlockingProfile::getName() const
@@ -438,14 +453,19 @@ QString ContentBlockingProfile::getTitle() const
 	return (m_title.isEmpty() ? tr("(Unknown)") : m_title);
 }
 
-QString ContentBlockingProfile::getPath() const
+QString ContentBlockingProfile::getPath(bool forceBundled) const
 {
-	return SessionsManager::getReadableDataPath(QLatin1String("contentBlocking") + QLatin1String("/") + m_name + QLatin1String(".txt"));
+	return SessionsManager::getReadableDataPath(QLatin1String("contentBlocking") + QLatin1Char('/') + m_name + QLatin1String(".txt"), forceBundled);
+}
+
+QDateTime ContentBlockingProfile::getLastUpdate() const
+{
+	return m_lastUpdate;
 }
 
 QUrl ContentBlockingProfile::getUpdateUrl() const
 {
-	return m_updateUrl;
+	return m_updateUrl.first;
 }
 
 ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType)
@@ -520,6 +540,16 @@ ContentBlockingProfile::ProfileCategory ContentBlockingProfile::getCategory() co
 	return m_category;
 }
 
+int ContentBlockingProfile::getUpdateInterval() const
+{
+	return m_updateInterval;
+}
+
+bool ContentBlockingProfile::hasCustomUpdateUrl() const
+{
+	return m_updateUrl.second;
+}
+
 bool ContentBlockingProfile::downloadRules()
 {
 	if (m_isUpdating)
@@ -527,23 +557,23 @@ bool ContentBlockingProfile::downloadRules()
 		return false;
 	}
 
-	if (!m_updateUrl.isValid())
+	if (!m_updateUrl.first.isValid())
 	{
 		const QString path(getPath());
 
-		if (m_updateUrl.isEmpty())
+		if (m_updateUrl.first.isEmpty())
 		{
 			Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile, update URL is empty"), Console::OtherCategory, Console::ErrorLevel, path);
 		}
 		else
 		{
-			Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile, update URL (%1) is invalid").arg(m_updateUrl.toString()), Console::OtherCategory, Console::ErrorLevel, path);
+			Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile, update URL (%1) is invalid").arg(m_updateUrl.first.toString()), Console::OtherCategory, Console::ErrorLevel, path);
 		}
 
 		return false;
 	}
 
-	QNetworkRequest request(m_updateUrl);
+	QNetworkRequest request(m_updateUrl.first);
 	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
 
 	m_networkReply = NetworkManagerFactory::getNetworkManager()->get(request);

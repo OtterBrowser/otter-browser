@@ -57,10 +57,16 @@ public:
 	static QVector<int> getProfileList(const QStringList &names);
 	static bool updateProfile(const QString &profile);
 
+public slots:
+	void scheduleSave();
+
 protected:
 	explicit ContentBlockingManager(QObject *parent = NULL);
 
+	void timerEvent(QTimerEvent *event);
+
 private:
+	int m_saveTimer;
 	static ContentBlockingManager *m_instance;
 	static QVector<ContentBlockingProfile*> m_profiles;
 

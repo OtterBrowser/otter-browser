@@ -1,0 +1,199 @@
+{
+	"advertisements.adblock-killer-filters":
+	{
+		"category": "advertisements"
+	},
+	"advertisements.antiadblockfilters":
+	{
+		"category": "advertisements"
+	},
+	"advertisements.easylist":
+	{
+		"category": "advertisements"
+	},
+	"annoyance.fanboy-annoyance":
+	{
+		"category": "annoyance"
+	},
+	"annoyance.obtrusive":
+	{
+		"category": "annoyance"
+	},
+	"privacy.easyprivacy":
+	{
+		"category": "privacy"
+	},
+	"privacy.enhancedstats":
+	{
+		"category": "privacy"
+	},
+	"regional.polish":
+	{
+		"category": "regional",
+		"languages":
+		[
+			"pl"
+		]
+	},
+	"regional.arabic":
+	{
+		"category": "regional",
+		"languages": 
+		[
+			"ar"
+		]
+	},
+	"regional.bulgarian":
+	{
+		"category": "regional",
+		"languages":
+		[
+			"bg"
+		]
+	},
+	"regional.czechAndSlovak":
+	{
+		"category": "regional",
+		"languages":
+		[
+			"cs-cz",
+			"sk"
+		]
+	},
+	"regional.chinese":
+	{
+		"category": "regional",
+		"languages":
+		[
+			"zh-cn"
+		]
+	},
+	"regional.dutch":
+	{
+		"category": "regional",
+		"languages":
+		[
+			"da"
+		]
+	},
+	"regional.german":
+	{
+		"category": "regional",
+		"languages":
+		[
+			"de"
+		]
+	},
+	"regional.italian":
+	{
+		"category": "regional",
+		"languages":
+		[
+			"it"
+		]
+	},
+	"regional.lithuanian":
+	{
+		"category": "regional",
+		"languages":
+		[
+			"lv"
+		]
+	},
+	"regional.spanish":
+	{
+		"category": "regional",
+		"languages":
+		[
+			"es"
+		]
+	},
+	"regional.estonian":
+	{
+		"category": "regional",
+		"languages":
+		[
+			"et"
+		]
+	},
+	"regional.swedish":
+	{
+		"category": "regional",
+		"languages":
+		[
+			"sv"
+		]
+	},
+	"regional.greek":
+	{
+		"category": "regional",
+		"languages":
+		[
+			"el"
+		]
+	},
+	"regional.hebrew":
+	{
+		"category": "regional",
+		"languages":
+		[
+			"he"
+		]
+	},
+	"regional.indonesian":
+	{
+		"category": "regional",
+		"languages":
+		[
+			"id"
+		]
+	},
+	"regional.latvian":
+	{
+		"category": "regional",
+		"languages":
+		[
+			"lt"
+		]
+	},
+	"regional.french":
+	{
+		"category": "regional",
+		"languages":
+		[
+			"fr"
+		]
+	},
+	"regional.russian":
+	{
+		"category": "regional",
+		"languages":
+		[
+			"ru"
+		]
+	},
+	"regional.danish":
+	{
+		"category": "regional",
+		"languages":
+		[
+			"da"
+		]
+	},
+	"regional.hungary":
+	{
+		"category": "regional",
+		"languages":
+		[
+			"hu"
+		]
+	},
+	"social.fanboy-antifacebook":
+	{
+		"category": "social"
+	},
+	"social.fanboy-social":
+	{
+		"category": "social"
+	}
+}

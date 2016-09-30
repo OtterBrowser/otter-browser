@@ -26,7 +26,9 @@
 #include "Utils.h"
 
 #include <QtCore/QDir>
-#include <QtCore/QSettings>
+#include <QtCore/QJsonArray>
+#include <QtCore/QJsonDocument>
+#include <QtCore/QJsonObject>
 #include <QtGui/QStandardItemModel>
 
 namespace Otter
@@ -35,7 +37,8 @@ namespace Otter
 ContentBlockingManager* ContentBlockingManager::m_instance = NULL;
 QVector<ContentBlockingProfile*> ContentBlockingManager::m_profiles;
 
-ContentBlockingManager::ContentBlockingManager(QObject *parent) : QObject(parent)
+ContentBlockingManager::ContentBlockingManager(QObject *parent) : QObject(parent),
+	m_saveTimer(0)
 {
 }
 
@@ -47,9 +50,87 @@ void ContentBlockingManager::createInstance(QObject *parent)
 	}
 }
 
+void ContentBlockingManager::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_saveTimer)
+	{
+		killTimer(m_saveTimer);
+
+		m_saveTimer = 0;
+
+		QJsonObject settings;
+		const QHash<ContentBlockingProfile::ProfileCategory, QString> categoryTitles({{ContentBlockingProfile::AdvertisementsCategory, QLatin1String("advertisements")}, {ContentBlockingProfile::AnnoyanceCategory, QLatin1String("annoyance")}, {ContentBlockingProfile::PrivacyCategory, QLatin1String("privacy")}, {ContentBlockingProfile::SocialCategory, QLatin1String("social")}, {ContentBlockingProfile::RegionalCategory, QLatin1String("regional")}, {ContentBlockingProfile::OtherCategory, QLatin1String("other")}});
+
+		for (int i = 0; i < m_profiles.count(); ++i)
+		{
+			ContentBlockingProfile *profile(m_profiles.at(i));
+
+			if (profile == NULL)
+			{
+				continue;
+			}
+
+			QJsonObject profileSettings;
+			const int updateInterval(profile->getUpdateInterval());
+
+			if (updateInterval > 0)
+			{
+				profileSettings[QLatin1String("updateInterval")] = updateInterval;
+			}
+
+			const QDateTime lastUpdate(profile->getLastUpdate());
+
+			if (lastUpdate.isValid())
+			{
+				profileSettings[QLatin1String("lastUpdate")] = lastUpdate.toString(Qt::ISODate);
+			}
+
+			if (profile->hasCustomUpdateUrl())
+			{
+				profileSettings[QLatin1String("updateUrl")] = profile->getUpdateUrl().url();
+			}
+
+			profileSettings[QLatin1String("category")] = categoryTitles.value(profile->getCategory());
+
+			const QList<QLocale::Language> languages(m_profiles.at(i)->getLanguages());
+
+			if (!languages.contains(QLocale::AnyLanguage))
+			{
+				QJsonArray languageNames;
+
+				for (int j = 0; j < languages.count(); ++j)
+				{
+					languageNames.append(QLocale(languages.at(j)).name());
+				}
+
+				profileSettings[QLatin1String("languages")] = languageNames;
+			}
+
+			settings[profile->getName()] = profileSettings;
+		}
+
+		QFile file(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.json")));
+
+		if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+		{
+			return;
+		}
+
+		file.write(QJsonDocument(settings).toJson());
+		file.close();
+	}
+}
+
+void ContentBlockingManager::scheduleSave()
+{
+	if (m_saveTimer == 0)
+	{
+		m_saveTimer = startTimer(1000);
+	}
+}
+
 QStandardItemModel* ContentBlockingManager::createModel(QObject *parent, const QStringList &profiles)
 {
-	const QSettings profilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
 	QHash<ContentBlockingProfile::ProfileCategory, QMultiMap<QString, QList<QStandardItem*> > > categoryEntries;
 	QStandardItemModel *model(new QStandardItemModel(parent));
 	model->setHorizontalHeaderLabels(QStringList({tr("Title"), tr("Update Interval"), tr("Last Update")}));
@@ -79,7 +160,7 @@ QStandardItemModel* ContentBlockingManager::createModel(QObject *parent, const Q
 			title = QStringLiteral("%1 [%2]").arg(title).arg(languageNames.join(QLatin1String(", ")));
 		}
 
-		QList<QStandardItem*> profileItems({new QStandardItem(title), new QStandardItem(profilesSettings.value(name + QLatin1String("/updateInterval")).toString()), new QStandardItem(Utils::formatDateTime(profilesSettings.value(name + QLatin1String("/lastUpdate")).toDateTime()))});
+		QList<QStandardItem*> profileItems({new QStandardItem(title), new QStandardItem(QString::number(m_profiles.at(i)->getUpdateInterval())), new QStandardItem(Utils::formatDateTime(m_profiles.at(i)->getLastUpdate()))});
 		profileItems[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		profileItems[0]->setData(name, Qt::UserRole);
 		profileItems[0]->setData(m_profiles.at(i)->getUpdateUrl(), (Qt::UserRole + 1));
@@ -253,13 +334,35 @@ QVector<ContentBlockingProfile*> ContentBlockingManager::getProfiles()
 
 		m_profiles.reserve(profiles.count());
 
+		QJsonObject settings;
+		QFile file(SessionsManager::getReadableDataPath(QLatin1String("contentBlocking.json")));
+
+		if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+		{
+			settings = QJsonDocument::fromJson(file.readAll()).object();
+
+			file.close();
+		}
+
+		const QHash<QString, ContentBlockingProfile::ProfileCategory> categoryTitles({{QLatin1String("advertisements"), ContentBlockingProfile::AdvertisementsCategory}, {QLatin1String("annoyance"), ContentBlockingProfile::AnnoyanceCategory}, {QLatin1String("privacy"), ContentBlockingProfile::PrivacyCategory},{QLatin1String("social"), ContentBlockingProfile::SocialCategory}, {QLatin1String("regional"), ContentBlockingProfile::RegionalCategory}, {QLatin1String("other"), ContentBlockingProfile::OtherCategory}});
+
 		for (int i = 0; i < profiles.count(); ++i)
 		{
-			ContentBlockingProfile *profile(new ContentBlockingProfile(profiles.at(i), m_instance));
+			const QJsonObject profileSettings(settings.value(profiles.at(i)).toObject());
+			const QJsonArray languages(profileSettings.value(QLatin1String("languages")).toArray());
+			QList<QString> parsedLanguages;
+
+			for (int j = 0; j < languages.count(); ++j)
+			{
+				parsedLanguages.append(languages.at(j).toString());
+			}
+
+			ContentBlockingProfile *profile(new ContentBlockingProfile(parsedLanguages, QUrl(profileSettings.value(QLatin1String("updateUrl")).toString()), QDateTime::fromString(profileSettings.value(QLatin1String("lastUpdate")).toString(), Qt::ISODate), profiles.at(i), profileSettings.value(QLatin1String("updateInterval")).toInt(), categoryTitles.value(profileSettings.value(QLatin1String("category")).toString()), m_instance));
 
 			m_profiles.append(profile);
 
 			connect(profile, SIGNAL(profileModified(QString)), m_instance, SIGNAL(profileModified(QString)));
+			connect(profile, SIGNAL(profileModified(QString)), m_instance, SLOT(scheduleSave()));
 		}
 	}
 

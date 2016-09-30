@@ -308,10 +308,10 @@ void WebsitePreferencesDialog::updateContentBlockingProfile(const QString &name)
 
 			if (entryIndex.data(Qt::UserRole).toString() == name)
 			{
-				const QSettings profilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
+				ContentBlockingProfile *profile(ContentBlockingManager::getProfile(name));
 
 				m_ui->contentBlockingProfilesViewWidget->setData(entryIndex, profile->getTitle(), Qt::DisplayRole);
-				m_ui->contentBlockingProfilesViewWidget->setData(entryIndex.sibling(j, 2), Utils::formatDateTime(profilesSettings.value(name + QLatin1String("/lastUpdate")).toDateTime()), Qt::DisplayRole);
+				m_ui->contentBlockingProfilesViewWidget->setData(entryIndex.sibling(j, 2), Utils::formatDateTime(profile->getLastUpdate()), Qt::DisplayRole);
 
 				return;
 			}

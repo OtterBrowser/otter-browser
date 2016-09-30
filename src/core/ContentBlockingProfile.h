@@ -69,19 +69,23 @@ public:
 		bool needsDomainCheck;
 	};
 
-	explicit ContentBlockingProfile(const QString &name, QObject *parent = NULL);
+	explicit ContentBlockingProfile(const QList<QString> languages, const QUrl updateUrl, const QDateTime lastUpdate, const QString &name, int updateInterval, const ProfileCategory &category, QObject *parent = NULL);
 
 	void clear();
+	void setUpdateInterval(int interval);
 	QString getName() const;
 	QString getTitle() const;
 	QUrl getUpdateUrl() const;
+	QDateTime getLastUpdate() const;
 	ContentBlockingManager::CheckResult checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType);
 	QStringList getStyleSheet();
 	QStringList getStyleSheetBlackList(const QString &domain);
 	QStringList getStyleSheetWhiteList(const QString &domain);
 	QList<QLocale::Language> getLanguages() const;
 	ProfileCategory getCategory() const;
+	int getUpdateInterval() const;
 	bool downloadRules();
+	bool hasCustomUpdateUrl() const;
 
 protected:
 	struct Node
@@ -93,8 +97,8 @@ protected:
 		Node() : rule(NULL), value(0) {}
 	};
 
-	QString getPath() const;
-	void load(bool onlyHeader = false);
+	QString getPath(bool forceBundled = false) const;
+	void loadHeader(const QString &path);
 	void parseRuleLine(QString line);
 	void parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list);
 	void addRule(ContentBlockingRule *rule, const QString &ruleString);
@@ -116,13 +120,15 @@ private:
 	QString m_baseUrlHost;
 	QString m_name;
 	QString m_title;
-	QUrl m_updateUrl;
+	QDateTime m_lastUpdate;
 	QRegularExpression m_domainExpression;
+	QPair<QUrl, bool> m_updateUrl;
 	QStringList m_styleSheet;
 	QList<QLocale::Language> m_languages;
-	ProfileCategory m_category;
 	QMultiHash<QString, QString> m_styleSheetBlackList;
 	QMultiHash<QString, QString> m_styleSheetWhiteList;
+	ProfileCategory m_category;
+	int m_updateInterval;
 	bool m_enableWildcards;
 	bool m_isUpdating;
 	bool m_isEmpty;

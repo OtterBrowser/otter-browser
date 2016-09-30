@@ -174,10 +174,26 @@ void ContentBlockingDialog::updateProfile(const QString &name)
 
 			if (entryIndex.data(Qt::UserRole).toString() == name)
 			{
-				const QSettings profilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
+				ContentBlockingProfile *profile(ContentBlockingManager::getProfile(name));
 
-				m_ui->profilesViewWidget->setData(entryIndex, profile->getTitle(), Qt::DisplayRole);
-				m_ui->profilesViewWidget->setData(entryIndex.sibling(j, 2), Utils::formatDateTime(profilesSettings.value(name + QLatin1String("/lastUpdate")).toDateTime()), Qt::DisplayRole);
+				ContentBlockingProfile::ProfileCategory category(profile->getCategory());
+				QString title(profile->getTitle());
+
+				if (category == ContentBlockingProfile::RegionalCategory)
+				{
+					const QList<QLocale::Language> languages(profile->getLanguages());
+					QStringList languageNames;
+
+					for (int k = 0; k < languages.count(); ++k)
+					{
+						languageNames.append(QLocale::languageToString(languages.at(k)));
+					}
+
+					title = QStringLiteral("%1 [%2]").arg(title).arg(languageNames.join(QLatin1String(", ")));
+				}
+
+				m_ui->profilesViewWidget->setData(entryIndex, title, Qt::DisplayRole);
+				m_ui->profilesViewWidget->setData(entryIndex.sibling(j, 2), Utils::formatDateTime(profile->getLastUpdate()), Qt::DisplayRole);
 
 				return;
 			}
@@ -187,7 +203,6 @@ void ContentBlockingDialog::updateProfile(const QString &name)
 
 void ContentBlockingDialog::save()
 {
-	QSettings profilesSettings(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.ini")), QSettings::IniFormat);
 	QStringList profiles;
 
 	for (int i = 0; i < m_ui->profilesViewWidget->getRowCount(); ++i)
@@ -197,14 +212,18 @@ void ContentBlockingDialog::save()
 		for (int j = 0; j < m_ui->profilesViewWidget->getRowCount(categoryIndex); ++j)
 		{
 			const QModelIndex entryIndex(m_ui->profilesViewWidget->getIndex(j, 0, categoryIndex));
+			const QModelIndex intervalIndex(m_ui->profilesViewWidget->getIndex(j, 1, categoryIndex));
+			const QString name(entryIndex.data(Qt::UserRole).toString());
+			ContentBlockingProfile *profile(ContentBlockingManager::getProfile(name));
 
-			profilesSettings.beginGroup(entryIndex.data(Qt::UserRole).toString());
-			profilesSettings.setValue(QLatin1String("updateInterval"), entryIndex.sibling(j, 0).data(Qt::DisplayRole));
-			profilesSettings.endGroup();
+			if (intervalIndex.data(Qt::EditRole).toInt() != profile->getUpdateInterval())
+			{
+				profile->setUpdateInterval(intervalIndex.data(Qt::EditRole).toInt());
+			}
 
 			if (entryIndex.data(Qt::CheckStateRole).toBool())
 			{
-				profiles.append(entryIndex.data(Qt::UserRole).toString());
+				profiles.append(name);
 			}
 		}
 	}
