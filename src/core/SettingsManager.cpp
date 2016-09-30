@@ -106,7 +106,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Browser_JavaScriptCanDisableContextMenuOption, true, BooleanType);
 	registerOption(Browser_JavaScriptCanOpenWindowsOption, true, BooleanType);
 	registerOption(Browser_JavaScriptCanShowStatusMessagesOption, false, BooleanType);
-	registerOption(Browser_KeyboardShortcutsProfilesOrderOption, QStringList(QLatin1String("default")), ListType);
+	registerOption(Browser_KeyboardShortcutsProfilesOrderOption, QStringList({QLatin1String("platform"), QLatin1String("default")}), ListType);
 	registerOption(Browser_LocaleOption, QLatin1String("system"), StringType);
 	registerOption(Browser_MouseProfilesOrderOption, QStringList(QLatin1String("default")), ListType);
 	registerOption(Browser_OfflineStorageLimitOption, 10240, IntegerType);
@@ -155,7 +155,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(History_ClearOnCloseOption, QStringList(), ListType);
 	registerOption(History_DownloadsLimitPeriodOption, 7, IntegerType);
 	registerOption(History_ExpandBranchesOption, QLatin1String("first"), EnumerationType, QStringList({QLatin1String("first"), QLatin1String("all"), QLatin1String("none")}));
-	registerOption(History_ManualClearOptionsOption, QStringList(), ListType);
+	registerOption(History_ManualClearOptionsOption, QStringList({QLatin1String("browsing"), QLatin1String("cookies"), QLatin1String("forms"), QLatin1String("downloads"), QLatin1String("caches")}), ListType);
 	registerOption(History_ManualClearPeriodOption, 1, IntegerType);
 	registerOption(History_RememberBrowsingOption, true, BooleanType);
 	registerOption(History_RememberDownloadsOption, true, BooleanType);
@@ -188,7 +188,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Proxy_AutomaticConfigurationPathOption, QString(), PathType);
 	registerOption(Proxy_CommonPortOption, 8080, IntegerType);
 	registerOption(Proxy_CommonServersOption, QString(), StringType);
-	registerOption(Proxy_ExceptionsOption, QString(), ListType);
+	registerOption(Proxy_ExceptionsOption, QStringList(QLatin1String("localhost")), ListType);
 	registerOption(Proxy_FtpPortOption, 8080, IntegerType);
 	registerOption(Proxy_FtpServersOption, QString(), StringType);
 	registerOption(Proxy_HttpPortOption, 8080, IntegerType);
@@ -207,13 +207,13 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Search_DefaultSearchEngineOption, QLatin1String("duckduckgo"), EnumerationType, QStringList(QLatin1String("duckduckgo")));
 	registerOption(Search_EnableFindInPageAsYouTypeOption, true, BooleanType);
 	registerOption(Search_ReuseLastQuickFindQueryOption, false, BooleanType);
-	registerOption(Search_SearchEnginesOrderOption, QStringList(), ListType);
+	registerOption(Search_SearchEnginesOrderOption, QStringList({QLatin1String("duckduckgo"), QLatin1String("wikipedia"), QLatin1String("startpage"), QLatin1String("google"), QLatin1String("yahoo"), QLatin1String("bing"), QLatin1String("youtube")}), ListType);
 	registerOption(Search_SearchEnginesSuggestionsOption, false, BooleanType);
 	registerOption(Security_CiphersOption, QStringList(QLatin1String("default")), ListType);
 	registerOption(Security_IgnoreSslErrorsOption, QStringList(), ListType);
 	registerOption(Sessions_OpenInExistingWindowOption, false, BooleanType);
 	registerOption(Sidebar_CurrentPanelOption, QString(), StringType);
-	registerOption(Sidebar_PanelsOption, QStringList(), ListType);
+	registerOption(Sidebar_PanelsOption, QStringList({QLatin1String("bookmarks"), QLatin1String("history"), QLatin1String("notes"), QLatin1String("transfers")}), ListType);
 	registerOption(Sidebar_ReverseOption, false, BooleanType);
 	registerOption(Sidebar_ShowToggleEdgeOption, false, BooleanType);
 	registerOption(Sidebar_VisibleOption, false, BooleanType);
