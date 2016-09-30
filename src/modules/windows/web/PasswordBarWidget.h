@@ -51,8 +51,8 @@ protected slots:
 	void rejected();
 
 private:
-	PasswordsManager::PasswordInformation m_password;
 	QDateTime m_created;
+	PasswordsManager::PasswordInformation m_password;
 	Ui::PasswordBarWidget *m_ui;
 
 signals:
