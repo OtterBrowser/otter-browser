@@ -560,7 +560,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 			for (iterator = fields.constBegin(); iterator != fields.constEnd(); ++iterator)
 			{
-				password.fields[iterator.key()] = iterator.value().toString();
+				password.fields.append(qMakePair(iterator.key(), iterator.value().toString()));
 			}
 
 			const QJsonArray passwords(object.value(QLatin1String("passwords")).toArray());

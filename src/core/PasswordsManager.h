@@ -45,7 +45,7 @@ public:
 	{
 		QUrl url;
 		QStringList passwords;
-		QMap<QString, QString> fields;
+		QList<QPair<QString, QString> > fields;
 		PasswordType type;
 
 		PasswordInformation() : type(FormPassword) {}
@@ -55,7 +55,6 @@ public:
 	static void addPassword(const PasswordInformation &password);
 	static PasswordsManager* getInstance();
 	static QList<PasswordInformation> getPasswords(const QUrl &url);
-	static bool isEncryptionAvailable();
 
 protected:
 	explicit PasswordsManager(QObject *parent = NULL);

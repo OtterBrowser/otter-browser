@@ -19,6 +19,7 @@
 
 #include "PasswordsManager.h"
 #include "PasswordsStorageBackend.h"
+#include "../modules/backends/passwords/file/FilePasswordsStorageBackend.h"
 
 namespace Otter
 {
@@ -35,6 +36,7 @@ void PasswordsManager::createInstance(QObject *parent)
 	if (!m_instance)
 	{
 		m_instance = new PasswordsManager(parent);
+		m_backend = new FilePasswordsStorageBackend(m_instance);
 	}
 }
 
@@ -54,11 +56,6 @@ PasswordsManager* PasswordsManager::getInstance()
 QList<PasswordsManager::PasswordInformation> PasswordsManager::getPasswords(const QUrl &url)
 {
 	return (m_backend ? m_backend->getPasswords(url) : QList<PasswordsManager::PasswordInformation>());
-}
-
-bool PasswordsManager::isEncryptionAvailable()
-{
-	return false;
 }
 
 }

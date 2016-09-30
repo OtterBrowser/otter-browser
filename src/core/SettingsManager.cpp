@@ -75,6 +75,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(AddressField_SuggestLocalPathsOption, true, BooleanType);
 	registerOption(AddressField_SuggestSearchOption, true, BooleanType);
 	registerOption(AddressField_SuggestSpecialPagesOption, true, BooleanType);
+	registerOption(Backends_PasswordsOption, QLatin1String("file"), EnumerationType, QStringList(QLatin1String("file")));
 	registerOption(Backends_WebOption, QLatin1String("qtwebkit"), EnumerationType, QStringList(QLatin1String("qtwebkit")));
 	registerOption(Browser_AlwaysAskWhereToSaveDownloadOption, true, BooleanType);
 	registerOption(Browser_AskToSavePasswordOption, true, BooleanType);

@@ -55,6 +55,7 @@ public:
 		AddressField_SuggestLocalPathsOption,
 		AddressField_SuggestSearchOption,
 		AddressField_SuggestSpecialPagesOption,
+		Backends_PasswordsOption,
 		Backends_WebOption,
 		Browser_AlwaysAskWhereToSaveDownloadOption,
 		Browser_AskToSavePasswordOption,
