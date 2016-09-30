@@ -30,7 +30,7 @@ PermissionBarWidget::PermissionBarWidget(WebWidget::FeaturePermission feature, c
 	m_feature(feature),
 	m_ui(new Ui::PermissionBarWidget)
 {
-	const QString domain(url.host());
+	const QString domain(url.host().isEmpty() ? QLatin1String("localhost") : url.host());
 
 	m_ui->setupUi(this);
 
