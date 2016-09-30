@@ -116,7 +116,7 @@ void ContentBlockingManager::timerEvent(QTimerEvent *event)
 			return;
 		}
 
-		file.write(QJsonDocument(settings).toJson());
+		file.write(QJsonDocument(settings).toJson(QJsonDocument::Indented));
 		file.close();
 	}
 }
