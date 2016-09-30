@@ -420,7 +420,7 @@ void PreferencesSearchPageWidget::save()
 		}
 	}
 
-	if (SettingsManager::getValue(SettingsManager::Search_SearchEnginesOrderOption).toStringList().join(QLatin1Char(',')) == searchEnginesOrder.join(QLatin1Char(',')))
+	if (SettingsManager::getValue(SettingsManager::Search_SearchEnginesOrderOption).toStringList() == searchEnginesOrder)
 	{
 		SearchEnginesManager::loadSearchEngines();
 	}

@@ -1547,7 +1547,7 @@ void PreferencesAdvancedPageWidget::save()
 		}
 	}
 
-	if (needsKeyboardProfilesReload && SettingsManager::getValue(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption).toStringList().join(QLatin1Char(',')) == keyboardProfiles.join(QLatin1Char(',')) && SettingsManager::getValue(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool() == m_ui->keyboardEnableSingleKeyShortcutsCheckBox->isChecked())
+	if (needsKeyboardProfilesReload && SettingsManager::getValue(SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption).toStringList() == keyboardProfiles && SettingsManager::getValue(SettingsManager::Browser_EnableSingleKeyShortcutsOption).toBool() == m_ui->keyboardEnableSingleKeyShortcutsCheckBox->isChecked())
 	{
 		ActionsManager::loadProfiles();
 	}
@@ -1614,7 +1614,7 @@ void PreferencesAdvancedPageWidget::save()
 		}
 	}
 
-	if (needsMouseProfilesReload && SettingsManager::getValue(SettingsManager::Browser_MouseProfilesOrderOption).toStringList().join(QLatin1Char(',')) == mouseProfiles.join(QLatin1Char(',')) && SettingsManager::getValue(SettingsManager::Browser_EnableMouseGesturesOption).toBool() == m_ui->mouseEnableGesturesCheckBox->isChecked())
+	if (needsMouseProfilesReload && SettingsManager::getValue(SettingsManager::Browser_MouseProfilesOrderOption).toStringList() == mouseProfiles && SettingsManager::getValue(SettingsManager::Browser_EnableMouseGesturesOption).toBool() == m_ui->mouseEnableGesturesCheckBox->isChecked())
 	{
 		GesturesManager::loadProfiles();
 	}
