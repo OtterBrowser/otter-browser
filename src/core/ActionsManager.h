@@ -130,6 +130,7 @@ public:
 		MediaLoopAction,
 		MediaPlayPauseAction,
 		MediaMuteAction,
+		FillPasswordAction,
 		GoAction,
 		GoBackAction,
 		GoForwardAction,

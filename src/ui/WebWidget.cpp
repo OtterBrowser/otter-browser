@@ -584,6 +584,11 @@ void WebWidget::updateQuickSearch()
 
 void WebWidget::updatePageActions(const QUrl &url)
 {
+	if (m_actions.contains(ActionsManager::FillPasswordAction))
+	{
+		m_actions[ActionsManager::FillPasswordAction]->setEnabled(!Utils::isUrlEmpty(url) && PasswordsManager::hasPasswords(url, PasswordsManager::FormPassword));
+	}
+
 	if (m_actions.contains(ActionsManager::BookmarkPageAction))
 	{
 		m_actions[ActionsManager::BookmarkPageAction]->setOverrideText(BookmarksManager::hasBookmark(url) ? QT_TRANSLATE_NOOP("actions", "Edit Bookmark…") : QT_TRANSLATE_NOOP("actions", "Add Bookmark…"));
@@ -1163,6 +1168,7 @@ Action* WebWidget::getAction(int identifier)
 			handleAudibleStateChange(isAudible());
 
 			break;
+		case ActionsManager::FillPasswordAction:
 		case ActionsManager::BookmarkPageAction:
 		case ActionsManager::WebsitePreferencesAction:
 			updatePageActions(getUrl());

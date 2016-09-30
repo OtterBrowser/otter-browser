@@ -232,6 +232,7 @@ bool Action::isLocal(int identifier)
 		case ActionsManager::MediaLoopAction:
 		case ActionsManager::MediaPlayPauseAction:
 		case ActionsManager::MediaMuteAction:
+		case ActionsManager::FillPasswordAction:
 		case ActionsManager::GoBackAction:
 		case ActionsManager::GoForwardAction:
 		case ActionsManager::RewindAction:
@@ -401,6 +402,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(MediaLoopAction, QT_TRANSLATE_NOOP("actions", "Looping"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag));
 	registerAction(MediaPlayPauseAction, QT_TRANSLATE_NOOP("actions", "Play"));
 	registerAction(MediaMuteAction, QT_TRANSLATE_NOOP("actions", "Mute"));
+	registerAction(FillPasswordAction, QT_TRANSLATE_NOOP("actions", "Log In"), QString(), ThemesManager::getIcon(QLatin1String("fill-password")), NoFlags);
 	registerAction(GoAction, QT_TRANSLATE_NOOP("actions", "Go"), QString(), ThemesManager::getIcon(QLatin1String("go-jump-locationbar")));
 	registerAction(GoBackAction, QT_TRANSLATE_NOOP("actions", "Back"), QString(), ThemesManager::getIcon(QLatin1String("go-previous")), (IsEnabledFlag | IsMenuFlag));
 	registerAction(GoForwardAction, QT_TRANSLATE_NOOP("actions", "Forward"), QString(), ThemesManager::getIcon(QLatin1String("go-next")), (IsEnabledFlag | IsMenuFlag));
