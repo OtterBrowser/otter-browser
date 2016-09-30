@@ -27,8 +27,6 @@
 #include <QtCore/QStandardPaths>
 #include <QtCore/QTextStream>
 #include <QtCore/QVector>
-#include <QtGui/QColor>
-#include <QtGui/QFont>
 
 namespace Otter
 {
@@ -129,24 +127,24 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Choices_WarnOpenBookmarkFolderOption, true, BooleanType);
 	registerOption(Choices_WarnQuitOption, QLatin1String("noWarn"), EnumerationType, QStringList({QLatin1String("alwaysWarn"), QLatin1String("warnOpenTabs"), QLatin1String("noWarn")}));
 	registerOption(Choices_WarnQuitTransfersOption, true, BooleanType);
-	registerOption(Content_BackgroundColorOption, QColor(QLatin1String("#FFFFFF")), ColorType);
-	registerOption(Content_CursiveFontOption, QFont(QLatin1String("Impact")), FontType);
+	registerOption(Content_BackgroundColorOption, QLatin1String("#FFFFFF"), ColorType);
+	registerOption(Content_CursiveFontOption, QLatin1String("Impact"), FontType);
 	registerOption(Content_DefaultCharacterEncodingOption, QString(), StringType);
 	registerOption(Content_DefaultFixedFontSizeOption, 16, IntegerType);
 	registerOption(Content_DefaultFontSizeOption, 16, IntegerType);
 	registerOption(Content_DefaultZoomOption, 100, IntegerType);
-	registerOption(Content_FantasyFontOption, QFont(QLatin1String("Comic Sans MS")), FontType);
-	registerOption(Content_FixedFontOption, QFont(QLatin1String("DejaVu Sans Mono")), FontType);
-	registerOption(Content_LinkColorOption, QColor(QLatin1String("#0000EE")), ColorType);
+	registerOption(Content_FantasyFontOption, QLatin1String("Comic Sans MS"), FontType);
+	registerOption(Content_FixedFontOption, QLatin1String("DejaVu Sans Mono"), FontType);
+	registerOption(Content_LinkColorOption, QLatin1String("#0000EE"), ColorType);
 	registerOption(Content_MinimumFontSizeOption, -1, IntegerType);
 	registerOption(Content_PageReloadTimeOption, -1, IntegerType);
 	registerOption(Content_PopupsPolicyOption, QLatin1String("ask"), EnumerationType, QStringList({QLatin1String("ask"), QLatin1String("blockAll"), QLatin1String("openAll"), QLatin1String("openAllInBackground")}));
-	registerOption(Content_SansSerifFontOption, QFont(QLatin1String("DejaVu Sans")), FontType);
-	registerOption(Content_SerifFontOption, QFont(QLatin1String("DejaVu Serif")), FontType);
-	registerOption(Content_StandardFontOption, QFont(QLatin1String("DejaVu Serif")), FontType);
-	registerOption(Content_TextColorOption, QColor(QLatin1String("#000000")), ColorType);
+	registerOption(Content_SansSerifFontOption, QLatin1String("DejaVu Sans"), FontType);
+	registerOption(Content_SerifFontOption, QLatin1String("DejaVu Serif"), FontType);
+	registerOption(Content_StandardFontOption, QLatin1String("DejaVu Serif"), FontType);
+	registerOption(Content_TextColorOption, QLatin1String("#000000"), ColorType);
 	registerOption(Content_UserStyleSheetOption, QString(), PathType);
-	registerOption(Content_VisitedLinkColorOption, QColor(QLatin1String("#551A8B")), ColorType);
+	registerOption(Content_VisitedLinkColorOption, QLatin1String("#551A8B"), ColorType);
 	registerOption(Content_ZoomTextOnlyOption, false, BooleanType);
 	registerOption(ContentBlocking_EnableContentBlockingOption, true, BooleanType);
 	registerOption(ContentBlocking_EnableWildcardsOption, true, BooleanType);
@@ -222,7 +220,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Sidebar_WidthOption, 300, IntegerType);
 	registerOption(SourceViewer_ShowLineNumbersOption, true, BooleanType);
 	registerOption(SourceViewer_WrapLinesOption, false, BooleanType);
-	registerOption(StartPage_BackgroundColorOption, QColor(), ColorType);
+	registerOption(StartPage_BackgroundColorOption, QString(), ColorType);
 	registerOption(StartPage_BackgroundModeOption, QLatin1String("standard"), EnumerationType, QStringList({QLatin1String("standard"), QLatin1String("bestFit"), QLatin1String("center"), QLatin1String("stretch"), QLatin1String("tile")}));
 	registerOption(StartPage_BackgroundPathOption, QString(), StringType);
 	registerOption(StartPage_BookmarksFolderOption, QLatin1String("/Start Page/"), StringType);
