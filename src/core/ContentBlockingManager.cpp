@@ -187,15 +187,17 @@ QStandardItemModel* ContentBlockingManager::createModel(QObject *parent, const Q
 		}
 
 		const QList<QList<QStandardItem*> > profileItems(categoryEntries[categoryTitles.at(i).first].values());
-		QStandardItem* categoryItem(new QStandardItem(categoryTitles.at(i).second));
-		categoryItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		QList<QStandardItem*> categoryItems({new QStandardItem(categoryTitles.at(i).second), new QStandardItem(), new QStandardItem()});
+		categoryItems[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		categoryItems[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		categoryItems[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
 		for (int j = 0; j < profileItems.count(); ++j)
 		{
-			categoryItem->appendRow(profileItems.at(j));
+			categoryItems[0]->appendRow(profileItems.at(j));
 		}
 
-		model->appendRow(categoryItem);
+		model->appendRow(categoryItems);
 	}
 
 	return model;

@@ -42,6 +42,9 @@
          <property name="text">
           <string>Select lists which you want to use for content blocking (AdBlock Plus compatible):</string>
          </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item>
@@ -50,6 +53,9 @@
           <widget class="Otter::ItemViewWidget" name="profilesViewWidget">
            <property name="sizeAdjustPolicy">
             <enum>QAbstractScrollArea::AdjustIgnored</enum>
+           </property>
+           <property name="editTriggers">
+            <set>QAbstractItemView::CurrentChanged|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
            </property>
            <property name="alternatingRowColors">
             <bool>true</bool>
