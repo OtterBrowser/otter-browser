@@ -42,6 +42,7 @@ public:
 	QIcon getIcon() const;
 	QStringList getHosts();
 	QList<PasswordsManager::PasswordInformation> getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types = PasswordsManager::AnyPassword);
+	PasswordsManager::PasswordMatch hasPassword(const PasswordsManager::PasswordInformation &password);
 	bool hasPasswords(const QUrl &url, PasswordsManager::PasswordTypes types = PasswordsManager::AnyPassword);
 
 protected:

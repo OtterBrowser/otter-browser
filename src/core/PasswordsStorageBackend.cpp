@@ -64,6 +64,13 @@ Addon::AddonType PasswordsStorageBackend::getType() const
 	return PasswordsStorageBackendType;
 }
 
+PasswordsManager::PasswordMatch PasswordsStorageBackend::hasPassword(const PasswordsManager::PasswordInformation &password)
+{
+	Q_UNUSED(password)
+
+	return PasswordsManager::NoMatch;
+}
+
 bool PasswordsStorageBackend::hasPasswords(const QUrl &url, PasswordsManager::PasswordTypes types)
 {
 	Q_UNUSED(url)

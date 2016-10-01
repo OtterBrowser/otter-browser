@@ -579,7 +579,12 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 			if (hasPassword)
 			{
-				m_widget->notifyAddPasswordRequested(password);
+				PasswordsManager::PasswordMatch match(PasswordsManager::hasPassword(password));
+
+				if (match != PasswordsManager::FullMatch)
+				{
+					m_widget->notifyAddPasswordRequested(password);
+				}
 			}
 		}
 

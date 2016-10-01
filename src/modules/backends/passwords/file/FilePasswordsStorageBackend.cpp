@@ -324,6 +324,62 @@ QList<PasswordsManager::PasswordInformation> FilePasswordsStorageBackend::getPas
 	return QList<PasswordsManager::PasswordInformation>();
 }
 
+PasswordsManager::PasswordMatch FilePasswordsStorageBackend::hasPassword(const PasswordsManager::PasswordInformation &password)
+{
+	if (!m_isInitialized)
+	{
+		initialize();
+	}
+
+	const QString host(password.url.host().isEmpty() ? QLatin1String("localhost") : password.url.host());
+
+	if (!m_passwords.contains(host))
+	{
+		return PasswordsManager::NoMatch;
+	}
+
+	const QList<PasswordsManager::PasswordInformation> passwords(m_passwords[host]);
+
+	for (int i = 0; i < passwords.count(); ++i)
+	{
+		if (passwords.at(i).type == password.type && passwords.at(i).url == password.url && passwords.at(i).passwords == password.passwords && passwords.at(i).fields.count() == password.fields.count())
+		{
+			PasswordsManager::PasswordMatch match(PasswordsManager::FullMatch);
+
+			for (int j = 0; j < password.fields.count(); ++j)
+			{
+				if (passwords.at(i).fields.at(j).first != password.fields.at(j).first)
+				{
+					match = PasswordsManager::NoMatch;
+
+					break;
+				}
+
+				if (passwords.at(i).fields.at(j).second != password.fields.at(j).second)
+				{
+					if (passwords.at(i).passwords.contains(passwords.at(i).fields.at(j).first))
+					{
+						match = PasswordsManager::PartialMatch;
+					}
+					else
+					{
+						match = PasswordsManager::NoMatch;
+
+						break;
+					}
+				}
+			}
+
+			if (match != PasswordsManager::NoMatch)
+			{
+				return match;
+			}
+		}
+	}
+
+	return PasswordsManager::NoMatch;
+}
+
 bool FilePasswordsStorageBackend::hasPasswords(const QUrl &url, PasswordsManager::PasswordTypes types)
 {
 	if (!m_isInitialized)

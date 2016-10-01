@@ -81,6 +81,11 @@ QList<PasswordsManager::PasswordInformation> PasswordsManager::getPasswords(cons
 	return (m_backend ? m_backend->getPasswords(url, types) : QList<PasswordsManager::PasswordInformation>());
 }
 
+PasswordsManager::PasswordMatch PasswordsManager::hasPassword(const PasswordsManager::PasswordInformation &password)
+{
+	return (m_backend ? m_backend->hasPassword(password) : NoMatch);
+}
+
 bool PasswordsManager::hasPasswords(const QUrl &url, PasswordTypes types)
 {
 	return (m_backend ? m_backend->hasPasswords(url, types) : false);
