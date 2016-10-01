@@ -207,7 +207,7 @@ void CookiesContentsWidget::removeCookies()
 
 				if (cookieItem)
 				{
-					cookies.append(getCookie((cookieItem->index())));
+					cookies.append(getCookie(cookieItem->index()));
 				}
 			}
 		}
