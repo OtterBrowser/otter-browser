@@ -579,6 +579,11 @@ void WebWidget::showContextMenu(const QPoint &position)
 	menu.exec(mapToGlobal(hitPosition));
 }
 
+void WebWidget::updatePasswords()
+{
+	updatePageActions(getUrl());
+}
+
 void WebWidget::updateQuickSearch()
 {
 	if (m_quickSearchMenu)
@@ -1174,6 +1179,7 @@ Action* WebWidget::getAction(int identifier)
 
 			break;
 		case ActionsManager::FillPasswordAction:
+			connect(PasswordsManager::getInstance(), SIGNAL(passwordsModified()), this, SLOT(updatePasswords()));
 		case ActionsManager::BookmarkPageAction:
 		case ActionsManager::WebsitePreferencesAction:
 			updatePageActions(getUrl());

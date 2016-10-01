@@ -68,6 +68,9 @@ protected:
 private:
 	static PasswordsManager *m_instance;
 	static PasswordsStorageBackend *m_backend;
+
+signals:
+	void passwordsModified();
 };
 
 }

@@ -37,6 +37,8 @@ void PasswordsManager::createInstance(QObject *parent)
 	{
 		m_instance = new PasswordsManager(parent);
 		m_backend = new FilePasswordsStorageBackend(m_instance);
+
+		connect(m_backend, SIGNAL(passwordsModified()), m_instance, SIGNAL(passwordsModified()));
 	}
 }
 

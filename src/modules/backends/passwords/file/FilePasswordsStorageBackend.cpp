@@ -84,6 +84,8 @@ void FilePasswordsStorageBackend::initialize()
 	}
 
 	m_passwords = passwords;
+
+	emit passwordsModified();
 }
 
 void FilePasswordsStorageBackend::save()
@@ -150,6 +152,8 @@ void FilePasswordsStorageBackend::addPassword(const PasswordsManager::PasswordIn
 
 	m_passwords[host].append(password);
 
+	emit passwordsModified();
+
 	save();
 }
 
@@ -188,6 +192,8 @@ void FilePasswordsStorageBackend::removePassword(const PasswordsManager::Passwor
 			if (isMatching)
 			{
 				m_passwords[host].removeAt(i);
+
+				emit passwordsModified();
 
 				save();
 
