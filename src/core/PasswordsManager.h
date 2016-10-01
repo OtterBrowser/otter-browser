@@ -20,7 +20,7 @@
 #ifndef OTTER_PASSWORDSMANAGER_H
 #define OTTER_PASSWORDSMANAGER_H
 
-#include <QtCore/QMap>
+#include <QtCore/QDateTime>
 #include <QtCore/QObject>
 #include <QtCore/QStringList>
 #include <QtCore/QUrl>
@@ -48,6 +48,8 @@ public:
 	struct PasswordInformation
 	{
 		QUrl url;
+		QDateTime timeAdded;
+		QDateTime timeUsed;
 		QStringList passwords;
 		QList<QPair<QString, QString> > fields;
 		PasswordType type;

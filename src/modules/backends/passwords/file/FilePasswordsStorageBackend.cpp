@@ -61,6 +61,8 @@ void FilePasswordsStorageBackend::initialize()
 			const QJsonObject passwordObject(hostArray.at(i).toObject());
 			PasswordsManager::PasswordInformation password;
 			password.url = QUrl(passwordObject.value(QLatin1String("url")).toString());
+			password.timeAdded = QDateTime::fromString(passwordObject.value(QLatin1String("timeAdded")).toString(), Qt::ISODate);
+			password.timeUsed = QDateTime::fromString(passwordObject.value(QLatin1String("timeUsed")).toString(), Qt::ISODate);
 			password.type = ((passwordObject.value(QLatin1String("type")).toString() == QLatin1String("auth")) ? PasswordsManager::AuthPassword : PasswordsManager::FormPassword);
 
 			const QJsonArray fieldsArray(passwordObject.value(QLatin1String("fields")).toArray());
@@ -123,6 +125,17 @@ void FilePasswordsStorageBackend::save()
 
 			QJsonObject passwordObject;
 			passwordObject.insert(QLatin1String("url"), passwords.at(i).url.toString());
+
+			if (passwords.at(i).timeAdded.isValid())
+			{
+				passwordObject.insert(QLatin1String("timeAdded"), passwords.at(i).timeAdded.toString(Qt::ISODate));
+			}
+
+			if (passwords.at(i).timeUsed.isValid())
+			{
+				passwordObject.insert(QLatin1String("timeUsed"), passwords.at(i).timeUsed.toString(Qt::ISODate));
+			}
+
 			passwordObject.insert(QLatin1String("type"), ((passwords.at(i).type == PasswordsManager::AuthPassword) ? QLatin1String("auth") : QLatin1String("form")));
 			passwordObject.insert(QLatin1String("fields"), fieldsArray);
 

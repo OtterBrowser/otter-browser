@@ -553,6 +553,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 			const QJsonObject object(QJsonDocument::fromJson(QByteArray::fromBase64(request.rawHeader(QByteArray("X-Otter-Data")))).object());
 			PasswordsManager::PasswordInformation password;
 			password.url = QUrl(object.value(QLatin1String("url")).toString());
+			password.timeAdded = QDateTime::currentDateTime();
 			password.type = PasswordsManager::FormPassword;
 
 			const QJsonObject fields(object.value(QLatin1String("fields")).toObject());
