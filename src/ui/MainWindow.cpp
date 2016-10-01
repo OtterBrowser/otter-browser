@@ -657,6 +657,17 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			}
 
 			break;
+		case ActionsManager::PasswordsAction:
+			{
+				const QUrl url(QLatin1String("about:passwords"));
+
+				if (!SessionsManager::hasUrl(url, true))
+				{
+					m_windowsManager->open(url);
+				}
+			}
+
+			break;
 		case ActionsManager::TransfersAction:
 			{
 				const QUrl url(QLatin1String("about:transfers"));

@@ -117,6 +117,7 @@
 		"Addons",
 		"Transfers",
 		"Notes",
+		"Passwords",
 		"separator",
 		{
 			"identifier": "ToolBarsMenu",

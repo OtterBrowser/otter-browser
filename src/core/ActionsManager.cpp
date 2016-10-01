@@ -503,6 +503,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(ClearHistoryAction, QT_TRANSLATE_NOOP("actions", "Clear History…"), QString(), ThemesManager::getIcon(QLatin1String("edit-clear-history")));
 	registerAction(AddonsAction, QT_TRANSLATE_NOOP("actions", "Addons"));
 	registerAction(NotesAction, QT_TRANSLATE_NOOP("actions", "Notes"));
+	registerAction(PasswordsAction, QT_TRANSLATE_NOOP("actions", "Passwords"));
 	registerAction(TransfersAction, QT_TRANSLATE_NOOP("actions", "Transfers"));
 	registerAction(PreferencesAction, QT_TRANSLATE_NOOP("actions", "Preferences…"));
 	registerAction(WebsitePreferencesAction, QT_TRANSLATE_NOOP("actions", "Website Preferences…"));

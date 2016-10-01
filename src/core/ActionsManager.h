@@ -231,6 +231,7 @@ public:
 		ClearHistoryAction,
 		AddonsAction,
 		NotesAction,
+		PasswordsAction,
 		TransfersAction,
 		PreferencesAction,
 		WebsitePreferencesAction,
