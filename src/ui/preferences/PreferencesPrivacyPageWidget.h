@@ -44,6 +44,7 @@ protected:
 protected slots:
 	void setupThirdPartyCookiesExceptions();
 	void setupClearHistory();
+	void viewPasswords();
 	void save();
 
 private:

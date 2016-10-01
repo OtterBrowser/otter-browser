@@ -20,6 +20,7 @@
 #include "PreferencesPrivacyPageWidget.h"
 #include "CookiesExceptionsDialog.h"
 #include "../ClearHistoryDialog.h"
+#include "../../core/ActionsManager.h"
 #include "../../core/SettingsManager.h"
 
 #include "ui_PreferencesPrivacyPageWidget.h"
@@ -73,11 +74,14 @@ PreferencesPrivacyPageWidget::PreferencesPrivacyPageWidget(QWidget *parent) : QW
 	m_ui->clearHistoryCheckBox->setChecked(!m_clearHisorySettings.isEmpty());
 	m_ui->clearHistoryButton->setEnabled(!m_clearHisorySettings.isEmpty());
 
+	m_ui->rememberPasswordsCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_RememberPasswordsOption).toBool());
+
 	connect(m_ui->privateModeCheckBox, SIGNAL(toggled(bool)), m_ui->historyWidget, SLOT(setDisabled(bool)));
 	connect(m_ui->enableCookiesCheckBox, SIGNAL(toggled(bool)), m_ui->cookiesWidget, SLOT(setEnabled(bool)));
 	connect(m_ui->thirdPartyCookiesExceptionsButton, SIGNAL(clicked(bool)), this, SLOT(setupThirdPartyCookiesExceptions()));
 	connect(m_ui->clearHistoryCheckBox, SIGNAL(toggled(bool)), m_ui->clearHistoryButton, SLOT(setEnabled(bool)));
 	connect(m_ui->clearHistoryButton, SIGNAL(clicked()), this, SLOT(setupClearHistory()));
+	connect(m_ui->managePasswordsButton, SIGNAL(clicked()), this, SLOT(viewPasswords()));
 }
 
 PreferencesPrivacyPageWidget::~PreferencesPrivacyPageWidget()
@@ -123,6 +127,11 @@ void PreferencesPrivacyPageWidget::setupClearHistory()
 	m_ui->clearHistoryButton->setEnabled(!m_clearHisorySettings.isEmpty());
 }
 
+void PreferencesPrivacyPageWidget::viewPasswords()
+{
+	ActionsManager::triggerAction(ActionsManager::PasswordsAction, this);
+}
+
 void PreferencesPrivacyPageWidget::save()
 {
 	SettingsManager::setValue(SettingsManager::Network_DoNotTrackPolicyOption, m_ui->doNotTrackComboBox->currentData().toString());
@@ -135,6 +144,7 @@ void PreferencesPrivacyPageWidget::save()
 	SettingsManager::setValue(SettingsManager::Network_ThirdPartyCookiesAcceptedHostsOption, m_thirdPartyCookiesAcceptedHosts);
 	SettingsManager::setValue(SettingsManager::Network_ThirdPartyCookiesRejectedHostsOption, m_thirdPartyCookiesRejectedHosts);
 	SettingsManager::setValue(SettingsManager::History_ClearOnCloseOption, (m_ui->clearHistoryCheckBox->isChecked() ? m_clearHisorySettings : QStringList()));
+	SettingsManager::setValue(SettingsManager::Browser_RememberPasswordsOption, m_ui->rememberPasswordsCheckBox->isChecked());
 }
 
 }

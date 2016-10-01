@@ -370,7 +370,7 @@ void QtWebKitWebWidget::pageLoadFinished()
 		}
 	}
 
-	if (!SettingsManager::getValue(SettingsManager::Browser_EnablePasswordsManagerOption).toBool() || !SettingsManager::getValue(SettingsManager::Browser_AskToSavePasswordOption).toBool())
+	if (!SettingsManager::getValue(SettingsManager::Browser_RememberPasswordsOption).toBool())
 	{
 		return;
 	}

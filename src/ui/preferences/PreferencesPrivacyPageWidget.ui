@@ -324,9 +324,6 @@
     <layout class="QHBoxLayout" name="rememberPasswordsLayout">
      <item>
       <widget class="QCheckBox" name="rememberPasswordsCheckBox">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
        <property name="text">
         <string>Remember passwords</string>
        </property>
@@ -346,10 +343,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="rememberPasswordsButton">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
+      <widget class="QPushButton" name="managePasswordsButton">
        <property name="text">
         <string>Manage…</string>
        </property>

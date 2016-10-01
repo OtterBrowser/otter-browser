@@ -78,7 +78,6 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Backends_PasswordsOption, QLatin1String("file"), EnumerationType, QStringList(QLatin1String("file")));
 	registerOption(Backends_WebOption, QLatin1String("qtwebkit"), EnumerationType, QStringList(QLatin1String("qtwebkit")));
 	registerOption(Browser_AlwaysAskWhereToSaveDownloadOption, true, BooleanType);
-	registerOption(Browser_AskToSavePasswordOption, true, BooleanType);
 	registerOption(Browser_DelayRestoringOfBackgroundTabsOption, false, BooleanType);
 	registerOption(Browser_EnableFullScreenOption, QLatin1String("ask"), EnumerationType, QStringList({QLatin1String("ask"), QLatin1String("allow"), QLatin1String("disallow")}));
 	registerOption(Browser_EnableGeolocationOption, QLatin1String("ask"), EnumerationType, QStringList({QLatin1String("ask"), QLatin1String("allow"), QLatin1String("disallow")}));
@@ -93,7 +92,6 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Browser_EnableNotificationsOption, QLatin1String("ask"), EnumerationType, QStringList({QLatin1String("ask"), QLatin1String("allow"), QLatin1String("disallow")}));
 	registerOption(Browser_EnableOfflineStorageDatabaseOption, false, BooleanType);
 	registerOption(Browser_EnableOfflineWebApplicationCacheOption, false, BooleanType);
-	registerOption(Browser_EnablePasswordsManagerOption, true, BooleanType);
 	registerOption(Browser_EnablePluginsOption, QLatin1String("onDemand"), EnumerationType, QStringList({QLatin1String("enabled"), QLatin1String("onDemand"), QLatin1String("disabled")}));
 	registerOption(Browser_EnablePointerLockOption, QLatin1String("ask"), EnumerationType, QStringList({QLatin1String("ask"), QLatin1String("allow"), QLatin1String("disallow")}));
 	registerOption(Browser_EnableSingleKeyShortcutsOption, true, BooleanType);
@@ -114,6 +112,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Browser_OfflineWebApplicationCacheLimitOption, 10240, IntegerType);
 	registerOption(Browser_OpenLinksInNewTabOption, true, BooleanType);
 	registerOption(Browser_PrivateModeOption, false, BooleanType);
+	registerOption(Browser_RememberPasswordsOption, false, BooleanType);
 	registerOption(Browser_ReuseCurrentTabOption, false, BooleanType);
 	registerOption(Browser_ShowSelectionContextMenuOnDoubleClickOption, false, BooleanType);
 	registerOption(Browser_SpellCheckDictionaryOption, QString(), StringType);
