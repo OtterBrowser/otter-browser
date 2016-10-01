@@ -551,18 +551,11 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 		if (QString(request.rawHeader(QByteArray("X-Otter-Token"))) == m_widget->getPasswordToken())
 		{
 			const QJsonObject object(QJsonDocument::fromJson(QByteArray::fromBase64(request.rawHeader(QByteArray("X-Otter-Data")))).object());
+			bool hasPassword(false);
 			PasswordsManager::PasswordInformation password;
 			password.url = QUrl(object.value(QLatin1String("url")).toString());
 			password.timeAdded = QDateTime::currentDateTime();
 			password.type = PasswordsManager::FormPassword;
-
-			const QJsonObject fields(object.value(QLatin1String("fields")).toObject());
-			QJsonObject::const_iterator iterator;
-
-			for (iterator = fields.constBegin(); iterator != fields.constEnd(); ++iterator)
-			{
-				password.fields.append(qMakePair(iterator.key(), iterator.value().toString()));
-			}
 
 			const QJsonArray passwords(object.value(QLatin1String("passwords")).toArray());
 
@@ -571,7 +564,23 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 				password.passwords.append(passwords.at(i).toString());
 			}
 
-			m_widget->notifyAddPasswordRequested(password);
+			const QJsonObject fields(object.value(QLatin1String("fields")).toObject());
+			QJsonObject::const_iterator iterator;
+
+			for (iterator = fields.constBegin(); iterator != fields.constEnd(); ++iterator)
+			{
+				password.fields.append(qMakePair(iterator.key(), iterator.value().toString()));
+
+				if (password.passwords.contains(iterator.key()) && !iterator.value().toString().isEmpty())
+				{
+					hasPassword = true;
+				}
+			}
+
+			if (hasPassword)
+			{
+				m_widget->notifyAddPasswordRequested(password);
+			}
 		}
 
 		QUrl url;
