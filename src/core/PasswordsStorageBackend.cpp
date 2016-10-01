@@ -41,6 +41,11 @@ QUrl PasswordsStorageBackend::getUpdateUrl() const
 	return QUrl();
 }
 
+QStringList PasswordsStorageBackend::getHosts()
+{
+	return QStringList();
+}
+
 QList<PasswordsManager::PasswordInformation> PasswordsStorageBackend::getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types)
 {
 	Q_UNUSED(url)

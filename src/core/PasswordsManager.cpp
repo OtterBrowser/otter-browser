@@ -63,6 +63,11 @@ PasswordsManager* PasswordsManager::getInstance()
 	return m_instance;
 }
 
+QStringList PasswordsManager::getHosts()
+{
+	return (m_backend ? m_backend->getHosts() : QStringList());
+}
+
 QList<PasswordsManager::PasswordInformation> PasswordsManager::getPasswords(const QUrl &url, PasswordTypes types)
 {
 	return (m_backend ? m_backend->getPasswords(url, types) : QList<PasswordsManager::PasswordInformation>());

@@ -228,6 +228,16 @@ QIcon FilePasswordsStorageBackend::getIcon() const
 	return QIcon();
 }
 
+QStringList FilePasswordsStorageBackend::getHosts()
+{
+	if (!m_isInitialized)
+	{
+		initialize();
+	}
+
+	return m_passwords.keys();
+}
+
 QList<PasswordsManager::PasswordInformation> FilePasswordsStorageBackend::getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types)
 {
 	if (!m_isInitialized)

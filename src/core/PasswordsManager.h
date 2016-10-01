@@ -59,6 +59,7 @@ public:
 	static void addPassword(const PasswordInformation &password);
 	static void removePassword(const PasswordInformation &password);
 	static PasswordsManager* getInstance();
+	static QStringList getHosts();
 	static QList<PasswordInformation> getPasswords(const QUrl &url, PasswordTypes types = AnyPassword);
 	static bool hasPasswords(const QUrl &url, PasswordTypes types = AnyPassword);
 
