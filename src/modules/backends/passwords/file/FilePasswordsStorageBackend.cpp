@@ -221,7 +221,7 @@ void FilePasswordsStorageBackend::removePassword(const PasswordsManager::Passwor
 
 			for (int j = 0; j < password.fields.count(); ++j)
 			{
-				if (passwords.at(i).fields.at(j).first != password.fields.at(j).first || passwords.at(i).fields.at(j).second != password.fields.at(j).second)
+				if (passwords.at(i).fields.at(j).first != password.fields.at(j).first || (!passwords.at(i).passwords.contains(passwords.at(i).fields.at(j).first) && passwords.at(i).fields.at(j).second != password.fields.at(j).second))
 				{
 					isMatching = false;
 
