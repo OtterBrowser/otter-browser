@@ -41,7 +41,7 @@
 	{
 		mutations.forEach(function(mutation)
 		{
-			for (var i = 0; i < mutation.addedNodes.length; i++)
+			for (var i = 0; i < mutation.addedNodes.length; ++i)
 			{
 				var addedNode = mutation.addedNodes[i];
 

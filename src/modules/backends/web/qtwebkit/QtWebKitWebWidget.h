@@ -89,6 +89,7 @@ public slots:
 	void clearOptions();
 	void goToHistoryIndex(int index);
 	void removeHistoryIndex(int index, bool purge = false);
+	void fillPassword(const PasswordsManager::PasswordInformation &password);
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void setActiveStyleSheet(const QString &styleSheet);
 	void setPermission(FeaturePermission feature, const QUrl &url, PermissionPolicies policies);

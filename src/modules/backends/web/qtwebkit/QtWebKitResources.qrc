@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/modules/backends/web/qtwebkit">
         <file>resources/formExtractor.js</file>
+        <file>resources/formFiller.js</file>
         <file>resources/imageViewer.js</file>
         <file>resources/resetSpellCheck.js</file>
     </qresource>
