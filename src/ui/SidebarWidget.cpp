@@ -176,6 +176,10 @@ void SidebarWidget::optionChanged(int identifier, const QVariant &value)
 			{
 				button->setIcon(ThemesManager::getIcon(QLatin1String("notes")));
 			}
+			else if (chosenPanels.at(i) == QLatin1String("passwords"))
+			{
+				button->setIcon(ThemesManager::getIcon(QLatin1String("dialog-password")));
+			}
 			else if (chosenPanels.at(i) == QLatin1String("transfers"))
 			{
 				button->setIcon(ThemesManager::getIcon(QLatin1String("transfers")));

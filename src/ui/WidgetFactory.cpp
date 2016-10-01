@@ -40,6 +40,7 @@
 #include "../modules/windows/cookies/CookiesContentsWidget.h"
 #include "../modules/windows/history/HistoryContentsWidget.h"
 #include "../modules/windows/notes/NotesContentsWidget.h"
+#include "../modules/windows/passwords/PasswordsContentsWidget.h"
 #include "../modules/windows/transfers/TransfersContentsWidget.h"
 #include "../modules/windows/web/WebContentsWidget.h"
 
@@ -189,6 +190,11 @@ QWidget* createSidebarPanel(const QString &panel, MainWindow *mainWindow)
 	if (panel == QLatin1String("notes"))
 	{
 		return new NotesContentsWidget(NULL);
+	}
+
+	if (panel == QLatin1String("passwords"))
+	{
+		return new PasswordsContentsWidget(NULL);
 	}
 
 	if (panel == QLatin1String("transfers"))

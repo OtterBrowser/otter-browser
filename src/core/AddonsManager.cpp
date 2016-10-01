@@ -85,6 +85,7 @@ AddonsManager::AddonsManager(QObject *parent) : QObject(parent)
 	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Cookies Manager"), QString(), QUrl(QLatin1String("about:cookies")), ThemesManager::getIcon(QLatin1String("cookies"), false)), QLatin1String("cookies"));
 	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "History Manager"), QString(), QUrl(QLatin1String("about:history")), ThemesManager::getIcon(QLatin1String("view-history"), false)), QLatin1String("history"));
 	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Notes Manager"), QString(), QUrl(QLatin1String("about:notes")), ThemesManager::getIcon(QLatin1String("notes"), false)), QLatin1String("notes"));
+	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Passwords Manager"), QString(), QUrl(QLatin1String("about:passwords")), ThemesManager::getIcon(QLatin1String("dialog-password"), false)), QLatin1String("passwords"));
 	registerSpecialPage(SpecialPageInformation(QT_TRANSLATE_NOOP("addons", "Transfers Manager"), QString(), QUrl(QLatin1String("about:transfers")), ThemesManager::getIcon(QLatin1String("transfers"), false)), QLatin1String("transfers"));
 }
 
