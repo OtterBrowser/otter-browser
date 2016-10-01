@@ -198,7 +198,40 @@ void FilePasswordsStorageBackend::addPassword(const PasswordsManager::PasswordIn
 
 	const QString host(password.url.host().isEmpty() ? QLatin1String("localhost") : password.url.host());
 
-	if (!m_passwords.contains(host))
+	if (m_passwords.contains(host))
+	{
+		const QList<PasswordsManager::PasswordInformation> passwords(m_passwords[host]);
+
+		for (int i = 0; i < passwords.count(); ++i)
+		{
+			if (passwords.at(i).type == password.type && passwords.at(i).url == password.url && passwords.at(i).passwords == password.passwords && passwords.at(i).fields.count() == password.fields.count())
+			{
+				bool isMatching(true);
+
+				for (int j = 0; j < password.fields.count(); ++j)
+				{
+					if (passwords.at(i).fields.at(j).first != password.fields.at(j).first || (!passwords.at(i).passwords.contains(passwords.at(i).fields.at(j).first) && passwords.at(i).fields.at(j).second != password.fields.at(j).second))
+					{
+						isMatching = false;
+
+						break;
+					}
+				}
+
+				if (isMatching)
+				{
+					m_passwords[host].replace(i, password);
+
+					emit passwordsModified();
+
+					save();
+
+					return;
+				}
+			}
+		}
+	}
+	else
 	{
 		m_passwords[host] = QList<PasswordsManager::PasswordInformation>();
 	}
