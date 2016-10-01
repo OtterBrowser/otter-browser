@@ -16,7 +16,7 @@ set(PATCH_VERSION "11")
 
 add_definitions(-DOTTER_VERSION_MAIN="${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}")
 add_definitions(-DOTTER_VERSION_WEEKLY=" ")
-add_definitions(-DOTTER_VERSION_CONTEXT="-dev")
+add_definitions(-DOTTER_VERSION_CONTEXT=" beta 11")
 add_definitions(-DOTTER_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}")
 
 if (EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
