@@ -42,6 +42,14 @@ void PasswordsManager::createInstance(QObject *parent)
 	}
 }
 
+void PasswordsManager::clearPasswords(const QString &host)
+{
+	if (m_backend)
+	{
+		m_backend->clearPasswords(host);
+	}
+}
+
 void PasswordsManager::addPassword(const PasswordInformation &password)
 {
 	if (m_backend)

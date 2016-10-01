@@ -26,6 +26,11 @@ PasswordsStorageBackend::PasswordsStorageBackend(QObject *parent) : Addon(parent
 {
 }
 
+void PasswordsStorageBackend::clearPasswords(const QString &host)
+{
+	Q_UNUSED(host)
+}
+
 void PasswordsStorageBackend::addPassword(const PasswordsManager::PasswordInformation &password)
 {
 	Q_UNUSED(password)

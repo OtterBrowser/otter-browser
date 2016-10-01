@@ -56,6 +56,7 @@ public:
 	};
 
 	static void createInstance(QObject *parent = NULL);
+	static void clearPasswords(const QString &host);
 	static void addPassword(const PasswordInformation &password);
 	static void removePassword(const PasswordInformation &password);
 	static PasswordsManager* getInstance();

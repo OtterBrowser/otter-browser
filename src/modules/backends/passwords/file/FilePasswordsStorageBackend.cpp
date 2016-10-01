@@ -136,6 +136,46 @@ void FilePasswordsStorageBackend::save()
 	file.close();
 }
 
+void FilePasswordsStorageBackend::clearPasswords(const QString &host)
+{
+	if (!m_isInitialized)
+	{
+		initialize();
+	}
+
+	if (m_passwords.isEmpty())
+	{
+		return;
+	}
+
+	if (host.isEmpty())
+	{
+		const QString path(SessionsManager::getWritableDataPath(QLatin1String("passwords.json")));
+
+		if (QFile::remove(path))
+		{
+			m_passwords.clear();
+
+			emit passwordsModified();
+		}
+		else
+		{
+			Console::addMessage(tr("Failed to remove passwords file"), Console::OtherCategory, Console::ErrorLevel, path);
+		}
+
+		return;
+	}
+
+	if (m_passwords.contains(host))
+	{
+		m_passwords.remove(host);
+
+		emit passwordsModified();
+
+		save();
+	}
+}
+
 void FilePasswordsStorageBackend::addPassword(const PasswordsManager::PasswordInformation &password)
 {
 	if (!m_isInitialized)
