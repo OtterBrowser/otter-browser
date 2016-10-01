@@ -88,8 +88,9 @@ void PasswordsContentsWidget::populatePasswords()
 
 			for (int k = 0; k < passwords.at(j).fields.count(); ++k)
 			{
-				QList<QStandardItem*> fieldItems({new QStandardItem(passwords.at(j).fields.at(k).first), new QStandardItem(passwords.at(j).passwords.contains(passwords.at(j).fields.at(k).first) ? QLatin1String("*****") : passwords.at(j).fields.at(k).second)});
-				fieldItems[0]->setData((passwords.at(j).passwords.contains(passwords.at(j).fields.at(k).first)) ? QLatin1String("password") : QLatin1String("text"));
+				const bool isPassword(passwords.at(j).passwords.contains(passwords.at(j).fields.at(k).first));
+				QList<QStandardItem*> fieldItems({new QStandardItem(passwords.at(j).fields.at(k).first), new QStandardItem(isPassword ? QLatin1String("*****") : passwords.at(j).fields.at(k).second)});
+				fieldItems[0]->setData((isPassword ? QLatin1String("password") : QLatin1String("text")), Qt::UserRole);
 
 				setItem->appendRow(fieldItems);
 			}
