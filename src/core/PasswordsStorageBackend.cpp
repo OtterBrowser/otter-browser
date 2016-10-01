@@ -31,6 +31,11 @@ void PasswordsStorageBackend::addPassword(const PasswordsManager::PasswordInform
 	Q_UNUSED(password)
 }
 
+void PasswordsStorageBackend::removePassword(const PasswordsManager::PasswordInformation &password)
+{
+	Q_UNUSED(password)
+}
+
 QUrl PasswordsStorageBackend::getUpdateUrl() const
 {
 	return QUrl();

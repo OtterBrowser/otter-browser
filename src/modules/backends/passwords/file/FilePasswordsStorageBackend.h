@@ -33,6 +33,7 @@ public:
 	explicit FilePasswordsStorageBackend(QObject *parent = NULL);
 
 	void addPassword(const PasswordsManager::PasswordInformation &password);
+	void removePassword(const PasswordsManager::PasswordInformation &password);
 	QString getTitle() const;
 	QString getDescription() const;
 	QString getVersion() const;
@@ -43,6 +44,7 @@ public:
 
 protected:
 	void initialize();
+	void save();
 
 private:
 	QHash<QString, QList<PasswordsManager::PasswordInformation> > m_passwords;

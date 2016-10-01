@@ -86,22 +86,8 @@ void FilePasswordsStorageBackend::initialize()
 	m_passwords = passwords;
 }
 
-void FilePasswordsStorageBackend::addPassword(const PasswordsManager::PasswordInformation &password)
+void FilePasswordsStorageBackend::save()
 {
-	if (!m_isInitialized)
-	{
-		initialize();
-	}
-
-	const QString host(password.url.host().isEmpty() ? QLatin1String("localhost") : password.url.host());
-
-	if (!m_passwords.contains(host))
-	{
-		m_passwords[host] = QList<PasswordsManager::PasswordInformation>();
-	}
-
-	m_passwords[host].append(password);
-
 	QFile file(SessionsManager::getWritableDataPath(QLatin1String("passwords.json")));
 
 	if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -146,6 +132,69 @@ void FilePasswordsStorageBackend::addPassword(const PasswordsManager::PasswordIn
 
 	file.write(QJsonDocument(hostsObject).toJson(QJsonDocument::Indented));
 	file.close();
+}
+
+void FilePasswordsStorageBackend::addPassword(const PasswordsManager::PasswordInformation &password)
+{
+	if (!m_isInitialized)
+	{
+		initialize();
+	}
+
+	const QString host(password.url.host().isEmpty() ? QLatin1String("localhost") : password.url.host());
+
+	if (!m_passwords.contains(host))
+	{
+		m_passwords[host] = QList<PasswordsManager::PasswordInformation>();
+	}
+
+	m_passwords[host].append(password);
+
+	save();
+}
+
+void FilePasswordsStorageBackend::removePassword(const PasswordsManager::PasswordInformation &password)
+{
+	if (!m_isInitialized)
+	{
+		initialize();
+	}
+
+	const QString host(password.url.host().isEmpty() ? QLatin1String("localhost") : password.url.host());
+
+	if (!m_passwords.contains(host))
+	{
+		return;
+	}
+
+	const QList<PasswordsManager::PasswordInformation> passwords(m_passwords[host]);
+
+	for (int i = 0; i < passwords.count(); ++i)
+	{
+		if (passwords.at(i).type == password.type && passwords.at(i).url == password.url && passwords.at(i).passwords == password.passwords && passwords.at(i).fields.count() == password.fields.count())
+		{
+			bool isMatching(true);
+
+			for (int j = 0; j < password.fields.count(); ++j)
+			{
+				if (passwords.at(i).fields.at(j).first != password.fields.at(j).first || passwords.at(i).fields.at(j).second != password.fields.at(j).second)
+				{
+					isMatching = false;
+
+					break;
+				}
+			}
+
+			if (isMatching)
+			{
+				m_passwords[host].removeAt(i);
+
+				save();
+
+				break;
+			}
+		}
+	}
 }
 
 QString FilePasswordsStorageBackend::getTitle() const

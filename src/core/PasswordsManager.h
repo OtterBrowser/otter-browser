@@ -57,6 +57,7 @@ public:
 
 	static void createInstance(QObject *parent = NULL);
 	static void addPassword(const PasswordInformation &password);
+	static void removePassword(const PasswordInformation &password);
 	static PasswordsManager* getInstance();
 	static QList<PasswordInformation> getPasswords(const QUrl &url, PasswordTypes types = AnyPassword);
 	static bool hasPasswords(const QUrl &url, PasswordTypes types = AnyPassword);

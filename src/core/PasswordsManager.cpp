@@ -48,6 +48,14 @@ void PasswordsManager::addPassword(const PasswordInformation &password)
 	}
 }
 
+void PasswordsManager::removePassword(const PasswordsManager::PasswordInformation &password)
+{
+	if (m_backend)
+	{
+		m_backend->removePassword(password);
+	}
+}
+
 PasswordsManager* PasswordsManager::getInstance()
 {
 	return m_instance;

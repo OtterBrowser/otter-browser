@@ -34,6 +34,7 @@ public:
 	explicit PasswordsStorageBackend(QObject *parent = NULL);
 
 	virtual void addPassword(const PasswordsManager::PasswordInformation &password);
+	virtual void removePassword(const PasswordsManager::PasswordInformation &password);
 	QUrl getUpdateUrl() const;
 	virtual QList<PasswordsManager::PasswordInformation> getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types = PasswordsManager::AnyPassword);
 	AddonType getType() const;
