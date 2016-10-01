@@ -828,11 +828,11 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 	}
 }
 
-void WebContentsWidget::handleAddPasswordRequest(const PasswordsManager::PasswordInformation &password)
+void WebContentsWidget::handleSavePasswordRequest(const PasswordsManager::PasswordInformation &password, bool isUpdate)
 {
 	if (!m_passwordBarWidget)
 	{
-		m_passwordBarWidget = new PasswordBarWidget(password, this);
+		m_passwordBarWidget = new PasswordBarWidget(password, isUpdate, this);
 
 		connect(m_passwordBarWidget, SIGNAL(requestedClose()), this, SLOT(closePasswordBar()));
 
@@ -1102,7 +1102,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 	connect(m_webWidget, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
 	connect(m_webWidget, SIGNAL(requestedPopupWindow(QUrl,QUrl)), this, SLOT(handlePopupWindowRequest(QUrl,QUrl)));
 	connect(m_webWidget, SIGNAL(requestedPermission(WebWidget::FeaturePermission,QUrl,bool)), this, SLOT(handlePermissionRequest(WebWidget::FeaturePermission,QUrl,bool)));
-	connect(m_webWidget, SIGNAL(requestedAddPassword(PasswordsManager::PasswordInformation)), this, SLOT(handleAddPasswordRequest(PasswordsManager::PasswordInformation)));
+	connect(m_webWidget, SIGNAL(requestedSavePassword(PasswordsManager::PasswordInformation,bool)), this, SLOT(handleSavePasswordRequest(PasswordsManager::PasswordInformation,bool)));
 	connect(m_webWidget, SIGNAL(requestedGeometryChange(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
 	connect(m_webWidget, SIGNAL(statusMessageChanged(QString)), this, SIGNAL(statusMessageChanged(QString)));
 	connect(m_webWidget, SIGNAL(titleChanged(QString)), this, SIGNAL(titleChanged(QString)));

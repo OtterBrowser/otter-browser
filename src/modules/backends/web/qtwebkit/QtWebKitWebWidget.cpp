@@ -833,9 +833,9 @@ void QtWebKitWebWidget::notifyPermissionRequested(QWebFrame *frame, QWebPage::Fe
 	}
 }
 
-void QtWebKitWebWidget::notifyAddPasswordRequested(const PasswordsManager::PasswordInformation &password)
+void QtWebKitWebWidget::notifySavePasswordRequested(const PasswordsManager::PasswordInformation &password, bool isUpdate)
 {
-	emit requestedAddPassword(password);
+	emit requestedSavePassword(password, isUpdate);
 }
 
 void QtWebKitWebWidget::notifyContentStateChanged()

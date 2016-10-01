@@ -307,7 +307,7 @@ signals:
 	void requestedSearch(const QString &query, const QString &search, WindowsManager::OpenHints hints);
 	void requestedPopupWindow(const QUrl &parentUrl, const QUrl &popupUrl);
 	void requestedPermission(WebWidget::FeaturePermission feature, const QUrl &url, bool cancel);
-	void requestedAddPassword(const PasswordsManager::PasswordInformation &password);
+	void requestedSavePassword(const PasswordsManager::PasswordInformation &password, bool isUpdate);
 	void requestedGeometryChange(const QRect &geometry);
 	void progressBarGeometryChanged();
 	void statusMessageChanged(const QString &message);

@@ -25,14 +25,14 @@
 namespace Otter
 {
 
-PasswordBarWidget::PasswordBarWidget(const PasswordsManager::PasswordInformation &password, QWidget *parent) : QWidget(parent),
+PasswordBarWidget::PasswordBarWidget(const PasswordsManager::PasswordInformation &password, bool isUpdate, QWidget *parent) : QWidget(parent),
 	m_created(QDateTime::currentDateTime()),
 	m_password(password),
 	m_ui(new Ui::PasswordBarWidget)
 {
 	m_ui->setupUi(this);
 	m_ui->iconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("dialog-password"), false).pixmap(m_ui->iconLabel->size()));
-	m_ui->messageLabel->setText(tr("Do you want to save login data for %1?").arg(password.url.host().isEmpty() ? QLatin1String("localhost") : password.url.host()));
+	m_ui->messageLabel->setText((isUpdate ? tr("Do you want to update login data for %1?") : tr("Do you want to save login data for %1?")).arg(password.url.host().isEmpty() ? QLatin1String("localhost") : password.url.host()));
 
 	connect(m_ui->okButton, SIGNAL(clicked()), this, SLOT(accepted()));
 	connect(m_ui->cancelButton, SIGNAL(clicked()), this, SLOT(rejected()));
