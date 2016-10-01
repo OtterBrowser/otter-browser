@@ -211,6 +211,7 @@ public:
 public slots:
 	virtual void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap()) = 0;
 	virtual void clearOptions();
+	virtual void fillPassword(const PasswordsManager::PasswordInformation &password);
 	virtual void goToHistoryIndex(int index) = 0;
 	virtual void removeHistoryIndex(int index, bool purge = false) = 0;
 	virtual void showContextMenu(const QPoint &position = QPoint());

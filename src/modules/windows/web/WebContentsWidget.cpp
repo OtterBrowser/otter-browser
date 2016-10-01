@@ -24,6 +24,7 @@
 #include "PopupsBarWidget.h"
 #include "ProgressBarWidget.h"
 #include "SearchBarWidget.h"
+#include "SelectPasswordDialog.h"
 #include "StartPageWidget.h"
 #include "../../../core/AddonsManager.h"
 #include "../../../core/InputInterpreter.h"
@@ -361,6 +362,29 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 					connect(interpreter, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
 
 					interpreter->interpret(text, WindowsManager::calculateOpenHints(), true);
+				}
+			}
+
+			break;
+		case ActionsManager::FillPasswordAction:
+			{
+				const QList<PasswordsManager::PasswordInformation> passwords(PasswordsManager::getPasswords(getUrl(), PasswordsManager::FormPassword));
+
+				if (!passwords.isEmpty())
+				{
+					if (passwords.count() == 1)
+					{
+						m_webWidget->fillPassword(passwords.first());
+					}
+					else
+					{
+						SelectPasswordDialog dialog(passwords, this);
+
+						if (dialog.exec() == QDialog::Accepted)
+						{
+							m_webWidget->fillPassword(dialog.getPassword());
+						}
+					}
 				}
 			}
 

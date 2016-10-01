@@ -407,6 +407,11 @@ void WebWidget::clearOptions()
 	m_options.clear();
 }
 
+void WebWidget::fillPassword(const PasswordsManager::PasswordInformation &password)
+{
+	Q_UNUSED(password)
+}
+
 void WebWidget::openUrl(const QUrl &url, WindowsManager::OpenHints hints)
 {
 	WebWidget *widget(clone(false, hints.testFlag(WindowsManager::PrivateOpen)));

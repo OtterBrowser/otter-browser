@@ -253,6 +253,7 @@ set(otter_src
 	src/modules/windows/web/PopupsBarWidget.cpp
 	src/modules/windows/web/ProgressBarWidget.cpp
 	src/modules/windows/web/SearchBarWidget.cpp
+	src/modules/windows/web/SelectPasswordDialog.cpp
 	src/modules/windows/web/StartPageModel.cpp
 	src/modules/windows/web/StartPagePreferencesDialog.cpp
 	src/modules/windows/web/StartPageWidget.cpp
@@ -318,6 +319,7 @@ qt5_wrap_ui(otter_ui
 	src/modules/windows/web/PermissionBarWidget.ui
 	src/modules/windows/web/PopupsBarWidget.ui
 	src/modules/windows/web/SearchBarWidget.ui
+	src/modules/windows/web/SelectPasswordDialog.ui
 	src/modules/windows/web/StartPagePreferencesDialog.ui
 )
 
