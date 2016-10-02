@@ -832,13 +832,28 @@ void WebContentsWidget::handleSavePasswordRequest(const PasswordsManager::Passwo
 {
 	if (!m_passwordBarWidget)
 	{
-		m_passwordBarWidget = new PasswordBarWidget(password, isUpdate, this);
+		bool isValid(false);
 
-		connect(m_passwordBarWidget, SIGNAL(requestedClose()), this, SLOT(closePasswordBar()));
+		for (int i = 0; i < password.fields.count(); ++i)
+		{
+			if (password.fields.at(i).type == PasswordsManager::PasswordField && !password.fields.at(i).value.isEmpty())
+			{
+				isValid = true;
 
-		m_layout->insertWidget(0, m_passwordBarWidget);
+				break;
+			}
+		}
 
-		m_passwordBarWidget->show();
+		if (isValid)
+		{
+			m_passwordBarWidget = new PasswordBarWidget(password, isUpdate, this);
+
+			connect(m_passwordBarWidget, SIGNAL(requestedClose()), this, SLOT(closePasswordBar()));
+
+			m_layout->insertWidget(0, m_passwordBarWidget);
+
+			m_passwordBarWidget->show();
+		}
 	}
 }
 
