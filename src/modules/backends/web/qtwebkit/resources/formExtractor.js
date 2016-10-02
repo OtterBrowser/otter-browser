@@ -5,28 +5,28 @@
 		form.addEventListener('submit', function(event)
 		{
 			var inputs = form.querySelectorAll('input:not([disabled])[name]');
-			var fields = {};
-			var passwords = [];
+			var fields = [];
+			var hasPassword = false;
 
 			for (var i = 0; i < inputs.length; ++i)
 			{
 				if (inputs[i].type == 'email' || inputs[i].type == 'password' || inputs[i].type == 'text')
 				{
-					fields[inputs[i].name] = inputs[i].value;
+					fields.push({ name: inputs[i].name, value: inputs[i].value, type: inputs[i].type });
 
-					if (inputs[i].type == 'password')
+					if (inputs[i].type == 'password' && inputs[i].value !== '')
 					{
-						passwords.push(inputs[i].name);
+						hasPassword = true;
 					}
 				}
 			}
 
-			if (passwords.length > 0)
+			if (hasPassword)
 			{
 				var request = new XMLHttpRequest();
 				request.open('GET', '/otter-password', true);
 				request.setRequestHeader('X-Otter-Token', '%1');
-				request.setRequestHeader('X-Otter-Data', btoa(JSON.stringify({ url: window.location.href, fields: fields, passwords: passwords })));
+				request.setRequestHeader('X-Otter-Data', btoa(JSON.stringify({ url: window.location.href, fields: fields })));
 				request.send(null);
 			}
 		});

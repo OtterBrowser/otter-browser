@@ -551,46 +551,28 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 		if (QString(request.rawHeader(QByteArray("X-Otter-Token"))) == m_widget->getPasswordToken())
 		{
 			const QJsonObject passwordObject(QJsonDocument::fromJson(QByteArray::fromBase64(request.rawHeader(QByteArray("X-Otter-Data")))).object());
-			bool hasPassword(false);
+			const QJsonArray fieldsArray(passwordObject.value(QLatin1String("fields")).toArray());
 			PasswordsManager::PasswordInformation password;
 			password.url = QUrl(passwordObject.value(QLatin1String("url")).toString());
 			password.timeAdded = QDateTime::currentDateTime();
 			password.type = PasswordsManager::FormPassword;
 
-			const QJsonArray passwordsArray(passwordObject.value(QLatin1String("passwords")).toArray());
-			QStringList passwords;
-
-			for (int i = 0; i < passwordsArray.count(); ++i)
+			for (int i = 0; i < fieldsArray.count(); ++i)
 			{
-				passwords.append(passwordsArray.at(i).toString());
-			}
-
-			const QJsonObject fieldsObject(passwordObject.value(QLatin1String("fields")).toObject());
-			QJsonObject::const_iterator iterator;
-
-			for (iterator = fieldsObject.constBegin(); iterator != fieldsObject.constEnd(); ++iterator)
-			{
+				const QJsonObject fieldObject(fieldsArray.at(i).toObject());
 				PasswordsManager::FieldInformation field;
-				field.name = iterator.key();
-				field.value = iterator.value().toString();
-				field.type = (passwords.contains(iterator.key()) ? PasswordsManager::PasswordField : PasswordsManager::TextField);
+				field.name = fieldObject.value(QLatin1String("name")).toString();
+				field.value = fieldObject.value(QLatin1String("value")).toString();
+				field.type = ((fieldObject.value(QLatin1String("type")).toString() == QLatin1String("password")) ? PasswordsManager::PasswordField : PasswordsManager::TextField);
 
 				password.fields.append(field);
-
-				if (field.type == PasswordsManager::PasswordField && !field.value.isEmpty())
-				{
-					hasPassword = true;
-				}
 			}
 
-			if (hasPassword)
-			{
-				PasswordsManager::PasswordMatch match(PasswordsManager::hasPassword(password));
+			PasswordsManager::PasswordMatch match(PasswordsManager::hasPassword(password));
 
-				if (match != PasswordsManager::FullMatch)
-				{
-					m_widget->notifySavePasswordRequested(password, (match == PasswordsManager::PartialMatch));
-				}
+			if (match != PasswordsManager::FullMatch)
+			{
+				m_widget->notifySavePasswordRequested(password, (match == PasswordsManager::PartialMatch));
 			}
 		}
 
