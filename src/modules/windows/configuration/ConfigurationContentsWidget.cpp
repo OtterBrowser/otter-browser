@@ -115,16 +115,16 @@ void ConfigurationContentsWidget::changeEvent(QEvent *event)
 
 void ConfigurationContentsWidget::optionChanged(int identifier, const QVariant &value)
 {
+	const QString name(SettingsManager::getOptionName(identifier));
+
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
 		QStandardItem *groupItem(m_model->item(i, 0));
 
-		if (!groupItem || !QString(identifier).startsWith(groupItem->text()))
+		if (!groupItem || !name.startsWith(groupItem->text()))
 		{
 			continue;
 		}
-
-		const QString name(SettingsManager::getOptionName(identifier));
 
 		for (int j = 0; j < groupItem->rowCount(); ++j)
 		{
