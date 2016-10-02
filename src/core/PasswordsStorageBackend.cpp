@@ -64,6 +64,36 @@ Addon::AddonType PasswordsStorageBackend::getType() const
 	return PasswordsStorageBackendType;
 }
 
+PasswordsManager::PasswordMatch PasswordsStorageBackend::comparePasswords(const PasswordsManager::PasswordInformation &first, const PasswordsManager::PasswordInformation &second)
+{
+	if (first.type != second.type || first.url != second.url || first.passwords != second.passwords || first.fields.count() != second.fields.count())
+	{
+		return PasswordsManager::NoMatch;
+	}
+
+	PasswordsManager::PasswordMatch match(PasswordsManager::FullMatch);
+
+	for (int i = 0; i < first.fields.count(); ++i)
+	{
+		if (first.fields.at(i).first != second.fields.at(i).first)
+		{
+			return PasswordsManager::NoMatch;
+		}
+
+		if (first.fields.at(i).second != second.fields.at(i).second)
+		{
+			if (!first.passwords.contains(first.fields.at(i).first))
+			{
+				return PasswordsManager::NoMatch;
+			}
+
+			match = PasswordsManager::PartialMatch;
+		}
+	}
+
+	return match;
+}
+
 PasswordsManager::PasswordMatch PasswordsStorageBackend::hasPassword(const PasswordsManager::PasswordInformation &password)
 {
 	Q_UNUSED(password)

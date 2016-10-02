@@ -43,6 +43,9 @@ public:
 	virtual PasswordsManager::PasswordMatch hasPassword(const PasswordsManager::PasswordInformation &password);
 	virtual bool hasPasswords(const QUrl &url, PasswordsManager::PasswordTypes types = PasswordsManager::AnyPassword);
 
+protected:
+	static PasswordsManager::PasswordMatch comparePasswords(const PasswordsManager::PasswordInformation &first, const PasswordsManager::PasswordInformation &second);
+
 signals:
 	void passwordsModified();
 };

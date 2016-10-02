@@ -204,30 +204,15 @@ void FilePasswordsStorageBackend::addPassword(const PasswordsManager::PasswordIn
 
 		for (int i = 0; i < passwords.count(); ++i)
 		{
-			if (passwords.at(i).type == password.type && passwords.at(i).url == password.url && passwords.at(i).passwords == password.passwords && passwords.at(i).fields.count() == password.fields.count())
+			if (comparePasswords(password, passwords.at(i)) == PasswordsManager::PartialMatch)
 			{
-				bool isMatching(true);
+				m_passwords[host].replace(i, password);
 
-				for (int j = 0; j < password.fields.count(); ++j)
-				{
-					if (passwords.at(i).fields.at(j).first != password.fields.at(j).first || (!passwords.at(i).passwords.contains(passwords.at(i).fields.at(j).first) && passwords.at(i).fields.at(j).second != password.fields.at(j).second))
-					{
-						isMatching = false;
+				emit passwordsModified();
 
-						break;
-					}
-				}
+				save();
 
-				if (isMatching)
-				{
-					m_passwords[host].replace(i, password);
-
-					emit passwordsModified();
-
-					save();
-
-					return;
-				}
+				return;
 			}
 		}
 	}
@@ -261,30 +246,15 @@ void FilePasswordsStorageBackend::removePassword(const PasswordsManager::Passwor
 
 	for (int i = 0; i < passwords.count(); ++i)
 	{
-		if (passwords.at(i).type == password.type && passwords.at(i).url == password.url && passwords.at(i).passwords == password.passwords && passwords.at(i).fields.count() == password.fields.count())
+		if (comparePasswords(password, passwords.at(i)) != PasswordsManager::NoMatch)
 		{
-			bool isMatching(true);
+			m_passwords[host].removeAt(i);
 
-			for (int j = 0; j < password.fields.count(); ++j)
-			{
-				if (passwords.at(i).fields.at(j).first != password.fields.at(j).first || (!passwords.at(i).passwords.contains(passwords.at(i).fields.at(j).first) && passwords.at(i).fields.at(j).second != password.fields.at(j).second))
-				{
-					isMatching = false;
+			emit passwordsModified();
 
-					break;
-				}
-			}
+			save();
 
-			if (isMatching)
-			{
-				m_passwords[host].removeAt(i);
-
-				emit passwordsModified();
-
-				save();
-
-				break;
-			}
+			return;
 		}
 	}
 }
@@ -375,38 +345,11 @@ PasswordsManager::PasswordMatch FilePasswordsStorageBackend::hasPassword(const P
 
 	for (int i = 0; i < passwords.count(); ++i)
 	{
-		if (passwords.at(i).type == password.type && passwords.at(i).url == password.url && passwords.at(i).passwords == password.passwords && passwords.at(i).fields.count() == password.fields.count())
+		const PasswordsManager::PasswordMatch match(comparePasswords(password, passwords.at(i)));
+
+		if (match != PasswordsManager::NoMatch)
 		{
-			PasswordsManager::PasswordMatch match(PasswordsManager::FullMatch);
-
-			for (int j = 0; j < password.fields.count(); ++j)
-			{
-				if (passwords.at(i).fields.at(j).first != password.fields.at(j).first)
-				{
-					match = PasswordsManager::NoMatch;
-
-					break;
-				}
-
-				if (passwords.at(i).fields.at(j).second != password.fields.at(j).second)
-				{
-					if (passwords.at(i).passwords.contains(passwords.at(i).fields.at(j).first))
-					{
-						match = PasswordsManager::PartialMatch;
-					}
-					else
-					{
-						match = PasswordsManager::NoMatch;
-
-						break;
-					}
-				}
-			}
-
-			if (match != PasswordsManager::NoMatch)
-			{
-				return match;
-			}
+			return match;
 		}
 	}
 
