@@ -503,7 +503,7 @@ void Menu::populateClosedWindowsMenu()
 
 		for (int i = 0; i < tabs.count(); ++i)
 		{
-			QAction *action(QMenu::addAction(HistoryManager::getIcon(QUrl(tabs.at(i).window.getUrl())), Utils::elideText(tabs.at(i).window.getTitle(), this), this, SLOT(restoreClosedWindow())));
+			QAction *action(QMenu::addAction(HistoryManager::getIcon(QUrl(tabs.at(i).window.getUrl())), Utils::elideText(tabs.at(i).window.getTitle().replace(QLatin1Char('&'), QLatin1String("&&")), this), this, SLOT(restoreClosedWindow())));
 			action->setData(i + 1);
 			action->setStatusTip(tabs.at(i).window.getUrl());
 		}
