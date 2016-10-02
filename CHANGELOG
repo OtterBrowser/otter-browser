@@ -3,6 +3,7 @@
 -- support for multiple credential sets per host;
 -- basic passwords management;
 -- disabled by default (no encryption yet);
+- added crash reporter;
 - added support for muting tab media;
 - F12 menu now exposes all modes for Images visibility (including new option to show cached images only) and Plugins;
 - QtWebEngine backend is now capable of saving pages in MIME HTML format and as complete set of files;
