@@ -184,6 +184,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Network_UserAgentOption, QLatin1String("default"), StringType);
 	registerOption(Network_WorkOfflineOption, false, BooleanType);
 	registerOption(Paths_DownloadsOption, QStandardPaths::writableLocation(QStandardPaths::DownloadLocation), PathType);
+	registerOption(Paths_OpenFileOption, QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), PathType);
 	registerOption(Paths_SaveFileOption, QStandardPaths::writableLocation(QStandardPaths::DownloadLocation), PathType);
 	registerOption(Proxy_AutomaticConfigurationPathOption, QString(), PathType);
 	registerOption(Proxy_CommonPortOption, 8080, IntegerType);

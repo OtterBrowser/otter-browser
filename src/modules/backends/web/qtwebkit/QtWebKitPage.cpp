@@ -568,10 +568,14 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 {
 	if (extension == QWebPage::ChooseMultipleFilesExtension && m_widget)
 	{
-		const QWebPage::ChooseMultipleFilesExtensionOption *filesOption(static_cast<const QWebPage::ChooseMultipleFilesExtensionOption*>(option));
 		QWebPage::ChooseMultipleFilesExtensionReturn *filesOutput(static_cast<QWebPage::ChooseMultipleFilesExtensionReturn*>(output));
 
-		filesOutput->fileNames = QFileDialog::getOpenFileNames(m_widget, tr("Open File"), QString(), filesOption->suggestedFileNames.join(QLatin1Char(';')));
+		filesOutput->fileNames = QFileDialog::getOpenFileNames(m_widget, tr("Open File"), SettingsManager::getValue(SettingsManager::Paths_OpenFileOption).toString());
+
+		if (!filesOutput->fileNames.isEmpty())
+		{
+			SettingsManager::setValue(SettingsManager::Paths_OpenFileOption, QFileInfo(filesOutput->fileNames.first()).dir().canonicalPath());
+		}
 
 		return true;
 	}

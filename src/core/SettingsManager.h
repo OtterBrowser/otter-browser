@@ -164,6 +164,7 @@ public:
 		Network_UserAgentOption,
 		Network_WorkOfflineOption,
 		Paths_DownloadsOption,
+		Paths_OpenFileOption,
 		Paths_SaveFileOption,
 		Proxy_AutomaticConfigurationPathOption,
 		Proxy_CommonPortOption,
