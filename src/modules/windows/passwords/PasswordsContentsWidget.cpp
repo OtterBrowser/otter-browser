@@ -88,8 +88,8 @@ void PasswordsContentsWidget::populatePasswords()
 
 			for (int k = 0; k < passwords.at(j).fields.count(); ++k)
 			{
-				const bool isPassword(passwords.at(j).passwords.contains(passwords.at(j).fields.at(k).first));
-				QList<QStandardItem*> fieldItems({new QStandardItem(passwords.at(j).fields.at(k).first), new QStandardItem(isPassword ? QLatin1String("*****") : passwords.at(j).fields.at(k).second)});
+				const bool isPassword(passwords.at(j).fields.at(k).type == PasswordsManager::PasswordField);
+				QList<QStandardItem*> fieldItems({new QStandardItem(passwords.at(j).fields.at(k).name), new QStandardItem(isPassword ? QLatin1String("*****") : passwords.at(j).fields.at(k).value)});
 				fieldItems[0]->setData((isPassword ? QLatin1String("password") : QLatin1String("text")), Qt::UserRole);
 
 				setItem->appendRow(fieldItems);
@@ -364,16 +364,14 @@ PasswordsManager::PasswordInformation PasswordsContentsWidget::getPassword(const
 
 	for (int i = 0; i < m_model->rowCount(index); ++i)
 	{
-		const QModelIndex keyIndex(index.child(i, 0));
-		const QString key(keyIndex.data(Qt::DisplayRole).toString());
-		const bool isPassword(keyIndex.data(Qt::UserRole).toString() == QLatin1String("password"));
+		const QModelIndex nameIndex(index.child(i, 0));
+		const bool isPassword(nameIndex.data(Qt::UserRole).toString() == QLatin1String("password"));
+		PasswordsManager::FieldInformation field;
+		field.name = nameIndex.data(Qt::DisplayRole).toString();
+		field.value = (isPassword ? QString() : index.child(i, 1).data(Qt::DisplayRole).toString());
+		field.type = (isPassword ? PasswordsManager::PasswordField : PasswordsManager::TextField);
 
-		if (isPassword)
-		{
-			password.passwords.append(key);
-		}
-
-		password.fields.append(qMakePair(key, (isPassword ? QString() : index.child(i, 1).data(Qt::DisplayRole).toString())));
+		password.fields.append(field);
 	}
 
 	return password;

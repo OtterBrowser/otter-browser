@@ -66,7 +66,7 @@ Addon::AddonType PasswordsStorageBackend::getType() const
 
 PasswordsManager::PasswordMatch PasswordsStorageBackend::comparePasswords(const PasswordsManager::PasswordInformation &first, const PasswordsManager::PasswordInformation &second)
 {
-	if (first.type != second.type || first.url != second.url || first.passwords != second.passwords || first.fields.count() != second.fields.count())
+	if (first.type != second.type || first.url != second.url || first.fields.count() != second.fields.count())
 	{
 		return PasswordsManager::NoMatch;
 	}
@@ -75,14 +75,14 @@ PasswordsManager::PasswordMatch PasswordsStorageBackend::comparePasswords(const 
 
 	for (int i = 0; i < first.fields.count(); ++i)
 	{
-		if (first.fields.at(i).first != second.fields.at(i).first)
+		if (first.fields.at(i).name != second.fields.at(i).name || first.fields.at(i).type != second.fields.at(i).type)
 		{
 			return PasswordsManager::NoMatch;
 		}
 
-		if (first.fields.at(i).second != second.fields.at(i).second)
+		if (first.fields.at(i).value != second.fields.at(i).value)
 		{
-			if (!first.passwords.contains(first.fields.at(i).first))
+			if (first.fields.at(i).type != PasswordsManager::PasswordField)
 			{
 				return PasswordsManager::NoMatch;
 			}

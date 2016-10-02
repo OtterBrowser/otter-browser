@@ -955,9 +955,9 @@ void QtWebKitWebWidget::fillPassword(const PasswordsManager::PasswordInformation
 	for (int i = 0; i < password.fields.count(); ++i)
 	{
 		QJsonObject fieldObject;
-		fieldObject.insert(QLatin1String("name"), password.fields.at(i).first);
-		fieldObject.insert(QLatin1String("value"), password.fields.at(i).second);
-		fieldObject.insert(QLatin1String("type"), (password.passwords.contains(password.fields.at(i).first) ? QLatin1String("password") : QLatin1String("text")));
+		fieldObject.insert(QLatin1String("name"), password.fields.at(i).name);
+		fieldObject.insert(QLatin1String("value"), password.fields.at(i).value);
+		fieldObject.insert(QLatin1String("type"), ((password.fields.at(i).type == PasswordsManager::PasswordField) ? QLatin1String("password") : QLatin1String("text")));
 
 		fieldsArray.append(fieldObject);
 	}

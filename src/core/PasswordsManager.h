@@ -35,6 +35,20 @@ class PasswordsManager : public QObject
 	Q_OBJECT
 
 public:
+	enum FieldType
+	{
+		UnknownField = 0,
+		PasswordField,
+		TextField
+	};
+
+	enum PasswordMatch
+	{
+		NoMatch = 0,
+		PartialMatch,
+		FullMatch
+	};
+
 	enum PasswordType
 	{
 		UnknownPassword = 0,
@@ -45,11 +59,13 @@ public:
 
 	Q_DECLARE_FLAGS(PasswordTypes, PasswordType)
 
-	enum PasswordMatch
+	struct FieldInformation
 	{
-		NoMatch = 0,
-		PartialMatch,
-		FullMatch
+		QString name;
+		QString value;
+		FieldType type;
+
+		FieldInformation() : type(UnknownField) {}
 	};
 
 	struct PasswordInformation
@@ -57,8 +73,7 @@ public:
 		QUrl url;
 		QDateTime timeAdded;
 		QDateTime timeUsed;
-		QStringList passwords;
-		QList<QPair<QString, QString> > fields;
+		QList<FieldInformation> fields;
 		PasswordType type;
 
 		PasswordInformation() : type(FormPassword) {}

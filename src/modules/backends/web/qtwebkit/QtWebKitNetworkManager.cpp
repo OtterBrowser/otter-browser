@@ -550,28 +550,34 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 	{
 		if (QString(request.rawHeader(QByteArray("X-Otter-Token"))) == m_widget->getPasswordToken())
 		{
-			const QJsonObject object(QJsonDocument::fromJson(QByteArray::fromBase64(request.rawHeader(QByteArray("X-Otter-Data")))).object());
+			const QJsonObject passwordObject(QJsonDocument::fromJson(QByteArray::fromBase64(request.rawHeader(QByteArray("X-Otter-Data")))).object());
 			bool hasPassword(false);
 			PasswordsManager::PasswordInformation password;
-			password.url = QUrl(object.value(QLatin1String("url")).toString());
+			password.url = QUrl(passwordObject.value(QLatin1String("url")).toString());
 			password.timeAdded = QDateTime::currentDateTime();
 			password.type = PasswordsManager::FormPassword;
 
-			const QJsonArray passwords(object.value(QLatin1String("passwords")).toArray());
+			const QJsonArray passwordsArray(passwordObject.value(QLatin1String("passwords")).toArray());
+			QStringList passwords;
 
-			for (int i = 0; i < passwords.count(); ++i)
+			for (int i = 0; i < passwordsArray.count(); ++i)
 			{
-				password.passwords.append(passwords.at(i).toString());
+				passwords.append(passwordsArray.at(i).toString());
 			}
 
-			const QJsonObject fields(object.value(QLatin1String("fields")).toObject());
+			const QJsonObject fieldsObject(passwordObject.value(QLatin1String("fields")).toObject());
 			QJsonObject::const_iterator iterator;
 
-			for (iterator = fields.constBegin(); iterator != fields.constEnd(); ++iterator)
+			for (iterator = fieldsObject.constBegin(); iterator != fieldsObject.constEnd(); ++iterator)
 			{
-				password.fields.append(qMakePair(iterator.key(), iterator.value().toString()));
+				PasswordsManager::FieldInformation field;
+				field.name = iterator.key();
+				field.value = iterator.value().toString();
+				field.type = (passwords.contains(iterator.key()) ? PasswordsManager::PasswordField : PasswordsManager::TextField);
 
-				if (password.passwords.contains(iterator.key()) && !iterator.value().toString().isEmpty())
+				password.fields.append(field);
+
+				if (field.type == PasswordsManager::PasswordField && !field.value.isEmpty())
 				{
 					hasPassword = true;
 				}

@@ -45,7 +45,7 @@ SelectPasswordDialog::SelectPasswordDialog(const QList<PasswordsManager::Passwor
 
 		for (int j = 0; j < passwords.at(i).fields.count(); ++j)
 		{
-			QList<QStandardItem*> fieldItems({new QStandardItem(passwords.at(i).fields.at(j).first), new QStandardItem(passwords.at(i).passwords.contains(passwords.at(i).fields.at(j).first) ? QLatin1String("*****") : passwords.at(i).fields.at(j).second)});
+			QList<QStandardItem*> fieldItems({new QStandardItem(passwords.at(i).fields.at(j).name), new QStandardItem((passwords.at(i).fields.at(j).type == PasswordsManager::PasswordField) ? QLatin1String("*****") : passwords.at(i).fields.at(j).value)});
 
 			setItem->appendRow(fieldItems);
 		}

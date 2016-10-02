@@ -70,13 +70,12 @@ void FilePasswordsStorageBackend::initialize()
 			for (int j = 0; j < fieldsArray.count(); ++j)
 			{
 				const QJsonObject fieldObject(fieldsArray.at(j).toObject());
+				PasswordsManager::FieldInformation field;
+				field.name = fieldObject.value(fieldObject.contains(QLatin1String("name")) ? QLatin1String("name") : QLatin1String("key")).toString();
+				field.value = fieldObject.value(QLatin1String("value")).toString();
+				field.type = ((fieldObject.value(QLatin1String("type")).toString() == QLatin1String("password")) ? PasswordsManager::PasswordField : PasswordsManager::TextField);
 
-				password.fields.append(qMakePair(fieldObject.value(QLatin1String("key")).toString(), fieldObject.value(QLatin1String("value")).toString()));
-
-				if (fieldObject.value(QLatin1String("type")).toString() == QLatin1String("password"))
-				{
-					password.passwords.append(fieldObject.value(QLatin1String("key")).toString());
-				}
+				password.fields.append(field);
 			}
 
 			hostPasswords.append(password);
@@ -116,9 +115,9 @@ void FilePasswordsStorageBackend::save()
 			for (int j = 0; j < passwords.at(i).fields.count(); ++j)
 			{
 				QJsonObject fieldObject;
-				fieldObject.insert(QLatin1String("key"), passwords.at(i).fields.at(j).first);
-				fieldObject.insert(QLatin1String("value"), passwords.at(i).fields.at(j).second);
-				fieldObject.insert(QLatin1String("type"), (passwords.at(i).passwords.contains(passwords.at(i).fields.at(j).first) ? QLatin1String("password") : QLatin1String("text")));
+				fieldObject.insert(QLatin1String("name"), passwords.at(i).fields.at(j).name);
+				fieldObject.insert(QLatin1String("value"), passwords.at(i).fields.at(j).value);
+				fieldObject.insert(QLatin1String("type"), ((passwords.at(i).fields.at(j).type == PasswordsManager::PasswordField) ? QLatin1String("password") : QLatin1String("text")));
 
 				fieldsArray.append(fieldObject);
 			}
