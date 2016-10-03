@@ -2983,7 +2983,7 @@ Do you want to continue?</translation>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="168"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="224"/>
         <source>You are about to delete %n password(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>You are about to delete %n password.</numerusform><numerusform>You are about to delete %n passwords.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="169"/>
@@ -3149,7 +3149,7 @@ Do you want to continue?</translation>
     <message numerus="yes">
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="118"/>
         <source>%1 wants to open %n pop-up window(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 wants to open %n pop-up window.</numerusform><numerusform>%1 wants to open %n pop-up windows.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4988,12 +4988,12 @@ Do you want to overwrite it?</translation>
     <message numerus="yes">
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
         <source>%n window(s) (%1)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n window (%1)</numerusform><numerusform>%n windows (%1)</numerusform></translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
         <source>%n tab(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n tab</numerusform><numerusform>%n tabs</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="105"/>
@@ -6536,7 +6536,7 @@ Click Install button to restart browser and install the update or close this dia
     <message numerus="yes">
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="86"/>
         <source>%1 (%n blocked)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%n blocked)</numerusform><numerusform>%1 (%n blocked)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="93"/>

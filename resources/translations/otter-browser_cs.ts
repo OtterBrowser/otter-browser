@@ -2953,7 +2953,7 @@ Chcete pokračovat?</translation>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="35"/>
         <source>Do you want to update login data for %1?</source>
-        <translation type="unfinished"/>
+        <translation>Chcete aktualizovat přihlašovací údaje pro %1?</translation>
     </message>
 </context>
 <context>
@@ -8232,7 +8232,7 @@ Klepněte na tlačítko Nainstalovat pro opětovné spuštění prohlížeče a 
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="506"/>
         <source>Passwords</source>
-        <translation type="unfinished"/>
+        <translation>Hesla</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="507"/>

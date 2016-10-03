@@ -1856,7 +1856,7 @@ Exponent: %2</translation>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="176"/>
         <source>Failed to remove passwords file</source>
-        <translation type="unfinished"/>
+        <translation>Het verwijderen van het wachtwoordbestand is mislukt</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="261"/>
@@ -2953,7 +2953,7 @@ Wilt u doorgaan?</translation>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="35"/>
         <source>Do you want to update login data for %1?</source>
-        <translation type="unfinished"/>
+        <translation>Wilt u de inloggegevens voor %1 bijwerken?</translation>
     </message>
 </context>
 <context>
@@ -2961,67 +2961,67 @@ Wilt u doorgaan?</translation>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Zoeken...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="72"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Naam</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="72"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Waarde</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="85"/>
         <source>Set #%1</source>
-        <translation type="unfinished"/>
+        <translation>#%1 instellen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="167"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="223"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="242"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Vraag</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="168"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="224"/>
         <source>You are about to delete %n password(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>U staat op het punt om %n wachtwoord te verwijderen.</numerusform><numerusform>U staat op het punt om %n wachtwoorden te verwijderen.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="169"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="225"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="244"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Wilt u doorgaan?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="243"/>
         <source>You are about to delete all passwords.</source>
-        <translation type="unfinished"/>
+        <translation>U staat op het punt om alle wachtwoorden te verwijderen.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="264"/>
         <source>Remove Password</source>
-        <translation type="unfinished"/>
+        <translation>Wachtwoord verwijderen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="267"/>
         <source>Remove All Passwords from This Domain…</source>
-        <translation type="unfinished"/>
+        <translation>Alle wachtwoorden van dit domein verwijderen...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="270"/>
         <source>Remove All Passwords…</source>
-        <translation type="unfinished"/>
+        <translation>Alle wachwoorden verwijderen...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="341"/>
         <source>Passwords Manager</source>
-        <translation type="unfinished"/>
+        <translation>Wachtwoordbeheer</translation>
     </message>
 </context>
 <context>
@@ -4896,42 +4896,42 @@ Wilt u deze overschrijven?</translation>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="14"/>
         <source>Select Password</source>
-        <translation type="unfinished"/>
+        <translation>Wachtwoord selecteren</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="20"/>
         <source>Select set of credentials:</source>
-        <translation type="unfinished"/>
+        <translation>Selecteer de referentie-set:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="41"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Verwijderen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="39"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Naam</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="39"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Waarde</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="43"/>
         <source>Set #%1</source>
-        <translation type="unfinished"/>
+        <translation>#%1 instellen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="86"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Vraag</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="86"/>
         <source>Do you really want to remove this credentials set?</source>
-        <translation type="unfinished"/>
+        <translation>Weet u zeker dat u deze referentie-set wilt verwijderen?</translation>
     </message>
 </context>
 <context>
@@ -8233,7 +8233,7 @@ Klik op de Installeren-knop om de webbrowser te herstarten en de update te insta
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="506"/>
         <source>Passwords</source>
-        <translation type="unfinished"/>
+        <translation>Wachtwoorden</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="507"/>
@@ -8530,7 +8530,7 @@ Klik op de Installeren-knop om de webbrowser te herstarten en de update te insta
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="88"/>
         <source>Passwords Manager</source>
-        <translation type="unfinished"/>
+        <translation>Wachtwoordbeheer</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="89"/>

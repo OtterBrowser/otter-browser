@@ -60,7 +60,7 @@
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="62"/>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="63"/>
         <source>Yes</source>
-        <translation>Ναί</translation>
+        <translation>Ναι</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="62"/>
@@ -330,7 +330,7 @@
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1139"/>
         <source>(Untitled)</source>
-        <translation>(Χωρίς τίτλο)</translation>
+        <translation>(Άτιτλο)</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1172"/>
@@ -1854,7 +1854,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="176"/>
         <source>Failed to remove passwords file</source>
-        <translation type="unfinished"/>
+        <translation>Αποτυχία αφαίρεσης του αρχείου των κωδικών πρόσβασης</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="261"/>
@@ -2226,7 +2226,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="14"/>
         <source>JavaScript Options</source>
-        <translation>Επιλογές Javascript</translation>
+        <translation>Επιλογές JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="26"/>
@@ -2951,7 +2951,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="35"/>
         <source>Do you want to update login data for %1?</source>
-        <translation type="unfinished"/>
+        <translation>Επιθυμείτε την ενημέρωση των δεδομένων σύνδεσης για το %1;</translation>
     </message>
 </context>
 <context>
@@ -2959,67 +2959,67 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Αναζήτηση…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="72"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Όνομα</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="72"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Τιμή</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="85"/>
         <source>Set #%1</source>
-        <translation type="unfinished"/>
+        <translation>Ορισμός #%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="167"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="223"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="242"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Ερώτηση</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="168"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="224"/>
         <source>You are about to delete %n password(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Πρόκειται να διαγράψετε %n κωδικό(ούς) πρόσβασης.</numerusform><numerusform>Πρόκειται να διαγράψετε %n κωδικό(ούς) πρόσβασης.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="169"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="225"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="244"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Θέλετε να συνεχίσετε;</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="243"/>
         <source>You are about to delete all passwords.</source>
-        <translation type="unfinished"/>
+        <translation>Πρόκειται να διαγράψετε όλους τους κωδικούς πρόσβασης.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="264"/>
         <source>Remove Password</source>
-        <translation type="unfinished"/>
+        <translation>Αφαίρεση του κωδικού πρόσβασης</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="267"/>
         <source>Remove All Passwords from This Domain…</source>
-        <translation type="unfinished"/>
+        <translation>Αφαίρεση όλων των κωδικών πρόσβασης από αυτόν τον τομέα…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="270"/>
         <source>Remove All Passwords…</source>
-        <translation type="unfinished"/>
+        <translation>Αφαίρεση όλων των κωδικών πρόσβασης…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="341"/>
         <source>Passwords Manager</source>
-        <translation type="unfinished"/>
+        <translation>Διαχειριστής κωδικών πρόσβασης</translation>
     </message>
 </context>
 <context>
@@ -3077,12 +3077,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="66"/>
         <source>%1 wants to access your camera.</source>
-        <translation>Το %1 θέλει πρόσβαση στην καμερά σας.</translation>
+        <translation>Το %1 θέλει πρόσβαση στην εικονοληπτική μηχανή σας.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="71"/>
         <source>%1 wants to access your microphone and camera.</source>
-        <translation>Το %1 θέλει πρόσβαση στο μικρόφωνο και στην καμερά σας.</translation>
+        <translation>Το %1 θέλει πρόσβαση στο μικρόφωνο και στην εικονοληπτική μηχανή σας.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PermissionBarWidget.cpp" line="76"/>
@@ -3647,7 +3647,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1506"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1576"/>
         <source>(Untitled)</source>
-        <translation>(Χωρίς τίτλο)</translation>
+        <translation>(Άτιτλο)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="236"/>
@@ -3736,13 +3736,13 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="966"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1166"/>
         <source>Do you really want to remove this profile?</source>
-        <translation>Θέλετε πραγματικά να διαγράψετε αυτό το προφιλ;</translation>
+        <translation>Θέλετε πραγματικά να διαγράψετε αυτήν την ταυτότητα;</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="975"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="1175"/>
         <source>Delete profile permanently</source>
-        <translation>Διαγραφή του προφίλ μόνιμα</translation>
+        <translation>Οριστική διαγραφή της ταυτότητας</translation>
     </message>
 </context>
 <context>
@@ -4084,7 +4084,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="45"/>
         <source>Show start page</source>
-        <translation>Εμφάνιση σελίδας εκίνησης </translation>
+        <translation>Εμφάνιση της σελίδας εκκίνησης </translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.cpp" line="46"/>
@@ -4167,7 +4167,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="279"/>
         <source>Clear history when application closes</source>
-        <translation>Εκκάθαριση ιστορικού όταν κλείνει η εφαρμογή</translation>
+        <translation>Εκκαθάριση του ιστορικού κατά το κλείσιμο της εφαρμογής</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="299"/>
@@ -4177,7 +4177,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="319"/>
         <source>Passwords</source>
-        <translation>Κωδικοί</translation>
+        <translation>Κωδικοί πρόσβασης</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="328"/>
@@ -4468,7 +4468,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="495"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="533"/>
         <source>Disable JavaScript popups</source>
-        <translation>Απενεργοποίηση αναδυόμενων Javascript</translation>
+        <translation>Απενεργοποίηση αναδυόμενων JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="444"/>
@@ -4573,7 +4573,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="702"/>
         <source>JavaScript</source>
-        <translation>Javascript</translation>
+        <translation>JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="702"/>
@@ -4924,7 +4924,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="86"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Ερώτηση</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="86"/>
@@ -4951,7 +4951,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="14"/>
         <source>Sessions Manager</source>
-        <translation>Δειαχήρηση συνεδριών</translation>
+        <translation>Διαχειριστής συνεδριών</translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.ui" line="52"/>
@@ -5659,12 +5659,12 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="176"/>
         <source>Switch tabs using the mouse wheel</source>
-        <translation>Αλλαγή καρτελών χρησιμοποιώντας την ροδέλλα του ποντικιού</translation>
+        <translation>Αλλαγή καρτελών χρησιμοποιώντας τον τροχό του ποντικιού</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="193"/>
         <source>Arrange</source>
-        <translation>Ταξινόμιση</translation>
+        <translation>Ταξινόμηση</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="459"/>
@@ -5978,7 +5978,7 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="405"/>
         <source>Clear Finished Transfers</source>
-        <translation>Εκάθαριση ολοκληρωμένων μεταφορτώσεων</translation>
+        <translation>Εκκαθάριση των ολοκληρωμένων μεταφορτώσεων</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="535"/>
@@ -6286,7 +6286,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="890"/>
         <source>Open Image in New Tab (Untitled)</source>
-        <translation>Άνοιγμα εικόνας σε νέα καρτέλα ( χώρις τίτλο)</translation>
+        <translation>Άνοιγμα εικόνας σε νέα καρτέλα (Άτιτλη)</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="890"/>
@@ -6306,7 +6306,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1228"/>
         <source>1 Minute</source>
-        <translation>1 minute</translation>
+        <translation>1 λεπτό</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1229"/>
@@ -6772,7 +6772,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="560"/>
         <source>Enable JavaScript</source>
-        <translation>Ενεργοποίηση Javascript</translation>
+        <translation>Ενεργοποίηση της JavaScript</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="588"/>
@@ -7941,32 +7941,32 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="449"/>
         <source>Go to Start of the Page</source>
-        <translation>Μετακίνηση στην αρχή της σελίδας</translation>
+        <translation>Μετάβαση στην αρχή της σελίδας</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="450"/>
         <source>Go to the End of the Page</source>
-        <translation>Μετακίνηση στο τέλος της σελίδας</translation>
+        <translation>Μετάβαση στο τέλος της σελίδας</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="451"/>
         <source>Page Up</source>
-        <translation>Μετακίνη σελίδας προς τα πάνω</translation>
+        <translation>Στο πάνω μέρος της σελίδας</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="452"/>
         <source>Page Down</source>
-        <translation>Μετακίνηση σελίδας προς τα κάτω</translation>
+        <translation>Στο κάτω μέρος της σελίδας</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="453"/>
         <source>Page Left</source>
-        <translation>Μετακίνηση σελίδας προς τα αριστερά</translation>
+        <translation>Αριστερά στη σελίδα</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="454"/>
         <source>Page Right</source>
-        <translation>Μετακίνηση σελίδας προς τα δεξιά</translation>
+        <translation>Δεξιά στη σελίδα</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="455"/>
@@ -8232,7 +8232,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="506"/>
         <source>Passwords</source>
-        <translation type="unfinished"/>
+        <translation>Κωδικοί πρόσβασης</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="507"/>
@@ -8529,7 +8529,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="88"/>
         <source>Passwords Manager</source>
-        <translation type="unfinished"/>
+        <translation>Διαχειριστής κωδικών πρόσβασης</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="89"/>

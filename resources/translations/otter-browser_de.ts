@@ -1039,7 +1039,7 @@ Sind Sie sicher, dass Sie sie dennoch wiederherstellen möchten?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="53"/>
         <source>View Certificate for %1</source>
-        <translation>Zeige Zertifikat von %1</translation>
+        <translation>Zertifikat von %1 anzeigen</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="62"/>
@@ -1055,12 +1055,12 @@ Sind Sie sicher, dass Sie sie dennoch wiederherstellen möchten?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
         <source>DER encoded X.509 certificates (*.der)</source>
-        <translation type="unfinished"/>
+        <translation>DER-kodierte X.509-Zertifikate (*.der)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
         <source>PEM encoded X.509 certificates (*.pem)</source>
-        <translation type="unfinished"/>
+        <translation>PEM-kodierte X.509-Zertifikate (*.pem)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
@@ -1492,7 +1492,7 @@ Exponent: %2</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="43"/>
         <source>Select lists which you want to use for content blocking (AdBlock Plus compatible):</source>
-        <translation type="unfinished"/>
+        <translation>Wählen Sie Listen aus, die Sie für die Inhaltsblockierung verwenden möchten (AdBlock-Plus-kompatibel):</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="73"/>
@@ -1660,12 +1660,12 @@ Exponent: %2</translation>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="180"/>
         <source>Advertisements</source>
-        <translation type="unfinished"/>
+        <translation>Werbebotschaften</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="180"/>
         <source>Annoyance</source>
-        <translation type="unfinished"/>
+        <translation>Beeinträchtigung</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="180"/>
@@ -1675,7 +1675,7 @@ Exponent: %2</translation>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="180"/>
         <source>Social</source>
-        <translation type="unfinished"/>
+        <translation>Sozial</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="180"/>
@@ -1846,27 +1846,27 @@ Exponent: %2</translation>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="45"/>
         <source>Failed to open passwords file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Fehler beim Öffnen der Passwortdatei: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="99"/>
         <source>Failed to save passwords file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Fehler beim Speichern der Passwortdatei: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="176"/>
         <source>Failed to remove passwords file</source>
-        <translation type="unfinished"/>
+        <translation>Fehler beim Entfernen der Passwortdatei</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="261"/>
         <source>Encrypted File</source>
-        <translation type="unfinished"/>
+        <translation>Verschlüsselte Datei</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="266"/>
         <source>Stores passwords in AES encrypted file.</source>
-        <translation type="unfinished"/>
+        <translation>Speichert Passwörter in AES-verschlüsselter Datei.</translation>
     </message>
 </context>
 <context>
@@ -1902,7 +1902,7 @@ Exponent: %2</translation>
     <message>
         <location filename="../../src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp" line="203"/>
         <source>Information</source>
-        <translation>Information</translation>
+        <translation>Informationen</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp" line="216"/>
@@ -2319,7 +2319,7 @@ Exponent: %2</translation>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="129"/>
         <source>Information</source>
-        <translation>Information</translation>
+        <translation>Informationen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/KeyboardProfileDialog.ui" line="135"/>
@@ -2570,7 +2570,7 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="182"/>
         <source>Information</source>
-        <translation>Information</translation>
+        <translation>Informationen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="188"/>
@@ -2953,7 +2953,7 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="35"/>
         <source>Do you want to update login data for %1?</source>
-        <translation type="unfinished"/>
+        <translation>Möchten Sie die Anmeldedaten für %1 aktualisieren?</translation>
     </message>
 </context>
 <context>
@@ -2961,67 +2961,67 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Suche…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="72"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="72"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Wert</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="85"/>
         <source>Set #%1</source>
-        <translation type="unfinished"/>
+        <translation>#%1 festlegen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="167"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="223"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="242"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Frage</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="168"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="224"/>
         <source>You are about to delete %n password(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Sie sind dabei, %n Passwort zu löschen.</numerusform><numerusform>Sie sind dabei, %n Passwörter zu löschen.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="169"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="225"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="244"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Möchten Sie fortfahren?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="243"/>
         <source>You are about to delete all passwords.</source>
-        <translation type="unfinished"/>
+        <translation>Sie sind dabei, alle Passwörter zu löschen.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="264"/>
         <source>Remove Password</source>
-        <translation type="unfinished"/>
+        <translation>Passwort entfernen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="267"/>
         <source>Remove All Passwords from This Domain…</source>
-        <translation type="unfinished"/>
+        <translation>Alle Passwörter von dieser Domain entfernen…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="270"/>
         <source>Remove All Passwords…</source>
-        <translation type="unfinished"/>
+        <translation>Alle Passwörter entfernen…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="341"/>
         <source>Passwords Manager</source>
-        <translation type="unfinished"/>
+        <translation>Passwortverwaltung</translation>
     </message>
 </context>
 <context>
@@ -3342,7 +3342,7 @@ Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="700"/>
         <source>Send referrer information</source>
-        <translation>Herkunftsinformation senden</translation>
+        <translation>Herkunftsinformationen senden</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="709"/>
@@ -4896,42 +4896,42 @@ Möchten Sie sie überschrieben?</translation>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="14"/>
         <source>Select Password</source>
-        <translation type="unfinished"/>
+        <translation>Passwort auswählen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="20"/>
         <source>Select set of credentials:</source>
-        <translation type="unfinished"/>
+        <translation>Satz an Anmeldungsdaten auswählen:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="41"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Entfernen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="39"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="39"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Wert</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="43"/>
         <source>Set #%1</source>
-        <translation type="unfinished"/>
+        <translation>#%1 festlegen</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="86"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Frage</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="86"/>
         <source>Do you really want to remove this credentials set?</source>
-        <translation type="unfinished"/>
+        <translation>Möchten Sie diesen Anmeldungsdatensatz wirklich entfernen?</translation>
     </message>
 </context>
 <context>
@@ -5985,7 +5985,7 @@ Fortschritt: %5&lt;/div&gt;</translation>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="535"/>
         <source>Transfers Manager</source>
-        <translation>Übertragungsmanager</translation>
+        <translation>Übertragungsverwaltung</translation>
     </message>
 </context>
 <context>
@@ -6093,7 +6093,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="215"/>
         <source>Check Error Console for more information.</source>
-        <translation>Überprüfen Sie die Fehlerkonsole für weitere Informationen.</translation>
+        <translation>Prüfen Sie die Fehlerkonsole für weitere Informationen.</translation>
     </message>
 </context>
 <context>
@@ -6873,7 +6873,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="965"/>
         <source>Send referrer information</source>
-        <translation>Herkunftsinformation übertragen</translation>
+        <translation>Herkunftsinformationen übertragen</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="973"/>
@@ -7438,7 +7438,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/core/ActionsManager.cpp" line="353"/>
         <location filename="../../src/ui/WebWidget.cpp" line="447"/>
         <source>Mute Tab Media</source>
-        <translation type="unfinished"/>
+        <translation>Tab-Medien stummschalten</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="354"/>
@@ -7724,7 +7724,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="405"/>
         <source>Log In</source>
-        <translation type="unfinished"/>
+        <translation>Anmelden</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="406"/>
@@ -8185,12 +8185,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="498"/>
         <source>Reset to Defaults…</source>
-        <translation type="unfinished"/>
+        <translation>Auf Standardeinstellungen zurücksetzen…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="498"/>
         <source>Reset Toolbars to Defaults…</source>
-        <translation type="unfinished"/>
+        <translation>Werkzeugleisten auf Standardeinstellungen zurücksetzen…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="499"/>
@@ -8231,7 +8231,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="506"/>
         <source>Passwords</source>
-        <translation type="unfinished"/>
+        <translation>Passwörter</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="507"/>
@@ -8262,12 +8262,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="512"/>
         <source>Website Information…</source>
-        <translation>Informationen zur Webseite...</translation>
+        <translation>Webseiteninformationen...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="513"/>
         <source>Website Certificate Information…</source>
-        <translation>Zertifikats-Informationen der Webseite…</translation>
+        <translation>Webseitenzertifikatsinformationen…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="514"/>
@@ -8337,37 +8337,37 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="103"/>
         <source>Import Opera Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>Opera-Lesezeichen importieren…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="107"/>
         <source>Import HTML Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>HTML-Lesezeichen importieren…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="113"/>
         <source>Import Opera Notes…</source>
-        <translation type="unfinished"/>
+        <translation>Opera-Notizen importieren…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="119"/>
         <source>Import Opera Search Engines…</source>
-        <translation type="unfinished"/>
+        <translation>Opera-Suchmaschinen importieren…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="125"/>
         <source>Import Opera Session…</source>
-        <translation type="unfinished"/>
+        <translation>Opera-Sitzung importieren...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="346"/>
         <source>Open All</source>
-        <translation type="unfinished"/>
+        <translation>Alle öffnen</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="358"/>
         <source>This Folder</source>
-        <translation type="unfinished"/>
+        <translation>Dieser Ordner</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="384"/>
@@ -8375,47 +8375,47 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/Menu.cpp" line="698"/>
         <location filename="../../src/ui/Menu.cpp" line="762"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Ohne Titel)</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="426"/>
         <source>Auto Detect</source>
-        <translation type="unfinished"/>
+        <translation>Automatisch erkennen</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="482"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Löschen</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="572"/>
         <source>Default Style</source>
-        <translation type="unfinished"/>
+        <translation>Standardstil</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="639"/>
         <source>Add New</source>
-        <translation type="unfinished"/>
+        <translation>Neue hinzufügen</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="642"/>
         <source>Add Toolbar…</source>
-        <translation type="unfinished"/>
+        <translation>Werkzeugleiste hinzufügen…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="645"/>
         <source>Add Bookmarks Bar…</source>
-        <translation type="unfinished"/>
+        <translation>Lesezeichenleiste hinzufügen…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="676"/>
         <source>Default User Agent</source>
-        <translation type="unfinished"/>
+        <translation>Standard-Benutzer-Agent</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="715"/>
         <source>Custom User Agent…</source>
-        <translation type="unfinished"/>
+        <translation>Angepasster Benutzer-Agent…</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="171"/>
@@ -8430,7 +8430,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="447"/>
         <source>Unmute Tab Media</source>
-        <translation type="unfinished"/>
+        <translation>Tab-Medien-Stummschaltung aufheben</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="604"/>
@@ -8493,47 +8493,47 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="81"/>
         <source>Addons Manager</source>
-        <translation type="unfinished"/>
+        <translation>Addons-Verwaltung</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="82"/>
         <source>Bookmarks Manager</source>
-        <translation type="unfinished"/>
+        <translation>Lesezeichenverwaltung</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="83"/>
         <source>Cache Manager</source>
-        <translation type="unfinished"/>
+        <translation>Zwischenspeicherverwaltung</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="84"/>
         <source>Configuration Manager</source>
-        <translation type="unfinished"/>
+        <translation>Konfigurationsverwaltung</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="85"/>
         <source>Cookies Manager</source>
-        <translation type="unfinished"/>
+        <translation>Cookie-Verwaltung</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="86"/>
         <source>History Manager</source>
-        <translation type="unfinished"/>
+        <translation>Verlaufsverwaltung</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="87"/>
         <source>Notes Manager</source>
-        <translation type="unfinished"/>
+        <translation>Notizenverwaltung</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="88"/>
         <source>Passwords Manager</source>
-        <translation type="unfinished"/>
+        <translation>Passwortverwaltung</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="89"/>
         <source>Transfers Manager</source>
-        <translation type="unfinished"/>
+        <translation>Übertragungsverwaltung</translation>
     </message>
 </context>
 <context>
@@ -8690,13 +8690,13 @@ Fehler: %2</translation>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="439"/>
         <source>Failed to run File Associations Manager, error code: %1
 Application ID: %2</source>
-        <translation>Fehler beim Ausführen des Dateizuordnungsmanagers, Fehlercode: %1
-Anwendungs-Kennung (ID): %2</translation>
+        <translation>Fehler beim Ausführen der Dateizuordnungsverwaltung, Fehlercode: %1
+Anwendungskennung: %2</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="458"/>
         <source>Failed to run File Associations Manager, error code: %1</source>
-        <translation>Fehler beim Ausführen des Dateizuordnungsmanagers, Fehlercode: %1</translation>
+        <translation>Fehler beim Ausführen der Dateizuordnungsverwaltung, Fehlercode: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="513"/>

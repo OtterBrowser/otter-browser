@@ -24,7 +24,7 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="56"/>
         <source>Expiration date:</source>
-        <translation>Tanggal Kadaluwarsa</translation>
+        <translation>Tanggal Kadaluwarsa:</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="63"/>
@@ -39,17 +39,17 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="47"/>
         <source>Website %1 requested to add new cookie.</source>
-        <translation>Situs %1 minta tambahan cookie.</translation>
+        <translation>Situs %1 minta untuk menambah cookie baru.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="51"/>
         <source>Website %1 requested to update existing cookie.</source>
-        <translation type="unfinished"/>
+        <translation>Situs %1 minta untuk memperbaharui cookie yang ada.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="55"/>
         <source>Website %1 requested to remove existing cookie.</source>
-        <translation type="unfinished"/>
+        <translation>Situs %1 minta untuk menghapus cookie yang ada.</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="61"/>
@@ -94,7 +94,7 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="20"/>
         <source>To add language, please choose one from list or type its code.</source>
-        <translation type="unfinished"/>
+        <translation>Untuk menambah bahasa, silahkan pilih satu dari daftar atau ketik kodenya.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="39"/>
@@ -109,27 +109,27 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="107"/>
         <source>Move Up</source>
-        <translation type="unfinished"/>
+        <translation>Pindah ke Atas</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="133"/>
         <source>Move Down</source>
-        <translation type="unfinished"/>
+        <translation>Pindah ke Bawah</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="38"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Nama</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="38"/>
         <source>Code</source>
-        <translation type="unfinished"/>
+        <translation>Kode</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="60"/>
         <source>Unknown [%1]</source>
-        <translation type="unfinished"/>
+        <translation>Tak Dikenal [%1]</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="77"/>
@@ -141,7 +141,7 @@
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="78"/>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="142"/>
         <source>System language (%1 - %2)</source>
-        <translation type="unfinished"/>
+        <translation>Bahasa sistem (%1 - %2)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="150"/>
@@ -151,7 +151,7 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.cpp" line="154"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Tak Dikenal</translation>
     </message>
 </context>
 <context>
@@ -159,12 +159,12 @@
     <message>
         <location filename="../../src/ui/ActionComboBoxWidget.cpp" line="87"/>
         <source>Select Action</source>
-        <translation type="unfinished"/>
+        <translation>Pilih Aksi</translation>
     </message>
     <message>
         <location filename="../../src/ui/ActionComboBoxWidget.cpp" line="132"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Mencari...</translation>
     </message>
 </context>
 <context>
@@ -172,7 +172,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Mencari...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="82"/>
@@ -182,7 +182,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="104"/>
         <source>Select File</source>
-        <translation type="unfinished"/>
+        <translation>Pilih Berkas</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="104"/>
@@ -193,7 +193,7 @@
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="115"/>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="122"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Eror</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="115"/>
@@ -226,27 +226,27 @@
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="93"/>
         <source>Search with %1</source>
-        <translation type="unfinished"/>
+        <translation>Cari dengan %1</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="110"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Bookmark</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="144"/>
         <source>Local files</source>
-        <translation type="unfinished"/>
+        <translation>Berkas lokal</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="160"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>Sejarah</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="182"/>
         <source>Special pages</source>
-        <translation type="unfinished"/>
+        <translation>Halaman spesial</translation>
     </message>
 </context>
 <context>
@@ -255,7 +255,7 @@
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="98"/>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="121"/>
         <source>Enter address or search…</source>
-        <translation type="unfinished"/>
+        <translation>Ketikkan alamat atau mencari...</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="311"/>
@@ -275,32 +275,32 @@
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="315"/>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Salin</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="316"/>
         <source>Paste</source>
-        <translation type="unfinished"/>
+        <translation>Tempel</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="323"/>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation>Hapus</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="325"/>
         <source>Copy to Note</source>
-        <translation type="unfinished"/>
+        <translation>Salin ke Catatan</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="327"/>
         <source>Clear All</source>
-        <translation type="unfinished"/>
+        <translation>Bersihkan Semua</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="328"/>
         <source>Select All</source>
-        <translation type="unfinished"/>
+        <translation>Pilih Semua</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="685"/>
@@ -315,7 +315,7 @@
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="701"/>
         <source>Feed List</source>
-        <translation type="unfinished"/>
+        <translation>Daftar Feed</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="730"/>
@@ -325,7 +325,7 @@
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1043"/>
         <source>Show Website Information</source>
-        <translation type="unfinished"/>
+        <translation>Tampilkan Informasi Situs</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="1139"/>
@@ -351,87 +351,91 @@
     <message>
         <location filename="../../src/core/Application.cpp" line="295"/>
         <source>Profile directory (%1) is not writable, application will be running in read-only mode.</source>
-        <translation type="unfinished"/>
+        <translation>Direktori profil (%1) tidak dapat ditulisi, aplikasi akan berjalan dalam mode baca-saja.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="319"/>
         <source>Your profile directory (%1) ran out of free disk space.
 This may lead to malfunctions or even data loss.</source>
-        <translation type="unfinished"/>
+        <translation>Direktori profil Anda (%1) kehabisan ruang cakram bebas.
+Hal ini dapat menyebabkan kerusakan atau bahkan kehilangan data.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="323"/>
         <source>Your profile directory (%1) is running low on free disk space (%2 remaining).
 This may lead to malfunctions or even data loss.</source>
-        <translation type="unfinished"/>
+        <translation>Direktori profil Anda (%1) hampir kehabisan ruang cakram bebas (%2 tersisa).
+Hal ini dapat menyebabkan kerusakan atau bahkan kehilangan data.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="329"/>
         <location filename="../../src/core/Application.cpp" line="975"/>
         <location filename="../../src/core/Application.cpp" line="1024"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Apakah anda ingin lanjut?</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="331"/>
         <location filename="../../src/core/Application.cpp" line="979"/>
         <location filename="../../src/core/Application.cpp" line="1028"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Jangan tampilkan pesan ini lagi</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="332"/>
         <source>Continue in Read-only Mode</source>
-        <translation type="unfinished"/>
+        <translation>Lanjutkan di Mode-Baca-saja</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="334"/>
         <source>Ignore</source>
-        <translation type="unfinished"/>
+        <translation>Abaikan</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="335"/>
         <source>Quit</source>
-        <translation type="unfinished"/>
+        <translation>Keluar</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="401"/>
         <source>SSL support is not available or incomplete.
 Some websites may work incorrectly or do not work at all.</source>
-        <translation type="unfinished"/>
+        <translation>Dukungan SSL tidak tersedia atau tidak lengkap.
+Beberapa situs dapat bekerja dengan tidak benar atau tidak sama sekali.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="578"/>
         <source>This session was not saved correctly.
 Are you sure that you want to restore this session anyway?</source>
-        <translation>Sesi ini tidak tersimpan dengan baik. Apakah Anda ingin mengembalikan sesi ini?</translation>
+        <translation>Sesi ini tidak tersimpan dengan baik. 
+Apakah Anda ingin mengembalikan sesi ini?</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="682"/>
         <source>New update %1 from %2 channel is available!</source>
-        <translation type="unfinished"/>
+        <translation>Pembaharuan terkini %1 dari kanal %2 tersedia!</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="973"/>
         <location filename="../../src/core/Application.cpp" line="1022"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Pertanyaan</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/core/Application.cpp" line="974"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Anda akan keluar sementara%n berkas masih sedang diunduh.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="981"/>
         <location filename="../../src/core/Application.cpp" line="1030"/>
         <source>Hide</source>
-        <translation type="unfinished"/>
+        <translation>Sembunyikan</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1023"/>
         <source>You are about to quit the current Otter Browser session.</source>
-        <translation type="unfinished"/>
+        <translation>Anda akan keluar dari sesi Otter Browser yang sekarang.</translation>
     </message>
 </context>
 <context>
@@ -441,24 +445,24 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="47"/>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="122"/>
         <source>Default Application</source>
-        <translation type="unfinished"/>
+        <translation>Aplikasi Bawaan</translation>
     </message>
     <message>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="36"/>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="48"/>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="139"/>
         <source>Other…</source>
-        <translation type="unfinished"/>
+        <translation>Lainnya...</translation>
     </message>
     <message>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="60"/>
         <source>Select Application</source>
-        <translation type="unfinished"/>
+        <translation>Pilih Aplikasi</translation>
     </message>
     <message>
         <location filename="../../src/ui/ApplicationComboBoxWidget.cpp" line="130"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Tak Dikenal</translation>
     </message>
 </context>
 <context>
@@ -514,7 +518,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="71"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Baru...</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="96"/>
@@ -524,7 +528,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="103"/>
         <source>Last Visit:</source>
-        <translation>Kunjungan Terakhir</translation>
+        <translation>Kunjungan Terakhir:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="110"/>
@@ -551,7 +555,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="67"/>
         <source>View Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Lihat Bookmark</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="79"/>
@@ -584,27 +588,27 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/widgets/bookmark/BookmarkWidget.cpp" line="99"/>
         <source>Title: %1</source>
-        <translation type="unfinished"/>
+        <translation>Judul: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/bookmark/BookmarkWidget.cpp" line="103"/>
         <source>Address: %1</source>
-        <translation type="unfinished"/>
+        <translation>Alamat: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/bookmark/BookmarkWidget.cpp" line="108"/>
         <source>Description: %1</source>
-        <translation type="unfinished"/>
+        <translation>Deskripsi: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/bookmark/BookmarkWidget.cpp" line="113"/>
         <source>Created: %1</source>
-        <translation type="unfinished"/>
+        <translation>Dibuat: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/bookmark/BookmarkWidget.cpp" line="118"/>
         <source>Visited: %1</source>
-        <translation type="unfinished"/>
+        <translation>Dikunjungi: %1</translation>
     </message>
 </context>
 <context>
@@ -612,7 +616,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksBarDialog.ui" line="14"/>
         <source>Edit Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Sunting Bilah Alat</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksBarDialog.ui" line="22"/>
@@ -622,7 +626,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksBarDialog.ui" line="35"/>
         <source>Name:</source>
-        <translation type="unfinished"/>
+        <translation>Nama:</translation>
     </message>
 </context>
 <context>
@@ -643,7 +647,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Mencari...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="85"/>
@@ -663,7 +667,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="115"/>
         <source>Keyword:</source>
-        <translation type="unfinished"/>
+        <translation>Kata kunci:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="133"/>
@@ -700,52 +704,52 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="167"/>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="208"/>
         <source>Add Separator</source>
-        <translation>Tambah Separator</translation>
+        <translation>Tambah Pemisah</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Judul</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Address</source>
-        <translation type="unfinished"/>
+        <translation>Alamat</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>Deskripsi</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Keyword</source>
-        <translation type="unfinished"/>
+        <translation>Kata kunci</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Added</source>
-        <translation type="unfinished"/>
+        <translation>Ditambah</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Modified</source>
-        <translation type="unfinished"/>
+        <translation>Dimodifikasi</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Visited</source>
-        <translation type="unfinished"/>
+        <translation>Dikunjungi</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Visits</source>
-        <translation type="unfinished"/>
+        <translation>Kunjungan</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="161"/>
         <source>Empty Trash</source>
-        <translation type="unfinished"/>
+        <translation>Kosongkan Tong Sampah</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="173"/>
@@ -775,12 +779,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="217"/>
         <source>Restore Bookmark</source>
-        <translation type="unfinished"/>
+        <translation>Pulihkan Bookmark</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="225"/>
         <source>Properties…</source>
-        <translation type="unfinished"/>
+        <translation>Properti...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="352"/>
@@ -803,12 +807,12 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="70"/>
         <source>New…</source>
-        <translation type="unfinished"/>
+        <translation>Baru...</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
         <source>Allow to duplicate already existing bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Perbolehkan untuk menduplikasi bookmark yang telah ada</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="107"/>
@@ -832,54 +836,54 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/core/BookmarksModel.cpp" line="99"/>
         <location filename="../../src/core/BookmarksModel.cpp" line="203"/>
         <source>Notes</source>
-        <translation type="unfinished"/>
+        <translation>Catatan</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="102"/>
         <location filename="../../src/core/BookmarksModel.cpp" line="203"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Bookmark</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="107"/>
         <location filename="../../src/core/BookmarksModel.cpp" line="208"/>
         <source>Trash</source>
-        <translation type="unfinished"/>
+        <translation>Tong Sampah</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="220"/>
         <source>Failed to open notes file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Gagal untuk membuka berkas catatan: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="220"/>
         <source>Failed to open bookmarks file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Gagal untuk membuka berkas bookmark: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="244"/>
         <source>Failed to load notes file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Gagal untuk memuat berkas catatan: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="244"/>
         <source>Failed to load bookmarks file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Gagal untuk memuat berkas bookmark: %1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="246"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Eror</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="246"/>
         <source>Failed to load notes file.</source>
-        <translation type="unfinished"/>
+        <translation>Gagal untuk memuat berkas catatan.</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="246"/>
         <source>Failed to load bookmarks file.</source>
-        <translation type="unfinished"/>
+        <translation>Gagal untuk memuat berkas bookmark.</translation>
     </message>
 </context>
 <context>
@@ -887,7 +891,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Mencari...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.ui" line="100"/>
@@ -1025,7 +1029,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="44"/>
         <source>Export…</source>
-        <translation type="unfinished"/>
+        <translation>Ekspor...</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="48"/>
@@ -1041,12 +1045,12 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/ui/CertificateDialog.cpp" line="62"/>
         <location filename="../../src/ui/CertificateDialog.cpp" line="445"/>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Tak Dikenal</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
         <source>Select File</source>
-        <translation type="unfinished"/>
+        <translation>Pilih Berkas</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
@@ -1066,7 +1070,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="122"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Eror</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="122"/>
@@ -1189,7 +1193,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="397"/>
         <source>Version</source>
-        <translation type="unfinished"/>
+        <translation>Versi</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="401"/>
@@ -1420,7 +1424,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="92"/>
         <source>CSS</source>
-        <translation type="unfinished"/>
+        <translation>CSS</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="108"/>
@@ -1702,7 +1706,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Mencari...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="102"/>
@@ -1759,23 +1763,23 @@ Exponent: %2</source>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="272"/>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="291"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Pertanyaan</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="273"/>
         <source>You are about to delete %n cookie(s).</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Anda akan menghapus %n cookie.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="274"/>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="293"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Apakah anda ingin lanjut?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="292"/>
         <source>You are about to delete all cookies.</source>
-        <translation type="unfinished"/>
+        <translation>Anda akan menghapus semua cookie.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="313"/>
@@ -1790,7 +1794,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="319"/>
         <source>Remove All Cookies…</source>
-        <translation type="unfinished"/>
+        <translation>Hapus semua cookie...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="448"/>
@@ -1814,19 +1818,19 @@ Exponent: %2</source>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="44"/>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="106"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Tambah</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="51"/>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="113"/>
         <source>Edit</source>
-        <translation type="unfinished"/>
+        <translation>Sunting</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="58"/>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="120"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Hapus</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="88"/>
@@ -1941,7 +1945,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Mencari...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="42"/>
@@ -2403,12 +2407,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/LocaleDialog.cpp" line="47"/>
         <source>Unknown [%1]</source>
-        <translation type="unfinished"/>
+        <translation>Tak Dikenal [%1]</translation>
     </message>
     <message>
         <location filename="../../src/ui/LocaleDialog.cpp" line="72"/>
         <source>Translation files (*.qm)</source>
-        <translation type="unfinished"/>
+        <translation>Berkas terjemahan (*.qm)</translation>
     </message>
 </context>
 <context>
@@ -2426,7 +2430,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="724"/>
         <source>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Web browser controlled by the user, not vice-versa.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Otter %1&lt;/b&gt;&lt;br&gt;Peramban web dikendalikan oleh pengguna, bukan sebaliknya.&lt;br&gt;&lt;a href=&quot;https://www.otter-browser.org/&quot;&gt;https://www.otter-browser.org/&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../../src/ui/MainWindow.cpp" line="730"/>
@@ -2460,22 +2464,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/MasterPasswordDialog.ui" line="14"/>
         <source>Set Master Password</source>
-        <translation type="unfinished"/>
+        <translation>Setel Kata sandi Induk</translation>
     </message>
     <message>
         <location filename="../../src/ui/MasterPasswordDialog.ui" line="22"/>
         <source>Current password:</source>
-        <translation type="unfinished"/>
+        <translation>Kata sandi sekarang:</translation>
     </message>
     <message>
         <location filename="../../src/ui/MasterPasswordDialog.ui" line="32"/>
         <source>New password:</source>
-        <translation type="unfinished"/>
+        <translation>Kata sandi baru:</translation>
     </message>
     <message>
         <location filename="../../src/ui/MasterPasswordDialog.ui" line="42"/>
         <source>Confirm new password:</source>
-        <translation type="unfinished"/>
+        <translation>Konfirmasi kata sandi baru:</translation>
     </message>
 </context>
 <context>
@@ -2483,12 +2487,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="216"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Buka</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="217"/>
         <source>Open in New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Buka di Tab Baru</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="218"/>
@@ -2498,7 +2502,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="220"/>
         <source>Open in New Window</source>
-        <translation type="unfinished"/>
+        <translation>Buka di Jendela Baru</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="221"/>
@@ -2508,7 +2512,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="492"/>
         <source>Window - %1</source>
-        <translation type="unfinished"/>
+        <translation>Jendela - %1</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="539"/>
@@ -2519,7 +2523,7 @@ Do you want to continue?</source>
     <message numerus="yes">
         <location filename="../../src/ui/Menu.cpp" line="554"/>
         <source>%1 (%n tab(s))</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1 (%n tab)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2527,7 +2531,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/widgets/menuButton/MenuButtonWidget.cpp" line="36"/>
         <source>Menu</source>
-        <translation type="unfinished"/>
+        <translation>Menu</translation>
     </message>
 </context>
 <context>
@@ -2535,17 +2539,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="14"/>
         <source>Profile Configuration</source>
-        <translation type="unfinished"/>
+        <translation>Pengaturan Profil</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="24"/>
         <source>Actions</source>
-        <translation type="unfinished"/>
+        <translation>Aksi</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="30"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Mencari...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="78"/>
@@ -2562,27 +2566,27 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="182"/>
         <source>Information</source>
-        <translation type="unfinished"/>
+        <translation>Informasi</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="188"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>Judul:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="198"/>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>Deskripsi:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="208"/>
         <source>Version:</source>
-        <translation type="unfinished"/>
+        <translation>Versi:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.ui" line="218"/>
         <source>Author:</source>
-        <translation type="unfinished"/>
+        <translation>Penulis:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
@@ -2592,7 +2596,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
         <source>Link</source>
-        <translation type="unfinished"/>
+        <translation>Tautan</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="38"/>
@@ -2627,7 +2631,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="68"/>
         <source>Action</source>
-        <translation type="unfinished"/>
+        <translation>Aksi</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="72"/>
@@ -2637,7 +2641,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/MouseProfileDialog.cpp" line="117"/>
         <source>Select Action</source>
-        <translation type="unfinished"/>
+        <translation>Pilih Aksi</translation>
     </message>
 </context>
 <context>
@@ -4723,27 +4727,27 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="14"/>
         <source>Edit Search Engine</source>
-        <translation type="unfinished"/>
+        <translation>Sunting Mesin Pencarian</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="22"/>
         <source>Title:</source>
-        <translation type="unfinished"/>
+        <translation>Judul:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="49"/>
         <source>Change Icon…</source>
-        <translation type="unfinished"/>
+        <translation>Ganti Ikon...</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="58"/>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>Deskripsi:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="71"/>
         <source>Keyword:</source>
-        <translation type="unfinished"/>
+        <translation>Kata kunci:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="84"/>
@@ -4774,7 +4778,7 @@ Do you want to overwrite it?</source>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="148"/>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="256"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Alamat:</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="161"/>
@@ -4812,7 +4816,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.cpp" line="135"/>
         <source>Language</source>
-        <translation type="unfinished"/>
+        <translation>Bahasa</translation>
     </message>
 </context>
 <context>
@@ -4820,7 +4824,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/core/SearchEnginesManager.cpp" line="175"/>
         <source>Manage Search Engines…</source>
-        <translation type="unfinished"/>
+        <translation>Kelola Mesin Pencarian...</translation>
     </message>
 </context>
 <context>
@@ -5983,17 +5987,17 @@ Progress: %5&lt;/div&gt;</source>
         <location filename="../../src/ui/TrayIcon.cpp" line="52"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="128"/>
         <source>Otter Browser</source>
-        <translation type="unfinished"/>
+        <translation>Otter Browser</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="119"/>
         <source>Show Windows</source>
-        <translation type="unfinished"/>
+        <translation>Tampilkan Jendela</translation>
     </message>
     <message>
         <location filename="../../src/ui/TrayIcon.cpp" line="119"/>
         <source>Hide Windows</source>
-        <translation type="unfinished"/>
+        <translation>Sembunyikan Jendela</translation>
     </message>
 </context>
 <context>
@@ -6001,17 +6005,17 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="14"/>
         <source>Check for Updates</source>
-        <translation type="unfinished"/>
+        <translation>Periksa Pembaharuan</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.ui" line="20"/>
         <source>Checking for update…</source>
-        <translation type="unfinished"/>
+        <translation>Memeriksa pembaharuan...</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="50"/>
         <source>Checking for updates…</source>
-        <translation type="unfinished"/>
+        <translation>Memeriksa pembaharuan...</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="93"/>
@@ -6026,12 +6030,12 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="103"/>
         <source>Details…</source>
-        <translation type="unfinished"/>
+        <translation>Detil...</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="106"/>
         <source>Download</source>
-        <translation type="unfinished"/>
+        <translation>Unduh</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="119"/>
@@ -6046,17 +6050,17 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="173"/>
         <source>Downloading:</source>
-        <translation type="unfinished"/>
+        <translation>Mengunduh:</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="188"/>
         <source>Download finished!</source>
-        <translation type="unfinished"/>
+        <translation>Pengunduhan selesai!</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="189"/>
         <source>Install</source>
-        <translation type="unfinished"/>
+        <translation>Instal</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="191"/>
@@ -6067,7 +6071,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="213"/>
         <source>Download failed!</source>
-        <translation type="unfinished"/>
+        <translation>Pengunduhan gagal!</translation>
     </message>
     <message>
         <location filename="../../src/ui/UpdateCheckerDialog.cpp" line="215"/>
@@ -7028,12 +7032,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Window.cpp" line="176"/>
         <source>Print Page</source>
-        <translation type="unfinished"/>
+        <translation>Cetak Halaman</translation>
     </message>
     <message>
         <location filename="../../src/ui/Window.cpp" line="192"/>
         <source>Print Preview</source>
-        <translation type="unfinished"/>
+        <translation>Cetak Pratinjau</translation>
     </message>
 </context>
 <context>
@@ -7041,29 +7045,29 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="342"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Pertanyaan</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/core/WindowsManager.cpp" line="343"/>
         <source>You are about to open %n bookmark(s).</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Anda akan membuka %n bookmark.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="344"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Apakah Anda ingin lanjut?</translation>
     </message>
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="348"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Jangan tampilkan pesan ini lagi</translation>
     </message>
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="847"/>
         <location filename="../../src/core/WindowsManager.cpp" line="935"/>
         <location filename="../../src/core/WindowsManager.cpp" line="1055"/>
         <source>Empty</source>
-        <translation type="unfinished"/>
+        <translation>Kosong</translation>
     </message>
 </context>
 <context>
@@ -7112,7 +7116,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="845"/>
         <source>Not connected</source>
-        <translation type="unfinished"/>
+        <translation>Tidak terkoneksi</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="913"/>
@@ -7201,7 +7205,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/3rdparty/qtftp/qftp.cpp" line="2397"/>
         <source>Connection closed</source>
-        <translation type="unfinished"/>
+        <translation>Koneksi ditutup</translation>
     </message>
 </context>
 <context>
@@ -7209,32 +7213,32 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="316"/>
         <source>File</source>
-        <translation type="unfinished"/>
+        <translation>Berkas</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="317"/>
         <source>Sessions</source>
-        <translation type="unfinished"/>
+        <translation>Sesi</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="318"/>
         <source>Import and Export</source>
-        <translation type="unfinished"/>
+        <translation>Impor dan Ekspor</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="319"/>
         <source>Edit</source>
-        <translation type="unfinished"/>
+        <translation>Sunting</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="320"/>
         <source>View</source>
-        <translation type="unfinished"/>
+        <translation>Tilik</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="321"/>
         <source>Toolbars</source>
-        <translation type="unfinished"/>
+        <translation>Bilah Alat</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="322"/>
@@ -7255,12 +7259,12 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/core/ActionsManager.cpp" line="325"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="45"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>Sejarah</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="326"/>
         <source>Closed Windows</source>
-        <translation type="unfinished"/>
+        <translation>Jendela Tertutup</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="327"/>
@@ -7271,32 +7275,32 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="328"/>
         <source>Tools</source>
-        <translation type="unfinished"/>
+        <translation>Alat</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="329"/>
         <source>Help</source>
-        <translation type="unfinished"/>
+        <translation>Bantuan</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="330"/>
         <source>Tabs and Windows</source>
-        <translation type="unfinished"/>
+        <translation>Tab dan Jendela</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="331"/>
         <source>Page</source>
-        <translation type="unfinished"/>
+        <translation>Halaman</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="332"/>
         <source>Print</source>
-        <translation type="unfinished"/>
+        <translation>Cetak</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="333"/>
         <source>Settings</source>
-        <translation type="unfinished"/>
+        <translation>Pengaturan</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="334"/>
@@ -7306,7 +7310,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="338"/>
         <source>New Tab</source>
-        <translation type="unfinished"/>
+        <translation>Tab Baru</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="339"/>
@@ -7316,7 +7320,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="340"/>
         <source>New Window</source>
-        <translation type="unfinished"/>
+        <translation>Jendela Baru</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="341"/>
@@ -7326,17 +7330,17 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="342"/>
         <source>Open…</source>
-        <translation type="unfinished"/>
+        <translation>Buka...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="343"/>
         <source>Save…</source>
-        <translation type="unfinished"/>
+        <translation>Simpan...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="344"/>
         <source>Clone Tab</source>
-        <translation type="unfinished"/>
+        <translation>Klon Tab</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="345"/>
@@ -7372,22 +7376,22 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="349"/>
         <source>Restore</source>
-        <translation type="unfinished"/>
+        <translation>Pulihkan</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="349"/>
         <source>Restore Tab</source>
-        <translation type="unfinished"/>
+        <translation>Pulihkan Tab</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="350"/>
         <source>Stay on Top</source>
-        <translation type="unfinished"/>
+        <translation>Tetap di Atas</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="351"/>
         <source>Clear Tab History</source>
-        <translation type="unfinished"/>
+        <translation>Bersihkan Sejarah Tab</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="351"/>
@@ -7418,12 +7422,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="355"/>
         <source>Close Tab</source>
-        <translation type="unfinished"/>
+        <translation>Tutup Tab</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="356"/>
         <source>Close Other Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Tutup Tab Lainnya</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="357"/>
@@ -7488,13 +7492,13 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="368"/>
         <source>Open URL</source>
-        <translation type="unfinished"/>
+        <translation>Buka URL</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="369"/>
         <location filename="../../src/core/ActionsManager.cpp" line="385"/>
         <source>Open</source>
-        <translation type="unfinished"/>
+        <translation>Buka</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="370"/>
@@ -8242,12 +8246,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="514"/>
         <source>Switch Application Language…</source>
-        <translation type="unfinished"/>
+        <translation>Ganti Bahasa Aplikasi...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="515"/>
         <source>Check for Updates…</source>
-        <translation type="unfinished"/>
+        <translation>Periksa Pembaharuan...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="516"/>
@@ -8257,17 +8261,17 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="517"/>
         <source>About Otter…</source>
-        <translation type="unfinished"/>
+        <translation>Tentang Otter...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="518"/>
         <source>About Qt…</source>
-        <translation type="unfinished"/>
+        <translation>Tentang Qt...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="519"/>
         <source>Exit</source>
-        <translation type="unfinished"/>
+        <translation>Keluar</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="48"/>
@@ -8511,27 +8515,27 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/Application.cpp" line="115"/>
         <source>URL to open</source>
-        <translation type="unfinished"/>
+        <translation>URL untuk dibuka</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="116"/>
         <source>Uses &lt;path&gt; as cache directory</source>
-        <translation type="unfinished"/>
+        <translation>Gunakan &lt;path&gt; sebagai direktori cache</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="117"/>
         <source>Uses &lt;path&gt; as profile directory</source>
-        <translation type="unfinished"/>
+        <translation>Gunakan &lt;path&gt; sebagai direktori profil</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="118"/>
         <source>Restores session &lt;session&gt; if it exists</source>
-        <translation type="unfinished"/>
+        <translation>Pulihkan sesi &lt;session&gt; jika ada</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="119"/>
         <source>Starts private session</source>
-        <translation type="unfinished"/>
+        <translation>Mulai sesi privat</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="120"/>
@@ -8741,7 +8745,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="151"/>
         <source>Error %1</source>
-        <translation type="unfinished"/>
+        <translation>Eror %1</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="153"/>
@@ -8768,23 +8772,23 @@ Application ID: %2</source>
         <location filename="../../src/core/Utils.cpp" line="267"/>
         <location filename="../../src/core/Utils.cpp" line="336"/>
         <source>All files (*)</source>
-        <translation type="unfinished"/>
+        <translation>Semua berkas (*)</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="332"/>
         <source>%1 files (*.%2)</source>
-        <translation type="unfinished"/>
+        <translation>%1 berkas (*.%2)</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="342"/>
         <source>Save File</source>
-        <translation type="unfinished"/>
+        <translation>Simpan Berkas</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="363"/>
         <location filename="../../src/core/Utils.cpp" line="372"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Peringatan</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="363"/>
