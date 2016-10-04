@@ -56,7 +56,6 @@
 #include "ui_MainWindow.h"
 
 #include <QtGui/QCloseEvent>
-#include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QVBoxLayout>
 
@@ -423,11 +422,11 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			break;
 		case ActionsManager::OpenAction:
 			{
-				const QUrl url(QFileDialog::getOpenFileUrl(this, tr("Open File")));
+				const QString path(Utils::getOpenPaths().value(0));
 
-				if (url.isValid())
+				if (!path.isEmpty())
 				{
-					m_windowsManager->open(url);
+					m_windowsManager->open(QUrl::fromLocalFile(path));
 				}
 			}
 

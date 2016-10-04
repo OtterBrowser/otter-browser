@@ -59,6 +59,7 @@ QString formatFileTypes(const QStringList &filters = QStringList());
 QString normalizePath(const QString &path);
 QUrl normalizeUrl(QUrl url);
 SaveInformation getSavePath(const QString &fileName, QString path = QString(), QStringList filters = QStringList(), bool forceAsk = false);
+QStringList getOpenPaths(const QStringList &fileNames = QStringList(), QStringList filters = QStringList(), bool selectMultiple = false);
 QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType);
 bool isUrlEmpty(const QUrl &url);
 

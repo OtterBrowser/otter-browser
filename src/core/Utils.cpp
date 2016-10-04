@@ -391,6 +391,36 @@ SaveInformation getSavePath(const QString &fileName, QString path, QStringList f
 	return information;
 }
 
+QStringList getOpenPaths(const QStringList &fileNames, QStringList filters, bool selectMultiple)
+{
+	Q_UNUSED(fileNames)
+
+	QStringList paths;
+
+	filters.append(QCoreApplication::translate("utils", "All files (*)"));
+
+	if (selectMultiple)
+	{
+		paths = QFileDialog::getOpenFileNames(SessionsManager::getActiveWindow(), QCoreApplication::translate("utils", "Open Files"), SettingsManager::getValue(SettingsManager::Paths_OpenFileOption).toString(), filters.join(QLatin1String(";;")));
+	}
+	else
+	{
+		const QString path(QFileDialog::getOpenFileName(SessionsManager::getActiveWindow(), QCoreApplication::translate("utils", "Open File"), SettingsManager::getValue(SettingsManager::Paths_OpenFileOption).toString(), filters.join(QLatin1String(";;"))));
+
+		if (!path.isEmpty())
+		{
+			paths = QStringList(path);
+		}
+	}
+
+	if (!paths.isEmpty())
+	{
+		SettingsManager::setValue(SettingsManager::Paths_OpenFileOption, QFileInfo(paths.first()).dir().canonicalPath());
+	}
+
+	return paths;
+}
+
 bool isUrlEmpty(const QUrl &url)
 {
 	return (url.isEmpty() || (url.scheme() == QLatin1String("about") && (url.path().isEmpty() || url.path() == QLatin1String("blank") || url.path() == QLatin1String("start"))));

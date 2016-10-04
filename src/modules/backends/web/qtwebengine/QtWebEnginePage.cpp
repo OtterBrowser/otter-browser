@@ -26,6 +26,7 @@
 #include "../../../../core/ContentBlockingManager.h"
 #include "../../../../core/ThemesManager.h"
 #include "../../../../core/UserScript.h"
+#include "../../../../core/Utils.h"
 #include "../../../../ui/ContentsDialog.h"
 
 #include <QtCore/QFile>
@@ -35,7 +36,6 @@
 #include <QtWebEngineWidgets/QWebEngineScript>
 #include <QtWebEngineWidgets/QWebEngineScriptCollection>
 #include <QtWebEngineWidgets/QWebEngineSettings>
-#include <QtWidgets/QFileDialog>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMessageBox>
@@ -281,31 +281,9 @@ QString QtWebEnginePage::createJavaScriptList(QStringList rules) const
 
 QStringList QtWebEnginePage::chooseFiles(QWebEnginePage::FileSelectionMode mode, const QStringList &oldFiles, const QStringList &acceptedMimeTypes)
 {
-	Q_UNUSED(oldFiles)
 	Q_UNUSED(acceptedMimeTypes)
 
-	QStringList files;
-
-	if (mode == QWebEnginePage::FileSelectOpen)
-	{
-		const QString path(QFileDialog::getOpenFileName(m_widget, tr("Open File"), SettingsManager::getValue(SettingsManager::Paths_OpenFileOption).toString()));
-
-		if (!path.isEmpty())
-		{
-			files = QStringList(path);
-		}
-	}
-	else
-	{
-		files = QFileDialog::getOpenFileNames(m_widget, tr("Open Files"), SettingsManager::getValue(SettingsManager::Paths_OpenFileOption).toString());
-	}
-
-	if (!files.isEmpty())
-	{
-		SettingsManager::setValue(SettingsManager::Paths_OpenFileOption, QFileInfo(files.first()).dir().canonicalPath());
-	}
-
-	return files;
+	return Utils::getOpenPaths(oldFiles, QStringList(), (mode == QWebEnginePage::FileSelectOpenMultiple));
 }
 
 bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::NavigationType type, bool isMainFrame)

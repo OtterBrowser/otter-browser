@@ -33,7 +33,6 @@
 #include <QtGui/QDesktopServices>
 #include <QtGui/QGuiApplication>
 #include <QtGui/QWheelEvent>
-#include <QtWidgets/QFileDialog>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QLineEdit>
@@ -394,16 +393,8 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 QString QtWebKitPage::chooseFile(QWebFrame *frame, const QString &suggestedFile)
 {
 	Q_UNUSED(frame)
-	Q_UNUSED(suggestedFile)
 
-	const QString path(QFileDialog::getOpenFileName(m_widget, tr("Open File"), SettingsManager::getValue(SettingsManager::Paths_OpenFileOption).toString()));
-
-	if (!path.isEmpty())
-	{
-		SettingsManager::setValue(SettingsManager::Paths_OpenFileOption, QFileInfo(path).dir().canonicalPath());
-	}
-
-	return path;
+	return Utils::getOpenPaths(QStringList(suggestedFile)).value(0);
 }
 
 QString QtWebKitPage::userAgentForUrl(const QUrl &url) const
@@ -583,14 +574,10 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 {
 	if (extension == QWebPage::ChooseMultipleFilesExtension && m_widget)
 	{
+		const QWebPage::ChooseMultipleFilesExtensionOption *filesOption(static_cast<const QWebPage::ChooseMultipleFilesExtensionOption*>(option));
 		QWebPage::ChooseMultipleFilesExtensionReturn *filesOutput(static_cast<QWebPage::ChooseMultipleFilesExtensionReturn*>(output));
 
-		filesOutput->fileNames = QFileDialog::getOpenFileNames(m_widget, tr("Open File"), SettingsManager::getValue(SettingsManager::Paths_OpenFileOption).toString());
-
-		if (!filesOutput->fileNames.isEmpty())
-		{
-			SettingsManager::setValue(SettingsManager::Paths_OpenFileOption, QFileInfo(filesOutput->fileNames.first()).dir().canonicalPath());
-		}
+		filesOutput->fileNames = Utils::getOpenPaths(filesOption->suggestedFileNames, QStringList(), true);
 
 		return true;
 	}
