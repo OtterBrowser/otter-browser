@@ -62,6 +62,7 @@ protected:
 	void javaScriptConsoleMessage(const QString &note, int line, const QString &source);
 #endif
 	QWebPage* createWindow(WebWindowType type);
+	QString chooseFile(QWebFrame *frame, const QString &suggestedFile);
 	QString userAgentForUrl(const QUrl &url) const;
 	QString getDefaultUserAgent() const;
 	bool acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, QWebPage::NavigationType type);

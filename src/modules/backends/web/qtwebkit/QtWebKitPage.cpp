@@ -391,6 +391,21 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 	return QWebPage::createWindow(type);
 }
 
+QString QtWebKitPage::chooseFile(QWebFrame *frame, const QString &suggestedFile)
+{
+	Q_UNUSED(frame)
+	Q_UNUSED(suggestedFile)
+
+	const QString path(QFileDialog::getOpenFileName(m_widget, tr("Open File"), SettingsManager::getValue(SettingsManager::Paths_OpenFileOption).toString()));
+
+	if (!path.isEmpty())
+	{
+		SettingsManager::setValue(SettingsManager::Paths_OpenFileOption, QFileInfo(path).dir().canonicalPath());
+	}
+
+	return path;
+}
+
 QString QtWebKitPage::userAgentForUrl(const QUrl &url) const
 {
 	if (m_networkManager)
