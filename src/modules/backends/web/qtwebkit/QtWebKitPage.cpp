@@ -614,8 +614,34 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 			return false;
 		}
 
+		QString title;
+
+		if ((errorOption->domain == QWebPage::QtNetwork && (errorOption->error == QNetworkReply::HostNotFoundError || errorOption->error == QNetworkReply::ContentNotFoundError)) || (errorOption->domain == QWebPage::Http && errorOption->error == 404))
+		{
+			if (errorOption->url.isLocalFile())
+			{
+				title = tr("File not found");
+			}
+			else
+			{
+				title = tr("Server not found");
+			}
+		}
+		else if (errorOption->domain == QWebPage::QtNetwork && errorOption->error == QNetworkReply::ConnectionRefusedError)
+		{
+			title = tr("Connection refused");
+		}
+		else if (errorOption->domain == QWebPage::WebKit)
+		{
+			title = tr("WebKit error %1").arg(errorOption->error);
+		}
+		else
+		{
+			title = tr("Network error %1").arg(errorOption->error);
+		}
+
 		errorOutput->baseUrl = errorOption->url;
-		errorOutput->content = Utils::createErrorPage(errorOption->url, QString::number(errorOption->error), errorOption->errorString).toUtf8();
+		errorOutput->content = Utils::createErrorPage(errorOption->url, title, errorOption->errorString).toUtf8();
 
 		return true;
 	}
