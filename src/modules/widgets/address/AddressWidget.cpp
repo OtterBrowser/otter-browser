@@ -715,7 +715,17 @@ void AddressWidget::updateFeeds()
 
 void AddressWidget::updateLoadPlugins()
 {
-	const bool canLoadPlugins(SettingsManager::getValue(SettingsManager::AddressField_ShowLoadPluginsIconOption).toBool() && m_window && !m_window->isAboutToClose() && m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction) && m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction)->isEnabled());
+	bool canLoadPlugins(false);
+
+	if (SettingsManager::getValue(SettingsManager::AddressField_ShowLoadPluginsIconOption).toBool() && m_window && !m_window->isAboutToClose())
+	{
+		Action *loadPluginsAction(m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction));
+
+		if (loadPluginsAction && loadPluginsAction->isEnabled())
+		{
+			canLoadPlugins = true;
+		}
+	}
 
 	if (canLoadPlugins && !m_loadPluginsLabel)
 	{
