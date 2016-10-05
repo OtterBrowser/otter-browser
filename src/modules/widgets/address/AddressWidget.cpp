@@ -699,7 +699,6 @@ void AddressWidget::updateFeeds()
 		m_feedsLabel->setPixmap(ThemesManager::getIcon(QLatin1String("application-rss+xml")).pixmap(m_feedsLabel->size()));
 		m_feedsLabel->setCursor(Qt::ArrowCursor);
 		m_feedsLabel->setToolTip(tr("Feed List"));
-		m_feedsLabel->setCursor(Qt::ArrowCursor);
 		m_feedsLabel->setFocusPolicy(Qt::NoFocus);
 		m_feedsLabel->installEventFilter(this);
 
@@ -728,7 +727,6 @@ void AddressWidget::updateLoadPlugins()
 		m_loadPluginsLabel->setPixmap(ThemesManager::getIcon(QLatin1String("preferences-plugin")).pixmap(m_loadPluginsLabel->size()));
 		m_loadPluginsLabel->setCursor(Qt::ArrowCursor);
 		m_loadPluginsLabel->setToolTip(tr("Click to load all plugins on the page"));
-		m_loadPluginsLabel->setCursor(Qt::ArrowCursor);
 		m_loadPluginsLabel->setFocusPolicy(Qt::NoFocus);
 		m_loadPluginsLabel->installEventFilter(this);
 
