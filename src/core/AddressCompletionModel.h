@@ -62,11 +62,11 @@ public:
 	enum EntryRole
 	{
 		TextRole = Qt::DisplayRole,
-		UrlRole = Qt::UserRole,
-		TitleRole = (Qt::UserRole + 1),
-		MatchRole = (Qt::UserRole + 2),
-		KeywordRole = (Qt::UserRole + 3),
-		TypeRole = (Qt::UserRole + 4)
+		UrlRole = Qt::StatusTipRole,
+		TitleRole = Qt::UserRole,
+		MatchRole = (Qt::UserRole + 1),
+		KeywordRole = (Qt::UserRole + 2),
+		TypeRole = (Qt::UserRole + 3)
 	};
 
 	struct CompletionEntry

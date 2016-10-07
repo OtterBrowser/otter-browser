@@ -264,7 +264,6 @@ QVariant AddressCompletionModel::data(const QModelIndex &index, int role) const
 		{
 			case Qt::DecorationRole:
 				return m_completions.at(index.row()).icon;
-			case Qt::StatusTipRole:
 			case TextRole:
 				return (m_completions.at(index.row()).text.isEmpty() ? m_completions.at(index.row()).url.toString() : m_completions.at(index.row()).text);
 			case UrlRole:
