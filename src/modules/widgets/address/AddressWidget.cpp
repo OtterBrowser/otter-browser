@@ -446,6 +446,21 @@ void AddressWidget::hidePopup()
 	m_removeModelTimer = startTimer(250);
 }
 
+void AddressWidget::hideCompletion()
+{
+	if (m_completionView)
+	{
+		m_completionView->hide();
+		m_completionView->deleteLater();
+		m_completionView = NULL;
+
+		QString statusTip;
+		QStatusTipEvent statusTipEvent(statusTip);
+
+		QApplication::sendEvent(this, &statusTipEvent);
+	}
+}
+
 void AddressWidget::optionChanged(int identifier, const QVariant &value)
 {
 	if (identifier == SettingsManager::AddressField_CompletionModeOption)
@@ -605,12 +620,7 @@ void AddressWidget::openUrl(const QString &url)
 
 void AddressWidget::openUrl(const QModelIndex &index)
 {
-	if (m_completionView)
-	{
-		m_completionView->hide();
-		m_completionView->deleteLater();
-		m_completionView = NULL;
-	}
+	hideCompletion();
 
 	if (!index.isValid())
 	{
@@ -810,12 +820,7 @@ void AddressWidget::setCompletion(const QString &filter)
 {
 	if (filter.isEmpty() || m_completionModel->rowCount() == 0)
 	{
-		if (m_completionView)
-		{
-			m_completionView->hide();
-			m_completionView->deleteLater();
-			m_completionView = NULL;
-		}
+		hideCompletion();
 
 		m_lineEdit->setCompletion(QString());
 		m_lineEdit->setFocus();
@@ -1208,9 +1213,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 			{
 				if (!m_lineEdit->hasFocus())
 				{
-					m_completionView->hide();
-					m_completionView->deleteLater();
-					m_completionView = NULL;
+					hideCompletion();
 				}
 
 				return true;
@@ -1238,9 +1241,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 						break;
 					}
 
-					m_completionView->hide();
-					m_completionView->deleteLater();
-					m_completionView = NULL;
+					hideCompletion();
 
 					m_lineEdit->setFocus();
 
@@ -1259,9 +1260,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 	}
 	else if (object == m_completionView && event->type() == QEvent::MouseButtonPress && !m_completionView->viewport()->underMouse())
 	{
-		m_completionView->hide();
-		m_completionView->deleteLater();
-		m_completionView = NULL;
+		hideCompletion();
 
 		m_lineEdit->setFocus();
 
@@ -1279,11 +1278,22 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 			{
 				m_completionView->setCurrentIndex(index);
 			}
+
+			QStatusTipEvent statusTipEvent(index.data(Qt::StatusTipRole).toString());
+
+			QApplication::sendEvent(this, &statusTipEvent);
 		}
 	}
 	else if (object == m_completionView && (event->type() == QEvent::InputMethod || event->type() == QEvent::ShortcutOverride))
 	{
 		QApplication::sendEvent(m_lineEdit, event);
+	}
+	else if (object == m_completionView && (event->type() == QEvent::Close || event->type() == QEvent::Hide || event->type() == QEvent::Leave))
+	{
+		QString statusTip;
+		QStatusTipEvent statusTipEvent(statusTip);
+
+		QApplication::sendEvent(this, &statusTipEvent);
 	}
 
 	return QObject::eventFilter(object, event);
