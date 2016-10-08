@@ -44,11 +44,6 @@ LocalListingNetworkReply::LocalListingNetworkReply(QObject *parent, const QNetwo
 
 	QString entriesHtml;
 	QRegularExpression entryExpression(QLatin1String("<!--entry:begin-->(.*)<!--entry:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
-	QRegularExpression urlExpression(QLatin1String("^/+"));
-#if QT_VERSION >= 0x050400
-	urlExpression.optimize();
-#endif
-
 	QFile file(SessionsManager::getReadableDataPath(QLatin1String("files/listing.html")));
 	file.open(QIODevice::ReadOnly | QIODevice::Text);
 
@@ -63,7 +58,7 @@ LocalListingNetworkReply::LocalListingNetworkReply(QObject *parent, const QNetwo
 
 	do
 	{
-		navigation.prepend(QStringLiteral("<a href=\"file:///%1\">%2</a>").arg(directory.canonicalPath().remove(urlExpression)).arg((directory.isRoot() ? QLatin1String("file://") : QString()) + directory.dirName() + QString('/')));
+		navigation.prepend(QStringLiteral("<a href=\"%1\">%2</a>").arg(QUrl::fromUserInput(directory.canonicalPath()).toString()).arg((directory.isRoot() ? QLatin1String("file://") : QString()) + directory.dirName() + QString('/')));
 	}
 	while (directory.cdUp());
 
@@ -90,7 +85,7 @@ LocalListingNetworkReply::LocalListingNetworkReply(QObject *parent, const QNetwo
 			QByteArray byteArray;
 			QBuffer buffer(&byteArray);
 			QPixmap pixmap(QIcon::fromTheme(mimeType.iconName(), iconProvider.icon(entries.at(i))).pixmap(16, 16));
-			
+
 			if (pixmap.isNull())
 			{
 				pixmap = ThemesManager::getIcon((entries.at(i).isDir() ? QLatin1String("inode-directory") : QLatin1String("unknown")), false).pixmap(16, 16);
@@ -102,7 +97,7 @@ LocalListingNetworkReply::LocalListingNetworkReply(QObject *parent, const QNetwo
 		}
 
 		QHash<QString, QString> entryVariables;
-		entryVariables[QLatin1String("url")] = QStringLiteral("file:///%1").arg(entries.at(i).filePath().remove(urlExpression));
+		entryVariables[QLatin1String("url")] = QUrl::fromUserInput(entries.at(i).filePath()).toString();
 		entryVariables[QLatin1String("icon")] = QStringLiteral("data:image/png;base64,%1").arg(icons[mimeType.name()]);
 		entryVariables[QLatin1String("mimeType")] = mimeType.name();
 		entryVariables[QLatin1String("name")] = entries.at(i).fileName();
