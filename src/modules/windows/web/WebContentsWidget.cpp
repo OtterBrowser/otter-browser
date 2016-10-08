@@ -31,6 +31,7 @@
 #include "../../../core/NetworkManagerFactory.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/ThemesManager.h"
+#include "../../../core/Utils.h"
 #include "../../../core/WebBackend.h"
 #include "../../../ui/CertificateDialog.h"
 #include "../../../ui/ContentsDialog.h"
@@ -802,7 +803,7 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 		return;
 	}
 
-	const bool showStartPage((url.isEmpty() && m_showStartPage) || url == QUrl(QLatin1String("about:start")));
+	const bool showStartPage((m_showStartPage && Utils::isUrlEmpty(url)) || url == QUrl(QLatin1String("about:start")));
 
 	if (showStartPage)
 	{
