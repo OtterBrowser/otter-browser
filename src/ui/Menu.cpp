@@ -883,7 +883,7 @@ void Menu::selectCharacterEncoding(QAction *action)
 		return;
 	}
 
-	QString encoding;
+	QString encoding(QLatin1String("auto"));
 
 	if (action && action->data().toInt() > 0)
 	{

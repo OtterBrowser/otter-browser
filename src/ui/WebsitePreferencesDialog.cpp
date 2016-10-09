@@ -59,7 +59,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 
 	m_ui->websiteLineEdit->setText(url.isLocalFile() ? QLatin1String("localhost") : url.host());
 
-	m_ui->encodingComboBox->addItem(tr("Auto Detect"));
+	m_ui->encodingComboBox->addItem(tr("Auto Detect"), QLatin1String("auto"));
 
 	for (int i = 0; i < textCodecs.count(); ++i)
 	{
@@ -70,7 +70,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 			continue;
 		}
 
-		m_ui->encodingComboBox->addItem(codec->name(), textCodecs.at(i));
+		m_ui->encodingComboBox->addItem(codec->name(), codec->name());
 	}
 
 	m_ui->popupsPolicyComboBox->addItem(tr("Ask"), QLatin1String("ask"));
@@ -225,7 +225,7 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 	switch (m_ui->buttonBox->buttonRole(button))
 	{
 		case QDialogButtonBox::AcceptRole:
-			SettingsManager::setValue(SettingsManager::Content_DefaultCharacterEncodingOption, (m_ui->encodingOverrideCheckBox->isChecked() ? (m_ui->encodingComboBox->currentIndex() ? m_ui->encodingComboBox->currentText() : QString()) : QVariant()), url);
+			SettingsManager::setValue(SettingsManager::Content_DefaultCharacterEncodingOption, (m_ui->encodingOverrideCheckBox->isChecked() ? m_ui->encodingComboBox->currentData(Qt::UserRole).toString() : QVariant()), url);
 			SettingsManager::setValue(SettingsManager::Content_PopupsPolicyOption, (m_ui->popupsPolicyOverrideCheckBox->isChecked() ? m_ui->popupsPolicyComboBox->currentData(Qt::UserRole).toString() : QVariant()), url);
 			SettingsManager::setValue(SettingsManager::Browser_EnableImagesOption, (m_ui->enableImagesOverrideCheckBox->isChecked() ? m_ui->enableImagesComboBox->currentData(Qt::UserRole).toString() : QVariant()), url);
 			SettingsManager::setValue(SettingsManager::Browser_EnableJavaOption, (m_ui->enableJavaOverrideCheckBox->isChecked() ? m_ui->enableJavaCheckBox->isChecked() : QVariant()), url);
@@ -331,7 +331,7 @@ void WebsitePreferencesDialog::updateValues(bool checked)
 
 	m_updateOverride = false;
 
-	m_ui->encodingComboBox->setCurrentIndex(qMax(0, m_ui->encodingComboBox->findText(SettingsManager::getValue(SettingsManager::Content_DefaultCharacterEncodingOption, (m_ui->encodingOverrideCheckBox->isChecked() ? url : QUrl())).toString())));
+	m_ui->encodingComboBox->setCurrentIndex(m_ui->encodingComboBox->findData(SettingsManager::getValue(SettingsManager::Content_DefaultCharacterEncodingOption, (m_ui->encodingOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
 
 	const int popupsPolicyIndex(m_ui->popupsPolicyComboBox->findData(SettingsManager::getValue(SettingsManager::Content_PopupsPolicyOption, (m_ui->popupsPolicyOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
 

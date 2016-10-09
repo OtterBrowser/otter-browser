@@ -1194,6 +1194,7 @@ void QtWebEngineWebWidget::updateRedo()
 
 void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 {
+	const QString encoding(getOption(SettingsManager::Content_DefaultCharacterEncodingOption, url).toString());
 	QWebEngineSettings *settings(m_webView->page()->settings());
 	settings->setAttribute(QWebEngineSettings::AutoLoadImages, (getOption(SettingsManager::Browser_EnableImagesOption, url).toString() != QLatin1String("onlyCached")));
 	settings->setAttribute(QWebEngineSettings::JavascriptEnabled, getOption(SettingsManager::Browser_EnableJavaScriptOption, url).toBool());
@@ -1203,7 +1204,7 @@ void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 	settings->setAttribute(QWebEngineSettings::WebGLEnabled, getOption(SettingsManager::Browser_EnableWebglOption, url).toBool());
 #endif
 	settings->setAttribute(QWebEngineSettings::LocalStorageEnabled, getOption(SettingsManager::Browser_EnableLocalStorageOption, url).toBool());
-	settings->setDefaultTextEncoding(getOption(SettingsManager::Content_DefaultCharacterEncodingOption, url).toString());
+	settings->setDefaultTextEncoding((encoding == QLatin1String("auto")) ? QString() : encoding);
 
 	m_webView->page()->profile()->setHttpUserAgent(getBackend()->getUserAgent(NetworkManagerFactory::getUserAgent(getOption(SettingsManager::Network_UserAgentOption, url).toString()).value));
 

@@ -855,6 +855,7 @@ void QtWebKitWebWidget::updateRedoText(const QString &text)
 
 void QtWebKitWebWidget::updateOptions(const QUrl &url)
 {
+	const QString encoding(getOption(SettingsManager::Content_DefaultCharacterEncodingOption, url).toString());
 	QWebSettings *settings(m_webView->page()->settings());
 	settings->setAttribute(QWebSettings::AutoLoadImages, (getOption(SettingsManager::Browser_EnableImagesOption, url).toString() != QLatin1String("onlyCached")));
 	settings->setAttribute(QWebSettings::PluginsEnabled, getOption(SettingsManager::Browser_EnablePluginsOption, url).toString() != QLatin1String("disabled"));
@@ -867,7 +868,7 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 	settings->setAttribute(QWebSettings::LocalStorageEnabled, getOption(SettingsManager::Browser_EnableLocalStorageOption, url).toBool());
 	settings->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, getOption(SettingsManager::Browser_EnableOfflineStorageDatabaseOption, url).toBool());
 	settings->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, getOption(SettingsManager::Browser_EnableOfflineWebApplicationCacheOption, url).toBool());
-	settings->setDefaultTextEncoding(getOption(SettingsManager::Content_DefaultCharacterEncodingOption, url).toString());
+	settings->setDefaultTextEncoding((encoding == QLatin1String("auto")) ? QString() : encoding);
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	settings->setAttribute(QWebSettings::MediaEnabled, getOption(QtWebKitWebBackend::getOptionIdentifier(QtWebKitWebBackend::QtWebKitBackend_EnableMediaOption), url).toBool());
 	settings->setAttribute(QWebSettings::MediaSourceEnabled, getOption(QtWebKitWebBackend::getOptionIdentifier(QtWebKitWebBackend::QtWebKitBackend_EnableMediaSourceOption), url).toBool());

@@ -129,7 +129,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Choices_WarnQuitTransfersOption, true, BooleanType);
 	registerOption(Content_BackgroundColorOption, QLatin1String("#FFFFFF"), ColorType);
 	registerOption(Content_CursiveFontOption, QLatin1String("Impact"), FontType);
-	registerOption(Content_DefaultCharacterEncodingOption, QString(), StringType);
+	registerOption(Content_DefaultCharacterEncodingOption, QLatin1String("auto"), StringType);
 	registerOption(Content_DefaultFixedFontSizeOption, 16, IntegerType);
 	registerOption(Content_DefaultFontSizeOption, 16, IntegerType);
 	registerOption(Content_DefaultZoomOption, 100, IntegerType);

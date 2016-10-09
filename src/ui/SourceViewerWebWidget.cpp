@@ -385,7 +385,12 @@ void SourceViewerWebWidget::setContents(const QByteArray &contents, const QStrin
 
 	if (hasOption(SettingsManager::Content_DefaultCharacterEncodingOption))
 	{
-		codec = QTextCodec::codecForName(getOption(SettingsManager::Content_DefaultCharacterEncodingOption).toByteArray());
+		const QString encoding(getOption(SettingsManager::Content_DefaultCharacterEncodingOption).toString());
+
+		if (encoding != QLatin1String("auto"))
+		{
+			codec = QTextCodec::codecForName(encoding.toLatin1());
+		}
 	}
 
 	if (!codec && !contentType.isEmpty() && contentType.contains(QLatin1String("charset=")))
