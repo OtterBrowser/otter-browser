@@ -274,7 +274,7 @@ public:
 	static OptionDefinition getOptionDefinition(int identifier);
 	static int registerOption(const QString &name, const QVariant &defaultValue, OptionType type, const QStringList &choices = QStringList());
 	static int getOptionIdentifier(const QString &name);
-	static bool hasOverride(const QUrl &url, const QString &key = QString());
+	static bool hasOverride(const QUrl &url, int identifier = -1);
 
 protected:
 	explicit SettingsManager(QObject *parent = NULL);

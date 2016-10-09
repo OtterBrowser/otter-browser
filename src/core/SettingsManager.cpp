@@ -485,14 +485,14 @@ int SettingsManager::getOptionIdentifier(const QString &name)
 	return m_instance->metaObject()->enumerator(m_optionIdentifierEnumerator).keyToValue(mutableName.toLatin1());
 }
 
-bool SettingsManager::hasOverride(const QUrl &url, const QString &key)
+bool SettingsManager::hasOverride(const QUrl &url, int identifier)
 {
-	if (key.isEmpty())
+	if (identifier < 0)
 	{
 		return QSettings(m_overridePath, QSettings::IniFormat).childGroups().contains(getHost(url));
 	}
 
-	return QSettings(m_overridePath, QSettings::IniFormat).contains(getHost(url) + QLatin1Char('/') + key);
+	return QSettings(m_overridePath, QSettings::IniFormat).contains(getHost(url) + QLatin1Char('/') + getOptionName(identifier));
 }
 
 }
