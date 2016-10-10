@@ -32,7 +32,7 @@
       <item>
        <widget class="QLabel" name="periodLabel">
         <property name="text">
-         <string>Period to Clear:</string>
+         <string>Period to clear:</string>
         </property>
        </widget>
       </item>

@@ -100,7 +100,7 @@
      <item row="7" column="0">
       <widget class="QLabel" name="lastVisitLabel">
        <property name="text">
-        <string>Last Visit:</string>
+        <string>Last visit:</string>
        </property>
       </widget>
      </item>

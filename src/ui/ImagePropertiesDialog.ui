@@ -33,7 +33,7 @@
      <item row="2" column="0">
       <widget class="QLabel" name="fileSizeLabel">
        <property name="text">
-        <string>File Size:</string>
+        <string>File size:</string>
        </property>
       </widget>
      </item>
@@ -47,14 +47,14 @@
      <item row="4" column="0">
       <widget class="QLabel" name="alternativeTextLabel">
        <property name="text">
-        <string>Alternative Text:</string>
+        <string>Alternative text:</string>
        </property>
       </widget>
      </item>
      <item row="5" column="0">
       <widget class="QLabel" name="longDescriptionLabel">
        <property name="text">
-        <string>Long Description:</string>
+        <string>Long description:</string>
        </property>
       </widget>
      </item>

@@ -230,7 +230,7 @@
      <item row="0" column="0">
       <widget class="QLabel" name="acceptLanguageLabel">
        <property name="text">
-        <string>Preferred Webpage Language:</string>
+        <string>Preferred webpage language:</string>
        </property>
        <property name="buddy">
         <cstring>acceptLanguageButton</cstring>

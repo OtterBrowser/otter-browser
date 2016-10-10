@@ -1086,7 +1086,7 @@
           </font>
          </property>
          <property name="text">
-          <string>SSL ciphers</string>
+          <string>SSL Ciphers</string>
          </property>
         </widget>
        </item>
@@ -1613,15 +1613,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>Otter::ItemViewWidget</class>
-   <extends>QTreeView</extends>
-   <header>src/ui/ItemViewWidget.h</header>
-  </customwidget>
-  <customwidget>
    <class>Otter::FilePathWidget</class>
    <extends>QWidget</extends>
    <header>src/ui/FilePathWidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Otter::ItemViewWidget</class>
+   <extends>QTreeView</extends>
+   <header>src/ui/ItemViewWidget.h</header>
   </customwidget>
   <customwidget>
    <class>Otter::ApplicationComboBoxWidget</class>
