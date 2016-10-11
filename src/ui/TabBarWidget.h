@@ -21,6 +21,7 @@
 #ifndef OTTER_TABBARWIDGET_H
 #define OTTER_TABBARWIDGET_H
 
+#include <QtWidgets/QProxyStyle>
 #include <QtWidgets/QTabBar>
 
 namespace Otter
@@ -28,6 +29,16 @@ namespace Otter
 
 class PreviewWidget;
 class Window;
+
+class TabBarStyle : public QProxyStyle
+{
+public:
+	explicit TabBarStyle(QStyle *style = NULL);
+
+	void drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const;
+	QSize sizeFromContents(ContentsType type, const QStyleOption *option, const QSize &size, const QWidget *widget) const;
+	QRect subElementRect(SubElement element, const QStyleOption *option, const QWidget *widget = NULL) const;
+};
 
 class TabBarWidget : public QTabBar
 {
