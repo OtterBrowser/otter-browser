@@ -37,12 +37,19 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 
 	QStandardItemModel *model(new QStandardItemModel(this));
 	const QVector<ActionsManager::ActionDefinition> definitions(ActionsManager::getActionDefinitions());
+
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		QStandardItem *item(new QStandardItem(definitions.at(i).icon, QCoreApplication::translate("actions", (definitions.at(i).description.isEmpty() ? definitions.at(i).text : definitions.at(i).description).toUtf8().constData())));
+		QStandardItem *item(new QStandardItem(QCoreApplication::translate("actions", (definitions.at(i).description.isEmpty() ? definitions.at(i).text : definitions.at(i).description).toUtf8().constData())));
+		item->setData(QColor(Qt::transparent), Qt::DecorationRole);
 		item->setData(definitions.at(i).identifier, Qt::UserRole);
 		item->setToolTip(ActionsManager::getActionName(definitions.at(i).identifier));
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+
+		if (!definitions.at(i).icon.isNull())
+		{
+			item->setIcon(definitions.at(i).icon);
+		}
 
 		if (profiles[profile].shortcuts.contains(definitions.at(i).identifier))
 		{

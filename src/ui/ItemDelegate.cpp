@@ -24,8 +24,7 @@
 namespace Otter
 {
 
-ItemDelegate::ItemDelegate(bool forceIcon, QObject *parent) : QItemDelegate(parent),
-	m_forceIcon(forceIcon)
+ItemDelegate::ItemDelegate(QObject *parent) : QItemDelegate(parent)
 {
 }
 
@@ -53,7 +52,11 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 		mutableOption.font = index.data(Qt::FontRole).value<QFont>();
 	}
 
-	if (m_forceIcon && index.column() == 0)
+	if (index.data(Qt::DecorationRole).isNull())
+	{
+		drawDisplay(painter, mutableOption, mutableOption.rect, index.data(Qt::DisplayRole).toString());
+	}
+	else
 	{
 		if (!index.data(Qt::DecorationRole).value<QIcon>().isNull())
 		{
@@ -68,10 +71,6 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 		titleRectangle.setLeft(option.rect.left() + option.rect.height());
 
 		drawDisplay(painter, mutableOption, titleRectangle, index.data(Qt::DisplayRole).toString());
-	}
-	else
-	{
-		drawDisplay(painter, mutableOption, mutableOption.rect, index.data(Qt::DisplayRole).toString());
 	}
 }
 

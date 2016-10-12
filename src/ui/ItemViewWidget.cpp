@@ -209,7 +209,7 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 
 	optionChanged(SettingsManager::Interface_ShowScrollBarsOption, SettingsManager::getValue(SettingsManager::Interface_ShowScrollBarsOption));
 	setHeader(m_headerWidget);
-	setItemDelegate(new ItemDelegate(true, this));
+	setItemDelegate(new ItemDelegate(this));
 	setIndentation(0);
 	setAllColumnsShowFocus(true);
 

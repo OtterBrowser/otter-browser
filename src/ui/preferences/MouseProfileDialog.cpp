@@ -50,10 +50,16 @@ MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QStri
 			for (iterator = profiles[profile].gestures[contexts.at(i).first].constBegin(); iterator != profiles[profile].gestures[contexts.at(i).first].constEnd(); ++iterator)
 			{
 				const ActionsManager::ActionDefinition action(ActionsManager::getActionDefinition(iterator.value()));
-				QList<QStandardItem*> items({new QStandardItem(QString(iterator.key()).replace(QLatin1Char(','), QLatin1String(", "))), new QStandardItem(action.icon, QCoreApplication::translate("actions", (action.description.isEmpty() ? action.text : action.description).toUtf8().constData()))});
+				QList<QStandardItem*> items({new QStandardItem(QString(iterator.key()).replace(QLatin1Char(','), QLatin1String(", "))), new QStandardItem(QCoreApplication::translate("actions", (action.description.isEmpty() ? action.text : action.description).toUtf8().constData()))});
 				items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+				items[1]->setData(QColor(Qt::transparent), Qt::DecorationRole);
 				items[1]->setData(action.identifier, Qt::UserRole);
 				items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren | Qt::ItemIsEditable);
+
+				if (!action.icon.isNull())
+				{
+					items[1]->setIcon(action.icon);
+				}
 
 				item->appendRow(items);
 			}

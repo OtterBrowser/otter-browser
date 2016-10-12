@@ -46,9 +46,17 @@ void ActionDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, co
 	{
 		ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(widget->getActionIdentifier()));
 
-		model->setData(index, definition.icon, Qt::DecorationRole);
 		model->setData(index, QCoreApplication::translate("actions", (definition.description.isEmpty() ? definition.text : definition.description).toUtf8().constData()), Qt::DisplayRole);
 		model->setData(index, widget->getActionIdentifier(), Qt::UserRole);
+
+		if (definition.icon.isNull())
+		{
+			model->setData(index, QColor(Qt::transparent), Qt::DecorationRole);
+		}
+		else
+		{
+			model->setData(index, definition.icon, Qt::DecorationRole);
+		}
 	}
 }
 

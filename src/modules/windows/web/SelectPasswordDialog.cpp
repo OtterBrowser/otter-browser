@@ -18,7 +18,6 @@
 **************************************************************************/
 
 #include "SelectPasswordDialog.h"
-#include "../../../ui/ItemDelegate.h"
 
 #include "ui_SelectPasswordDialog.h"
 
@@ -55,7 +54,6 @@ SelectPasswordDialog::SelectPasswordDialog(const QList<PasswordsManager::Passwor
 
 	m_ui->passwordsViewWidget->setModel(model);
 	m_ui->passwordsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
-	m_ui->passwordsViewWidget->setItemDelegate(new ItemDelegate(false, this));
 	m_ui->passwordsViewWidget->header()->setSectionResizeMode(0, QHeaderView::Stretch);
 	m_ui->passwordsViewWidget->selectionModel()->select(m_ui->passwordsViewWidget->getIndex(0, 0), (QItemSelectionModel::Select | QItemSelectionModel::Rows));
 	m_ui->passwordsViewWidget->expandAll();

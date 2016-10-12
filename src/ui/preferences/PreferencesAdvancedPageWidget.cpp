@@ -23,7 +23,6 @@
 #include "JavaScriptPreferencesDialog.h"
 #include "KeyboardProfileDialog.h"
 #include "MouseProfileDialog.h"
-#include "../ItemDelegate.h"
 #include "../OptionDelegate.h"
 #include "../UserAgentsManagerDialog.h"
 #include "../../core/ActionsManager.h"
@@ -92,7 +91,6 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->advancedViewWidget->setModel(navigationModel);
 	m_ui->advancedViewWidget->selectionModel()->select(navigationModel->index(0, 0), QItemSelectionModel::Select);
-	m_ui->advancedViewWidget->setItemDelegate(new ItemDelegate(false, this));
 
 	updatePageSwitcher();
 
@@ -129,7 +127,6 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	}
 
 	m_ui->notificationsItemView->setModel(notificationsModel);
-	m_ui->notificationsItemView->setItemDelegate(new ItemDelegate(false, this));
 	m_ui->preferNativeNotificationsCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Interface_UseNativeNotificationsOption).toBool());
 
 	const QStringList widgetStyles(QStyleFactory::keys());

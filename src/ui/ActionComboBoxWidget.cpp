@@ -37,6 +37,7 @@ ActionComboBoxWidget::ActionComboBoxWidget(QWidget *parent) : QComboBox(parent),
 	setEditable(true);
 	setView(m_view);
 
+	m_view->header()->setStretchLastSection(true);
 	m_view->setHeaderHidden(true);
 
 	lineEdit()->hide();
@@ -48,10 +49,16 @@ ActionComboBoxWidget::ActionComboBoxWidget(QWidget *parent) : QComboBox(parent),
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		QStandardItem *item(new QStandardItem(definitions.at(i).icon, QCoreApplication::translate("actions", (definitions.at(i).description.isEmpty() ? definitions.at(i).text : definitions.at(i).description).toUtf8().constData())));
+		QStandardItem *item(new QStandardItem(QCoreApplication::translate("actions", (definitions.at(i).description.isEmpty() ? definitions.at(i).text : definitions.at(i).description).toUtf8().constData())));
+		item->setData(QColor(Qt::transparent), Qt::DecorationRole);
 		item->setData(definitions.at(i).identifier, Qt::UserRole);
 		item->setToolTip(ActionsManager::getActionName(definitions.at(i).identifier));
 		item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
+
+		if (!definitions.at(i).icon.isNull())
+		{
+			item->setIcon(definitions.at(i).icon);
+		}
 
 		model->appendRow(item);
 	}

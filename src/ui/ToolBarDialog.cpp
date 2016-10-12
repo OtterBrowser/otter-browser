@@ -113,14 +113,20 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 		}
 	}
 
-	const QVector<ActionsManager::ActionDefinition> actions = ActionsManager::getActionDefinitions();
+	const QVector<ActionsManager::ActionDefinition> actions(ActionsManager::getActionDefinitions());
 
 	for (int i = 0; i < actions.count(); ++i)
 	{
-		QStandardItem *item(new QStandardItem(actions.at(i).icon, QCoreApplication::translate("actions", (actions.at(i).description.isEmpty() ? actions.at(i).text : actions.at(i).description).toUtf8().constData())));
+		QStandardItem *item(new QStandardItem(QCoreApplication::translate("actions", (actions.at(i).description.isEmpty() ? actions.at(i).text : actions.at(i).description).toUtf8().constData())));
+		item->setData(QColor(Qt::transparent), Qt::DecorationRole);
 		item->setData(ActionsManager::getActionName(actions.at(i).identifier) + QLatin1String("Action"), Qt::UserRole);
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 		item->setToolTip(item->text());
+
+		if (!actions.at(i).icon.isNull())
+		{
+			item->setIcon(actions.at(i).icon);
+		}
 
 		availableEntriesModel->appendRow(item);
 	}
@@ -358,6 +364,7 @@ void ToolBarDialog::updateActions()
 QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVariantMap &options)
 {
 	QStandardItem *item(new QStandardItem());
+	item->setData(QColor(Qt::transparent), Qt::DecorationRole);
 	item->setData(identifier, Qt::UserRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
@@ -431,7 +438,11 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 			const SearchEnginesManager::SearchEngineDefinition definition(SearchEnginesManager::getSearchEngine(options[QLatin1String("searchEngine")].toString()));
 
 			item->setText(tr("Search Field (%1)").arg(definition.title.isEmpty() ? tr("Unknown") : definition.title));
-			item->setIcon(definition.icon);
+
+			if (!definition.icon.isNull())
+			{
+				item->setIcon(definition.icon);
+			}
 		}
 		else
 		{
@@ -456,8 +467,14 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 
 		if (bookmark)
 		{
+			const QIcon icon(bookmark->data(Qt::DecorationRole).value<QIcon>());
+
 			item->setText(bookmark->data(BookmarksModel::TitleRole).isValid() ? bookmark->data(BookmarksModel::TitleRole).toString() : tr("(Untitled)"));
-			item->setIcon(bookmark->data(Qt::DecorationRole).value<QIcon>());
+
+			if (!icon.isNull())
+			{
+				item->setIcon(icon);
+			}
 		}
 		else
 		{
@@ -477,7 +494,11 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 			const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(actionIdentifier));
 
 			item->setText(QCoreApplication::translate("actions", (definition.description.isEmpty() ? definition.text : definition.description).toUtf8().constData()));
-			item->setIcon(definition.icon);
+
+			if (!definition.icon.isNull())
+			{
+				item->setIcon(definition.icon);
+			}
 		}
 	}
 	else
@@ -492,14 +513,20 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 		if (options.contains(QLatin1String("icon")))
 		{
 			const QString data(options[QLatin1String("icon")].toString());
+			QIcon icon;
 
 			if (data.startsWith(QLatin1String("data:image/")))
 			{
-				item->setIcon(QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8())))));
+				icon = QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8()))));
 			}
 			else
 			{
-				item->setIcon(ThemesManager::getIcon(data));
+				icon = ThemesManager::getIcon(data);
+			}
+
+			if (!icon.isNull())
+			{
+				item->setIcon(icon);
 			}
 		}
 
