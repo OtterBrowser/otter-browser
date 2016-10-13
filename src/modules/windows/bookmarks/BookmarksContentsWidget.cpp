@@ -221,8 +221,11 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 				menu.addAction(getAction(ActionsManager::DeleteAction));
 			}
 
-			menu.addSeparator();
-			menu.addAction(tr("Properties…"), this, SLOT(bookmarkProperties()));
+			if (type != BookmarksModel::SeparatorBookmark)
+			{
+				menu.addSeparator();
+				menu.addAction(tr("Properties…"), this, SLOT(bookmarkProperties()));
+			}
 		}
 
 		connect(bookmarkAllOpenPagesAction, SIGNAL(triggered(bool)), this, SLOT(triggerAction()));
