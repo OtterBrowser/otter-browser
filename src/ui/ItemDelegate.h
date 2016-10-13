@@ -20,12 +20,12 @@
 #ifndef OTTER_ITEMDELEGATE_H
 #define OTTER_ITEMDELEGATE_H
 
-#include <QtWidgets/QItemDelegate>
+#include <QtWidgets/QStyledItemDelegate>
 
 namespace Otter
 {
 
-class ItemDelegate : public QItemDelegate
+class ItemDelegate : public QStyledItemDelegate
 {
 public:
 	explicit ItemDelegate(QObject *parent = NULL);

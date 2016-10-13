@@ -19,21 +19,25 @@
 
 #include "ItemDelegate.h"
 
+#include <QtGui/QPainter>
 #include <QtWidgets/QApplication>
 
 namespace Otter
 {
 
-ItemDelegate::ItemDelegate(QObject *parent) : QItemDelegate(parent)
+ItemDelegate::ItemDelegate(QObject *parent) : QStyledItemDelegate(parent)
 {
 }
 
 void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-	drawBackground(painter, option, index);
-
 	if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("separator"))
 	{
+		if (option.state.testFlag(QStyle::State_Selected))
+		{
+			painter->fillRect(option.rect, option.palette.brush((option.state.testFlag(QStyle::State_Enabled) ? (option.state.testFlag(QStyle::State_Active) ? QPalette::Normal : QPalette::Inactive) : QPalette::Disabled), QPalette::Highlight));
+		}
+
 		QStyleOptionFrame frameOption;
 		frameOption.palette = option.palette;
 		frameOption.rect = option.rect;
@@ -45,33 +49,17 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 		return;
 	}
 
-	QStyleOptionViewItem mutableOption(option);
-
 	if (index.data(Qt::FontRole).isValid())
 	{
+		QStyleOptionViewItem mutableOption(option);
 		mutableOption.font = index.data(Qt::FontRole).value<QFont>();
+
+		QStyledItemDelegate::paint(painter, mutableOption, index);
+
+		return;
 	}
 
-	if (index.data(Qt::DecorationRole).isNull())
-	{
-		drawDisplay(painter, mutableOption, mutableOption.rect, index.data(Qt::DisplayRole).toString());
-	}
-	else
-	{
-		if (!index.data(Qt::DecorationRole).value<QIcon>().isNull())
-		{
-			QRect decorationRectangle(option.rect);
-			decorationRectangle.setRight(option.rect.left() + option.rect.height());
-			decorationRectangle = decorationRectangle.marginsRemoved(QMargins(1, 1, 1, 1));
-
-			index.data(Qt::DecorationRole).value<QIcon>().paint(painter, decorationRectangle);
-		}
-
-		QRect titleRectangle(option.rect);
-		titleRectangle.setLeft(option.rect.left() + option.rect.height());
-
-		drawDisplay(painter, mutableOption, titleRectangle, index.data(Qt::DisplayRole).toString());
-	}
+	QStyledItemDelegate::paint(painter, option, index);
 }
 
 QSize ItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
