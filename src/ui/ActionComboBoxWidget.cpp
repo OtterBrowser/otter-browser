@@ -23,8 +23,8 @@
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QTimer>
-#include <QtGui/QStylePainter>
 #include <QtWidgets/QLineEdit>
+#include <QtWidgets/QStylePainter>
 
 namespace Otter
 {
