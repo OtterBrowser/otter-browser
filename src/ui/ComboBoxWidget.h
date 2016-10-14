@@ -25,12 +25,19 @@
 namespace Otter
 {
 
+class ItemViewWidget;
+
 class ComboBoxWidget : public QComboBox
 {
 	Q_OBJECT
 
 public:
 	explicit ComboBoxWidget(QWidget *parent = NULL);
+
+	ItemViewWidget* getView() const;
+
+private:
+	ItemViewWidget *m_view;
 };
 
 }

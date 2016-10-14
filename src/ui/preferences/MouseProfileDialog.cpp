@@ -18,7 +18,7 @@
 **************************************************************************/
 
 #include "MouseProfileDialog.h"
-#include "ActionDelegate.h"
+#include "../ActionComboBoxWidget.h"
 #include "../../core/ActionsManager.h"
 
 #include "ui_MouseProfileDialog.h"
@@ -26,13 +26,57 @@
 namespace Otter
 {
 
+GestureActionDelegate::GestureActionDelegate(QObject *parent) : ItemDelegate(parent)
+{
+}
+
+void GestureActionDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	Q_UNUSED(option)
+	Q_UNUSED(index)
+
+	editor->setGeometry(option.rect);
+}
+
+void GestureActionDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
+{
+	ActionComboBoxWidget *widget(qobject_cast<ActionComboBoxWidget*>(editor));
+
+	if (widget && widget->getActionIdentifier() >= 0)
+	{
+		const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(widget->getActionIdentifier()));
+
+		model->setData(index, QCoreApplication::translate("actions", (definition.description.isEmpty() ? definition.text : definition.description).toUtf8().constData()), Qt::DisplayRole);
+		model->setData(index, widget->getActionIdentifier(), Qt::UserRole);
+
+		if (definition.icon.isNull())
+		{
+			model->setData(index, QColor(Qt::transparent), Qt::DecorationRole);
+		}
+		else
+		{
+			model->setData(index, definition.icon, Qt::DecorationRole);
+		}
+	}
+}
+
+QWidget* GestureActionDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	Q_UNUSED(option)
+
+	ActionComboBoxWidget *widget(new ActionComboBoxWidget(parent));
+	widget->setActionIdentifier(index.data(Qt::UserRole).toInt());
+
+	return widget;
+}
+
 MouseProfileDialog::MouseProfileDialog(const QString &profile, const QHash<QString, MouseProfile> &profiles, QWidget *parent) : Dialog(parent),
 	m_profile(profile),
 	m_isModified(profiles[profile].isModified),
 	m_ui(new Ui::MouseProfileDialog)
 {
 	m_ui->setupUi(this);
-	m_ui->gesturesViewWidget->setItemDelegateForColumn(1, new ActionDelegate(this));
+	m_ui->gesturesViewWidget->setItemDelegateForColumn(1, new GestureActionDelegate(this));
 
 	QStandardItemModel *gesturesModel(new QStandardItemModel(this));
 	QList<QPair<QString, QString> > contexts({qMakePair(QLatin1String("Generic"), tr("Generic")), qMakePair(QLatin1String("Link"), tr("Link")), qMakePair(QLatin1String("ContentEditable"), tr("Editable Content")), qMakePair(QLatin1String("TabHandle"), tr("Tab Handle")), qMakePair(QLatin1String("ActiveTabHandle"), tr("Tab Handle of Active Tab")), qMakePair(QLatin1String("NoTabHandle"), tr("Empty Area of Tab Bar")), qMakePair(QLatin1String("ToolBar"), tr("Any Toolbar"))});
@@ -122,6 +166,7 @@ void MouseProfileDialog::addGesture()
 	{
 		QList<QStandardItem*> items({new QStandardItem(), new QStandardItem(tr("Select Action"))});
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+		items[1]->setData(QColor(Qt::transparent), Qt::DecorationRole);
 		items[1]->setData(-1, Qt::UserRole);
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren | Qt::ItemIsEditable);
 
@@ -186,17 +231,17 @@ void MouseProfileDialog::updateGesturesActions()
 {
 	disconnect(m_ui->stepsViewWidget->getSourceModel(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(saveGesture()));
 
+	const QModelIndex index(m_ui->gesturesViewWidget->currentIndex().sibling(m_ui->gesturesViewWidget->currentIndex().row(), 0));
+	const bool isGesture(index.flags().testFlag(Qt::ItemNeverHasChildren));
+
+	m_ui->gesturesViewWidget->setCurrentIndex(index.sibling(index.row(), 1));
 	m_ui->stepsViewWidget->getSourceModel()->removeRows(0, m_ui->stepsViewWidget->getSourceModel()->rowCount());
-
-	QStandardItem *item(m_ui->gesturesViewWidget->getSourceModel()->itemFromIndex(m_ui->gesturesViewWidget->currentIndex().sibling(m_ui->gesturesViewWidget->currentIndex().row(), 0)));
-	const bool isGesture(item && item->flags().testFlag(Qt::ItemNeverHasChildren));
-
-	m_ui->addGestureButton->setEnabled(item);
+	m_ui->addGestureButton->setEnabled(index.isValid());
 	m_ui->removeGestureButton->setEnabled(isGesture);
 
 	if (isGesture)
 	{
-		const QStringList steps(item->text().split(QLatin1String(", ")));
+		const QStringList steps(index.data(Qt::DisplayRole).toString().split(QLatin1String(", ")));
 
 		for (int i = 0; i < steps.count(); ++i)
 		{

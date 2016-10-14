@@ -21,6 +21,7 @@
 #define OTTER_MOUSEPROFILEDIALOG_H
 
 #include "../Dialog.h"
+#include "../ItemDelegate.h"
 
 namespace Otter
 {
@@ -41,6 +42,16 @@ struct MouseProfile
 	bool isModified;
 
 	MouseProfile() : isModified(false) {}
+};
+
+class GestureActionDelegate : public ItemDelegate
+{
+public:
+	explicit GestureActionDelegate(QObject *parent);
+
+	void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
+	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 };
 
 class MouseProfileDialog : public Dialog

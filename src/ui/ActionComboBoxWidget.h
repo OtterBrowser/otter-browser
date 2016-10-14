@@ -20,16 +20,17 @@
 #ifndef OTTER_ACTIONCOMBOBOXWIDGET_H
 #define OTTER_ACTIONCOMBOBOXWIDGET_H
 
+#include "ComboBoxWidget.h"
+
 #include <QtCore/QTime>
 #include <QtGui/QMouseEvent>
-#include <QtWidgets/QComboBox>
 
 namespace Otter
 {
 
 class ItemViewWidget;
 
-class ActionComboBoxWidget : public QComboBox
+class ActionComboBoxWidget : public ComboBoxWidget
 {
 	Q_OBJECT
 
@@ -46,7 +47,6 @@ protected:
 	void mouseReleaseEvent(QMouseEvent *event);
 
 private:
-	ItemViewWidget *m_view;
 	QLineEdit *m_filterLineEdit;
 	QTime m_popupHideTime;
 	bool m_wasPopupVisible;

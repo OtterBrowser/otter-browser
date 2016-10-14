@@ -23,13 +23,18 @@
 namespace Otter
 {
 
-ComboBoxWidget::ComboBoxWidget(QWidget *parent) : QComboBox(parent)
+ComboBoxWidget::ComboBoxWidget(QWidget *parent) : QComboBox(parent),
+	m_view(new ItemViewWidget(this))
 {
-	ItemViewWidget *view(new ItemViewWidget(this));
-	view->header()->setStretchLastSection(true);
-	view->header()->hide();
+	m_view->header()->setStretchLastSection(true);
+	m_view->header()->hide();
 
-	setView(view);
+	setView(m_view);
+}
+
+ItemViewWidget* ComboBoxWidget::getView() const
+{
+	return m_view;
 }
 
 }

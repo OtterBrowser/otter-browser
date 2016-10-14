@@ -207,7 +207,6 @@ set(otter_src
 	src/ui/Window.cpp
 	src/ui/WorkspaceWidget.cpp
 	src/ui/preferences/AcceptLanguageDialog.cpp
-	src/ui/preferences/ActionDelegate.cpp
 	src/ui/preferences/ContentBlockingDialog.cpp
 	src/ui/preferences/ContentBlockingIntervalDelegate.cpp
 	src/ui/preferences/CookiesExceptionsDialog.cpp
