@@ -64,15 +64,21 @@ void ItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 QSize ItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+	if (index.data(Qt::SizeHintRole).isValid())
+	{
+		return index.data(Qt::SizeHintRole).toSize();
+	}
+
+	const int height((index.data(Qt::FontRole).isValid() ? QFontMetrics(index.data(Qt::FontRole).value<QFont>()) : option.fontMetrics).height());
 	QSize size(index.data(Qt::SizeHintRole).toSize());
 
-	if (index.data(Qt::FontRole).isValid())
+	if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("separator"))
 	{
-		size.setHeight(QFontMetrics(index.data(Qt::FontRole).value<QFont>()).height() * 1.25);
+		size.setHeight(height * 0.75);
 	}
 	else
 	{
-		size.setHeight(option.fontMetrics.height() * 1.25);
+		size.setHeight(height * 1.25);
 	}
 
 	return size;
