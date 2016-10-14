@@ -21,21 +21,20 @@
 #ifndef OTTER_CONTENTBLOCKINGINTERVALDELEGATE_H
 #define OTTER_CONTENTBLOCKINGINTERVALDELEGATE_H
 
-#include <QtWidgets/QItemDelegate>
+#include "../ItemDelegate.h"
 
 namespace Otter
 {
 
-class ContentBlockingIntervalDelegate : public QItemDelegate
+class ContentBlockingIntervalDelegate : public ItemDelegate
 {
 public:
 	explicit ContentBlockingIntervalDelegate(QObject *parent = NULL);
 
-	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 	void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
 	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+	QString displayText(const QVariant &value, const QLocale &locale) const;
 };
 
 }

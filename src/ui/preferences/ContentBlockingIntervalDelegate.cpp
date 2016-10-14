@@ -26,20 +26,8 @@
 namespace Otter
 {
 
-ContentBlockingIntervalDelegate::ContentBlockingIntervalDelegate(QObject *parent) : QItemDelegate(parent)
+ContentBlockingIntervalDelegate::ContentBlockingIntervalDelegate(QObject *parent) : ItemDelegate(parent)
 {
-}
-
-void ContentBlockingIntervalDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
-{
-	drawBackground(painter, option, index);
-
-	if (index.sibling(index.row(), 0).parent().isValid())
-	{
-		const int updateInterval(index.data(Qt::EditRole).toInt());
-
-		drawDisplay(painter, option, option.rect, ((updateInterval > 0) ? QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", "%n day(s)", "", updateInterval) : QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", "Never")));
-	}
 }
 
 void ContentBlockingIntervalDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -52,11 +40,11 @@ void ContentBlockingIntervalDelegate::updateEditorGeometry(QWidget *editor, cons
 
 void ContentBlockingIntervalDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-	QSpinBox *spinBox(qobject_cast<QSpinBox*>(editor));
+	QSpinBox *widget(qobject_cast<QSpinBox*>(editor));
 
-	if (spinBox)
+	if (widget)
 	{
-		model->setData(index, spinBox->value());
+		model->setData(index, widget->value(), Qt::DisplayRole);
 	}
 }
 
@@ -64,22 +52,28 @@ QWidget* ContentBlockingIntervalDelegate::createEditor(QWidget *parent, const QS
 {
 	Q_UNUSED(option)
 
-	QSpinBox *spinBox(new QSpinBox(parent));
-	spinBox->setSuffix(QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", " day(s)"));
-	spinBox->setSpecialValueText(QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", "Never"));
-	spinBox->setMinimum(0);
-	spinBox->setMaximum(365);
-	spinBox->setValue(index.data(Qt::EditRole).toInt());
+	QSpinBox *widget(new QSpinBox(parent));
+	widget->setSuffix(QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", " day(s)"));
+	widget->setSpecialValueText(QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", "Never"));
+	widget->setMinimum(0);
+	widget->setMaximum(365);
+	widget->setValue(index.data(Qt::DisplayRole).toInt());
 
-	return spinBox;
+	return widget;
 }
 
-QSize ContentBlockingIntervalDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+QString ContentBlockingIntervalDelegate::displayText(const QVariant &value, const QLocale &locale) const
 {
-	QSize size(index.data(Qt::SizeHintRole).toSize());
-	size.setHeight(option.fontMetrics.height() * 1.25);
+	Q_UNUSED(locale)
 
-	return size;
+	if (value.isNull())
+	{
+		return QString();
+	}
+
+	const int updateInterval(value.toInt());
+
+	return ((updateInterval > 0) ? QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", "%n day(s)", "", updateInterval) : QCoreApplication::translate("Otter::ContentBlockingIntervalDelegate", "Never"));
 }
 
 }
