@@ -28,7 +28,7 @@
        <item>
         <widget class="Otter::ItemViewWidget" name="searchViewWidget">
          <property name="editTriggers">
-          <set>QAbstractItemView::SelectedClicked</set>
+          <set>QAbstractItemView::CurrentChanged</set>
          </property>
          <property name="dragEnabled">
           <bool>true</bool>

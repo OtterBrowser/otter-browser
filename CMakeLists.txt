@@ -218,7 +218,6 @@ set(otter_src
 	src/ui/preferences/PreferencesGeneralPageWidget.cpp
 	src/ui/preferences/PreferencesPrivacyPageWidget.cpp
 	src/ui/preferences/PreferencesSearchPageWidget.cpp
-	src/ui/preferences/SearchKeywordDelegate.cpp
 	src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp
 	src/modules/importers/html/HtmlBookmarksImporter.cpp
 	src/modules/importers/opera/OperaBookmarksImporter.cpp

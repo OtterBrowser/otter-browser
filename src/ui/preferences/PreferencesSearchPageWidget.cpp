@@ -19,8 +19,6 @@
 **************************************************************************/
 
 #include "PreferencesSearchPageWidget.h"
-#include "SearchKeywordDelegate.h"
-#include "../SearchDelegate.h"
 #include "../SearchEnginePropertiesDialog.h"
 #include "../../core/SessionsManager.h"
 #include "../../core/SettingsManager.h"
@@ -32,11 +30,56 @@
 #include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
+#include <QtGui/QRegularExpressionValidator>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
+
+SearchKeywordDelegate::SearchKeywordDelegate(QObject *parent) : ItemDelegate(parent)
+{
+}
+
+void SearchKeywordDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	Q_UNUSED(option)
+	Q_UNUSED(index)
+
+	editor->setGeometry(option.rect);
+}
+
+void SearchKeywordDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
+{
+	QLineEdit *widget(qobject_cast<QLineEdit*>(editor));
+
+	if (widget)
+	{
+		model->setData(index, widget->text());
+	}
+}
+
+QWidget* SearchKeywordDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	Q_UNUSED(option)
+
+	QStringList keywords;
+
+	for (int i = 0; i < index.model()->rowCount(); ++i)
+	{
+		const QString keyword(index.model()->index(i, 1).data(Qt::DisplayRole).toString());
+
+		if (index.row() != i && !keyword.isEmpty())
+		{
+			keywords.append(keyword);
+		}
+	}
+
+	QLineEdit *widget(new QLineEdit(index.data(Qt::DisplayRole).toString(), parent));
+	widget->setValidator(new QRegularExpressionValidator(QRegularExpression((keywords.isEmpty() ? QString() : QStringLiteral("(?!\\b(%1)\\b)").arg(keywords.join('|'))) + "[a-z0-9]*"), widget));
+
+	return widget;
+}
 
 PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWidget(parent),
 	m_defaultSearchEngine(SettingsManager::getValue(SettingsManager::Search_DefaultSearchEngineOption).toString()),
@@ -356,8 +399,14 @@ void PreferencesSearchPageWidget::removeSearchEngine()
 
 void PreferencesSearchPageWidget::updateSearchActions()
 {
+	const QModelIndex index(m_ui->searchViewWidget->currentIndex());
 	const int currentRow(m_ui->searchViewWidget->getCurrentRow());
 	const bool isSelected(currentRow >= 0 && currentRow < m_ui->searchViewWidget->getRowCount());
+
+	if (index.column() != 1)
+	{
+		m_ui->searchViewWidget->setCurrentIndex(index.sibling(index.row(), 1));
+	}
 
 	m_ui->editSearchButton->setEnabled(isSelected);
 	m_ui->removeSearchButton->setEnabled(isSelected);

@@ -21,6 +21,7 @@
 #ifndef OTTER_PREFERENCESSEARCHPAGEWIDGET_H
 #define OTTER_PREFERENCESSEARCHPAGEWIDGET_H
 
+#include "../ItemDelegate.h"
 #include "../../core/SearchEnginesManager.h"
 
 #include <QtWidgets/QWidget>
@@ -32,6 +33,16 @@ namespace Ui
 {
 	class PreferencesSearchPageWidget;
 }
+
+class SearchKeywordDelegate : public ItemDelegate
+{
+public:
+	explicit SearchKeywordDelegate(QObject *parent);
+
+	void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
+	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+};
 
 class PreferencesSearchPageWidget : public QWidget
 {
