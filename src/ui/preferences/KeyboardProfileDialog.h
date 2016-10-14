@@ -21,6 +21,7 @@
 #define OTTER_KEYBOARDPROFILEDIALOG_H
 
 #include "../Dialog.h"
+#include "../ItemDelegate.h"
 
 #include <QtCore/QModelIndex>
 
@@ -43,6 +44,15 @@ struct KeyboardProfile
 	bool isModified;
 
 	KeyboardProfile() : isModified(false) {}
+};
+
+class KeyboardShortcutDelegate : public ItemDelegate
+{
+public:
+	explicit KeyboardShortcutDelegate(QObject *parent);
+
+	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
+	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 };
 
 class KeyboardProfileDialog : public Dialog

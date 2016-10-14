@@ -212,7 +212,6 @@ set(otter_src
 	src/ui/preferences/CookiesExceptionsDialog.cpp
 	src/ui/preferences/JavaScriptPreferencesDialog.cpp
 	src/ui/preferences/KeyboardProfileDialog.cpp
-	src/ui/preferences/KeyboardShortcutDelegate.cpp
 	src/ui/preferences/MouseProfileDialog.cpp
 	src/ui/preferences/PreferencesAdvancedPageWidget.cpp
 	src/ui/preferences/PreferencesContentPageWidget.cpp

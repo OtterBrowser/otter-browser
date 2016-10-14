@@ -18,15 +18,36 @@
 **************************************************************************/
 
 #include "KeyboardProfileDialog.h"
-#include "KeyboardShortcutDelegate.h"
 #include "../../core/ActionsManager.h"
 
 #include "ui_KeyboardProfileDialog.h"
 
 #include <QtWidgets/QInputDialog>
+#include <QtWidgets/QKeySequenceEdit>
 
 namespace Otter
 {
+
+KeyboardShortcutDelegate::KeyboardShortcutDelegate(QObject *parent) : ItemDelegate(parent)
+{
+}
+
+void KeyboardShortcutDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
+{
+	QKeySequenceEdit *widget(qobject_cast<QKeySequenceEdit*>(editor));
+
+	if (widget)
+	{
+		model->setData(index, widget->keySequence().toString());
+	}
+}
+
+QWidget* KeyboardShortcutDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	Q_UNUSED(option)
+
+	return new QKeySequenceEdit(QKeySequence(index.data().toString()), parent);
+}
 
 KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash<QString, KeyboardProfile> &profiles, QWidget *parent) : Dialog(parent),
 	m_profile(profile),
