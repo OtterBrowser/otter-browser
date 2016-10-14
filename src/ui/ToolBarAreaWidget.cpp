@@ -60,7 +60,12 @@ ToolBarAreaWidget::ToolBarAreaWidget(Qt::ToolBarArea area, MainWindow *parent) :
 	setLayout(m_layout);
 	setAcceptDrops(true);
 
-	const QVector<ToolBarsManager::ToolBarDefinition> toolBarDefinitions(ToolBarsManager::getToolBarDefinitions());
+	QVector<ToolBarsManager::ToolBarDefinition> toolBarDefinitions(ToolBarsManager::getToolBarDefinitions());
+
+	std::sort(toolBarDefinitions.begin(), toolBarDefinitions.end(), [&](const ToolBarsManager::ToolBarDefinition &first, const ToolBarsManager::ToolBarDefinition &second)
+	{
+		return (first.row < second.row);
+	});
 
 	for (int i = 0; i < toolBarDefinitions.count(); ++i)
 	{
@@ -335,13 +340,15 @@ void ToolBarAreaWidget::toolBarAdded(int identifier)
 	}
 	else
 	{
-		m_layout->insertWidget(definition.row, toolBar);
+		m_layout->addWidget(toolBar);
 	}
 
 	if (identifier == ToolBarsManager::TabBar)
 	{
 		m_mainWindow->setTabBar(toolBar->findChild<TabBarWidget*>());
 	}
+
+	updateToolBarsOrder();
 }
 
 void ToolBarAreaWidget::toolBarModified(int identifier)
@@ -359,11 +366,15 @@ void ToolBarAreaWidget::toolBarModified(int identifier)
 				m_layout->removeWidget(toolBar);
 
 				m_mainWindow->moveToolBar(toolBar, definition.location);
+
+				updateToolBarsOrder();
 			}
 			else if (m_layout->indexOf(toolBar) != definition.row)
 			{
 				m_layout->removeWidget(toolBar);
 				m_layout->insertWidget(definition.row, toolBar);
+
+				updateToolBarsOrder();
 			}
 		}
 	}
@@ -424,6 +435,26 @@ void ToolBarAreaWidget::updateDropRow(const QPoint &position)
 		m_dropRow = row;
 
 		update();
+	}
+}
+
+void ToolBarAreaWidget::updateToolBarsOrder()
+{
+	for (int i = 0; i < m_layout->count(); ++i)
+	{
+		ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(m_layout->itemAt(i)->widget()));
+
+		if (toolBar)
+		{
+			ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(toolBar->getIdentifier()));
+
+			if (definition.row != i)
+			{
+				definition.row = i;
+
+				ToolBarsManager::setToolBar(definition);
+			}
+		}
 	}
 }
 

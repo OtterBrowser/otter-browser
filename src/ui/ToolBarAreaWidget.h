@@ -48,6 +48,7 @@ protected:
 	void startToolBarDragging();
 	void endToolBarDragging();
 	void updateDropRow(const QPoint &position);
+	void updateToolBarsOrder();
 	void insertToolBar(ToolBarWidget *toolBar);
 
 protected slots:
