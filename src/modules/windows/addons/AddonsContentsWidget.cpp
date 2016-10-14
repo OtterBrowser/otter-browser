@@ -24,7 +24,6 @@
 #include "../../../core/ThemesManager.h"
 #include "../../../core/UserScript.h"
 #include "../../../core/Utils.h"
-#include "../../../ui/OptionDelegate.h"
 
 #include "ui_AddonsContentsWidget.h"
 
@@ -47,7 +46,6 @@ AddonsContentsWidget::AddonsContentsWidget(Window *window) : ContentsWidget(wind
 	m_ui(new Ui::AddonsContentsWidget)
 {
 	m_ui->setupUi(this);
-	m_ui->addonsViewWidget->setItemDelegate(new OptionDelegate(true, this));
 	m_ui->addonsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->addonsViewWidget->installEventFilter(this);
 	m_ui->filterLineEdit->installEventFilter(this);

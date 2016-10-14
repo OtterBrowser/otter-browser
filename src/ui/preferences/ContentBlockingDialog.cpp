@@ -20,7 +20,6 @@
 
 #include "ContentBlockingDialog.h"
 #include "ContentBlockingIntervalDelegate.h"
-#include "../OptionDelegate.h"
 #include "../../core/Console.h"
 #include "../../core/ContentBlockingManager.h"
 #include "../../core/ContentBlockingProfile.h"
@@ -45,7 +44,6 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 	const QStringList globalProfiles(SettingsManager::getValue(SettingsManager::ContentBlocking_ProfilesOption).toStringList());
 
 	m_ui->profilesViewWidget->setModel(ContentBlockingManager::createModel(this, globalProfiles));
-	m_ui->profilesViewWidget->setItemDelegate(new OptionDelegate(true, this));
 	m_ui->profilesViewWidget->setItemDelegateForColumn(1, new ContentBlockingIntervalDelegate(this));
 	m_ui->profilesViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->profilesViewWidget->header()->setSectionResizeMode(0, QHeaderView::Stretch);
@@ -76,7 +74,6 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 	}
 
 	m_ui->customRulesViewWidget->setModel(customRulesModel);
-	m_ui->customRulesViewWidget->setItemDelegate(new OptionDelegate(true, this));
 	m_ui->enableWildcardsCheckBox->setChecked(SettingsManager::getValue(SettingsManager::ContentBlocking_EnableWildcardsOption).toBool());
 
 	connect(ContentBlockingManager::getInstance(), SIGNAL(profileModified(QString)), this, SLOT(updateProfile(QString)));

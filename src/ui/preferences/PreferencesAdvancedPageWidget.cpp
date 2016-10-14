@@ -23,7 +23,6 @@
 #include "JavaScriptPreferencesDialog.h"
 #include "KeyboardProfileDialog.h"
 #include "MouseProfileDialog.h"
-#include "../OptionDelegate.h"
 #include "../UserAgentsManagerDialog.h"
 #include "../../core/ActionsManager.h"
 #include "../../core/Application.h"
@@ -191,7 +190,6 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->downloadsItemView->setModel(downloadsModel);
 	m_ui->downloadsItemView->sortByColumn(0, Qt::AscendingOrder);
-	m_ui->downloadsItemView->setItemDelegate(new OptionDelegate(true, this));
 	m_ui->downloadsFilePathWidget->setSelectFile(false);
 	m_ui->downloadsApplicationComboBoxWidget->setAlwaysShowDefaultApplication(true);
 
@@ -228,7 +226,6 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	}
 
 	m_ui->proxyExceptionsItemView->setModel(proxyExceptionsModel);
-	m_ui->proxyExceptionsItemView->setItemDelegate(new OptionDelegate(true, this));
 
 	m_ui->proxyModeComboBox->addItem(tr("No proxy"), QLatin1String("noproxy"));
 	m_ui->proxyModeComboBox->addItem(tr("System configuration"), QLatin1String("system"));
@@ -303,7 +300,6 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 		}
 
 		m_ui->ciphersViewWidget->setModel(ciphersModel);
-		m_ui->ciphersViewWidget->setItemDelegate(new OptionDelegate(true, this));
 		m_ui->ciphersAddButton->setEnabled(m_ui->ciphersAddButton->menu()->actions().count() > 0);
 	}
 	else
@@ -339,8 +335,6 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	}
 
 	m_ui->updateChannelsItemView->setModel(updateChannelsModel);
-	m_ui->updateChannelsItemView->setItemDelegate(new OptionDelegate(true, this));
-	m_ui->updateChannelsItemView->setHeaderHidden(true);
 
 	m_ui->autoInstallCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Updates_AutomaticInstallOption).toBool());
 	m_ui->intervalSpinBox->setValue(SettingsManager::getValue(SettingsManager::Updates_CheckIntervalOption).toInt());
@@ -373,7 +367,6 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	}
 
 	m_ui->keyboardViewWidget->setModel(keyboardProfilesModel);
-	m_ui->keyboardViewWidget->setItemDelegate(new OptionDelegate(true, this));
 
 	QMenu *addKeyboardProfileMenu(new QMenu(m_ui->keyboardAddButton));
 	addKeyboardProfileMenu->addAction(tr("New…"));
@@ -410,7 +403,6 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	}
 
 	m_ui->mouseViewWidget->setModel(mouseProfilesModel);
-	m_ui->mouseViewWidget->setItemDelegate(new OptionDelegate(true, this));
 
 	QMenu *addMouseProfileMenu(new QMenu(m_ui->mouseAddButton));
 	addMouseProfileMenu->addAction(tr("New…"));

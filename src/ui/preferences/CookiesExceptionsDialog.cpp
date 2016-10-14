@@ -18,7 +18,6 @@
 **************************************************************************/
 
 #include "CookiesExceptionsDialog.h"
-#include "../OptionDelegate.h"
 
 #include "ui_CookiesExceptionsDialog.h"
 
@@ -41,7 +40,6 @@ CookiesExceptionsDialog::CookiesExceptionsDialog(const QStringList &acceptedHost
 	}
 
 	m_ui->acceptedHostsItemView->setModel(acceptedHostsModel);
-	m_ui->acceptedHostsItemView->setItemDelegate(new OptionDelegate(true, this));
 
 	QStandardItemModel *rejectedHostsModel(new QStandardItemModel(this));
 
@@ -54,7 +52,6 @@ CookiesExceptionsDialog::CookiesExceptionsDialog(const QStringList &acceptedHost
 	}
 
 	m_ui->rejectedHostsItemView->setModel(rejectedHostsModel);
-	m_ui->rejectedHostsItemView->setItemDelegate(new OptionDelegate(true, this));
 
 	updateAcceptedHostsActions();
 	updateRejectedHostsActions();

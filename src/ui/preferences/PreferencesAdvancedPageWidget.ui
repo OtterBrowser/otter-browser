@@ -1249,6 +1249,9 @@
          <property name="selectionMode">
           <enum>QAbstractItemView::NoSelection</enum>
          </property>
+         <property name="headerHidden">
+          <bool>true</bool>
+         </property>
          <property name="isWrapping" stdset="0">
           <bool>false</bool>
          </property>
@@ -1613,15 +1616,15 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>Otter::ItemViewWidget</class>
+   <extends>QTreeView</extends>
+   <header>src/ui/ItemViewWidget.h</header>
+  </customwidget>
+  <customwidget>
    <class>Otter::FilePathWidget</class>
    <extends>QWidget</extends>
    <header>src/ui/FilePathWidget.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Otter::ItemViewWidget</class>
-   <extends>QTreeView</extends>
-   <header>src/ui/ItemViewWidget.h</header>
   </customwidget>
   <customwidget>
    <class>Otter::ApplicationComboBoxWidget</class>
