@@ -42,6 +42,7 @@ public:
 	~ToolBarDialog();
 
 	ToolBarsManager::ToolBarDefinition getDefinition() const;
+	bool eventFilter(QObject *object, QEvent *event);
 
 protected:
 	void changeEvent(QEvent *event);

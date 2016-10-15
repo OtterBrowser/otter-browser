@@ -120,7 +120,7 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 		QStandardItem *item(new QStandardItem(QCoreApplication::translate("actions", (actions.at(i).description.isEmpty() ? actions.at(i).text : actions.at(i).description).toUtf8().constData())));
 		item->setData(QColor(Qt::transparent), Qt::DecorationRole);
 		item->setData(ActionsManager::getActionName(actions.at(i).identifier) + QLatin1String("Action"), Qt::UserRole);
-		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 		item->setToolTip(item->text());
 
 		if (!actions.at(i).icon.isNull())
@@ -132,7 +132,7 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 	}
 
 	m_ui->availableEntriesItemView->setModel(availableEntriesModel);
-	m_ui->availableEntriesItemView->viewport()->setAcceptDrops(false);
+	m_ui->availableEntriesItemView->viewport()->installEventFilter(this);
 	m_ui->currentEntriesItemView->setModel(new QStandardItemModel(this));
 	m_ui->currentEntriesItemView->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->currentEntriesItemView->setRootIsDecorated(false);
@@ -585,6 +585,18 @@ ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition() const
 	}
 
 	return definition;
+}
+
+bool ToolBarDialog::eventFilter(QObject *object, QEvent *event)
+{
+	if (object == m_ui->availableEntriesItemView->viewport() && event->type() == QEvent::Drop)
+	{
+		event->accept();
+
+		return true;
+	}
+
+	return Dialog::eventFilter(object, event);;
 }
 
 }
