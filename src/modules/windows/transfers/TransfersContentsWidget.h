@@ -22,6 +22,7 @@
 
 #include "../../../core/TransfersManager.h"
 #include "../../../ui/ContentsWidget.h"
+#include "../../../ui/ItemDelegate.h"
 
 #include <QtGui/QStandardItemModel>
 
@@ -34,6 +35,14 @@ namespace Ui
 }
 
 class Window;
+
+class ProgressBarDelegate : public ItemDelegate
+{
+public:
+	explicit ProgressBarDelegate(QObject *parent);
+
+	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+};
 
 class TransfersContentsWidget : public ContentsWidget
 {

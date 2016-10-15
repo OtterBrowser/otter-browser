@@ -18,7 +18,6 @@
 **************************************************************************/
 
 #include "TransfersContentsWidget.h"
-#include "ProgressBarDelegate.h"
 #include "../../../core/ActionsManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/TransfersManager.h"
@@ -38,6 +37,27 @@
 
 namespace Otter
 {
+
+ProgressBarDelegate::ProgressBarDelegate(QObject *parent) : ItemDelegate(parent)
+{
+}
+
+void ProgressBarDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	QStyleOptionProgressBar progressBarOption;
+	progressBarOption.fontMetrics = option.fontMetrics;
+	progressBarOption.palette = option.palette;
+	progressBarOption.rect = option.rect;
+	progressBarOption.state = option.state;
+	progressBarOption.minimum = 0;
+	progressBarOption.maximum = 100;
+	progressBarOption.textAlignment = Qt::AlignCenter;
+	progressBarOption.textVisible = true;
+	progressBarOption.progress = index.data(Qt::DisplayRole).toInt();
+	progressBarOption.text = QStringLiteral("%1%").arg(progressBarOption.progress);
+
+	QApplication::style()->drawControl(QStyle::CE_ProgressBar, &progressBarOption, painter, 0);
+}
 
 TransfersContentsWidget::TransfersContentsWidget(Window *window) : ContentsWidget(window),
 	m_model(new QStandardItemModel(this)),

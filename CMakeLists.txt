@@ -243,7 +243,6 @@ set(otter_src
 	src/modules/windows/history/HistoryContentsWidget.cpp
 	src/modules/windows/notes/NotesContentsWidget.cpp
 	src/modules/windows/passwords/PasswordsContentsWidget.cpp
-	src/modules/windows/transfers/ProgressBarDelegate.cpp
 	src/modules/windows/transfers/TransfersContentsWidget.cpp
 	src/modules/windows/web/PasswordBarWidget.cpp
 	src/modules/windows/web/PermissionBarWidget.cpp
