@@ -20,23 +20,23 @@
 #ifndef OTTER_OPTIONDELEGATE_H
 #define OTTER_OPTIONDELEGATE_H
 
+#include "ItemDelegate.h"
 #include "OptionWidget.h"
-
-#include <QtWidgets/QItemDelegate>
 
 namespace Otter
 {
 
-class OptionDelegate : public QItemDelegate
+class OptionDelegate : public ItemDelegate
 {
 public:
 	explicit OptionDelegate(bool isSimple, QObject *parent);
 
-	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 	void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
 	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+
+protected:
+	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const;
 
 private:
 	bool m_isSimple;
