@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -56,7 +56,7 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 			painter->drawLine((option.rect.left() + 5), (option.rect.top() + 3), (option.rect.right() - 5), (option.rect.top() + 3));
 		}
 
-		drawDisplay(painter, option, titleRectangle, index.data(Qt::UserRole + 1).toString());
+		drawDisplay(painter, option, titleRectangle, index.data(AddressCompletionModel::TitleRole).toString());
 
 		return;
 	}
