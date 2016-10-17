@@ -125,7 +125,7 @@ void NetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError
 		return;
 	}
 
-	if (QMessageBox::warning(SessionsManager::getActiveWindow(), tr("Warning"), tr("SSL errors occured:\n\n%1\n\nDo you want to continue?").arg(messages.join(QLatin1Char('\n'))), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::Yes)
+	if (QMessageBox::warning(SessionsManager::getActiveWindow(), tr("Warning"), tr("SSL errors occurred:\n\n%1\n\nDo you want to continue?").arg(messages.join(QLatin1Char('\n'))), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::Yes)
 	{
 		reply->ignoreSslErrors(errors);
 	}

@@ -43,7 +43,7 @@
 -- suggest bookmarks by URL and keyword;
 -- suggest URLs from history;
 -- suggest searching for given string using default search engine;
--- allow to use popup with list of suggestions;
+-- allow one to use popup with list of suggestions;
 - added new extremely flexible mouse gestures system;
 - added icons for badge in address field;
 - added FTP listing support to QtWebKit backend;
@@ -63,7 +63,7 @@
 - added dialog allowing to decide what to do with downloaded file;
 - MDI actions are now enabled by default;
 - multiple fixes and improvements for MacOS X;
-- allow to specify default arguments using arguments.txt;
+- allow one to specify default arguments using arguments.txt;
 - various minor fixes and improvements.
 
 0.9.06 (2015-06-01):
@@ -98,10 +98,10 @@
 0.9.04 (2015-01-01):
 - added support for mouse gestures;
 - added initial support for customizing toolbars;
-- allow to load plugins on demand;
+- allow one to load plugins on demand;
 - more actions (over 150 in total);
 - added Go to Page dialog (F2);
-- allow to customize menu button (JSON file);
+- allow one to customize menu button (JSON file);
 - lots of other fixes and improvements.
 
 0.9.03 (2014-11-01):
@@ -112,7 +112,7 @@
 - added Ctrl+Tab tabs switching;
 - added option to set user style sheet;
 - added tray icon;
-- allow to customize menu bar (JSON file);
+- allow one to customize menu bar (JSON file);
 - various minor fixes and improvements.
 
 0.9.02 (2014-08-01):
@@ -120,7 +120,7 @@
 - added Opera and HTML (Netscape) bookmarks import;
 - added rocker navigation;
 - added more keyboard shortcuts;
-- allow to stop page loading by pressing Esc;
+- allow one to stop page loading by pressing Esc;
 - no need for manual tweaking to get working binary for Windows XP (requires Qt 5.3);
 - translation related improvements;
 - some other fixes and minor improvements.
@@ -130,9 +130,9 @@
 - added error console;
 - added support for additional attributes for bookmarks;
 - added support for bookmark keyword;
-- allow to load translations (18 languages available);
-- allow to configure SSL ciphers priorities;
-- allow to compile using Qt stack available in Ubuntu (outdated QtWebKit);
+- allow one to load translations (18 languages available);
+- allow one to configure SSL ciphers priorities;
+- allow one to compile using Qt stack available in Ubuntu (outdated QtWebKit);
 - various minor fixes and improvements.
 
 0.5.01 (2014-05-01):

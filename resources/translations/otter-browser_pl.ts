@@ -811,7 +811,7 @@ Czy pomimo tego jesteś pewien, że chcesz przywrócić tę sesję?</translation
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
-        <source>Allow to duplicate already existing bookmarks</source>
+        <source>Allow one to duplicate already existing bookmarks</source>
         <translation>Pozwól na powielanie już istniejących zakładek</translation>
     </message>
     <message>
@@ -2252,22 +2252,22 @@ Wykładnik: %2</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="63"/>
-        <source>Allow to disable context menu</source>
+        <source>Allow one to disable context menu</source>
         <translation>Pozwól na wyłączanie menu kontekstowego</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="70"/>
-        <source>Allow to open windows</source>
+        <source>Allow one to open windows</source>
         <translation>Pozwól na zamykanie okien</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="79"/>
-        <source>Allow to close windows:</source>
+        <source>Allow one to close windows:</source>
         <translation>Pozwól na zamykanie okien:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="95"/>
-        <source>Allow to enter full screen mode:</source>
+        <source>Allow one to enter full screen mode:</source>
         <translation>Pozwól na przechodzenie do trybu pełnoekranowego:</translation>
     </message>
     <message>
@@ -2676,7 +2676,7 @@ Czy chcesz kontynuować?</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManager.cpp" line="128"/>
-        <source>SSL errors occured:
+        <source>SSL errors occurred:
 
 %1
 
@@ -4437,7 +4437,7 @@ Czy chcesz kontynuować?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="353"/>
-        <source>SSL errors occured, do you want to continue?</source>
+        <source>SSL errors occurred, do you want to continue?</source>
         <translation>Wystąpiły błędy SSL, czy chcesz kontynuować?</translation>
     </message>
     <message>
@@ -4579,7 +4579,7 @@ Czy chcesz kontynuować?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="702"/>
-        <source>Webpage wants to close this tab, do you want to allow to close it?</source>
+        <source>Webpage wants to close this tab, do you want to allow one to close it?</source>
         <translation>Strona chce zamknąć tę kartę. Czy pozwalasz na to?</translation>
     </message>
     <message>
@@ -6748,7 +6748,7 @@ Kliknij przycisk &quot;Zainstaluj&quot;, aby uruchomić ponownie przeglądarkę 
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="461"/>
-        <source>Allow to disable context menu</source>
+        <source>Allow one to disable context menu</source>
         <translation>Pozwól na wyłączanie menu kontekstowego</translation>
     </message>
     <message>
@@ -6758,7 +6758,7 @@ Kliknij przycisk &quot;Zainstaluj&quot;, aby uruchomić ponownie przeglądarkę 
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="502"/>
-        <source>Allow to close windows:</source>
+        <source>Allow one to close windows:</source>
         <translation>Pozwól na zamykanie okien:</translation>
     </message>
     <message>
@@ -6778,7 +6778,7 @@ Kliknij przycisk &quot;Zainstaluj&quot;, aby uruchomić ponownie przeglądarkę 
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="588"/>
-        <source>Allow to open windows</source>
+        <source>Allow one to open windows</source>
         <translation>Pozwól na zamykanie okien</translation>
     </message>
     <message>
@@ -6788,7 +6788,7 @@ Kliknij przycisk &quot;Zainstaluj&quot;, aby uruchomić ponownie przeglądarkę 
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="618"/>
-        <source>Allow to enter full screen mode:</source>
+        <source>Allow one to enter full screen mode:</source>
         <translation>Pozwól na przechodzenie do trybu pełnoekranowego:</translation>
     </message>
     <message>
