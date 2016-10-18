@@ -18,7 +18,6 @@
 **************************************************************************/
 
 #include "TabSwitcherWidget.h"
-#include "AddressDelegate.h"
 #include "Window.h"
 #include "../core/ThemesManager.h"
 #include "../core/WindowsManager.h"
@@ -35,7 +34,7 @@ TabSwitcherWidget::TabSwitcherWidget(WindowsManager *manager, QWidget *parent) :
 	m_windowsManager(manager),
 	m_model(new QStandardItemModel(this)),
 	m_frame(new QFrame(this)),
-	m_tabsView(new QListView(m_frame)),
+	m_tabsView(new ItemViewWidget(m_frame)),
 	m_previewLabel(new QLabel(m_frame)),
 	m_loadingMovie(NULL),
 	m_reason(KeyboardReason)
@@ -50,6 +49,8 @@ TabSwitcherWidget::TabSwitcherWidget(WindowsManager *manager, QWidget *parent) :
 	frameLayout->addWidget(m_tabsView, 1);
 	frameLayout->addWidget(m_previewLabel, 0, Qt::AlignCenter);
 
+	m_model->setSortRole(Qt::UserRole);
+
 	m_frame->setLayout(frameLayout);
 	m_frame->setAutoFillBackground(true);
 	m_frame->setMinimumWidth(600);
@@ -57,11 +58,9 @@ TabSwitcherWidget::TabSwitcherWidget(WindowsManager *manager, QWidget *parent) :
 	m_frame->setStyleSheet(QStringLiteral("#tabSwitcher {background:%1;border:1px solid #B3B3B3;border-radius:4px;}").arg(palette().color(QPalette::Base).name()));
 
 	m_tabsView->setModel(m_model);
-	m_tabsView->setItemDelegate(new AddressDelegate(false, m_tabsView));
-	m_tabsView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-	m_tabsView->setGridSize(QSize(200, 22));
-	m_tabsView->setIconSize(QSize(22, 22));
 	m_tabsView->setStyleSheet(QLatin1String("border:0;"));
+	m_tabsView->header()->hide();
+	m_tabsView->header()->setStretchLastSection(true);
 	m_tabsView->viewport()->installEventFilter(this);
 
 	m_previewLabel->setFixedSize(260, 170);
@@ -85,7 +84,7 @@ void TabSwitcherWidget::showEvent(QShowEvent *event)
 		}
 	}
 
-	m_model->sort(1, Qt::DescendingOrder);
+	m_model->sort(0, Qt::DescendingOrder);
 
 	m_tabsView->setCurrentIndex(m_model->index(0, 0));
 
@@ -244,17 +243,16 @@ void TabSwitcherWidget::setIcon(const QIcon &icon)
 	}
 }
 
-QList<QStandardItem*> TabSwitcherWidget::createRow(Window *window) const
+QStandardItem* TabSwitcherWidget::createRow(Window *window) const
 {
-	QList<QStandardItem*> items({new QStandardItem(window->getIcon(), window->getTitle()), new QStandardItem(QString::number(window->getLastActivity().toMSecsSinceEpoch()))});
-	items[0]->setData(window->getIdentifier(), Qt::UserRole);
-	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+	QStandardItem* item(new QStandardItem(window->getIcon(), window->getTitle()));
+	item->setData(window->getIdentifier(), Qt::UserRole);
+	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
 	connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
 
-	return items;
+	return item;
 }
 
 TabSwitcherWidget::SwitcherReason TabSwitcherWidget::getReason() const
