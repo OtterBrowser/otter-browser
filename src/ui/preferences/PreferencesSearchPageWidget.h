@@ -55,6 +55,7 @@ public:
 protected:
 	void changeEvent(QEvent *event);
 	void updateReaddSearchMenu();
+	QList<QStandardItem*> createRow(const SearchEnginesManager::SearchEngineDefinition &searchEngine) const;
 
 protected slots:
 	void addSearchEngine();

@@ -103,19 +103,7 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 
 		m_searchEngines[searchEngine.identifier] = qMakePair(false, searchEngine);
 
-		QList<QStandardItem*> items({new QStandardItem(searchEngine.title), new QStandardItem(searchEngine.keyword)});
-		items[0]->setData(QColor(Qt::transparent), Qt::DecorationRole);
-		items[0]->setData(searchEngine.identifier, Qt::UserRole);
-		items[0]->setToolTip(searchEngine.description);
-		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
-		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
-
-		if (!searchEngine.icon.isNull())
-		{
-			items[0]->setIcon(searchEngine.icon);
-		}
-
-		searchEnginesModel->appendRow(items);
+		searchEnginesModel->appendRow(createRow(searchEngine));
 	}
 
 	m_ui->searchViewWidget->setModel(searchEnginesModel);
@@ -205,19 +193,7 @@ void PreferencesSearchPageWidget::addSearchEngine()
 		m_defaultSearchEngine = identifier;
 	}
 
-	QList<QStandardItem*> items({new QStandardItem(searchEngine.title), new QStandardItem(searchEngine.keyword)});
-	items[0]->setData(QColor(Qt::transparent), Qt::DecorationRole);
-	items[0]->setData(identifier, Qt::UserRole);
-	items[0]->setToolTip(searchEngine.description);
-	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
-	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
-
-	if (!searchEngine.icon.isNull())
-	{
-		items[0]->setIcon(searchEngine.icon);
-	}
-
-	m_ui->searchViewWidget->insertRow(items);
+	m_ui->searchViewWidget->insertRow(createRow(searchEngine));
 
 	emit settingsModified();
 }
@@ -279,19 +255,7 @@ void PreferencesSearchPageWidget::readdSearchEngine(QAction *action)
 
 	m_searchEngines[identifier] = qMakePair(false, searchEngine);
 
-	QList<QStandardItem*> items({new QStandardItem(searchEngine.icon, searchEngine.title), new QStandardItem(searchEngine.keyword)});
-	items[0]->setData(QColor(Qt::transparent), Qt::DecorationRole);
-	items[0]->setData(identifier, Qt::UserRole);
-	items[0]->setToolTip(searchEngine.description);
-	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
-	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
-
-	if (!searchEngine.icon.isNull())
-	{
-		items[0]->setIcon(searchEngine.icon);
-	}
-
-	m_ui->searchViewWidget->insertRow(items);
+	m_ui->searchViewWidget->insertRow(createRow(searchEngine));
 
 	updateReaddSearchMenu();
 
@@ -508,6 +472,23 @@ void PreferencesSearchPageWidget::save()
 	SettingsManager::setValue(SettingsManager::Search_SearchEnginesSuggestionsOption, m_ui->searchSuggestionsCheckBox->isChecked());
 
 	updateReaddSearchMenu();
+}
+
+QList<QStandardItem*> PreferencesSearchPageWidget::createRow(const SearchEnginesManager::SearchEngineDefinition &searchEngine) const
+{
+	QList<QStandardItem*> items({new QStandardItem(searchEngine.icon, searchEngine.title), new QStandardItem(searchEngine.keyword)});
+	items[0]->setData(QColor(Qt::transparent), Qt::DecorationRole);
+	items[0]->setData(searchEngine.identifier, Qt::UserRole);
+	items[0]->setToolTip(searchEngine.description);
+	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
+	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
+
+	if (!searchEngine.icon.isNull())
+	{
+		items[0]->setIcon(searchEngine.icon);
+	}
+
+	return items;
 }
 
 }
