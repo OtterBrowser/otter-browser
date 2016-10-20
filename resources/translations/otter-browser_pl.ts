@@ -2976,7 +2976,7 @@ Czy chcesz kontynuować?</translation>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="85"/>
         <source>Set #%1</source>
-        <translation>Ustaw #%1</translation>
+        <translation>Zestaw #%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="167"/>

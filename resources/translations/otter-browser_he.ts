@@ -1531,12 +1531,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="157"/>
         <source>Enable custom rules</source>
-        <translation type="unfinished"/>
+        <translation>אפשר כללים מותאמים</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="165"/>
         <source>Custom Rules</source>
-        <translation type="unfinished"/>
+        <translation>כללים מותאמים</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="239"/>
@@ -1546,7 +1546,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="239"/>
         <source>Failed to create a file with custom rules!</source>
-        <translation type="unfinished"/>
+        <translation>נכשל ליצור קובץ עם כללים מותאמים!</translation>
     </message>
 </context>
 <context>
@@ -1857,7 +1857,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="261"/>
         <source>Encrypted File</source>
-        <translation type="unfinished"/>
+        <translation>קובץ מוצפן</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="266"/>
@@ -2957,17 +2957,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>חפש…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="72"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>שם</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="72"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>ערך</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="85"/>
@@ -2979,30 +2979,30 @@ Do you want to continue?</source>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="223"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="242"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>שאלה</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="168"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="224"/>
         <source>You are about to delete %n password(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>אתה עומד למחוק סיסמה %n.</numerusform><numerusform>אתה עומד למחוק %n סיסמאות.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="169"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="225"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="244"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>האם ברצונך להמשיך?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="243"/>
         <source>You are about to delete all passwords.</source>
-        <translation type="unfinished"/>
+        <translation>אתה עומד למחוק את כל הסיסמאות.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="264"/>
         <source>Remove Password</source>
-        <translation type="unfinished"/>
+        <translation>הסר סיסמה</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="267"/>
@@ -3012,12 +3012,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="270"/>
         <source>Remove All Passwords…</source>
-        <translation type="unfinished"/>
+        <translation>הסר את כל הסיסמאות…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="341"/>
         <source>Passwords Manager</source>
-        <translation type="unfinished"/>
+        <translation>מנהל סיסמאות</translation>
     </message>
 </context>
 <context>
@@ -4902,17 +4902,17 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="41"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>הסר</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="39"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>שם</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="39"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>ערך</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="43"/>
@@ -4922,7 +4922,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="86"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>שאלה</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="86"/>
@@ -6885,7 +6885,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="1016"/>
         <source>Enable custom rules</source>
-        <translation type="unfinished"/>
+        <translation>אפשר כללים מותאמים</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="62"/>
@@ -7721,7 +7721,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="405"/>
         <source>Log In</source>
-        <translation type="unfinished"/>
+        <translation>התחבר</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="406"/>
@@ -8228,7 +8228,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="506"/>
         <source>Passwords</source>
-        <translation type="unfinished"/>
+        <translation>סיסמאות</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="507"/>
@@ -8525,7 +8525,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="88"/>
         <source>Passwords Manager</source>
-        <translation type="unfinished"/>
+        <translation>מנהל סיסמאות</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="89"/>

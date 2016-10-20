@@ -1055,17 +1055,17 @@ Biztosan ezt a munkamenetet akarja visszaállítani?</translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
         <source>DER encoded X.509 certificates (*.der)</source>
-        <translation type="unfinished"/>
+        <translation>DER kódolt X.509 tanúsítványok (*.der)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
         <source>PEM encoded X.509 certificates (*.pem)</source>
-        <translation type="unfinished"/>
+        <translation>PEM kódolt X.509 tanúsítványok (*.pem)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
         <source>Text files (*.txt)</source>
-        <translation type="unfinished"/>
+        <translation>Szöveges fájlok (*.txt)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="122"/>
@@ -1427,7 +1427,7 @@ Exponent: %2</translation>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="92"/>
         <source>CSS</source>
-        <translation type="unfinished"/>
+        <translation>CSS</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="108"/>
@@ -1482,17 +1482,17 @@ Exponent: %2</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="24"/>
         <source>General</source>
-        <translation type="unfinished"/>
+        <translation>Általános</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="36"/>
         <source>Profiles</source>
-        <translation type="unfinished"/>
+        <translation>Profilok</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="43"/>
         <source>Select lists which you want to use for content blocking (AdBlock Plus compatible):</source>
-        <translation type="unfinished"/>
+        <translation>Válassza ki a listákat amiket használni akar a tartalom blokkoláshoz (AdBlock Plus kompatibilis):</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="73"/>
@@ -1520,37 +1520,37 @@ Exponent: %2</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="133"/>
         <source>Settings</source>
-        <translation type="unfinished"/>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="143"/>
         <source>Enable cosmetic filters</source>
-        <translation type="unfinished"/>
+        <translation>Testreszabott szűrők engedélyezése</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="150"/>
         <source>Enable wildcard expressions</source>
-        <translation type="unfinished"/>
+        <translation>Helyettesítő kifejezések engedélyezése</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="157"/>
         <source>Enable custom rules</source>
-        <translation type="unfinished"/>
+        <translation>Egyéni szabályok engedélyezése</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="165"/>
         <source>Custom Rules</source>
-        <translation type="unfinished"/>
+        <translation>Egyéni szabályok</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="239"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="239"/>
         <source>Failed to create a file with custom rules!</source>
-        <translation type="unfinished"/>
+        <translation>Nem sikerült létrehozni egy fájlt az egyéni szabályokkal!</translation>
     </message>
 </context>
 <context>
@@ -1645,47 +1645,47 @@ Exponent: %2</translation>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="136"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Név</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="136"/>
         <source>Update Interval</source>
-        <translation type="unfinished"/>
+        <translation>Frissítés gyakorisága</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="136"/>
         <source>Last Update</source>
-        <translation type="unfinished"/>
+        <translation>Utolsó frissítés</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="180"/>
         <source>Advertisements</source>
-        <translation type="unfinished"/>
+        <translation>Reklámok</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="180"/>
         <source>Annoyance</source>
-        <translation type="unfinished"/>
+        <translation>Zavaró tartalmak</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="180"/>
         <source>Privacy</source>
-        <translation type="unfinished"/>
+        <translation>Adatvédelem</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="180"/>
         <source>Social</source>
-        <translation type="unfinished"/>
+        <translation>Szociális</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="180"/>
         <source>Regional</source>
-        <translation type="unfinished"/>
+        <translation>Területi</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="180"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>Egyéb</translation>
     </message>
 </context>
 <context>
@@ -1846,27 +1846,27 @@ Exponent: %2</translation>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="45"/>
         <source>Failed to open passwords file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nem sikerült megnyitni a jelszavakat tartalmazó fájlt: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="99"/>
         <source>Failed to save passwords file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nem sikerült menteni a jelszavakat tartalmazó fájlt: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="176"/>
         <source>Failed to remove passwords file</source>
-        <translation type="unfinished"/>
+        <translation>Nem sikerült eltávolítani a jelszavakat tartalmazó fájlt</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="261"/>
         <source>Encrypted File</source>
-        <translation type="unfinished"/>
+        <translation>Titkosított fájl</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="266"/>
         <source>Stores passwords in AES encrypted file.</source>
-        <translation type="unfinished"/>
+        <translation>Jelszó tárolása AES titkosított fájlban</translation>
     </message>
 </context>
 <context>
@@ -2415,7 +2415,7 @@ Exponent: %2</translation>
     <message>
         <location filename="../../src/ui/LocaleDialog.cpp" line="72"/>
         <source>Translation files (*.qm)</source>
-        <translation type="unfinished"/>
+        <translation>Fordítás fájlok (*.qm)</translation>
     </message>
 </context>
 <context>
@@ -2654,17 +2654,17 @@ Biztos újra el akarja menteni?</translation>
         <location filename="../../src/modules/widgets/action/NavigationActionWidget.cpp" line="58"/>
         <location filename="../../src/modules/widgets/action/NavigationActionWidget.cpp" line="162"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Névtelen)</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/action/NavigationActionWidget.cpp" line="191"/>
         <source>Remove Entry</source>
-        <translation type="unfinished"/>
+        <translation>Bejegyzés eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/action/NavigationActionWidget.cpp" line="192"/>
         <source>Purge Entry</source>
-        <translation type="unfinished"/>
+        <translation>Bejegyzés törlése</translation>
     </message>
 </context>
 <context>
@@ -2953,7 +2953,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="35"/>
         <source>Do you want to update login data for %1?</source>
-        <translation type="unfinished"/>
+        <translation>Frissíti a bejelentkezési adatait ennek: %1?</translation>
     </message>
 </context>
 <context>
@@ -2961,67 +2961,67 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Keresés...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="72"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Név</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="72"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Érték</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="85"/>
         <source>Set #%1</source>
-        <translation type="unfinished"/>
+        <translation>Beállítás #%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="167"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="223"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="242"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Kérdés</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="168"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="224"/>
         <source>You are about to delete %n password(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Le fog törölni %n darab jelszót.</numerusform><numerusform>Le fog törölni %n darab jelszót.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="169"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="225"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="244"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Biztosan folytatja?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="243"/>
         <source>You are about to delete all passwords.</source>
-        <translation type="unfinished"/>
+        <translation>Az összes jelszót törölni fogja.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="264"/>
         <source>Remove Password</source>
-        <translation type="unfinished"/>
+        <translation>Jelszó eltávolítása</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="267"/>
         <source>Remove All Passwords from This Domain…</source>
-        <translation type="unfinished"/>
+        <translation>A domain összes jelszavának az eltávolítása...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="270"/>
         <source>Remove All Passwords…</source>
-        <translation type="unfinished"/>
+        <translation>Az összes jelszó törlése...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="341"/>
         <source>Passwords Manager</source>
-        <translation type="unfinished"/>
+        <translation>Jelszó kezelő</translation>
     </message>
 </context>
 <context>
@@ -3183,7 +3183,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="88"/>
         <source>Local paths</source>
-        <translation type="unfinished"/>
+        <translation>Helyi útvonalak</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="103"/>
@@ -3591,7 +3591,7 @@ Biztosan folytatja?</translation>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="146"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="167"/>
         <source>Style sheets (*.css)</source>
-        <translation type="unfinished"/>
+        <translation>Lap stílusok (*.css)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="149"/>
@@ -3674,7 +3674,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="266"/>
         <source>Proxy configuration files (*.pac)</source>
-        <translation type="unfinished"/>
+        <translation>Proxy beállítás fájlok (*.pac)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="324"/>
@@ -4532,7 +4532,7 @@ Biztosan folytatja?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="214"/>
         <source>WebKit Backend (legacy)</source>
-        <translation type="unfinished"/>
+        <translation>Webkit Backend (legacy)</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="216"/>

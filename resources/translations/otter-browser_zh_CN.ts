@@ -1055,17 +1055,17 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
         <source>DER encoded X.509 certificates (*.der)</source>
-        <translation type="unfinished"/>
+        <translation>DER 编码的 X.509 证书 (*.der)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
         <source>PEM encoded X.509 certificates (*.pem)</source>
-        <translation type="unfinished"/>
+        <translation>PEM 编码的 X.509 证书 (*.pem)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
         <source>Text files (*.txt)</source>
-        <translation type="unfinished"/>
+        <translation>文本文件 (*.txt)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="122"/>
@@ -1427,7 +1427,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="92"/>
         <source>CSS</source>
-        <translation type="unfinished"/>
+        <translation>CSS</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="108"/>
@@ -1482,17 +1482,17 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="24"/>
         <source>General</source>
-        <translation type="unfinished"/>
+        <translation>常规</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="36"/>
         <source>Profiles</source>
-        <translation type="unfinished"/>
+        <translation>配置档案</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="43"/>
         <source>Select lists which you want to use for content blocking (AdBlock Plus compatible):</source>
-        <translation type="unfinished"/>
+        <translation>选择您希望用于进行内容拦截的列表（兼容 AdBlock Plus）：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="73"/>
@@ -1520,37 +1520,37 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="133"/>
         <source>Settings</source>
-        <translation type="unfinished"/>
+        <translation>设置</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="143"/>
         <source>Enable cosmetic filters</source>
-        <translation type="unfinished"/>
+        <translation>启用外观滤镜</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="150"/>
         <source>Enable wildcard expressions</source>
-        <translation type="unfinished"/>
+        <translation>启用通配表达式</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="157"/>
         <source>Enable custom rules</source>
-        <translation type="unfinished"/>
+        <translation>启用自定义规则</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="165"/>
         <source>Custom Rules</source>
-        <translation type="unfinished"/>
+        <translation>自定义规则</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="239"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>错误</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="239"/>
         <source>Failed to create a file with custom rules!</source>
-        <translation type="unfinished"/>
+        <translation>无法创建自定义规则文件！</translation>
     </message>
 </context>
 <context>
@@ -1645,47 +1645,47 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="136"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>标题</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="136"/>
         <source>Update Interval</source>
-        <translation type="unfinished"/>
+        <translation>更新间隔</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="136"/>
         <source>Last Update</source>
-        <translation type="unfinished"/>
+        <translation>最近更新</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="180"/>
         <source>Advertisements</source>
-        <translation type="unfinished"/>
+        <translation>广告</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="180"/>
         <source>Annoyance</source>
-        <translation type="unfinished"/>
+        <translation>恼人的内容</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="180"/>
         <source>Privacy</source>
-        <translation type="unfinished"/>
+        <translation>隐私</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="180"/>
         <source>Social</source>
-        <translation type="unfinished"/>
+        <translation>社交</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="180"/>
         <source>Regional</source>
-        <translation type="unfinished"/>
+        <translation>区域</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="180"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>其他</translation>
     </message>
 </context>
 <context>
@@ -1846,27 +1846,27 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="45"/>
         <source>Failed to open passwords file: %1</source>
-        <translation type="unfinished"/>
+        <translation>无法打开密码文件：%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="99"/>
         <source>Failed to save passwords file: %1</source>
-        <translation type="unfinished"/>
+        <translation>无法保存密码文件：%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="176"/>
         <source>Failed to remove passwords file</source>
-        <translation type="unfinished"/>
+        <translation>无法移除密码文件</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="261"/>
         <source>Encrypted File</source>
-        <translation type="unfinished"/>
+        <translation>已加密的文件</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="266"/>
         <source>Stores passwords in AES encrypted file.</source>
-        <translation type="unfinished"/>
+        <translation>将密码保存在 AES 加密的文件中。</translation>
     </message>
 </context>
 <context>
@@ -2415,7 +2415,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/LocaleDialog.cpp" line="72"/>
         <source>Translation files (*.qm)</source>
-        <translation type="unfinished"/>
+        <translation>翻译文件 (*.qm)</translation>
     </message>
 </context>
 <context>
@@ -2653,17 +2653,17 @@ Do you want to continue?</source>
         <location filename="../../src/modules/widgets/action/NavigationActionWidget.cpp" line="58"/>
         <location filename="../../src/modules/widgets/action/NavigationActionWidget.cpp" line="162"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>（未命名）</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/action/NavigationActionWidget.cpp" line="191"/>
         <source>Remove Entry</source>
-        <translation type="unfinished"/>
+        <translation>移除条目</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/action/NavigationActionWidget.cpp" line="192"/>
         <source>Purge Entry</source>
-        <translation type="unfinished"/>
+        <translation>清除条目</translation>
     </message>
 </context>
 <context>
@@ -2952,7 +2952,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="35"/>
         <source>Do you want to update login data for %1?</source>
-        <translation type="unfinished"/>
+        <translation>您希望更新 %1 的登录信息吗？</translation>
     </message>
 </context>
 <context>
@@ -2960,67 +2960,67 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>搜索…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="72"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>名称</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="72"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>值</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="85"/>
         <source>Set #%1</source>
-        <translation type="unfinished"/>
+        <translation>设置 #%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="167"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="223"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="242"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>问题</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="168"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="224"/>
         <source>You are about to delete %n password(s).</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>您将要删除 %n 个密码。</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="169"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="225"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="244"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>您确定要继续吗？</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="243"/>
         <source>You are about to delete all passwords.</source>
-        <translation type="unfinished"/>
+        <translation>您将要删除所有密码。</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="264"/>
         <source>Remove Password</source>
-        <translation type="unfinished"/>
+        <translation>移除密码</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="267"/>
         <source>Remove All Passwords from This Domain…</source>
-        <translation type="unfinished"/>
+        <translation>移除此域名下的所有密码…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="270"/>
         <source>Remove All Passwords…</source>
-        <translation type="unfinished"/>
+        <translation>移除所有密码…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="341"/>
         <source>Passwords Manager</source>
-        <translation type="unfinished"/>
+        <translation>密码管理器</translation>
     </message>
 </context>
 <context>
@@ -3182,7 +3182,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="88"/>
         <source>Local paths</source>
-        <translation type="unfinished"/>
+        <translation>本地路径</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="103"/>
@@ -3590,7 +3590,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="146"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="167"/>
         <source>Style sheets (*.css)</source>
-        <translation type="unfinished"/>
+        <translation>样式表 (*.css)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="149"/>
@@ -3673,7 +3673,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="266"/>
         <source>Proxy configuration files (*.pac)</source>
-        <translation type="unfinished"/>
+        <translation>代理配置文件 (*.pac)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="324"/>
@@ -4531,7 +4531,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="214"/>
         <source>WebKit Backend (legacy)</source>
-        <translation type="unfinished"/>
+        <translation>WebKit 后端（老旧）</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="216"/>
@@ -4895,42 +4895,42 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="14"/>
         <source>Select Password</source>
-        <translation type="unfinished"/>
+        <translation>选择密码</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="20"/>
         <source>Select set of credentials:</source>
-        <translation type="unfinished"/>
+        <translation>选择凭证集：</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="41"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>移除</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="39"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>名称</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="39"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>值</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="43"/>
         <source>Set #%1</source>
-        <translation type="unfinished"/>
+        <translation>设置 #%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="86"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>问题</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="86"/>
         <source>Do you really want to remove this credentials set?</source>
-        <translation type="unfinished"/>
+        <translation>您确实要移除此凭证集吗？</translation>
     </message>
 </context>
 <context>
@@ -6883,12 +6883,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="986"/>
         <source>Profiles</source>
-        <translation type="unfinished"/>
+        <translation>配置档案</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="1016"/>
         <source>Enable custom rules</source>
-        <translation type="unfinished"/>
+        <translation>启用自定义规则</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="62"/>
@@ -7041,7 +7041,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="349"/>
         <source>Style sheets (*.css)</source>
-        <translation type="unfinished"/>
+        <translation>样式表 (*.css)</translation>
     </message>
 </context>
 <context>
@@ -7438,7 +7438,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/core/ActionsManager.cpp" line="353"/>
         <location filename="../../src/ui/WebWidget.cpp" line="447"/>
         <source>Mute Tab Media</source>
-        <translation type="unfinished"/>
+        <translation>静音媒体标签页</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="354"/>
@@ -7724,7 +7724,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="405"/>
         <source>Log In</source>
-        <translation type="unfinished"/>
+        <translation>登录</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="406"/>
@@ -7869,7 +7869,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="435"/>
         <source>Deselect</source>
-        <translation type="unfinished"/>
+        <translation>取消选中</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="436"/>
@@ -8185,12 +8185,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="498"/>
         <source>Reset to Defaults…</source>
-        <translation type="unfinished"/>
+        <translation>重置为默认值…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="498"/>
         <source>Reset Toolbars to Defaults…</source>
-        <translation type="unfinished"/>
+        <translation>重置工具栏为默认值…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="499"/>
@@ -8231,7 +8231,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="506"/>
         <source>Passwords</source>
-        <translation type="unfinished"/>
+        <translation>密码</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="507"/>
@@ -8337,37 +8337,37 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="103"/>
         <source>Import Opera Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>导入 Opera 书签…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="107"/>
         <source>Import HTML Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>导入 HTML 书签…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="113"/>
         <source>Import Opera Notes…</source>
-        <translation type="unfinished"/>
+        <translation>导入 Opera 笔记…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="119"/>
         <source>Import Opera Search Engines…</source>
-        <translation type="unfinished"/>
+        <translation>导入 Opera 搜索引擎…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="125"/>
         <source>Import Opera Session…</source>
-        <translation type="unfinished"/>
+        <translation>导入 Opera 会话…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="346"/>
         <source>Open All</source>
-        <translation type="unfinished"/>
+        <translation>打开所有</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="358"/>
         <source>This Folder</source>
-        <translation type="unfinished"/>
+        <translation>此文件夹</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="384"/>
@@ -8375,47 +8375,47 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/Menu.cpp" line="698"/>
         <location filename="../../src/ui/Menu.cpp" line="762"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>（未命名）</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="426"/>
         <source>Auto Detect</source>
-        <translation type="unfinished"/>
+        <translation>自动检测</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="482"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>清除</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="572"/>
         <source>Default Style</source>
-        <translation type="unfinished"/>
+        <translation>默认样式</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="639"/>
         <source>Add New</source>
-        <translation type="unfinished"/>
+        <translation>新增</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="642"/>
         <source>Add Toolbar…</source>
-        <translation type="unfinished"/>
+        <translation>添加工具栏…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="645"/>
         <source>Add Bookmarks Bar…</source>
-        <translation type="unfinished"/>
+        <translation>添加书签栏…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="676"/>
         <source>Default User Agent</source>
-        <translation type="unfinished"/>
+        <translation>默认 User Agent</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="715"/>
         <source>Custom User Agent…</source>
-        <translation type="unfinished"/>
+        <translation>自定义 User Agent …</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="171"/>
@@ -8430,7 +8430,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="447"/>
         <source>Unmute Tab Media</source>
-        <translation type="unfinished"/>
+        <translation>取消媒体标签静音</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="604"/>
@@ -8493,47 +8493,47 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="81"/>
         <source>Addons Manager</source>
-        <translation type="unfinished"/>
+        <translation>扩展管理器</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="82"/>
         <source>Bookmarks Manager</source>
-        <translation type="unfinished"/>
+        <translation>书签管理器</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="83"/>
         <source>Cache Manager</source>
-        <translation type="unfinished"/>
+        <translation>缓存管理器</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="84"/>
         <source>Configuration Manager</source>
-        <translation type="unfinished"/>
+        <translation>配置管理器</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="85"/>
         <source>Cookies Manager</source>
-        <translation type="unfinished"/>
+        <translation>Cookies 管理器</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="86"/>
         <source>History Manager</source>
-        <translation type="unfinished"/>
+        <translation>历史管理器</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="87"/>
         <source>Notes Manager</source>
-        <translation type="unfinished"/>
+        <translation>笔记管理器</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="88"/>
         <source>Passwords Manager</source>
-        <translation type="unfinished"/>
+        <translation>密码管理器</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="89"/>
         <source>Transfers Manager</source>
-        <translation type="unfinished"/>
+        <translation>传输管理器</translation>
     </message>
 </context>
 <context>
@@ -8706,12 +8706,12 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="72"/>
         <source>Failed to load custom rules: invalid adblock header</source>
-        <translation type="unfinished"/>
+        <translation>无法载入自定义规则：无效的 Adblock 标头</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="237"/>
         <source>Failed to create a file with custom rules: %1</source>
-        <translation type="unfinished"/>
+        <translation>无法创建自定义规则文件：%1</translation>
     </message>
 </context>
 <context>

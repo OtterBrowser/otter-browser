@@ -34,7 +34,7 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="70"/>
         <source>Is HttpOnly:</source>
-        <translation>僅 Https：</translation>
+        <translation>僅 Http：</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.cpp" line="47"/>
@@ -1535,12 +1535,12 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="157"/>
         <source>Enable custom rules</source>
-        <translation>啟用自定義規則</translation>
+        <translation>啟用自訂規則</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="165"/>
         <source>Custom Rules</source>
-        <translation>自定義規則</translation>
+        <translation>自訂規則</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="239"/>
@@ -3135,7 +3135,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="52"/>
         <source>Block All Pop-Ups from This Website</source>
-        <translation>阻檔所有自此網頁而來的彈出式視窗</translation>
+        <translation>阻擋所有自此網頁而來的彈出式視窗</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="56"/>
@@ -4417,7 +4417,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="187"/>
         <source>Receiving data from %1…</source>
-        <translation>正在從 %1 接收資料...</translation>
+        <translation>正在從 %1 接收資料…</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="240"/>
@@ -4428,7 +4428,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="272"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="297"/>
         <source>Waiting for authentication…</source>
-        <translation>等待認證...</translation>
+        <translation>等待認證…</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="353"/>
@@ -4453,7 +4453,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="696"/>
         <source>Sending request to %1…</source>
-        <translation>正在送出請求到 %1...</translation>
+        <translation>正在送出請求到 %1…</translation>
     </message>
 </context>
 <context>
@@ -5263,7 +5263,7 @@ Do you want to save your changes or discard them?</source>
         <location filename="../../src/ui/StartupDialog.ui" line="14"/>
         <location filename="../../src/ui/StartupDialog.ui" line="27"/>
         <source>Welcome to Otter</source>
-        <translation>歡迎來到 Otter</translation>
+        <translation>歡迎使用 Otter</translation>
     </message>
     <message>
         <location filename="../../src/ui/StartupDialog.ui" line="34"/>
@@ -6313,22 +6313,22 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1229"/>
         <source>30 Minutes</source>
-        <translation>30分鐘</translation>
+        <translation>30 分鐘</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1230"/>
         <source>1 Hour</source>
-        <translation>1小時</translation>
+        <translation>1 小時</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1231"/>
         <source>2 Hours</source>
-        <translation>2小時</translation>
+        <translation>2 小時</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1232"/>
         <source>6 Hours</source>
-        <translation>6小時</translation>
+        <translation>6 小時</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1233"/>
@@ -6553,7 +6553,7 @@ Click Install button to restart browser and install the update or close this dia
     <message numerus="yes">
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="86"/>
         <source>%1 (%n blocked)</source>
-        <translation><numerusform>%1（%n% 已阻擋）</numerusform></translation>
+        <translation><numerusform>%1（%n 已阻擋）</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="93"/>
@@ -6889,7 +6889,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="1016"/>
         <source>Enable custom rules</source>
-        <translation>啟用自定義規則</translation>
+        <translation>啟用自訂規則</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="62"/>
@@ -7103,7 +7103,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="226"/>
         <source>No valid suffix for given MIME type: %1</source>
-        <translation>給定的 MIME 類型無有效後綴：%1</translation>
+        <translation>指定的 MIME 類型無有效後綴：%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="293"/>
@@ -8633,7 +8633,7 @@ Script: %2</source>
         <location filename="../../src/core/SessionsManager.h" line="84"/>
         <location filename="../../src/core/SessionsManager.h" line="87"/>
         <source>(Untitled)</source>
-        <translation>(Untitled)</translation>
+        <translation>（無標題）</translation>
     </message>
     <message>
         <location filename="../../src/core/UpdateChecker.cpp" line="44"/>
@@ -8707,7 +8707,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="72"/>
         <source>Failed to load custom rules: invalid adblock header</source>
-        <translation>載入自定義規則失敗：無效的 adblock 標頭</translation>
+        <translation>載入自訂規則失敗：無效的 adblock 標頭</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="237"/>

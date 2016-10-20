@@ -290,7 +290,7 @@
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="325"/>
         <source>Copy to Note</source>
-        <translation>複製到便條</translation>
+        <translation>複製到手帳</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="327"/>
@@ -543,7 +543,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="152"/>
         <source>Keyword:</source>
-        <translation>關鍵詞：</translation>
+        <translation>搜尋暱稱：</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="49"/>
@@ -575,7 +575,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.cpp" line="145"/>
         <source>Bookmark with this keyword already exists.</source>
-        <translation>已經有包含呢個關鍵詞嘅書籤。</translation>
+        <translation>存在相同搜尋暱稱嘅書籤。</translation>
     </message>
 </context>
 <context>
@@ -667,7 +667,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="115"/>
         <source>Keyword:</source>
-        <translation>關鍵詞：</translation>
+        <translation>搜尋暱稱：</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.ui" line="133"/>
@@ -724,17 +724,17 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Keyword</source>
-        <translation>關鍵詞</translation>
+        <translation>搜尋暱稱</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Added</source>
-        <translation>已加入</translation>
+        <translation>加入於</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
         <source>Modified</source>
-        <translation>修改過</translation>
+        <translation>修改於</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="51"/>
@@ -836,7 +836,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/core/BookmarksModel.cpp" line="99"/>
         <location filename="../../src/core/BookmarksModel.cpp" line="203"/>
         <source>Notes</source>
-        <translation>便條</translation>
+        <translation>手帳</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="102"/>
@@ -853,7 +853,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="220"/>
         <source>Failed to open notes file: %1</source>
-        <translation>開啟便條檔案失敗：%1</translation>
+        <translation>開啟手帳檔案失敗：%1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="220"/>
@@ -863,7 +863,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="244"/>
         <source>Failed to load notes file: %1</source>
-        <translation>載入便條檔案失敗：%1</translation>
+        <translation>載入手帳檔案失敗：%1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="244"/>
@@ -878,7 +878,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="246"/>
         <source>Failed to load notes file.</source>
-        <translation>載入便條檔案失敗。</translation>
+        <translation>載入手帳檔案失敗。</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="246"/>
@@ -1006,7 +1006,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/modules/windows/cache/CacheContentsWidget.cpp" line="555"/>
         <source>Cache</source>
-        <translation>快存</translation>
+        <translation>網頁留駐</translation>
     </message>
 </context>
 <context>
@@ -1304,7 +1304,7 @@ Exponent：%2</translation>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="78"/>
         <source>Clear forms History</source>
-        <translation>清除表單歷史</translation>
+        <translation>清除表格歷史</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="85"/>
@@ -1319,7 +1319,7 @@ Exponent：%2</translation>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="102"/>
         <source>Clear caches</source>
-        <translation>清除快存</translation>
+        <translation>清除網頁留駐</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="112"/>
@@ -2681,7 +2681,7 @@ Do you want to continue?</source>
 %1
 
 Do you want to continue?</source>
-        <translation>SSL錯誤：
+        <translation>發生SSL錯誤：
 
 %1
 
@@ -2754,7 +2754,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="179"/>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="181"/>
         <source>Add Note</source>
-        <translation>加入便條</translation>
+        <translation>加入手帳</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="48"/>
@@ -2766,7 +2766,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="58"/>
         <source>Add note…</source>
-        <translation>加入便條…</translation>
+        <translation>加入手帳…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="97"/>
@@ -2796,12 +2796,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="191"/>
         <source>Restore Note</source>
-        <translation>復原便條</translation>
+        <translation>復原手帳</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="370"/>
         <source>Notes Manager</source>
-        <translation>便條管理員</translation>
+        <translation>手帳管理員</translation>
     </message>
 </context>
 <context>
@@ -2835,7 +2835,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/OpenBookmarkDialog.ui" line="20"/>
         <source>Enter the keyword of bookmark:</source>
-        <translation>輸入書籤嘅關鍵詞：</translation>
+        <translation>輸入書籤名或搜尋暱稱：</translation>
     </message>
 </context>
 <context>
@@ -2866,17 +2866,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="106"/>
         <source>Opera Notes</source>
-        <translation>Opera便條</translation>
+        <translation>Opera手帳</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="111"/>
         <source>Imports notes from Opera Browser version 12 or earlier</source>
-        <translation>從Opera瀏覽器12或更早版本匯入便條</translation>
+        <translation>從Opera瀏覽器12或更早版本匯入手帳</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="161"/>
         <source>Opera notes files (notes.adr)</source>
-        <translation>Opera便條檔案（notes.adr）</translation>
+        <translation>Opera手帳檔案（notes.adr）</translation>
     </message>
 </context>
 <context>
@@ -3168,17 +3168,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="64"/>
         <source>Suggest bookmarks</source>
-        <translation>建議書籤</translation>
+        <translation>從書籤</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="71"/>
         <source>Suggest history</source>
-        <translation>建議歷史</translation>
+        <translation>從歷史</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="81"/>
         <source>Suggest search results</source>
-        <translation>建議搜尋結果</translation>
+        <translation>從搜尋結果</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="88"/>
@@ -3332,12 +3332,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="604"/>
         <source>Open with application</source>
-        <translation>開啟時使用何種程式</translation>
+        <translation>用外部程式開啟</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="650"/>
         <source>Pass web address directly to application</source>
-        <translation>將網址直接傳送畀程式</translation>
+        <translation>直接傳送網址畀外部程式</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="700"/>
@@ -3499,12 +3499,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1468"/>
         <source>Mouse Actions and Gestures</source>
-        <translation>滑鼠動作與手勢</translation>
+        <translation>滑鼠動作與鼠轍導航</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1601"/>
         <source>Enable mouse gestures</source>
-        <translation>啟用滑鼠手勢</translation>
+        <translation>啟用鼠轍導航</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="66"/>
@@ -3564,7 +3564,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="104"/>
         <source>Compact</source>
-        <translation>小巧</translation>
+        <translation>結實</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="105"/>
@@ -3601,7 +3601,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="150"/>
         <source>Cached images</source>
-        <translation>快存圖像</translation>
+        <translation>庫存圖像</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="151"/>
@@ -3787,7 +3787,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="143"/>
         <source>Default proportional font size:</source>
-        <translation>預設比例字型尺寸：</translation>
+        <translation>預設比例字型大小：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="153"/>
@@ -3799,12 +3799,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="169"/>
         <source>Default fixed-width font size:</source>
-        <translation>預設固定闊度字型尺寸：</translation>
+        <translation>預設固定闊度字型大小：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="195"/>
         <source>Minimum font size:</source>
-        <translation>最小字型尺寸：</translation>
+        <translation>最小字型大小：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.ui" line="205"/>
@@ -4031,17 +4031,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="198"/>
         <source>Activate the last active tab</source>
-        <translation>啟用上一個活躍分頁</translation>
+        <translation>前往上一個活躍分頁</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="203"/>
         <source>Activate the next tab</source>
-        <translation>啟用下一個分頁</translation>
+        <translation>前往下一個分頁</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="208"/>
         <source>Activate the first tab opened from current tab</source>
-        <translation>啟用由目前分頁開啟嘅首個分頁</translation>
+        <translation>前往由目前分頁開啟嘅首個分頁</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="224"/>
@@ -4134,7 +4134,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="136"/>
         <source>Remember form history</source>
-        <translation>記住表單歷史</translation>
+        <translation>記住表格歷史</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesPrivacyPageWidget.ui" line="159"/>
@@ -4299,7 +4299,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="48"/>
         <source>Keyword</source>
-        <translation>關鍵詞</translation>
+        <translation>搜尋暱稱</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="77"/>
@@ -4314,7 +4314,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="140"/>
         <source>New Search Engine</source>
-        <translation>新搜尋引擎</translation>
+        <translation>新搜尋器</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="209"/>
@@ -4325,17 +4325,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="210"/>
         <source>Keyword is already in use. Do you want to continue anyway?</source>
-        <translation>關鍵詞已被使用。仍繼續？</translation>
+        <translation>搜尋暱稱已被使用。仍繼續？</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="302"/>
         <source>Do you really want to remove this search engine?</source>
-        <translation>移除呢個搜尋引擎，確定？</translation>
+        <translation>移除呢個搜尋器，確定？</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="311"/>
         <source>Delete search engine permanently</source>
-        <translation>永遠刪除搜尋引擎</translation>
+        <translation>永遠刪除搜尋器</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="381"/>
@@ -4428,7 +4428,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="272"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="297"/>
         <source>Waiting for authentication…</source>
-        <translation>等待認證...</translation>
+        <translation>等待認證…</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="353"/>
@@ -4438,7 +4438,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="353"/>
         <source>SSL errors occured, do you want to continue?</source>
-        <translation>SSL錯誤，仍繼續？</translation>
+        <translation>發生SSL錯誤，仍繼續？</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="357"/>
@@ -4453,7 +4453,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="696"/>
         <source>Sending request to %1…</source>
-        <translation>傳送對%1嘅請求…</translation>
+        <translation>向%1傳送請求…</translation>
     </message>
 </context>
 <context>
@@ -4483,13 +4483,13 @@ Do you want to continue?</source>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="444"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="458"/>
         <source>Are you sure that you want to send form data again?</source>
-        <translation>再次傳送表單資料，確定？</translation>
+        <translation>再次傳送表格資料，確定？</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="444"/>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="459"/>
         <source>Do you want to resend data?</source>
-        <translation>再次傳送資料嗎？</translation>
+        <translation>再次傳送資料，確定？</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="445"/>
@@ -4580,7 +4580,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="702"/>
         <source>Webpage wants to close this tab, do you want to allow to close it?</source>
-        <translation>按網頁要求，關閉呢個分頁嗎？</translation>
+        <translation>按網頁要求關閉呢個分頁，確定？</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="703"/>
@@ -4732,7 +4732,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="14"/>
         <source>Edit Search Engine</source>
-        <translation>編輯搜尋引擎</translation>
+        <translation>編輯搜尋器</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="22"/>
@@ -4752,7 +4752,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="71"/>
         <source>Keyword:</source>
-        <translation>關鍵詞：</translation>
+        <translation>搜尋暱稱：</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="84"/>
@@ -4762,7 +4762,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="101"/>
         <source>Form address:</source>
-        <translation>表單網址：</translation>
+        <translation>表格網址：</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="117"/>
@@ -4772,7 +4772,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="129"/>
         <source>Set as default search engine</source>
-        <translation>設定為預設搜尋引擎</translation>
+        <translation>設定為預設搜尋器</translation>
     </message>
     <message>
         <location filename="../../src/ui/SearchEnginePropertiesDialog.ui" line="140"/>
@@ -4829,7 +4829,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/core/SearchEnginesManager.cpp" line="175"/>
         <source>Manage Search Engines…</source>
-        <translation>管理搜尋引擎…</translation>
+        <translation>管理搜尋器…</translation>
     </message>
 </context>
 <context>
@@ -4878,7 +4878,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="221"/>
         <source>Copy to Note</source>
-        <translation>複製到便條</translation>
+        <translation>複製到手帳</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="223"/>
@@ -5059,7 +5059,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="405"/>
         <source>Cache</source>
-        <translation>快存</translation>
+        <translation>網頁留駐</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="410"/>
@@ -5079,7 +5079,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="425"/>
         <source>Notes</source>
-        <translation>便條</translation>
+        <translation>手帳</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="430"/>
@@ -5201,7 +5201,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="41"/>
         <source>Best fit</source>
-        <translation>最符合</translation>
+        <translation>縮放到可見闊度與高度</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/StartPagePreferencesDialog.cpp" line="42"/>
@@ -5509,7 +5509,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="272"/>
         <source>Show search engine:</source>
-        <translation>顯示搜尋引擎</translation>
+        <translation>顯示搜尋器</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.cpp" line="273"/>
@@ -5808,7 +5808,7 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/ui/TransferDialog.ui" line="104"/>
         <source>Remember choice for this file type</source>
-        <translation>記住本檔案類型嘅選擇</translation>
+        <translation>記住本類型檔案嘅選擇</translation>
     </message>
     <message>
         <location filename="../../src/ui/TransferDialog.cpp" line="43"/>
@@ -5884,7 +5884,7 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
         <source>Filename</source>
-        <translation>檔案名稱</translation>
+        <translation>名稱</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
@@ -5899,7 +5899,7 @@ Do you want to overwrite it?
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
         <source>Time</source>
-        <translation>時間</translation>
+        <translation>已用時間</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="49"/>
@@ -5949,7 +5949,7 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="369"/>
         <source>Open With</source>
-        <translation>開啟時使用</translation>
+        <translation>開啟並使用</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="373"/>
@@ -5980,7 +5980,7 @@ Progress: %5&lt;/div&gt;</source>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="405"/>
         <source>Clear Finished Transfers</source>
-        <translation>清除已完成傳輸項目</translation>
+        <translation>清除完成項目</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/transfers/TransfersContentsWidget.cpp" line="535"/>
@@ -6170,7 +6170,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="551"/>
         <source>Cached Images</source>
-        <translation>快存圖像</translation>
+        <translation>庫存圖像</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/WebContentsWidget.cpp" line="555"/>
@@ -6283,7 +6283,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="742"/>
         <source>No search engines defined</source>
-        <translation>未定義搜尋引擎</translation>
+        <translation>未定義搜尋器</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="890"/>
@@ -6323,7 +6323,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1231"/>
         <source>2 Hours</source>
-        <translation>2小時</translation>
+        <translation>兩小時</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebWidget.cpp" line="1232"/>
@@ -6553,7 +6553,7 @@ Click Install button to restart browser and install the update or close this dia
     <message numerus="yes">
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="86"/>
         <source>%1 (%n blocked)</source>
-        <translation><numerusform>%1（%n%已封鎖）</numerusform></translation>
+        <translation><numerusform>%1（已封鎖%n）</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="93"/>
@@ -6600,7 +6600,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="142"/>
         <source>Only cached</source>
-        <translation>僅快存</translation>
+        <translation>僅庫存</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="167"/>
@@ -6926,7 +6926,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="82"/>
         <source>Cached images</source>
-        <translation>快存圖像</translation>
+        <translation>庫存圖像</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.cpp" line="83"/>
@@ -7098,12 +7098,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="182"/>
         <source>Failed to run command &quot;%1&quot; (arguments: &quot;%2&quot;)</source>
-        <translation>執行指令「%1」失敗（衝突：「%2」）</translation>
+        <translation>執行指令「%1」失敗（參數值：「%2」）</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="226"/>
         <source>No valid suffix for given MIME type: %1</source>
-        <translation>指定MIME類型欠有效後綴：%1</translation>
+        <translation>指定MIME類型無有效後綴：%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="293"/>
@@ -7579,12 +7579,12 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/core/ActionsManager.cpp" line="388"/>
         <location filename="../../src/core/ActionsManager.cpp" line="486"/>
         <source>Open with…</source>
-        <translation>開啟時使用…</translation>
+        <translation>開啟並使用…</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="379"/>
         <source>Open Link with External Application</source>
-        <translation>以外部程式開啟連結</translation>
+        <translation>用外部程式開啟連結</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="380"/>
@@ -7630,7 +7630,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="388"/>
         <source>Open Frame with External Application</source>
-        <translation>以外部程式開啟框格</translation>
+        <translation>用外部程式開啟框格</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="389"/>
@@ -7790,7 +7790,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="419"/>
         <source>Reload and Bypass Cache</source>
-        <translation>重新載入並忽略快存</translation>
+        <translation>重新載入並忽略庫存</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="420"/>
@@ -7840,7 +7840,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="429"/>
         <source>Copy to Note</source>
-        <translation>複製到便條</translation>
+        <translation>複製到手帳</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="430"/>
@@ -7855,7 +7855,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="432"/>
         <source>Insert Note</source>
-        <translation>插入便條</translation>
+        <translation>插入手帳</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="433"/>
@@ -8126,7 +8126,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="486"/>
         <source>Open Current Page with External Application</source>
-        <translation>以外部程式開啟目前頁面</translation>
+        <translation>用外部程式開啟目前頁面</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="487"/>
@@ -8227,7 +8227,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/core/ActionsManager.cpp" line="505"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="46"/>
         <source>Notes</source>
-        <translation>便條</translation>
+        <translation>手帳</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="506"/>
@@ -8348,12 +8348,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="113"/>
         <source>Import Opera Notes…</source>
-        <translation>匯入Opera便條…</translation>
+        <translation>匯入Opera手帳…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="119"/>
         <source>Import Opera Search Engines…</source>
-        <translation>匯入Opera搜尋引擎…</translation>
+        <translation>匯入Opera搜尋器…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="125"/>
@@ -8504,7 +8504,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="83"/>
         <source>Cache Manager</source>
-        <translation>快存圖像</translation>
+        <translation>網頁留駐管理員</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="84"/>
@@ -8524,7 +8524,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="87"/>
         <source>Notes Manager</source>
-        <translation>便條管理員</translation>
+        <translation>手帳管理員</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="88"/>
@@ -8547,7 +8547,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/Application.cpp" line="116"/>
         <source>Uses &lt;path&gt; as cache directory</source>
-        <translation>使用&lt;path&gt;作為快存目錄</translation>
+        <translation>使用&lt;path&gt;作為網頁留駐目錄</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="117"/>
@@ -8572,7 +8572,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/Application.cpp" line="121"/>
         <source>Sets profile and cache paths to directories inside the same directory as that of application binary</source>
-        <translation>將設定檔與快存目錄放進程式資料夾</translation>
+        <translation>將設定檔與網頁留駐目錄放進程式資料夾</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="122"/>
@@ -8786,7 +8786,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="159"/>
         <source>Make sure your internet connection is active and check whether other applications that rely on the same connection are working.</source>
-        <translation>請確保已接通互聯網，並檢查其他使用相同線路嘅程式正常運作。</translation>
+        <translation>請確保已接通互聯網，並檢查其他使用相同線路嘅程式是否正常運作。</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="159"/>
@@ -8796,7 +8796,7 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="159"/>
         <source>Try pressing the F12 key on your keyboard and disabling proxy servers, unless you know that you are required to use a proxy to connect to the internet, and then reload the page.</source>
-        <translation>請嘗試按下F12鍵並停用代理伺服器（必須使用代理連接互聯網例外），再重新載入。</translation>
+        <translation>請嘗試按下「F12」並停用代理伺服器（須使用代理連接互聯網者例外），再重新載入。</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="260"/>

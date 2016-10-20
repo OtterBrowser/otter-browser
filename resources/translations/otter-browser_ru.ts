@@ -1065,7 +1065,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
         <source>Text files (*.txt)</source>
-        <translation type="unfinished"/>
+        <translation>Текстовые файлы (*.txt)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="122"/>
@@ -1545,7 +1545,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="239"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="239"/>
@@ -1645,7 +1645,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="136"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Заголовок</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="136"/>
@@ -1655,7 +1655,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="136"/>
         <source>Last Update</source>
-        <translation type="unfinished"/>
+        <translation>Последнее обновление</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="180"/>
@@ -2472,17 +2472,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/MasterPasswordDialog.ui" line="22"/>
         <source>Current password:</source>
-        <translation type="unfinished"/>
+        <translation>Текущий пароль:</translation>
     </message>
     <message>
         <location filename="../../src/ui/MasterPasswordDialog.ui" line="32"/>
         <source>New password:</source>
-        <translation type="unfinished"/>
+        <translation>Новый пароль:</translation>
     </message>
     <message>
         <location filename="../../src/ui/MasterPasswordDialog.ui" line="42"/>
         <source>Confirm new password:</source>
-        <translation type="unfinished"/>
+        <translation>Подтверждение нового пароля:</translation>
     </message>
 </context>
 <context>
@@ -2653,7 +2653,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/widgets/action/NavigationActionWidget.cpp" line="58"/>
         <location filename="../../src/modules/widgets/action/NavigationActionWidget.cpp" line="162"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Без названия)</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/action/NavigationActionWidget.cpp" line="191"/>
@@ -2724,12 +2724,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="98"/>
         <source>Address:</source>
-        <translation type="unfinished"/>
+        <translation>Адрес:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="105"/>
         <source>Date:</source>
-        <translation type="unfinished"/>
+        <translation>Дата:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.ui" line="139"/>
@@ -2952,7 +2952,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="35"/>
         <source>Do you want to update login data for %1?</source>
-        <translation type="unfinished"/>
+        <translation>Вы уверены, что хотите обновить данные входа для %1?</translation>
     </message>
 </context>
 <context>
@@ -2960,12 +2960,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Найти...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="72"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Имя</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="72"/>
@@ -2982,7 +2982,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="223"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="242"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Вопрос</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="168"/>
@@ -2995,7 +2995,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="225"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="244"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Хотите продолжить?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="243"/>
@@ -3015,7 +3015,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="270"/>
         <source>Remove All Passwords…</source>
-        <translation type="unfinished"/>
+        <translation>Удалить все пароли…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="341"/>
@@ -4347,27 +4347,27 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/widgets/progressInformation/ProgressInformationWidget.cpp" line="69"/>
         <source>Document: %p%</source>
-        <translation type="unfinished"/>
+        <translation>Документ: %р%</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/progressInformation/ProgressInformationWidget.cpp" line="111"/>
         <source>Total: %1</source>
-        <translation type="unfinished"/>
+        <translation>Всего: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/progressInformation/ProgressInformationWidget.cpp" line="118"/>
         <source>Elements: %1/%2</source>
-        <translation type="unfinished"/>
+        <translation>Элементы: %1/%2</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/progressInformation/ProgressInformationWidget.cpp" line="125"/>
         <source>Speed: %1</source>
-        <translation type="unfinished"/>
+        <translation>Скорость:%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/progressInformation/ProgressInformationWidget.cpp" line="135"/>
         <source>Time: %1</source>
-        <translation type="unfinished"/>
+        <translation>Время:%1</translation>
     </message>
 </context>
 <context>
@@ -4447,7 +4447,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="396"/>
         <source>Loading finished</source>
-        <translation type="unfinished"/>
+        <translation>Загрузка завершена</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="696"/>
@@ -4905,12 +4905,12 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="41"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Удалить</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="39"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Имя</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="39"/>
@@ -4925,7 +4925,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="86"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Вопрос</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="86"/>
@@ -6606,7 +6606,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="182"/>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="197"/>
         <source>Always ask</source>
-        <translation type="unfinished"/>
+        <translation>Всегда спрашивать</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="208"/>
@@ -6688,7 +6688,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="181"/>
         <source>Images:</source>
-        <translation type="unfinished"/>
+        <translation>Изображения:</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="195"/>
@@ -7871,7 +7871,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="435"/>
         <source>Deselect</source>
-        <translation type="unfinished"/>
+        <translation>Снять выделение</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="436"/>
@@ -8233,7 +8233,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="506"/>
         <source>Passwords</source>
-        <translation type="unfinished"/>
+        <translation>Пароли</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="507"/>
@@ -8339,12 +8339,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="103"/>
         <source>Import Opera Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>Импортировать закладки Opera...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="107"/>
         <source>Import HTML Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>Импортировать HTLM-файл с закладками...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="113"/>
@@ -8364,12 +8364,12 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="346"/>
         <source>Open All</source>
-        <translation type="unfinished"/>
+        <translation>Открыть все</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="358"/>
         <source>This Folder</source>
-        <translation type="unfinished"/>
+        <translation>Эта папка</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="384"/>
@@ -8377,7 +8377,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/ui/Menu.cpp" line="698"/>
         <location filename="../../src/ui/Menu.cpp" line="762"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Без названия)</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="426"/>
@@ -8387,7 +8387,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="482"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Очистить</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="572"/>
@@ -8397,7 +8397,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="639"/>
         <source>Add New</source>
-        <translation type="unfinished"/>
+        <translation>Добавить новый</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="642"/>

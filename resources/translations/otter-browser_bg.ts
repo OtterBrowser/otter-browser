@@ -4,7 +4,7 @@
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="14"/>
         <source>Accept Cookie</source>
-        <translation>Приеми бисквитка</translation>
+        <translation>Приеми бисквитката</translation>
     </message>
     <message>
         <location filename="../../src/ui/AcceptCookieDialog.ui" line="35"/>
@@ -159,12 +159,12 @@
     <message>
         <location filename="../../src/ui/ActionComboBoxWidget.cpp" line="87"/>
         <source>Select Action</source>
-        <translation type="unfinished"/>
+        <translation>Изберете действие</translation>
     </message>
     <message>
         <location filename="../../src/ui/ActionComboBoxWidget.cpp" line="132"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Търсене...</translation>
     </message>
 </context>
 <context>
@@ -172,17 +172,17 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Търсене...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="82"/>
         <source>User Scripts</source>
-        <translation type="unfinished"/>
+        <translation>Потребителски скриптове</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="104"/>
         <source>Select File</source>
-        <translation type="unfinished"/>
+        <translation>Избери файл</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="104"/>
@@ -193,7 +193,7 @@
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="115"/>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="122"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Грешка</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="115"/>
@@ -208,17 +208,17 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="235"/>
         <source>Remove Addon…</source>
-        <translation type="unfinished"/>
+        <translation>Премахни добавка...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="239"/>
         <source>Add Addon…</source>
-        <translation type="unfinished"/>
+        <translation>Добави добавка...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="308"/>
         <source>Addons Manager</source>
-        <translation type="unfinished"/>
+        <translation>Мениджър на добавки</translation>
     </message>
 </context>
 <context>
@@ -226,12 +226,12 @@
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="93"/>
         <source>Search with %1</source>
-        <translation type="unfinished"/>
+        <translation>Търсене с %1</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="110"/>
         <source>Bookmarks</source>
-        <translation type="unfinished"/>
+        <translation>Отметки</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="144"/>
@@ -241,7 +241,7 @@
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="160"/>
         <source>History</source>
-        <translation type="unfinished"/>
+        <translation>История</translation>
     </message>
     <message>
         <location filename="../../src/core/AddressCompletionModel.cpp" line="182"/>
@@ -1749,18 +1749,18 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="208"/>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation>Добави</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.ui" line="231"/>
         <source>Apply</source>
-        <translation type="unfinished"/>
+        <translation>Приложи</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="272"/>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="291"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Въпрос</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="273"/>
@@ -1771,7 +1771,7 @@ Exponent: %2</source>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="274"/>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="293"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Искате ли да продължите ?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="292"/>
@@ -1781,7 +1781,7 @@ Exponent: %2</source>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="313"/>
         <source>Remove Cookie</source>
-        <translation type="unfinished"/>
+        <translation>Премахни бисквитката</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="316"/>
@@ -8775,13 +8775,13 @@ Application ID: %2</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="342"/>
         <source>Save File</source>
-        <translation type="unfinished"/>
+        <translation>Запази файла</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="363"/>
         <location filename="../../src/core/Utils.cpp" line="372"/>
         <source>Warning</source>
-        <translation type="unfinished"/>
+        <translation>Внимание</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="363"/>
