@@ -350,7 +350,7 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 		return;
 	}
 
-	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), tr("Warning"), tr("SSL errors occured, do you want to continue?"), messages.join('\n'), (QDialogButtonBox::Yes | QDialogButtonBox::No), NULL, m_widget);
+	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), tr("Warning"), tr("SSL errors occurred, do you want to continue?"), messages.join('\n'), (QDialogButtonBox::Yes | QDialogButtonBox::No), NULL, m_widget);
 
 	if (!m_widget->getUrl().isEmpty())
 	{

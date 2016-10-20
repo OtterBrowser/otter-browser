@@ -810,7 +810,7 @@ Are you sure that you want to restore this session anyway?</source>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
-        <source>Allow to duplicate already existing bookmarks</source>
+        <source>Allow one to duplicate already existing bookmarks</source>
         <translation>Permitir duplicar favoritos já existentes</translation>
     </message>
     <message>
@@ -2251,22 +2251,22 @@ Exponente: %2</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="63"/>
-        <source>Allow to disable context menu</source>
+        <source>Allow one to disable context menu</source>
         <translation>Permitir desativar o menu de contexto</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="70"/>
-        <source>Allow to open windows</source>
+        <source>Allow one to open windows</source>
         <translation>Permitir abrir as janelas</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="79"/>
-        <source>Allow to close windows:</source>
+        <source>Allow one to close windows:</source>
         <translation>Permitir fechar janelas:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="95"/>
-        <source>Allow to enter full screen mode:</source>
+        <source>Allow one to enter full screen mode:</source>
         <translation>Permitir entrar no modo de tela cheia:</translation>
     </message>
     <message>
@@ -2675,7 +2675,7 @@ Você quer continuar?</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManager.cpp" line="128"/>
-        <source>SSL errors occured:
+        <source>SSL errors occurred:
 
 %1
 
@@ -4436,7 +4436,7 @@ Você quer continuar?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="353"/>
-        <source>SSL errors occured, do you want to continue?</source>
+        <source>SSL errors occurred, do you want to continue?</source>
         <translation>Ocorreram erros com o SSL, você quer continuar?</translation>
     </message>
     <message>
@@ -4578,7 +4578,7 @@ Você quer continuar?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="702"/>
-        <source>Webpage wants to close this tab, do you want to allow to close it?</source>
+        <source>Webpage wants to close this tab, do you want to allow one to close it?</source>
         <translation>A página da web quer fechar esta aba, você quer permiti-la que a feche?</translation>
     </message>
     <message>
@@ -6747,7 +6747,7 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="461"/>
-        <source>Allow to disable context menu</source>
+        <source>Allow one to disable context menu</source>
         <translation>Permitir desativar o menu de contexto</translation>
     </message>
     <message>
@@ -6757,7 +6757,7 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="502"/>
-        <source>Allow to close windows:</source>
+        <source>Allow one to close windows:</source>
         <translation>Permitir fechar as janelas:</translation>
     </message>
     <message>
@@ -6777,7 +6777,7 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="588"/>
-        <source>Allow to open windows</source>
+        <source>Allow one to open windows</source>
         <translation>Permitir abrir as janelas</translation>
     </message>
     <message>
@@ -6787,7 +6787,7 @@ Clique no botão Instalar pra reiniciar o navegador e instalar a atualização o
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="618"/>
-        <source>Allow to enter full screen mode:</source>
+        <source>Allow one to enter full screen mode:</source>
         <translation>Permitir entrar no modo de tela cheia:</translation>
     </message>
     <message>

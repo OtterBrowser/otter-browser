@@ -1053,7 +1053,7 @@ void QtWebEngineWebWidget::handleWindowCloseRequest()
 		return;
 	}
 
-	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), tr("JavaScript"), tr("Webpage wants to close this tab, do you want to allow to close it?"), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), NULL, this);
+	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), tr("JavaScript"), tr("Webpage wants to close this tab, do you want to allow one to close it?"), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), NULL, this);
 	dialog.setCheckBox(tr("Do not show this message again"), false);
 
 	connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));

@@ -808,7 +808,7 @@ Kas tahad tõesti sessiooni taastada?</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
-        <source>Allow to duplicate already existing bookmarks</source>
+        <source>Allow one to duplicate already existing bookmarks</source>
         <translation>Luba sama järge mitu korda</translation>
     </message>
     <message>
@@ -2246,22 +2246,22 @@ Exponent: %2</source>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="63"/>
-        <source>Allow to disable context menu</source>
+        <source>Allow one to disable context menu</source>
         <translation>Luba kohamenüüd peita</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="70"/>
-        <source>Allow to open windows</source>
+        <source>Allow one to open windows</source>
         <translation>Luba aknaid avada</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="79"/>
-        <source>Allow to close windows:</source>
+        <source>Allow one to close windows:</source>
         <translation>Luba aknaid sulgeda:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="95"/>
-        <source>Allow to enter full screen mode:</source>
+        <source>Allow one to enter full screen mode:</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2670,7 +2670,7 @@ Kas jätkad?</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManager.cpp" line="128"/>
-        <source>SSL errors occured:
+        <source>SSL errors occurred:
 
 %1
 
@@ -4431,7 +4431,7 @@ Kas jätkad?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="353"/>
-        <source>SSL errors occured, do you want to continue?</source>
+        <source>SSL errors occurred, do you want to continue?</source>
         <translation>Tekkis SSL-viga. Kas jätkad?</translation>
     </message>
     <message>
@@ -4573,7 +4573,7 @@ Kas jätkad?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="702"/>
-        <source>Webpage wants to close this tab, do you want to allow to close it?</source>
+        <source>Webpage wants to close this tab, do you want to allow one to close it?</source>
         <translation>Sait tahab seda kaarti sulgeda. Kas lubad?</translation>
     </message>
     <message>
@@ -6741,7 +6741,7 @@ Kui vajutad Paigalda, siis brauser taaskäivitatakse ja uuendus paigaldatakse. K
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="461"/>
-        <source>Allow to disable context menu</source>
+        <source>Allow one to disable context menu</source>
         <translation>Luba kohamenüüd peita</translation>
     </message>
     <message>
@@ -6751,7 +6751,7 @@ Kui vajutad Paigalda, siis brauser taaskäivitatakse ja uuendus paigaldatakse. K
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="502"/>
-        <source>Allow to close windows:</source>
+        <source>Allow one to close windows:</source>
         <translation>Luba aknaid sulgeda:</translation>
     </message>
     <message>
@@ -6771,7 +6771,7 @@ Kui vajutad Paigalda, siis brauser taaskäivitatakse ja uuendus paigaldatakse. K
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="588"/>
-        <source>Allow to open windows</source>
+        <source>Allow one to open windows</source>
         <translation>Luba aknaid avada</translation>
     </message>
     <message>
@@ -6781,7 +6781,7 @@ Kui vajutad Paigalda, siis brauser taaskäivitatakse ja uuendus paigaldatakse. K
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="618"/>
-        <source>Allow to enter full screen mode:</source>
+        <source>Allow one to enter full screen mode:</source>
         <translation type="unfinished"/>
     </message>
     <message>

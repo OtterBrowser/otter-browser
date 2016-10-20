@@ -458,7 +458,7 @@
        <item row="6" column="1">
         <widget class="QCheckBox" name="canDisableContextMenuCheckBox">
          <property name="text">
-          <string>Allow to disable context menu</string>
+          <string>Allow one to disable context menu</string>
          </property>
         </widget>
        </item>
@@ -499,7 +499,7 @@
        <item row="8" column="1">
         <widget class="QLabel" name="canCloseWindowsLabel">
          <property name="text">
-          <string>Allow to close windows:</string>
+          <string>Allow one to close windows:</string>
          </property>
          <property name="buddy">
           <cstring>canCloseWindowsComboBox</cstring>
@@ -585,7 +585,7 @@
        <item row="7" column="1">
         <widget class="QCheckBox" name="canOpenWindowsCheckBox">
          <property name="text">
-          <string>Allow to open windows</string>
+          <string>Allow one to open windows</string>
          </property>
         </widget>
        </item>
@@ -615,7 +615,7 @@
        <item row="9" column="1">
         <widget class="QLabel" name="enableFullScreenLabel">
          <property name="text">
-          <string>Allow to enter full screen mode:</string>
+          <string>Allow one to enter full screen mode:</string>
          </property>
          <property name="buddy">
           <cstring>enableFullScreenComboBox</cstring>

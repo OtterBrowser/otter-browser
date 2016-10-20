@@ -811,7 +811,7 @@ Are you sure that you want to restore this session anyway?</source>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
-        <source>Allow to duplicate already existing bookmarks</source>
+        <source>Allow one to duplicate already existing bookmarks</source>
         <translation>可以複製現存書籤</translation>
     </message>
     <message>
@@ -2252,22 +2252,22 @@ Exponent：%2</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="63"/>
-        <source>Allow to disable context menu</source>
+        <source>Allow one to disable context menu</source>
         <translation>容許停用右鍵選單</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="70"/>
-        <source>Allow to open windows</source>
+        <source>Allow one to open windows</source>
         <translation>容許開啟視窗</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="79"/>
-        <source>Allow to close windows:</source>
+        <source>Allow one to close windows:</source>
         <translation>容許關閉視窗：</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="95"/>
-        <source>Allow to enter full screen mode:</source>
+        <source>Allow one to enter full screen mode:</source>
         <translation>容許進入全螢幕模式：</translation>
     </message>
     <message>
@@ -4579,7 +4579,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="702"/>
-        <source>Webpage wants to close this tab, do you want to allow to close it?</source>
+        <source>Webpage wants to close this tab, do you want to allow one to close it?</source>
         <translation>按網頁要求，關閉呢個分頁嗎？</translation>
     </message>
     <message>
@@ -6748,7 +6748,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="461"/>
-        <source>Allow to disable context menu</source>
+        <source>Allow one to disable context menu</source>
         <translation>容許停用右鍵選單</translation>
     </message>
     <message>
@@ -6758,7 +6758,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="502"/>
-        <source>Allow to close windows:</source>
+        <source>Allow one to close windows:</source>
         <translation>容許關閉視窗：</translation>
     </message>
     <message>
@@ -6778,7 +6778,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="588"/>
-        <source>Allow to open windows</source>
+        <source>Allow one to open windows</source>
         <translation>容許開啟視窗</translation>
     </message>
     <message>
@@ -6788,7 +6788,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="618"/>
-        <source>Allow to enter full screen mode:</source>
+        <source>Allow one to enter full screen mode:</source>
         <translation>容許進入全螢幕模式：</translation>
     </message>
     <message>

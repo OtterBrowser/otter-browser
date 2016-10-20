@@ -78,7 +78,7 @@
        <item row="1" column="0">
         <widget class="QCheckBox" name="allowDuplicatesCheckBox">
          <property name="text">
-          <string>Allow to duplicate already existing bookmarks</string>
+          <string>Allow one to duplicate already existing bookmarks</string>
          </property>
          <property name="checked">
           <bool>true</bool>

@@ -808,7 +808,7 @@ Sunteți sigur că doriți să restaurați această sesiune, oricum?</translatio
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
-        <source>Allow to duplicate already existing bookmarks</source>
+        <source>Allow one to duplicate already existing bookmarks</source>
         <translation>Permite duplicarea marcajelor deja existente</translation>
     </message>
     <message>
@@ -2246,22 +2246,22 @@ Exponent: %2</source>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="63"/>
-        <source>Allow to disable context menu</source>
+        <source>Allow one to disable context menu</source>
         <translation>Permite dezactivarea meniului contextual</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="70"/>
-        <source>Allow to open windows</source>
+        <source>Allow one to open windows</source>
         <translation>Permite deschiderea de ferestre</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="79"/>
-        <source>Allow to close windows:</source>
+        <source>Allow one to close windows:</source>
         <translation>Permite închiderea de ferestre:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="95"/>
-        <source>Allow to enter full screen mode:</source>
+        <source>Allow one to enter full screen mode:</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2670,7 +2670,7 @@ Doriţi să continuaţi? </translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManager.cpp" line="128"/>
-        <source>SSL errors occured:
+        <source>SSL errors occurred:
 
 %1
 
@@ -4431,7 +4431,7 @@ Doriţi să continuaţi? </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="353"/>
-        <source>SSL errors occured, do you want to continue?</source>
+        <source>SSL errors occurred, do you want to continue?</source>
         <translation>S-au întâmpinat erori SSL, doriţi să continuaţi?</translation>
     </message>
     <message>
@@ -4573,7 +4573,7 @@ Doriţi să continuaţi? </translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="702"/>
-        <source>Webpage wants to close this tab, do you want to allow to close it?</source>
+        <source>Webpage wants to close this tab, do you want to allow one to close it?</source>
         <translation>Pagina de web vrea să închidă acest tab, doriţi să permiteţi închiderea?</translation>
     </message>
     <message>
@@ -6730,7 +6730,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="461"/>
-        <source>Allow to disable context menu</source>
+        <source>Allow one to disable context menu</source>
         <translation>Permite dezactivarea meniului contextual</translation>
     </message>
     <message>
@@ -6740,7 +6740,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="502"/>
-        <source>Allow to close windows:</source>
+        <source>Allow one to close windows:</source>
         <translation>Permite închiderea de ferestre:</translation>
     </message>
     <message>
@@ -6760,7 +6760,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="588"/>
-        <source>Allow to open windows</source>
+        <source>Allow one to open windows</source>
         <translation>Permite deschiderea de ferestre</translation>
     </message>
     <message>
@@ -6770,7 +6770,7 @@ Click Install button to restart browser and install the update or close this dia
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="618"/>
-        <source>Allow to enter full screen mode:</source>
+        <source>Allow one to enter full screen mode:</source>
         <translation type="unfinished"/>
     </message>
     <message>

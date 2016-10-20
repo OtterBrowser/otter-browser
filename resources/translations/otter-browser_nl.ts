@@ -811,7 +811,7 @@ Weet u zeker dat u de sessie tóch wilt herstellen?</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="81"/>
-        <source>Allow to duplicate already existing bookmarks</source>
+        <source>Allow one to duplicate already existing bookmarks</source>
         <translation>Dupliceren van reeds bestaande bladwijzers toestaan</translation>
     </message>
     <message>
@@ -2252,22 +2252,22 @@ Exponent: %2</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="63"/>
-        <source>Allow to disable context menu</source>
+        <source>Allow one to disable context menu</source>
         <translation>Toestaan om rechtermuisknop-menu uit te schakelen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="70"/>
-        <source>Allow to open windows</source>
+        <source>Allow one to open windows</source>
         <translation>Toestaan om vensters te openen</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="79"/>
-        <source>Allow to close windows:</source>
+        <source>Allow one to close windows:</source>
         <translation>Toestaan om vensters te sluiten:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/JavaScriptPreferencesDialog.ui" line="95"/>
-        <source>Allow to enter full screen mode:</source>
+        <source>Allow one to enter full screen mode:</source>
         <translation>Volledige scherm-modus toestaan:</translation>
     </message>
     <message>
@@ -2676,7 +2676,7 @@ Wilt u doorgaan?</translation>
     </message>
     <message>
         <location filename="../../src/core/NetworkManager.cpp" line="128"/>
-        <source>SSL errors occured:
+        <source>SSL errors occurred:
 
 %1
 
@@ -4437,7 +4437,7 @@ Wilt u doorgaan?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="353"/>
-        <source>SSL errors occured, do you want to continue?</source>
+        <source>SSL errors occurred, do you want to continue?</source>
         <translation>Er zijn SSL-fouten opgetreden. Wilt u doorgaan?</translation>
     </message>
     <message>
@@ -4579,7 +4579,7 @@ Wilt u doorgaan?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebWidget.cpp" line="702"/>
-        <source>Webpage wants to close this tab, do you want to allow to close it?</source>
+        <source>Webpage wants to close this tab, do you want to allow one to close it?</source>
         <translation>De webpagina wil dit tabblad sluiten. Wilt u toestaan het te sluiten?</translation>
     </message>
     <message>
@@ -6747,7 +6747,7 @@ Klik op de Installeren-knop om de webbrowser te herstarten en de update te insta
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="461"/>
-        <source>Allow to disable context menu</source>
+        <source>Allow one to disable context menu</source>
         <translation>Toestaan om contextmenu uit te schakelen</translation>
     </message>
     <message>
@@ -6757,7 +6757,7 @@ Klik op de Installeren-knop om de webbrowser te herstarten en de update te insta
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="502"/>
-        <source>Allow to close windows:</source>
+        <source>Allow one to close windows:</source>
         <translation>Toestaan om vensters te sluiten:</translation>
     </message>
     <message>
@@ -6777,7 +6777,7 @@ Klik op de Installeren-knop om de webbrowser te herstarten en de update te insta
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="588"/>
-        <source>Allow to open windows</source>
+        <source>Allow one to open windows</source>
         <translation>Toestaan om vensters te openen</translation>
     </message>
     <message>
@@ -6787,7 +6787,7 @@ Klik op de Installeren-knop om de webbrowser te herstarten en de update te insta
     </message>
     <message>
         <location filename="../../src/ui/WebsitePreferencesDialog.ui" line="618"/>
-        <source>Allow to enter full screen mode:</source>
+        <source>Allow one to enter full screen mode:</source>
         <translation>Volledige scherm-modus toestaan:</translation>
     </message>
     <message>
