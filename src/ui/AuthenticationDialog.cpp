@@ -32,7 +32,7 @@ AuthenticationDialog::AuthenticationDialog(const QUrl &url, QAuthenticator *auth
 	m_ui->setupUi(this);
 	m_ui->serverValueLabel->setText(url.host());
 	m_ui->messageValueLabel->setText(authenticator->realm());
-	m_ui->userLineEdit->setText(authenticator->user());
+	m_ui->userComboBox->setCurrentText(authenticator->user());
 	m_ui->passwordLineEdit->setText(authenticator->password());
 
 	connect(this, SIGNAL(accepted()), this, SLOT(setup()));
@@ -55,7 +55,7 @@ void AuthenticationDialog::changeEvent(QEvent *event)
 
 void AuthenticationDialog::setup()
 {
-	m_authenticator->setUser(m_ui->userLineEdit->text());
+	m_authenticator->setUser(m_ui->userComboBox->currentText());
 	m_authenticator->setPassword(m_ui->passwordLineEdit->text());
 }
 
