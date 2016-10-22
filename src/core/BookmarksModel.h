@@ -125,6 +125,8 @@ protected:
 	void readdBookmarkUrl(BookmarksItem *bookmark);
 
 private:
+	BookmarksItem *m_rootItem;
+	BookmarksItem *m_trashItem;
 	QHash<BookmarksItem*, QPair<QModelIndex, int> > m_trash;
 	QHash<QUrl, QList<BookmarksItem*> > m_urls;
 	QHash<QString, BookmarksItem*> m_keywords;

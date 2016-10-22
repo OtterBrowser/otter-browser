@@ -196,21 +196,20 @@ QList<QUrl> BookmarksItem::getUrls() const
 }
 
 BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *parent) : QStandardItemModel(parent),
+	m_rootItem(new BookmarksItem()),
+	m_trashItem(new BookmarksItem()),
 	m_mode(mode)
 {
-	BookmarksItem *rootItem(new BookmarksItem());
-	rootItem->setData(RootBookmark, TypeRole);
-	rootItem->setData(((mode == NotesMode) ? tr("Notes") : tr("Bookmarks")), TitleRole);
-	rootItem->setDragEnabled(false);
+	m_rootItem->setData(RootBookmark, TypeRole);
+	m_rootItem->setData(((mode == NotesMode) ? tr("Notes") : tr("Bookmarks")), TitleRole);
+	m_rootItem->setDragEnabled(false);
+	m_trashItem->setData(TrashBookmark, TypeRole);
+	m_trashItem->setData(tr("Trash"), TitleRole);
+	m_trashItem->setDragEnabled(false);
+	m_trashItem->setEnabled(false);
 
-	BookmarksItem *trashItem(new BookmarksItem());
-	trashItem->setData(TrashBookmark, TypeRole);
-	trashItem->setData(tr("Trash"), TitleRole);
-	trashItem->setDragEnabled(false);
-	trashItem->setEnabled(false);
-
-	appendRow(rootItem);
-	appendRow(trashItem);
+	appendRow(m_rootItem);
+	appendRow(m_trashItem);
 	setItemPrototype(new BookmarksItem());
 
 	QFile file(path);
@@ -230,7 +229,7 @@ BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *pa
 		{
 			if (reader.name() == QLatin1String("folder") || reader.name() == QLatin1String("bookmark") || reader.name() == QLatin1String("separator"))
 			{
-				readBookmark(&reader, rootItem);
+				readBookmark(&reader, m_rootItem);
 			}
 			else
 			{
@@ -773,12 +772,12 @@ BookmarksItem* BookmarksModel::getBookmark(quint64 identifier) const
 
 BookmarksItem* BookmarksModel::getRootItem() const
 {
-	return dynamic_cast<BookmarksItem*>(item(0, 0));
+	return m_rootItem;
 }
 
 BookmarksItem* BookmarksModel::getTrashItem() const
 {
-	return dynamic_cast<BookmarksItem*>(item(1, 0));
+	return m_trashItem;
 }
 
 BookmarksItem* BookmarksModel::getItem(const QString &path) const
