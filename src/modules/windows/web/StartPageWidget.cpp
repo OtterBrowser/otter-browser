@@ -474,9 +474,9 @@ void StartPageWidget::editTile()
 
 void StartPageWidget::reloadTile()
 {
-	m_model->reloadTile(m_currentIndex);
-
 	m_listView->openPersistentEditor(m_currentIndex);
+
+	m_model->reloadTile(m_currentIndex);
 }
 
 void StartPageWidget::removeTile()
