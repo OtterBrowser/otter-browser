@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,14 @@ class AuthenticationDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit AuthenticationDialog(const QUrl &url, QAuthenticator *authenticator, QWidget *parent = NULL);
+	enum AuthenticationType
+	{
+		UnknownAuthentication = 0,
+		HttpAuthentication,
+		ProxyAuthentication
+	};
+
+	explicit AuthenticationDialog(const QUrl &url, QAuthenticator *authenticator, AuthenticationType type, QWidget *parent = NULL);
 	~AuthenticationDialog();
 
 	void setButtonsVisible(bool visible);
@@ -54,6 +61,8 @@ protected slots:
 
 private:
 	QAuthenticator *m_authenticator;
+	QUrl m_url;
+	AuthenticationType m_type;
 	Ui::AuthenticationDialog *m_ui;
 };
 

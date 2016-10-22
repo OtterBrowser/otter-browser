@@ -70,7 +70,7 @@ NetworkManager::NetworkManager(bool isPrivate, QObject *parent) : QNetworkAccess
 
 void NetworkManager::handleAuthenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator)
 {
-	AuthenticationDialog dialog(reply->url(), authenticator, SessionsManager::getActiveWindow());
+	AuthenticationDialog dialog(reply->url(), authenticator, AuthenticationDialog::HttpAuthentication, SessionsManager::getActiveWindow());
 	dialog.exec();
 }
 
@@ -83,7 +83,7 @@ void NetworkManager::handleProxyAuthenticationRequired(const QNetworkProxy &prox
 		return;
 	}
 
-	AuthenticationDialog dialog(QUrl(proxy.hostName()), authenticator, SessionsManager::getActiveWindow());
+	AuthenticationDialog dialog(QUrl(proxy.hostName()), authenticator, AuthenticationDialog::ProxyAuthentication, SessionsManager::getActiveWindow());
 	dialog.exec();
 }
 

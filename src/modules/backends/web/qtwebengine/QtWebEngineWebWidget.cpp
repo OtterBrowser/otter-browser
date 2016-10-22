@@ -883,7 +883,7 @@ void QtWebEngineWebWidget::handleIconChange(const QUrl &url)
 
 void QtWebEngineWebWidget::handleAuthenticationRequired(const QUrl &url, QAuthenticator *authenticator)
 {
-	AuthenticationDialog *authenticationDialog(new AuthenticationDialog(url, authenticator, this));
+	AuthenticationDialog *authenticationDialog(new AuthenticationDialog(url, authenticator, AuthenticationDialog::HttpAuthentication, this));
 	authenticationDialog->setButtonsVisible(false);
 
 	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, this);
@@ -898,7 +898,7 @@ void QtWebEngineWebWidget::handleProxyAuthenticationRequired(const QUrl &url, QA
 {
 	Q_UNUSED(url)
 
-	AuthenticationDialog *authenticationDialog(new AuthenticationDialog(proxy, authenticator, this));
+	AuthenticationDialog *authenticationDialog(new AuthenticationDialog(proxy, authenticator, AuthenticationDialog::ProxyAuthentication, this));
 	authenticationDialog->setButtonsVisible(false);
 
 	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, this);

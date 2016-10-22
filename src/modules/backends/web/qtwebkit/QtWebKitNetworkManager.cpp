@@ -271,7 +271,7 @@ void QtWebKitNetworkManager::handleAuthenticationRequired(QNetworkReply *reply, 
 {
 	setPageInformation(WebWidget::LoadingMessageInformation, tr("Waiting for authentication…"));
 
-	AuthenticationDialog *authenticationDialog(new AuthenticationDialog(reply->url(), authenticator, m_widget));
+	AuthenticationDialog *authenticationDialog(new AuthenticationDialog(reply->url(), authenticator, AuthenticationDialog::HttpAuthentication, m_widget));
 	authenticationDialog->setButtonsVisible(false);
 
 	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, m_widget);
@@ -296,7 +296,7 @@ void QtWebKitNetworkManager::handleProxyAuthenticationRequired(const QNetworkPro
 
 	setPageInformation(WebWidget::LoadingMessageInformation, tr("Waiting for authentication…"));
 
-	AuthenticationDialog *authenticationDialog(new AuthenticationDialog(proxy.hostName(), authenticator, m_widget));
+	AuthenticationDialog *authenticationDialog(new AuthenticationDialog(proxy.hostName(), authenticator, AuthenticationDialog::ProxyAuthentication, m_widget));
 	authenticationDialog->setButtonsVisible(false);
 
 	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, m_widget);

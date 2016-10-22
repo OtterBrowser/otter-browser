@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,14 +19,18 @@
 
 #include "AuthenticationDialog.h"
 #include "../core/NetworkManagerFactory.h"
+#include "../core/PasswordsManager.h"
+#include "../core/SettingsManager.h"
 
 #include "ui_AuthenticationDialog.h"
 
 namespace Otter
 {
 
-AuthenticationDialog::AuthenticationDialog(const QUrl &url, QAuthenticator *authenticator, QWidget *parent) : Dialog(parent),
+AuthenticationDialog::AuthenticationDialog(const QUrl &url, QAuthenticator *authenticator, AuthenticationType type, QWidget *parent) : Dialog(parent),
 	m_authenticator(authenticator),
+	m_url(url),
+	m_type(type),
 	m_ui(new Ui::AuthenticationDialog)
 {
 	m_ui->setupUi(this);
@@ -34,6 +38,15 @@ AuthenticationDialog::AuthenticationDialog(const QUrl &url, QAuthenticator *auth
 	m_ui->messageValueLabel->setText(authenticator->realm());
 	m_ui->userComboBox->setCurrentText(authenticator->user());
 	m_ui->passwordLineEdit->setText(authenticator->password());
+
+	if (type == HttpAuthentication)
+	{
+		m_ui->rememberPasswordCheckBox->setEnabled(SettingsManager::getValue(SettingsManager::Browser_RememberPasswordsOption).toBool());
+	}
+	else
+	{
+		m_ui->rememberPasswordCheckBox->hide();
+	}
 
 	connect(this, SIGNAL(accepted()), this, SLOT(setup()));
 }
@@ -57,6 +70,26 @@ void AuthenticationDialog::setup()
 {
 	m_authenticator->setUser(m_ui->userComboBox->currentText());
 	m_authenticator->setPassword(m_ui->passwordLineEdit->text());
+
+	if (m_ui->rememberPasswordCheckBox->isChecked() && !m_authenticator->user().isEmpty() && !m_authenticator->password().isEmpty())
+	{
+		PasswordsManager::FieldInformation userField;
+		userField.value = m_authenticator->user();
+		userField.type = PasswordsManager::TextField;
+
+		PasswordsManager::FieldInformation passwordField;
+		passwordField.value = m_authenticator->password();
+		passwordField.type = PasswordsManager::PasswordField;
+
+		PasswordsManager::PasswordInformation password;
+		password.url = m_url.toString();
+		password.timeAdded = QDateTime::currentDateTime();
+		password.type = PasswordsManager::AuthPassword;
+		password.fields.append(userField);
+		password.fields.append(passwordField);
+
+		PasswordsManager::addPassword(password);
+	}
 }
 
 void AuthenticationDialog::authenticated(QAuthenticator *authenticator, bool wasAccepted)
