@@ -28,6 +28,7 @@
 #include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QMimeData>
+#include <QtGui/QPainter>
 
 namespace Otter
 {
@@ -202,7 +203,22 @@ void StartPageModel::reloadTile(const QModelIndex &index, bool full)
 			return;
 		}
 
-		if (AddonsManager::getWebBackend()->requestThumbnail(url, size))
+		if (url.scheme() == QLatin1String("about"))
+		{
+			const AddonsManager::SpecialPageInformation information(AddonsManager::getSpecialPage(url.path()));
+
+			QPixmap thumbnail(size);
+			thumbnail.fill();
+
+			QPainter painter(&thumbnail);
+
+			information.icon.paint(&painter, QRect(QPoint(0, 0), size));
+
+			m_reloads[index.data(BookmarksModel::UrlRole).toUrl()] = qMakePair(index.data(BookmarksModel::IdentifierRole).toULongLong(), full);
+
+			thumbnailCreated(url, thumbnail, information.getTitle());
+		}
+		else if (AddonsManager::getWebBackend()->requestThumbnail(url, size))
 		{
 			m_reloads[index.data(BookmarksModel::UrlRole).toUrl()] = qMakePair(index.data(BookmarksModel::IdentifierRole).toULongLong(), full);
 		}
