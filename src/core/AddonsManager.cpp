@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "AddonsManager.h"
+#include "Console.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "ThemesManager.h"
@@ -141,6 +142,10 @@ void AddonsManager::loadUserScripts()
 			script->setEnabled(enabledScripts.value(scripts.at(i).fileName(), false));
 
 			m_userScripts[scripts.at(i).fileName()] = script;
+		}
+		else
+		{
+			Console::addMessage(QCoreApplication::translate("main", "Failed to find User Script file: %1").arg(path), Console::OtherCategory, Console::WarningLevel);
 		}
 	}
 
