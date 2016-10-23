@@ -27,7 +27,6 @@
 #include "../../../ui/LineEditWidget.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/PreferencesDialog.h"
-#include "../../../ui/SearchDelegate.h"
 #include "../../../ui/ToolBarWidget.h"
 #include "../../../ui/Window.h"
 
@@ -39,6 +38,74 @@
 
 namespace Otter
 {
+
+SearchDelegate::SearchDelegate(QObject *parent) : QItemDelegate(parent)
+{
+}
+
+void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	drawBackground(painter, option, index);
+
+	if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("separator"))
+	{
+		QStyleOptionFrame frameOption;
+		frameOption.palette = option.palette;
+		frameOption.rect = option.rect;
+		frameOption.state = option.state;
+		frameOption.frameShape = QFrame::HLine;
+
+		QApplication::style()->drawControl(QStyle::CE_ShapedFrame, &frameOption, painter, 0);
+
+		return;
+	}
+
+	const bool configureEntry(index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("configure"));
+	const int shortcutWidth((!configureEntry && option.rect.width() > 150) ? 40 : 0);
+	QRect titleRectangle(option.rect);
+
+	if (!index.data(Qt::DecorationRole).value<QIcon>().isNull())
+	{
+		QRect decorationRectangle(option.rect);
+		decorationRectangle.setRight(option.rect.height());
+		decorationRectangle = decorationRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
+
+		index.data(Qt::DecorationRole).value<QIcon>().paint(painter, decorationRectangle, option.decorationAlignment);
+	}
+
+	titleRectangle.setLeft(option.rect.height());
+
+	if (shortcutWidth > 0)
+	{
+		titleRectangle.setRight(titleRectangle.right() - (shortcutWidth + 5));
+	}
+
+	drawDisplay(painter, option, titleRectangle, index.data(configureEntry ? Qt::DisplayRole : Qt::UserRole).toString());
+
+	if (shortcutWidth > 0)
+	{
+		QRect shortcutReactangle(option.rect);
+		shortcutReactangle.setLeft(option.rect.right() - shortcutWidth);
+
+		drawDisplay(painter, option, shortcutReactangle, index.data(Qt::UserRole + 2).toString());
+	}
+}
+
+QSize SearchDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+	QSize size(index.data(Qt::SizeHintRole).toSize());
+
+	if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("separator"))
+	{
+		size.setHeight(option.fontMetrics.height() * 0.75);
+	}
+	else
+	{
+		size.setHeight(option.fontMetrics.height() * 1.25);
+	}
+
+	return size;
+}
 
 SearchWidget::SearchWidget(Window *window, QWidget *parent) : ComboBoxWidget(parent),
 	m_window(NULL),

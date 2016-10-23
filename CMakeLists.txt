@@ -181,7 +181,6 @@ set(otter_src
 	src/ui/ReloadTimeDialog.cpp
 	src/ui/ReportDialog.cpp
 	src/ui/SaveSessionDialog.cpp
-	src/ui/SearchDelegate.cpp
 	src/ui/SearchEnginePropertiesDialog.cpp
 	src/ui/SessionsManagerDialog.cpp
 	src/ui/SidebarWidget.cpp

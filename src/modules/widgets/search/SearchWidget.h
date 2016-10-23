@@ -26,6 +26,7 @@
 
 #include <QtCore/QTime>
 #include <QtWidgets/QCompleter>
+#include <QtWidgets/QItemDelegate>
 
 namespace Otter
 {
@@ -33,6 +34,15 @@ namespace Otter
 class LineEditWidget;
 class SearchSuggester;
 class Window;
+
+class SearchDelegate : public QItemDelegate
+{
+public:
+	explicit SearchDelegate(QObject *parent = NULL);
+
+	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+};
 
 class SearchWidget : public ComboBoxWidget
 {
