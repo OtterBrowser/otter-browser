@@ -92,7 +92,7 @@ protected:
 	{
 		ContentBlockingRule *rule;
 		QChar value;
-		QVarLengthArray<Node*, 5> children;
+		QVarLengthArray<Node*, 1> children;
 
 		Node() : rule(NULL), value(0) {}
 	};
