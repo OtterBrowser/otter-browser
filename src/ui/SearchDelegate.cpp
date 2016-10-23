@@ -82,10 +82,12 @@ QSize SearchDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelI
 
 	if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("separator"))
 	{
-		return size;
+		size.setHeight(option.fontMetrics.height() * 0.75);
 	}
-
-	size.setHeight(option.fontMetrics.height() * 1.25);
+	else
+	{
+		size.setHeight(option.fontMetrics.height() * 1.25);
+	}
 
 	return size;
 }
