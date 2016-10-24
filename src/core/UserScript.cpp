@@ -36,11 +36,29 @@ UserScript::UserScript(const QString &path, QObject *parent) : Addon(parent),
 	m_injectionTime(DocumentReadyTime),
 	m_shouldRunOnSubFrames(true)
 {
-	QFile file(path);
+	reload();
+}
+
+void UserScript::reload()
+{
+	m_source = QString();
+	m_title = QString();
+	m_description = QString();
+	m_version = QString();
+	m_homePage = QUrl();
+	m_updateUrl = QUrl();
+	m_icon = ThemesManager::getIcon(QLatin1String("addon-user-script"), false);
+	m_excludeRules = QStringList();
+	m_includeRules = QStringList();
+	m_matchRules = QStringList();
+	m_injectionTime = DocumentReadyTime;
+	m_shouldRunOnSubFrames = true;
+
+	QFile file(m_path);
 
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
-		Console::addMessage(QCoreApplication::translate("main", "Failed to open user script file: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, path);
+		Console::addMessage(QCoreApplication::translate("main", "Failed to open User Script file: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, m_path);
 
 		return;
 	}
@@ -113,7 +131,7 @@ UserScript::UserScript(const QString &path, QObject *parent) : Addon(parent),
 				}
 			}
 
-			Console::addMessage(QCoreApplication::translate("main", "Invalid match rule for User Script: %1").arg(line), Console::OtherCategory, Console::ErrorLevel, path);
+			Console::addMessage(QCoreApplication::translate("main", "Invalid match rule for User Script: %1").arg(line), Console::OtherCategory, Console::ErrorLevel, m_path);
 		}
 		else if (keyword == QLatin1String("name"))
 		{
@@ -159,7 +177,7 @@ UserScript::UserScript(const QString &path, QObject *parent) : Addon(parent),
 
 	if (!hasHeader)
 	{
-		Console::addMessage(QCoreApplication::translate("main", "Failed to locate header of user script file"), Console::OtherCategory, Console::WarningLevel, path);
+		Console::addMessage(QCoreApplication::translate("main", "Failed to locate header of User Script file"), Console::OtherCategory, Console::WarningLevel, m_path);
 	}
 }
 

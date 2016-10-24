@@ -168,6 +168,29 @@ void AddonsContentsWidget::addAddon(Addon *addon)
 	typeItem->appendRow(item);
 }
 
+void AddonsContentsWidget::reloadAddon()
+{
+	const QModelIndexList indexes(m_ui->addonsViewWidget->selectionModel()->selectedIndexes());
+
+	for (int i = 0; i < indexes.count(); ++i)
+	{
+		if (indexes.at(i).isValid() && indexes.at(i).parent() != m_model->invisibleRootItem()->index())
+		{
+			Addon::AddonType type(static_cast<Addon::AddonType>(indexes.at(i).parent().data(TypeRole).toInt()));
+
+			if (type == Addon::UserScriptType)
+			{
+				UserScript *script(AddonsManager::getUserScript(indexes.at(i).data(NameRole).toString()));
+
+				if (script)
+				{
+					script->reload();
+				}
+			}
+		}
+	}
+}
+
 void AddonsContentsWidget::removeAddons()
 {
 	const QModelIndexList indexes(m_ui->addonsViewWidget->selectionModel()->selectedIndexes());
@@ -230,6 +253,8 @@ void AddonsContentsWidget::showContextMenu(const QPoint &point)
 
 	if (index.isValid() && index.parent() != m_model->invisibleRootItem()->index())
 	{
+		menu.addAction(tr("Reload Addon"), this, SLOT(reloadAddon()));
+		menu.addSeparator();
 		menu.addAction(tr("Remove Addon…"), this, SLOT(removeAddons()))->setEnabled(false);
 		menu.addSeparator();
 	}

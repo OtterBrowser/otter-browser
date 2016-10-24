@@ -56,6 +56,9 @@ public:
 	bool isEnabledForUrl(const QUrl &url);
 	bool shouldRunOnSubFrames() const;
 
+public slots:
+	void reload();
+
 protected:
 	QString checkUrlSubString(const QString &rule, const QString &urlSubString, QString generatedUrl, int position = 0) const;
 	bool checkUrl(const QUrl &url, const QStringList &rules) const;

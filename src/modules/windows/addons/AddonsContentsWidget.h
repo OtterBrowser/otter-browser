@@ -69,6 +69,7 @@ protected slots:
 	void filterAddons(const QString &filter);
 	void addAddon();
 	void addAddon(Addon *addon);
+	void reloadAddon();
 	void removeAddons();
 	void save();
 	void showContextMenu(const QPoint &point);
