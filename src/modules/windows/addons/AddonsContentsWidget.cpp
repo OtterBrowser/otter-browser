@@ -106,7 +106,7 @@ void AddonsContentsWidget::addAddon()
 		return;
 	}
 
-	const QString targetPath(QDir(SessionsManager::getWritableDataPath(QLatin1String("scripts"))).filePath(QFileInfo(sourcePath).baseName()));
+	const QString targetPath(QDir(SessionsManager::getWritableDataPath(QLatin1String("scripts"))).filePath(QFileInfo(sourcePath).completeBaseName()));
 
 	if (QFile::exists(targetPath))
 	{
