@@ -297,6 +297,8 @@ void Loader::loadPlugin(const QString &pluginPath)
         return;
     }
 #else
+    Q_UNUSED(pluginPath)
+
     Client *client = new HunspellClient(this);
 #endif
 
