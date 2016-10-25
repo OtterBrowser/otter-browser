@@ -156,6 +156,8 @@ void QtWebKitSpellChecker::setDictionary(const QString &dictionary)
 
 QString QtWebKitSpellChecker::autoCorrectSuggestionForMisspelledWord(const QString &word)
 {
+	Q_UNUSED(word)
+
 	return QString();
 }
 
