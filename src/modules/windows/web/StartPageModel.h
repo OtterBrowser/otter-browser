@@ -20,8 +20,7 @@
 #ifndef OTTER_STARTPAGEMODEL_H
 #define OTTER_STARTPAGEMODEL_H
 
-#include <QtCore/QUrl>
-#include <QtGui/QStandardItemModel>
+#include "../../../core/BookmarksModel.h"
 
 namespace Otter
 {
@@ -33,12 +32,18 @@ class StartPageModel : public QStandardItemModel
 	Q_OBJECT
 
 public:
+	enum
+	{
+		IsDraggedRole = BookmarksModel::UserRole,
+		IsReloadingRole
+	};
+
 	explicit StartPageModel(QObject *parent = NULL);
 
 	QMimeData* mimeData(const QModelIndexList &indexes) const;
+	QVariant data(const QModelIndex &index, int role) const;
 	QStringList mimeTypes() const;
 	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
-	bool isReloadingTile(const QModelIndex &index) const;
 	bool event(QEvent *event);
 
 public slots:

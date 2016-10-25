@@ -18,7 +18,7 @@
 **************************************************************************/
 
 #include "TileDelegate.h"
-#include "../../../core/BookmarksModel.h"
+#include "StartPageModel.h"
 #include "../../../core/HistoryManager.h"
 #include "../../../core/SessionsManager.h"
 #include "../../../core/SettingsManager.h"
@@ -48,7 +48,7 @@ void TileDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, 
 
 	painter->setRenderHint(QPainter::HighQualityAntialiasing);
 
-	if (index.data(BookmarksModel::UserRole).toBool() || index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
+	if (index.data(StartPageModel::IsDraggedRole).toBool() || index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
 	{
 		const bool isAddTile(index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"));
 

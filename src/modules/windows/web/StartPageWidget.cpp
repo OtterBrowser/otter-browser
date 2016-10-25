@@ -535,7 +535,7 @@ void StartPageWidget::updateTiles()
 {
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		if (m_model->item(i) && m_model->isReloadingTile(m_model->index(i, 0)))
+		if (m_model->index(i, 0).data(StartPageModel::IsReloadingRole).toBool())
 		{
 			m_listView->openPersistentEditor(m_model->index(i, 0));
 		}

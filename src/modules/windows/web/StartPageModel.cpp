@@ -20,7 +20,6 @@
 #include "StartPageModel.h"
 #include "../../../core/AddonsManager.h"
 #include "../../../core/BookmarksManager.h"
-#include "../../../core/BookmarksModel.h"
 #include "../../../core/SessionsManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/WebBackend.h"
@@ -59,9 +58,9 @@ void StartPageModel::dragEnded()
 {
 	for (int i = 0; i < rowCount(); ++i)
 	{
-		if (item(i) && item(i)->data(BookmarksModel::UserRole).toBool())
+		if (item(i) && item(i)->data(IsDraggedRole).toBool())
 		{
-			item(i)->setData(QVariant(), BookmarksModel::UserRole);
+			item(i)->setData(QVariant(), IsDraggedRole);
 
 			emit isReloadingTileChanged(item(i)->index());
 		}
@@ -235,7 +234,7 @@ QMimeData* StartPageModel::mimeData(const QModelIndexList &indexes) const
 	{
 		mimeData->setProperty("x-item-index", indexes.at(0));
 
-		itemFromIndex(indexes.at(0))->setData(true, BookmarksModel::UserRole);
+		itemFromIndex(indexes.at(0))->setData(true, IsDraggedRole);
 	}
 
 	for (int i = 0; i < indexes.count(); ++i)
@@ -253,6 +252,16 @@ QMimeData* StartPageModel::mimeData(const QModelIndexList &indexes) const
 	connect(mimeData, SIGNAL(destroyed()), this, SLOT(dragEnded()));
 
 	return mimeData;
+}
+
+QVariant StartPageModel::data(const QModelIndex &index, int role) const
+{
+	if (role == IsReloadingRole)
+	{
+		return m_reloads.contains(index.data(BookmarksModel::UrlRole).toUrl());
+	}
+
+	return QStandardItemModel::data(index, role);
 }
 
 QStringList StartPageModel::mimeTypes() const
@@ -289,11 +298,6 @@ bool StartPageModel::event(QEvent *event)
 	}
 
 	return QStandardItemModel::event(event);
-}
-
-bool StartPageModel::isReloadingTile(const QModelIndex &index) const
-{
-	return m_reloads.contains(index.data(BookmarksModel::UrlRole).toUrl());
 }
 
 }
