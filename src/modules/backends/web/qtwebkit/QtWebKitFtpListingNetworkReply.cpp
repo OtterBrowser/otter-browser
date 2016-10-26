@@ -154,7 +154,7 @@ void QtWebKitFtpListingNetworkReply::processCommand(int command, bool isError)
 				variables[QLatin1String("title")] = request().url().toString() + (request().url().path().endsWith(QLatin1Char('/')) ? QString() : QLatin1String("/"));
 				variables[QLatin1String("description")] = tr("Directory Contents");
 				variables[QLatin1String("dir")] = (QGuiApplication::isLeftToRight() ? QLatin1String("ltr") : QLatin1String("rtl"));
-				variables[QLatin1String("navigation")] = navigation.join(QString());
+				variables[QLatin1String("navigation")] = navigation.join(QLatin1String("&shy;"));
 				variables[QLatin1String("headerName")] = tr("Name");
 				variables[QLatin1String("headerType")] = tr("Type");
 				variables[QLatin1String("headerSize")] = tr("Size");
