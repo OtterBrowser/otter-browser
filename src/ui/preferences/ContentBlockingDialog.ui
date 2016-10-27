@@ -72,9 +72,6 @@
           <layout class="QVBoxLayout" name="profilesButtonsLayout" stretch="0,0,0,0,1">
            <item>
             <widget class="QPushButton" name="addProfileButton">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
              <property name="text">
               <string>Add</string>
              </property>

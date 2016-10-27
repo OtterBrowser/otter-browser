@@ -35,16 +35,17 @@
 namespace Otter
 {
 
-ContentBlockingProfile::ContentBlockingProfile(const QList<QString> languages, const QUrl updateUrl, const QDateTime lastUpdate, const QString &name, int updateInterval, const ProfileCategory &category, QObject *parent) : QObject(parent),
+ContentBlockingProfile::ContentBlockingProfile(const QList<QString> languages, const QUrl updateUrl, const QDateTime lastUpdate, const QString &name, const QString &title, int updateInterval, const ProfileCategory &category, QObject *parent) : QObject(parent),
 	m_root(NULL),
 	m_networkReply(NULL),
-	m_category(category),
 	m_name(name),
-	m_updateUrl(updateUrl, true),
+	m_title(title, true),
 	m_lastUpdate(lastUpdate),
+	m_updateUrl(updateUrl, true),
 	m_languages({QLocale::AnyLanguage}),
-	m_enableWildcards(SettingsManager::getValue(SettingsManager::ContentBlocking_EnableWildcardsOption).toBool()),
+	m_category(category),
 	m_updateInterval(updateInterval),
+	m_enableWildcards(SettingsManager::getValue(SettingsManager::ContentBlocking_EnableWildcardsOption).toBool()),
 	m_isUpdating(false),
 	m_isEmpty(true),
 	m_wasLoaded(false)
@@ -133,9 +134,9 @@ void ContentBlockingProfile::loadHeader(const QString &path)
 			break;
 		}
 
-		if (line.startsWith(QLatin1String("! Title: ")))
+		if (line.startsWith(QLatin1String("! Title: ")) && m_title.first.isEmpty())
 		{
-			m_title = line.remove(QLatin1String("! Title: "));
+			m_title = qMakePair(line.remove(QLatin1String("! Title: ")), false);
 
 			continue;
 		}
@@ -144,7 +145,7 @@ void ContentBlockingProfile::loadHeader(const QString &path)
 
 		if (line.startsWith(QLatin1String("!URL:")) && m_updateUrl.first.isEmpty())
 		{
-			m_updateUrl = QPair<QUrl,bool>(QUrl(line.remove(QLatin1String("!URL:"))), !isBundled);
+			m_updateUrl = qMakePair(QUrl(line.remove(QLatin1String("!URL:"))), !isBundled);
 
 			continue;
 		}
@@ -401,7 +402,7 @@ void ContentBlockingProfile::replyFinished()
 
 	QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking")));
 
-	QFile file(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking") + QLatin1Char('/') + m_name + QLatin1String(".txt")));
+	QFile file(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking/%1.txt")).arg(m_name));
 
 	if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate))
 	{
@@ -443,6 +444,36 @@ void ContentBlockingProfile::setUpdateInterval(int interval)
 	}
 }
 
+void ContentBlockingProfile::setUpdateUrl(const QUrl url)
+{
+	if (url.isValid() && url != m_updateUrl.first)
+	{
+		m_updateUrl = qMakePair(url, true);
+
+		emit profileModified(m_name);
+	}
+}
+
+void ContentBlockingProfile::setCategory(const ProfileCategory &category)
+{
+	if (category != m_category)
+	{
+		m_category = category;
+
+		emit profileModified(m_name);
+	}
+}
+
+void ContentBlockingProfile::setTitle(const QString &title)
+{
+	if (title != m_title.first)
+	{
+		m_title = qMakePair(title, true);
+
+		emit profileModified(m_name);
+	}
+}
+
 QString ContentBlockingProfile::getName() const
 {
 	return m_name;
@@ -450,7 +481,7 @@ QString ContentBlockingProfile::getName() const
 
 QString ContentBlockingProfile::getTitle() const
 {
-	return (m_title.isEmpty() ? tr("(Unknown)") : m_title);
+	return (m_title.first.isEmpty() ? tr("(Unknown)") : m_title.first);
 }
 
 QString ContentBlockingProfile::getPath(bool forceBundled) const
@@ -543,6 +574,11 @@ ContentBlockingProfile::ProfileCategory ContentBlockingProfile::getCategory() co
 int ContentBlockingProfile::getUpdateInterval() const
 {
 	return m_updateInterval;
+}
+
+bool ContentBlockingProfile::hasCustomTitle() const
+{
+	return m_title.second;
 }
 
 bool ContentBlockingProfile::hasCustomUpdateUrl() const

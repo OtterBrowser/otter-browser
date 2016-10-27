@@ -69,10 +69,13 @@ public:
 		bool needsDomainCheck;
 	};
 
-	explicit ContentBlockingProfile(const QList<QString> languages, const QUrl updateUrl, const QDateTime lastUpdate, const QString &name, int updateInterval, const ProfileCategory &category, QObject *parent = NULL);
+	explicit ContentBlockingProfile(const QList<QString> languages, const QUrl updateUrl, const QDateTime lastUpdate, const QString &name, const QString &title, int updateInterval, const ProfileCategory &category, QObject *parent = NULL);
 
 	void clear();
+	void setCategory(const ProfileCategory &category);
+	void setTitle(const QString &title);
 	void setUpdateInterval(int interval);
+	void setUpdateUrl(const QUrl url);
 	QString getName() const;
 	QString getTitle() const;
 	QUrl getUpdateUrl() const;
@@ -85,6 +88,7 @@ public:
 	ProfileCategory getCategory() const;
 	int getUpdateInterval() const;
 	bool downloadRules();
+	bool hasCustomTitle() const;
 	bool hasCustomUpdateUrl() const;
 
 protected:
@@ -119,9 +123,9 @@ private:
 	QString m_requestHost;
 	QString m_baseUrlHost;
 	QString m_name;
-	QString m_title;
 	QDateTime m_lastUpdate;
 	QRegularExpression m_domainExpression;
+	QPair<QString, bool> m_title;
 	QPair<QUrl, bool> m_updateUrl;
 	QStringList m_styleSheet;
 	QList<QLocale::Language> m_languages;

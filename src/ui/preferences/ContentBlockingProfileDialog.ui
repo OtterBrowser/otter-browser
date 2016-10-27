@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Otter::ContentBlockingProfileDialog</class>
+ <widget class="QDialog" name="Otter::ContentBlockingProfileDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>180</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Profile Settings</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="titleLabel">
+     <property name="text">
+      <string>Title:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="titleEdit"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="updateUrlLabel">
+     <property name="text">
+      <string>Update URL:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="updateUrlEdit"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="updateIntervalLabel">
+     <property name="text">
+      <string>Update interval:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QSpinBox" name="updateIntervalSpinBox"/>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="lastUpdateLabel">
+     <property name="text">
+      <string>Last update:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="Otter::TextLabelWidget" name="lastUpdateTextLabel" native="true">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0" colspan="2">
+    <widget class="QDialogButtonBox" name="confirmButtonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="categoryLabel">
+     <property name="text">
+      <string>Category:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QComboBox" name="categoryComboBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Otter::TextLabelWidget</class>
+   <extends>QWidget</extends>
+   <header>src/ui/textlabelwidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

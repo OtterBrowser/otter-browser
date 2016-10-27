@@ -45,6 +45,7 @@ public:
 	};
 
 	static void createInstance(QObject *parent = NULL);
+	static void addProfile(ContentBlockingProfile *profile);
 	static QStandardItemModel* createModel(QObject *parent, const QStringList &profiles);
 	static ContentBlockingManager* getInstance();
 	static ContentBlockingProfile* getProfile(const QString &profile);
