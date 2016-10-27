@@ -623,7 +623,7 @@ bool ContentBlockingProfile::downloadRules()
 
 bool ContentBlockingProfile::loadRules()
 {
-	if (m_isEmpty)
+	if (m_isEmpty && !m_updateUrl.first.isEmpty())
 	{
 		downloadRules();
 
