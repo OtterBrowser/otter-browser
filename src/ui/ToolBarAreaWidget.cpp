@@ -334,14 +334,7 @@ void ToolBarAreaWidget::toolBarAdded(int identifier)
 
 	ToolBarWidget *toolBar(new ToolBarWidget(identifier, NULL, this));
 
-	if (definition.row < 0)
-	{
-		m_layout->addWidget(toolBar);
-	}
-	else
-	{
-		m_layout->addWidget(toolBar);
-	}
+	m_layout->addWidget(toolBar);
 
 	if (identifier == ToolBarsManager::TabBar)
 	{

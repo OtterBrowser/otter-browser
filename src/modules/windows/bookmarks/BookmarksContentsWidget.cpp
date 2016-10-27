@@ -395,7 +395,7 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 		WindowsManager *manager(SessionsManager::getWindowsManager());
 
-		if (mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
+		if (manager && mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
 		{
 			BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->indexAt(mouseEvent->pos())));
 

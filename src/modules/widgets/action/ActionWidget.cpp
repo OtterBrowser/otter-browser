@@ -140,7 +140,7 @@ bool ActionWidget::event(QEvent *event)
 		Action *action(qobject_cast<Action*>(defaultAction()));
 		QHelpEvent *helpEvent(dynamic_cast<QHelpEvent*>(event));
 
-		if (helpEvent)
+		if (action && helpEvent)
 		{
 			const QVector<QKeySequence> shortcuts(ActionsManager::getActionDefinition(action ? action->getIdentifier() : m_identifier).shortcuts);
 

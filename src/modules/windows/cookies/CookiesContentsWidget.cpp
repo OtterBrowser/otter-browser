@@ -72,7 +72,7 @@ void CookiesContentsWidget::changeEvent(QEvent *event)
 
 void CookiesContentsWidget::populateCookies()
 {
-	CookieJar *cookieJar(qobject_cast<CookieJar*>(NetworkManagerFactory::getCookieJar()));
+	CookieJar *cookieJar(NetworkManagerFactory::getCookieJar());
 	const QList<QNetworkCookie> cookies(cookieJar->getCookies());
 
 	for (int i = 0; i < cookies.count(); ++i)
@@ -237,7 +237,6 @@ void CookiesContentsWidget::removeDomainCookies()
 		return;
 	}
 
-	CookieJar *cookieJar(NetworkManagerFactory::getCookieJar());
 	QList<QNetworkCookie> cookies;
 
 	for (int i = 0; i < indexes.count(); ++i)
@@ -278,6 +277,8 @@ void CookiesContentsWidget::removeDomainCookies()
 
 	if (messageBox.exec() == QMessageBox::Yes)
 	{
+		CookieJar *cookieJar(NetworkManagerFactory::getCookieJar());
+
 		for (int i = 0; i < cookies.count(); ++i)
 		{
 			cookieJar->forceDeleteCookie(cookies.at(i));

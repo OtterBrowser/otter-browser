@@ -1706,11 +1706,11 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 		{
 			setClickPosition(mouseEvent->pos());
 			updateHitTestResult(mouseEvent->pos());
-		}
 
-		if (mouseEvent->button() == Qt::LeftButton && !getCurrentHitTestResult().linkUrl.isEmpty())
-		{
-			m_lastUrlClickTime = QDateTime::currentDateTime();
+			if (mouseEvent->button() == Qt::LeftButton && !getCurrentHitTestResult().linkUrl.isEmpty())
+			{
+				m_lastUrlClickTime = QDateTime::currentDateTime();
+			}
 		}
 
 		QList<GesturesManager::GesturesContext> contexts;
