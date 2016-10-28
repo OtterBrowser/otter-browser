@@ -34,6 +34,13 @@ class SearchEnginesManager : public QObject
 	Q_OBJECT
 
 public:
+	enum SearchEngineRole
+	{
+		TitleRole = Qt::UserRole,
+		IdentifierRole,
+		KeywordRole
+	};
+
 	struct SearchUrl
 	{
 		QString url;

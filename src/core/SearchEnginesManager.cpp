@@ -156,9 +156,9 @@ void SearchEnginesManager::updateSearchEnginesModel()
 		if (!search.identifier.isEmpty())
 		{
 			QStandardItem *item(new QStandardItem((search.icon.isNull() ? ThemesManager::getIcon(QLatin1String("edit-find")) : search.icon), QString()));
-			item->setData(search.title, Qt::UserRole);
-			item->setData(search.identifier, (Qt::UserRole + 1));
-			item->setData(search.keyword, (Qt::UserRole + 2));
+			item->setData(search.title, TitleRole);
+			item->setData(search.identifier, IdentifierRole);
+			item->setData(search.keyword, KeywordRole);
 			item->setFlags(item->flags() | Qt::ItemNeverHasChildren);
 
 			m_searchEnginesModel->appendRow(item);

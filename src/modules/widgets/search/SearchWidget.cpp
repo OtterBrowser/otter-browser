@@ -80,14 +80,14 @@ void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 		titleRectangle.setRight(titleRectangle.right() - (shortcutWidth + 5));
 	}
 
-	drawDisplay(painter, option, titleRectangle, index.data(configureEntry ? Qt::DisplayRole : Qt::UserRole).toString());
+	drawDisplay(painter, option, titleRectangle, index.data(configureEntry ? Qt::DisplayRole : SearchEnginesManager::TitleRole).toString());
 
 	if (shortcutWidth > 0)
 	{
 		QRect shortcutReactangle(option.rect);
 		shortcutReactangle.setLeft(option.rect.right() - shortcutWidth);
 
-		drawDisplay(painter, option, shortcutReactangle, index.data(Qt::UserRole + 2).toString());
+		drawDisplay(painter, option, shortcutReactangle, index.data(SearchEnginesManager::KeywordRole).toString());
 	}
 }
 
@@ -160,7 +160,7 @@ void SearchWidget::changeEvent(QEvent *event)
 
 	if (event->type() == QEvent::LanguageChange && itemData(currentIndex(), Qt::AccessibleDescriptionRole).toString().isEmpty())
 	{
-		m_lineEdit->setPlaceholderText(tr("Search using %1").arg(currentData(Qt::UserRole).toString()));
+		m_lineEdit->setPlaceholderText(tr("Search using %1").arg(currentData(SearchEnginesManager::TitleRole).toString()));
 	}
 }
 
@@ -426,10 +426,10 @@ void SearchWidget::currentIndexChanged(int index)
 		{
 			SessionsManager::markSessionModified();
 
-			emit searchEngineChanged(currentData(Qt::UserRole + 1).toString());
+			emit searchEngineChanged(currentData(SearchEnginesManager::IdentifierRole).toString());
 		}
 
-		m_lineEdit->setPlaceholderText(tr("Search using %1").arg(itemData(index, Qt::UserRole).toString()));
+		m_lineEdit->setPlaceholderText(tr("Search using %1").arg(itemData(index, SearchEnginesManager::TitleRole).toString()));
 		m_lineEdit->setText(m_query);
 
 		if (m_suggester)
@@ -487,7 +487,7 @@ void SearchWidget::sendRequest(const QString &query)
 	{
 		if (m_query.isEmpty())
 		{
-			const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(currentData(Qt::UserRole + 1).toString()));
+			const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(currentData(SearchEnginesManager::IdentifierRole).toString()));
 
 			if (searchEngine.formUrl.isValid())
 			{
@@ -496,7 +496,7 @@ void SearchWidget::sendRequest(const QString &query)
 		}
 		else
 		{
-			emit requestedSearch(m_query, currentData(Qt::UserRole + 1).toString(), WindowsManager::calculateOpenHints());
+			emit requestedSearch(m_query, currentData(SearchEnginesManager::IdentifierRole).toString(), WindowsManager::calculateOpenHints());
 		}
 	}
 }
@@ -644,7 +644,7 @@ void SearchWidget::setWindow(Window *window)
 
 QString SearchWidget::getCurrentSearchEngine() const
 {
-	return currentData(Qt::UserRole + 1).toString();
+	return currentData(SearchEnginesManager::IdentifierRole).toString();
 }
 
 QVariantMap SearchWidget::getOptions() const
