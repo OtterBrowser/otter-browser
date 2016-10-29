@@ -104,7 +104,7 @@ void CookiesContentsWidget::addCookie(const QNetworkCookie &cookie)
 	{
 		for (int i = 0; i < domainItem->rowCount(); ++i)
 		{
-			if (domainItem->child(i, 0)->text() == cookie.name() && domainItem->child(i, 0)->data(Qt::UserRole).toString() == cookie.path())
+			if (domainItem->child(i, 0)->text() == cookie.name() && domainItem->child(i, 0)->data(PathRole).toString() == cookie.path())
 			{
 				return;
 			}
@@ -124,8 +124,8 @@ void CookiesContentsWidget::addCookie(const QNetworkCookie &cookie)
 	}
 
 	QStandardItem *cookieItem(new QStandardItem(QString(cookie.name())));
-	cookieItem->setData(cookie.path(), Qt::UserRole);
-	cookieItem->setData(cookie.domain(), (Qt::UserRole + 1));
+	cookieItem->setData(cookie.path(), PathRole);
+	cookieItem->setData(cookie.domain(), DomainRole);
 	cookieItem->setToolTip(cookie.name());
 	cookieItem->setFlags(cookieItem->flags() | Qt::ItemNeverHasChildren);
 
@@ -144,7 +144,7 @@ void CookiesContentsWidget::removeCookie(const QNetworkCookie &cookie)
 
 		for (int j = 0; j < domainItem->rowCount(); ++j)
 		{
-			if (domainItem->child(j, 0)->text() == cookie.name() && domainItem->child(j, 0)->data(Qt::UserRole).toString() == cookie.path())
+			if (domainItem->child(j, 0)->text() == cookie.name() && domainItem->child(j, 0)->data(PathRole).toString() == cookie.path())
 			{
 				point = m_ui->cookiesViewWidget->visualRect(domainItem->child(j, 0)->index()).center();
 
@@ -192,7 +192,7 @@ void CookiesContentsWidget::removeCookies()
 			continue;
 		}
 
-		if (indexes.at(i).data(Qt::UserRole).toString().isEmpty())
+		if (indexes.at(i).data(PathRole).toString().isEmpty())
 		{
 			QStandardItem *domainItem(m_model->itemFromIndex(indexes.at(i)));
 
@@ -375,13 +375,13 @@ void CookiesContentsWidget::updateActions()
 	m_ui->secureCheckBox->setChecked(false);
 	m_ui->httpOnlyCheckBox->setChecked(false);
 
-	if (indexes.count() == 1 && !indexes.first().data(Qt::UserRole).toString().isEmpty())
+	if (indexes.count() == 1 && !indexes.first().data(PathRole).toString().isEmpty())
 	{
 		const QModelIndex index(indexes.first());
 		QUrl url;
 		url.setScheme(QLatin1String("http"));
 		url.setHost(index.parent().data(Qt::ToolTipRole).toString());
-		url.setPath(index.data(Qt::UserRole).toString());
+		url.setPath(index.data(PathRole).toString());
 
 		const QList<QNetworkCookie> cookies(NetworkManagerFactory::getCookieJar()->cookiesForUrl(url));
 
@@ -467,8 +467,8 @@ QIcon CookiesContentsWidget::getIcon() const
 QNetworkCookie CookiesContentsWidget::getCookie(const QModelIndex &index) const
 {
 	QNetworkCookie cookie(index.data(Qt::DisplayRole).toString().toUtf8());
-	cookie.setDomain(index.data(Qt::UserRole + 1).toString());
-	cookie.setPath(index.data(Qt::UserRole).toString());
+	cookie.setDomain(index.data(DomainRole).toString());
+	cookie.setPath(index.data(PathRole).toString());
 
 	return cookie;
 }
