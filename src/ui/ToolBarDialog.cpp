@@ -119,7 +119,7 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 	{
 		QStandardItem *item(new QStandardItem(QCoreApplication::translate("actions", (actions.at(i).description.isEmpty() ? actions.at(i).text : actions.at(i).description).toUtf8().constData())));
 		item->setData(QColor(Qt::transparent), Qt::DecorationRole);
-		item->setData(ActionsManager::getActionName(actions.at(i).identifier) + QLatin1String("Action"), Qt::UserRole);
+		item->setData(ActionsManager::getActionName(actions.at(i).identifier) + QLatin1String("Action"), IdentifierRole);
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 		item->setToolTip(item->text());
 
@@ -212,12 +212,12 @@ void ToolBarDialog::addEntry()
 		QStandardItem *newItem(sourceItem->clone());
 		QStandardItem *targetItem(m_ui->currentEntriesItemView->getItem(m_ui->currentEntriesItemView->currentIndex()));
 
-		if (targetItem && targetItem->data(Qt::UserRole).toString() != QLatin1String("CustomMenu"))
+		if (targetItem && targetItem->data(IdentifierRole).toString() != QLatin1String("CustomMenu"))
 		{
 			targetItem = targetItem->parent();
 		}
 
-		if (targetItem && targetItem->data(Qt::UserRole).toString() == QLatin1String("CustomMenu"))
+		if (targetItem && targetItem->data(IdentifierRole).toString() == QLatin1String("CustomMenu"))
 		{
 			int row(-1);
 
@@ -248,8 +248,8 @@ void ToolBarDialog::addEntry()
 void ToolBarDialog::editEntry()
 {
 	const QModelIndex index(m_ui->currentEntriesItemView->currentIndex());
-	const QString identifier(index.data(Qt::UserRole).toString());
-	QVariantMap options(index.data(Qt::UserRole + 1).toMap());
+	const QString identifier(index.data(IdentifierRole).toString());
+	QVariantMap options(index.data(OptionsRole).toMap());
 	QList<QPair<QString, OptionWidget*> > widgets;
 
 	if (identifier == QLatin1String("SearchWidget"))
@@ -331,7 +331,7 @@ void ToolBarDialog::editEntry()
 	m_ui->currentEntriesItemView->setData(index, item->text(), Qt::DisplayRole);
 	m_ui->currentEntriesItemView->setData(index, item->text(), Qt::ToolTipRole);
 	m_ui->currentEntriesItemView->setData(index, item->icon(), Qt::DecorationRole);
-	m_ui->currentEntriesItemView->setData(index, options, (Qt::UserRole + 1));
+	m_ui->currentEntriesItemView->setData(index, options, OptionsRole);
 
 	delete item;
 }
@@ -353,10 +353,10 @@ void ToolBarDialog::restoreDefaults()
 
 void ToolBarDialog::updateActions()
 {
-	const QString sourceIdentifier(m_ui->availableEntriesItemView->currentIndex().data(Qt::UserRole).toString());
-	const QString targetIdentifier(m_ui->currentEntriesItemView->currentIndex().data(Qt::UserRole).toString());
+	const QString sourceIdentifier(m_ui->availableEntriesItemView->currentIndex().data(IdentifierRole).toString());
+	const QString targetIdentifier(m_ui->currentEntriesItemView->currentIndex().data(IdentifierRole).toString());
 
-	m_ui->addButton->setEnabled(!sourceIdentifier.isEmpty() && (!(m_ui->currentEntriesItemView->currentIndex().data(Qt::UserRole).toString() == QLatin1String("CustomMenu") || m_ui->currentEntriesItemView->currentIndex().parent().data(Qt::UserRole).toString() == QLatin1String("CustomMenu")) || (sourceIdentifier == QLatin1String("separator") || sourceIdentifier.endsWith(QLatin1String("Action")) || sourceIdentifier.endsWith(QLatin1String("Menu")))));
+	m_ui->addButton->setEnabled(!sourceIdentifier.isEmpty() && (!(m_ui->currentEntriesItemView->currentIndex().data(IdentifierRole).toString() == QLatin1String("CustomMenu") || m_ui->currentEntriesItemView->currentIndex().parent().data(IdentifierRole).toString() == QLatin1String("CustomMenu")) || (sourceIdentifier == QLatin1String("separator") || sourceIdentifier.endsWith(QLatin1String("Action")) || sourceIdentifier.endsWith(QLatin1String("Menu")))));
 	m_ui->removeButton->setEnabled(m_ui->currentEntriesItemView->currentIndex().isValid() && targetIdentifier != QLatin1String("MenuBarWidget") && targetIdentifier != QLatin1String("TabBarWidget"));
 	m_ui->editEntryButton->setEnabled(targetIdentifier == QLatin1String("ContentBlockingInformationWidget") || targetIdentifier == QLatin1String("MenuButtonWidget") || targetIdentifier == QLatin1String("PanelChooserWidget") || targetIdentifier == QLatin1String("SearchWidget") || targetIdentifier.startsWith(QLatin1String("bookmarks:")) || targetIdentifier.endsWith(QLatin1String("Action")) || targetIdentifier.endsWith(QLatin1String("Menu")));
 }
@@ -365,7 +365,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 {
 	QStandardItem *item(new QStandardItem());
 	item->setData(QColor(Qt::transparent), Qt::DecorationRole);
-	item->setData(identifier, Qt::UserRole);
+	item->setData(identifier, IdentifierRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemNeverHasChildren);
 
 	if (identifier == QLatin1String("separator"))
@@ -508,7 +508,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 
 	if (!options.isEmpty())
 	{
-		item->setData(options, (Qt::UserRole + 1));
+		item->setData(options, OptionsRole);
 
 		if (options.contains(QLatin1String("icon")))
 		{
@@ -550,8 +550,8 @@ ActionsManager::ActionEntryDefinition ToolBarDialog::getEntry(QStandardItem *ite
 		return definition;
 	}
 
-	definition.action = item->data(Qt::UserRole).toString();
-	definition.options = item->data(Qt::UserRole + 1).toMap();
+	definition.action = item->data(IdentifierRole).toString();
+	definition.options = item->data(OptionsRole).toMap();
 
 	if (definition.action == QLatin1String("CustomMenu"))
 	{

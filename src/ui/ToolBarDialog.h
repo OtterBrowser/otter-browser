@@ -38,6 +38,12 @@ class ToolBarDialog : public Dialog
 	Q_OBJECT
 
 public:
+	enum DataRole
+	{
+		IdentifierRole = Qt::UserRole,
+		OptionsRole
+	};
+
 	explicit ToolBarDialog(int identifier = -1, QWidget *parent = NULL);
 	~ToolBarDialog();
 
