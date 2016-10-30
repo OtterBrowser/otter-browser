@@ -78,19 +78,19 @@ void PasswordsContentsWidget::populatePasswords()
 		const QUrl url(QStringLiteral("http://%1/").arg(hosts.at(i)));
 		const QList<PasswordsManager::PasswordInformation> passwords(PasswordsManager::getPasswords(url));
 		QStandardItem *hostItem(new QStandardItem(HistoryManager::getIcon(url), hosts.at(i)));
-		hostItem->setData(hosts.at(i), Qt::UserRole);
+		hostItem->setData(hosts.at(i), HostRole);
 
 		for (int j = 0; j < passwords.count(); ++j)
 		{
 			QStandardItem *setItem(new QStandardItem(tr("Set #%1").arg(j + 1)));
-			setItem->setData(passwords.at(j).url, Qt::UserRole);
-			setItem->setData(((passwords.at(j).type == PasswordsManager::AuthPassword) ? QLatin1String("auth") : QLatin1String("form")), (Qt::UserRole + 1));
+			setItem->setData(passwords.at(j).url, UrlRole);
+			setItem->setData(((passwords.at(j).type == PasswordsManager::AuthPassword) ? QLatin1String("auth") : QLatin1String("form")), AuthTypeRole);
 
 			for (int k = 0; k < passwords.at(j).fields.count(); ++k)
 			{
 				const bool isPassword(passwords.at(j).fields.at(k).type == PasswordsManager::PasswordField);
 				QList<QStandardItem*> fieldItems({new QStandardItem(passwords.at(j).fields.at(k).name), new QStandardItem(isPassword ? QLatin1String("*****") : passwords.at(j).fields.at(k).value)});
-				fieldItems[0]->setData((isPassword ? QLatin1String("password") : QLatin1String("text")), Qt::UserRole);
+				fieldItems[0]->setData((isPassword ? QLatin1String("password") : QLatin1String("text")), FieldTypeRole);
 
 				setItem->appendRow(fieldItems);
 			}
@@ -203,7 +203,7 @@ void PasswordsContentsWidget::removeHostPasswords()
 
 		if (hostIndex.isValid())
 		{
-			const QString host(hostIndex.data(Qt::UserRole).toString());
+			const QString host(hostIndex.data(HostRole).toString());
 
 			if (!host.isEmpty() && !hosts.contains(host))
 			{
@@ -359,13 +359,13 @@ QIcon PasswordsContentsWidget::getIcon() const
 PasswordsManager::PasswordInformation PasswordsContentsWidget::getPassword(const QModelIndex &index) const
 {
 	PasswordsManager::PasswordInformation password;
-	password.url = index.data(Qt::UserRole).toString();
-	password.type = ((index.data(Qt::UserRole + 1).toString() == QLatin1String("auth")) ? PasswordsManager::AuthPassword : PasswordsManager::FormPassword);
+	password.url = index.data(UrlRole).toString();
+	password.type = ((index.data(AuthTypeRole).toString() == QLatin1String("auth")) ? PasswordsManager::AuthPassword : PasswordsManager::FormPassword);
 
 	for (int i = 0; i < m_model->rowCount(index); ++i)
 	{
 		const QModelIndex nameIndex(index.child(i, 0));
-		const bool isPassword(nameIndex.data(Qt::UserRole).toString() == QLatin1String("password"));
+		const bool isPassword(nameIndex.data(FieldTypeRole).toString() == QLatin1String("password"));
 		PasswordsManager::FieldInformation field;
 		field.name = nameIndex.data(Qt::DisplayRole).toString();
 		field.value = (isPassword ? QString() : index.child(i, 1).data(Qt::DisplayRole).toString());

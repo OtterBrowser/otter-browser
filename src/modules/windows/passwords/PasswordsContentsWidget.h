@@ -40,6 +40,14 @@ class PasswordsContentsWidget : public ContentsWidget
 	Q_OBJECT
 
 public:
+	enum DataRole
+	{
+		HostRole = Qt::UserRole,
+		UrlRole,
+		AuthTypeRole,
+		FieldTypeRole
+	};
+
 	explicit PasswordsContentsWidget(Window *window);
 	~PasswordsContentsWidget();
 
