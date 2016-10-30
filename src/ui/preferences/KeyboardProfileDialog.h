@@ -60,6 +60,12 @@ class KeyboardProfileDialog : public Dialog
 	Q_OBJECT
 
 public:
+	enum DataRole
+	{
+		IdentifierRole = Qt::UserRole,
+		ShortcutsRole
+	};
+
 	explicit KeyboardProfileDialog(const QString &profile, const QHash<QString, KeyboardProfile> &profiles, QWidget *parent = NULL);
 	~KeyboardProfileDialog();
 

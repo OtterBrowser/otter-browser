@@ -63,7 +63,7 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 	{
 		QStandardItem *item(new QStandardItem(QCoreApplication::translate("actions", (definitions.at(i).description.isEmpty() ? definitions.at(i).text : definitions.at(i).description).toUtf8().constData())));
 		item->setData(QColor(Qt::transparent), Qt::DecorationRole);
-		item->setData(definitions.at(i).identifier, Qt::UserRole);
+		item->setData(definitions.at(i).identifier, IdentifierRole);
 		item->setToolTip(ActionsManager::getActionName(definitions.at(i).identifier));
 		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 
@@ -81,7 +81,7 @@ KeyboardProfileDialog::KeyboardProfileDialog(const QString &profile, const QHash
 				shortcuts.append(profiles[profile].shortcuts[definitions.at(i).identifier].at(j).toString());
 			}
 
-			item->setData(shortcuts.join(QLatin1Char(' ')), (Qt::UserRole + 1));
+			item->setData(shortcuts.join(QLatin1Char(' ')), ShortcutsRole);
 		}
 
 		model->appendRow(item);
@@ -161,7 +161,7 @@ void KeyboardProfileDialog::updateActionsActions()
 
 	m_ui->addShortcutButton->setEnabled(true);
 
-	const QStringList rawShortcuts(m_currentAction.data(Qt::UserRole + 1).toString().split(QLatin1Char(' '), QString::SkipEmptyParts));
+	const QStringList rawShortcuts(m_currentAction.data(ShortcutsRole).toString().split(QLatin1Char(' '), QString::SkipEmptyParts));
 
 	for (int i = 0; i < rawShortcuts.count(); ++i)
 	{
@@ -203,7 +203,7 @@ void KeyboardProfileDialog::saveShortcuts()
 		}
 	}
 
-	m_ui->actionsViewWidget->setData(m_currentAction, shortcuts.join(QLatin1Char(' ')), (Qt::UserRole + 1));
+	m_ui->actionsViewWidget->setData(m_currentAction, shortcuts.join(QLatin1Char(' ')), ShortcutsRole);
 }
 
 KeyboardProfile KeyboardProfileDialog::getProfile() const
@@ -217,7 +217,7 @@ KeyboardProfile KeyboardProfileDialog::getProfile() const
 
 	for (int i = 0; i < m_ui->actionsViewWidget->getRowCount(); ++i)
 	{
-		const QStringList rawShortcuts(m_ui->actionsViewWidget->getIndex(i, 0).data(Qt::UserRole + 1).toString().split(QLatin1Char(' '), QString::SkipEmptyParts));
+		const QStringList rawShortcuts(m_ui->actionsViewWidget->getIndex(i, 0).data(ShortcutsRole).toString().split(QLatin1Char(' '), QString::SkipEmptyParts));
 
 		if (!rawShortcuts.isEmpty())
 		{
@@ -228,7 +228,7 @@ KeyboardProfile KeyboardProfileDialog::getProfile() const
 				shortcuts.append(QKeySequence(rawShortcuts.at(j)));
 			}
 
-			profile.shortcuts[m_ui->actionsViewWidget->getIndex(i, 0).data(Qt::UserRole).toInt()] = shortcuts;
+			profile.shortcuts[m_ui->actionsViewWidget->getIndex(i, 0).data(IdentifierRole).toInt()] = shortcuts;
 		}
 	}
 
