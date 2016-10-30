@@ -238,6 +238,7 @@ public:
 		IntegerType,
 		ListType,
 		PathType,
+		PasswordType,
 		StringType
 	};
 

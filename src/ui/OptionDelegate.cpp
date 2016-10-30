@@ -58,6 +58,13 @@ void OptionDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelI
 			option->font = QFont(index.data(Qt::DisplayRole).toString());
 
 			break;
+		case SettingsManager::PasswordType:
+			if (!option->text.isEmpty())
+			{
+				option->text = QString(5, QChar(0x2022));
+			}
+
+			break;
 		default:
 			break;
 	}

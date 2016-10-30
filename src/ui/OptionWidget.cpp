@@ -121,6 +121,11 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, Setting
 			m_lineEdit->setClearButtonEnabled(true);
 			m_lineEdit->selectAll();
 
+			if (type == SettingsManager::PasswordType)
+			{
+				m_lineEdit->setEchoMode(QLineEdit::PasswordEchoOnEdit);
+			}
+
 			connect(m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(markModified()));
 
 			break;
