@@ -168,6 +168,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : ComboBoxWidget(p
 	m_lineEdit(new LineEditWidget(this)),
 	m_completionModel(new AddressCompletionModel(this)),
 	m_completionView(NULL),
+	m_visibleView(NULL),
 	m_bookmarkLabel(NULL),
 	m_feedsLabel(NULL),
 	m_loadPluginsLabel(NULL),
@@ -201,6 +202,11 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : ComboBoxWidget(p
 
 	m_lineEdit->setStyleSheet(QLatin1String("QLineEdit {background:transparent;}"));
 	m_lineEdit->installEventFilter(this);
+
+	view()->installEventFilter(this);
+	view()->viewport()->setAttribute(Qt::WA_Hover);
+	view()->viewport()->setMouseTracking(true);
+	view()->viewport()->installEventFilter(this);
 
 	if (toolBar)
 	{
@@ -547,6 +553,8 @@ void AddressWidget::showPopup()
 
 	m_lineEdit->setText(text);
 
+	m_visibleView = view();
+
 	ComboBoxWidget::showPopup();
 }
 
@@ -555,6 +563,13 @@ void AddressWidget::hidePopup()
 	m_popupHideTime = QTime::currentTime();
 
 	ComboBoxWidget::hidePopup();
+
+	QString statusTip;
+	QStatusTipEvent statusTipEvent(statusTip);
+
+	QApplication::sendEvent(this, &statusTipEvent);
+
+	m_visibleView = NULL;
 
 	m_removeModelTimer = startTimer(250);
 }
@@ -571,6 +586,8 @@ void AddressWidget::hideCompletion()
 		QStatusTipEvent statusTipEvent(statusTip);
 
 		QApplication::sendEvent(this, &statusTipEvent);
+
+		m_visibleView = NULL;
 	}
 }
 
@@ -965,6 +982,8 @@ void AddressWidget::setCompletion(const QString &filter)
 
 			m_completionView->move(mapToGlobal(contentsRect().bottomLeft()));
 			m_completionView->show();
+
+			m_visibleView = m_completionView;
 		}
 
 		int completionHeight(5);
@@ -1379,15 +1398,19 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 
 		return true;
 	}
-	else if (m_completionView && object == m_completionView->viewport() && event->type() == QEvent::MouseMove)
+	else if (object == m_completionView && (event->type() == QEvent::InputMethod || event->type() == QEvent::ShortcutOverride))
+	{
+		QApplication::sendEvent(m_lineEdit, event);
+	}
+	else if (m_visibleView && object == m_visibleView->viewport() && event->type() == QEvent::MouseMove)
 	{
 		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent)
 		{
-			const QModelIndex index(m_completionView->indexAt(mouseEvent->pos()));
+			const QModelIndex index(m_visibleView->indexAt(mouseEvent->pos()));
 
-			if (index.isValid())
+			if (index.isValid() && m_visibleView == m_completionView)
 			{
 				m_completionView->setCurrentIndex(index);
 			}
@@ -1397,11 +1420,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 			QApplication::sendEvent(this, &statusTipEvent);
 		}
 	}
-	else if (object == m_completionView && (event->type() == QEvent::InputMethod || event->type() == QEvent::ShortcutOverride))
-	{
-		QApplication::sendEvent(m_lineEdit, event);
-	}
-	else if (object == m_completionView && (event->type() == QEvent::Close || event->type() == QEvent::Hide || event->type() == QEvent::Leave))
+	else if (object == m_visibleView && (event->type() == QEvent::Close || event->type() == QEvent::Hide || event->type() == QEvent::Leave))
 	{
 		QString statusTip;
 		QStatusTipEvent statusTipEvent(statusTip);

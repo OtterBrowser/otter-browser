@@ -133,6 +133,7 @@ private:
 	LineEditWidget *m_lineEdit;
 	AddressCompletionModel *m_completionModel;
 	ItemViewWidget *m_completionView;
+	QAbstractItemView *m_visibleView;
 	QLabel *m_bookmarkLabel;
 	QLabel *m_feedsLabel;
 	QLabel *m_loadPluginsLabel;
