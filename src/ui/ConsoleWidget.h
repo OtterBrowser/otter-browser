@@ -42,6 +42,14 @@ public:
 	~ConsoleWidget();
 
 protected:
+	enum DataRole
+	{
+		TimeRole = Qt::UserRole,
+		CategoryRole,
+		SourceRole,
+		WindowRole
+	};
+
 	enum MessagesScope
 	{
 		NoScope = 0,

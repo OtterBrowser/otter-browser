@@ -91,7 +91,7 @@ void ConsoleWidget::showEvent(QShowEvent *event)
 		}
 
 		m_model = new QStandardItemModel(this);
-		m_model->setSortRole(Qt::UserRole);
+		m_model->setSortRole(TimeRole);
 
 		const QList<Console::Message> messages(Console::getMessages());
 
@@ -163,10 +163,10 @@ void ConsoleWidget::addMessage(const Console::Message &message)
 	}
 
 	QStandardItem *item(new QStandardItem(icon, entry));
-	item->setData(message.time.toTime_t(), Qt::UserRole);
-	item->setData(message.category, (Qt::UserRole + 1));
-	item->setData(source, (Qt::UserRole + 2));
-	item->setData(message.window, (Qt::UserRole + 3));
+	item->setData(message.time.toTime_t(), TimeRole);
+	item->setData(message.category, CategoryRole);
+	item->setData(source, SourceRole);
+	item->setData(message.window, WindowRole);
 
 	if (!message.note.isEmpty())
 	{
@@ -243,15 +243,15 @@ void ConsoleWidget::applyFilters(QStandardItem *item, const QString &filter, con
 
 	bool matched(true);
 
-	if (!filter.isEmpty() && !(item->data(Qt::UserRole + 2).toString().contains(filter, Qt::CaseInsensitive) || (item->child(0, 0) && item->child(0, 0)->text().contains(filter, Qt::CaseInsensitive))))
+	if (!filter.isEmpty() && !(item->data(SourceRole).toString().contains(filter, Qt::CaseInsensitive) || (item->child(0, 0) && item->child(0, 0)->text().contains(filter, Qt::CaseInsensitive))))
 	{
 		matched = false;
 	}
 	else
 	{
-		const quint64 window(item->data(Qt::UserRole + 3).toULongLong());
+		const quint64 window(item->data(WindowRole).toULongLong());
 
-		matched = (((window == 0 && m_messageScopes.testFlag(OtherSourcesScope)) || (window > 0 && ((window == currentWindow && m_messageScopes.testFlag(CurrentTabScope)) || m_messageScopes.testFlag(AllTabsScope)))) && categories.contains(static_cast<Console::MessageCategory>(item->data(Qt::UserRole + 1).toInt())));
+		matched = (((window == 0 && m_messageScopes.testFlag(OtherSourcesScope)) || (window > 0 && ((window == currentWindow && m_messageScopes.testFlag(CurrentTabScope)) || m_messageScopes.testFlag(AllTabsScope)))) && categories.contains(static_cast<Console::MessageCategory>(item->data(CategoryRole).toInt())));
 	}
 
 	m_ui->consoleView->setRowHidden(item->row(), m_ui->consoleView->rootIndex(), !matched);
