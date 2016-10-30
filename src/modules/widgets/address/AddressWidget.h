@@ -2,6 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -26,6 +27,7 @@
 
 #include <QtCore/QTime>
 #include <QtCore/QUrl>
+#include <QtWidgets/QItemDelegate>
 #include <QtWidgets/QLabel>
 
 namespace Otter
@@ -35,6 +37,29 @@ class AddressCompletionModel;
 class ItemViewWidget;
 class LineEditWidget;
 class Window;
+
+class AddressDelegate : public QItemDelegate
+{
+	Q_OBJECT
+
+public:
+	enum DisplayMode
+	{
+		CompactMode = 0,
+		ColumnsMode
+	};
+
+	explicit AddressDelegate(QObject *parent = NULL);
+
+	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+
+protected slots:
+	void optionChanged(int identifier, const QVariant &value);
+
+private:
+	DisplayMode m_displayMode;
+};
 
 class AddressWidget : public ComboBoxWidget
 {
