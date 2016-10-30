@@ -49,7 +49,13 @@ public:
 		ColumnsMode
 	};
 
-	explicit AddressDelegate(QObject *parent = NULL);
+	enum ViewMode
+	{
+		CompletionMode = 0,
+		HistoryMode
+	};
+
+	explicit AddressDelegate(ViewMode mode, QObject *parent = NULL);
 
 	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
@@ -59,6 +65,7 @@ protected slots:
 
 private:
 	DisplayMode m_displayMode;
+	ViewMode m_viewMode;
 };
 
 class AddressWidget : public ComboBoxWidget

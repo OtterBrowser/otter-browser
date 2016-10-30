@@ -49,8 +49,9 @@
 namespace Otter
 {
 
-AddressDelegate::AddressDelegate(QObject *parent) : QItemDelegate(parent),
-	m_displayMode((SettingsManager::getValue(SettingsManager::AddressField_CompletionDisplayModeOption).toString() == QLatin1String("columns")) ? ColumnsMode : CompactMode)
+AddressDelegate::AddressDelegate(ViewMode mode, QObject *parent) : QItemDelegate(parent),
+	m_displayMode((SettingsManager::getValue(SettingsManager::AddressField_CompletionDisplayModeOption).toString() == QLatin1String("columns")) ? ColumnsMode : CompactMode),
+	m_viewMode(mode)
 {
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
 }
@@ -103,16 +104,7 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 		linkOption.palette.setColor(QPalette::Text, option.palette.color(QPalette::Link));
 	}
 
-	QString description;
-
-	if (index.data(Qt::UserRole + 1).type() == QVariant::DateTime)
-	{
-		description = Utils::formatDateTime(index.data(Qt::UserRole + 1).toDateTime());
-	}
-	else
-	{
-		description = index.data(Qt::UserRole + 1).toString();
-	}
+	const QString description((m_viewMode == HistoryMode) ? Utils::formatDateTime(index.data(HistoryModel::TimeVisitedRole).toDateTime()) : index.data(AddressCompletionModel::TitleRole).toString());
 
 	if (m_displayMode == ColumnsMode)
 	{
@@ -199,7 +191,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : ComboBoxWidget(p
 	setLineEdit(m_lineEdit);
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	setMinimumWidth(100);
-	setItemDelegate(new AddressDelegate(this));
+	setItemDelegate(new AddressDelegate(AddressDelegate::HistoryMode, this));
 	setInsertPolicy(QComboBox::NoInsert);
 	setMouseTracking(true);
 	setWindow(window);
@@ -958,7 +950,7 @@ void AddressWidget::setCompletion(const QString &filter)
 			m_completionView->setFocusPolicy(Qt::NoFocus);
 			m_completionView->setFocusProxy(m_lineEdit);
 			m_completionView->setModel(m_completionModel);
-			m_completionView->setItemDelegate(new AddressDelegate(m_completionView));
+			m_completionView->setItemDelegate(new AddressDelegate(AddressDelegate::CompletionMode, m_completionView));
 			m_completionView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 			m_completionView->setFixedWidth(width());
 			m_completionView->installEventFilter(this);
