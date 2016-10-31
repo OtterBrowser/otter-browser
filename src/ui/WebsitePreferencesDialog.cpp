@@ -138,11 +138,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 		}
 		else
 		{
-			const UserAgentInformation userAgent(NetworkManagerFactory::getUserAgent(userAgents.at(i)));
-			const QString title(userAgent.title);
-
-			m_ui->userAgentComboBox->addItem((title.isEmpty() ? tr("(Untitled)") : QCoreApplication::translate("userAgents", title.toUtf8())), userAgents.at(i));
-			m_ui->userAgentComboBox->setItemData((i + 1), userAgent.value, (Qt::UserRole + 1));
+			m_ui->userAgentComboBox->addItem(NetworkManagerFactory::getUserAgent(userAgents.at(i)).getTitle(), userAgents.at(i));
 		}
 	}
 

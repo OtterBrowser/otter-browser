@@ -687,20 +687,11 @@ void Menu::populateUserAgentMenu()
 		}
 		else
 		{
-			const QString title(NetworkManagerFactory::getUserAgent(userAgents.at(i)).title);
 			Action *action(addAction());
 			action->setData(userAgents.at(i));
 			action->setCheckable(true);
 			action->setChecked(userAgent == userAgents.at(i));
-
-			if (title.isEmpty())
-			{
-				action->setOverrideText(QT_TRANSLATE_NOOP("actions", "(Untitled)"));
-			}
-			else
-			{
-				action->setText(Utils::elideText(QCoreApplication::translate("userAgents", title.toUtf8()), this));
-			}
+			action->setText(Utils::elideText(NetworkManagerFactory::getUserAgent(userAgents.at(i)).getTitle(), this));
 
 			m_actionGroup->addAction(action);
 		}

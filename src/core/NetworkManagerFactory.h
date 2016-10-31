@@ -21,7 +21,7 @@
 #ifndef OTTER_NETWORKMANAGERFACTORY_H
 #define OTTER_NETWORKMANAGERFACTORY_H
 
-#include <QtCore/QObject>
+#include <QtCore/QCoreApplication>
 #include <QtNetwork/QAuthenticator>
 #include <QtNetwork/QNetworkCookieJar>
 #include <QtNetwork/QNetworkDiskCache>
@@ -36,6 +36,11 @@ struct UserAgentInformation
 	QString title;
 	QString value;
 	QStringList children;
+
+	QString getTitle() const
+	{
+		return (title.isEmpty() ? QCoreApplication::translate("userAgents", "(Untitled)") : QCoreApplication::translate("userAgents", title.toUtf8().constData()));
+	}
 };
 
 class CookieJar;

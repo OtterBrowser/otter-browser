@@ -39,8 +39,7 @@ UserAgentsManagerDialog::UserAgentsManagerDialog(QList<UserAgentInformation> use
 
 	for (int i = 0; i < userAgents.count(); ++i)
 	{
-		const QString title(userAgents.at(i).title);
-		QList<QStandardItem*> items({new QStandardItem(title.isEmpty() ? tr("(Untitled)") : title), new QStandardItem(userAgents.at(i).value)});
+		QList<QStandardItem*> items({new QStandardItem(userAgents.at(i).getTitle()), new QStandardItem(userAgents.at(i).value)});
 		items[0]->setData(userAgents.at(i).identifier, Qt::UserRole);
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable);
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable);
