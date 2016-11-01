@@ -138,7 +138,7 @@ void AddonsManager::loadUserScripts()
 
 		if (QFile::exists(path))
 		{
-			UserScript *script = new UserScript(path, m_instance);
+			UserScript *script(new UserScript(path, m_instance));
 			script->setEnabled(enabledScripts.value(scripts.at(i).fileName(), false));
 
 			m_userScripts[scripts.at(i).fileName()] = script;

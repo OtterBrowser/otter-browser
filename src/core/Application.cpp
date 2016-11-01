@@ -255,7 +255,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 
 	if (socket.waitForConnected(500))
 	{
-		const QStringList decodedArguments = arguments;
+		const QStringList decodedArguments(arguments);
 		QStringList encodedArguments;
 
 #ifdef Q_OS_WIN

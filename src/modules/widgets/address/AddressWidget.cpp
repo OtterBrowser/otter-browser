@@ -595,7 +595,7 @@ void AddressWidget::optionChanged(int identifier, const QVariant &value)
 {
 	if (identifier == SettingsManager::AddressField_CompletionModeOption)
 	{
-		const QString completionMode = value.toString();
+		const QString completionMode(value.toString());
 
 		if (completionMode == QLatin1String("inlineAndPopup"))
 		{
