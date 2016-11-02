@@ -60,8 +60,6 @@ void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 		return;
 	}
 
-	const bool configureEntry(index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("configure"));
-	const int shortcutWidth((!configureEntry && option.rect.width() > 150) ? 40 : 0);
 	QRect titleRectangle(option.rect);
 
 	if (!index.data(Qt::DecorationRole).value<QIcon>().isNull())
@@ -75,12 +73,14 @@ void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 
 	titleRectangle.setLeft(option.rect.height());
 
-	if (shortcutWidth > 0)
+	if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("configure"))
 	{
-		titleRectangle.setRight(titleRectangle.right() - (shortcutWidth + 5));
+		drawDisplay(painter, option, titleRectangle, index.data(Qt::DisplayRole).toString());
+
+		return;
 	}
 
-	drawDisplay(painter, option, titleRectangle, index.data(configureEntry ? Qt::DisplayRole : SearchEnginesManager::TitleRole).toString());
+	const int shortcutWidth((option.rect.width() > 150) ? 40 : 0);
 
 	if (shortcutWidth > 0)
 	{
@@ -88,7 +88,11 @@ void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 		shortcutReactangle.setLeft(option.rect.right() - shortcutWidth);
 
 		drawDisplay(painter, option, shortcutReactangle, index.data(SearchEnginesManager::KeywordRole).toString());
+
+		titleRectangle.setRight(titleRectangle.right() - (shortcutWidth + 5));
 	}
+
+	drawDisplay(painter, option, titleRectangle, index.data(SearchEnginesManager::TitleRole).toString());
 }
 
 QSize SearchDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
