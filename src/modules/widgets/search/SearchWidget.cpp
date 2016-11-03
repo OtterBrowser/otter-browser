@@ -65,13 +65,29 @@ void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 	if (!index.data(Qt::DecorationRole).value<QIcon>().isNull())
 	{
 		QRect decorationRectangle(option.rect);
-		decorationRectangle.setRight(option.rect.height());
+
+		if (option.direction == Qt::RightToLeft)
+		{
+			decorationRectangle.setLeft(option.rect.width() - option.rect.height());
+		}
+		else
+		{
+			decorationRectangle.setRight(option.rect.height());
+		}
+
 		decorationRectangle = decorationRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
 
 		index.data(Qt::DecorationRole).value<QIcon>().paint(painter, decorationRectangle, option.decorationAlignment);
 	}
 
-	titleRectangle.setLeft(option.rect.height());
+	if (option.direction == Qt::RightToLeft)
+	{
+		titleRectangle.setRight(option.rect.width() - option.rect.height());
+	}
+	else
+	{
+		titleRectangle.setLeft(option.rect.height());
+	}
 
 	if (index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("configure"))
 	{
@@ -85,11 +101,21 @@ void SearchDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
 	if (shortcutWidth > 0)
 	{
 		QRect shortcutReactangle(option.rect);
-		shortcutReactangle.setLeft(option.rect.right() - shortcutWidth);
+
+		if (option.direction == Qt::RightToLeft)
+		{
+			shortcutReactangle.setRight(shortcutWidth);
+
+			titleRectangle.setLeft(shortcutWidth + 5);
+		}
+		else
+		{
+			shortcutReactangle.setLeft(option.rect.right() - shortcutWidth);
+
+			titleRectangle.setRight(titleRectangle.right() - (shortcutWidth + 5));
+		}
 
 		drawDisplay(painter, option, shortcutReactangle, index.data(SearchEnginesManager::KeywordRole).toString());
-
-		titleRectangle.setRight(titleRectangle.right() - (shortcutWidth + 5));
 	}
 
 	drawDisplay(painter, option, titleRectangle, index.data(SearchEnginesManager::TitleRole).toString());
@@ -162,9 +188,21 @@ void SearchWidget::changeEvent(QEvent *event)
 {
 	ComboBoxWidget::changeEvent(event);
 
-	if (event->type() == QEvent::LanguageChange && itemData(currentIndex(), Qt::AccessibleDescriptionRole).toString().isEmpty())
+	switch (event->type())
 	{
-		m_lineEdit->setPlaceholderText(tr("Search using %1").arg(currentData(SearchEnginesManager::TitleRole).toString()));
+		case QEvent::LanguageChange:
+			if (itemData(currentIndex(), Qt::AccessibleDescriptionRole).toString().isEmpty())
+			{
+				m_lineEdit->setPlaceholderText(tr("Search using %1").arg(currentData(SearchEnginesManager::TitleRole).toString()));
+			}
+
+			break;
+		case QEvent::LayoutDirectionChange:
+			updateGeometries();
+
+			break;
+		default:
+			break;
 	}
 }
 
@@ -199,43 +237,7 @@ void SearchWidget::resizeEvent(QResizeEvent *event)
 {
 	ComboBoxWidget::resizeEvent(event);
 
-	QStyleOptionFrame panel;
-	panel.initFrom(m_lineEdit);
-	panel.rect = rect();
-	panel.lineWidth = 1;
-
-	const QRect rectangle(style()->subElementRect(QStyle::SE_LineEditContents, &panel, this));
-
-	m_iconRectangle = rectangle;
-	m_iconRectangle.setWidth(rectangle.height());
-	m_iconRectangle = m_iconRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
-
-	if (m_isSearchEngineLocked)
-	{
-		m_dropdownArrowRectangle = QRect();
-	}
-	else
-	{
-		m_dropdownArrowRectangle = rectangle;
-		m_dropdownArrowRectangle.setLeft(rectangle.left() + rectangle.height());
-		m_dropdownArrowRectangle.setWidth(12);
-	}
-
-	if (m_options.value(QLatin1String("showSearchButton"), true).toBool())
-	{
-		m_searchButtonRectangle = rectangle;
-		m_searchButtonRectangle.setLeft(rectangle.right() - rectangle.height());
-		m_searchButtonRectangle = m_searchButtonRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
-	}
-	else
-	{
-		m_searchButtonRectangle = QRect();
-	}
-
-	m_lineEdit->resize((rectangle.width() - m_iconRectangle.width() - m_dropdownArrowRectangle.width() - m_searchButtonRectangle.width() - 10), rectangle.height());
-	m_lineEdit->move((m_isSearchEngineLocked ? m_iconRectangle : m_dropdownArrowRectangle).topRight() + QPoint(3, 0));
-
-	m_lineEditRectangle = m_lineEdit->geometry();
+	updateGeometries();
 }
 
 void SearchWidget::focusInEvent(QFocusEvent *event)
@@ -541,6 +543,87 @@ void SearchWidget::restoreCurrentSearchEngine()
 void SearchWidget::activate(Qt::FocusReason reason)
 {
 	m_lineEdit->activate(reason);
+}
+
+void SearchWidget::updateGeometries()
+{
+	QStyleOptionFrame panel;
+	panel.initFrom(m_lineEdit);
+	panel.rect = rect();
+	panel.lineWidth = 1;
+
+	QMargins lineEditMargins(1, 0, 1, 0);
+	const QRect rectangle(style()->subElementRect(QStyle::SE_LineEditContents, &panel, this));
+	const bool isSearchButtonEnabled(m_options.value(QLatin1String("showSearchButton"), true).toBool());
+
+	m_iconRectangle = rectangle;
+
+	if (layoutDirection() == Qt::RightToLeft)
+	{
+		m_iconRectangle.setLeft(rectangle.width() - rectangle.height());
+
+		lineEditMargins.setRight(lineEditMargins.right() + rectangle.height());
+	}
+	else
+	{
+		m_iconRectangle.setRight(rectangle.height());
+
+		lineEditMargins.setLeft(lineEditMargins.left() + rectangle.height());
+	}
+
+	m_iconRectangle = m_iconRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
+
+	if (m_isSearchEngineLocked)
+	{
+		m_dropdownArrowRectangle = QRect();
+	}
+	else
+	{
+		m_dropdownArrowRectangle = rectangle;
+
+		if (layoutDirection() == Qt::RightToLeft)
+		{
+			m_dropdownArrowRectangle.setRight(m_iconRectangle.left() - 2);
+			m_dropdownArrowRectangle.setLeft(m_dropdownArrowRectangle.right() - 12);
+
+			lineEditMargins.setRight(lineEditMargins.right() + 12);
+		}
+		else
+		{
+			m_dropdownArrowRectangle.setLeft(m_iconRectangle.right() + 2);
+			m_dropdownArrowRectangle.setRight(m_dropdownArrowRectangle.left() + 12);
+
+			lineEditMargins.setLeft(lineEditMargins.left() + 12);
+		}
+	}
+
+	if (isSearchButtonEnabled)
+	{
+		m_searchButtonRectangle = rectangle;
+
+		if (layoutDirection() == Qt::RightToLeft)
+		{
+			m_searchButtonRectangle.setRight(rectangle.height());
+
+			lineEditMargins.setLeft(lineEditMargins.left() + rectangle.height());
+		}
+		else
+		{
+			m_searchButtonRectangle.setLeft(rectangle.right() - rectangle.height());
+
+			lineEditMargins.setRight(lineEditMargins.right() + rectangle.height());
+		}
+
+		m_searchButtonRectangle = m_searchButtonRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
+	}
+	else
+	{
+		m_searchButtonRectangle = QRect();
+	}
+
+	m_lineEditRectangle = rectangle.marginsRemoved(lineEditMargins);
+
+	m_lineEdit->setGeometry(m_lineEditRectangle);
 }
 
 void SearchWidget::setSearchEngine(const QString &searchEngine)

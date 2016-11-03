@@ -71,6 +71,7 @@ protected:
 	void mousePressEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
 	void wheelEvent(QWheelEvent *event);
+	void updateGeometries();
 
 protected slots:
 	void optionChanged(int identifier, const QVariant &value);
