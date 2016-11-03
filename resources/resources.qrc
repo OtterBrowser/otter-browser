@@ -1,34 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>contentBlocking/advertisements.adblock-killer-filters.txt</file>
-        <file>contentBlocking/advertisements.antiadblockfilters.txt</file>
-        <file>contentBlocking/advertisements.easylist.txt</file>
-        <file>contentBlocking/annoyance.fanboy-annoyance.txt</file>
-        <file>contentBlocking/annoyance.obtrusive.txt</file>
-        <file>contentBlocking/privacy.easyprivacy.txt</file>
-        <file>contentBlocking/privacy.enhancedstats.txt</file>
-        <file>contentBlocking/regional.arabic.txt</file>
-        <file>contentBlocking/regional.bulgarian.txt</file>
-        <file>contentBlocking/regional.czechAndSlovak.txt</file>
-        <file>contentBlocking/regional.german.txt</file>
-        <file>contentBlocking/regional.danish.txt</file>
-        <file>contentBlocking/regional.spanish.txt</file>
-        <file>contentBlocking/regional.estonian.txt</file>
-        <file>contentBlocking/regional.french.txt</file>
-        <file>contentBlocking/regional.greek.txt</file>
-        <file>contentBlocking/regional.hungary.txt</file>
-        <file>contentBlocking/regional.chinese.txt</file>
-        <file>contentBlocking/regional.indonesian.txt</file>
-        <file>contentBlocking/regional.hebrew.txt</file>
-        <file>contentBlocking/regional.italian.txt</file>
-        <file>contentBlocking/regional.lithuanian.txt</file>
-        <file>contentBlocking/regional.latvian.txt</file>
-        <file>contentBlocking/regional.dutch.txt</file>
-        <file>contentBlocking/regional.polish.txt</file>
-        <file>contentBlocking/regional.russian.txt</file>
-        <file>contentBlocking/regional.swedish.txt</file>
-        <file>contentBlocking/social.fanboy-antifacebook.txt</file>
-        <file>contentBlocking/social.fanboy-social.txt</file>
         <file>cursors/scroll-bottom-left.png</file>
         <file>cursors/scroll-bottom-right.png</file>
         <file>cursors/scroll-bottom.png</file>

@@ -85,12 +85,12 @@ void ContentBlockingManager::timerEvent(QTimerEvent *event)
 				profileSettings[QLatin1String("lastUpdate")] = lastUpdate.toString(Qt::ISODate);
 			}
 
-			if (profile->hasCustomTitle())
+			if (profile->getFlags().testFlag(ContentBlockingProfile::HasCustomTitleFlag))
 			{
 				profileSettings[QLatin1String("title")] = profile->getTitle();
 			}
 
-			if (profile->hasCustomUpdateUrl())
+			if (profile->getFlags().testFlag(ContentBlockingProfile::HasCustomUpdateUrlFlag))
 			{
 				profileSettings[QLatin1String("updateUrl")] = profile->getUpdateUrl().url();
 			}
@@ -337,12 +337,32 @@ QVector<ContentBlockingProfile*> ContentBlockingManager::getProfiles()
 	if (m_profiles.isEmpty())
 	{
 		QStringList profiles;
-		QList<QFileInfo> allProfiles(QDir(QLatin1String(":/contentBlocking/")).entryInfoList(QStringList(QLatin1String("*.txt")), QDir::Files));
-		allProfiles.append(QDir(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking"))).entryInfoList(QStringList(QLatin1String("*.txt")), QDir::Files));
+		const QList<QFileInfo> existingProfiles(QDir(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking"))).entryInfoList(QStringList(QLatin1String("*.txt")), QDir::Files));
+		QJsonObject bundledSettings;
+		QFile bundledFile(SessionsManager::getReadableDataPath(QLatin1String("contentBlocking.json"), true));
 
-		for (int i = 0; i < allProfiles.count(); ++i)
+		if (bundledFile.open(QIODevice::ReadOnly | QIODevice::Text))
 		{
-			const QString name(allProfiles.at(i).completeBaseName());
+			bundledSettings = QJsonDocument::fromJson(bundledFile.readAll()).object();
+
+			bundledFile.close();
+		}
+
+		for (int i = 0; i < existingProfiles.count(); ++i)
+		{
+			const QString name(existingProfiles.at(i).completeBaseName());
+
+			if (!profiles.contains(name))
+			{
+				profiles.append(name);
+			}
+		}
+
+		QJsonObject::const_iterator iterator;
+
+		for (iterator = bundledSettings.constBegin(); iterator != bundledSettings.constEnd(); ++iterator)
+		{
+			const QString name(iterator.key());
 
 			if (!profiles.contains(name))
 			{
@@ -368,7 +388,42 @@ QVector<ContentBlockingProfile*> ContentBlockingManager::getProfiles()
 
 		for (int i = 0; i < profiles.count(); ++i)
 		{
-			const QJsonObject profileSettings(settings.value(profiles.at(i)).toObject());
+			QJsonObject profileSettings(settings.value(profiles.at(i)).toObject());
+			const QJsonObject bundledProfileSettings(bundledSettings.value(profiles.at(i)).toObject());
+			QString title;
+			QUrl updateUrl;
+			ContentBlockingProfile::ProfileFlags flags(ContentBlockingProfile::NoFlags);
+
+			if (profileSettings.isEmpty())
+			{
+				profileSettings = bundledProfileSettings;
+				updateUrl = QUrl(profileSettings.value(QLatin1String("updateUrl")).toString());
+				title = profileSettings.value(QLatin1String("title")).toString();
+			}
+			else
+			{
+				updateUrl = QUrl(profileSettings.value(QLatin1String("updateUrl")).toString());
+				title = profileSettings.value(QLatin1String("title")).toString();
+
+				if (updateUrl.isEmpty())
+				{
+					updateUrl = QUrl(bundledProfileSettings.value(QLatin1String("updateUrl")).toString());
+				}
+				else
+				{
+					flags |= ContentBlockingProfile::HasCustomUpdateUrlFlag;
+				}
+
+				if (title.isEmpty())
+				{
+					title = bundledProfileSettings.value(QLatin1String("title")).toString();
+				}
+				else
+				{
+					flags |= ContentBlockingProfile::HasCustomTitleFlag;
+				}
+			}
+
 			const QJsonArray languages(profileSettings.value(QLatin1String("languages")).toArray());
 			QList<QString> parsedLanguages;
 
@@ -377,7 +432,7 @@ QVector<ContentBlockingProfile*> ContentBlockingManager::getProfiles()
 				parsedLanguages.append(languages.at(j).toString());
 			}
 
-			ContentBlockingProfile *profile(new ContentBlockingProfile(parsedLanguages, QUrl(profileSettings.value(QLatin1String("updateUrl")).toString()), QDateTime::fromString(profileSettings.value(QLatin1String("lastUpdate")).toString(), Qt::ISODate), profiles.at(i), profileSettings.value(QLatin1String("title")).toString(), profileSettings.value(QLatin1String("updateInterval")).toInt(), categoryTitles.value(profileSettings.value(QLatin1String("category")).toString()), m_instance));
+			ContentBlockingProfile *profile(new ContentBlockingProfile(profiles.at(i), title, updateUrl, QDateTime::fromString(profileSettings.value(QLatin1String("lastUpdate")).toString(), Qt::ISODate), parsedLanguages, profileSettings.value(QLatin1String("updateInterval")).toInt(), categoryTitles.value(profileSettings.value(QLatin1String("category")).toString()), flags, m_instance));
 
 			m_profiles.append(profile);
 

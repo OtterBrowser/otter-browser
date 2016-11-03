@@ -1,3 +1,0 @@
-[Adblock Plus 2.0]
-! URL: https://notabug.org/latvian-list/adblock-latvian/raw/master/lists/latvian-list.txt
-! Title: Latvian List

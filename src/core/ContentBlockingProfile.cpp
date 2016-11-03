@@ -35,15 +35,16 @@
 namespace Otter
 {
 
-ContentBlockingProfile::ContentBlockingProfile(const QList<QString> languages, const QUrl updateUrl, const QDateTime lastUpdate, const QString &name, const QString &title, int updateInterval, const ProfileCategory &category, QObject *parent) : QObject(parent),
+ContentBlockingProfile::ContentBlockingProfile(const QString &name, const QString &title, const QUrl &updateUrl, const QDateTime lastUpdate, const QList<QString> languages, int updateInterval, const ProfileCategory &category, const ProfileFlags &flags, QObject *parent) : QObject(parent),
 	m_root(NULL),
 	m_networkReply(NULL),
 	m_name(name),
-	m_title(title, true),
+	m_title(title),
+	m_updateUrl(updateUrl),
 	m_lastUpdate(lastUpdate),
-	m_updateUrl(updateUrl, true),
 	m_languages({QLocale::AnyLanguage}),
 	m_category(category),
+	m_flags(flags),
 	m_updateInterval(updateInterval),
 	m_enableWildcards(SettingsManager::getValue(SettingsManager::ContentBlocking_EnableWildcardsOption).toBool()),
 	m_isUpdating(false),
@@ -96,14 +97,12 @@ void ContentBlockingProfile::clear()
 
 void ContentBlockingProfile::loadHeader(const QString &path)
 {
-	const bool isBundled(path.startsWith(QLatin1String(":/")));
-
-	if (!isBundled)
-	{
-		loadHeader(getPath(true));
-	}
-
 	QFile file(path);
+
+	if (!file.exists())
+	{
+		return;
+	}
 
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 	{
@@ -134,18 +133,9 @@ void ContentBlockingProfile::loadHeader(const QString &path)
 			break;
 		}
 
-		if (line.startsWith(QLatin1String("! Title: ")) && m_title.first.isEmpty())
+		if (line.startsWith(QLatin1String("! Title: ")) && !m_flags.testFlag(HasCustomTitleFlag))
 		{
-			m_title = qMakePair(line.remove(QLatin1String("! Title: ")), false);
-
-			continue;
-		}
-
-		line.remove(QLatin1Char(' '));
-
-		if (line.startsWith(QLatin1String("!URL:")) && m_updateUrl.first.isEmpty())
-		{
-			m_updateUrl = qMakePair(QUrl(line.remove(QLatin1String("!URL:"))), !isBundled);
+			m_title = line.remove(QLatin1String("! Title: "));
 
 			continue;
 		}
@@ -153,7 +143,7 @@ void ContentBlockingProfile::loadHeader(const QString &path)
 
 	file.close();
 
-	if (!isBundled && !m_isUpdating && m_updateInterval > 0 && (!m_lastUpdate.isValid() || m_lastUpdate.daysTo(QDateTime::currentDateTime()) > m_updateInterval))
+	if (!m_isUpdating && m_updateInterval > 0 && (!m_lastUpdate.isValid() || m_lastUpdate.daysTo(QDateTime::currentDateTime()) > m_updateInterval))
 	{
 		downloadRules();
 	}
@@ -444,11 +434,12 @@ void ContentBlockingProfile::setUpdateInterval(int interval)
 	}
 }
 
-void ContentBlockingProfile::setUpdateUrl(const QUrl url)
+void ContentBlockingProfile::setUpdateUrl(const QUrl &url)
 {
-	if (url.isValid() && url != m_updateUrl.first)
+	if (url.isValid() && url != m_updateUrl)
 	{
-		m_updateUrl = qMakePair(url, true);
+		m_updateUrl = url;
+		m_flags |= HasCustomUpdateUrlFlag;
 
 		emit profileModified(m_name);
 	}
@@ -466,9 +457,10 @@ void ContentBlockingProfile::setCategory(const ProfileCategory &category)
 
 void ContentBlockingProfile::setTitle(const QString &title)
 {
-	if (title != m_title.first)
+	if (title != m_title)
 	{
-		m_title = qMakePair(title, true);
+		m_title = title;
+		m_flags |= HasCustomTitleFlag;
 
 		emit profileModified(m_name);
 	}
@@ -481,12 +473,12 @@ QString ContentBlockingProfile::getName() const
 
 QString ContentBlockingProfile::getTitle() const
 {
-	return (m_title.first.isEmpty() ? tr("(Unknown)") : m_title.first);
+	return (m_title.isEmpty() ? tr("(Unknown)") : m_title);
 }
 
-QString ContentBlockingProfile::getPath(bool forceBundled) const
+QString ContentBlockingProfile::getPath() const
 {
-	return SessionsManager::getReadableDataPath(QLatin1String("contentBlocking") + QLatin1Char('/') + m_name + QLatin1String(".txt"), forceBundled);
+	return SessionsManager::getWritableDataPath(QLatin1String("contentBlocking/%1.txt")).arg(m_name);
 }
 
 QDateTime ContentBlockingProfile::getLastUpdate() const
@@ -496,7 +488,7 @@ QDateTime ContentBlockingProfile::getLastUpdate() const
 
 QUrl ContentBlockingProfile::getUpdateUrl() const
 {
-	return m_updateUrl.first;
+	return m_updateUrl;
 }
 
 ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrl(const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType)
@@ -571,19 +563,14 @@ ContentBlockingProfile::ProfileCategory ContentBlockingProfile::getCategory() co
 	return m_category;
 }
 
+ContentBlockingProfile::ProfileFlags ContentBlockingProfile::getFlags() const
+{
+	return m_flags;
+}
+
 int ContentBlockingProfile::getUpdateInterval() const
 {
 	return m_updateInterval;
-}
-
-bool ContentBlockingProfile::hasCustomTitle() const
-{
-	return m_title.second;
-}
-
-bool ContentBlockingProfile::hasCustomUpdateUrl() const
-{
-	return m_updateUrl.second;
 }
 
 bool ContentBlockingProfile::downloadRules()
@@ -593,23 +580,23 @@ bool ContentBlockingProfile::downloadRules()
 		return false;
 	}
 
-	if (!m_updateUrl.first.isValid())
+	if (!m_updateUrl.isValid())
 	{
 		const QString path(getPath());
 
-		if (m_updateUrl.first.isEmpty())
+		if (m_updateUrl.isEmpty())
 		{
 			Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile, update URL is empty"), Console::OtherCategory, Console::ErrorLevel, path);
 		}
 		else
 		{
-			Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile, update URL (%1) is invalid").arg(m_updateUrl.first.toString()), Console::OtherCategory, Console::ErrorLevel, path);
+			Console::addMessage(QCoreApplication::translate("main", "Failed to update content blocking profile, update URL (%1) is invalid").arg(m_updateUrl.toString()), Console::OtherCategory, Console::ErrorLevel, path);
 		}
 
 		return false;
 	}
 
-	QNetworkRequest request(m_updateUrl.first);
+	QNetworkRequest request(m_updateUrl);
 	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
 
 	m_networkReply = NetworkManagerFactory::getNetworkManager()->get(request);
@@ -623,7 +610,7 @@ bool ContentBlockingProfile::downloadRules()
 
 bool ContentBlockingProfile::loadRules()
 {
-	if (m_isEmpty && !m_updateUrl.first.isEmpty())
+	if (m_isEmpty && !m_updateUrl.isEmpty())
 	{
 		downloadRules();
 

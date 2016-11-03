@@ -49,6 +49,15 @@ public:
 
 	Q_DECLARE_FLAGS(RuleOptions, RuleOption)
 
+	enum ProfileFlag
+	{
+		NoFlags = 0,
+		HasCustomTitleFlag = 1,
+		HasCustomUpdateUrlFlag = 2
+	};
+
+	Q_DECLARE_FLAGS(ProfileFlags, ProfileFlag)
+
 	enum ProfileCategory
 	{
 		OtherCategory = 0,
@@ -69,13 +78,13 @@ public:
 		bool needsDomainCheck;
 	};
 
-	explicit ContentBlockingProfile(const QList<QString> languages, const QUrl updateUrl, const QDateTime lastUpdate, const QString &name, const QString &title, int updateInterval, const ProfileCategory &category, QObject *parent = NULL);
+	explicit ContentBlockingProfile(const QString &name, const QString &title, const QUrl &updateUrl, const QDateTime lastUpdate, const QList<QString> languages, int updateInterval, const ProfileCategory &category, const ProfileFlags &flags, QObject *parent = NULL);
 
 	void clear();
 	void setCategory(const ProfileCategory &category);
 	void setTitle(const QString &title);
 	void setUpdateInterval(int interval);
-	void setUpdateUrl(const QUrl url);
+	void setUpdateUrl(const QUrl &url);
 	QString getName() const;
 	QString getTitle() const;
 	QUrl getUpdateUrl() const;
@@ -86,10 +95,9 @@ public:
 	QStringList getStyleSheetWhiteList(const QString &domain);
 	QList<QLocale::Language> getLanguages() const;
 	ProfileCategory getCategory() const;
+	ProfileFlags getFlags() const;
 	int getUpdateInterval() const;
 	bool downloadRules();
-	bool hasCustomTitle() const;
-	bool hasCustomUpdateUrl() const;
 
 protected:
 	struct Node
@@ -101,7 +109,7 @@ protected:
 		Node() : rule(NULL), value(0) {}
 	};
 
-	QString getPath(bool forceBundled = false) const;
+	QString getPath() const;
 	void loadHeader(const QString &path);
 	void parseRuleLine(QString line);
 	void parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list);
@@ -123,15 +131,16 @@ private:
 	QString m_requestHost;
 	QString m_baseUrlHost;
 	QString m_name;
+	QString m_title;
+	QUrl m_updateUrl;
 	QDateTime m_lastUpdate;
 	QRegularExpression m_domainExpression;
-	QPair<QString, bool> m_title;
-	QPair<QUrl, bool> m_updateUrl;
 	QStringList m_styleSheet;
 	QList<QLocale::Language> m_languages;
 	QMultiHash<QString, QString> m_styleSheetBlackList;
 	QMultiHash<QString, QString> m_styleSheetWhiteList;
 	ProfileCategory m_category;
+	ProfileFlags m_flags;
 	int m_updateInterval;
 	bool m_enableWildcards;
 	bool m_isUpdating;

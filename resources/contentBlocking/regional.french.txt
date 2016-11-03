@@ -1,3 +1,0 @@
-[Adblock Plus 2.0]
-! URL: https://easylist-downloads.adblockplus.org/liste_fr.txt
-! Title: Liste FR
