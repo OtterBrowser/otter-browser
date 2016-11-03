@@ -1127,7 +1127,7 @@ void AddressWidget::setUrl(const QUrl &url, bool force)
 		updateFeeds();
 	}
 
-	if ((force || !hasFocus()) && url.scheme() != QLatin1String("javascript"))
+	if (!m_window || ((force || !hasFocus()) && url.scheme() != QLatin1String("javascript")))
 	{
 		const QString text(Utils::isUrlEmpty(url) ? QString() : url.toString());
 
