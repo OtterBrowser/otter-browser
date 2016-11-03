@@ -81,10 +81,26 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 		return;
 	}
 
-	titleRectangle.setLeft(33);
+	if (option.direction == Qt::RightToLeft)
+	{
+		titleRectangle.setRight(option.rect.width() - 33);
+	}
+	else
+	{
+		titleRectangle.setLeft(33);
+	}
 
 	QRect decorationRectangle(option.rect);
-	decorationRectangle.setRight(titleRectangle.left());
+
+	if (option.direction == Qt::RightToLeft)
+	{
+		decorationRectangle.setLeft(option.rect.width() - 33);
+	}
+	else
+	{
+		decorationRectangle.setRight(33);
+	}
+
 	decorationRectangle = decorationRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
 
 	QIcon icon(index.data(Qt::DecorationRole).value<QIcon>());
@@ -97,14 +113,13 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 	icon.paint(painter, decorationRectangle, option.decorationAlignment);
 
 	QString url(index.data(Qt::DisplayRole).toString());
+	const QString description((m_viewMode == HistoryMode) ? Utils::formatDateTime(index.data(HistoryModel::TimeVisitedRole).toDateTime()) : index.data(AddressCompletionModel::TitleRole).toString());
 	QStyleOptionViewItem linkOption(option);
 
 	if (static_cast<AddressCompletionModel::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) != AddressCompletionModel::SearchSuggestionType)
 	{
 		linkOption.palette.setColor(QPalette::Text, option.palette.color(QPalette::Link));
 	}
-
-	const QString description((m_viewMode == HistoryMode) ? Utils::formatDateTime(index.data(HistoryModel::TimeVisitedRole).toDateTime()) : index.data(AddressCompletionModel::TitleRole).toString());
 
 	if (m_displayMode == ColumnsMode)
 	{
@@ -116,7 +131,14 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 
 		if (!description.isEmpty())
 		{
-			titleRectangle.setLeft(maxUrlWidth);
+			if (option.direction == Qt::RightToLeft)
+			{
+				titleRectangle.setRight(maxUrlWidth);
+			}
+			else
+			{
+				titleRectangle.setLeft(maxUrlWidth);
+			}
 
 			drawDisplay(painter, option, titleRectangle, description);
 		}
@@ -132,7 +154,14 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 
 		if (urlLength < titleRectangle.width())
 		{
-			titleRectangle.setLeft(titleRectangle.left() + urlLength);
+			if (option.direction == Qt::RightToLeft)
+			{
+				titleRectangle.setRight(option.rect.width() - (urlLength + 33));
+			}
+			else
+			{
+				titleRectangle.setLeft(urlLength + 33);
+			}
 
 			drawDisplay(painter, option, titleRectangle, QLatin1String("- ") + description);
 		}
@@ -235,9 +264,21 @@ void AddressWidget::changeEvent(QEvent *event)
 {
 	ComboBoxWidget::changeEvent(event);
 
-	if (event->type() == QEvent::LanguageChange && !m_isUsingSimpleMode)
+	switch (event->type())
 	{
-		m_lineEdit->setPlaceholderText(tr("Enter address or search…"));
+		case QEvent::LanguageChange:
+			if (!m_isUsingSimpleMode)
+			{
+				m_lineEdit->setPlaceholderText(tr("Enter address or search…"));
+			}
+
+			break;
+		case QEvent::LayoutDirectionChange:
+			updateGeometries();
+
+			break;
+		default:
+			break;
 	}
 }
 
@@ -320,14 +361,8 @@ void AddressWidget::paintEvent(QPaintEvent *event)
 	panel.palette.setColor(QPalette::Base, badgeColor);
 	panel.state = QStyle::State_Active;
 
-	QRect rectangle(style()->subElementRect(QStyle::SE_LineEditContents, &panel, this));
-	rectangle.setWidth(30);
-	rectangle.moveTo(panel.lineWidth, panel.lineWidth);
-
-	m_securityBadgeRectangle = rectangle;
-
-	painter.fillRect(rectangle, badgeColor);
-	painter.setClipRect(rectangle);
+	painter.fillRect(m_securityBadgeRectangle, badgeColor);
+	painter.setClipRect(m_securityBadgeRectangle);
 
 	style()->drawPrimitive(QStyle::PE_PanelLineEdit, &panel, &painter, this);
 
@@ -335,11 +370,14 @@ void AddressWidget::paintEvent(QPaintEvent *event)
 	linePalette.setCurrentColorGroup(QPalette::Disabled);
 
 	painter.setPen(QPen(linePalette.mid().color(), 1));
-	painter.drawLine(rectangle.right(), rectangle.top(), rectangle.right(), rectangle.bottom());
+
+	const int badgeLineX((layoutDirection() == Qt::RightToLeft) ? m_securityBadgeRectangle.left() : m_securityBadgeRectangle.right());
+
+	painter.drawLine(badgeLineX, m_securityBadgeRectangle.top(), badgeLineX, m_securityBadgeRectangle.bottom());
 
 	if (!badgeIcon.isEmpty())
 	{
-		ThemesManager::getIcon(badgeIcon, false).paint(&painter, rectangle.adjusted(4, 4, -4, -4));
+		ThemesManager::getIcon(badgeIcon, false).paint(&painter, m_securityBadgeRectangle.adjusted(4, 4, -4, -4));
 	}
 }
 
@@ -347,20 +385,7 @@ void AddressWidget::resizeEvent(QResizeEvent *event)
 {
 	ComboBoxWidget::resizeEvent(event);
 
-	updateLineEdit();
-
-	if (m_isHistoryDropdownEnabled || m_isUsingSimpleMode)
-	{
-		QStyleOptionFrame panel;
-		panel.initFrom(m_lineEdit);
-		panel.rect = rect();
-		panel.lineWidth = 1;
-
-		m_historyDropdownArrowRectangle = style()->subElementRect(QStyle::SE_LineEditContents, &panel, this);
-		m_historyDropdownArrowRectangle.setLeft(m_historyDropdownArrowRectangle.left() + m_historyDropdownArrowRectangle.width() - 12);
-	}
-
-	updateIcons();
+	updateGeometries();
 }
 
 void AddressWidget::focusInEvent(QFocusEvent *event)
@@ -899,51 +924,54 @@ void AddressWidget::updateLineEdit()
 void AddressWidget::updateIcons()
 {
 	QMargins margins(5, 0, 0, 0);
+	const bool isRightToLeft(layoutDirection() == Qt::RightToLeft);
 
 	if (!m_isUsingSimpleMode)
 	{
-		margins.setLeft(margins.left() + 30);
+		margins.setLeft(margins.left() + 31);
 	}
 
 	if (m_urlIconLabel)
 	{
-		m_urlIconLabel->move(36, ((height() - m_urlIconLabel->height()) / 2));
+		m_urlIconLabel->move((isRightToLeft ? (width() - 54) : 36), ((height() - m_urlIconLabel->height()) / 2));
 
 		margins.setLeft(margins.left() + 22);
 	}
 
 	if (m_isHistoryDropdownEnabled || m_isUsingSimpleMode)
 	{
-		margins.setRight(margins.right() + m_historyDropdownArrowRectangle.width());
+		margins.setRight(margins.right() + 13);
 	}
 
 	if (m_bookmarkLabel)
 	{
 		margins.setRight(margins.right() + 22);
 
-		m_bookmarkLabel->move((width() - margins.right()), ((height() - m_bookmarkLabel->height()) / 2));
+		m_bookmarkLabel->move((isRightToLeft ? (margins.right() - 16) : (width() - margins.right())), ((height() - m_bookmarkLabel->height()) / 2));
 	}
 
 	if (m_feedsLabel)
 	{
 		margins.setRight(margins.right() + 22);
 
-		m_feedsLabel->move((width() - margins.right()), ((height() - m_feedsLabel->height()) / 2));
+		m_feedsLabel->move((isRightToLeft ? (margins.right() - 16) : (width() - margins.right())), ((height() - m_feedsLabel->height()) / 2));
 	}
 
 	if (m_loadPluginsLabel)
 	{
 		margins.setRight(margins.right() + 22);
 
-		m_loadPluginsLabel->move((width() - margins.right()), ((height() - m_loadPluginsLabel->height()) / 2));
+		m_loadPluginsLabel->move((isRightToLeft ? (margins.right() - 16) : (width() - margins.right())), ((height() - m_loadPluginsLabel->height()) / 2));
 	}
 
 	margins.setRight(margins.right() + 3);
 
 	m_lineEdit->resize((width() - margins.left() - margins.right()), height());
-	m_lineEdit->move(QPoint(margins.left(), 0));
+	m_lineEdit->move(QPoint((isRightToLeft ? margins.right() : margins.left()), 0));
 
 	m_lineEditRectangle = m_lineEdit->geometry();
+
+	updateLineEdit();
 }
 
 void AddressWidget::setCompletion(const QString &filter)
@@ -1026,6 +1054,46 @@ void AddressWidget::setCompletion(const QString &filter)
 void AddressWidget::activate(Qt::FocusReason reason)
 {
 	m_lineEdit->activate(reason);
+}
+
+void AddressWidget::updateGeometries()
+{
+	QStyleOptionFrame panel;
+	panel.initFrom(m_lineEdit);
+	panel.rect = rect();
+	panel.lineWidth = 1;
+
+	const QRect rectangle(style()->subElementRect(QStyle::SE_LineEditContents, &panel, this));
+
+	if (m_isHistoryDropdownEnabled || m_isUsingSimpleMode)
+	{
+		m_historyDropdownArrowRectangle = rectangle;
+
+		if (layoutDirection() == Qt::RightToLeft)
+		{
+			m_historyDropdownArrowRectangle.setRight(13);
+		}
+		else
+		{
+			m_historyDropdownArrowRectangle.setLeft(m_historyDropdownArrowRectangle.width() - 13);
+		}
+	}
+
+	if (!m_isUsingSimpleMode)
+	{
+		m_securityBadgeRectangle = rectangle;
+
+		if (layoutDirection() == Qt::RightToLeft)
+		{
+			m_securityBadgeRectangle.setLeft(m_securityBadgeRectangle.width() - 31);
+		}
+		else
+		{
+			m_securityBadgeRectangle.setRight(31);
+		}
+	}
+
+	updateIcons();
 }
 
 void AddressWidget::setIcon(const QIcon &icon)

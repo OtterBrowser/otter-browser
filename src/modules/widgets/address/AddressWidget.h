@@ -111,6 +111,7 @@ protected:
 	void mouseReleaseEvent(QMouseEvent *event);
 	void wheelEvent(QWheelEvent *event);
 	void hideCompletion();
+	void updateGeometries();
 	bool startDrag(QMouseEvent *event);
 
 protected slots:
