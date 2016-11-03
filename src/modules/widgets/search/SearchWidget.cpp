@@ -318,7 +318,7 @@ void SearchWidget::mouseReleaseEvent(QMouseEvent *event)
 {
 	if (event->button() == Qt::LeftButton)
 	{
-		if (!m_isSearchEngineLocked && (m_iconRectangle.contains(event->pos()) || m_dropdownArrowRectangle.contains(event->pos())))
+		if (!m_isSearchEngineLocked && m_dropdownArrowRectangle.united(m_iconRectangle.marginsAdded(QMargins(2, 2, 2, 2))).contains(event->pos()))
 		{
 			m_popupHideTime = QTime();
 
@@ -331,7 +331,7 @@ void SearchWidget::mouseReleaseEvent(QMouseEvent *event)
 				showPopup();
 			}
 		}
-		else if (m_searchButtonRectangle.contains(event->pos()))
+		else if (m_searchButtonRectangle.marginsAdded(QMargins(2, 2, 2, 2)).contains(event->pos()))
 		{
 			sendRequest();
 		}
