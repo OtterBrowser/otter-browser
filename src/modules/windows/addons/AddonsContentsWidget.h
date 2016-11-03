@@ -46,6 +46,13 @@ public:
 		NameRole = (Qt::UserRole + 1)
 	};
 
+	enum ReplaceMode
+	{
+		UnknownMode = 0,
+		ReplaceAllMode,
+		IgnoreAllMode
+	};
+
 	explicit AddonsContentsWidget(Window *window);
 	~AddonsContentsWidget();
 
