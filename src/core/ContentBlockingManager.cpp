@@ -375,7 +375,7 @@ QVector<ContentBlockingProfile*> ContentBlockingManager::getProfiles()
 		m_profiles.reserve(profiles.count());
 
 		QJsonObject settings;
-		QFile file(SessionsManager::getReadableDataPath(QLatin1String("contentBlocking.json")));
+		QFile file(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking.json")));
 
 		if (file.open(QIODevice::ReadOnly | QIODevice::Text))
 		{

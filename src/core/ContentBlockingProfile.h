@@ -153,4 +153,6 @@ signals:
 
 }
 
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::ContentBlockingProfile::ProfileFlags)
+
 #endif
