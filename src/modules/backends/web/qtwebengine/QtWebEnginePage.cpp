@@ -40,28 +40,6 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMessageBox>
 
-template<typename Arg, typename R, typename C>
-
-struct InvokeWrapper
-{
-	R *receiver;
-	void (C::*memberFunction)(Arg);
-
-	void operator()(Arg result)
-	{
-		(receiver->*memberFunction)(result);
-	}
-};
-
-template<typename Arg, typename R, typename C>
-
-InvokeWrapper<Arg, R, C> invoke(R *receiver, void (C::*memberFunction)(Arg))
-{
-	InvokeWrapper<Arg, R, C> wrapper{receiver, memberFunction};
-
-	return wrapper;
-}
-
 namespace Otter
 {
 
@@ -84,77 +62,75 @@ void QtWebEnginePage::pageLoadFinished()
 {
 	m_ignoreJavaScriptPopups = false;
 
-	toHtml(invoke(this, &QtWebEnginePage::handlePageLoaded));
-}
-
-void QtWebEnginePage::handlePageLoaded(const QString &result)
-{
-	if (m_widget)
+	toHtml([&](const QString &result)
 	{
-		const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption, url()).toStringList()));
-
-		if (!profiles.isEmpty())
+		if (m_widget)
 		{
-			const QStringList domainList(ContentBlockingManager::createSubdomainList(url().host()));
-			QStringList styleSheetBlackList(ContentBlockingManager::getStyleSheet(profiles));
-			QStringList styleSheetWhiteList;
+			const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption, url()).toStringList()));
 
-			for (int i = 0; i < domainList.count(); ++i)
+			if (!profiles.isEmpty())
 			{
-				styleSheetBlackList += ContentBlockingManager::getStyleSheetBlackList(domainList.at(i), profiles);
-				styleSheetWhiteList += ContentBlockingManager::getStyleSheetWhiteList(domainList.at(i), profiles);
+				const QStringList domainList(ContentBlockingManager::createSubdomainList(url().host()));
+				QStringList styleSheetBlackList(ContentBlockingManager::getStyleSheet(profiles));
+				QStringList styleSheetWhiteList;
+
+				for (int i = 0; i < domainList.count(); ++i)
+				{
+					styleSheetBlackList += ContentBlockingManager::getStyleSheetBlackList(domainList.at(i), profiles);
+					styleSheetWhiteList += ContentBlockingManager::getStyleSheetWhiteList(domainList.at(i), profiles);
+				}
+
+				QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hideElements.js"));
+
+				if (file.open(QIODevice::ReadOnly))
+				{
+					runJavaScript(QString(file.readAll()).arg(createJavaScriptList(styleSheetWhiteList)).arg(createJavaScriptList(styleSheetBlackList)));
+
+					file.close();
+				}
 			}
 
-			QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hideElements.js"));
+			const QStringList blockedRequests(qobject_cast<QtWebEngineWebBackend*>(m_widget->getBackend())->getBlockedElements(url().host()));
 
-			if (file.open(QIODevice::ReadOnly))
+			if (!blockedRequests.isEmpty())
 			{
-				runJavaScript(QString(file.readAll()).arg(createJavaScriptList(styleSheetWhiteList)).arg(createJavaScriptList(styleSheetBlackList)));
+				QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hideBlockedRequests.js"));
 
-				file.close();
+				if (file.open(QIODevice::ReadOnly))
+				{
+					runJavaScript(QString(file.readAll()).arg(createJavaScriptList(blockedRequests)));
+
+					file.close();
+				}
 			}
 		}
 
-		const QStringList blockedRequests(qobject_cast<QtWebEngineWebBackend*>(m_widget->getBackend())->getBlockedElements(url().host()));
+		QString string(url().toString());
+		string.truncate(1000);
 
-		if (!blockedRequests.isEmpty())
+		const QRegularExpressionMatch match(QRegularExpression(QStringLiteral(">(<img style=\"-webkit-user-select: none;(?: cursor: zoom-in;)?\"|<video controls=\"\" autoplay=\"\" name=\"media\"><source) src=\"%1").arg(QRegularExpression::escape(string))).match(result));
+		const bool isViewingMedia(match.hasMatch());
+
+		if (isViewingMedia && match.captured().startsWith(QLatin1String("><img")))
 		{
-			QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hideBlockedRequests.js"));
+			settings()->setAttribute(QWebEngineSettings::AutoLoadImages, true);
+			settings()->setAttribute(QWebEngineSettings::JavascriptEnabled, true);
 
-			if (file.open(QIODevice::ReadOnly))
-			{
-				runJavaScript(QString(file.readAll()).arg(createJavaScriptList(blockedRequests)));
+			QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/imageViewer.js"));
+			file.open(QIODevice::ReadOnly);
 
-				file.close();
-			}
+			runJavaScript(file.readAll());
+
+			file.close();
 		}
-	}
 
-	QString string(url().toString());
-	string.truncate(1000);
+		if (isViewingMedia != m_isViewingMedia)
+		{
+			m_isViewingMedia = isViewingMedia;
 
-	const QRegularExpressionMatch match(QRegularExpression(QStringLiteral(">(<img style=\"-webkit-user-select: none;(?: cursor: zoom-in;)?\"|<video controls=\"\" autoplay=\"\" name=\"media\"><source) src=\"%1").arg(QRegularExpression::escape(string))).match(result));
-	const bool isViewingMedia(match.hasMatch());
-
-	if (isViewingMedia && match.captured().startsWith(QLatin1String("><img")))
-	{
-		settings()->setAttribute(QWebEngineSettings::AutoLoadImages, true);
-		settings()->setAttribute(QWebEngineSettings::JavascriptEnabled, true);
-
-		QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/imageViewer.js"));
-		file.open(QIODevice::ReadOnly);
-
-		runJavaScript(file.readAll());
-
-		file.close();
-	}
-
-	if (isViewingMedia != m_isViewingMedia)
-	{
-		m_isViewingMedia = isViewingMedia;
-
-		emit viewingMediaChanged(m_isViewingMedia);
-	}
+			emit viewingMediaChanged(m_isViewingMedia);
+		}
+	});
 }
 
 void QtWebEnginePage::removePopup(const QUrl &url)

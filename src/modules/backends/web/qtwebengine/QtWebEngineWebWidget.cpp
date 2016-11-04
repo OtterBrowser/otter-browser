@@ -54,29 +54,6 @@
 #include <QtWidgets/QToolTip>
 #include <QtWidgets/QVBoxLayout>
 
-template<typename Arg, typename R, typename C>
-
-struct InvokeWrapper
-{
-	R *receiver;
-
-	void (C::*memberFunction)(Arg);
-
-	void operator()(Arg result)
-	{
-		(receiver->*memberFunction)(result);
-	}
-};
-
-template<typename Arg, typename R, typename C>
-
-InvokeWrapper<Arg, R, C> invoke(R *receiver, void (C::*memberFunction)(Arg))
-{
-	InvokeWrapper<Arg, R, C> wrapper{receiver, memberFunction};
-
-	return wrapper;
-}
-
 namespace Otter
 {
 
@@ -141,7 +118,13 @@ void QtWebEngineWebWidget::timerEvent(QTimerEvent *event)
 {
 	if (event->timerId() == m_scrollTimer)
 	{
-		m_webView->page()->runJavaScript(QLatin1String("[window.scrollX, window.scrollY]"), invoke(this, &QtWebEngineWebWidget::handleScroll));
+		m_webView->page()->runJavaScript(QLatin1String("[window.scrollX, window.scrollY]"), [&](const QVariant &result)
+		{
+			if (result.isValid())
+			{
+				m_scrollPosition = QPoint(result.toList()[0].toInt(), result.toList()[1].toInt());
+			}
+		});
 	}
 	else
 	{
@@ -575,7 +558,27 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			}
 			else
 			{
-				m_webView->page()->runJavaScript(QStringLiteral("var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element && element.tagName && element.tagName.toLowerCase() == 'img') { [element.naturalWidth, element.naturalHeight]; }").arg(getClickPosition().x() / m_webView->zoomFactor()).arg(getClickPosition().y() / m_webView->zoomFactor()), invoke(this, &QtWebEngineWebWidget::handleImageProperties));
+				m_webView->page()->runJavaScript(QStringLiteral("var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 + window.scrollX)) : document.activeElement); if (element && element.tagName && element.tagName.toLowerCase() == 'img') { [element.naturalWidth, element.naturalHeight]; }").arg(getClickPosition().x() / m_webView->zoomFactor()).arg(getClickPosition().y() / m_webView->zoomFactor()), [&](const QVariant &result)
+				{
+					QVariantMap properties;
+					properties[QLatin1String("alternativeText")] = m_hitResult.alternateText;
+					properties[QLatin1String("longDescription")] = m_hitResult.longDescription;
+
+					if (result.isValid())
+					{
+						properties[QLatin1String("width")] = result.toList()[0].toInt();
+						properties[QLatin1String("height")] = result.toList()[1].toInt();
+					}
+
+					ImagePropertiesDialog *imagePropertiesDialog(new ImagePropertiesDialog(m_hitResult.imageUrl, properties, NULL, this));
+					imagePropertiesDialog->setButtonsVisible(false);
+
+					ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this);
+
+					connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
+
+					showDialog(&dialog);
+				});
 			}
 
 			return;
@@ -728,7 +731,37 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/createSearch.js"));
 				file.open(QIODevice::ReadOnly);
 
-				m_webView->page()->runJavaScript(QString(file.readAll()).arg(getClickPosition().x() / m_webView->zoomFactor()).arg(getClickPosition().y() / m_webView->zoomFactor()), invoke(this, &QtWebEngineWebWidget::handleCreateSearch));
+				m_webView->page()->runJavaScript(QString(file.readAll()).arg(getClickPosition().x() / m_webView->zoomFactor()).arg(getClickPosition().y() / m_webView->zoomFactor()), [&](const QVariant &result)
+				{
+					if (result.isNull())
+					{
+						return;
+					}
+
+					const QUrlQuery parameters(result.toMap().value(QLatin1String("query")).toString());
+					const QStringList identifiers(SearchEnginesManager::getSearchEngines());
+					const QStringList keywords(SearchEnginesManager::getSearchKeywords());
+					const QIcon icon(getIcon());
+					const QUrl url(result.toMap().value(QLatin1String("url")).toString());
+					SearchEnginesManager::SearchEngineDefinition searchEngine;
+					searchEngine.identifier = Utils::createIdentifier(getUrl().host(), identifiers);
+					searchEngine.title = getTitle();
+					searchEngine.formUrl = getUrl();
+					searchEngine.icon = (icon.isNull() ? ThemesManager::getIcon(QLatin1String("edit-find")) : icon);
+					searchEngine.resultsUrl.url = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
+					searchEngine.resultsUrl.enctype = result.toMap().value(QLatin1String("enctype")).toString();
+					searchEngine.resultsUrl.method = result.toMap().value(QLatin1String("method")).toString();
+					searchEngine.resultsUrl.parameters = parameters;
+
+					SearchEnginePropertiesDialog dialog(searchEngine, keywords, false, this);
+
+					if (dialog.exec() == QDialog::Rejected)
+					{
+						return;
+					}
+
+					SearchEnginesManager::addSearchEngine(dialog.getSearchEngine(), dialog.isDefault());
+				});
 
 				file.close();
 			}
@@ -920,75 +953,6 @@ void QtWebEngineWebWidget::handleProxyAuthenticationRequired(const QUrl &url, QA
 	showDialog(&dialog);
 }
 
-void QtWebEngineWebWidget::handleCreateSearch(const QVariant &result)
-{
-	if (result.isNull())
-	{
-		return;
-	}
-
-	const QUrlQuery parameters(result.toMap().value(QLatin1String("query")).toString());
-	const QStringList identifiers(SearchEnginesManager::getSearchEngines());
-	const QStringList keywords(SearchEnginesManager::getSearchKeywords());
-	const QIcon icon(getIcon());
-	const QUrl url(result.toMap().value(QLatin1String("url")).toString());
-	SearchEnginesManager::SearchEngineDefinition searchEngine;
-	searchEngine.identifier = Utils::createIdentifier(getUrl().host(), identifiers);
-	searchEngine.title = getTitle();
-	searchEngine.formUrl = getUrl();
-	searchEngine.icon = (icon.isNull() ? ThemesManager::getIcon(QLatin1String("edit-find")) : icon);
-	searchEngine.resultsUrl.url = (url.isEmpty() ? getUrl() : (url.isRelative() ? getUrl().resolved(url) : url)).toString();
-	searchEngine.resultsUrl.enctype = result.toMap().value(QLatin1String("enctype")).toString();
-	searchEngine.resultsUrl.method = result.toMap().value(QLatin1String("method")).toString();
-	searchEngine.resultsUrl.parameters = parameters;
-
-	SearchEnginePropertiesDialog dialog(searchEngine, keywords, false, this);
-
-	if (dialog.exec() == QDialog::Rejected)
-	{
-		return;
-	}
-
-	SearchEnginesManager::addSearchEngine(dialog.getSearchEngine(), dialog.isDefault());
-}
-
-void QtWebEngineWebWidget::handleEditingCheck(const QVariant &result)
-{
-	m_isEditing = result.toBool();
-
-	emit unlockEventLoop();
-}
-
-void QtWebEngineWebWidget::handleHitTest(const QVariant &result)
-{
-	m_hitResult = HitTestResult(result);
-
-	emit hitTestResultReady();
-	emit unlockEventLoop();
-}
-
-void QtWebEngineWebWidget::handleImageProperties(const QVariant &result)
-{
-	QVariantMap properties;
-	properties[QLatin1String("alternativeText")] = m_hitResult.alternateText;
-	properties[QLatin1String("longDescription")] = m_hitResult.longDescription;
-
-	if (result.isValid())
-	{
-		properties[QLatin1String("width")] = result.toList()[0].toInt();
-		properties[QLatin1String("height")] = result.toList()[1].toInt();
-	}
-
-	ImagePropertiesDialog *imagePropertiesDialog(new ImagePropertiesDialog(m_hitResult.imageUrl, properties, NULL, this));
-	imagePropertiesDialog->setButtonsVisible(false);
-
-	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this);
-
-	connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
-
-	showDialog(&dialog);
-}
-
 void QtWebEngineWebWidget::handleFullScreenRequest(QWebEngineFullScreenRequest request)
 {
 	request.accept();
@@ -1032,22 +996,6 @@ void QtWebEngineWebWidget::handlePermissionRequest(const QUrl &url, QWebEnginePa
 void QtWebEngineWebWidget::handlePermissionCancel(const QUrl &url, QWebEnginePage::Feature feature)
 {
 	notifyPermissionRequested(url, feature, true);
-}
-
-void QtWebEngineWebWidget::handleScroll(const QVariant &result)
-{
-	if (result.isValid())
-	{
-		m_scrollPosition = QPoint(result.toList()[0].toInt(), result.toList()[1].toInt());
-	}
-}
-
-void QtWebEngineWebWidget::handleScrollToAnchor(const QVariant &result)
-{
-	if (result.isValid())
-	{
-		setScrollPosition(QPoint(result.toList()[0].toInt(), result.toList()[1].toInt()));
-	}
 }
 
 void QtWebEngineWebWidget::handleWindowCloseRequest()
@@ -1229,7 +1177,13 @@ void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 
 void QtWebEngineWebWidget::setScrollPosition(const QPoint &position)
 {
-	m_webView->page()->runJavaScript(QStringLiteral("window.scrollTo(%1, %2); [window.scrollX, window.scrollY];").arg(position.x()).arg(position.y()), invoke(this, &QtWebEngineWebWidget::handleScroll));
+	m_webView->page()->runJavaScript(QStringLiteral("window.scrollTo(%1, %2); [window.scrollX, window.scrollY];").arg(position.x()).arg(position.y()), [&](const QVariant &result)
+	{
+		if (result.isValid())
+		{
+			m_scrollPosition = QPoint(result.toList()[0].toInt(), result.toList()[1].toInt());
+		}
+	});
 }
 
 void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
@@ -1301,7 +1255,13 @@ void QtWebEngineWebWidget::setUrl(const QUrl &url, bool isTyped)
 
 	if (!url.fragment().isEmpty() && url.matches(getUrl(), (QUrl::RemoveFragment | QUrl::StripTrailingSlash | QUrl::NormalizePathSegments)))
 	{
-		m_webView->page()->runJavaScript(QStringLiteral("var element = document.querySelector('a[name=%1], [id=%1]'); if (element) { var geometry = element.getBoundingClientRect(); [(geometry.left + window.scrollX), (geometry.top + window.scrollY)]; }").arg(url.fragment()), invoke(this, &QtWebEngineWebWidget::handleScrollToAnchor));
+		m_webView->page()->runJavaScript(QStringLiteral("var element = document.querySelector('a[name=%1], [id=%1]'); if (element) { var geometry = element.getBoundingClientRect(); [(geometry.left + window.scrollX), (geometry.top + window.scrollY)]; }").arg(url.fragment()), [&](const QVariant &result)
+		{
+			if (result.isValid())
+			{
+				setScrollPosition(QPoint(result.toList()[0].toInt(), result.toList()[1].toInt()));
+			}
+		});
 
 		return;
 	}
@@ -1595,11 +1555,15 @@ WebWidget::HitTestResult QtWebEngineWebWidget::getHitTestResult(const QPoint &po
 
 	QEventLoop eventLoop;
 
-	m_webView->page()->runJavaScript(QString(file.readAll()).arg(position.x() / m_webView->zoomFactor()).arg(position.y() / m_webView->zoomFactor()), invoke(this, &QtWebEngineWebWidget::handleHitTest));
+	m_webView->page()->runJavaScript(QString(file.readAll()).arg(position.x() / m_webView->zoomFactor()).arg(position.y() / m_webView->zoomFactor()), [&](const QVariant &result)
+	{
+		m_hitResult = HitTestResult(result);
+
+		eventLoop.quit();
+	});
 
 	file.close();
 
-	connect(this, SIGNAL(unlockEventLoop()), &eventLoop, SLOT(quit()));
 	connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
 	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
@@ -1786,9 +1750,13 @@ bool QtWebEngineWebWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		QEventLoop eventLoop;
 
-		m_webView->page()->runJavaScript(QLatin1String("var element = document.body.querySelector(':focus'); var tagName = (element ? element.tagName.toLowerCase() : ''); var result = false; if (tagName == 'textarea' || tagName == 'input') { var type = (element.type ? element.type.toLowerCase() : ''); if ((type == '' || tagName == 'textarea' || type == 'text' || type == 'search') && !element.hasAttribute('readonly') && !element.hasAttribute('disabled')) { result = true; } } result;"), invoke(this, &QtWebEngineWebWidget::handleEditingCheck));
+		m_webView->page()->runJavaScript(QLatin1String("var element = document.body.querySelector(':focus'); var tagName = (element ? element.tagName.toLowerCase() : ''); var result = false; if (tagName == 'textarea' || tagName == 'input') { var type = (element.type ? element.type.toLowerCase() : ''); if ((type == '' || tagName == 'textarea' || type == 'text' || type == 'search') && !element.hasAttribute('readonly') && !element.hasAttribute('disabled')) { result = true; } } result;"), [&](const QVariant &result)
+		{
+			m_isEditing = result.toBool();
 
-		connect(this, SIGNAL(unlockEventLoop()), &eventLoop, SLOT(quit()));
+			eventLoop.quit();
+		});
+
 		connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
 		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 

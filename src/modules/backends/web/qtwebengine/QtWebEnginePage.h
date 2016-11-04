@@ -53,7 +53,6 @@ protected:
 
 protected slots:
 	void pageLoadFinished();
-	void handlePageLoaded(const QString &result);
 	void removePopup(const QUrl &url);
 
 private:

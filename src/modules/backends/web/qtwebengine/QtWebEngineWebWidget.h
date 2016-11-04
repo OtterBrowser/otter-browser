@@ -82,12 +82,6 @@ protected:
 	void timerEvent(QTimerEvent *event);
 	void focusInEvent(QFocusEvent *event);
 	void pasteText(const QString &text);
-	void handleCreateSearch(const QVariant &result);
-	void handleEditingCheck(const QVariant &result);
-	void handleHitTest(const QVariant &result);
-	void handleImageProperties(const QVariant &result);
-	void handleScroll(const QVariant &result);
-	void handleScrollToAnchor(const QVariant &result);
 	void updateOptions(const QUrl &url);
 	void setHistory(QDataStream &stream);
 	void setOptions(const QHash<int, QVariant> &options);
@@ -137,10 +131,6 @@ private:
 	int m_scrollTimer;
 	bool m_isEditing;
 	bool m_isTyped;
-
-signals:
-	void hitTestResultReady();
-	void unlockEventLoop();
 
 friend class QtWebEnginePage;
 friend class QtWebEngineWebBackend;
