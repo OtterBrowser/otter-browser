@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2015 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -247,6 +247,7 @@ void ItemViewWidget::showEvent(QShowEvent *event)
 	setSort(settings.getValue(QLatin1String("sortColumn"), -1).toInt(), ((settings.getValue(QLatin1String("sortOrder"), QLatin1String("ascending")).toString() == QLatin1String("ascending")) ? Qt::AscendingOrder : Qt::DescendingOrder));
 
 	const QStringList columns(settings.getValue(QLatin1String("columns")).toString().split(QLatin1Char(','), QString::SkipEmptyParts));
+	bool shouldStretchLastSection(true);
 
 	if (!columns.isEmpty())
 	{
@@ -264,13 +265,21 @@ void ItemViewWidget::showEvent(QShowEvent *event)
 			if (m_headerWidget)
 			{
 				m_headerWidget->moveSection(m_headerWidget->visualIndex(columns[i].toInt()), i);
+
+				if (m_headerWidget->sectionResizeMode(i) == QHeaderView::Stretch)
+				{
+					shouldStretchLastSection = false;
+				}
 			}
 		}
 
 		connect(m_headerWidget, SIGNAL(sectionMoved(int,int,int)), this, SLOT(saveState()));
 	}
 
-	m_headerWidget->setStretchLastSection(true);
+	if (shouldStretchLastSection)
+	{
+		m_headerWidget->setStretchLastSection(true);
+	}
 
 	m_isInitialized = true;
 
