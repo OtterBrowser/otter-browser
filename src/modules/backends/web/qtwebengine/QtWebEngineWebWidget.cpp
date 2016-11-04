@@ -185,7 +185,18 @@ void QtWebEngineWebWidget::search(const QString &query, const QString &searchEng
 
 void QtWebEngineWebWidget::print(QPrinter *printer)
 {
+#if QT_VERSION < 0x050800
 	m_webView->render(printer);
+#else
+	QEventLoop eventLoop;
+
+	m_webView->page()->print(printer, [&](bool)
+	{
+		eventLoop.quit();
+	});
+
+	eventLoop.exec();
+#endif
 }
 
 void QtWebEngineWebWidget::pageLoadStarted()
