@@ -80,24 +80,24 @@ void ContentBlockingProfileDialog::save()
 {
 	const ContentBlockingProfile::ProfileCategory category(static_cast<ContentBlockingProfile::ProfileCategory>(m_ui->categoryComboBox->itemData(m_ui->categoryComboBox->currentIndex()).toInt()));
 
+	const QUrl url(m_ui->updateUrlEdit->text());
+
+	if (!url.isValid())
+	{
+		QMessageBox::critical(this, tr("Error"), tr("Valid update URL is required."), QMessageBox::Close);
+
+		return;
+	}
+
 	if (m_profile)
 	{
 		m_profile->setCategory(category);
 		m_profile->setTitle(m_ui->titleEdit->text());
-		m_profile->setUpdateUrl(QUrl(m_ui->updateUrlEdit->text()));
+		m_profile->setUpdateUrl(url);
 		m_profile->setUpdateInterval(m_ui->updateIntervalSpinBox->value());
 	}
 	else
 	{
-		const QUrl url(m_ui->updateUrlEdit->text());
-
-		if (!url.isValid())
-		{
-			QMessageBox::critical(this, tr("Error"), tr("Update URL is required."), QMessageBox::Close);
-
-			return;
-		}
-
 		QDir().mkpath(SessionsManager::getWritableDataPath(QLatin1String("contentBlocking")));
 
 		const QString fileName(QFileInfo(url.fileName()).completeBaseName());
