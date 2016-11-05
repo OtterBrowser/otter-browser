@@ -166,6 +166,8 @@ void QtWebEnginePage::javaScriptAlert(const QUrl &url, const QString &message)
 		return;
 	}
 
+	emit m_widget->needsAttention();
+
 	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, QString(), QDialogButtonBox::Ok, NULL, m_widget);
 	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
 
@@ -375,6 +377,8 @@ bool QtWebEnginePage::javaScriptConfirm(const QUrl &url, const QString &message)
 		return QWebEnginePage::javaScriptConfirm(url, message);
 	}
 
+	emit m_widget->needsAttention();
+
 	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), NULL, m_widget);
 	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
 
@@ -401,6 +405,8 @@ bool QtWebEnginePage::javaScriptPrompt(const QUrl &url, const QString &message, 
 	{
 		return QWebEnginePage::javaScriptPrompt(url, message, defaultValue, result);
 	}
+
+	emit m_widget->needsAttention();
 
 	QWidget *widget(new QWidget(m_widget));
 	QLineEdit *lineEdit(new QLineEdit(defaultValue, widget));

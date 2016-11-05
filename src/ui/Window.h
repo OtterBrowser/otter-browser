@@ -128,6 +128,7 @@ private:
 
 signals:
 	void aboutToClose();
+	void needsAttention();
 	void requestedOpenBookmark(BookmarksItem *bookmark, WindowsManager::OpenHints hints);
 	void requestedOpenUrl(const QUrl &url, WindowsManager::OpenHints hints);
 	void requestedSearch(const QString &query, const QString &searchEngine, WindowsManager::OpenHints hints = WindowsManager::DefaultOpen);

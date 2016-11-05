@@ -299,6 +299,7 @@ private:
 signals:
 	void aboutToNavigate();
 	void aboutToReload();
+	void needsAttention();
 	void requestedCloseWindow();
 	void requestedOpenUrl(const QUrl &url, WindowsManager::OpenHints hints);
 	void requestedAddBookmark(const QUrl &url, const QString &title, const QString &description);

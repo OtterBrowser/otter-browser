@@ -641,6 +641,10 @@ void WindowsManager::addWindow(Window *window, OpenHints hints, int index, const
 	}
 
 	connect(m_mainWindow, SIGNAL(controlsHiddenChanged(bool)), window, SLOT(setControlsHidden(bool)));
+	connect(window, &Window::needsAttention, [&]()
+	{
+		QApplication::alert(m_mainWindow);
+	});
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
 	connect(window, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), this, SLOT(open(QUrl,WindowsManager::OpenHints)));
 	connect(window, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), this, SLOT(open(BookmarksItem*,WindowsManager::OpenHints)));
