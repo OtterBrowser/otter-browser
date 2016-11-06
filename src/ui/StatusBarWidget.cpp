@@ -44,6 +44,16 @@ StatusBarWidget::StatusBarWidget(MainWindow *parent) : QStatusBar(parent),
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
 }
 
+void StatusBarWidget::changeEvent(QEvent *event)
+{
+	QStatusBar::changeEvent(event);
+
+	if (event->type() == QEvent::LayoutDirectionChange)
+	{
+		updateSize();
+	}
+}
+
 void StatusBarWidget::paintEvent(QPaintEvent *event)
 {
 	Q_UNUSED(event)
@@ -99,7 +109,7 @@ void StatusBarWidget::updateSize()
 	}
 
 	m_toolBar->setFixedSize((width() - offset), ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).iconSize);
-	m_toolBar->move(((layoutDirection() == Qt::LeftToRight) ? 0 : offset), 0);
+	m_toolBar->move(((layoutDirection() == Qt::RightToLeft) ? offset : 0), 0);
 }
 
 }

@@ -36,6 +36,7 @@ public:
 	explicit StatusBarWidget(MainWindow *parent);
 
 protected:
+	void changeEvent(QEvent *event);
 	void paintEvent(QPaintEvent *event);
 	void resizeEvent(QResizeEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
