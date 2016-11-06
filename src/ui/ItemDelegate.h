@@ -28,7 +28,7 @@ namespace Otter
 class ItemDelegate : public QStyledItemDelegate
 {
 public:
-	explicit ItemDelegate(QObject *parent = NULL);
+	explicit ItemDelegate(QObject *parent = nullptr);
 
 	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;

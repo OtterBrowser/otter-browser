@@ -32,7 +32,7 @@ class QtWebEngineTransfer : public Transfer
 	Q_OBJECT
 
 public:
-	explicit QtWebEngineTransfer(QWebEngineDownloadItem *item, TransferOptions options = CanAskForPathOption, QObject *parent = NULL);
+	explicit QtWebEngineTransfer(QWebEngineDownloadItem *item, TransferOptions options = CanAskForPathOption, QObject *parent = nullptr);
 
 	QUrl getSource() const;
 	QString getSuggestedFileName();

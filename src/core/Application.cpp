@@ -77,12 +77,12 @@
 namespace Otter
 {
 
-Application* Application::m_instance = NULL;
-PlatformIntegration* Application::m_platformIntegration = NULL;
-TrayIcon* Application::m_trayIcon = NULL;
-QTranslator* Application::m_qtTranslator = NULL;
-QTranslator* Application::m_applicationTranslator = NULL;
-QLocalServer* Application::m_localServer = NULL;
+Application* Application::m_instance = nullptr;
+PlatformIntegration* Application::m_platformIntegration = nullptr;
+TrayIcon* Application::m_trayIcon = nullptr;
+QTranslator* Application::m_qtTranslator = nullptr;
+QTranslator* Application::m_applicationTranslator = nullptr;
+QLocalServer* Application::m_localServer = nullptr;
 QString Application::m_localePath;
 QCommandLineParser Application::m_commandLineParser;
 QList<MainWindow*> Application::m_windows;
@@ -294,7 +294,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 
 	if (!isReadOnly && !QFileInfo(profilePath).isWritable())
 	{
-		QMessageBox::warning(NULL, tr("Warning"), tr("Profile directory (%1) is not writable, application will be running in read-only mode.").arg(profilePath), QMessageBox::Close);
+		QMessageBox::warning(nullptr, tr("Warning"), tr("Profile directory (%1) is not writable, application will be running in read-only mode.").arg(profilePath), QMessageBox::Close);
 
 		isReadOnly = true;
 	}
@@ -400,7 +400,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 
 	if (!QSslSocket::supportsSsl() || (webBackend && webBackend->getSslVersion().isEmpty()))
 	{
-		QMessageBox::warning(NULL, tr("Warning"), tr("SSL support is not available or incomplete.\nSome websites may work incorrectly or do not work at all."), QMessageBox::Close);
+		QMessageBox::warning(nullptr, tr("Warning"), tr("SSL support is not available or incomplete.\nSome websites may work incorrectly or do not work at all."), QMessageBox::Close);
 	}
 
 	if (SettingsManager::getValue(SettingsManager::Browser_EnableTrayIconOption).toBool())
@@ -480,7 +480,7 @@ void Application::optionChanged(int identifier, const QVariant &value)
 		else if (m_trayIcon && !value.toBool())
 		{
 			m_trayIcon->deleteLater();
-			m_trayIcon = NULL;
+			m_trayIcon = nullptr;
 		}
 	}
 }
@@ -548,7 +548,7 @@ void Application::newConnection()
 
 	socket->waitForReadyRead(1000);
 
-	MainWindow *window(getWindows().isEmpty() ? NULL : getWindow());
+	MainWindow *window(getWindows().isEmpty() ? nullptr : getWindow());
 	QString data;
 	QTextStream stream(socket);
 	stream >> data;
@@ -577,7 +577,7 @@ void Application::newConnection()
 	{
 		const SessionInformation sessionData(SessionsManager::getSession(session));
 
-		if (sessionData.isClean || QMessageBox::warning(NULL, tr("Warning"), tr("This session was not saved correctly.\nAre you sure that you want to restore this session anyway?"), (QMessageBox::Yes | QMessageBox::No), QMessageBox::No) == QMessageBox::Yes)
+		if (sessionData.isClean || QMessageBox::warning(nullptr, tr("Warning"), tr("This session was not saved correctly.\nAre you sure that you want to restore this session anyway?"), (QMessageBox::Yes | QMessageBox::No), QMessageBox::No) == QMessageBox::Yes)
 		{
 			for (int i = 0; i < sessionData.windows.count(); ++i)
 			{
@@ -694,7 +694,7 @@ void Application::showUpdateDetails()
 
 	if (notification)
 	{
-		UpdateCheckerDialog *dialog(new UpdateCheckerDialog(NULL, notification->getData().value<QList<UpdateInformation> >()));
+		UpdateCheckerDialog *dialog(new UpdateCheckerDialog(nullptr, notification->getData().value<QList<UpdateInformation> >()));
 		dialog->show();
 	}
 }
@@ -1066,7 +1066,7 @@ bool Application::isUpdating() const
 
 bool Application::isRunning() const
 {
-	return (m_localServer == NULL);
+	return (m_localServer == nullptr);
 }
 
 }

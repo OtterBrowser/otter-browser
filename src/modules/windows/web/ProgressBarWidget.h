@@ -34,7 +34,7 @@ class ProgressBarWidget : public QFrame
 	Q_OBJECT
 
 public:
-	explicit ProgressBarWidget(Window *window, QWidget *parent = NULL);
+	explicit ProgressBarWidget(Window *window, QWidget *parent = nullptr);
 
 public slots:
 	void scheduleGeometryUpdate();

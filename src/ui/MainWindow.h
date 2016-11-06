@@ -54,7 +54,7 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 public:
-	explicit MainWindow(Application::MainWindowFlags flags = Application::NoFlags, const SessionMainWindow &session = SessionMainWindow(), QWidget *parent = NULL);
+	explicit MainWindow(Application::MainWindowFlags flags = Application::NoFlags, const SessionMainWindow &session = SessionMainWindow(), QWidget *parent = nullptr);
 	~MainWindow();
 
 	static MainWindow* findMainWindow(QObject *parent);

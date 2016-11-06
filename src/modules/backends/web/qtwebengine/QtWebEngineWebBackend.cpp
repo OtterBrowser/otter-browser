@@ -43,7 +43,7 @@ QMap<QString, QString> QtWebEngineWebBackend::m_userAgentComponents;
 QMap<QString, QString> QtWebEngineWebBackend::m_userAgents;
 
 QtWebEngineWebBackend::QtWebEngineWebBackend(QObject *parent) : WebBackend(parent),
-	m_requestInterceptor(NULL),
+	m_requestInterceptor(nullptr),
 	m_isInitialized(false)
 {
 	const QString userAgent(QWebEngineProfile::defaultProfile()->httpUserAgent());

@@ -39,7 +39,7 @@ class SidebarWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit SidebarWidget(QWidget *parent = NULL);
+	explicit SidebarWidget(QWidget *parent = nullptr);
 	~SidebarWidget();
 
 	void selectPanel(const QString &identifier);

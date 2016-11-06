@@ -32,7 +32,7 @@ class InputInterpreter : public QObject
 	Q_OBJECT
 
 public:
-	explicit InputInterpreter(QObject *parent = NULL);
+	explicit InputInterpreter(QObject *parent = nullptr);
 
 	void interpret(const QString &text, WindowsManager::OpenHints hints, bool ignoreBookmarks = false);
 

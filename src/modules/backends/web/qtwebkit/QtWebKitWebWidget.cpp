@@ -77,9 +77,9 @@ namespace Otter
 
 QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebKitNetworkManager *networkManager, ContentsWidget *parent) : WebWidget(isPrivate, backend, parent),
 	m_webView(new QWebView(this)),
-	m_page(NULL),
+	m_page(nullptr),
 	m_pluginFactory(new QtWebKitPluginFactory(this)),
-	m_inspector(NULL),
+	m_inspector(nullptr),
 	m_networkManager(networkManager),
 	m_splitter(new QSplitter(Qt::Vertical, this)),
 	m_loadingState(WindowsManager::FinishedLoadingState),
@@ -106,7 +106,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	}
 	else
 	{
-		m_networkManager = new QtWebKitNetworkManager(isPrivate, NULL, this);
+		m_networkManager = new QtWebKitNetworkManager(isPrivate, nullptr, this);
 	}
 
 	m_page = new QtWebKitPage(m_networkManager, this);
@@ -699,7 +699,7 @@ void QtWebKitWebWidget::handleWindowCloseRequest()
 		return;
 	}
 
-	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), tr("JavaScript"), tr("Webpage wants to close this tab, do you want to allow to close it?"), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), NULL, this);
+	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), tr("JavaScript"), tr("Webpage wants to close this tab, do you want to allow to close it?"), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), nullptr, this);
 	dialog.setCheckBox(tr("Do not show this message again"), false);
 
 	connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
@@ -1308,7 +1308,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				if (parent)
 				{
-					ImagePropertiesDialog *imagePropertiesDialog(new ImagePropertiesDialog(getCurrentHitTestResult().imageUrl, properties, (m_networkManager->cache() ? m_networkManager->cache()->data(getCurrentHitTestResult().imageUrl) : NULL), this));
+					ImagePropertiesDialog *imagePropertiesDialog(new ImagePropertiesDialog(getCurrentHitTestResult().imageUrl, properties, (m_networkManager->cache() ? m_networkManager->cache()->data(getCurrentHitTestResult().imageUrl) : nullptr), this));
 					imagePropertiesDialog->setButtonsVisible(false);
 
 					ContentsDialog *dialog(new ContentsDialog(ThemesManager::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this));
@@ -1996,7 +1996,7 @@ void QtWebKitWebWidget::setScrollPosition(const QPoint &position)
 
 WebWidget* QtWebKitWebWidget::clone(bool cloneHistory, bool isPrivate)
 {
-	QtWebKitWebWidget *widget(new QtWebKitWebWidget((this->isPrivate() || isPrivate), getBackend(), ((this->isPrivate() != isPrivate) ? NULL : m_networkManager->clone()), NULL));
+	QtWebKitWebWidget *widget(new QtWebKitWebWidget((this->isPrivate() || isPrivate), getBackend(), ((this->isPrivate() != isPrivate) ? nullptr : m_networkManager->clone()), nullptr));
 	widget->setOptions(getOptions());
 
 	if (cloneHistory)

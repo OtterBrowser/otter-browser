@@ -32,8 +32,8 @@
 namespace Otter
 {
 
-SearchEnginesManager* SearchEnginesManager::m_instance = NULL;
-QStandardItemModel* SearchEnginesManager::m_searchEnginesModel = NULL;
+SearchEnginesManager* SearchEnginesManager::m_instance = nullptr;
+QStandardItemModel* SearchEnginesManager::m_searchEnginesModel = nullptr;
 QStringList SearchEnginesManager::m_searchEnginesOrder;
 QStringList SearchEnginesManager::m_searchKeywords;
 QHash<QString, SearchEnginesManager::SearchEngineDefinition> SearchEnginesManager::m_searchEngines;
@@ -303,7 +303,7 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::loadSearchEng
 
 	if (reader.readNextStartElement() && reader.name() == QLatin1String("OpenSearchDescription"))
 	{
-		SearchUrl *currentUrl(NULL);
+		SearchUrl *currentUrl(nullptr);
 
 		while (!reader.atEnd())
 		{
@@ -327,7 +327,7 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::loadSearchEng
 					}
 					else
 					{
-						currentUrl = NULL;
+						currentUrl = nullptr;
 					}
 
 					if (currentUrl)

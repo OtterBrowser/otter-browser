@@ -25,8 +25,8 @@ namespace Otter
 {
 
 BookmarksImporter::BookmarksImporter(QObject *parent): Importer(parent),
-	m_currentFolder(NULL),
-	m_importFolder(NULL),
+	m_currentFolder(nullptr),
+	m_importFolder(nullptr),
 	m_allowDuplicates(true)
 {
 	setImportFolder(BookmarksManager::getModel()->getRootItem());

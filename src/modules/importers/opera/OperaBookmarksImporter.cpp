@@ -30,7 +30,7 @@ namespace Otter
 {
 
 OperaBookmarksImporter::OperaBookmarksImporter(QObject *parent): BookmarksImporter(parent),
-	m_optionsWidget(NULL)
+	m_optionsWidget(nullptr)
 {
 }
 
@@ -153,7 +153,7 @@ bool OperaBookmarksImporter::import(const QString &path)
 		}
 	}
 
-	BookmarksItem *bookmark(NULL);
+	BookmarksItem *bookmark(nullptr);
 	OperaBookmarkEntry type(NoEntry);
 	bool isHeader(true);
 
@@ -194,7 +194,7 @@ bool OperaBookmarksImporter::import(const QString &path)
 			if (!allowDuplicates() && BookmarksManager::hasBookmark(url))
 			{
 				bookmark->remove();
-				bookmark = NULL;
+				bookmark = nullptr;
 			}
 			else
 			{
@@ -235,7 +235,7 @@ bool OperaBookmarksImporter::import(const QString &path)
 					setCurrentFolder(bookmark);
 				}
 
-				bookmark = NULL;
+				bookmark = nullptr;
 			}
 			else if (type == FolderEndEntry)
 			{

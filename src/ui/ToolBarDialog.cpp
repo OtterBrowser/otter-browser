@@ -74,9 +74,9 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 
 	if (m_definition.bookmarksPath.isEmpty())
 	{
-		m_ui->folderLabel->setParent(NULL);
+		m_ui->folderLabel->setParent(nullptr);
 		m_ui->folderLabel->deleteLater();
-		m_ui->folderComboBox->setParent(NULL);
+		m_ui->folderComboBox->setParent(nullptr);
 		m_ui->folderComboBox->deleteLater();
 	}
 	else

@@ -35,7 +35,7 @@ class StartPagePreferencesDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit StartPagePreferencesDialog(QWidget *parent = NULL);
+	explicit StartPagePreferencesDialog(QWidget *parent = nullptr);
 	~StartPagePreferencesDialog();
 
 protected:

@@ -46,7 +46,7 @@ class Importer : public Addon
 	Q_OBJECT
 
 public:
-	explicit Importer(QObject *parent = NULL);
+	explicit Importer(QObject *parent = nullptr);
 
 	virtual QWidget* getOptionsWidget() = 0;
 	virtual QString getSuggestedPath(const QString &path = QString()) const = 0;

@@ -60,8 +60,8 @@ namespace Otter
 QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : WebWidget(isPrivate, backend, parent),
 	m_webView(new QWebEngineView(this)),
 	m_page(new QtWebEnginePage(isPrivate, this)),
-	m_iconReply(NULL),
-	m_loadingTime(NULL),
+	m_iconReply(nullptr),
+	m_loadingTime(nullptr),
 	m_loadingState(WindowsManager::FinishedLoadingState),
 	m_documentLoadingProgress(0),
 #if QT_VERSION < 0x050700
@@ -545,7 +545,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 				if (parent)
 				{
-					ImagePropertiesDialog *imagePropertiesDialog(new ImagePropertiesDialog(m_hitResult.imageUrl, properties, NULL, this));
+					ImagePropertiesDialog *imagePropertiesDialog(new ImagePropertiesDialog(m_hitResult.imageUrl, properties, nullptr, this));
 					imagePropertiesDialog->setButtonsVisible(false);
 
 					ContentsDialog *dialog(new ContentsDialog(ThemesManager::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this));
@@ -570,7 +570,7 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 						properties[QLatin1String("height")] = result.toList()[1].toInt();
 					}
 
-					ImagePropertiesDialog *imagePropertiesDialog(new ImagePropertiesDialog(m_hitResult.imageUrl, properties, NULL, this));
+					ImagePropertiesDialog *imagePropertiesDialog(new ImagePropertiesDialog(m_hitResult.imageUrl, properties, nullptr, this));
 					imagePropertiesDialog->setButtonsVisible(false);
 
 					ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this);
@@ -887,7 +887,7 @@ void QtWebEngineWebWidget::iconReplyFinished()
 	emit iconChanged(getIcon());
 
 	m_iconReply->deleteLater();
-	m_iconReply = NULL;
+	m_iconReply = nullptr;
 }
 
 void QtWebEngineWebWidget::viewSourceReplyFinished(QNetworkReply::NetworkError error)
@@ -1012,7 +1012,7 @@ void QtWebEngineWebWidget::handleWindowCloseRequest()
 		return;
 	}
 
-	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), tr("JavaScript"), tr("Webpage wants to close this tab, do you want to allow to close it?"), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), NULL, this);
+	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), tr("JavaScript"), tr("Webpage wants to close this tab, do you want to allow to close it?"), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), nullptr, this);
 	dialog.setCheckBox(tr("Do not show this message again"), false);
 
 	connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));

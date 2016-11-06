@@ -58,10 +58,10 @@ public:
 		QString match;
 		bool isTypedIn;
 
-		HistoryEntryMatch () : entry(NULL), isTypedIn(false) {}
+		HistoryEntryMatch () : entry(nullptr), isTypedIn(false) {}
 	};
 
-	explicit HistoryModel(const QString &path, QObject *parent = NULL);
+	explicit HistoryModel(const QString &path, QObject *parent = nullptr);
 
 	void clearExcessEntries(int limit);
 	void clearRecentEntries(uint period);

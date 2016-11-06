@@ -33,7 +33,7 @@ class OperaSearchEnginesImporter : public Importer
 	Q_OBJECT
 
 public:
-	explicit OperaSearchEnginesImporter(QObject *parent = NULL);
+	explicit OperaSearchEnginesImporter(QObject *parent = nullptr);
 	~OperaSearchEnginesImporter();
 
 	QWidget* getOptionsWidget();

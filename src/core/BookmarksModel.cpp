@@ -242,7 +242,7 @@ BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *pa
 
 				Console::addMessage(((m_mode == NotesMode) ? tr("Failed to load notes file: %1") : tr("Failed to load bookmarks file: %1")).arg(reader.errorString()), Console::OtherCategory, Console::ErrorLevel, path);
 
-				QMessageBox::warning(NULL, tr("Error"), ((m_mode == NotesMode) ? tr("Failed to load notes file.") : tr("Failed to load bookmarks file.")), QMessageBox::Close);
+				QMessageBox::warning(nullptr, tr("Error"), ((m_mode == NotesMode) ? tr("Failed to load notes file.") : tr("Failed to load bookmarks file.")), QMessageBox::Close);
 
 				return;
 			}
@@ -354,7 +354,7 @@ void BookmarksModel::removeBookmark(BookmarksItem *bookmark)
 
 void BookmarksModel::readBookmark(QXmlStreamReader *reader, BookmarksItem *parent)
 {
-	BookmarksItem *bookmark(NULL);
+	BookmarksItem *bookmark(nullptr);
 
 	if (reader->name() == QLatin1String("folder"))
 	{
@@ -747,7 +747,7 @@ BookmarksItem* BookmarksModel::getBookmark(const QString &keyword) const
 		return m_keywords[keyword];
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 BookmarksItem* BookmarksModel::getBookmark(const QModelIndex &index) const
@@ -767,7 +767,7 @@ BookmarksItem* BookmarksModel::getBookmark(quint64 identifier) const
 		return m_identifiers[identifier];
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 BookmarksItem* BookmarksModel::getRootItem() const
@@ -813,7 +813,7 @@ BookmarksItem* BookmarksModel::getItem(const QString &path) const
 
 		if (!hasFound)
 		{
-			return NULL;
+			return nullptr;
 		}
 	}
 

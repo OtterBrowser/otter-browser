@@ -37,7 +37,7 @@ namespace Otter
 {
 
 NetworkManager::NetworkManager(bool isPrivate, QObject *parent) : QNetworkAccessManager(parent),
-	m_cookieJar(NULL)
+	m_cookieJar(nullptr)
 {
 	NetworkManagerFactory::initialize();
 

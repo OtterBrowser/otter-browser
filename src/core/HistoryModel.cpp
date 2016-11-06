@@ -195,7 +195,7 @@ HistoryEntryItem* HistoryModel::getEntry(quint64 identifier) const
 		return m_identifiers[identifier];
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 QList<HistoryModel::HistoryEntryMatch> HistoryModel::findEntries(const QString &prefix, bool markAsTypedIn) const

@@ -35,7 +35,7 @@ class CookiesExceptionsDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit CookiesExceptionsDialog(const QStringList &acceptedHosts, const QStringList &rejectedHosts, QWidget *parent = NULL);
+	explicit CookiesExceptionsDialog(const QStringList &acceptedHosts, const QStringList &rejectedHosts, QWidget *parent = nullptr);
 	~CookiesExceptionsDialog();
 
 	QStringList getAcceptedHosts() const;

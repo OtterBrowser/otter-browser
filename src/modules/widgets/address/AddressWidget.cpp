@@ -193,15 +193,15 @@ QSize AddressDelegate::sizeHint(const QStyleOptionViewItem &option, const QModel
 }
 
 AddressWidget::AddressWidget(Window *window, QWidget *parent) : ComboBoxWidget(parent),
-	m_window(NULL),
+	m_window(nullptr),
 	m_lineEdit(new LineEditWidget(this)),
 	m_completionModel(new AddressCompletionModel(this)),
-	m_completionView(NULL),
-	m_visibleView(NULL),
-	m_bookmarkLabel(NULL),
-	m_feedsLabel(NULL),
-	m_loadPluginsLabel(NULL),
-	m_urlIconLabel(NULL),
+	m_completionView(nullptr),
+	m_visibleView(nullptr),
+	m_bookmarkLabel(nullptr),
+	m_feedsLabel(nullptr),
+	m_loadPluginsLabel(nullptr),
+	m_urlIconLabel(nullptr),
 	m_completionModes(NoCompletionMode),
 	m_hints(WindowsManager::DefaultOpen),
 	m_removeModelTimer(0),
@@ -594,7 +594,7 @@ void AddressWidget::hidePopup()
 
 	QApplication::sendEvent(this, &statusTipEvent);
 
-	m_visibleView = NULL;
+	m_visibleView = nullptr;
 
 	m_removeModelTimer = startTimer(250);
 }
@@ -605,14 +605,14 @@ void AddressWidget::hideCompletion()
 	{
 		m_completionView->hide();
 		m_completionView->deleteLater();
-		m_completionView = NULL;
+		m_completionView = nullptr;
 
 		QString statusTip;
 		QStatusTipEvent statusTipEvent(statusTip);
 
 		QApplication::sendEvent(this, &statusTipEvent);
 
-		m_visibleView = NULL;
+		m_visibleView = nullptr;
 	}
 }
 
@@ -698,7 +698,7 @@ void AddressWidget::optionChanged(int identifier, const QVariant &value)
 		else if (!value.toBool() && m_bookmarkLabel)
 		{
 			m_bookmarkLabel->deleteLater();
-			m_bookmarkLabel = NULL;
+			m_bookmarkLabel = nullptr;
 
 			updateIcons();
 		}
@@ -730,7 +730,7 @@ void AddressWidget::optionChanged(int identifier, const QVariant &value)
 			if (!value.toBool() && m_urlIconLabel)
 			{
 				m_urlIconLabel->deleteLater();
-				m_urlIconLabel = NULL;
+				m_urlIconLabel = nullptr;
 
 				updateIcons();
 			}
@@ -872,7 +872,7 @@ void AddressWidget::updateFeeds()
 	else if (feeds.isEmpty() && m_feedsLabel)
 	{
 		m_feedsLabel->deleteLater();
-		m_feedsLabel = NULL;
+		m_feedsLabel = nullptr;
 
 		updateIcons();
 	}
@@ -910,7 +910,7 @@ void AddressWidget::updateLoadPlugins()
 	else if (!canLoadPlugins && m_loadPluginsLabel)
 	{
 		m_loadPluginsLabel->deleteLater();
-		m_loadPluginsLabel = NULL;
+		m_loadPluginsLabel = nullptr;
 
 		updateIcons();
 	}
@@ -1319,7 +1319,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 				}
 				else
 				{
-					BookmarkPropertiesDialog dialog(url.adjusted(QUrl::RemovePassword), m_window->getTitle(), QString(), NULL, -1, true, this);
+					BookmarkPropertiesDialog dialog(url.adjusted(QUrl::RemovePassword), m_window->getTitle(), QString(), nullptr, -1, true, this);
 					dialog.exec();
 				}
 

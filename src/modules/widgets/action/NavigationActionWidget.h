@@ -31,7 +31,7 @@ class NavigationActionWidget : public ActionWidget
 	Q_OBJECT
 
 public:
-	explicit NavigationActionWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = NULL);
+	explicit NavigationActionWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = nullptr);
 
 	bool eventFilter(QObject *object, QEvent *event);
 

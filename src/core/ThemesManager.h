@@ -30,12 +30,12 @@ class ThemesManager : public QObject
 	Q_OBJECT
 
 public:
-	static void createInstance(QObject *parent = NULL);
+	static void createInstance(QObject *parent = nullptr);
 	static ThemesManager* getInstance();
 	static QIcon getIcon(const QString &name, bool fromTheme = true);
 
 protected:
-	explicit ThemesManager(QObject *parent = NULL);
+	explicit ThemesManager(QObject *parent = nullptr);
 
 protected slots:
 	void optionChanged(int identifier, const QVariant &value);

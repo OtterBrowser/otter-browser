@@ -35,7 +35,7 @@ class ActionComboBoxWidget : public ComboBoxWidget
 	Q_OBJECT
 
 public:
-	explicit ActionComboBoxWidget(QWidget *parent = NULL);
+	explicit ActionComboBoxWidget(QWidget *parent = nullptr);
 
 	void setActionIdentifier(int action);
 	int getActionIdentifier() const;

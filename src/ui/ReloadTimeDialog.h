@@ -35,7 +35,7 @@ class ReloadTimeDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit ReloadTimeDialog(int time, QWidget *parent = NULL);
+	explicit ReloadTimeDialog(int time, QWidget *parent = nullptr);
 	~ReloadTimeDialog();
 
 	int getReloadTime() const;

@@ -319,7 +319,7 @@ Action* BookmarksContentsWidget::getAction(int identifier)
 
 	if (identifier != ActionsManager::DeleteAction)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	Action *action(new Action(identifier, this));

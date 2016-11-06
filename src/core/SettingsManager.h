@@ -263,7 +263,7 @@ public:
 		OptionDefinition() : type(UnknownType), flags(IsEnabledFlag | IsVisibleFlag), identifier(-1) {}
 	};
 
-	static void createInstance(const QString &path, QObject *parent = NULL);
+	static void createInstance(const QString &path, QObject *parent = nullptr);
 	static void removeOverride(const QUrl &url, const QString &key = QString());
 	static void updateOptionDefinition(int identifier, const OptionDefinition &definition);
 	static void setValue(int identifier, const QVariant &value, const QUrl &url = QUrl());
@@ -278,7 +278,7 @@ public:
 	static bool hasOverride(const QUrl &url, int identifier = -1);
 
 protected:
-	explicit SettingsManager(QObject *parent = NULL);
+	explicit SettingsManager(QObject *parent = nullptr);
 
 	static QString getHost(const QUrl &url);
 	static void registerOption(int identifier, const QVariant &defaultValue, OptionType type, const QStringList &choices = QStringList());

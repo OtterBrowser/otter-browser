@@ -35,7 +35,7 @@ class SourceViewerWebWidget : public WebWidget
 	Q_OBJECT
 
 public:
-	explicit SourceViewerWebWidget(bool isPrivate, ContentsWidget *parent = NULL);
+	explicit SourceViewerWebWidget(bool isPrivate, ContentsWidget *parent = nullptr);
 
 	void print(QPrinter *printer);
 	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false);

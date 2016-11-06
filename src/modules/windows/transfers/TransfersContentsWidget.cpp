@@ -526,7 +526,7 @@ Transfer* TransfersContentsWidget::getTransfer(const QModelIndex &index)
 		return static_cast<Transfer*>(m_model->item(index.row(), 0)->data(Qt::UserRole).value<void*>());
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 Action* TransfersContentsWidget::getAction(int identifier)
@@ -538,7 +538,7 @@ Action* TransfersContentsWidget::getAction(int identifier)
 
 	if (identifier != ActionsManager::CopyAction && identifier != ActionsManager::DeleteAction)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	Action *action(new Action(identifier, this));

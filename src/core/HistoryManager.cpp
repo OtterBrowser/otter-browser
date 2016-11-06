@@ -30,9 +30,9 @@
 namespace Otter
 {
 
-HistoryManager* HistoryManager::m_instance = NULL;
-HistoryModel* HistoryManager::m_browsingHistoryModel = NULL;
-HistoryModel* HistoryManager::m_typedHistoryModel = NULL;
+HistoryManager* HistoryManager::m_instance = nullptr;
+HistoryModel* HistoryManager::m_browsingHistoryModel = nullptr;
+HistoryModel* HistoryManager::m_typedHistoryModel = nullptr;
 bool HistoryManager::m_isEnabled = false;
 bool HistoryManager::m_isStoringFavicons = true;
 

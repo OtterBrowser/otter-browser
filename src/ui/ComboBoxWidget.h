@@ -32,7 +32,7 @@ class ComboBoxWidget : public QComboBox
 	Q_OBJECT
 
 public:
-	explicit ComboBoxWidget(QWidget *parent = NULL);
+	explicit ComboBoxWidget(QWidget *parent = nullptr);
 
 	ItemViewWidget* getView() const;
 

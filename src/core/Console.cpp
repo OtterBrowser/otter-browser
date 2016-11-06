@@ -22,7 +22,7 @@
 namespace Otter
 {
 
-Console* Console::m_instance = NULL;
+Console* Console::m_instance = nullptr;
 QList<Console::Message> Console::m_messages;
 
 Console::Console(QObject *parent) : QObject(parent)

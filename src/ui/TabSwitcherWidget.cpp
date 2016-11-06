@@ -36,7 +36,7 @@ TabSwitcherWidget::TabSwitcherWidget(WindowsManager *manager, QWidget *parent) :
 	m_frame(new QFrame(this)),
 	m_tabsView(new ItemViewWidget(m_frame)),
 	m_previewLabel(new QLabel(m_frame)),
-	m_loadingMovie(NULL),
+	m_loadingMovie(nullptr),
 	m_reason(KeyboardReason)
 {
 	QHBoxLayout *mainLayout(new QHBoxLayout(this));
@@ -161,13 +161,13 @@ void TabSwitcherWidget::currentTabChanged(const QModelIndex &index)
 		}
 		else
 		{
-			m_previewLabel->setMovie(NULL);
+			m_previewLabel->setMovie(nullptr);
 			m_previewLabel->setPixmap((window->getLoadingState() == WindowsManager::CrashedLoadingState) ? ThemesManager::getIcon(QLatin1String("tab-crashed")).pixmap(32, 32) : window->getThumbnail());
 		}
 	}
 	else
 	{
-		m_previewLabel->setMovie(NULL);
+		m_previewLabel->setMovie(nullptr);
 		m_previewLabel->setPixmap(QPixmap());
 	}
 }

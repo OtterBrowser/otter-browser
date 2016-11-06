@@ -52,12 +52,12 @@ namespace Otter
 
 WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : QWidget(parent),
 	m_backend(backend),
-	m_pasteNoteMenu(NULL),
-	m_linkApplicationsMenu(NULL),
-	m_frameApplicationsMenu(NULL),
-	m_pageApplicationsMenu(NULL),
-	m_reloadTimeMenu(NULL),
-	m_quickSearchMenu(NULL),
+	m_pasteNoteMenu(nullptr),
+	m_linkApplicationsMenu(nullptr),
+	m_frameApplicationsMenu(nullptr),
+	m_pageApplicationsMenu(nullptr),
+	m_reloadTimeMenu(nullptr),
+	m_quickSearchMenu(nullptr),
 	m_windowIdentifier(0),
 	m_loadingTime(0),
 	m_loadingTimer(0),
@@ -92,7 +92,7 @@ void WebWidget::timerEvent(QTimerEvent *event)
 
 void WebWidget::bounceAction(int identifier, QVariantMap parameters)
 {
-	Window *window(NULL);
+	Window *window(nullptr);
 	QObject *parent(parentWidget());
 
 	while (parent)
@@ -1158,7 +1158,7 @@ Action* WebWidget::getAction(int identifier)
 {
 	if (identifier < 0)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	if (m_actions.contains(identifier))
@@ -1399,7 +1399,7 @@ Action* WebWidget::getAction(int identifier)
 
 Action* WebWidget::getExistingAction(int identifier)
 {
-	return (m_actions.contains(identifier) ? m_actions[identifier] : NULL);
+	return (m_actions.contains(identifier) ? m_actions[identifier] : nullptr);
 }
 
 WebBackend* WebWidget::getBackend()

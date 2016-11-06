@@ -35,8 +35,8 @@
 namespace Otter
 {
 
-QtWebKitWebBackend* QtWebKitWebBackend::m_instance = NULL;
-QPointer<WebWidget> QtWebKitWebBackend::m_activeWidget = NULL;
+QtWebKitWebBackend* QtWebKitWebBackend::m_instance = nullptr;
+QPointer<WebWidget> QtWebKitWebBackend::m_activeWidget = nullptr;
 QMap<QString, QString> QtWebKitWebBackend::m_userAgentComponents;
 QMap<QString, QString> QtWebKitWebBackend::m_userAgents;
 int QtWebKitWebBackend::m_enableMediaOption = -1;
@@ -196,7 +196,7 @@ WebWidget* QtWebKitWebBackend::createWidget(bool isPrivate, ContentsWidget *pare
 		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
 	}
 
-	QtWebKitWebWidget *widget(new QtWebKitWebWidget(isPrivate, this, NULL, parent));
+	QtWebKitWebWidget *widget(new QtWebKitWebWidget(isPrivate, this, nullptr, parent));
 
 	connect(widget, SIGNAL(widgetActivated(WebWidget*)), this, SLOT(setActiveWidget(WebWidget*)));
 

@@ -34,7 +34,7 @@ class HistoryManager : public QObject
 	Q_OBJECT
 
 public:
-	static void createInstance(QObject *parent = NULL);
+	static void createInstance(QObject *parent = nullptr);
 	static void clearHistory(uint period = 0);
 	static void removeEntry(quint64 identifier);
 	static void removeEntries(const QList<quint64> &identifiers);
@@ -49,7 +49,7 @@ public:
 	static bool hasEntry(const QUrl &url);
 
 protected:
-	explicit HistoryManager(QObject *parent = NULL);
+	explicit HistoryManager(QObject *parent = nullptr);
 
 	void timerEvent(QTimerEvent *event);
 	void scheduleSave();

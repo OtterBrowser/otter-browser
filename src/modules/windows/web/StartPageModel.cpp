@@ -33,7 +33,7 @@ namespace Otter
 {
 
 StartPageModel::StartPageModel(QObject *parent) : QStandardItemModel(parent),
-	m_bookmark(NULL)
+	m_bookmark(nullptr)
 {
 	optionChanged(SettingsManager::Backends_WebOption);
 	reloadModel();

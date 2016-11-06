@@ -32,7 +32,7 @@ class PacUtils : public QObject
 	Q_OBJECT
 
 public:
-	explicit PacUtils(QObject *parent = NULL);
+	explicit PacUtils(QObject *parent = nullptr);
 
 public slots:
 	void alert(const QString &message) const;
@@ -62,7 +62,7 @@ class NetworkAutomaticProxy : public QObject
 	Q_OBJECT
 
 public:
-	explicit NetworkAutomaticProxy(QObject *parent = NULL);
+	explicit NetworkAutomaticProxy(QObject *parent = nullptr);
 
 	QList<QNetworkProxy> getProxy(const QString &url, const QString &host);
 	bool setup(const QString &script);

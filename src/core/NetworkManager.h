@@ -62,7 +62,7 @@ public:
 		ResourceInformation() : resourceType(NetworkManager::OtherType) {}
 	};
 
-	explicit NetworkManager(bool isPrivate = false, QObject *parent = NULL);
+	explicit NetworkManager(bool isPrivate = false, QObject *parent = nullptr);
 
 	CookieJar* getCookieJar();
 

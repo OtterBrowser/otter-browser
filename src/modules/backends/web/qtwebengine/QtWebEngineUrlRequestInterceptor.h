@@ -33,7 +33,7 @@ class QtWebEngineUrlRequestInterceptor : public QWebEngineUrlRequestInterceptor
 	Q_OBJECT
 
 public:
-	explicit QtWebEngineUrlRequestInterceptor(QObject *parent = NULL);
+	explicit QtWebEngineUrlRequestInterceptor(QObject *parent = nullptr);
 
 	QStringList getBlockedElements(const QString &domain) const;
 	void interceptRequest(QWebEngineUrlRequestInfo &request);

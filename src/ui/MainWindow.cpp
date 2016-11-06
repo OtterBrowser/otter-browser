@@ -63,20 +63,20 @@ namespace Otter
 {
 
 MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWindow &session, QWidget *parent) : QMainWindow(parent),
-	m_windowsManager(NULL),
-	m_tabSwitcher(NULL),
+	m_windowsManager(nullptr),
+	m_tabSwitcher(nullptr),
 	m_workspace(new WorkspaceWidget(this)),
-	m_topToolBarArea(NULL),
-	m_bottomToolBarArea(NULL),
-	m_leftToolBarArea(NULL),
-	m_rightToolBarArea(NULL),
-	m_tabBar(NULL),
-	m_menuBar(NULL),
-	m_statusBar(NULL),
-	m_sidebarToggle(NULL),
-	m_sidebar(NULL),
+	m_topToolBarArea(nullptr),
+	m_bottomToolBarArea(nullptr),
+	m_leftToolBarArea(nullptr),
+	m_rightToolBarArea(nullptr),
+	m_tabBar(nullptr),
+	m_menuBar(nullptr),
+	m_statusBar(nullptr),
+	m_sidebarToggle(nullptr),
+	m_sidebar(nullptr),
 	m_splitter(new QSplitter(this)),
-	m_currentWindow(NULL),
+	m_currentWindow(nullptr),
 	m_mouseTrackerTimer(0),
 	m_tabSwitcherTimer(0),
 	m_hasToolBars(!flags.testFlag(Application::NoToolBarsFlag)),
@@ -84,7 +84,7 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 {
 	m_ui->setupUi(this);
 
-	m_standardActions.fill(NULL, ActionsManager::getActionDefinitions().count());
+	m_standardActions.fill(nullptr, ActionsManager::getActionDefinitions().count());
 
 	updateShortcuts();
 
@@ -369,13 +369,13 @@ void MainWindow::optionChanged(int identifier, const QVariant &value)
 		if (m_sidebarToggle && !value.toBool())
 		{
 			m_sidebarToggle->deleteLater();
-			m_sidebarToggle = NULL;
+			m_sidebarToggle = nullptr;
 
 			placeSidebars();
 		}
 		else if (!m_sidebarToggle && value.toBool())
 		{
-			m_sidebarToggle = new ActionWidget(ActionsManager::ShowSidebarAction, NULL, ActionsManager::ActionEntryDefinition(), this);
+			m_sidebarToggle = new ActionWidget(ActionsManager::ShowSidebarAction, nullptr, ActionsManager::ActionEntryDefinition(), this);
 			m_sidebarToggle->setFixedWidth(6);
 			m_sidebarToggle->setText(QString());
 			m_sidebarToggle->setVisible(!areControlsHidden());
@@ -914,7 +914,7 @@ void MainWindow::addBookmark(const QUrl &url, const QString &title, const QStrin
 		return;
 	}
 
-	BookmarkPropertiesDialog dialog(bookmarkUrl, (url.isValid() ? title : m_windowsManager->getTitle()), description, NULL, -1, true, this);
+	BookmarkPropertiesDialog dialog(bookmarkUrl, (url.isValid() ? title : m_windowsManager->getTitle()), description, nullptr, -1, true, this);
 	dialog.exec();
 }
 
@@ -938,9 +938,9 @@ void MainWindow::toolBarModified(int identifier)
 		if (m_menuBar && !showMenuBar)
 		{
 			m_menuBar->deleteLater();
-			m_menuBar = NULL;
+			m_menuBar = nullptr;
 
-			setMenuBar(NULL);
+			setMenuBar(nullptr);
 		}
 		else if (!m_menuBar && showMenuBar)
 		{
@@ -958,9 +958,9 @@ void MainWindow::toolBarModified(int identifier)
 		if (m_statusBar && !showStatusBar)
 		{
 			m_statusBar->deleteLater();
-			m_statusBar = NULL;
+			m_statusBar = nullptr;
 
-			setStatusBar(NULL);
+			setStatusBar(nullptr);
 		}
 		else if (!m_statusBar && showStatusBar)
 		{
@@ -1124,8 +1124,8 @@ void MainWindow::setCurrentWindow(Window *window)
 		if (m_standardActions[i] && Action::isLocal(m_standardActions[i]->getIdentifier()))
 		{
 			const int identifier(m_standardActions[i]->getIdentifier());
-			Action *previousAction((previousWindow && previousWindow->getContentsWidget()) ? previousWindow->getContentsWidget()->getAction(identifier) : NULL);
-			Action *currentAction(window ? window->getContentsWidget()->getAction(identifier) : NULL);
+			Action *previousAction((previousWindow && previousWindow->getContentsWidget()) ? previousWindow->getContentsWidget()->getAction(identifier) : nullptr);
+			Action *currentAction(window ? window->getContentsWidget()->getAction(identifier) : nullptr);
 
 			if (previousAction)
 			{
@@ -1153,7 +1153,7 @@ MainWindow* MainWindow::findMainWindow(QObject *parent)
 {
 	if (!parent)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	if (parent->metaObject()->className() == QLatin1String("Otter::MainWindow"))
@@ -1161,7 +1161,7 @@ MainWindow* MainWindow::findMainWindow(QObject *parent)
 		return qobject_cast<MainWindow*>(parent);
 	}
 
-	MainWindow *window(NULL);
+	MainWindow *window(nullptr);
 	QWidget *widget(qobject_cast<QWidget*>(parent));
 
 	if (widget && widget->window())
@@ -1193,7 +1193,7 @@ Action* MainWindow::getAction(int identifier)
 {
 	if (identifier < 0 || identifier >= m_standardActions.count())
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	if (!m_standardActions[identifier])
@@ -1215,7 +1215,7 @@ Action* MainWindow::getAction(int identifier)
 		}
 	}
 
-	return m_standardActions.value(identifier, NULL);
+	return m_standardActions.value(identifier, nullptr);
 }
 
 WorkspaceWidget* MainWindow::getWorkspace()

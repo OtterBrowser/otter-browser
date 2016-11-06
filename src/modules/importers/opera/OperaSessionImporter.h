@@ -31,7 +31,7 @@ class OperaSessionImporter : public Importer
 	Q_OBJECT
 
 public:
-	explicit OperaSessionImporter(QObject *parent = NULL);
+	explicit OperaSessionImporter(QObject *parent = nullptr);
 
 	QWidget* getOptionsWidget();
 	QString getTitle() const;

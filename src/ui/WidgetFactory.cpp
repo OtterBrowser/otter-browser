@@ -129,7 +129,7 @@ QWidget* createToolBarItem(const ActionsManager::ActionEntryDefinition &definiti
 
 		if (identifier >= 0)
 		{
-			ActionWidget *actionWidget(NULL);
+			ActionWidget *actionWidget(nullptr);
 
 			if (identifier == ActionsManager::GoBackAction || identifier == ActionsManager::GoForwardAction)
 			{
@@ -151,7 +151,7 @@ QWidget* createToolBarItem(const ActionsManager::ActionEntryDefinition &definiti
 		return new ToolButtonWidget(definition, parent);
 	}
 
-	return NULL;
+	return nullptr;
 
 }
 
@@ -159,58 +159,58 @@ QWidget* createSidebarPanel(const QString &panel, MainWindow *mainWindow)
 {
 	if (panel == QLatin1String("addons"))
 	{
-		return new AddonsContentsWidget(NULL);
+		return new AddonsContentsWidget(nullptr);
 	}
 
 	if (panel == QLatin1String("bookmarks"))
 	{
-		return new BookmarksContentsWidget(NULL);
+		return new BookmarksContentsWidget(nullptr);
 	}
 
 	if (panel == QLatin1String("cache"))
 	{
-		return new CacheContentsWidget(NULL);
+		return new CacheContentsWidget(nullptr);
 	}
 
 	if (panel == QLatin1String("config"))
 	{
-		return new ConfigurationContentsWidget(NULL);
+		return new ConfigurationContentsWidget(nullptr);
 	}
 
 	if (panel == QLatin1String("cookies"))
 	{
-		return new CookiesContentsWidget(NULL);
+		return new CookiesContentsWidget(nullptr);
 	}
 
 	if (panel == QLatin1String("history"))
 	{
-		return new HistoryContentsWidget(NULL);
+		return new HistoryContentsWidget(nullptr);
 	}
 
 	if (panel == QLatin1String("notes"))
 	{
-		return new NotesContentsWidget(NULL);
+		return new NotesContentsWidget(nullptr);
 	}
 
 	if (panel == QLatin1String("passwords"))
 	{
-		return new PasswordsContentsWidget(NULL);
+		return new PasswordsContentsWidget(nullptr);
 	}
 
 	if (panel == QLatin1String("transfers"))
 	{
-		return new TransfersContentsWidget(NULL);
+		return new TransfersContentsWidget(nullptr);
 	}
 
 	if (panel.startsWith(QLatin1String("web:")))
 	{
-		WebContentsWidget *webWidget(new WebContentsWidget((mainWindow ? mainWindow->getWindowsManager()->isPrivate() : true), NULL, NULL));
+		WebContentsWidget *webWidget(new WebContentsWidget((mainWindow ? mainWindow->getWindowsManager()->isPrivate() : true), nullptr, nullptr));
 		webWidget->setUrl(panel.section(QLatin1Char(':'), 1, -1), false);
 
 		return webWidget;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 }

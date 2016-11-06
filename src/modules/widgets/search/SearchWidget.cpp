@@ -138,10 +138,10 @@ QSize SearchDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelI
 }
 
 SearchWidget::SearchWidget(Window *window, QWidget *parent) : ComboBoxWidget(parent),
-	m_window(NULL),
+	m_window(nullptr),
 	m_lineEdit(new LineEditWidget(this)),
 	m_completer(new QCompleter(this)),
-	m_suggester(NULL),
+	m_suggester(nullptr),
 	m_lastValidIndex(0),
 	m_isIgnoringActivation(false),
 	m_isPopupUpdated(false),
@@ -410,9 +410,9 @@ void SearchWidget::optionChanged(int identifier, const QVariant &value)
 		else if (!value.toBool() && m_suggester)
 		{
 			m_suggester->deleteLater();
-			m_suggester = NULL;
+			m_suggester = nullptr;
 
-			m_completer->setModel(NULL);
+			m_completer->setModel(nullptr);
 		}
 	}
 }

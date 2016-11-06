@@ -32,13 +32,13 @@ class NotesManager : public QObject
 	Q_OBJECT
 
 public:
-	static void createInstance(QObject *parent = NULL);
+	static void createInstance(QObject *parent = nullptr);
 	static NotesManager* getInstance();
 	static BookmarksModel* getModel();
-	static BookmarksItem* addNote(BookmarksModel::BookmarkType type, const QUrl &url = QUrl(), const QString &title = QString(), BookmarksItem *parent = NULL);
+	static BookmarksItem* addNote(BookmarksModel::BookmarkType type, const QUrl &url = QUrl(), const QString &title = QString(), BookmarksItem *parent = nullptr);
 
 protected:
-	explicit NotesManager(QObject *parent = NULL);
+	explicit NotesManager(QObject *parent = nullptr);
 
 	void timerEvent(QTimerEvent *event);
 

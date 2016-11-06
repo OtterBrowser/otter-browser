@@ -39,8 +39,8 @@ namespace Otter
 
 MenuBarWidget::MenuBarWidget(MainWindow *parent) : QMenuBar(parent),
 	m_mainWindow(parent),
-	m_leftToolBar(NULL),
-	m_rightToolBar(NULL)
+	m_leftToolBar(nullptr),
+	m_rightToolBar(nullptr)
 {
 	QFile file(SessionsManager::getReadableDataPath(QLatin1String("menu/menuBar.json")));
 	file.open(QIODevice::ReadOnly);
@@ -105,17 +105,17 @@ void MenuBarWidget::setup()
 		if (m_leftToolBar)
 		{
 			m_leftToolBar->deleteLater();
-			m_leftToolBar = NULL;
+			m_leftToolBar = nullptr;
 
-			setCornerWidget(NULL, Qt::TopLeftCorner);
+			setCornerWidget(nullptr, Qt::TopLeftCorner);
 		}
 
 		if (m_rightToolBar)
 		{
 			m_rightToolBar->deleteLater();
-			m_rightToolBar = NULL;
+			m_rightToolBar = nullptr;
 
-			setCornerWidget(NULL, Qt::TopRightCorner);
+			setCornerWidget(nullptr, Qt::TopRightCorner);
 		}
 
 		return;
@@ -134,9 +134,9 @@ void MenuBarWidget::setup()
 	else if (!needsLeftToolbar && m_leftToolBar)
 	{
 		m_leftToolBar->deleteLater();
-		m_leftToolBar = NULL;
+		m_leftToolBar = nullptr;
 
-		setCornerWidget(NULL, Qt::TopLeftCorner);
+		setCornerWidget(nullptr, Qt::TopLeftCorner);
 	}
 
 	if (needsRightToolbar && !m_rightToolBar)
@@ -148,9 +148,9 @@ void MenuBarWidget::setup()
 	else if (!needsRightToolbar && m_rightToolBar)
 	{
 		m_rightToolBar->deleteLater();
-		m_rightToolBar = NULL;
+		m_rightToolBar = nullptr;
 
-		setCornerWidget(NULL, Qt::TopRightCorner);
+		setCornerWidget(nullptr, Qt::TopRightCorner);
 	}
 
 	ToolBarsManager::ToolBarDefinition leftDefinition(definition);

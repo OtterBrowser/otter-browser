@@ -188,8 +188,8 @@ bool NavigationActionWidget::eventFilter(QObject *object, QEvent *event)
 			if (action && action->data().type() == QVariant::Int)
 			{
 				QMenu contextMenu(menu());
-				QAction *removeEntryAction(contextMenu.addAction(tr("Remove Entry"), NULL, NULL, QKeySequence(Qt::Key_Delete)));
-				QAction *purgeEntryAction(contextMenu.addAction(tr("Purge Entry"), NULL, NULL, QKeySequence(Qt::ShiftModifier | Qt::Key_Delete)));
+				QAction *removeEntryAction(contextMenu.addAction(tr("Remove Entry"), nullptr, nullptr, QKeySequence(Qt::Key_Delete)));
+				QAction *purgeEntryAction(contextMenu.addAction(tr("Purge Entry"), nullptr, nullptr, QKeySequence(Qt::ShiftModifier | Qt::Key_Delete)));
 				QAction *selectedAction(contextMenu.exec(contextMenuEvent->globalPos()));
 
 				if (selectedAction == removeEntryAction)

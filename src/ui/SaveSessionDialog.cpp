@@ -72,7 +72,7 @@ void SaveSessionDialog::saveSession()
 		return;
 	}
 
-	if (SessionsManager::saveSession(m_ui->identifierLineEdit->text(), m_ui->titleLineEdit->text(), (m_ui->onlyCurrentWindowCheckBox->isChecked() ? qobject_cast<MainWindow*>(parentWidget()) : NULL)))
+	if (SessionsManager::saveSession(m_ui->identifierLineEdit->text(), m_ui->titleLineEdit->text(), (m_ui->onlyCurrentWindowCheckBox->isChecked() ? qobject_cast<MainWindow*>(parentWidget()) : nullptr)))
 	{
 		close();
 	}

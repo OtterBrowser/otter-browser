@@ -53,7 +53,7 @@ CertificateDialog::CertificateDialog(QList<QSslCertificate> certificates, QWidge
 	setWindowTitle(tr("View Certificate for %1").arg(certificates.first().subjectInfo(QSslCertificate::CommonName).join(QLatin1String(", "))));
 
 	QStandardItemModel *chainModel(new QStandardItemModel(this));
-	QStandardItem *certificateItem(NULL);
+	QStandardItem *certificateItem(nullptr);
 
 	for (int i = (certificates.count() - 1); i >= 0; --i)
 	{

@@ -30,7 +30,7 @@ class StatusMessageWidget : public QLabel
 	Q_OBJECT
 
 public:
-	explicit StatusMessageWidget(QWidget *parent = NULL);
+	explicit StatusMessageWidget(QWidget *parent = nullptr);
 
 protected:
 	void resizeEvent(QResizeEvent *event);

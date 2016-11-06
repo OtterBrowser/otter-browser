@@ -112,9 +112,9 @@ bool GesturesManager::GestureStep::operator !=(const GestureStep &other)
 	return !((*this) == other);
 }
 
-GesturesManager* GesturesManager::m_instance = NULL;
-MouseGestures::Recognizer* GesturesManager::m_recognizer = NULL;
-QPointer<QObject> GesturesManager::m_trackedObject = NULL;
+GesturesManager* GesturesManager::m_instance = nullptr;
+MouseGestures::Recognizer* GesturesManager::m_recognizer = nullptr;
+QPointer<QObject> GesturesManager::m_trackedObject = nullptr;
 QPoint GesturesManager::m_lastClick;
 QPoint GesturesManager::m_lastPosition;
 QVariantMap GesturesManager::m_paramaters;
@@ -303,7 +303,7 @@ void GesturesManager::releaseObject()
 		disconnect(m_trackedObject, SIGNAL(destroyed(QObject*)), m_instance, SLOT(endGesture()));
 	}
 
-	m_trackedObject = NULL;
+	m_trackedObject = nullptr;
 }
 
 void GesturesManager::endGesture()
@@ -698,7 +698,7 @@ bool GesturesManager::triggerAction(int gestureIdentifier)
 
 bool GesturesManager::isTracking()
 {
-	return (m_trackedObject != NULL);
+	return (m_trackedObject != nullptr);
 }
 
 bool GesturesManager::eventFilter(QObject *object, QEvent *event)
@@ -760,7 +760,7 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 			{
 				delete m_recognizer;
 
-				m_recognizer = NULL;
+				m_recognizer = nullptr;
 			}
 
 			gesture = matchGesture();
@@ -818,7 +818,7 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 			{
 				delete m_recognizer;
 
-				m_recognizer = NULL;
+				m_recognizer = nullptr;
 			}
 
 			gesture = matchGesture();

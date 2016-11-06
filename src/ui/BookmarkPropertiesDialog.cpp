@@ -85,7 +85,7 @@ BookmarkPropertiesDialog::BookmarkPropertiesDialog(BookmarksItem *bookmark, QWid
 }
 
 BookmarkPropertiesDialog::BookmarkPropertiesDialog(const QUrl &url, const QString &title, const QString &description, BookmarksItem *folder, int index, bool isUrl, QWidget *parent) : Dialog(parent),
-	m_bookmark(NULL),
+	m_bookmark(nullptr),
 	m_index(index),
 	m_ui(new Ui::BookmarkPropertiesDialog)
 {

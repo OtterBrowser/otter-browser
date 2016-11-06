@@ -30,7 +30,7 @@ namespace Otter
 {
 
 ActionComboBoxWidget::ActionComboBoxWidget(QWidget *parent) : ComboBoxWidget(parent),
-	m_filterLineEdit(NULL),
+	m_filterLineEdit(nullptr),
 	m_wasPopupVisible(false)
 {
 	setEditable(true);

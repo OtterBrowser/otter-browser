@@ -35,7 +35,7 @@ class ToolButtonWidget : public QToolButton
 	Q_OBJECT
 
 public:
-	explicit ToolButtonWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = NULL);
+	explicit ToolButtonWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = nullptr);
 
 	QVariantMap getOptions() const;
 	bool isCustomized() const;

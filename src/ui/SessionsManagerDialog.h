@@ -35,7 +35,7 @@ class SessionsManagerDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit SessionsManagerDialog(QWidget *parent = NULL);
+	explicit SessionsManagerDialog(QWidget *parent = nullptr);
 	~SessionsManagerDialog();
 
 protected:

@@ -171,7 +171,7 @@ void MdiWindow::mouseReleaseEvent(QMouseEvent *event)
 			}
 			else
 			{
-				mdiArea()->setActiveSubWindow(NULL);
+				mdiArea()->setActiveSubWindow(nullptr);
 			}
 		}
 		else if (activeSubWindows > 1)
@@ -212,8 +212,8 @@ void MdiWindow::mouseDoubleClickEvent(QMouseEvent *event)
 
 WorkspaceWidget::WorkspaceWidget(MainWindow *parent) : QWidget(parent),
 	m_mainWindow(parent),
-	m_mdi(NULL),
-	m_activeWindow(NULL),
+	m_mdi(nullptr),
+	m_activeWindow(nullptr),
 	m_restoreTimer(0),
 	m_isRestored(false)
 {
@@ -305,7 +305,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 		createMdi();
 	}
 
-	MdiWindow *subWindow(NULL);
+	MdiWindow *subWindow(nullptr);
 
 	if (parameters.contains(QLatin1String("window")))
 	{
@@ -631,7 +631,7 @@ void WorkspaceWidget::updateActions()
 	m_mainWindow->getAction(ActionsManager::CascadeAllAction)->setEnabled(subWindowsCount > 0);
 	m_mainWindow->getAction(ActionsManager::TileAllAction)->setEnabled(subWindowsCount > 0);
 
-	QMdiSubWindow *activeSubWindow(m_mdi ? m_mdi->currentSubWindow() : NULL);
+	QMdiSubWindow *activeSubWindow(m_mdi ? m_mdi->currentSubWindow() : nullptr);
 
 	m_mainWindow->getAction(ActionsManager::MaximizeTabAction)->setEnabled(activeSubWindow && !activeSubWindow->windowState().testFlag(Qt::WindowMaximized));
 	m_mainWindow->getAction(ActionsManager::MinimizeTabAction)->setEnabled(activeSubWindow && !activeSubWindow->windowState().testFlag(Qt::WindowMinimized));
@@ -651,7 +651,7 @@ void WorkspaceWidget::setActiveWindow(Window *window, bool force)
 	{
 		if (m_mdi)
 		{
-			MdiWindow *subWindow(NULL);
+			MdiWindow *subWindow(nullptr);
 
 			if (window)
 			{

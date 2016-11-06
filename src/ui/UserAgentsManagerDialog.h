@@ -37,7 +37,7 @@ class UserAgentsManagerDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit UserAgentsManagerDialog(QList<UserAgentInformation> userAgents, QWidget *parent = NULL);
+	explicit UserAgentsManagerDialog(QList<UserAgentInformation> userAgents, QWidget *parent = nullptr);
 	~UserAgentsManagerDialog();
 
 	QList<UserAgentInformation> getUserAgents() const;

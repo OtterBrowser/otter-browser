@@ -86,15 +86,15 @@ public:
 		BookmarksItem *bookmark;
 		QString match;
 
-		BookmarkMatch () : bookmark(NULL) {}
+		BookmarkMatch () : bookmark(nullptr) {}
 	};
 
-	explicit BookmarksModel(const QString &path, FormatMode mode, QObject *parent = NULL);
+	explicit BookmarksModel(const QString &path, FormatMode mode, QObject *parent = nullptr);
 
 	void trashBookmark(BookmarksItem *bookmark);
 	void restoreBookmark(BookmarksItem *bookmark);
 	void removeBookmark(BookmarksItem *bookmark);
-	BookmarksItem* addBookmark(BookmarkType type, quint64 identifier = 0, const QUrl &url = QUrl(), const QString &title = QString(), BookmarksItem *parent = NULL, int index = -1);
+	BookmarksItem* addBookmark(BookmarkType type, quint64 identifier = 0, const QUrl &url = QUrl(), const QString &title = QString(), BookmarksItem *parent = nullptr, int index = -1);
 	BookmarksItem* getBookmark(const QString &keyword) const;
 	BookmarksItem* getBookmark(const QModelIndex &index) const;
 	BookmarksItem* getBookmark(quint64 identifier) const;
@@ -105,7 +105,7 @@ public:
 	QStringList mimeTypes() const;
 	QStringList getKeywords() const;
 	QList<BookmarkMatch> findBookmarks(const QString &prefix) const;
-	QList<BookmarksItem*> findUrls(const QUrl &url, QStandardItem *branch = NULL) const;
+	QList<BookmarksItem*> findUrls(const QUrl &url, QStandardItem *branch = nullptr) const;
 	QList<BookmarksItem*> getBookmarks(const QUrl &url) const;
 	FormatMode getFormatMode() const;
 	bool moveBookmark(BookmarksItem *bookmark, BookmarksItem *newParent, int newRow = -1);

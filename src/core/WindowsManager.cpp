@@ -45,7 +45,7 @@ WindowsManager::WindowsManager(bool isPrivate, MainWindow *parent) : QObject(par
 
 void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters)
 {
-	Window *window(NULL);
+	Window *window(nullptr);
 
 	if (parameters.contains(QLatin1String("window")))
 	{
@@ -90,7 +90,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 					hints |= PrivateOpen;
 				}
 
-				window->getContentsWidget()->setParent(NULL);
+				window->getContentsWidget()->setParent(nullptr);
 
 				Window *newWindow(openWindow(window->getContentsWidget(), hints));
 
@@ -483,7 +483,7 @@ void WindowsManager::restore(const SessionMainWindow &session)
 		}
 		else
 		{
-			m_mainWindow->setCurrentWindow(NULL);
+			m_mainWindow->setCurrentWindow(nullptr);
 		}
 	}
 	else
@@ -691,7 +691,7 @@ void WindowsManager::handleWindowClose(Window *window)
 		if (!Utils::isUrlEmpty(window->getUrl()) || history.entries.count() > 1)
 		{
 			Window *nextWindow(getWindowByIndex(index + 1));
-			Window *previousWindow((index > 0) ? getWindowByIndex(index - 1) : NULL);
+			Window *previousWindow((index > 0) ? getWindowByIndex(index - 1) : nullptr);
 
 			ClosedWindow closedWindow;
 			closedWindow.window = window->getSession();
@@ -734,7 +734,7 @@ void WindowsManager::handleWindowClose(Window *window)
 		else
 		{
 			m_mainWindow->getAction(ActionsManager::CloseTabAction)->setEnabled(false);
-			m_mainWindow->setCurrentWindow(NULL);
+			m_mainWindow->setCurrentWindow(nullptr);
 
 			emit windowTitleChanged(QString());
 		}
@@ -877,17 +877,17 @@ Action* WindowsManager::getAction(int identifier)
 {
 	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
 
-	return (window ? window->getContentsWidget()->getAction(identifier) : NULL);
+	return (window ? window->getContentsWidget()->getAction(identifier) : nullptr);
 }
 
 Window* WindowsManager::openWindow(ContentsWidget *widget, OpenHints hints)
 {
 	if (!widget)
 	{
-		return NULL;
+		return nullptr;
 	}
 
-	Window *window(NULL);
+	Window *window(nullptr);
 
 	if (hints.testFlag(NewWindowOpen))
 	{
@@ -922,7 +922,7 @@ Window* WindowsManager::getWindowByIndex(int index) const
 
 Window* WindowsManager::getWindowByIdentifier(quint64 identifier) const
 {
-	return (m_windows.contains(identifier) ? m_windows[identifier] : NULL);
+	return (m_windows.contains(identifier) ? m_windows[identifier] : nullptr);
 }
 
 QVariant WindowsManager::getOption(int identifier) const

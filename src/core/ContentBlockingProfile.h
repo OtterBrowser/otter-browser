@@ -78,7 +78,7 @@ public:
 		bool needsDomainCheck;
 	};
 
-	explicit ContentBlockingProfile(const QString &name, const QString &title, const QUrl &updateUrl, const QDateTime lastUpdate, const QList<QString> languages, int updateInterval, const ProfileCategory &category, const ProfileFlags &flags, QObject *parent = NULL);
+	explicit ContentBlockingProfile(const QString &name, const QString &title, const QUrl &updateUrl, const QDateTime lastUpdate, const QList<QString> languages, int updateInterval, const ProfileCategory &category, const ProfileFlags &flags, QObject *parent = nullptr);
 
 	void clear();
 	void setCategory(const ProfileCategory &category);
@@ -106,7 +106,7 @@ protected:
 		QChar value;
 		QVarLengthArray<Node*, 1> children;
 
-		Node() : rule(NULL), value(0) {}
+		Node() : rule(nullptr), value(0) {}
 	};
 
 	QString getPath() const;

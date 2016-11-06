@@ -31,8 +31,8 @@ class Settings : public QObject
 	Q_OBJECT
 
 public:
-	explicit Settings(QObject *parent = NULL);
-	Settings(const QString &path, QObject *parent = NULL);
+	explicit Settings(QObject *parent = nullptr);
+	Settings(const QString &path, QObject *parent = nullptr);
 
 	void clear();
 	void beginGroup(const QString &group);

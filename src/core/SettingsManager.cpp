@@ -31,7 +31,7 @@
 namespace Otter
 {
 
-SettingsManager* SettingsManager::m_instance = NULL;
+SettingsManager* SettingsManager::m_instance = nullptr;
 QString SettingsManager::m_globalPath;
 QString SettingsManager::m_overridePath;
 QVector<SettingsManager::OptionDefinition> SettingsManager::m_definitions;

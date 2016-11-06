@@ -28,7 +28,7 @@ namespace Otter
 PreviewWidget::PreviewWidget(QWidget *parent) : QFrame(parent),
 	m_textLabel(new QLabel(this)),
 	m_pixmapLabel(new QLabel(this)),
-	m_moveAnimation(NULL)
+	m_moveAnimation(nullptr)
 {
 	QVBoxLayout *layout(new QVBoxLayout(this));
 	layout->addWidget(m_pixmapLabel);

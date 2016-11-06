@@ -25,8 +25,8 @@
 namespace Otter
 {
 
-NotesManager* NotesManager::m_instance = NULL;
-BookmarksModel* NotesManager::m_model = NULL;
+NotesManager* NotesManager::m_instance = nullptr;
+BookmarksModel* NotesManager::m_model = nullptr;
 
 NotesManager::NotesManager(QObject *parent) : QObject(parent),
 	m_saveTimer(0)

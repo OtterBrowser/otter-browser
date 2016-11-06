@@ -145,7 +145,7 @@ void FreeDesktopOrgPlatformIntegration::createApplicationsCacheThread()
 
 void FreeDesktopOrgPlatformIntegration::notificationCallFinished(QDBusPendingCallWatcher *watcher)
 {
-	Notification *notification(m_notificationWatchers.value(watcher, NULL));
+	Notification *notification(m_notificationWatchers.value(watcher, nullptr));
 
 	if (notification)
 	{
@@ -161,7 +161,7 @@ void FreeDesktopOrgPlatformIntegration::notificationIgnored(quint32 identifier, 
 {
 	Q_UNUSED(reason)
 
-	Notification *notification(m_notifications.value(identifier, NULL));
+	Notification *notification(m_notifications.value(identifier, nullptr));
 
 	if (notification)
 	{
@@ -175,7 +175,7 @@ void FreeDesktopOrgPlatformIntegration::notificationClicked(quint32 identifier, 
 {
 	Q_UNUSED(action)
 
-	Notification *notification(m_notifications.value(identifier, NULL));
+	Notification *notification(m_notifications.value(identifier, nullptr));
 
 	if (notification)
 	{

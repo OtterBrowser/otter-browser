@@ -205,7 +205,7 @@ void AddonsContentsWidget::addAddon(Addon *addon)
 		return;
 	}
 
-	QStandardItem *typeItem(NULL);
+	QStandardItem *typeItem(nullptr);
 
 	if (m_types.contains(addon->getType()))
 	{
@@ -273,7 +273,7 @@ void AddonsContentsWidget::removeAddons()
 
 void AddonsContentsWidget::save()
 {
-	QStandardItem *userScriptsItem(NULL);
+	QStandardItem *userScriptsItem(nullptr);
 
 	if (m_types.contains(Addon::UserScriptType))
 	{
@@ -382,7 +382,7 @@ Action* AddonsContentsWidget::getAction(int identifier)
 
 	if (identifier != ActionsManager::DeleteAction && identifier != ActionsManager::SelectAllAction)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	Action *action(new Action(identifier, this));

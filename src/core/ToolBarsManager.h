@@ -76,7 +76,7 @@ public:
 		}
 	};
 
-	static void createInstance(QObject *parent = NULL);
+	static void createInstance(QObject *parent = nullptr);
 	static void resetToolBars();
 	static void setToolBar(ToolBarsManager::ToolBarDefinition definition);
 	static void setToolBarsLocked(bool locked);
@@ -108,7 +108,7 @@ private:
 	int m_saveTimer;
 
 private:
-	explicit ToolBarsManager(QObject *parent = NULL);
+	explicit ToolBarsManager(QObject *parent = nullptr);
 
 	static ToolBarsManager *m_instance;
 	static QMap<int, QString> m_identifiers;

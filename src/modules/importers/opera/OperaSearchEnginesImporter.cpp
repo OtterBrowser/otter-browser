@@ -34,7 +34,7 @@ namespace Otter
 {
 
 OperaSearchEnginesImporter::OperaSearchEnginesImporter(QObject *parent) : Importer(parent),
-	m_optionsWidget(NULL)
+	m_optionsWidget(nullptr)
 {
 }
 

@@ -58,12 +58,12 @@ public:
 		DigestSha256Field
 	};
 
-	explicit CertificateDialog(QList<QSslCertificate> certificates, QWidget *parent = NULL);
+	explicit CertificateDialog(QList<QSslCertificate> certificates, QWidget *parent = nullptr);
 	~CertificateDialog();
 
 protected:
 	void changeEvent(QEvent *event);
-	QStandardItem* createField(CertificateField field, QStandardItem *parent = NULL, const QMap<int, QVariant> &data = QMap<int, QVariant>());
+	QStandardItem* createField(CertificateField field, QStandardItem *parent = nullptr, const QMap<int, QVariant> &data = QMap<int, QVariant>());
 	QString formatHex(const QString &source, const QChar &separator = QLatin1Char(' '));
 
 protected slots:

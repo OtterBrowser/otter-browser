@@ -35,7 +35,7 @@ class MasterPasswordDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit MasterPasswordDialog(QWidget *parent = NULL);
+	explicit MasterPasswordDialog(QWidget *parent = nullptr);
 	~MasterPasswordDialog();
 
 protected:

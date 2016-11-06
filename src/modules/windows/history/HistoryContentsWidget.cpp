@@ -169,7 +169,7 @@ void HistoryContentsWidget::addEntry(HistoryEntryItem *entry)
 		return;
 	}
 
-	QStandardItem *groupItem(NULL);
+	QStandardItem *groupItem(nullptr);
 
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
@@ -180,7 +180,7 @@ void HistoryContentsWidget::addEntry(HistoryEntryItem *entry)
 			break;
 		}
 
-		groupItem = NULL;
+		groupItem = nullptr;
 	}
 
 	if (!groupItem)
@@ -391,7 +391,7 @@ QStandardItem* HistoryContentsWidget::findEntry(quint64 identifier)
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 QString HistoryContentsWidget::getTitle() const

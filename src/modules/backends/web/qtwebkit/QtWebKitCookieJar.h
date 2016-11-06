@@ -39,7 +39,7 @@ public:
 
 	void setup(const QStringList &thirdPartyAcceptedHosts, const QStringList &thirdPartyRejectedHosts, CookieJar::CookiesPolicy generalCookiesPolicy, CookieJar::CookiesPolicy thirdPartyCookiesPolicy, CookieJar::KeepMode keepMode);
 	void setWidget(WebWidget *widget);
-	QtWebKitCookieJar* clone(WebWidget *parent = NULL);
+	QtWebKitCookieJar* clone(WebWidget *parent = nullptr);
 	CookieJar* getCookieJar();
 	QList<QNetworkCookie> cookiesForUrl(const QUrl &url) const;
 	bool insertCookie(const QNetworkCookie &cookie);

@@ -55,7 +55,7 @@ public:
 		HistoryMode
 	};
 
-	explicit AddressDelegate(ViewMode mode, QObject *parent = NULL);
+	explicit AddressDelegate(ViewMode mode, QObject *parent = nullptr);
 
 	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
@@ -82,7 +82,7 @@ public:
 
 	Q_DECLARE_FLAGS(CompletionModes, CompletionMode)
 
-	explicit AddressWidget(Window *window, QWidget *parent = NULL);
+	explicit AddressWidget(Window *window, QWidget *parent = nullptr);
 
 	void showPopup();
 	void hidePopup();
@@ -96,7 +96,7 @@ public slots:
 	void handleUserInput(const QString &text, WindowsManager::OpenHints hints = WindowsManager::DefaultOpen);
 	void setText(const QString &text);
 	void setUrl(const QUrl &url, bool force = false);
-	void setWindow(Window *window = NULL);
+	void setWindow(Window *window = nullptr);
 
 protected:
 	void changeEvent(QEvent *event);

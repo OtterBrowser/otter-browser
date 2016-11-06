@@ -33,18 +33,18 @@ class Action : public QAction
 	Q_OBJECT
 
 public:
-	explicit Action(int identifier, QObject *parent = NULL);
+	explicit Action(int identifier, QObject *parent = nullptr);
 
 	void setOverrideText(const QString &text);
 	QString getText() const;
 	QList<QKeySequence> getShortcuts() const;
 	int getIdentifier() const;
 	bool event(QEvent *event);
-	static bool calculateCheckedState(const QVariantMap &parameters, Action *action = NULL);
+	static bool calculateCheckedState(const QVariantMap &parameters, Action *action = nullptr);
 	static bool isLocal(int identifier);
 
 public slots:
-	void setup(Action *action = NULL);
+	void setup(Action *action = nullptr);
 
 protected:
 	void update(bool reset = false);

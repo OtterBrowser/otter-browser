@@ -34,7 +34,7 @@ class OperaBookmarksImporter : public BookmarksImporter
 	Q_OBJECT
 
 public:
-	explicit OperaBookmarksImporter(QObject *parent = NULL);
+	explicit OperaBookmarksImporter(QObject *parent = nullptr);
 	~OperaBookmarksImporter();
 
 	QWidget* getOptionsWidget();

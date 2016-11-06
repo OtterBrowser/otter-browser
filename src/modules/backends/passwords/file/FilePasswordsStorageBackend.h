@@ -30,7 +30,7 @@ class FilePasswordsStorageBackend : public PasswordsStorageBackend
 	Q_OBJECT
 
 public:
-	explicit FilePasswordsStorageBackend(QObject *parent = NULL);
+	explicit FilePasswordsStorageBackend(QObject *parent = nullptr);
 
 	void clearPasswords(const QString &host = QString());
 	void addPassword(const PasswordsManager::PasswordInformation &password);

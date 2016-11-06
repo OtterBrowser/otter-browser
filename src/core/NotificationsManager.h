@@ -90,16 +90,16 @@ public:
 		UpdateAvailableEvent = 1
 	};
 
-	static void createInstance(QObject *parent = NULL);
+	static void createInstance(QObject *parent = nullptr);
 	static NotificationsManager* getInstance();
-	static Notification* createNotification(int event, const QString &message, Notification::NotificationLevel level = Notification::InformationLevel, QObject *parent = NULL);
+	static Notification* createNotification(int event, const QString &message, Notification::NotificationLevel level = Notification::InformationLevel, QObject *parent = nullptr);
 	static QString getEventName(int identifier);
 	static EventDefinition getEventDefinition(int identifier);
 	static QVector<EventDefinition> getEventDefinitions();
 	static int registerEvent(const QString &title, const QString &description = QString());
 
 protected:
-	explicit NotificationsManager(QObject *parent = NULL);
+	explicit NotificationsManager(QObject *parent = nullptr);
 
 private:
 	static NotificationsManager *m_instance;

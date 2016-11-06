@@ -59,7 +59,7 @@ class Window : public QWidget
 	Q_PROPERTY(bool isPrivate READ isPrivate)
 
 public:
-	explicit Window(bool isPrivate, ContentsWidget *widget = NULL, QWidget *parent = NULL);
+	explicit Window(bool isPrivate, ContentsWidget *widget = nullptr, QWidget *parent = nullptr);
 
 	void clear();
 	void attachAddressWidget(AddressWidget *widget);
@@ -67,7 +67,7 @@ public:
 	void attachSearchWidget(SearchWidget *widget);
 	void detachSearchWidget(SearchWidget *widget);
 	void setSession(const SessionWindow &session);
-	Window* clone(bool cloneHistory = true, QWidget *parent = NULL);
+	Window* clone(bool cloneHistory = true, QWidget *parent = nullptr);
 	ContentsWidget* getContentsWidget();
 	QString getSearchEngine() const;
 	QString getTitle() const;

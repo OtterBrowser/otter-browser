@@ -33,13 +33,13 @@ class BookmarksManager : public QObject
 	Q_OBJECT
 
 public:
-	static void createInstance(QObject *parent = NULL);
+	static void createInstance(QObject *parent = nullptr);
 	static void updateVisits(const QUrl &url);
 	static void removeBookmark(const QUrl &url);
 	static void setLastUsedFolder(BookmarksItem *folder);
 	static BookmarksManager* getInstance();
 	static BookmarksModel* getModel();
-	static BookmarksItem* addBookmark(BookmarksModel::BookmarkType type, const QUrl &url = QUrl(), const QString &title = QString(), BookmarksItem *parent = NULL, int index = -1);
+	static BookmarksItem* addBookmark(BookmarksModel::BookmarkType type, const QUrl &url = QUrl(), const QString &title = QString(), BookmarksItem *parent = nullptr, int index = -1);
 	static BookmarksItem* getBookmark(const QString &keyword);
 	static BookmarksItem* getBookmark(quint64 identifier);
 	static BookmarksItem* getLastUsedFolder();
@@ -49,7 +49,7 @@ public:
 	static bool hasKeyword(const QString &keyword);
 
 protected:
-	explicit BookmarksManager(QObject *parent = NULL);
+	explicit BookmarksManager(QObject *parent = nullptr);
 
 	void timerEvent(QTimerEvent *event);
 

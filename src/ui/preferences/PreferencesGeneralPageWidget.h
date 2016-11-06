@@ -37,7 +37,7 @@ class PreferencesGeneralPageWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit PreferencesGeneralPageWidget(QWidget *parent = NULL);
+	explicit PreferencesGeneralPageWidget(QWidget *parent = nullptr);
 	~PreferencesGeneralPageWidget();
 
 protected:

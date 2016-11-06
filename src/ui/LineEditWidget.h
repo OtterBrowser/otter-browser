@@ -37,7 +37,7 @@ public:
 		ReplaceAndNotifyDropMode
 	};
 
-	explicit LineEditWidget(QWidget *parent = NULL);
+	explicit LineEditWidget(QWidget *parent = nullptr);
 
 	void activate(Qt::FocusReason reason);
 	void setDropMode(DropMode mode);

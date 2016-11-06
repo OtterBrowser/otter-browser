@@ -41,7 +41,7 @@ public:
 		QString url;
 	};
 
-	explicit SearchSuggester(const QString &searchEngine, QObject *parent = NULL);
+	explicit SearchSuggester(const QString &searchEngine, QObject *parent = nullptr);
 
 	QStandardItemModel* getModel();
 

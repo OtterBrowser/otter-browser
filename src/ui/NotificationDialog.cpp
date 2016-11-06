@@ -36,7 +36,7 @@ namespace Otter
 
 NotificationDialog::NotificationDialog(Notification *notification, QWidget *parent) : QDialog(parent),
 	m_notification(notification),
-	m_closeLabel(NULL)
+	m_closeLabel(nullptr)
 {
 	QFrame *notificationFrame(new QFrame(this));
 	notificationFrame->setObjectName(QLatin1String("notificationFrame"));

@@ -34,7 +34,7 @@ class Updater : public QObject
 	Q_OBJECT
 
 public:
-	explicit Updater(const UpdateInformation &information, QObject *parent = NULL);
+	explicit Updater(const UpdateInformation &information, QObject *parent = nullptr);
 
 	static void clearUpdate();
 	static QString getScriptPath();

@@ -34,7 +34,7 @@ namespace Otter
 {
 
 UpdateChecker::UpdateChecker(QObject *parent, bool inBackground) : QObject(parent),
-	m_networkReply(NULL),
+	m_networkReply(nullptr),
 	m_isInBackground(inBackground)
 {
 	const QUrl url(SettingsManager::getValue(SettingsManager::Updates_ServerUrlOption).toString());

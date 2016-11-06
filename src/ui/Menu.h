@@ -50,7 +50,7 @@ public:
 		WindowsMenuRole
 	};
 
-	explicit Menu(MenuRole role = NoMenuRole, QWidget *parent = NULL);
+	explicit Menu(MenuRole role = NoMenuRole, QWidget *parent = nullptr);
 
 	void load(const QString &path, const QStringList &options = QStringList());
 	void load(const QJsonObject &definition, const QStringList &options = QStringList());

@@ -67,7 +67,7 @@ void BookmarkWidget::removeBookmark(BookmarksItem *bookmark)
 {
 	if (m_bookmark && m_bookmark == bookmark)
 	{
-		m_bookmark = NULL;
+		m_bookmark = nullptr;
 
 		deleteLater();
 	}
@@ -119,7 +119,7 @@ void BookmarkWidget::updateBookmark(BookmarksItem *bookmark)
 		}
 
 		setToolTip(QLatin1String("<div style=\"white-space:pre;\">") + toolTip.join(QLatin1Char('\n')) + QLatin1String("</div>"));
-		setMenu(NULL);
+		setMenu(nullptr);
 	}
 
 	setText(title);

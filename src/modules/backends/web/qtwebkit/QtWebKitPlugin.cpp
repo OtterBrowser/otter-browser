@@ -36,7 +36,7 @@ QObject* QtWebKitPlugin::createExtension(Extension extension) const
 		return new QtWebKitSpellChecker();
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 bool QtWebKitPlugin::supportsExtension(Extension extension) const

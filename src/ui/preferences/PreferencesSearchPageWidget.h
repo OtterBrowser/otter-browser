@@ -49,7 +49,7 @@ class PreferencesSearchPageWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit PreferencesSearchPageWidget(QWidget *parent = NULL);
+	explicit PreferencesSearchPageWidget(QWidget *parent = nullptr);
 	~PreferencesSearchPageWidget();
 
 protected:

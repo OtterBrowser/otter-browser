@@ -33,10 +33,10 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 	m_headerWidget(new QWidget(this)),
 	m_payloadWidget(payload),
 	m_closeLabel(new QLabel(m_headerWidget)),
-	m_detailsLabel(NULL),
-	m_scrollArea(NULL),
-	m_checkBox(NULL),
-	m_buttonBox(NULL),
+	m_detailsLabel(nullptr),
+	m_scrollArea(nullptr),
+	m_checkBox(nullptr),
+	m_buttonBox(nullptr),
 	m_isAccepted(false)
 {
 	QBoxLayout *mainLayout(new QBoxLayout(QBoxLayout::TopToBottom, this));

@@ -37,7 +37,7 @@ ToolButtonWidget::ToolButtonWidget(const ActionsManager::ActionEntryDefinition &
 	setContextMenuPolicy(Qt::NoContextMenu);
 	setOptions(definition.options);
 
-	Menu *menu(NULL);
+	Menu *menu(nullptr);
 
 	if (!definition.entries.isEmpty())
 	{

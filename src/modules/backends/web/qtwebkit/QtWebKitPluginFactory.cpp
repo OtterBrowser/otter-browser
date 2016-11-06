@@ -41,7 +41,7 @@ QObject* QtWebKitPluginFactory::create(const QString &mimeType, const QUrl &url,
 			m_widget->clearPluginToken();
 		}
 
-		return NULL;
+		return nullptr;
 	}
 
 	return new QtWebKitPluginWidget(mimeType, url, m_widget);

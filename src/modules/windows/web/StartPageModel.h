@@ -38,7 +38,7 @@ public:
 		IsReloadingRole
 	};
 
-	explicit StartPageModel(QObject *parent = NULL);
+	explicit StartPageModel(QObject *parent = nullptr);
 
 	QMimeData* mimeData(const QModelIndexList &indexes) const;
 	QVariant data(const QModelIndex &index, int role) const;

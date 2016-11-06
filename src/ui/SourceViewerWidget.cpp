@@ -324,7 +324,7 @@ bool MarginWidget::event(QEvent *event)
 }
 
 SourceViewerWidget::SourceViewerWidget(QWidget *parent) : QPlainTextEdit(parent),
-	m_marginWidget(NULL),
+	m_marginWidget(nullptr),
 	m_findFlags(WebWidget::NoFlagsFind),
 	m_zoom(100)
 {
@@ -392,7 +392,7 @@ void SourceViewerWidget::optionChanged(int identifier, const QVariant &value)
 		else if (!value.toBool() && m_marginWidget)
 		{
 			m_marginWidget->deleteLater();
-			m_marginWidget = NULL;
+			m_marginWidget = nullptr;
 
 			setViewportMargins(0, 0, 0, 0);
 		}

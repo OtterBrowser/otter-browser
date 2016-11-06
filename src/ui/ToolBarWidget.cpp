@@ -113,8 +113,8 @@ void ToolBarDragAreaWidget::mouseReleaseEvent(QMouseEvent *event)
 ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : QToolBar(parent),
 	m_mainWindow(MainWindow::findMainWindow(parent)),
 	m_window(window),
-	m_bookmark(NULL),
-	m_dragArea(NULL),
+	m_bookmark(nullptr),
+	m_dragArea(nullptr),
 	m_identifier(identifier)
 {
 	setStyleSheet(QLatin1String("QToolBar {padding:0 3px;spacing:3px;}"));
@@ -271,7 +271,7 @@ void ToolBarWidget::bookmarkRemoved(BookmarksItem *bookmark)
 {
 	if (bookmark == m_bookmark)
 	{
-		m_bookmark = NULL;
+		m_bookmark = nullptr;
 
 		loadBookmarks();
 	}
@@ -293,7 +293,7 @@ void ToolBarWidget::loadBookmarks()
 {
 	clear();
 
-	m_dragArea = NULL;
+	m_dragArea = nullptr;
 
 	if (!ToolBarsManager::areToolBarsLocked() && qobject_cast<ToolBarAreaWidget*>(parentWidget()))
 	{
@@ -342,12 +342,12 @@ void ToolBarWidget::updateVisibility()
 
 void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &definition)
 {
-	TabBarWidget *tabBar((m_identifier == ToolBarsManager::TabBar && m_mainWindow) ? m_mainWindow->getTabBar() : NULL);
+	TabBarWidget *tabBar((m_identifier == ToolBarsManager::TabBar && m_mainWindow) ? m_mainWindow->getTabBar() : nullptr);
 
 	setVisible(definition.normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
 	setOrientation((definition.location == Qt::LeftToolBarArea || definition.location == Qt::RightToolBarArea) ? Qt::Vertical : Qt::Horizontal);
 
-	m_dragArea = NULL;
+	m_dragArea = nullptr;
 
 	if (m_identifier == ToolBarsManager::TabBar)
 	{
@@ -442,13 +442,13 @@ void ToolBarWidget::setToolBarLocked(bool locked)
 	if (locked && m_dragArea)
 	{
 		m_dragArea->deleteLater();
-		m_dragArea = NULL;
+		m_dragArea = nullptr;
 	}
 	else if (!locked && !m_dragArea && qobject_cast<ToolBarAreaWidget*>(parentWidget()))
 	{
 		m_dragArea = new ToolBarDragAreaWidget(this);
 
-		insertWidget(((actions().count() > 0) ? actions().at(0) : NULL), m_dragArea);
+		insertWidget(((actions().count() > 0) ? actions().at(0) : nullptr), m_dragArea);
 	}
 }
 

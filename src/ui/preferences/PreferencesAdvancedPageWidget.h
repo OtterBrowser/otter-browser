@@ -41,7 +41,7 @@ class PreferencesAdvancedPageWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit PreferencesAdvancedPageWidget(QWidget *parent = NULL);
+	explicit PreferencesAdvancedPageWidget(QWidget *parent = nullptr);
 	~PreferencesAdvancedPageWidget();
 
 protected:

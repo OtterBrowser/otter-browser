@@ -84,7 +84,7 @@ void HeaderViewWidget::contextMenuEvent(QContextMenuEvent *event)
 	QMenu *visibilityMenu(menu.addMenu(tr("Visible Columns")));
 	visibilityMenu->setEnabled(model()->columnCount() > 1);
 
-	QAction *showAllColumnsAction(NULL);
+	QAction *showAllColumnsAction(nullptr);
 	bool allColumnsVisible(true);
 
 	if (visibilityMenu->isEnabled())
@@ -194,8 +194,8 @@ int ItemViewWidget::m_treeIndentation = 0;
 
 ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 	m_headerWidget(new HeaderViewWidget(Qt::Horizontal, this)),
-	m_sourceModel(NULL),
-	m_proxyModel(NULL),
+	m_sourceModel(nullptr),
+	m_proxyModel(nullptr),
 	m_viewMode(ListViewMode),
 	m_sortOrder(Qt::AscendingOrder),
 	m_sortColumn(-1),
@@ -679,7 +679,7 @@ void ItemViewWidget::setModel(QAbstractItemModel *model, bool useSortProxy)
 	else if (m_proxyModel)
 	{
 		m_proxyModel->deleteLater();
-		m_proxyModel = NULL;
+		m_proxyModel = nullptr;
 	}
 
 	m_sourceModel = qobject_cast<QStandardItemModel*>(model);
@@ -724,12 +724,12 @@ QSortFilterProxyModel* ItemViewWidget::getProxyModel()
 
 QStandardItem* ItemViewWidget::getItem(const QModelIndex &index) const
 {
-	return(m_sourceModel ? m_sourceModel->itemFromIndex(index) : NULL);
+	return(m_sourceModel ? m_sourceModel->itemFromIndex(index) : nullptr);
 }
 
 QStandardItem* ItemViewWidget::getItem(int row, int column, const QModelIndex &parent) const
 {
-	return(m_sourceModel ? m_sourceModel->itemFromIndex(getIndex(row, column, parent)) : NULL);
+	return(m_sourceModel ? m_sourceModel->itemFromIndex(getIndex(row, column, parent)) : nullptr);
 }
 
 QModelIndex ItemViewWidget::getIndex(int row, int column, const QModelIndex &parent) const

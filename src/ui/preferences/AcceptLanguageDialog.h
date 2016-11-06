@@ -38,7 +38,7 @@ class AcceptLanguageDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit AcceptLanguageDialog(const QString &languages, QWidget *parent = NULL);
+	explicit AcceptLanguageDialog(const QString &languages, QWidget *parent = nullptr);
 	~AcceptLanguageDialog();
 
 	QString getLanguages();

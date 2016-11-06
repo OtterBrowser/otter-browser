@@ -36,7 +36,7 @@ class SelectPasswordDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit SelectPasswordDialog(const QList<PasswordsManager::PasswordInformation> &passwords, QWidget *parent = NULL);
+	explicit SelectPasswordDialog(const QList<PasswordsManager::PasswordInformation> &passwords, QWidget *parent = nullptr);
 	~SelectPasswordDialog();
 
 	PasswordsManager::PasswordInformation getPassword() const;

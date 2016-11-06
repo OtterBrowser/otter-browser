@@ -36,10 +36,10 @@
 namespace Otter
 {
 
-SourceViewerWebWidget::SourceViewerWebWidget(bool isPrivate, ContentsWidget *parent) : WebWidget(isPrivate, NULL, parent),
+SourceViewerWebWidget::SourceViewerWebWidget(bool isPrivate, ContentsWidget *parent) : WebWidget(isPrivate, nullptr, parent),
 	m_sourceViewer(new SourceViewerWidget(this)),
-	m_networkManager(NULL),
-	m_viewSourceReply(NULL),
+	m_networkManager(nullptr),
+	m_viewSourceReply(nullptr),
 	m_isLoading(true),
 	m_isPrivate(isPrivate)
 {
@@ -86,7 +86,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 					{
 						Console::addMessage(tr("Failed to save file: %1").arg(file.errorString()), Console::OtherCategory, Console::ErrorLevel, path);
 
-						QMessageBox::warning(NULL, tr("Error"), tr("Failed to save file."), QMessageBox::Close);
+						QMessageBox::warning(nullptr, tr("Error"), tr("Failed to save file."), QMessageBox::Close);
 					}
 				}
 			}
@@ -99,7 +99,7 @@ void SourceViewerWebWidget::triggerAction(int identifier, const QVariantMap &par
 
 				m_viewSourceReply->abort();
 				m_viewSourceReply->deleteLater();
-				m_viewSourceReply = NULL;
+				m_viewSourceReply = nullptr;
 			}
 
 			m_isLoading = false;
@@ -261,7 +261,7 @@ void SourceViewerWebWidget::viewSourceReplyFinished()
 		setContents(m_viewSourceReply->readAll(), m_viewSourceReply->header(QNetworkRequest::ContentTypeHeader).toString());
 
 		m_viewSourceReply->deleteLater();
-		m_viewSourceReply = NULL;
+		m_viewSourceReply = nullptr;
 
 		updateNavigationActions();
 	}
@@ -381,7 +381,7 @@ void SourceViewerWebWidget::setContents(const QByteArray &contents, const QStrin
 {
 	triggerAction(ActionsManager::StopAction);
 
-	QTextCodec *codec(NULL);
+	QTextCodec *codec(nullptr);
 
 	if (hasOption(SettingsManager::Content_DefaultCharacterEncodingOption))
 	{
@@ -423,7 +423,7 @@ WebWidget* SourceViewerWebWidget::clone(bool cloneHistory, bool isPrivate)
 	Q_UNUSED(cloneHistory)
 	Q_UNUSED(isPrivate)
 
-	return NULL;
+	return nullptr;
 }
 
 Action* SourceViewerWebWidget::getAction(int identifier)
@@ -459,7 +459,7 @@ Action* SourceViewerWebWidget::getAction(int identifier)
 		case ActionsManager::ActivateContentAction:
 			break;
 		default:
-			return NULL;
+			return nullptr;
 	}
 
 	if (identifier == ActionsManager::UndoAction && !getExistingAction(ActionsManager::UndoAction))

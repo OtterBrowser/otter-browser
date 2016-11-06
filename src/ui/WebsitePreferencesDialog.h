@@ -40,7 +40,7 @@ class WebsitePreferencesDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit WebsitePreferencesDialog(const QUrl &url, const QList<QNetworkCookie> &cookies, QWidget *parent = NULL);
+	explicit WebsitePreferencesDialog(const QUrl &url, const QList<QNetworkCookie> &cookies, QWidget *parent = nullptr);
 	~WebsitePreferencesDialog();
 
 protected:

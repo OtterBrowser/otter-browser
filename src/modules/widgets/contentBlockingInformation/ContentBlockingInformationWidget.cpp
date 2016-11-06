@@ -35,8 +35,8 @@ namespace Otter
 
 ContentBlockingInformationWidget::ContentBlockingInformationWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
 	m_window(window),
-	m_elementsMenu(NULL),
-	m_profilesMenu(NULL),
+	m_elementsMenu(nullptr),
+	m_profilesMenu(nullptr),
 	m_amount(0)
 {
 	QMenu *menu(new QMenu(this));

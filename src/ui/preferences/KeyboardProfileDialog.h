@@ -66,7 +66,7 @@ public:
 		ShortcutsRole
 	};
 
-	explicit KeyboardProfileDialog(const QString &profile, const QHash<QString, KeyboardProfile> &profiles, QWidget *parent = NULL);
+	explicit KeyboardProfileDialog(const QString &profile, const QHash<QString, KeyboardProfile> &profiles, QWidget *parent = nullptr);
 	~KeyboardProfileDialog();
 
 	KeyboardProfile getProfile() const;

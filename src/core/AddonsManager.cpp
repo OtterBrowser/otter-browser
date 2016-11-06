@@ -59,7 +59,7 @@ bool Addon::isEnabled() const
 	return m_isEnabled;
 }
 
-AddonsManager *AddonsManager::m_instance = NULL;
+AddonsManager *AddonsManager::m_instance = nullptr;
 QHash<QString, UserScript*> AddonsManager::m_userScripts;
 QHash<QString, WebBackend*> AddonsManager::m_webBackends;
 QHash<QString, AddonsManager::SpecialPageInformation> AddonsManager::m_specialPages;
@@ -164,7 +164,7 @@ UserScript* AddonsManager::getUserScript(const QString &name)
 		return m_userScripts[name];
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 WebBackend* AddonsManager::getWebBackend(const QString &name)
@@ -183,10 +183,10 @@ WebBackend* AddonsManager::getWebBackend(const QString &name)
 			return m_webBackends[defaultName];
 		}
 
-		return m_webBackends.value(m_webBackends.keys().first(), NULL);
+		return m_webBackends.value(m_webBackends.keys().first(), nullptr);
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 AddonsManager::SpecialPageInformation AddonsManager::getSpecialPage(const QString &name)

@@ -34,7 +34,7 @@ OperaSessionImporter::OperaSessionImporter(QObject *parent): Importer(parent)
 
 QWidget* OperaSessionImporter::getOptionsWidget()
 {
-	return NULL;
+	return nullptr;
 }
 
 QString OperaSessionImporter::getTitle() const

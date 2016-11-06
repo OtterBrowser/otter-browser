@@ -38,7 +38,7 @@ public:
 		DeferredTime
 	};
 
-	explicit UserScript(const QString &path, QObject *parent = NULL);
+	explicit UserScript(const QString &path, QObject *parent = nullptr);
 
 	QString getName() const;
 	QString getTitle() const;

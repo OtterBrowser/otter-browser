@@ -35,7 +35,7 @@ class SearchBarWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit SearchBarWidget(QWidget *parent = NULL);
+	explicit SearchBarWidget(QWidget *parent = nullptr);
 	~SearchBarWidget();
 
 	void selectAll();

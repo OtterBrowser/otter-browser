@@ -126,7 +126,7 @@ class SessionsManager : public QObject
 	Q_OBJECT
 
 public:
-	static void createInstance(const QString &profilePath, const QString &cachePath, bool isPrivate = false, bool isReadOnly = false, QObject *parent = NULL);
+	static void createInstance(const QString &profilePath, const QString &cachePath, bool isPrivate = false, bool isReadOnly = false, QObject *parent = nullptr);
 	static void clearClosedWindows();
 	static void registerWindow(MainWindow *window);
 	static void storeClosedWindow(MainWindow *window);
@@ -147,8 +147,8 @@ public:
 	static QStringList getSessions();
 	static QList<MainWindow*> getWindows();
 	static bool restoreClosedWindow(int index = -1);
-	static bool restoreSession(const SessionInformation &session, MainWindow *window = NULL, bool isPrivate = false);
-	static bool saveSession(const QString &path = QString(), const QString &title = QString(), MainWindow *window = NULL, bool isClean = true);
+	static bool restoreSession(const SessionInformation &session, MainWindow *window = nullptr, bool isPrivate = false);
+	static bool saveSession(const QString &path = QString(), const QString &title = QString(), MainWindow *window = nullptr, bool isClean = true);
 	static bool saveSession(const SessionInformation &session);
 	static bool deleteSession(const QString &path = QString());
 	static bool isLastWindow();
@@ -157,7 +157,7 @@ public:
 	static bool hasUrl(const QUrl &url, bool activate = false);
 
 protected:
-	explicit SessionsManager(QObject *parent = NULL);
+	explicit SessionsManager(QObject *parent = nullptr);
 
 	void timerEvent(QTimerEvent *event);
 	void scheduleSave();

@@ -332,7 +332,7 @@ void ToolBarAreaWidget::toolBarAdded(int identifier)
 		return;
 	}
 
-	ToolBarWidget *toolBar(new ToolBarWidget(identifier, NULL, this));
+	ToolBarWidget *toolBar(new ToolBarWidget(identifier, nullptr, this));
 
 	m_layout->addWidget(toolBar);
 

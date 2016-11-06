@@ -348,7 +348,7 @@ Action* NotesContentsWidget::getAction(int identifier)
 			}
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 BookmarksItem* NotesContentsWidget::findFolder(const QModelIndex &index)

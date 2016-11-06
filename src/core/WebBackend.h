@@ -34,9 +34,9 @@ class WebBackend : public Addon
 	Q_OBJECT
 
 public:
-	explicit WebBackend(QObject *parent = NULL);
+	explicit WebBackend(QObject *parent = nullptr);
 
-	virtual WebWidget* createWidget(bool isPrivate = false, ContentsWidget *parent = NULL) = 0;
+	virtual WebWidget* createWidget(bool isPrivate = false, ContentsWidget *parent = nullptr) = 0;
 	virtual QString getEngineVersion() const = 0;
 	virtual QString getSslVersion() const = 0;
 	virtual QString getUserAgent(const QString &pattern = QString()) const = 0;

@@ -64,7 +64,7 @@ PreferencesGeneralPageWidget::PreferencesGeneralPageWidget(QWidget *parent) : QW
 
 	PlatformIntegration *integration(Application::getPlatformIntegration());
 
-	if (integration == NULL || !integration->canSetAsDefaultBrowser())
+	if (integration == nullptr || !integration->canSetAsDefaultBrowser())
 	{
 		m_ui->setDefaultButton->setEnabled(false);
 	}

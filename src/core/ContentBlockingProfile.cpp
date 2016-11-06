@@ -36,8 +36,8 @@ namespace Otter
 {
 
 ContentBlockingProfile::ContentBlockingProfile(const QString &name, const QString &title, const QUrl &updateUrl, const QDateTime lastUpdate, const QList<QString> languages, int updateInterval, const ProfileCategory &category, const ProfileFlags &flags, QObject *parent) : QObject(parent),
-	m_root(NULL),
-	m_networkReply(NULL),
+	m_root(nullptr),
+	m_networkReply(nullptr),
 	m_name(name),
 	m_title(title),
 	m_updateUrl(updateUrl),

@@ -40,10 +40,10 @@
 namespace Otter
 {
 
-NetworkManagerFactory* NetworkManagerFactory::m_instance = NULL;
-NetworkManager* NetworkManagerFactory::m_networkManager = NULL;
-NetworkCache* NetworkManagerFactory::m_cache = NULL;
-CookieJar* NetworkManagerFactory::m_cookieJar = NULL;
+NetworkManagerFactory* NetworkManagerFactory::m_instance = nullptr;
+NetworkManager* NetworkManagerFactory::m_networkManager = nullptr;
+NetworkCache* NetworkManagerFactory::m_cache = nullptr;
+CookieJar* NetworkManagerFactory::m_cookieJar = nullptr;
 QString NetworkManagerFactory::m_acceptLanguage;
 QMap<QString, UserAgentInformation> NetworkManagerFactory::m_userAgents;
 NetworkManagerFactory::DoNotTrackPolicy NetworkManagerFactory::m_doNotTrackPolicy = NetworkManagerFactory::SkipTrackPolicy;
@@ -92,7 +92,7 @@ void NetworkManagerFactory::initialize()
 
 	for (int i = (m_defaultCiphers.count() - 1); i >= 0; --i)
 	{
-		if (m_defaultCiphers.at(i).isNull() || (m_defaultCiphers.at(i).keyExchangeMethod() == QLatin1String("DH") && m_defaultCiphers.at(i).supportedBits() < 1024) || m_defaultCiphers.at(i).supportedBits() < 128 || m_defaultCiphers.at(i).authenticationMethod() == QLatin1String("PSK") || m_defaultCiphers.at(i).authenticationMethod() == QLatin1String("EXP") || m_defaultCiphers.at(i).authenticationMethod() == QLatin1String("NULL") || m_defaultCiphers.at(i).encryptionMethod().startsWith(QLatin1String("RC4(")) || m_defaultCiphers.at(i).authenticationMethod() == QLatin1String("ADH"))
+		if (m_defaultCiphers.at(i).isNull() || (m_defaultCiphers.at(i).keyExchangeMethod() == QLatin1String("DH") && m_defaultCiphers.at(i).supportedBits() < 1024) || m_defaultCiphers.at(i).supportedBits() < 128 || m_defaultCiphers.at(i).authenticationMethod() == QLatin1String("PSK") || m_defaultCiphers.at(i).authenticationMethod() == QLatin1String("EXP") || m_defaultCiphers.at(i).authenticationMethod() == QLatin1String("nullptr") || m_defaultCiphers.at(i).encryptionMethod().startsWith(QLatin1String("RC4(")) || m_defaultCiphers.at(i).authenticationMethod() == QLatin1String("ADH"))
 		{
 			m_defaultCiphers.removeAt(i);
 		}

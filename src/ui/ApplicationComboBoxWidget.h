@@ -31,7 +31,7 @@ class ApplicationComboBoxWidget : public QComboBox
 	Q_OBJECT
 
 public:
-	explicit ApplicationComboBoxWidget(QWidget *parent = NULL);
+	explicit ApplicationComboBoxWidget(QWidget *parent = nullptr);
 
 	void setCurrentCommand(const QString &command);
 	void setMimeType(const QMimeType &mimeType);

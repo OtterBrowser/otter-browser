@@ -35,7 +35,7 @@ class LocaleDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit LocaleDialog(QWidget *parent = NULL);
+	explicit LocaleDialog(QWidget *parent = nullptr);
 	~LocaleDialog();
 
 protected:

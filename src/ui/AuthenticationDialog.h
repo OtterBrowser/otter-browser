@@ -45,7 +45,7 @@ public:
 		ProxyAuthentication
 	};
 
-	explicit AuthenticationDialog(const QUrl &url, QAuthenticator *authenticator, AuthenticationType type, QWidget *parent = NULL);
+	explicit AuthenticationDialog(const QUrl &url, QAuthenticator *authenticator, AuthenticationType type, QWidget *parent = nullptr);
 	~AuthenticationDialog();
 
 	void setButtonsVisible(bool visible);

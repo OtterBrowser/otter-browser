@@ -31,10 +31,10 @@ namespace Otter
 {
 
 OperaNotesImporter::OperaNotesImporter(QObject *parent): Importer(parent),
-	m_folderComboBox(NULL),
-	m_currentFolder(NULL),
-	m_importFolder(NULL),
-	m_optionsWidget(NULL)
+	m_folderComboBox(nullptr),
+	m_currentFolder(nullptr),
+	m_importFolder(nullptr),
+	m_optionsWidget(nullptr)
 {
 	setImportFolder(NotesManager::getModel()->getRootItem());
 }
@@ -190,7 +190,7 @@ bool OperaNotesImporter::import(const QString &path)
 		setImportFolder(m_folderComboBox->getCurrentFolder());
 	}
 
-	BookmarksItem *note(NULL);
+	BookmarksItem *note(nullptr);
 	OperaNoteEntry type(NoEntry);
 	bool isHeader(true);
 
@@ -247,7 +247,7 @@ bool OperaNotesImporter::import(const QString &path)
 					setCurrentFolder(note);
 				}
 
-				note = NULL;
+				note = nullptr;
 			}
 			else if (type == FolderEndEntry)
 			{

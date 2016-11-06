@@ -32,7 +32,7 @@ namespace Otter
 
 FilePathWidget::FilePathWidget(QWidget *parent) : QWidget(parent),
 	m_lineEdit(new QLineEdit(this)),
-	m_completer(NULL),
+	m_completer(nullptr),
 	m_selectFile(true)
 {
 	QPushButton *button(new QPushButton(tr("Browse…"), this));

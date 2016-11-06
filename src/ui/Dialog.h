@@ -30,7 +30,7 @@ class Dialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit Dialog(QWidget *parent = NULL);
+	explicit Dialog(QWidget *parent = nullptr);
 
 protected:
 	void showEvent(QShowEvent *event);

@@ -63,13 +63,13 @@ public:
 		Message() : category(OtherCategory), level(UnknownLevel), window(0), line(-1) {}
 	};
 
-	static void createInstance(QObject *parent = NULL);
+	static void createInstance(QObject *parent = nullptr);
 	static void addMessage(const QString &note, MessageCategory category, MessageLevel level, const QString &source = QString(), int line = -1, quint64 window = 0);
 	static Console* getInstance();
 	static QList<Message> getMessages();
 
 protected:
-	explicit Console(QObject *parent = NULL);
+	explicit Console(QObject *parent = nullptr);
 
 private:
 	static Console *m_instance;

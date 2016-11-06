@@ -35,7 +35,7 @@ class PreferencesPrivacyPageWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit PreferencesPrivacyPageWidget(QWidget *parent = NULL);
+	explicit PreferencesPrivacyPageWidget(QWidget *parent = nullptr);
 	~PreferencesPrivacyPageWidget();
 
 protected:

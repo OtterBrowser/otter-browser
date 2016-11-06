@@ -35,7 +35,7 @@ class ClearHistoryDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit ClearHistoryDialog(const QStringList &clearSettings, bool configureMode, QWidget *parent = NULL);
+	explicit ClearHistoryDialog(const QStringList &clearSettings, bool configureMode, QWidget *parent = nullptr);
 	~ClearHistoryDialog();
 
 	QStringList getClearSettings() const;

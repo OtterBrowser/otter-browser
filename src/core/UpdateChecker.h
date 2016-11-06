@@ -45,7 +45,7 @@ class UpdateChecker : public QObject
 	Q_OBJECT
 
 public:
-	explicit UpdateChecker(QObject *parent = NULL, bool inBackground = true);
+	explicit UpdateChecker(QObject *parent = nullptr, bool inBackground = true);
 
 protected slots:
 	void runUpdateCheck();

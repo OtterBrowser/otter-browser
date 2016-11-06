@@ -34,7 +34,7 @@ class OperaNotesImporter : public Importer
 	Q_OBJECT
 
 public:
-	explicit OperaNotesImporter(QObject *parent = NULL);
+	explicit OperaNotesImporter(QObject *parent = nullptr);
 	~OperaNotesImporter();
 
 	BookmarksItem* getCurrentFolder() const;

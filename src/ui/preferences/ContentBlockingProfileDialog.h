@@ -37,7 +37,7 @@ class ContentBlockingProfileDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit ContentBlockingProfileDialog(QWidget *parent = NULL, ContentBlockingProfile *profile = NULL);
+	explicit ContentBlockingProfileDialog(QWidget *parent = nullptr, ContentBlockingProfile *profile = nullptr);
 	~ContentBlockingProfileDialog();
 
 	ContentBlockingProfile* getProfile();

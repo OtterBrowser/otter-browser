@@ -107,7 +107,7 @@ protected:
 		PositionEntryData = 2
 	};
 
-	explicit QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebKitNetworkManager *networkManager = NULL, ContentsWidget *parent = NULL);
+	explicit QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebKitNetworkManager *networkManager = nullptr, ContentsWidget *parent = nullptr);
 
 	void timerEvent(QTimerEvent *event);
 	void showEvent(QShowEvent *event);

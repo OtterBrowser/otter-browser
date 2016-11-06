@@ -24,8 +24,8 @@
 namespace Otter
 {
 
-PasswordsManager* PasswordsManager::m_instance = NULL;
-PasswordsStorageBackend* PasswordsManager::m_backend = NULL;
+PasswordsManager* PasswordsManager::m_instance = nullptr;
+PasswordsStorageBackend* PasswordsManager::m_backend = nullptr;
 
 PasswordsManager::PasswordsManager(QObject *parent) : QObject(parent)
 {

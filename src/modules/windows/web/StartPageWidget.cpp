@@ -45,7 +45,7 @@
 namespace Otter
 {
 
-StartPageModel* StartPageWidget::m_model = NULL;
+StartPageModel* StartPageWidget::m_model = nullptr;
 
 StartPageContentsWidget::StartPageContentsWidget(QWidget *parent) : QWidget(parent),
 	m_color(Qt::transparent),
@@ -159,7 +159,7 @@ StartPageWidget::StartPageWidget(Window *window, QWidget *parent) : QScrollArea(
 	m_window(window),
 	m_contentsWidget(new StartPageContentsWidget(this)),
 	m_listView(new QListView(this)),
-	m_searchWidget(NULL),
+	m_searchWidget(nullptr),
 	m_ignoreEnter(false)
 {
 	if (!m_model)
@@ -265,8 +265,8 @@ void StartPageWidget::optionChanged(int identifier, const QVariant &value)
 			break;
 		case SettingsManager::StartPage_ShowSearchFieldOption:
 			{
-				QGridLayout *layout(NULL);
-				const bool needsInitialization(m_contentsWidget->layout() == NULL);
+				QGridLayout *layout(nullptr);
+				const bool needsInitialization(m_contentsWidget->layout() == nullptr);
 
 				if (needsInitialization)
 				{
@@ -315,7 +315,7 @@ void StartPageWidget::optionChanged(int identifier, const QVariant &value)
 					if (m_searchWidget)
 					{
 						m_searchWidget->deleteLater();
-						m_searchWidget = NULL;
+						m_searchWidget = nullptr;
 					}
 
 					layout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), 0, 1);

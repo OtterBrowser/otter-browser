@@ -46,13 +46,13 @@
 namespace Otter
 {
 
-WebBackend* QtWebKitNetworkManager::m_backend = NULL;
+WebBackend* QtWebKitNetworkManager::m_backend = nullptr;
 
 QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar *cookieJarProxy, QtWebKitWebWidget *parent) : QNetworkAccessManager(parent),
 	m_widget(parent),
-	m_cookieJar(NULL),
+	m_cookieJar(nullptr),
 	m_cookieJarProxy(cookieJarProxy),
-	m_baseReply(NULL),
+	m_baseReply(nullptr),
 	m_contentState(WindowsManager::UnknownContentState),
 	m_doNotTrackPolicy(NetworkManagerFactory::SkipTrackPolicy),
 	m_bytesReceivedDifference(0),
@@ -132,7 +132,7 @@ void QtWebKitNetworkManager::resetStatistics()
 	m_pageInformation[WebWidget::BytesTotalInformation] = quint64(0);
 	m_pageInformation[WebWidget::RequestsFinishedInformation] = 0;
 	m_pageInformation[WebWidget::RequestsStartedInformation] = 0;
-	m_baseReply = NULL;
+	m_baseReply = nullptr;
 	m_contentState = WindowsManager::UnknownContentState;
 	m_bytesReceivedDifference = 0;
 	m_securityState = UnknownState;
@@ -153,7 +153,7 @@ void QtWebKitNetworkManager::registerTransfer(QNetworkReply *reply)
 	{
 		m_transfers.append(reply);
 
-		setParent(NULL);
+		setParent(nullptr);
 
 		connect(reply, SIGNAL(finished()), this, SLOT(transferFinished()));
 	}
@@ -167,7 +167,7 @@ void QtWebKitNetworkManager::downloadProgress(qint64 bytesReceived, qint64 bytes
 	{
 		if (m_baseReply->hasRawHeader(QStringLiteral("Location").toLatin1()))
 		{
-			m_baseReply = NULL;
+			m_baseReply = nullptr;
 		}
 		else
 		{
@@ -350,7 +350,7 @@ void QtWebKitNetworkManager::handleSslErrors(QNetworkReply *reply, const QList<Q
 		return;
 	}
 
-	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), tr("Warning"), tr("SSL errors occured, do you want to continue?"), messages.join('\n'), (QDialogButtonBox::Yes | QDialogButtonBox::No), NULL, m_widget);
+	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), tr("Warning"), tr("SSL errors occured, do you want to continue?"), messages.join('\n'), (QDialogButtonBox::Yes | QDialogButtonBox::No), nullptr, m_widget);
 
 	if (!m_widget->getUrl().isEmpty())
 	{
@@ -532,7 +532,7 @@ void QtWebKitNetworkManager::setWidget(QtWebKitWebWidget *widget)
 
 QtWebKitNetworkManager* QtWebKitNetworkManager::clone()
 {
-	return new QtWebKitNetworkManager((cache() == NULL), m_cookieJarProxy->clone(NULL), NULL);
+	return new QtWebKitNetworkManager((cache() == nullptr), m_cookieJarProxy->clone(nullptr), nullptr);
 }
 
 QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Operation operation, const QNetworkRequest &request, QIODevice *outgoingData)
@@ -683,7 +683,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 	setPageInformation(WebWidget::LoadingMessageInformation, tr("Sending request to %1…").arg(request.url().host()));
 
-	QNetworkReply *reply(NULL);
+	QNetworkReply *reply(nullptr);
 
 	if (operation == GetOperation && request.url().isLocalFile() && QFileInfo(request.url().toLocalFile()).isDir())
 	{

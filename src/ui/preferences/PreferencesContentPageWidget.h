@@ -36,7 +36,7 @@ class PreferencesContentPageWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit PreferencesContentPageWidget(QWidget *parent = NULL);
+	explicit PreferencesContentPageWidget(QWidget *parent = nullptr);
 	~PreferencesContentPageWidget();
 
 protected:

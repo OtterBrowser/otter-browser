@@ -32,7 +32,7 @@
 namespace Otter
 {
 
-NotificationsManager* NotificationsManager::m_instance = NULL;
+NotificationsManager* NotificationsManager::m_instance = nullptr;
 QMap<int, QString> NotificationsManager::m_identifiers;
 QVector<EventDefinition> NotificationsManager::m_definitions;
 int NotificationsManager::m_eventIdentifierEnumerator = 0;

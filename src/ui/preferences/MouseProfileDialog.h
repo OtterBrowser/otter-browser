@@ -59,7 +59,7 @@ class MouseProfileDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit MouseProfileDialog(const QString &profile, const QHash<QString, MouseProfile> &profiles, QWidget *parent = NULL);
+	explicit MouseProfileDialog(const QString &profile, const QHash<QString, MouseProfile> &profiles, QWidget *parent = nullptr);
 	~MouseProfileDialog();
 
 	MouseProfile getProfile() const;

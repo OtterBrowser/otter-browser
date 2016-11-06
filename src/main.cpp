@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
 
 	if (!application.getCommandLineParser()->value(QLatin1String("session")).isEmpty() && SessionsManager::getSession(session).isClean)
 	{
-		SessionsManager::restoreSession(SessionsManager::getSession(session), NULL, isPrivate);
+		SessionsManager::restoreSession(SessionsManager::getSession(session), nullptr, isPrivate);
 	}
 	else if (startupBehavior == QLatin1String("showDialog") || application.getCommandLineParser()->isSet(QLatin1String("sessionchooser")) || !SessionsManager::getSession(session).isClean)
 	{
@@ -136,11 +136,11 @@ int main(int argc, char *argv[])
 			return 0;
 		}
 
-		SessionsManager::restoreSession(dialog.getSession(), NULL, isPrivate);
+		SessionsManager::restoreSession(dialog.getSession(), nullptr, isPrivate);
 	}
 	else if (startupBehavior == QLatin1String("continuePrevious"))
 	{
-		SessionsManager::restoreSession(SessionsManager::getSession(QLatin1String("default")), NULL, isPrivate);
+		SessionsManager::restoreSession(SessionsManager::getSession(QLatin1String("default")), nullptr, isPrivate);
 	}
 	else if (startupBehavior != QLatin1String("startEmpty"))
 	{
@@ -172,7 +172,7 @@ int main(int argc, char *argv[])
 		sessionData.windows.append(window);
 		sessionData.index = 0;
 
-		SessionsManager::restoreSession(sessionData, NULL, isPrivate);
+		SessionsManager::restoreSession(sessionData, nullptr, isPrivate);
 	}
 
 	if (!application.getCommandLineParser()->positionalArguments().isEmpty())

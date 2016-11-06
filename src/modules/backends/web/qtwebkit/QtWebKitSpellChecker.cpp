@@ -28,7 +28,7 @@ namespace Otter
 {
 
 QtWebKitSpellChecker::QtWebKitSpellChecker() : QWebSpellChecker(),
-	m_speller(NULL)
+	m_speller(nullptr)
 {
 	setDictionary(QtWebKitWebBackend::getActiveDictionary());
 
@@ -53,7 +53,7 @@ void QtWebKitSpellChecker::toggleGrammarChecking()
 
 void QtWebKitSpellChecker::checkSpellingOfString(const QString &word, int *misspellingLocation, int *misspellingLength)
 {
-	if (!m_speller || misspellingLocation == NULL || misspellingLength == NULL)
+	if (!m_speller || misspellingLocation == nullptr || misspellingLength == nullptr)
 	{
 		return;
 	}
@@ -139,7 +139,7 @@ void QtWebKitSpellChecker::setDictionary(const QString &dictionary)
 	{
 		delete m_speller;
 
-		m_speller = NULL;
+		m_speller = nullptr;
 	}
 	else if (!dictionary.isEmpty())
 	{
@@ -163,7 +163,7 @@ QString QtWebKitSpellChecker::autoCorrectSuggestionForMisspelledWord(const QStri
 
 bool QtWebKitSpellChecker::isContinousSpellCheckingEnabled() const
 {
-	return (m_speller != NULL);
+	return (m_speller != nullptr);
 }
 
 bool QtWebKitSpellChecker::isGrammarCheckingEnabled()

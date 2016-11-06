@@ -50,7 +50,7 @@ public:
 		WebBackendType
 	};
 
-	explicit Addon(QObject *parent = NULL);
+	explicit Addon(QObject *parent = nullptr);
 
 	virtual QString getTitle() const = 0;
 	virtual QString getDescription() const = 0;
@@ -97,7 +97,7 @@ public:
 		}
 	};
 
-	static void createInstance(QObject *parent = NULL);
+	static void createInstance(QObject *parent = nullptr);
 	static void registerWebBackend(WebBackend *backend, const QString &name);
 	static void registerSpecialPage(const SpecialPageInformation &information, const QString &name);
 	static void loadUserScripts();
@@ -110,7 +110,7 @@ public:
 	static QStringList getSpecialPages();
 
 protected:
-	explicit AddonsManager(QObject *parent = NULL);
+	explicit AddonsManager(QObject *parent = nullptr);
 
 private:
 	static AddonsManager *m_instance;

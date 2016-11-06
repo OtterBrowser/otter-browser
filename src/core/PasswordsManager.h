@@ -79,7 +79,7 @@ public:
 		PasswordInformation() : type(FormPassword) {}
 	};
 
-	static void createInstance(QObject *parent = NULL);
+	static void createInstance(QObject *parent = nullptr);
 	static void clearPasswords(const QString &host = QString());
 	static void addPassword(const PasswordInformation &password);
 	static void removePassword(const PasswordInformation &password);
@@ -90,7 +90,7 @@ public:
 	static bool hasPasswords(const QUrl &url, PasswordTypes types = AnyPassword);
 
 protected:
-	explicit PasswordsManager(QObject *parent = NULL);
+	explicit PasswordsManager(QObject *parent = nullptr);
 
 private:
 	static PasswordsManager *m_instance;

@@ -38,7 +38,7 @@ class SearchEnginePropertiesDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit SearchEnginePropertiesDialog(const SearchEnginesManager::SearchEngineDefinition &searchEngine, const QStringList &keywords, bool isDefault, QWidget *parent = NULL);
+	explicit SearchEnginePropertiesDialog(const SearchEnginesManager::SearchEngineDefinition &searchEngine, const QStringList &keywords, bool isDefault, QWidget *parent = nullptr);
 	~SearchEnginePropertiesDialog();
 
 	SearchEnginesManager::SearchEngineDefinition getSearchEngine() const;

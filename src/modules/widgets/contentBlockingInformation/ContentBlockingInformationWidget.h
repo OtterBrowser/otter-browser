@@ -33,7 +33,7 @@ class ContentBlockingInformationWidget : public ToolButtonWidget
 	Q_OBJECT
 
 public:
-	explicit ContentBlockingInformationWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = NULL);
+	explicit ContentBlockingInformationWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = nullptr);
 
 protected:
 	void paintEvent(QPaintEvent *event);

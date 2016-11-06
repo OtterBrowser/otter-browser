@@ -34,7 +34,7 @@
 namespace Otter
 {
 
-ContentBlockingManager* ContentBlockingManager::m_instance = NULL;
+ContentBlockingManager* ContentBlockingManager::m_instance = nullptr;
 QVector<ContentBlockingProfile*> ContentBlockingManager::m_profiles;
 
 ContentBlockingManager::ContentBlockingManager(QObject *parent) : QObject(parent),
@@ -65,7 +65,7 @@ void ContentBlockingManager::timerEvent(QTimerEvent *event)
 		{
 			ContentBlockingProfile *profile(m_profiles.at(i));
 
-			if (profile == NULL || profile->getName() == QLatin1String("custom"))
+			if (profile == nullptr || profile->getName() == QLatin1String("custom"))
 			{
 				continue;
 			}
@@ -236,7 +236,7 @@ ContentBlockingProfile* ContentBlockingManager::getProfile(const QString &profil
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 ContentBlockingManager::CheckResult ContentBlockingManager::checkUrl(const QVector<int> &profiles, const QUrl &baseUrl, const QUrl &requestUrl, NetworkManager::ResourceType resourceType)

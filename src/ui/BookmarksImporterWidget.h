@@ -38,7 +38,7 @@ class BookmarksImporterWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit BookmarksImporterWidget(QWidget *parent = NULL);
+	explicit BookmarksImporterWidget(QWidget *parent = nullptr);
 	~BookmarksImporterWidget();
 
 	BookmarksItem *getTargetFolder() const;

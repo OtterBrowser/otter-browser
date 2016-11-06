@@ -30,13 +30,13 @@ namespace Otter
 {
 
 OpenAddressDialog::OpenAddressDialog(QWidget *parent) : Dialog(parent),
-	m_addressWidget(NULL),
-	m_inputInterpreter(NULL),
+	m_addressWidget(nullptr),
+	m_inputInterpreter(nullptr),
 	m_ui(new Ui::OpenAddressDialog)
 {
 	m_ui->setupUi(this);
 
-	m_addressWidget = new AddressWidget(NULL, this);
+	m_addressWidget = new AddressWidget(nullptr, this);
 	m_addressWidget->setFocus();
 
 	m_ui->verticalLayout->insertWidget(1, m_addressWidget);

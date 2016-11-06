@@ -38,7 +38,7 @@ class ContentBlockingDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit ContentBlockingDialog(QWidget *parent = NULL);
+	explicit ContentBlockingDialog(QWidget *parent = nullptr);
 	~ContentBlockingDialog();
 
 protected:

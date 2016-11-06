@@ -32,7 +32,7 @@ class FilePathWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit FilePathWidget(QWidget *parent = NULL);
+	explicit FilePathWidget(QWidget *parent = nullptr);
 
 	void setFilters(const QStringList &filters);
 	void setSelectFile(bool mode);

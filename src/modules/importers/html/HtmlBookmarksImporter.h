@@ -37,7 +37,7 @@ class HtmlBookmarksImporter : public BookmarksImporter
 	Q_OBJECT
 
 public:
-	explicit HtmlBookmarksImporter(QObject *parent = NULL);
+	explicit HtmlBookmarksImporter(QObject *parent = nullptr);
 	~HtmlBookmarksImporter();
 
 	QWidget* getOptionsWidget();

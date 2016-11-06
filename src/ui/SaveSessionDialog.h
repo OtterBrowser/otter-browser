@@ -35,7 +35,7 @@ class SaveSessionDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit SaveSessionDialog(QWidget *parent = NULL);
+	explicit SaveSessionDialog(QWidget *parent = nullptr);
 	~SaveSessionDialog();
 
 protected:

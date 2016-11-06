@@ -37,7 +37,7 @@ class BookmarksComboBoxWidget : public QComboBox
 	Q_OBJECT
 
 public:
-	explicit BookmarksComboBoxWidget(QWidget *parent = NULL);
+	explicit BookmarksComboBoxWidget(QWidget *parent = nullptr);
 
 	void setCurrentFolder(BookmarksItem *folder);
 	void setMode(BookmarksModel::FormatMode mode);
@@ -45,7 +45,7 @@ public:
 
 protected slots:
 	void createFolder();
-	void updateBranch(QStandardItem *branch = NULL);
+	void updateBranch(QStandardItem *branch = nullptr);
 
 private:
 	QTreeView *m_view;

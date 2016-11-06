@@ -104,7 +104,7 @@ void SessionsManagerDialog::openSession()
 
 	if (session.isClean || QMessageBox::warning(this, tr("Warning"), tr("This session was not saved correctly.\nAre you sure that you want to restore this session anyway?"), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
 	{
-		SessionsManager::restoreSession(session, (m_ui->openInExistingWindowCheckBox->isChecked() ? SessionsManager::getActiveWindow() : NULL));
+		SessionsManager::restoreSession(session, (m_ui->openInExistingWindowCheckBox->isChecked() ? SessionsManager::getActiveWindow() : nullptr));
 
 		close();
 	}

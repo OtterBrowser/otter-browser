@@ -59,11 +59,11 @@ public:
 		CancelledState = 4
 	};
 
-	explicit Transfer(TransferOptions options = CanAskForPathOption, QObject *parent = NULL);
-	Transfer(const QSettings &settings, QObject *parent = NULL);
-	Transfer(const QUrl &source, const QString &target = QString(), TransferOptions options = CanAskForPathOption, QObject *parent = NULL);
-	Transfer(const QNetworkRequest &request, const QString &target = QString(), TransferOptions options = CanAskForPathOption, QObject *parent = NULL);
-	Transfer(QNetworkReply *reply, const QString &target = QString(), TransferOptions options = CanAskForPathOption, QObject *parent = NULL);
+	explicit Transfer(TransferOptions options = CanAskForPathOption, QObject *parent = nullptr);
+	Transfer(const QSettings &settings, QObject *parent = nullptr);
+	Transfer(const QUrl &source, const QString &target = QString(), TransferOptions options = CanAskForPathOption, QObject *parent = nullptr);
+	Transfer(const QNetworkRequest &request, const QString &target = QString(), TransferOptions options = CanAskForPathOption, QObject *parent = nullptr);
+	Transfer(QNetworkReply *reply, const QString &target = QString(), TransferOptions options = CanAskForPathOption, QObject *parent = nullptr);
 	~Transfer();
 
 	virtual void setUpdateInterval(int interval);
@@ -134,7 +134,7 @@ class TransfersManager : public QObject
 	Q_OBJECT
 
 public:
-	static void createInstance(QObject *parent = NULL);
+	static void createInstance(QObject *parent = nullptr);
 	static void addTransfer(Transfer *transfer);
 	static void clearTransfers(int period = 0);
 	static TransfersManager* getInstance();
@@ -146,7 +146,7 @@ public:
 	static bool isDownloading(const QString &source, const QString &target = QString());
 
 protected:
-	explicit TransfersManager(QObject *parent = NULL);
+	explicit TransfersManager(QObject *parent = nullptr);
 
 	void timerEvent(QTimerEvent *event);
 	void scheduleSave();

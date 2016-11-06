@@ -39,7 +39,7 @@ class UpdateCheckerDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit UpdateCheckerDialog(QWidget *parent = NULL, const QList<UpdateInformation> &availableUpdates = QList<UpdateInformation>());
+	explicit UpdateCheckerDialog(QWidget *parent = nullptr, const QList<UpdateInformation> &availableUpdates = QList<UpdateInformation>());
 	~UpdateCheckerDialog();
 
 protected:

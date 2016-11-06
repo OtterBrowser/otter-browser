@@ -28,7 +28,7 @@ namespace Otter
 {
 
 PopupsBarWidget::PopupsBarWidget(const QUrl &parentUrl, QWidget *parent) : QWidget(parent),
-	m_popupsMenu(NULL),
+	m_popupsMenu(nullptr),
 	m_popupsGroup(new QActionGroup(this)),
 	m_parentUrl(parentUrl),
 	m_ui(new Ui::PopupsBarWidget)

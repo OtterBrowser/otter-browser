@@ -35,7 +35,7 @@ class PermissionBarWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit PermissionBarWidget(WebWidget::FeaturePermission feature, const QUrl &url, QWidget *parent = NULL);
+	explicit PermissionBarWidget(WebWidget::FeaturePermission feature, const QUrl &url, QWidget *parent = nullptr);
 	~PermissionBarWidget();
 
 	QUrl getUrl() const;

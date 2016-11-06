@@ -48,7 +48,7 @@ public:
 		OtherGesturesContext
 	};
 
-	static void createInstance(QObject *parent = NULL);
+	static void createInstance(QObject *parent = nullptr);
 	static void loadProfiles();
 	static GesturesManager* getInstance();
 	static bool startGesture(QObject *object, QEvent *event, QList<GesturesContext> contexts = QList<GesturesContext>({GenericGesturesContext}), const QVariantMap &parameters = QVariantMap());

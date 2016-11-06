@@ -420,7 +420,7 @@ QStandardItem* CookiesContentsWidget::findDomain(const QString &domain)
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 Action* CookiesContentsWidget::getAction(int identifier)
@@ -432,7 +432,7 @@ Action* CookiesContentsWidget::getAction(int identifier)
 
 	if (identifier != ActionsManager::DeleteAction && identifier != ActionsManager::SelectAllAction)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	Action *action(new Action(identifier, this));

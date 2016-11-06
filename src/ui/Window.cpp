@@ -54,8 +54,8 @@ namespace Otter
 quint64 Window::m_identifierCounter = 0;
 
 Window::Window(bool isPrivate, ContentsWidget *widget, QWidget *parent) : QWidget(parent),
-	m_navigationBar(NULL),
-	m_contentsWidget(NULL),
+	m_navigationBar(nullptr),
+	m_contentsWidget(nullptr),
 	m_identifier(++m_identifierCounter),
 	m_areControlsHidden(false),
 	m_isAboutToClose(false),
@@ -99,8 +99,8 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 {
 	if (parameters.contains(QLatin1String("isBounced")))
 	{
-		AddressWidget *addressWidget(NULL);
-		SearchWidget *searchWidget(NULL);
+		AddressWidget *addressWidget(nullptr);
+		SearchWidget *searchWidget(nullptr);
 
 		if (identifier == ActionsManager::ActivateAddressFieldAction || identifier == ActionsManager::ActivateSearchFieldAction)
 		{
@@ -163,7 +163,7 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 			{
 				m_session = getSession();
 
-				setContentsWidget(NULL);
+				setContentsWidget(nullptr);
 			}
 
 			break;
@@ -211,7 +211,7 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 
 void Window::clear()
 {
-	setContentsWidget(new WebContentsWidget(m_isPrivate, NULL, this));
+	setContentsWidget(new WebContentsWidget(m_isPrivate, nullptr, this));
 
 	m_isAboutToClose = false;
 
@@ -259,7 +259,7 @@ void Window::search(const QString &query, const QString &searchEngine)
 
 	if (!widget)
 	{
-		widget = new WebContentsWidget(isPrivate(), NULL, this);
+		widget = new WebContentsWidget(isPrivate(), nullptr, this);
 
 		setContentsWidget(widget);
 	}
@@ -380,7 +380,7 @@ void Window::setSearchEngine(const QString &searchEngine)
 
 void Window::setUrl(const QUrl &url, bool isTyped)
 {
-	ContentsWidget *newWidget(NULL);
+	ContentsWidget *newWidget(nullptr);
 
 	if (url.scheme() == QLatin1String("about"))
 	{
@@ -438,7 +438,7 @@ void Window::setUrl(const QUrl &url, bool isTyped)
 
 	if (!newWidget && (!m_contentsWidget || m_contentsWidget->getType() != QLatin1String("web")))
 	{
-		newWidget = new WebContentsWidget(m_isPrivate, NULL, this);
+		newWidget = new WebContentsWidget(m_isPrivate, nullptr, this);
 	}
 
 	if (newWidget)
@@ -505,7 +505,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 			layout()->removeWidget(m_navigationBar);
 
 			m_navigationBar->deleteLater();
-			m_navigationBar = NULL;
+			m_navigationBar = nullptr;
 		}
 
 		emit widgetChanged();
@@ -594,14 +594,14 @@ AddressWidget* Window::findAddressWidget() const
 		}
 	}
 
-	return m_addressWidgets.value(0, NULL);
+	return m_addressWidgets.value(0, nullptr);
 }
 
 Window* Window::clone(bool cloneHistory, QWidget *parent)
 {
 	if (!m_contentsWidget || !canClone())
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	Window *window(new Window(false, m_contentsWidget->clone(cloneHistory), parent));

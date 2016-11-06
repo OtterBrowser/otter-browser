@@ -30,7 +30,7 @@ namespace Otter
 {
 
 SearchEnginePropertiesDialog::SearchEnginePropertiesDialog(const SearchEnginesManager::SearchEngineDefinition &searchEngine, const QStringList &keywords, bool isDefault, QWidget *parent) : Dialog(parent),
-	m_currentLineEdit(NULL),
+	m_currentLineEdit(nullptr),
 	m_identifier(searchEngine.identifier),
 	m_keywords(keywords),
 	m_ui(new Ui::SearchEnginePropertiesDialog)
@@ -139,7 +139,7 @@ bool SearchEnginePropertiesDialog::eventFilter(QObject *object, QEvent *event)
 			contextMenu->exec(static_cast<QContextMenuEvent*>(event)->globalPos());
 			contextMenu->deleteLater();
 
-			m_currentLineEdit = NULL;
+			m_currentLineEdit = nullptr;
 
 			return true;
 		}

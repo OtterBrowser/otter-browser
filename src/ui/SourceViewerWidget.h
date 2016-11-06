@@ -78,7 +78,7 @@ class MarginWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit MarginWidget(SourceViewerWidget *parent = NULL);
+	explicit MarginWidget(SourceViewerWidget *parent = nullptr);
 
 public slots:
 	void updateNumbers(const QRect &rectangle, int offset);
@@ -101,7 +101,7 @@ class SourceViewerWidget : public QPlainTextEdit
 	Q_OBJECT
 
 public:
-	explicit SourceViewerWidget(QWidget *parent = NULL);
+	explicit SourceViewerWidget(QWidget *parent = nullptr);
 
 	void setZoom(int zoom);
 	int getZoom() const;

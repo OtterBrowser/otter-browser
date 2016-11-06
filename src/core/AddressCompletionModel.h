@@ -82,7 +82,7 @@ public:
 		CompletionEntry(const QUrl &urlValue, const QString &titleValue, const QString &matchValue, const QIcon &iconValue, EntryType typeValue) : title(titleValue), match(matchValue), url(urlValue), icon(iconValue), type(typeValue) {}
 	};
 
-	explicit AddressCompletionModel(QObject *parent = NULL);
+	explicit AddressCompletionModel(QObject *parent = nullptr);
 
 	QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 	QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;

@@ -44,7 +44,7 @@ public:
 	void triggerAction(WebAction action, bool checked = false);
 	QVariant runScript(const QString &path, QWebElement element = QWebElement());
 	bool event(QEvent *event);
-	bool extension(Extension extension, const ExtensionOption *option = NULL, ExtensionReturn *output = NULL);
+	bool extension(Extension extension, const ExtensionOption *option = nullptr, ExtensionReturn *output = nullptr);
 	bool shouldInterruptJavaScript();
 	bool supportsExtension(Extension extension) const;
 	bool isViewingMedia() const;

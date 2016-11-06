@@ -106,7 +106,7 @@ QRect TabBarStyle::subElementRect(QStyle::SubElement element, const QStyleOption
 }
 
 TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
-	m_previewWidget(NULL),
+	m_previewWidget(nullptr),
 	m_closeButtonPosition(static_cast<QTabBar::ButtonPosition>(QApplication::style()->styleHint(QStyle::SH_TabBar_CloseButtonPosition))),
 	m_iconButtonPosition(((m_closeButtonPosition == QTabBar::RightSide) ? QTabBar::LeftSide : QTabBar::RightSide)),
 	m_tabSize(0),
@@ -381,7 +381,7 @@ void TabBarWidget::tabInserted(int index)
 	}
 	else
 	{
-		setTabButton(index, m_iconButtonPosition, NULL);
+		setTabButton(index, m_iconButtonPosition, nullptr);
 	}
 
 	if (m_showCloseButton || getTabProperty(index, QLatin1String("isPinned"), false).toBool())
@@ -613,7 +613,7 @@ void TabBarWidget::optionChanged(int identifier, const QVariant &value)
 				}
 				else
 				{
-					setTabButton(i, m_closeButtonPosition, NULL);
+					setTabButton(i, m_closeButtonPosition, nullptr);
 				}
 			}
 
@@ -639,7 +639,7 @@ void TabBarWidget::optionChanged(int identifier, const QVariant &value)
 				}
 				else
 				{
-					setTabButton(i, m_iconButtonPosition, NULL);
+					setTabButton(i, m_iconButtonPosition, nullptr);
 				}
 			}
 
@@ -853,7 +853,7 @@ void TabBarWidget::updateTabs(int index)
 				if (label->movie())
 				{
 					label->movie()->deleteLater();
-					label->setMovie(NULL);
+					label->setMovie(nullptr);
 				}
 
 				QIcon icon;
@@ -916,7 +916,7 @@ Window* TabBarWidget::getWindow(int index) const
 {
 	if (index < 0 || index >= count())
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	MainWindow *mainWindow(MainWindow::findMainWindow(parentWidget()));
@@ -926,7 +926,7 @@ Window* TabBarWidget::getWindow(int index) const
 		return mainWindow->getWindowsManager()->getWindowByIdentifier(tabData(index).toULongLong());
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 QVariant TabBarWidget::getTabProperty(int index, const QString &key, const QVariant &defaultValue) const

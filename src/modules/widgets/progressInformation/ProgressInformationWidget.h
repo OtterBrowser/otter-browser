@@ -47,7 +47,7 @@ public:
 		MessageType
 	};
 
-	explicit ProgressInformationWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = NULL);
+	explicit ProgressInformationWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = nullptr);
 
 	QSize sizeHint() const;
 

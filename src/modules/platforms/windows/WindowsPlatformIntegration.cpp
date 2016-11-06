@@ -194,13 +194,13 @@ void WindowsPlatformIntegration::getApplicationInformation(ApplicationInformatio
 
 	const QString fullApplicationPath(information.command.left(information.command.indexOf(QLatin1String(".exe"), 0, Qt::CaseInsensitive) + 4));
 	const QFileInfo fileInformation(fullApplicationPath);
-	HKEY key = NULL;
+	HKEY key = nullptr;
 	TCHAR readBuffer[128];
 	DWORD bufferSize = sizeof(readBuffer);
 
 	if (RegOpenKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\MuiCache"), 0, KEY_QUERY_VALUE, &key) == ERROR_SUCCESS)
 	{
-		if (RegQueryValueEx(key, fullApplicationPath.toStdWString().c_str(), NULL, NULL, (LPBYTE)readBuffer, &bufferSize) == ERROR_SUCCESS)
+		if (RegQueryValueEx(key, fullApplicationPath.toStdWString().c_str(), nullptr, nullptr, (LPBYTE)readBuffer, &bufferSize) == ERROR_SUCCESS)
 		{
 			information.name = QString::fromWCharArray(readBuffer);
 		}
@@ -421,8 +421,8 @@ bool WindowsPlatformIntegration::setAsDefaultBrowser()
 	if (QSysInfo::windowsVersion() >= QSysInfo::WV_10_0)
 	{
 		DWORD pid = 0;
-		IApplicationActivationManager *activationManager = NULL;
-		HRESULT result = CoCreateInstance(CLSID_ApplicationActivationManager, NULL, CLSCTX_INPROC_SERVER, IID_IApplicationActivationManager, (LPVOID*)&activationManager);
+		IApplicationActivationManager *activationManager = nullptr;
+		HRESULT result = CoCreateInstance(CLSID_ApplicationActivationManager, nullptr, CLSCTX_INPROC_SERVER, IID_IApplicationActivationManager, (LPVOID*)&activationManager);
 
 		if (result == S_OK)
 		{
@@ -440,8 +440,8 @@ bool WindowsPlatformIntegration::setAsDefaultBrowser()
 	}
 	else if (QSysInfo::windowsVersion() >= QSysInfo::WV_VISTA)
 	{
-		IApplicationAssociationRegistrationUI *applicationAssociationRegistrationUI = NULL;
-		HRESULT result = CoCreateInstance(CLSID_ApplicationAssociationRegistrationUI, NULL, CLSCTX_INPROC_SERVER, IID_IApplicationAssociationRegistrationUI, (LPVOID*)&applicationAssociationRegistrationUI);
+		IApplicationAssociationRegistrationUI *applicationAssociationRegistrationUI = nullptr;
+		HRESULT result = CoCreateInstance(CLSID_ApplicationAssociationRegistrationUI, nullptr, CLSCTX_INPROC_SERVER, IID_IApplicationAssociationRegistrationUI, (LPVOID*)&applicationAssociationRegistrationUI);
 
 		if (result == S_OK && applicationAssociationRegistrationUI)
 		{
@@ -459,7 +459,7 @@ bool WindowsPlatformIntegration::setAsDefaultBrowser()
 	}
 	else
 	{
-		SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_DWORD | SHCNF_FLUSH, NULL, NULL);
+		SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_DWORD | SHCNF_FLUSH, nullptr, nullptr);
 		Sleep(1000);
 	}
 

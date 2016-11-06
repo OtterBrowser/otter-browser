@@ -60,7 +60,7 @@ public:
 		DoNotAllowToTrackPolicy = 2
 	};
 
-	static void createInstance(QObject *parent = NULL);
+	static void createInstance(QObject *parent = nullptr);
 	static void initialize();
 	static void clearCookies(int period = 0);
 	static void clearCache(int period = 0);
@@ -81,7 +81,7 @@ public:
 	static bool isUsingSystemProxyAuthentication();
 
 protected:
-	explicit NetworkManagerFactory(QObject *parent = NULL);
+	explicit NetworkManagerFactory(QObject *parent = nullptr);
 
 protected slots:
 	void optionChanged(int identifier, const QVariant &value);

@@ -40,7 +40,7 @@ class TransferDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit TransferDialog(Transfer *transfer, QWidget *parent = NULL);
+	explicit TransferDialog(Transfer *transfer, QWidget *parent = nullptr);
 	~TransferDialog();
 
 protected:

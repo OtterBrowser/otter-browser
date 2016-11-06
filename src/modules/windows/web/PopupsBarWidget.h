@@ -35,7 +35,7 @@ class PopupsBarWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit PopupsBarWidget(const QUrl &parentUrl, QWidget *parent = NULL);
+	explicit PopupsBarWidget(const QUrl &parentUrl, QWidget *parent = nullptr);
 	~PopupsBarWidget();
 
 	void addPopup(const QUrl &url);

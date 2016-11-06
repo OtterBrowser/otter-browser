@@ -41,7 +41,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 
 	const QMetaEnum metaEnum(SettingsManager::getInstance()->metaObject()->enumerator(SettingsManager::getInstance()->metaObject()->indexOfEnumerator(QLatin1String("OptionType").data())));
 	const QStringList options(SettingsManager::getOptions());
-	QStandardItem *groupItem(NULL);
+	QStandardItem *groupItem(nullptr);
 
 	for (int i = 0; i < options.count(); ++i)
 	{

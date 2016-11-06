@@ -35,7 +35,7 @@ class NotificationDialog : public QDialog
 	Q_OBJECT
 
 public:
-	explicit NotificationDialog(Notification *notification, QWidget *parent = NULL);
+	explicit NotificationDialog(Notification *notification, QWidget *parent = nullptr);
 
 	bool eventFilter(QObject *object, QEvent *event);
 

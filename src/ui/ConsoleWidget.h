@@ -38,7 +38,7 @@ class ConsoleWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit ConsoleWidget(QWidget *parent = NULL);
+	explicit ConsoleWidget(QWidget *parent = nullptr);
 	~ConsoleWidget();
 
 protected:

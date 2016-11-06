@@ -43,8 +43,8 @@ namespace Otter
 {
 
 Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
-	m_actionGroup(NULL),
-	m_bookmark(NULL),
+	m_actionGroup(nullptr),
+	m_bookmark(nullptr),
 	m_role(role)
 {
 	switch (role)
@@ -846,7 +846,7 @@ void Menu::openBookmark()
 		mainWindow->getWindowsManager()->open(m_bookmark, ((hints == WindowsManager::DefaultOpen) ? WindowsManager::calculateOpenHints() : hints));
 	}
 
-	m_bookmark = NULL;
+	m_bookmark = nullptr;
 }
 
 void Menu::openImporter(QAction *action)
@@ -861,7 +861,7 @@ void Menu::openSession(QAction *action)
 {
 	if (!action->data().isNull())
 	{
-		SessionsManager::restoreSession(SessionsManager::getSession(action->data().toString()), (SettingsManager::getValue(SettingsManager::Sessions_OpenInExistingWindowOption).toBool() ? SessionsManager::getActiveWindow() : NULL));
+		SessionsManager::restoreSession(SessionsManager::getSession(action->data().toString()), (SettingsManager::getValue(SettingsManager::Sessions_OpenInExistingWindowOption).toBool() ? SessionsManager::getActiveWindow() : nullptr));
 	}
 }
 

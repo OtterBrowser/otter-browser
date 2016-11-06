@@ -324,7 +324,7 @@ Action* PasswordsContentsWidget::getAction(int identifier)
 
 	if (identifier != ActionsManager::DeleteAction && identifier != ActionsManager::SelectAllAction)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	Action *action(new Action(identifier, this));

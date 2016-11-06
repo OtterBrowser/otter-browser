@@ -39,10 +39,10 @@ public:
 		QtWebKitBackend_EnableMediaSourceOption
 	};
 
-	explicit QtWebKitWebBackend(QObject *parent = NULL);
+	explicit QtWebKitWebBackend(QObject *parent = nullptr);
 	~QtWebKitWebBackend();
 
-	WebWidget* createWidget(bool isPrivate = false, ContentsWidget *parent = NULL);
+	WebWidget* createWidget(bool isPrivate = false, ContentsWidget *parent = nullptr);
 	QString getTitle() const;
 	QString getDescription() const;
 	QString getVersion() const;

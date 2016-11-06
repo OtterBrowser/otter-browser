@@ -53,10 +53,10 @@ public:
 		RemoveCookie = 2
 	};
 
-	explicit CookieJar(bool isPrivate, QObject *parent = NULL);
+	explicit CookieJar(bool isPrivate, QObject *parent = nullptr);
 
 	void clearCookies(int period = 0);
-	CookieJar* clone(QObject *parent = NULL);
+	CookieJar* clone(QObject *parent = nullptr);
 	QList<QNetworkCookie> cookiesForUrl(const QUrl &url) const;
 	QList<QNetworkCookie> getCookiesForUrl(const QUrl &url) const;
 	QList<QNetworkCookie> getCookies(const QString &domain = QString()) const;

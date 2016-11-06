@@ -44,7 +44,7 @@ public:
 		CheckResult() : isBlocked(false) {}
 	};
 
-	static void createInstance(QObject *parent = NULL);
+	static void createInstance(QObject *parent = nullptr);
 	static void addProfile(ContentBlockingProfile *profile);
 	static QStandardItemModel* createModel(QObject *parent, const QStringList &profiles);
 	static ContentBlockingManager* getInstance();
@@ -62,7 +62,7 @@ public slots:
 	void scheduleSave();
 
 protected:
-	explicit ContentBlockingManager(QObject *parent = NULL);
+	explicit ContentBlockingManager(QObject *parent = nullptr);
 
 	void timerEvent(QTimerEvent *event);
 

@@ -72,7 +72,7 @@ void ImportDialog::changeEvent(QEvent *event)
 
 void ImportDialog::createDialog(const QString &importerName, QWidget *parent)
 {
-	Importer *importer(NULL);
+	Importer *importer(nullptr);
 
 	if (importerName == QLatin1String("OperaBookmarks"))
 	{

@@ -32,7 +32,7 @@ class QtWebKitPluginWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit QtWebKitPluginWidget(const QString &mimeType, const QUrl &url, QWidget *parent = NULL);
+	explicit QtWebKitPluginWidget(const QString &mimeType, const QUrl &url, QWidget *parent = nullptr);
 
 protected:
 	void changeEvent(QEvent *event);

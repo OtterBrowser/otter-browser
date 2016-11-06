@@ -31,8 +31,8 @@ namespace Otter
 {
 
 NetworkProxyFactory::NetworkProxyFactory() : QObject(), QNetworkProxyFactory(),
-	m_automaticProxy(NULL),
-	m_pacNetworkReply(NULL),
+	m_automaticProxy(nullptr),
+	m_pacNetworkReply(nullptr),
 	m_proxyMode(SystemProxy)
 {
 	optionChanged(SettingsManager::Network_ProxyModeOption);

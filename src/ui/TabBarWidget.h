@@ -33,11 +33,11 @@ class Window;
 class TabBarStyle : public QProxyStyle
 {
 public:
-	explicit TabBarStyle(QStyle *style = NULL);
+	explicit TabBarStyle(QStyle *style = nullptr);
 
 	void drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const;
 	QSize sizeFromContents(ContentsType type, const QStyleOption *option, const QSize &size, const QWidget *widget) const;
-	QRect subElementRect(SubElement element, const QStyleOption *option, const QWidget *widget = NULL) const;
+	QRect subElementRect(SubElement element, const QStyleOption *option, const QWidget *widget = nullptr) const;
 };
 
 class TabBarWidget : public QTabBar
@@ -45,7 +45,7 @@ class TabBarWidget : public QTabBar
 	Q_OBJECT
 
 public:
-	explicit TabBarWidget(QWidget *parent = NULL);
+	explicit TabBarWidget(QWidget *parent = nullptr);
 
 	void addTab(int index, Window *window);
 	void removeTab(int index);
@@ -79,7 +79,7 @@ protected:
 protected slots:
 	void optionChanged(int identifier, const QVariant &value);
 	void currentTabChanged(int index);
-	void isPinnedChanged(Window *window = NULL);
+	void isPinnedChanged(Window *window = nullptr);
 	void updateButtons();
 	void updateTabs(int index = -1);
 	void setCycle(bool enable);

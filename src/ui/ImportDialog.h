@@ -39,7 +39,7 @@ class ImportDialog : public Dialog
 public:
 	~ImportDialog();
 
-	static void createDialog(const QString &importerName, QWidget *parent = NULL);
+	static void createDialog(const QString &importerName, QWidget *parent = nullptr);
 
 protected:
 	explicit ImportDialog(Importer *importer, QWidget *parent);

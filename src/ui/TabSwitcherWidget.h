@@ -43,7 +43,7 @@ public:
 		WheelReason = 2
 	};
 
-	explicit TabSwitcherWidget(WindowsManager *manager, QWidget *parent = NULL);
+	explicit TabSwitcherWidget(WindowsManager *manager, QWidget *parent = nullptr);
 
 	void show(SwitcherReason reason);
 	void accept();

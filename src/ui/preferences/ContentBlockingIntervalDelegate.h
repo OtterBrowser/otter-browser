@@ -29,7 +29,7 @@ namespace Otter
 class ContentBlockingIntervalDelegate : public ItemDelegate
 {
 public:
-	explicit ContentBlockingIntervalDelegate(QObject *parent = NULL);
+	explicit ContentBlockingIntervalDelegate(QObject *parent = nullptr);
 
 	void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;

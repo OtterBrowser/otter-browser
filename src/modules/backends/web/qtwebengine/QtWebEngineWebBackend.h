@@ -36,9 +36,9 @@ class QtWebEngineWebBackend : public WebBackend
 	Q_OBJECT
 
 public:
-	explicit QtWebEngineWebBackend(QObject *parent = NULL);
+	explicit QtWebEngineWebBackend(QObject *parent = nullptr);
 
-	WebWidget* createWidget(bool isPrivate = false, ContentsWidget *parent = NULL);
+	WebWidget* createWidget(bool isPrivate = false, ContentsWidget *parent = nullptr);
 	QString getTitle() const;
 	QString getDescription() const;
 	QString getVersion() const;

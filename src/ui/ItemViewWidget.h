@@ -36,7 +36,7 @@ class HeaderViewWidget : public QHeaderView
 	Q_OBJECT
 
 public:
-	explicit HeaderViewWidget(Qt::Orientation orientation, QWidget *parent = NULL);
+	explicit HeaderViewWidget(Qt::Orientation orientation, QWidget *parent = nullptr);
 
 public slots:
 	void setSort(int column, Qt::SortOrder order);
@@ -66,7 +66,7 @@ public:
 		TreeViewMode = 1
 	};
 
-	explicit ItemViewWidget(QWidget *parent = NULL);
+	explicit ItemViewWidget(QWidget *parent = nullptr);
 
 	void setData(const QModelIndex &index, const QVariant &value, int role);
 	void setModel(QAbstractItemModel *model);

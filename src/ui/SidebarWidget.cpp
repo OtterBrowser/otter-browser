@@ -381,7 +381,7 @@ void SidebarWidget::selectPanel(const QString &identifier)
 		setFixedWidth(m_ui->buttonsLayout->sizeHint().width());
 	}
 
-	m_ui->containerWidget->setVisible(widget != NULL);
+	m_ui->containerWidget->setVisible(widget != nullptr);
 
 	m_currentPanel = identifier;
 

@@ -38,7 +38,7 @@ class Window;
 class SearchDelegate : public QItemDelegate
 {
 public:
-	explicit SearchDelegate(QObject *parent = NULL);
+	explicit SearchDelegate(QObject *parent = nullptr);
 
 	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
@@ -49,7 +49,7 @@ class SearchWidget : public ComboBoxWidget
 	Q_OBJECT
 
 public:
-	explicit SearchWidget(Window *window, QWidget *parent = NULL);
+	explicit SearchWidget(Window *window, QWidget *parent = nullptr);
 
 	void hidePopup();
 	QString getCurrentSearchEngine() const;
@@ -57,7 +57,7 @@ public:
 
 public slots:
 	void activate(Qt::FocusReason reason);
-	void setWindow(Window *window = NULL);
+	void setWindow(Window *window = nullptr);
 	void setSearchEngine(const QString &searchEngine = QString());
 	void setOptions(const QVariantMap &options);
 

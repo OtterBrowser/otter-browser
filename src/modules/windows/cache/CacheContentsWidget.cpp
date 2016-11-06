@@ -459,7 +459,7 @@ void CacheContentsWidget::updateActions()
 				sizeItem->setText(Utils::formatUnit(device->size()));
 				sizeItem->setData(device->size(), Qt::UserRole);
 
-				QStandardItem *domainSizeItem(sizeItem->parent() ? m_model->item(sizeItem->parent()->row(), 2) : NULL);
+				QStandardItem *domainSizeItem(sizeItem->parent() ? m_model->item(sizeItem->parent()->row(), 2) : nullptr);
 
 				if (domainSizeItem)
 				{
@@ -503,7 +503,7 @@ QStandardItem* CacheContentsWidget::findDomain(const QString &domain)
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 QStandardItem* CacheContentsWidget::findEntry(const QUrl &entry)
@@ -526,7 +526,7 @@ QStandardItem* CacheContentsWidget::findEntry(const QUrl &entry)
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 Action* CacheContentsWidget::getAction(int identifier)
@@ -538,7 +538,7 @@ Action* CacheContentsWidget::getAction(int identifier)
 
 	if (identifier != ActionsManager::DeleteAction)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	Action *action(new Action(identifier, this));

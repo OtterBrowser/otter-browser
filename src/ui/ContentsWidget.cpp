@@ -24,7 +24,7 @@ namespace Otter
 {
 
 ContentsWidget::ContentsWidget(Window *window) : QWidget(window),
-	m_layer(NULL),
+	m_layer(nullptr),
 	m_layerTimer(0)
 {
 	if (window)
@@ -45,7 +45,7 @@ void ContentsWidget::timerEvent(QTimerEvent *event)
 		{
 			m_layer->hide();
 			m_layer->deleteLater();
-			m_layer = NULL;
+			m_layer = nullptr;
 		}
 	}
 }
@@ -251,14 +251,14 @@ ContentsWidget* ContentsWidget::clone(bool cloneHistory)
 {
 	Q_UNUSED(cloneHistory)
 
-	return NULL;
+	return nullptr;
 }
 
 Action* ContentsWidget::getAction(int identifier)
 {
 	Q_UNUSED(identifier)
 
-	return NULL;
+	return nullptr;
 }
 
 Window* ContentsWidget::getParent()

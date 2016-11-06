@@ -34,7 +34,7 @@ class BookmarksImporter : public Importer
 	Q_OBJECT
 
 public:
-	explicit BookmarksImporter(QObject *parent = NULL);
+	explicit BookmarksImporter(QObject *parent = nullptr);
 
 	BookmarksItem *getCurrentFolder() const;
 	ImportType getImportType() const;

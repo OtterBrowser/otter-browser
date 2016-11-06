@@ -36,7 +36,7 @@ class BookmarksBarDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit BookmarksBarDialog(QWidget *parent = NULL);
+	explicit BookmarksBarDialog(QWidget *parent = nullptr);
 	~BookmarksBarDialog();
 
 	ToolBarsManager::ToolBarDefinition getDefinition() const;

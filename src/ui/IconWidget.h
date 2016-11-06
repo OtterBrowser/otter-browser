@@ -30,7 +30,7 @@ class IconWidget : public QToolButton
 	Q_OBJECT
 
 public:
-	explicit IconWidget(QWidget *parent = NULL);
+	explicit IconWidget(QWidget *parent = nullptr);
 
 	void setIcon(const QString &data);
 	void setIcon(const QIcon &icon);

@@ -225,7 +225,7 @@ public slots:
 	void setRequestedUrl(const QUrl &url, bool isTyped = true, bool onlyUpdate = false);
 
 protected:
-	explicit WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent = NULL);
+	explicit WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent = nullptr);
 
 	void timerEvent(QTimerEvent *event);
 	void bounceAction(int identifier, QVariantMap parameters);

@@ -33,7 +33,7 @@ namespace Otter
 {
 
 ConsoleWidget::ConsoleWidget(QWidget *parent) : QWidget(parent),
-	m_model(NULL),
+	m_model(nullptr),
 	m_messageScopes(AllTabsScope | OtherSourcesScope),
 	m_ui(new Ui::ConsoleWidget)
 {
@@ -299,7 +299,7 @@ QList<Console::MessageCategory> ConsoleWidget::getCategories() const
 quint64 ConsoleWidget::getCurrentWindow()
 {
 	MainWindow *mainWindow(MainWindow::findMainWindow(this));
-	Window *currentWindow(mainWindow ? mainWindow->getWindowsManager()->getWindowByIndex(mainWindow->getTabBar()->currentIndex()) : NULL);
+	Window *currentWindow(mainWindow ? mainWindow->getWindowsManager()->getWindowByIndex(mainWindow->getTabBar()->currentIndex()) : nullptr);
 
 	return (currentWindow ? currentWindow->getIdentifier() : 0);
 }

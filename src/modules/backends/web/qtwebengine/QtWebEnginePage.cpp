@@ -168,7 +168,7 @@ void QtWebEnginePage::javaScriptAlert(const QUrl &url, const QString &message)
 
 	emit m_widget->needsAttention();
 
-	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, QString(), QDialogButtonBox::Ok, NULL, m_widget);
+	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, QString(), QDialogButtonBox::Ok, nullptr, m_widget);
 	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
 
 	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
@@ -201,7 +201,7 @@ QWebEnginePage* QtWebEnginePage::createWindow(QWebEnginePage::WebWindowType type
 {
 	if (type == QWebEnginePage::WebDialog)
 	{
-		QtWebEngineWebWidget *widget(NULL);
+		QtWebEngineWebWidget *widget(nullptr);
 
 		if (!m_widget || m_widget->getLastUrlClickTime().isNull() || m_widget->getLastUrlClickTime().secsTo(QDateTime::currentDateTime()) > 1)
 		{
@@ -209,12 +209,12 @@ QWebEnginePage* QtWebEnginePage::createWindow(QWebEnginePage::WebWindowType type
 
 			if (popupsPolicy == QLatin1String("blockAll"))
 			{
-				return NULL;
+				return nullptr;
 			}
 
 			if (popupsPolicy == QLatin1String("ask"))
 			{
-				QtWebEnginePage *page(new QtWebEnginePage(false, NULL));
+				QtWebEnginePage *page(new QtWebEnginePage(false, nullptr));
 				page->markAsPopup();
 
 				connect(page, SIGNAL(aboutToNavigate(QUrl, QWebEnginePage::NavigationType)), this, SLOT(removePopup(QUrl)));
@@ -229,7 +229,7 @@ QWebEnginePage* QtWebEnginePage::createWindow(QWebEnginePage::WebWindowType type
 		}
 		else
 		{
-			widget = new QtWebEngineWebWidget(false, NULL, NULL);
+			widget = new QtWebEngineWebWidget(false, nullptr, nullptr);
 		}
 
 		widget->pageLoadStarted();
@@ -294,7 +294,7 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::N
 
 		if (m_widget)
 		{
-			ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), tr("Question"), tr("Are you sure that you want to send form data again?"), tr("Do you want to resend data?"), (QDialogButtonBox::Yes | QDialogButtonBox::Cancel), NULL, m_widget);
+			ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), tr("Question"), tr("Are you sure that you want to send form data again?"), tr("Do you want to resend data?"), (QDialogButtonBox::Yes | QDialogButtonBox::Cancel), nullptr, m_widget);
 			dialog.setCheckBox(tr("Do not show this message again"), false);
 
 			connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
@@ -379,7 +379,7 @@ bool QtWebEnginePage::javaScriptConfirm(const QUrl &url, const QString &message)
 
 	emit m_widget->needsAttention();
 
-	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), NULL, m_widget);
+	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-information")), tr("JavaScript"), message, QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), nullptr, m_widget);
 	dialog.setCheckBox(tr("Disable JavaScript popups"), false);
 
 	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));

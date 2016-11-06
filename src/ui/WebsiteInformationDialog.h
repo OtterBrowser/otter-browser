@@ -36,7 +36,7 @@ class WebsiteInformationDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit WebsiteInformationDialog(WebWidget *widget, QWidget *parent = NULL);
+	explicit WebsiteInformationDialog(WebWidget *widget, QWidget *parent = nullptr);
 	~WebsiteInformationDialog();
 
 protected:

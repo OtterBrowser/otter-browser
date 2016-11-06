@@ -45,7 +45,7 @@ public:
 		IgnoreCookie
 	};
 
-	explicit AcceptCookieDialog(const QNetworkCookie &cookie, CookieJar::CookieOperation operation, CookieJar *cookieJar, QWidget *parent = NULL);
+	explicit AcceptCookieDialog(const QNetworkCookie &cookie, CookieJar::CookieOperation operation, CookieJar *cookieJar, QWidget *parent = nullptr);
 	~AcceptCookieDialog();
 
 protected:

@@ -36,7 +36,7 @@ class PreferencesDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit PreferencesDialog(const QLatin1String &section, QWidget *parent = NULL);
+	explicit PreferencesDialog(const QLatin1String &section, QWidget *parent = nullptr);
 	~PreferencesDialog();
 
 protected:

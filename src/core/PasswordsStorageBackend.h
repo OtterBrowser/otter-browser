@@ -31,7 +31,7 @@ class PasswordsStorageBackend : public Addon
 	Q_OBJECT
 
 public:
-	explicit PasswordsStorageBackend(QObject *parent = NULL);
+	explicit PasswordsStorageBackend(QObject *parent = nullptr);
 
 	virtual void clearPasswords(const QString &host = QString());
 	virtual void addPassword(const PasswordsManager::PasswordInformation &password);

@@ -38,8 +38,8 @@ class BookmarkPropertiesDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit BookmarkPropertiesDialog(BookmarksItem *bookmark, QWidget *parent = NULL);
-	BookmarkPropertiesDialog(const QUrl &url, const QString &title, const QString &description = QString(), BookmarksItem *folder = NULL, int index = -1, bool isUrl = true, QWidget *parent = NULL);
+	explicit BookmarkPropertiesDialog(BookmarksItem *bookmark, QWidget *parent = nullptr);
+	BookmarkPropertiesDialog(const QUrl &url, const QString &title, const QString &description = QString(), BookmarksItem *folder = nullptr, int index = -1, bool isUrl = true, QWidget *parent = nullptr);
 	~BookmarkPropertiesDialog();
 
 protected:

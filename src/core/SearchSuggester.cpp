@@ -29,8 +29,8 @@ namespace Otter
 {
 
 SearchSuggester::SearchSuggester(const QString &searchEngine, QObject *parent) : QObject(parent),
-	m_networkReply(NULL),
-	m_model(NULL),
+	m_networkReply(nullptr),
+	m_model(nullptr),
 	m_searchEngine(searchEngine)
 {
 }
@@ -55,7 +55,7 @@ void SearchSuggester::setQuery(const QString &query)
 		{
 			m_networkReply->abort();
 			m_networkReply->deleteLater();
-			m_networkReply = NULL;
+			m_networkReply = nullptr;
 		}
 
 		const SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::getSearchEngine(m_searchEngine));
@@ -102,7 +102,7 @@ void SearchSuggester::replyFinished()
 
 	if (m_networkReply->size() <= 0)
 	{
-		m_networkReply = NULL;
+		m_networkReply = nullptr;
 
 		return;
 	}
@@ -134,7 +134,7 @@ void SearchSuggester::replyFinished()
 		emit suggestionsChanged(suggestions);
 	}
 
-	m_networkReply = NULL;
+	m_networkReply = nullptr;
 }
 
 QStandardItemModel* SearchSuggester::getModel()

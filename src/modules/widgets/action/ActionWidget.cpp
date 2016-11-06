@@ -76,7 +76,7 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 
 		QAction *action(defaultAction());
 
-		setDefaultAction(NULL);
+		setDefaultAction(nullptr);
 
 		ToolButtonWidget::mouseReleaseEvent(event);
 
@@ -90,7 +90,7 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 
 void ActionWidget::resetAction()
 {
-	Action *action(NULL);
+	Action *action(nullptr);
 
 	if (m_window && Action::isLocal(m_identifier) && m_window->getContentsWidget() && m_window->getContentsWidget()->getAction(m_identifier))
 	{

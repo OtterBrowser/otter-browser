@@ -31,7 +31,7 @@ class TextLabelWidget : public QLineEdit
 	Q_OBJECT
 
 public:
-	explicit TextLabelWidget(QWidget *parent = NULL);
+	explicit TextLabelWidget(QWidget *parent = nullptr);
 
 	bool event(QEvent *event);
 

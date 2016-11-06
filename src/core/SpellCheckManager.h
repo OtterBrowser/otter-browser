@@ -42,13 +42,13 @@ public:
 
 	~SpellCheckManager();
 
-	static void createInstance(QObject *parent = NULL);
+	static void createInstance(QObject *parent = nullptr);
 	static SpellCheckManager* getInstance();
 	static QString getDefaultDictionary();
 	static QList<DictionaryInformation> getDictionaries();
 
 protected:
-	explicit SpellCheckManager(QObject *parent = NULL);
+	explicit SpellCheckManager(QObject *parent = nullptr);
 
 private:
 	static SpellCheckManager *m_instance;

@@ -32,8 +32,8 @@
 namespace Otter
 {
 
-SessionsManager* SessionsManager::m_instance = NULL;
-QPointer<MainWindow> SessionsManager::m_activeWindow = NULL;
+SessionsManager* SessionsManager::m_instance = nullptr;
+QPointer<MainWindow> SessionsManager::m_activeWindow = nullptr;
 QString SessionsManager::m_sessionPath;
 QString SessionsManager::m_sessionTitle;
 QString SessionsManager::m_cachePath;
@@ -61,7 +61,7 @@ void SessionsManager::timerEvent(QTimerEvent *event)
 
 		if (!m_isPrivate)
 		{
-			saveSession(QString(), QString(), NULL, false);
+			saveSession(QString(), QString(), nullptr, false);
 		}
 	}
 }
@@ -148,7 +148,7 @@ SessionsManager* SessionsManager::getInstance()
 
 WindowsManager* SessionsManager::getWindowsManager()
 {
-	return (m_activeWindow ? m_activeWindow->getWindowsManager() : NULL);
+	return (m_activeWindow ? m_activeWindow->getWindowsManager() : nullptr);
 }
 
 MainWindow* SessionsManager::getActiveWindow()

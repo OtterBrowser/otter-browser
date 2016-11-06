@@ -48,7 +48,7 @@ public:
 		QIcon icon;
 	};
 
-	explicit OptionWidget(const QString &option, const QVariant &value, SettingsManager::OptionType type, QWidget *parent = NULL);
+	explicit OptionWidget(const QString &option, const QVariant &value, SettingsManager::OptionType type, QWidget *parent = nullptr);
 
 	void setIndex(const QModelIndex &index);
 	void setValue(const QVariant &value);

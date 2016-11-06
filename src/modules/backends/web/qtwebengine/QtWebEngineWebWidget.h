@@ -77,7 +77,7 @@ public slots:
 	void setUrl(const QUrl &url, bool isTyped = true);
 
 protected:
-	explicit QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent = NULL);
+	explicit QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent = nullptr);
 
 	void timerEvent(QTimerEvent *event);
 	void focusInEvent(QFocusEvent *event);

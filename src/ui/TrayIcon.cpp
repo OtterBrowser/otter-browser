@@ -52,7 +52,7 @@ TrayIcon::TrayIcon(Application *parent) : QObject(parent),
 	m_trayIcon->setToolTip(tr("Otter Browser"));
 	m_trayIcon->show();
 
-	setParent(NULL);
+	setParent(nullptr);
 
 	connect(Application::getInstance(), SIGNAL(aboutToQuit()), this, SLOT(hide()));
 	connect(this, SIGNAL(destroyed()), menu, SLOT(deleteLater()));
