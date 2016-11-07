@@ -150,6 +150,11 @@ void FilePasswordsStorageBackend::save()
 
 void FilePasswordsStorageBackend::clearPasswords(const QString &host)
 {
+	if (host.isEmpty())
+	{
+		return;
+	}
+
 	if (!m_isInitialized)
 	{
 		initialize();
@@ -160,24 +165,6 @@ void FilePasswordsStorageBackend::clearPasswords(const QString &host)
 		return;
 	}
 
-	if (host.isEmpty())
-	{
-		const QString path(SessionsManager::getWritableDataPath(QLatin1String("passwords.json")));
-
-		if (QFile::remove(path))
-		{
-			m_passwords.clear();
-
-			emit passwordsModified();
-		}
-		else
-		{
-			Console::addMessage(tr("Failed to remove passwords file"), Console::OtherCategory, Console::ErrorLevel, path);
-		}
-
-		return;
-	}
-
 	if (m_passwords.contains(host))
 	{
 		m_passwords.remove(host);
@@ -185,6 +172,71 @@ void FilePasswordsStorageBackend::clearPasswords(const QString &host)
 		emit passwordsModified();
 
 		save();
+	}
+}
+
+void FilePasswordsStorageBackend::clearPasswords(int period)
+{
+	if (period <= 0)
+	{
+		const QString path(SessionsManager::getWritableDataPath(QLatin1String("passwords.json")));
+
+		if (!QFile::remove(path))
+		{
+			Console::addMessage(tr("Failed to remove passwords file"), Console::OtherCategory, Console::ErrorLevel, path);
+		}
+		else if (!m_passwords.isEmpty())
+		{
+			m_passwords.clear();
+
+			emit passwordsModified();
+		}
+	}
+
+	if (!m_isInitialized)
+	{
+		initialize();
+	}
+
+	if (m_passwords.isEmpty())
+	{
+		return;
+	}
+
+	QHash<QString, QList<PasswordsManager::PasswordInformation> >::iterator iterator(m_passwords.begin());
+	bool wasModified(false);
+
+	while (iterator != m_passwords.end())
+	{
+		QList<PasswordsManager::PasswordInformation> passwords(iterator.value());
+
+		for (int i = (passwords.count() - 1); i >= 0; --i)
+		{
+			if (passwords.at(i).timeAdded.secsTo(QDateTime::currentDateTime()) < (period * 3600))
+			{
+				passwords.removeAt(i);
+
+				wasModified = true;
+			}
+		}
+
+		if (passwords.isEmpty())
+		{
+			iterator = m_passwords.erase(iterator);
+		}
+		else
+		{
+			m_passwords[iterator.key()] = passwords;
+
+			++iterator;
+		}
+	}
+
+	if (wasModified)
+	{
+		save();
+
+		emit passwordsModified();
 	}
 }
 

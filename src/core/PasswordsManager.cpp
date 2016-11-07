@@ -50,6 +50,14 @@ void PasswordsManager::clearPasswords(const QString &host)
 	}
 }
 
+void PasswordsManager::clearPasswords(int period)
+{
+	if (m_backend)
+	{
+		m_backend->clearPasswords(period);
+	}
+}
+
 void PasswordsManager::addPassword(const PasswordInformation &password)
 {
 	if (m_backend)
