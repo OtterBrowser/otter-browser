@@ -75,7 +75,7 @@
       <bool>false</bool>
      </property>
      <property name="text">
-      <string>Clear forms History</string>
+      <string>Clear forms history</string>
      </property>
     </widget>
    </item>
@@ -115,9 +115,6 @@
    </item>
    <item>
     <widget class="QCheckBox" name="clearPasswordsCheckBox">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
      <property name="text">
       <string>Clear passwords</string>
      </property>

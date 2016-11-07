@@ -649,6 +649,11 @@ void Application::clearHistory()
 		{
 			NetworkManagerFactory::clearCache();
 		}
+
+		if (shouldClearAll || clearSettings.contains(QLatin1String("passwords")))
+		{
+			PasswordsManager::clearPasswords();
+		}
 	}
 }
 

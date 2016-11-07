@@ -20,6 +20,7 @@
 #include "ClearHistoryDialog.h"
 #include "../core/HistoryManager.h"
 #include "../core/NetworkManagerFactory.h"
+#include "../core/PasswordsManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/TransfersManager.h"
 
@@ -101,6 +102,11 @@ void ClearHistoryDialog::clearHistory()
 	if (m_ui->clearCachesCheckBox->isChecked())
 	{
 		NetworkManagerFactory::clearCache(m_ui->periodSpinBox->value());
+	}
+
+	if (m_ui->clearPasswordsCheckBox->isChecked())
+	{
+		PasswordsManager::clearPasswords(m_ui->periodSpinBox->value());
 	}
 
 	SettingsManager::setValue(SettingsManager::History_ManualClearOptionsOption, getClearSettings());
