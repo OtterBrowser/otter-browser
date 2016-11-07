@@ -190,7 +190,7 @@ void CacheContentsWidget::addEntry(const QUrl &entry)
 	}
 
 	const QMimeType mimeType((type.isEmpty() && device) ? QMimeDatabase().mimeTypeForData(device) : QMimeDatabase().mimeTypeForName(type));
-	QList<QStandardItem*> entryItems({new QStandardItem(entry.path()), new QStandardItem(mimeType.name()), new QStandardItem(device ? Utils::formatUnit(device->size()) : QString()), new QStandardItem(metaData.lastModified().toString()), new QStandardItem(metaData.expirationDate().toString())});
+	QList<QStandardItem*> entryItems({new QStandardItem(entry.path()), new QStandardItem(mimeType.name()), new QStandardItem(device ? Utils::formatUnit(device->size()) : QString()), new QStandardItem(Utils::formatDateTime(metaData.lastModified())), new QStandardItem(Utils::formatDateTime(metaData.expirationDate()))});
 	entryItems[0]->setData(entry, Qt::UserRole);
 	entryItems[0]->setFlags(entryItems[0]->flags() | Qt::ItemNeverHasChildren);
 	entryItems[1]->setFlags(entryItems[1]->flags() | Qt::ItemNeverHasChildren);
@@ -420,8 +420,8 @@ void CacheContentsWidget::updateActions()
 		m_ui->locationLabelWidget->setUrl(localUrl);
 		m_ui->typeLabelWidget->setText(mimeType.name());
 		m_ui->sizeLabelWidget->setText(device ? Utils::formatUnit(device->size(), false, 2) : tr("Unknown"));
-		m_ui->lastModifiedLabelWidget->setText(metaData.lastModified().toString());
-		m_ui->expiresLabelWidget->setText(metaData.expirationDate().toString());
+		m_ui->lastModifiedLabelWidget->setText(Utils::formatDateTime(metaData.lastModified()));
+		m_ui->expiresLabelWidget->setText(Utils::formatDateTime(metaData.expirationDate()));
 
 		if (!preview.isNull())
 		{
