@@ -337,7 +337,7 @@ void Transfer::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 
 void Transfer::downloadData()
 {
-	if (!m_reply)
+	if (!m_reply || !m_device)
 	{
 		return;
 	}
@@ -354,6 +354,11 @@ void Transfer::downloadData()
 
 	m_device->write(m_reply->readAll());
 	m_device->seek(m_device->size());
+
+	if (m_state == RunningState && m_reply->attribute(QNetworkRequest::SourceIsFromCacheAttribute).toBool() && m_bytesTotal >= 0 && m_device->size() == m_bytesTotal)
+	{
+		downloadFinished();
+	}
 }
 
 void Transfer::downloadFinished()
