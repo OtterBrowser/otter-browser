@@ -105,6 +105,11 @@ void FilePasswordsStorageBackend::save()
 
 	for (hostsIterator = m_passwords.begin(); hostsIterator != m_passwords.end(); ++hostsIterator)
 	{
+		if (hostsIterator.value().isEmpty())
+		{
+			continue;
+		}
+
 		QJsonArray hostArray;
 		const QList<PasswordsManager::PasswordInformation> passwords(hostsIterator.value());
 
