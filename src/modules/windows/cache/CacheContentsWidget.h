@@ -62,7 +62,6 @@ protected:
 
 protected slots:
 	void populateCache();
-	void clearEntries();
 	void addEntry(const QUrl &entry);
 	void removeEntry(const QUrl &entry);
 	void removeEntry();

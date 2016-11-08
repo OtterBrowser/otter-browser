@@ -109,11 +109,11 @@ void CacheContentsWidget::triggerAction(int identifier, const QVariantMap &param
 
 void CacheContentsWidget::populateCache()
 {
-	NetworkCache *cache(NetworkManagerFactory::getCache());
-
+	m_model->clear();
 	m_model->setHorizontalHeaderLabels(QStringList({tr("Address"), tr("Type"), tr("Size"), tr("Last Modified"), tr("Expires")}));
 	m_model->setSortRole(Qt::DisplayRole);
 
+	NetworkCache *cache(NetworkManagerFactory::getCache());
 	const QList<QUrl> entries(cache->getEntries());
 
 	for (int i = 0; i < entries.count(); ++i)
@@ -123,23 +123,21 @@ void CacheContentsWidget::populateCache()
 
 	m_model->sort(0);
 
-	m_ui->cacheViewWidget->setModel(m_model);
-	m_ui->cacheViewWidget->setFilterRoles(QSet<int>({Qt::DisplayRole, Qt::UserRole}));
+	if (m_isLoading)
+	{
+		m_ui->cacheViewWidget->setModel(m_model);
+		m_ui->cacheViewWidget->setFilterRoles(QSet<int>({Qt::DisplayRole, Qt::UserRole}));
 
-	m_isLoading = false;
+		m_isLoading = false;
 
-	emit loadingStateChanged(WindowsManager::FinishedLoadingState);
+		emit loadingStateChanged(WindowsManager::FinishedLoadingState);
 
-	connect(cache, SIGNAL(cleared()), this, SLOT(clearEntries()));
-	connect(cache, SIGNAL(entryAdded(QUrl)), this, SLOT(addEntry(QUrl)));
-	connect(cache, SIGNAL(entryRemoved(QUrl)), this, SLOT(removeEntry(QUrl)));
-	connect(m_model, SIGNAL(modelReset()), this, SLOT(updateActions()));
-	connect(m_ui->cacheViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
-}
-
-void CacheContentsWidget::clearEntries()
-{
-	m_model->clear();
+		connect(cache, SIGNAL(cleared()), this, SLOT(populateCache()));
+		connect(cache, SIGNAL(entryAdded(QUrl)), this, SLOT(addEntry(QUrl)));
+		connect(cache, SIGNAL(entryRemoved(QUrl)), this, SLOT(removeEntry(QUrl)));
+		connect(m_model, SIGNAL(modelReset()), this, SLOT(updateActions()));
+		connect(m_ui->cacheViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
+	}
 }
 
 void CacheContentsWidget::addEntry(const QUrl &entry)
