@@ -112,9 +112,9 @@ bool GesturesManager::GestureStep::operator !=(const GestureStep &other)
 	return !((*this) == other);
 }
 
-GesturesManager* GesturesManager::m_instance = nullptr;
-MouseGestures::Recognizer* GesturesManager::m_recognizer = nullptr;
-QPointer<QObject> GesturesManager::m_trackedObject = nullptr;
+GesturesManager* GesturesManager::m_instance(nullptr);
+MouseGestures::Recognizer* GesturesManager::m_recognizer(nullptr);
+QPointer<QObject> GesturesManager::m_trackedObject(nullptr);
 QPoint GesturesManager::m_lastClick;
 QPoint GesturesManager::m_lastPosition;
 QVariantMap GesturesManager::m_paramaters;
@@ -123,8 +123,8 @@ QHash<GesturesManager::GesturesContext, QList<QList<GesturesManager::GestureStep
 QList<QInputEvent*> GesturesManager::m_events;
 QList<GesturesManager::GestureStep> GesturesManager::m_steps;
 QList<GesturesManager::GesturesContext> GesturesManager::m_contexts;
-bool GesturesManager::m_isReleasing = false;
-bool GesturesManager::m_afterScroll = false;
+bool GesturesManager::m_isReleasing(false);
+bool GesturesManager::m_afterScroll(false);
 
 GesturesManager::GesturesManager(QObject *parent) : QObject(parent),
 	m_reloadTimer(0)

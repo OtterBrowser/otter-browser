@@ -36,11 +36,11 @@
 namespace Otter
 {
 
-ToolBarsManager* ToolBarsManager::m_instance = nullptr;
+ToolBarsManager* ToolBarsManager::m_instance(nullptr);
 QMap<int, QString> ToolBarsManager::m_identifiers;
 QVector<ToolBarsManager::ToolBarDefinition> ToolBarsManager::m_definitions;
-int ToolBarsManager::m_toolBarIdentifierEnumerator = 0;
-bool ToolBarsManager::m_areToolBarsLocked = false;
+int ToolBarsManager::m_toolBarIdentifierEnumerator(0);
+bool ToolBarsManager::m_areToolBarsLocked(false);
 
 ToolBarsManager::ToolBarsManager(QObject *parent) : QObject(parent),
 	m_saveTimer(0)

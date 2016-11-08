@@ -45,7 +45,7 @@
 namespace Otter
 {
 
-StartPageModel* StartPageWidget::m_model = nullptr;
+StartPageModel* StartPageWidget::m_model(nullptr);
 
 StartPageContentsWidget::StartPageContentsWidget(QWidget *parent) : QWidget(parent),
 	m_color(Qt::transparent),

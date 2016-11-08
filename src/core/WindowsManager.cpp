@@ -260,6 +260,8 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 			{
 				window->triggerAction(identifier, parameters);
 			}
+
+			break;
 	}
 }
 

@@ -23,9 +23,9 @@
 namespace Otter
 {
 
-SpellCheckManager* SpellCheckManager::m_instance = nullptr;
+SpellCheckManager* SpellCheckManager::m_instance(nullptr);
 #ifdef OTTER_ENABLE_SPELLCHECK
-Sonnet::Speller* SpellCheckManager::m_speller = nullptr;
+Sonnet::Speller* SpellCheckManager::m_speller(nullptr);
 #endif
 
 SpellCheckManager::SpellCheckManager(QObject *parent) : QObject(parent)

@@ -51,7 +51,7 @@
 namespace Otter
 {
 
-quint64 Window::m_identifierCounter = 0;
+quint64 Window::m_identifierCounter(0);
 
 Window::Window(bool isPrivate, ContentsWidget *widget, QWidget *parent) : QWidget(parent),
 	m_navigationBar(nullptr),

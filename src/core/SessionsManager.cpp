@@ -32,17 +32,17 @@
 namespace Otter
 {
 
-SessionsManager* SessionsManager::m_instance = nullptr;
-QPointer<MainWindow> SessionsManager::m_activeWindow = nullptr;
+SessionsManager* SessionsManager::m_instance(nullptr);
+QPointer<MainWindow> SessionsManager::m_activeWindow(nullptr);
 QString SessionsManager::m_sessionPath;
 QString SessionsManager::m_sessionTitle;
 QString SessionsManager::m_cachePath;
 QString SessionsManager::m_profilePath;
 QList<MainWindow*> SessionsManager::m_windows;
 QList<SessionMainWindow> SessionsManager::m_closedWindows;
-bool SessionsManager::m_isDirty = false;
-bool SessionsManager::m_isPrivate = false;
-bool SessionsManager::m_isReadOnly = false;
+bool SessionsManager::m_isDirty(false);
+bool SessionsManager::m_isPrivate(false);
+bool SessionsManager::m_isReadOnly(false);
 
 SessionsManager::SessionsManager(QObject *parent) : QObject(parent),
 	m_saveTimer(0)

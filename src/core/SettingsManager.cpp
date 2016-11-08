@@ -31,13 +31,13 @@
 namespace Otter
 {
 
-SettingsManager* SettingsManager::m_instance = nullptr;
+SettingsManager* SettingsManager::m_instance(nullptr);
 QString SettingsManager::m_globalPath;
 QString SettingsManager::m_overridePath;
 QVector<SettingsManager::OptionDefinition> SettingsManager::m_definitions;
 QHash<QString, int> SettingsManager::m_customOptions;
-int SettingsManager::m_identifierCounter = -1;
-int SettingsManager::m_optionIdentifierEnumerator = 0;
+int SettingsManager::m_identifierCounter(-1);
+int SettingsManager::m_optionIdentifierEnumerator(0);
 
 SettingsManager::SettingsManager(QObject *parent) : QObject(parent)
 {

@@ -40,18 +40,18 @@
 namespace Otter
 {
 
-NetworkManagerFactory* NetworkManagerFactory::m_instance = nullptr;
-NetworkManager* NetworkManagerFactory::m_networkManager = nullptr;
-NetworkCache* NetworkManagerFactory::m_cache = nullptr;
-CookieJar* NetworkManagerFactory::m_cookieJar = nullptr;
+NetworkManagerFactory* NetworkManagerFactory::m_instance(nullptr);
+NetworkManager* NetworkManagerFactory::m_networkManager(nullptr);
+NetworkCache* NetworkManagerFactory::m_cache(nullptr);
+CookieJar* NetworkManagerFactory::m_cookieJar(nullptr);
 QString NetworkManagerFactory::m_acceptLanguage;
 QMap<QString, UserAgentInformation> NetworkManagerFactory::m_userAgents;
-NetworkManagerFactory::DoNotTrackPolicy NetworkManagerFactory::m_doNotTrackPolicy = NetworkManagerFactory::SkipTrackPolicy;
+NetworkManagerFactory::DoNotTrackPolicy NetworkManagerFactory::m_doNotTrackPolicy(NetworkManagerFactory::SkipTrackPolicy);
 QList<QSslCipher> NetworkManagerFactory::m_defaultCiphers;
-bool NetworkManagerFactory::m_canSendReferrer = true;
-bool NetworkManagerFactory::m_isWorkingOffline = false;
-bool NetworkManagerFactory::m_isInitialized = false;
-bool NetworkManagerFactory::m_isUsingSystemProxyAuthentication = false;
+bool NetworkManagerFactory::m_canSendReferrer(true);
+bool NetworkManagerFactory::m_isWorkingOffline(false);
+bool NetworkManagerFactory::m_isInitialized(false);
+bool NetworkManagerFactory::m_isUsingSystemProxyAuthentication(false);
 
 NetworkManagerFactory::NetworkManagerFactory(QObject *parent) : QObject(parent)
 {

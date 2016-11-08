@@ -25,8 +25,8 @@
 namespace Otter
 {
 
-ThemesManager* ThemesManager::m_instance = nullptr;
-bool ThemesManager::m_useSystemIconTheme = false;
+ThemesManager* ThemesManager::m_instance(nullptr);
+bool ThemesManager::m_useSystemIconTheme(false);
 
 ThemesManager::ThemesManager(QObject *parent) : QObject(parent)
 {

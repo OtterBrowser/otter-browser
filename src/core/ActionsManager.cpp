@@ -32,9 +32,9 @@
 namespace Otter
 {
 
-ActionsManager* ActionsManager::m_instance = nullptr;
+ActionsManager* ActionsManager::m_instance(nullptr);
 QVector<ActionsManager::ActionDefinition> ActionsManager::m_definitions;
-int ActionsManager::m_actionIdentifierEnumerator = 0;
+int ActionsManager::m_actionIdentifierEnumerator(0);
 
 Action::Action(int identifier, QObject *parent) : QAction(parent),
 	m_identifier(identifier),

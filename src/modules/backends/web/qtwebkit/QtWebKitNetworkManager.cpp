@@ -46,7 +46,7 @@
 namespace Otter
 {
 
-WebBackend* QtWebKitNetworkManager::m_backend = nullptr;
+WebBackend* QtWebKitNetworkManager::m_backend(nullptr);
 
 QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar *cookieJarProxy, QtWebKitWebWidget *parent) : QNetworkAccessManager(parent),
 	m_widget(parent),

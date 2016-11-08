@@ -77,17 +77,17 @@
 namespace Otter
 {
 
-Application* Application::m_instance = nullptr;
-PlatformIntegration* Application::m_platformIntegration = nullptr;
-TrayIcon* Application::m_trayIcon = nullptr;
-QTranslator* Application::m_qtTranslator = nullptr;
-QTranslator* Application::m_applicationTranslator = nullptr;
-QLocalServer* Application::m_localServer = nullptr;
+Application* Application::m_instance(nullptr);
+PlatformIntegration* Application::m_platformIntegration(nullptr);
+TrayIcon* Application::m_trayIcon(nullptr);
+QTranslator* Application::m_qtTranslator(nullptr);
+QTranslator* Application::m_applicationTranslator(nullptr);
+QLocalServer* Application::m_localServer(nullptr);
 QString Application::m_localePath;
 QCommandLineParser Application::m_commandLineParser;
 QList<MainWindow*> Application::m_windows;
-bool Application::m_isHidden = false;
-bool Application::m_isUpdating = false;
+bool Application::m_isHidden(false);
+bool Application::m_isUpdating(false);
 
 Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 {

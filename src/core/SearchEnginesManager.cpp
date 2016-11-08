@@ -32,12 +32,12 @@
 namespace Otter
 {
 
-SearchEnginesManager* SearchEnginesManager::m_instance = nullptr;
-QStandardItemModel* SearchEnginesManager::m_searchEnginesModel = nullptr;
+SearchEnginesManager* SearchEnginesManager::m_instance(nullptr);
+QStandardItemModel* SearchEnginesManager::m_searchEnginesModel(nullptr);
 QStringList SearchEnginesManager::m_searchEnginesOrder;
 QStringList SearchEnginesManager::m_searchKeywords;
 QHash<QString, SearchEnginesManager::SearchEngineDefinition> SearchEnginesManager::m_searchEngines;
-bool SearchEnginesManager::m_isInitialized = false;
+bool SearchEnginesManager::m_isInitialized(false);
 
 SearchEnginesManager::SearchEnginesManager(QObject *parent) : QObject(parent)
 {

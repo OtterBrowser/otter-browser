@@ -27,7 +27,7 @@
 namespace Otter
 {
 
-HandlersManager* HandlersManager::m_instance = nullptr;
+HandlersManager* HandlersManager::m_instance(nullptr);
 
 HandlersManager::HandlersManager(QObject *parent) : QObject(parent)
 {

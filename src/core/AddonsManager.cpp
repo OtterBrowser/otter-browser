@@ -59,11 +59,11 @@ bool Addon::isEnabled() const
 	return m_isEnabled;
 }
 
-AddonsManager *AddonsManager::m_instance = nullptr;
+AddonsManager *AddonsManager::m_instance(nullptr);
 QHash<QString, UserScript*> AddonsManager::m_userScripts;
 QHash<QString, WebBackend*> AddonsManager::m_webBackends;
 QHash<QString, AddonsManager::SpecialPageInformation> AddonsManager::m_specialPages;
-bool AddonsManager::m_areUserScripsInitialized = false;
+bool AddonsManager::m_areUserScripsInitialized(false);
 
 AddonsManager::AddonsManager(QObject *parent) : QObject(parent)
 {

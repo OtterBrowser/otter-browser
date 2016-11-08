@@ -35,12 +35,12 @@
 namespace Otter
 {
 
-QtWebKitWebBackend* QtWebKitWebBackend::m_instance = nullptr;
-QPointer<WebWidget> QtWebKitWebBackend::m_activeWidget = nullptr;
+QtWebKitWebBackend* QtWebKitWebBackend::m_instance(nullptr);
+QPointer<WebWidget> QtWebKitWebBackend::m_activeWidget(nullptr);
 QMap<QString, QString> QtWebKitWebBackend::m_userAgentComponents;
 QMap<QString, QString> QtWebKitWebBackend::m_userAgents;
-int QtWebKitWebBackend::m_enableMediaOption = -1;
-int QtWebKitWebBackend::m_enableMediaSourceOption = -1;
+int QtWebKitWebBackend::m_enableMediaOption(-1);
+int QtWebKitWebBackend::m_enableMediaSourceOption(-1);
 
 QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent),
 	m_isInitialized(false)

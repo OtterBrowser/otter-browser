@@ -53,7 +53,7 @@ protected:
 private:
 	static SpellCheckManager *m_instance;
 #ifdef OTTER_ENABLE_SPELLCHECK
-	static Sonnet::Speller* m_speller;
+	static Sonnet::Speller *m_speller;
 #endif
 };
 

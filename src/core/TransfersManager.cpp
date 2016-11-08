@@ -36,10 +36,10 @@
 namespace Otter
 {
 
-TransfersManager* TransfersManager::m_instance = nullptr;
+TransfersManager* TransfersManager::m_instance(nullptr);
 QList<Transfer*> TransfersManager::m_transfers;
 QList<Transfer*> TransfersManager::m_privateTransfers;
-bool TransfersManager::m_isInitilized = false;
+bool TransfersManager::m_isInitilized(false);
 
 Transfer::Transfer(TransferOptions options, QObject *parent) : QObject(parent ? parent : TransfersManager::getInstance()),
 	m_reply(nullptr),
