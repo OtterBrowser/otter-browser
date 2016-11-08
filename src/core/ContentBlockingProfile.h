@@ -121,7 +121,6 @@ protected:
 	bool checkRuleMatch(ContentBlockingRule *rule, const QString &currentRule, NetworkManager::ResourceType resourceType);
 
 protected slots:
-	void optionChanged(int identifier, const QVariant &value);
 	void replyFinished();
 
 private:
@@ -142,7 +141,6 @@ private:
 	ProfileCategory m_category;
 	ProfileFlags m_flags;
 	int m_updateInterval;
-	bool m_enableWildcards;
 	bool m_isUpdating;
 	bool m_isEmpty;
 	bool m_wasLoaded;

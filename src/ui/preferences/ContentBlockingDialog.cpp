@@ -48,7 +48,13 @@ ContentBlockingDialog::ContentBlockingDialog(QWidget *parent) : Dialog(parent),
 	m_ui->profilesViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->profilesViewWidget->header()->setSectionResizeMode(0, QHeaderView::Stretch);
 	m_ui->profilesViewWidget->expandAll();
+	m_ui->cosmeticFiltersComboBox->addItem(tr("All"), QLatin1String("all"));
+	m_ui->cosmeticFiltersComboBox->addItem(tr("Domain specific only"), QLatin1String("domainOnly"));
+	m_ui->cosmeticFiltersComboBox->addItem(tr("None"), QLatin1String("none"));
 
+	const int cosmeticFiltersIndex(m_ui->cosmeticFiltersComboBox->findData(SettingsManager::getValue(SettingsManager::ContentBlocking_CosmeticFiltersModeOption).toString()));
+
+	m_ui->cosmeticFiltersComboBox->setCurrentIndex((cosmeticFiltersIndex < 0) ? 0 : cosmeticFiltersIndex);
 	m_ui->enableCustomRulesCheckBox->setChecked(globalProfiles.contains(QLatin1String("custom")));
 
 	QStandardItemModel *customRulesModel(new QStandardItemModel(this));
@@ -329,6 +335,7 @@ void ContentBlockingDialog::save()
 
 	SettingsManager::setValue(SettingsManager::ContentBlocking_ProfilesOption, profiles);
 	SettingsManager::setValue(SettingsManager::ContentBlocking_EnableWildcardsOption, m_ui->enableWildcardsCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::ContentBlocking_CosmeticFiltersModeOption, m_ui->cosmeticFiltersComboBox->currentData().toString());
 
 	close();
 }

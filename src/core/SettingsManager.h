@@ -126,6 +126,7 @@ public:
 		Content_UserStyleSheetOption,
 		Content_VisitedLinkColorOption,
 		Content_ZoomTextOnlyOption,
+		ContentBlocking_CosmeticFiltersModeOption,
 		ContentBlocking_EnableContentBlockingOption,
 		ContentBlocking_EnableWildcardsOption,
 		ContentBlocking_ProfilesOption,

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>550</width>
+    <width>640</width>
     <height>450</height>
    </rect>
   </property>
@@ -23,7 +23,7 @@
       <attribute name="title">
        <string>General</string>
       </attribute>
-      <layout class="QVBoxLayout" name="profilesVerticalLayout">
+      <layout class="QVBoxLayout" name="generalVerticalLayout">
        <item>
         <widget class="QLabel" name="profilesHeaderLabel">
          <property name="font">
@@ -50,23 +50,68 @@
        <item>
         <layout class="QHBoxLayout" name="profilesHorizontalLayout">
          <item>
-          <widget class="Otter::ItemViewWidget" name="profilesViewWidget">
-           <property name="sizeAdjustPolicy">
-            <enum>QAbstractScrollArea::AdjustIgnored</enum>
-           </property>
-           <property name="editTriggers">
-            <set>QAbstractItemView::CurrentChanged|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
-           </property>
-           <property name="alternatingRowColors">
-            <bool>true</bool>
-           </property>
-           <property name="autoExpandDelay">
-            <number>-1</number>
-           </property>
-           <attribute name="headerStretchLastSection">
-            <bool>false</bool>
-           </attribute>
-          </widget>
+          <layout class="QVBoxLayout" name="profilesVerticalLayout">
+           <item>
+            <widget class="Otter::ItemViewWidget" name="profilesViewWidget">
+             <property name="sizeAdjustPolicy">
+              <enum>QAbstractScrollArea::AdjustIgnored</enum>
+             </property>
+             <property name="editTriggers">
+              <set>QAbstractItemView::CurrentChanged|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
+             </property>
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
+             <property name="autoExpandDelay">
+              <number>-1</number>
+             </property>
+             <attribute name="headerStretchLastSection">
+              <bool>false</bool>
+             </attribute>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="settingsHeaderLabel">
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Settings</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QFormLayout" name="settingsFormLayout">
+             <item row="1" column="0">
+              <widget class="QLabel" name="cosmeticFiltersLabel">
+               <property name="text">
+                <string>Cosmetic filters:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QComboBox" name="cosmeticFiltersComboBox"/>
+             </item>
+             <item row="2" column="0">
+              <widget class="QCheckBox" name="enableWildcardsCheckBox">
+               <property name="text">
+                <string>Enable wildcard expressions</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QCheckBox" name="enableCustomRulesCheckBox">
+               <property name="text">
+                <string>Enable custom rules</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
          </item>
          <item>
           <layout class="QVBoxLayout" name="profilesButtonsLayout" stretch="0,0,0,0,1">
@@ -125,39 +170,12 @@
         </layout>
        </item>
        <item>
-        <widget class="QLabel" name="settingsHeaderLabel">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
+        <widget class="QDialogButtonBox" name="confirmButtonBox">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
          </property>
-         <property name="text">
-          <string>Settings</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="enableCosmeticFiltersCheckBox">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Enable cosmetic filters</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="enableWildcardsCheckBox">
-         <property name="text">
-          <string>Enable wildcard expressions</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="enableCustomRulesCheckBox">
-         <property name="text">
-          <string>Enable custom rules</string>
+         <property name="standardButtons">
+          <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
          </property>
         </widget>
        </item>
@@ -222,16 +240,6 @@
        </item>
       </layout>
      </widget>
-    </widget>
-   </item>
-   <item>
-    <widget class="QDialogButtonBox" name="confirmButtonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
     </widget>
    </item>
   </layout>

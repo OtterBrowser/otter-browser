@@ -46,7 +46,6 @@ ContentBlockingProfile::ContentBlockingProfile(const QString &name, const QStrin
 	m_category(category),
 	m_flags(flags),
 	m_updateInterval(updateInterval),
-	m_enableWildcards(SettingsManager::getValue(SettingsManager::ContentBlocking_EnableWildcardsOption).toBool()),
 	m_isUpdating(false),
 	m_isEmpty(true),
 	m_wasLoaded(false)
@@ -62,18 +61,6 @@ ContentBlockingProfile::ContentBlockingProfile(const QString &name, const QStrin
 	}
 
 	loadHeader(getPath());
-
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
-}
-
-void ContentBlockingProfile::optionChanged(int identifier, const QVariant &value)
-{
-	if (identifier == SettingsManager::ContentBlocking_EnableWildcardsOption)
-	{
-		m_enableWildcards = value.toBool();
-
-		clear();
-	}
 }
 
 void ContentBlockingProfile::clear()
@@ -158,21 +145,30 @@ void ContentBlockingProfile::parseRuleLine(QString line)
 
 	if (line.startsWith(QLatin1String("##")))
 	{
-		m_styleSheet.append(line.mid(2));
+		if (ContentBlockingManager::getCosmeticFiltersMode() == ContentBlockingManager::AllFiltersMode)
+		{
+			m_styleSheet.append(line.mid(2));
+		}
 
 		return;
 	}
 
 	if (line.contains(QLatin1String("##")))
 	{
-		parseStyleSheetRule(line.split(QLatin1String("##")), m_styleSheetBlackList);
+		if (ContentBlockingManager::getCosmeticFiltersMode() != ContentBlockingManager::NoFiltersMode)
+		{
+			parseStyleSheetRule(line.split(QLatin1String("##")), m_styleSheetBlackList);
+		}
 
 		return;
 	}
 
 	if (line.contains(QLatin1String("#@#")))
 	{
-		parseStyleSheetRule(line.split(QLatin1String("#@#")), m_styleSheetWhiteList);
+		if (ContentBlockingManager::getCosmeticFiltersMode() != ContentBlockingManager::NoFiltersMode)
+		{
+			parseStyleSheetRule(line.split(QLatin1String("#@#")), m_styleSheetWhiteList);
+		}
 
 		return;
 	}
@@ -197,7 +193,7 @@ void ContentBlockingProfile::parseRuleLine(QString line)
 		line = line.mid(1);
 	}
 
-	if (line.contains(QLatin1Char('^')) || (!m_enableWildcards && line.contains(QLatin1Char('*'))))
+	if (line.contains(QLatin1Char('^')) || (!ContentBlockingManager::areWildcardEnabled() && line.contains(QLatin1Char('*'))))
 	{
 		// TODO - '^'
 		return;

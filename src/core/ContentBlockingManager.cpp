@@ -34,12 +34,19 @@
 namespace Otter
 {
 
-ContentBlockingManager* ContentBlockingManager::m_instance = nullptr;
+ContentBlockingManager* ContentBlockingManager::m_instance(nullptr);
 QVector<ContentBlockingProfile*> ContentBlockingManager::m_profiles;
+ContentBlockingManager::CosmeticFiltersMode ContentBlockingManager::m_cosmeticFiltersMode(AllFiltersMode);
+bool ContentBlockingManager::m_areWildcardsEnabled(true);
 
 ContentBlockingManager::ContentBlockingManager(QObject *parent) : QObject(parent),
 	m_saveTimer(0)
 {
+	m_areWildcardsEnabled = SettingsManager::getValue(SettingsManager::ContentBlocking_EnableWildcardsOption).toBool();
+
+	optionChanged(SettingsManager::ContentBlocking_CosmeticFiltersModeOption, SettingsManager::getValue(SettingsManager::ContentBlocking_CosmeticFiltersModeOption).toString());
+
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
 }
 
 void ContentBlockingManager::createInstance(QObject *parent)
@@ -123,6 +130,43 @@ void ContentBlockingManager::timerEvent(QTimerEvent *event)
 
 		file.write(QJsonDocument(settings).toJson(QJsonDocument::Indented));
 		file.close();
+	}
+}
+
+void ContentBlockingManager::optionChanged(int identifier, const QVariant &value)
+{
+	switch (identifier)
+	{
+		case SettingsManager::ContentBlocking_EnableWildcardsOption:
+			m_areWildcardsEnabled = value.toBool();
+
+			break;
+		case SettingsManager::ContentBlocking_CosmeticFiltersModeOption:
+			{
+				const QString cosmeticFiltersMode(value.toString());
+
+				if (cosmeticFiltersMode == QLatin1String("none"))
+				{
+					m_cosmeticFiltersMode = NoFiltersMode;
+				}
+				else if (cosmeticFiltersMode == QLatin1String("domainOnly"))
+				{
+					m_cosmeticFiltersMode = DomainOnlyFiltersMode;
+				}
+				else
+				{
+					m_cosmeticFiltersMode = AllFiltersMode;
+				}
+			}
+
+			break;
+		default:
+			return;
+	}
+
+	for (int i = 0; i < m_profiles.count(); ++i)
+	{
+		m_profiles[i]->clear();
 	}
 }
 
@@ -463,6 +507,16 @@ QVector<int> ContentBlockingManager::getProfileList(const QStringList &names)
 	}
 
 	return profiles;
+}
+
+ContentBlockingManager::CosmeticFiltersMode ContentBlockingManager::getCosmeticFiltersMode()
+{
+	return m_cosmeticFiltersMode;
+}
+
+bool ContentBlockingManager::areWildcardEnabled()
+{
+	return m_areWildcardsEnabled;
 }
 
 bool ContentBlockingManager::updateProfile(const QString &profile)
