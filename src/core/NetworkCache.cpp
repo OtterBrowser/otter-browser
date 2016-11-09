@@ -63,16 +63,18 @@ void NetworkCache::clearCache(int period)
 
 		for (int j = 0; j < subDirectories.count(); ++j)
 		{
-			const QDir cacheFilesDirectory(cacheSubDirectory.absoluteFilePath(subDirectories.at(j)));
-			const QStringList files(cacheFilesDirectory.entryList(QDir::Files));
+			const QFileInfoList files(QDir(cacheSubDirectory.absoluteFilePath(subDirectories.at(j))).entryInfoList(QDir::Files));
 
 			for (int k = 0; k < files.count(); ++k)
 			{
-				const QNetworkCacheMetaData metaData(fileMetaData(cacheFilesDirectory.absoluteFilePath(files.at(k))));
-
-				if (metaData.isValid() && metaData.lastModified().isValid() && metaData.lastModified().secsTo(QDateTime::currentDateTime()) > (period * 3600))
+				if (files.at(k).lastModified().secsTo(QDateTime::currentDateTime()) < (period * 3600))
 				{
-					remove(metaData.url());
+					const QNetworkCacheMetaData metaData(fileMetaData(files.at(k).absoluteFilePath()));
+
+					if (metaData.isValid())
+					{
+						remove(metaData.url());
+					}
 				}
 			}
 		}
