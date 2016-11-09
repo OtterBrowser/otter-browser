@@ -123,6 +123,7 @@ protected slots:
 	void addWindow(Window *window, WindowsManager::OpenHints hints = DefaultOpen, int index = -1, const QRect &geometry = QRect(), WindowState state = NormalWindowState, bool isAlwaysOnTop = false);
 	void removeStoredUrl(const QString &url);
 	void handleWindowClose(Window *window);
+	void handleWindowIsPinnedChanged(bool isPinned);
 	void setTitle(const QString &title);
 	void setStatusMessage(const QString &message);
 	Window* openWindow(ContentsWidget *widget, WindowsManager::OpenHints hints = DefaultOpen);

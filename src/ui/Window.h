@@ -95,7 +95,7 @@ public slots:
 	void setSearchEngine(const QString &searchEngine);
 	void setUrl(const QUrl &url, bool isTyped = true);
 	void setControlsHidden(bool hidden);
-	void setPinned(bool pinned);
+	void setPinned(bool isPinned);
 
 protected:
 	void focusInEvent(QFocusEvent *event);
@@ -145,7 +145,7 @@ signals:
 	void contentStateChanged(WindowsManager::ContentStates state);
 	void loadingStateChanged(WindowsManager::LoadingState state);
 	void zoomChanged(int zoom);
-	void isPinnedChanged(bool pinned);
+	void isPinnedChanged(bool isPinned);
 	void widgetChanged();
 };
 

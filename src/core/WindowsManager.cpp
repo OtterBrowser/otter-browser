@@ -614,11 +614,7 @@ void WindowsManager::addWindow(Window *window, OpenHints hints, int index, const
 
 	m_mainWindow->getTabBar()->addTab(index, window);
 	m_mainWindow->getWorkspace()->addWindow(window, geometry, state, isAlwaysOnTop);
-
-	if (!m_mainWindow->getAction(ActionsManager::CloseTabAction)->isEnabled())
-	{
-		m_mainWindow->getAction(ActionsManager::CloseTabAction)->setEnabled(true);
-	}
+	m_mainWindow->getAction(ActionsManager::CloseTabAction)->setEnabled(!window->isPinned());
 
 	if (!hints.testFlag(BackgroundOpen) || m_mainWindow->getTabBar()->count() < 2)
 	{
@@ -655,6 +651,7 @@ void WindowsManager::addWindow(Window *window, OpenHints hints, int index, const
 	connect(window, SIGNAL(requestedEditBookmark(QUrl)), this, SIGNAL(requestedEditBookmark(QUrl)));
 	connect(window, SIGNAL(requestedNewWindow(ContentsWidget*,WindowsManager::OpenHints)), this, SLOT(openWindow(ContentsWidget*,WindowsManager::OpenHints)));
 	connect(window, SIGNAL(requestedCloseWindow(Window*)), this, SLOT(handleWindowClose(Window*)));
+	connect(window, SIGNAL(isPinnedChanged(bool)), this, SLOT(handleWindowIsPinnedChanged(bool)));
 
 	emit windowAdded(window->getIdentifier());
 }
@@ -761,6 +758,16 @@ void WindowsManager::handleWindowClose(Window *window)
 	}
 }
 
+void WindowsManager::handleWindowIsPinnedChanged(bool isPinned)
+{
+	Window *window(qobject_cast<Window*>(sender()));
+
+	if (window && window == m_mainWindow->getWorkspace()->getActiveWindow())
+	{
+		m_mainWindow->getAction(ActionsManager::CloseTabAction)->setEnabled(!isPinned);
+	}
+}
+
 void WindowsManager::setOption(int identifier, const QVariant &value)
 {
 	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
@@ -808,6 +815,7 @@ void WindowsManager::setActiveWindowByIndex(int index)
 
 	window = getWindowByIndex(index);
 
+	m_mainWindow->getAction(ActionsManager::CloseTabAction)->setEnabled(window && !window->isPinned());
 	m_mainWindow->setCurrentWindow(window);
 
 	if (window)

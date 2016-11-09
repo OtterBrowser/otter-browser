@@ -477,13 +477,13 @@ void Window::setControlsHidden(bool hidden)
 	}
 }
 
-void Window::setPinned(bool pinned)
+void Window::setPinned(bool isPinned)
 {
-	if (pinned != m_isPinned)
+	if (isPinned != m_isPinned)
 	{
-		m_isPinned = pinned;
+		m_isPinned = isPinned;
 
-		emit isPinnedChanged(pinned);
+		emit isPinnedChanged(isPinned);
 	}
 }
 
