@@ -213,7 +213,7 @@ void WebWidget::startTransfer(Transfer *transfer)
 					return;
 				}
 
-				transfer->setTarget(path);
+				transfer->setTarget(path, true);
 
 				TransfersManager::addTransfer(transfer);
 			}

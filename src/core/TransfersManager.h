@@ -86,7 +86,7 @@ public slots:
 	void setOpenCommand(const QString &command);
 	virtual bool resume();
 	virtual bool restart();
-	virtual bool setTarget(const QString &target);
+	virtual bool setTarget(const QString &target, bool canOverwriteExisting = false);
 
 protected:
 	void timerEvent(QTimerEvent *event);

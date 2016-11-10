@@ -145,7 +145,7 @@ void TransferDialog::buttonClicked(QAbstractButton *button)
 			return;
 		}
 
-		m_transfer->setTarget(path);
+		m_transfer->setTarget(path, true);
 
 		if (m_ui->rememberChoiceCheckBox->isChecked())
 		{

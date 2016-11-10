@@ -247,6 +247,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 	}
 
 	QString finalTarget;
+	bool canOverwriteExisting(false);
 
 	if (target.isEmpty())
 	{
@@ -272,7 +273,10 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 		{
 			m_isSelectingPath = true;
 
-			path = Utils::getSavePath(fileName, path).path;
+			const SaveInformation information(Utils::getSavePath(fileName, path));
+
+			path = information.path;
+			canOverwriteExisting = information.canOverwriteExisting;
 
 			m_isSelectingPath = false;
 
@@ -300,7 +304,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 
 	if (!finalTarget.isEmpty())
 	{
-		setTarget(finalTarget);
+		setTarget(finalTarget, canOverwriteExisting);
 	}
 
 	if (m_state == FinishedState)
@@ -782,7 +786,7 @@ bool Transfer::restart()
 	return true;
 }
 
-bool Transfer::setTarget(const QString &target)
+bool Transfer::setTarget(const QString &target, bool canOverwriteExisting)
 {
 	if (m_target == target)
 	{
@@ -791,7 +795,7 @@ bool Transfer::setTarget(const QString &target)
 
 	QString mutableTarget(target);
 
-	if (QFile::exists(target) && !m_options.testFlag(CanOverwriteOption))
+	if (!canOverwriteExisting && !m_options.testFlag(CanOverwriteOption) && QFile::exists(target))
 	{
 		const QMessageBox::StandardButton result(QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with the same name already exists.\nDo you want to overwrite it?\n\n%1").arg(target), (QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel)));
 

@@ -360,6 +360,7 @@ SaveInformation getSavePath(const QString &fileName, QString path, QStringList f
 			}
 
 			information.filter = dialog.selectedNameFilter();
+			information.canOverwriteExisting = true;
 
 			path = dialog.selectedFiles().value(0);
 		}

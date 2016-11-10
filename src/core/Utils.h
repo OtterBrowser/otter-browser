@@ -41,6 +41,7 @@ struct SaveInformation
 {
 	QString path;
 	QString filter;
+	bool canOverwriteExisting = false;
 };
 
 namespace Utils
