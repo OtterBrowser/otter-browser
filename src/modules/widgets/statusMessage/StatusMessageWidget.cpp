@@ -50,7 +50,7 @@ void StatusMessageWidget::setMessage(const QString &message)
 {
 	m_message = message;
 
-	setText(QFontMetrics(font()).elidedText(m_message, (QGuiApplication::isLeftToRight() ? Qt::ElideRight : Qt::ElideLeft), width()));
+	setText(fontMetrics().elidedText(m_message, (QGuiApplication::isLeftToRight() ? Qt::ElideRight : Qt::ElideLeft), width()));
 }
 
 }
