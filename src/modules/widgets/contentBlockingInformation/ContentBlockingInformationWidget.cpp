@@ -44,6 +44,7 @@ ContentBlockingInformationWidget::ContentBlockingInformationWidget(Window *windo
 	m_profilesMenu = menu->addMenu(tr("Active Profiles"));
 	m_elementsMenu = menu->addMenu(tr("Blocked Elements"));
 
+	updateState();
 	setMenu(menu);
 	setPopupMode(QToolButton::InstantPopup);
 	setIcon(ThemesManager::getIcon(QLatin1String("content-blocking")));
@@ -62,71 +63,11 @@ ContentBlockingInformationWidget::ContentBlockingInformationWidget(Window *windo
 	connect(m_profilesMenu, SIGNAL(triggered(QAction*)), this, SLOT(toggleOption(QAction*)));
 }
 
-void ContentBlockingInformationWidget::paintEvent(QPaintEvent *event)
-{
-	Q_UNUSED(event)
-
-	QStylePainter painter(this);
-	QStyleOptionToolButton option;
-
-	initStyleOption(&option);
-
-	if (m_icon.isNull())
-	{
-		m_icon = getOptions().value(QLatin1String("icon")).value<QIcon>();
-
-		if (m_icon.isNull())
-		{
-			m_icon = ThemesManager::getIcon(QLatin1String("content-blocking"));
-		}
-
-		const int iconSize(option.iconSize.width());
-		const int fontSize(qMax((iconSize / 2), 12));
-		QFont font(option.font);
-		font.setBold(true);
-		font.setPixelSize(fontSize);
-
-		QString text;
-
-		if (m_amount > 999999)
-		{
-			text = QString::number(m_amount / 1000000) + QLatin1Char('M');
-		}
-		else if (m_amount > 999)
-		{
-			text = QString::number(m_amount / 1000) + QLatin1Char('K');
-		}
-		else
-		{
-			text = QString::number(m_amount);
-		}
-
-		const qreal textWidth(QFontMetricsF(font).width(text));
-
-		font.setPixelSize(fontSize * 0.8);
-
-		QRectF rectangle((iconSize - textWidth), (iconSize - fontSize), textWidth, fontSize);
-		QPixmap pixmap(m_icon.pixmap(option.iconSize));
-		QPainter iconPainter(&pixmap);
-		iconPainter.fillRect(rectangle, Qt::red);
-		iconPainter.setFont(font);
-		iconPainter.setPen(QColor(255, 255, 255, 230));
-		iconPainter.drawText(rectangle, Qt::AlignCenter, text);
-
-		m_icon = QIcon(pixmap);
-	}
-
-	option.icon = m_icon;
-	option.text = option.fontMetrics.elidedText(option.text, Qt::ElideRight, (option.rect.width() - (option.fontMetrics.width(QLatin1Char(' ')) * 2) - ((toolButtonStyle() == Qt::ToolButtonTextBesideIcon) ? option.iconSize.width() : 0)));
-
-	painter.drawComplexControl(QStyle::CC_ToolButton, option);
-}
-
 void ContentBlockingInformationWidget::resizeEvent(QResizeEvent *event)
 {
-	m_icon = QIcon();
-
 	ToolButtonWidget::resizeEvent(event);
+
+	updateState();
 }
 
 void ContentBlockingInformationWidget::clear()
@@ -293,24 +234,51 @@ void ContentBlockingInformationWidget::handleRequest(const NetworkManager::Resou
 
 void ContentBlockingInformationWidget::updateState()
 {
-	m_icon = QIcon();
+	m_icon = (isCustomized() ? getOptions().value(QLatin1String("icon")).value<QIcon>() : QIcon());
 
-	QString text(tr("Blocked Elements: %1"));
-
-	if (isCustomized())
+	if (m_icon.isNull())
 	{
-		const QVariantMap options(getOptions());
-
-		if (options.contains(QLatin1String("text")))
-		{
-			text = options[QLatin1String("text")].toString();
-		}
+		m_icon = ThemesManager::getIcon(QLatin1String("content-blocking"));
 	}
 
-	text = text.arg(m_amount);
+	const int iconSize(this->iconSize().width());
+	const int fontSize(qMax((iconSize / 2), 12));
+	QFont font(this->font());
+	font.setBold(true);
+	font.setPixelSize(fontSize);
 
-	setText(text);
-	setToolTip(text);
+	QString label;
+
+	if (m_amount > 999999)
+	{
+		label = QString::number(m_amount / 1000000) + QLatin1Char('M');
+	}
+	else if (m_amount > 999)
+	{
+		label = QString::number(m_amount / 1000) + QLatin1Char('K');
+	}
+	else
+	{
+		label = QString::number(m_amount);
+	}
+
+	const qreal labelWidth(QFontMetricsF(font).width(label));
+
+	font.setPixelSize(fontSize * 0.8);
+
+	QRectF rectangle((iconSize - labelWidth), (iconSize - fontSize), labelWidth, fontSize);
+	QPixmap pixmap(m_icon.pixmap(iconSize, iconSize));
+	QPainter iconPainter(&pixmap);
+	iconPainter.fillRect(rectangle, Qt::red);
+	iconPainter.setFont(font);
+	iconPainter.setPen(QColor(255, 255, 255, 230));
+	iconPainter.drawText(rectangle, Qt::AlignCenter, label);
+
+	m_icon = QIcon(pixmap);
+
+	setText(getText());
+	setToolTip(text());
+	setIcon(m_icon);
 
 	m_elementsMenu->setEnabled(m_amount > 0);
 }
@@ -336,6 +304,26 @@ void ContentBlockingInformationWidget::setWindow(Window *window)
 
 	updateState();
 	setEnabled(m_window);
+}
+
+QString ContentBlockingInformationWidget::getText() const
+{
+	if (isCustomized())
+	{
+		const QVariantMap options(getOptions());
+
+		if (options.contains(QLatin1String("text")))
+		{
+			return options[QLatin1String("text")].toString().arg(m_amount);
+		}
+	}
+
+	return tr("Blocked Elements: %1").arg(m_amount);
+}
+
+QIcon ContentBlockingInformationWidget::getIcon() const
+{
+	return m_icon;
 }
 
 }

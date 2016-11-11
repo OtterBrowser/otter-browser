@@ -35,9 +35,11 @@ class ContentBlockingInformationWidget : public ToolButtonWidget
 public:
 	explicit ContentBlockingInformationWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = nullptr);
 
+	QString getText() const override;
+	QIcon getIcon() const override;
+
 protected:
-	void paintEvent(QPaintEvent *event);
-	void resizeEvent(QResizeEvent *event);
+	void resizeEvent(QResizeEvent *event) override;
 	void updateState();
 
 protected slots:

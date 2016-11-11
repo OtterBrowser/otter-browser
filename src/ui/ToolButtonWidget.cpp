@@ -24,6 +24,7 @@
 #include "../core/ThemesManager.h"
 
 #include <QtCore/QEvent>
+#include <QtGui/QActionEvent>
 #include <QtWidgets/QStyleOptionToolButton>
 #include <QtWidgets/QStylePainter>
 
@@ -73,6 +74,17 @@ ToolButtonWidget::ToolButtonWidget(const ActionsManager::ActionEntryDefinition &
 	}
 }
 
+void ToolButtonWidget::actionEvent(QActionEvent *event)
+{
+	QToolButton::actionEvent(event);
+
+	if (event->type() == QEvent::ActionChanged || event->type() == QEvent::ActionAdded)
+	{
+		setText(getText());
+		setIcon(getIcon());
+	}
+}
+
 void ToolButtonWidget::paintEvent(QPaintEvent *event)
 {
 	Q_UNUSED(event)
@@ -81,19 +93,6 @@ void ToolButtonWidget::paintEvent(QPaintEvent *event)
 	QStyleOptionToolButton option;
 
 	initStyleOption(&option);
-
-	if (m_isCustomized)
-	{
-		if (m_options.contains(QLatin1String("icon")))
-		{
-			option.icon = m_options[QLatin1String("icon")].value<QIcon>();
-		}
-
-		if (m_options.contains(QLatin1String("text")))
-		{
-			option.text = m_options[QLatin1String("text")].toString();
-		}
-	}
 
 	option.text = option.fontMetrics.elidedText(option.text, Qt::ElideRight, (option.rect.width() - (option.fontMetrics.width(QLatin1Char(' ')) * 2) - ((toolButtonStyle() == Qt::ToolButtonTextBesideIcon) ? iconSize().width() : 0)));
 
@@ -132,17 +131,16 @@ void ToolButtonWidget::setOptions(const QVariantMap &options)
 	m_options = options;
 	m_isCustomized = (options.contains(QLatin1String("icon")) || options.contains(QLatin1String("text")));
 
-	if (m_isCustomized && options.contains(QLatin1String("icon")))
+	if (m_isCustomized)
 	{
-		const QString data(options[QLatin1String("icon")].toString());
-
-		if (data.startsWith(QLatin1String("data:image/")))
+		if (options.contains(QLatin1String("text")))
 		{
-			m_options[QLatin1String("icon")] = QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8()))));
+			setText(getText());
 		}
-		else
+
+		if (options.contains(QLatin1String("icon")))
 		{
-			m_options[QLatin1String("icon")] = ThemesManager::getIcon(data);
+			setIcon(getIcon());
 		}
 	}
 
@@ -196,6 +194,45 @@ void ToolButtonWidget::setMaximumButtonSize(int size)
 	{
 		setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
 	}
+}
+
+QString ToolButtonWidget::getText() const
+{
+	if (m_isCustomized && m_options.contains(QLatin1String("text")))
+	{
+		return m_options[QLatin1String("text")].toString();
+	}
+
+	if (defaultAction())
+	{
+		Action *action(qobject_cast<Action*>(defaultAction()));
+
+		if (action)
+		{
+			return action->getText();
+		}
+
+		return defaultAction()->text();
+	}
+
+	return text();
+}
+
+QIcon ToolButtonWidget::getIcon() const
+{
+	if (m_isCustomized && m_options.contains(QLatin1String("icon")))
+	{
+		const QString data(m_options[QLatin1String("icon")].toString());
+
+		if (data.startsWith(QLatin1String("data:image/")))
+		{
+			return QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8()))));
+		}
+
+		return ThemesManager::getIcon(data);
+	}
+
+	return (defaultAction() ? defaultAction()->icon() : icon());
 }
 
 QVariantMap ToolButtonWidget::getOptions() const
