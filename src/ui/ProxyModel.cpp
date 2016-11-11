@@ -75,7 +75,7 @@ QVariant ProxyModel::data(const QModelIndex &index, int role) const
 
 QVariant ProxyModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-	return (orientation == Qt::Horizontal && role == Qt::DisplayRole && section < m_mapping.count()) ? QCoreApplication::translate("views", m_mapping[section].first.toUtf8().constData()) : QIdentityProxyModel::headerData(section, orientation, role);
+	return (orientation == Qt::Horizontal && role == Qt::DisplayRole && section >= 0 && section < m_mapping.count()) ? QCoreApplication::translate("views", m_mapping[section].first.toUtf8().constData()) : QIdentityProxyModel::headerData(section, orientation, role);
 }
 
 QModelIndex ProxyModel::index(int row, int column, const QModelIndex &parent) const
