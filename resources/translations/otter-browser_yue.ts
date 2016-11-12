@@ -290,7 +290,7 @@
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="325"/>
         <source>Copy to Note</source>
-        <translation>複製到手帳</translation>
+        <translation>複製到字條</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="327"/>
@@ -836,7 +836,7 @@ Are you sure that you want to restore this session anyway?</source>
         <location filename="../../src/core/BookmarksModel.cpp" line="99"/>
         <location filename="../../src/core/BookmarksModel.cpp" line="203"/>
         <source>Notes</source>
-        <translation>手帳</translation>
+        <translation>字條</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="102"/>
@@ -853,7 +853,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="220"/>
         <source>Failed to open notes file: %1</source>
-        <translation>開啟手帳檔案失敗：%1</translation>
+        <translation>開啟字條檔案失敗：%1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="220"/>
@@ -863,7 +863,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="244"/>
         <source>Failed to load notes file: %1</source>
-        <translation>載入手帳檔案失敗：%1</translation>
+        <translation>載入字條檔案失敗：%1</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="244"/>
@@ -878,7 +878,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="246"/>
         <source>Failed to load notes file.</source>
-        <translation>載入手帳檔案失敗。</translation>
+        <translation>載入字條檔案失敗。</translation>
     </message>
     <message>
         <location filename="../../src/core/BookmarksModel.cpp" line="246"/>
@@ -2754,7 +2754,7 @@ Do you want to continue?</source>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="179"/>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="181"/>
         <source>Add Note</source>
-        <translation>加入手帳</translation>
+        <translation>加入字條</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="48"/>
@@ -2766,7 +2766,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="58"/>
         <source>Add note…</source>
-        <translation>加入手帳…</translation>
+        <translation>加入字條…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="97"/>
@@ -2796,12 +2796,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="191"/>
         <source>Restore Note</source>
-        <translation>復原手帳</translation>
+        <translation>復原字條</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="370"/>
         <source>Notes Manager</source>
-        <translation>手帳管理員</translation>
+        <translation>字條管理員</translation>
     </message>
 </context>
 <context>
@@ -2866,17 +2866,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="106"/>
         <source>Opera Notes</source>
-        <translation>Opera手帳</translation>
+        <translation>Opera字條</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="111"/>
         <source>Imports notes from Opera Browser version 12 or earlier</source>
-        <translation>從Opera瀏覽器12或更早版本匯入手帳</translation>
+        <translation>從Opera瀏覽器12或更早版本匯入字條</translation>
     </message>
     <message>
         <location filename="../../src/modules/importers/opera/OperaNotesImporter.cpp" line="161"/>
         <source>Opera notes files (notes.adr)</source>
-        <translation>Opera手帳檔案（notes.adr）</translation>
+        <translation>Opera字條檔案（notes.adr）</translation>
     </message>
 </context>
 <context>
@@ -4878,7 +4878,7 @@ Do you want to overwrite it?</source>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="221"/>
         <source>Copy to Note</source>
-        <translation>複製到手帳</translation>
+        <translation>複製到字條</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="223"/>
@@ -5079,7 +5079,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="425"/>
         <source>Notes</source>
-        <translation>手帳</translation>
+        <translation>字條</translation>
     </message>
     <message>
         <location filename="../../src/ui/SidebarWidget.cpp" line="430"/>
@@ -7840,7 +7840,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="429"/>
         <source>Copy to Note</source>
-        <translation>複製到手帳</translation>
+        <translation>複製到字條</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="430"/>
@@ -7855,7 +7855,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="432"/>
         <source>Insert Note</source>
-        <translation>插入手帳</translation>
+        <translation>插入字條</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="433"/>
@@ -8227,7 +8227,7 @@ Click Install button to restart browser and install the update or close this dia
         <location filename="../../src/core/ActionsManager.cpp" line="505"/>
         <location filename="../../src/ui/TrayIcon.cpp" line="46"/>
         <source>Notes</source>
-        <translation>手帳</translation>
+        <translation>字條</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="506"/>
@@ -8348,7 +8348,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/Menu.cpp" line="113"/>
         <source>Import Opera Notes…</source>
-        <translation>匯入Opera手帳…</translation>
+        <translation>匯入Opera字條…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="119"/>
@@ -8524,7 +8524,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="87"/>
         <source>Notes Manager</source>
-        <translation>手帳管理員</translation>
+        <translation>字條管理員</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="88"/>

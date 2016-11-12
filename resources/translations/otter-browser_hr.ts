@@ -177,7 +177,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="82"/>
         <source>User Scripts</source>
-        <translation type="unfinished"/>
+        <translation>Korisničke skripte</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="104"/>
@@ -187,7 +187,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="104"/>
         <source>User Script files (*.js)</source>
-        <translation type="unfinished"/>
+        <translation>Datoteke korisničkih skripti (*.js)</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="115"/>
@@ -198,12 +198,12 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="115"/>
         <source>User Script with this name already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Korisnička skripta sa ovim imenom već postoji.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="122"/>
         <source>Failed to import User Script file.</source>
-        <translation type="unfinished"/>
+        <translation>Neuspjeli uvoz datoteke korisničke skripte.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="235"/>
