@@ -166,7 +166,7 @@ void MacPlatformIntegration::timerEvent(QTimerEvent *event)
 {
 	if (event->timerId() == m_notificationsWatcherTimer)
 	{
-		const int visibilityDuration(SettingsManager::getValue(QLatin1String("Interface/NotificationVisibilityDuration")).toInt());
+		const int visibilityDuration(SettingsManager::getValue(SettingsManager::Interface_NotificationVisibilityDurationOption).toInt());
 		QHash<quint64, NSUserNotification*> existingNotifications;
 
 		for (NSUserNotification *notification in [[NSUserNotificationCenter defaultUserNotificationCenter] deliveredNotifications])
@@ -297,7 +297,7 @@ void MacPlatformIntegration::showNotification(Notification *notification)
 
 	[[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:nativeNotification];
 
-	if (m_notificationsWatcherTimer == 0 && SettingsManager::getValue(QLatin1String("Interface/NotificationVisibilityDuration")).toInt() > 0)
+	if (m_notificationsWatcherTimer == 0 && SettingsManager::getValue(SettingsManager::Interface_NotificationVisibilityDurationOption).toInt() > 0)
 	{
 		m_notificationsWatcherTimer = startTimer(1000);
 	}
