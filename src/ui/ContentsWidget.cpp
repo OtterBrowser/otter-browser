@@ -188,6 +188,8 @@ void ContentsWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 	dialog->setFocus();
 	dialog->move(geometry().center() - QRect(QPoint(0, 0), dialog->size()).center());
 
+	emit needsAttention();
+
 	if (lockEventLoop)
 	{
 		QEventLoop eventLoop;
