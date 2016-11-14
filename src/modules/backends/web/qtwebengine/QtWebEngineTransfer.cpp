@@ -131,11 +131,11 @@ Transfer::TransferState QtWebEngineTransfer::getState() const
 	return UnknownState;
 }
 
-bool QtWebEngineTransfer::setTarget(const QString &target)
+bool QtWebEngineTransfer::setTarget(const QString &target, bool canOverwriteExisting)
 {
 	if (!m_item)
 	{
-		return Transfer::setTarget(target);
+		return Transfer::setTarget(target, canOverwriteExisting);
 	}
 
 	m_item->setPath(target);

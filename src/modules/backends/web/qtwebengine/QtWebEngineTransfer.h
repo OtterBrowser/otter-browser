@@ -34,17 +34,17 @@ class QtWebEngineTransfer : public Transfer
 public:
 	explicit QtWebEngineTransfer(QWebEngineDownloadItem *item, TransferOptions options = CanAskForPathOption, QObject *parent = nullptr);
 
-	QUrl getSource() const;
-	QString getSuggestedFileName();
-	QString getTarget() const;
-	QMimeType getMimeType() const;
-	qint64 getBytesReceived() const;
-	qint64 getBytesTotal() const;
-	TransferState getState() const;
+	QUrl getSource() const override;
+	QString getSuggestedFileName() override;
+	QString getTarget() const override;
+	QMimeType getMimeType() const override;
+	qint64 getBytesReceived() const override;
+	qint64 getBytesTotal() const override;
+	TransferState getState() const override;
 
 public slots:
-	void cancel();
-	bool setTarget(const QString &target);
+	void cancel() override;
+	bool setTarget(const QString &target, bool canOverwriteExisting = false) override;
 
 private:
 	QPointer<QWebEngineDownloadItem> m_item;
