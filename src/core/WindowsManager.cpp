@@ -1062,21 +1062,11 @@ bool WindowsManager::event(QEvent *event)
 {
 	if (event->type() == QEvent::LanguageChange)
 	{
-		for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
+		Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
+
+		if (window)
 		{
-			Window *window(getWindowByIndex(i));
-
-			if (window)
-			{
-				QString text(window->getTitle().isEmpty() ? tr("Empty") : window->getTitle());
-
-				if (i == m_mainWindow->getTabBar()->currentIndex())
-				{
-					emit windowTitleChanged(text);
-				}
-
-				m_mainWindow->getTabBar()->setTabText(i, text.replace(QLatin1Char('&'), QLatin1String("&&")));
-			}
+			emit windowTitleChanged(window->getTitle().isEmpty() ? tr("Empty") : window->getTitle());
 		}
 	}
 
