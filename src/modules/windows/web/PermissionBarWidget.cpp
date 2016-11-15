@@ -122,7 +122,7 @@ void PermissionBarWidget::rejected()
 {
 	hide();
 
-	emit permissionChanged(WebWidget::DeniedPermission);
+	emit permissionChanged(WebWidget::DeniedPermission | WebWidget::KeepAskingPermission);
 }
 
 QUrl PermissionBarWidget::getUrl() const
