@@ -91,7 +91,7 @@ public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void close();
 	void search(const QString &query, const QString &searchEngine);
-	void markActive();
+	void markAsActive();
 	void setSearchEngine(const QString &searchEngine);
 	void setUrl(const QUrl &url, bool isTyped = true);
 	void setControlsHidden(bool hidden);
@@ -127,6 +127,7 @@ private:
 	static quint64 m_identifierCounter;
 
 signals:
+	void activated();
 	void aboutToClose();
 	void needsAttention();
 	void requestedOpenBookmark(BookmarksItem *bookmark, WindowsManager::OpenHints hints);

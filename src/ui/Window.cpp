@@ -269,7 +269,7 @@ void Window::search(const QString &query, const QString &searchEngine)
 	emit urlChanged(getUrl(), true);
 }
 
-void Window::markActive()
+void Window::markAsActive()
 {
 	if (!m_contentsWidget)
 	{
@@ -277,6 +277,8 @@ void Window::markActive()
 	}
 
 	m_lastActivity = QDateTime::currentDateTime();
+
+	emit activated();
 }
 
 void Window::handleIconChanged(const QIcon &icon)

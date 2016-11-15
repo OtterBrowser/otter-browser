@@ -850,7 +850,7 @@ void WindowsManager::setActiveWindowByIndex(int index)
 		m_mainWindow->getWorkspace()->setActiveWindow(window);
 
 		window->setFocus();
-		window->markActive();
+		window->markAsActive();
 
 		setStatusMessage(window->getContentsWidget()->getStatusMessage());
 
