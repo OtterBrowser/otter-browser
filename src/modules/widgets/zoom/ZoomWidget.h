@@ -34,11 +34,13 @@ class ZoomWidget : public QSlider
 public:
 	explicit ZoomWidget(QWidget *parent = nullptr);
 
+	QSize sizeHint() const override;
+
 public slots:
 	void setZoom(int zoom);
 
 protected:
-	void mousePressEvent(QMouseEvent *event);
+	void mousePressEvent(QMouseEvent *event) override;
 
 private:
 	MainWindow *m_mainWindow;

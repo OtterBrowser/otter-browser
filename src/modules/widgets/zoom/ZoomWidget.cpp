@@ -46,9 +46,9 @@ ZoomWidget::ZoomWidget(QWidget *parent) : QSlider(parent),
 	setTracking(true);
 	setOrientation(Qt::Horizontal);
 	setFocusPolicy(Qt::TabFocus);
+	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	setTickPosition(QSlider::TicksBelow);
 	setTickInterval(100);
-	setMaximumWidth(150);
 	setZoom(100);
 }
 
@@ -101,6 +101,11 @@ void ZoomWidget::setZoom(int zoom)
 
 		QApplication::sendEvent(m_mainWindow, &event);
 	}
+}
+
+QSize ZoomWidget::sizeHint() const
+{
+	return QSize(150, QSlider::sizeHint().height());
 }
 
 }
