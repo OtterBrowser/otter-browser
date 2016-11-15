@@ -153,7 +153,6 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_isDetachingTab(false),
 	m_isIgnoringTabDrag(false)
 {
-	qRegisterMetaType<WindowsManager::LoadingState>("WindowsManager::LoadingState");
 	setAcceptDrops(true);
 	setDrawBase(false);
 	setExpanding(false);
@@ -304,45 +303,45 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 		if (window)
 		{
 			parameters[QLatin1String("window")] = window->getIdentifier();
+
+			const int amount(count() - getPinnedTabsAmount());
+			const bool isPinned(window->isPinned());
+			Action *cloneTabAction(new Action(ActionsManager::CloneTabAction, &menu));
+			cloneTabAction->setEnabled(window->canClone());
+			cloneTabAction->setData(parameters);
+
+			Action *pinTabAction(new Action(ActionsManager::PinTabAction, &menu));
+			pinTabAction->setOverrideText(isPinned ? QT_TRANSLATE_NOOP("actions", "Unpin Tab") : QT_TRANSLATE_NOOP("actions", "Pin Tab"));
+			pinTabAction->setData(parameters);
+
+			Action *detachTabAction(new Action(ActionsManager::DetachTabAction, &menu));
+			detachTabAction->setEnabled(count() > 1);
+			detachTabAction->setData(parameters);
+
+			Action *closeTabAction(new Action(ActionsManager::CloseTabAction, &menu));
+			closeTabAction->setEnabled(!isPinned);
+			closeTabAction->setData(parameters);
+
+			Action *closeOtherTabsAction(new Action(ActionsManager::CloseOtherTabsAction, &menu));
+			closeOtherTabsAction->setEnabled(amount > 0 && !(amount == 1 && !isPinned));
+			closeOtherTabsAction->setData(parameters);
+
+			menu.addAction(cloneTabAction);
+			menu.addAction(pinTabAction);
+			menu.addAction(window ? window->getContentsWidget()->getAction(ActionsManager::MuteTabMediaAction) : new Action(ActionsManager::MuteTabMediaAction, &menu));
+			menu.addSeparator();
+			menu.addAction(detachTabAction);
+			menu.addSeparator();
+			menu.addAction(closeTabAction);
+			menu.addAction(closeOtherTabsAction);
+			menu.addAction(ActionsManager::getAction(ActionsManager::ClosePrivateTabsAction, this));
+
+			connect(cloneTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
+			connect(pinTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
+			connect(detachTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
+			connect(closeTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
+			connect(closeOtherTabsAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
 		}
-
-		const int amount(count() - getPinnedTabsAmount());
-		const bool isPinned(getTabProperty(m_clickedTab, QLatin1String("isPinned"), false).toBool());
-		Action *cloneTabAction(new Action(ActionsManager::CloneTabAction, &menu));
-		cloneTabAction->setEnabled(getTabProperty(m_clickedTab, QLatin1String("canClone"), false).toBool());
-		cloneTabAction->setData(parameters);
-
-		Action *pinTabAction(new Action(ActionsManager::PinTabAction, &menu));
-		pinTabAction->setOverrideText(isPinned ? QT_TRANSLATE_NOOP("actions", "Unpin Tab") : QT_TRANSLATE_NOOP("actions", "Pin Tab"));
-		pinTabAction->setData(parameters);
-
-		Action *detachTabAction(new Action(ActionsManager::DetachTabAction, &menu));
-		detachTabAction->setEnabled(count() > 1);
-		detachTabAction->setData(parameters);
-
-		Action *closeTabAction(new Action(ActionsManager::CloseTabAction, &menu));
-		closeTabAction->setEnabled(!isPinned);
-		closeTabAction->setData(parameters);
-
-		Action *closeOtherTabsAction(new Action(ActionsManager::CloseOtherTabsAction, &menu));
-		closeOtherTabsAction->setEnabled(amount > 0 && !(amount == 1 && !isPinned));
-		closeOtherTabsAction->setData(parameters);
-
-		menu.addAction(cloneTabAction);
-		menu.addAction(pinTabAction);
-		menu.addAction(window ? window->getContentsWidget()->getAction(ActionsManager::MuteTabMediaAction) : new Action(ActionsManager::MuteTabMediaAction, &menu));
-		menu.addSeparator();
-		menu.addAction(detachTabAction);
-		menu.addSeparator();
-		menu.addAction(closeTabAction);
-		menu.addAction(closeOtherTabsAction);
-		menu.addAction(ActionsManager::getAction(ActionsManager::ClosePrivateTabsAction, this));
-
-		connect(cloneTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
-		connect(pinTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
-		connect(detachTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
-		connect(closeTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
-		connect(closeOtherTabsAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
 	}
 
 	menu.addSeparator();
@@ -371,7 +370,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::CascadeAllAction, this));
 	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::TileAllAction, this));
 
-	QAction *cycleAction(new QAction(tr("Switch tabs using the mouse wheel"), this));
+	QAction *cycleAction(new QAction(tr("Switch Tabs Using the Mouse Wheel"), this));
 	cycleAction->setCheckable(true);
 	cycleAction->setChecked(!SettingsManager::getValue(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption).toBool());
 
@@ -699,7 +698,9 @@ void TabBarWidget::tabInserted(int index)
 		setTabButton(index, m_iconButtonPosition, nullptr);
 	}
 
-	if (m_showCloseButton || getTabProperty(index, QLatin1String("isPinned"), false).toBool())
+	Window *window(getWindow(index));
+
+	if (m_showCloseButton || (window && window->isPinned()))
 	{
 		QLabel *label(new QLabel());
 		label->setFixedSize(QSize(16, 16));
@@ -743,7 +744,8 @@ void TabBarWidget::tabHovered(int index)
 		m_previewWidget->show();
 	}
 
-	QStatusTipEvent statusTipEvent((index >= 0) ? getTabProperty(index, QLatin1String("url"), QUrl()).toString() : QString());
+	Window *window(getWindow(index));
+	QStatusTipEvent statusTipEvent(window ? window->getUrl().toDisplayString() : QString());
 
 	QApplication::sendEvent(this, &statusTipEvent);
 
@@ -760,11 +762,11 @@ void TabBarWidget::addTab(int index, Window *window)
 
 	connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(updateTabs()));
 	connect(window, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateTabs()));
-	connect(window, SIGNAL(isPinnedChanged(bool)), this, SLOT(isPinnedChanged()));
+	connect(window, SIGNAL(updatePinnedTabsAmount(bool)), this, SLOT(updatePinnedTabsAmount()));
 
 	if (window->isPinned())
 	{
-		isPinnedChanged(window);
+		updatePinnedTabsAmount(window);
 	}
 
 	updateTabs(index);
@@ -790,7 +792,7 @@ void TabBarWidget::removeTab(int index)
 
 	if (window && window->isPinned())
 	{
-		isPinnedChanged();
+		updatePinnedTabsAmount();
 		updateGeometry();
 		adjustSize();
 	}
@@ -816,14 +818,16 @@ void TabBarWidget::activateTabOnRight()
 
 void TabBarWidget::showPreview(int index)
 {
-	if (!m_enablePreviews || (window() && !window()->underMouse()))
+	if (!m_enablePreviews || !isActiveWindow())
 	{
 		hidePreview();
 
 		return;
 	}
 
-	if (index >= 0 && m_clickedTab < 0)
+	Window *window(getWindow(index));
+
+	if (window && m_clickedTab < 0)
 	{
 		if (!m_previewWidget)
 		{
@@ -840,7 +844,7 @@ void TabBarWidget::showPreview(int index)
 		QRect rectangle(tabRect(index));
 		rectangle.moveTo(mapToGlobal(rectangle.topLeft()));
 
-		m_previewWidget->setPreview(getTabProperty(index, QLatin1String("title"), tr("(Untitled)")).toString(), ((index == currentIndex()) ? QPixmap() : getTabProperty(index, QLatin1String("thumbnail"), QPixmap()).value<QPixmap>()));
+		m_previewWidget->setPreview(window->getTitle(), ((index == currentIndex()) ? QPixmap() : window->getThumbnail()));
 
 		switch (shape())
 		{
@@ -1018,13 +1022,15 @@ void TabBarWidget::currentTabChanged(int index)
 	}
 }
 
-void TabBarWidget::isPinnedChanged(Window *window)
+void TabBarWidget::updatePinnedTabsAmount(Window *modifiedWindow)
 {
 	int amount(0);
 
 	for (int i = 0; i < count(); ++i)
 	{
-		if (getTabProperty(i, QLatin1String("isPinned"), false).toBool())
+		Window *window(getWindow(i));
+
+		if (window && window->isPinned())
 		{
 			++amount;
 		}
@@ -1032,18 +1038,18 @@ void TabBarWidget::isPinnedChanged(Window *window)
 
 	m_pinnedTabsAmount = amount;
 
-	if (!window)
+	if (!modifiedWindow)
 	{
-		window = qobject_cast<Window*>(sender());
+		modifiedWindow = qobject_cast<Window*>(sender());
 	}
 
-	if (window)
+	if (modifiedWindow)
 	{
 		int index(-1);
 
 		for (int i = 0; i < count(); ++i)
 		{
-			if (tabData(i).toULongLong() == window->getIdentifier())
+			if (tabData(i).toULongLong() == modifiedWindow->getIdentifier())
 			{
 				index = i;
 
@@ -1053,7 +1059,7 @@ void TabBarWidget::isPinnedChanged(Window *window)
 
 		if (index >= 0)
 		{
-			moveTab(index, (window->isPinned() ? qMax(0, (m_pinnedTabsAmount - 1)) : m_pinnedTabsAmount));
+			moveTab(index, (modifiedWindow->isPinned() ? qMax(0, (m_pinnedTabsAmount - 1)) : m_pinnedTabsAmount));
 			updateButtons();
 			updateGeometry();
 			adjustSize();
@@ -1071,10 +1077,11 @@ void TabBarWidget::updateButtons()
 
 	for (int i = 0; i < count(); ++i)
 	{
+		Window *window(getWindow(i));
 		QLabel *closeLabel(qobject_cast<QLabel*>(tabButton(i, m_closeButtonPosition)));
 		QLabel *iconLabel(qobject_cast<QLabel*>(tabButton(i, m_iconButtonPosition)));
 		const bool isCurrent(i == currentIndex());
-		const bool isPinned(getTabProperty(i, QLatin1String("isPinned"), false).toBool());
+		const bool isPinned(window ? window->isPinned() : false);
 
 		if (iconLabel)
 		{
@@ -1146,7 +1153,8 @@ void TabBarWidget::updateTabs(int index)
 
 	for (int i = ((index >= 0) ? index : 0); i < limit; ++i)
 	{
-		const WindowsManager::LoadingState loadingState(static_cast<WindowsManager::LoadingState>(getTabProperty(i, QLatin1String("loadingState"), WindowsManager::FinishedLoadingState).toInt()));
+		Window *window(getWindow(i));
+		const WindowsManager::LoadingState loadingState(window ? window->getLoadingState() : WindowsManager::FinishedLoadingState);
 		QLabel *label(qobject_cast<QLabel*>(tabButton(i, m_iconButtonPosition)));
 
 		if (label)
@@ -1177,9 +1185,13 @@ void TabBarWidget::updateTabs(int index)
 				{
 					icon = ThemesManager::getIcon(QLatin1String("tab-crashed"));
 				}
+				else if (window)
+				{
+					icon = window->getIcon();
+				}
 				else
 				{
-					icon = getTabProperty(i, QLatin1String("icon"), ThemesManager::getIcon(getTabProperty(i, QLatin1String("isPrivate"), false).toBool() ? QLatin1String("tab-private") : QLatin1String("tab"))).value<QIcon>();
+					icon = ThemesManager::getIcon(QLatin1String("tab"));
 				}
 
 				label->setPixmap(icon.pixmap(16, 16));
@@ -1244,42 +1256,20 @@ Window* TabBarWidget::getWindow(int index) const
 	return nullptr;
 }
 
-QVariant TabBarWidget::getTabProperty(int index, const QString &key, const QVariant &defaultValue) const
-{
-	if (index < 0 || index >= count())
-	{
-		return defaultValue;
-	}
-
-	Window *window(getWindow(index));
-
-	if (window)
-	{
-		const QVariant value(window->property(key.toLatin1()));
-
-		if (!value.isNull())
-		{
-			return value;
-		}
-	}
-
-	return defaultValue;
-}
-
 QSize TabBarWidget::tabSizeHint(int index) const
 {
-	const bool isHorizontal(shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth);
-
-	if (isHorizontal && getTabProperty(index, QLatin1String("isPinned"), false).toBool())
+	if (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth)
 	{
-		return QSize(m_minimumTabSize, QTabBar::tabSizeHint(0).height());
-	}
+		Window *window(getWindow(index));
 
-	if (isHorizontal)
-	{
+		if (window && window->isPinned())
+		{
+			return QSize(m_minimumTabSize, QTabBar::tabSizeHint(0).height());
+		}
+
 		const int amount(getPinnedTabsAmount());
 
-		return QSize(((m_tabSize > 0) ? m_tabSize : qBound(m_minimumTabSize, qFloor(((isHorizontal ? geometry().width() : geometry().height()) - (amount * m_minimumTabSize)) / qMax(1, (count() - amount))), m_maximumTabSize)), QTabBar::tabSizeHint(0).height());
+		return QSize(((m_tabSize > 0) ? m_tabSize : qBound(m_minimumTabSize, qFloor((geometry().width() - (amount * m_minimumTabSize)) / qMax(1, (count() - amount))), m_maximumTabSize)), QTabBar::tabSizeHint(0).height());
 	}
 
 	return QSize(m_maximumTabSize, QTabBar::tabSizeHint(0).height());
@@ -1298,7 +1288,9 @@ QSize TabBarWidget::sizeHint() const
 
 		for (int i = 0; i < count(); ++i)
 		{
-			size += (getTabProperty(i, QLatin1String("isPinned"), false).toBool() ? m_minimumTabSize : m_maximumTabSize);
+			Window *window(getWindow(i));
+
+			size += ((window && window->isPinned()) ? m_minimumTabSize : m_maximumTabSize);
 		}
 
 		return QSize(size, QTabBar::sizeHint().height());

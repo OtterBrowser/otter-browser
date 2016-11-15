@@ -66,7 +66,6 @@ public:
 	void activateTabOnLeft();
 	void activateTabOnRight();
 	Window* getWindow(int index) const;
-	QVariant getTabProperty(int index, const QString &key, const QVariant &defaultValue) const;
 	QSize minimumSizeHint() const override;
 	QSize sizeHint() const override;
 	int getPinnedTabsAmount() const;
@@ -100,7 +99,7 @@ protected:
 protected slots:
 	void optionChanged(int identifier, const QVariant &value);
 	void currentTabChanged(int index);
-	void isPinnedChanged(Window *window = nullptr);
+	void updatePinnedTabsAmount(Window *modifiedWindow = nullptr);
 	void updateButtons();
 	void updateTabs(int index = -1);
 	void setCycle(bool enable);

@@ -48,15 +48,6 @@ class ToolBarWidget;
 class Window : public QWidget
 {
 	Q_OBJECT
-	Q_PROPERTY(QString title READ getTitle NOTIFY titleChanged)
-	Q_PROPERTY(QString type READ getType)
-	Q_PROPERTY(QUrl url READ getUrl WRITE setUrl NOTIFY urlChanged)
-	Q_PROPERTY(QIcon icon READ getIcon NOTIFY iconChanged)
-	Q_PROPERTY(QPixmap thumbnail READ getThumbnail)
-	Q_PROPERTY(WindowsManager::LoadingState loadingState READ getLoadingState NOTIFY loadingStateChanged)
-	Q_PROPERTY(bool canClone READ canClone)
-	Q_PROPERTY(bool isPinned READ isPinned WRITE setPinned NOTIFY isPinnedChanged)
-	Q_PROPERTY(bool isPrivate READ isPrivate)
 
 public:
 	explicit Window(bool isPrivate, ContentsWidget *widget = nullptr, QWidget *parent = nullptr);
