@@ -182,18 +182,26 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 		return;
 	}
 
-	QList<QAction*> actions;
-	QAction *cycleAction(new QAction(tr("Switch tabs using the mouse wheel"), this));
+	QAction *cycleAction(new QAction(tr("Switch Tabs Using the Mouse Wheel"), this));
 	cycleAction->setCheckable(true);
 	cycleAction->setChecked(!SettingsManager::getValue(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption).toBool());
-	cycleAction->setEnabled(m_mainWindow->getTabBar());
 
-	actions.append(cycleAction);
+	QAction *thumbnailsAction(new QAction(tr("Show Thumbnails in Tabs"), this));
+	thumbnailsAction->setCheckable(true);
+	thumbnailsAction->setChecked(SettingsManager::getValue(SettingsManager::TabBar_EnableThumbnailsOption).toBool());
 
-	if (m_mainWindow->getTabBar())
+	connect(cycleAction, &QAction::toggled, [&](bool isEnabled)
 	{
-		connect(cycleAction, SIGNAL(toggled(bool)), m_mainWindow->getTabBar(), SLOT(setCycle(bool)));
-	}
+		SettingsManager::setValue(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption, !isEnabled);
+	});
+	connect(thumbnailsAction, &QAction::toggled, [&](bool areEnabled)
+	{
+		SettingsManager::setValue(SettingsManager::TabBar_EnableThumbnailsOption, areEnabled);
+	});
+
+	QList<QAction*> actions;
+	actions.append(cycleAction);
+	actions.append(thumbnailsAction);
 
 	QMenu menu(this);
 	menu.addAction(ActionsManager::getAction(ActionsManager::NewTabAction, this));
@@ -214,6 +222,8 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	menu.exec(event->globalPos());
 
 	cycleAction->deleteLater();
+
+	thumbnailsAction->deleteLater();
 }
 
 void ToolBarWidget::startToolBarDragging()
