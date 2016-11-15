@@ -83,34 +83,7 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 		case ActionsManager::DetachTabAction:
 			if (window && m_mainWindow->getTabBar()->count() > 1)
 			{
-				OpenHints hints(NewWindowOpen);
-
-				if (window->isPrivate())
-				{
-					hints |= PrivateOpen;
-				}
-
-				window->getContentsWidget()->setParent(nullptr);
-
-				Window *newWindow(openWindow(window->getContentsWidget(), hints));
-
-				if (newWindow && window->isPinned())
-				{
-					newWindow->setPinned(true);
-				}
-
-				m_mainWindow->getTabBar()->removeTab(getWindowIndex(window->getIdentifier()));
-
-				Action *closePrivateTabsAction(m_mainWindow->getAction(ActionsManager::ClosePrivateTabsAction));
-
-				if (closePrivateTabsAction->isEnabled() && getWindowCount(true) == 0)
-				{
-					closePrivateTabsAction->setEnabled(false);
-				}
-
-				m_windows.remove(window->getIdentifier());
-
-				emit windowRemoved(window->getIdentifier());
+				moveWindow(window);
 			}
 
 			break;
@@ -661,6 +634,53 @@ void WindowsManager::addWindow(Window *window, OpenHints hints, int index, const
 	connect(window, SIGNAL(isPinnedChanged(bool)), this, SLOT(handleWindowIsPinnedChanged(bool)));
 
 	emit windowAdded(window->getIdentifier());
+}
+
+void WindowsManager::moveWindow(Window *window, MainWindow *mainWindow, int index)
+{
+	Window *newWindow(nullptr);
+	OpenHints hints(mainWindow ? DefaultOpen : NewWindowOpen);
+
+	if (window->isPrivate())
+	{
+		hints |= PrivateOpen;
+	}
+
+	window->getContentsWidget()->setParent(nullptr);
+
+	if (mainWindow)
+	{
+		newWindow = mainWindow->getWindowsManager()->openWindow(window->getContentsWidget(), hints, index);
+	}
+	else
+	{
+		newWindow = openWindow(window->getContentsWidget(), hints);
+	}
+
+	if (newWindow && window->isPinned())
+	{
+		newWindow->setPinned(true);
+	}
+
+	m_mainWindow->getTabBar()->removeTab(getWindowIndex(window->getIdentifier()));
+
+	m_windows.remove(window->getIdentifier());
+
+	if (mainWindow && m_windows.isEmpty())
+	{
+		m_mainWindow->close();
+	}
+	else
+	{
+		Action *closePrivateTabsAction(m_mainWindow->getAction(ActionsManager::ClosePrivateTabsAction));
+
+		if (closePrivateTabsAction->isEnabled() && getWindowCount(true) == 0)
+		{
+			closePrivateTabsAction->setEnabled(false);
+		}
+
+		emit windowRemoved(window->getIdentifier());
+	}
 }
 
 void WindowsManager::removeStoredUrl(const QString &url)

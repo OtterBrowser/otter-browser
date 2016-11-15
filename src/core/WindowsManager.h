@@ -83,6 +83,7 @@ public:
 
 	explicit WindowsManager(bool isPrivate, MainWindow *parent);
 
+	void moveWindow(Window *window, MainWindow *mainWindow = nullptr, int index = -1);
 	Action* getAction(int identifier);
 	Window* getWindowByIndex(int index) const;
 	Window* getWindowByIdentifier(quint64 identifier) const;
