@@ -1585,7 +1585,7 @@ QSize TabBarWidget::tabSizeHint(int index) const
 
 		const int amount(getPinnedTabsAmount());
 
-		return QSize(((m_tabWidth > 0) ? m_tabWidth : qBound(m_minimumTabWidth, qFloor((geometry().width() - (amount * m_minimumTabWidth)) / qMax(1, (count() - amount))), m_maximumTabWidth)), tabHeight);
+		return QSize(((m_tabWidth > 0) ? m_tabWidth : qBound(m_minimumTabWidth, qFloor((rect().width() - (amount * m_minimumTabWidth)) / qMax(1, (count() - amount))), m_maximumTabWidth)), tabHeight);
 	}
 
 	return QSize(m_maximumTabWidth, (m_areThumbnailsEnabled ? 200 : (QFontMetrics(font()).height() * 1.5)));
@@ -1607,6 +1607,11 @@ QSize TabBarWidget::sizeHint() const
 			Window *window(getWindow(i));
 
 			size += ((window && window->isPinned()) ? m_minimumTabWidth : m_maximumTabWidth);
+		}
+
+		if (parentWidget() && size > parentWidget()->width())
+		{
+			size = parentWidget()->width();
 		}
 
 		return QSize(size, QTabBar::sizeHint().height());
