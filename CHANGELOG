@@ -1,3 +1,18 @@
+0.9.12 (????-??-??):
+- greatly improved tab bar:
+-- allow to detach tabs by dragging them away;
+-- allow to drop URLs and tabs from other windows;
+-- added option to show embedded tab thumbnails;
+-- improved handling of visibility of close button;
+-- tabs demanding attention are drawn using bold font;
+-- improved RTL support;
+-- decreased default tab padding;
+-- tab text is no longer centered horizontally;
+-- fixed status tip messages while rearranging tabs;
+- open file path is saved;
+- improved RTL support in address and search fields;
+- many other fixes and improvements.
+
 0.9.11 (2016-10-01):
 - added initial support for storing passwords:
 -- support for multiple credential sets per host;

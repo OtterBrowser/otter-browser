@@ -216,6 +216,7 @@ public:
 		StartPage_TilesPerRowOption,
 		StartPage_ZoomLevelOption,
 		TabBar_EnablePreviewsOption,
+		TabBar_EnableThumbnailsOption,
 		TabBar_MaximumTabSizeOption,
 		TabBar_MinimumTabSizeOption,
 		TabBar_OpenNextToActiveOption,

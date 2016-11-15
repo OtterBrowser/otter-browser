@@ -21,7 +21,10 @@
 #ifndef OTTER_TABBARWIDGET_H
 #define OTTER_TABBARWIDGET_H
 
+#include "../core/WindowsManager.h"
+
 #include <QtGui/QDrag>
+#include <QtGui/QMovie>
 #include <QtWidgets/QProxyStyle>
 #include <QtWidgets/QTabBar>
 
@@ -29,6 +32,7 @@ namespace Otter
 {
 
 class PreviewWidget;
+class TabBarWidget;
 class Window;
 
 class TabDrag : public QDrag
@@ -49,9 +53,46 @@ class TabBarStyle : public QProxyStyle
 public:
 	explicit TabBarStyle(QStyle *style = nullptr);
 
-	void drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const override;
-	QSize sizeFromContents(ContentsType type, const QStyleOption *option, const QSize &size, const QWidget *widget) const override;
 	QRect subElementRect(SubElement element, const QStyleOption *option, const QWidget *widget = nullptr) const override;
+	int pixelMetric(PixelMetric metric, const QStyleOption *option = nullptr, const QWidget *widget = nullptr) const override;
+};
+
+class TabHandleWidget : public QWidget
+{
+	Q_OBJECT
+
+public:
+	explicit TabHandleWidget(Window *window, TabBarWidget *parent);
+
+	Window* getWindow() const;
+
+protected:
+	void paintEvent(QPaintEvent *event) override;
+	void moveEvent(QMoveEvent *event) override;
+	void resizeEvent(QResizeEvent *event) override;
+	void leaveEvent(QEvent *event) override;
+	void mouseMoveEvent(QMouseEvent *event) override;
+	void mouseReleaseEvent(QMouseEvent *event) override;
+
+protected slots:
+	void markAsActive();
+	void markAsNeedingAttention();
+	void handleLoadingStateChanged(WindowsManager::LoadingState state);
+	void updateGeometries();
+
+private:
+	Window *m_window;
+	TabBarWidget *m_tabBarWidget;
+	QMovie *m_loadingMovie;
+	QRect m_closeButtonRectangle;
+	QRect m_urlIconRectangle;
+	QRect m_thumbnailRectangle;
+	QRect m_titleRectangle;
+	bool m_isCloseButtonUnderMouse;
+
+	static QMovie *m_delayedLoadingMovie;
+	static QMovie *m_ongoingLoadingMovie;
+	static QIcon m_lockedIcon;
 };
 
 class TabBarWidget : public QTabBar
@@ -65,22 +106,28 @@ public:
 	void removeTab(int index);
 	void activateTabOnLeft();
 	void activateTabOnRight();
+	void showPreview(int index, int delay = 0);
+	void hidePreview();
 	Window* getWindow(int index) const;
 	QSize minimumSizeHint() const override;
 	QSize sizeHint() const override;
 	int getPinnedTabsAmount() const;
-	bool eventFilter(QObject *object, QEvent *event) override;
+	static bool areThumbnailsEnabled();
+	static bool isLayoutReversed();
+	static bool isCloseButtonEnabled();
+	static bool isUrlIconEnabled();
 
 protected:
+	void changeEvent(QEvent *event) override;
+	void childEvent(QChildEvent *event) override;
 	void timerEvent(QTimerEvent *event) override;
-	void resizeEvent(QResizeEvent *event) override;
 	void paintEvent(QPaintEvent *event) override;
 	void enterEvent(QEvent *event) override;
 	void leaveEvent(QEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
 	void mousePressEvent(QMouseEvent *event) override;
-	void mouseReleaseEvent(QMouseEvent *event) override;
 	void mouseMoveEvent(QMouseEvent *event) override;
+	void mouseReleaseEvent(QMouseEvent *event) override;
 	void wheelEvent(QWheelEvent *event) override;
 	void dragEnterEvent(QDragEnterEvent *event) override;
 	void dragMoveEvent(QDragMoveEvent *event) override;
@@ -90,45 +137,43 @@ protected:
 	void tabInserted(int index) override;
 	void tabRemoved(int index) override;
 	void tabHovered(int index);
-	void showPreview(int index);
-	void hidePreview();
+	QStyleOptionTab createStyleOptionTab(int index) const;
 	QSize tabSizeHint(int index) const override;
 	int getDropIndex() const;
 	bool event(QEvent *event) override;
 
 protected slots:
 	void optionChanged(int identifier, const QVariant &value);
-	void currentTabChanged(int index);
+	void updatePreviewPosition();
 	void updatePinnedTabsAmount(Window *modifiedWindow = nullptr);
-	void updateButtons();
-	void updateTabs(int index = -1);
-	void setCycle(bool enable);
 	void setArea(Qt::ToolBarArea area);
-	void setShape(QTabBar::Shape shape);
 
 private:
 	PreviewWidget *m_previewWidget;
+	QWidget *m_movableTabWidget;
 	QPoint m_dragMovePosition;
 	QPoint m_dragStartPosition;
 	quint64 m_draggedWindow;
-	QTabBar::ButtonPosition m_closeButtonPosition;
-	QTabBar::ButtonPosition m_iconButtonPosition;
-	int m_tabSize;
-	int m_maximumTabSize;
-	int m_minimumTabSize;
+	int m_tabPadding;
+	int m_tabWidth;
+	int m_maximumTabWidth;
+	int m_minimumTabWidth;
 	int m_pinnedTabsAmount;
 	int m_clickedTab;
 	int m_hoveredTab;
 	int m_previewTimer;
-	bool m_showCloseButton;
-	bool m_showUrlIcon;
-	bool m_enablePreviews;
+	bool m_arePreviewsEnabled;
 	bool m_isDraggingTab;
 	bool m_isDetachingTab;
 	bool m_isIgnoringTabDrag;
 
+	static bool m_areThumbnailsEnabled;
+	static bool m_isLayoutReversed;
+	static bool m_isCloseButtonEnabled;
+	static bool m_isUrlIconEnabled;
+
 signals:
-	void layoutChanged();
+	void needsGeometriesUpdate();
 	void tabsAmountChanged(int amount);
 };
 

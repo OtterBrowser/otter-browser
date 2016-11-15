@@ -33,8 +33,6 @@
 #include <QtCore/QtMath>
 #include <QtCore/QTimer>
 #include <QtGui/QContextMenuEvent>
-#include <QtGui/QMovie>
-#include <QtGui/QPainter>
 #include <QtGui/QStatusTipEvent>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QCheckBox>
@@ -42,12 +40,20 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
-#include <QtWidgets/QStyle>
 #include <QtWidgets/QStyleOption>
+#include <QtWidgets/QStylePainter>
 #include <QtWidgets/QToolTip>
 
 namespace Otter
 {
+
+QIcon TabHandleWidget::m_lockedIcon;
+QMovie* TabHandleWidget::m_delayedLoadingMovie(nullptr);
+QMovie* TabHandleWidget::m_ongoingLoadingMovie(nullptr);
+bool TabBarWidget::m_areThumbnailsEnabled(true);
+bool TabBarWidget::m_isLayoutReversed(false);
+bool TabBarWidget::m_isCloseButtonEnabled(true);
+bool TabBarWidget::m_isUrlIconEnabled(true);
 
 TabDrag::TabDrag(quint64 window, QObject *parent) : QDrag(parent),
 	m_window(window),
@@ -81,81 +87,465 @@ TabBarStyle::TabBarStyle(QStyle *style) : QProxyStyle(style)
 {
 }
 
-void TabBarStyle::drawControl(QStyle::ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
-{
-	if (element == CE_TabBarTabLabel)
-	{
-		const QStyleOptionTab *tabOption(qstyleoption_cast<const QStyleOptionTab*>(option));
-
-		if (tabOption)
-		{
-			QStyleOptionTab mutableTabOption(*tabOption);
-			mutableTabOption.shape = QTabBar::RoundedNorth;
-
-			QProxyStyle::drawControl(element, &mutableTabOption, painter, widget);
-
-			return;
-		}
-	}
-
-	QProxyStyle::drawControl(element, option, painter, widget);
-}
-
-QSize TabBarStyle::sizeFromContents(QStyle::ContentsType type, const QStyleOption *option, const QSize &size, const QWidget *widget) const
-{
-	QSize mutableSize(QProxyStyle::sizeFromContents(type, option, size, widget));
-	const QStyleOptionTab *tabOption(qstyleoption_cast<const QStyleOptionTab*>(option));
-
-	if (type == QStyle::CT_TabBarTab && tabOption && (tabOption->shape == QTabBar::RoundedEast || tabOption->shape == QTabBar::RoundedWest))
-	{
-		mutableSize.transpose();
-	}
-
-	return mutableSize;
-}
-
 QRect TabBarStyle::subElementRect(QStyle::SubElement element, const QStyleOption *option, const QWidget *widget) const
 {
-	if (element == QStyle::SE_TabBarTabLeftButton || element == QStyle::SE_TabBarTabRightButton || element == QStyle::SE_TabBarTabText)
+	if (element == QStyle::SE_TabBarTabLeftButton)
 	{
-		const QStyleOptionTab *tabOption(qstyleoption_cast<const QStyleOptionTab*>(option));
-
-		if (tabOption->shape == QTabBar::RoundedEast || tabOption->shape == QTabBar::RoundedWest)
+		if (qstyleoption_cast<const QStyleOptionTab*>(option))
 		{
-			QStyleOptionTab mutableTabOption(*tabOption);
-			mutableTabOption.shape = QTabBar::RoundedNorth;
-
-			QRect rectangle(QProxyStyle::subElementRect(element, &mutableTabOption, widget));
-			rectangle.translate(0, option->rect.top());
-
-			return rectangle;
+			return option->rect;
 		}
+
+		QStyleOptionTab tabOption;
+		tabOption.cornerWidgets = QStyleOptionTab::LeftCornerWidget;
+		tabOption.rect = option->rect;
+		tabOption.shape = QTabBar::RoundedNorth;
+
+		const int offset(QProxyStyle::subElementRect(QStyle::SE_TabBarTabLeftButton, &tabOption, widget).left() - option->rect.left());
+		QRect rectangle(option->rect);
+		rectangle.setLeft(rectangle.left() + offset);
+		rectangle.setRight(rectangle.right() - offset);
+
+		return rectangle;
 	}
 
 	return QProxyStyle::subElementRect(element, option, widget);
 }
 
+int TabBarStyle::pixelMetric(QStyle::PixelMetric metric, const QStyleOption *option, const QWidget *widget) const
+{
+	if (metric == QStyle::PM_TabBarTabHSpace && QProxyStyle::pixelMetric(metric, option, widget) == QCommonStyle::pixelMetric(metric, option, widget))
+	{
+		return QProxyStyle::pixelMetric(QStyle::PM_TabBarTabVSpace, option, widget);
+	}
+
+	return QProxyStyle::pixelMetric(metric, option, widget);
+}
+
+TabHandleWidget::TabHandleWidget(Window *window, TabBarWidget *parent) : QWidget(parent),
+	m_window(window),
+	m_tabBarWidget(parent),
+	m_loadingMovie(nullptr),
+	m_isCloseButtonUnderMouse(false)
+{
+	handleLoadingStateChanged(window->getLoadingState());
+	setMouseTracking(true);
+
+	connect(window, SIGNAL(activated()), this, SLOT(markAsActive()));
+	connect(window, SIGNAL(needsAttention()), this, SLOT(markAsNeedingAttention()));
+	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(update()));
+	connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(update()));
+	connect(window, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(handleLoadingStateChanged(WindowsManager::LoadingState)));
+	connect(parent, SIGNAL(currentChanged(int)), this, SLOT(updateGeometries()));
+	connect(parent, SIGNAL(tabsAmountChanged(int)), this, SLOT(updateGeometries()));
+	connect(parent, SIGNAL(needsGeometriesUpdate()), this, SLOT(updateGeometries()));
+}
+
+void TabHandleWidget::paintEvent(QPaintEvent *event)
+{
+	Q_UNUSED(event)
+
+	if (!m_window)
+	{
+		return;
+	}
+
+	QPainter painter(this);
+
+	if (m_closeButtonRectangle.isValid())
+	{
+		if (m_window->isPinned())
+		{
+			if (m_lockedIcon.isNull())
+			{
+				m_lockedIcon = ThemesManager::getIcon(QLatin1String("object-locked"));
+			}
+
+			m_lockedIcon.paint(&painter, m_closeButtonRectangle);
+		}
+		else
+		{
+			QStyleOption option;
+			option.init(this);
+			option.rect = m_closeButtonRectangle;
+			option.state = (QStyle::State_Enabled | QStyle::State_AutoRaise);
+
+			if (m_isCloseButtonUnderMouse && QGuiApplication::mouseButtons().testFlag(Qt::LeftButton))
+			{
+				option.state |= QStyle::State_Sunken;
+			}
+
+			if (m_tabBarWidget->getWindow(m_tabBarWidget->currentIndex()) == m_window)
+			{
+				option.state |= QStyle::State_Selected;
+			}
+
+			style()->drawPrimitive(QStyle::PE_IndicatorTabClose, &option, &painter, this);
+		}
+	}
+
+	if (m_urlIconRectangle.isValid())
+	{
+		if (m_loadingMovie)
+		{
+			painter.drawPixmap(m_urlIconRectangle, m_loadingMovie->currentPixmap());
+		}
+		else
+		{
+			m_window->getIcon().paint(&painter, m_urlIconRectangle);
+		}
+	}
+
+	if (m_thumbnailRectangle.isValid())
+	{
+		const QPixmap thumbnail(m_window->getThumbnail());
+
+		if (thumbnail.isNull())
+		{
+			painter.fillRect(m_thumbnailRectangle, Qt::white);
+
+			if (m_thumbnailRectangle.height() >= 16 && m_thumbnailRectangle.width() >= 16)
+			{
+				if (m_loadingMovie)
+				{
+					painter.drawPixmap(QRect((m_thumbnailRectangle.left() + ((m_thumbnailRectangle.width() - 16) / 2)), (m_thumbnailRectangle.top() + ((m_thumbnailRectangle.height() - 16) / 2)), 16, 16), m_loadingMovie->currentPixmap());
+				}
+				else
+				{
+					m_window->getIcon().paint(&painter, m_thumbnailRectangle);
+				}
+			}
+		}
+		else
+		{
+			QRect sourceRectangle(m_thumbnailRectangle);
+			sourceRectangle.moveTo(0, 0);
+
+			painter.drawPixmap(m_thumbnailRectangle, thumbnail, sourceRectangle);
+		}
+	}
+
+	if (m_titleRectangle.isValid())
+	{
+		painter.drawText(m_titleRectangle, ((isRightToLeft() ? Qt::AlignRight : Qt::AlignLeft) | Qt::AlignVCenter), fontMetrics().elidedText(m_window->getTitle(), Qt::ElideRight, m_titleRectangle.width()));
+	}
+}
+
+void TabHandleWidget::moveEvent(QMoveEvent *event)
+{
+	QWidget::moveEvent(event);
+
+	if (underMouse())
+	{
+		m_isCloseButtonUnderMouse = m_closeButtonRectangle.contains(mapFromGlobal(QCursor::pos()));
+	}
+}
+
+void TabHandleWidget::resizeEvent(QResizeEvent *event)
+{
+	QWidget::resizeEvent(event);
+
+	updateGeometries();
+}
+
+void TabHandleWidget::leaveEvent(QEvent *event)
+{
+	QWidget::leaveEvent(event);
+
+	m_isCloseButtonUnderMouse = false;
+
+	update();
+}
+
+void TabHandleWidget::mouseMoveEvent(QMouseEvent *event)
+{
+	const bool wasCloseButtonUnderMouse(m_isCloseButtonUnderMouse);
+
+	m_isCloseButtonUnderMouse = m_closeButtonRectangle.contains(event->pos());
+
+	if (m_window)
+	{
+		if (!m_window->isPinned())
+		{
+			if (wasCloseButtonUnderMouse && !m_isCloseButtonUnderMouse)
+			{
+				m_tabBarWidget->showPreview(-1, 250);
+
+				QToolTip::hideText();
+
+				setToolTip(QString());
+			}
+			else if (!wasCloseButtonUnderMouse && m_isCloseButtonUnderMouse)
+			{
+				m_tabBarWidget->hidePreview();
+
+				const QVector<QKeySequence> shortcuts(ActionsManager::getActionDefinition(ActionsManager::CloseTabAction).shortcuts);
+
+				setToolTip(tr("Close Tab") + (shortcuts.isEmpty() ? QString() : QLatin1String(" (") + shortcuts.at(0).toString(QKeySequence::NativeText) + QLatin1Char(')')));
+			}
+		}
+	}
+
+	QWidget::mouseMoveEvent(event);
+
+	update();
+}
+
+void TabHandleWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+	QWidget::mouseReleaseEvent(event);
+
+	if (m_window && !m_window->isPinned() && event->button() == Qt::LeftButton && m_isCloseButtonUnderMouse)
+	{
+		m_window->close();
+	}
+}
+
+void TabHandleWidget::markAsActive()
+{
+	setFont(parentWidget()->font());
+}
+
+void TabHandleWidget::markAsNeedingAttention()
+{
+	if (m_tabBarWidget->getWindow(m_tabBarWidget->currentIndex()) != m_window)
+	{
+		QFont font(parentWidget()->font());
+		font.setBold(true);
+
+		setFont(font);
+	}
+}
+
+void TabHandleWidget::handleLoadingStateChanged(WindowsManager::LoadingState state)
+{
+	if (m_loadingMovie)
+	{
+		disconnect(m_loadingMovie, SIGNAL(frameChanged(int)), this, SLOT(update()));
+
+		m_loadingMovie = nullptr;
+
+		update();
+	}
+
+	if (state == WindowsManager::DelayedLoadingState || state == WindowsManager::OngoingLoadingState)
+	{
+		if (state == WindowsManager::OngoingLoadingState)
+		{
+			if (!m_ongoingLoadingMovie)
+			{
+				m_ongoingLoadingMovie = new QMovie(QLatin1String(":/icons/loading.gif"), QByteArray(), QCoreApplication::instance());
+				m_ongoingLoadingMovie->setSpeed(100);
+				m_ongoingLoadingMovie->start();
+			}
+
+			m_loadingMovie = m_ongoingLoadingMovie;
+		}
+		else
+		{
+			if (!m_delayedLoadingMovie)
+			{
+				m_delayedLoadingMovie = new QMovie(QLatin1String(":/icons/loading.gif"), QByteArray(), QCoreApplication::instance());
+				m_delayedLoadingMovie->setSpeed(10);
+				m_delayedLoadingMovie->start();
+			}
+
+			m_loadingMovie = m_delayedLoadingMovie;
+		}
+
+		connect(m_loadingMovie, SIGNAL(frameChanged(int)), this, SLOT(update()));
+	}
+}
+
+void TabHandleWidget::updateGeometries()
+{
+	if (!m_window)
+	{
+		return;
+	}
+
+	QStyleOption option;
+	option.initFrom(this);
+
+	QRect controlsRectangle(style()->subElementRect(QStyle::SE_TabBarTabLeftButton, &option, m_tabBarWidget));
+
+	m_closeButtonRectangle = QRect();
+	m_urlIconRectangle = QRect();
+	m_thumbnailRectangle = QRect();
+	m_titleRectangle = QRect();
+
+	if (TabBarWidget::areThumbnailsEnabled())
+	{
+		const int controlsHeight(qMax(16.0, (QFontMetrics(font()).height() * 1.5)));
+
+		if (controlsRectangle.height() > (controlsHeight * 2))
+		{
+			m_thumbnailRectangle = controlsRectangle;
+			m_thumbnailRectangle.setHeight(controlsRectangle.height() - controlsHeight);
+			m_thumbnailRectangle.setTop(style()->pixelMetric(QStyle::PM_TabBarTabVSpace) / 2);
+
+			controlsRectangle.setTop(m_thumbnailRectangle.bottom());
+		}
+	}
+
+	const int controlsWidth(controlsRectangle.width());
+	const bool isActive(m_tabBarWidget->getWindow(m_tabBarWidget->currentIndex()) == m_window);
+	const bool isLayoutReversed(TabBarWidget::isLayoutReversed() && isLeftToRight());
+	const bool isCloseButtonEnabled(TabBarWidget::isCloseButtonEnabled());
+	const bool isUrlIconEnabled(TabBarWidget::isUrlIconEnabled());
+
+	if (controlsWidth <= 16 && (isCloseButtonEnabled || isUrlIconEnabled))
+	{
+		if (isUrlIconEnabled)
+		{
+			if (isActive && isCloseButtonEnabled && !m_window->isPinned())
+			{
+				m_closeButtonRectangle = controlsRectangle;
+				m_urlIconRectangle = controlsRectangle;
+
+				if (isLayoutReversed)
+				{
+					m_closeButtonRectangle.setWidth(controlsRectangle.width() / 2);
+
+					m_urlIconRectangle.setLeft(m_closeButtonRectangle.right());
+				}
+				else
+				{
+					m_urlIconRectangle.setWidth(controlsRectangle.width() / 2);
+
+					m_closeButtonRectangle.setLeft(m_urlIconRectangle.right());
+				}
+			}
+			else
+			{
+				m_urlIconRectangle = controlsRectangle;
+			}
+		}
+		else
+		{
+			m_closeButtonRectangle = controlsRectangle;
+		}
+	}
+	else if (controlsWidth <= 32 && isActive && (isCloseButtonEnabled && !m_window->isPinned()) && isUrlIconEnabled)
+	{
+		if (isUrlIconEnabled)
+		{
+			m_closeButtonRectangle = controlsRectangle;
+			m_urlIconRectangle = controlsRectangle;
+
+			if (isLayoutReversed)
+			{
+				m_closeButtonRectangle.setWidth(controlsRectangle.width() / 2);
+
+				m_urlIconRectangle.setLeft(m_closeButtonRectangle.right());
+			}
+			else
+			{
+				m_urlIconRectangle.setWidth(controlsRectangle.width() / 2);
+
+				m_closeButtonRectangle.setLeft(m_urlIconRectangle.right());
+			}
+		}
+	}
+	else
+	{
+		m_titleRectangle = controlsRectangle;
+
+		if (isUrlIconEnabled)
+		{
+			m_urlIconRectangle = controlsRectangle;
+
+			if (isLayoutReversed)
+			{
+				m_urlIconRectangle.setLeft(controlsRectangle.width() - 16);
+
+				m_titleRectangle.setWidth(controlsRectangle.width() - 20);
+			}
+			else
+			{
+				m_urlIconRectangle.setWidth(16);
+
+				m_titleRectangle.setLeft(m_urlIconRectangle.right() + 4);
+			}
+		}
+
+		if (isCloseButtonEnabled && (isActive || controlsWidth >= 70))
+		{
+			m_closeButtonRectangle = m_titleRectangle;
+
+			if (isLayoutReversed)
+			{
+				m_closeButtonRectangle.setWidth(16);
+			}
+			else
+			{
+				m_closeButtonRectangle.setLeft(m_titleRectangle.right() - 16);
+			}
+
+			if (controlsWidth <= 40)
+			{
+				m_titleRectangle = QRect();
+			}
+			else
+			{
+				if (isLayoutReversed)
+				{
+					m_titleRectangle.setLeft(20);
+				}
+				else
+				{
+					m_titleRectangle.setRight(m_closeButtonRectangle.left() - 4);
+				}
+			}
+		}
+	}
+
+	if (m_closeButtonRectangle.isValid() && m_closeButtonRectangle.height() > m_closeButtonRectangle.width())
+	{
+		m_closeButtonRectangle.setTop(controlsRectangle.top() + ((m_closeButtonRectangle.height() - m_closeButtonRectangle.width()) / 2));
+		m_closeButtonRectangle.setHeight(m_closeButtonRectangle.width());
+	}
+
+	if (m_urlIconRectangle.isValid() && m_urlIconRectangle.height() > m_urlIconRectangle.width())
+	{
+		m_urlIconRectangle.setTop(controlsRectangle.top() + ((m_urlIconRectangle.height() - m_urlIconRectangle.width()) / 2));
+		m_urlIconRectangle.setHeight(m_urlIconRectangle.width());
+	}
+
+	m_isCloseButtonUnderMouse = (underMouse() && m_closeButtonRectangle.contains(mapFromGlobal(QCursor::pos())));
+
+	update();
+}
+
+Window* TabHandleWidget::getWindow() const
+{
+	return m_window;
+}
+
 TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_previewWidget(nullptr),
-	m_closeButtonPosition(static_cast<QTabBar::ButtonPosition>(QApplication::style()->styleHint(QStyle::SH_TabBar_CloseButtonPosition))),
-	m_iconButtonPosition(((m_closeButtonPosition == QTabBar::RightSide) ? QTabBar::LeftSide : QTabBar::RightSide)),
-	m_tabSize(0),
-	m_maximumTabSize(40),
-	m_minimumTabSize(250),
+	m_movableTabWidget(nullptr),
+	m_tabWidth(0),
+	m_maximumTabWidth(250),
+	m_minimumTabWidth(0),
 	m_pinnedTabsAmount(0),
 	m_clickedTab(-1),
 	m_hoveredTab(-1),
 	m_previewTimer(0),
-	m_showCloseButton(SettingsManager::getValue(SettingsManager::TabBar_ShowCloseButtonOption).toBool()),
-	m_showUrlIcon(SettingsManager::getValue(SettingsManager::TabBar_ShowUrlIconOption).toBool()),
-	m_enablePreviews(SettingsManager::getValue(SettingsManager::TabBar_EnablePreviewsOption).toBool()),
+	m_arePreviewsEnabled(SettingsManager::getValue(SettingsManager::TabBar_EnablePreviewsOption).toBool()),
 	m_isDraggingTab(false),
 	m_isDetachingTab(false),
 	m_isIgnoringTabDrag(false)
 {
+	m_areThumbnailsEnabled = SettingsManager::getValue(SettingsManager::TabBar_EnableThumbnailsOption).toBool();
+	m_isLayoutReversed = (static_cast<QTabBar::ButtonPosition>(style()->styleHint(QStyle::SH_TabBar_CloseButtonPosition)) == QTabBar::LeftSide);
+	m_isCloseButtonEnabled = SettingsManager::getValue(SettingsManager::TabBar_ShowCloseButtonOption).toBool();
+	m_isUrlIconEnabled = SettingsManager::getValue(SettingsManager::TabBar_ShowUrlIconOption).toBool();
+
 	setAcceptDrops(true);
 	setDrawBase(false);
 	setExpanding(false);
+	setTabsClosable(false);
 	setMovable(true);
 	setSelectionBehaviorOnRemove(QTabBar::SelectPreviousTab);
 	setElideMode(Qt::ElideRight);
@@ -177,7 +567,45 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	}
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
-	connect(this, SIGNAL(currentChanged(int)), this, SLOT(currentTabChanged(int)));
+	connect(this, SIGNAL(currentChanged(int)), this, SLOT(updatePreviewPosition()));
+}
+
+void TabBarWidget::changeEvent(QEvent *event)
+{
+	QTabBar::changeEvent(event);
+
+	switch (event->type())
+	{
+		case QEvent::LayoutDirectionChange:
+			emit needsGeometriesUpdate();
+
+			break;
+		case QEvent::StyleChange:
+			m_isLayoutReversed = (static_cast<QTabBar::ButtonPosition>(style()->styleHint(QStyle::SH_TabBar_CloseButtonPosition)) == QTabBar::LeftSide);
+
+			optionChanged(SettingsManager::TabBar_MinimumTabSizeOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabSizeOption));
+
+			emit needsGeometriesUpdate();
+
+			break;
+		default:
+			break;
+	}
+}
+
+void TabBarWidget::childEvent(QChildEvent *event)
+{
+	QTabBar::childEvent(event);
+
+	if (m_isDraggingTab && !m_isIgnoringTabDrag && !m_movableTabWidget && event->added())
+	{
+		QWidget *widget(qobject_cast<QWidget*>(event->child()));
+
+		if (widget)
+		{
+			m_movableTabWidget = widget;
+		}
+	}
 }
 
 void TabBarWidget::timerEvent(QTimerEvent *event)
@@ -192,16 +620,43 @@ void TabBarWidget::timerEvent(QTimerEvent *event)
 	}
 }
 
-void TabBarWidget::resizeEvent(QResizeEvent *event)
-{
-	QTabBar::resizeEvent(event);
-
-	QTimer::singleShot(100, this, SLOT(updateTabs()));
-}
-
 void TabBarWidget::paintEvent(QPaintEvent *event)
 {
-	QTabBar::paintEvent(event);
+	Q_UNUSED(event)
+
+	QStylePainter painter(this);
+	const int selectedIndex(currentIndex());
+
+	for (int i = 0; i < count(); ++i)
+	{
+		if (i == selectedIndex)
+		{
+			continue;
+		}
+
+		const QStyleOptionTab tabOption(createStyleOptionTab(i));
+
+		if (rect().intersects(tabOption.rect))
+		{
+			painter.drawControl(QStyle::CE_TabBarTab, tabOption);
+		}
+	}
+
+	if (selectedIndex >= 0)
+	{
+		const QStyleOptionTab tabOption(createStyleOptionTab(selectedIndex));
+
+		if (m_isDraggingTab && !m_isIgnoringTabDrag && m_movableTabWidget)
+		{
+			const int taboverlap(style()->pixelMetric(QStyle::PM_TabBarTabOverlap, 0, this));
+
+			m_movableTabWidget->setGeometry(tabOption.rect.adjusted(-taboverlap, 0, taboverlap, 0));
+		}
+		else
+		{
+			painter.drawControl(QStyle::CE_TabBarTab, tabOption);
+		}
+	}
 
 	if (!m_dragMovePosition.isNull())
 	{
@@ -225,7 +680,6 @@ void TabBarWidget::paintEvent(QPaintEvent *event)
 				lineOffset = tabRect(dropIndex).left();
 			}
 
-			QPainter painter(this);
 			painter.setPen(QPen(palette().text(), 3, Qt::DotLine));
 
 			if (isHorizontal)
@@ -257,7 +711,7 @@ void TabBarWidget::enterEvent(QEvent *event)
 {
 	QTabBar::enterEvent(event);
 
-	m_previewTimer = startTimer(250);
+	showPreview(-1, 250);
 }
 
 void TabBarWidget::leaveEvent(QEvent *event)
@@ -266,15 +720,15 @@ void TabBarWidget::leaveEvent(QEvent *event)
 
 	hidePreview();
 
-	m_tabSize = 0;
+	m_tabWidth = 0;
 	m_hoveredTab = -1;
+
+	updateGeometry();
+	adjustSize();
 
 	QStatusTipEvent statusTipEvent((QString()));
 
 	QApplication::sendEvent(this, &statusTipEvent);
-
-	updateGeometry();
-	adjustSize();
 }
 
 void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
@@ -374,7 +828,18 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	cycleAction->setCheckable(true);
 	cycleAction->setChecked(!SettingsManager::getValue(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption).toBool());
 
-	connect(cycleAction, SIGNAL(toggled(bool)), this, SLOT(setCycle(bool)));
+	QAction *thumbnailsAction(new QAction(tr("Show Thumbnails in Tabs"), this));
+	thumbnailsAction->setCheckable(true);
+	thumbnailsAction->setChecked(SettingsManager::getValue(SettingsManager::TabBar_EnableThumbnailsOption).toBool());
+
+	connect(cycleAction, &QAction::toggled, [&](bool isEnabled)
+	{
+		SettingsManager::setValue(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption, !isEnabled);
+	});
+	connect(thumbnailsAction, &QAction::toggled, [&](bool areEnabled)
+	{
+		SettingsManager::setValue(SettingsManager::TabBar_EnableThumbnailsOption, areEnabled);
+	});
 	connect(restoreTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
 	connect(minimizeTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
 	connect(maximizeTabAction, SIGNAL(triggered()), mainWindow, SLOT(triggerAction()));
@@ -385,6 +850,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	{
 		QList<QAction*> actions;
 		actions.append(cycleAction);
+		actions.append(thumbnailsAction);
 
 		menu.addMenu(ToolBarWidget::createCustomizationMenu(ToolBarsManager::TabBar, actions, &menu));
 	}
@@ -392,6 +858,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	{
 		QMenu *customizationMenu(menu.addMenu(tr("Customize")));
 		customizationMenu->addAction(cycleAction);
+		customizationMenu->addAction(thumbnailsAction);
 		customizationMenu->addSeparator();
 		customizationMenu->addAction(ActionsManager::getAction(ActionsManager::LockToolBarsAction, this));
 	}
@@ -675,9 +1142,21 @@ void TabBarWidget::tabLayoutChange()
 {
 	QTabBar::tabLayoutChange();
 
-	updateButtons();
+	for (int i = 0; i < count(); ++i)
+	{
+		QWidget *tabHandleWidget(tabButton(i, QTabBar::LeftSide));
 
-	emit layoutChanged();
+		if (tabHandleWidget)
+		{
+			QStyleOptionTab tabOption;
+
+			initStyleOption(&tabOption, i);
+
+			tabHandleWidget->resize(style()->subElementRect(QStyle::SE_TabBarTabLeftButton, &tabOption, this).size());
+		}
+	}
+
+	tabHovered(tabAt(mapFromGlobal(QCursor::pos())));
 }
 
 void TabBarWidget::tabInserted(int index)
@@ -685,31 +1164,6 @@ void TabBarWidget::tabInserted(int index)
 	setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
 
 	QTabBar::tabInserted(index);
-
-	if (m_showUrlIcon)
-	{
-		QLabel *label(new QLabel());
-		label->setFixedSize(QSize(16, 16));
-
-		setTabButton(index, m_iconButtonPosition, label);
-	}
-	else
-	{
-		setTabButton(index, m_iconButtonPosition, nullptr);
-	}
-
-	Window *window(getWindow(index));
-
-	if (m_showCloseButton || (window && window->isPinned()))
-	{
-		QLabel *label(new QLabel());
-		label->setFixedSize(QSize(16, 16));
-		label->installEventFilter(this);
-
-		setTabButton(index, m_closeButtonPosition, label);
-	}
-
-	updateTabs();
 
 	emit tabsAmountChanged(count());
 }
@@ -721,10 +1175,6 @@ void TabBarWidget::tabRemoved(int index)
 	if (count() == 0)
 	{
 		setMaximumSize(0, 0);
-	}
-	else
-	{
-		QTimer::singleShot(100, this, SLOT(updateTabs()));
 	}
 
 	emit tabsAmountChanged(count());
@@ -744,32 +1194,36 @@ void TabBarWidget::tabHovered(int index)
 		m_previewWidget->show();
 	}
 
-	Window *window(getWindow(index));
-	QStatusTipEvent statusTipEvent(window ? window->getUrl().toDisplayString() : QString());
-
-	QApplication::sendEvent(this, &statusTipEvent);
-
 	if (m_previewWidget && m_previewWidget->isVisible())
 	{
 		showPreview(index);
+	}
+
+	if (!m_isDraggingTab)
+	{
+		Window *window(getWindow(index));
+
+		if (window)
+		{
+			QStatusTipEvent statusTipEvent(window->getUrl().toDisplayString());
+
+			QApplication::sendEvent(this, &statusTipEvent);
+		}
 	}
 }
 
 void TabBarWidget::addTab(int index, Window *window)
 {
-	insertTab(index, window->getTitle());
-	setTabData(index, window->getIdentifier());
+	insertTab(index, QString());
+	setTabButton(index, QTabBar::LeftSide, new TabHandleWidget(window, this));
+	setTabButton(index, QTabBar::RightSide, nullptr);
 
-	connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(updateTabs()));
-	connect(window, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateTabs()));
-	connect(window, SIGNAL(updatePinnedTabsAmount(bool)), this, SLOT(updatePinnedTabsAmount()));
+	connect(window, SIGNAL(isPinnedChanged(bool)), this, SLOT(updatePinnedTabsAmount()));
 
 	if (window->isPinned())
 	{
 		updatePinnedTabsAmount(window);
 	}
-
-	updateTabs(index);
 }
 
 void TabBarWidget::removeTab(int index)
@@ -778,7 +1232,7 @@ void TabBarWidget::removeTab(int index)
 	{
 		const QSize size(tabSizeHint(count() - 1));
 
-		m_tabSize = size.width();
+		m_tabWidth = size.width();
 	}
 
 	Window *window(getWindow(index));
@@ -799,7 +1253,7 @@ void TabBarWidget::removeTab(int index)
 
 	if (underMouse() && tabAt(mapFromGlobal(QCursor::pos())) < 0)
 	{
-		m_tabSize = 0;
+		m_tabWidth = 0;
 
 		updateGeometry();
 		adjustSize();
@@ -816,9 +1270,19 @@ void TabBarWidget::activateTabOnRight()
 	setCurrentIndex((currentIndex() + 1 < count()) ? (currentIndex() + 1) : 0);
 }
 
-void TabBarWidget::showPreview(int index)
+void TabBarWidget::showPreview(int index, int delay)
 {
-	if (!m_enablePreviews || !isActiveWindow())
+	if (delay > 0)
+	{
+		if (m_previewTimer == 0)
+		{
+			m_previewTimer = startTimer(delay);
+		}
+
+		return;
+	}
+
+	if (!m_arePreviewsEnabled || !isActiveWindow())
 	{
 		hidePreview();
 
@@ -909,116 +1373,92 @@ void TabBarWidget::hidePreview()
 
 void TabBarWidget::optionChanged(int identifier, const QVariant &value)
 {
-	if (identifier == SettingsManager::TabBar_ShowCloseButtonOption)
+	switch (identifier)
 	{
-		const bool showCloseButton(value.toBool());
+		case SettingsManager::TabBar_EnablePreviewsOption:
+			m_arePreviewsEnabled = value.toBool();
 
-		if (showCloseButton != m_showCloseButton)
-		{
-			for (int i = 0; i < count(); ++i)
+			emit needsGeometriesUpdate();
+
+			break;
+		case SettingsManager::TabBar_EnableThumbnailsOption:
+			if (value.toBool() != m_areThumbnailsEnabled)
 			{
-				if (showCloseButton)
+				m_areThumbnailsEnabled = value.toBool();
+
+				updateGeometry();
+				adjustSize();
+
+				emit needsGeometriesUpdate();
+			}
+
+			break;
+		case SettingsManager::TabBar_MaximumTabSizeOption:
+			{
+				const int oldValue(m_maximumTabWidth);
+
+				m_maximumTabWidth = value.toInt();
+
+				if (m_maximumTabWidth < 0)
 				{
-					Window *window(getWindow(i));
-					QLabel *label(new QLabel());
-					label->setFixedSize(QSize(16, 16));
-
-					if (window)
-					{
-						label->setBuddy(window);
-					}
-
-					setTabButton(i, m_closeButtonPosition, label);
+					m_maximumTabWidth = 250;
 				}
-				else
+
+				if (m_maximumTabWidth != oldValue)
 				{
-					setTabButton(i, m_closeButtonPosition, nullptr);
+					updateGeometry();
+					adjustSize();
 				}
 			}
 
-			updateTabs();
-		}
-
-		m_showCloseButton = showCloseButton;
-	}
-	else if (identifier == SettingsManager::TabBar_ShowUrlIconOption)
-	{
-		const bool showUrlIcon(value.toBool());
-
-		if (showUrlIcon != m_showUrlIcon)
-		{
-			for (int i = 0; i < count(); ++i)
+			break;
+		case SettingsManager::TabBar_MinimumTabSizeOption:
 			{
-				if (showUrlIcon)
-				{
-					QLabel *label(new QLabel());
-					label->setFixedSize(QSize(16, 16));
+				const int oldValue(m_minimumTabWidth);
 
-					setTabButton(i, m_iconButtonPosition, label);
-				}
-				else
+				m_minimumTabWidth = value.toInt();
+
+				if (m_minimumTabWidth < 0)
 				{
-					setTabButton(i, m_iconButtonPosition, nullptr);
+					m_minimumTabWidth = (16 + style()->pixelMetric(QStyle::PM_TabBarTabHSpace));
+				}
+
+				if (m_minimumTabWidth != oldValue)
+				{
+					updateGeometry();
+					adjustSize();
 				}
 			}
 
-			updateTabs();
-		}
+			break;
+		case SettingsManager::TabBar_ShowCloseButtonOption:
+			if (value.toBool() != m_isCloseButtonEnabled)
+			{
+				m_isCloseButtonEnabled = value.toBool();
 
-		m_showUrlIcon = showUrlIcon;
-	}
-	else if (identifier == SettingsManager::TabBar_EnablePreviewsOption)
-	{
-		m_enablePreviews = value.toBool();
-	}
-	else if (identifier == SettingsManager::TabBar_MaximumTabSizeOption)
-	{
-		const int oldValue(m_maximumTabSize);
+				emit needsGeometriesUpdate();
+			}
 
-		m_maximumTabSize = value.toInt();
+			break;
+		case SettingsManager::TabBar_ShowUrlIconOption:
+			if (value.toBool() != m_isUrlIconEnabled)
+			{
+				m_isUrlIconEnabled = value.toBool();
 
-		if (m_maximumTabSize < 0)
-		{
-			m_maximumTabSize = 250;
-		}
+				emit needsGeometriesUpdate();
+			}
 
-		if (m_maximumTabSize != oldValue)
-		{
-			updateGeometry();
-			updateTabs();
-		}
-	}
-	else if (identifier == SettingsManager::TabBar_MinimumTabSizeOption && value.toInt() != m_minimumTabSize)
-	{
-		const int oldValue(m_minimumTabSize);
-
-		m_minimumTabSize = value.toInt();
-
-		if (m_minimumTabSize < 0)
-		{
-			m_minimumTabSize = 40;
-		}
-
-		if (m_minimumTabSize != oldValue)
-		{
-			updateGeometry();
-			updateTabs();
-		}
+			break;
+		default:
+			break;
 	}
 }
 
-void TabBarWidget::currentTabChanged(int index)
+void TabBarWidget::updatePreviewPosition()
 {
-	Q_UNUSED(index)
-
 	if (m_previewWidget && m_previewWidget->isVisible())
 	{
 		showPreview(tabAt(mapFromGlobal(QCursor::pos())));
-	}
-
-	if (m_showCloseButton)
-	{
-		updateButtons();
 	}
 }
 
@@ -1049,7 +1489,7 @@ void TabBarWidget::updatePinnedTabsAmount(Window *modifiedWindow)
 
 		for (int i = 0; i < count(); ++i)
 		{
-			if (tabData(i).toULongLong() == modifiedWindow->getIdentifier())
+			if (getWindow(i) == modifiedWindow)
 			{
 				index = i;
 
@@ -1060,153 +1500,10 @@ void TabBarWidget::updatePinnedTabsAmount(Window *modifiedWindow)
 		if (index >= 0)
 		{
 			moveTab(index, (modifiedWindow->isPinned() ? qMax(0, (m_pinnedTabsAmount - 1)) : m_pinnedTabsAmount));
-			updateButtons();
 			updateGeometry();
 			adjustSize();
 		}
 	}
-
-	updateTabs();
-}
-
-void TabBarWidget::updateButtons()
-{
-	const QSize size(tabSizeHint(count() - 1));
-	const bool isVertical(shape() == QTabBar::RoundedWest || shape() == QTabBar::RoundedEast);
-	const bool isNarrow(size.width() < 60);
-
-	for (int i = 0; i < count(); ++i)
-	{
-		Window *window(getWindow(i));
-		QLabel *closeLabel(qobject_cast<QLabel*>(tabButton(i, m_closeButtonPosition)));
-		QLabel *iconLabel(qobject_cast<QLabel*>(tabButton(i, m_iconButtonPosition)));
-		const bool isCurrent(i == currentIndex());
-		const bool isPinned(window ? window->isPinned() : false);
-
-		if (iconLabel)
-		{
-			iconLabel->setVisible(isPinned || !isCurrent || !isNarrow);
-		}
-
-		if (!closeLabel)
-		{
-			continue;
-		}
-
-		const bool wasPinned(closeLabel->property("isPinned").toBool());
-
-		if (!closeLabel->buddy())
-		{
-			Window *window(getWindow(i));
-
-			if (window)
-			{
-				closeLabel->setBuddy(window);
-			}
-		}
-
-		if (isPinned != wasPinned || !closeLabel->pixmap())
-		{
-			closeLabel->setProperty("isPinned", isPinned);
-
-			if (isPinned)
-			{
-				closeLabel->setPixmap(ThemesManager::getIcon(QLatin1String("object-locked")).pixmap(16, 16));
-			}
-			else
-			{
-				QStyleOption option;
-				option.rect = QRect(0, 0, 16, 16);
-
-				QPixmap pixmap(QSize(16, 16) * devicePixelRatio());
-				pixmap.setDevicePixelRatio(devicePixelRatio());
-				pixmap.fill(Qt::transparent);
-
-				QPainter painter(&pixmap);
-
-				style()->drawPrimitive(QStyle::PE_IndicatorTabClose, &option, &painter, this);
-
-				closeLabel->setPixmap(pixmap);
-			}
-		}
-
-		closeLabel->setVisible((isPinned && isVertical) || ((isCurrent || !isNarrow) && !isPinned));
-	}
-}
-
-void TabBarWidget::updateTabs(int index)
-{
-	if (index < 0 && sender() && sender()->inherits(QStringLiteral("Otter::Window").toLatin1()))
-	{
-		for (int i = 0; i < count(); ++i)
-		{
-			if (sender() == getWindow(i))
-			{
-				index = i;
-
-				break;
-			}
-		}
-	}
-
-	const int limit((index >= 0) ? (index + 1) : count());
-
-	for (int i = ((index >= 0) ? index : 0); i < limit; ++i)
-	{
-		Window *window(getWindow(i));
-		const WindowsManager::LoadingState loadingState(window ? window->getLoadingState() : WindowsManager::FinishedLoadingState);
-		QLabel *label(qobject_cast<QLabel*>(tabButton(i, m_iconButtonPosition)));
-
-		if (label)
-		{
-			if (loadingState == WindowsManager::DelayedLoadingState || loadingState == WindowsManager::OngoingLoadingState)
-			{
-				if (!label->movie())
-				{
-					QMovie *movie(new QMovie(QLatin1String(":/icons/loading.gif"), QByteArray(), label));
-					movie->start();
-
-					label->setMovie(movie);
-				}
-
-				label->movie()->setSpeed((loadingState == WindowsManager::OngoingLoadingState) ? 100 : 10);
-			}
-			else
-			{
-				if (label->movie())
-				{
-					label->movie()->deleteLater();
-					label->setMovie(nullptr);
-				}
-
-				QIcon icon;
-
-				if (loadingState == WindowsManager::CrashedLoadingState)
-				{
-					icon = ThemesManager::getIcon(QLatin1String("tab-crashed"));
-				}
-				else if (window)
-				{
-					icon = window->getIcon();
-				}
-				else
-				{
-					icon = ThemesManager::getIcon(QLatin1String("tab"));
-				}
-
-				label->setPixmap(icon.pixmap(16, 16));
-			}
-		}
-	}
-
-	m_hoveredTab = -1;
-
-	tabHovered(tabAt(mapFromGlobal(QCursor::pos())));
-}
-
-void TabBarWidget::setCycle(bool enable)
-{
-	SettingsManager::setValue(SettingsManager::TabBar_RequireModifierToSwitchTabOnScrollOption, !enable);
 }
 
 void TabBarWidget::setArea(Qt::ToolBarArea area)
@@ -1232,13 +1529,6 @@ void TabBarWidget::setArea(Qt::ToolBarArea area)
 	}
 }
 
-void TabBarWidget::setShape(QTabBar::Shape shape)
-{
-	QTabBar::setShape(shape);
-
-	QTimer::singleShot(100, this, SLOT(updateTabs()));
-}
-
 Window* TabBarWidget::getWindow(int index) const
 {
 	if (index < 0 || index >= count())
@@ -1246,14 +1536,39 @@ Window* TabBarWidget::getWindow(int index) const
 		return nullptr;
 	}
 
-	MainWindow *mainWindow(MainWindow::findMainWindow(parentWidget()));
+	TabHandleWidget *widget(qobject_cast<TabHandleWidget*>(tabButton(index, QTabBar::LeftSide)));
 
-	if (mainWindow)
+	if (widget)
 	{
-		return mainWindow->getWindowsManager()->getWindowByIdentifier(tabData(index).toULongLong());
+		return widget->getWindow();
 	}
 
 	return nullptr;
+}
+
+QStyleOptionTab TabBarWidget::createStyleOptionTab(int index) const
+{
+	QStyleOptionTab tabOption;
+
+	initStyleOption(&tabOption, index);
+
+	QWidget *widget(tabButton(index, QTabBar::LeftSide));
+
+	if (widget)
+	{
+		const QPoint position(widget->mapToParent(widget->rect().topLeft()));
+
+		if (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth)
+		{
+			tabOption.rect.moveTo(position.x(), tabOption.rect.y());
+		}
+		else
+		{
+			tabOption.rect.moveTo(tabOption.rect.x(), position.y());
+		}
+	}
+
+	return tabOption;
 }
 
 QSize TabBarWidget::tabSizeHint(int index) const
@@ -1261,18 +1576,19 @@ QSize TabBarWidget::tabSizeHint(int index) const
 	if (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth)
 	{
 		Window *window(getWindow(index));
+		const int tabHeight(qMax((m_areThumbnailsEnabled ? 200 : 0), height()));
 
 		if (window && window->isPinned())
 		{
-			return QSize(m_minimumTabSize, QTabBar::tabSizeHint(0).height());
+			return QSize(m_minimumTabWidth, tabHeight);
 		}
 
 		const int amount(getPinnedTabsAmount());
 
-		return QSize(((m_tabSize > 0) ? m_tabSize : qBound(m_minimumTabSize, qFloor((geometry().width() - (amount * m_minimumTabSize)) / qMax(1, (count() - amount))), m_maximumTabSize)), QTabBar::tabSizeHint(0).height());
+		return QSize(((m_tabWidth > 0) ? m_tabWidth : qBound(m_minimumTabWidth, qFloor((geometry().width() - (amount * m_minimumTabWidth)) / qMax(1, (count() - amount))), m_maximumTabWidth)), tabHeight);
 	}
 
-	return QSize(m_maximumTabSize, QTabBar::tabSizeHint(0).height());
+	return QSize(m_maximumTabWidth, (m_areThumbnailsEnabled ? 200 : (QFontMetrics(font()).height() * 1.5)));
 }
 
 QSize TabBarWidget::minimumSizeHint() const
@@ -1290,7 +1606,7 @@ QSize TabBarWidget::sizeHint() const
 		{
 			Window *window(getWindow(i));
 
-			size += ((window && window->isPinned()) ? m_minimumTabSize : m_maximumTabSize);
+			size += ((window && window->isPinned()) ? m_minimumTabWidth : m_maximumTabWidth);
 		}
 
 		return QSize(size, QTabBar::sizeHint().height());
@@ -1331,117 +1647,98 @@ int TabBarWidget::getPinnedTabsAmount() const
 	return m_pinnedTabsAmount;
 }
 
+bool TabBarWidget::areThumbnailsEnabled()
+{
+	return m_areThumbnailsEnabled;
+}
+
+bool TabBarWidget::isLayoutReversed()
+{
+	return m_isLayoutReversed;
+}
+
+bool TabBarWidget::isCloseButtonEnabled()
+{
+	return m_isCloseButtonEnabled;
+}
+
+bool TabBarWidget::isUrlIconEnabled()
+{
+	return m_isUrlIconEnabled;
+}
+
 bool TabBarWidget::event(QEvent *event)
 {
-	if (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel)
+	switch (event->type())
 	{
-		QVariantMap parameters;
-		int tab(-1);
-
-		if (event->type() == QEvent::Wheel)
-		{
-			QWheelEvent *wheelEvent(dynamic_cast<QWheelEvent*>(event));
-
-			if (wheelEvent)
+		case QEvent::MouseButtonPress:
+		case QEvent::MouseButtonDblClick:
+		case QEvent::Wheel:
 			{
-				tab = tabAt(wheelEvent->pos());
+				QVariantMap parameters;
+				int tab(-1);
+
+				if (event->type() == QEvent::Wheel)
+				{
+					QWheelEvent *wheelEvent(dynamic_cast<QWheelEvent*>(event));
+
+					if (wheelEvent)
+					{
+						tab = tabAt(wheelEvent->pos());
+					}
+				}
+				else
+				{
+					QMouseEvent *mouseEvent(dynamic_cast<QMouseEvent*>(event));
+
+					if (mouseEvent)
+					{
+						tab = tabAt(mouseEvent->pos());
+					}
+				}
+
+				if (tab >= 0)
+				{
+					Window *window(getWindow(tab));
+
+					if (window)
+					{
+						parameters[QLatin1String("window")] = window->getIdentifier();
+					}
+				}
+
+				QList<GesturesManager::GesturesContext> contexts;
+
+				if (tab < 0)
+				{
+					contexts.append(GesturesManager::NoTabHandleGesturesContext);
+				}
+				else if (tab == currentIndex())
+				{
+					contexts.append(GesturesManager::ActiveTabHandleGesturesContext);
+					contexts.append(GesturesManager::TabHandleGesturesContext);
+				}
+				else
+				{
+					contexts.append(GesturesManager::TabHandleGesturesContext);
+				}
+
+				if (qobject_cast<ToolBarWidget*>(parentWidget()))
+				{
+					contexts.append(GesturesManager::ToolBarGesturesContext);
+				}
+
+				contexts.append(GesturesManager::GenericGesturesContext);
+
+				GesturesManager::startGesture(this, event, contexts, parameters);
 			}
-		}
-		else
-		{
-			QMouseEvent *mouseEvent(dynamic_cast<QMouseEvent*>(event));
 
-			if (mouseEvent)
-			{
-				tab = tabAt(mouseEvent->pos());
-			}
-		}
-
-		if (tab >= 0)
-		{
-			Window *window(getWindow(tab));
-
-			if (window)
-			{
-				parameters[QLatin1String("window")] = window->getIdentifier();
-			}
-		}
-
-		QList<GesturesManager::GesturesContext> contexts;
-
-		if (tab < 0)
-		{
-			contexts.append(GesturesManager::NoTabHandleGesturesContext);
-		}
-		else if (tab == currentIndex())
-		{
-			contexts.append(GesturesManager::ActiveTabHandleGesturesContext);
-			contexts.append(GesturesManager::TabHandleGesturesContext);
-		}
-		else
-		{
-			contexts.append(GesturesManager::TabHandleGesturesContext);
-		}
-
-		if (qobject_cast<ToolBarWidget*>(parentWidget()))
-		{
-			contexts.append(GesturesManager::ToolBarGesturesContext);
-		}
-
-		contexts.append(GesturesManager::GenericGesturesContext);
-
-		GesturesManager::startGesture(this, event, contexts, parameters);
+			break;
+		default:
+			break;
 	}
 
 	return QTabBar::event(event);
-}
-
-bool TabBarWidget::eventFilter(QObject *object, QEvent *event)
-{
-	if (event->type() == QEvent::Enter && !object->property("isPinned").toBool())
-	{
-		hidePreview();
-	}
-	else if (event->type() == QEvent::Leave)
-	{
-		m_previewTimer = startTimer(250);
-	}
-	else if (event->type() == QEvent::ToolTip)
-	{
-		QHelpEvent *helpEvent(dynamic_cast<QHelpEvent*>(event));
-
-		if (helpEvent && !object->property("isPinned").toBool())
-		{
-			const QVector<QKeySequence> shortcuts(ActionsManager::getActionDefinition(ActionsManager::CloseTabAction).shortcuts);
-
-			QToolTip::showText(helpEvent->globalPos(), tr("Close Tab") + (shortcuts.isEmpty() ? QString() : QLatin1String(" (") + shortcuts.at(0).toString(QKeySequence::NativeText) + QLatin1Char(')')));
-		}
-
-		return true;
-	}
-	else if (event->type() == QEvent::MouseButtonPress && !object->property("isPinned").toBool())
-	{
-		return true;
-	}
-	else if (event->type() == QEvent::MouseButtonRelease && !object->property("isPinned").toBool())
-	{
-		QMouseEvent *mouseEvent(dynamic_cast<QMouseEvent*>(event));
-		QLabel *label(qobject_cast<QLabel*>(object));
-
-		if (label && mouseEvent && mouseEvent->button() == Qt::LeftButton)
-		{
-			Window *window(qobject_cast<Window*>(label->buddy()));
-
-			if (window)
-			{
-				window->close();
-
-				return true;
-			}
-		}
-	}
-
-	return QTabBar::eventFilter(object, event);
 }
 
 }

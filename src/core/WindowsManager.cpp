@@ -899,8 +899,6 @@ void WindowsManager::setTitle(const QString &title)
 	{
 		emit windowTitleChanged(text);
 	}
-
-	m_mainWindow->getTabBar()->setTabText(index, text.replace(QLatin1Char('&'), QLatin1String("&&")));
 }
 
 void WindowsManager::setStatusMessage(const QString &message)
