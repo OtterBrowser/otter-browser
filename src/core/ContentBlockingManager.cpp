@@ -514,7 +514,7 @@ ContentBlockingManager::CosmeticFiltersMode ContentBlockingManager::getCosmeticF
 	return m_cosmeticFiltersMode;
 }
 
-bool ContentBlockingManager::areWildcardEnabled()
+bool ContentBlockingManager::areWildcardsEnabled()
 {
 	return m_areWildcardsEnabled;
 }

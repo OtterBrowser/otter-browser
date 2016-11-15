@@ -64,7 +64,7 @@ public:
 	static QVector<ContentBlockingProfile*> getProfiles();
 	static QVector<int> getProfileList(const QStringList &names);
 	static CosmeticFiltersMode getCosmeticFiltersMode();
-	static bool areWildcardEnabled();
+	static bool areWildcardsEnabled();
 	static bool updateProfile(const QString &profile);
 
 public slots:
@@ -80,6 +80,7 @@ protected slots:
 
 private:
 	int m_saveTimer;
+
 	static ContentBlockingManager *m_instance;
 	static QVector<ContentBlockingProfile*> m_profiles;
 	static CosmeticFiltersMode m_cosmeticFiltersMode;

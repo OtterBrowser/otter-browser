@@ -145,6 +145,8 @@ private:
 	bool m_isEmpty;
 	bool m_wasLoaded;
 
+	static QList<QChar> m_separators;
+
 signals:
 	void profileModified(const QString &profile);
 };

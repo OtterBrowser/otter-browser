@@ -35,6 +35,8 @@
 namespace Otter
 {
 
+QList<QChar> ContentBlockingProfile::m_separators(QList<QChar>({QLatin1Char('_'), QLatin1Char('-'), QLatin1Char('.'), QLatin1Char('%')}));
+
 ContentBlockingProfile::ContentBlockingProfile(const QString &name, const QString &title, const QUrl &updateUrl, const QDateTime lastUpdate, const QList<QString> languages, int updateInterval, const ProfileCategory &category, const ProfileFlags &flags, QObject *parent) : QObject(parent),
 	m_root(nullptr),
 	m_networkReply(nullptr),
@@ -183,7 +185,7 @@ void ContentBlockingProfile::parseRuleLine(QString line)
 		line = line.left(optionSeparator);
 	}
 
-	while (line.endsWith(QLatin1Char('|')) || line.endsWith(QLatin1Char('*')) || line.endsWith(QLatin1Char('^')))
+	while (line.endsWith(QLatin1Char('|')) || line.endsWith(QLatin1Char('*')))
 	{
 		line = line.left(line.length() - 1);
 	}
@@ -193,9 +195,8 @@ void ContentBlockingProfile::parseRuleLine(QString line)
 		line = line.mid(1);
 	}
 
-	if (line.contains(QLatin1Char('^')) || (!ContentBlockingManager::areWildcardEnabled() && line.contains(QLatin1Char('*'))))
+	if (!ContentBlockingManager::areWildcardsEnabled() && line.contains(QLatin1Char('*')))
 	{
-		// TODO - '^'
 		return;
 	}
 
@@ -684,7 +685,7 @@ bool ContentBlockingProfile::checkUrlSubstring(Node *node, const QString &subStr
 				}
 			}
 
-			if (nextNode->value == treeChar)
+			if (nextNode->value == treeChar || (nextNode->value == QLatin1Char('^') && !treeChar.isDigit() && !treeChar.isLetter() && !m_separators.contains(treeChar)))
 			{
 				node = nextNode;
 
@@ -705,6 +706,14 @@ bool ContentBlockingProfile::checkUrlSubstring(Node *node, const QString &subStr
 	if (node->rule && checkRuleMatch(node->rule, currentRule, resourceType))
 	{
 		return true;
+	}
+
+	for (int i = 0; i < node->children.count(); ++i)
+	{
+		if (node->children.at(i)->value == QLatin1Char('^') && node->children.at(i)->rule && checkRuleMatch(node->children.at(i)->rule, currentRule, resourceType))
+		{
+			return true;
+		}
 	}
 
 	return false;
