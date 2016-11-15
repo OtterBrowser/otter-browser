@@ -101,8 +101,8 @@ public:
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
-	void open(const QUrl &url = QUrl(), WindowsManager::OpenHints hints = DefaultOpen);
-	void open(BookmarksItem *bookmark, WindowsManager::OpenHints hints = DefaultOpen);
+	void open(const QUrl &url = QUrl(), WindowsManager::OpenHints hints = DefaultOpen, int index = -1);
+	void open(BookmarksItem *bookmark, WindowsManager::OpenHints hints = DefaultOpen, int index = -1);
 	void search(const QString &query, const QString &searchEngine, WindowsManager::OpenHints hints = DefaultOpen);
 	void close(int index);
 	void closeAll();
@@ -115,7 +115,7 @@ public slots:
 	void setZoom(int zoom);
 
 protected:
-	void openTab(const QUrl &url, WindowsManager::OpenHints hints = DefaultOpen);
+	void openTab(const QUrl &url, WindowsManager::OpenHints hints = DefaultOpen, int index = -1);
 	void closeOther(int index = -1);
 	bool event(QEvent *event);
 
@@ -126,7 +126,7 @@ protected slots:
 	void handleWindowIsPinnedChanged(bool isPinned);
 	void setTitle(const QString &title);
 	void setStatusMessage(const QString &message);
-	Window* openWindow(ContentsWidget *widget, WindowsManager::OpenHints hints = DefaultOpen);
+	Window* openWindow(ContentsWidget *widget, WindowsManager::OpenHints hints = DefaultOpen, int index = -1);
 
 private:
 	MainWindow *m_mainWindow;

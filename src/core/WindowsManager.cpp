@@ -265,8 +265,15 @@ void WindowsManager::triggerAction(int identifier, const QVariantMap &parameters
 	}
 }
 
-void WindowsManager::open(const QUrl &url, OpenHints hints)
+void WindowsManager::open(const QUrl &url, OpenHints hints, int index)
 {
+	if (index >= 0)
+	{
+		openTab(url, hints, index);
+
+		return;
+	}
+
 	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
 
 	if (hints == NewTabOpen && !url.isEmpty() && window && Utils::isUrlEmpty(window->getUrl()))
@@ -312,7 +319,7 @@ void WindowsManager::open(const QUrl &url, OpenHints hints)
 	}
 }
 
-void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints)
+void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints, int index)
 {
 	if (!bookmark)
 	{
@@ -329,7 +336,7 @@ void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints)
 	switch (static_cast<BookmarksModel::BookmarkType>(bookmark->data(BookmarksModel::TypeRole).toInt()))
 	{
 		case BookmarksModel::UrlBookmark:
-			open(QUrl(bookmark->data(BookmarksModel::UrlRole).toUrl()), hints);
+			open(QUrl(bookmark->data(BookmarksModel::UrlRole).toUrl()), hints, index);
 
 			break;
 		case BookmarksModel::RootBookmark:
@@ -362,11 +369,11 @@ void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints)
 					return;
 				}
 
-				open(urls.at(0), hints);
+				open(urls.at(0), hints, index);
 
 				for (int i = 1; i < urls.count(); ++i)
 				{
-					open(urls.at(i), ((hints == DefaultOpen || hints.testFlag(CurrentTabOpen)) ? NewTabOpen : hints));
+					open(urls.at(i), ((hints == DefaultOpen || hints.testFlag(CurrentTabOpen)) ? NewTabOpen : hints), ((index >= 0) ? (index + i) : index));
 				}
 			}
 
@@ -376,11 +383,11 @@ void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints)
 	}
 }
 
-void WindowsManager::openTab(const QUrl &url, OpenHints hints)
+void WindowsManager::openTab(const QUrl &url, OpenHints hints, int index)
 {
 	Window *window(new Window(hints.testFlag(PrivateOpen)));
 
-	addWindow(window, hints);
+	addWindow(window, hints, index);
 
 	window->setUrl(((url.isEmpty() && SettingsManager::getValue(SettingsManager::StartPage_EnableStartPageOption).toBool()) ? QUrl(QLatin1String("about:start")) : url), false);
 }
@@ -890,7 +897,7 @@ Action* WindowsManager::getAction(int identifier)
 	return (window ? window->getContentsWidget()->getAction(identifier) : nullptr);
 }
 
-Window* WindowsManager::openWindow(ContentsWidget *widget, OpenHints hints)
+Window* WindowsManager::openWindow(ContentsWidget *widget, OpenHints hints, int index)
 {
 	if (!widget)
 	{
@@ -914,7 +921,7 @@ Window* WindowsManager::openWindow(ContentsWidget *widget, OpenHints hints)
 	{
 		window = new Window((widget->isPrivate() || hints.testFlag(PrivateOpen)), widget);
 
-		addWindow(window, hints);
+		addWindow(window, hints, index);
 	}
 
 	return window;
