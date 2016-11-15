@@ -46,9 +46,7 @@ public:
 	struct CheckResult
 	{
 		QString profile;
-		bool isBlocked;
-
-		CheckResult() : isBlocked(false) {}
+		bool isBlocked = false;
 	};
 
 	static void createInstance(QObject *parent = nullptr);

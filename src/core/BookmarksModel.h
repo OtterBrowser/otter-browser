@@ -83,10 +83,8 @@ public:
 
 	struct BookmarkMatch
 	{
-		BookmarksItem *bookmark;
+		BookmarksItem *bookmark = nullptr;
 		QString match;
-
-		BookmarkMatch () : bookmark(nullptr) {}
 	};
 
 	explicit BookmarksModel(const QString &path, FormatMode mode, QObject *parent = nullptr);

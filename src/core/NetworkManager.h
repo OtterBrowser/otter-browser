@@ -57,9 +57,7 @@ public:
 	{
 		QUrl url;
 		QMap<ResourceMetaData, QVariant> metaData;
-		NetworkManager::ResourceType resourceType;
-
-		ResourceInformation() : resourceType(NetworkManager::OtherType) {}
+		ResourceType resourceType = OtherType;
 	};
 
 	explicit NetworkManager(bool isPrivate = false, QObject *parent = nullptr);

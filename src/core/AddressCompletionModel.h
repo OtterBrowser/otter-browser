@@ -79,7 +79,9 @@ public:
 		QIcon icon;
 		EntryType type;
 
-		CompletionEntry(const QUrl &urlValue, const QString &titleValue, const QString &matchValue, const QIcon &iconValue, EntryType typeValue) : title(titleValue), match(matchValue), url(urlValue), icon(iconValue), type(typeValue) {}
+		explicit CompletionEntry(const QUrl &urlValue, const QString &titleValue, const QString &matchValue, const QIcon &iconValue, EntryType typeValue) : title(titleValue), match(matchValue), url(urlValue), icon(iconValue), type(typeValue)
+		{
+		}
 	};
 
 	explicit AddressCompletionModel(QObject *parent = nullptr);

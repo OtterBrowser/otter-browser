@@ -63,9 +63,7 @@ public:
 	{
 		QString name;
 		QString value;
-		FieldType type;
-
-		FieldInformation() : type(UnknownField) {}
+		FieldType type = UnknownField;
 	};
 
 	struct PasswordInformation
@@ -74,9 +72,7 @@ public:
 		QDateTime timeAdded;
 		QDateTime timeUsed;
 		QList<FieldInformation> fields;
-		PasswordType type;
-
-		PasswordInformation() : type(FormPassword) {}
+		PasswordType type = FormPassword;
 	};
 
 	static void createInstance(QObject *parent = nullptr);

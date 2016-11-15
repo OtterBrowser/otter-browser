@@ -54,11 +54,9 @@ public:
 
 	struct HistoryEntryMatch
 	{
-		HistoryEntryItem *entry;
+		HistoryEntryItem *entry = nullptr;
 		QString match;
-		bool isTypedIn;
-
-		HistoryEntryMatch () : entry(nullptr), isTypedIn(false) {}
+		bool isTypedIn = false;
 	};
 
 	explicit HistoryModel(const QString &path, QObject *parent = nullptr);

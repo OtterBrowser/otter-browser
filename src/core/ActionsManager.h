@@ -265,10 +265,8 @@ public:
 		QString description;
 		QIcon icon;
 		QVector<QKeySequence> shortcuts;
-		ActionFlags flags;
-		int identifier;
-
-		ActionDefinition() : flags(IsEnabledFlag), identifier(-1) {}
+		ActionFlags flags = IsEnabledFlag;
+		int identifier = -1;
 	};
 
 	struct ActionEntryDefinition

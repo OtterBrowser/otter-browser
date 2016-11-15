@@ -38,10 +38,8 @@ struct HandlerDefinition
 {
 	QString openCommand;
 	QString downloadsPath;
-	TransferMode transferMode;
-	bool isExplicit;
-
-	HandlerDefinition() : transferMode(IgnoreTransferMode), isExplicit(true) {}
+	TransferMode transferMode = IgnoreTransferMode;
+	bool isExplicit = true;
 };
 
 class HandlersManager : public QObject

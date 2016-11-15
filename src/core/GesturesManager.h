@@ -74,9 +74,7 @@ protected:
 	struct MouseGesture
 	{
 		QList<GestureStep> steps;
-		int action;
-
-		MouseGesture() : action(0) {}
+		int action = 0;
 	};
 
 	explicit GesturesManager(QObject *parent);

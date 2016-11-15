@@ -82,9 +82,13 @@ public:
 		QUrl url;
 		QIcon icon;
 
-		SpecialPageInformation() {}
+		explicit SpecialPageInformation(const QString &valueTitle, const QString &valueDescription, const QUrl &valueUrl, const QIcon &valueIcon) : title(valueTitle), description(valueDescription), url(valueUrl), icon(valueIcon)
+		{
+		}
 
-		SpecialPageInformation(const QString &valueTitle, const QString &valueDescription, const QUrl &valueUrl, const QIcon &valueIcon) : title(valueTitle), description(valueDescription), url(valueUrl), icon(valueIcon) {}
+		SpecialPageInformation()
+		{
+		}
 
 		QString getTitle() const
 		{

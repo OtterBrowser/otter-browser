@@ -35,9 +35,7 @@ struct UpdateInformation
 	QUrl detailsUrl;
 	QUrl scriptUrl;
 	QUrl fileUrl;
-	bool isAvailable;
-
-	UpdateInformation() : isAvailable(false) {}
+	bool isAvailable = false;
 };
 
 class UpdateChecker : public QObject

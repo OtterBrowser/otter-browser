@@ -45,10 +45,8 @@ public:
 	{
 		QString url;
 		QString enctype;
-		QString method;
+		QString method = QLatin1String("get");
 		QUrlQuery parameters;
-
-		SearchUrl() : method(QLatin1String("get")) {}
 	};
 
 	struct SearchEngineDefinition
@@ -57,14 +55,12 @@ public:
 		QString title;
 		QString description;
 		QString keyword;
-		QString encoding;
+		QString encoding = QLatin1String("UTF-8");
 		QUrl formUrl;
 		QUrl selfUrl;
 		SearchUrl resultsUrl;
 		SearchUrl suggestionsUrl;
 		QIcon icon;
-
-		SearchEngineDefinition() : encoding(QLatin1String("UTF-8")) {}
 	};
 
 	static void createInstance(QObject *parent = nullptr);

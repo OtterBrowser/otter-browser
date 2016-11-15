@@ -39,9 +39,7 @@ struct MouseProfile
 	QString author;
 	QString version;
 	QHash<QString, QHash<QString, int> > gestures;
-	bool isModified;
-
-	MouseProfile() : isModified(false) {}
+	bool isModified = false;
 };
 
 class GestureActionDelegate : public ItemDelegate

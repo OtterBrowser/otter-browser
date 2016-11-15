@@ -32,11 +32,9 @@ struct EventDefinition
 	QString title;
 	QString description;
 	QString playSound;
-	int identifier;
-	bool showAlert;
-	bool showNotification;
-
-	EventDefinition() : identifier(-1), showAlert(false), showNotification(false) {}
+	int identifier = -1;
+	bool showAlert = false;
+	bool showNotification = false;
 };
 
 class NotificationsManager;

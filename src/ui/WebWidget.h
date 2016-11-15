@@ -135,9 +135,7 @@ public:
 		QUrl mediaUrl;
 		QPoint position;
 		QRect geometry;
-		HitTestFlags flags;
-
-		HitTestResult() : flags(NoFlagsTest) {}
+		HitTestFlags flags = NoFlagsTest;
 
 		explicit HitTestResult(const QVariant &result)
 		{
@@ -156,6 +154,10 @@ public:
 			geometry = QRect(geometryMap.value(QLatin1String("x")).toInt(), geometryMap.value(QLatin1String("y")).toInt(), geometryMap.value(QLatin1String("w")).toInt(), geometryMap.value(QLatin1String("h")).toInt());
 			position = map.value(QLatin1String("position")).toPoint();
 			flags = static_cast<HitTestFlags>(map.value(QLatin1String("flags")).toInt());
+		}
+
+		HitTestResult()
+		{
 		}
 	};
 

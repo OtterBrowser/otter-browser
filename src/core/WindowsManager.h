@@ -31,10 +31,8 @@ namespace Otter
 struct ClosedWindow
 {
 	SessionWindow window;
-	quint64 nextWindow;
-	quint64 previousWindow;
-
-	ClosedWindow() : nextWindow(0), previousWindow(0) {}
+	quint64 nextWindow = 0;
+	quint64 previousWindow = 0;
 };
 
 class BookmarksItem;

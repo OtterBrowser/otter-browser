@@ -56,19 +56,17 @@ public:
 		QString title;
 		QString bookmarksPath;
 		QList<ActionsManager::ActionEntryDefinition> entries;
-		ToolBarVisibility normalVisibility;
-		ToolBarVisibility fullScreenVisibility;
-		Qt::ToolBarArea location;
-		Qt::ToolButtonStyle buttonStyle;
-		int identifier;
-		int iconSize;
-		int maximumButtonSize;
-		int row;
-		bool canReset;
-		bool isDefault;
-		bool wasRemoved;
-
-		ToolBarDefinition() : normalVisibility(AlwaysVisibleToolBar), fullScreenVisibility(AlwaysHiddenToolBar), location(Qt::NoToolBarArea), buttonStyle(Qt::ToolButtonIconOnly), identifier(-1), iconSize(-1), maximumButtonSize(-1), row(-1), canReset(false), isDefault(false), wasRemoved(false) {}
+		ToolBarVisibility normalVisibility = AlwaysVisibleToolBar;
+		ToolBarVisibility fullScreenVisibility = AlwaysHiddenToolBar;
+		Qt::ToolBarArea location = Qt::NoToolBarArea;
+		Qt::ToolButtonStyle buttonStyle = Qt::ToolButtonIconOnly;
+		int identifier = -1;
+		int iconSize = -1;
+		int maximumButtonSize = -1;
+		int row = -1;
+		bool canReset = false;
+		bool isDefault = false;
+		bool wasRemoved = false;
 
 		QString getTitle() const
 		{

@@ -55,11 +55,9 @@ public:
 	struct BlockData : public QTextBlockUserData
 	{
 		QString context;
-		HighlightingSyntax currentSyntax;
-		HighlightingSyntax previousSyntax;
-		HighlightingState state;
-
-		BlockData() : currentSyntax(HtmlSyntax), previousSyntax(HtmlSyntax), state(NoState) {}
+		HighlightingSyntax currentSyntax = HtmlSyntax;
+		HighlightingSyntax previousSyntax = HtmlSyntax;
+		HighlightingState state = NoState;
 	};
 
 	explicit SyntaxHighlighter(QTextDocument *parent);

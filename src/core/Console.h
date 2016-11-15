@@ -55,12 +55,10 @@ public:
 		QDateTime time;
 		QString note;
 		QString source;
-		MessageCategory category;
-		MessageLevel level;
-		quint64 window;
-		int line;
-
-		Message() : category(OtherCategory), level(UnknownLevel), window(0), line(-1) {}
+		MessageCategory category = OtherCategory;
+		MessageLevel level = UnknownLevel;
+		quint64 window = 0;
+		int line = -1;
 	};
 
 	static void createInstance(QObject *parent = nullptr);

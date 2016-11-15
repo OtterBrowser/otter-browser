@@ -102,11 +102,9 @@ public:
 protected:
 	struct Node
 	{
-		ContentBlockingRule *rule;
-		QChar value;
+		ContentBlockingRule *rule = nullptr;
+		QChar value = 0;
 		QVarLengthArray<Node*, 1> children;
-
-		Node() : rule(nullptr), value(0) {}
 	};
 
 	QString getPath() const;

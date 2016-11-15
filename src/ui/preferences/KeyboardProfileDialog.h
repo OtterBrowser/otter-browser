@@ -41,9 +41,7 @@ struct KeyboardProfile
 	QString author;
 	QString version;
 	QHash<int, QVector<QKeySequence> > shortcuts;
-	bool isModified;
-
-	KeyboardProfile() : isModified(false) {}
+	bool isModified = false;
 };
 
 class KeyboardShortcutDelegate : public ItemDelegate

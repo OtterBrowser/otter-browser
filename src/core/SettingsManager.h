@@ -259,11 +259,9 @@ public:
 	{
 		QVariant defaultValue;
 		QStringList choices;
-		OptionType type;
-		OptionFlags flags;
-		int identifier;
-
-		OptionDefinition() : type(UnknownType), flags(IsEnabledFlag | IsVisibleFlag), identifier(-1) {}
+		OptionType type = UnknownType;
+		OptionFlags flags = static_cast<OptionFlags>(IsEnabledFlag | IsVisibleFlag);
+		int identifier = -1;
 	};
 
 	static void createInstance(const QString &path, QObject *parent = nullptr);
