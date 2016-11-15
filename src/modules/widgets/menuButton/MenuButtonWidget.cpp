@@ -30,7 +30,8 @@ namespace Otter
 {
 
 MenuButtonWidget::MenuButtonWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent) : ToolButtonWidget(definition, parent),
-	m_menu(new Menu(Menu::NoMenuRole, this))
+	m_menu(new Menu(Menu::NoMenuRole, this)),
+	m_isHidden(false)
 {
 	setIcon(ThemesManager::getIcon(QLatin1String("otter-browser"), false));
 	setText(definition.options.value(QLatin1String("text"), tr("Menu")).toString());
@@ -54,23 +55,9 @@ void MenuButtonWidget::toolBarModified(int identifier)
 {
 	if (identifier == ToolBarsManager::MenuBar)
 	{
-		if (ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar)
-		{
-			QToolButton::setMaximumSize(0, 0);
-		}
-		else
-		{
-			ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
+		m_isHidden = (ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar);
 
-			if (toolBar)
-			{
-				setMaximumButtonSize(toolBar->getMaximumButtonSize());
-			}
-			else
-			{
-				setMaximumButtonSize(QWIDGETSIZE_MAX);
-			}
-		}
+		updateGeometry();
 	}
 }
 
@@ -81,6 +68,26 @@ void MenuButtonWidget::updateMenu()
 	m_menu->load(QLatin1String("menu/menuButton.json"));
 
 	connect(m_menu, SIGNAL(aboutToShow()), this, SLOT(updateMenu()));
+}
+
+QSize MenuButtonWidget::minimumSizeHint() const
+{
+	if (m_isHidden)
+	{
+		return QSize(0, 0);
+	}
+
+	return ToolButtonWidget::minimumSizeHint();
+}
+
+QSize MenuButtonWidget::sizeHint() const
+{
+	if (m_isHidden)
+	{
+		return QSize(0, 0);
+	}
+
+	return ToolButtonWidget::sizeHint();
 }
 
 }

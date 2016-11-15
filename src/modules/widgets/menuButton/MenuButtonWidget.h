@@ -34,12 +34,16 @@ class MenuButtonWidget : public ToolButtonWidget
 public:
 	explicit MenuButtonWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent);
 
+	QSize minimumSizeHint() const override;
+	QSize sizeHint() const override;
+
 protected slots:
 	void toolBarModified(int identifier);
 	void updateMenu();
 
 private:
 	Menu *m_menu;
+	bool m_isHidden;
 };
 
 }
