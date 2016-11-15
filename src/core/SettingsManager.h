@@ -105,6 +105,7 @@ public:
 		Choices_WarnFormResendOption,
 		Choices_WarnLowDiskSpaceOption,
 		Choices_WarnOpenBookmarkFolderOption,
+		Choices_WarnOpenMultipleDroppedUrlsOption,
 		Choices_WarnQuitOption,
 		Choices_WarnQuitTransfersOption,
 		Content_BackgroundColorOption,

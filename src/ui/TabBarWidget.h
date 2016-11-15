@@ -21,6 +21,7 @@
 #ifndef OTTER_TABBARWIDGET_H
 #define OTTER_TABBARWIDGET_H
 
+#include <QtGui/QDrag>
 #include <QtWidgets/QProxyStyle>
 #include <QtWidgets/QTabBar>
 
@@ -30,14 +31,27 @@ namespace Otter
 class PreviewWidget;
 class Window;
 
+class TabDrag : public QDrag
+{
+public:
+	explicit TabDrag(quint64 window, QObject *parent);
+	~TabDrag();
+
+	void timerEvent(QTimerEvent *event) override;
+
+private:
+	quint64 m_window;
+	int m_releaseTimer;
+};
+
 class TabBarStyle : public QProxyStyle
 {
 public:
 	explicit TabBarStyle(QStyle *style = nullptr);
 
-	void drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const;
-	QSize sizeFromContents(ContentsType type, const QStyleOption *option, const QSize &size, const QWidget *widget) const;
-	QRect subElementRect(SubElement element, const QStyleOption *option, const QWidget *widget = nullptr) const;
+	void drawControl(ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const override;
+	QSize sizeFromContents(ContentsType type, const QStyleOption *option, const QSize &size, const QWidget *widget) const override;
+	QRect subElementRect(SubElement element, const QStyleOption *option, const QWidget *widget = nullptr) const override;
 };
 
 class TabBarWidget : public QTabBar
@@ -53,28 +67,35 @@ public:
 	void activateTabOnRight();
 	Window* getWindow(int index) const;
 	QVariant getTabProperty(int index, const QString &key, const QVariant &defaultValue) const;
-	QSize minimumSizeHint() const;
-	QSize sizeHint() const;
+	QSize minimumSizeHint() const override;
+	QSize sizeHint() const override;
 	int getPinnedTabsAmount() const;
-	bool eventFilter(QObject *object, QEvent *event);
+	bool eventFilter(QObject *object, QEvent *event) override;
 
 protected:
-	void timerEvent(QTimerEvent *event);
-	void resizeEvent(QResizeEvent *event);
-	void enterEvent(QEvent *event);
-	void leaveEvent(QEvent *event);
-	void contextMenuEvent(QContextMenuEvent *event);
-	void mousePressEvent(QMouseEvent *event);
-	void mouseMoveEvent(QMouseEvent *event);
-	void wheelEvent(QWheelEvent *event);
-	void tabLayoutChange();
-	void tabInserted(int index);
-	void tabRemoved(int index);
+	void timerEvent(QTimerEvent *event) override;
+	void resizeEvent(QResizeEvent *event) override;
+	void paintEvent(QPaintEvent *event) override;
+	void enterEvent(QEvent *event) override;
+	void leaveEvent(QEvent *event) override;
+	void contextMenuEvent(QContextMenuEvent *event) override;
+	void mousePressEvent(QMouseEvent *event) override;
+	void mouseReleaseEvent(QMouseEvent *event) override;
+	void mouseMoveEvent(QMouseEvent *event) override;
+	void wheelEvent(QWheelEvent *event) override;
+	void dragEnterEvent(QDragEnterEvent *event) override;
+	void dragMoveEvent(QDragMoveEvent *event) override;
+	void dragLeaveEvent(QDragLeaveEvent *event) override;
+	void dropEvent(QDropEvent *event) override;
+	void tabLayoutChange() override;
+	void tabInserted(int index) override;
+	void tabRemoved(int index) override;
 	void tabHovered(int index);
 	void showPreview(int index);
 	void hidePreview();
-	QSize tabSizeHint(int index) const;
-	bool event(QEvent *event);
+	QSize tabSizeHint(int index) const override;
+	int getDropIndex() const;
+	bool event(QEvent *event) override;
 
 protected slots:
 	void optionChanged(int identifier, const QVariant &value);
@@ -88,6 +109,9 @@ protected slots:
 
 private:
 	PreviewWidget *m_previewWidget;
+	QPoint m_dragMovePosition;
+	QPoint m_dragStartPosition;
+	quint64 m_draggedWindow;
 	QTabBar::ButtonPosition m_closeButtonPosition;
 	QTabBar::ButtonPosition m_iconButtonPosition;
 	int m_tabSize;
@@ -100,6 +124,9 @@ private:
 	bool m_showCloseButton;
 	bool m_showUrlIcon;
 	bool m_enablePreviews;
+	bool m_isDraggingTab;
+	bool m_isDetachingTab;
+	bool m_isIgnoringTabDrag;
 
 signals:
 	void layoutChanged();

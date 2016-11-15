@@ -125,6 +125,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Choices_WarnFormResendOption, true, BooleanType);
 	registerOption(Choices_WarnLowDiskSpaceOption, QLatin1String("warn"), EnumerationType, QStringList({QLatin1String("warn"), QLatin1String("continueReadOnly"), QLatin1String("continueReadWrite")}));
 	registerOption(Choices_WarnOpenBookmarkFolderOption, true, BooleanType);
+	registerOption(Choices_WarnOpenMultipleDroppedUrlsOption, true, BooleanType);
 	registerOption(Choices_WarnQuitOption, QLatin1String("noWarn"), EnumerationType, QStringList({QLatin1String("alwaysWarn"), QLatin1String("warnOpenTabs"), QLatin1String("noWarn")}));
 	registerOption(Choices_WarnQuitTransfersOption, true, BooleanType);
 	registerOption(Content_BackgroundColorOption, QLatin1String("#FFFFFF"), ColorType);

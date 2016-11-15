@@ -29,23 +29,53 @@
 #include "../core/SettingsManager.h"
 #include "../core/ThemesManager.h"
 
+#include <QtCore/QMimeData>
 #include <QtCore/QtMath>
 #include <QtCore/QTimer>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QMovie>
 #include <QtGui/QPainter>
 #include <QtGui/QStatusTipEvent>
-#include <QtWidgets/QStyle>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QBoxLayout>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QMessageBox>
+#include <QtWidgets/QStyle>
 #include <QtWidgets/QStyleOption>
 #include <QtWidgets/QToolTip>
 
 namespace Otter
 {
+
+TabDrag::TabDrag(quint64 window, QObject *parent) : QDrag(parent),
+	m_window(window),
+	m_releaseTimer(0)
+{
+	m_releaseTimer = startTimer(250);
+}
+
+TabDrag::~TabDrag()
+{
+	if (!target())
+	{
+		QVariantMap parameters;
+		parameters[QLatin1String("window")] = m_window;
+
+		ActionsManager::triggerAction(ActionsManager::DetachTabAction, this, parameters);
+	}
+}
+
+void TabDrag::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_releaseTimer && QGuiApplication::mouseButtons() == Qt::NoButton)
+	{
+		deleteLater();
+	}
+
+	QDrag::timerEvent(event);
+}
 
 TabBarStyle::TabBarStyle(QStyle *style) : QProxyStyle(style)
 {
@@ -118,9 +148,13 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_previewTimer(0),
 	m_showCloseButton(SettingsManager::getValue(SettingsManager::TabBar_ShowCloseButtonOption).toBool()),
 	m_showUrlIcon(SettingsManager::getValue(SettingsManager::TabBar_ShowUrlIconOption).toBool()),
-	m_enablePreviews(SettingsManager::getValue(SettingsManager::TabBar_EnablePreviewsOption).toBool())
+	m_enablePreviews(SettingsManager::getValue(SettingsManager::TabBar_EnablePreviewsOption).toBool()),
+	m_isDraggingTab(false),
+	m_isDetachingTab(false),
+	m_isIgnoringTabDrag(false)
 {
 	qRegisterMetaType<WindowsManager::LoadingState>("WindowsManager::LoadingState");
+	setAcceptDrops(true);
 	setDrawBase(false);
 	setExpanding(false);
 	setMovable(true);
@@ -164,6 +198,60 @@ void TabBarWidget::resizeEvent(QResizeEvent *event)
 	QTabBar::resizeEvent(event);
 
 	QTimer::singleShot(100, this, SLOT(updateTabs()));
+}
+
+void TabBarWidget::paintEvent(QPaintEvent *event)
+{
+	QTabBar::paintEvent(event);
+
+	if (!m_dragMovePosition.isNull())
+	{
+		const int dropIndex(getDropIndex());
+
+		if (dropIndex >= 0)
+		{
+			const bool isHorizontal(shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth);
+			int lineOffset(0);
+
+			if (count() == 0)
+			{
+				lineOffset = 0;
+			}
+			else if (dropIndex >= count())
+			{
+				lineOffset = tabRect(count() - 1).right();
+			}
+			else
+			{
+				lineOffset = tabRect(dropIndex).left();
+			}
+
+			QPainter painter(this);
+			painter.setPen(QPen(palette().text(), 3, Qt::DotLine));
+
+			if (isHorizontal)
+			{
+				painter.drawLine(lineOffset, 0, lineOffset, height());
+			}
+			else
+			{
+				painter.drawLine(0, lineOffset, width(), lineOffset);
+			}
+
+			painter.setPen(QPen(palette().text(), 9, Qt::SolidLine, Qt::RoundCap));
+
+			if (isHorizontal)
+			{
+				painter.drawPoint(lineOffset, 0);
+				painter.drawPoint(lineOffset, height());
+			}
+			else
+			{
+				painter.drawPoint(0, lineOffset);
+				painter.drawPoint(width(), lineOffset);
+			}
+		}
+	}
 }
 
 void TabBarWidget::enterEvent(QEvent *event)
@@ -325,16 +413,102 @@ void TabBarWidget::mousePressEvent(QMouseEvent *event)
 {
 	QTabBar::mousePressEvent(event);
 
+	if (event->button() == Qt::LeftButton)
+	{
+		Window *window(getWindow(tabAt(event->pos())));
+
+		m_isIgnoringTabDrag = (count() == 1 || (window && window->isPinned() && m_pinnedTabsAmount == 1));
+
+		if (window)
+		{
+			m_dragStartPosition = event->pos();
+			m_draggedWindow = window->getIdentifier();
+		}
+	}
+
 	hidePreview();
 }
 
 void TabBarWidget::mouseMoveEvent(QMouseEvent *event)
 {
-	QTabBar::mouseMoveEvent(event);
+	tabHovered(tabAt(event->pos()));
 
-	if (event->buttons() == Qt::NoButton)
+	if (!m_isDraggingTab && !m_dragStartPosition.isNull())
 	{
-		tabHovered(tabAt(event->pos()));
+		m_isDraggingTab = ((event->pos() - m_dragStartPosition).manhattanLength() > QApplication::startDragDistance());
+	}
+
+	if (m_isDraggingTab && !rect().adjusted(-10, -10, 10, 10).contains(event->pos()))
+	{
+		m_isDraggingTab = false;
+
+		QMouseEvent mouseEvent(QEvent::MouseButtonRelease, event->pos(), Qt::LeftButton, Qt::LeftButton, event->modifiers());
+
+		QApplication::sendEvent(this, &mouseEvent);
+
+		m_isDetachingTab = true;
+
+		updateGeometry();
+		adjustSize();
+
+		MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+		if (mainWindow)
+		{
+			Window *window(mainWindow->getWindowsManager()->getWindowByIdentifier(m_draggedWindow));
+
+			if (window)
+			{
+				QDrag *drag(new TabDrag(window->getIdentifier(), this));
+
+				connect(drag, &QDrag::destroyed, [&]()
+				{
+					m_isDetachingTab = false;
+				});
+
+				QMimeData *mimeData(new QMimeData());
+				mimeData->setText(window->getUrl().toString());
+				mimeData->setUrls(QList<QUrl>({window->getUrl()}));
+				mimeData->setProperty("x-url-title", window->getTitle());
+				mimeData->setProperty("x-window-identifier", window->getIdentifier());
+
+				const QPixmap thumbnail(window->getThumbnail());
+
+				drag->setMimeData(mimeData);
+				drag->setPixmap(thumbnail.isNull() ? window->getIcon().pixmap(16, 16) : thumbnail);
+				drag->exec(Qt::CopyAction | Qt::MoveAction);
+			}
+		}
+
+		return;
+	}
+
+	if (m_isIgnoringTabDrag || m_isDetachingTab)
+	{
+		return;
+	}
+
+	QTabBar::mouseMoveEvent(event);
+}
+
+void TabBarWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+	QTabBar::mouseReleaseEvent(event);
+
+	if (event->button() == Qt::LeftButton)
+	{
+		if (m_isDetachingTab)
+		{
+			QVariantMap parameters;
+			parameters[QLatin1String("window")] = m_draggedWindow;
+
+			ActionsManager::triggerAction(ActionsManager::DetachTabAction, this, parameters);
+
+			m_isDetachingTab = false;
+		}
+
+		m_dragStartPosition = QPoint();
+		m_isDraggingTab = false;
 	}
 }
 
@@ -355,6 +529,147 @@ void TabBarWidget::wheelEvent(QWheelEvent *event)
 	{
 		activateTabOnRight();
 	}
+}
+
+void TabBarWidget::dragEnterEvent(QDragEnterEvent *event)
+{
+	if (event->mimeData()->hasUrls() || (event->source() && !event->mimeData()->property("x-window-identifier").isNull()))
+	{
+		event->accept();
+
+		m_dragMovePosition = event->pos();
+
+		update();
+	}
+}
+
+void TabBarWidget::dragMoveEvent(QDragMoveEvent *event)
+{
+	m_dragMovePosition = event->pos();
+
+	update();
+}
+
+void TabBarWidget::dragLeaveEvent(QDragLeaveEvent *event)
+{
+	Q_UNUSED(event)
+
+	m_dragMovePosition = QPoint();
+
+	update();
+}
+
+void TabBarWidget::dropEvent(QDropEvent *event)
+{
+	const int dropIndex(getDropIndex());
+
+	if (event->source() && !event->mimeData()->property("x-window-identifier").isNull())
+	{
+		event->setDropAction(Qt::MoveAction);
+		event->accept();
+
+		int previousIndex(-1);
+		const quint64 windowIdentifier(event->mimeData()->property("x-window-identifier").toULongLong());
+
+		if (event->source() == this)
+		{
+			for (int i = 0; i < count(); ++i)
+			{
+				Window *window(getWindow(i));
+
+				if (window && window->getIdentifier() == windowIdentifier)
+				{
+					previousIndex = i;
+
+					break;
+				}
+			}
+		}
+
+		if (previousIndex < 0)
+		{
+			MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+			if (mainWindow)
+			{
+				const QList<MainWindow*> mainWindows(SessionsManager::getWindows());
+
+				for (int i = 0; i < mainWindows.count(); ++i)
+				{
+					if (mainWindows.at(i))
+					{
+						Window *window(mainWindows.at(i)->getWindowsManager()->getWindowByIdentifier(windowIdentifier));
+
+						if (window)
+						{
+							mainWindows.at(i)->getWindowsManager()->moveWindow(window, mainWindow, dropIndex);
+
+							break;
+						}
+					}
+				}
+			}
+		}
+		else if (previousIndex != dropIndex && (previousIndex + 1) != dropIndex)
+		{
+			moveTab(previousIndex, (dropIndex - ((dropIndex > previousIndex) ? 1 : 0)));
+		}
+	}
+	else if (event->mimeData()->hasUrls())
+	{
+		MainWindow *mainWindow(MainWindow::findMainWindow(this));
+		bool canOpen(mainWindow != nullptr);
+
+		if (canOpen)
+		{
+			const QList<QUrl> urls(event->mimeData()->urls());
+
+			if (urls.count() > 1 && SettingsManager::getValue(SettingsManager::Choices_WarnOpenMultipleDroppedUrlsOption).toBool())
+			{
+				QMessageBox messageBox;
+				messageBox.setWindowTitle(tr("Question"));
+				messageBox.setText(tr("You are about to open %n URL(s).", "", urls.count()));
+				messageBox.setInformativeText(tr("Do you want to continue?"));
+				messageBox.setIcon(QMessageBox::Question);
+				messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+				messageBox.setDefaultButton(QMessageBox::Yes);
+				messageBox.setCheckBox(new QCheckBox(tr("Do not show this message again")));
+
+				if (messageBox.exec() == QMessageBox::Cancel)
+				{
+					canOpen = false;
+				}
+
+				SettingsManager::setValue(SettingsManager::Choices_WarnOpenMultipleDroppedUrlsOption, !messageBox.checkBox()->isChecked());
+			}
+
+			if (canOpen)
+			{
+				for (int i = 0; i < urls.count(); ++i)
+				{
+					mainWindow->getWindowsManager()->open(urls.at(i), WindowsManager::DefaultOpen, (dropIndex + i));
+				}
+			}
+		}
+
+		if (canOpen)
+		{
+			event->setDropAction(Qt::CopyAction);
+			event->accept();
+		}
+		else
+		{
+			event->ignore();
+		}
+	}
+	else
+	{
+		event->ignore();
+	}
+
+	m_dragMovePosition = QPoint();
+
+	update();
 }
 
 void TabBarWidget::tabLayoutChange()
@@ -990,6 +1305,33 @@ QSize TabBarWidget::sizeHint() const
 	}
 
 	return QSize(QTabBar::sizeHint().width(), (tabSizeHint(0).height() * count()));
+}
+
+int TabBarWidget::getDropIndex() const
+{
+	if (m_dragMovePosition.isNull())
+	{
+		return ((count() > 0) ? (count() + 1) : 0);
+	}
+
+	int index(tabAt(m_dragMovePosition));
+	const bool isHorizontal((shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth));
+
+	if (index >= 0)
+	{
+		const QPoint tabCenter(tabRect(index).center());
+
+		if ((isHorizontal && m_dragMovePosition.x() > tabCenter.x()) || (!isHorizontal && m_dragMovePosition.y() > tabCenter.y()))
+		{
+			++index;
+		}
+	}
+	else
+	{
+		index = (((isHorizontal && m_dragMovePosition.x() < rect().left()) || (!isHorizontal && m_dragMovePosition.y() < rect().top())) ? count() : 0);
+	}
+
+	return index;
 }
 
 int TabBarWidget::getPinnedTabsAmount() const
