@@ -427,14 +427,14 @@ void WindowsManager::search(const QString &query, const QString &searchEngine, O
 
 void WindowsManager::close(int index)
 {
-	if (index < 0 || index >= m_mainWindow->getTabBar()->count() || m_mainWindow->getTabBar()->getTabProperty(index, QLatin1String("isPinned"), false).toBool())
+	if (index < 0 || index >= m_mainWindow->getTabBar()->count())
 	{
 		return;
 	}
 
 	Window *window(getWindowByIndex(index));
 
-	if (window)
+	if (window && !window->isPinned())
 	{
 		window->close();
 	}
@@ -927,7 +927,7 @@ Window* WindowsManager::getWindowByIndex(int index) const
 		index = m_mainWindow->getTabBar()->currentIndex();
 	}
 
-	return getWindowByIdentifier(m_mainWindow->getTabBar()->tabData(index).toULongLong());
+	return m_mainWindow->getTabBar()->getWindow(index);
 }
 
 Window* WindowsManager::getWindowByIdentifier(quint64 identifier) const
@@ -1040,7 +1040,9 @@ int WindowsManager::getWindowIndex(quint64 identifier) const
 {
 	for (int i = 0; i < m_mainWindow->getTabBar()->count(); ++i)
 	{
-		if (m_mainWindow->getTabBar()->tabData(i).toULongLong() == identifier)
+		Window *window(m_mainWindow->getTabBar()->getWindow(i));
+
+		if (window && window->getIdentifier() == identifier)
 		{
 			return i;
 		}
