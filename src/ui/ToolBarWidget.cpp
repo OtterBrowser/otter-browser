@@ -139,6 +139,16 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 	}
 }
 
+void ToolBarWidget::changeEvent(QEvent *event)
+{
+	QToolBar::changeEvent(event);
+
+	if (event->type() == QEvent::StyleChange && ToolBarsManager::getToolBarDefinition(m_identifier).iconSize <= 0)
+	{
+		emit iconSizeChanged(style()->pixelMetric(QStyle::PM_ToolBarIconSize));
+	}
+}
+
 void ToolBarWidget::paintEvent(QPaintEvent *event)
 {
 	if (m_identifier >= 0 && m_identifier != ToolBarsManager::StatusBar)
@@ -372,7 +382,7 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 	}
 
 	emit buttonStyleChanged(definition.buttonStyle);
-	emit iconSizeChanged(definition.iconSize);
+	emit iconSizeChanged(getIconSize());
 
 	if (!definition.bookmarksPath.isEmpty())
 	{
@@ -511,7 +521,14 @@ int ToolBarWidget::getIdentifier() const
 
 int ToolBarWidget::getIconSize() const
 {
-	return ToolBarsManager::getToolBarDefinition(m_identifier).iconSize;
+	const int iconSize(ToolBarsManager::getToolBarDefinition(m_identifier).iconSize);
+
+	if (iconSize > 0)
+	{
+		return iconSize;
+	}
+
+	return style()->pixelMetric(QStyle::PM_ToolBarIconSize);
 }
 
 int ToolBarWidget::getMaximumButtonSize() const

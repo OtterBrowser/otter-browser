@@ -36,10 +36,10 @@ class Window;
 class ToolBarDragAreaWidget : public QWidget
 {
 public:
-	void paintEvent(QPaintEvent *event);
-	void mousePressEvent(QMouseEvent *event);
-	void mouseMoveEvent(QMouseEvent *event);
-	void mouseReleaseEvent(QMouseEvent *event);
+	void paintEvent(QPaintEvent *event) override;
+	void mousePressEvent(QMouseEvent *event) override;
+	void mouseMoveEvent(QMouseEvent *event) override;
+	void mouseReleaseEvent(QMouseEvent *event) override;
 
 protected:
 	explicit ToolBarDragAreaWidget(ToolBarWidget *parent);
@@ -66,11 +66,12 @@ public:
 	int getIdentifier() const;
 	int getIconSize() const;
 	int getMaximumButtonSize() const;
-	bool event(QEvent *event);
+	bool event(QEvent *event) override;
 
 protected:
-	void paintEvent(QPaintEvent *event);
-	void contextMenuEvent(QContextMenuEvent *event);
+	void changeEvent(QEvent *event) override;
+	void paintEvent(QPaintEvent *event) override;
+	void contextMenuEvent(QContextMenuEvent *event) override;
 	void startToolBarDragging();
 	void endToolBarDragging();
 
