@@ -160,9 +160,7 @@ void ToolBarAreaWidget::leaveEvent(QEvent *event)
 
 		for (int i = 0; i < toolBars.count(); ++i)
 		{
-			ToolBarsManager::ToolBarVisibility visibility(ToolBarsManager::getToolBarDefinition(toolBars.at(i)->getIdentifier()).fullScreenVisibility);
-
-			if (visibility == ToolBarsManager::OnHoverVisibleToolBar)
+			if (ToolBarsManager::getToolBarDefinition(toolBars.at(i)->getIdentifier()).fullScreenVisibility == ToolBarsManager::OnHoverVisibleToolBar)
 			{
 				toolBars.at(i)->hide();
 			}
@@ -277,8 +275,8 @@ void ToolBarAreaWidget::setControlsHidden(bool areHidden)
 
 	for (int i = 0; i < toolBars.count(); ++i)
 	{
-		ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(toolBars.at(i)->getIdentifier()));
-		ToolBarsManager::ToolBarVisibility visibility(areHidden ? definition.fullScreenVisibility : definition.normalVisibility);
+		const ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(toolBars.at(i)->getIdentifier()));
+		const ToolBarsManager::ToolBarVisibility visibility(areHidden ? definition.fullScreenVisibility : definition.normalVisibility);
 
 		if (visibility == ToolBarsManager::AlwaysVisibleToolBar)
 		{
@@ -309,9 +307,7 @@ void ToolBarAreaWidget::activateToolBars(Qt::ToolBarAreas areas)
 
 	for (int i = 0; i < toolBars.count(); ++i)
 	{
-		ToolBarsManager::ToolBarVisibility visibility(ToolBarsManager::getToolBarDefinition(toolBars.at(i)->getIdentifier()).fullScreenVisibility);
-
-		if (visibility == ToolBarsManager::OnHoverVisibleToolBar)
+		if (ToolBarsManager::getToolBarDefinition(toolBars.at(i)->getIdentifier()).fullScreenVisibility == ToolBarsManager::OnHoverVisibleToolBar)
 		{
 			toolBars.at(i)->show();
 		}
