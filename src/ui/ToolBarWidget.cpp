@@ -96,7 +96,7 @@ void ToolBarDragAreaWidget::mouseMoveEvent(QMouseEvent *event)
 	m_toolBar->startToolBarDragging();
 
 	QMimeData *mimeData(new QMimeData());
-	mimeData->setData(QLatin1String("x-toolbar-identifier"), QString::number(m_toolBar->getIdentifier()).toUtf8());
+	mimeData->setProperty("x-toolbar-identifier", m_toolBar->getIdentifier());
 
 	QDrag *drag(new QDrag(this));
 	drag->setMimeData(mimeData);

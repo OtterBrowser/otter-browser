@@ -170,29 +170,29 @@ void ToolBarAreaWidget::leaveEvent(QEvent *event)
 
 void ToolBarAreaWidget::dragEnterEvent(QDragEnterEvent *event)
 {
-	if (event->mimeData()->hasFormat(QLatin1String("x-toolbar-identifier")))
+	if (event->mimeData()->property("x-toolbar-identifier").isNull())
+	{
+		event->ignore();
+	}
+	else
 	{
 		event->accept();
 
 		updateDropRow(event->pos());
-	}
-	else
-	{
-		event->ignore();
 	}
 }
 
 void ToolBarAreaWidget::dragMoveEvent(QDragMoveEvent *event)
 {
-	if (event->mimeData()->hasFormat(QLatin1String("x-toolbar-identifier")))
+	if (event->mimeData()->property("x-toolbar-identifier").isNull())
+	{
+		event->ignore();
+	}
+	else
 	{
 		event->accept();
 
 		updateDropRow(event->pos());
-	}
-	else
-	{
-		event->ignore();
 	}
 }
 
@@ -207,7 +207,7 @@ void ToolBarAreaWidget::dragLeaveEvent(QDragLeaveEvent *event)
 
 void ToolBarAreaWidget::dropEvent(QDropEvent *event)
 {
-	if (!event->mimeData()->hasFormat(QLatin1String("x-toolbar-identifier")))
+	if (event->mimeData()->property("x-toolbar-identifier").isNull())
 	{
 		event->ignore();
 
@@ -218,7 +218,7 @@ void ToolBarAreaWidget::dropEvent(QDropEvent *event)
 
 	updateDropRow(event->pos());
 
-	const int draggedIdentifier(QString(event->mimeData()->data(QLatin1String("x-toolbar-identifier"))).toInt());
+	const int draggedIdentifier(event->mimeData()->property("x-toolbar-identifier").toInt());
 	QVector<int> identifiers;
 	identifiers.reserve(m_layout->count() + 1);
 
