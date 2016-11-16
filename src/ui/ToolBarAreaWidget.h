@@ -39,17 +39,17 @@ public:
 	Qt::ToolBarArea getArea() const;
 
 protected:
-	void paintEvent(QPaintEvent *event);
-	void leaveEvent(QEvent *event);
-	void dragEnterEvent(QDragEnterEvent *event);
-	void dragMoveEvent(QDragMoveEvent *event);
-	void dragLeaveEvent(QDragLeaveEvent *event);
-	void dropEvent(QDropEvent *event);
+	void paintEvent(QPaintEvent *event) override;
+	void leaveEvent(QEvent *event) override;
+	void dragEnterEvent(QDragEnterEvent *event) override;
+	void dragMoveEvent(QDragMoveEvent *event) override;
+	void dragLeaveEvent(QDragLeaveEvent *event) override;
+	void dropEvent(QDropEvent *event) override;
 	void startToolBarDragging();
 	void endToolBarDragging();
+	void insertToolBar(ToolBarWidget *toolBar);
 	void updateDropRow(const QPoint &position);
 	void updateToolBarsOrder();
-	void insertToolBar(ToolBarWidget *toolBar);
 
 protected slots:
 	void activateToolBars(Qt::ToolBarAreas areas);
