@@ -36,12 +36,15 @@ StatusBarWidget::StatusBarWidget(MainWindow *parent) : QStatusBar(parent),
 	m_toolBar(new ToolBarWidget(ToolBarsManager::StatusBar, nullptr, this))
 {
 	optionChanged(SettingsManager::Interface_ShowSizeGripOption, SettingsManager::getValue(SettingsManager::Interface_ShowSizeGripOption));
-	setFixedHeight(ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).iconSize);
+	setFixedHeight(m_toolBar->getIconSize());
 
-	QTimer::singleShot(100, this, SLOT(updateSize()));
+	QTimer::singleShot(100, this, SLOT(updateGeometries()));
 
+	connect(m_toolBar, &ToolBarWidget::iconSizeChanged, [&](int iconSize)
+	{
+		setFixedHeight(iconSize);
+	});
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
-	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
 }
 
 void StatusBarWidget::changeEvent(QEvent *event)
@@ -50,7 +53,7 @@ void StatusBarWidget::changeEvent(QEvent *event)
 
 	if (event->type() == QEvent::LayoutDirectionChange)
 	{
-		updateSize();
+		updateGeometries();
 	}
 }
 
@@ -69,7 +72,7 @@ void StatusBarWidget::resizeEvent(QResizeEvent *event)
 {
 	QStatusBar::resizeEvent(event);
 
-	updateSize();
+	updateGeometries();
 }
 
 void StatusBarWidget::contextMenuEvent(QContextMenuEvent *event)
@@ -84,19 +87,11 @@ void StatusBarWidget::optionChanged(int identifier, const QVariant &value)
 	if (identifier == SettingsManager::Interface_ShowSizeGripOption)
 	{
 		setSizeGripEnabled(value.toBool());
-		updateSize();
+		updateGeometries();
 	}
 }
 
-void StatusBarWidget::toolBarModified(int identifier)
-{
-	if (identifier == ToolBarsManager::StatusBar)
-	{
-		setFixedHeight(ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).iconSize);
-	}
-}
-
-void StatusBarWidget::updateSize()
+void StatusBarWidget::updateGeometries()
 {
 	int offset(0);
 
@@ -108,7 +103,7 @@ void StatusBarWidget::updateSize()
 		offset = (style()->sizeFromContents(QStyle::CT_SizeGrip, &option, QSize(13, 13), this).expandedTo(QApplication::globalStrut())).height();
 	}
 
-	m_toolBar->setFixedSize((width() - offset), ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).iconSize);
+	m_toolBar->setFixedSize((width() - offset), m_toolBar->getIconSize());
 	m_toolBar->move(((layoutDirection() == Qt::RightToLeft) ? offset : 0), 0);
 }
 
