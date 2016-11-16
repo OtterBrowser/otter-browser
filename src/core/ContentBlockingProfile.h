@@ -102,9 +102,9 @@ public:
 protected:
 	struct Node
 	{
-		ContentBlockingRule *rule = nullptr;
 		QChar value = 0;
 		QVarLengthArray<Node*, 1> children;
+		QVarLengthArray<ContentBlockingRule*, 1> rules;
 	};
 
 	QString getPath() const;
@@ -113,10 +113,11 @@ protected:
 	void parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list);
 	void addRule(ContentBlockingRule *rule, const QString &ruleString);
 	void deleteNode(Node *node);
-	bool loadRules();
-	bool resolveDomainExceptions(const QString &url, const QStringList &ruleList);
+	bool evaluateRulesInNode(Node *node, const QString &currentRule, NetworkManager::ResourceType resourceType);
 	bool checkUrlSubstring(Node *node, const QString &subString, QString currentRule, NetworkManager::ResourceType resourceType);
 	bool checkRuleMatch(ContentBlockingRule *rule, const QString &currentRule, NetworkManager::ResourceType resourceType);
+	bool loadRules();
+	bool resolveDomainExceptions(const QString &url, const QStringList &ruleList);
 
 protected slots:
 	void replyFinished();

@@ -338,7 +338,7 @@ void ContentBlockingProfile::addRule(ContentBlockingRule *rule, const QString &r
 		}
 	}
 
-	node->rule = rule;
+	node->rules.append(rule);
 }
 
 void ContentBlockingProfile::deleteNode(Node *node)
@@ -348,7 +348,11 @@ void ContentBlockingProfile::deleteNode(Node *node)
 		deleteNode(node->children.at(i));
 	}
 
-	delete node->rule;
+	for (int i = 0; i < node->rules.count(); ++i)
+	{
+		delete node->rules.at(i);
+	}
+
 	delete node;
 }
 
@@ -605,6 +609,19 @@ bool ContentBlockingProfile::downloadRules()
 	return true;
 }
 
+bool ContentBlockingProfile::evaluateRulesInNode(Node *node, const QString &currentRule, NetworkManager::ResourceType resourceType)
+{
+	for (int i = 0; i < node->rules.count(); ++i)
+	{
+		if (node->rules.at(i) && checkRuleMatch(node->rules.at(i), currentRule, resourceType))
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 bool ContentBlockingProfile::loadRules()
 {
 	if (m_isEmpty && !m_updateUrl.isEmpty())
@@ -661,7 +678,7 @@ bool ContentBlockingProfile::checkUrlSubstring(Node *node, const QString &subStr
 	{
 		const QChar treeChar(subString.at(i));
 
-		if (node->rule && checkRuleMatch(node->rule, currentRule, resourceType))
+		if (evaluateRulesInNode(node, currentRule, resourceType))
 		{
 			return true;
 		}
@@ -703,14 +720,14 @@ bool ContentBlockingProfile::checkUrlSubstring(Node *node, const QString &subStr
 		currentRule += treeChar;
 	}
 
-	if (node->rule && checkRuleMatch(node->rule, currentRule, resourceType))
+	if (evaluateRulesInNode(node, currentRule, resourceType))
 	{
 		return true;
 	}
 
 	for (int i = 0; i < node->children.count(); ++i)
 	{
-		if (node->children.at(i)->value == QLatin1Char('^') && node->children.at(i)->rule && checkRuleMatch(node->children.at(i)->rule, currentRule, resourceType))
+		if (node->children.at(i)->value == QLatin1Char('^') && evaluateRulesInNode(node, currentRule, resourceType))
 		{
 			return true;
 		}
