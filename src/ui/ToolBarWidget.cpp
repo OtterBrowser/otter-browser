@@ -143,9 +143,13 @@ void ToolBarWidget::changeEvent(QEvent *event)
 {
 	QToolBar::changeEvent(event);
 
-	if (event->type() == QEvent::StyleChange && ToolBarsManager::getToolBarDefinition(m_identifier).iconSize <= 0)
+	if (event->type() == QEvent::StyleChange)
 	{
-		emit iconSizeChanged(style()->pixelMetric(QStyle::PM_ToolBarIconSize));
+		const int iconSize(getIconSize());
+
+		setIconSize(QSize(iconSize, iconSize));
+
+		emit iconSizeChanged(iconSize);
 	}
 }
 
@@ -384,15 +388,13 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 		clear();
 	}
 
-	setToolButtonStyle(definition.buttonStyle);
+	const int iconSize(getIconSize());
 
-	if (definition.iconSize > 0)
-	{
-		setIconSize(QSize(definition.iconSize, definition.iconSize));
-	}
+	setToolButtonStyle(definition.buttonStyle);
+	setIconSize(QSize(iconSize, iconSize));
 
 	emit buttonStyleChanged(definition.buttonStyle);
-	emit iconSizeChanged(getIconSize());
+	emit iconSizeChanged(iconSize);
 
 	if (!definition.bookmarksPath.isEmpty())
 	{
