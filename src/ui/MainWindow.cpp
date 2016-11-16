@@ -844,7 +844,7 @@ void MainWindow::endToolBarDragging()
 
 void MainWindow::moveToolBar(ToolBarWidget *toolBar, Qt::ToolBarArea area)
 {
-	if (!m_hasToolBars)
+	if (!m_hasToolBars || !toolBar)
 	{
 		return;
 	}

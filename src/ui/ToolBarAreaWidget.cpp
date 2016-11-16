@@ -316,7 +316,10 @@ void ToolBarAreaWidget::activateToolBars(Qt::ToolBarAreas areas)
 
 void ToolBarAreaWidget::insertToolBar(ToolBarWidget *toolBar)
 {
-	m_layout->insertWidget(ToolBarsManager::getToolBarDefinition(toolBar->getIdentifier()).row, toolBar);
+	if (toolBar)
+	{
+		m_layout->insertWidget(ToolBarsManager::getToolBarDefinition(toolBar->getIdentifier()).row, toolBar);
+	}
 }
 
 void ToolBarAreaWidget::toolBarAdded(int identifier)
