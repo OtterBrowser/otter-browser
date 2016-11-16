@@ -60,6 +60,7 @@ public:
 
 	static QMenu* createCustomizationMenu(int identifier, QList<QAction*> actions = QList<QAction*>(), QWidget *parent = nullptr);
 	void reload();
+	void resetGeometry();
 	void setDefinition(const ToolBarsManager::ToolBarDefinition &definition);
 	Qt::ToolBarArea getArea() const;
 	Qt::ToolButtonStyle getButtonStyle() const;

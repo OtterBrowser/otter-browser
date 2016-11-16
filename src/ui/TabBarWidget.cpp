@@ -1386,6 +1386,16 @@ void TabBarWidget::optionChanged(int identifier, const QVariant &value)
 			{
 				m_areThumbnailsEnabled = value.toBool();
 
+				if (!m_areThumbnailsEnabled)
+				{
+					ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
+
+					if (toolBar)
+					{
+						toolBar->resetGeometry();
+					}
+				}
+
 				updateGeometry();
 				adjustSize();
 

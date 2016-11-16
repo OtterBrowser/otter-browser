@@ -259,6 +259,33 @@ void ToolBarWidget::reload()
 	emit areaChanged(definition.location);
 }
 
+void ToolBarWidget::resetGeometry()
+{
+	for (int i = 0; i < actions().count(); ++i)
+	{
+		QWidget *widget(widgetForAction(actions().at(i)));
+
+		if (widget)
+		{
+			widget->setMaximumSize(0, 0);
+		}
+	}
+
+	setMaximumSize(0, 0);
+
+	for (int i = 0; i < actions().count(); ++i)
+	{
+		QWidget *widget(widgetForAction(actions().at(i)));
+
+		if (widget)
+		{
+			widget->setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
+		}
+	}
+
+	setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
+}
+
 void ToolBarWidget::toolBarModified(int identifier)
 {
 	if (identifier == m_identifier)
@@ -382,6 +409,8 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 				removeAction(actions().at(i));
 			}
 		}
+
+		resetGeometry();
 	}
 	else
 	{
