@@ -36,14 +36,13 @@ public:
 	explicit MenuBarWidget(MainWindow *parent);
 
 protected:
-	void changeEvent(QEvent *event);
-	void resizeEvent(QResizeEvent *event);
-	void contextMenuEvent(QContextMenuEvent *event);
-	void setup();
+	void changeEvent(QEvent *event) override;
+	void resizeEvent(QResizeEvent *event) override;
+	void contextMenuEvent(QContextMenuEvent *event) override;
+	void reload();
 
 protected slots:
-	void toolBarModified(int identifier);
-	void updateSize();
+	void updateGeometries();
 
 private:
 	MainWindow *m_mainWindow;

@@ -60,9 +60,15 @@ MenuBarWidget::MenuBarWidget(MainWindow *parent) : QMenuBar(parent),
 
 	if (!isNativeMenuBar())
 	{
-		setup();
+		reload();
 
-		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
+		connect(ToolBarsManager::getInstance(), &ToolBarsManager::toolBarModified, [&](int identifier)
+		{
+			if (identifier == ToolBarsManager::MenuBar)
+			{
+				reload();
+			}
+		});
 	}
 }
 
@@ -72,7 +78,7 @@ void MenuBarWidget::changeEvent(QEvent *event)
 
 	if (event->type() == QEvent::LanguageChange)
 	{
-		QTimer::singleShot(100, this, SLOT(updateSize()));
+		QTimer::singleShot(100, this, SLOT(updateGeometries()));
 	}
 }
 
@@ -80,7 +86,7 @@ void MenuBarWidget::resizeEvent(QResizeEvent *event)
 {
 	QMenuBar::resizeEvent(event);
 
-	updateSize();
+	updateGeometries();
 }
 
 void MenuBarWidget::contextMenuEvent(QContextMenuEvent *event)
@@ -90,7 +96,7 @@ void MenuBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	menu->deleteLater();
 }
 
-void MenuBarWidget::setup()
+void MenuBarWidget::reload()
 {
 	const ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar));
 	QStringList actions;
@@ -174,33 +180,33 @@ void MenuBarWidget::setup()
 		}
 	}
 
-	if (m_leftToolBar)
-	{
-		m_leftToolBar->setDefinition(leftDefinition);
-	}
-
-	if (m_rightToolBar)
-	{
-		m_rightToolBar->setDefinition(rightDefinition);
-	}
-
 	const int menuBarHeight(actionGeometry(this->actions().at(0)).height());
-	const int toolBarHeight((m_leftToolBar || m_rightToolBar) ? (definition.iconSize + 12) : 0);
 
-	setFixedHeight((toolBarHeight > 0 && toolBarHeight > menuBarHeight) ? toolBarHeight : menuBarHeight);
-
-	QTimer::singleShot(100, this, SLOT(updateSize()));
-}
-
-void MenuBarWidget::toolBarModified(int identifier)
-{
-	if (identifier == ToolBarsManager::MenuBar)
+	if (m_leftToolBar || m_rightToolBar)
 	{
-		setup();
+		const int toolBarHeight((m_leftToolBar ? m_leftToolBar->getIconSize() : m_rightToolBar->getIconSize()) + 12);
+
+		if (m_leftToolBar)
+		{
+			m_leftToolBar->setDefinition(leftDefinition);
+		}
+
+		if (m_rightToolBar)
+		{
+			m_rightToolBar->setDefinition(rightDefinition);
+		}
+
+		setFixedHeight((toolBarHeight > menuBarHeight) ? toolBarHeight : menuBarHeight);
 	}
+	else
+	{
+		setFixedHeight(menuBarHeight);
+	}
+
+	QTimer::singleShot(100, this, SLOT(updateGeometries()));
 }
 
-void MenuBarWidget::updateSize()
+void MenuBarWidget::updateGeometries()
 {
 	if (!m_leftToolBar && !m_rightToolBar)
 	{
