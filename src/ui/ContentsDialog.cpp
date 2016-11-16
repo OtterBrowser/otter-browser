@@ -151,7 +151,12 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 			{
 				connect(this, SIGNAL(accepted()), dialog, SLOT(accept()));
 				connect(this, SIGNAL(rejected()), dialog, SLOT(reject()));
-				connect(dialog, SIGNAL(finished(int)), this, SLOT(finished(int)));
+				connect(dialog, &QDialog::finished, [&](int result)
+				{
+					m_isAccepted = (result == QDialog::Accepted);
+
+					close();
+				});
 			}
 		}
 
@@ -167,7 +172,7 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 
 		m_contentsLayout->addWidget(m_buttonBox);
 
-		connect(m_buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(clicked(QAbstractButton*)));
+		connect(m_buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(handleButtonClick(QAbstractButton*)));
 	}
 
 	setContextMenuPolicy(Qt::PreventContextMenu);
@@ -206,7 +211,7 @@ void ContentsDialog::closeEvent(QCloseEvent *event)
 	event->accept();
 }
 
-void ContentsDialog::clicked(QAbstractButton *button)
+void ContentsDialog::handleButtonClick(QAbstractButton *button)
 {
 	if (m_buttonBox)
 	{
@@ -223,13 +228,6 @@ void ContentsDialog::clicked(QAbstractButton *button)
 				break;
 		}
 	}
-
-	close();
-}
-
-void ContentsDialog::finished(int result)
-{
-	m_isAccepted = (result == QDialog::Accepted);
 
 	close();
 }

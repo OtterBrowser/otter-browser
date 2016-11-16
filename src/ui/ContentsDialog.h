@@ -41,15 +41,14 @@ public:
 	void setCheckBox(const QString &text, bool state);
 	bool getCheckBoxState() const;
 	bool isAccepted() const;
-	bool eventFilter(QObject *object, QEvent *event);
+	bool eventFilter(QObject *object, QEvent *event) override;
 
 protected:
-	void showEvent(QShowEvent *event);
-	void closeEvent(QCloseEvent *event);
+	void showEvent(QShowEvent *event) override;
+	void closeEvent(QCloseEvent *event) override;
 
 protected slots:
-	void clicked(QAbstractButton *button);
-	void finished(int result);
+	void handleButtonClick(QAbstractButton *button);
 
 private:
 	QBoxLayout *m_contentsLayout;
