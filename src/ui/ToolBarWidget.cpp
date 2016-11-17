@@ -393,7 +393,7 @@ void ToolBarWidget::updateVisibility()
 
 void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &definition)
 {
-	TabBarWidget *tabBar((m_identifier == ToolBarsManager::TabBar && m_mainWindow) ? m_mainWindow->getTabBar() : nullptr);
+	QWidget *tabBar((m_identifier == ToolBarsManager::TabBar && m_mainWindow) ? m_mainWindow->getTabBar() : nullptr);
 
 	setVisible(definition.normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
 	setOrientation((definition.location == Qt::LeftToolBarArea || definition.location == Qt::RightToolBarArea) ? Qt::Vertical : Qt::Horizontal);
@@ -447,6 +447,8 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 		addWidget(m_dragArea);
 	}
 
+	const bool isHorizontal(definition.location != Qt::LeftToolBarArea && definition.location != Qt::RightToolBarArea);
+
 	for (int i = 0; i < definition.entries.count(); ++i)
 	{
 		if (definition.entries.at(i).action == QLatin1String("separator"))
@@ -476,13 +478,24 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 
 					if (isTabBar)
 					{
+						tabBar = widget;
+
 						connect(widget, SIGNAL(tabsAmountChanged(int)), this, SLOT(updateVisibility()));
 
 						updateVisibility();
 					}
+					else
+					{
+						layout()->setAlignment(widget, (isHorizontal ? Qt::AlignVCenter : Qt::AlignHCenter));
+					}
 				}
 			}
 		}
+	}
+
+	if (tabBar)
+	{
+		layout()->setAlignment(tabBar, Qt::AlignBottom);
 	}
 }
 
