@@ -293,12 +293,14 @@ void TabHandleWidget::mouseMoveEvent(QMouseEvent *event)
 
 void TabHandleWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-	QWidget::mouseReleaseEvent(event);
-
-	if (m_window && !m_window->isPinned() && event->button() == Qt::LeftButton && m_isCloseButtonUnderMouse)
+	if (m_window && !m_window->isPinned() && event->button() == Qt::LeftButton && m_closeButtonRectangle.contains(event->pos()))
 	{
 		m_window->close();
+
+		event->accept();
 	}
+
+	QWidget::mouseReleaseEvent(event);
 }
 
 void TabHandleWidget::markAsActive()
