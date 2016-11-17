@@ -495,7 +495,25 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 
 	if (tabBar)
 	{
-		layout()->setAlignment(tabBar, Qt::AlignBottom);
+		switch (definition.location)
+		{
+			case Qt::BottomToolBarArea:
+				layout()->setAlignment(tabBar, Qt::AlignTop);
+
+				break;
+			case Qt::LeftToolBarArea:
+				layout()->setAlignment(tabBar, Qt::AlignRight);
+
+				break;
+			case Qt::RightToolBarArea:
+				layout()->setAlignment(tabBar, Qt::AlignLeft);
+
+				break;
+			default:
+				layout()->setAlignment(tabBar, Qt::AlignBottom);
+
+				break;
+		}
 	}
 }
 
