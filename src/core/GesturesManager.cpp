@@ -457,9 +457,9 @@ QList<GesturesManager::GestureStep> GesturesManager::recognizeMoveStep(QInputEve
 			{
 				MouseGestures::ActionList moves;
 
-				for (int j = m_steps.count(); j < steps.count() && steps[j].type == QEvent::MouseMove; ++j)
+				for (int k = m_steps.count(); k < steps.count() && steps[k].type == QEvent::MouseMove; ++k)
 				{
-					moves.push_back(steps[j].direction);
+					moves.push_back(steps[k].direction);
 				}
 
 				if (!moves.empty())
