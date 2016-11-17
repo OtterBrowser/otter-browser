@@ -541,7 +541,6 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_isUrlIconEnabled = SettingsManager::getValue(SettingsManager::TabBar_ShowUrlIconOption).toBool();
 
 	setAcceptDrops(true);
-	setDrawBase(false);
 	setExpanding(false);
 	setTabsClosable(false);
 	setMovable(true);

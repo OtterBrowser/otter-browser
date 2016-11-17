@@ -155,10 +155,76 @@ void ToolBarWidget::changeEvent(QEvent *event)
 
 void ToolBarWidget::paintEvent(QPaintEvent *event)
 {
-	if (m_identifier >= 0 && m_identifier != ToolBarsManager::StatusBar)
+	if (m_identifier == ToolBarsManager::StatusBar)
 	{
-		QToolBar::paintEvent(event);
+		return;
 	}
+
+	QToolBar::paintEvent(event);
+
+	if (m_identifier != ToolBarsManager::TabBar)
+	{
+		return;
+	}
+
+	const Qt::ToolBarArea area(getArea());
+	QStyleOptionTab tabOption;
+
+	switch (area)
+	{
+		case Qt::BottomToolBarArea:
+			tabOption.shape = QTabBar::RoundedSouth;
+
+			break;
+		case Qt::LeftToolBarArea:
+			tabOption.shape = QTabBar::RoundedWest;
+
+			break;
+		case Qt::RightToolBarArea:
+			tabOption.shape = QTabBar::RoundedEast;
+
+			break;
+		default:
+			tabOption.shape = QTabBar::RoundedNorth;
+
+			break;
+	}
+
+	const int overlap(style()->pixelMetric(QStyle::PM_TabBarBaseOverlap, &tabOption));
+	QPainter painter(this);
+	QStyleOptionTabBarBase tabBarBaseOption;
+	tabBarBaseOption.initFrom(this);
+	tabBarBaseOption.documentMode = true;
+	tabBarBaseOption.rect = contentsRect();
+	tabBarBaseOption.shape = tabOption.shape;
+	tabBarBaseOption.tabBarRect = contentsRect();
+
+	if (overlap > 0)
+	{
+		const QSize size(contentsRect().size());
+
+		switch (area)
+		{
+			case Qt::BottomToolBarArea:
+				tabBarBaseOption.rect.setRect(0, 0, size.width(), overlap);
+
+				break;
+			case Qt::LeftToolBarArea:
+				tabBarBaseOption.rect.setRect((size.width() - overlap), 0, overlap, size.height());
+
+				break;
+			case Qt::RightToolBarArea:
+				tabBarBaseOption.rect.setRect(0, 0, overlap, size.height());
+
+				break;
+			default:
+				tabBarBaseOption.rect.setRect(0, (size.height() - overlap), size.width(), overlap);
+
+				break;
+		}
+	}
+
+	style()->drawPrimitive(QStyle::PE_FrameTabBarBase, &tabBarBaseOption, &painter);
 }
 
 void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
