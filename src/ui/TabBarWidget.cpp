@@ -550,7 +550,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	setMouseTracking(true);
 	setDocumentMode(true);
 	setMaximumSize(0, 0);
-	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
 	setStyle(new TabBarStyle());
 	optionChanged(SettingsManager::TabBar_MaximumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MaximumTabHeightOption));
 	optionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabHeightOption));
@@ -1580,6 +1580,8 @@ void TabBarWidget::setArea(Qt::ToolBarArea area)
 
 			break;
 	}
+
+	setSizePolicy(QSizePolicy::Preferred, ((area != Qt::LeftToolBarArea && area != Qt::RightToolBarArea) ? QSizePolicy::Maximum : QSizePolicy::Preferred));
 }
 
 Window* TabBarWidget::getWindow(int index) const
@@ -1629,7 +1631,7 @@ QSize TabBarWidget::tabSizeHint(int index) const
 	if (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth)
 	{
 		Window *window(getWindow(index));
-		const int tabHeight(qBound(m_minimumTabSize.height(), qMax((m_areThumbnailsEnabled ? 200 : 0), height()), m_maximumTabSize.height()));
+		const int tabHeight(qBound(m_minimumTabSize.height(), qMax((m_areThumbnailsEnabled ? 200 : 0), (parentWidget() ? parentWidget()->contentsRect().height() : height())), m_maximumTabSize.height()));
 
 		if (window && window->isPinned())
 		{
@@ -1670,7 +1672,7 @@ QSize TabBarWidget::sizeHint() const
 			size = parentWidget()->width();
 		}
 
-		return QSize(size, QTabBar::sizeHint().height());
+		return QSize(size, tabSizeHint(0).height());
 	}
 
 	return QSize(QTabBar::sizeHint().width(), (tabSizeHint(0).height() * count()));
