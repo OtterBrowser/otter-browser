@@ -153,14 +153,13 @@ private:
 	QWidget *m_movableTabWidget;
 	QPoint m_dragMovePosition;
 	QPoint m_dragStartPosition;
+	QSize m_maximumTabSize;
+	QSize m_minimumTabSize;
 	quint64 m_draggedWindow;
-	int m_tabPadding;
 	int m_tabWidth;
-	int m_maximumTabWidth;
-	int m_minimumTabWidth;
-	int m_pinnedTabsAmount;
 	int m_clickedTab;
 	int m_hoveredTab;
+	int m_pinnedTabsAmount;
 	int m_previewTimer;
 	bool m_arePreviewsEnabled;
 	bool m_isDraggingTab;

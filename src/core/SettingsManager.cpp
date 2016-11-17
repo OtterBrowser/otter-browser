@@ -237,8 +237,10 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(StartPage_ZoomLevelOption, 100, IntegerType);
 	registerOption(TabBar_EnablePreviewsOption, true, BooleanType);
 	registerOption(TabBar_EnableThumbnailsOption, false, BooleanType);
-	registerOption(TabBar_MaximumTabSizeOption, 250, IntegerType);
-	registerOption(TabBar_MinimumTabSizeOption, -1, IntegerType);
+	registerOption(TabBar_MaximumTabHeightOption, -1, IntegerType);
+	registerOption(TabBar_MinimumTabHeightOption, -1, IntegerType);
+	registerOption(TabBar_MaximumTabWidthOption, 250, IntegerType);
+	registerOption(TabBar_MinimumTabWidthOption, -1, IntegerType);
 	registerOption(TabBar_OpenNextToActiveOption, true, BooleanType);
 	registerOption(TabBar_RequireModifierToSwitchTabOnScrollOption, true, BooleanType);
 	registerOption(TabBar_ShowCloseButtonOption, true, BooleanType);

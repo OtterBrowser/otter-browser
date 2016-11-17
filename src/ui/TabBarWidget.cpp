@@ -526,11 +526,9 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_previewWidget(nullptr),
 	m_movableTabWidget(nullptr),
 	m_tabWidth(0),
-	m_maximumTabWidth(250),
-	m_minimumTabWidth(0),
-	m_pinnedTabsAmount(0),
 	m_clickedTab(-1),
 	m_hoveredTab(-1),
+	m_pinnedTabsAmount(0),
 	m_previewTimer(0),
 	m_arePreviewsEnabled(SettingsManager::getValue(SettingsManager::TabBar_EnablePreviewsOption).toBool()),
 	m_isDraggingTab(false),
@@ -554,8 +552,10 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	setMaximumSize(0, 0);
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	setStyle(new TabBarStyle());
-	optionChanged(SettingsManager::TabBar_MaximumTabSizeOption, SettingsManager::getValue(SettingsManager::TabBar_MaximumTabSizeOption));
-	optionChanged(SettingsManager::TabBar_MinimumTabSizeOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabSizeOption));
+	optionChanged(SettingsManager::TabBar_MaximumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MaximumTabHeightOption));
+	optionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabHeightOption));
+	optionChanged(SettingsManager::TabBar_MaximumTabWidthOption, SettingsManager::getValue(SettingsManager::TabBar_MaximumTabWidthOption));
+	optionChanged(SettingsManager::TabBar_MinimumTabWidthOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabWidthOption));
 
 	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
@@ -576,6 +576,10 @@ void TabBarWidget::changeEvent(QEvent *event)
 
 	switch (event->type())
 	{
+		case QEvent::FontChange:
+			optionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabHeightOption));
+
+			break;
 		case QEvent::LayoutDirectionChange:
 			emit needsGeometriesUpdate();
 
@@ -583,7 +587,8 @@ void TabBarWidget::changeEvent(QEvent *event)
 		case QEvent::StyleChange:
 			m_isLayoutReversed = (static_cast<QTabBar::ButtonPosition>(style()->styleHint(QStyle::SH_TabBar_CloseButtonPosition)) == QTabBar::LeftSide);
 
-			optionChanged(SettingsManager::TabBar_MinimumTabSizeOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabSizeOption));
+			optionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabHeightOption));
+			optionChanged(SettingsManager::TabBar_MinimumTabWidthOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabWidthOption));
 
 			emit needsGeometriesUpdate();
 
@@ -1403,18 +1408,18 @@ void TabBarWidget::optionChanged(int identifier, const QVariant &value)
 			}
 
 			break;
-		case SettingsManager::TabBar_MaximumTabSizeOption:
+		case SettingsManager::TabBar_MaximumTabHeightOption:
 			{
-				const int oldValue(m_maximumTabWidth);
+				const int oldValue(m_maximumTabSize.height());
 
-				m_maximumTabWidth = value.toInt();
+				m_maximumTabSize.setHeight(value.toInt());
 
-				if (m_maximumTabWidth < 0)
+				if (m_maximumTabSize.height() < 0)
 				{
-					m_maximumTabWidth = 250;
+					m_maximumTabSize.setHeight(QWIDGETSIZE_MAX);
 				}
 
-				if (m_maximumTabWidth != oldValue)
+				if (m_maximumTabSize.height() != oldValue)
 				{
 					updateGeometry();
 					adjustSize();
@@ -1422,18 +1427,56 @@ void TabBarWidget::optionChanged(int identifier, const QVariant &value)
 			}
 
 			break;
-		case SettingsManager::TabBar_MinimumTabSizeOption:
+		case SettingsManager::TabBar_MaximumTabWidthOption:
 			{
-				const int oldValue(m_minimumTabWidth);
+				const int oldValue(m_maximumTabSize.width());
 
-				m_minimumTabWidth = value.toInt();
+				m_maximumTabSize.setWidth(value.toInt());
 
-				if (m_minimumTabWidth < 0)
+				if (m_maximumTabSize.width() < 0)
 				{
-					m_minimumTabWidth = (16 + style()->pixelMetric(QStyle::PM_TabBarTabHSpace));
+					m_maximumTabSize.setWidth(250);
 				}
 
-				if (m_minimumTabWidth != oldValue)
+				if (m_maximumTabSize.width() != oldValue)
+				{
+					updateGeometry();
+					adjustSize();
+				}
+			}
+
+			break;
+		case SettingsManager::TabBar_MinimumTabHeightOption:
+			{
+				const int oldValue(m_minimumTabSize.height());
+
+				m_minimumTabSize.setHeight(value.toInt());
+
+				if (m_minimumTabSize.height() < 0)
+				{
+					m_minimumTabSize.setHeight((QFontMetrics(font()).height() * 1.25) + style()->pixelMetric(QStyle::PM_TabBarTabVSpace));
+				}
+
+				if (m_minimumTabSize.height() != oldValue)
+				{
+					updateGeometry();
+					adjustSize();
+				}
+			}
+
+			break;
+		case SettingsManager::TabBar_MinimumTabWidthOption:
+			{
+				const int oldValue(m_minimumTabSize.width());
+
+				m_minimumTabSize.setWidth(value.toInt());
+
+				if (m_minimumTabSize.width() < 0)
+				{
+					m_minimumTabSize.setWidth(16 + style()->pixelMetric(QStyle::PM_TabBarTabHSpace));
+				}
+
+				if (m_minimumTabSize.width() != oldValue)
 				{
 					updateGeometry();
 					adjustSize();
@@ -1586,19 +1629,22 @@ QSize TabBarWidget::tabSizeHint(int index) const
 	if (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth)
 	{
 		Window *window(getWindow(index));
-		const int tabHeight(qMax((m_areThumbnailsEnabled ? 200 : 0), height()));
+		const int tabHeight(qBound(m_minimumTabSize.height(), qMax((m_areThumbnailsEnabled ? 200 : 0), height()), m_maximumTabSize.height()));
 
 		if (window && window->isPinned())
 		{
-			return QSize(m_minimumTabWidth, tabHeight);
+			return QSize(m_minimumTabSize.width(), tabHeight);
 		}
 
-		const int amount(getPinnedTabsAmount());
+		if (m_tabWidth > 0)
+		{
+			return QSize(m_tabWidth, tabHeight);
+		}
 
-		return QSize(((m_tabWidth > 0) ? m_tabWidth : qBound(m_minimumTabWidth, qFloor((rect().width() - (amount * m_minimumTabWidth)) / qMax(1, (count() - amount))), m_maximumTabWidth)), tabHeight);
+		return QSize(qBound(m_minimumTabSize.width(), qFloor((rect().width() - (m_pinnedTabsAmount * m_minimumTabSize.width())) / qMax(1, (count() - m_pinnedTabsAmount))), m_maximumTabSize.width()), tabHeight);
 	}
 
-	return QSize(m_maximumTabWidth, (m_areThumbnailsEnabled ? 200 : (QFontMetrics(font()).height() * 1.5)));
+	return QSize(m_maximumTabSize.width(), (m_areThumbnailsEnabled ? 200 : m_minimumTabSize.height()));
 }
 
 QSize TabBarWidget::minimumSizeHint() const
@@ -1616,7 +1662,7 @@ QSize TabBarWidget::sizeHint() const
 		{
 			Window *window(getWindow(i));
 
-			size += ((window && window->isPinned()) ? m_minimumTabWidth : m_maximumTabWidth);
+			size += ((window && window->isPinned()) ? m_minimumTabSize.width() : m_maximumTabSize.width());
 		}
 
 		if (parentWidget() && size > parentWidget()->width())
