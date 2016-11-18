@@ -49,6 +49,14 @@ public:
 
 	Q_DECLARE_FLAGS(RuleOptions, RuleOption)
 
+	enum RuleMatch
+	{
+		ContainsMatch = 0,
+		StartMatch,
+		EndMatch,
+		ExactMatch
+	};
+
 	enum ProfileFlag
 	{
 		NoFlags = 0,
@@ -72,10 +80,15 @@ public:
 	{
 		QStringList blockedDomains;
 		QStringList allowedDomains;
-		RuleOptions ruleOption;
-		RuleOptions exceptionRuleOption;
-		bool isException;
-		bool needsDomainCheck;
+		RuleOptions ruleOption = NoOption;
+		RuleOptions exceptionRuleOption = NoOption;
+		RuleMatch ruleMatch = ContainsMatch;
+		bool isException = false;
+		bool needsDomainCheck = false;
+
+		explicit ContentBlockingRule(QStringList blockedDomainsValue, QStringList allowedDomainsValue, RuleOptions ruleOptionValue, RuleOptions exceptionRuleOptionValue, RuleMatch ruleMatchValue, bool isExceptionValue, bool needsDomainCheckValue) : blockedDomains(blockedDomainsValue), allowedDomains(allowedDomainsValue), ruleOption(ruleOptionValue), exceptionRuleOption(exceptionRuleOptionValue), ruleMatch(ruleMatchValue), isException(isExceptionValue), needsDomainCheck(needsDomainCheckValue)
+		{
+		}
 	};
 
 	explicit ContentBlockingProfile(const QString &name, const QString &title, const QUrl &updateUrl, const QDateTime lastUpdate, const QList<QString> languages, int updateInterval, const ProfileCategory &category, const ProfileFlags &flags, QObject *parent = nullptr);
