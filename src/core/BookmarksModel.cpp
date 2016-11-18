@@ -251,7 +251,9 @@ BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *pa
 
 	connect(this, SIGNAL(itemChanged(QStandardItem*)), this, SIGNAL(modelModified()));
 	connect(this, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SIGNAL(modelModified()));
+	connect(this, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(notifyBookmarkModified(QModelIndex)));
 	connect(this, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SIGNAL(modelModified()));
+	connect(this, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(notifyBookmarkModified(QModelIndex)));
 	connect(this, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SIGNAL(modelModified()));
 }
 
@@ -693,6 +695,16 @@ void BookmarksModel::emptyTrash()
 	m_trash.clear();
 
 	emit modelModified();
+}
+
+void BookmarksModel::notifyBookmarkModified(const QModelIndex &index)
+{
+	BookmarksItem *bookmark(getBookmark(index));
+
+	if (bookmark)
+	{
+		emit bookmarkModified(bookmark);
+	}
 }
 
 BookmarksItem* BookmarksModel::addBookmark(BookmarkType type, quint64 identifier, const QUrl &url, const QString &title, BookmarksItem *parent, int index)
