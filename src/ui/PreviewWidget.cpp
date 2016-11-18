@@ -75,7 +75,7 @@ void PreviewWidget::setPosition(const QPoint &position)
 	m_moveAnimation->start();
 }
 
-void PreviewWidget::setPreview(const QString &text, const QPixmap &pixmap)
+void PreviewWidget::setPreview(const QString &text, const QPixmap &pixmap, bool showFullText)
 {
 	if (pixmap.isNull())
 	{
@@ -87,7 +87,8 @@ void PreviewWidget::setPreview(const QString &text, const QPixmap &pixmap)
 		m_pixmapLabel->show();
 	}
 
-	m_textLabel->setText(m_textLabel->fontMetrics().elidedText(text, (QGuiApplication::isLeftToRight() ? Qt::ElideRight : Qt::ElideLeft), m_textLabel->width()));
+	m_textLabel->setText(showFullText ? text : m_textLabel->fontMetrics().elidedText(text, (QGuiApplication::isLeftToRight() ? Qt::ElideRight : Qt::ElideLeft), m_textLabel->width()));
+	m_textLabel->setWordWrap(showFullText);
 
 	adjustSize();
 }

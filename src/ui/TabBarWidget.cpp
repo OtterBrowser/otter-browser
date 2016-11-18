@@ -1312,7 +1312,9 @@ void TabBarWidget::showPreview(int index, int delay)
 		QRect rectangle(tabRect(index));
 		rectangle.moveTo(mapToGlobal(rectangle.topLeft()));
 
-		m_previewWidget->setPreview(window->getTitle(), ((index == currentIndex()) ? QPixmap() : window->getThumbnail()));
+		const bool isActive(index == currentIndex());
+
+		m_previewWidget->setPreview(window->getTitle(), (isActive ? QPixmap() : window->getThumbnail()), isActive);
 
 		switch (shape())
 		{
