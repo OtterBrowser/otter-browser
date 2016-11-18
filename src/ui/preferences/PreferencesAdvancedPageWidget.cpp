@@ -1309,11 +1309,11 @@ void PreferencesAdvancedPageWidget::save()
 
 	const QString widgetStyle((m_ui->appearranceWidgetStyleComboBox->currentIndex() == 0) ? QString() : m_ui->appearranceWidgetStyleComboBox->currentText());
 
+	Application::setStyle(widgetStyle);
+
 	SettingsManager::setValue(SettingsManager::Interface_WidgetStyleOption, widgetStyle);
 	SettingsManager::setValue(SettingsManager::Interface_StyleSheetOption, m_ui->appearranceStyleSheetFilePathWidget->getPath());
 	SettingsManager::setValue(SettingsManager::Browser_EnableTrayIconOption, m_ui->enableTrayIconCheckBox->isChecked());
-
-	Application::setStyle(widgetStyle);
 
 	if (m_ui->appearranceStyleSheetFilePathWidget->getPath().isEmpty())
 	{

@@ -40,6 +40,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
+#include <QtWidgets/QStyleFactory>
 #include <QtWidgets/QStyleOption>
 #include <QtWidgets/QStylePainter>
 #include <QtWidgets/QToolTip>
@@ -525,6 +526,7 @@ Window* TabHandleWidget::getWindow() const
 }
 
 TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
+	m_style(new TabBarStyle()),
 	m_previewWidget(nullptr),
 	m_movableTabWidget(nullptr),
 	m_tabWidth(0),
@@ -552,7 +554,8 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	setDocumentMode(true);
 	setMaximumSize(0, 0);
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
-	setStyle(new TabBarStyle());
+	setStyle(m_style);
+	updateStyle();
 	optionChanged(SettingsManager::TabBar_MaximumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MaximumTabHeightOption));
 	optionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabHeightOption));
 	optionChanged(SettingsManager::TabBar_MaximumTabWidthOption, SettingsManager::getValue(SettingsManager::TabBar_MaximumTabWidthOption));
@@ -586,12 +589,7 @@ void TabBarWidget::changeEvent(QEvent *event)
 
 			break;
 		case QEvent::StyleChange:
-			m_isLayoutReversed = (static_cast<QTabBar::ButtonPosition>(style()->styleHint(QStyle::SH_TabBar_CloseButtonPosition)) == QTabBar::LeftSide);
-
-			optionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabHeightOption));
-			optionChanged(SettingsManager::TabBar_MinimumTabWidthOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabWidthOption));
-
-			emit needsGeometriesUpdate();
+			updateStyle();
 
 			break;
 		default:
@@ -1381,6 +1379,10 @@ void TabBarWidget::optionChanged(int identifier, const QVariant &value)
 {
 	switch (identifier)
 	{
+		case SettingsManager::Interface_WidgetStyleOption:
+			updateStyle();
+
+			break;
 		case SettingsManager::TabBar_EnablePreviewsOption:
 			m_arePreviewsEnabled = value.toBool();
 
@@ -1557,6 +1559,21 @@ void TabBarWidget::updatePinnedTabsAmount(Window *modifiedWindow)
 			updateGeometry();
 			adjustSize();
 		}
+	}
+}
+
+void TabBarWidget::updateStyle()
+{
+	if (m_style->baseStyle()->metaObject()->className() != QApplication::style()->metaObject()->className())
+	{
+		m_style->setBaseStyle(QStyleFactory::create(SettingsManager::getValue(SettingsManager::Interface_WidgetStyleOption).toString()));
+
+		m_isLayoutReversed = (static_cast<QTabBar::ButtonPosition>(style()->styleHint(QStyle::SH_TabBar_CloseButtonPosition)) == QTabBar::LeftSide);
+
+		optionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabHeightOption));
+		optionChanged(SettingsManager::TabBar_MinimumTabWidthOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabWidthOption));
+
+		emit needsGeometriesUpdate();
 	}
 }
 

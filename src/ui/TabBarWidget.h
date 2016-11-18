@@ -137,6 +137,7 @@ protected:
 	void tabInserted(int index) override;
 	void tabRemoved(int index) override;
 	void tabHovered(int index);
+	void updateStyle();
 	QStyleOptionTab createStyleOptionTab(int index) const;
 	QSize tabSizeHint(int index) const override;
 	int getDropIndex() const;
@@ -149,6 +150,7 @@ protected slots:
 	void setArea(Qt::ToolBarArea area);
 
 private:
+	TabBarStyle *m_style;
 	PreviewWidget *m_previewWidget;
 	QWidget *m_movableTabWidget;
 	QPoint m_dragMovePosition;
