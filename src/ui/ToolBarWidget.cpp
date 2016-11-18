@@ -224,7 +224,7 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 		}
 	}
 
-	style()->drawPrimitive(QStyle::PE_FrameTabBarBase, &tabBarBaseOption, &painter);
+	style()->drawPrimitive(QStyle::PE_FrameTabBarBase, &tabBarBaseOption, &painter, this);
 }
 
 void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
