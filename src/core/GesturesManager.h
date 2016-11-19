@@ -67,8 +67,8 @@ protected:
 		GestureStep(QEvent::Type type, Qt::MouseButton button, Qt::KeyboardModifiers modifiers = Qt::NoModifier);
 		explicit GestureStep(const QInputEvent *event);
 
-		bool operator ==(const GestureStep &other);
-		bool operator !=(const GestureStep &other);
+		bool operator ==(const GestureStep &other) const;
+		bool operator !=(const GestureStep &other) const;
 	};
 
 	struct MouseGesture

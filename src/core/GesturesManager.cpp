@@ -102,12 +102,12 @@ GesturesManager::GestureStep::GestureStep(const QInputEvent *event) : type(event
 	}
 }
 
-bool GesturesManager::GestureStep::operator ==(const GestureStep &other)
+bool GesturesManager::GestureStep::operator ==(const GestureStep &other) const
 {
 	return (type == other.type) && (button == other.button) && (direction == other.direction) && (modifiers == other.modifiers || type == QEvent::MouseMove);
 }
 
-bool GesturesManager::GestureStep::operator !=(const GestureStep &other)
+bool GesturesManager::GestureStep::operator !=(const GestureStep &other) const
 {
 	return !((*this) == other);
 }
