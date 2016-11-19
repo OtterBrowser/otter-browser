@@ -565,6 +565,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	emit widgetChanged();
 	emit titleChanged(m_contentsWidget->getTitle());
 	emit iconChanged(m_contentsWidget->getIcon());
+	emit loadingStateChanged(m_contentsWidget->getLoadingState());
 	emit canZoomChanged(m_contentsWidget->canZoom());
 
 	connect(this, SIGNAL(aboutToClose()), m_contentsWidget, SLOT(close()));
