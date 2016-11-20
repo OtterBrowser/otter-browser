@@ -80,6 +80,7 @@ public:
 	static QString createReport(ReportOptions options = FullReport);
 	static QString getFullVersion();
 	static QString getLocalePath();
+	static QString getSystemWidgetStyle();
 	static QList<MainWindow*> getWindows();
 	bool canClose();
 	bool isHidden() const;
@@ -107,6 +108,7 @@ private:
 	static QTranslator *m_applicationTranslator;
 	static QLocalServer *m_localServer;
 	static QString m_localePath;
+	static QString m_systemWidgetStyle;
 	static QCommandLineParser m_commandLineParser;
 	static QList<MainWindow*> m_windows;
 	static bool m_isHidden;

@@ -72,7 +72,7 @@
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QStyleFactory>
+#include <QtWidgets/QStyle>
 
 namespace Otter
 {
@@ -84,6 +84,7 @@ QTranslator* Application::m_qtTranslator(nullptr);
 QTranslator* Application::m_applicationTranslator(nullptr);
 QLocalServer* Application::m_localServer(nullptr);
 QString Application::m_localePath;
+QString Application::m_systemWidgetStyle;
 QCommandLineParser Application::m_commandLineParser;
 QList<MainWindow*> Application::m_windows;
 bool Application::m_isHidden(false);
@@ -437,6 +438,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 
 		LongTermTimer::runTimer((interval * SECONDS_IN_DAY), this, SLOT(periodicUpdateCheck()));
 	}
+
+	m_systemWidgetStyle = style()->objectName();
 
 	setStyle(SettingsManager::getValue(SettingsManager::Interface_WidgetStyleOption).toString());
 
@@ -953,6 +956,11 @@ QString Application::getFullVersion()
 QString Application::getLocalePath()
 {
 	return m_localePath;
+}
+
+QString Application::getSystemWidgetStyle()
+{
+	return m_systemWidgetStyle;
 }
 
 QList<MainWindow*> Application::getWindows()
