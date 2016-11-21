@@ -466,6 +466,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 
 Application::~Application()
 {
+	m_systemWidgetStyle.clear();
+
 	for (int i = 0; i < m_windows.count(); ++i)
 	{
 		m_windows.at(i)->deleteLater();
