@@ -22,6 +22,7 @@
 
 #include <QtGui/QMouseEvent>
 #include <QtWidgets/QDialog>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QScrollBar>
 #include <QtWidgets/QStyle>
 
@@ -209,6 +210,43 @@ void ContentsDialog::closeEvent(QCloseEvent *event)
 	emit finished();
 
 	event->accept();
+}
+
+void ContentsDialog::keyPressEvent(QKeyEvent *event)
+{
+	if (event->matches(QKeySequence::Cancel))
+	{
+		m_isAccepted = false;
+
+		close();
+	}
+	else if (!event->modifiers())
+	{
+		switch (event->key())
+		{
+			case Qt::Key_Enter:
+			case Qt::Key_Return:
+				{
+					QList<QPushButton*> buttons(findChildren<QPushButton*>());
+
+					for (int i = 0; i < buttons.count(); ++i)
+					{
+						if (buttons.at(i)->isDefault())
+						{
+							buttons.at(i)->click();
+
+							return;
+						}
+					}
+				}
+
+				break;
+			default:
+				break;
+		}
+	}
+
+	event->ignore();
 }
 
 void ContentsDialog::handleButtonClick(QAbstractButton *button)

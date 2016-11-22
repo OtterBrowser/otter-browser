@@ -46,6 +46,7 @@ public:
 protected:
 	void showEvent(QShowEvent *event) override;
 	void closeEvent(QCloseEvent *event) override;
+	void keyPressEvent(QKeyEvent *event) override;
 
 protected slots:
 	void handleButtonClick(QAbstractButton *button);
