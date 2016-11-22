@@ -1234,9 +1234,7 @@ void TabBarWidget::removeTab(int index)
 {
 	if (underMouse())
 	{
-		const QSize size(tabSizeHint(count() - 1));
-
-		m_tabWidth = size.width();
+		m_tabWidth = tabSizeHint(count() - 1).width();
 	}
 
 	Window *window(getWindow(index));
