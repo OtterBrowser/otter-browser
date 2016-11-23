@@ -214,7 +214,7 @@ void ContentsDialog::closeEvent(QCloseEvent *event)
 
 void ContentsDialog::keyPressEvent(QKeyEvent *event)
 {
-	if (event->matches(QKeySequence::Cancel))
+	if (event->key() == Qt::Key_Escape)
 	{
 		m_isAccepted = false;
 
