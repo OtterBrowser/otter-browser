@@ -457,6 +457,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 		}
 	}
 
+	QDesktopServices::setUrlHandler(QLatin1String("ftp"), this, "openUrl");
 	QDesktopServices::setUrlHandler(QLatin1String("http"), this, "openUrl");
 	QDesktopServices::setUrlHandler(QLatin1String("https"), this, "openUrl");
 
