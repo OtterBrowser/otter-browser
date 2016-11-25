@@ -71,6 +71,7 @@ protected:
 	void moveEvent(QMoveEvent *event) override;
 	void resizeEvent(QResizeEvent *event) override;
 	void leaveEvent(QEvent *event) override;
+	void mousePressEvent(QMouseEvent *event) override;
 	void mouseMoveEvent(QMouseEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
 
@@ -89,6 +90,7 @@ private:
 	QRect m_thumbnailRectangle;
 	QRect m_titleRectangle;
 	bool m_isCloseButtonUnderMouse;
+	bool m_wasCloseButtonPressed;
 
 	static QMovie *m_delayedLoadingMovie;
 	static QMovie *m_ongoingLoadingMovie;

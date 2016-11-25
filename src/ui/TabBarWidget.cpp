@@ -127,7 +127,8 @@ TabHandleWidget::TabHandleWidget(Window *window, TabBarWidget *parent) : QWidget
 	m_window(window),
 	m_tabBarWidget(parent),
 	m_loadingMovie(nullptr),
-	m_isCloseButtonUnderMouse(false)
+	m_isCloseButtonUnderMouse(false),
+	m_wasCloseButtonPressed(false)
 {
 	handleLoadingStateChanged(window->getLoadingState());
 	setMouseTracking(true);
@@ -258,6 +259,15 @@ void TabHandleWidget::leaveEvent(QEvent *event)
 	update();
 }
 
+void TabHandleWidget::mousePressEvent(QMouseEvent *event)
+{
+	m_wasCloseButtonPressed = m_closeButtonRectangle.contains(event->pos());
+
+	QWidget::mouseMoveEvent(event);
+
+	update();
+}
+
 void TabHandleWidget::mouseMoveEvent(QMouseEvent *event)
 {
 	const bool wasCloseButtonUnderMouse(m_isCloseButtonUnderMouse);
@@ -294,7 +304,7 @@ void TabHandleWidget::mouseMoveEvent(QMouseEvent *event)
 
 void TabHandleWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-	if (m_window && !m_window->isPinned() && event->button() == Qt::LeftButton && m_closeButtonRectangle.contains(event->pos()))
+	if (m_window && !m_window->isPinned() && event->button() == Qt::LeftButton && m_wasCloseButtonPressed && m_closeButtonRectangle.contains(event->pos()))
 	{
 		m_window->close();
 
