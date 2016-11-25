@@ -36,6 +36,8 @@ namespace Otter
 {
 
 QList<QChar> ContentBlockingProfile::m_separators(QList<QChar>({QLatin1Char('_'), QLatin1Char('-'), QLatin1Char('.'), QLatin1Char('%')}));
+QHash<QString, ContentBlockingProfile::RuleOption> ContentBlockingProfile::m_options({{QLatin1String("third-party"), ThirdPartyOption}, {QLatin1String("stylesheet"), StyleSheetOption}, {QLatin1String("image"), ImageOption}, {QLatin1String("script"), ScriptOption}, {QLatin1String("object"), ObjectOption}, {QLatin1String("object-subrequest"), ObjectSubRequestOption}, {QLatin1String("object_subrequest"), ObjectSubRequestOption}, {QLatin1String("subdocument"), SubDocumentOption}, {QLatin1String("xmlhttprequest"), XmlHttpRequestOption}});
+QHash<NetworkManager::ResourceType, ContentBlockingProfile::RuleOption> ContentBlockingProfile::m_resourceTypes({{NetworkManager::ImageType, ImageOption}, {NetworkManager::ScriptType, ScriptOption}, {NetworkManager::StyleSheetType, StyleSheetOption}, {NetworkManager::ObjectType, ObjectOption}, {NetworkManager::XmlHttpRequestType, XmlHttpRequestOption}, {NetworkManager::SubFrameType, SubDocumentOption}, {NetworkManager::ObjectSubrequestType, ObjectSubRequestOption}});
 
 ContentBlockingProfile::ContentBlockingProfile(const QString &name, const QString &title, const QUrl &updateUrl, const QDateTime lastUpdate, const QList<QString> languages, int updateInterval, const ProfileCategory &category, const ProfileFlags &flags, QObject *parent) : QObject(parent),
 	m_root(nullptr),
@@ -202,8 +204,7 @@ void ContentBlockingProfile::parseRuleLine(QString line)
 
 	QStringList allowedDomains;
 	QStringList blockedDomains;
-	RuleOptions ruleOptions(NoOption);
-	RuleOptions exceptionRuleOption(NoOption);
+	RuleOptions ruleOptions;
 	RuleMatch ruleMatch(ContainsMatch);
 	bool isException(false);
 	bool needsDomainCheck(false);
@@ -239,48 +240,13 @@ void ContentBlockingProfile::parseRuleLine(QString line)
 	for (int i = 0; i < options.count(); ++i)
 	{
 		const bool optionException(options.at(i).startsWith(QLatin1Char('~')));
+		const QString optionName(optionException ? options.at(i).mid(1) : options.at(i));
 
-		if (options.at(i).contains(QLatin1String("third-party")))
+		if (m_options.contains(optionName))
 		{
-			ruleOptions |= ThirdPartyOption;
-			exceptionRuleOption |= (optionException ? ThirdPartyOption : NoOption);
+			ruleOptions |= (optionException ? static_cast<RuleOption>(m_options.value(optionName) * 2) : m_options.value(optionName));
 		}
-		else if (options.at(i).contains(QLatin1String("stylesheet")))
-		{
-			ruleOptions |= StyleSheetOption;
-			exceptionRuleOption |= (optionException ? StyleSheetOption : NoOption);
-		}
-		else if (options.at(i).contains(QLatin1String("image")))
-		{
-			ruleOptions |= ImageOption;
-			exceptionRuleOption |= (optionException ? ImageOption : NoOption);
-		}
-		else if (options.at(i).contains(QLatin1String("script")))
-		{
-			ruleOptions |= ScriptOption;
-			exceptionRuleOption |= (optionException ? ScriptOption : NoOption);
-		}
-		else if (options.at(i).contains(QLatin1String("object")))
-		{
-			ruleOptions |= ObjectOption;
-			exceptionRuleOption |= (optionException ? ObjectOption : NoOption);
-		}
-		else if (options.at(i).contains(QLatin1String("object-subrequest")) || options.at(i).contains(QLatin1String("object_subrequest")))
-		{
-			ruleOptions |= ObjectSubRequestOption;
-			exceptionRuleOption |= (optionException ? ObjectSubRequestOption : NoOption);
-		}
-		else if (options.at(i).contains(QLatin1String("subdocument")))
-		{
-			ruleOptions |= SubDocumentOption;
-			exceptionRuleOption |= (optionException ? SubDocumentOption : NoOption);
-		}
-		else if (options.at(i).contains(QLatin1String("xmlhttprequest")))
-		{
-			ruleOptions |= XmlHttpRequestOption;
-			exceptionRuleOption |= (optionException ? XmlHttpRequestOption : NoOption);
-		}
-		else if (options.at(i).contains(QLatin1String("domain")))
+		else if (optionName.startsWith(QLatin1String("domain")))
 		{
 			const QStringList parsedDomains(options.at(i).mid(options.at(i).indexOf(QLatin1Char('=')) + 1).split(QLatin1Char('|'), QString::SkipEmptyParts));
 
@@ -302,7 +268,7 @@ void ContentBlockingProfile::parseRuleLine(QString line)
 		}
 	}
 
-	addRule(new ContentBlockingRule(blockedDomains, allowedDomains, ruleOptions, exceptionRuleOption, ruleMatch, isException, needsDomainCheck), line);
+	addRule(new ContentBlockingRule(blockedDomains, allowedDomains, ruleOptions, ruleMatch, isException, needsDomainCheck), line);
 
 	return;
 }
@@ -795,31 +761,31 @@ bool ContentBlockingProfile::checkRuleMatch(ContentBlockingRule *rule, const QSt
 	bool isBlocked(hasBlockedDomains ? resolveDomainExceptions(m_baseUrlHost, rule->blockedDomains) : true);
 	isBlocked = (hasAllowedDomains ? !resolveDomainExceptions(m_baseUrlHost, rule->allowedDomains) : isBlocked);
 
-	if (rule->ruleOption.testFlag(ThirdPartyOption))
+	if (rule->ruleOptions.testFlag(ThirdPartyExceptionOption) || rule->ruleOptions.testFlag(ThirdPartyOption))
 	{
 		if (m_baseUrlHost.isEmpty() || requestSubdomainList.contains(m_baseUrlHost))
 		{
-			isBlocked = rule->exceptionRuleOption.testFlag(ThirdPartyOption);
+			isBlocked = rule->ruleOptions.testFlag(ThirdPartyExceptionOption);
 		}
 		else if (!hasBlockedDomains && !hasAllowedDomains)
 		{
-			isBlocked = !rule->exceptionRuleOption.testFlag(ThirdPartyOption);
+			isBlocked = rule->ruleOptions.testFlag(ThirdPartyOption);
 		}
 	}
 
-	QList<QPair<RuleOption, NetworkManager::ResourceType> > options({qMakePair(ImageOption, NetworkManager::ImageType), qMakePair(ScriptOption, NetworkManager::ScriptType), qMakePair(StyleSheetOption, NetworkManager::StyleSheetType), qMakePair(ObjectOption, NetworkManager::ObjectType), qMakePair(XmlHttpRequestOption, NetworkManager::XmlHttpRequestType), qMakePair(SubDocumentOption, NetworkManager::SubFrameType), qMakePair(ObjectSubRequestOption, NetworkManager::ObjectSubrequestType)});
+	QHash<NetworkManager::ResourceType, RuleOption>::const_iterator iterator;
 
-	for (int i = 0; i < options.count(); ++i)
+	for (iterator = m_resourceTypes.begin(); iterator != m_resourceTypes.end(); ++iterator)
 	{
-		if (rule->ruleOption.testFlag(options.at(i).first))
+		if (rule->ruleOptions.testFlag(iterator.value()) || rule->ruleOptions.testFlag(static_cast<RuleOption>(iterator.value() * 2)))
 		{
-			if (resourceType == options.at(i).second)
+			if (resourceType == iterator.key())
 			{
-				isBlocked = (isBlocked ? !rule->exceptionRuleOption.testFlag(options.at(i).first) : isBlocked);
+				isBlocked = (isBlocked ? rule->ruleOptions.testFlag(iterator.value()) : isBlocked);
 			}
 			else
 			{
-				isBlocked = (isBlocked ? rule->exceptionRuleOption.testFlag(options.at(i).first) : isBlocked);
+				isBlocked = (isBlocked ? rule->ruleOptions.testFlag(static_cast<RuleOption>(iterator.value() * 2)) : isBlocked);
 			}
 		}
 	}
