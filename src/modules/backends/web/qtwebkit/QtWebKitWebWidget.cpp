@@ -1534,6 +1534,11 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					{
 						const QString name(inputs.at(i).attribute(QLatin1String("name")));
 
+						if (name.isEmpty())
+						{
+							continue;
+						}
+
 						if (inputs.at(i).tagName().toLower() == QLatin1String("select"))
 						{
 							const QWebElementCollection options(inputs.at(i).findAll(QLatin1String("option:checked")));
