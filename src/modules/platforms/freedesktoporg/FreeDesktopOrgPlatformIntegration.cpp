@@ -98,6 +98,10 @@ namespace Otter
 FreeDesktopOrgPlatformIntegration::FreeDesktopOrgPlatformIntegration(Application *parent) : PlatformIntegration(parent),
 	m_notificationsInterface(new QDBusInterface(QLatin1String("org.freedesktop.Notifications"), QLatin1String("/org/freedesktop/Notifications"), QLatin1String("org.freedesktop.Notifications"), QDBusConnection::sessionBus(), this))
 {
+#if QT_VERSION >= 0x050700
+	QGuiApplication::setDesktopFileName(QLatin1String("otter-browser.desktop"));
+#endif
+
 	qDBusRegisterMetaType<QImage>();
 
 	m_notificationsInterface->connection().connect(m_notificationsInterface->service(), m_notificationsInterface->path(), m_notificationsInterface->interface(), QLatin1String("NotificationClosed"), this, SLOT(notificationIgnored(quint32,quint32)));
