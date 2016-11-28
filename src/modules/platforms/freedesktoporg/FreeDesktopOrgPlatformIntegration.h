@@ -41,6 +41,7 @@ class FreeDesktopOrgPlatformIntegration : public PlatformIntegration
 
 public:
 	explicit FreeDesktopOrgPlatformIntegration(Application *parent);
+	~FreeDesktopOrgPlatformIntegration();
 
 	void runApplication(const QString &command, const QUrl &url = QUrl()) const;
 	QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType);
@@ -55,6 +56,7 @@ protected slots:
 	void notificationCallFinished(QDBusPendingCallWatcher *watcher);
 	void notificationIgnored(quint32 identifier, quint32 reason);
 	void notificationClicked(quint32 identifier, const QString &action);
+	void updateTransferProgress(bool clear = false);
 
 private:
 	QDBusInterface *m_notificationsInterface;
