@@ -105,23 +105,23 @@ FreeDesktopOrgPlatformIntegration::FreeDesktopOrgPlatformIntegration(Application
 
 	qDBusRegisterMetaType<QImage>();
 
-	m_notificationsInterface->connection().connect(m_notificationsInterface->service(), m_notificationsInterface->path(), m_notificationsInterface->interface(), QLatin1String("NotificationClosed"), this, SLOT(notificationIgnored(quint32,quint32)));
-	m_notificationsInterface->connection().connect(m_notificationsInterface->service(), m_notificationsInterface->path(), m_notificationsInterface->interface(), QLatin1String("ActionInvoked"), this, SLOT(notificationClicked(quint32,QString)));
+	m_notificationsInterface->connection().connect(m_notificationsInterface->service(), m_notificationsInterface->path(), m_notificationsInterface->interface(), QLatin1String("NotificationClosed"), this, SLOT(handleNotificationIgnored(quint32,quint32)));
+	m_notificationsInterface->connection().connect(m_notificationsInterface->service(), m_notificationsInterface->path(), m_notificationsInterface->interface(), QLatin1String("ActionInvoked"), this, SLOT(handleNotificationClicked(quint32,QString)));
 
-	updateTransferProgress();
+	updateTransfersProgress();
 
 	QTimer::singleShot(250, this, SLOT(createApplicationsCacheThread()));
 
-	connect(TransfersManager::getInstance(), SIGNAL(transferChanged(Transfer*)), this, SLOT(updateTransferProgress()));
-	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(updateTransferProgress()));
-	connect(TransfersManager::getInstance(), SIGNAL(transferFinished(Transfer*)), this, SLOT(updateTransferProgress()));
-	connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(Transfer*)), this, SLOT(updateTransferProgress()));
-	connect(TransfersManager::getInstance(), SIGNAL(transferStopped(Transfer*)), this, SLOT(updateTransferProgress()));
+	connect(TransfersManager::getInstance(), SIGNAL(transferChanged(Transfer*)), this, SLOT(updateTransfersProgress()));
+	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(updateTransfersProgress()));
+	connect(TransfersManager::getInstance(), SIGNAL(transferFinished(Transfer*)), this, SLOT(updateTransfersProgress()));
+	connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(Transfer*)), this, SLOT(updateTransfersProgress()));
+	connect(TransfersManager::getInstance(), SIGNAL(transferStopped(Transfer*)), this, SLOT(updateTransfersProgress()));
 }
 
 FreeDesktopOrgPlatformIntegration::~FreeDesktopOrgPlatformIntegration()
 {
-	updateTransferProgress(true);
+	updateTransfersProgress(true);
 }
 
 void FreeDesktopOrgPlatformIntegration::runApplication(const QString &command, const QUrl &url) const
@@ -161,7 +161,7 @@ void FreeDesktopOrgPlatformIntegration::createApplicationsCacheThread()
 	QtConcurrent::run(this, &FreeDesktopOrgPlatformIntegration::createApplicationsCache);
 }
 
-void FreeDesktopOrgPlatformIntegration::notificationCallFinished(QDBusPendingCallWatcher *watcher)
+void FreeDesktopOrgPlatformIntegration::handleNotificationCallFinished(QDBusPendingCallWatcher *watcher)
 {
 	Notification *notification(m_notificationWatchers.value(watcher, nullptr));
 
@@ -175,7 +175,7 @@ void FreeDesktopOrgPlatformIntegration::notificationCallFinished(QDBusPendingCal
 	watcher->deleteLater();
 }
 
-void FreeDesktopOrgPlatformIntegration::notificationIgnored(quint32 identifier, quint32 reason)
+void FreeDesktopOrgPlatformIntegration::handleNotificationIgnored(quint32 identifier, quint32 reason)
 {
 	Q_UNUSED(reason)
 
@@ -189,7 +189,7 @@ void FreeDesktopOrgPlatformIntegration::notificationIgnored(quint32 identifier, 
 	}
 }
 
-void FreeDesktopOrgPlatformIntegration::notificationClicked(quint32 identifier, const QString &action)
+void FreeDesktopOrgPlatformIntegration::handleNotificationClicked(quint32 identifier, const QString &action)
 {
 	Q_UNUSED(action)
 
@@ -241,10 +241,10 @@ void FreeDesktopOrgPlatformIntegration::showNotification(Notification *notificat
 
 	m_notificationWatchers[watcher] = notification;
 
-	connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)), this, SLOT(notificationCallFinished(QDBusPendingCallWatcher*)));
+	connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher*)), this, SLOT(handleNotificationCallFinished(QDBusPendingCallWatcher*)));
 }
 
-void FreeDesktopOrgPlatformIntegration::updateTransferProgress(bool clear)
+void FreeDesktopOrgPlatformIntegration::updateTransfersProgress(bool clear)
 {
 	qint64 bytesTotal(0);
 	qint64 bytesReceived(0);
@@ -277,7 +277,7 @@ void FreeDesktopOrgPlatformIntegration::updateTransferProgress(bool clear)
 	arguments << QLatin1String("application://otter-browser.desktop");
 	arguments << properties;
 
-	QDBusMessage message(QDBusMessage::createSignal( QLatin1String("/com/canonical/unity/launcherentry/9ddcf02c30a33cd63e9762f06957263f"), QLatin1String("com.canonical.Unity.LauncherEntry"), QLatin1String("Update")));
+	QDBusMessage message(QDBusMessage::createSignal(QLatin1String("/com/canonical/unity/launcherentry/9ddcf02c30a33cd63e9762f06957263f"), QLatin1String("com.canonical.Unity.LauncherEntry"), QLatin1String("Update")));
 	message.setArguments(arguments);
 
 	QDBusConnection::sessionBus().send(message);

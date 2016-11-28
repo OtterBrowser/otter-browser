@@ -43,20 +43,20 @@ public:
 	explicit FreeDesktopOrgPlatformIntegration(Application *parent);
 	~FreeDesktopOrgPlatformIntegration();
 
-	void runApplication(const QString &command, const QUrl &url = QUrl()) const;
-	QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType);
-	bool canShowNotifications() const;
+	void runApplication(const QString &command, const QUrl &url = QUrl()) const override;
+	QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType) override;
+	bool canShowNotifications() const override;
 
 public slots:
-	void showNotification(Notification *notification);
+	void showNotification(Notification *notification) override;
 
 protected slots:
 	void createApplicationsCache();
 	void createApplicationsCacheThread();
-	void notificationCallFinished(QDBusPendingCallWatcher *watcher);
-	void notificationIgnored(quint32 identifier, quint32 reason);
-	void notificationClicked(quint32 identifier, const QString &action);
-	void updateTransferProgress(bool clear = false);
+	void handleNotificationCallFinished(QDBusPendingCallWatcher *watcher);
+	void handleNotificationIgnored(quint32 identifier, quint32 reason);
+	void handleNotificationClicked(quint32 identifier, const QString &action);
+	void updateTransfersProgress(bool clear = false);
 
 private:
 	QDBusInterface *m_notificationsInterface;
