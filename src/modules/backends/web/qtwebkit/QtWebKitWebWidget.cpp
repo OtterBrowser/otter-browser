@@ -1550,23 +1550,12 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 						}
 						else
 						{
-							QString value;
-
-							if (inputs.at(i).tagName().toLower() == QLatin1String("textarea"))
+							if (inputs.at(i).attribute(QLatin1String("type")) == QLatin1String("submit") || ((inputs.at(i).attribute(QLatin1String("type")) == QLatin1String("checkbox") || inputs.at(i).attribute(QLatin1String("type")) == QLatin1String("radio")) && !inputs.at(i).hasAttribute(QLatin1String("checked"))))
 							{
-								value = inputs.at(i).toPlainText();
-							}
-							else
-							{
-								if (inputs.at(i).attribute(QLatin1String("type")) == QLatin1String("submit") || ((inputs.at(i).attribute(QLatin1String("type")) == QLatin1String("checkbox") || inputs.at(i).attribute(QLatin1String("type")) == QLatin1String("radio")) && !inputs.at(i).hasAttribute(QLatin1String("checked"))))
-								{
-									continue;
-								}
-
-								value = inputs.at(i).attribute(QLatin1String("value"));
+								continue;
 							}
 
-							parameters.addQueryItem(name, ((inputs.at(i) == hitResult.element()) ? QLatin1String("{searchTerms}") : value));
+							parameters.addQueryItem(name, ((inputs.at(i) == hitResult.element()) ? QLatin1String("{searchTerms}") : inputs.at(i).evaluateJavaScript(QLatin1String("this.value")).toString()));
 						}
 					}
 
