@@ -177,8 +177,9 @@ void ContentBlockingProfile::parseRuleLine(QString line)
 		return;
 	}
 
-	const int optionSeparator(line.indexOf(QLatin1Char('$')));
+	const QString rule(line);
 	QStringList options;
+	const int optionSeparator(line.indexOf(QLatin1Char('$')));
 
 	if (optionSeparator >= 0)
 	{
@@ -268,9 +269,7 @@ void ContentBlockingProfile::parseRuleLine(QString line)
 		}
 	}
 
-	addRule(new ContentBlockingRule(blockedDomains, allowedDomains, ruleOptions, ruleMatch, isException, needsDomainCheck), line);
-
-	return;
+	addRule(new ContentBlockingRule(rule, blockedDomains, allowedDomains, ruleOptions, ruleMatch, isException, needsDomainCheck), line);
 }
 
 void ContentBlockingProfile::parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list)
@@ -333,6 +332,209 @@ void ContentBlockingProfile::deleteNode(Node *node)
 	}
 
 	delete node;
+}
+
+ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrlSubstring(Node *node, const QString &subString, QString currentRule, NetworkManager::ResourceType resourceType)
+{
+	ContentBlockingManager::CheckResult result;
+	ContentBlockingManager::CheckResult currentResult;
+
+	for (int i = 0; i < subString.length(); ++i)
+	{
+		const QChar treeChar(subString.at(i));
+		bool childrenExists(false);
+
+		currentResult = evaluateRulesInNode(node, currentRule, resourceType);
+
+		if (currentResult.isBlocked)
+		{
+			result = currentResult;
+		}
+		else if (currentResult.isException)
+		{
+			return currentResult;
+		}
+
+		for (int j = 0; j < node->children.count(); ++j)
+		{
+			Node *nextNode(node->children.at(j));
+
+			if (nextNode->value == QLatin1Char('*'))
+			{
+				const QString wildcardSubString(subString.mid(i));
+
+				for (int k = 0; k < wildcardSubString.length(); ++k)
+				{
+					currentResult = checkUrlSubstring(nextNode, wildcardSubString.right(wildcardSubString.length() - k), currentRule + wildcardSubString.left(k), resourceType);
+
+					if (currentResult.isBlocked)
+					{
+						result = currentResult;
+					}
+					else if (currentResult.isException)
+					{
+						return currentResult;
+					}
+				}
+			}
+
+			if (nextNode->value == QLatin1Char('^') && !treeChar.isDigit() && !treeChar.isLetter() && !m_separators.contains(treeChar))
+			{
+				currentResult = checkUrlSubstring(nextNode, subString.mid(i), currentRule, resourceType);
+
+				if (currentResult.isBlocked)
+				{
+					result = currentResult;
+				}
+				else if (currentResult.isException)
+				{
+					return currentResult;
+				}
+			}
+
+			if (nextNode->value == treeChar)
+			{
+				node = nextNode;
+
+				childrenExists = true;
+
+				break;
+			}
+		}
+
+		if (!childrenExists)
+		{
+			return result;
+		}
+
+		currentRule += treeChar;
+	}
+
+	currentResult = evaluateRulesInNode(node, currentRule, resourceType);
+
+	if (currentResult.isBlocked)
+	{
+		result = currentResult;
+	}
+	else if (currentResult.isException)
+	{
+		return currentResult;
+	}
+
+	for (int i = 0; i < node->children.count(); ++i)
+	{
+		if (node->children.at(i)->value == QLatin1Char('^'))
+		{
+			currentResult = evaluateRulesInNode(node, currentRule, resourceType);
+
+			if (currentResult.isBlocked)
+			{
+				result = currentResult;
+			}
+			else if (currentResult.isException)
+			{
+				return currentResult;
+			}
+		}
+	}
+
+	return result;
+}
+
+ContentBlockingManager::CheckResult ContentBlockingProfile::checkRuleMatch(ContentBlockingRule *rule, const QString &currentRule, NetworkManager::ResourceType resourceType)
+{
+	switch (rule->ruleMatch)
+	{
+		case StartMatch:
+			if (!m_requestUrl.startsWith(currentRule))
+			{
+				return ContentBlockingManager::CheckResult();
+			}
+
+			break;
+		case EndMatch:
+			if (!m_requestUrl.endsWith(currentRule))
+			{
+				return ContentBlockingManager::CheckResult();
+			}
+
+			break;
+		case ExactMatch:
+			if (m_requestUrl != currentRule)
+			{
+				return ContentBlockingManager::CheckResult();
+			}
+
+			break;
+		default:
+			if (!m_requestUrl.contains(currentRule))
+			{
+				return ContentBlockingManager::CheckResult();
+			}
+
+			break;
+	}
+
+	const QStringList requestSubdomainList(ContentBlockingManager::createSubdomainList(m_requestHost));
+
+	if (rule->needsDomainCheck && !requestSubdomainList.contains(currentRule.left(currentRule.indexOf(m_domainExpression))))
+	{
+		return ContentBlockingManager::CheckResult();
+	}
+
+	const bool hasBlockedDomains(!rule->blockedDomains.isEmpty());
+	const bool hasAllowedDomains(!rule->allowedDomains.isEmpty());
+	bool isBlocked(hasBlockedDomains ? resolveDomainExceptions(m_baseUrlHost, rule->blockedDomains) : true);
+	isBlocked = (hasAllowedDomains ? !resolveDomainExceptions(m_baseUrlHost, rule->allowedDomains) : isBlocked);
+
+	if (rule->ruleOptions.testFlag(ThirdPartyExceptionOption) || rule->ruleOptions.testFlag(ThirdPartyOption))
+	{
+		if (m_baseUrlHost.isEmpty() || requestSubdomainList.contains(m_baseUrlHost))
+		{
+			isBlocked = rule->ruleOptions.testFlag(ThirdPartyExceptionOption);
+		}
+		else if (!hasBlockedDomains && !hasAllowedDomains)
+		{
+			isBlocked = rule->ruleOptions.testFlag(ThirdPartyOption);
+		}
+	}
+
+	QHash<NetworkManager::ResourceType, RuleOption>::const_iterator iterator;
+
+	for (iterator = m_resourceTypes.begin(); iterator != m_resourceTypes.end(); ++iterator)
+	{
+		if (rule->ruleOptions.testFlag(iterator.value()) || rule->ruleOptions.testFlag(static_cast<RuleOption>(iterator.value() * 2)))
+		{
+			if (resourceType == iterator.key())
+			{
+				isBlocked = (isBlocked ? rule->ruleOptions.testFlag(iterator.value()) : isBlocked);
+			}
+			else
+			{
+				isBlocked = (isBlocked ? rule->ruleOptions.testFlag(static_cast<RuleOption>(iterator.value() * 2)) : isBlocked);
+			}
+		}
+	}
+
+	if (isBlocked)
+	{
+		ContentBlockingManager::CheckResult result;
+		result.rule = rule->rule;
+
+		if (rule->isException)
+		{
+			result.isBlocked = false;
+			result.isException = true;
+
+			return result;
+		}
+
+		result.isBlocked = true;
+
+		return result;
+	}
+
+	return ContentBlockingManager::CheckResult();
 }
 
 void ContentBlockingProfile::replyFinished()
@@ -491,12 +693,15 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkUrl(const QUrl 
 
 	for (int i = 0; i < m_requestUrl.length(); ++i)
 	{
-		if (checkUrlSubstring(m_root, m_requestUrl.right(m_requestUrl.length() - i), QString(), resourceType))
-		{
-			result.profile = m_name;
-			result.isBlocked = true;
+		ContentBlockingManager::CheckResult currentResult(checkUrlSubstring(m_root, m_requestUrl.right(m_requestUrl.length() - i), QString(), resourceType));
 
-			return result;
+		if (currentResult.isBlocked)
+		{
+			result = currentResult;
+		}
+		else if (currentResult.isException)
+		{
+			return currentResult;
 		}
 	}
 
@@ -588,17 +793,28 @@ bool ContentBlockingProfile::downloadRules()
 	return true;
 }
 
-bool ContentBlockingProfile::evaluateRulesInNode(Node *node, const QString &currentRule, NetworkManager::ResourceType resourceType)
+ContentBlockingManager::CheckResult ContentBlockingProfile::evaluateRulesInNode(Node *node, const QString &currentRule, NetworkManager::ResourceType resourceType)
 {
+	ContentBlockingManager::CheckResult result;
+
 	for (int i = 0; i < node->rules.count(); ++i)
 	{
-		if (node->rules.at(i) && checkRuleMatch(node->rules.at(i), currentRule, resourceType))
+		if (node->rules.at(i))
 		{
-			return true;
+			ContentBlockingManager::CheckResult currentResult(checkRuleMatch(node->rules.at(i), currentRule, resourceType));
+
+			if (currentResult.isBlocked)
+			{
+				result = currentResult;
+			}
+			else if (currentResult.isException)
+			{
+				return currentResult;
+			}
 		}
 	}
 
-	return false;
+	return result;
 }
 
 bool ContentBlockingProfile::loadRules()
@@ -649,148 +865,6 @@ bool ContentBlockingProfile::resolveDomainExceptions(const QString &url, const Q
 	}
 
 	return false;
-}
-
-bool ContentBlockingProfile::checkUrlSubstring(Node *node, const QString &subString, QString currentRule, NetworkManager::ResourceType resourceType)
-{
-	for (int i = 0; i < subString.length(); ++i)
-	{
-		const QChar treeChar(subString.at(i));
-
-		if (evaluateRulesInNode(node, currentRule, resourceType))
-		{
-			return true;
-		}
-
-		bool childrenExists(false);
-
-		for (int j = 0; j < node->children.count(); ++j)
-		{
-			Node *nextNode(node->children.at(j));
-
-			if (nextNode->value == QLatin1Char('*'))
-			{
-				const QString wildcardSubString(subString.mid(i));
-
-				for (int k = 0; k < wildcardSubString.length(); ++k)
-				{
-					if (checkUrlSubstring(nextNode, wildcardSubString.right(wildcardSubString.length() - k), currentRule + wildcardSubString.left(k), resourceType))
-					{
-						return true;
-					}
-				}
-			}
-
-			if (nextNode->value == treeChar || (nextNode->value == QLatin1Char('^') && !treeChar.isDigit() && !treeChar.isLetter() && !m_separators.contains(treeChar)))
-			{
-				node = nextNode;
-
-				childrenExists = true;
-
-				break;
-			}
-		}
-
-		if (!childrenExists)
-		{
-			return false;
-		}
-
-		currentRule += treeChar;
-	}
-
-	if (evaluateRulesInNode(node, currentRule, resourceType))
-	{
-		return true;
-	}
-
-	for (int i = 0; i < node->children.count(); ++i)
-	{
-		if (node->children.at(i)->value == QLatin1Char('^') && evaluateRulesInNode(node, currentRule, resourceType))
-		{
-			return true;
-		}
-	}
-
-	return false;
-}
-
-bool ContentBlockingProfile::checkRuleMatch(ContentBlockingRule *rule, const QString &currentRule, NetworkManager::ResourceType resourceType)
-{
-	switch (rule->ruleMatch)
-	{
-		case StartMatch:
-			if (!m_requestUrl.startsWith(currentRule))
-			{
-				return false;
-			}
-
-			break;
-		case EndMatch:
-			if (!m_requestUrl.endsWith(currentRule))
-			{
-				return false;
-			}
-
-			break;
-		case ExactMatch:
-			if (m_requestUrl != currentRule)
-			{
-				return false;
-			}
-
-			break;
-		default:
-			if (!m_requestUrl.contains(currentRule))
-			{
-				return false;
-			}
-
-			break;
-	}
-
-	const QStringList requestSubdomainList(ContentBlockingManager::createSubdomainList(m_requestHost));
-
-	if (rule->needsDomainCheck && !requestSubdomainList.contains(currentRule.left(currentRule.indexOf(m_domainExpression))))
-	{
-		return false;
-	}
-
-	const bool hasBlockedDomains(!rule->blockedDomains.isEmpty());
-	const bool hasAllowedDomains(!rule->allowedDomains.isEmpty());
-	bool isBlocked(hasBlockedDomains ? resolveDomainExceptions(m_baseUrlHost, rule->blockedDomains) : true);
-	isBlocked = (hasAllowedDomains ? !resolveDomainExceptions(m_baseUrlHost, rule->allowedDomains) : isBlocked);
-
-	if (rule->ruleOptions.testFlag(ThirdPartyExceptionOption) || rule->ruleOptions.testFlag(ThirdPartyOption))
-	{
-		if (m_baseUrlHost.isEmpty() || requestSubdomainList.contains(m_baseUrlHost))
-		{
-			isBlocked = rule->ruleOptions.testFlag(ThirdPartyExceptionOption);
-		}
-		else if (!hasBlockedDomains && !hasAllowedDomains)
-		{
-			isBlocked = rule->ruleOptions.testFlag(ThirdPartyOption);
-		}
-	}
-
-	QHash<NetworkManager::ResourceType, RuleOption>::const_iterator iterator;
-
-	for (iterator = m_resourceTypes.begin(); iterator != m_resourceTypes.end(); ++iterator)
-	{
-		if (rule->ruleOptions.testFlag(iterator.value()) || rule->ruleOptions.testFlag(static_cast<RuleOption>(iterator.value() * 2)))
-		{
-			if (resourceType == iterator.key())
-			{
-				isBlocked = (isBlocked ? rule->ruleOptions.testFlag(iterator.value()) : isBlocked);
-			}
-			else
-			{
-				isBlocked = (isBlocked ? rule->ruleOptions.testFlag(static_cast<RuleOption>(iterator.value() * 2)) : isBlocked);
-			}
-		}
-	}
-
-	return (isBlocked ? !rule->isException : false);
 }
 
 }

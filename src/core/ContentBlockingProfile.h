@@ -86,6 +86,7 @@ public:
 
 	struct ContentBlockingRule
 	{
+		QString rule;
 		QStringList blockedDomains;
 		QStringList allowedDomains;
 		RuleOptions ruleOptions = NoOption;
@@ -93,7 +94,7 @@ public:
 		bool isException = false;
 		bool needsDomainCheck = false;
 
-		explicit ContentBlockingRule(QStringList blockedDomainsValue, QStringList allowedDomainsValue, RuleOptions ruleOptionsValue, RuleMatch ruleMatchValue, bool isExceptionValue, bool needsDomainCheckValue) : blockedDomains(blockedDomainsValue), allowedDomains(allowedDomainsValue), ruleOptions(ruleOptionsValue), ruleMatch(ruleMatchValue), isException(isExceptionValue), needsDomainCheck(needsDomainCheckValue)
+		explicit ContentBlockingRule(QString ruleValue, QStringList blockedDomainsValue, QStringList allowedDomainsValue, RuleOptions ruleOptionsValue, RuleMatch ruleMatchValue, bool isExceptionValue, bool needsDomainCheckValue) : rule(ruleValue), blockedDomains(blockedDomainsValue), allowedDomains(allowedDomainsValue), ruleOptions(ruleOptionsValue), ruleMatch(ruleMatchValue), isException(isExceptionValue), needsDomainCheck(needsDomainCheckValue)
 		{
 		}
 	};
@@ -133,9 +134,9 @@ protected:
 	void parseStyleSheetRule(const QStringList &line, QMultiHash<QString, QString> &list);
 	void addRule(ContentBlockingRule *rule, const QString &ruleString);
 	void deleteNode(Node *node);
-	bool evaluateRulesInNode(Node *node, const QString &currentRule, NetworkManager::ResourceType resourceType);
-	bool checkUrlSubstring(Node *node, const QString &subString, QString currentRule, NetworkManager::ResourceType resourceType);
-	bool checkRuleMatch(ContentBlockingRule *rule, const QString &currentRule, NetworkManager::ResourceType resourceType);
+	ContentBlockingManager::CheckResult checkUrlSubstring(Node *node, const QString &subString, QString currentRule, NetworkManager::ResourceType resourceType);
+	ContentBlockingManager::CheckResult checkRuleMatch(ContentBlockingRule *rule, const QString &currentRule, NetworkManager::ResourceType resourceType);
+	ContentBlockingManager::CheckResult evaluateRulesInNode(Node *node, const QString &currentRule, NetworkManager::ResourceType resourceType);
 	bool loadRules();
 	bool resolveDomainExceptions(const QString &url, const QStringList &ruleList);
 

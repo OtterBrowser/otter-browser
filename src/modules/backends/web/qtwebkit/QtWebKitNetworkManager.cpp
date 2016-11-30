@@ -633,7 +633,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 
 				if (result.isBlocked)
 				{
-					Console::addMessage(QCoreApplication::translate("main", "Blocked request"), Console::NetworkCategory, Console::LogLevel, request.url().toString(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
+					Console::addMessage(QCoreApplication::translate("main", "Request blocked with rule: %1").arg(result.rule), Console::NetworkCategory, Console::LogLevel, request.url().toString(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
 
 					if (storeBlockedUrl)
 					{
@@ -644,6 +644,7 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 					resource.url = request.url();
 					resource.resourceType = resourceType;
 					resource.metaData[NetworkManager::ContentBlockingProfileMetaData] = result.profile;
+					resource.metaData[NetworkManager::ContentBlockingRuleMetaData] = result.rule;
 
 					m_blockedRequests.append(resource);
 

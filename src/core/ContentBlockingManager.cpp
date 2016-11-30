@@ -297,6 +297,8 @@ ContentBlockingManager::CheckResult ContentBlockingManager::checkUrl(const QVect
 		return CheckResult();
 	}
 
+	CheckResult result;
+
 	for (int i = 0; i < profiles.count(); ++i)
 	{
 		if (profiles[i] >= 0 && profiles[i] < m_profiles.count())
@@ -305,12 +307,16 @@ ContentBlockingManager::CheckResult ContentBlockingManager::checkUrl(const QVect
 
 			if (currentResult.isBlocked)
 			{
+				result = currentResult;
+			}
+			else if (currentResult.isException)
+			{
 				return currentResult;
 			}
 		}
 	}
 
-	return CheckResult();
+	return result;
 }
 
 QStringList ContentBlockingManager::createSubdomainList(const QString &domain)

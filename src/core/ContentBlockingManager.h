@@ -46,7 +46,9 @@ public:
 	struct CheckResult
 	{
 		QString profile;
+		QString rule;
 		bool isBlocked = false;
+		bool isException = false;
 	};
 
 	static void createInstance(QObject *parent = nullptr);
