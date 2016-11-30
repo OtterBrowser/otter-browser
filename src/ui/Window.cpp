@@ -102,7 +102,7 @@ void Window::triggerAction(int identifier, const QVariantMap &parameters)
 		AddressWidget *addressWidget(nullptr);
 		SearchWidget *searchWidget(nullptr);
 
-		if (identifier == ActionsManager::ActivateAddressFieldAction || identifier == ActionsManager::ActivateSearchFieldAction)
+		if (identifier == ActionsManager::ActivateAddressFieldAction || identifier == ActionsManager::ActivateSearchFieldAction || identifier == ActionsManager::GoAction)
 		{
 			addressWidget = findAddressWidget();
 
