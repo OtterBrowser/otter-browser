@@ -2,6 +2,7 @@
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -551,12 +552,12 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	{
 		AddressWidget *addressWidget(findAddressWidget());
 
-		if (Utils::isUrlEmpty(getUrl()) && addressWidget)
+		if (Utils::isUrlEmpty(m_contentsWidget->getUrl()) && addressWidget)
 		{
 			addressWidget->setFocus();
 		}
 
-		if (m_contentsWidget->getUrl().scheme() == QLatin1String("about") || Utils::isUrlEmpty(getUrl()))
+		if (m_contentsWidget->getUrl().scheme() == QLatin1String("about") || Utils::isUrlEmpty(m_contentsWidget->getUrl()))
 		{
 			emit titleChanged(m_contentsWidget->getTitle());
 		}
@@ -564,6 +565,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	emit widgetChanged();
 	emit titleChanged(m_contentsWidget->getTitle());
+	emit urlChanged(m_contentsWidget->getUrl());
 	emit iconChanged(m_contentsWidget->getIcon());
 	emit loadingStateChanged(m_contentsWidget->getLoadingState());
 	emit canZoomChanged(m_contentsWidget->canZoom());
