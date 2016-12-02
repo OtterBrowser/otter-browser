@@ -1524,62 +1524,87 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					parentElement = parentElement.parent();
 				}
 
-				const QWebElementCollection inputs(parentElement.findAll(QLatin1String("input:not([disabled])[name], select:not([disabled])[name], textarea:not([disabled])[name]")));
+				const QWebElementCollection inputElements(parentElement.findAll(QLatin1String("input:not([disabled])[name], select:not([disabled])[name], textarea:not([disabled])[name]")));
 
-				if (!parentElement.isNull() && parentElement.hasAttribute(QLatin1String("action")) && inputs.count() > 0)
+				if (!parentElement.hasAttribute(QLatin1String("action")) || inputElements.count() == 0)
 				{
-					QUrlQuery parameters;
+					return;
+				}
 
-					for (int i = 0; i < inputs.count(); ++i)
+				QWebElement searchTermsElement;
+
+				if (inputElements.toList().contains(hitResult.element()) && hitResult.element().tagName().toLower() != QLatin1String("select"))
+				{
+					const QString type(hitResult.element().attribute(QLatin1String("type")));
+
+					if (type != QLatin1String("checkbox") && type != QLatin1String("image") && type != QLatin1String("radio") && type != QLatin1String("submit"))
 					{
-						const QString name(inputs.at(i).attribute(QLatin1String("name")));
+						searchTermsElement = hitResult.element();
+					}
+				}
 
-						if (name.isEmpty())
+				if (searchTermsElement.isNull())
+				{
+					searchTermsElement = parentElement.findFirst(QLatin1String("input:not([disabled])[name][type=\"search\"]"));
+				}
+
+				QUrlQuery parameters;
+
+				for (int i = 0; i < inputElements.count(); ++i)
+				{
+					const QString name(inputElements.at(i).attribute(QLatin1String("name")));
+
+					if (name.isEmpty())
+					{
+						continue;
+					}
+
+					if (inputElements.at(i).tagName().toLower() == QLatin1String("select"))
+					{
+						const QWebElementCollection optionElements(inputElements.at(i).findAll(QLatin1String("option:checked")));
+
+						for (int j = 0; j < optionElements.count(); ++j)
+						{
+							parameters.addQueryItem(name, optionElements.at(j).evaluateJavaScript(QLatin1String("this.value")).toString());
+						}
+					}
+					else
+					{
+						const QString type(inputElements.at(i).attribute(QLatin1String("type")));
+						const bool isSubmit(type == QLatin1String("image") || type == QLatin1String("submit"));
+
+						if ((isSubmit && inputElements.at(i) != hitResult.element()) || ((type == QLatin1String("checkbox") || type == QLatin1String("radio")) && !inputElements.at(i).evaluateJavaScript(QLatin1String("this.checked")).toBool()))
 						{
 							continue;
 						}
 
-						if (inputs.at(i).tagName().toLower() == QLatin1String("select"))
+						if (!isSubmit && searchTermsElement.isNull())
 						{
-							const QWebElementCollection options(inputs.at(i).findAll(QLatin1String("option:checked")));
-
-							for (int j = 0; j < options.count(); ++j)
-							{
-								parameters.addQueryItem(name, options.at(j).evaluateJavaScript(QLatin1String("this.value")).toString());
-							}
+							searchTermsElement = inputElements.at(i);
 						}
-						else
-						{
-							if (inputs.at(i).attribute(QLatin1String("type")) == QLatin1String("submit") || ((inputs.at(i).attribute(QLatin1String("type")) == QLatin1String("checkbox") || inputs.at(i).attribute(QLatin1String("type")) == QLatin1String("radio")) && !inputs.at(i).hasAttribute(QLatin1String("checked"))))
-							{
-								continue;
-							}
 
-							parameters.addQueryItem(name, ((inputs.at(i) == hitResult.element()) ? QLatin1String("{searchTerms}") : inputs.at(i).evaluateJavaScript(QLatin1String("this.value")).toString()));
-						}
+						parameters.addQueryItem(name, ((inputElements.at(i) == searchTermsElement) ? QLatin1String("{searchTerms}") : inputElements.at(i).evaluateJavaScript(QLatin1String("this.value")).toString()));
 					}
+				}
 
-					const QStringList identifiers(SearchEnginesManager::getSearchEngines());
-					const QStringList keywords(SearchEnginesManager::getSearchKeywords());
-					const QIcon icon(m_webView->icon());
-					const QUrl url(parentElement.attribute(QLatin1String("action")));
-					SearchEnginesManager::SearchEngineDefinition searchEngine;
-					searchEngine.identifier = Utils::createIdentifier(getUrl().host(), identifiers);
-					searchEngine.title = getTitle();
-					searchEngine.formUrl = getUrl();
-					searchEngine.icon = (icon.isNull() ? ThemesManager::getIcon(QLatin1String("edit-find")) : icon);
-					searchEngine.resultsUrl.url = (url.isEmpty() ? getUrl() : resolveUrl(parentElement.webFrame(), url)).toString();
-					searchEngine.resultsUrl.enctype = parentElement.attribute(QLatin1String("enctype"));
-					searchEngine.resultsUrl.method = ((parentElement.attribute(QLatin1String("method"), QLatin1String("get")).toLower() == QLatin1String("post")) ? QLatin1String("post") : QLatin1String("get"));
-					searchEngine.resultsUrl.parameters = parameters;
+				const QStringList identifiers(SearchEnginesManager::getSearchEngines());
+				const QStringList keywords(SearchEnginesManager::getSearchKeywords());
+				const QIcon icon(m_webView->icon());
+				const QUrl url(parentElement.attribute(QLatin1String("action")));
+				SearchEnginesManager::SearchEngineDefinition searchEngine;
+				searchEngine.identifier = Utils::createIdentifier(getUrl().host(), identifiers);
+				searchEngine.title = getTitle();
+				searchEngine.formUrl = getUrl();
+				searchEngine.icon = (icon.isNull() ? ThemesManager::getIcon(QLatin1String("edit-find")) : icon);
+				searchEngine.resultsUrl.url = (url.isEmpty() ? getUrl() : resolveUrl(parentElement.webFrame(), url)).toString();
+				searchEngine.resultsUrl.enctype = parentElement.attribute(QLatin1String("enctype"));
+				searchEngine.resultsUrl.method = ((parentElement.attribute(QLatin1String("method"), QLatin1String("get")).toLower() == QLatin1String("post")) ? QLatin1String("post") : QLatin1String("get"));
+				searchEngine.resultsUrl.parameters = parameters;
 
-					SearchEnginePropertiesDialog dialog(searchEngine, keywords, false, this);
+				SearchEnginePropertiesDialog dialog(searchEngine, keywords, false, this);
 
-					if (dialog.exec() == QDialog::Rejected)
-					{
-						return;
-					}
-
+				if (dialog.exec() == QDialog::Accepted)
+				{
 					SearchEnginesManager::addSearchEngine(dialog.getSearchEngine(), dialog.isDefault());
 				}
 			}
