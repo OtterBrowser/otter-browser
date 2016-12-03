@@ -2,17 +2,7 @@ var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 
 
 if (element)
 {
-	var form = element;
-
-	while (form)
-	{
-		if (form.tagName && form.tagName.toLowerCase() == 'form')
-		{
-			break;
-		}
-
-		form = form.parentNode;
-	}
+	var form = element.closest('form');
 
 	if (form)
 	{
