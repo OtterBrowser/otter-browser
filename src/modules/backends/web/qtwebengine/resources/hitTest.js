@@ -25,6 +25,18 @@ if (element)
 	}
 
 	var geometry = element.getBoundingClientRect();
+	var anchorElement = element.closest('a[href]');
+	var titledElement = element.closest('[title]');
+
+	if (anchorElement)
+	{
+		result.linkUrl = anchorElement.href;
+	}
+
+	if (titledElement)
+	{
+		result.title = titledElement.title;
+	}
 
 	result.geometry = { x: geometry.top, y: geometry.left, w: geometry.width, h: geometry.height };
 
@@ -70,13 +82,6 @@ if (element)
 		result.mediaUrl = createUrl(element.src);
 	}
 
-	var link = element.closest('a');
-
-	if (link)
-	{
-		result.linkUrl = link.href;
-	}
-
 	if (result.tagName == 'textarea' || result.tagName == 'input')
 	{
 		var type = (element.type ? element.type.toLowerCase() : '');
@@ -114,16 +119,6 @@ if (element)
 
 			result.flags |= 4;
 		}
-	}
-
-	while (element && result.title == '')
-	{
-		if (element != document && element.title !== '')
-		{
-			result.title = element.title;
-		}
-
-		element = element.parentNode;
 	}
 }
 
