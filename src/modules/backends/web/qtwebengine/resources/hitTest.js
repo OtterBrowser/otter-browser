@@ -16,6 +16,14 @@ var result = {
 
 if (element)
 {
+	function createUrl(url)
+	{
+		var element = document.createElement('a');
+		element.href = url;
+
+		return element.href;
+	}
+
 	var geometry = element.getBoundingClientRect();
 
 	result.geometry = { x: geometry.top, y: geometry.left, w: geometry.width, h: geometry.height };
@@ -29,27 +37,16 @@ if (element)
 
 	if (result.tagName == 'iframe' || result.tagName == 'frame')
 	{
-		var link = document.createElement('a');
-		link.href = element.src;
-
-		result.frameUrl = link.href;
+		result.frameUrl = createUrl(element.src);
 	}
-
-	if (result.tagName == 'img')
+	else if (result.tagName == 'img')
 	{
-		var link = document.createElement('a');
-		link.href = element.src;
-
 		result.alternateText = element.alt;
-		result.imageUrl = link.href;
+		result.imageUrl = createUrl(element.src);
 		result.longDescription = element.longDesc;
 	}
-
-	if (result.tagName == 'audio' || result.tagName == 'video')
+	else if (result.tagName == 'audio' || result.tagName == 'video')
 	{
-		var link = document.createElement('a');
-		link.href = element.src;
-
 		if (element.controls)
 		{
 			result.flags |= 16;
@@ -70,7 +67,14 @@ if (element)
 			result.flags |= 128;
 		}
 
-		result.mediaUrl = link.href;
+		result.mediaUrl = createUrl(element.src);
+	}
+
+	var link = element.closest('a');
+
+	if (link)
+	{
+		result.linkUrl = link.href;
 	}
 
 	if (result.tagName == 'textarea' || result.tagName == 'input')
@@ -107,18 +111,11 @@ if (element)
 
 		if (element.tagName)
 		{
-			if (element.tagName.toLowerCase() == 'a')
+			if ((isForm || (isSubmit && result.formUrl == '')) && element.tagName.toLowerCase() == 'form')
 			{
-				result.linkUrl = element.href;
-			}
-			else if ((isForm || (isSubmit && result.formUrl == '')) && element.tagName.toLowerCase() == 'form')
-			{
-				if ((isSubmit && result.formUrl == ''))
+				if (isSubmit && result.formUrl == '')
 				{
-					var link = document.createElement('a');
-					link.href = element.action;
-
-					result.formUrl = link.href;
+					result.formUrl = createUrl(element.action);
 				}
 				else
 				{
