@@ -1533,6 +1533,16 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				QWebElement searchTermsElement;
 				const QString tagName(hitResult.element().tagName().toLower());
+				const QUrl url(parentElement.attribute(QLatin1String("action")));
+				const QIcon icon(m_webView->icon());
+				SearchEnginesManager::SearchEngineDefinition searchEngine;
+				searchEngine.identifier = Utils::createIdentifier(getUrl().host(), SearchEnginesManager::getSearchEngines());
+				searchEngine.title = getTitle();
+				searchEngine.formUrl = getUrl();
+				searchEngine.icon = (icon.isNull() ? ThemesManager::getIcon(QLatin1String("edit-find")) : icon);
+				searchEngine.resultsUrl.url = (url.isEmpty() ? getUrl() : resolveUrl(parentElement.webFrame(), url)).toString();
+				searchEngine.resultsUrl.enctype = parentElement.attribute(QLatin1String("enctype"));
+				searchEngine.resultsUrl.method = ((parentElement.attribute(QLatin1String("method"), QLatin1String("get")).toLower() == QLatin1String("post")) ? QLatin1String("post") : QLatin1String("get"));
 
 				if (tagName != QLatin1String("select"))
 				{
@@ -1554,8 +1564,6 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					searchTermsElement = parentElement.findFirst(QLatin1String("input:not([disabled])[name][type=\"search\"]"));
 				}
 
-				QUrlQuery parameters;
-
 				for (int i = 0; i < inputElements.count(); ++i)
 				{
 					const QString name(inputElements.at(i).attribute(QLatin1String("name")));
@@ -1570,6 +1578,24 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 							continue;
 						}
 
+						if (isSubmit && inputElements.at(i) == hitResult.element())
+						{
+							if (inputElements.at(i).hasAttribute(QLatin1String("formaction")))
+							{
+								searchEngine.resultsUrl.url = resolveUrl(parentElement.webFrame(), inputElements.at(i).attribute(QLatin1String("formaction"))).toString();
+							}
+
+							if (inputElements.at(i).hasAttribute(QLatin1String("formenctype")))
+							{
+								searchEngine.resultsUrl.enctype = inputElements.at(i).attribute(QLatin1String("formenctype"));
+							}
+
+							if (inputElements.at(i).hasAttribute(QLatin1String("formmethod")))
+							{
+								searchEngine.resultsUrl.method = inputElements.at(i).attribute(QLatin1String("formmethod"));
+							}
+						}
+
 						if (!isSubmit && searchTermsElement.isNull())
 						{
 							searchTermsElement = inputElements.at(i);
@@ -1577,7 +1603,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 						if (!name.isEmpty())
 						{
-							parameters.addQueryItem(name, ((inputElements.at(i) == searchTermsElement) ? QLatin1String("{searchTerms}") : inputElements[i].evaluateJavaScript((inputElements.at(i).tagName().toLower() == QLatin1String("button")) ? QLatin1String("this.innerHTML") : QLatin1String("this.value")).toString()));
+							searchEngine.resultsUrl.parameters.addQueryItem(name, ((inputElements.at(i) == searchTermsElement) ? QLatin1String("{searchTerms}") : inputElements[i].evaluateJavaScript((inputElements.at(i).tagName().toLower() == QLatin1String("button")) ? QLatin1String("this.innerHTML") : QLatin1String("this.value")).toString()));
 						}
 					}
 					else if (!name.isEmpty())
@@ -1586,26 +1612,12 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 						for (int j = 0; j < optionElements.count(); ++j)
 						{
-							parameters.addQueryItem(name, optionElements.at(j).evaluateJavaScript(QLatin1String("this.value")).toString());
+							searchEngine.resultsUrl.parameters.addQueryItem(name, optionElements.at(j).evaluateJavaScript(QLatin1String("this.value")).toString());
 						}
 					}
 				}
 
-				const QStringList identifiers(SearchEnginesManager::getSearchEngines());
-				const QStringList keywords(SearchEnginesManager::getSearchKeywords());
-				const QIcon icon(m_webView->icon());
-				const QUrl url(parentElement.attribute(QLatin1String("action")));
-				SearchEnginesManager::SearchEngineDefinition searchEngine;
-				searchEngine.identifier = Utils::createIdentifier(getUrl().host(), identifiers);
-				searchEngine.title = getTitle();
-				searchEngine.formUrl = getUrl();
-				searchEngine.icon = (icon.isNull() ? ThemesManager::getIcon(QLatin1String("edit-find")) : icon);
-				searchEngine.resultsUrl.url = (url.isEmpty() ? getUrl() : resolveUrl(parentElement.webFrame(), url)).toString();
-				searchEngine.resultsUrl.enctype = parentElement.attribute(QLatin1String("enctype"));
-				searchEngine.resultsUrl.method = ((parentElement.attribute(QLatin1String("method"), QLatin1String("get")).toLower() == QLatin1String("post")) ? QLatin1String("post") : QLatin1String("get"));
-				searchEngine.resultsUrl.parameters = parameters;
-
-				SearchEnginePropertiesDialog dialog(searchEngine, keywords, false, this);
+				SearchEnginePropertiesDialog dialog(searchEngine, SearchEnginesManager::getSearchKeywords(), false, this);
 
 				if (dialog.exec() == QDialog::Accepted)
 				{
@@ -2344,7 +2356,7 @@ WebWidget::HitTestResult QtWebKitWebWidget::getHitTestResult(const QPoint &posit
 		{
 			if (isSubmit)
 			{
-				const QUrl url(parentElement.attribute(QLatin1String("action")));
+				const QUrl url(nativeResult.element().hasAttribute(QLatin1String("formaction")) ? nativeResult.element().attribute(QLatin1String("formaction")) : parentElement.attribute(QLatin1String("action")));
 
 				result.formUrl = (url.isEmpty() ? getUrl() : resolveUrl(parentElement.webFrame(), url)).toString();
 			}
