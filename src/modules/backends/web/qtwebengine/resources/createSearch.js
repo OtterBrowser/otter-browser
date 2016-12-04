@@ -2,10 +2,24 @@ var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 
 
 if (element)
 {
+	function createUrl(url)
+	{
+		var element = document.createElement('a');
+		element.href = url;
+
+		return element.href;
+	}
+
 	var formElement = element.closest('form');
 
 	if (formElement)
 	{
+		var result = {
+			url: createUrl(formElement.action),
+			method: formElement.method,
+			enctype: formElement.enctype,
+			query: ''
+		}
 		var inputElements = formElement.querySelectorAll('input:not([disabled])[name], select:not([disabled])[name], textarea:not([disabled])[name]');
 		var query = [];
 
@@ -28,8 +42,27 @@ if (element)
 			else
 			{
 				var type = (inputElements[i].type ? inputElements[i].type.toLowerCase() : '');
+				var isSubmit = (type == 'image' || type == 'submit');
 
-				if (type == 'image' || type == 'submit' || ((type == 'checkbox' || type == 'radio') && !inputElements[i].checked))
+				if (isSubmit && inputElements[i] == element)
+				{
+					if (inputElements[i].hasAttribute('formaction'))
+					{
+						result.url = createUrl(inputElements[i].getAttribute('formaction'));
+					}
+
+					if (inputElements[i].hasAttribute('formenctype'))
+					{
+						result.enctype = inputElements[i].getAttribute('formenctype');
+					}
+
+					if (inputElements[i].hasAttribute('formmethod'))
+					{
+						result.method = inputElements[i].getAttribute('formmethod');
+					}
+				}
+
+				if (isSubmit || ((type == 'checkbox' || type == 'radio') && !inputElements[i].checked))
 				{
 					continue;
 				}
@@ -38,12 +71,7 @@ if (element)
 			}
 		}
 
-		var result = {
-			url: formElement.action,
-			method: formElement.method,
-			enctype: formElement.enctype,
-			query: query.join('&')
-		}
+		result.query = query.join('&');
 
 		result;
 	}

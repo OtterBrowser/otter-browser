@@ -114,7 +114,7 @@ if (element)
 
 			if ((result.tagName == 'button'|| result.tagName == 'input') && (type == 'image' || type == 'submit'))
 			{
-				result.formUrl = createUrl(formElement.action);
+				result.formUrl = createUrl(element.hasAttribute('formaction') ? element.getAttribute('formaction') : formElement.action);
 			}
 
 			if (formElement.querySelectorAll('input:not([disabled])[name], select:not([disabled])[name], textarea:not([disabled])[name]').length > 0)
