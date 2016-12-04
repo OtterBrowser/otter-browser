@@ -99,29 +99,28 @@ if (element)
 		result.flags |= 1;
 	}
 
-	var isForm = (result.tagName == 'textarea' || result.tagName == 'select' || ((result.tagName == 'input'|| result.tagName == 'button') && element.type && (element.type.toLowerCase() == 'text' || element.type.toLowerCase() == 'password' || element.type.toLowerCase() == 'search')));
-	var isSubmit = ((result.tagName == 'input'|| result.tagName == 'button') && element.type && (element.type.toLowerCase() == 'submit' || element.type.toLowerCase() == 'image'));
+	if (result.tagName == 'button' || result.tagName == 'input' || result.tagName == 'select'|| result.tagName == 'textarea')
+	{
+		var formElement = element.closest('form');
 
-	while (element && ((isForm && !(result.flags & 4)) || (isSubmit && result.formUrl == '') || result.linkUrl == '' || result.title == ''))
+		if (formElement)
+		{
+			var type = (element.type ? element.type.toLowerCase() : '');
+
+			if ((result.tagName == 'button'|| result.tagName == 'input') && (type == 'image' || type == 'submit'))
+			{
+				result.formUrl = createUrl(formElement.action);
+			}
+
+			result.flags |= 4;
+		}
+	}
+
+	while (element && result.title == '')
 	{
 		if (element != document && element.title !== '')
 		{
 			result.title = element.title;
-		}
-
-		if (element.tagName)
-		{
-			if ((isForm || (isSubmit && result.formUrl == '')) && element.tagName.toLowerCase() == 'form')
-			{
-				if (isSubmit && result.formUrl == '')
-				{
-					result.formUrl = createUrl(element.action);
-				}
-				else
-				{
-					result.flags |= 4;
-				}
-			}
 		}
 
 		element = element.parentNode;
