@@ -117,7 +117,10 @@ if (element)
 				result.formUrl = createUrl(formElement.action);
 			}
 
-			result.flags |= 4;
+			if (formElement.querySelectorAll('input:not([disabled])[name], select:not([disabled])[name], textarea:not([disabled])[name]').length > 0)
+			{
+				result.flags |= 4;
+			}
 		}
 	}
 }
