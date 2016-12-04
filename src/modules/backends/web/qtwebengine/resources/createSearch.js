@@ -20,29 +20,44 @@ if (element)
 			enctype: formElement.enctype,
 			query: ''
 		}
-		var inputElements = formElement.querySelectorAll('input:not([disabled])[name], select:not([disabled])[name], textarea:not([disabled])[name]');
+		var tagName = element.tagName.toLowerCase();
+		var searchTermsElement = null;
+		var inputElements = Array.from(formElement.querySelectorAll('button:not([disabled])[name][type="submit"], input:not([disabled])[name], select:not([disabled])[name], textarea:not([disabled])[name]'));
 		var query = [];
+
+		if (tagName !== 'select')
+		{
+			var type = (element.type ? element.type.toLowerCase() : '');
+
+			if (inputElements.indexOf(element) < 0 && (type == 'image' || type == 'submit'))
+			{
+				inputElements.push(element);
+			}
+
+			if (tagName == 'textarea' || type == 'email' || type == 'password' || type == 'search' || type == 'tel' || type == 'text' || type == 'url')
+			{
+				searchTermsElement = element;
+			}
+		}
+
+		if (!searchTermsElement)
+		{
+			searchTermsElement = formElement.querySelector('input:not([disabled])[name][type="search"]');
+		}
 
 		for (var i = 0; i < inputElements.length; ++i)
 		{
-			if (inputElements[i].name == '')
-			{
-				continue;
-			}
+			var tagName = inputElements[i].tagName.toLowerCase();
 
-			if (inputElements[i].tagName.toLowerCase() == 'select')
-			{
-				var optionElements = inputElements[i].querySelectorAll('option:checked');
-
-				for (var j = 0; j < optionElements.length; ++j)
-				{
-					query.push(inputElements[i].name + '=' + encodeURIComponent(optionElements[j].value));
-				}
-			}
-			else
+			if (tagName !== 'select')
 			{
 				var type = (inputElements[i].type ? inputElements[i].type.toLowerCase() : '');
 				var isSubmit = (type == 'image' || type == 'submit');
+
+				if ((isSubmit && inputElements[i] != element) || ((type == 'checkbox' || type == 'radio') && !inputElements[i].checked))
+				{
+					continue;
+				}
 
 				if (isSubmit && inputElements[i] == element)
 				{
@@ -62,12 +77,24 @@ if (element)
 					}
 				}
 
-				if (isSubmit || ((type == 'checkbox' || type == 'radio') && !inputElements[i].checked))
+				if (!isSubmit && !searchTermsElement)
 				{
-					continue;
+					searchTermsElement = inputElements[i];
 				}
 
-				query.push(inputElements[i].name + '=' + ((inputElements[i] == element) ? '{searchTerms}' : encodeURIComponent(inputElements[i].value)));
+				if (inputElements[i].name !== '')
+				{
+					query.push(inputElements[i].name + '=' + ((inputElements[i] == searchTermsElement) ? '{searchTerms}' : encodeURIComponent((tagName == 'button') ? inputElements[i].innerHTML : inputElements[i].value)));
+				}
+			}
+			else if (inputElements[i].name !== '')
+			{
+				var optionElements = inputElements[i].querySelectorAll('option:checked');
+
+				for (var j = 0; j < optionElements.length; ++j)
+				{
+					query.push(inputElements[i].name + '=' + encodeURIComponent(optionElements[j].value));
+				}
 			}
 		}
 
