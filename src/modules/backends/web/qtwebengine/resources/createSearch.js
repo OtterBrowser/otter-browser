@@ -2,38 +2,46 @@ var element = ((%1 >= 0) ? document.elementFromPoint((%1 + window.scrollX), (%2 
 
 if (element)
 {
-	var form = element.closest('form');
+	var formElement = element.closest('form');
 
-	if (form)
+	if (formElement)
 	{
-		var inputs = form.querySelectorAll('input:not([disabled])[name], select:not([disabled])[name], textarea:not([disabled])[name]');
+		var inputElements = formElement.querySelectorAll('input:not([disabled])[name], select:not([disabled])[name], textarea:not([disabled])[name]');
 		var query = [];
 
-		for (var i = 0; i < inputs.length; ++i)
+		for (var i = 0; i < inputElements.length; ++i)
 		{
-			var value = '';
-
-			if (inputs[i].tagName.toLowerCase() == 'select')
+			if (inputElements[i].name == '')
 			{
-				value = inputs[i].options[inputs[i].selectedIndex].value;
+				continue;
+			}
+
+			if (inputElements[i].tagName.toLowerCase() == 'select')
+			{
+				var optionElements = inputElements[i].querySelectorAll('option:checked');
+
+				for (var j = 0; j < optionElements.length; ++j)
+				{
+					query.push(inputElements[i].name + '=' + encodeURIComponent(optionElements[j].value));
+				}
 			}
 			else
 			{
-				if (inputs[i].type == 'submit' || ((inputs[i].type == 'checkbox' || inputs[i].type == 'radio') && !inputs[i].checked))
+				var type = (inputElements[i].type ? inputElements[i].type.toLowerCase() : '');
+
+				if (type == 'image' || type == 'submit' || ((type == 'checkbox' || type == 'radio') && !inputElements[i].checked))
 				{
 					continue;
 				}
 
-				value = inputs[i].value;
+				query.push(inputElements[i].name + '=' + ((inputElements[i] == element) ? '{searchTerms}' : encodeURIComponent(inputElements[i].value)));
 			}
-
-			query.push(inputs[i].name + '=' + ((inputs[i] == element) ? '{searchTerms}' : encodeURIComponent(value)));
 		}
 
 		var result = {
-			url: form.action,
-			method: form.method,
-			enctype: form.enctype,
+			url: formElement.action,
+			method: formElement.method,
+			enctype: formElement.enctype,
 			query: query.join('&')
 		}
 
