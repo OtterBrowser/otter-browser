@@ -47,7 +47,7 @@ if (element)
 
 	result.tagName = element.tagName.toLowerCase();
 
-	if (result.tagName == 'iframe' || result.tagName == 'frame')
+	if (result.tagName == 'frame' || result.tagName == 'iframe')
 	{
 		result.frameUrl = createUrl(element.src);
 	}
@@ -82,13 +82,13 @@ if (element)
 		result.mediaUrl = createUrl(element.src);
 	}
 
-	if (result.tagName == 'textarea' || result.tagName == 'input')
+	if (result.tagName == 'input' || result.tagName == 'textarea')
 	{
 		var type = (element.type ? element.type.toLowerCase() : '');
 
-		if (type == '' || result.tagName == 'textarea' || type == 'text' || type == 'password' || type == 'search')
+		if (result.tagName == 'textarea' || type == 'email' || type == 'password' || type == 'search' || type == 'tel' || type == 'text' || type == 'url')
 		{
-			if (!element.hasAttribute('readonly') && !element.hasAttribute('disabled'))
+			if (!element.hasAttribute('disabled') && !element.hasAttribute('readonly'))
 			{
 				result.flags |= 1;
 			}
