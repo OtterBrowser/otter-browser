@@ -99,6 +99,7 @@ QRect TabBarStyle::subElementRect(QStyle::SubElement element, const QStyleOption
 
 		QStyleOptionTab tabOption;
 		tabOption.cornerWidgets = QStyleOptionTab::LeftCornerWidget;
+		tabOption.leftButtonSize = QSize(1, 1);
 		tabOption.rect = option->rect;
 		tabOption.shape = QTabBar::RoundedNorth;
 
