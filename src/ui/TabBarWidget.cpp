@@ -172,9 +172,9 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 			option.rect = m_closeButtonRectangle;
 			option.state = (QStyle::State_Enabled | QStyle::State_AutoRaise);
 
-			if (m_isCloseButtonUnderMouse && QGuiApplication::mouseButtons().testFlag(Qt::LeftButton))
+			if (m_isCloseButtonUnderMouse)
 			{
-				option.state |= QStyle::State_Sunken;
+				option.state |= (QGuiApplication::mouseButtons().testFlag(Qt::LeftButton) ? QStyle::State_Sunken : QStyle::State_Raised);
 			}
 
 			if (m_tabBarWidget->getWindow(m_tabBarWidget->currentIndex()) == m_window)
