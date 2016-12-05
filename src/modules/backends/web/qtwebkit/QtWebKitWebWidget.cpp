@@ -1596,7 +1596,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 							}
 						}
 
-						if (!isSubmit && searchTermsElement.isNull())
+						if (!isSubmit && searchTermsElement.isNull() && type != QLatin1String("hidden"))
 						{
 							searchTermsElement = inputElements.at(i);
 						}

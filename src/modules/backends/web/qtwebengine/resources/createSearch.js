@@ -77,7 +77,7 @@ if (element)
 					}
 				}
 
-				if (!isSubmit && !searchTermsElement)
+				if (!isSubmit && !searchTermsElement && type !== 'hidden')
 				{
 					searchTermsElement = inputElements[i];
 				}
