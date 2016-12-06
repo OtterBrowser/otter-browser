@@ -628,6 +628,10 @@ QNetworkReply* QtWebKitNetworkManager::createRequest(QNetworkAccessManager::Oper
 				{
 					resourceType = NetworkManager::XmlHttpRequestType;
 				}
+				else if (request.hasRawHeader(QByteArray("Sec-WebSocket-Protocol")))
+				{
+					resourceType = NetworkManager::WebSocketType;
+				}
 
 				const ContentBlockingManager::CheckResult result(ContentBlockingManager::checkUrl(m_contentBlockingProfiles, m_widget->getUrl(), request.url(), resourceType));
 
