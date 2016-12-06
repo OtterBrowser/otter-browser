@@ -52,7 +52,8 @@ public:
 		SubDocumentOption = 4096,
 		SubDocumentExceptionOption = 8192,
 		XmlHttpRequestOption = 16384,
-		XmlHttpRequestExceptionOption = 32768
+		XmlHttpRequestExceptionOption = 32768,
+		WebSocketOption = 65536
 	};
 
 	Q_DECLARE_FLAGS(RuleOptions, RuleOption)
