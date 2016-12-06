@@ -898,7 +898,7 @@ void TabBarWidget::mousePressEvent(QMouseEvent *event)
 	{
 		Window *window(getWindow(tabAt(event->pos())));
 
-		m_isIgnoringTabDrag = (count() == 1 || (window && window->isPinned() && m_pinnedTabsAmount == 1));
+		m_isIgnoringTabDrag = (count() == 1);
 
 		if (window)
 		{
