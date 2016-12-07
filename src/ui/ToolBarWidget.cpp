@@ -33,6 +33,7 @@
 #include "../modules/widgets/bookmark/BookmarkWidget.h"
 
 #include <QtCore/QMimeData>
+#include <QtCore/QTimer>
 #include <QtGui/QDrag>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPainter>
@@ -225,6 +226,18 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 	}
 
 	style()->drawPrimitive(QStyle::PE_FrameTabBarBase, &tabBarBaseOption, &painter, this);
+}
+
+void ToolBarWidget::resizeEvent(QResizeEvent *event)
+{
+	QToolBar::resizeEvent(event);
+	
+	QWidget *tabBar((m_identifier == ToolBarsManager::TabBar && m_mainWindow) ? m_mainWindow->getTabBar() : nullptr);
+	
+	if (tabBar)
+	{
+		QTimer::singleShot(200, tabBar, SLOT(updateSize()));
+	}
 }
 
 void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
@@ -580,6 +593,8 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 
 				break;
 		}
+		
+		QTimer::singleShot(200, tabBar, SLOT(updateSize()));
 	}
 }
 

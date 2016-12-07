@@ -119,6 +119,9 @@ public:
 	static bool isCloseButtonEnabled();
 	static bool isUrlIconEnabled();
 
+public slots:
+	void updateSize();
+
 protected:
 	void changeEvent(QEvent *event) override;
 	void childEvent(QChildEvent *event) override;

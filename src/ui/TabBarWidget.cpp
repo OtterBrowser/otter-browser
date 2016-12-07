@@ -738,8 +738,7 @@ void TabBarWidget::leaveEvent(QEvent *event)
 	m_tabWidth = 0;
 	m_hoveredTab = -1;
 
-	updateGeometry();
-	adjustSize();
+	updateSize();
 
 	QStatusTipEvent statusTipEvent((QString()));
 
@@ -929,8 +928,7 @@ void TabBarWidget::mouseMoveEvent(QMouseEvent *event)
 
 		m_isDetachingTab = true;
 
-		updateGeometry();
-		adjustSize();
+		updateSize();
 
 		MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
@@ -1260,16 +1258,14 @@ void TabBarWidget::removeTab(int index)
 	if (window && window->isPinned())
 	{
 		updatePinnedTabsAmount();
-		updateGeometry();
-		adjustSize();
+		updateSize();
 	}
 
 	if (underMouse() && tabAt(mapFromGlobal(QCursor::pos())) < 0)
 	{
 		m_tabWidth = 0;
 
-		updateGeometry();
-		adjustSize();
+		updateSize();
 	}
 }
 
@@ -1415,8 +1411,7 @@ void TabBarWidget::optionChanged(int identifier, const QVariant &value)
 					}
 				}
 
-				updateGeometry();
-				adjustSize();
+				updateSize();
 
 				emit needsGeometriesUpdate();
 			}
@@ -1435,8 +1430,7 @@ void TabBarWidget::optionChanged(int identifier, const QVariant &value)
 
 				if (m_maximumTabSize.height() != oldValue)
 				{
-					updateGeometry();
-					adjustSize();
+					updateSize();
 				}
 			}
 
@@ -1454,8 +1448,7 @@ void TabBarWidget::optionChanged(int identifier, const QVariant &value)
 
 				if (m_maximumTabSize.width() != oldValue)
 				{
-					updateGeometry();
-					adjustSize();
+					updateSize();
 				}
 			}
 
@@ -1473,8 +1466,7 @@ void TabBarWidget::optionChanged(int identifier, const QVariant &value)
 
 				if (m_minimumTabSize.height() != oldValue)
 				{
-					updateGeometry();
-					adjustSize();
+					updateSize();
 				}
 			}
 
@@ -1492,8 +1484,7 @@ void TabBarWidget::optionChanged(int identifier, const QVariant &value)
 
 				if (m_minimumTabSize.width() != oldValue)
 				{
-					updateGeometry();
-					adjustSize();
+					updateSize();
 				}
 			}
 
@@ -1567,10 +1558,15 @@ void TabBarWidget::updatePinnedTabsAmount(Window *modifiedWindow)
 		if (index >= 0)
 		{
 			moveTab(index, (modifiedWindow->isPinned() ? qMax(0, (m_pinnedTabsAmount - 1)) : m_pinnedTabsAmount));
-			updateGeometry();
-			adjustSize();
+			updateSize();
 		}
 	}
+}
+
+void TabBarWidget::updateSize()
+{
+	updateGeometry();
+	adjustSize();
 }
 
 void TabBarWidget::updateStyle()
