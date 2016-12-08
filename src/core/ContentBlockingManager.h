@@ -47,6 +47,7 @@ public:
 	{
 		QString profile;
 		QString rule;
+		CosmeticFiltersMode comesticFiltersMode = AllFiltersMode;
 		bool isBlocked = false;
 		bool isException = false;
 	};

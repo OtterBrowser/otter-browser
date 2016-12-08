@@ -34,38 +34,6 @@ class ContentBlockingProfile : public QObject
 	Q_OBJECT
 
 public:
-	enum RuleOption
-	{
-		NoOption = 0,
-		ThirdPartyOption = 1,
-		ThirdPartyExceptionOption = 2,
-		StyleSheetOption = 4,
-		StyleSheetExceptionOption = 8,
-		ScriptOption = 16,
-		ScriptExceptionOption = 32,
-		ImageOption = 64,
-		ImageExceptionOption = 128,
-		ObjectOption = 256,
-		ObjectExceptionOption = 512,
-		ObjectSubRequestOption = 1024,
-		ObjectSubRequestExceptionOption = 2048,
-		SubDocumentOption = 4096,
-		SubDocumentExceptionOption = 8192,
-		XmlHttpRequestOption = 16384,
-		XmlHttpRequestExceptionOption = 32768,
-		WebSocketOption = 65536
-	};
-
-	Q_DECLARE_FLAGS(RuleOptions, RuleOption)
-
-	enum RuleMatch
-	{
-		ContainsMatch = 0,
-		StartMatch,
-		EndMatch,
-		ExactMatch
-	};
-
 	enum ProfileFlag
 	{
 		NoFlags = 0,
@@ -83,21 +51,6 @@ public:
 		PrivacyCategory = 4,
 		SocialCategory = 8,
 		RegionalCategory = 16
-	};
-
-	struct ContentBlockingRule
-	{
-		QString rule;
-		QStringList blockedDomains;
-		QStringList allowedDomains;
-		RuleOptions ruleOptions = NoOption;
-		RuleMatch ruleMatch = ContainsMatch;
-		bool isException = false;
-		bool needsDomainCheck = false;
-
-		explicit ContentBlockingRule(QString ruleValue, QStringList blockedDomainsValue, QStringList allowedDomainsValue, RuleOptions ruleOptionsValue, RuleMatch ruleMatchValue, bool isExceptionValue, bool needsDomainCheckValue) : rule(ruleValue), blockedDomains(blockedDomainsValue), allowedDomains(allowedDomainsValue), ruleOptions(ruleOptionsValue), ruleMatch(ruleMatchValue), isException(isExceptionValue), needsDomainCheck(needsDomainCheckValue)
-		{
-		}
 	};
 
 	explicit ContentBlockingProfile(const QString &name, const QString &title, const QUrl &updateUrl, const QDateTime lastUpdate, const QList<QString> languages, int updateInterval, const ProfileCategory &category, const ProfileFlags &flags, QObject *parent = nullptr);
@@ -122,6 +75,55 @@ public:
 	bool downloadRules();
 
 protected:
+	enum RuleOption : quint32
+	{
+		NoOption = 0,
+		ThirdPartyOption = 1,
+		ThirdPartyExceptionOption = 2,
+		StyleSheetOption = 4,
+		StyleSheetExceptionOption = 8,
+		ScriptOption = 16,
+		ScriptExceptionOption = 32,
+		ImageOption = 64,
+		ImageExceptionOption = 128,
+		ObjectOption = 256,
+		ObjectExceptionOption = 512,
+		ObjectSubRequestOption = 1024,
+		ObjectSubRequestExceptionOption = 2048,
+		SubDocumentOption = 4096,
+		SubDocumentExceptionOption = 8192,
+		XmlHttpRequestOption = 16384,
+		XmlHttpRequestExceptionOption = 32768,
+		WebSocketOption = 65536,
+		ElementHideOption = 131072,
+		GenericHideOption = 262144
+	};
+
+	Q_DECLARE_FLAGS(RuleOptions, RuleOption)
+
+	enum RuleMatch
+	{
+		ContainsMatch = 0,
+		StartMatch,
+		EndMatch,
+		ExactMatch
+	};
+
+	struct ContentBlockingRule
+	{
+		QString rule;
+		QStringList blockedDomains;
+		QStringList allowedDomains;
+		RuleOptions ruleOptions = NoOption;
+		RuleMatch ruleMatch = ContainsMatch;
+		bool isException = false;
+		bool needsDomainCheck = false;
+
+		explicit ContentBlockingRule(QString ruleValue, QStringList blockedDomainsValue, QStringList allowedDomainsValue, RuleOptions ruleOptionsValue, RuleMatch ruleMatchValue, bool isExceptionValue, bool needsDomainCheckValue) : rule(ruleValue), blockedDomains(blockedDomainsValue), allowedDomains(allowedDomainsValue), ruleOptions(ruleOptionsValue), ruleMatch(ruleMatchValue), isException(isExceptionValue), needsDomainCheck(needsDomainCheckValue)
+		{
+		}
+	};
+
 	struct Node
 	{
 		QChar value = 0;

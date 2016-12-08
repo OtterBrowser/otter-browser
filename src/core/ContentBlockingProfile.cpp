@@ -36,7 +36,7 @@ namespace Otter
 {
 
 QList<QChar> ContentBlockingProfile::m_separators(QList<QChar>({QLatin1Char('_'), QLatin1Char('-'), QLatin1Char('.'), QLatin1Char('%')}));
-QHash<QString, ContentBlockingProfile::RuleOption> ContentBlockingProfile::m_options({{QLatin1String("third-party"), ThirdPartyOption}, {QLatin1String("stylesheet"), StyleSheetOption}, {QLatin1String("image"), ImageOption}, {QLatin1String("script"), ScriptOption}, {QLatin1String("object"), ObjectOption}, {QLatin1String("object-subrequest"), ObjectSubRequestOption}, {QLatin1String("object_subrequest"), ObjectSubRequestOption}, {QLatin1String("subdocument"), SubDocumentOption}, {QLatin1String("xmlhttprequest"), XmlHttpRequestOption}, {QLatin1String("websocket"), WebSocketOption}});
+QHash<QString, ContentBlockingProfile::RuleOption> ContentBlockingProfile::m_options({{QLatin1String("third-party"), ThirdPartyOption}, {QLatin1String("stylesheet"), StyleSheetOption}, {QLatin1String("image"), ImageOption}, {QLatin1String("script"), ScriptOption}, {QLatin1String("object"), ObjectOption}, {QLatin1String("object-subrequest"), ObjectSubRequestOption}, {QLatin1String("object_subrequest"), ObjectSubRequestOption}, {QLatin1String("subdocument"), SubDocumentOption}, {QLatin1String("xmlhttprequest"), XmlHttpRequestOption}, {QLatin1String("websocket"), WebSocketOption}, {QLatin1String("elemhide"), ElementHideOption}, {QLatin1String("generichide"), GenericHideOption}});
 QHash<NetworkManager::ResourceType, ContentBlockingProfile::RuleOption> ContentBlockingProfile::m_resourceTypes({{NetworkManager::ImageType, ImageOption}, {NetworkManager::ScriptType, ScriptOption}, {NetworkManager::StyleSheetType, StyleSheetOption}, {NetworkManager::ObjectType, ObjectOption}, {NetworkManager::XmlHttpRequestType, XmlHttpRequestOption}, {NetworkManager::SubFrameType, SubDocumentOption}, {NetworkManager::ObjectSubrequestType, ObjectSubRequestOption}, {NetworkManager::WebSocketType, WebSocketOption}});
 
 ContentBlockingProfile::ContentBlockingProfile(const QString &name, const QString &title, const QUrl &updateUrl, const QDateTime lastUpdate, const QList<QString> languages, int updateInterval, const ProfileCategory &category, const ProfileFlags &flags, QObject *parent) : QObject(parent),
@@ -247,7 +247,11 @@ void ContentBlockingProfile::parseRuleLine(QString line)
 		{
 			const RuleOption option(m_options.value(optionName));
 
-			if (!optionException)
+			if ((!isException || optionException) && (option == ElementHideOption || option == GenericHideOption))
+			{
+				continue;
+			}
+			else if (!optionException)
 			{
 				ruleOptions |= option;
 			}
@@ -319,7 +323,14 @@ void ContentBlockingProfile::addRule(ContentBlockingRule *rule, const QString &r
 			Node *newNode(new Node());
 			newNode->value = value;
 
-			node->children.append(newNode);
+			if (value == QChar('^'))
+			{
+				node->children.insert(0, newNode);
+			}
+			else
+			{
+				node->children.append(newNode);
+			}
 
 			node = newNode;
 		}
@@ -508,21 +519,24 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkRuleMatch(Conte
 		}
 	}
 
-	QHash<NetworkManager::ResourceType, RuleOption>::const_iterator iterator;
-
-	for (iterator = m_resourceTypes.begin(); iterator != m_resourceTypes.end(); ++iterator)
+	if (rule->ruleOptions != NoOption)
 	{
-		const bool supportsException(iterator.value() != WebSocketOption);
+		QHash<NetworkManager::ResourceType, RuleOption>::const_iterator iterator;
 
-		if (rule->ruleOptions.testFlag(iterator.value()) || (supportsException && rule->ruleOptions.testFlag(static_cast<RuleOption>(iterator.value() * 2))))
+		for (iterator = m_resourceTypes.begin(); iterator != m_resourceTypes.end(); ++iterator)
 		{
-			if (resourceType == iterator.key())
+			const bool supportsException(iterator.value() != WebSocketOption);
+
+			if (rule->ruleOptions.testFlag(iterator.value()) || (supportsException && rule->ruleOptions.testFlag(static_cast<RuleOption>(iterator.value() * 2))))
 			{
-				isBlocked = (isBlocked ? rule->ruleOptions.testFlag(iterator.value()) : isBlocked);
-			}
-			else if (supportsException)
-			{
-				isBlocked = (isBlocked ? rule->ruleOptions.testFlag(static_cast<RuleOption>(iterator.value() * 2)) : isBlocked);
+				if (resourceType == iterator.key())
+				{
+					isBlocked = (isBlocked ? rule->ruleOptions.testFlag(iterator.value()) : isBlocked);
+				}
+				else if (supportsException)
+				{
+					isBlocked = (isBlocked ? rule->ruleOptions.testFlag(static_cast<RuleOption>(iterator.value() * 2)) : isBlocked);
+				}
 			}
 		}
 	}
@@ -536,6 +550,15 @@ ContentBlockingManager::CheckResult ContentBlockingProfile::checkRuleMatch(Conte
 		{
 			result.isBlocked = false;
 			result.isException = true;
+
+			if (rule->ruleOptions.testFlag(ElementHideOption))
+			{
+				result.comesticFiltersMode = ContentBlockingManager::NoFiltersMode;
+			}
+			else if (rule->ruleOptions.testFlag(GenericHideOption))
+			{
+				result.comesticFiltersMode = ContentBlockingManager::DomainOnlyFiltersMode;
+			}
 
 			return result;
 		}

@@ -68,25 +68,38 @@ void QtWebEnginePage::pageLoadFinished()
 		{
 			const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption, url()).toStringList()));
 
-			if (!profiles.isEmpty())
+			if (!profiles.isEmpty() && ContentBlockingManager::getCosmeticFiltersMode() != ContentBlockingManager::NoFiltersMode)
 			{
-				const QStringList domainList(ContentBlockingManager::createSubdomainList(url().host()));
-				QStringList styleSheetBlackList(ContentBlockingManager::getStyleSheet(profiles));
+				const ContentBlockingManager::CosmeticFiltersMode mode(ContentBlockingManager::checkUrl(profiles, url(), url(), NetworkManager::OtherType).comesticFiltersMode);
+				QStringList styleSheetBlackList;
 				QStringList styleSheetWhiteList;
 
-				for (int i = 0; i < domainList.count(); ++i)
+				if (mode != ContentBlockingManager::NoFiltersMode)
 				{
-					styleSheetBlackList += ContentBlockingManager::getStyleSheetBlackList(domainList.at(i), profiles);
-					styleSheetWhiteList += ContentBlockingManager::getStyleSheetWhiteList(domainList.at(i), profiles);
+					if (mode != ContentBlockingManager::DomainOnlyFiltersMode)
+					{
+						styleSheetBlackList = ContentBlockingManager::getStyleSheet(profiles);
+					}
+
+					const QStringList domainList(ContentBlockingManager::createSubdomainList(url().host()));
+
+					for (int i = 0; i < domainList.count(); ++i)
+					{
+						styleSheetBlackList += ContentBlockingManager::getStyleSheetBlackList(domainList.at(i), profiles);
+						styleSheetWhiteList += ContentBlockingManager::getStyleSheetWhiteList(domainList.at(i), profiles);
+					}
 				}
 
-				QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hideElements.js"));
-
-				if (file.open(QIODevice::ReadOnly))
+				if (!styleSheetBlackList.isEmpty() || !styleSheetWhiteList.isEmpty())
 				{
-					runJavaScript(QString(file.readAll()).arg(createJavaScriptList(styleSheetWhiteList)).arg(createJavaScriptList(styleSheetBlackList)));
+					QFile file(QLatin1String(":/modules/backends/web/qtwebengine/resources/hideElements.js"));
 
-					file.close();
+					if (file.open(QIODevice::ReadOnly))
+					{
+						runJavaScript(QString(file.readAll()).arg(createJavaScriptList(styleSheetWhiteList)).arg(createJavaScriptList(styleSheetBlackList)));
+
+						file.close();
+					}
 				}
 			}
 

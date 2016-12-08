@@ -97,16 +97,28 @@ void QtWebKitPage::pageLoadFinished()
 		return;
 	}
 
-	const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption, m_widget->getUrl()).toStringList()));
+	const QUrl url(m_widget->getUrl());
+	const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption, url).toStringList()));
 
-	applyContentBlockingRules(ContentBlockingManager::getStyleSheet(profiles), true);
-
-	const QStringList domainList(ContentBlockingManager::createSubdomainList(m_widget->getUrl().host()));
-
-	for (int i = 0; i < domainList.count(); ++i)
+	if (!profiles.isEmpty() && ContentBlockingManager::getCosmeticFiltersMode() != ContentBlockingManager::NoFiltersMode)
 	{
-		applyContentBlockingRules(ContentBlockingManager::getStyleSheetBlackList(domainList.at(i), profiles), true);
-		applyContentBlockingRules(ContentBlockingManager::getStyleSheetWhiteList(domainList.at(i), profiles), false);
+		const ContentBlockingManager::CosmeticFiltersMode mode(ContentBlockingManager::checkUrl(profiles, url, url, NetworkManager::OtherType).comesticFiltersMode);
+
+		if (mode != ContentBlockingManager::NoFiltersMode)
+		{
+			if (mode != ContentBlockingManager::DomainOnlyFiltersMode)
+			{
+				applyContentBlockingRules(ContentBlockingManager::getStyleSheet(profiles), true);
+			}
+
+			const QStringList domainList(ContentBlockingManager::createSubdomainList(url.host()));
+
+			for (int i = 0; i < domainList.count(); ++i)
+			{
+				applyContentBlockingRules(ContentBlockingManager::getStyleSheetBlackList(domainList.at(i), profiles), true);
+				applyContentBlockingRules(ContentBlockingManager::getStyleSheetWhiteList(domainList.at(i), profiles), false);
+			}
+		}
 	}
 
 	const QStringList blockedRequests(m_widget->getBlockedElements());
