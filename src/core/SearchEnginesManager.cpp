@@ -467,6 +467,31 @@ QStringList SearchEnginesManager::getSearchKeywords()
 	return m_searchKeywords;
 }
 
+bool SearchEnginesManager::hasSearchEngine(const QUrl &url)
+{
+	if (!url.isValid())
+	{
+		return false;
+	}
+
+	if (!m_isInitialized)
+	{
+		initialize();
+	}
+
+	QHash<QString, SearchEngineDefinition>::iterator iterator;
+
+	for (iterator = m_searchEngines.begin(); iterator != m_searchEngines.end(); ++iterator)
+	{
+		if (iterator.value().selfUrl == url)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 bool SearchEnginesManager::saveSearchEngine(const SearchEngineDefinition &searchEngine)
 {
 	if (SessionsManager::isReadOnly() || searchEngine.identifier.isEmpty())

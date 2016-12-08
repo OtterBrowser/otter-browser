@@ -73,6 +73,7 @@ public:
 	static SearchEngineDefinition getSearchEngine(const QString &identifier = QString(), bool byKeyword = false);
 	static QStringList getSearchEngines();
 	static QStringList getSearchKeywords();
+	static bool hasSearchEngine(const QUrl &url);
 	static bool saveSearchEngine(const SearchEngineDefinition &searchEngine);
 	static bool setupSearchQuery(const QString &query, const QString &searchEngine, QNetworkRequest *request, QNetworkAccessManager::Operation *method, QByteArray *body);
 
