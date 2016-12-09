@@ -18,9 +18,12 @@
 **************************************************************************/
 
 #include "SearchEnginesManager.h"
+#include "NetworkManager.h"
+#include "NetworkManagerFactory.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "ThemesManager.h"
+#include "Utils.h"
 
 #include <QtCore/QBuffer>
 #include <QtCore/QDir>
@@ -316,6 +319,8 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::loadSearchEng
 					if (reader.attributes().value(QLatin1String("rel")) == QLatin1String("self") || reader.attributes().value(QLatin1String("type")) == QLatin1String("application/opensearchdescription+xml"))
 					{
 						searchEngine.selfUrl = QUrl(reader.attributes().value(QLatin1String("template")).toString());
+
+						currentUrl = nullptr;
 					}
 					else if (reader.attributes().value(QLatin1String("rel")) == QLatin1String("suggestions") || reader.attributes().value(QLatin1String("type")) == QLatin1String("application/x-suggestions+json"))
 					{
@@ -375,7 +380,14 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::loadSearchEng
 				{
 					const QString data(reader.readElementText());
 
-					searchEngine.icon = QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8()), "png")));
+					if (data.startsWith(QLatin1String("data:image")))
+					{
+						searchEngine.icon = QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8()), "png")));
+					}
+					else
+					{
+						searchEngine.iconUrl = QUrl(data);
+					}
 				}
 				else if (reader.name() == QLatin1String("SearchForm"))
 				{
@@ -618,6 +630,82 @@ bool SearchEnginesManager::setupSearchQuery(const QString &query, const QString 
 	setupQuery(query, search.resultsUrl, request, method, body);
 
 	return true;
+}
+
+SearchEngineFetchJob::SearchEngineFetchJob(const QUrl &url, QObject *parent) : QObject(parent),
+	m_reply(nullptr),
+	m_isFetchingIcon(false)
+{
+	QNetworkRequest request(url);
+	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
+
+	m_reply = NetworkManagerFactory::getNetworkManager()->get(request);
+
+	connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(handleRequestFailed()));
+	connect(m_reply, SIGNAL(finished()), this, SLOT(handleRequestFinished()));
+}
+
+SearchEngineFetchJob::~SearchEngineFetchJob()
+{
+	m_reply->deleteLater();
+}
+
+void SearchEngineFetchJob::handleRequestFailed()
+{
+	deleteLater();
+
+	if (m_isFetchingIcon)
+	{
+		SearchEnginesManager::addSearchEngine(m_searchEngine);
+	}
+
+	emit jobFinished(m_isFetchingIcon);
+}
+
+void SearchEngineFetchJob::handleRequestFinished()
+{
+	if (m_isFetchingIcon)
+	{
+		QPixmap pixmap;
+
+		if (pixmap.loadFromData(m_reply->readAll()))
+		{
+			m_searchEngine.icon = QIcon(pixmap);
+		}
+
+		SearchEnginesManager::addSearchEngine(m_searchEngine);
+
+		deleteLater();
+
+		emit jobFinished(true);
+
+		return;
+	}
+
+	m_searchEngine = SearchEnginesManager::loadSearchEngine(m_reply, Utils::createIdentifier(QLatin1String("custom"), SearchEnginesManager::getSearchEngines()));
+
+	if (m_searchEngine.iconUrl.isValid())
+	{
+		m_isFetchingIcon = true;
+
+		m_reply->deleteLater();
+
+		QNetworkRequest request(m_searchEngine.iconUrl);
+		request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
+
+		m_reply = NetworkManagerFactory::getNetworkManager()->get(request);
+
+		connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(handleRequestFailed()));
+		connect(m_reply, SIGNAL(finished()), this, SLOT(handleRequestFinished()));
+	}
+	else
+	{
+		SearchEnginesManager::addSearchEngine(m_searchEngine);
+
+		deleteLater();
+
+		emit jobFinished(true);
+	}
 }
 
 }
