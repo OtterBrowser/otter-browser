@@ -19,8 +19,8 @@
 
 #include "ConsoleWidget.h"
 #include "MainWindow.h"
-#include "TabBarWidget.h"
 #include "Window.h"
+#include "WorkspaceWidget.h"
 #include "../core/ThemesManager.h"
 
 #include "ui_ConsoleWidget.h"
@@ -299,7 +299,7 @@ QList<Console::MessageCategory> ConsoleWidget::getCategories() const
 quint64 ConsoleWidget::getCurrentWindow()
 {
 	MainWindow *mainWindow(MainWindow::findMainWindow(this));
-	Window *currentWindow(mainWindow ? mainWindow->getWindowsManager()->getWindowByIndex(mainWindow->getTabBar()->currentIndex()) : nullptr);
+	Window *currentWindow(mainWindow ? mainWindow->getWorkspace()->getActiveWindow() : nullptr);
 
 	return (currentWindow ? currentWindow->getIdentifier() : 0);
 }
