@@ -71,7 +71,6 @@ protected:
 	void mousePressEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
 	void wheelEvent(QWheelEvent *event);
-	void updateGeometries();
 
 protected slots:
 	void optionChanged(int identifier, const QVariant &value);
@@ -79,8 +78,10 @@ protected slots:
 	void queryChanged(const QString &query);
 	void sendRequest(const QString &query = QString());
 	void pasteAndGo();
+	void addSearchEngine(QAction *action);
 	void storeCurrentSearchEngine();
 	void restoreCurrentSearchEngine();
+	void updateGeometries();
 
 private:
 	QPointer<Window> m_window;
@@ -93,6 +94,7 @@ private:
 	QRect m_iconRectangle;
 	QRect m_dropdownArrowRectangle;
 	QRect m_lineEditRectangle;
+	QRect m_addButtonRectangle;
 	QRect m_searchButtonRectangle;
 	QVariantMap m_options;
 	int m_lastValidIndex;

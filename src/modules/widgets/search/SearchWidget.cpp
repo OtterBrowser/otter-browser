@@ -24,6 +24,7 @@
 #include "../../../core/SessionsManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/ThemesManager.h"
+#include "../../../ui/ContentsWidget.h"
 #include "../../../ui/LineEditWidget.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/PreferencesDialog.h"
@@ -35,6 +36,7 @@
 #include <QtGui/QPainter>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QAbstractItemView>
+#include <QtWidgets/QMessageBox>
 
 namespace Otter
 {
@@ -230,7 +232,15 @@ void SearchWidget::paintEvent(QPaintEvent *event)
 		style()->drawPrimitive(QStyle::PE_IndicatorArrowDown, &arrow, &painter, this);
 	}
 
-	painter.drawPixmap(m_searchButtonRectangle, ThemesManager::getIcon(QLatin1String("edit-find")).pixmap(m_searchButtonRectangle.size(), (isEnabled() ? QIcon::Active : QIcon::Disabled)));
+	if (m_addButtonRectangle.isValid())
+	{
+		painter.drawPixmap(m_addButtonRectangle, ThemesManager::getIcon(QLatin1String("list-add")).pixmap(m_addButtonRectangle.size(), (isEnabled() ? QIcon::Active : QIcon::Disabled)));
+	}
+
+	if (m_searchButtonRectangle.isValid())
+	{
+		painter.drawPixmap(m_searchButtonRectangle, ThemesManager::getIcon(QLatin1String("edit-find")).pixmap(m_searchButtonRectangle.size(), (isEnabled() ? QIcon::Active : QIcon::Disabled)));
+	}
 }
 
 void SearchWidget::resizeEvent(QResizeEvent *event)
@@ -330,6 +340,23 @@ void SearchWidget::mouseReleaseEvent(QMouseEvent *event)
 			{
 				showPopup();
 			}
+		}
+		else if (m_addButtonRectangle.marginsAdded(QMargins(2, 2, 2, 2)).contains(event->pos()))
+		{
+			QMenu menu(this);
+			const QList<LinkUrl> searchEngines(m_window ? m_window->getContentsWidget()->getSearchEngines() : QList<LinkUrl>());
+
+			for (int i = 0; i < searchEngines.count(); ++i)
+			{
+				if (!SearchEnginesManager::hasSearchEngine(searchEngines.at(i).url))
+				{
+					menu.addAction(tr("Add %1").arg(searchEngines.at(i).title.isEmpty() ? tr("(untitled)") : searchEngines.at(i).title))->setData(searchEngines.at(i).url);
+				}
+			}
+
+			connect(&menu, SIGNAL(triggered(QAction*)), this, SLOT(addSearchEngine(QAction*)));
+
+			menu.exec(mapToGlobal(m_addButtonRectangle.bottomLeft()));
 		}
 		else if (m_searchButtonRectangle.marginsAdded(QMargins(2, 2, 2, 2)).contains(event->pos()))
 		{
@@ -514,6 +541,22 @@ void SearchWidget::pasteAndGo()
 	sendRequest();
 }
 
+void SearchWidget::addSearchEngine(QAction *action)
+{
+	if (action)
+	{
+		SearchEngineFetchJob *job(new SearchEngineFetchJob(action->data().toUrl(), this));
+
+		connect(job, &SearchEngineFetchJob::jobFinished, [&](bool isSuccess)
+		{
+			if (!isSuccess)
+			{
+				QMessageBox::warning(this, tr("Error"), tr("Failed to add search engine."), QMessageBox::Close);
+			}
+		});
+	}
+}
+
 void SearchWidget::storeCurrentSearchEngine()
 {
 	m_storedSearchEngine = getCurrentSearchEngine();
@@ -532,6 +575,8 @@ void SearchWidget::restoreCurrentSearchEngine()
 
 		m_storedSearchEngine = QString();
 	}
+
+	updateGeometries();
 
 	m_lineEdit->setText(m_query);
 	m_lineEdit->setGeometry(m_lineEditRectangle);
@@ -552,6 +597,7 @@ void SearchWidget::updateGeometries()
 	panel.rect = rect();
 	panel.lineWidth = 1;
 
+	const QList<LinkUrl> searchEngines(m_window ? m_window->getContentsWidget()->getSearchEngines() : QList<LinkUrl>());
 	QMargins lineEditMargins(1, 0, 1, 0);
 	const QRect rectangle(style()->subElementRect(QStyle::SE_LineEditContents, &panel, this));
 	const bool isSearchButtonEnabled(m_options.value(QLatin1String("showSearchButton"), true).toBool());
@@ -572,6 +618,8 @@ void SearchWidget::updateGeometries()
 	}
 
 	m_iconRectangle = m_iconRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
+	m_searchButtonRectangle = QRect();
+	m_addButtonRectangle = QRect();
 
 	if (m_isSearchEngineLocked)
 	{
@@ -616,9 +664,42 @@ void SearchWidget::updateGeometries()
 
 		m_searchButtonRectangle = m_searchButtonRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
 	}
-	else
+
+	if (m_window && !searchEngines.isEmpty())
 	{
-		m_searchButtonRectangle = QRect();
+		bool hasAllSearchEngines(true);
+
+		for (int i = 0; i < searchEngines.count(); ++i)
+		{
+			if (!SearchEnginesManager::hasSearchEngine(searchEngines.at(i).url))
+			{
+				hasAllSearchEngines = false;
+
+				break;
+			}
+		}
+
+		m_lineEditRectangle = rectangle.marginsRemoved(lineEditMargins);
+
+		if (!hasAllSearchEngines && m_lineEditRectangle.width() > 50)
+		{
+			m_addButtonRectangle = m_lineEditRectangle;
+
+			if (layoutDirection() == Qt::RightToLeft)
+			{
+				m_addButtonRectangle.setRight(m_lineEditRectangle.height());
+
+				lineEditMargins.setLeft(lineEditMargins.left() + m_lineEditRectangle.height());
+			}
+			else
+			{
+				m_addButtonRectangle.setLeft(m_lineEditRectangle.right() - m_lineEditRectangle.height());
+
+				lineEditMargins.setRight(lineEditMargins.right() + m_lineEditRectangle.height());
+			}
+
+			m_addButtonRectangle = m_addButtonRectangle.marginsRemoved(QMargins(2, 2, 2, 2));
+		}
 	}
 
 	m_lineEditRectangle = rectangle.marginsRemoved(lineEditMargins);
@@ -693,8 +774,9 @@ void SearchWidget::setWindow(Window *window)
 		disconnect(this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), m_window.data(), SLOT(handleOpenUrlRequest(QUrl,WindowsManager::OpenHints)));
 		disconnect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), m_window.data(), SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
 		disconnect(this, SIGNAL(searchEngineChanged(QString)), m_window.data(), SLOT(setSearchEngine(QString)));
-		disconnect(m_window.data(), SIGNAL(searchEngineChanged(QString)), this, SLOT(setSearchEngine(QString)));
 		disconnect(m_window.data(), SIGNAL(destroyed(QObject*)), this, SLOT(setWindow()));
+		disconnect(m_window.data(), SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateGeometries()));
+		disconnect(m_window.data(), SIGNAL(searchEngineChanged(QString)), this, SLOT(setSearchEngine(QString)));
 
 		setSearchEngine();
 	}
@@ -715,8 +797,16 @@ void SearchWidget::setWindow(Window *window)
 		connect(this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), m_window.data(), SLOT(handleOpenUrlRequest(QUrl,WindowsManager::OpenHints)));
 		connect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), window, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
 		connect(this, SIGNAL(searchEngineChanged(QString)), window, SLOT(setSearchEngine(QString)));
-		connect(window, SIGNAL(searchEngineChanged(QString)), this, SLOT(setSearchEngine(QString)));
 		connect(window, SIGNAL(destroyed(QObject*)), this, SLOT(setWindow()));
+		connect(window, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateGeometries()));
+		connect(window, SIGNAL(searchEngineChanged(QString)), this, SLOT(setSearchEngine(QString)));
+
+		ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
+
+		if (!toolBar || toolBar->getIdentifier() != ToolBarsManager::NavigationBar)
+		{
+			connect(window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
+		}
 	}
 	else
 	{
@@ -727,6 +817,8 @@ void SearchWidget::setWindow(Window *window)
 
 		setSearchEngine();
 	}
+
+	updateGeometries();
 }
 
 QString SearchWidget::getCurrentSearchEngine() const
