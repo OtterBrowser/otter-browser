@@ -37,6 +37,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QAbstractItemView>
 #include <QtWidgets/QMessageBox>
+#include <QtWidgets/QToolTip>
 
 namespace Otter
 {
@@ -195,6 +196,8 @@ void SearchWidget::changeEvent(QEvent *event)
 		case QEvent::LanguageChange:
 			if (itemData(currentIndex(), Qt::AccessibleDescriptionRole).toString().isEmpty())
 			{
+				setToolTip(tr("Search using %1").arg(currentData(SearchEnginesManager::TitleRole).toString()));
+
 				m_lineEdit->setPlaceholderText(tr("Search using %1").arg(currentData(SearchEnginesManager::TitleRole).toString()));
 			}
 
@@ -462,6 +465,8 @@ void SearchWidget::currentIndexChanged(int index)
 			emit searchEngineChanged(currentData(SearchEnginesManager::IdentifierRole).toString());
 		}
 
+		setToolTip(tr("Search using %1").arg(itemData(index, SearchEnginesManager::TitleRole).toString()));
+
 		m_lineEdit->setPlaceholderText(tr("Search using %1").arg(itemData(index, SearchEnginesManager::TitleRole).toString()));
 		m_lineEdit->setText(m_query);
 
@@ -720,6 +725,7 @@ void SearchWidget::setSearchEngine(const QString &searchEngine)
 	{
 		hidePopup();
 		setEnabled(false);
+		setToolTip(QString());
 
 		m_lineEdit->setPlaceholderText(QString());
 
@@ -829,6 +835,40 @@ QString SearchWidget::getCurrentSearchEngine() const
 QVariantMap SearchWidget::getOptions() const
 {
 	return m_options;
+}
+
+bool SearchWidget::event(QEvent *event)
+{
+	if (isEnabled() && event->type() == QEvent::ToolTip)
+	{
+		QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
+
+		if (helpEvent)
+		{
+			if (m_iconRectangle.contains(helpEvent->pos()) || m_dropdownArrowRectangle.contains(helpEvent->pos()))
+			{
+				QToolTip::showText(helpEvent->globalPos(), tr("Select Search Engine"));
+
+				return true;
+			}
+
+			if (m_addButtonRectangle.contains(helpEvent->pos()))
+			{
+				QToolTip::showText(helpEvent->globalPos(), tr("Add Search Engine…"));
+
+				return true;
+			}
+
+			if (m_searchButtonRectangle.contains(helpEvent->pos()))
+			{
+				QToolTip::showText(helpEvent->globalPos(), tr("Search"));
+
+				return true;
+			}
+		}
+	}
+
+	return ComboBoxWidget::event(event);
 }
 
 }

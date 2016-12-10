@@ -54,6 +54,7 @@ public:
 	void hidePopup();
 	QString getCurrentSearchEngine() const;
 	QVariantMap getOptions() const;
+	bool event(QEvent *event);
 
 public slots:
 	void activate(Qt::FocusReason reason);
