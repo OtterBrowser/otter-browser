@@ -44,7 +44,7 @@ public:
 		OptionsRole
 	};
 
-	explicit ToolBarDialog(int identifier = -1, QWidget *parent = nullptr);
+	explicit ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definition = ToolBarsManager::ToolBarDefinition(), QWidget *parent = nullptr);
 	~ToolBarDialog();
 
 	ToolBarsManager::ToolBarDefinition getDefinition() const;

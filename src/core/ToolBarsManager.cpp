@@ -21,7 +21,6 @@
 #include "SessionsManager.h"
 #include "Utils.h"
 #include "../ui/BookmarksComboBoxWidget.h"
-#include "../ui/BookmarksBarDialog.h"
 #include "../ui/ToolBarDialog.h"
 
 #include <QtCore/QFile>
@@ -219,7 +218,10 @@ void ToolBarsManager::addToolBar()
 
 void ToolBarsManager::addBookmarksBar()
 {
-	BookmarksBarDialog dialog;
+	ToolBarDefinition definition;
+	definition.bookmarksPath = QLatin1String("/");
+
+	ToolBarDialog dialog(definition);
 
 	if (dialog.exec() == QDialog::Accepted)
 	{
@@ -238,7 +240,7 @@ void ToolBarsManager::configureToolBar(int identifier)
 
 	if (identifier >= 0 && identifier < m_definitions.count())
 	{
-		ToolBarDialog dialog(identifier);
+		ToolBarDialog dialog(getToolBarDefinition(identifier));
 
 		if (dialog.exec() == QDialog::Accepted)
 		{

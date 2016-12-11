@@ -33,8 +33,8 @@
 namespace Otter
 {
 
-ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
-	m_definition(ToolBarsManager::getToolBarDefinition(identifier)),
+ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definition, QWidget *parent) : Dialog(parent),
+	m_definition(definition),
 	m_ui(new Ui::ToolBarDialog)
 {
 	m_ui->setupUi(this);
@@ -74,19 +74,12 @@ ToolBarDialog::ToolBarDialog(int identifier, QWidget *parent) : Dialog(parent),
 
 	if (m_definition.bookmarksPath.isEmpty())
 	{
-		m_ui->folderLabel->setParent(nullptr);
-		m_ui->folderLabel->deleteLater();
-		m_ui->folderComboBox->setParent(nullptr);
-		m_ui->folderComboBox->deleteLater();
+		m_ui->bookmarksWidget->hide();
 	}
 	else
 	{
 		m_ui->folderComboBox->setCurrentFolder(BookmarksManager::getModel()->getItem(m_definition.bookmarksPath));
-		m_ui->optionsHeader->hide();
-		m_ui->arrangementWidget->hide();
-
-		setObjectName(QLatin1String("BookmarkBar"));
-		adjustSize();
+		m_ui->entriesEditorWidget->hide();
 	}
 
 	QStandardItemModel *availableEntriesModel(new QStandardItemModel(this));
