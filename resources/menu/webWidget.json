@@ -1,177 +1,177 @@
 {
-    "actions":
-    [
-        {
-            "type": "include",
-            "includeIn": "standard",
-            "actions":
-            [
-                "GoBack",
-                "GoForward",
-                "Rewind",
-                "FastForward",
-                "separator",
-                "ReloadOrStop",
-                "ScheduleReload",
-                "separator",
-                "BookmarkPage",
-                "CopyAddress",
-                "Print",
-                "separator",
-                {
-                    "type": "include",
-                    "includeIn": "form",
-                    "actions":
-                    [
-                        "CreateSearch"
-                    ]
-                },
-                "InspectElement",
-                "ViewSource",
-                "Validate",
-                "separator",
-                {
-                    "type": "menu",
-                    "includeIn": "frame",
-                    "title": "Frame",
-                    "actions":
-                    [
-                        "OpenFrameInCurrentTab",
-                        "OpenFrameInNewTab",
-                        "OpenFrameInNewTabBackground",
-                        "separator",
-                        "ViewFrameSource",
-                        "ReloadFrame",
-                        "CopyFrameLinkToClipboard"
-                    ]
-                },
-                "separator",
-                "ContentBlocking",
-                "WebsitePreferences",
-                "separator",
-                "FullScreen"
-            ]
-        },
-        {
-            "type": "include",
-            "includeIn": "edit",
-            "actions":
-            [
-                "PasteNote",
-                "separator",
-                "Undo",
-                "Redo",
-                "separator",
-                "Cut",
-                "Copy",
-                "Paste",
-                "Delete",
-                "separator",
-                "CopyToNote",
-                "separator",
-                "SelectAll",
-                "ClearAll",
-                "separator",
-                {
-                    "type": "include",
-                    "includeIn": "form",
-                    "actions":
-                    [
-                        "CreateSearch",
-                        "separator"
-                    ]
-                },
-                "InspectElement",
-                "separator",
-                "CheckSpelling",
-                "SelectDictionary",
-                "separator"
-            ]
-        },
-        {
-            "type": "include",
-            "includeIn": "selection",
-            "actions":
-            [
-                "Search",
-                "SearchMenu",
-                "separator",
-                "Copy",
-                "CopyToNote",
-                "separator",
-                "OpenSelectionAsLink",
-                "separator"
-            ]
-        },
-        {
-            "type": "include",
-            "includeIn": "mail",
-            "actions":
-            [
-                "OpenLink",
-                "separator",
-                "CopyLinkToClipboard",
-                "separator",
-                "InspectElement",
-                "separator"
-            ]
-        },
-        {
-            "type": "include",
-            "includeIn": "link",
-            "actions":
-            [
-                "OpenLink",
-                "OpenLinkInNewTab",
-                "OpenLinkInNewTabBackground",
-                "separator",
-                "OpenLinkInNewWindow",
-                "OpenLinkInNewWindowBackground",
-                "separator",
-                "BookmarkLink",
-                "CopyLinkToClipboard",
-                "separator",
-                "SaveLinkToDisk",
-                "SaveLinkToDownloads",
-                "separator",
-                "InspectElement",
-                "separator"
-            ]
-        },
-        {
-            "type": "include",
-            "includeIn": "image",
-            "actions":
-            [
-                "OpenImageInNewTab",
-                "OpenImageInNewTabBackground",
-                "ReloadImage",
-                "CopyImageUrlToClipboard",
-                "separator",
-                "SaveImageToDisk",
-                "CopyImageToClipboard",
-                "separator",
-                "InspectElement",
-                "ImageProperties",
-                "separator"
-            ]
-        },
-        {
-            "type": "include",
-            "includeIn": "media",
-            "actions":
-            [
-                "CopyMediaUrlToClipboard",
-                "SaveMediaToDisk",
-                "separator",
-                "MediaPlayPause",
-                "MediaMute",
-                "MediaLoop",
-                "MediaControls",
-                "separator",
-                "InspectElement",
-                "separator"
-            ]
-        }
-    ]
+	"actions":
+	[
+		{
+			"type": "include",
+			"includeIn": "standard",
+			"actions":
+			[
+				"GoBack",
+				"GoForward",
+				"Rewind",
+				"FastForward",
+				"separator",
+				"ReloadOrStop",
+				"ScheduleReload",
+				"separator",
+				"BookmarkPage",
+				"CopyAddress",
+				"Print",
+				"separator",
+				{
+					"type": "include",
+					"includeIn": "form",
+					"actions":
+					[
+						"CreateSearch"
+					]
+				},
+				"InspectElement",
+				"ViewSource",
+				"Validate",
+				"separator",
+				{
+					"type": "menu",
+					"includeIn": "frame",
+					"title": "Frame",
+					"actions":
+					[
+						"OpenFrameInCurrentTab",
+						"OpenFrameInNewTab",
+						"OpenFrameInNewTabBackground",
+						"separator",
+						"ViewFrameSource",
+						"ReloadFrame",
+						"CopyFrameLinkToClipboard"
+					]
+				},
+				"separator",
+				"ContentBlocking",
+				"WebsitePreferences",
+				"separator",
+				"FullScreen"
+			]
+		},
+		{
+			"type": "include",
+			"includeIn": "edit",
+			"actions":
+			[
+				"PasteNote",
+				"separator",
+				"Undo",
+				"Redo",
+				"separator",
+				"Cut",
+				"Copy",
+				"Paste",
+				"Delete",
+				"separator",
+				"CopyToNote",
+				"separator",
+				"SelectAll",
+				"ClearAll",
+				"separator",
+				{
+					"type": "include",
+					"includeIn": "form",
+					"actions":
+					[
+						"CreateSearch",
+						"separator"
+					]
+				},
+				"InspectElement",
+				"separator",
+				"CheckSpelling",
+				"SelectDictionary",
+				"separator"
+			]
+		},
+		{
+			"type": "include",
+			"includeIn": "selection",
+			"actions":
+			[
+				"Search",
+				"SearchMenu",
+				"separator",
+				"Copy",
+				"CopyToNote",
+				"separator",
+				"OpenSelectionAsLink",
+				"separator"
+			]
+		},
+		{
+			"type": "include",
+			"includeIn": "mail",
+			"actions":
+			[
+				"OpenLink",
+				"separator",
+				"CopyLinkToClipboard",
+				"separator",
+				"InspectElement",
+				"separator"
+			]
+		},
+		{
+			"type": "include",
+			"includeIn": "link",
+			"actions":
+			[
+				"OpenLink",
+				"OpenLinkInNewTab",
+				"OpenLinkInNewTabBackground",
+				"separator",
+				"OpenLinkInNewWindow",
+				"OpenLinkInNewWindowBackground",
+				"separator",
+				"BookmarkLink",
+				"CopyLinkToClipboard",
+				"separator",
+				"SaveLinkToDisk",
+				"SaveLinkToDownloads",
+				"separator",
+				"InspectElement",
+				"separator"
+			]
+		},
+		{
+			"type": "include",
+			"includeIn": "image",
+			"actions":
+			[
+				"OpenImageInNewTab",
+				"OpenImageInNewTabBackground",
+				"ReloadImage",
+				"CopyImageUrlToClipboard",
+				"separator",
+				"SaveImageToDisk",
+				"CopyImageToClipboard",
+				"separator",
+				"InspectElement",
+				"ImageProperties",
+				"separator"
+			]
+		},
+		{
+			"type": "include",
+			"includeIn": "media",
+			"actions":
+			[
+				"CopyMediaUrlToClipboard",
+				"SaveMediaToDisk",
+				"separator",
+				"MediaPlayPause",
+				"MediaMute",
+				"MediaLoop",
+				"MediaControls",
+				"separator",
+				"InspectElement",
+				"separator"
+			]
+		}
+	]
 }
