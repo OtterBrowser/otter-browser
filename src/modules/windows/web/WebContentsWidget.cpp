@@ -493,6 +493,18 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 			setScrollMode(NoScroll);
 
 			break;
+		case ActionsManager::EnableJavaScriptAction:
+			m_webWidget->setOption(SettingsManager::Browser_EnableJavaScriptOption, Action::calculateCheckedState(parameters));
+
+			break;
+		case ActionsManager::EnableJavaAction:
+			m_webWidget->setOption(SettingsManager::Browser_EnableJavaOption, Action::calculateCheckedState(parameters));
+
+			break;
+		case ActionsManager::EnableReferrerAction:
+			m_webWidget->setOption(SettingsManager::Network_EnableReferrerOption, Action::calculateCheckedState(parameters));
+
+			break;
 		case ActionsManager::QuickPreferencesAction:
 			{
 				if (m_isTabPreferencesMenuVisible)
@@ -580,15 +592,8 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 					showAllImagesAction->setChecked(true);
 				}
 
-				QAction *enableJavaScriptAction(menu.addAction(tr("Enable JavaScript")));
-				enableJavaScriptAction->setCheckable(true);
-				enableJavaScriptAction->setChecked(m_webWidget->getOption(SettingsManager::Browser_EnableJavaScriptOption).toBool());
-				enableJavaScriptAction->setData(QLatin1String("Browser/EnableJavaScript"));
-
-				QAction *enableJavaAction(menu.addAction(tr("Enable Java")));
-				enableJavaAction->setCheckable(true);
-				enableJavaAction->setChecked(m_webWidget->getOption(SettingsManager::Browser_EnableJavaOption).toBool());
-				enableJavaAction->setData(QLatin1String("Browser/EnableJava"));
+				menu.addAction(m_webWidget->getAction(ActionsManager::EnableJavaScriptAction));
+				menu.addAction(m_webWidget->getAction(ActionsManager::EnableJavaAction));
 
 				QMenu *enablePluginsMenu(menu.addMenu(tr("Plugins")));
 				QAction *enablePluginsAction(enablePluginsMenu->addAction(tr("Enabled")));
@@ -632,9 +637,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				enableCookiesAction->setCheckable(true);
 				enableCookiesAction->setEnabled(false);
 
-				QAction *enableReferrerAction(menu.addAction(tr("Enable Referrer")));
-				enableReferrerAction->setCheckable(true);
-				enableReferrerAction->setEnabled(false);
+				menu.addAction(m_webWidget->getAction(ActionsManager::EnableReferrerAction));
 
 				QAction *enableProxyAction(menu.addAction(tr("Enable Proxy")));
 				enableProxyAction->setCheckable(true);
@@ -647,7 +650,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				QAction *triggeredAction(menu.exec(QCursor::pos()));
 
-				if (triggeredAction && triggeredAction->data().isValid())
+				if (triggeredAction && (triggeredAction->data().type() == QVariant::List || triggeredAction->data().type() == QVariant::String))
 				{
 					if (triggeredAction->data().type() == QVariant::List)
 					{
