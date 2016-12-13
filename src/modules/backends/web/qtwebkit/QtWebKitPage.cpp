@@ -55,7 +55,7 @@ QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWi
 	updateStyleSheets();
 	optionChanged(SettingsManager::Interface_ShowScrollBarsOption);
 
-	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
+	connect(this->mainFrame(), SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	connect(this, SIGNAL(consoleMessageReceived(MessageSource,MessageLevel,QString,int,QString)), this, SLOT(handleConsoleMessage(MessageSource,MessageLevel,QString,int,QString)));
 #endif
