@@ -311,7 +311,39 @@ void PasswordsContentsWidget::filterPasswords(const QString &filter)
 {
 	for (int i = 0; i < m_model->rowCount(); ++i)
 	{
-		m_ui->passwordsViewWidget->setRowHidden(i, m_model->invisibleRootItem()->index(), (!filter.isEmpty() && !m_model->item(i, 0)->data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive)));
+		const QModelIndex domainIndex(m_model->index(i, 0, m_model->invisibleRootItem()->index()));
+		int foundSets(0);
+		bool hasDomainMatch(filter.isEmpty() || domainIndex.data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive));
+
+		for (int j = 0; j < m_model->rowCount(domainIndex); ++j)
+		{
+			const QModelIndex setIndex(domainIndex.child(j, 0));
+			bool hasFieldMatch(hasDomainMatch || setIndex.data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive));
+
+			if (!hasFieldMatch)
+			{
+				for (int k = 0; k < m_model->rowCount(setIndex); ++k)
+				{
+					const QModelIndex fieldIndex(setIndex.child(k, 0));
+
+					if (fieldIndex.data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive) || (fieldIndex.data(FieldTypeRole).toString() != QLatin1String("password") && fieldIndex.sibling(fieldIndex.row(), 1).data(Qt::DisplayRole).toString().contains(filter, Qt::CaseInsensitive)))
+					{
+						hasFieldMatch = true;
+
+						break;
+					}
+				}
+
+				if (hasFieldMatch)
+				{
+					++foundSets;
+				}
+			}
+
+			m_ui->passwordsViewWidget->setRowHidden(j, domainIndex, (!filter.isEmpty() && !hasFieldMatch));
+		}
+
+		m_ui->passwordsViewWidget->setRowHidden(i, m_model->invisibleRootItem()->index(), (foundSets == 0 && !hasDomainMatch));
 	}
 }
 
