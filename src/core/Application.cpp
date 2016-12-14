@@ -796,6 +796,11 @@ MainWindow* Application::getWindow()
 	return m_windows[0];
 }
 
+Style* Application::getStyle()
+{
+	return qobject_cast<Style*>(QApplication::style());
+}
+
 PlatformIntegration* Application::getPlatformIntegration()
 {
 	return m_platformIntegration;

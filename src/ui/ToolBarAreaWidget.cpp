@@ -19,6 +19,7 @@
 
 #include "ToolBarAreaWidget.h"
 #include "MainWindow.h"
+#include "Style.h"
 #include "TabBarWidget.h"
 #include "ToolBarWidget.h"
 #include "../core/ToolBarsManager.h"
@@ -91,7 +92,6 @@ void ToolBarAreaWidget::paintEvent(QPaintEvent *event)
 	}
 
 	QPainter painter(this);
-	painter.setPen(QPen(palette().text(), 3, Qt::DotLine));
 
 	const bool isHorizontal(m_area == Qt::TopToolBarArea || m_area == Qt::BottomToolBarArea);
 	int lineOffset(4);
@@ -127,27 +127,7 @@ void ToolBarAreaWidget::paintEvent(QPaintEvent *event)
 		lineOffset = (width() - lineOffset);
 	}
 
-	if (isHorizontal)
-	{
-		painter.drawLine(0, lineOffset, width(), lineOffset);
-	}
-	else
-	{
-		painter.drawLine(lineOffset, 0, lineOffset, height());
-	}
-
-	painter.setPen(QPen(palette().text(), 9, Qt::SolidLine, Qt::RoundCap));
-
-	if (isHorizontal)
-	{
-		painter.drawPoint(0, lineOffset);
-		painter.drawPoint(width(), lineOffset);
-	}
-	else
-	{
-		painter.drawPoint(lineOffset, 0);
-		painter.drawPoint(lineOffset, height());
-	}
+	Application::getStyle()->drawDropZone((isHorizontal ? QLine(0, lineOffset, width(), lineOffset) : QLine(lineOffset, 0, lineOffset, height())), &painter);
 }
 
 void ToolBarAreaWidget::leaveEvent(QEvent *event)

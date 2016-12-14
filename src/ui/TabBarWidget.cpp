@@ -22,6 +22,7 @@
 #include "ContentsWidget.h"
 #include "MainWindow.h"
 #include "PreviewWidget.h"
+#include "Style.h"
 #include "ToolBarWidget.h"
 #include "Window.h"
 #include "../core/ActionsManager.h"
@@ -679,7 +680,6 @@ void TabBarWidget::paintEvent(QPaintEvent *event)
 
 		if (dropIndex >= 0)
 		{
-			const bool isHorizontal(shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth);
 			int lineOffset(0);
 
 			if (count() == 0)
@@ -695,29 +695,7 @@ void TabBarWidget::paintEvent(QPaintEvent *event)
 				lineOffset = tabRect(dropIndex).left();
 			}
 
-			painter.setPen(QPen(palette().text(), 3, Qt::DotLine));
-
-			if (isHorizontal)
-			{
-				painter.drawLine(lineOffset, 0, lineOffset, height());
-			}
-			else
-			{
-				painter.drawLine(0, lineOffset, width(), lineOffset);
-			}
-
-			painter.setPen(QPen(palette().text(), 9, Qt::SolidLine, Qt::RoundCap));
-
-			if (isHorizontal)
-			{
-				painter.drawPoint(lineOffset, 0);
-				painter.drawPoint(lineOffset, height());
-			}
-			else
-			{
-				painter.drawPoint(0, lineOffset);
-				painter.drawPoint(width(), lineOffset);
-			}
+			Application::getStyle()->drawDropZone(((shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth) ? QLine(lineOffset, 0, lineOffset, height()) : QLine(0, lineOffset, width(), lineOffset)), &painter);
 		}
 	}
 }

@@ -35,6 +35,7 @@ namespace Otter
 class MainWindow;
 class Notification;
 class PlatformIntegration;
+class Style;
 class TrayIcon;
 
 class Application : public QApplication
@@ -74,6 +75,7 @@ public:
 	static MainWindow* createWindow(MainWindowFlags flags = NoFlags, bool inBackground = false, const SessionMainWindow &windows = SessionMainWindow());
 	static Application* getInstance();
 	static MainWindow* getWindow();
+	static Style* getStyle();
 	static TrayIcon* getTrayIcon();
 	static PlatformIntegration* getPlatformIntegration();
 	QCommandLineParser* getCommandLineParser();

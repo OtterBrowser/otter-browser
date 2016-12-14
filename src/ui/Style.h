@@ -39,7 +39,6 @@ public:
 
 	explicit Style(const QString &name);
 
-protected:
 	void drawDropZone(const QLine &line, QPainter *painter);
 };
 
