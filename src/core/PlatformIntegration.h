@@ -31,6 +31,7 @@ namespace Otter
 struct ApplicationInformation;
 class Application;
 class Notification;
+class Style;
 
 class PlatformIntegration : public QObject
 {
@@ -40,6 +41,7 @@ public:
 	explicit PlatformIntegration(Application *parent);
 
 	virtual void runApplication(const QString &command, const QUrl &url = QUrl()) const;
+	virtual Style* createStyle(const QString &name) const;
 	virtual QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType);
 	virtual QString getPlatform() const;
 	virtual bool canShowNotifications() const;

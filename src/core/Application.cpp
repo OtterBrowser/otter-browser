@@ -51,6 +51,7 @@
 #include "../ui/MainWindow.h"
 #include "../ui/NotificationDialog.h"
 #include "../ui/ReportDialog.h"
+#include "../ui/Style.h"
 #include "../ui/TrayIcon.h"
 #include "../ui/UpdateCheckerDialog.h"
 
@@ -84,7 +85,6 @@ QTranslator* Application::m_qtTranslator(nullptr);
 QTranslator* Application::m_applicationTranslator(nullptr);
 QLocalServer* Application::m_localServer(nullptr);
 QString Application::m_localePath;
-QString Application::m_systemWidgetStyle;
 QCommandLineParser Application::m_commandLineParser;
 QList<MainWindow*> Application::m_windows;
 bool Application::m_isHidden(false);
@@ -439,9 +439,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 		LongTermTimer::runTimer((interval * SECONDS_IN_DAY), this, SLOT(periodicUpdateCheck()));
 	}
 
-	m_systemWidgetStyle = style()->objectName();
-
-	setStyle(SettingsManager::getValue(SettingsManager::Interface_WidgetStyleOption).toString());
+	setStyle(ThemesManager::createStyle(SettingsManager::getValue(SettingsManager::Interface_WidgetStyleOption).toString()));
 
 	const QString styleSheet(SettingsManager::getValue(SettingsManager::Interface_StyleSheetOption).toString());
 
@@ -467,8 +465,6 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 
 Application::~Application()
 {
-	m_systemWidgetStyle.clear();
-
 	for (int i = 0; i < m_windows.count(); ++i)
 	{
 		m_windows.at(i)->deleteLater();
@@ -959,11 +955,6 @@ QString Application::getFullVersion()
 QString Application::getLocalePath()
 {
 	return m_localePath;
-}
-
-QString Application::getSystemWidgetStyle()
-{
-	return m_systemWidgetStyle;
 }
 
 QList<MainWindow*> Application::getWindows()

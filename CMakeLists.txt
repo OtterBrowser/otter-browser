@@ -186,6 +186,7 @@ set(otter_src
 	src/ui/SourceViewerWidget.cpp
 	src/ui/StartupDialog.cpp
 	src/ui/StatusBarWidget.cpp
+	src/ui/Style.cpp
 	src/ui/TabBarWidget.cpp
 	src/ui/TabSwitcherWidget.cpp
 	src/ui/TextLabelWidget.cpp

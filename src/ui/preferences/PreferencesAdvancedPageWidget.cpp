@@ -23,6 +23,7 @@
 #include "JavaScriptPreferencesDialog.h"
 #include "KeyboardProfileDialog.h"
 #include "MouseProfileDialog.h"
+#include "../Style.h"
 #include "../UserAgentsManagerDialog.h"
 #include "../../core/ActionsManager.h"
 #include "../../core/Application.h"
@@ -1307,9 +1308,9 @@ void PreferencesAdvancedPageWidget::save()
 
 	SettingsManager::setValue(SettingsManager::Interface_UseNativeNotificationsOption, m_ui->preferNativeNotificationsCheckBox->isChecked());
 
-	const QString widgetStyle((m_ui->appearranceWidgetStyleComboBox->currentIndex() == 0) ? Application::getSystemWidgetStyle() : m_ui->appearranceWidgetStyleComboBox->currentText());
+	const QString widgetStyle((m_ui->appearranceWidgetStyleComboBox->currentIndex() == 0) ? QString() : m_ui->appearranceWidgetStyleComboBox->currentText());
 
-	Application::setStyle(widgetStyle);
+	Application::setStyle(ThemesManager::createStyle(widgetStyle));
 
 	SettingsManager::setValue(SettingsManager::Interface_WidgetStyleOption, widgetStyle);
 	SettingsManager::setValue(SettingsManager::Interface_StyleSheetOption, m_ui->appearranceStyleSheetFilePathWidget->getPath());

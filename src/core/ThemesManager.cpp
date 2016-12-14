@@ -18,9 +18,13 @@
 **************************************************************************/
 
 #include "ThemesManager.h"
+#include "Application.h"
+#include "PlatformIntegration.h"
 #include "SettingsManager.h"
+#include "../ui/Style.h"
 
 #include <QtGui/QIcon>
+#include <QtWidgets/QStyleFactory>
 
 namespace Otter
 {
@@ -45,15 +49,35 @@ void ThemesManager::createInstance(QObject *parent)
 
 void ThemesManager::optionChanged(int identifier, const QVariant &value)
 {
-	if (identifier == SettingsManager::Interface_UseSystemIconThemeOption)
+	if (identifier ==  SettingsManager::Interface_UseSystemIconThemeOption && m_useSystemIconTheme != value.toBool())
 	{
 		m_useSystemIconTheme = value.toBool();
+
+		emit iconSetChanged();
 	}
 }
 
 ThemesManager* ThemesManager::getInstance()
 {
 	return m_instance;
+}
+
+Style* ThemesManager::createStyle(const QString &name)
+{
+	Style *style(nullptr);
+	PlatformIntegration *integration(Application::getPlatformIntegration());
+
+	if (integration)
+	{
+		style = integration->createStyle(name);
+	}
+
+	if (!style)
+	{
+		style = new Style(name);
+	}
+
+	return style;
 }
 
 QIcon ThemesManager::getIcon(const QString &name, bool fromTheme)

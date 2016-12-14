@@ -41,6 +41,13 @@ void PlatformIntegration::runApplication(const QString &command, const QUrl &url
 	Q_UNUSED(url)
 }
 
+Style* PlatformIntegration::createStyle(const QString &name) const
+{
+	Q_UNUSED(name)
+
+	return nullptr;
+}
+
 QList<ApplicationInformation> PlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)
 {
 	Q_UNUSED(mimeType)
