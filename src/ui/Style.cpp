@@ -22,6 +22,7 @@
 #include <QtGui/QGuiApplication>
 #include <QtGui/QPainter>
 #include <QtWidgets/QStyleFactory>
+#include <QtWidgets/QStyleOption>
 
 namespace Otter
 {
@@ -39,6 +40,47 @@ void Style::drawDropZone(const QLine &line, QPainter *painter)
 	painter->drawPoint(line.p1());
 	painter->drawPoint(line.p2());
 	painter->restore();
+}
+
+QString Style::getName() const
+{
+	return (baseStyle() ? baseStyle() : this)->objectName().toLower();
+}
+
+QRect Style::subElementRect(QStyle::SubElement element, const QStyleOption *option, const QWidget *widget) const
+{
+	if (element == QStyle::SE_TabBarTabLeftButton)
+	{
+		if (qstyleoption_cast<const QStyleOptionTab*>(option))
+		{
+			return option->rect;
+		}
+
+		QStyleOptionTab tabOption;
+		tabOption.cornerWidgets = QStyleOptionTab::LeftCornerWidget;
+		tabOption.leftButtonSize = QSize(1, 1);
+		tabOption.rect = option->rect;
+		tabOption.shape = QTabBar::RoundedNorth;
+
+		const int offset(QProxyStyle::subElementRect(QStyle::SE_TabBarTabLeftButton, &tabOption, widget).left() - option->rect.left());
+		QRect rectangle(option->rect);
+		rectangle.setLeft(rectangle.left() + offset);
+		rectangle.setRight(rectangle.right() - offset);
+
+		return rectangle;
+	}
+
+	return QProxyStyle::subElementRect(element, option, widget);
+}
+
+int Style::pixelMetric(QStyle::PixelMetric metric, const QStyleOption *option, const QWidget *widget) const
+{
+	if (metric == QStyle::PM_TabBarTabHSpace && QProxyStyle::pixelMetric(metric, option, widget) == QCommonStyle::pixelMetric(metric, option, widget))
+	{
+		return QProxyStyle::pixelMetric(QStyle::PM_TabBarTabVSpace, option, widget);
+	}
+
+	return QProxyStyle::pixelMetric(metric, option, widget);
 }
 
 }

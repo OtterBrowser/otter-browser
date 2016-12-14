@@ -85,46 +85,6 @@ void TabDrag::timerEvent(QTimerEvent *event)
 	QDrag::timerEvent(event);
 }
 
-TabBarStyle::TabBarStyle(QStyle *style) : QProxyStyle(style)
-{
-}
-
-QRect TabBarStyle::subElementRect(QStyle::SubElement element, const QStyleOption *option, const QWidget *widget) const
-{
-	if (element == QStyle::SE_TabBarTabLeftButton)
-	{
-		if (qstyleoption_cast<const QStyleOptionTab*>(option))
-		{
-			return option->rect;
-		}
-
-		QStyleOptionTab tabOption;
-		tabOption.cornerWidgets = QStyleOptionTab::LeftCornerWidget;
-		tabOption.leftButtonSize = QSize(1, 1);
-		tabOption.rect = option->rect;
-		tabOption.shape = QTabBar::RoundedNorth;
-
-		const int offset(QProxyStyle::subElementRect(QStyle::SE_TabBarTabLeftButton, &tabOption, widget).left() - option->rect.left());
-		QRect rectangle(option->rect);
-		rectangle.setLeft(rectangle.left() + offset);
-		rectangle.setRight(rectangle.right() - offset);
-
-		return rectangle;
-	}
-
-	return QProxyStyle::subElementRect(element, option, widget);
-}
-
-int TabBarStyle::pixelMetric(QStyle::PixelMetric metric, const QStyleOption *option, const QWidget *widget) const
-{
-	if (metric == QStyle::PM_TabBarTabHSpace && QProxyStyle::pixelMetric(metric, option, widget) == QCommonStyle::pixelMetric(metric, option, widget))
-	{
-		return QProxyStyle::pixelMetric(QStyle::PM_TabBarTabVSpace, option, widget);
-	}
-
-	return QProxyStyle::pixelMetric(metric, option, widget);
-}
-
 TabHandleWidget::TabHandleWidget(Window *window, TabBarWidget *parent) : QWidget(parent),
 	m_window(window),
 	m_tabBarWidget(parent),
@@ -538,7 +498,6 @@ Window* TabHandleWidget::getWindow() const
 }
 
 TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
-	m_style(new TabBarStyle()),
 	m_previewWidget(nullptr),
 	m_movableTabWidget(nullptr),
 	m_tabWidth(0),
@@ -566,7 +525,6 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	setDocumentMode(true);
 	setMaximumSize(0, 0);
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
-	setStyle(m_style);
 	updateStyle();
 	optionChanged(SettingsManager::TabBar_MaximumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MaximumTabHeightOption));
 	optionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabHeightOption));
@@ -1549,17 +1507,12 @@ void TabBarWidget::updateSize()
 
 void TabBarWidget::updateStyle()
 {
-	if (m_style->baseStyle()->metaObject()->className() != QApplication::style()->metaObject()->className())
-	{
-		m_style->setBaseStyle(QStyleFactory::create(SettingsManager::getValue(SettingsManager::Interface_WidgetStyleOption).toString()));
+	m_isLayoutReversed = (static_cast<QTabBar::ButtonPosition>(style()->styleHint(QStyle::SH_TabBar_CloseButtonPosition)) == QTabBar::LeftSide);
 
-		m_isLayoutReversed = (static_cast<QTabBar::ButtonPosition>(style()->styleHint(QStyle::SH_TabBar_CloseButtonPosition)) == QTabBar::LeftSide);
+	optionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabHeightOption));
+	optionChanged(SettingsManager::TabBar_MinimumTabWidthOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabWidthOption));
 
-		optionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabHeightOption));
-		optionChanged(SettingsManager::TabBar_MinimumTabWidthOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabWidthOption));
-
-		emit needsGeometriesUpdate();
-	}
+	emit needsGeometriesUpdate();
 }
 
 void TabBarWidget::setArea(Qt::ToolBarArea area)

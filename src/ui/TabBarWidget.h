@@ -48,15 +48,6 @@ private:
 	int m_releaseTimer;
 };
 
-class TabBarStyle : public QProxyStyle
-{
-public:
-	explicit TabBarStyle(QStyle *style = nullptr);
-
-	QRect subElementRect(SubElement element, const QStyleOption *option, const QWidget *widget = nullptr) const override;
-	int pixelMetric(PixelMetric metric, const QStyleOption *option = nullptr, const QWidget *widget = nullptr) const override;
-};
-
 class TabHandleWidget : public QWidget
 {
 	Q_OBJECT
@@ -155,7 +146,6 @@ protected slots:
 	void setArea(Qt::ToolBarArea area);
 
 private:
-	TabBarStyle *m_style;
 	PreviewWidget *m_previewWidget;
 	QWidget *m_movableTabWidget;
 	QPoint m_dragMovePosition;
