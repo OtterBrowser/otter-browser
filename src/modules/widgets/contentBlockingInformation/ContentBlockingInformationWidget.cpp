@@ -38,6 +38,7 @@ ContentBlockingInformationWidget::ContentBlockingInformationWidget(Window *windo
 	m_window(window),
 	m_elementsMenu(nullptr),
 	m_profilesMenu(nullptr),
+	m_isContentBlockingEnabled(false),
 	m_amount(0)
 {
 	QMenu *menu(new QMenu(this));
@@ -45,10 +46,10 @@ ContentBlockingInformationWidget::ContentBlockingInformationWidget(Window *windo
 	m_profilesMenu = menu->addMenu(tr("Active Profiles"));
 	m_elementsMenu = menu->addMenu(tr("Blocked Elements"));
 
-	updateState();
 	setMenu(menu);
-	setPopupMode(QToolButton::InstantPopup);
+	setPopupMode(QToolButton::MenuButtonPopup);
 	setIcon(ThemesManager::getIcon(QLatin1String("content-blocking")));
+	setDefaultAction(new QAction(this));
 	setWindow(window);
 
 	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
@@ -62,6 +63,7 @@ ContentBlockingInformationWidget::ContentBlockingInformationWidget(Window *windo
 	connect(m_elementsMenu, SIGNAL(triggered(QAction*)), this, SLOT(openElement(QAction*)));
 	connect(m_profilesMenu, SIGNAL(aboutToShow()), this, SLOT(populateProfilesMenu()));
 	connect(m_profilesMenu, SIGNAL(triggered(QAction*)), this, SLOT(toggleOption(QAction*)));
+	connect(defaultAction(), SIGNAL(triggered()), this, SLOT(toggleContentBlocking()));
 }
 
 void ContentBlockingInformationWidget::resizeEvent(QResizeEvent *event)
@@ -88,30 +90,35 @@ void ContentBlockingInformationWidget::openElement(QAction *action)
 	}
 }
 
+void ContentBlockingInformationWidget::toggleContentBlocking()
+{
+	if (m_window)
+	{
+		m_isContentBlockingEnabled = !m_window->getContentsWidget()->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption).toBool();
+
+		m_window->getContentsWidget()->setOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, m_isContentBlockingEnabled);
+
+		updateState();
+	}
+}
+
 void ContentBlockingInformationWidget::toggleOption(QAction *action)
 {
-	if (action && m_window)
+	if (action && m_window && !action->data().isNull())
 	{
-		if (action->data().isNull())
-		{
-			m_window->getContentsWidget()->setOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, action->isChecked());
-		}
-		else
-		{
-			const QString profile(action->data().toString());
-			QStringList profiles(m_window->getContentsWidget()->getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList());
+		const QString profile(action->data().toString());
+		QStringList profiles(m_window->getContentsWidget()->getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList());
 
-			if (!action->isChecked())
-			{
-				profiles.removeAll(profile);
-			}
-			else if (!profiles.contains(profile))
-			{
-				profiles.append(profile);
-			}
-
-			m_window->getContentsWidget()->setOption(SettingsManager::ContentBlocking_ProfilesOption, profiles);
+		if (!action->isChecked())
+		{
+			profiles.removeAll(profile);
 		}
+		else if (!profiles.contains(profile))
+		{
+			profiles.append(profile);
+		}
+
+		m_window->getContentsWidget()->setOption(SettingsManager::ContentBlocking_ProfilesOption, profiles);
 	}
 }
 
@@ -188,7 +195,7 @@ void ContentBlockingInformationWidget::populateProfilesMenu()
 		return;
 	}
 
-	QAction *enableContentBlockingAction(m_profilesMenu->addAction(tr("Enable Content Blocking")));
+	QAction *enableContentBlockingAction(m_profilesMenu->addAction(tr("Enable Content Blocking"), this, SLOT(toggleContentBlocking())));
 	enableContentBlockingAction->setCheckable(true);
 	enableContentBlockingAction->setChecked(m_window->getContentsWidget()->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption).toBool());
 
@@ -272,9 +279,9 @@ void ContentBlockingInformationWidget::updateState()
 	font.setPixelSize(fontSize * 0.8);
 
 	QRectF rectangle((iconSize - labelWidth), (iconSize - fontSize), labelWidth, fontSize);
-	QPixmap pixmap(m_icon.pixmap(iconSize, iconSize));
+	QPixmap pixmap(m_icon.pixmap(iconSize, iconSize, (m_isContentBlockingEnabled ? QIcon::Normal : QIcon::Disabled)));
 	QPainter iconPainter(&pixmap);
-	iconPainter.fillRect(rectangle, Qt::red);
+	iconPainter.fillRect(rectangle, (m_isContentBlockingEnabled ? Qt::darkRed : Qt::darkGray));
 	iconPainter.setFont(font);
 	iconPainter.setPen(QColor(255, 255, 255, 230));
 	iconPainter.drawText(rectangle, Qt::AlignCenter, label);
@@ -302,9 +309,14 @@ void ContentBlockingInformationWidget::setWindow(Window *window)
 	if (window)
 	{
 		m_amount = window->getContentsWidget()->getBlockedRequests().count();
+		m_isContentBlockingEnabled = (m_window->getContentsWidget()->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption).toBool());
 
 		connect(m_window->getContentsWidget(), SIGNAL(aboutToNavigate()), this, SLOT(clear()));
 		connect(m_window->getContentsWidget(), SIGNAL(requestBlocked(NetworkManager::ResourceInformation)), this, SLOT(handleRequest(NetworkManager::ResourceInformation)));
+	}
+	else
+	{
+		m_isContentBlockingEnabled = false;
 	}
 
 	updateState();

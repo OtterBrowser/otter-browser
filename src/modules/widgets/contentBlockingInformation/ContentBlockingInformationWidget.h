@@ -46,6 +46,7 @@ protected:
 protected slots:
 	void clear();
 	void openElement(QAction *action);
+	void toggleContentBlocking();
 	void toggleOption(QAction *action);
 	void populateElementsMenu();
 	void populateProfilesMenu();
@@ -58,6 +59,7 @@ private:
 	QMenu *m_profilesMenu;
 	QIcon m_icon;
 	int m_amount;
+	bool m_isContentBlockingEnabled;
 };
 
 }
