@@ -58,7 +58,8 @@
 			"StatusMessageWidget",
 			"ZoomOutAction",
 			"ZoomWidget",
-			"ZoomInAction"
+			"ZoomInAction",
+			"ContentBlockingInformationWidget"
 		]
 	}
 ]
