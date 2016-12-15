@@ -121,13 +121,13 @@ int main(int argc, char *argv[])
 
 	const QString session(application.getCommandLineParser()->value(QLatin1String("session")).isEmpty() ? QLatin1String("default") : application.getCommandLineParser()->value(QLatin1String("session")));
 	const QString startupBehavior(SettingsManager::getValue(SettingsManager::Browser_StartupBehaviorOption).toString());
-	const bool isPrivate(application.getCommandLineParser()->isSet(QLatin1String("privatesession")));
+	const bool isPrivate(application.getCommandLineParser()->isSet(QLatin1String("private-session")));
 
 	if (!application.getCommandLineParser()->value(QLatin1String("session")).isEmpty() && SessionsManager::getSession(session).isClean)
 	{
 		SessionsManager::restoreSession(SessionsManager::getSession(session), nullptr, isPrivate);
 	}
-	else if (startupBehavior == QLatin1String("showDialog") || application.getCommandLineParser()->isSet(QLatin1String("sessionchooser")) || !SessionsManager::getSession(session).isClean)
+	else if (startupBehavior == QLatin1String("showDialog") || application.getCommandLineParser()->isSet(QLatin1String("session-chooser")) || !SessionsManager::getSession(session).isClean)
 	{
 		StartupDialog dialog(session);
 

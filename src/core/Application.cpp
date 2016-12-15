@@ -117,8 +117,8 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("cache"), QCoreApplication::translate("main", "Uses <path> as cache directory"), QLatin1String("path"), QString()));
 	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("profile"), QCoreApplication::translate("main", "Uses <path> as profile directory"), QLatin1String("path"), QString()));
 	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("session"), QCoreApplication::translate("main", "Restores session <session> if it exists"), QLatin1String("session"), QString()));
-	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("privatesession"), QCoreApplication::translate("main", "Starts private session")));
-	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("sessionchooser"), QCoreApplication::translate("main", "Forces session chooser dialog")));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("private-session"), QCoreApplication::translate("main", "Starts private session")));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("session-chooser"), QCoreApplication::translate("main", "Forces session chooser dialog")));
 	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("portable"), QCoreApplication::translate("main", "Sets profile and cache paths to directories inside the same directory as that of application binary")));
 	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("readonly"), QCoreApplication::translate("main", "Tells application to avoid writing data to disk")));
 	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("report"), QCoreApplication::translate("main", "Prints out diagnostic report and exits application")));
@@ -160,7 +160,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 	m_commandLineParser.process(arguments);
 
 	const bool isPortable(m_commandLineParser.isSet(QLatin1String("portable")));
-	const bool isPrivate(m_commandLineParser.isSet(QLatin1String("privatesession")));
+	const bool isPrivate(m_commandLineParser.isSet(QLatin1String("private-session")));
 	bool isReadOnly(m_commandLineParser.isSet(QLatin1String("readonly")));
 
 	if (isPortable)
@@ -566,7 +566,7 @@ void Application::newConnection()
 	m_commandLineParser.parse(decodedArguments);
 
 	const QString session(m_commandLineParser.value(QLatin1String("session")));
-	const bool isPrivate(m_commandLineParser.isSet(QLatin1String("privatesession")));
+	const bool isPrivate(m_commandLineParser.isSet(QLatin1String("private-session")));
 
 	if (session.isEmpty())
 	{
