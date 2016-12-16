@@ -870,11 +870,13 @@ void MainWindow::moveToolBar(ToolBarWidget *toolBar, Qt::ToolBarArea area)
 	}
 }
 
-void MainWindow::openUrl(const QString &text)
+void MainWindow::openUrl(const QString &text, bool isPrivate)
 {
+	WindowsManager::OpenHints hints(isPrivate ? WindowsManager::PrivateOpen : WindowsManager::DefaultOpen);
+
 	if (text.isEmpty())
 	{
-		m_windowsManager->triggerAction(ActionsManager::NewTabAction);
+		m_windowsManager->triggerAction(hints | ActionsManager::NewTabAction);
 
 		return;
 	}
@@ -886,7 +888,16 @@ void MainWindow::openUrl(const QString &text)
 		connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), m_windowsManager, SLOT(open(QUrl,WindowsManager::OpenHints)));
 		connect(interpreter, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), m_windowsManager, SLOT(search(QString,QString,WindowsManager::OpenHints)));
 
-		interpreter->interpret(text, ((!m_workspace->getActiveWindow() || Utils::isUrlEmpty(m_workspace->getActiveWindow()->getUrl())) ? WindowsManager::CurrentTabOpen : WindowsManager::NewTabOpen));
+		if (!m_workspace->getActiveWindow() || Utils::isUrlEmpty(m_workspace->getActiveWindow()->getUrl()))
+		{
+			hints |= WindowsManager::CurrentTabOpen;
+		}
+		else
+		{
+			hints |= WindowsManager::NewTabOpen;
+		}
+
+		interpreter->interpret(text, hints);
 	}
 }
 

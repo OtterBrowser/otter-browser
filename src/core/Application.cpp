@@ -120,6 +120,10 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("private-session"), QCoreApplication::translate("main", "Starts private session")));
 	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("session-chooser"), QCoreApplication::translate("main", "Forces session chooser dialog")));
 	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("portable"), QCoreApplication::translate("main", "Sets profile and cache paths to directories inside the same directory as that of application binary")));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("new-tab"), QCoreApplication::translate("main", "Loads URL in new tab")));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("new-private-tab"), QCoreApplication::translate("main", "Loads URL in new private tab")));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("new-window"), QCoreApplication::translate("main", "Loads URL in new window")));
+	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("new-private-window"), QCoreApplication::translate("main", "Loads URL in new private window")));
 	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("readonly"), QCoreApplication::translate("main", "Tells application to avoid writing data to disk")));
 	m_commandLineParser.addOption(QCommandLineOption(QLatin1String("report"), QCoreApplication::translate("main", "Prints out diagnostic report and exits application")));
 
@@ -279,7 +283,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 
 	m_localServer = new QLocalServer(this);
 
-	connect(m_localServer, SIGNAL(newConnection()), this, SLOT(newConnection()));
+	connect(m_localServer, SIGNAL(newConnection()), this, SLOT(handleNewConnection()));
 
 	m_localServer->setSocketOptions(QLocalServer::UserAccessOption);
 
@@ -526,103 +530,6 @@ void Application::removeWindow(MainWindow *window)
 	emit m_instance->windowRemoved(window);
 }
 
-void Application::showNotification(Notification *notification)
-{
-	if (SettingsManager::getValue(SettingsManager::Interface_UseNativeNotificationsOption).toBool() && m_platformIntegration && m_platformIntegration->canShowNotifications())
-	{
-		m_platformIntegration->showNotification(notification);
-	}
-	else
-	{
-		NotificationDialog *dialog(new NotificationDialog(notification));
-		dialog->show();
-	}
-}
-
-void Application::newConnection()
-{
-	QLocalSocket *socket(m_localServer->nextPendingConnection());
-
-	if (!socket)
-	{
-		return;
-	}
-
-	socket->waitForReadyRead(1000);
-
-	MainWindow *window(getWindows().isEmpty() ? nullptr : getWindow());
-	QString data;
-	QTextStream stream(socket);
-	stream >> data;
-
-	const QStringList encodedArguments(QString(QByteArray::fromBase64(data.toUtf8())).split(QLatin1Char(' ')));
-	QStringList decodedArguments;
-
-	for (int i = 0; i < encodedArguments.count(); ++i)
-	{
-		decodedArguments.append(QString(QByteArray::fromBase64(encodedArguments.at(i).toUtf8())));
-	}
-
-	m_commandLineParser.parse(decodedArguments);
-
-	const QString session(m_commandLineParser.value(QLatin1String("session")));
-	const bool isPrivate(m_commandLineParser.isSet(QLatin1String("private-session")));
-
-	if (session.isEmpty())
-	{
-		if (!window || !SettingsManager::getValue(SettingsManager::Browser_OpenLinksInNewTabOption).toBool() || (isPrivate && !window->getWindowsManager()->isPrivate()))
-		{
-			window = createWindow(isPrivate ? PrivateFlag : NoFlags);
-		}
-	}
-	else
-	{
-		const SessionInformation sessionData(SessionsManager::getSession(session));
-
-		if (sessionData.isClean || QMessageBox::warning(nullptr, tr("Warning"), tr("This session was not saved correctly.\nAre you sure that you want to restore this session anyway?"), (QMessageBox::Yes | QMessageBox::No), QMessageBox::No) == QMessageBox::Yes)
-		{
-			for (int i = 0; i < sessionData.windows.count(); ++i)
-			{
-				createWindow((isPrivate ? PrivateFlag : NoFlags), false, sessionData.windows.at(i));
-			}
-		}
-	}
-
-	if (window)
-	{
-		if (m_commandLineParser.positionalArguments().isEmpty())
-		{
-			window->triggerAction(ActionsManager::NewTabAction);
-		}
-		else
-		{
-			const QStringList urls(m_commandLineParser.positionalArguments());
-
-			for (int i = 0; i < urls.count(); ++i)
-			{
-				window->openUrl(urls.at(i));
-			}
-		}
-	}
-
-	delete socket;
-
-	if (window)
-	{
-		window->raise();
-		window->activateWindow();
-
-		if (m_isHidden)
-		{
-			setHidden(false);
-		}
-		else
-		{
-			window->raiseWindow();
-		}
-	}
-}
-
 void Application::clearHistory()
 {
 	QStringList clearSettings(SettingsManager::getValue(SettingsManager::History_ClearOnCloseOption).toStringList());
@@ -692,6 +599,139 @@ void Application::updateCheckFinished(const QList<UpdateInformation> &availableU
 		notification->setData(QVariant::fromValue<QList<UpdateInformation> >(availableUpdates));
 
 		connect(notification, SIGNAL(clicked()), this, SLOT(showUpdateDetails()));
+	}
+}
+
+void Application::handleNewConnection()
+{
+	QLocalSocket *socket(m_localServer->nextPendingConnection());
+
+	if (!socket)
+	{
+		return;
+	}
+
+	socket->waitForReadyRead(1000);
+
+	MainWindow *window(getWindows().isEmpty() ? nullptr : getWindow());
+	QString data;
+	QTextStream stream(socket);
+	stream >> data;
+
+	const QStringList encodedArguments(QString(QByteArray::fromBase64(data.toUtf8())).split(QLatin1Char(' ')));
+	QStringList decodedArguments;
+
+	for (int i = 0; i < encodedArguments.count(); ++i)
+	{
+		decodedArguments.append(QString(QByteArray::fromBase64(encodedArguments.at(i).toUtf8())));
+	}
+
+	m_commandLineParser.parse(decodedArguments);
+
+	const QString session(m_commandLineParser.value(QLatin1String("session")));
+	const bool isPrivate(m_commandLineParser.isSet(QLatin1String("private-session")));
+
+	if (session.isEmpty())
+	{
+		if (!window || !SettingsManager::getValue(SettingsManager::Browser_OpenLinksInNewTabOption).toBool() || (isPrivate && !window->getWindowsManager()->isPrivate()))
+		{
+			window = createWindow(isPrivate ? PrivateFlag : NoFlags);
+		}
+	}
+	else
+	{
+		const SessionInformation sessionData(SessionsManager::getSession(session));
+
+		if (sessionData.isClean || QMessageBox::warning(nullptr, tr("Warning"), tr("This session was not saved correctly.\nAre you sure that you want to restore this session anyway?"), (QMessageBox::Yes | QMessageBox::No), QMessageBox::No) == QMessageBox::Yes)
+		{
+			for (int i = 0; i < sessionData.windows.count(); ++i)
+			{
+				createWindow((isPrivate ? PrivateFlag : NoFlags), false, sessionData.windows.at(i));
+			}
+		}
+	}
+
+	handlePositionalArguments(&m_commandLineParser);
+
+	delete socket;
+
+	if (window)
+	{
+		window->raise();
+		window->activateWindow();
+
+		if (m_isHidden)
+		{
+			setHidden(false);
+		}
+		else
+		{
+			window->raiseWindow();
+		}
+	}
+}
+
+void Application::handlePositionalArguments(QCommandLineParser *parser)
+{
+	WindowsManager::OpenHints openHints(WindowsManager::DefaultOpen);
+
+	if (parser->isSet(QLatin1String("new-private-window")))
+	{
+		openHints = (WindowsManager::NewWindowOpen | WindowsManager::PrivateOpen);
+	}
+	else if (parser->isSet(QLatin1String("new-window")))
+	{
+		openHints = WindowsManager::WindowsManager::NewWindowOpen;
+	}
+	else if (parser->isSet(QLatin1String("new-private-tab")))
+	{
+		openHints =(WindowsManager::NewTabOpen | WindowsManager::PrivateOpen);
+	}
+	else if (parser->isSet(QLatin1String("new-tab")))
+	{
+		openHints = WindowsManager::NewTabOpen;
+	}
+
+	const QStringList urls((openHints == WindowsManager::DefaultOpen || !parser->positionalArguments().isEmpty()) ? parser->positionalArguments() : QStringList(QString()));
+
+	if (urls.isEmpty())
+	{
+		return;
+	}
+
+	if (openHints.testFlag(WindowsManager::NewWindowOpen))
+	{
+		MainWindowFlag flags(openHints.testFlag(WindowsManager::PrivateOpen) ? PrivateFlag : NoFlags);
+
+		for (int i = 0; i < urls.count(); ++i)
+		{
+			createWindow(flags)->openUrl(urls.at(i));
+		}
+	}
+	else
+	{
+		MainWindow *window(getWindow());
+
+		if (window)
+		{
+			for (int i = 0; i < urls.count(); ++i)
+			{
+				window->openUrl(urls.at(i), openHints.testFlag(WindowsManager::PrivateOpen));
+			}
+		}
+	}
+}
+
+void Application::showNotification(Notification *notification)
+{
+	if (SettingsManager::getValue(SettingsManager::Interface_UseNativeNotificationsOption).toBool() && m_platformIntegration && m_platformIntegration->canShowNotifications())
+	{
+		m_platformIntegration->showNotification(notification);
+	}
+	else
+	{
+		NotificationDialog *dialog(new NotificationDialog(notification));
+		dialog->show();
 	}
 }
 

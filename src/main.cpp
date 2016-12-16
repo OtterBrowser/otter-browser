@@ -175,20 +175,7 @@ int main(int argc, char *argv[])
 		SessionsManager::restoreSession(sessionData, nullptr, isPrivate);
 	}
 
-	if (!application.getCommandLineParser()->positionalArguments().isEmpty())
-	{
-		MainWindow *window(Application::getWindow());
-
-		if (window)
-		{
-			const QStringList urls(application.getCommandLineParser()->positionalArguments());
-
-			for (int i = 0; i < urls.count(); ++i)
-			{
-				window->openUrl(urls.at(i));
-			}
-		}
-	}
+	Application::handlePositionalArguments(application.getCommandLineParser());
 
 	if (application.getWindows().isEmpty())
 	{

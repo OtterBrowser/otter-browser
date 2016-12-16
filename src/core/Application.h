@@ -71,6 +71,7 @@ public:
 	static void openWindow(bool isPrivate = false, bool inBackground = false, const QUrl &url = QUrl());
 	static void removeWindow(MainWindow* window);
 	static void showNotification(Notification *notification);
+	static void handlePositionalArguments(QCommandLineParser *parser);
 	static void setLocale(const QString &locale);
 	static MainWindow* createWindow(MainWindowFlags flags = NoFlags, bool inBackground = false, const SessionMainWindow &windows = SessionMainWindow());
 	static Application* getInstance();
@@ -96,10 +97,10 @@ protected slots:
 	void optionChanged(int identifier, const QVariant &value);
 	void openUrl(const QUrl &url);
 	void updateCheckFinished(const QList<UpdateInformation> &availableUpdates);
-	void newConnection();
 	void clearHistory();
 	void periodicUpdateCheck();
 	void showUpdateDetails();
+	void handleNewConnection();
 
 private:
 	static Application *m_instance;

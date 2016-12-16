@@ -67,7 +67,7 @@ public:
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
-	void openUrl(const QString &text = QString());
+	void openUrl(const QString &text = QString(), bool isPrivate = false);
 	void storeWindowState();
 	void restoreWindowState();
 	void raiseWindow();
