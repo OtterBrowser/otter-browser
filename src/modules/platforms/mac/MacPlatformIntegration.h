@@ -46,7 +46,7 @@ protected:
 
 protected slots:
 	void triggerAction(QAction *action);
-	void updateDockIcon();
+	void updateTransfersProgress();
 
 private:
 	QHash<quint64, Notification*> m_notifications;

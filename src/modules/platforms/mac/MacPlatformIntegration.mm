@@ -168,12 +168,12 @@ MacPlatformIntegration::MacPlatformIntegration(Application *parent) : PlatformIn
 	menu->addAction(ActionsManager::NotesAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Notes"));
 	menu->setAsDockMenu();
 
+	connect(TransfersManager::getInstance(), SIGNAL(transferChanged(Transfer*)), this, SLOT(updateTransfersProgress()));
+	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(updateTransfersProgress()));
+	connect(TransfersManager::getInstance(), SIGNAL(transferFinished(Transfer*)), this, SLOT(updateTransfersProgress()));
+	connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(Transfer*)), this, SLOT(updateTransfersProgress()));
+	connect(TransfersManager::getInstance(), SIGNAL(transferStopped(Transfer*)), this, SLOT(updateTransfersProgress()));
 	connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(triggerAction(QAction*)));
-	connect(TransfersManager::getInstance(), SIGNAL(transferChanged(Transfer*)), this, SLOT(updateDockIcon()));
-	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(updateDockIcon()));
-	connect(TransfersManager::getInstance(), SIGNAL(transferFinished(Transfer*)), this, SLOT(updateDockIcon()));
-	connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(Transfer*)), this, SLOT(updateDockIcon()));
-	connect(TransfersManager::getInstance(), SIGNAL(transferStopped(Transfer*)), this, SLOT(updateDockIcon()));
 }
 
 void MacPlatformIntegration::timerEvent(QTimerEvent *event)
@@ -248,24 +248,25 @@ void MacPlatformIntegration::runApplication(const QString &command, const QUrl &
 ///TODO
 }
 
-void MacPlatformIntegration::updateDockIcon()
+void MacPlatformIntegration::updateTransfersProgress()
 {
 	const QList<Transfer*> transfers(TransfersManager::getInstance()->getTransfers());
 	qint64 bytesTotal(0);
 	qint64 bytesReceived(0);
-	bool hasActiveTransfers(false);
+	int transferAmount(0);
 
 	for (int i = 0; i < transfers.count(); ++i)
 	{
 		if (transfers[i]->getState() == Transfer::RunningState && transfers[i]->getBytesTotal() > 0)
 		{
-			hasActiveTransfers = true;
+			++transferAmount;
+
 			bytesTotal += transfers[i]->getBytesTotal();
 			bytesReceived += transfers[i]->getBytesReceived();
 		}
 	}
 
-	const qreal progress((hasActiveTransfers && bytesReceived > 0 && bytesTotal > 0) ? (static_cast<qreal>(bytesReceived) / bytesTotal) : 0);
+	const qreal progress((transferAmount > 0 && bytesReceived > 0 && bytesTotal > 0) ? (static_cast<qreal>(bytesReceived) / bytesTotal) : 0);
 
 	if (progress > 0)
 	{
@@ -284,6 +285,8 @@ void MacPlatformIntegration::updateDockIcon()
 
 		[[NSApp dockTile] setContentView:nil];
 	}
+
+	[[[NSApplication sharedApplication] dockTile] setBadgeLabel:((transferAmount > 0) ? [NSString stringWithFormat:@"%d", transferAmount] : @"")];
 }
 
 void MacPlatformIntegration::showNotification(Notification *notification)
