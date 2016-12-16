@@ -23,6 +23,8 @@
 #include "../../../core/Utils.h"
 #include "../../../core/PlatformIntegration.h"
 
+#include <QtWidgets/QAction>
+
 namespace Otter
 {
 
@@ -43,6 +45,7 @@ protected:
 	void timerEvent(QTimerEvent *event);
 
 protected slots:
+	void triggerAction(QAction *action);
 	void updateDockIcon();
 
 private:

@@ -18,10 +18,13 @@
 **************************************************************************/
 
 #include "MacPlatformIntegration.h"
+#include "../../../core/ActionsManager.h"
 #include "../../../core/Application.h"
 #include "../../../core/NotificationsManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/TransfersManager.h"
+#include "../../../ui/MainWindow.h"
+#include "../../../ui/Menu.h"
 
 #include <QtCore/QDateTime>
 #include <QtCore/QSysInfo>
@@ -155,6 +158,17 @@ MacPlatformIntegration::MacPlatformIntegration(Application *parent) : PlatformIn
 {
 	[[MacPlatformIntegrationUserNotificationCenterDelegate alloc] initWithPlatformIntegration:this];
 
+	Menu *menu(new Menu());
+	menu->addAction(ActionsManager::NewTabAction);
+	menu->addAction(ActionsManager::NewTabPrivateAction);
+	menu->addSeparator();
+	menu->addAction(ActionsManager::BookmarksAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
+	menu->addAction(ActionsManager::TransfersAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Transfers"));
+	menu->addAction(ActionsManager::HistoryAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "History"));
+	menu->addAction(ActionsManager::NotesAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Notes"));
+	menu->setAsDockMenu();
+
+	connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(triggerAction(QAction*)));
 	connect(TransfersManager::getInstance(), SIGNAL(transferChanged(Transfer*)), this, SLOT(updateDockIcon()));
 	connect(TransfersManager::getInstance(), SIGNAL(transferStarted(Transfer*)), this, SLOT(updateDockIcon()));
 	connect(TransfersManager::getInstance(), SIGNAL(transferFinished(Transfer*)), this, SLOT(updateDockIcon()));
@@ -200,6 +214,17 @@ void MacPlatformIntegration::timerEvent(QTimerEvent *event)
 
 			m_notificationsWatcherTimer = 0;
 		}
+	}
+}
+
+void MacPlatformIntegration::triggerAction(QAction *action)
+{
+	MainWindow *window(SessionsManager::getActiveWindow());
+	Action *actionObject(qobject_cast<Action*>(action));
+
+	if (window && actionObject)
+	{
+		window->triggerAction(actionObject->getIdentifier());
 	}
 }
 
