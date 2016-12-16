@@ -248,18 +248,17 @@ void WindowsManager::open(const QUrl &url, OpenHints hints, int index)
 	}
 
 	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
+	const bool isUrlEmpty(window && window->getLoadingState() == WindowsManager::FinishedLoadingState && Utils::isUrlEmpty(window->getUrl()));
 
-	if (hints == NewTabOpen && !url.isEmpty() && window && Utils::isUrlEmpty(window->getUrl()))
+	if (hints == NewTabOpen && !url.isEmpty() && isUrlEmpty)
 	{
 		hints = CurrentTabOpen;
 	}
-
-	if (hints == DefaultOpen && url.scheme() == QLatin1String("about") && !url.path().isEmpty() && url.path() != QLatin1String("blank") && url.path() != QLatin1String("start") && (!window || !Utils::isUrlEmpty(window->getUrl())))
+	else if (hints == DefaultOpen && url.scheme() == QLatin1String("about") && !url.path().isEmpty() && url.path() != QLatin1String("blank") && url.path() != QLatin1String("start") && (!window || !Utils::isUrlEmpty(window->getUrl())))
 	{
 		hints = NewTabOpen;
 	}
-
-	if (hints == DefaultOpen && url.scheme() != QLatin1String("javascript") && ((window && Utils::isUrlEmpty(window->getUrl())) || SettingsManager::getValue(SettingsManager::Browser_ReuseCurrentTabOption).toBool()))
+	else if (hints == DefaultOpen && url.scheme() != QLatin1String("javascript") && (isUrlEmpty || SettingsManager::getValue(SettingsManager::Browser_ReuseCurrentTabOption).toBool()))
 	{
 		hints = CurrentTabOpen;
 	}
@@ -301,7 +300,7 @@ void WindowsManager::open(BookmarksItem *bookmark, OpenHints hints, int index)
 
 	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
 
-	if (hints == DefaultOpen && ((window && Utils::isUrlEmpty(window->getUrl())) || SettingsManager::getValue(SettingsManager::Browser_ReuseCurrentTabOption).toBool()))
+	if (hints == DefaultOpen && ((window && window->getLoadingState() == WindowsManager::FinishedLoadingState && Utils::isUrlEmpty(window->getUrl())) || SettingsManager::getValue(SettingsManager::Browser_ReuseCurrentTabOption).toBool()))
 	{
 		hints = CurrentTabOpen;
 	}
@@ -368,13 +367,9 @@ void WindowsManager::openTab(const QUrl &url, OpenHints hints, int index)
 void WindowsManager::search(const QString &query, const QString &searchEngine, OpenHints hints)
 {
 	Window *window(m_mainWindow->getWorkspace()->getActiveWindow());
+	const bool isUrlEmpty(window && window->getLoadingState() == WindowsManager::FinishedLoadingState && Utils::isUrlEmpty(window->getUrl()));
 
-	if (hints == NewTabOpen && window && Utils::isUrlEmpty(window->getUrl()))
-	{
-		hints = CurrentTabOpen;
-	}
-
-	if (hints == DefaultOpen && ((window && Utils::isUrlEmpty(window->getUrl())) || SettingsManager::getValue(SettingsManager::Browser_ReuseCurrentTabOption).toBool()))
+	if ((hints == NewTabOpen && isUrlEmpty) || (hints == DefaultOpen && (isUrlEmpty || SettingsManager::getValue(SettingsManager::Browser_ReuseCurrentTabOption).toBool())))
 	{
 		hints = CurrentTabOpen;
 	}

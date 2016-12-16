@@ -888,7 +888,7 @@ void MainWindow::openUrl(const QString &text, bool isPrivate)
 		connect(interpreter, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), m_windowsManager, SLOT(open(QUrl,WindowsManager::OpenHints)));
 		connect(interpreter, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), m_windowsManager, SLOT(search(QString,QString,WindowsManager::OpenHints)));
 
-		if (!m_workspace->getActiveWindow() || Utils::isUrlEmpty(m_workspace->getActiveWindow()->getUrl()))
+		if (!m_workspace->getActiveWindow() || (m_workspace->getActiveWindow()->getLoadingState() == WindowsManager::FinishedLoadingState && Utils::isUrlEmpty(m_workspace->getActiveWindow()->getUrl())))
 		{
 			hints |= WindowsManager::CurrentTabOpen;
 		}
