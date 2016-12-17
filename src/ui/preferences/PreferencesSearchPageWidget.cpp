@@ -29,8 +29,9 @@
 
 #include <QtCore/QDir>
 #include <QtCore/QFile>
-#include <QtCore/QFileInfo>
+#include <QtCore/QStandardPaths>
 #include <QtGui/QRegularExpressionValidator>
+#include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMessageBox>
 
@@ -63,18 +64,7 @@ QWidget* SearchKeywordDelegate::createEditor(QWidget *parent, const QStyleOption
 {
 	Q_UNUSED(option)
 
-	QStringList keywords;
-
-	for (int i = 0; i < index.model()->rowCount(); ++i)
-	{
-		const QString keyword(index.model()->index(i, 1).data(Qt::DisplayRole).toString());
-
-		if (index.row() != i && !keyword.isEmpty())
-		{
-			keywords.append(keyword);
-		}
-	}
-
+	const QStringList keywords(PreferencesSearchPageWidget::getKeywords(index.model(), index.row()));
 	QLineEdit *widget(new QLineEdit(index.data(Qt::DisplayRole).toString(), parent));
 	widget->setValidator(new QRegularExpressionValidator(QRegularExpression((keywords.isEmpty() ? QString() : QStringLiteral("(?!\\b(%1)\\b)").arg(keywords.join('|'))) + "[a-z0-9]*"), widget));
 
@@ -111,7 +101,8 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 	m_ui->searchSuggestionsCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Search_SearchEnginesSuggestionsOption).toBool());
 
 	QMenu *addSearchMenu(new QMenu(m_ui->addSearchButton));
-	addSearchMenu->addAction(tr("New…"));
+	addSearchMenu->addAction(tr("New…"), this, SLOT(createSearchEngine()));
+	addSearchMenu->addAction(tr("File…"), this, SLOT(importSearchEngine()));
 	addSearchMenu->addAction(tr("Readd"))->setMenu(new QMenu(m_ui->addSearchButton));
 
 	m_ui->addSearchButton->setMenu(addSearchMenu);
@@ -125,8 +116,7 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 	connect(m_ui->searchViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->moveUpSearchButton, SLOT(setEnabled(bool)));
 	connect(m_ui->searchViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateSearchActions()));
 	connect(m_ui->searchViewWidget, SIGNAL(modified()), this, SIGNAL(settingsModified()));
-	connect(m_ui->addSearchButton->menu()->actions().at(0), SIGNAL(triggered()), this, SLOT(addSearchEngine()));
-	connect(m_ui->addSearchButton->menu()->actions().at(1)->menu(), SIGNAL(triggered(QAction*)), this, SLOT(readdSearchEngine(QAction*)));
+	connect(m_ui->addSearchButton->menu()->actions().at(2)->menu(), SIGNAL(triggered(QAction*)), this, SLOT(readdSearchEngine(QAction*)));
 	connect(m_ui->editSearchButton, SIGNAL(clicked()), this, SLOT(editSearchEngine()));
 	connect(m_ui->removeSearchButton, SIGNAL(clicked()), this, SLOT(removeSearchEngine()));
 	connect(m_ui->moveDownSearchButton, SIGNAL(clicked()), m_ui->searchViewWidget, SLOT(moveDownRow()));
@@ -148,7 +138,7 @@ void PreferencesSearchPageWidget::changeEvent(QEvent *event)
 	}
 }
 
-void PreferencesSearchPageWidget::addSearchEngine()
+void PreferencesSearchPageWidget::createSearchEngine()
 {
 	QStringList identifiers;
 	QStringList keywords;
@@ -198,68 +188,22 @@ void PreferencesSearchPageWidget::addSearchEngine()
 	emit settingsModified();
 }
 
+void PreferencesSearchPageWidget::importSearchEngine()
+{
+	const QString path(QFileDialog::getOpenFileName(this, tr("Select File"), QStandardPaths::standardLocations(QStandardPaths::HomeLocation).value(0), Utils::formatFileTypes({tr("Open Search files (*.xml)")})));
+
+	if (!path.isEmpty())
+	{
+		addSearchEngine(path, Utils::createIdentifier(QString(), getKeywords(m_ui->searchViewWidget->getSourceModel())), false);
+	}
+}
+
 void PreferencesSearchPageWidget::readdSearchEngine(QAction *action)
 {
-	if (!action || action->data().isNull())
+	if (action && !action->data().isNull())
 	{
-		return;
+		addSearchEngine(SessionsManager::getReadableDataPath(QLatin1String("searches/") + action->data().toString() + QLatin1String(".xml")), action->data().toString(), true);
 	}
-
-	const QString identifier(action->data().toString());
-	QFile file(SessionsManager::getReadableDataPath(QLatin1String("searches/") + identifier + QLatin1String(".xml")));
-
-	if (!file.open(QIODevice::ReadOnly))
-	{
-		return;
-	}
-
-	SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::loadSearchEngine(&file, identifier, false));
-
-	file.close();
-
-	if (searchEngine.identifier.isEmpty() || m_searchEngines.contains(identifier))
-	{
-		return;
-	}
-
-	QStringList keywords;
-
-	for (int i = 0; i < m_ui->searchViewWidget->getRowCount(); ++i)
-	{
-		const QString keyword(m_ui->searchViewWidget->getIndex(i, 1).data(Qt::DisplayRole).toString());
-
-		if (!keyword.isEmpty())
-		{
-			keywords.append(keyword);
-		}
-	}
-
-	if (keywords.contains(searchEngine.keyword))
-	{
-		QMessageBox messageBox;
-		messageBox.setWindowTitle(tr("Question"));
-		messageBox.setText(tr("Keyword is already in use. Do you want to continue anyway?"));
-		messageBox.setIcon(QMessageBox::Question);
-		messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
-		messageBox.setDefaultButton(QMessageBox::Cancel);
-
-		if (messageBox.exec() == QMessageBox::Yes)
-		{
-			searchEngine.keyword = QString();
-		}
-		else
-		{
-			return;
-		}
-	}
-
-	m_searchEngines[identifier] = qMakePair(false, searchEngine);
-
-	m_ui->searchViewWidget->insertRow(createRow(searchEngine));
-
-	updateReaddSearchMenu();
-
-	emit settingsModified();
 }
 
 void PreferencesSearchPageWidget::editSearchEngine()
@@ -272,18 +216,7 @@ void PreferencesSearchPageWidget::editSearchEngine()
 		return;
 	}
 
-	QStringList keywords;
-
-	for (int i = 0; i < m_ui->searchViewWidget->getRowCount(); ++i)
-	{
-		const QString keyword(m_ui->searchViewWidget->getIndex(i, 1).data(Qt::DisplayRole).toString());
-
-		if (m_ui->searchViewWidget->getCurrentRow() != i && !keyword.isEmpty())
-		{
-			keywords.append(keyword);
-		}
-	}
-
+	const QStringList keywords(getKeywords(m_ui->searchViewWidget->getSourceModel(), m_ui->searchViewWidget->getCurrentRow()));
 	SearchEnginePropertiesDialog dialog(m_searchEngines[identifier].second, keywords, (identifier == m_defaultSearchEngine), this);
 
 	if (dialog.exec() == QDialog::Rejected)
@@ -361,6 +294,59 @@ void PreferencesSearchPageWidget::removeSearchEngine()
 	}
 }
 
+void PreferencesSearchPageWidget::addSearchEngine(const QString &path, const QString &identifier, bool isReadding)
+{
+	QFile file(path);
+
+	if (!file.open(QIODevice::ReadOnly))
+	{
+		QMessageBox::warning(this, tr("Error"), tr("Failed to open Open Search file."));
+
+		return;
+	}
+
+	SearchEnginesManager::SearchEngineDefinition searchEngine(SearchEnginesManager::loadSearchEngine(&file, identifier, false));
+
+	file.close();
+
+	if (searchEngine.identifier.isEmpty() || m_searchEngines.contains(identifier))
+	{
+		QMessageBox::warning(this, tr("Error"), tr("Failed to open Open Search file."));
+
+		return;
+	}
+
+	const QStringList keywords(getKeywords(m_ui->searchViewWidget->getSourceModel()));
+
+	if (keywords.contains(searchEngine.keyword))
+	{
+		QMessageBox messageBox;
+		messageBox.setWindowTitle(tr("Question"));
+		messageBox.setText(tr("Keyword is already in use. Do you want to continue anyway?"));
+		messageBox.setIcon(QMessageBox::Question);
+		messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel);
+		messageBox.setDefaultButton(QMessageBox::Cancel);
+
+		if (messageBox.exec() == QMessageBox::Cancel)
+		{
+			return;
+		}
+
+		searchEngine.keyword = QString();
+	}
+
+	m_searchEngines[identifier] = qMakePair(false, searchEngine);
+
+	m_ui->searchViewWidget->insertRow(createRow(searchEngine));
+
+	if (isReadding)
+	{
+		updateReaddSearchMenu();
+	}
+
+	emit settingsModified();
+}
+
 void PreferencesSearchPageWidget::updateSearchActions()
 {
 	const QModelIndex index(m_ui->searchViewWidget->currentIndex());
@@ -412,12 +398,12 @@ void PreferencesSearchPageWidget::updateReaddSearchMenu()
 		}
 	}
 
-	m_ui->addSearchButton->menu()->actions().at(1)->menu()->clear();
-	m_ui->addSearchButton->menu()->actions().at(1)->menu()->setEnabled(!availableSearchEngines.isEmpty());
+	m_ui->addSearchButton->menu()->actions().at(2)->menu()->clear();
+	m_ui->addSearchButton->menu()->actions().at(2)->menu()->setEnabled(!availableSearchEngines.isEmpty());
 
 	for (int i = 0; i < availableSearchEngines.count(); ++i)
 	{
-		m_ui->addSearchButton->menu()->actions().at(1)->menu()->addAction(availableSearchEngines.at(i).icon, (availableSearchEngines.at(i).title.isEmpty() ? tr("(Untitled)") : availableSearchEngines.at(i).title))->setData(availableSearchEngines.at(i).identifier);
+		m_ui->addSearchButton->menu()->actions().at(2)->menu()->addAction(availableSearchEngines.at(i).icon, (availableSearchEngines.at(i).title.isEmpty() ? tr("(Untitled)") : availableSearchEngines.at(i).title))->setData(availableSearchEngines.at(i).identifier);
 	}
 }
 
@@ -489,6 +475,23 @@ QList<QStandardItem*> PreferencesSearchPageWidget::createRow(const SearchEngines
 	}
 
 	return items;
+}
+
+QStringList PreferencesSearchPageWidget::getKeywords(const QAbstractItemModel *model, int excludeRow)
+{
+	QStringList keywords;
+
+	for (int i = 0; i < model->rowCount(); ++i)
+	{
+		const QString keyword(model->index(i, 1).data(Qt::DisplayRole).toString());
+
+		if (i != excludeRow && !keyword.isEmpty())
+		{
+			keywords.append(keyword);
+		}
+	}
+
+	return keywords;
 }
 
 }

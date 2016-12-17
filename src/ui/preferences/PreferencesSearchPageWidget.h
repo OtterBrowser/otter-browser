@@ -52,13 +52,17 @@ public:
 	explicit PreferencesSearchPageWidget(QWidget *parent = nullptr);
 	~PreferencesSearchPageWidget();
 
+	static QStringList getKeywords(const QAbstractItemModel *model, int excludeRow = -1);
+
 protected:
 	void changeEvent(QEvent *event);
+	void addSearchEngine(const QString &path, const QString &identifier, bool isReadding);
 	void updateReaddSearchMenu();
 	QList<QStandardItem*> createRow(const SearchEnginesManager::SearchEngineDefinition &searchEngine) const;
 
 protected slots:
-	void addSearchEngine();
+	void createSearchEngine();
+	void importSearchEngine();
 	void readdSearchEngine(QAction *action);
 	void editSearchEngine();
 	void removeSearchEngine();
