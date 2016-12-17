@@ -107,6 +107,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->browsingDisplayModeComboBox->setCurrentIndex((displayModeIndex < 0) ? 1 : displayModeIndex);
 
 	m_ui->notificationsPlaySoundButton->setIcon(ThemesManager::getIcon(QLatin1String("media-playback-start")));
+	m_ui->notificationsPlaySoundFilePathWidget->setFilters(QStringList(tr("WAV files (*.wav)")));
 
 	QStandardItemModel *notificationsModel(new QStandardItemModel(this));
 	notificationsModel->setHorizontalHeaderLabels(QStringList({tr("Name"), tr("Description")}));
@@ -514,10 +515,11 @@ void PreferencesAdvancedPageWidget::updateNotificationsActions()
 	disconnect(m_ui->notificationsShowNotificationCheckBox, SIGNAL(clicked()), this, SLOT(updateNotificationsOptions()));
 
 	const QModelIndex index(m_ui->notificationsItemView->getIndex(m_ui->notificationsItemView->getCurrentRow()));
+	const QString path(index.data(Qt::UserRole + 1).toString());
 
 	m_ui->notificationOptionsWidget->setEnabled(index.isValid());
-	m_ui->notificationsPlaySoundFilePathWidget->setPath(index.data(Qt::UserRole + 1).toString());
-	m_ui->notificationsPlaySoundFilePathWidget->setFilters(QStringList(tr("WAV files (*.wav)")));
+	m_ui->notificationsPlaySoundButton->setEnabled(!path.isEmpty() && QFile::exists(path));
+	m_ui->notificationsPlaySoundFilePathWidget->setPath(path);
 	m_ui->notificationsShowAlertCheckBox->setChecked(index.data(Qt::UserRole + 2).toBool());
 	m_ui->notificationsShowNotificationCheckBox->setChecked(index.data(Qt::UserRole + 3).toBool());
 
@@ -532,9 +534,12 @@ void PreferencesAdvancedPageWidget::updateNotificationsOptions()
 
 	if (index.isValid())
 	{
-		connect(m_ui->notificationsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateNotificationsActions()));
+		disconnect(m_ui->notificationsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateNotificationsActions()));
 
-		m_ui->notificationsItemView->setData(index, m_ui->notificationsPlaySoundFilePathWidget->getPath(), (Qt::UserRole + 1));
+		const QString path(m_ui->notificationsPlaySoundFilePathWidget->getPath());
+
+		m_ui->notificationsPlaySoundButton->setEnabled(!path.isEmpty() && QFile::exists(path));
+		m_ui->notificationsItemView->setData(index, path, (Qt::UserRole + 1));
 		m_ui->notificationsItemView->setData(index, m_ui->notificationsShowAlertCheckBox->isChecked(), (Qt::UserRole + 2));
 		m_ui->notificationsItemView->setData(index, m_ui->notificationsShowNotificationCheckBox->isChecked(), (Qt::UserRole + 3));
 
