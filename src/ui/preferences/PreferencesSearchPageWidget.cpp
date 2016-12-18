@@ -140,22 +140,7 @@ void PreferencesSearchPageWidget::changeEvent(QEvent *event)
 
 void PreferencesSearchPageWidget::createSearchEngine()
 {
-	QStringList identifiers;
-	QStringList keywords;
-
-	for (int i = 0; i < m_ui->searchViewWidget->getRowCount(); ++i)
-	{
-		identifiers.append(m_ui->searchViewWidget->getIndex(i, 0).data(Qt::UserRole).toString());
-
-		const QString keyword(m_ui->searchViewWidget->getIndex(i, 1).data(Qt::DisplayRole).toString());
-
-		if (!keyword.isEmpty())
-		{
-			keywords.append(keyword);
-		}
-	}
-
-	const QString identifier(Utils::createIdentifier(QString(), identifiers));
+	const QString identifier(Utils::createIdentifier(QString(), m_searchEngines.keys()));
 
 	if (identifier.isEmpty())
 	{
@@ -167,7 +152,7 @@ void PreferencesSearchPageWidget::createSearchEngine()
 	searchEngine.title = tr("New Search Engine");
 	searchEngine.icon = ThemesManager::getIcon(QLatin1String("edit-find"));
 
-	SearchEnginePropertiesDialog dialog(searchEngine, keywords, false, this);
+	SearchEnginePropertiesDialog dialog(searchEngine, getKeywords(m_ui->searchViewWidget->getSourceModel()), false, this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
@@ -194,7 +179,7 @@ void PreferencesSearchPageWidget::importSearchEngine()
 
 	if (!path.isEmpty())
 	{
-		addSearchEngine(path, Utils::createIdentifier(QString(), getKeywords(m_ui->searchViewWidget->getSourceModel())), false);
+		addSearchEngine(path, Utils::createIdentifier(QString(), m_searchEngines.keys()), false);
 	}
 }
 
