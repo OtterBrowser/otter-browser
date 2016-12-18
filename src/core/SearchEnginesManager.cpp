@@ -699,6 +699,11 @@ void SearchEngineFetchJob::handleRequestFinished()
 		return;
 	}
 
+	if (m_searchEngine.selfUrl.isEmpty())
+	{
+		m_searchEngine.selfUrl = m_reply->request().url();
+	}
+
 	if (m_searchEngine.iconUrl.isValid())
 	{
 		m_isFetchingIcon = true;
