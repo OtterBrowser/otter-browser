@@ -405,13 +405,16 @@ void ItemViewWidget::currentChanged(const QModelIndex &current, const QModelInde
 {
 	QTreeView::currentChanged(current, previous);
 
-	if (m_sourceModel)
+	if (selectionModel()->hasSelection())
 	{
-		emit canMoveUpChanged(canMoveUp());
-		emit canMoveDownChanged(canMoveDown());
-	}
+		if (m_sourceModel)
+		{
+			emit canMoveUpChanged(canMoveUp());
+			emit canMoveDownChanged(canMoveDown());
+		}
 
-	emit needsActionsUpdate();
+		emit needsActionsUpdate();
+	}
 }
 
 void ItemViewWidget::moveRow(bool up)
