@@ -57,7 +57,7 @@ public:
 protected:
 	void changeEvent(QEvent *event);
 	void addSearchEngine(const QString &path, const QString &identifier, bool isReadding);
-	void updateReaddSearchMenu();
+	void updateReaddSearchEngineMenu();
 	QList<QStandardItem*> createRow(const SearchEnginesManager::SearchEngineDefinition &searchEngine) const;
 
 protected slots:
@@ -65,8 +65,10 @@ protected slots:
 	void importSearchEngine();
 	void readdSearchEngine(QAction *action);
 	void editSearchEngine();
+	void updateSearchEngine();
 	void removeSearchEngine();
-	void updateSearchActions();
+	void handleSearchEngineUpdate(bool isSuccess);
+	void updateSearchEngineActions();
 	void save();
 
 private:

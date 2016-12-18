@@ -107,8 +107,10 @@ class SearchEngineFetchJob : public QObject
 	Q_OBJECT
 
 public:
-	explicit SearchEngineFetchJob(const QUrl &url, QObject *parent = nullptr);
+	explicit SearchEngineFetchJob(const QUrl &url, const QString &identifier = QString(), bool saveSearchEngine = true, QObject *parent = nullptr);
 	~SearchEngineFetchJob();
+
+	SearchEnginesManager::SearchEngineDefinition getSearchEngine() const;
 
 protected slots:
 	void handleRequestFailed();
@@ -118,6 +120,7 @@ private:
 	QNetworkReply *m_reply;
 	SearchEnginesManager::SearchEngineDefinition m_searchEngine;
 	bool m_isFetchingIcon;
+	bool m_needsToSaveSearchEngine;
 
 signals:
 	void jobFinished(bool isSuccess);

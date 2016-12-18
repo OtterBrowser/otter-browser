@@ -109,15 +109,16 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 	m_ui->moveDownSearchButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-down")));
 	m_ui->moveUpSearchButton->setIcon(ThemesManager::getIcon(QLatin1String("arrow-up")));
 
-	updateReaddSearchMenu();
+	updateReaddSearchEngineMenu();
 
 	connect(m_ui->searchFilterLineEdit, SIGNAL(textChanged(QString)), m_ui->searchViewWidget, SLOT(setFilterString(QString)));
 	connect(m_ui->searchViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->moveDownSearchButton, SLOT(setEnabled(bool)));
 	connect(m_ui->searchViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->moveUpSearchButton, SLOT(setEnabled(bool)));
-	connect(m_ui->searchViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateSearchActions()));
+	connect(m_ui->searchViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateSearchEngineActions()));
 	connect(m_ui->searchViewWidget, SIGNAL(modified()), this, SIGNAL(settingsModified()));
 	connect(m_ui->addSearchButton->menu()->actions().at(2)->menu(), SIGNAL(triggered(QAction*)), this, SLOT(readdSearchEngine(QAction*)));
 	connect(m_ui->editSearchButton, SIGNAL(clicked()), this, SLOT(editSearchEngine()));
+	connect(m_ui->updateSearchButton, SIGNAL(clicked()), this, SLOT(updateSearchEngine()));
 	connect(m_ui->removeSearchButton, SIGNAL(clicked()), this, SLOT(removeSearchEngine()));
 	connect(m_ui->moveDownSearchButton, SIGNAL(clicked()), m_ui->searchViewWidget, SLOT(moveDownRow()));
 	connect(m_ui->moveUpSearchButton, SIGNAL(clicked()), m_ui->searchViewWidget, SLOT(moveUpRow()));
@@ -239,6 +240,16 @@ void PreferencesSearchPageWidget::editSearchEngine()
 	emit settingsModified();
 }
 
+void PreferencesSearchPageWidget::updateSearchEngine()
+{
+	const QString identifier(m_ui->searchViewWidget->getIndex(m_ui->searchViewWidget->getCurrentRow(), 0).data(Qt::UserRole).toString());
+
+	if (!identifier.isEmpty() && m_searchEngines.contains(identifier))
+	{
+		connect(new SearchEngineFetchJob(m_searchEngines[identifier].second.selfUrl, identifier, false, this), SIGNAL(jobFinished(bool)), this, SLOT(handleSearchEngineUpdate(bool)));
+	}
+}
+
 void PreferencesSearchPageWidget::removeSearchEngine()
 {
 	const QString identifier(m_ui->searchViewWidget->getIndex(m_ui->searchViewWidget->getCurrentRow(), 0).data(Qt::UserRole).toString());
@@ -273,7 +284,7 @@ void PreferencesSearchPageWidget::removeSearchEngine()
 
 		m_ui->searchViewWidget->removeRow();
 
-		updateReaddSearchMenu();
+		updateReaddSearchEngineMenu();
 
 		emit settingsModified();
 	}
@@ -326,15 +337,52 @@ void PreferencesSearchPageWidget::addSearchEngine(const QString &path, const QSt
 
 	if (isReadding)
 	{
-		updateReaddSearchMenu();
+		updateReaddSearchEngineMenu();
 	}
 
 	emit settingsModified();
 }
 
-void PreferencesSearchPageWidget::updateSearchActions()
+void PreferencesSearchPageWidget::handleSearchEngineUpdate(bool isSuccess)
+{
+	SearchEngineFetchJob *job(qobject_cast<SearchEngineFetchJob*>(sender()));
+
+	if (!job || !isSuccess)
+	{
+		QMessageBox::warning(this, tr("Error"), tr("Failed to update search engine."), QMessageBox::Close);
+
+		return;
+	}
+
+	SearchEnginesManager::SearchEngineDefinition searchEngine(job->getSearchEngine());
+
+	if (!m_searchEngines.contains(searchEngine.identifier))
+	{
+		return;
+	}
+
+	searchEngine.keyword = m_searchEngines[searchEngine.identifier].second.keyword;
+
+	m_searchEngines[searchEngine.identifier] = qMakePair(true, searchEngine);
+
+	for (int i = 0; i < m_ui->searchViewWidget->getRowCount(); ++i)
+	{
+		const QModelIndex index(m_ui->searchViewWidget->getIndex(i, 0));
+
+		if (index.data(Qt::UserRole).toString() == searchEngine.identifier)
+		{
+			m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::DisplayRole);
+			m_ui->searchViewWidget->setData(index, searchEngine.description, Qt::ToolTipRole);
+
+			break;
+		}
+	}
+}
+
+void PreferencesSearchPageWidget::updateSearchEngineActions()
 {
 	const QModelIndex index(m_ui->searchViewWidget->currentIndex());
+	const QString identifier(index.sibling(index.row(), 0).data(Qt::UserRole).toString());
 	const int currentRow(m_ui->searchViewWidget->getCurrentRow());
 	const bool isSelected(currentRow >= 0 && currentRow < m_ui->searchViewWidget->getRowCount());
 
@@ -344,10 +392,11 @@ void PreferencesSearchPageWidget::updateSearchActions()
 	}
 
 	m_ui->editSearchButton->setEnabled(isSelected);
+	m_ui->updateSearchButton->setEnabled(isSelected && m_searchEngines.contains(identifier) && m_searchEngines[identifier].second.selfUrl.isValid());
 	m_ui->removeSearchButton->setEnabled(isSelected);
 }
 
-void PreferencesSearchPageWidget::updateReaddSearchMenu()
+void PreferencesSearchPageWidget::updateReaddSearchEngineMenu()
 {
 	if (!m_ui->addSearchButton->menu())
 	{
@@ -442,7 +491,7 @@ void PreferencesSearchPageWidget::save()
 	SettingsManager::setValue(SettingsManager::Search_DefaultSearchEngineOption, m_defaultSearchEngine);
 	SettingsManager::setValue(SettingsManager::Search_SearchEnginesSuggestionsOption, m_ui->searchSuggestionsCheckBox->isChecked());
 
-	updateReaddSearchMenu();
+	updateReaddSearchEngineMenu();
 }
 
 QList<QStandardItem*> PreferencesSearchPageWidget::createRow(const SearchEnginesManager::SearchEngineDefinition &searchEngine) const

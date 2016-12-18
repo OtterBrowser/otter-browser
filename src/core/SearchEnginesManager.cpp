@@ -632,10 +632,13 @@ bool SearchEnginesManager::setupSearchQuery(const QString &query, const QString 
 	return true;
 }
 
-SearchEngineFetchJob::SearchEngineFetchJob(const QUrl &url, QObject *parent) : QObject(parent),
+SearchEngineFetchJob::SearchEngineFetchJob(const QUrl &url, const QString &identifier, bool saveSearchEngine, QObject *parent) : QObject(parent),
 	m_reply(nullptr),
-	m_isFetchingIcon(false)
+	m_isFetchingIcon(false),
+	m_needsToSaveSearchEngine(saveSearchEngine)
 {
+	m_searchEngine.identifier = (identifier.isEmpty() ? Utils::createIdentifier(QString(), SearchEnginesManager::getSearchEngines()) : identifier);
+
 	QNetworkRequest request(url);
 	request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
 
@@ -673,7 +676,10 @@ void SearchEngineFetchJob::handleRequestFinished()
 			m_searchEngine.icon = QIcon(pixmap);
 		}
 
-		SearchEnginesManager::addSearchEngine(m_searchEngine);
+		if (m_needsToSaveSearchEngine)
+		{
+			SearchEnginesManager::addSearchEngine(m_searchEngine);
+		}
 
 		deleteLater();
 
@@ -682,7 +688,16 @@ void SearchEngineFetchJob::handleRequestFinished()
 		return;
 	}
 
-	m_searchEngine = SearchEnginesManager::loadSearchEngine(m_reply, Utils::createIdentifier(QLatin1String("custom"), SearchEnginesManager::getSearchEngines()));
+	m_searchEngine = SearchEnginesManager::loadSearchEngine(m_reply, m_searchEngine.identifier);
+
+	if (m_searchEngine.identifier.isEmpty())
+	{
+		deleteLater();
+
+		emit jobFinished(false);
+
+		return;
+	}
 
 	if (m_searchEngine.iconUrl.isValid())
 	{
@@ -700,12 +715,20 @@ void SearchEngineFetchJob::handleRequestFinished()
 	}
 	else
 	{
-		SearchEnginesManager::addSearchEngine(m_searchEngine);
+		if (m_needsToSaveSearchEngine)
+		{
+			SearchEnginesManager::addSearchEngine(m_searchEngine);
+		}
 
 		deleteLater();
 
 		emit jobFinished(true);
 	}
+}
+
+SearchEnginesManager::SearchEngineDefinition SearchEngineFetchJob::getSearchEngine() const
+{
+	return m_searchEngine;
 }
 
 }

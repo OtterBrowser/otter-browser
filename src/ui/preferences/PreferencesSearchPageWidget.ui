@@ -59,7 +59,7 @@
       </layout>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="searchButtonsLayout" stretch="0,0,0,1,0">
+      <layout class="QVBoxLayout" name="searchButtonsLayout" stretch="0,0,0,0,1,0">
        <item>
         <widget class="QPushButton" name="addSearchButton">
          <property name="text">
@@ -74,6 +74,16 @@
          </property>
          <property name="text">
           <string>Edit…</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="updateSearchButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Update</string>
          </property>
         </widget>
        </item>
