@@ -165,7 +165,7 @@ QString createErrorPage(const QUrl &url, const QString &title, const QString &de
 	}
 	else
 	{
-		hints = QStringList({QCoreApplication::translate("utils", "Check the the address for typing errors."), QCoreApplication::translate("utils", "Make sure your internet connection is active and check whether other applications that rely on the same connection are working."), QCoreApplication::translate("utils", "Check that the setup of any internet security software is correct and does not interfere with ordinary web browsing."), QCoreApplication::translate("utils", "Try pressing the F12 key on your keyboard and disabling proxy servers, unless you know that you are required to use a proxy to connect to the internet, and then reload the page.")});
+		hints = QStringList({QCoreApplication::translate("utils", "Check the address for typing errors."), QCoreApplication::translate("utils", "Make sure your internet connection is active and check whether other applications that rely on the same connection are working."), QCoreApplication::translate("utils", "Check that the setup of any internet security software is correct and does not interfere with ordinary web browsing."), QCoreApplication::translate("utils", "Try pressing the F12 key on your keyboard and disabling proxy servers, unless you know that you are required to use a proxy to connect to the internet, and then reload the page.")});
 	}
 
 	for (int i = 0; i < hints.count(); ++i)
