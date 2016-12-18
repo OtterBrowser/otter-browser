@@ -172,7 +172,7 @@ void ContentBlockingInformationWidget::populateElementsMenu()
 
 				break;
 			case NetworkManager::WebSocketType:
-				type = tr("web socket");
+				type = tr("WebSocket");
 
 				break;
 			default:
