@@ -654,21 +654,6 @@ void Application::handleNewConnection()
 	handlePositionalArguments(&m_commandLineParser);
 
 	delete socket;
-
-	if (window)
-	{
-		window->raise();
-		window->activateWindow();
-
-		if (m_isHidden)
-		{
-			setHidden(false);
-		}
-		else
-		{
-			window->raiseWindow();
-		}
-	}
 }
 
 void Application::handlePositionalArguments(QCommandLineParser *parser)
@@ -685,7 +670,7 @@ void Application::handlePositionalArguments(QCommandLineParser *parser)
 	}
 	else if (parser->isSet(QLatin1String("new-private-tab")))
 	{
-		openHints =(WindowsManager::NewTabOpen | WindowsManager::PrivateOpen);
+		openHints = (WindowsManager::NewTabOpen | WindowsManager::PrivateOpen);
 	}
 	else if (parser->isSet(QLatin1String("new-tab")))
 	{
@@ -699,18 +684,25 @@ void Application::handlePositionalArguments(QCommandLineParser *parser)
 		return;
 	}
 
+	MainWindow *window(nullptr);
+
 	if (openHints.testFlag(WindowsManager::NewWindowOpen))
 	{
 		MainWindowFlag flags(openHints.testFlag(WindowsManager::PrivateOpen) ? PrivateFlag : NoFlags);
 
 		for (int i = 0; i < urls.count(); ++i)
 		{
-			createWindow(flags)->openUrl(urls.at(i));
+			window = createWindow(flags);
+
+			if (!urls.at(i).isEmpty())
+			{
+				window->openUrl(urls.at(i));
+			}
 		}
 	}
 	else
 	{
-		MainWindow *window(getWindow());
+		window = getWindow();
 
 		if (window)
 		{
@@ -718,6 +710,21 @@ void Application::handlePositionalArguments(QCommandLineParser *parser)
 			{
 				window->openUrl(urls.at(i), openHints.testFlag(WindowsManager::PrivateOpen));
 			}
+		}
+	}
+
+	if (window)
+	{
+		window->raise();
+		window->activateWindow();
+
+		if (m_isHidden)
+		{
+			m_instance->setHidden(false);
+		}
+		else
+		{
+			window->raiseWindow();
 		}
 	}
 }
