@@ -473,6 +473,7 @@ elseif (APPLE)
 	set(otter_src
 		${otter_src}
 		src/modules/platforms/mac/MacPlatformIntegration.mm
+		src/modules/platforms/mac/MacPlatformStyle.cpp
 		resources/icons/otter-browser.icns
 	)
 

@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "MacPlatformIntegration.h"
+#include "MacPlatformStyle.h"
 #include "../../../core/ActionsManager.h"
 #include "../../../core/Application.h"
 #include "../../../core/NotificationsManager.h"
@@ -319,6 +320,11 @@ void MacPlatformIntegration::showNotification(Notification *notification)
 	{
 		m_notificationsWatcherTimer = startTimer(1000);
 	}
+}
+
+Style* MacPlatformIntegration::createStyle(const QString &name) const
+{
+	return new MacPlatformStyle(name);
 }
 
 QList<ApplicationInformation> MacPlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)
