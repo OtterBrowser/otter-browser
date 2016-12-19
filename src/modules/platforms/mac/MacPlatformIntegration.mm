@@ -161,6 +161,8 @@ MacPlatformIntegration::MacPlatformIntegration(Application *parent) : PlatformIn
 	Menu *menu(new Menu());
 	menu->addAction(ActionsManager::NewTabAction);
 	menu->addAction(ActionsManager::NewTabPrivateAction);
+	menu->addAction(ActionsManager::NewWindowAction);
+	menu->addAction(ActionsManager::NewWindowPrivateAction);
 	menu->addSeparator();
 	menu->addAction(ActionsManager::BookmarksAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
 	menu->addAction(ActionsManager::TransfersAction)->setOverrideText(QT_TRANSLATE_NOOP("actions", "Transfers"));
