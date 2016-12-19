@@ -125,3 +125,20 @@ Exec=otter-browser %u
 Terminal=false
 StartupNotify=false
 MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/rdf+xml;image/gif;image/jpeg;image/png;x-scheme-handler/http;x-scheme-handler/https;
+Actions=NewTab;NewPrivateTab;NewWindow;NewPrivateWindow;
+
+[Desktop Action NewTab]
+Name=New Tab
+Exec=otter-browser --new-tab %u
+
+[Desktop Action NewPrivateTab]
+Name=New Private Tab
+Exec=otter-browser --new-private-tab %u
+
+[Desktop Action NewWindow]
+Name=New Window
+Exec=otter-browser --new-window %u
+
+[Desktop Action NewPrivateWindow]
+Name=New Private Window
+Exec=otter-browser --new-private-window %u
