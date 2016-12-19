@@ -21,6 +21,7 @@
 #include "../../../core/Application.h"
 #include "../../../core/Console.h"
 #include "../../../core/NotificationsManager.h"
+#include "../../../core/ThemesManager.h"
 #include "../../../core/TransfersManager.h"
 #include "../../../core/Utils.h"
 #include "../../../ui/MainWindow.h"
@@ -34,6 +35,8 @@
 #include <QtCore/QtMath>
 #include <QtGui/QDesktopServices>
 #include <QtWidgets/QFileIconProvider>
+#include <QtWinExtras/QWinJumpList>
+#include <QtWinExtras/QWinJumpListCategory>
 
 namespace Otter
 {
@@ -58,6 +61,18 @@ WindowsPlatformIntegration::WindowsPlatformIntegration(Application *parent) : Pl
 		connect(TransfersManager::getInstance(), SIGNAL(transferFinished(Transfer*)), this, SLOT(updateTaskbarButtons()));
 		connect(TransfersManager::getInstance(), SIGNAL(transferRemoved(Transfer*)), this, SLOT(updateTaskbarButtons()));
 		connect(TransfersManager::getInstance(), SIGNAL(transferStopped(Transfer*)), this, SLOT(updateTaskbarButtons()));
+	}
+
+	if (QSysInfo::windowsVersion() >= QSysInfo::WV_VISTA)
+	{
+		const QString applicationFilePath(QCoreApplication::applicationFilePath());
+		QWinJumpList jumpLists;
+		QWinJumpListCategory* tasks(jumpLists.tasks());
+		tasks->addLink(ThemesManager::getIcon(QLatin1String("tab-new")), tr("New tab"), applicationFilePath, QStringList(QLatin1String("--new-tab")));
+		tasks->addLink(ThemesManager::getIcon(QLatin1String("tab-new-private")), tr("New private tab"), applicationFilePath, QStringList(QLatin1String("--new-private-tab")));
+		tasks->addLink(ThemesManager::getIcon(QLatin1String("window-new")), tr("New window"), applicationFilePath, QStringList(QLatin1String("--new-window")));
+		tasks->addLink(ThemesManager::getIcon(QLatin1String("window-new-private")), tr("New private window"), applicationFilePath, QStringList(QLatin1String("--new-private-window")));
+		tasks->setVisible(true);
 	}
 }
 
