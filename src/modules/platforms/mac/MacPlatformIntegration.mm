@@ -52,6 +52,8 @@ static MacPlatformIntegrationDockIconView *getSharedDockIconView = nil;
 	if (getSharedDockIconView == nil)
 	{
 		getSharedDockIconView = [[MacPlatformIntegrationDockIconView alloc] init];
+
+		[[MacPlatformIntegrationDockIconView getSharedDockIconView] setProgress:-1];
 	}
 
 	return getSharedDockIconView;
@@ -71,6 +73,11 @@ static MacPlatformIntegrationDockIconView *getSharedDockIconView = nil;
 	NSRect boundary = [self bounds];
 
 	[[NSApp applicationIconImage] drawInRect:boundary fromRect:NSZeroRect operation:NSCompositeCopy fraction:1.0];
+
+	if (m_value < 0)
+	{
+		return;
+	}
 
 	NSRect rectangle = boundary;
 	rectangle.size.height *= 0.13;
@@ -153,10 +160,10 @@ namespace Otter
 
 MacPlatformIntegration::MacPlatformIntegration(Application *parent) : PlatformIntegration(parent),
 	m_notificationIdentifier(0),
-	m_notificationsWatcherTimer(0),
-	m_isDockIconViewVisible(false)
+	m_notificationsWatcherTimer(0)
 {
 	[[MacPlatformIntegrationUserNotificationCenterDelegate alloc] initWithPlatformIntegration:this];
+	[[NSApp dockTile] setContentView:[MacPlatformIntegrationDockIconView getSharedDockIconView]];
 
 	Menu *menu(new Menu());
 	menu->addAction(ActionsManager::NewTabAction);
@@ -268,26 +275,7 @@ void MacPlatformIntegration::updateTransfersProgress()
 		}
 	}
 
-	const qreal progress((transferAmount > 0 && bytesReceived > 0 && bytesTotal > 0) ? (static_cast<qreal>(bytesReceived) / bytesTotal) : 0);
-
-	if (progress > 0)
-	{
-		if (!m_isDockIconViewVisible)
-		{
-			m_isDockIconViewVisible = true;
-
-			[[NSApp dockTile] setContentView:[MacPlatformIntegrationDockIconView getSharedDockIconView]];
-		}
-
-		[[MacPlatformIntegrationDockIconView getSharedDockIconView] setProgress:progress];
-	}
-	else if (m_isDockIconViewVisible)
-	{
-		m_isDockIconViewVisible = false;
-
-		[[NSApp dockTile] setContentView:nil];
-	}
-
+	[[MacPlatformIntegrationDockIconView getSharedDockIconView] setProgress:((transferAmount > 0 && bytesTotal > 0) ? (static_cast<double>(bytesReceived) / bytesTotal) : -1)];
 	[[[NSApplication sharedApplication] dockTile] setBadgeLabel:((transferAmount > 0) ? [NSString stringWithFormat:@"%d", transferAmount] : @"")];
 }
 

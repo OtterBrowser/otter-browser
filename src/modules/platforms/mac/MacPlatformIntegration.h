@@ -52,7 +52,6 @@ private:
 	QHash<quint64, Notification*> m_notifications;
 	quint64 m_notificationIdentifier;
 	int m_notificationsWatcherTimer;
-	bool m_isDockIconViewVisible;
 };
 
 }
