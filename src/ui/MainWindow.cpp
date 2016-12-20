@@ -84,6 +84,8 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 {
 	m_ui->setupUi(this);
 
+	setUnifiedTitleAndToolBarOnMac(true);
+
 	m_standardActions.fill(nullptr, ActionsManager::getActionDefinitions().count());
 
 	updateShortcuts();
