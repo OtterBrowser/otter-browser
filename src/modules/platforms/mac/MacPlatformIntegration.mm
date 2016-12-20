@@ -324,7 +324,12 @@ void MacPlatformIntegration::showNotification(Notification *notification)
 
 Style* MacPlatformIntegration::createStyle(const QString &name) const
 {
-	return new MacPlatformStyle(name);
+	if (name.isEmpty() || name.toLower() == QLatin1String("macintosh"))
+	{
+		return new MacPlatformStyle(name);
+	}
+
+	return nullptr;
 }
 
 QList<ApplicationInformation> MacPlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)
