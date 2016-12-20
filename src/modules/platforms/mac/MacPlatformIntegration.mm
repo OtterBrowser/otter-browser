@@ -28,8 +28,11 @@
 #include "../../../ui/Menu.h"
 
 #include <QtCore/QDateTime>
+#include <QtCore/QFileInfo>
 #include <QtCore/QSysInfo>
+#include <QtCore/QTemporaryFile>
 #include <QtGui/QDesktopServices>
+#include <QtMacExtras/QtMac>
 
 #import <AppKit/AppKit.h>
 #import <Cocoa/Cocoa.h>
@@ -255,7 +258,7 @@ void MacPlatformIntegration::runApplication(const QString &command, const QUrl &
 		QDesktopServices::openUrl(url);
 	}
 
-///TODO
+	[[NSWorkspace sharedWorkspace] openFile:url.toLocalFile().toNSString() withApplication:command.toNSString()];
 }
 
 void MacPlatformIntegration::updateTransfersProgress()
@@ -334,11 +337,37 @@ Style* MacPlatformIntegration::createStyle(const QString &name) const
 
 QList<ApplicationInformation> MacPlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)
 {
-	Q_UNUSED(mimeType)
+	QList<ApplicationInformation> applications;
 
-///TODO
+	if (mimeType.preferredSuffix().isEmpty())
+	{
+		return applications;
+	}
 
-	return QList<ApplicationInformation>();
+	NSRect iconRectangle(NSMakeRect(0, 0, 64, 64));
+	QTemporaryFile file(QLatin1String("XXXXXX.") + mimeType.preferredSuffix());
+	file.open();
+
+	QUrl url(file.fileName());
+	url.setScheme(QLatin1String("file"));
+
+	const CFArrayRef urls(LSCopyApplicationURLsForURL(url.toCFURL(), kLSRolesAll));
+	const int count(CFArrayGetCount(urls));
+
+	applications.reserve(count);
+
+	for (int i = 0; i < count; ++i)
+	{
+		const QString path(QUrl::fromCFURL(static_cast<CFURLRef>(CFArrayGetValueAtIndex(urls, i))).toLocalFile());
+		ApplicationInformation application;
+		application.command = path;
+		application.name = QFileInfo(path).bundleName();
+		application.icon = QIcon(QtMac::fromCGImageRef([[[NSWorkspace sharedWorkspace] iconForFile:path.toNSString()] CGImageForProposedRect:&iconRectangle context:nil hints:nil]));
+
+		applications.append(application);
+	}
+
+	return applications;
 }
 
 bool MacPlatformIntegration::canShowNotifications() const

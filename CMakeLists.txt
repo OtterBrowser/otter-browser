@@ -463,6 +463,8 @@ if (WIN32)
 		src/modules/platforms/windows/WindowsPlatformIntegration.cpp
 	)
 elseif (APPLE)
+	find_package(Qt5MacExtras 5.3.0 QUIET)
+
 	set(MACOSX_BUNDLE_BUNDLE_NAME "Otter Browser")
 	set(MACOSX_BUNDLE_BUNDLE_VERSION ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION})
 	set(MACOSX_BUNDLE_LONG_VERSION_STRING ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION})
@@ -517,7 +519,7 @@ elseif (APPLE)
 	find_library(FRAMEWORK_Cocoa Cocoa)
 	find_library(FRAMEWORK_Foundation Foundation)
 
-	target_link_libraries(otter-browser ${FRAMEWORK_Cocoa} ${FRAMEWORK_Foundation})
+	target_link_libraries(otter-browser Qt5::MacExtras ${FRAMEWORK_Cocoa} ${FRAMEWORK_Foundation})
 elseif (UNIX)
 	target_link_libraries(otter-browser Qt5::DBus)
 
