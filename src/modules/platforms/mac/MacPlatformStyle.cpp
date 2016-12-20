@@ -59,4 +59,14 @@ void MacPlatformStyle::drawPrimitive(QStyle::PrimitiveElement element, const QSt
 	Style::drawPrimitive(element, option, painter, widget);
 }
 
+int Otter::MacPlatformStyle::pixelMetric(QStyle::PixelMetric metric, const QStyleOption *option, const QWidget *widget) const
+{
+	if (metric == QStyle::PM_ToolBarIconSize)
+	{
+		return 16;
+	}
+
+	return Style::pixelMetric(metric, option, widget);
+}
+
 }

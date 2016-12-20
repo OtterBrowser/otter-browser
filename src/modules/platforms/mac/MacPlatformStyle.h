@@ -30,7 +30,8 @@ class MacPlatformStyle : public Style
 public:
 	explicit MacPlatformStyle(const QString &name);
 
-	void drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
+	void drawPrimitive(PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
+	int pixelMetric(PixelMetric metric, const QStyleOption *option, const QWidget *widget) const override;
 };
 
 }
