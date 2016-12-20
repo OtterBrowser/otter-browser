@@ -444,7 +444,11 @@ QVector<ContentBlockingProfile*> ContentBlockingManager::getProfiles()
 			QUrl updateUrl;
 			ContentBlockingProfile::ProfileFlags flags(ContentBlockingProfile::NoFlags);
 
-			if (profileSettings.isEmpty())
+			if (profiles.at(i) == QLatin1String("custom"))
+			{
+				title = tr("Custom Rules");
+			}
+			else if (profileSettings.isEmpty())
 			{
 				profileSettings = bundledProfileSettings;
 				updateUrl = QUrl(profileSettings.value(QLatin1String("updateUrl")).toString());
