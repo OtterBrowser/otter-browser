@@ -225,7 +225,7 @@ void TabHandleWidget::mousePressEvent(QMouseEvent *event)
 {
 	m_wasCloseButtonPressed = m_closeButtonRectangle.contains(event->pos());
 
-	QWidget::mouseMoveEvent(event);
+	QWidget::mousePressEvent(event);
 
 	update();
 }
@@ -732,7 +732,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 			menu.addAction(cloneTabAction);
 			menu.addAction(pinTabAction);
-			menu.addAction(window ? window->getContentsWidget()->getAction(ActionsManager::MuteTabMediaAction) : new Action(ActionsManager::MuteTabMediaAction, &menu));
+			menu.addAction((window && window->getLoadingState() != WindowsManager::DelayedLoadingState) ? window->getContentsWidget()->getAction(ActionsManager::MuteTabMediaAction) : new Action(ActionsManager::MuteTabMediaAction, &menu));
 			menu.addSeparator();
 			menu.addAction(detachTabAction);
 			menu.addSeparator();
