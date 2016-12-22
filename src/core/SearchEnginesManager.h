@@ -112,6 +112,9 @@ public:
 
 	SearchEnginesManager::SearchEngineDefinition getSearchEngine() const;
 
+public slots:
+	void cancel();
+
 protected slots:
 	void handleRequestFailed();
 	void handleRequestFinished();

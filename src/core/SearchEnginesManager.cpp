@@ -653,6 +653,16 @@ SearchEngineFetchJob::~SearchEngineFetchJob()
 	m_reply->deleteLater();
 }
 
+void SearchEngineFetchJob::cancel()
+{
+	if (m_reply)
+	{
+		m_reply->abort();
+	}
+
+	emit jobFinished(false);
+}
+
 void SearchEngineFetchJob::handleRequestFailed()
 {
 	deleteLater();

@@ -38,11 +38,32 @@
 namespace Otter
 {
 
-SearchKeywordDelegate::SearchKeywordDelegate(QObject *parent) : ItemDelegate(parent)
+QMovie* PreferencesSearchPageWidget::m_updateMovie = nullptr;
+
+SearchEngineTitleDelegate::SearchEngineTitleDelegate(QObject *parent) : ItemDelegate(parent)
 {
 }
 
-void SearchKeywordDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
+void SearchEngineTitleDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
+{
+	ItemDelegate::initStyleOption(option, index);
+
+	if (index.data(PreferencesSearchPageWidget::IsUpdatingRole).toBool())
+	{
+		QMovie *movie(PreferencesSearchPageWidget::getUpdateMovie());
+
+		if (movie)
+		{
+			option->icon = QIcon(movie->currentPixmap());
+		}
+	}
+}
+
+SearchEngineKeywordDelegate::SearchEngineKeywordDelegate(QObject *parent) : ItemDelegate(parent)
+{
+}
+
+void SearchEngineKeywordDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
 	Q_UNUSED(option)
 	Q_UNUSED(index)
@@ -50,7 +71,7 @@ void SearchKeywordDelegate::updateEditorGeometry(QWidget *editor, const QStyleOp
 	editor->setGeometry(option.rect);
 }
 
-void SearchKeywordDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
+void SearchEngineKeywordDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
 	QLineEdit *widget(qobject_cast<QLineEdit*>(editor));
 
@@ -60,7 +81,7 @@ void SearchKeywordDelegate::setModelData(QWidget *editor, QAbstractItemModel *mo
 	}
 }
 
-QWidget* SearchKeywordDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+QWidget* SearchEngineKeywordDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
 	Q_UNUSED(option)
 
@@ -97,7 +118,8 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 	}
 
 	m_ui->searchViewWidget->setModel(searchEnginesModel);
-	m_ui->searchViewWidget->setItemDelegateForColumn(1, new SearchKeywordDelegate(this));
+	m_ui->searchViewWidget->setItemDelegateForColumn(0, new SearchEngineTitleDelegate(this));
+	m_ui->searchViewWidget->setItemDelegateForColumn(1, new SearchEngineKeywordDelegate(this));
 	m_ui->searchSuggestionsCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Search_SearchEnginesSuggestionsOption).toBool());
 
 	QMenu *addSearchMenu(new QMenu(m_ui->addSearchButton));
@@ -195,7 +217,7 @@ void PreferencesSearchPageWidget::readdSearchEngine(QAction *action)
 void PreferencesSearchPageWidget::editSearchEngine()
 {
 	const QModelIndex index(m_ui->searchViewWidget->getIndex(m_ui->searchViewWidget->getCurrentRow(), 0));
-	const QString identifier(index.data(Qt::UserRole).toString());
+	const QString identifier(index.data(IdentifierRole).toString());
 
 	if (identifier.isEmpty() || !m_searchEngines.contains(identifier))
 	{
@@ -242,17 +264,33 @@ void PreferencesSearchPageWidget::editSearchEngine()
 
 void PreferencesSearchPageWidget::updateSearchEngine()
 {
-	const QString identifier(m_ui->searchViewWidget->getIndex(m_ui->searchViewWidget->getCurrentRow(), 0).data(Qt::UserRole).toString());
+	const QModelIndex index(m_ui->searchViewWidget->getIndex(m_ui->searchViewWidget->getCurrentRow(), 0));
+	const QString identifier(index.data(IdentifierRole).toString());
 
-	if (!identifier.isEmpty() && m_searchEngines.contains(identifier))
+	if (!identifier.isEmpty() && m_searchEngines.contains(identifier) && !m_updateJobs.contains(identifier))
 	{
-		connect(new SearchEngineFetchJob(m_searchEngines[identifier].second.selfUrl, identifier, false, this), SIGNAL(jobFinished(bool)), this, SLOT(handleSearchEngineUpdate(bool)));
+		if (!m_updateMovie)
+		{
+			m_updateMovie = new QMovie(QLatin1String(":/icons/loading.gif"), QByteArray(), this);
+			m_updateMovie->start();
+
+			connect(m_updateMovie, SIGNAL(frameChanged(int)), m_ui->searchViewWidget, SLOT(update()));
+		}
+
+		m_ui->searchViewWidget->setData(index, true, IsUpdatingRole);
+		m_ui->searchViewWidget->update();
+
+		SearchEngineFetchJob *job(new SearchEngineFetchJob(m_searchEngines[identifier].second.selfUrl, identifier, false, this));
+
+		m_updateJobs[identifier] = job;
+
+		connect(job, SIGNAL(jobFinished(bool)), this, SLOT(handleSearchEngineUpdate(bool)));
 	}
 }
 
 void PreferencesSearchPageWidget::removeSearchEngine()
 {
-	const QString identifier(m_ui->searchViewWidget->getIndex(m_ui->searchViewWidget->getCurrentRow(), 0).data(Qt::UserRole).toString());
+	const QString identifier(m_ui->searchViewWidget->getIndex(m_ui->searchViewWidget->getCurrentRow(), 0).data(IdentifierRole).toString());
 
 	if (identifier.isEmpty() || !m_searchEngines.contains(identifier))
 	{
@@ -278,6 +316,12 @@ void PreferencesSearchPageWidget::removeSearchEngine()
 		if (messageBox.checkBox() && messageBox.checkBox()->isChecked())
 		{
 			m_filesToRemove.append(path);
+		}
+
+		if (m_updateJobs.contains(identifier))
+		{
+			m_updateJobs[identifier]->cancel();
+			m_updateJobs.remove(identifier);
 		}
 
 		m_searchEngines.remove(identifier);
@@ -347,42 +391,62 @@ void PreferencesSearchPageWidget::handleSearchEngineUpdate(bool isSuccess)
 {
 	SearchEngineFetchJob *job(qobject_cast<SearchEngineFetchJob*>(sender()));
 
-	if (!job || !isSuccess)
+	if (!job)
+	{
+		return;
+	}
+
+	SearchEnginesManager::SearchEngineDefinition searchEngine(job->getSearchEngine());
+	const QString identifier(searchEngine.identifier.isEmpty() ? m_updateJobs.key(job) : searchEngine.identifier);
+
+	if (!identifier.isEmpty())
+	{
+		for (int i = 0; i < m_ui->searchViewWidget->getRowCount(); ++i)
+		{
+			const QModelIndex index(m_ui->searchViewWidget->getIndex(i, 0));
+
+			if (index.data(IdentifierRole).toString() == identifier)
+			{
+				if (isSuccess)
+				{
+					m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::DisplayRole);
+					m_ui->searchViewWidget->setData(index, searchEngine.description, Qt::ToolTipRole);
+				}
+
+				m_ui->searchViewWidget->setData(index, false, IsUpdatingRole);
+
+				break;
+			}
+		}
+
+		m_updateJobs.remove(identifier);
+
+		if (m_updateJobs.isEmpty())
+		{
+			m_updateMovie->deleteLater();
+			m_updateMovie = nullptr;
+		}
+	}
+
+	if (!isSuccess)
 	{
 		QMessageBox::warning(this, tr("Error"), tr("Failed to update search engine."), QMessageBox::Close);
 
 		return;
 	}
 
-	SearchEnginesManager::SearchEngineDefinition searchEngine(job->getSearchEngine());
-
-	if (!m_searchEngines.contains(searchEngine.identifier))
+	if (m_searchEngines.contains(identifier))
 	{
-		return;
-	}
+		searchEngine.keyword = m_searchEngines[identifier].second.keyword;
 
-	searchEngine.keyword = m_searchEngines[searchEngine.identifier].second.keyword;
-
-	m_searchEngines[searchEngine.identifier] = qMakePair(true, searchEngine);
-
-	for (int i = 0; i < m_ui->searchViewWidget->getRowCount(); ++i)
-	{
-		const QModelIndex index(m_ui->searchViewWidget->getIndex(i, 0));
-
-		if (index.data(Qt::UserRole).toString() == searchEngine.identifier)
-		{
-			m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::DisplayRole);
-			m_ui->searchViewWidget->setData(index, searchEngine.description, Qt::ToolTipRole);
-
-			break;
-		}
+		m_searchEngines[identifier] = qMakePair(true, searchEngine);
 	}
 }
 
 void PreferencesSearchPageWidget::updateSearchEngineActions()
 {
 	const QModelIndex index(m_ui->searchViewWidget->currentIndex());
-	const QString identifier(index.sibling(index.row(), 0).data(Qt::UserRole).toString());
+	const QString identifier(index.sibling(index.row(), 0).data(IdentifierRole).toString());
 	const int currentRow(m_ui->searchViewWidget->getCurrentRow());
 	const bool isSelected(currentRow >= 0 && currentRow < m_ui->searchViewWidget->getRowCount());
 
@@ -454,7 +518,7 @@ void PreferencesSearchPageWidget::save()
 
 	for (int i = 0; i < m_ui->searchViewWidget->getRowCount(); ++i)
 	{
-		const QString identifier(m_ui->searchViewWidget->getIndex(i, 0).data(Qt::UserRole).toString());
+		const QString identifier(m_ui->searchViewWidget->getIndex(i, 0).data(IdentifierRole).toString());
 		const QString keyword(m_ui->searchViewWidget->getIndex(i, 1).data(Qt::DisplayRole).toString());
 
 		if (!identifier.isEmpty())
@@ -494,21 +558,9 @@ void PreferencesSearchPageWidget::save()
 	updateReaddSearchEngineMenu();
 }
 
-QList<QStandardItem*> PreferencesSearchPageWidget::createRow(const SearchEnginesManager::SearchEngineDefinition &searchEngine) const
+QMovie* PreferencesSearchPageWidget::getUpdateMovie()
 {
-	QList<QStandardItem*> items({new QStandardItem(searchEngine.icon, searchEngine.title), new QStandardItem(searchEngine.keyword)});
-	items[0]->setData(QColor(Qt::transparent), Qt::DecorationRole);
-	items[0]->setData(searchEngine.identifier, Qt::UserRole);
-	items[0]->setToolTip(searchEngine.description);
-	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
-	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
-
-	if (!searchEngine.icon.isNull())
-	{
-		items[0]->setIcon(searchEngine.icon);
-	}
-
-	return items;
+	return m_updateMovie;
 }
 
 QStringList PreferencesSearchPageWidget::getKeywords(const QAbstractItemModel *model, int excludeRow)
@@ -526,6 +578,23 @@ QStringList PreferencesSearchPageWidget::getKeywords(const QAbstractItemModel *m
 	}
 
 	return keywords;
+}
+
+QList<QStandardItem*> PreferencesSearchPageWidget::createRow(const SearchEnginesManager::SearchEngineDefinition &searchEngine) const
+{
+	QList<QStandardItem*> items({new QStandardItem(searchEngine.icon, searchEngine.title), new QStandardItem(searchEngine.keyword)});
+	items[0]->setData(QColor(Qt::transparent), Qt::DecorationRole);
+	items[0]->setData(searchEngine.identifier, IdentifierRole);
+	items[0]->setToolTip(searchEngine.description);
+	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
+	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
+
+	if (!searchEngine.icon.isNull())
+	{
+		items[0]->setIcon(searchEngine.icon);
+	}
+
+	return items;
 }
 
 }

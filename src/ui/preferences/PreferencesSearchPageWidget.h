@@ -24,6 +24,7 @@
 #include "../ItemDelegate.h"
 #include "../../core/SearchEnginesManager.h"
 
+#include <QtGui/QMovie>
 #include <QtWidgets/QWidget>
 
 namespace Otter
@@ -34,14 +35,22 @@ namespace Ui
 	class PreferencesSearchPageWidget;
 }
 
-class SearchKeywordDelegate : public ItemDelegate
+class SearchEngineTitleDelegate : public ItemDelegate
 {
 public:
-	explicit SearchKeywordDelegate(QObject *parent);
+	explicit SearchEngineTitleDelegate(QObject *parent);
 
-	void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
-	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
+};
+
+class SearchEngineKeywordDelegate : public ItemDelegate
+{
+public:
+	explicit SearchEngineKeywordDelegate(QObject *parent);
+
+	void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
+	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 };
 
 class PreferencesSearchPageWidget : public QWidget
@@ -49,13 +58,20 @@ class PreferencesSearchPageWidget : public QWidget
 	Q_OBJECT
 
 public:
+	enum DataRole
+	{
+		IdentifierRole = Qt::UserRole,
+		IsUpdatingRole
+	};
+
 	explicit PreferencesSearchPageWidget(QWidget *parent = nullptr);
 	~PreferencesSearchPageWidget();
 
+	static QMovie* getUpdateMovie();
 	static QStringList getKeywords(const QAbstractItemModel *model, int excludeRow = -1);
 
 protected:
-	void changeEvent(QEvent *event);
+	void changeEvent(QEvent *event) override;
 	void addSearchEngine(const QString &path, const QString &identifier, bool isReadding);
 	void updateReaddSearchEngineMenu();
 	QList<QStandardItem*> createRow(const SearchEnginesManager::SearchEngineDefinition &searchEngine) const;
@@ -74,8 +90,11 @@ protected slots:
 private:
 	QString m_defaultSearchEngine;
 	QStringList m_filesToRemove;
+	QHash<QString, SearchEngineFetchJob*> m_updateJobs;
 	QHash<QString, QPair<bool, SearchEnginesManager::SearchEngineDefinition> > m_searchEngines;
 	Ui::PreferencesSearchPageWidget *m_ui;
+
+	static QMovie *m_updateMovie;
 
 signals:
 	void settingsModified();
