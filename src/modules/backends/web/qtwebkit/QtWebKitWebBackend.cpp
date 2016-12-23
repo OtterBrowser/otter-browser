@@ -190,6 +190,9 @@ WebWidget* QtWebKitWebBackend::createWidget(bool isPrivate, ContentsWidget *pare
 
 		QWebSettings::setMaximumPagesInCache(SettingsManager::getValue(SettingsManager::Cache_PagesInMemoryLimitOption).toInt());
 		QWebSettings::globalSettings()->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
+#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
+		QWebSettings::globalSettings()->setAttribute(QWebSettings::FullScreenSupportEnabled, true);
+#endif
 
 		optionChanged(SettingsManager::Browser_EnableFullScreenOption);
 

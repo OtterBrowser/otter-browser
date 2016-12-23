@@ -157,6 +157,9 @@ protected slots:
 	void viewSourceReplyFinished(QNetworkReply::NetworkError error = QNetworkReply::NoError);
 	void handlePrintRequest(QWebFrame *frame);
 	void handleWindowCloseRequest();
+#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
+	void handleFullScreenRequest(QWebFullScreenRequest request);
+#endif
 	void handlePermissionRequest(QWebFrame *frame, QWebPage::Feature feature);
 	void handlePermissionCancel(QWebFrame *frame, QWebPage::Feature feature);
 	void notifyTitleChanged();

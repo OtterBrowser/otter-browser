@@ -64,6 +64,9 @@
 #include <QtGui/QImageWriter>
 #include <QtGui/QMouseEvent>
 #include <QtPrintSupport/QPrintPreviewDialog>
+#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
+#include <QtWebKit/QWebFullScreenRequest>
+#endif
 #include <QtWebKit/QWebHistory>
 #include <QtWebKit/QWebElement>
 #include <QtWebKitWidgets/QWebFrame>
@@ -150,6 +153,9 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(m_page, SIGNAL(microFocusChanged()), this, SLOT(updateEditActions()));
 	connect(m_page, SIGNAL(printRequested(QWebFrame*)), this, SLOT(handlePrintRequest(QWebFrame*)));
 	connect(m_page, SIGNAL(windowCloseRequested()), this, SLOT(handleWindowCloseRequest()));
+#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
+	connect(m_page, SIGNAL(fullScreenRequested(QWebFullScreenRequest)), this, SLOT(handleFullScreenRequest(QWebFullScreenRequest)));
+#endif
 	connect(m_page, SIGNAL(featurePermissionRequested(QWebFrame*,QWebPage::Feature)), this, SLOT(handlePermissionRequest(QWebFrame*,QWebPage::Feature)));
 	connect(m_page, SIGNAL(featurePermissionRequestCanceled(QWebFrame*,QWebPage::Feature)), this, SLOT(handlePermissionCancel(QWebFrame*,QWebPage::Feature)));
 	connect(m_page, SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
@@ -714,6 +720,43 @@ void QtWebKitWebWidget::handleWindowCloseRequest()
 		emit requestedCloseWindow();
 	}
 }
+
+#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
+void QtWebKitWebWidget::handleFullScreenRequest(QWebFullScreenRequest request)
+{
+	request.accept();
+
+	if (request.toggleOn())
+	{
+		const QString value(SettingsManager::getValue(SettingsManager::Browser_EnableFullScreenOption, request.origin()).toString());
+
+		if (value == QLatin1String("allow"))
+		{
+			MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+			if (mainWindow && !mainWindow->isFullScreen())
+			{
+				mainWindow->triggerAction(ActionsManager::FullScreenAction);
+			}
+		}
+		else if (value == QLatin1String("ask"))
+		{
+			emit requestedPermission(FullScreenFeature, request.origin(), false);
+		}
+	}
+	else
+	{
+		MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+		if (mainWindow && mainWindow->isFullScreen())
+		{
+			mainWindow->triggerAction(ActionsManager::FullScreenAction);
+		}
+
+		emit requestedPermission(FullScreenFeature, request.origin(), true);
+	}
+}
+#endif
 
 void QtWebKitWebWidget::handlePermissionRequest(QWebFrame *frame, QWebPage::Feature feature)
 {
@@ -1966,6 +2009,21 @@ void QtWebKitWebWidget::setUrl(const QUrl &url, bool isTyped)
 void QtWebKitWebWidget::setPermission(FeaturePermission feature, const QUrl &url, WebWidget::PermissionPolicies policies)
 {
 	WebWidget::setPermission(feature, url, policies);
+
+	if (feature == FullScreenFeature)
+	{
+		if (policies.testFlag(GrantedPermission))
+		{
+			MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+			if (mainWindow && !mainWindow->isFullScreen())
+			{
+				mainWindow->triggerAction(ActionsManager::FullScreenAction);
+			}
+		}
+
+		return;
+	}
 
 	QWebPage::Feature nativeFeature(QWebPage::Geolocation);
 
