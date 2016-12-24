@@ -285,13 +285,13 @@ void QtWebKitWebWidget::navigating(const QUrl &url, QWebFrame *frame, QWebPage::
 {
 	if (frame == m_page->mainFrame())
 	{
-		if (type != QWebPage::NavigationTypeBackOrForward)
+		if (type != QWebPage::NavigationTypeBackOrForward && (type != QWebPage::NavigationTypeLinkClicked || !getUrl().matches(url, QUrl::RemoveFragment)))
 		{
 			pageLoadStarted();
 			handleHistory();
-		}
 
-		m_networkManager->resetStatistics();
+			m_networkManager->resetStatistics();
+		}
 
 		updateOptions(url);
 
