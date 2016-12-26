@@ -33,18 +33,20 @@ void MacPlatformStyle::drawPrimitive(QStyle::PrimitiveElement element, const QSt
 {
 	if (element == QStyle::PE_IndicatorTabClose)
 	{
+		const int size(pixelMetric(QStyle::PM_TabCloseIndicatorWidth, option, widget));
+
 		painter->save();
 		painter->translate(option->rect.topLeft());
 
-		if (option->rect.width() < 12)
+		if (option->rect.width() < size)
 		{
-			const qreal scale(option->rect.width() / 12.0);
+			const qreal scale(option->rect.width() / static_cast<qreal>(size));
 
 			painter->scale(scale, scale);
 		}
 		else
 		{
-			const int offset((option->rect.width() - 12) / 2);
+			const int offset((option->rect.width() - size) / 2);
 
 			painter->translate(offset, offset);
 		}
