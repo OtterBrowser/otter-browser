@@ -505,10 +505,6 @@ if (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 	target_link_libraries(otter-browser Qt5::WebKit Qt5::WebKitWidgets)
 endif (Qt5WebKitWidgets_FOUND AND ENABLE_QTWEBKIT)
 
-if (GCRYPT_FOUND)
-	target_link_libraries(otter-browser ${GCRYPT_LIBRARIES})
-endif (GCRYPT_FOUND)
-
 if (HUNSPELL_FOUND)
 	target_link_libraries(otter-browser ${HUNSPELL_LIBRARIES})
 endif (HUNSPELL_FOUND)
