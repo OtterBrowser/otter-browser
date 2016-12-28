@@ -839,6 +839,17 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 			}
 
 			return;
+		case ActionsManager::FullScreenAction:
+			{
+				MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+				if (mainWindow && !mainWindow->isFullScreen())
+				{
+					m_webView->triggerPageAction(QWebEnginePage::ExitFullScreen);
+				}
+			}
+
+			return;
 		case ActionsManager::WebsitePreferencesAction:
 			{
 				const QUrl url(getUrl());

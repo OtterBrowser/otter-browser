@@ -549,6 +549,8 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 				showFullScreen();
 			}
 
+			m_windowsManager->triggerAction(identifier, parameters);
+
 			break;
 		case ActionsManager::ShowTabSwitcherAction:
 			if (!m_tabSwitcher)

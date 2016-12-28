@@ -1812,6 +1812,19 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			}
 
 			return;
+#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
+		case ActionsManager::FullScreenAction:
+			{
+				MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+				if (mainWindow && !mainWindow->isFullScreen())
+				{
+					m_page->mainFrame()->evaluateJavaScript(QLatin1String("document.webkitExitFullscreen()"));
+				}
+			}
+
+			return;
+#endif
 		case ActionsManager::WebsitePreferencesAction:
 			{
 				const QUrl url(getUrl());
