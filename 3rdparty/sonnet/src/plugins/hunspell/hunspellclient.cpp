@@ -22,6 +22,7 @@
 #include "hunspelldict.h"
 #include "hunspelldebug.h"
 
+#include <QCoreApplication>
 #include <QDir>
 #include <QDebug>
 
@@ -31,7 +32,6 @@ HunspellClient::HunspellClient(QObject *parent)
     : Client(parent)
 {
     qCDebug(SONNET_HUNSPELL) << " HunspellClient::HunspellClient";
-    QStringList lst;
     const QString AFF_MASK = QStringLiteral("*.aff");
 
 #if defined(Q_OS_MAC) || defined(Q_OS_WIN)
@@ -62,10 +62,11 @@ HunspellClient::HunspellClient(QObject *parent)
 
     const QString otterDirectory(qgetenv("OTTER_DICTIONARIES"));
 
-    if (!otterDirectory.isEmpty())
-    {
+    if (!otterDirectory.isEmpty()) {
         directories.append(otterDirectory);
     }
+
+    directories.append(QCoreApplication::applicationDirPath() + QDir::separator() + QLatin1String("dictionaries"));
 
     for (int i = 0; i < directories.count(); ++i) {
         QDir dir(directories.at(i));
