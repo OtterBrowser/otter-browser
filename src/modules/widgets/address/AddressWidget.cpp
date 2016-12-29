@@ -337,7 +337,7 @@ void AddressWidget::paintEvent(QPaintEvent *event)
 	}
 	else if (state.testFlag(WindowsManager::TrustedContentState))
 	{
-		badgeIcon = QLatin1String("badge-trusted");
+		badgeIcon = QLatin1String("badge-secure");
 		badgeColor = QColor(173, 232, 153);
 	}
 	else if (state.testFlag(WindowsManager::SecureContentState))

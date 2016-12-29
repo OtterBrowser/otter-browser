@@ -50,7 +50,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 	else if (state.testFlag(WindowsManager::TrustedContentState))
 	{
 		m_ui->stateLabel->setText(tr("Your connection with this website is private."));
-		m_ui->stateIconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("badge-trusted"), false).pixmap(16, 16));
+		m_ui->stateIconLabel->setPixmap(ThemesManager::getIcon(QLatin1String("badge-secure"), false).pixmap(16, 16));
 	}
 	else if (state.testFlag(WindowsManager::SecureContentState))
 	{
