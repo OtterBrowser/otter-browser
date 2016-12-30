@@ -78,7 +78,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Backends_PasswordsOption, QLatin1String("file"), EnumerationType, QStringList(QLatin1String("file")));
 	registerOption(Backends_WebOption, QLatin1String("qtwebkit"), EnumerationType, QStringList(QLatin1String("qtwebkit")));
 	registerOption(Browser_AlwaysAskWhereToSaveDownloadOption, true, BooleanType);
-	registerOption(Browser_DelayRestoringOfBackgroundTabsOption, false, BooleanType);
+	registerOption(Browser_DelayRestoringOfBackgroundTabsOption, true, BooleanType);
 	registerOption(Browser_EnableFullScreenOption, QLatin1String("ask"), EnumerationType, QStringList({QLatin1String("ask"), QLatin1String("allow"), QLatin1String("disallow")}));
 	registerOption(Browser_EnableGeolocationOption, QLatin1String("ask"), EnumerationType, QStringList({QLatin1String("ask"), QLatin1String("allow"), QLatin1String("disallow")}));
 	registerOption(Browser_EnableImagesOption, QLatin1String("enable"), EnumerationType, QStringList({QLatin1String("enable"), QLatin1String("onlyCached"), QLatin1String("disabled")}));
