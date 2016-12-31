@@ -162,6 +162,7 @@ private:
 	bool m_isDraggingTab;
 	bool m_isDetachingTab;
 	bool m_isIgnoringTabDrag;
+	bool m_needsUpdateOnLeave;
 
 	static bool m_areThumbnailsEnabled;
 	static bool m_isLayoutReversed;

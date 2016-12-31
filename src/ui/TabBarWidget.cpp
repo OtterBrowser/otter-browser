@@ -508,7 +508,8 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_arePreviewsEnabled(SettingsManager::getValue(SettingsManager::TabBar_EnablePreviewsOption).toBool()),
 	m_isDraggingTab(false),
 	m_isDetachingTab(false),
-	m_isIgnoringTabDrag(false)
+	m_isIgnoringTabDrag(false),
+	m_needsUpdateOnLeave(false)
 {
 	m_areThumbnailsEnabled = SettingsManager::getValue(SettingsManager::TabBar_EnableThumbnailsOption).toBool();
 	m_isLayoutReversed = (static_cast<QTabBar::ButtonPosition>(style()->styleHint(QStyle::SH_TabBar_CloseButtonPosition)) == QTabBar::LeftSide);
@@ -674,7 +675,12 @@ void TabBarWidget::leaveEvent(QEvent *event)
 	m_tabWidth = 0;
 	m_hoveredTab = -1;
 
-	updateSize();
+	if (m_needsUpdateOnLeave)
+	{
+		updateSize();
+
+		m_needsUpdateOnLeave = false;
+	}
 
 	QStatusTipEvent statusTipEvent((QString()));
 
@@ -1124,6 +1130,10 @@ void TabBarWidget::tabRemoved(int index)
 	if (count() == 0)
 	{
 		setMaximumSize(0, 0);
+	}
+	else if (underMouse())
+	{
+		m_needsUpdateOnLeave = true;
 	}
 
 	emit tabsAmountChanged(count());
