@@ -231,9 +231,9 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 void ToolBarWidget::resizeEvent(QResizeEvent *event)
 {
 	QToolBar::resizeEvent(event);
-	
+
 	QWidget *tabBar((m_identifier == ToolBarsManager::TabBar && m_mainWindow) ? m_mainWindow->getTabBar() : nullptr);
-	
+
 	if (tabBar)
 	{
 		QTimer::singleShot(200, tabBar, SLOT(updateSize()));
@@ -593,7 +593,7 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 
 				break;
 		}
-		
+
 		QTimer::singleShot(200, tabBar, SLOT(updateSize()));
 	}
 }
