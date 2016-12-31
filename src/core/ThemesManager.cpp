@@ -23,6 +23,8 @@
 #include "SettingsManager.h"
 #include "../ui/Style.h"
 
+#include <QtCore/QDir>
+#include <QtCore/QFile>
 #include <QtGui/QIcon>
 #include <QtWidgets/QStyleFactory>
 
@@ -30,11 +32,14 @@ namespace Otter
 {
 
 ThemesManager* ThemesManager::m_instance(nullptr);
+QString ThemesManager::m_iconThemePath(QLatin1String(":/icons/"));
 bool ThemesManager::m_useSystemIconTheme(false);
 
 ThemesManager::ThemesManager(QObject *parent) : QObject(parent)
 {
 	m_useSystemIconTheme = SettingsManager::getValue(SettingsManager::Interface_UseSystemIconThemeOption).toBool();
+
+	optionChanged(SettingsManager::Interface_IconThemePathOption, SettingsManager::getValue(SettingsManager::Interface_IconThemePathOption));
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
 }
@@ -49,11 +54,39 @@ void ThemesManager::createInstance(QObject *parent)
 
 void ThemesManager::optionChanged(int identifier, const QVariant &value)
 {
-	if (identifier ==  SettingsManager::Interface_UseSystemIconThemeOption && m_useSystemIconTheme != value.toBool())
+	switch (identifier)
 	{
-		m_useSystemIconTheme = value.toBool();
+		case SettingsManager::Interface_IconThemePathOption:
+			{
+				QString path(value.toString());
 
-		emit iconSetChanged();
+				if (path.isEmpty())
+				{
+					path = QLatin1String(":/icons/");
+				}
+				else if (!path.endsWith(QDir::separator()))
+				{
+					path.append(QDir::separator());
+				}
+
+				if (path != m_iconThemePath)
+				{
+					m_iconThemePath = path;
+
+					emit iconThemeChanged();
+				}
+			}
+
+			break;
+		case SettingsManager::Interface_UseSystemIconThemeOption:
+			if (value.toBool() != m_useSystemIconTheme)
+			{
+				m_useSystemIconTheme = value.toBool();
+
+				emit iconThemeChanged();
+			}
+		default:
+			break;
 	}
 }
 
@@ -87,7 +120,15 @@ QIcon ThemesManager::getIcon(const QString &name, bool fromTheme)
 		return QIcon::fromTheme(name);
 	}
 
-	return QIcon(QStringLiteral(":/icons/%1.png").arg(name));
+	const QString iconPath(m_iconThemePath + name);
+	const QString svgPath(iconPath + QLatin1String(".svg"));
+
+	if (QFile::exists(svgPath))
+	{
+		return QIcon(svgPath);
+	}
+
+	return QIcon(iconPath + QLatin1String(".png"));
 }
 
 }

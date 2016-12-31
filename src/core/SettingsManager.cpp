@@ -163,6 +163,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(History_RememberDownloadsOption, true, BooleanType);
 	registerOption(History_StoreFaviconsOption, true, BooleanType);
 	registerOption(Interface_DateTimeFormatOption, QString(), StringType);
+	registerOption(Interface_IconThemePathOption, QString(), PathType);
 	registerOption(Interface_LastTabClosingActionOption, QLatin1String("openTab"), EnumerationType, QStringList({QLatin1String("openTab"), QLatin1String("closeWindow"), QLatin1String("closeWindowIfNotLast"), QLatin1String("doNothing")}));
 	registerOption(Interface_LockToolBarsOption, false, BooleanType);
 	registerOption(Interface_MaximizeNewWindowsOption, true, BooleanType);

@@ -143,6 +143,7 @@ public:
 		History_RememberDownloadsOption,
 		History_StoreFaviconsOption,
 		Interface_DateTimeFormatOption,
+		Interface_IconThemePathOption,
 		Interface_LastTabClosingActionOption,
 		Interface_LockToolBarsOption,
 		Interface_MaximizeNewWindowsOption,

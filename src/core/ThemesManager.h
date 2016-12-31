@@ -46,10 +46,11 @@ protected slots:
 
 private:
 	static ThemesManager *m_instance;
+	static QString m_iconThemePath;
 	static bool m_useSystemIconTheme;
 
 signals:
-	void iconSetChanged();
+	void iconThemeChanged();
 	void widgetStyleChanged();
 };
 
