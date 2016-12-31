@@ -133,7 +133,7 @@ void MenuBarWidget::reload()
 
 	if (needsLeftToolbar && !m_leftToolBar)
 	{
-		m_leftToolBar = new ToolBarWidget(-1, m_mainWindow->getWorkspace()->getActiveWindow(), this);
+		m_leftToolBar = new ToolBarWidget(ToolBarsManager::MenuBar, m_mainWindow->getWorkspace()->getActiveWindow(), this);
 
 		setCornerWidget(m_leftToolBar, Qt::TopLeftCorner);
 	}
@@ -147,7 +147,7 @@ void MenuBarWidget::reload()
 
 	if (needsRightToolbar && !m_rightToolBar)
 	{
-		m_rightToolBar = new ToolBarWidget(-1, m_mainWindow->getWorkspace()->getActiveWindow(), this);
+		m_rightToolBar = new ToolBarWidget(ToolBarsManager::MenuBar, m_mainWindow->getWorkspace()->getActiveWindow(), this);
 
 		setCornerWidget(m_rightToolBar, Qt::TopRightCorner);
 	}

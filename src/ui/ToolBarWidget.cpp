@@ -124,7 +124,7 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 
 	layout()->setContentsMargins(0, 0, 0, 0);
 
-	if (identifier >= 0)
+	if (identifier >= 0 && identifier != ToolBarsManager::MenuBar)
 	{
 		setToolBarLocked(ToolBarsManager::areToolBarsLocked());
 		reload();
