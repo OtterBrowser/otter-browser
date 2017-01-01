@@ -1562,7 +1562,7 @@ Wykładnik: %2</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="52"/>
         <source>Domain specific only</source>
-        <translation>Tylko dotyczące konkretnych domen</translation>
+        <translation>Tylko w określonych domenach</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="53"/>
