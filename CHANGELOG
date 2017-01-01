@@ -1,4 +1,4 @@
-0.9.12 (????-??-??):
+0.9.12 (2017-01-01):
 - greatly improved tab bar:
 -- allow to detach tabs by dragging them away;
 -- allow to drop URLs and tabs from other windows;
@@ -9,6 +9,15 @@
 -- decreased default tab padding;
 -- tab text is no longer centered horizontally;
 -- fixed status tip messages while rearranging tabs;
+- improved KDE5 and Unity integration:
+-- added support for progress information;
+-- added support for desktop actions;
+- several MacOS X specific fixes and improvements:
+-- improved rendering of platform style;
+-- added dock icon menu;
+-- added support for listing applications associated with given MIME type;
+- added support for Windows jump list;
+- added fullscreen support for QtWebKit backend;
 - open file path is saved;
 - improved RTL support in address and search fields;
 - many other fixes and improvements.
