@@ -12,11 +12,11 @@ project(otter-browser)
 
 set(MAJOR_VERSION "0")
 set(MINOR_VERSION "9")
-set(PATCH_VERSION "12")
+set(PATCH_VERSION "91")
 
 add_definitions(-DOTTER_VERSION_MAIN="${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}")
 add_definitions(-DOTTER_VERSION_WEEKLY=" ")
-add_definitions(-DOTTER_VERSION_CONTEXT=" beta 12")
+add_definitions(-DOTTER_VERSION_CONTEXT="-dev")
 add_definitions(-DOTTER_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}")
 
 if (EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
