@@ -635,7 +635,7 @@ void Application::handleNewConnection()
 	{
 		if (!window || !SettingsManager::getValue(SettingsManager::Browser_OpenLinksInNewTabOption).toBool() || (isPrivate && !window->getWindowsManager()->isPrivate()))
 		{
-			window = createWindow(isPrivate ? PrivateFlag : NoFlags);
+			createWindow(isPrivate ? PrivateFlag : NoFlags);
 		}
 	}
 	else

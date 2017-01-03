@@ -38,8 +38,8 @@ ContentBlockingInformationWidget::ContentBlockingInformationWidget(Window *windo
 	m_window(window),
 	m_elementsMenu(nullptr),
 	m_profilesMenu(nullptr),
-	m_isContentBlockingEnabled(false),
-	m_amount(0)
+	m_amount(0),
+	m_isContentBlockingEnabled(false)
 {
 	QMenu *menu(new QMenu(this));
 
