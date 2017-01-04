@@ -380,9 +380,9 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::loadSearchEng
 				{
 					const QString data(reader.readElementText());
 
-					if (data.startsWith(QLatin1String("data:image")))
+					if (data.startsWith(QLatin1String("data:image/")))
 					{
-						searchEngine.icon = QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8()), "png")));
+						searchEngine.icon = QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8()))));
 					}
 					else
 					{
