@@ -411,6 +411,15 @@ void PreferencesSearchPageWidget::handleSearchEngineUpdate(bool isSuccess)
 				{
 					m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::DisplayRole);
 					m_ui->searchViewWidget->setData(index, searchEngine.description, Qt::ToolTipRole);
+
+					if (searchEngine.icon.isNull())
+					{
+						m_ui->searchViewWidget->setData(index, QColor(Qt::transparent), Qt::DecorationRole);
+					}
+					else
+					{
+						m_ui->searchViewWidget->setData(index, searchEngine.icon, Qt::DecorationRole);
+					}
 				}
 
 				m_ui->searchViewWidget->setData(index, false, IsUpdatingRole);
@@ -583,15 +592,14 @@ QStringList PreferencesSearchPageWidget::getKeywords(const QAbstractItemModel *m
 QList<QStandardItem*> PreferencesSearchPageWidget::createRow(const SearchEnginesManager::SearchEngineDefinition &searchEngine) const
 {
 	QList<QStandardItem*> items({new QStandardItem(searchEngine.icon, searchEngine.title), new QStandardItem(searchEngine.keyword)});
-	items[0]->setData(QColor(Qt::transparent), Qt::DecorationRole);
 	items[0]->setData(searchEngine.identifier, IdentifierRole);
 	items[0]->setToolTip(searchEngine.description);
 	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
-	if (!searchEngine.icon.isNull())
+	if (searchEngine.icon.isNull())
 	{
-		items[0]->setIcon(searchEngine.icon);
+		items[0]->setData(QColor(Qt::transparent), Qt::DecorationRole);
 	}
 
 	return items;
