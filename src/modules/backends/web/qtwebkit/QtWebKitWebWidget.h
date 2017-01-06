@@ -81,6 +81,7 @@ public:
 	bool isAudible() const;
 	bool isAudioMuted() const;
 #endif
+	bool isFullScreen() const;
 	bool isPrivate() const;
 	bool findInPage(const QString &text, FindFlags flags = NoFlagsFind);
 	bool eventFilter(QObject *object, QEvent *event);
@@ -191,6 +192,7 @@ private:
 	int m_transfersTimer;
 	bool m_canLoadPlugins;
 	bool m_isAudioMuted;
+	bool m_isFullScreen;
 	bool m_isTyped;
 	bool m_isNavigating;
 

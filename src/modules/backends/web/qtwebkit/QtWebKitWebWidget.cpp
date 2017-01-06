@@ -89,6 +89,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	m_transfersTimer(0),
 	m_canLoadPlugins(false),
 	m_isAudioMuted(false),
+	m_isFullScreen(false),
 	m_isTyped(false),
 	m_isNavigating(false)
 {
@@ -755,6 +756,10 @@ void QtWebKitWebWidget::handleFullScreenRequest(QWebFullScreenRequest request)
 
 		emit requestedPermission(FullScreenFeature, request.origin(), true);
 	}
+
+	m_isFullScreen = request.toggleOn();
+
+	emit isFullScreenChanged(m_isFullScreen);
 }
 #endif
 
@@ -2661,6 +2666,11 @@ bool QtWebKitWebWidget::isAudioMuted() const
 	return m_isAudioMuted;
 }
 #endif
+
+bool QtWebKitWebWidget::isFullScreen() const
+{
+	return m_isFullScreen;
+}
 
 bool QtWebKitWebWidget::isPrivate() const
 {

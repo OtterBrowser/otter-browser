@@ -60,6 +60,7 @@ public:
 	bool isAudible() const;
 	bool isAudioMuted() const;
 #endif
+	bool isFullScreen() const;
 	bool isPrivate() const;
 	bool findInPage(const QString &text, FindFlags flags = NoFlagsFind);
 	bool eventFilter(QObject *object, QEvent *event);
@@ -130,6 +131,7 @@ private:
 	int m_documentLoadingProgress;
 	int m_scrollTimer;
 	bool m_isEditing;
+	bool m_isFullScreen;
 	bool m_isTyped;
 
 friend class QtWebEnginePage;

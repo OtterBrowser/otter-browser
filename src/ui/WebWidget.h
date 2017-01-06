@@ -207,6 +207,7 @@ public:
 	virtual bool hasSelection() const;
 	virtual bool isAudible() const;
 	virtual bool isAudioMuted() const;
+	virtual bool isFullScreen() const;
 	virtual bool isPrivate() const = 0;
 	virtual bool findInPage(const QString &text, FindFlags flags = NoFlagsFind) = 0;
 
@@ -322,6 +323,7 @@ signals:
 	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
 	void requestBlocked(const NetworkManager::ResourceInformation &request);
 	void zoomChanged(int zoom);
+	void isFullScreenChanged(bool isFullScreen);
 };
 
 }

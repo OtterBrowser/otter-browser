@@ -1767,4 +1767,9 @@ bool WebWidget::isAudioMuted() const
 	return false;
 }
 
+bool WebWidget::isFullScreen() const
+{
+	return false;
+}
+
 }
