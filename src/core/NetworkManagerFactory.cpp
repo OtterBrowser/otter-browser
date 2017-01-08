@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -205,32 +205,55 @@ void NetworkManagerFactory::loadUserAgents()
 
 	for (int i = 0; i < userAgents.count(); ++i)
 	{
-		if (userAgents.at(i).isObject())
-		{
-			const QJsonObject object(userAgents.at(i).toObject());
-			const QString identifier(object.value(QLatin1String("identifier")).toString());
-
-			if (!m_userAgents.contains(identifier))
-			{
-				UserAgentInformation userAgent;
-				userAgent.identifier = identifier;
-				userAgent.title = object.value(QLatin1String("title")).toString();
-				userAgent.value = object.value(QLatin1String("value")).toString();
-
-				m_userAgents[identifier] = userAgent;
-			}
-
-			root.children.append(identifier);
-		}
-		else if (userAgents.at(i).isString() && userAgents.at(i).toString() == QLatin1String("separator"))
-		{
-			root.children.append(QString());
-		}
+		readUserAgent(userAgents.at(i), &root);
 	}
 
 	m_userAgents[QLatin1String("root")] = root;
 
 	file.close();
+}
+
+void NetworkManagerFactory::readUserAgent(const QJsonValue &value, UserAgentInformation *parent)
+{
+	if (!value.isObject())
+	{
+		if (value.isString() && value.toString() == QLatin1String("separator"))
+		{
+			parent->children.append(QString());
+		}
+
+		return;
+	}
+
+	const QJsonObject object(value.toObject());
+	const QString identifier(object.value(QLatin1String("identifier")).toString());
+
+	if (!m_userAgents.contains(identifier))
+	{
+		UserAgentInformation userAgent;
+		userAgent.identifier = identifier;
+		userAgent.title = object.value(QLatin1String("title")).toString();
+
+		if (object.keys().contains(QLatin1String("children")))
+		{
+			userAgent.isFolder = true;
+
+			const QJsonArray children(object.value(QLatin1String("children")).toArray());
+
+			for (int i = 0; i < children.count(); ++i)
+			{
+				readUserAgent(children.at(i), &userAgent);
+			}
+		}
+		else
+		{
+			userAgent.value = object.value(QLatin1String("value")).toString();
+		}
+
+		m_userAgents[identifier] = userAgent;
+	}
+
+	parent->children.append(identifier);
 }
 
 void NetworkManagerFactory::notifyAuthenticated(QAuthenticator *authenticator, bool wasAccepted)
