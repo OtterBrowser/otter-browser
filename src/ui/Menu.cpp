@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -662,22 +662,26 @@ void Menu::populateUserAgentMenu()
 		clear();
 	}
 
+	const bool isRoot(!menuAction() || menuAction()->data().toString().isEmpty());
 	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-	const QStringList userAgents(NetworkManagerFactory::getUserAgents());
 	const QString userAgent(mainWindow ? mainWindow->getWindowsManager()->getOption(SettingsManager::Network_UserAgentOption).toString() : QString());
+	const QStringList userAgents(isRoot ? NetworkManagerFactory::getUserAgents() : NetworkManagerFactory::getUserAgent(menuAction()->data().toString()).children);
 
 	m_actionGroup = new QActionGroup(this);
 	m_actionGroup->setExclusive(true);
 
-	Action *defaultAction(addAction());
-	defaultAction->setData(QLatin1String("default"));
-	defaultAction->setCheckable(true);
-	defaultAction->setChecked(userAgent == QLatin1String("default"));
-	defaultAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Default User Agent"));
+	if (isRoot)
+	{
+		Action *defaultAction(addAction());
+		defaultAction->setData(QLatin1String("default"));
+		defaultAction->setCheckable(true);
+		defaultAction->setChecked(userAgent == QLatin1String("default"));
+		defaultAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Default User Agent"));
 
-	m_actionGroup->addAction(defaultAction);
+		m_actionGroup->addAction(defaultAction);
 
-	addSeparator();
+		addSeparator();
+	}
 
 	for (int i = 0; i < userAgents.count(); ++i)
 	{
@@ -687,29 +691,45 @@ void Menu::populateUserAgentMenu()
 		}
 		else
 		{
+			const UserAgentInformation definition(NetworkManagerFactory::getUserAgent(userAgents.at(i)));
 			Action *action(addAction());
 			action->setData(userAgents.at(i));
-			action->setCheckable(true);
-			action->setChecked(userAgent == userAgents.at(i));
-			action->setText(Utils::elideText(NetworkManagerFactory::getUserAgent(userAgents.at(i)).getTitle(), this));
+			action->setText(Utils::elideText(definition.getTitle(), this));
+
+			if (definition.isFolder)
+			{
+				action->setIcon(ThemesManager::getIcon(QLatin1String("inode-directory")));
+
+				if (definition.children.count() > 0)
+				{
+					action->setMenu(new Menu(m_role, this));
+				}
+				else
+				{
+					action->setEnabled(false);
+				}
+			}
+			else
+			{
+				action->setCheckable(true);
+				action->setChecked(userAgent == userAgents.at(i));
+			}
 
 			m_actionGroup->addAction(action);
 		}
 	}
 
-	addSeparator();
-
-	Action *customAction(addAction());
-	customAction->setData(QLatin1String("custom"));
-	customAction->setCheckable(true);
-	customAction->setChecked(userAgent.startsWith(QLatin1String("custom;")));
-	customAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Custom User Agent…"));
-
-	m_actionGroup->addAction(customAction);
-
-	if (!m_actionGroup->checkedAction() && actions().count() > 2)
+	if (isRoot)
 	{
-		actions().first()->setChecked(true);
+		addSeparator();
+
+		Action *customAction(addAction());
+		customAction->setData(QLatin1String("custom"));
+		customAction->setCheckable(true);
+		customAction->setChecked(userAgent.startsWith(QLatin1String("custom;")));
+		customAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Custom User Agent…"));
+
+		m_actionGroup->addAction(customAction);
 	}
 }
 
