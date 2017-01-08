@@ -262,7 +262,7 @@ QString QtWebKitWebBackend::getUserAgent(const QString &pattern) const
 		return userAgent;
 	}
 
-	const UserAgentInformation userAgent(NetworkManagerFactory::getUserAgent(SettingsManager::getValue(SettingsManager::Network_UserAgentOption).toString()));
+	const UserAgentDefinition userAgent(NetworkManagerFactory::getUserAgent(SettingsManager::getValue(SettingsManager::Network_UserAgentOption).toString()));
 
 	return ((userAgent.value.isEmpty()) ? QString() : getUserAgent(userAgent.value));
 }

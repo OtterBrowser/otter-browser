@@ -209,7 +209,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 		}
 		else
 		{
-			const UserAgentInformation userAgent(NetworkManagerFactory::getUserAgent(userAgents.at(i)));
+			const UserAgentDefinition userAgent(NetworkManagerFactory::getUserAgent(userAgents.at(i)));
 
 			m_ui->userAgentComboBox->addItem(userAgent.getTitle(), userAgents.at(i));
 			m_ui->userAgentComboBox->setItemData((i + 1), userAgent.value, (Qt::UserRole + 1));
@@ -661,11 +661,11 @@ void PreferencesAdvancedPageWidget::updateDownloadsMode()
 
 void PreferencesAdvancedPageWidget::manageUserAgents()
 {
-	QList<UserAgentInformation> userAgents;
+	QList<UserAgentDefinition> userAgents;
 
 	for (int i = 1; i < m_ui->userAgentComboBox->count(); ++i)
 	{
-		UserAgentInformation userAgent;
+		UserAgentDefinition userAgent;
 		userAgent.identifier = m_ui->userAgentComboBox->itemData(i, Qt::UserRole).toString();
 		userAgent.title = m_ui->userAgentComboBox->itemText(i);
 		userAgent.value = m_ui->userAgentComboBox->itemData(i, (Qt::UserRole + 1)).toString();

@@ -45,7 +45,7 @@ NetworkManager* NetworkManagerFactory::m_networkManager(nullptr);
 NetworkCache* NetworkManagerFactory::m_cache(nullptr);
 CookieJar* NetworkManagerFactory::m_cookieJar(nullptr);
 QString NetworkManagerFactory::m_acceptLanguage;
-QMap<QString, UserAgentInformation> NetworkManagerFactory::m_userAgents;
+QMap<QString, UserAgentDefinition> NetworkManagerFactory::m_userAgents;
 NetworkManagerFactory::DoNotTrackPolicy NetworkManagerFactory::m_doNotTrackPolicy(NetworkManagerFactory::SkipTrackPolicy);
 QList<QSslCipher> NetworkManagerFactory::m_defaultCiphers;
 bool NetworkManagerFactory::m_canSendReferrer(true);
@@ -201,7 +201,7 @@ void NetworkManagerFactory::loadUserAgents()
 	}
 
 	const QJsonArray userAgents(QJsonDocument::fromJson(file.readAll()).array());
-	UserAgentInformation root;
+	UserAgentDefinition root;
 
 	for (int i = 0; i < userAgents.count(); ++i)
 	{
@@ -213,7 +213,7 @@ void NetworkManagerFactory::loadUserAgents()
 	file.close();
 }
 
-void NetworkManagerFactory::readUserAgent(const QJsonValue &value, UserAgentInformation *parent)
+void NetworkManagerFactory::readUserAgent(const QJsonValue &value, UserAgentDefinition *parent)
 {
 	if (!value.isObject())
 	{
@@ -230,7 +230,7 @@ void NetworkManagerFactory::readUserAgent(const QJsonValue &value, UserAgentInfo
 
 	if (!m_userAgents.contains(identifier))
 	{
-		UserAgentInformation userAgent;
+		UserAgentDefinition userAgent;
 		userAgent.identifier = identifier;
 		userAgent.title = object.value(QLatin1String("title")).toString();
 
@@ -321,11 +321,11 @@ QList<QSslCipher> NetworkManagerFactory::getDefaultCiphers()
 	return m_defaultCiphers;
 }
 
-UserAgentInformation NetworkManagerFactory::getUserAgent(const QString &identifier)
+UserAgentDefinition NetworkManagerFactory::getUserAgent(const QString &identifier)
 {
 	if (identifier.startsWith(QLatin1String("custom;")))
 	{
-		UserAgentInformation userAgent;
+		UserAgentDefinition userAgent;
 		userAgent.identifier = QLatin1String("custom");
 		userAgent.title = tr("Custom");
 		userAgent.value = identifier.mid(7);
@@ -340,7 +340,7 @@ UserAgentInformation NetworkManagerFactory::getUserAgent(const QString &identifi
 
 	if (identifier.isEmpty() || !m_userAgents.contains(identifier))
 	{
-		UserAgentInformation userAgent;
+		UserAgentDefinition userAgent;
 		userAgent.identifier = QLatin1String("default");
 		userAgent.title = tr("Default");
 		userAgent.value = QLatin1String("Mozilla/5.0 {platform} {engineVersion} {applicationVersion}");

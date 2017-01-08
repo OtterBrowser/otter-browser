@@ -30,17 +30,17 @@ namespace Ui
 	class UserAgentsManagerDialog;
 }
 
-struct UserAgentInformation;
+struct UserAgentDefinition;
 
 class UserAgentsManagerDialog : public Dialog
 {
 	Q_OBJECT
 
 public:
-	explicit UserAgentsManagerDialog(QList<UserAgentInformation> userAgents, QWidget *parent = nullptr);
+	explicit UserAgentsManagerDialog(QList<UserAgentDefinition> userAgents, QWidget *parent = nullptr);
 	~UserAgentsManagerDialog();
 
-	QList<UserAgentInformation> getUserAgents() const;
+	QList<UserAgentDefinition> getUserAgents() const;
 
 protected:
 	void changeEvent(QEvent *event);

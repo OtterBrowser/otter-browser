@@ -691,7 +691,7 @@ void Menu::populateUserAgentMenu()
 		}
 		else
 		{
-			const UserAgentInformation definition(NetworkManagerFactory::getUserAgent(userAgents.at(i)));
+			const UserAgentDefinition definition(NetworkManagerFactory::getUserAgent(userAgents.at(i)));
 			Action *action(addAction());
 			action->setData(userAgents.at(i));
 			action->setText(Utils::elideText(definition.getTitle(), this));

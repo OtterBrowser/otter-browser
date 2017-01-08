@@ -30,7 +30,7 @@
 namespace Otter
 {
 
-struct UserAgentInformation
+struct UserAgentDefinition
 {
 	QString identifier;
 	QString title;
@@ -75,7 +75,7 @@ public:
 	static QString getUserAgent();
 	static QStringList getUserAgents();
 	static QList<QSslCipher> getDefaultCiphers();
-	static UserAgentInformation getUserAgent(const QString &identifier);
+	static UserAgentDefinition getUserAgent(const QString &identifier);
 	static DoNotTrackPolicy getDoNotTrackPolicy();
 	static bool canSendReferrer();
 	static bool isWorkingOffline();
@@ -84,7 +84,7 @@ public:
 protected:
 	explicit NetworkManagerFactory(QObject *parent = nullptr);
 
-	static void readUserAgent(const QJsonValue &value, UserAgentInformation *parent);
+	static void readUserAgent(const QJsonValue &value, UserAgentDefinition *parent);
 
 protected slots:
 	void optionChanged(int identifier, const QVariant &value);
@@ -95,7 +95,7 @@ private:
 	static NetworkCache *m_cache;
 	static CookieJar *m_cookieJar;
 	static QString m_acceptLanguage;
-	static QMap<QString, UserAgentInformation> m_userAgents;
+	static QMap<QString, UserAgentDefinition> m_userAgents;
 	static QList<QSslCipher> m_defaultCiphers;
 	static DoNotTrackPolicy m_doNotTrackPolicy;
 	static bool m_canSendReferrer;
