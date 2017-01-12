@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -43,6 +43,12 @@
 namespace Otter
 {
 
+QtWebKitFrame::QtWebKitFrame(QWebFrame *frame, QtWebKitPage *parent) : QObject(parent),
+	m_frame(frame)
+{
+	connect(frame, SIGNAL(destroyed(QObject*)), this, SLOT(deleteLater()));
+}
+
 QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWidget *parent) : QWebPage(parent),
 	m_widget(parent),
 	m_networkManager(networkManager),
@@ -55,11 +61,12 @@ QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWi
 	updateStyleSheets();
 	optionChanged(SettingsManager::Interface_ShowScrollBarsOption);
 
-	connect(this->mainFrame(), SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
+	connect(this, SIGNAL(frameCreated(QWebFrame*)), this, SLOT(handleFrameCreation(QWebFrame*)));
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	connect(this, SIGNAL(consoleMessageReceived(MessageSource,MessageLevel,QString,int,QString)), this, SLOT(handleConsoleMessage(MessageSource,MessageLevel,QString,int,QString)));
 #endif
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
+	connect(mainFrame(), SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 }
 
 QtWebKitPage::QtWebKitPage() : QWebPage(),
@@ -182,6 +189,11 @@ void QtWebKitPage::applyContentBlockingRules(const QStringList &rules, bool remo
 			}
 		}
 	}
+}
+
+void QtWebKitPage::handleFrameCreation(QWebFrame *frame)
+{
+	new QtWebKitFrame(frame, this);
 }
 
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY

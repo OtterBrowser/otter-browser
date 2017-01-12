@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -30,8 +30,20 @@ namespace Otter
 {
 
 class QtWebKitNetworkManager;
+class QtWebKitPage;
 class QtWebKitWebWidget;
 class WebWidget;
+
+class QtWebKitFrame : public QObject
+{
+	Q_OBJECT
+
+public:
+	explicit QtWebKitFrame(QWebFrame *frame, QtWebKitPage *parent);
+
+private:
+	QWebFrame *m_frame;
+};
 
 class QtWebKitPage : public QWebPage
 {
@@ -73,6 +85,7 @@ protected slots:
 	void optionChanged(int identifier);
 	void pageLoadFinished();
 	void removePopup(const QUrl &url);
+	void handleFrameCreation(QWebFrame *frame);
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	void handleConsoleMessage(MessageSource category, MessageLevel level, const QString &message, int line, const QString &source);
 #endif
