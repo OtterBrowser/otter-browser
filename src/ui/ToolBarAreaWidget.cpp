@@ -91,8 +91,6 @@ void ToolBarAreaWidget::paintEvent(QPaintEvent *event)
 		return;
 	}
 
-	QPainter painter(this);
-
 	const bool isHorizontal(m_area == Qt::TopToolBarArea || m_area == Qt::BottomToolBarArea);
 	int lineOffset(4);
 
@@ -126,6 +124,8 @@ void ToolBarAreaWidget::paintEvent(QPaintEvent *event)
 	{
 		lineOffset = (width() - lineOffset);
 	}
+
+	QPainter painter(this);
 
 	Application::getStyle()->drawDropZone((isHorizontal ? QLine(0, lineOffset, width(), lineOffset) : QLine(lineOffset, 0, lineOffset, height())), &painter);
 }
