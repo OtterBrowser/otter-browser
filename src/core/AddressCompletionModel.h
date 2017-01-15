@@ -64,9 +64,9 @@ public:
 		TextRole = Qt::DisplayRole,
 		UrlRole = Qt::StatusTipRole,
 		TitleRole = Qt::UserRole,
-		MatchRole = (Qt::UserRole + 1),
-		KeywordRole = (Qt::UserRole + 2),
-		TypeRole = (Qt::UserRole + 3)
+		MatchRole,
+		KeywordRole,
+		TypeRole
 	};
 
 	struct CompletionEntry

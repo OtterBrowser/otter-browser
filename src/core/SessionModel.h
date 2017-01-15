@@ -45,12 +45,12 @@ public:
 		TitleRole = Qt::DisplayRole,
 		UrlRole = Qt::StatusTipRole,
 		IdentifierRole = Qt::UserRole,
-		TypeRole = (Qt::UserRole + 1),
-		IndexRole = (Qt::UserRole + 2),
-		LastActivityRole = (Qt::UserRole + 3),
-		ZoomRole = (Qt::UserRole + 4),
-		PinnedRole = (Qt::UserRole + 5),
-		SettingsRole = (Qt::UserRole + 6)
+		TypeRole,
+		IndexRole,
+		LastActivityRole,
+		ZoomRole,
+		PinnedRole,
+		SettingsRole
 	};
 
 	explicit SessionModel(const QString &path, QObject *parent);

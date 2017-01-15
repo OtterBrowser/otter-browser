@@ -65,13 +65,13 @@ public:
 		UrlRole = Qt::StatusTipRole,
 		DescriptionRole = Qt::ToolTipRole,
 		IdentifierRole = Qt::UserRole,
-		TypeRole = (Qt::UserRole + 1),
-		KeywordRole = (Qt::UserRole + 2),
-		TimeAddedRole = (Qt::UserRole + 3),
-		TimeModifiedRole = (Qt::UserRole + 4),
-		TimeVisitedRole = (Qt::UserRole + 5),
-		VisitsRole = (Qt::UserRole + 6),
-		IsTrashedRole = (Qt::UserRole + 7),
+		TypeRole,
+		KeywordRole,
+		TimeAddedRole,
+		TimeModifiedRole,
+		TimeVisitedRole,
+		VisitsRole,
+		IsTrashedRole,
 		UserRole
 	};
 
