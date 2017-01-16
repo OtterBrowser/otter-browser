@@ -471,7 +471,7 @@ elseif (APPLE)
 	set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${MAJOR_VERSION}.${MINOR_VERSION})
 	set(MACOSX_BUNDLE_ICON_FILE otter-browser.icns)
 	set(MACOSX_BUNDLE_GUI_IDENTIFIER "org.otter-browser.otter-browser")
-	set(MACOSX_BUNDLE_COPYRIGHT "Copyright (C) 2013-2016 Otter Browser Team. All rights reserved.")
+	set(MACOSX_BUNDLE_COPYRIGHT "Copyright (C) 2013-2017 Otter Browser Team. All rights reserved.")
 	set(otter_src
 		${otter_src}
 		src/modules/platforms/mac/MacPlatformIntegration.mm
