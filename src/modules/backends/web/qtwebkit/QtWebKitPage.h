@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -39,10 +39,17 @@ class QtWebKitFrame : public QObject
 	Q_OBJECT
 
 public:
-	explicit QtWebKitFrame(QWebFrame *frame, QtWebKitPage *parent);
+	explicit QtWebKitFrame(QWebFrame *frame, QtWebKitWebWidget *parent);
+
+protected:
+	void applyContentBlockingRules(const QStringList &rules, bool remove);
+
+protected slots:
+	void handleLoadFinished();
 
 private:
 	QWebFrame *m_frame;
+	QtWebKitWebWidget *m_widget;
 };
 
 class QtWebKitPage : public QWebPage
@@ -68,7 +75,6 @@ protected:
 	QtWebKitPage();
 
 	void markAsPopup();
-	void applyContentBlockingRules(const QStringList &rules, bool remove);
 	void javaScriptAlert(QWebFrame *frame, const QString &message);
 #ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 	void javaScriptConsoleMessage(const QString &note, int line, const QString &source);

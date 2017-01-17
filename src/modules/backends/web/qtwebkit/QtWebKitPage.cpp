@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -43,10 +43,88 @@
 namespace Otter
 {
 
-QtWebKitFrame::QtWebKitFrame(QWebFrame *frame, QtWebKitPage *parent) : QObject(parent),
-	m_frame(frame)
+QtWebKitFrame::QtWebKitFrame(QWebFrame *frame, QtWebKitWebWidget *parent) : QObject(parent),
+	m_frame(frame),
+	m_widget(parent)
 {
 	connect(frame, SIGNAL(destroyed(QObject*)), this, SLOT(deleteLater()));
+	connect(frame, SIGNAL(loadFinished(bool)), this, SLOT(handleLoadFinished()));
+}
+
+void QtWebKitFrame::applyContentBlockingRules(const QStringList &rules, bool remove)
+{
+	const QWebElement document(m_frame->documentElement());
+	const QString value(remove ? QLatin1String("none !important") : QString());
+
+	for (int i = 0; i < rules.count(); ++i)
+	{
+		const QWebElementCollection elements(document.findAll(rules.at(i)));
+
+		for (int j = 0; j < elements.count(); ++j)
+		{
+			QWebElement element(elements.at(j));
+
+			if (!element.isNull())
+			{
+				element.setStyleProperty(QLatin1String("display"), value);
+			}
+		}
+	}
+}
+
+void QtWebKitFrame::handleLoadFinished()
+{
+	if (!m_widget || !m_widget->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, m_widget->getUrl()).toBool())
+	{
+		return;
+	}
+
+	const QUrl url(m_widget->getUrl());
+	const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption, url).toStringList()));
+
+	if (!profiles.isEmpty() && ContentBlockingManager::getCosmeticFiltersMode() != ContentBlockingManager::NoFiltersMode)
+	{
+		const ContentBlockingManager::CosmeticFiltersMode mode(ContentBlockingManager::checkUrl(profiles, url, url, NetworkManager::OtherType).comesticFiltersMode);
+
+		if (mode != ContentBlockingManager::NoFiltersMode)
+		{
+			if (mode != ContentBlockingManager::DomainOnlyFiltersMode)
+			{
+				applyContentBlockingRules(ContentBlockingManager::getStyleSheet(profiles), true);
+			}
+
+			const QStringList domainList(ContentBlockingManager::createSubdomainList(url.host()));
+
+			for (int i = 0; i < domainList.count(); ++i)
+			{
+				applyContentBlockingRules(ContentBlockingManager::getStyleSheetBlackList(domainList.at(i), profiles), true);
+				applyContentBlockingRules(ContentBlockingManager::getStyleSheetWhiteList(domainList.at(i), profiles), false);
+			}
+		}
+	}
+
+	const QStringList blockedRequests(m_widget->getBlockedElements());
+
+	if (blockedRequests.count() > 0)
+	{
+		const QWebElementCollection elements(m_frame->documentElement().findAll(QLatin1String("[src]")));
+
+		for (int i = 0; i < elements.count(); ++i)
+		{
+			QWebElement element(elements.at(i));
+			const QUrl url(element.attribute(QLatin1String("src")));
+
+			for (int j = 0; j < blockedRequests.count(); ++j)
+			{
+				if (url.matches(QUrl(blockedRequests[j]), QUrl::None) || blockedRequests[j].endsWith(url.url()))
+				{
+					element.setStyleProperty(QLatin1String("display"), QLatin1String("none !important"));
+
+					break;
+				}
+			}
+		}
+	}
 }
 
 QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWidget *parent) : QWebPage(parent),
@@ -60,6 +138,7 @@ QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWi
 	setForwardUnsupportedContent(true);
 	updateStyleSheets();
 	optionChanged(SettingsManager::Interface_ShowScrollBarsOption);
+	handleFrameCreation(mainFrame());
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
 	connect(this, SIGNAL(frameCreated(QWebFrame*)), this, SLOT(handleFrameCreation(QWebFrame*)));
@@ -98,57 +177,6 @@ void QtWebKitPage::pageLoadFinished()
 	m_ignoreJavaScriptPopups = false;
 
 	updateStyleSheets();
-
-	if (!m_widget || !m_widget->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, m_widget->getUrl()).toBool())
-	{
-		return;
-	}
-
-	const QUrl url(m_widget->getUrl());
-	const QVector<int> profiles(ContentBlockingManager::getProfileList(m_widget->getOption(SettingsManager::ContentBlocking_ProfilesOption, url).toStringList()));
-
-	if (!profiles.isEmpty() && ContentBlockingManager::getCosmeticFiltersMode() != ContentBlockingManager::NoFiltersMode)
-	{
-		const ContentBlockingManager::CosmeticFiltersMode mode(ContentBlockingManager::checkUrl(profiles, url, url, NetworkManager::OtherType).comesticFiltersMode);
-
-		if (mode != ContentBlockingManager::NoFiltersMode)
-		{
-			if (mode != ContentBlockingManager::DomainOnlyFiltersMode)
-			{
-				applyContentBlockingRules(ContentBlockingManager::getStyleSheet(profiles), true);
-			}
-
-			const QStringList domainList(ContentBlockingManager::createSubdomainList(url.host()));
-
-			for (int i = 0; i < domainList.count(); ++i)
-			{
-				applyContentBlockingRules(ContentBlockingManager::getStyleSheetBlackList(domainList.at(i), profiles), true);
-				applyContentBlockingRules(ContentBlockingManager::getStyleSheetWhiteList(domainList.at(i), profiles), false);
-			}
-		}
-	}
-
-	const QStringList blockedRequests(m_widget->getBlockedElements());
-
-	if (blockedRequests.count() > 0)
-	{
-		const QWebElementCollection elements(mainFrame()->documentElement().findAll(QLatin1String("[src]")));
-
-		for (int i = 0; i < blockedRequests.count(); ++i)
-		{
-			for (int j = 0; j < elements.count(); ++j)
-			{
-				QWebElement element(elements.at(j));
-
-				if (element.attribute(QLatin1String("src")) == blockedRequests[i]) ///NOTE: Consider comparing them as URLs
-				{
-					element.setStyleProperty(QLatin1String("display"), QLatin1String("none !important"));
-
-					break;
-				}
-			}
-		}
-	}
 }
 
 void QtWebKitPage::removePopup(const QUrl &url)
@@ -170,30 +198,9 @@ void QtWebKitPage::markAsPopup()
 	m_isPopup = true;
 }
 
-void QtWebKitPage::applyContentBlockingRules(const QStringList &rules, bool remove)
-{
-	const QWebElement document(mainFrame()->documentElement());
-	const QString value(remove ? QLatin1String("none !important") : QString());
-
-	for (int i = 0; i < rules.count(); ++i)
-	{
-		const QWebElementCollection elements(document.findAll(rules.at(i)));
-
-		for (int j = 0; j < elements.count(); ++j)
-		{
-			QWebElement element(elements.at(j));
-
-			if (!element.isNull())
-			{
-				element.setStyleProperty(QLatin1String("display"), value);
-			}
-		}
-	}
-}
-
 void QtWebKitPage::handleFrameCreation(QWebFrame *frame)
 {
-	new QtWebKitFrame(frame, this);
+	new QtWebKitFrame(frame, m_widget);
 }
 
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
