@@ -75,7 +75,7 @@ void UpdateChecker::runUpdateCheck()
 	const QJsonObject updateData(QJsonDocument::fromJson(m_networkReply->readAll()).object());
 	const QJsonArray channels(updateData.value(QLatin1String("channels")).toArray());
 	const QString platform(Application::getPlatformIntegration()->getPlatform());
-	const int mainVersion(QCoreApplication::applicationVersion().remove(QChar('.')).toInt());
+	const int mainVersion(QCoreApplication::applicationVersion().remove(QLatin1Char('.')).toInt());
 	const int subVersion(QString(OTTER_VERSION_WEEKLY).toInt());
 	QList<UpdateInformation> availableUpdates;
 
@@ -89,7 +89,7 @@ void UpdateChecker::runUpdateCheck()
 
 			if (activeChannels.contains(identifier, Qt::CaseInsensitive) || (!m_isInBackground && activeChannels.isEmpty()))
 			{
-				const int channelMainVersion(channelVersion.trimmed().remove(QChar('.')).toInt());
+				const int channelMainVersion(channelVersion.trimmed().remove(QLatin1Char('.')).toInt());
 
 				if (channelMainVersion == 0)
 				{
