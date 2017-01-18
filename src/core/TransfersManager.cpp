@@ -605,7 +605,7 @@ QString Transfer::getSuggestedFileName()
 
 	if (m_reply->hasRawHeader(QStringLiteral("Content-Disposition").toLatin1()))
 	{
-		fileName = QRegularExpression(QLatin1String(" filename=[\"]?([^\"]+)[\"]?(; )?")).match(QString(m_reply->rawHeader(QStringLiteral("Content-Disposition").toLatin1()))).captured(1);
+		fileName = QRegularExpression(QLatin1String("[\\s;]filename=[\"]?([^\"]+)[\"]?[\\s;]?")).match(QString(m_reply->rawHeader(QStringLiteral("Content-Disposition").toLatin1()))).captured(1);
 
 		if (fileName.contains(QLatin1String("; ")))
 		{
