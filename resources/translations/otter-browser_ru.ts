@@ -3839,7 +3839,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="36"/>
         <source>Ask</source>
-        <translation>Справшивать</translation>
+        <translation>Спрашивать</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesContentPageWidget.cpp" line="37"/>
@@ -4406,7 +4406,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/widgets/progressInformation/ProgressInformationWidget.cpp" line="69"/>
         <source>Document: %p%</source>
-        <translation>Документ: %р%</translation>
+        <translation>Документ: %p%</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/progressInformation/ProgressInformationWidget.cpp" line="111"/>
@@ -6760,7 +6760,7 @@ Click Install button to restart browser and install the update or close this dia
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="216"/>
         <source>Ask</source>
-        <translation>Справшивать</translation>
+        <translation>Спрашивать</translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="245"/>

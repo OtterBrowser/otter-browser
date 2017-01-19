@@ -11,11 +11,11 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 * GNU General Public License for more details.
 *
 * You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 **************************************************************************/
 
@@ -207,6 +207,7 @@ public:
 	virtual bool hasSelection() const;
 	virtual bool isAudible() const;
 	virtual bool isAudioMuted() const;
+	virtual bool isFullScreen() const;
 	virtual bool isPrivate() const = 0;
 	virtual bool findInPage(const QString &text, FindFlags flags = NoFlagsFind) = 0;
 
@@ -322,6 +323,7 @@ signals:
 	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
 	void requestBlocked(const NetworkManager::ResourceInformation &request);
 	void zoomChanged(int zoom);
+	void isFullScreenChanged(bool isFullScreen);
 };
 
 }

@@ -9,11 +9,11 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 * GNU General Public License for more details.
 *
 * You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 **************************************************************************/
 
@@ -27,7 +27,7 @@
 namespace Otter
 {
 
-UserAgentsManagerDialog::UserAgentsManagerDialog(QList<UserAgentInformation> userAgents, QWidget *parent) : Dialog(parent),
+UserAgentsManagerDialog::UserAgentsManagerDialog(QList<UserAgentDefinition> userAgents, QWidget *parent) : Dialog(parent),
 	m_ui(new Ui::UserAgentsManagerDialog)
 {
 	m_ui->setupUi(this);
@@ -94,9 +94,9 @@ void UserAgentsManagerDialog::updateUserAgentActions()
 	m_ui->removeButton->setEnabled(currentRow >= 0 && currentRow < m_ui->userAgentsView->getRowCount());
 }
 
-QList<UserAgentInformation> UserAgentsManagerDialog::getUserAgents() const
+QList<UserAgentDefinition> UserAgentsManagerDialog::getUserAgents() const
 {
-	QList<UserAgentInformation> userAgents;
+	QList<UserAgentDefinition> userAgents;
 	QStringList identifiers;
 
 	for (int i = 0; i < m_ui->userAgentsView->getRowCount(); ++i)
@@ -110,7 +110,7 @@ QList<UserAgentInformation> UserAgentsManagerDialog::getUserAgents() const
 
 		identifiers.append(identifier);
 
-		UserAgentInformation userAgent;
+		UserAgentDefinition userAgent;
 		userAgent.identifier = identifier;
 		userAgent.title = m_ui->userAgentsView->getIndex(i, 0).data(Qt::DisplayRole).toString();
 		userAgent.value = m_ui->userAgentsView->getIndex(i, 1).data(Qt::DisplayRole).toString();

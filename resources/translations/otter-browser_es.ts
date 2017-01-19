@@ -182,7 +182,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="103"/>
         <source>Select Files</source>
-        <translation type="unfinished"/>
+        <translation>Seleccionar ficheros</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="103"/>
@@ -192,23 +192,24 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="139"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Pregunta</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="140"/>
         <source>User Script with this name already exists:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Ya existe un script de usuario con este nombre:
+%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="141"/>
         <source>Do you want to replace it?</source>
-        <translation type="unfinished"/>
+        <translation>¿Quiere reemplazarlo?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="148"/>
         <source>Apply to all</source>
-        <translation type="unfinished"/>
+        <translation>Aplicar a todos</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="193"/>
@@ -219,12 +220,14 @@
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="193"/>
         <source>Failed to import following User Script file(s):
 %1</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>No se pudo importar el siguiente fichero de script de usuario:
+%1</numerusform><numerusform>No se pudieron importar los siguientes ficheros de scripts de usuario:
+%1</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="324"/>
         <source>Reload Addon</source>
-        <translation type="unfinished"/>
+        <translation>Volver a cargar el complemento</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="326"/>
@@ -517,7 +520,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="101"/>
         <source>Remember password</source>
-        <translation type="unfinished"/>
+        <translation>Recordar contraseña</translation>
     </message>
 </context>
 <context>
@@ -555,7 +558,7 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="103"/>
         <source>Last visit:</source>
-        <translation type="unfinished"/>
+        <translation>Última visita:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="110"/>
@@ -1064,17 +1067,17 @@ Are you sure that you want to restore this session anyway?</source>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
         <source>DER encoded X.509 certificates (*.der)</source>
-        <translation type="unfinished"/>
+        <translation>Certificados X.509 con codificación DER (*.der)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
         <source>PEM encoded X.509 certificates (*.pem)</source>
-        <translation type="unfinished"/>
+        <translation>Certificados X.509 con codificación PEM (*.pem)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
         <source>Text files (*.txt)</source>
-        <translation type="unfinished"/>
+        <translation>Ficheros de texto (*.txt)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="122"/>
@@ -1288,7 +1291,7 @@ Exponente: %2</translation>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="35"/>
         <source>Period to clear:</source>
-        <translation type="unfinished"/>
+        <translation>Periodo a borrar:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="42"/>
@@ -1313,7 +1316,7 @@ Exponente: %2</translation>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="78"/>
         <source>Clear forms history</source>
-        <translation type="unfinished"/>
+        <translation>Borrar historial de formularios</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="85"/>
@@ -1436,7 +1439,7 @@ Exponente: %2</translation>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="92"/>
         <source>CSS</source>
-        <translation type="unfinished"/>
+        <translation>CSS</translation>
     </message>
     <message>
         <location filename="../../src/ui/ConsoleWidget.ui" line="108"/>
@@ -1491,37 +1494,37 @@ Exponente: %2</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="24"/>
         <source>General</source>
-        <translation type="unfinished"/>
+        <translation>General</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="36"/>
         <source>Profiles</source>
-        <translation type="unfinished"/>
+        <translation>Perfiles</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="43"/>
         <source>Select lists which you want to use for content blocking (AdBlock Plus compatible):</source>
-        <translation type="unfinished"/>
+        <translation>Seleccione listas que quiera usar para bloquear contenido (compatible con AdBlock Plus):</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="82"/>
         <source>Settings</source>
-        <translation type="unfinished"/>
+        <translation>Configuración</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="91"/>
         <source>Cosmetic filters:</source>
-        <translation type="unfinished"/>
+        <translation>Filtros cosméticos:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="101"/>
         <source>Enable wildcard expressions</source>
-        <translation type="unfinished"/>
+        <translation>Habilitar expresiones con comodines</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="108"/>
         <source>Enable custom rules</source>
-        <translation type="unfinished"/>
+        <translation>Habilitar reglas personalizadas</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="121"/>
@@ -1549,22 +1552,22 @@ Exponente: %2</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="176"/>
         <source>Custom Rules</source>
-        <translation type="unfinished"/>
+        <translation>Reglas personalizadas</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="51"/>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation>Todos</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="52"/>
         <source>Domain specific only</source>
-        <translation type="unfinished"/>
+        <translation>Sólo dominios específicos</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="53"/>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>Ninguno</translation>
     </message>
 </context>
 <context>
@@ -1622,7 +1625,7 @@ Exponente: %2</translation>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="175"/>
         <source>WebSocket</source>
-        <translation type="unfinished"/>
+        <translation>WebSocket</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="179"/>
@@ -1664,52 +1667,52 @@ Exponente: %2</translation>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="197"/>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Título</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="197"/>
         <source>Update Interval</source>
-        <translation type="unfinished"/>
+        <translation>Intervalo de actualización</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="197"/>
         <source>Last Update</source>
-        <translation type="unfinished"/>
+        <translation>Última actualización</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="241"/>
         <source>Advertisements</source>
-        <translation type="unfinished"/>
+        <translation>Publicidad</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="241"/>
         <source>Annoyance</source>
-        <translation type="unfinished"/>
+        <translation>Molestia</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="241"/>
         <source>Privacy</source>
-        <translation type="unfinished"/>
+        <translation>Privacidad</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="241"/>
         <source>Social</source>
-        <translation type="unfinished"/>
+        <translation>Social</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="241"/>
         <source>Regional</source>
-        <translation type="unfinished"/>
+        <translation>Regional</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="241"/>
         <source>Other</source>
-        <translation type="unfinished"/>
+        <translation>Otro</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="449"/>
         <source>Custom Rules</source>
-        <translation type="unfinished"/>
+        <translation>Reglas personalizadas</translation>
     </message>
 </context>
 <context>
@@ -1870,27 +1873,27 @@ Exponente: %2</translation>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="45"/>
         <source>Failed to open passwords file: %1</source>
-        <translation type="unfinished"/>
+        <translation>No se pudo abrir el fichero de contraseñas: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="98"/>
         <source>Failed to save passwords file: %1</source>
-        <translation type="unfinished"/>
+        <translation>No se pudo abrir el fichero de contraseñas: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="191"/>
         <source>Failed to remove passwords file</source>
-        <translation type="unfinished"/>
+        <translation>No se pudo eliminar el fichero de contraseñas</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="320"/>
         <source>Encrypted File</source>
-        <translation type="unfinished"/>
+        <translation>Fichero cifrado</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="325"/>
         <source>Stores passwords in AES encrypted file.</source>
-        <translation type="unfinished"/>
+        <translation>Almacena las contraseñas en un fichero con cifrado AES.</translation>
     </message>
 </context>
 <context>
@@ -2162,7 +2165,7 @@ Exponente: %2</translation>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.ui" line="36"/>
         <source>File size:</source>
-        <translation type="unfinished"/>
+        <translation>Tamaño del fichero:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.ui" line="43"/>
@@ -2172,12 +2175,12 @@ Exponente: %2</translation>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.ui" line="50"/>
         <source>Alternative text:</source>
-        <translation type="unfinished"/>
+        <translation>Texto alternativo:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.ui" line="57"/>
         <source>Long description:</source>
-        <translation type="unfinished"/>
+        <translation>Descripción larga:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="37"/>
@@ -2439,7 +2442,7 @@ Exponente: %2</translation>
     <message>
         <location filename="../../src/ui/LocaleDialog.cpp" line="72"/>
         <source>Translation files (*.qm)</source>
-        <translation type="unfinished"/>
+        <translation>Ficheros de traducción (*.qm)</translation>
     </message>
 </context>
 <context>
@@ -2673,17 +2676,17 @@ Do you want to continue?</source>
         <location filename="../../src/modules/widgets/action/NavigationActionWidget.cpp" line="58"/>
         <location filename="../../src/modules/widgets/action/NavigationActionWidget.cpp" line="162"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Sin título)</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/action/NavigationActionWidget.cpp" line="191"/>
         <source>Remove Entry</source>
-        <translation type="unfinished"/>
+        <translation>Eliminar entrada</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/action/NavigationActionWidget.cpp" line="192"/>
         <source>Purge Entry</source>
-        <translation type="unfinished"/>
+        <translation>Purgar entrada</translation>
     </message>
 </context>
 <context>
@@ -2700,7 +2703,11 @@ Do you want to continue?</source>
 %1
 
 Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Ha habido errores de SSL:
+
+%1
+
+¿Desea continuar?</translation>
     </message>
 </context>
 <context>
@@ -2963,7 +2970,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="35"/>
         <source>Do you want to update login data for %1?</source>
-        <translation type="unfinished"/>
+        <translation>¿Quiere actualizar los datos de inicio de sesión para %1?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/PasswordBarWidget.cpp" line="35"/>
@@ -2976,67 +2983,67 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Buscar...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="72"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Nombre</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="72"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Valor</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="85"/>
         <source>Set #%1</source>
-        <translation type="unfinished"/>
+        <translation>Grupo %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="167"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="223"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="242"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Pregunta</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="168"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="224"/>
         <source>You are about to delete %n password(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Está a punto de borrar %n contraseña.</numerusform><numerusform>Está a punto de borrar %n contraseñas.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="169"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="225"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="244"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>¿Quiere continuar?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="243"/>
         <source>You are about to delete all passwords.</source>
-        <translation type="unfinished"/>
+        <translation>Está a punto de borrar todas las contraseñas.</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="264"/>
         <source>Remove Password</source>
-        <translation type="unfinished"/>
+        <translation>Eliminar contraseña</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="267"/>
         <source>Remove All Passwords from This Domain…</source>
-        <translation type="unfinished"/>
+        <translation>Eliminar todas las contraseñas de este dominio...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="270"/>
         <source>Remove All Passwords…</source>
-        <translation type="unfinished"/>
+        <translation>Eliminar todas las contraseñas...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="373"/>
         <source>Passwords Manager</source>
-        <translation type="unfinished"/>
+        <translation>Administrador de contraseñas</translation>
     </message>
 </context>
 <context>
@@ -3198,7 +3205,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="88"/>
         <source>Local paths</source>
-        <translation type="unfinished"/>
+        <translation>Rutas locales</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="103"/>
@@ -3447,7 +3454,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1089"/>
         <source>SSL Ciphers</source>
-        <translation type="unfinished"/>
+        <translation>Cifrado SSL</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1169"/>
@@ -3611,7 +3618,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="144"/>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="165"/>
         <source>Style sheets (*.css)</source>
-        <translation type="unfinished"/>
+        <translation>Hojas de estilo (*.css)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="147"/>
@@ -3672,7 +3679,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="261"/>
         <source>Proxy configuration files (*.pac)</source>
-        <translation type="unfinished"/>
+        <translation>Ficheros de configuración de proxy (*.pac)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.cpp" line="318"/>
@@ -4064,7 +4071,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="233"/>
         <source>Preferred webpage language:</source>
-        <translation type="unfinished"/>
+        <translation>Idioma preferido para páginas web:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="258"/>
@@ -4287,7 +4294,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="86"/>
         <source>Update</source>
-        <translation type="unfinished"/>
+        <translation>Actualizar</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="96"/>
@@ -4327,7 +4334,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="127"/>
         <source>File…</source>
-        <translation type="unfinished"/>
+        <translation>Fichero...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="128"/>
@@ -4342,12 +4349,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="201"/>
         <source>Select File</source>
-        <translation type="unfinished"/>
+        <translation>Seleccionar fichero</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="201"/>
         <source>Open Search files (*.xml)</source>
-        <translation type="unfinished"/>
+        <translation>Ficheros Open Search (*.xml)</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="301"/>
@@ -4370,13 +4377,13 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="354"/>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="433"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Error</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="343"/>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="354"/>
         <source>Failed to open Open Search file.</source>
-        <translation type="unfinished"/>
+        <translation>No se pudo abrir el fichero Open Search.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="365"/>
@@ -4386,7 +4393,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="433"/>
         <source>Failed to update search engine.</source>
-        <translation type="unfinished"/>
+        <translation>No se pudo actualizar el motor de búsqueda.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="504"/>
@@ -4427,22 +4434,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="61"/>
         <source>Server not found</source>
-        <translation type="unfinished"/>
+        <translation>No se encontró el servidor</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="65"/>
         <source>Connection refused</source>
-        <translation type="unfinished"/>
+        <translation>La conexión fue rechazada</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="69"/>
         <source>Network error %1</source>
-        <translation type="unfinished"/>
+        <translation>Error de red %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="73"/>
         <source>Network error</source>
-        <translation type="unfinished"/>
+        <translation>Error de red</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="89"/>
@@ -4509,7 +4516,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="353"/>
         <source>SSL errors occurred, do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Ha habido errores de SSL, ¿quiere continuar?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="357"/>
@@ -4576,27 +4583,27 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="641"/>
         <source>File not found</source>
-        <translation type="unfinished"/>
+        <translation>Fichero no encontrado</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="645"/>
         <source>Server not found</source>
-        <translation type="unfinished"/>
+        <translation>Servidor no encontrado</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="650"/>
         <source>Connection refused</source>
-        <translation type="unfinished"/>
+        <translation>Conexión rechazada</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="654"/>
         <source>WebKit error %1</source>
-        <translation type="unfinished"/>
+        <translation>Error de Webkit %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="658"/>
         <source>Network error %1</source>
-        <translation type="unfinished"/>
+        <translation>Error de red %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="674"/>

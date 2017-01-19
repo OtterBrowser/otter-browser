@@ -10,11 +10,11 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 * GNU General Public License for more details.
 *
 * You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 **************************************************************************/
 
@@ -81,6 +81,7 @@ public:
 	bool isAudible() const;
 	bool isAudioMuted() const;
 #endif
+	bool isFullScreen() const;
 	bool isPrivate() const;
 	bool findInPage(const QString &text, FindFlags flags = NoFlagsFind);
 	bool eventFilter(QObject *object, QEvent *event);
@@ -191,6 +192,7 @@ private:
 	int m_transfersTimer;
 	bool m_canLoadPlugins;
 	bool m_isAudioMuted;
+	bool m_isFullScreen;
 	bool m_isTyped;
 	bool m_isNavigating;
 

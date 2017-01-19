@@ -10,11 +10,11 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 * GNU General Public License for more details.
 *
 * You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 **************************************************************************/
 
@@ -279,7 +279,7 @@ QString QtWebEngineWebBackend::getUserAgent(const QString &pattern) const
 		return userAgent;
 	}
 
-	const UserAgentInformation userAgent(NetworkManagerFactory::getUserAgent(SettingsManager::getValue(SettingsManager::Network_UserAgentOption).toString()));
+	const UserAgentDefinition userAgent(NetworkManagerFactory::getUserAgent(SettingsManager::getValue(SettingsManager::Network_UserAgentOption).toString()));
 
 	return ((userAgent.value.isEmpty()) ? QString() : getUserAgent(userAgent.value));
 }

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -10,11 +10,11 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 * GNU General Public License for more details.
 *
 * You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 **************************************************************************/
 
@@ -45,7 +45,7 @@ NetworkManager* NetworkManagerFactory::m_networkManager(nullptr);
 NetworkCache* NetworkManagerFactory::m_cache(nullptr);
 CookieJar* NetworkManagerFactory::m_cookieJar(nullptr);
 QString NetworkManagerFactory::m_acceptLanguage;
-QMap<QString, UserAgentInformation> NetworkManagerFactory::m_userAgents;
+QMap<QString, UserAgentDefinition> NetworkManagerFactory::m_userAgents;
 NetworkManagerFactory::DoNotTrackPolicy NetworkManagerFactory::m_doNotTrackPolicy(NetworkManagerFactory::SkipTrackPolicy);
 QList<QSslCipher> NetworkManagerFactory::m_defaultCiphers;
 bool NetworkManagerFactory::m_canSendReferrer(true);
@@ -201,36 +201,59 @@ void NetworkManagerFactory::loadUserAgents()
 	}
 
 	const QJsonArray userAgents(QJsonDocument::fromJson(file.readAll()).array());
-	UserAgentInformation root;
+	UserAgentDefinition root;
 
 	for (int i = 0; i < userAgents.count(); ++i)
 	{
-		if (userAgents.at(i).isObject())
-		{
-			const QJsonObject object(userAgents.at(i).toObject());
-			const QString identifier(object.value(QLatin1String("identifier")).toString());
-
-			if (!m_userAgents.contains(identifier))
-			{
-				UserAgentInformation userAgent;
-				userAgent.identifier = identifier;
-				userAgent.title = object.value(QLatin1String("title")).toString();
-				userAgent.value = object.value(QLatin1String("value")).toString();
-
-				m_userAgents[identifier] = userAgent;
-			}
-
-			root.children.append(identifier);
-		}
-		else if (userAgents.at(i).isString() && userAgents.at(i).toString() == QLatin1String("separator"))
-		{
-			root.children.append(QString());
-		}
+		readUserAgent(userAgents.at(i), &root);
 	}
 
 	m_userAgents[QLatin1String("root")] = root;
 
 	file.close();
+}
+
+void NetworkManagerFactory::readUserAgent(const QJsonValue &value, UserAgentDefinition *parent)
+{
+	if (!value.isObject())
+	{
+		if (value.isString() && value.toString() == QLatin1String("separator"))
+		{
+			parent->children.append(QString());
+		}
+
+		return;
+	}
+
+	const QJsonObject object(value.toObject());
+	const QString identifier(object.value(QLatin1String("identifier")).toString());
+
+	if (!m_userAgents.contains(identifier))
+	{
+		UserAgentDefinition userAgent;
+		userAgent.identifier = identifier;
+		userAgent.title = object.value(QLatin1String("title")).toString();
+
+		if (object.keys().contains(QLatin1String("children")))
+		{
+			userAgent.isFolder = true;
+
+			const QJsonArray children(object.value(QLatin1String("children")).toArray());
+
+			for (int i = 0; i < children.count(); ++i)
+			{
+				readUserAgent(children.at(i), &userAgent);
+			}
+		}
+		else
+		{
+			userAgent.value = object.value(QLatin1String("value")).toString();
+		}
+
+		m_userAgents[identifier] = userAgent;
+	}
+
+	parent->children.append(identifier);
 }
 
 void NetworkManagerFactory::notifyAuthenticated(QAuthenticator *authenticator, bool wasAccepted)
@@ -298,11 +321,11 @@ QList<QSslCipher> NetworkManagerFactory::getDefaultCiphers()
 	return m_defaultCiphers;
 }
 
-UserAgentInformation NetworkManagerFactory::getUserAgent(const QString &identifier)
+UserAgentDefinition NetworkManagerFactory::getUserAgent(const QString &identifier)
 {
 	if (identifier.startsWith(QLatin1String("custom;")))
 	{
-		UserAgentInformation userAgent;
+		UserAgentDefinition userAgent;
 		userAgent.identifier = QLatin1String("custom");
 		userAgent.title = tr("Custom");
 		userAgent.value = identifier.mid(7);
@@ -317,7 +340,7 @@ UserAgentInformation NetworkManagerFactory::getUserAgent(const QString &identifi
 
 	if (identifier.isEmpty() || !m_userAgents.contains(identifier))
 	{
-		UserAgentInformation userAgent;
+		UserAgentDefinition userAgent;
 		userAgent.identifier = QLatin1String("default");
 		userAgent.title = tr("Default");
 		userAgent.value = QLatin1String("Mozilla/5.0 {platform} {engineVersion} {applicationVersion}");

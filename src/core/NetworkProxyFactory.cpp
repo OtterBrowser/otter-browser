@@ -10,11 +10,11 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 * GNU General Public License for more details.
 *
 * You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 **************************************************************************/
 
@@ -65,12 +65,12 @@ void NetworkProxyFactory::optionChanged(int identifier)
 		{
 			QFile file(path);
 
-			if (!file.open(QIODevice::ReadOnly | QIODevice::Text) || !m_automaticProxy->setup(file.readAll()))
-			{
-				Console::addMessage(tr("Failed to load proxy auto-config (PAC): %1").arg(file.errorString()), Console::NetworkCategory, Console::ErrorLevel, path);
+//			if (!file.open(QIODevice::ReadOnly | QIODevice::Text) || !m_automaticProxy->setup(file.readAll()))
+//			{
+//				Console::addMessage(tr("Failed to load proxy auto-config (PAC): %1").arg(file.errorString()), Console::NetworkCategory, Console::ErrorLevel, path);
 
-				m_proxyMode = SystemProxy;
-			}
+//				m_proxyMode = SystemProxy;
+//			}
 
 			file.close();
 		}

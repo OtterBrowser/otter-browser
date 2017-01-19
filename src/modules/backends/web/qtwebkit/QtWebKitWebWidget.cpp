@@ -10,11 +10,11 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 * GNU General Public License for more details.
 *
 * You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 **************************************************************************/
 
@@ -89,6 +89,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	m_transfersTimer(0),
 	m_canLoadPlugins(false),
 	m_isAudioMuted(false),
+	m_isFullScreen(false),
 	m_isTyped(false),
 	m_isNavigating(false)
 {
@@ -755,6 +756,10 @@ void QtWebKitWebWidget::handleFullScreenRequest(QWebFullScreenRequest request)
 
 		emit requestedPermission(FullScreenFeature, request.origin(), true);
 	}
+
+	m_isFullScreen = request.toggleOn();
+
+	emit isFullScreenChanged(m_isFullScreen);
 }
 #endif
 
@@ -1898,7 +1903,7 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 		position[QLatin1String("y")] = history.entries.at(i).position.y();
 
 		QVariantMap entry;
-		entry[QLatin1String("pageScaleFactor")] = (history.entries.at(i).zoom / qreal(100));
+		entry[QLatin1String("pageScaleFactor")] = 0;
 		entry[QLatin1String("title")] = history.entries.at(i).title;
 		entry[QLatin1String("urlString")] = QString(QUrl::fromUserInput(history.entries.at(i).url).toEncoded());
 		entry[QLatin1String("scrollPosition")] = position;
@@ -2661,6 +2666,11 @@ bool QtWebKitWebWidget::isAudioMuted() const
 	return m_isAudioMuted;
 }
 #endif
+
+bool QtWebKitWebWidget::isFullScreen() const
+{
+	return m_isFullScreen;
+}
 
 bool QtWebKitWebWidget::isPrivate() const
 {

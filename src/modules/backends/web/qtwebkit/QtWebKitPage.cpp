@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -10,11 +10,11 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 * GNU General Public License for more details.
 *
 * You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 **************************************************************************/
 
@@ -43,55 +43,37 @@
 namespace Otter
 {
 
-QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWidget *parent) : QWebPage(parent),
-	m_widget(parent),
-	m_networkManager(networkManager),
-	m_ignoreJavaScriptPopups(false),
-	m_isPopup(false),
-	m_isViewingMedia(false)
+QtWebKitFrame::QtWebKitFrame(QWebFrame *frame, QtWebKitWebWidget *parent) : QObject(parent),
+	m_frame(frame),
+	m_widget(parent)
 {
-	setNetworkAccessManager(m_networkManager);
-	setForwardUnsupportedContent(true);
-	updateStyleSheets();
-	optionChanged(SettingsManager::Interface_ShowScrollBarsOption);
-
-	connect(this->mainFrame(), SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
-#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
-	connect(this, SIGNAL(consoleMessageReceived(MessageSource,MessageLevel,QString,int,QString)), this, SLOT(handleConsoleMessage(MessageSource,MessageLevel,QString,int,QString)));
-#endif
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
+	connect(frame, SIGNAL(destroyed(QObject*)), this, SLOT(deleteLater()));
+	connect(frame, SIGNAL(loadFinished(bool)), this, SLOT(handleLoadFinished()));
 }
 
-QtWebKitPage::QtWebKitPage() : QWebPage(),
-	m_widget(nullptr),
-	m_networkManager(nullptr),
-	m_ignoreJavaScriptPopups(false),
-	m_isPopup(false),
-	m_isViewingMedia(false)
+void QtWebKitFrame::applyContentBlockingRules(const QStringList &rules, bool remove)
 {
-}
+	const QWebElement document(m_frame->documentElement());
+	const QString value(remove ? QLatin1String("none !important") : QString());
 
-QtWebKitPage::~QtWebKitPage()
-{
-	qDeleteAll(m_popups);
-
-	m_popups.clear();
-}
-
-void QtWebKitPage::optionChanged(int identifier)
-{
-	if (SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Content/")) || identifier == SettingsManager::Interface_ShowScrollBarsOption)
+	for (int i = 0; i < rules.count(); ++i)
 	{
-		updateStyleSheets();
+		const QWebElementCollection elements(document.findAll(rules.at(i)));
+
+		for (int j = 0; j < elements.count(); ++j)
+		{
+			QWebElement element(elements.at(j));
+
+			if (!element.isNull())
+			{
+				element.setStyleProperty(QLatin1String("display"), value);
+			}
+		}
 	}
 }
 
-void QtWebKitPage::pageLoadFinished()
+void QtWebKitFrame::handleLoadFinished()
 {
-	m_ignoreJavaScriptPopups = false;
-
-	updateStyleSheets();
-
 	if (!m_widget || !m_widget->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, m_widget->getUrl()).toBool())
 	{
 		return;
@@ -125,15 +107,16 @@ void QtWebKitPage::pageLoadFinished()
 
 	if (blockedRequests.count() > 0)
 	{
-		const QWebElementCollection elements(mainFrame()->documentElement().findAll(QLatin1String("[src]")));
+		const QWebElementCollection elements(m_frame->documentElement().findAll(QLatin1String("[src]")));
 
-		for (int i = 0; i < blockedRequests.count(); ++i)
+		for (int i = 0; i < elements.count(); ++i)
 		{
-			for (int j = 0; j < elements.count(); ++j)
-			{
-				QWebElement element(elements.at(j));
+			QWebElement element(elements.at(i));
+			const QUrl url(element.attribute(QLatin1String("src")));
 
-				if (element.attribute(QLatin1String("src")) == blockedRequests[i]) ///NOTE: Consider comparing them as URLs
+			for (int j = 0; j < blockedRequests.count(); ++j)
+			{
+				if (url.matches(QUrl(blockedRequests[j]), QUrl::None) || blockedRequests[j].endsWith(url.url()))
 				{
 					element.setStyleProperty(QLatin1String("display"), QLatin1String("none !important"));
 
@@ -142,6 +125,58 @@ void QtWebKitPage::pageLoadFinished()
 			}
 		}
 	}
+}
+
+QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWidget *parent) : QWebPage(parent),
+	m_widget(parent),
+	m_networkManager(networkManager),
+	m_ignoreJavaScriptPopups(false),
+	m_isPopup(false),
+	m_isViewingMedia(false)
+{
+	setNetworkAccessManager(m_networkManager);
+	setForwardUnsupportedContent(true);
+	updateStyleSheets();
+	optionChanged(SettingsManager::Interface_ShowScrollBarsOption);
+	handleFrameCreation(mainFrame());
+
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
+	connect(this, SIGNAL(frameCreated(QWebFrame*)), this, SLOT(handleFrameCreation(QWebFrame*)));
+#ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
+	connect(this, SIGNAL(consoleMessageReceived(MessageSource,MessageLevel,QString,int,QString)), this, SLOT(handleConsoleMessage(MessageSource,MessageLevel,QString,int,QString)));
+#endif
+	connect(mainFrame(), SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
+}
+
+QtWebKitPage::QtWebKitPage() : QWebPage(),
+	m_widget(nullptr),
+	m_networkManager(nullptr),
+	m_ignoreJavaScriptPopups(false),
+	m_isPopup(false),
+	m_isViewingMedia(false)
+{
+}
+
+QtWebKitPage::~QtWebKitPage()
+{
+	qDeleteAll(m_popups);
+
+	m_popups.clear();
+}
+
+void QtWebKitPage::optionChanged(int identifier)
+{
+	if (SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Content/")) || identifier == SettingsManager::Interface_ShowScrollBarsOption)
+	{
+		updateStyleSheets();
+	}
+}
+
+void QtWebKitPage::pageLoadFinished()
+{
+	m_ignoreJavaScriptPopups = false;
+
+	updateStyleSheets();
 }
 
 void QtWebKitPage::removePopup(const QUrl &url)
@@ -163,25 +198,9 @@ void QtWebKitPage::markAsPopup()
 	m_isPopup = true;
 }
 
-void QtWebKitPage::applyContentBlockingRules(const QStringList &rules, bool remove)
+void QtWebKitPage::handleFrameCreation(QWebFrame *frame)
 {
-	const QWebElement document(mainFrame()->documentElement());
-	const QString value(remove ? QLatin1String("none !important") : QString());
-
-	for (int i = 0; i < rules.count(); ++i)
-	{
-		const QWebElementCollection elements(document.findAll(rules.at(i)));
-
-		for (int j = 0; j < elements.count(); ++j)
-		{
-			QWebElement element(elements.at(j));
-
-			if (!element.isNull())
-			{
-				element.setStyleProperty(QLatin1String("display"), value);
-			}
-		}
-	}
+	new QtWebKitFrame(frame, m_widget);
 }
 
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY

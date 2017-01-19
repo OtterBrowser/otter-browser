@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -10,11 +10,11 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 * GNU General Public License for more details.
 *
 * You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 **************************************************************************/
 
@@ -30,12 +30,13 @@
 namespace Otter
 {
 
-struct UserAgentInformation
+struct UserAgentDefinition
 {
 	QString identifier;
 	QString title;
 	QString value;
 	QStringList children;
+	bool isFolder = false;
 
 	QString getTitle() const
 	{
@@ -74,7 +75,7 @@ public:
 	static QString getUserAgent();
 	static QStringList getUserAgents();
 	static QList<QSslCipher> getDefaultCiphers();
-	static UserAgentInformation getUserAgent(const QString &identifier);
+	static UserAgentDefinition getUserAgent(const QString &identifier);
 	static DoNotTrackPolicy getDoNotTrackPolicy();
 	static bool canSendReferrer();
 	static bool isWorkingOffline();
@@ -82,6 +83,8 @@ public:
 
 protected:
 	explicit NetworkManagerFactory(QObject *parent = nullptr);
+
+	static void readUserAgent(const QJsonValue &value, UserAgentDefinition *parent);
 
 protected slots:
 	void optionChanged(int identifier, const QVariant &value);
@@ -92,7 +95,7 @@ private:
 	static NetworkCache *m_cache;
 	static CookieJar *m_cookieJar;
 	static QString m_acceptLanguage;
-	static QMap<QString, UserAgentInformation> m_userAgents;
+	static QMap<QString, UserAgentDefinition> m_userAgents;
 	static QList<QSslCipher> m_defaultCiphers;
 	static DoNotTrackPolicy m_doNotTrackPolicy;
 	static bool m_canSendReferrer;

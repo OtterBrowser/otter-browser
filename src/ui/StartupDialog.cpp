@@ -9,11 +9,11 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 * GNU General Public License for more details.
 *
 * You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 **************************************************************************/
 
@@ -98,6 +98,7 @@ void StartupDialog::setSession(int index)
 			QStandardItem *tabItem(new QStandardItem(session.windows.at(i).windows.at(j).getTitle()));
 			tabItem->setFlags(windowItem->flags() | Qt::ItemIsUserCheckable);
 			tabItem->setData(Qt::Checked, Qt::CheckStateRole);
+			tabItem->setData(tr("Title: %1\nAddress: %2").arg(tabItem->text()).arg(session.windows.at(i).windows.at(j).getUrl()), Qt::ToolTipRole);
 
 			if (j == session.windows.at(i).index)
 			{

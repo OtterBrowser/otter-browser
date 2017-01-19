@@ -471,7 +471,7 @@ elseif (APPLE)
 	set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${MAJOR_VERSION}.${MINOR_VERSION})
 	set(MACOSX_BUNDLE_ICON_FILE otter-browser.icns)
 	set(MACOSX_BUNDLE_GUI_IDENTIFIER "org.otter-browser.otter-browser")
-	set(MACOSX_BUNDLE_COPYRIGHT "Copyright (C) 2013-2016 Otter Browser Team. All rights reserved.")
+	set(MACOSX_BUNDLE_COPYRIGHT "Copyright (C) 2013-2017 Otter Browser Team. All rights reserved.")
 	set(otter_src
 		${otter_src}
 		src/modules/platforms/mac/MacPlatformIntegration.mm
@@ -526,7 +526,6 @@ endif (WIN32)
 
 target_link_libraries(otter-browser Qt5::Core Qt5::Gui Qt5::Multimedia Qt5::Network Qt5::PrintSupport Qt5::Qml Qt5::Widgets Qt5::XmlPatterns)
 
-set(OTTER_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 set(XDG_APPS_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/applications CACHE FILEPATH "Install path for .desktop files")
 
 file(GLOB _qm_files resources/translations/*.qm)

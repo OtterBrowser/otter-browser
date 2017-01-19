@@ -44,6 +44,7 @@
 #include "../core/ActionsManager.h"
 #include "../core/AddonsManager.h"
 #include "../core/BookmarksManager.h"
+#include "../core/GesturesManager.h"
 #include "../core/HistoryManager.h"
 #include "../core/InputInterpreter.h"
 #include "../core/SettingsManager.h"
@@ -335,6 +336,13 @@ void MainWindow::contextMenuEvent(QContextMenuEvent *event)
 {
 	if (m_tabSwitcher && m_tabSwitcher->isVisible())
 	{
+		return;
+	}
+
+	if (event->reason() == QContextMenuEvent::Mouse)
+	{
+		event->accept();
+
 		return;
 	}
 
@@ -1372,6 +1380,11 @@ bool MainWindow::event(QEvent *event)
 			break;
 		default:
 			break;
+	}
+
+	if (!GesturesManager::isTracking() && (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel))
+	{
+		GesturesManager::startGesture(this, event);
 	}
 
 	return QMainWindow::event(event);

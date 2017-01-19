@@ -9,11 +9,11 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 * GNU General Public License for more details.
 *
 * You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 **************************************************************************/
 
@@ -70,6 +70,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	m_scrollTimer(0),
 #endif
 	m_isEditing(false),
+	m_isFullScreen(false),
 	m_isTyped(false)
 {
 	m_webView->setPage(m_page);
@@ -997,6 +998,10 @@ void QtWebEngineWebWidget::handleFullScreenRequest(QWebEngineFullScreenRequest r
 
 		emit requestedPermission(FullScreenFeature, request.origin(), true);
 	}
+
+	m_isFullScreen = request.toggleOn();
+
+	emit isFullScreenChanged(m_isFullScreen);
 }
 
 void QtWebEngineWebWidget::handlePermissionRequest(const QUrl &url, QWebEnginePage::Feature feature)
@@ -1641,6 +1646,11 @@ bool QtWebEngineWebWidget::isAudioMuted() const
 	return m_page->isAudioMuted();
 }
 #endif
+
+bool QtWebEngineWebWidget::isFullScreen() const
+{
+	return m_isFullScreen;
+}
 
 bool QtWebEngineWebWidget::isPrivate() const
 {
