@@ -107,6 +107,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Browser_JavaScriptCanShowStatusMessagesOption, false, BooleanType);
 	registerOption(Browser_KeyboardShortcutsProfilesOrderOption, QStringList({QLatin1String("platform"), QLatin1String("default")}), ListType);
 	registerOption(Browser_LocaleOption, QLatin1String("system"), StringType);
+	registerOption(Browser_MigrationsOption, QStringList(), ListType);
 	registerOption(Browser_MouseProfilesOrderOption, QStringList(QLatin1String("default")), ListType);
 	registerOption(Browser_OfflineStorageLimitOption, 10240, IntegerType);
 	registerOption(Browser_OfflineWebApplicationCacheLimitOption, 10240, IntegerType);

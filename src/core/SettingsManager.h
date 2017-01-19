@@ -87,6 +87,7 @@ public:
 		Browser_JavaScriptCanShowStatusMessagesOption,
 		Browser_KeyboardShortcutsProfilesOrderOption,
 		Browser_LocaleOption,
+		Browser_MigrationsOption,
 		Browser_MouseProfilesOrderOption,
 		Browser_OfflineStorageLimitOption,
 		Browser_OfflineWebApplicationCacheLimitOption,
