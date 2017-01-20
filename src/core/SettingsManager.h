@@ -198,6 +198,7 @@ public:
 		Security_IgnoreSslErrorsOption,
 		Sessions_OpenInExistingWindowOption,
 		Sessions_OptionsExludedFromInheritingOption,
+		Sessions_OptionsExludedFromSavingOption,
 		Sidebar_CurrentPanelOption,
 		Sidebar_PanelsOption,
 		Sidebar_ReverseOption,

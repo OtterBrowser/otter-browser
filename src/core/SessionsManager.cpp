@@ -468,6 +468,7 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 		return false;
 	}
 
+	const QStringList excludedOptions(SettingsManager::getValue(SettingsManager::Sessions_OptionsExludedFromSavingOption).toStringList());
 	QJsonArray mainWindowsArray;
 	QJsonObject sessionObject;
 	sessionObject.insert(QLatin1String("title"), session.title);
@@ -501,7 +502,7 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 				{
 					const QString optionName(SettingsManager::getOptionName(optionsIterator.key()));
 
-					if (!optionName.isEmpty())
+					if (!optionName.isEmpty() && !excludedOptions.contains(optionName))
 					{
 						optionsObject.insert(optionName, QJsonValue::fromVariant(optionsIterator.value()));
 					}

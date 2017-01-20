@@ -218,6 +218,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Security_IgnoreSslErrorsOption, QStringList(), ListType);
 	registerOption(Sessions_OpenInExistingWindowOption, false, BooleanType);
 	registerOption(Sessions_OptionsExludedFromInheritingOption, QStringList(QLatin1String("Content/PageReloadTime")), ListType);
+	registerOption(Sessions_OptionsExludedFromSavingOption, QStringList(), ListType);
 	registerOption(Sidebar_CurrentPanelOption, QString(), StringType);
 	registerOption(Sidebar_PanelsOption, QStringList({QLatin1String("bookmarks"), QLatin1String("history"), QLatin1String("notes"), QLatin1String("transfers")}), ListType);
 	registerOption(Sidebar_ReverseOption, false, BooleanType);
