@@ -236,9 +236,9 @@ SessionInformation SessionsManager::getSession(const QString &path)
 	{
 		const QJsonObject mainWindowObject(mainWindowsArray.at(i).toObject());
 		const QJsonArray windowsArray(mainWindowObject.value(QLatin1String("windows")).toArray());
-		SessionMainWindow sessionEntry;
-		sessionEntry.geometry = QByteArray::fromBase64(mainWindowObject.value(QLatin1String("geometry")).toString().toLatin1());
-		sessionEntry.index = (mainWindowObject.value(QLatin1String("currentIndex")).toInt(1) - 1);
+		SessionMainWindow sessionMainWindow;
+		sessionMainWindow.geometry = QByteArray::fromBase64(mainWindowObject.value(QLatin1String("geometry")).toString().toLatin1());
+		sessionMainWindow.index = (mainWindowObject.value(QLatin1String("currentIndex")).toInt(1) - 1);
 
 		for (int j = 0; j < windowsArray.count(); ++j)
 		{
@@ -282,10 +282,25 @@ SessionInformation SessionsManager::getSession(const QString &path)
 				sessionWindow.history.append(historyEntry);
 			}
 
-			sessionEntry.windows.append(sessionWindow);
+			if (sessionWindow.historyIndex < 0 || sessionWindow.historyIndex >= sessionWindow.history.count())
+			{
+				sessionWindow.historyIndex = (sessionWindow.history.count() - 1);
+			}
+
+			sessionMainWindow.windows.append(sessionWindow);
 		}
 
-		session.windows.append(sessionEntry);
+		if (sessionMainWindow.index < 0 || sessionMainWindow.index >= sessionMainWindow.windows.count())
+		{
+			sessionMainWindow.index = (sessionMainWindow.windows.count() - 1);
+		}
+
+		session.windows.append(sessionMainWindow);
+	}
+
+	if (session.index < 0 || session.index >= session.windows.count())
+	{
+		session.index = (session.windows.count() - 1);
 	}
 
 	file.close();
