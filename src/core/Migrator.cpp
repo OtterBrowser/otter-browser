@@ -25,6 +25,7 @@
 #include <QtCore/QDate>
 #include <QtCore/QDir>
 #include <QtCore/QSet>
+#include <QtCore/QSettings>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QPushButton>
@@ -34,13 +35,17 @@ namespace Otter
 
 Migrator::Migrator(QObject *parent) : QObject(parent)
 {
+	registerMigration(QLatin1String("sessionsIniToJson"), QT_TRANSLATE_NOOP("migrations", "Sessions"));
 }
 
 void Migrator::run()
 {
 	QSet<QString> newMigrations;
 
-///TODO
+	if (!QDir(SessionsManager::getWritableDataPath(QLatin1String("sessions"))).entryList(QStringList(QLatin1String("*.ini")), QDir::Files).isEmpty())
+	{
+		newMigrations.insert(QLatin1String("sessionsIniToJson"));
+	}
 
 	QSet<QString> migrations(SettingsManager::getValue(SettingsManager::Browser_MigrationsOption).toStringList().toSet());
 
@@ -77,7 +82,86 @@ void Migrator::run()
 			continue;
 		}
 
-///TODO
+		if (*iterator == QLatin1String("sessionsIniToJson"))
+		{
+			const QList<QFileInfo> entries(QDir(SessionsManager::getWritableDataPath(QLatin1String("sessions"))).entryInfoList(QStringList(QLatin1String("*.ini")), QDir::Files));
+
+			for (int i = 0; i < entries.count(); ++i)
+			{
+				QSettings sessionData(entries.at(i).absoluteFilePath(), QSettings::IniFormat);
+				sessionData.setIniCodec("UTF-8");
+
+				SessionInformation session;
+				session.path = entries.at(i).absolutePath() + QDir::separator() + entries.at(i).baseName() + QLatin1String(".json");
+				session.title = sessionData.value(QLatin1String("Session/title"), QString()).toString();
+				session.index = (sessionData.value(QLatin1String("Session/index"), 1).toInt() - 1);
+				session.isClean = sessionData.value(QLatin1String("Session/clean"), true).toBool();
+
+				const int windowsAmount(sessionData.value(QLatin1String("Session/windows"), 0).toInt());
+				const int defaultZoom(SettingsManager::getValue(SettingsManager::Content_DefaultZoomOption).toInt());
+
+				for (int j = 1; j <= windowsAmount; ++j)
+				{
+					const int tabs(sessionData.value(QStringLiteral("%1/Properties/windows").arg(j), 0).toInt());
+					SessionMainWindow sessionEntry;
+					sessionEntry.geometry = QByteArray::fromBase64(sessionData.value(QStringLiteral("%1/Properties/geometry").arg(j), QString()).toString().toLatin1());
+					sessionEntry.index = (sessionData.value(QStringLiteral("%1/Properties/index").arg(j), 1).toInt() - 1);
+
+					for (int k = 1; k <= tabs; ++k)
+					{
+						const QString state(sessionData.value(QStringLiteral("%1/%2/Properties/state").arg(j).arg(k), QString()).toString());
+						const QString searchEngine(sessionData.value(QStringLiteral("%1/%2/Properties/searchEngine").arg(j).arg(k), QString()).toString());
+						const QString userAgent(sessionData.value(QStringLiteral("%1/%2/Properties/userAgent").arg(j).arg(k), QString()).toString());
+						const QStringList geometry(sessionData.value(QStringLiteral("%1/%2/Properties/geometry").arg(j).arg(k), QString()).toString().split(QLatin1Char(',')));
+						const int historyAmount(sessionData.value(QStringLiteral("%1/%2/Properties/history").arg(j).arg(k), 0).toInt());
+						const int reloadTime(sessionData.value(QStringLiteral("%1/%2/Properties/reloadTime").arg(j).arg(k), -1).toInt());
+						SessionWindow sessionWindow;
+						sessionWindow.geometry = ((geometry.count() == 4) ? QRect(geometry.at(0).simplified().toInt(), geometry.at(1).simplified().toInt(), geometry.at(2).simplified().toInt(), geometry.at(3).simplified().toInt()) : QRect());
+						sessionWindow.state = ((state == QLatin1String("maximized")) ? MaximizedWindowState : ((state == QLatin1String("minimized")) ? MinimizedWindowState : NormalWindowState));
+						sessionWindow.parentGroup = sessionData.value(QStringLiteral("%1/%2/Properties/group").arg(j).arg(k), 0).toInt();
+						sessionWindow.historyIndex = (sessionData.value(QStringLiteral("%1/%2/Properties/index").arg(j).arg(k), 1).toInt() - 1);
+						sessionWindow.isAlwaysOnTop = sessionData.value(QStringLiteral("%1/%2/Properties/alwaysOnTop").arg(j).arg(k), false).toBool();
+						sessionWindow.isPinned = sessionData.value(QStringLiteral("%1/%2/Properties/pinned").arg(j).arg(k), false).toBool();
+
+						if (!searchEngine.isEmpty())
+						{
+							sessionWindow.overrides[SettingsManager::Search_DefaultSearchEngineOption] = searchEngine;
+						}
+
+						if (!userAgent.isEmpty())
+						{
+							sessionWindow.overrides[SettingsManager::Network_UserAgentOption] = userAgent;
+						}
+
+						if (reloadTime >= 0)
+						{
+							sessionWindow.overrides[SettingsManager::Content_PageReloadTimeOption] = reloadTime;
+						}
+
+						for (int l = 1; l <= historyAmount; ++l)
+						{
+							const QStringList position(sessionData.value(QStringLiteral("%1/%2/History/%3/position").arg(j).arg(k).arg(l), 1).toStringList());
+							WindowHistoryEntry historyEntry;
+							historyEntry.url = sessionData.value(QStringLiteral("%1/%2/History/%3/url").arg(j).arg(k).arg(l), QString()).toString();
+							historyEntry.title = sessionData.value(QStringLiteral("%1/%2/History/%3/title").arg(j).arg(k).arg(l), QString()).toString();
+							historyEntry.position = ((position.count() == 2) ? QPoint(position.at(0).simplified().toInt(), position.at(1).simplified().toInt()) : QPoint(0, 0));
+							historyEntry.zoom = sessionData.value(QStringLiteral("%1/%2/History/%3/zoom").arg(j).arg(k).arg(l), defaultZoom).toInt();
+
+							sessionWindow.history.append(historyEntry);
+						}
+
+						sessionEntry.windows.append(sessionWindow);
+					}
+
+					session.windows.append(sessionEntry);
+				}
+
+				if (SessionsManager::saveSession(session))
+				{
+					QFile::remove(entries.at(i).absoluteFilePath());
+				}
+			}
+		}
 	}
 
 	SettingsManager::setValue(SettingsManager::Browser_MigrationsOption, QVariant(migrations.toList()));
@@ -88,7 +172,11 @@ void Migrator::createBackup(const QString &identifier)
 	QString sourcePath;
 	QStringList sourceFilters(QLatin1String("*"));
 
-///TODO
+	if (identifier == QLatin1String("sessionsIniToJson"))
+	{
+		sourcePath = QLatin1String("sessions");
+		sourceFilters = QStringList(QLatin1String("*.ini"));
+	}
 
 	if (sourcePath.isEmpty())
 	{
@@ -109,6 +197,8 @@ void Migrator::createBackup(const QString &identifier)
 
 			break;
 		}
+
+		++i;
 	}
 	while (true);
 

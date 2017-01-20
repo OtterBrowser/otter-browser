@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -26,8 +26,10 @@
 #include "../ui/MainWindow.h"
 
 #include <QtCore/QDir>
+#include <QtCore/QJsonArray>
+#include <QtCore/QJsonDocument>
+#include <QtCore/QJsonObject>
 #include <QtCore/QSaveFile>
-#include <QtCore/QSettings>
 
 namespace Otter
 {
@@ -189,13 +191,13 @@ QString SessionsManager::getSessionPath(const QString &path, bool isBound)
 
 	if (cleanPath.isEmpty())
 	{
-		cleanPath = QLatin1String("default.ini");
+		cleanPath = QLatin1String("default.json");
 	}
 	else
 	{
-		if (!cleanPath.endsWith(QLatin1String(".ini")))
+		if (!cleanPath.endsWith(QLatin1String(".json")))
 		{
-			cleanPath += QLatin1String(".ini");
+			cleanPath += QLatin1String(".json");
 		}
 
 		if (isBound)
@@ -213,65 +215,69 @@ QString SessionsManager::getSessionPath(const QString &path, bool isBound)
 
 SessionInformation SessionsManager::getSession(const QString &path)
 {
-	const QString sessionPath(getSessionPath(path));
-	QSettings sessionData(sessionPath, QSettings::IniFormat);
-	sessionData.setIniCodec("UTF-8");
-
 	SessionInformation session;
-	session.path = path;
-	session.title = sessionData.value(QLatin1String("Session/title"), ((path == QLatin1String("default")) ? tr("Default") : tr("(Untitled)"))).toString();
-	session.index = (sessionData.value(QLatin1String("Session/index"), 1).toInt() - 1);
-	session.isClean = sessionData.value(QLatin1String("Session/clean"), true).toBool();
+	QFile file(getSessionPath(path));
 
-	const int windows(sessionData.value(QLatin1String("Session/windows"), 0).toInt());
-	const int defaultZoom(SettingsManager::getValue(SettingsManager::Content_DefaultZoomOption).toInt());
-
-	for (int i = 1; i <= windows; ++i)
+	if (!file.open(QIODevice::ReadOnly))
 	{
-		const int tabs(sessionData.value(QStringLiteral("%1/Properties/windows").arg(i), 0).toInt());
+		return session;
+	}
+
+	const int defaultZoom(SettingsManager::getValue(SettingsManager::Content_DefaultZoomOption).toInt());
+	const QJsonObject sessionObject(QJsonDocument::fromJson(file.readAll()).object());
+	const QJsonArray mainWindowsArray(sessionObject.value(QLatin1String("windows")).toArray());
+
+	session.path = path;
+	session.title = sessionObject.value(QLatin1String("title")).toString((path == QLatin1String("default")) ? tr("Default") : tr("(Untitled)"));
+	session.index = (sessionObject.value(QLatin1String("currentIndex")).toInt(1) - 1);
+	session.isClean = sessionObject.value(QLatin1String("isClean")).toBool(true);
+
+	for (int i = 0; i < mainWindowsArray.count(); ++i)
+	{
+		const QJsonObject mainWindowObject(mainWindowsArray.at(i).toObject());
+		const QJsonArray windowsArray(mainWindowObject.value(QLatin1String("windows")).toArray());
 		SessionMainWindow sessionEntry;
-		sessionEntry.geometry = QByteArray::fromBase64(sessionData.value(QStringLiteral("%1/Properties/geometry").arg(i), 1).toString().toLatin1());
-		sessionEntry.index = (sessionData.value(QStringLiteral("%1/Properties/index").arg(i), 1).toInt() - 1);
+		sessionEntry.geometry = QByteArray::fromBase64(mainWindowObject.value(QLatin1String("geometry")).toString().toLatin1());
+		sessionEntry.index = (mainWindowObject.value(QLatin1String("currentIndex")).toInt(1) - 1);
 
-		for (int j = 1; j <= tabs; ++j)
+		for (int j = 0; j < windowsArray.count(); ++j)
 		{
-			const QString state(sessionData.value(QStringLiteral("%1/%2/Properties/state").arg(i).arg(j), QString()).toString());
-			const QString searchEngine(sessionData.value(QStringLiteral("%1/%2/Properties/searchEngine").arg(i).arg(j), QString()).toString());
-			const QString userAgent(sessionData.value(QStringLiteral("%1/%2/Properties/userAgent").arg(i).arg(j), QString()).toString());
-			const QStringList geometry(sessionData.value(QStringLiteral("%1/%2/Properties/geometry").arg(i).arg(j), QString()).toString().split(QLatin1Char(',')));
-			const int history(sessionData.value(QStringLiteral("%1/%2/Properties/history").arg(i).arg(j), 0).toInt());
-			const int reloadTime(sessionData.value(QStringLiteral("%1/%2/Properties/reloadTime").arg(i).arg(j), -1).toInt());
+			const QJsonObject windowObject(windowsArray.at(j).toObject());
+			const QJsonArray windowHistoryArray(windowObject.value(QLatin1String("history")).toArray());
+			const QString state(windowObject.value(QLatin1String("state")).toString());
+			const QStringList geometry(windowObject.value(QLatin1String("geometry")).toString().split(QLatin1Char(',')));
 			SessionWindow sessionWindow;
-			sessionWindow.geometry = ((geometry.count() == 4) ? QRect(geometry.at(0).toInt(), geometry.at(1).toInt(), geometry.at(2).toInt(), geometry.at(3).toInt()) : QRect());
+			sessionWindow.geometry = ((geometry.count() == 4) ? QRect(geometry.at(0).simplified().toInt(), geometry.at(1).simplified().toInt(), geometry.at(2).simplified().toInt(), geometry.at(3).simplified().toInt()) : QRect());
 			sessionWindow.state = ((state == QLatin1String("maximized")) ? MaximizedWindowState : ((state == QLatin1String("minimized")) ? MinimizedWindowState : NormalWindowState));
-			sessionWindow.parentGroup = sessionData.value(QStringLiteral("%1/%2/Properties/group").arg(i).arg(j), 0).toInt();
-			sessionWindow.historyIndex = (sessionData.value(QStringLiteral("%1/%2/Properties/index").arg(i).arg(j), 1).toInt() - 1);
-			sessionWindow.isAlwaysOnTop = sessionData.value(QStringLiteral("%1/%2/Properties/alwaysOnTop").arg(i).arg(j), false).toBool();
-			sessionWindow.isPinned = sessionData.value(QStringLiteral("%1/%2/Properties/pinned").arg(i).arg(j), false).toBool();
+			sessionWindow.historyIndex = (windowObject.value(QLatin1String("currentIndex")).toInt(1) - 1);
+			sessionWindow.isAlwaysOnTop = windowObject.value(QLatin1String("isAlwaysOnTop")).toBool(false);
+			sessionWindow.isPinned = windowObject.value(QLatin1String("isPinned")).toBool(false);
 
-			if (!searchEngine.isEmpty())
+			if (windowObject.keys().contains(QLatin1String("options")))
 			{
-				sessionWindow.overrides[SettingsManager::Search_DefaultSearchEngineOption] = searchEngine;
+				const QJsonObject optionsObject(windowObject.value(QLatin1String("options")).toObject());
+				QJsonObject::const_iterator iterator;
+
+				for (iterator = optionsObject.constBegin(); iterator != optionsObject.constEnd(); ++iterator)
+				{
+					const int optionIdentifier(SettingsManager::getOptionIdentifier(iterator.key()));
+
+					if (optionIdentifier >= 0)
+					{
+						sessionWindow.overrides[optionIdentifier] = iterator.value().toVariant();
+					}
+				}
 			}
 
-			if (!userAgent.isEmpty())
+			for (int k = 0; k < windowHistoryArray.count(); ++k)
 			{
-				sessionWindow.overrides[SettingsManager::Network_UserAgentOption] = userAgent;
-			}
-
-			if (reloadTime >= 0)
-			{
-				sessionWindow.overrides[SettingsManager::Content_PageReloadTimeOption] = reloadTime;
-			}
-
-			for (int k = 1; k <= history; ++k)
-			{
-				const QStringList position(sessionData.value(QStringLiteral("%1/%2/History/%3/position").arg(i).arg(j).arg(k), 1).toStringList());
+				const QJsonObject historyEntryObject(windowHistoryArray.at(k).toObject());
+				const QStringList position(historyEntryObject.value(QLatin1String("position")).toString().split(QLatin1Char(',')));
 				WindowHistoryEntry historyEntry;
-				historyEntry.url = sessionData.value(QStringLiteral("%1/%2/History/%3/url").arg(i).arg(j).arg(k), 0).toString();
-				historyEntry.title = sessionData.value(QStringLiteral("%1/%2/History/%3/title").arg(i).arg(j).arg(k), 1).toString();
-				historyEntry.position = QPoint(position.value(0, QString::number(0)).toInt(), position.value(1, QString::number(0)).toInt());
-				historyEntry.zoom = sessionData.value(QStringLiteral("%1/%2/History/%3/zoom").arg(i).arg(j).arg(k), defaultZoom).toInt();
+				historyEntry.url = historyEntryObject.value(QLatin1String("url")).toString();
+				historyEntry.title = historyEntryObject.value(QLatin1String("title")).toString();
+				historyEntry.position = ((position.count() == 2) ? QPoint(position.at(0).simplified().toInt(), position.at(1).simplified().toInt()) : QPoint(0, 0));
+				historyEntry.zoom = historyEntryObject.value(QLatin1String("zoom")).toInt(defaultZoom);
 
 				sessionWindow.history.append(historyEntry);
 			}
@@ -281,6 +287,8 @@ SessionInformation SessionsManager::getSession(const QString &path)
 
 		session.windows.append(sessionEntry);
 	}
+
+	file.close();
 
 	return session;
 }
@@ -307,7 +315,7 @@ QStringList SessionsManager::getClosedWindows()
 
 QStringList SessionsManager::getSessions()
 {
-	QStringList entries(QDir(m_profilePath + QLatin1String("/sessions/")).entryList(QStringList(QLatin1String("*.ini")), QDir::Files));
+	QStringList entries(QDir(m_profilePath + QLatin1String("/sessions/")).entryList(QStringList(QLatin1String("*.json")), QDir::Files));
 
 	for (int i = 0; i < entries.count(); ++i)
 	{
@@ -423,18 +431,18 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 
 	if (path.isEmpty())
 	{
-		path = m_profilePath + QLatin1String("/sessions/") + session.title + QLatin1String(".ini");
+		path = m_profilePath + QLatin1String("/sessions/") + session.title + QLatin1String(".json");
 
 		if (QFileInfo(path).exists())
 		{
 			int i = 1;
 
-			while (QFileInfo(m_profilePath + QLatin1String("/sessions/") + session.title + QString::number(i) + QLatin1String(".ini")).exists())
+			while (QFileInfo(m_profilePath + QLatin1String("/sessions/") + session.title + QString::number(i) + QLatin1String(".json")).exists())
 			{
 				++i;
 			}
 
-			path = m_profilePath + QLatin1String("/sessions/") + session.title + QString::number(i) + QLatin1String(".ini");
+			path = m_profilePath + QLatin1String("/sessions/") + session.title + QString::number(i) + QLatin1String(".json");
 		}
 	}
 
@@ -445,82 +453,103 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 		return false;
 	}
 
-	const QString defaultSearchEngine(SettingsManager::getValue(SettingsManager::Search_DefaultSearchEngineOption).toString());
-	const QString defaultUserAgent(SettingsManager::getValue(SettingsManager::Network_UserAgentOption).toString());
-	QTextStream stream(&file);
-	stream.setCodec("UTF-8");
-	stream << QLatin1String("[Session]\n");
-	stream << Utils::formatConfigurationEntry(QLatin1String("title"), session.title, true);
+	QJsonArray mainWindowsArray;
+	QJsonObject sessionObject;
+	sessionObject.insert(QLatin1String("title"), session.title);
+	sessionObject.insert(QLatin1String("currentIndex"), 1);
 
 	if (!session.isClean)
 	{
-		stream << QLatin1String("clean=false\n");
+		sessionObject.insert(QLatin1String("isClean"), false);
 	}
-
-	stream << QLatin1String("windows=") << session.windows.count() << QLatin1Char('\n');
-	stream << QLatin1String("index=1\n\n");
 
 	for (int i = 0; i < session.windows.count(); ++i)
 	{
 		const SessionMainWindow sessionEntry(session.windows.at(i));
+		QJsonObject mainWindowObject;
+		mainWindowObject.insert(QLatin1String("currentIndex"), (sessionEntry.index + 1));
+		mainWindowObject.insert(QLatin1String("geometry"), QString(sessionEntry.geometry.toBase64()));
 
-		stream << QStringLiteral("[%1/Properties]\n").arg(i + 1);
-		stream << Utils::formatConfigurationEntry(QLatin1String("geometry"), session.windows.at(i).geometry.toBase64(), true);
-		stream << QLatin1String("groups=0\n");
-		stream << QLatin1String("windows=") << sessionEntry.windows.count() << QLatin1Char('\n');
-		stream << QLatin1String("index=") << (sessionEntry.index + 1) << QLatin1String("\n\n");
+		QJsonArray windowsArray;
 
 		for (int j = 0; j < sessionEntry.windows.count(); ++j)
 		{
-			stream << QStringLiteral("[%1/%2/Properties]\n").arg(i + 1).arg(j + 1);
+			QJsonObject windowObject;
 
-			if (sessionEntry.windows.at(j).state == NormalWindowState)
+			if (!sessionEntry.windows.at(j).overrides.isEmpty())
 			{
-				stream << Utils::formatConfigurationEntry(QLatin1String("geometry"), QStringLiteral("%1,%2,%3,%4").arg(sessionEntry.windows.at(j).geometry.x()).arg(sessionEntry.windows.at(j).geometry.y()).arg(sessionEntry.windows.at(j).geometry.width()).arg(sessionEntry.windows.at(j).geometry.height()), true);
+				const QHash<int, QVariant> windowOptions(sessionEntry.windows.at(j).overrides);
+				QHash<int, QVariant>::const_iterator optionsIterator;
+				QJsonObject optionsObject;
+
+				for (optionsIterator = windowOptions.constBegin(); optionsIterator != windowOptions.constEnd(); ++optionsIterator)
+				{
+					const QString optionName(SettingsManager::getOptionName(optionsIterator.key()));
+
+					if (!optionName.isEmpty())
+					{
+						optionsObject.insert(optionName, QJsonValue::fromVariant(optionsIterator.value()));
+					}
+				}
+
+				windowObject.insert(QLatin1String("options"), optionsObject);
+			}
+
+			windowObject.insert(QLatin1String("geometry"), QStringLiteral("%1, %2, %3, %4").arg(sessionEntry.windows.at(j).geometry.x()).arg(sessionEntry.windows.at(j).geometry.y()).arg(sessionEntry.windows.at(j).geometry.width()).arg(sessionEntry.windows.at(j).geometry.height()));
+			windowObject.insert(QLatin1String("currentIndex"), (sessionEntry.windows.at(j).historyIndex + 1));
+
+			if (sessionEntry.windows.at(j).state == MaximizedWindowState)
+			{
+				windowObject.insert(QLatin1String("state"), QLatin1String("maximized"));
+			}
+			else if (sessionEntry.windows.at(j).state == MinimizedWindowState)
+			{
+				windowObject.insert(QLatin1String("state"), QLatin1String("minimized"));
 			}
 			else
 			{
-				stream << Utils::formatConfigurationEntry(QLatin1String("state"), ((sessionEntry.windows.at(j).state == MaximizedWindowState) ? QLatin1String("maximized") : QLatin1String("minimized")));
-			}
-
-			if (sessionEntry.windows.at(j).overrides.value(SettingsManager::Search_DefaultSearchEngineOption, QString()).toString() != defaultSearchEngine)
-			{
-				stream << Utils::formatConfigurationEntry(QLatin1String("searchEngine"), sessionEntry.windows.at(j).overrides[SettingsManager::Search_DefaultSearchEngineOption].toString());
-			}
-
-			if (sessionEntry.windows.at(j).overrides.value(SettingsManager::Network_UserAgentOption, QString()).toString() != defaultUserAgent)
-			{
-				stream << Utils::formatConfigurationEntry(QLatin1String("userAgent"), sessionEntry.windows.at(j).overrides[SettingsManager::Network_UserAgentOption].toString(), true);
-			}
-
-			if (sessionEntry.windows.at(j).overrides.value(SettingsManager::Content_PageReloadTimeOption, -1).toInt() != -1)
-			{
-				stream << Utils::formatConfigurationEntry(QLatin1String("reloadTime"), QString::number(sessionEntry.windows.at(j).overrides[SettingsManager::Content_PageReloadTimeOption].toInt()));
+				windowObject.insert(QLatin1String("state"), QLatin1String("normal"));
 			}
 
 			if (sessionEntry.windows.at(j).isAlwaysOnTop)
 			{
-				stream << QLatin1String("alwaysOnTop=true\n");
+				windowObject.insert(QLatin1String("isAlwaysOnTop"), true);
 			}
 
 			if (sessionEntry.windows.at(j).isPinned)
 			{
-				stream << QLatin1String("pinned=true\n");
+				windowObject.insert(QLatin1String("isPinned"), true);
 			}
 
-			stream << QLatin1String("history=") << sessionEntry.windows.at(j).history.count() << QLatin1Char('\n');
-			stream << QLatin1String("index=") << (sessionEntry.windows.at(j).historyIndex + 1) << QLatin1String("\n\n");
+			QJsonArray windowHistoryArray;
 
 			for (int k = 0; k < sessionEntry.windows.at(j).history.count(); ++k)
 			{
-				stream << QStringLiteral("[%1/%2/History/%3]\n").arg(i + 1).arg(j + 1).arg(k + 1);
-				stream << Utils::formatConfigurationEntry(QLatin1String("url"), sessionEntry.windows.at(j).history.at(k).url, true);
-				stream << Utils::formatConfigurationEntry(QLatin1String("title"), sessionEntry.windows.at(j).history.at(k).title, true);
-				stream << QLatin1String("position=") << sessionEntry.windows.at(j).history.at(k).position.x() << ',' << sessionEntry.windows.at(j).history.at(k).position.y() << QLatin1Char('\n');
-				stream << QLatin1String("zoom=") << sessionEntry.windows.at(j).history.at(k).zoom << QLatin1String("\n\n");
+				QJsonObject historyEntryObject;
+				historyEntryObject.insert(QLatin1String("url"), sessionEntry.windows.at(j).history.at(k).url);
+				historyEntryObject.insert(QLatin1String("title"), sessionEntry.windows.at(j).history.at(k).title);
+				historyEntryObject.insert(QLatin1String("position"), QString::number(sessionEntry.windows.at(j).history.at(k).position.x()) + QLatin1String(", ") + QString::number(sessionEntry.windows.at(j).history.at(k).position.y()));
+				historyEntryObject.insert(QLatin1String("zoom"), sessionEntry.windows.at(j).history.at(k).zoom);
+
+				windowHistoryArray.append(historyEntryObject);
 			}
+
+			windowObject.insert(QLatin1String("history"), windowHistoryArray);
+
+			windowsArray.append(windowObject);
 		}
+
+		mainWindowObject.insert(QLatin1String("windows"), windowsArray);
+
+		mainWindowsArray.append(mainWindowObject);
 	}
+
+	sessionObject.insert(QLatin1String("windows"), mainWindowsArray);
+
+	QJsonDocument document;
+	document.setObject(sessionObject);
+
+	file.write(document.toJson());
 
 	return file.commit();
 }
