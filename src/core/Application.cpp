@@ -535,6 +535,11 @@ void Application::removeWindow(MainWindow *window)
 	window->deleteLater();
 
 	emit m_instance->windowRemoved(window);
+
+	if (m_windows.isEmpty())
+	{
+		exit();
+	}
 }
 
 void Application::clearHistory()
