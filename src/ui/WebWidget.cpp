@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -414,7 +414,7 @@ void WebWidget::fillPassword(const PasswordsManager::PasswordInformation &passwo
 
 void WebWidget::openUrl(const QUrl &url, WindowsManager::OpenHints hints)
 {
-	WebWidget *widget(clone(false, hints.testFlag(WindowsManager::PrivateOpen)));
+	WebWidget *widget(clone(false, hints.testFlag(WindowsManager::PrivateOpen), SettingsManager::getValue(SettingsManager::Sessions_OptionsExludedFromInheritingOption).toStringList()));
 	widget->setRequestedUrl(url, false);
 
 	emit requestedNewWindow(widget, hints);
@@ -1130,9 +1130,19 @@ void WebWidget::setOption(int identifier, const QVariant &value)
 	}
 }
 
-void WebWidget::setOptions(const QHash<int, QVariant> &options)
+void WebWidget::setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions)
 {
 	m_options = options;
+
+	for (int i = 0; i < excludedOptions.count(); ++i)
+	{
+		const int identifier(SettingsManager::getOptionIdentifier(excludedOptions.at(i)));
+
+		if (identifier >= 0 && m_options.contains(identifier))
+		{
+			m_options.remove(identifier);
+		}
+	}
 }
 
 void WebWidget::setRequestedUrl(const QUrl &url, bool isTyped, bool onlyUpdate)

@@ -406,7 +406,7 @@ QWebPage* QtWebKitPage::createWindow(QWebPage::WebWindowType type)
 
 		if (m_widget)
 		{
-			widget = qobject_cast<QtWebKitWebWidget*>(m_widget->clone(false));
+			widget = qobject_cast<QtWebKitWebWidget*>(m_widget->clone(false, m_widget->isPrivate(), SettingsManager::getValue(SettingsManager::Sessions_OptionsExludedFromInheritingOption).toStringList()));
 		}
 		else
 		{

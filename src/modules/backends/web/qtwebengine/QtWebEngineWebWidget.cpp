@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -1375,17 +1375,17 @@ void QtWebEngineWebWidget::setOption(int identifier, const QVariant &value)
 	}
 }
 
-void QtWebEngineWebWidget::setOptions(const QHash<int, QVariant> &options)
+void QtWebEngineWebWidget::setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions)
 {
-	WebWidget::setOptions(options);
+	WebWidget::setOptions(options, excludedOptions);
 
 	updateOptions(getUrl());
 }
 
-WebWidget* QtWebEngineWebWidget::clone(bool cloneHistory, bool isPrivate)
+WebWidget* QtWebEngineWebWidget::clone(bool cloneHistory, bool isPrivate, const QStringList &excludedOptions)
 {
 	QtWebEngineWebWidget *widget(new QtWebEngineWebWidget((this->isPrivate() || isPrivate), getBackend()));
-	widget->setOptions(getOptions());
+	widget->setOptions(getOptions(), excludedOptions);
 
 	if (cloneHistory)
 	{

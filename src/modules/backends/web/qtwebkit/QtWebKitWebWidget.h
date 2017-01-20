@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -52,7 +52,7 @@ public:
 
 	void search(const QString &query, const QString &searchEngine);
 	void print(QPrinter *printer);
-	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false);
+	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = QStringList());
 	Action* getAction(int identifier);
 	QString getDefaultCharacterEncoding() const;
 	QString getTitle() const;
@@ -129,7 +129,7 @@ protected:
 #else
 	void setHistory(const QVariantMap &history);
 #endif
-	void setOptions(const QHash<int, QVariant> &options);
+	void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = QStringList());
 	QWebPage* getPage();
 	QString getPasswordToken() const;
 	QString getPluginToken() const;

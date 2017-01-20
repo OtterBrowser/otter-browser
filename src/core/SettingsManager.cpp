@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014, 2016 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -217,6 +217,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Security_CiphersOption, QStringList(QLatin1String("default")), ListType);
 	registerOption(Security_IgnoreSslErrorsOption, QStringList(), ListType);
 	registerOption(Sessions_OpenInExistingWindowOption, false, BooleanType);
+	registerOption(Sessions_OptionsExludedFromInheritingOption, QStringList(QLatin1String("Content/PageReloadTime")), ListType);
 	registerOption(Sidebar_CurrentPanelOption, QString(), StringType);
 	registerOption(Sidebar_PanelsOption, QStringList({QLatin1String("bookmarks"), QLatin1String("history"), QLatin1String("notes"), QLatin1String("transfers")}), ListType);
 	registerOption(Sidebar_ReverseOption, false, BooleanType);

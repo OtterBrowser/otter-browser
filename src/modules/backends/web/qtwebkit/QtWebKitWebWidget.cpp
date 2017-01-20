@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -2093,9 +2093,9 @@ void QtWebKitWebWidget::setOption(int identifier, const QVariant &value)
 	}
 }
 
-void QtWebKitWebWidget::setOptions(const QHash<int, QVariant> &options)
+void QtWebKitWebWidget::setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions)
 {
-	WebWidget::setOptions(options);
+	WebWidget::setOptions(options, excludedOptions);
 
 	updateOptions(getUrl());
 }
@@ -2105,10 +2105,10 @@ void QtWebKitWebWidget::setScrollPosition(const QPoint &position)
 	m_webView->page()->mainFrame()->setScrollPosition(position);
 }
 
-WebWidget* QtWebKitWebWidget::clone(bool cloneHistory, bool isPrivate)
+WebWidget* QtWebKitWebWidget::clone(bool cloneHistory, bool isPrivate, const QStringList &excludedOptions)
 {
 	QtWebKitWebWidget *widget(new QtWebKitWebWidget((this->isPrivate() || isPrivate), getBackend(), ((this->isPrivate() != isPrivate) ? nullptr : m_networkManager->clone()), nullptr));
-	widget->setOptions(getOptions());
+	widget->setOptions(getOptions(), excludedOptions);
 
 	if (cloneHistory)
 	{

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -333,9 +333,9 @@ void SourceViewerWebWidget::setOption(int identifier, const QVariant &value)
 	}
 }
 
-void SourceViewerWebWidget::setOptions(const QHash<int, QVariant> &options)
+void SourceViewerWebWidget::setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions)
 {
-	WebWidget::setOptions(options);
+	WebWidget::setOptions(options, excludedOptions);
 
 	if (options.contains(SettingsManager::Content_DefaultCharacterEncodingOption))
 	{
@@ -418,10 +418,11 @@ void SourceViewerWebWidget::setContents(const QByteArray &contents, const QStrin
 	m_sourceViewer->document()->setModified(false);
 }
 
-WebWidget* SourceViewerWebWidget::clone(bool cloneHistory, bool isPrivate)
+WebWidget* SourceViewerWebWidget::clone(bool cloneHistory, bool isPrivate, const QStringList &excludedOptions)
 {
 	Q_UNUSED(cloneHistory)
 	Q_UNUSED(isPrivate)
+	Q_UNUSED(excludedOptions)
 
 	return nullptr;
 }
