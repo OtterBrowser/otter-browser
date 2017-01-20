@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -1013,7 +1013,7 @@ void TabBarWidget::dropEvent(QDropEvent *event)
 
 			if (mainWindow)
 			{
-				const QList<MainWindow*> mainWindows(SessionsManager::getWindows());
+				const QList<MainWindow*> mainWindows(Application::getWindows());
 
 				for (int i = 0; i < mainWindows.count(); ++i)
 				{

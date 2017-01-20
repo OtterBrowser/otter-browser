@@ -774,25 +774,18 @@ void Application::setHidden(bool hidden)
 
 	m_isHidden = hidden;
 
-	const QList<MainWindow*> windows(SessionsManager::getWindows());
-
-	for (int i = 0; i < windows.count(); ++i)
+	for (int i = 0; i < m_windows.count(); ++i)
 	{
-		if (!windows.at(i))
-		{
-			continue;
-		}
-
 		if (m_isHidden)
 		{
-			windows.at(i)->storeWindowState();
-			windows.at(i)->hide();
+			m_windows.at(i)->storeWindowState();
+			m_windows.at(i)->hide();
 		}
 		else
 		{
-			windows.at(i)->show();
-			windows.at(i)->activateWindow();
-			windows.at(i)->restoreWindowState();
+			m_windows.at(i)->show();
+			m_windows.at(i)->activateWindow();
+			m_windows.at(i)->restoreWindowState();
 		}
 	}
 }

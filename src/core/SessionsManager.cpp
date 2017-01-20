@@ -40,7 +40,6 @@ QString SessionsManager::m_sessionPath;
 QString SessionsManager::m_sessionTitle;
 QString SessionsManager::m_cachePath;
 QString SessionsManager::m_profilePath;
-QList<MainWindow*> SessionsManager::m_windows;
 QList<SessionMainWindow> SessionsManager::m_closedWindows;
 bool SessionsManager::m_isDirty(false);
 bool SessionsManager::m_isPrivate(false);
@@ -95,22 +94,12 @@ void SessionsManager::clearClosedWindows()
 	emit m_instance->closedWindowsChanged();
 }
 
-void SessionsManager::registerWindow(MainWindow *window)
-{
-	if (window)
-	{
-		m_windows.append(window);
-	}
-}
-
 void SessionsManager::storeClosedWindow(MainWindow *window)
 {
 	if (!window)
 	{
 		return;
 	}
-
-	m_windows.removeAll(window);
 
 	SessionMainWindow session(window->getWindowsManager()->getSession());
 	session.geometry = window->saveGeometry();
@@ -306,11 +295,6 @@ SessionInformation SessionsManager::getSession(const QString &path)
 	file.close();
 
 	return session;
-}
-
-QList<MainWindow*> SessionsManager::getWindows()
-{
-	return m_windows;
 }
 
 QStringList SessionsManager::getClosedWindows()
@@ -582,11 +566,6 @@ bool SessionsManager::deleteSession(const QString &path)
 	return false;
 }
 
-bool SessionsManager::isLastWindow()
-{
-	return (m_windows.count() == 1);
-}
-
 bool SessionsManager::isPrivate()
 {
 	return m_isPrivate;
@@ -599,11 +578,13 @@ bool SessionsManager::isReadOnly()
 
 bool SessionsManager::hasUrl(const QUrl &url, bool activate)
 {
-	for (int i = 0; i < m_windows.count(); ++i)
+	const QList<MainWindow*> windows(Application::getWindows());
+
+	for (int i = 0; i < windows.count(); ++i)
 	{
-		if (m_windows.at(i)->getWindowsManager()->hasUrl(url, activate))
+		if (windows.at(i)->getWindowsManager()->hasUrl(url, activate))
 		{
-			QWidget *window(qobject_cast<QWidget*>(m_windows.at(i)->parent()));
+			QWidget *window(qobject_cast<QWidget*>(windows.at(i)->parent()));
 
 			if (window)
 			{

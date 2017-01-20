@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -139,8 +139,6 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 		setCentralWidget(m_splitter);
 	}
 
-	SessionsManager::registerWindow(this);
-
 	getAction(ActionsManager::WorkOfflineAction)->setChecked(SettingsManager::getValue(SettingsManager::Network_WorkOfflineOption).toBool());
 	getAction(ActionsManager::ShowMenuBarAction)->setChecked(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
 	getAction(ActionsManager::ShowSidebarAction)->setChecked(SettingsManager::getValue(SettingsManager::Sidebar_VisibleOption).toBool());
@@ -249,14 +247,16 @@ void MainWindow::timerEvent(QTimerEvent *event)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-	if (SessionsManager::isLastWindow() && !Application::getInstance()->canClose())
+	const bool isLastWindow(Application::getWindows().count() == 1);
+
+	if (isLastWindow && !Application::getInstance()->canClose())
 	{
 		event->ignore();
 
 		return;
 	}
 
-	if (Application::getInstance()->getWindows().count() == 1)
+	if (isLastWindow)
 	{
 		if (SessionsManager::getCurrentSession() == QLatin1String("default"))
 		{
@@ -448,7 +448,7 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 			}
 			else
 			{
-				const QList<MainWindow*> windows(SessionsManager::getWindows());
+				const QList<MainWindow*> windows(Application::getWindows());
 
 				for (int i = 0; i < windows.count(); ++i)
 				{
