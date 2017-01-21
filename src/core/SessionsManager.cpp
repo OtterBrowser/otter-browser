@@ -21,15 +21,13 @@
 #include "SessionsManager.h"
 #include "ActionsManager.h"
 #include "Application.h"
-#include "Utils.h"
+#include "JsonSettings.h"
 #include "WindowsManager.h"
 #include "../ui/MainWindow.h"
 
 #include <QtCore/QDir>
 #include <QtCore/QJsonArray>
-#include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
-#include <QtCore/QSaveFile>
 
 namespace Otter
 {
@@ -189,21 +187,20 @@ QString SessionsManager::getSessionPath(const QString &path, bool isBound)
 SessionInformation SessionsManager::getSession(const QString &path)
 {
 	SessionInformation session;
-	QFile file(getSessionPath(path));
+	const JsonSettings settings(getSessionPath(path));
 
-	if (!file.open(QIODevice::ReadOnly))
+	if (settings.isNull())
 	{
 		return session;
 	}
 
 	const int defaultZoom(SettingsManager::getValue(SettingsManager::Content_DefaultZoomOption).toInt());
-	const QJsonObject sessionObject(QJsonDocument::fromJson(file.readAll()).object());
-	const QJsonArray mainWindowsArray(sessionObject.value(QLatin1String("windows")).toArray());
+	const QJsonArray mainWindowsArray(settings.object().value(QLatin1String("windows")).toArray());
 
 	session.path = path;
-	session.title = sessionObject.value(QLatin1String("title")).toString((path == QLatin1String("default")) ? tr("Default") : tr("(Untitled)"));
-	session.index = (sessionObject.value(QLatin1String("currentIndex")).toInt(1) - 1);
-	session.isClean = sessionObject.value(QLatin1String("isClean")).toBool(true);
+	session.title = settings.object().value(QLatin1String("title")).toString((path == QLatin1String("default")) ? tr("Default") : tr("(Untitled)"));
+	session.index = (settings.object().value(QLatin1String("currentIndex")).toInt(1) - 1);
+	session.isClean = settings.object().value(QLatin1String("isClean")).toBool(true);
 
 	for (int i = 0; i < mainWindowsArray.count(); ++i)
 	{
@@ -275,8 +272,6 @@ SessionInformation SessionsManager::getSession(const QString &path)
 	{
 		session.index = (session.windows.count() - 1);
 	}
-
-	file.close();
 
 	return session;
 }
@@ -429,13 +424,6 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 		}
 	}
 
-	QSaveFile file(path);
-
-	if (!file.open(QIODevice::WriteOnly))
-	{
-		return false;
-	}
-
 	const QStringList excludedOptions(SettingsManager::getValue(SettingsManager::Sessions_OptionsExludedFromSavingOption).toStringList());
 	QJsonArray mainWindowsArray;
 	QJsonObject sessionObject;
@@ -530,12 +518,10 @@ bool SessionsManager::saveSession(const SessionInformation &session)
 
 	sessionObject.insert(QLatin1String("windows"), mainWindowsArray);
 
-	QJsonDocument document;
-	document.setObject(sessionObject);
+	JsonSettings settings;
+	settings.setObject(sessionObject);
 
-	file.write(document.toJson());
-
-	return file.commit();
+	return settings.save(path);
 }
 
 bool SessionsManager::deleteSession(const QString &path)
