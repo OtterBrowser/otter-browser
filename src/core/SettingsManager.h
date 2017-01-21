@@ -298,6 +298,7 @@ private:
 	static QHash<QString, int> m_customOptions;
 	static int m_identifierCounter;
 	static int m_optionIdentifierEnumerator;
+	static bool m_hasWildcardedOverrides;
 
 signals:
 	void valueChanged(int identifier, const QVariant &value);

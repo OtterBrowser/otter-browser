@@ -38,6 +38,7 @@ QVector<SettingsManager::OptionDefinition> SettingsManager::m_definitions;
 QHash<QString, int> SettingsManager::m_customOptions;
 int SettingsManager::m_identifierCounter(-1);
 int SettingsManager::m_optionIdentifierEnumerator(0);
+bool SettingsManager::m_hasWildcardedOverrides(false);
 
 SettingsManager::SettingsManager(QObject *parent) : QObject(parent)
 {
@@ -254,6 +255,18 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Updates_CheckIntervalOption, 7, IntegerType);
 	registerOption(Updates_LastCheckOption, QString(), StringType);
 	registerOption(Updates_ServerUrlOption, QLatin1String("https://www.otter-browser.org/updates/update.json"), StringType);
+
+	const QStringList hosts(QSettings(m_overridePath, QSettings::IniFormat).childGroups());
+
+	for (int i = 0; i < hosts.count(); ++i)
+	{
+		if (hosts.at(i).startsWith(QLatin1Char('*')))
+		{
+			m_hasWildcardedOverrides = true;
+
+			break;
+		}
+	}
 }
 
 void SettingsManager::removeOverride(const QUrl &url, const QString &key)
@@ -295,13 +308,20 @@ void SettingsManager::setValue(int identifier, const QVariant &value, const QUrl
 
 	if (!url.isEmpty())
 	{
+		const QString overrideName(getHost(url) + QLatin1Char('/') + name);
+
 		if (value.isNull())
 		{
-			QSettings(m_overridePath, QSettings::IniFormat).remove(getHost(url) + QLatin1Char('/') + name);
+			QSettings(m_overridePath, QSettings::IniFormat).remove(overrideName);
 		}
 		else
 		{
-			QSettings(m_overridePath, QSettings::IniFormat).setValue(getHost(url) + QLatin1Char('/') + name, value);
+			QSettings(m_overridePath, QSettings::IniFormat).setValue(overrideName, value);
+		}
+
+		if (!m_hasWildcardedOverrides && overrideName.startsWith(QLatin1Char('*')))
+		{
+			m_hasWildcardedOverrides = true;
 		}
 
 		emit m_instance->valueChanged(identifier, value, url);
@@ -420,12 +440,31 @@ QVariant SettingsManager::getValue(int identifier, const QUrl &url)
 
 	const QString name(getOptionName(identifier));
 
-	if (!url.isEmpty())
+	if (url.isEmpty())
 	{
-		return QSettings(m_overridePath, QSettings::IniFormat).value(getHost(url) + QLatin1Char('/') + name, getValue(identifier));
+		return QSettings(m_globalPath, QSettings::IniFormat).value(name, m_definitions.at(identifier).defaultValue);
 	}
 
-	return QSettings(m_globalPath, QSettings::IniFormat).value(name, m_definitions.at(identifier).defaultValue);
+	const QString host(getHost(url));
+	const QString overrideName(host + QLatin1Char('/') + name);
+	const QSettings overrides(m_overridePath, QSettings::IniFormat);
+
+	if (m_hasWildcardedOverrides && !overrides.contains(overrideName))
+	{
+		const QStringList hostParts(host.split(QLatin1Char('.')));
+
+		for (int i = 1; i < hostParts.count(); ++i)
+		{
+			const QString wildcardedName(QLatin1String("*.") + hostParts.mid(i).join(QLatin1Char('.')) + QLatin1Char('/') + name);
+
+			if (overrides.contains(wildcardedName))
+			{
+				return QSettings(m_overridePath, QSettings::IniFormat).value(wildcardedName, getValue(identifier));
+			}
+		}
+	}
+
+	return QSettings(m_overridePath, QSettings::IniFormat).value(overrideName, getValue(identifier));
 }
 
 QStringList SettingsManager::getOptions()
