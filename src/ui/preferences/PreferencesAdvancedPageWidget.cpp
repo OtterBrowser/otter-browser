@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -28,6 +28,7 @@
 #include "../../core/ActionsManager.h"
 #include "../../core/Application.h"
 #include "../../core/GesturesManager.h"
+#include "../../core/JsonSettings.h"
 #include "../../core/NetworkManagerFactory.h"
 #include "../../core/NotificationsManager.h"
 #include "../../core/SessionsManager.h"
@@ -39,7 +40,6 @@
 #include "ui_PreferencesAdvancedPageWidget.h"
 
 #include <QtCore/QJsonArray>
-#include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QSettings>
@@ -1435,28 +1435,21 @@ void PreferencesAdvancedPageWidget::save()
 
 	if (m_userAgentsModified)
 	{
-		QJsonDocument document;
-		QJsonArray userAgents;
+		QJsonArray userAgentsArray;
 
 		for (int i = 1; i < m_ui->userAgentComboBox->count(); ++i)
 		{
-			QJsonObject userAgent;
-			userAgent.insert(QLatin1String("identifier"), m_ui->userAgentComboBox->itemData(i, Qt::UserRole).toString());
-			userAgent.insert(QLatin1String("title"), m_ui->userAgentComboBox->itemText(i));
-			userAgent.insert(QLatin1String("value"), m_ui->userAgentComboBox->itemData(i, (Qt::UserRole + 1)).toString());
+			QJsonObject userAgentObject;
+			userAgentObject.insert(QLatin1String("identifier"), m_ui->userAgentComboBox->itemData(i, Qt::UserRole).toString());
+			userAgentObject.insert(QLatin1String("title"), m_ui->userAgentComboBox->itemText(i));
+			userAgentObject.insert(QLatin1String("value"), m_ui->userAgentComboBox->itemData(i, (Qt::UserRole + 1)).toString());
 
-			userAgents.append(userAgent);
+			userAgentsArray.append(userAgentObject);
 		}
 
-		document.setArray(userAgents);
-
-		QFile file(SessionsManager::getWritableDataPath(QLatin1String("userAgents.json")));
-
-		if (file.open(QIODevice::WriteOnly))
-		{
-			file.write(document.toJson(QJsonDocument::Indented));
-			file.close();
-		}
+		JsonSettings settings;
+		settings.setArray(userAgentsArray);
+		settings.save(SessionsManager::getWritableDataPath(QLatin1String("userAgents.json")));
 
 		NetworkManagerFactory::loadUserAgents();
 	}

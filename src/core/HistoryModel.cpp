@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,14 +19,13 @@
 
 #include "HistoryModel.h"
 #include "Console.h"
+#include "JsonSettings.h"
 #include "SessionsManager.h"
 #include "Utils.h"
 
 #include <QtCore/QFile>
 #include <QtCore/QJsonArray>
-#include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
-#include <QtCore/QSaveFile>
 
 namespace Otter
 {
@@ -63,15 +62,15 @@ HistoryModel::HistoryModel(const QString &path, QObject *parent) : QStandardItem
 		return;
 	}
 
-	const QJsonArray array(QJsonDocument::fromJson(file.readAll()).array());
+	const QJsonArray historyArray(QJsonDocument::fromJson(file.readAll()).array());
 
 	file.close();
 
-	for (int i = 0; i < array.count(); ++i)
+	for (int i = 0; i < historyArray.count(); ++i)
 	{
-		const QJsonObject object(array.at(i).toObject());
+		const QJsonObject entryObject(historyArray.at(i).toObject());
 
-		addEntry(QUrl(object.value(QLatin1String("url")).toString()), object.value(QLatin1String("title")).toString(), QIcon(), QDateTime::fromString(object.value(QLatin1String("time")).toString(), QLatin1String("yyyy-MM-dd hh:mm:ss")));
+		addEntry(QUrl(entryObject.value(QLatin1String("url")).toString()), entryObject.value(QLatin1String("title")).toString(), QIcon(), QDateTime::fromString(entryObject.value(QLatin1String("time")).toString(), QLatin1String("yyyy-MM-dd hh:mm:ss")));
 	}
 
 	setSortRole(TimeVisitedRole);
@@ -251,14 +250,7 @@ bool HistoryModel::save(const QString &path) const
 		return false;
 	}
 
-	QSaveFile file(path);
-
-	if (!file.open(QIODevice::WriteOnly))
-	{
-		return false;
-	}
-
-	QJsonArray array;
+	QJsonArray historyArray;
 
 	for (int i = 0; i < rowCount(); ++i)
 	{
@@ -266,21 +258,19 @@ bool HistoryModel::save(const QString &path) const
 
 		if (entry)
 		{
-			QJsonObject object;
-			object.insert(QLatin1String("url"), entry->data(UrlRole).toUrl().toString());
-			object.insert(QLatin1String("title"), entry->data(TitleRole).toString());
-			object.insert(QLatin1String("time"), entry->data(TimeVisitedRole).toDateTime().toString(QLatin1String("yyyy-MM-dd hh:mm:ss")));
+			QJsonObject entryObject;
+			entryObject.insert(QLatin1String("url"), entry->data(UrlRole).toUrl().toString());
+			entryObject.insert(QLatin1String("title"), entry->data(TitleRole).toString());
+			entryObject.insert(QLatin1String("time"), entry->data(TimeVisitedRole).toDateTime().toString(QLatin1String("yyyy-MM-dd hh:mm:ss")));
 
-			array.prepend(object);
+			historyArray.prepend(entryObject);
 		}
 	}
 
-	QJsonDocument document;
-	document.setArray(array);
+	JsonSettings settings;
+	settings.setArray(historyArray);
 
-	file.write(document.toJson(QJsonDocument::Indented));
-
-	return file.commit();
+	return settings.save(path);
 }
 
 bool HistoryModel::setData(const QModelIndex &index, const QVariant &value, int role)

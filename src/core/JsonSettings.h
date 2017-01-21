@@ -33,7 +33,7 @@ public:
 
 	void setComment(const QString &comment);
 	QString getComment() const;
-	bool save(const QString &path, bool isAtomic = true);
+	bool save(const QString &path = QString(), bool isAtomic = true);
 	bool hasError() const;
 
 private:

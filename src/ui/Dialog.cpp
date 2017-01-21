@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,11 +18,11 @@
 **************************************************************************/
 
 #include "Dialog.h"
+#include "../core/JsonSettings.h"
 #include "../core/SessionsManager.h"
 
 #include <QtCore/QFile>
 #include <QtCore/QJsonArray>
-#include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
 
 namespace Otter
@@ -46,17 +46,17 @@ void Dialog::showEvent(QShowEvent *event)
 		else
 		{
 			const QString name(normalizeDialogName(objectName()));
-			const QJsonObject object(QJsonDocument::fromJson(file.readAll()).object());
+			const QJsonObject settingsObject(QJsonDocument::fromJson(file.readAll()).object());
 
 			file.close();
 
-			if (object.contains(name))
+			if (settingsObject.contains(name))
 			{
-				QJsonObject size(object.value(name).toObject().value(QLatin1String("size")).toObject());
+				QJsonObject sizeObject(settingsObject.value(name).toObject().value(QLatin1String("size")).toObject());
 
-				if (!size.isEmpty() && size.value(QLatin1String("width")).toInt() > 0 && size.value(QLatin1String("height")).toInt() > 0)
+				if (!sizeObject.isEmpty() && sizeObject.value(QLatin1String("width")).toInt() > 0 && sizeObject.value(QLatin1String("height")).toInt() > 0)
 				{
-					resize(size.value(QLatin1String("width")).toInt(), size.value(QLatin1String("height")).toInt());
+					resize(sizeObject.value(QLatin1String("width")).toInt(), sizeObject.value(QLatin1String("height")).toInt());
 				}
 			}
 		}
@@ -76,34 +76,20 @@ void Dialog::resizeEvent(QResizeEvent *event)
 		return;
 	}
 
-	QJsonObject object;
-	QFile file(SessionsManager::getWritableDataPath(QLatin1String("dialogs.json")));
-
-	if (file.open(QIODevice::ReadOnly))
-	{
-		object = QJsonDocument::fromJson(file.readAll()).object();
-
-		file.close();
-	}
-
+	JsonSettings settings(SessionsManager::getWritableDataPath(QLatin1String("dialogs.json")));
+	QJsonObject settingsObject(settings.object());
 	const QString name(normalizeDialogName(objectName()));
-	QJsonObject dialog(object.value(name).toObject());
-	QJsonObject size;
-	size.insert(QLatin1String("width"), width());
-	size.insert(QLatin1String("height"), height());
+	QJsonObject dialogObject(settingsObject.value(name).toObject());
+	QJsonObject sizeObject;
+	sizeObject.insert(QLatin1String("width"), width());
+	sizeObject.insert(QLatin1String("height"), height());
 
-	dialog.insert(QLatin1String("size"), size);
+	dialogObject.insert(QLatin1String("size"), sizeObject);
 
-	object.insert(name, dialog);
+	settingsObject.insert(name, dialogObject);
 
-	if (file.open(QIODevice::WriteOnly))
-	{
-		QJsonDocument document;
-		document.setObject(object);
-
-		file.write(document.toJson(QJsonDocument::Indented));
-		file.close();
-	}
+	settings.setObject(settingsObject);
+	settings.save();
 }
 
 QString Dialog::normalizeDialogName(QString name)

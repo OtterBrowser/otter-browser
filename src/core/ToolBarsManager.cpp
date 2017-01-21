@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "ToolBarsManager.h"
+#include "JsonSettings.h"
 #include "SessionsManager.h"
 #include "Utils.h"
 #include "../ui/BookmarksComboBoxWidget.h"
@@ -25,7 +26,6 @@
 
 #include <QtCore/QFile>
 #include <QtCore/QJsonArray>
-#include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
 #include <QtCore/QMetaEnum>
 #include <QtCore/QVector>
@@ -69,130 +69,125 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 
 		m_saveTimer = 0;
 
-		if (!m_definitions.isEmpty())
+		if (m_definitions.isEmpty())
 		{
-			QJsonArray definitions;
-			const QMap<ToolBarVisibility, QString> visibilityModes({{AlwaysVisibleToolBar, QLatin1String("visible")}, {OnHoverVisibleToolBar, QLatin1String("hover")}, {AutoVisibilityToolBar, QLatin1String("auto")}, {AlwaysHiddenToolBar, QLatin1String("hidden")}});
+			return;
+		}
 
-			for (int i = 0; i < m_definitions.count(); ++i)
+		QJsonArray definitionsArray;
+		const QMap<ToolBarVisibility, QString> visibilityModes({{AlwaysVisibleToolBar, QLatin1String("visible")}, {OnHoverVisibleToolBar, QLatin1String("hover")}, {AutoVisibilityToolBar, QLatin1String("auto")}, {AlwaysHiddenToolBar, QLatin1String("hidden")}});
+
+		for (int i = 0; i < m_definitions.count(); ++i)
+		{
+			if ((m_definitions[i].isDefault && !m_definitions[i].canReset) || m_definitions[i].wasRemoved)
 			{
-				if ((m_definitions[i].isDefault && !m_definitions[i].canReset) || m_definitions[i].wasRemoved)
+				continue;
+			}
+
+			QString identifier(getToolBarName(m_definitions[i].identifier));
+
+			if (identifier.isEmpty())
+			{
+				continue;
+			}
+
+			QJsonObject definitionObject;
+			definitionObject.insert(QLatin1String("identifier"), QJsonValue(identifier));
+			definitionObject.insert(QLatin1String("title"), QJsonValue(m_definitions[i].title));
+
+			if (!m_definitions[i].bookmarksPath.isEmpty())
+			{
+				definitionObject.insert(QLatin1String("bookmarksPath"), QJsonValue(m_definitions[i].bookmarksPath));
+			}
+
+			definitionObject.insert(QLatin1String("normalVisibility"), QJsonValue(visibilityModes.value(m_definitions[i].normalVisibility)));
+			definitionObject.insert(QLatin1String("fullScreenVisibility"), QJsonValue(visibilityModes.value(m_definitions[i].fullScreenVisibility)));
+
+			if (m_definitions[i].location != Qt::NoToolBarArea)
+			{
+				QString location;
+
+				switch (m_definitions[i].location)
 				{
-					continue;
-				}
-
-				QString identifier(getToolBarName(m_definitions[i].identifier));
-
-				if (identifier.isEmpty())
-				{
-					continue;
-				}
-
-				QJsonObject definition;
-				definition.insert(QLatin1String("identifier"), QJsonValue(identifier));
-				definition.insert(QLatin1String("title"), QJsonValue(m_definitions[i].title));
-
-				if (!m_definitions[i].bookmarksPath.isEmpty())
-				{
-					definition.insert(QLatin1String("bookmarksPath"), QJsonValue(m_definitions[i].bookmarksPath));
-				}
-
-				definition.insert(QLatin1String("normalVisibility"), QJsonValue(visibilityModes.value(m_definitions[i].normalVisibility)));
-				definition.insert(QLatin1String("fullScreenVisibility"), QJsonValue(visibilityModes.value(m_definitions[i].fullScreenVisibility)));
-
-				if (m_definitions[i].location != Qt::NoToolBarArea)
-				{
-					QString location;
-
-					switch (m_definitions[i].location)
-					{
-						case Qt::BottomToolBarArea:
-							location = QLatin1String("bottom");
-
-							break;
-						case Qt::LeftToolBarArea:
-							location = QLatin1String("left");
-
-							break;
-						case Qt::RightToolBarArea:
-							location = QLatin1String("right");
-
-							break;
-						default:
-							location = QLatin1String("top");
-
-							break;
-					}
-
-					definition.insert(QLatin1String("location"), QJsonValue(location));
-				}
-
-				QString buttonStyle;
-
-				switch (m_definitions[i].buttonStyle)
-				{
-					case Qt::ToolButtonFollowStyle:
-						buttonStyle = QLatin1String("auto");
+					case Qt::BottomToolBarArea:
+						location = QLatin1String("bottom");
 
 						break;
-					case Qt::ToolButtonTextOnly:
-						buttonStyle = QLatin1String("textOnly");
+					case Qt::LeftToolBarArea:
+						location = QLatin1String("left");
 
 						break;
-					case Qt::ToolButtonTextBesideIcon:
-						buttonStyle = QLatin1String("textBesideIcon");
-
-						break;
-					case Qt::ToolButtonTextUnderIcon:
-						buttonStyle = QLatin1String("textUnderIcon");
+					case Qt::RightToolBarArea:
+						location = QLatin1String("right");
 
 						break;
 					default:
-						buttonStyle = QLatin1String("iconOnly");
+						location = QLatin1String("top");
 
 						break;
 				}
 
-				definition.insert(QLatin1String("buttonStyle"), QJsonValue(buttonStyle));
-
-				if (m_definitions[i].iconSize > 0)
-				{
-					definition.insert(QLatin1String("iconSize"), QJsonValue(m_definitions[i].iconSize));
-				}
-
-				if (m_definitions[i].maximumButtonSize > 0)
-				{
-					definition.insert(QLatin1String("maximumButtonSize"), QJsonValue(m_definitions[i].maximumButtonSize));
-				}
-
-				definition.insert(QLatin1String("row"), QJsonValue(m_definitions[i].row));
-
-				if (!m_definitions[i].entries.isEmpty())
-				{
-					QJsonArray actions;
-
-					for (int j = 0; j < m_definitions[i].entries.count(); ++j)
-					{
-						actions.append(encodeEntry(m_definitions[i].entries.at(j)));
-					}
-
-					definition.insert(QLatin1String("actions"), actions);
-				}
-
-				definitions.append(definition);
+				definitionObject.insert(QLatin1String("location"), QJsonValue(location));
 			}
 
-			QJsonDocument document;
-			document.setArray(definitions);
+			QString buttonStyle;
 
-			QFile file(SessionsManager::getWritableDataPath(QLatin1String("toolBars.json")));
-
-			if (file.open(QIODevice::WriteOnly))
+			switch (m_definitions[i].buttonStyle)
 			{
-				file.write(document.toJson(QJsonDocument::Indented));
-				file.close();
+				case Qt::ToolButtonFollowStyle:
+					buttonStyle = QLatin1String("auto");
+
+					break;
+				case Qt::ToolButtonTextOnly:
+					buttonStyle = QLatin1String("textOnly");
+
+					break;
+				case Qt::ToolButtonTextBesideIcon:
+					buttonStyle = QLatin1String("textBesideIcon");
+
+					break;
+				case Qt::ToolButtonTextUnderIcon:
+					buttonStyle = QLatin1String("textUnderIcon");
+
+					break;
+				default:
+					buttonStyle = QLatin1String("iconOnly");
+
+					break;
 			}
+
+			definitionObject.insert(QLatin1String("buttonStyle"), QJsonValue(buttonStyle));
+
+			if (m_definitions[i].iconSize > 0)
+			{
+				definitionObject.insert(QLatin1String("iconSize"), QJsonValue(m_definitions[i].iconSize));
+			}
+
+			if (m_definitions[i].maximumButtonSize > 0)
+			{
+				definitionObject.insert(QLatin1String("maximumButtonSize"), QJsonValue(m_definitions[i].maximumButtonSize));
+			}
+
+			definitionObject.insert(QLatin1String("row"), QJsonValue(m_definitions[i].row));
+
+			if (!m_definitions[i].entries.isEmpty())
+			{
+				QJsonArray actionsArray;
+
+				for (int j = 0; j < m_definitions[i].entries.count(); ++j)
+				{
+					actionsArray.append(encodeEntry(m_definitions[i].entries.at(j)));
+				}
+
+				definitionObject.insert(QLatin1String("actions"), actionsArray);
+			}
+
+			definitionsArray.append(definitionObject);
 		}
+
+		JsonSettings settings;
+		settings.setArray(definitionsArray);
+		settings.save(SessionsManager::getWritableDataPath(QLatin1String("toolBars.json")));
 	}
 }
 

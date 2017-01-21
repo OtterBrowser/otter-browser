@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -21,6 +21,7 @@
 #include "AddonsContentsWidget.h"
 #include "../../../core/ActionsManager.h"
 #include "../../../core/SessionsManager.h"
+#include "../../../core/JsonSettings.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/UserScript.h"
 #include "../../../core/Utils.h"
@@ -28,7 +29,6 @@
 #include "ui_AddonsContentsWidget.h"
 
 #include <QtCore/QFile>
-#include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
 #include <QtCore/QStandardPaths>
 #include <QtCore/QTimer>
@@ -285,14 +285,7 @@ void AddonsContentsWidget::save()
 		return;
 	}
 
-	QFile file(SessionsManager::getWritableDataPath(QLatin1String("scripts/scripts.json")));
-
-	if (!file.open(QIODevice::WriteOnly))
-	{
-		return;
-	}
-
-	QJsonObject settings;
+	QJsonObject settingsObject;
 
 	for (int i = 0; i < userScriptsItem->rowCount(); ++i)
 	{
@@ -300,18 +293,16 @@ void AddonsContentsWidget::save()
 
 		if (item && !item->data(NameRole).toString().isEmpty())
 		{
-			QJsonObject script;
-			script.insert(QLatin1String("isEnabled"), QJsonValue(item->checkState() == Qt::Checked));
+			QJsonObject scriptObject;
+			scriptObject.insert(QLatin1String("isEnabled"), QJsonValue(item->checkState() == Qt::Checked));
 
-			settings.insert(item->data(NameRole).toString(), script);
+			settingsObject.insert(item->data(NameRole).toString(), scriptObject);
 		}
 	}
 
-	QJsonDocument document;
-	document.setObject(settings);
-
-	file.write(document.toJson(QJsonDocument::Indented));
-	file.close();
+	JsonSettings settings;
+	settings.setObject(settingsObject);
+	settings.save(SessionsManager::getWritableDataPath(QLatin1String("scripts/scripts.json")));
 }
 
 void AddonsContentsWidget::showContextMenu(const QPoint &point)

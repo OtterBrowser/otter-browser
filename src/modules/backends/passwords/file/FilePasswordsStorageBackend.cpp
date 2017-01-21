@@ -149,7 +149,7 @@ void FilePasswordsStorageBackend::save()
 		hostsObject.insert(hostsIterator.key(), hostArray);
 	}
 
-	file.write(QJsonDocument(hostsObject).toJson(QJsonDocument::Indented));
+	file.write(QJsonDocument(hostsObject).toJson(QJsonDocument::Compact));
 	file.close();
 }
 
