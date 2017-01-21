@@ -129,7 +129,7 @@
 			{
 				"identifier": "ClosedWindowsMenu",
 				"type": "menu",
-				"title": "Closed Windows",
+				"title": "Closed Tabs and Windows",
 				"actions":
 				[
 				]

@@ -323,7 +323,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Style"));
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Character Encoding"));
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "History"));
-	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Closed Windows"));
+	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Closed Tabs and Windows"));
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Tools"));
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Help"));

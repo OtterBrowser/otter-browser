@@ -378,7 +378,7 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	}
 	else if (identifier == QLatin1String("ClosedWindowsMenu"))
 	{
-		item->setText(tr("List of Closed Windows and Tabs"));
+		item->setText(tr("List of Closed Tabs and Windows"));
 	}
 	else if (identifier == QLatin1String("AddressWidget"))
 	{
