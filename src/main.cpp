@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -70,7 +70,7 @@ bool otterCrashDumpHandler(const wchar_t *dumpDirectory, const wchar_t *dumpIden
 
 		qDebug("Crash dump saved to: %s", dumpPath.toLocal8Bit().constData());
 
-		MainWindow *mainWindow(SessionsManager::getActiveWindow());
+		MainWindow *mainWindow(Application::getActiveWindow());
 
 		QProcess::startDetached(QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + QDir::separator() + QLatin1String("crash-reporter.exe")), QStringList({dumpPath, (mainWindow ? mainWindow->getWindowsManager()->getUrl().toDisplayString() : QString())}));
 	}
@@ -86,7 +86,7 @@ bool otterCrashDumpHandler(const google_breakpad::MinidumpDescriptor &descriptor
 	{
 		qDebug("Crash dump saved to: %s", descriptor.path());
 
-		MainWindow *mainWindow(SessionsManager::getActiveWindow());
+		MainWindow *mainWindow(Application::getActiveWindow());
 
 		QProcess::startDetached(QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + QDir::separator() + QLatin1String("crash-reporter")), QStringList({descriptor.path(), (mainWindow ? mainWindow->getWindowsManager()->getUrl().toDisplayString() : QString())}));
 	}
