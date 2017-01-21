@@ -113,6 +113,7 @@ set(otter_src
 	src/core/HistoryModel.cpp
 	src/core/Importer.cpp
 	src/core/InputInterpreter.cpp
+	src/core/JsonSettings.cpp
 	src/core/LocalListingNetworkReply.cpp
 	src/core/LongTermTimer.cpp
 	src/core/Migrator.cpp
