@@ -98,7 +98,7 @@ void TrayIcon::triggerAction(QAction *action)
 	}
 	else
 	{
-		MainWindow *window(SessionsManager::getActiveWindow());
+		MainWindow *window(Application::getActiveWindow());
 
 		if (window)
 		{

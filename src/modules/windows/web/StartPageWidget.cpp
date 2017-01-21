@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -467,12 +467,12 @@ void StartPageWidget::openTile()
 		return;
 	}
 
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 	const QUrl url(m_currentIndex.data(BookmarksModel::UrlRole).toUrl());
-	WindowsManager *manager(SessionsManager::getWindowsManager());
 
-	if (manager && url.isValid())
+	if (mainWindow && url.isValid())
 	{
-		manager->open(url, WindowsManager::CurrentTabOpen);
+		mainWindow->getWindowsManager()->open(url, WindowsManager::CurrentTabOpen);
 	}
 }
 
@@ -769,11 +769,11 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 					}
 					else if (parentWidget() && parentWidget()->parentWidget() && mouseEvent->button() != Qt::MiddleButton)
 					{
-						WindowsManager *manager(SessionsManager::getWindowsManager());
+						MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
-						if (manager && url.isValid())
+						if (mainWindow && url.isValid())
 						{
-							manager->open(url, WindowsManager::CurrentTabOpen);
+							mainWindow->getWindowsManager()->open(url, WindowsManager::CurrentTabOpen);
 						}
 					}
 				}

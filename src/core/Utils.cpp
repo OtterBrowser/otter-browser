@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -349,7 +349,7 @@ SaveInformation getSavePath(const QString &fileName, QString path, QStringList f
 	{
 		if (path.isEmpty() || forceAsk)
 		{
-			QFileDialog dialog(SessionsManager::getActiveWindow(), QCoreApplication::translate("utils", "Save File"), SettingsManager::getValue(SettingsManager::Paths_SaveFileOption).toString() + QDir::separator() + fileName);
+			QFileDialog dialog(Application::getActiveWindow(), QCoreApplication::translate("utils", "Save File"), SettingsManager::getValue(SettingsManager::Paths_SaveFileOption).toString() + QDir::separator() + fileName);
 			dialog.setNameFilters(filters);
 			dialog.setFileMode(QFileDialog::AnyFile);
 			dialog.setAcceptMode(QFileDialog::AcceptSave);
@@ -371,7 +371,7 @@ SaveInformation getSavePath(const QString &fileName, QString path, QStringList f
 		{
 			path = QString();
 
-			if (QMessageBox::warning(SessionsManager::getActiveWindow(), QCoreApplication::translate("utils", "Warning"), QCoreApplication::translate("utils", "This path is already used by different download, pick another one."), (QMessageBox::Ok | QMessageBox::Cancel)) == QMessageBox::Cancel)
+			if (QMessageBox::warning(Application::getActiveWindow(), QCoreApplication::translate("utils", "Warning"), QCoreApplication::translate("utils", "This path is already used by different download, pick another one."), (QMessageBox::Ok | QMessageBox::Cancel)) == QMessageBox::Cancel)
 			{
 				break;
 			}
@@ -380,7 +380,7 @@ SaveInformation getSavePath(const QString &fileName, QString path, QStringList f
 		{
 			path = QString();
 
-			if (QMessageBox::warning(SessionsManager::getActiveWindow(), QCoreApplication::translate("utils", "Warning"), QCoreApplication::translate("utils", "Target path is not writable.\nSelect another one."), (QMessageBox::Ok | QMessageBox::Cancel)) == QMessageBox::Cancel)
+			if (QMessageBox::warning(Application::getActiveWindow(), QCoreApplication::translate("utils", "Warning"), QCoreApplication::translate("utils", "Target path is not writable.\nSelect another one."), (QMessageBox::Ok | QMessageBox::Cancel)) == QMessageBox::Cancel)
 			{
 				break;
 			}
@@ -412,11 +412,11 @@ QStringList getOpenPaths(const QStringList &fileNames, QStringList filters, bool
 
 	if (selectMultiple)
 	{
-		paths = QFileDialog::getOpenFileNames(SessionsManager::getActiveWindow(), QCoreApplication::translate("utils", "Open Files"), SettingsManager::getValue(SettingsManager::Paths_OpenFileOption).toString(), filters.join(QLatin1String(";;")));
+		paths = QFileDialog::getOpenFileNames(Application::getActiveWindow(), QCoreApplication::translate("utils", "Open Files"), SettingsManager::getValue(SettingsManager::Paths_OpenFileOption).toString(), filters.join(QLatin1String(";;")));
 	}
 	else
 	{
-		const QString path(QFileDialog::getOpenFileName(SessionsManager::getActiveWindow(), QCoreApplication::translate("utils", "Open File"), SettingsManager::getValue(SettingsManager::Paths_OpenFileOption).toString(), filters.join(QLatin1String(";;"))));
+		const QString path(QFileDialog::getOpenFileName(Application::getActiveWindow(), QCoreApplication::translate("utils", "Open File"), SettingsManager::getValue(SettingsManager::Paths_OpenFileOption).toString(), filters.join(QLatin1String(";;"))));
 
 		if (!path.isEmpty())
 		{

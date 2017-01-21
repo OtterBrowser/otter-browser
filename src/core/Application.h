@@ -76,6 +76,7 @@ public:
 	static MainWindow* createWindow(MainWindowFlags flags = NoFlags, bool inBackground = false, const SessionMainWindow &windows = SessionMainWindow());
 	static Application* getInstance();
 	static MainWindow* getWindow();
+	static MainWindow* getActiveWindow();
 	static Style* getStyle();
 	static TrayIcon* getTrayIcon();
 	static PlatformIntegration* getPlatformIntegration();
@@ -99,8 +100,9 @@ protected slots:
 	void updateCheckFinished(const QList<UpdateInformation> &availableUpdates);
 	void clearHistory();
 	void periodicUpdateCheck();
-	void showUpdateDetails();
 	void handleNewConnection();
+	void showUpdateDetails();
+	void setActiveWindow(MainWindow *window);
 
 private:
 	static Application *m_instance;
@@ -109,6 +111,7 @@ private:
 	static QTranslator *m_qtTranslator;
 	static QTranslator *m_applicationTranslator;
 	static QLocalServer *m_localServer;
+	static QPointer<MainWindow> m_activeWindow;
 	static QString m_localePath;
 	static QCommandLineParser m_commandLineParser;
 	static QList<MainWindow*> m_windows;

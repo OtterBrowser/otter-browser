@@ -126,6 +126,7 @@ private:
 	Ui::MainWindow *m_ui;
 
 signals:
+	void activated(MainWindow *window);
 	void requestedToolBarsActivation(Qt::ToolBarAreas areas);
 	void controlsHiddenChanged(bool hidden);
 	void statusMessageChanged(const QString &message);

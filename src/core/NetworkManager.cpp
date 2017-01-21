@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -20,11 +20,11 @@
 **************************************************************************/
 
 #include "NetworkManager.h"
+#include "Application.h"
 #include "CookieJar.h"
 #include "LocalListingNetworkReply.h"
 #include "NetworkCache.h"
 #include "NetworkManagerFactory.h"
-#include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "Utils.h"
 #include "../ui/AuthenticationDialog.h"
@@ -71,7 +71,7 @@ NetworkManager::NetworkManager(bool isPrivate, QObject *parent) : QNetworkAccess
 
 void NetworkManager::handleAuthenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator)
 {
-	AuthenticationDialog dialog(reply->url(), authenticator, AuthenticationDialog::HttpAuthentication, SessionsManager::getActiveWindow());
+	AuthenticationDialog dialog(reply->url(), authenticator, AuthenticationDialog::HttpAuthentication, Application::getActiveWindow());
 	dialog.exec();
 }
 
@@ -84,7 +84,7 @@ void NetworkManager::handleProxyAuthenticationRequired(const QNetworkProxy &prox
 		return;
 	}
 
-	AuthenticationDialog dialog(QUrl(proxy.hostName()), authenticator, AuthenticationDialog::ProxyAuthentication, SessionsManager::getActiveWindow());
+	AuthenticationDialog dialog(QUrl(proxy.hostName()), authenticator, AuthenticationDialog::ProxyAuthentication, Application::getActiveWindow());
 	dialog.exec();
 }
 
@@ -126,7 +126,7 @@ void NetworkManager::handleSslErrors(QNetworkReply *reply, const QList<QSslError
 		return;
 	}
 
-	if (QMessageBox::warning(SessionsManager::getActiveWindow(), tr("Warning"), tr("SSL errors occurred:\n\n%1\n\nDo you want to continue?").arg(messages.join(QLatin1Char('\n'))), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::Yes)
+	if (QMessageBox::warning(Application::getActiveWindow(), tr("Warning"), tr("SSL errors occurred:\n\n%1\n\nDo you want to continue?").arg(messages.join(QLatin1Char('\n'))), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::Yes)
 	{
 		reply->ignoreSslErrors(errors);
 	}

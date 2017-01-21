@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 #include "../../../core/SettingsManager.h"
 #include "../../../core/ThemesManager.h"
 #include "../../../core/Utils.h"
+#include "../../../ui/MainWindow.h"
 
 #include "ui_NotesContentsWidget.h"
 
@@ -120,11 +121,11 @@ void NotesContentsWidget::restoreNote()
 void NotesContentsWidget::openUrl(const QModelIndex &index)
 {
 	BookmarksItem *bookmark(NotesManager::getModel()->getBookmark(index.isValid() ? index : m_ui->notesViewWidget->currentIndex()));
-	WindowsManager *manager(SessionsManager::getWindowsManager());
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
-	if (bookmark && bookmark->data(BookmarksModel::UrlRole).toUrl().isValid() && manager)
+	if (bookmark && bookmark->data(BookmarksModel::UrlRole).toUrl().isValid() && mainWindow)
 	{
-		manager->open(bookmark);
+		mainWindow->getWindowsManager()->open(bookmark);
 	}
 }
 
@@ -390,15 +391,15 @@ bool NotesContentsWidget::eventFilter(QObject *object, QEvent *event)
 	if (object == m_ui->notesViewWidget->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
 		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
-		WindowsManager *manager(SessionsManager::getWindowsManager());
+		MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
-		if (manager && mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
+		if (mainWindow && mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
 		{
 			BookmarksItem *bookmark(NotesManager::getModel()->getBookmark(m_ui->notesViewWidget->indexAt(mouseEvent->pos())));
 
 			if (bookmark)
 			{
-				manager->open(bookmark, WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen, mouseEvent->button(), mouseEvent->modifiers()));
+				mainWindow->getWindowsManager()->open(bookmark, WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen, mouseEvent->button(), mouseEvent->modifiers()));
 
 				return true;
 			}

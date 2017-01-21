@@ -278,12 +278,12 @@ void SidebarWidget::scheduleSizeSave()
 
 void SidebarWidget::addWebPanel()
 {
-	WindowsManager *manager(SessionsManager::getWindowsManager());
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 	QString url;
 
-	if (manager)
+	if (mainWindow)
 	{
-		url = manager->getUrl().toString(QUrl::RemovePassword);
+		url = mainWindow->getWindowsManager()->getUrl().toString(QUrl::RemovePassword);
 	}
 
 	url = QInputDialog::getText(this, tr("Add web panel"), tr("Input address of web page to be shown in panel:"), QLineEdit::Normal, url);

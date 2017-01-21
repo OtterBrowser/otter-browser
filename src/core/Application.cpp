@@ -85,6 +85,7 @@ TrayIcon* Application::m_trayIcon(nullptr);
 QTranslator* Application::m_qtTranslator(nullptr);
 QTranslator* Application::m_applicationTranslator(nullptr);
 QLocalServer* Application::m_localServer(nullptr);
+QPointer<MainWindow> Application::m_activeWindow(nullptr);
 QString Application::m_localePath;
 QCommandLineParser Application::m_commandLineParser;
 QList<MainWindow*> Application::m_windows;
@@ -500,11 +501,9 @@ void Application::optionChanged(int identifier, const QVariant &value)
 
 void Application::openUrl(const QUrl &url)
 {
-	MainWindow *mainWindow(SessionsManager::getActiveWindow());
-
-	if (mainWindow)
+	if (m_activeWindow)
 	{
-		mainWindow->getWindowsManager()->open(url);
+		m_activeWindow->getWindowsManager()->open(url);
 	}
 }
 
@@ -765,6 +764,11 @@ void Application::showUpdateDetails()
 	}
 }
 
+void Application::setActiveWindow(MainWindow *window)
+{
+	m_activeWindow = window;
+}
+
 void Application::setHidden(bool hidden)
 {
 	if (hidden == m_isHidden)
@@ -819,6 +823,10 @@ MainWindow* Application::createWindow(MainWindowFlags flags, bool inBackground, 
 	{
 		window->setAttribute(Qt::WA_ShowWithoutActivating, true);
 	}
+	else
+	{
+		m_activeWindow = window;
+	}
 
 	window->show();
 
@@ -829,6 +837,8 @@ MainWindow* Application::createWindow(MainWindowFlags flags, bool inBackground, 
 	}
 
 	emit m_instance->windowAdded(window);
+
+	connect(window, &MainWindow::activated, m_instance, &Application::setActiveWindow);
 
 	return window;
 }
@@ -846,6 +856,11 @@ MainWindow* Application::getWindow()
 	}
 
 	return m_windows[0];
+}
+
+MainWindow* Application::getActiveWindow()
+{
+	return m_activeWindow;
 }
 
 Style* Application::getStyle()

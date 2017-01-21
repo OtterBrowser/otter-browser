@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -21,6 +21,7 @@
 
 #include "PreferencesGeneralPageWidget.h"
 #include "AcceptLanguageDialog.h"
+#include "../MainWindow.h"
 #include "../Menu.h"
 #include "../../core/Application.h"
 #include "../../core/BookmarksManager.h"
@@ -96,11 +97,11 @@ void PreferencesGeneralPageWidget::changeEvent(QEvent *event)
 
 void PreferencesGeneralPageWidget::useCurrentAsHomePage()
 {
-	WindowsManager *manager(SessionsManager::getWindowsManager());
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
-	if (manager)
+	if (mainWindow)
 	{
-		m_ui->homePageLineEdit->setText(manager->getUrl().toString(QUrl::RemovePassword));
+		m_ui->homePageLineEdit->setText(mainWindow->getWindowsManager()->getUrl().toString(QUrl::RemovePassword));
 	}
 }
 

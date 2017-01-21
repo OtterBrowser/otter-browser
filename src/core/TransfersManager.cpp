@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -263,7 +263,7 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 		{
 			path = SettingsManager::getValue(SettingsManager::Paths_DownloadsOption).toString();
 
-			if (QFile::exists(path + QDir::separator() + fileName) && QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with that name already exists.\nDo you want to overwrite it?"), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::No)
+			if (QFile::exists(path + QDir::separator() + fileName) && QMessageBox::question(Application::getActiveWindow(), tr("Question"), tr("File with that name already exists.\nDo you want to overwrite it?"), (QMessageBox::Yes | QMessageBox::No)) == QMessageBox::No)
 			{
 				path = QString();
 			}
@@ -797,7 +797,7 @@ bool Transfer::setTarget(const QString &target, bool canOverwriteExisting)
 
 	if (!canOverwriteExisting && !m_options.testFlag(CanOverwriteOption) && QFile::exists(target))
 	{
-		const QMessageBox::StandardButton result(QMessageBox::question(SessionsManager::getActiveWindow(), tr("Question"), tr("File with the same name already exists.\nDo you want to overwrite it?\n\n%1").arg(target), (QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel)));
+		const QMessageBox::StandardButton result(QMessageBox::question(Application::getActiveWindow(), tr("Question"), tr("File with the same name already exists.\nDo you want to overwrite it?\n\n%1").arg(target), (QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel)));
 
 		if (result == QMessageBox::No)
 		{

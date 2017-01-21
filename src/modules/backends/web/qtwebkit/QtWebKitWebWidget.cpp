@@ -440,7 +440,7 @@ void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
 
 				if (!file.open(QIODevice::WriteOnly))
 				{
-					QMessageBox::critical(SessionsManager::getActiveWindow(), tr("Error"), tr("Failed to open file for writing."), QMessageBox::Close);
+					QMessageBox::critical(this, tr("Error"), tr("Failed to open file for writing."), QMessageBox::Close);
 				}
 
 				file.write(device->readAll());

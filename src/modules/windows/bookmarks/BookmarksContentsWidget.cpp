@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -127,13 +127,13 @@ void BookmarksContentsWidget::restoreBookmark()
 void BookmarksContentsWidget::openBookmark(const QModelIndex &index)
 {
 	BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(index.isValid() ? index : m_ui->bookmarksViewWidget->currentIndex()));
-	WindowsManager *manager(SessionsManager::getWindowsManager());
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
-	if (bookmark && manager)
+	if (bookmark && mainWindow)
 	{
 		QAction *action(qobject_cast<QAction*>(sender()));
 
-		manager->open(bookmark, (action ? static_cast<WindowsManager::OpenHints>(action->data().toInt()) : WindowsManager::DefaultOpen));
+		mainWindow->getWindowsManager()->open(bookmark, (action ? static_cast<WindowsManager::OpenHints>(action->data().toInt()) : WindowsManager::DefaultOpen));
 	}
 }
 
@@ -393,15 +393,15 @@ bool BookmarksContentsWidget::eventFilter(QObject *object, QEvent *event)
 	else if (object == m_ui->bookmarksViewWidget->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
 		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
-		WindowsManager *manager(SessionsManager::getWindowsManager());
+		MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
-		if (manager && mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
+		if (mainWindow && mouseEvent && ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier) || mouseEvent->button() == Qt::MiddleButton))
 		{
 			BookmarksItem *bookmark(BookmarksManager::getModel()->getBookmark(m_ui->bookmarksViewWidget->indexAt(mouseEvent->pos())));
 
 			if (bookmark)
 			{
-				manager->open(bookmark, WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen, mouseEvent->button(), mouseEvent->modifiers()));
+				mainWindow->getWindowsManager()->open(bookmark, WindowsManager::calculateOpenHints(WindowsManager::NewTabOpen, mouseEvent->button(), mouseEvent->modifiers()));
 
 				return true;
 			}

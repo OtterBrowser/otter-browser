@@ -25,7 +25,6 @@
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QRect>
-#include <QtCore/QPointer>
 
 namespace Otter
 {
@@ -122,10 +121,7 @@ public:
 	static void storeClosedWindow(MainWindow *window);
 	static void markSessionModified();
 	static void removeStoredUrl(const QString &url);
-	static void setActiveWindow(MainWindow *window);
 	static SessionsManager* getInstance();
-	static WindowsManager* getWindowsManager();
-	static MainWindow* getActiveWindow();
 	static QString getCurrentSession();
 	static QString getCachePath();
 	static QString getProfilePath();
@@ -154,7 +150,6 @@ private:
 	int m_saveTimer;
 
 	static SessionsManager *m_instance;
-	static QPointer<MainWindow> m_activeWindow;
 	static QString m_sessionPath;
 	static QString m_sessionTitle;
 	static QString m_cachePath;

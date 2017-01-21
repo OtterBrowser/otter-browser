@@ -91,8 +91,6 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 
 	updateShortcuts();
 
-	SessionsManager::setActiveWindow(this);
-
 	m_windowsManager = new WindowsManager((flags.testFlag(Application::PrivateFlag) || SessionsManager::isPrivate() || SettingsManager::getValue(SettingsManager::Browser_PrivateModeOption).toBool()), this);
 
 	m_workspace->updateActions();
@@ -1206,7 +1204,7 @@ MainWindow* MainWindow::findMainWindow(QObject *parent)
 
 	if (!window)
 	{
-		window = qobject_cast<MainWindow*>(SessionsManager::getActiveWindow());
+		window = Application::getActiveWindow();
 	}
 
 	return window;
@@ -1351,7 +1349,7 @@ bool MainWindow::event(QEvent *event)
 
 			break;
 		case QEvent::WindowActivate:
-			SessionsManager::setActiveWindow(this);
+			emit activated(this);
 		case QEvent::Resize:
 			updateSidebars();
 

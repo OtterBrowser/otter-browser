@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -25,6 +25,7 @@
 #include "../../../core/WindowsManager.h"
 #include "../../../ui/ComboBoxWidget.h"
 
+#include <QtCore/QPointer>
 #include <QtCore/QTime>
 #include <QtCore/QUrl>
 #include <QtWidgets/QItemDelegate>

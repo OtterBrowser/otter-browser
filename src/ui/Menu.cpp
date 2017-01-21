@@ -294,11 +294,11 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 
 				if (action >= 0)
 				{
-					WindowsManager *manager(SessionsManager::getWindowsManager());
+					MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
-					if (manager && Action::isLocal(action) && manager->getAction(action))
+					if (mainWindow && Action::isLocal(action) && mainWindow->getWindowsManager()->getAction(action))
 					{
-						QMenu::addAction(manager->getAction(action));
+						QMenu::addAction(mainWindow->getWindowsManager()->getAction(action));
 					}
 					else
 					{
@@ -881,7 +881,7 @@ void Menu::openSession(QAction *action)
 {
 	if (!action->data().isNull())
 	{
-		SessionsManager::restoreSession(SessionsManager::getSession(action->data().toString()), (SettingsManager::getValue(SettingsManager::Sessions_OpenInExistingWindowOption).toBool() ? SessionsManager::getActiveWindow() : nullptr));
+		SessionsManager::restoreSession(SessionsManager::getSession(action->data().toString()), (SettingsManager::getValue(SettingsManager::Sessions_OpenInExistingWindowOption).toBool() ? Application::getActiveWindow() : nullptr));
 	}
 }
 
