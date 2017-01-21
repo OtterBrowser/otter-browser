@@ -234,6 +234,7 @@ Migrator::MigrationFlags Migrator::checkMigrationStatus(const QString &identifie
 	QAbstractButton *ignoreButton(messageBox.addButton(tr("No"), QMessageBox::RejectRole));
 	QAbstractButton *cancelButton(messageBox.addButton(tr("Cancel"), QMessageBox::RejectRole));
 
+	messageBox.checkBox()->setChecked(true);
 	messageBox.exec();
 
 	if (messageBox.clickedButton() == cancelButton)
