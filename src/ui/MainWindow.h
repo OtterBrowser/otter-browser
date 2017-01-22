@@ -117,7 +117,7 @@ private:
 	Window *m_currentWindow;
 	QString m_currentBookmark;
 	QString m_windowTitle;
-	QVector<Action*> m_standardActions;
+	QVector<Action*> m_actions;
 	QVector<Shortcut*> m_shortcuts;
 	Qt::WindowStates m_previousState;
 	Qt::WindowStates m_previousRaisedState;

@@ -88,7 +88,7 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 
 	setUnifiedTitleAndToolBarOnMac(true);
 
-	m_standardActions.fill(nullptr, ActionsManager::getActionDefinitions().count());
+	m_actions.fill(nullptr, ActionsManager::getActionDefinitions().count());
 
 	updateShortcuts();
 
@@ -1127,26 +1127,26 @@ void MainWindow::setCurrentWindow(Window *window)
 
 	m_currentWindow = window;
 
-	for (int i = 0; i < m_standardActions.count(); ++i)
+	for (int i = 0; i < m_actions.count(); ++i)
 	{
-		if (m_standardActions[i] && Action::isLocal(m_standardActions[i]->getIdentifier()))
+		if (m_actions[i] && Action::isLocal(m_actions[i]->getIdentifier()))
 		{
-			const int identifier(m_standardActions[i]->getIdentifier());
+			const int identifier(m_actions[i]->getIdentifier());
 			Action *previousAction((previousWindow && previousWindow->getContentsWidget()) ? previousWindow->getContentsWidget()->getAction(identifier) : nullptr);
 			Action *currentAction(window ? window->getContentsWidget()->getAction(identifier) : nullptr);
 
 			if (previousAction)
 			{
-				disconnect(previousAction, SIGNAL(changed()), m_standardActions[i], SLOT(setup()));
+				disconnect(previousAction, SIGNAL(changed()), m_actions[i], SLOT(setup()));
 			}
 
-			m_standardActions[i]->blockSignals(true);
-			m_standardActions[i]->setup(currentAction);
-			m_standardActions[i]->blockSignals(false);
+			m_actions[i]->blockSignals(true);
+			m_actions[i]->setup(currentAction);
+			m_actions[i]->blockSignals(false);
 
 			if (currentAction)
 			{
-				connect(currentAction, SIGNAL(changed()), m_standardActions[i], SLOT(setup()));
+				connect(currentAction, SIGNAL(changed()), m_actions[i], SLOT(setup()));
 			}
 		}
 	}
@@ -1199,17 +1199,17 @@ MainWindow* MainWindow::findMainWindow(QObject *parent)
 
 Action* MainWindow::getAction(int identifier)
 {
-	if (identifier < 0 || identifier >= m_standardActions.count())
+	if (identifier < 0 || identifier >= m_actions.count())
 	{
 		return nullptr;
 	}
 
-	if (!m_standardActions[identifier])
+	if (!m_actions[identifier])
 	{
 		const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(identifier));
 		Action *action(new Action(identifier, this));
 
-		m_standardActions[identifier] = action;
+		m_actions[identifier] = action;
 
 		addAction(action);
 
@@ -1223,7 +1223,7 @@ Action* MainWindow::getAction(int identifier)
 		}
 	}
 
-	return m_standardActions.value(identifier, nullptr);
+	return m_actions.value(identifier, nullptr);
 }
 
 WorkspaceWidget* MainWindow::getWorkspace()
