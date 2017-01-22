@@ -232,7 +232,7 @@ void MacPlatformIntegration::timerEvent(QTimerEvent *event)
 
 void MacPlatformIntegration::triggerAction(QAction *action)
 {
-	MainWindow *window(SessionsManager::getActiveWindow());
+	MainWindow *window(Application::getActiveWindow());
 	Action *actionObject(qobject_cast<Action*>(action));
 
 	if (window && actionObject)
