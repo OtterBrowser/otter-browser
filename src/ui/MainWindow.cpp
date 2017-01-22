@@ -814,7 +814,7 @@ void MainWindow::triggerAction(bool checked)
 
 	if (action)
 	{
-		QVariantMap parameters(action->data().toMap());
+		QVariantMap parameters(action->getParameters());
 
 		if (action->isCheckable())
 		{

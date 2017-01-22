@@ -718,23 +718,23 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 			const bool isPinned(window->isPinned());
 			Action *cloneTabAction(new Action(ActionsManager::CloneTabAction, &menu));
 			cloneTabAction->setEnabled(window->canClone());
-			cloneTabAction->setData(parameters);
+			cloneTabAction->setParameters(parameters);
 
 			Action *pinTabAction(new Action(ActionsManager::PinTabAction, &menu));
 			pinTabAction->setOverrideText(isPinned ? QT_TRANSLATE_NOOP("actions", "Unpin Tab") : QT_TRANSLATE_NOOP("actions", "Pin Tab"));
-			pinTabAction->setData(parameters);
+			pinTabAction->setParameters(parameters);
 
 			Action *detachTabAction(new Action(ActionsManager::DetachTabAction, &menu));
 			detachTabAction->setEnabled(count() > 1);
-			detachTabAction->setData(parameters);
+			detachTabAction->setParameters(parameters);
 
 			Action *closeTabAction(new Action(ActionsManager::CloseTabAction, &menu));
 			closeTabAction->setEnabled(!isPinned);
-			closeTabAction->setData(parameters);
+			closeTabAction->setParameters(parameters);
 
 			Action *closeOtherTabsAction(new Action(ActionsManager::CloseOtherTabsAction, &menu));
 			closeOtherTabsAction->setEnabled(amount > 0 && !(amount == 1 && !isPinned));
-			closeOtherTabsAction->setData(parameters);
+			closeOtherTabsAction->setParameters(parameters);
 
 			menu.addAction(cloneTabAction);
 			menu.addAction(pinTabAction);
@@ -759,15 +759,15 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	QMenu *arrangeMenu(menu.addMenu(tr("Arrange")));
 	Action *restoreTabAction(new Action(ActionsManager::RestoreTabAction, &menu));
 	restoreTabAction->setEnabled(m_clickedTab >= 0);
-	restoreTabAction->setData(parameters);
+	restoreTabAction->setParameters(parameters);
 
 	Action *minimizeTabAction(new Action(ActionsManager::MinimizeTabAction, &menu));
 	minimizeTabAction->setEnabled(m_clickedTab >= 0);
-	minimizeTabAction->setData(parameters);
+	minimizeTabAction->setParameters(parameters);
 
 	Action *maximizeTabAction(new Action(ActionsManager::MaximizeTabAction, &menu));
 	maximizeTabAction->setEnabled(m_clickedTab >= 0);
-	maximizeTabAction->setData(parameters);
+	maximizeTabAction->setParameters(parameters);
 
 	arrangeMenu->addAction(restoreTabAction);
 	arrangeMenu->addAction(minimizeTabAction);

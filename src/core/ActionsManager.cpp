@@ -129,9 +129,19 @@ void Action::setOverrideText(const QString &text)
 	update();
 }
 
+void Action::setParameters(const QVariantMap &parameters)
+{
+	m_parameters = parameters;
+}
+
 QString Action::getText() const
 {
 	return QCoreApplication::translate("actions", (m_isOverridingText ? m_overrideText : ActionsManager::getActionDefinition(m_identifier).text).toUtf8().constData());
+}
+
+QVariantMap Action::getParameters() const
+{
+	return m_parameters;
 }
 
 QList<QKeySequence> Action::getShortcuts() const

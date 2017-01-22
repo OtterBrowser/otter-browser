@@ -259,6 +259,47 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 		if (actions.at(i).isObject())
 		{
 			const QJsonObject object(actions.at(i).toObject());
+			const QString type(object.value(QLatin1String("type")).toString());
+
+			if (type == QLatin1String("action"))
+			{
+				const QVariantMap parameters(object.value(QLatin1String("parameters")).toVariant().toMap());
+				const int identifier(ActionsManager::getActionIdentifier(object.value(QLatin1String("identifier")).toString()));
+
+				if (identifier >= 0)
+				{
+					const QString text(object.value(QLatin1String("title")).toString());
+					MainWindow *mainWindow(MainWindow::findMainWindow(this));
+					Action *action(addAction(identifier, false));
+					action->setParameters(parameters);
+
+					if (!text.isEmpty())
+					{
+						action->setOverrideText(text);
+					}
+
+					if (object.contains(QLatin1String("icon")))
+					{
+						const QString data(object.value(QLatin1String("icon")).toString());
+
+						if (data.startsWith(QLatin1String("data:image/")))
+						{
+							action->setIcon(QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8())))));
+						}
+						else
+						{
+							action->setIcon(ThemesManager::getIcon(data));
+						}
+					}
+
+					if (mainWindow)
+					{
+						connect(action, SIGNAL(triggered(bool)), mainWindow, SLOT(triggerAction(bool)));
+					}
+				}
+
+				continue;
+			}
 
 			if (object.contains(QLatin1String("includeIn")) && !options.contains(object.value(QLatin1String("includeIn")).toString()))
 			{
@@ -268,11 +309,11 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 			Menu *menu(new Menu(Menu::getRole(object.value(QLatin1String("identifier")).toString()), this));
 			menu->load(object, options);
 
-			if (object.value(QLatin1String("type")).toString() == QLatin1String("menu"))
+			if (type == QLatin1String("menu"))
 			{
 				addMenu(menu);
 			}
-			else if (object.value(QLatin1String("type")).toString() == QLatin1String("include"))
+			else if (type == QLatin1String("include"))
 			{
 				for (int j = 0; j < menu->actions().count(); ++j)
 				{
@@ -290,19 +331,19 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 			}
 			else
 			{
-				const int action(ActionsManager::getActionIdentifier(rawAction));
+				const int identifier(ActionsManager::getActionIdentifier(rawAction));
 
-				if (action >= 0)
+				if (identifier >= 0)
 				{
 					MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
-					if (mainWindow && Action::isLocal(action) && mainWindow->getWindowsManager()->getAction(action))
+					if (mainWindow && Action::isLocal(identifier) && mainWindow->getWindowsManager()->getAction(identifier))
 					{
-						QMenu::addAction(mainWindow->getWindowsManager()->getAction(action));
+						QMenu::addAction(mainWindow->getWindowsManager()->getAction(identifier));
 					}
 					else
 					{
-						addAction(action, true);
+						addAction(identifier, true);
 					}
 				}
 			}

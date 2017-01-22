@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -37,7 +37,9 @@ public:
 	explicit Action(int identifier, QObject *parent = nullptr);
 
 	void setOverrideText(const QString &text);
+	void setParameters(const QVariantMap &parameters);
 	QString getText() const;
+	QVariantMap getParameters() const;
 	QList<QKeySequence> getShortcuts() const;
 	int getIdentifier() const;
 	bool event(QEvent *event);
@@ -52,6 +54,7 @@ protected:
 
 private:
 	QString m_overrideText;
+	QVariantMap m_parameters;
 	int m_identifier;
 	bool m_isOverridingText;
 };
