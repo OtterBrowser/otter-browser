@@ -223,7 +223,7 @@ SessionInformation SessionsManager::getSession(const QString &path)
 			sessionWindow.isAlwaysOnTop = windowObject.value(QLatin1String("isAlwaysOnTop")).toBool(false);
 			sessionWindow.isPinned = windowObject.value(QLatin1String("isPinned")).toBool(false);
 
-			if (windowObject.keys().contains(QLatin1String("options")))
+			if (windowObject.contains(QLatin1String("options")))
 			{
 				const QJsonObject optionsObject(windowObject.value(QLatin1String("options")).toObject());
 				QJsonObject::const_iterator iterator;

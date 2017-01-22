@@ -234,7 +234,7 @@ void NetworkManagerFactory::readUserAgent(const QJsonValue &value, UserAgentDefi
 		userAgent.identifier = identifier;
 		userAgent.title = object.value(QLatin1String("title")).toString();
 
-		if (object.keys().contains(QLatin1String("children")))
+		if (object.contains(QLatin1String("children")))
 		{
 			userAgent.isFolder = true;
 
