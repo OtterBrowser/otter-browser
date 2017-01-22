@@ -63,6 +63,7 @@ public:
 	TabBarWidget* getTabBar();
 	WindowsManager* getWindowsManager();
 	bool areControlsHidden() const;
+	bool isAboutToClose() const;
 	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
@@ -122,6 +123,7 @@ private:
 	Qt::WindowStates m_previousRaisedState;
 	int m_mouseTrackerTimer;
 	int m_tabSwitcherTimer;
+	bool m_isAboutToClose;
 	bool m_hasToolBars;
 	Ui::MainWindow *m_ui;
 

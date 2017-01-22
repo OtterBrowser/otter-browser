@@ -1198,7 +1198,7 @@ void AddressWidget::setWindow(Window *window)
 			connect(window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
 		}
 	}
-	else if (mainWindow && !m_isUsingSimpleMode)
+	else if (mainWindow && !mainWindow->isAboutToClose() && !m_isUsingSimpleMode)
 	{
 		connect(this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(open(QUrl,WindowsManager::OpenHints)));
 		connect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(open(BookmarksItem*,WindowsManager::OpenHints)));

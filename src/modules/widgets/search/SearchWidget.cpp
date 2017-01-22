@@ -816,7 +816,7 @@ void SearchWidget::setWindow(Window *window)
 	}
 	else
 	{
-		if (mainWindow)
+		if (mainWindow && !mainWindow->isAboutToClose())
 		{
 			connect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,WindowsManager::OpenHints)));
 		}

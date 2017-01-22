@@ -80,6 +80,7 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 	m_currentWindow(nullptr),
 	m_mouseTrackerTimer(0),
 	m_tabSwitcherTimer(0),
+	m_isAboutToClose(false),
 	m_hasToolBars(!flags.testFlag(Application::NoToolBarsFlag)),
 	m_ui(new Ui::MainWindow)
 {
@@ -253,6 +254,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 		return;
 	}
+
+	m_isAboutToClose = true;
 
 	if (isLastWindow)
 	{
@@ -1257,6 +1260,11 @@ WindowsManager* MainWindow::getWindowsManager()
 bool MainWindow::areControlsHidden() const
 {
 	return windowState().testFlag(Qt::WindowFullScreen);
+}
+
+bool MainWindow::isAboutToClose() const
+{
+	return m_isAboutToClose;
 }
 
 bool MainWindow::event(QEvent *event)
