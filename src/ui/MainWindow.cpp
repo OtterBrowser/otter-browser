@@ -772,36 +772,28 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 void MainWindow::triggerAction()
 {
-	QShortcut *shortcut(qobject_cast<QShortcut*>(sender()));
+	Shortcut *shortcut(qobject_cast<Shortcut*>(sender()));
 
 	if (shortcut)
 	{
-		for (int i = 0; i < m_actionShortcuts.count(); ++i)
+		if (shortcut->getParameters().isEmpty())
 		{
-			if (m_actionShortcuts[i].second.contains(shortcut))
+			const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(shortcut->getIdentifier()));
+
+			if (definition.identifier >= 0 && definition.flags.testFlag(ActionsManager::IsCheckableFlag))
 			{
-				const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(m_actionShortcuts[i].first));
+				Action *action(getAction(definition.identifier));
 
-				if (definition.identifier >= 0)
+				if (action)
 				{
-					if (definition.flags.testFlag(ActionsManager::IsCheckableFlag))
-					{
-						Action *action(getAction(m_actionShortcuts[i].first));
+					action->toggle();
 
-						if (action)
-						{
-							action->toggle();
-						}
-					}
-					else
-					{
-						triggerAction(m_actionShortcuts[i].first);
-					}
+					return;
 				}
-
-				return;
 			}
 		}
+
+		triggerAction(shortcut->getIdentifier(), shortcut->getParameters());
 
 		return;
 	}
@@ -1106,34 +1098,26 @@ void MainWindow::updateWindowTitle(const QString &title)
 
 void MainWindow::updateShortcuts()
 {
-	for (int i = 0; i < m_actionShortcuts.count(); ++i)
-	{
-		qDeleteAll(m_actionShortcuts[i].second);
-	}
+	qDeleteAll(m_shortcuts);
 
-	m_actionShortcuts.clear();
+	m_shortcuts.clear();
 
 	const QVector<ActionsManager::ActionDefinition> definitions(ActionsManager::getActionDefinitions());
 	const QList<QKeySequence> standardShortcuts({QKeySequence(QKeySequence::Copy), QKeySequence(QKeySequence::Cut), QKeySequence(QKeySequence::Delete), QKeySequence(QKeySequence::Paste), QKeySequence(QKeySequence::Redo), QKeySequence(QKeySequence::SelectAll), QKeySequence(QKeySequence::Undo)});
 
 	for (int i = 0; i < definitions.count(); ++i)
 	{
-		QVector<QShortcut*> shortcuts;
-		shortcuts.reserve(definitions[i].shortcuts.count());
-
 		for (int j = 0; j < definitions[i].shortcuts.count(); ++j)
 		{
 			if (!standardShortcuts.contains(definitions[i].shortcuts[j]))
 			{
-				QShortcut *shortcut(new QShortcut(definitions[i].shortcuts[j], this));
+				Shortcut *shortcut(new Shortcut(definitions[i].identifier, definitions[i].shortcuts[j], this));
 
-				shortcuts.append(shortcut);
+				m_shortcuts.append(shortcut);
 
 				connect(shortcut, SIGNAL(activated()), this, SLOT(triggerAction()));
 			}
 		}
-
-		m_actionShortcuts.append(qMakePair(i, shortcuts));
 	}
 }
 

@@ -118,7 +118,7 @@ private:
 	QString m_currentBookmark;
 	QString m_windowTitle;
 	QVector<Action*> m_standardActions;
-	QVector<QPair<int, QVector<QShortcut*> > > m_actionShortcuts;
+	QVector<Shortcut*> m_shortcuts;
 	Qt::WindowStates m_previousState;
 	Qt::WindowStates m_previousRaisedState;
 	int m_mouseTrackerTimer;

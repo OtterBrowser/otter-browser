@@ -24,6 +24,7 @@
 
 #include <QtCore/QVariantMap>
 #include <QtWidgets/QAction>
+#include <QtWidgets/QShortcut>
 
 namespace Otter
 {
@@ -53,6 +54,22 @@ private:
 	QString m_overrideText;
 	int m_identifier;
 	bool m_isOverridingText;
+};
+
+class Shortcut : public QShortcut
+{
+	Q_OBJECT
+
+public:
+	explicit Shortcut(int identifier, const QKeySequence &sequence, QWidget *parent = nullptr);
+
+	void setParameters(const QVariantMap &parameters);
+	QVariantMap getParameters() const;
+	int getIdentifier() const;
+
+private:
+	QVariantMap m_parameters;
+	int m_identifier;
 };
 
 class ActionsManager : public QObject

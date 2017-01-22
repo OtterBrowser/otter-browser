@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -308,6 +308,26 @@ bool Action::isLocal(int identifier)
 	}
 
 	return false;
+}
+
+Shortcut::Shortcut(int identifier, const QKeySequence &sequence, QWidget *parent) : QShortcut(sequence, parent),
+	m_identifier(identifier)
+{
+}
+
+void Shortcut::setParameters(const QVariantMap &parameters)
+{
+	m_parameters = parameters;
+}
+
+QVariantMap Shortcut::getParameters() const
+{
+	return m_parameters;
+}
+
+int Shortcut::getIdentifier() const
+{
+	return m_identifier;
 }
 
 ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
