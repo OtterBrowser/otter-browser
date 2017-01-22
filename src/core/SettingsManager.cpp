@@ -455,7 +455,7 @@ QVariant SettingsManager::getValue(int identifier, const QUrl &url)
 
 		for (int i = 1; i < hostParts.count(); ++i)
 		{
-			const QString wildcardedName(QLatin1String("*.") + hostParts.mid(i).join(QLatin1Char('.')) + QLatin1Char('/') + name);
+			const QString wildcardedName(QLatin1String("*.") + QStringList(hostParts.mid(i)).join(QLatin1Char('.')) + QLatin1Char('/') + name);
 
 			if (overrides.contains(wildcardedName))
 			{
