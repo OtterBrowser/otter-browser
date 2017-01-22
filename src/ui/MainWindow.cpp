@@ -147,14 +147,14 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 	getAction(ActionsManager::AboutQtAction)->setMenuRole(QAction::AboutQtRole);
 	getAction(ActionsManager::AboutApplicationAction)->setMenuRole(QAction::AboutRole);
 
-	if (ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar)
+	if (m_hasToolBars && ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar)
 	{
 		m_menuBar = new MenuBarWidget(this);
 
 		setMenuBar(m_menuBar);
 	}
 
-	if (ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar)
+	if (m_hasToolBars && ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar)
 	{
 		m_statusBar = new StatusBarWidget(this);
 
