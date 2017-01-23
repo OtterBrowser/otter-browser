@@ -563,7 +563,7 @@ void WindowsManager::addWindow(Window *window, OpenHints hints, int index, const
 		m_mainWindow->getAction(ActionsManager::ClosePrivateTabsAction)->setEnabled(true);
 	}
 
-	window->setControlsHidden(m_mainWindow->isFullScreen());
+	window->setToolBarsVisible(m_mainWindow->areToolBarsVisible());
 
 	if (index < 0)
 	{
@@ -613,7 +613,7 @@ void WindowsManager::addWindow(Window *window, OpenHints hints, int index, const
 		}
 	}
 
-	connect(m_mainWindow, SIGNAL(controlsHiddenChanged(bool)), window, SLOT(setControlsHidden(bool)));
+	connect(m_mainWindow, SIGNAL(areToolBarsVisibleChanged(bool)), window, SLOT(setToolBarsVisible(bool)));
 	connect(window, &Window::needsAttention, [&]()
 	{
 		QApplication::alert(m_mainWindow);

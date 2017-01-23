@@ -117,6 +117,7 @@ private:
 signals:
 	void toolBarAdded(int identifier);
 	void toolBarModified(int identifier);
+	void toolBarMoved(int identifier);
 	void toolBarRemoved(int identifier);
 	void toolBarsLockedChanged(bool locked);
 };

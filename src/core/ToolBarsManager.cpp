@@ -314,6 +314,8 @@ void ToolBarsManager::resetToolBars()
 		emit m_instance->toolBarModified(i);
 	}
 
+	emit m_instance->toolBarMoved(TabBar);
+
 	m_instance->scheduleSave();
 }
 
@@ -343,7 +345,14 @@ void ToolBarsManager::setToolBar(ToolBarsManager::ToolBarDefinition definition)
 			definition.canReset = true;
 		}
 
+		const bool wasMoved(definition.location != m_definitions[identifier].location || definition.row != m_definitions[identifier].row);
+
 		m_definitions[identifier] = definition;
+
+		if (wasMoved)
+		{
+			emit m_instance->toolBarMoved(identifier);
+		}
 
 		emit m_instance->toolBarModified(identifier);
 	}

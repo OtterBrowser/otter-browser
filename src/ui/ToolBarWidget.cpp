@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -23,7 +23,6 @@
 #include "MainWindow.h"
 #include "Menu.h"
 #include "TabBarWidget.h"
-#include "ToolBarAreaWidget.h"
 #include "WidgetFactory.h"
 #include "Window.h"
 #include "../core/BookmarksManager.h"
@@ -32,93 +31,137 @@
 #include "../core/WindowsManager.h"
 #include "../modules/widgets/bookmark/BookmarkWidget.h"
 
-#include <QtCore/QMimeData>
 #include <QtCore/QTimer>
 #include <QtGui/QDrag>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPainter>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QLayout>
 #include <QtWidgets/QStyle>
 #include <QtWidgets/QStyleOption>
 
 namespace Otter
 {
 
-ToolBarDragAreaWidget::ToolBarDragAreaWidget(ToolBarWidget *parent) : QWidget(parent),
-	m_toolBar(parent)
+ToolBarDropZoneWidget::ToolBarDropZoneWidget(MainWindow *parent) : QToolBar(parent),
+	m_mainWindow(parent),
+	m_isDropTarget(false)
 {
-	setToolTip(tr("Drag to move toolbar"));
-	setCursor(QCursor(Qt::SizeAllCursor));
-
-	if (m_toolBar->orientation() == Qt::Horizontal)
-	{
-		setFixedWidth(style()->pixelMetric(QStyle::PM_ToolBarHandleExtent));
-	}
-	else
-	{
-		setFixedHeight(style()->pixelMetric(QStyle::PM_ToolBarHandleExtent));
-	}
+	setAcceptDrops(true);
 }
 
-void ToolBarDragAreaWidget::paintEvent(QPaintEvent *event)
+void ToolBarDropZoneWidget::paintEvent(QPaintEvent *event)
 {
 	Q_UNUSED(event)
 
 	QPainter painter(this);
-	QStyleOption option;
-	option.palette = palette();
-	option.rect = QRect(QPoint(0, 0), size());
 
-	if (m_toolBar->orientation() == Qt::Horizontal)
+	if (!m_isDropTarget)
 	{
-		option.state = QStyle::State_Horizontal;
+		painter.setOpacity(0.25);
 	}
 
-	style()->drawPrimitive(QStyle::PE_IndicatorToolBarHandle, &option, &painter, this);
+	QStyleOptionRubberBand rubberBandOption;
+	rubberBandOption.initFrom(this);
+
+	style()->drawControl(QStyle::CE_RubberBand, &rubberBandOption, &painter);
 }
 
-void ToolBarDragAreaWidget::mousePressEvent(QMouseEvent *event)
+void ToolBarDropZoneWidget::dragEnterEvent(QDragEnterEvent *event)
 {
-	QWidget::mousePressEvent(event);
-
-	if (event->button() == Qt::LeftButton)
+	if (canDrop(event->mimeData()))
 	{
-		m_dragStartPosition = event->pos();
+		event->accept();
+
+		m_isDropTarget = true;
+
+		update();
+	}
+	else
+	{
+		event->ignore();
 	}
 }
 
-void ToolBarDragAreaWidget::mouseMoveEvent(QMouseEvent *event)
+void ToolBarDropZoneWidget::dragMoveEvent(QDragMoveEvent *event)
 {
-	if (!event->buttons().testFlag(Qt::LeftButton) || (event->pos() - m_dragStartPosition).manhattanLength() < QApplication::startDragDistance() || !m_toolBar->isMovable())
+	if (canDrop(event->mimeData()))
 	{
+		event->accept();
+	}
+	else
+	{
+		event->ignore();
+	}
+}
+
+void ToolBarDropZoneWidget::dragLeaveEvent(QDragLeaveEvent *event)
+{
+	QWidget::dragLeaveEvent(event);
+
+	m_isDropTarget = false;
+
+	update();
+}
+
+void ToolBarDropZoneWidget::dropEvent(QDropEvent *event)
+{
+	if (!canDrop(event->mimeData()))
+	{
+		event->ignore();
+
+		m_mainWindow->endToolBarDragging();
+
 		return;
 	}
 
-	m_toolBar->startToolBarDragging();
+	event->accept();
 
-	QMimeData *mimeData(new QMimeData());
-	mimeData->setProperty("x-toolbar-identifier", m_toolBar->getIdentifier());
+	m_isDropTarget = false;
 
-	QDrag *drag(new QDrag(this));
-	drag->setMimeData(mimeData);
-	drag->exec(Qt::MoveAction);
+	update();
+
+	const QList<ToolBarWidget*> toolBars(m_mainWindow->findChildren<ToolBarWidget*>());
+	const int draggedIdentifier(event->mimeData()->property("x-toolbar-identifier").toInt());
+
+	for (int i = 0; i < toolBars.count(); ++i)
+	{
+		if (toolBars.at(i)->getIdentifier() == draggedIdentifier)
+		{
+			m_mainWindow->insertToolBar(this, toolBars.at(i));
+			m_mainWindow->insertToolBarBreak(this);
+
+			QTimer::singleShot(100, m_mainWindow, SLOT(saveToolBarPositions()));
+
+			break;
+		}
+	}
+
+	m_mainWindow->endToolBarDragging();
 }
 
-void ToolBarDragAreaWidget::mouseReleaseEvent(QMouseEvent *event)
+QSize ToolBarDropZoneWidget::sizeHint() const
 {
-	QWidget::mouseReleaseEvent(event);
+	if ((orientation() == Qt::Horizontal))
+	{
+		return QSize(QToolBar::sizeHint().width(), 5);
+	}
 
-	m_toolBar->endToolBarDragging();
+	return QSize(5, QToolBar::sizeHint().height());
+}
+
+bool ToolBarDropZoneWidget::canDrop(const QMimeData *mimeData)
+{
+	return (mimeData && !mimeData->property("x-toolbar-identifier").isNull() && m_mainWindow->toolBarArea(this) != Qt::NoToolBarArea);
 }
 
 ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : QToolBar(parent),
 	m_mainWindow(MainWindow::findMainWindow(parent)),
 	m_window(window),
 	m_bookmark(nullptr),
-	m_dragArea(nullptr),
 	m_identifier(identifier)
 {
-	setStyleSheet(QLatin1String("QToolBar {padding:0 3px;spacing:3px;}"));
+	setAcceptDrops(true);
 	setAllowedAreas(Qt::NoToolBarArea);
 	setFloatable(false);
 
@@ -240,6 +283,49 @@ void ToolBarWidget::resizeEvent(QResizeEvent *event)
 	}
 }
 
+void ToolBarWidget::mousePressEvent(QMouseEvent *event)
+{
+	QWidget::mousePressEvent(event);
+
+	if (event->button() == Qt::LeftButton)
+	{
+		QStyleOptionToolBar option;
+		initStyleOption(&option);
+
+		if (style()->subElementRect(QStyle::SE_ToolBarHandle, &option, this).contains(event->pos()))
+		{
+			m_dragStartPosition = event->pos();
+		}
+	}
+}
+
+void ToolBarWidget::mouseMoveEvent(QMouseEvent *event)
+{
+	if (!m_mainWindow || !event->buttons().testFlag(Qt::LeftButton) || (event->pos() - m_dragStartPosition).manhattanLength() < QApplication::startDragDistance() || !isMovable())
+	{
+		return;
+	}
+
+	m_mainWindow->beginToolBarDragging();
+
+	QMimeData *mimeData(new QMimeData());
+	mimeData->setProperty("x-toolbar-identifier", m_identifier);
+
+	QDrag *drag(new QDrag(this));
+	drag->setMimeData(mimeData);
+	drag->exec(Qt::MoveAction);
+}
+
+void ToolBarWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+	QWidget::mouseReleaseEvent(event);
+
+	if (m_mainWindow)
+	{
+		m_mainWindow->endToolBarDragging();
+	}
+}
+
 void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 {
 	if (m_identifier < 0)
@@ -309,29 +395,9 @@ void ToolBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	thumbnailsAction->deleteLater();
 }
 
-void ToolBarWidget::startToolBarDragging()
-{
-	ToolBarAreaWidget *toolBarArea(qobject_cast<ToolBarAreaWidget*>(parentWidget()));
-
-	if (toolBarArea)
-	{
-		toolBarArea->startToolBarDragging();
-	}
-}
-
-void ToolBarWidget::endToolBarDragging()
-{
-	ToolBarAreaWidget *toolBarArea(qobject_cast<ToolBarAreaWidget*>(parentWidget()));
-
-	if (toolBarArea)
-	{
-		toolBarArea->endToolBarDragging();
-	}
-}
-
 void ToolBarWidget::reload()
 {
-	const ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(m_identifier));
+	const ToolBarsManager::ToolBarDefinition definition(getDefinition());
 
 	setDefinition(definition);
 
@@ -423,15 +489,6 @@ void ToolBarWidget::loadBookmarks()
 {
 	clear();
 
-	m_dragArea = nullptr;
-
-	if (!ToolBarsManager::areToolBarsLocked() && qobject_cast<ToolBarAreaWidget*>(parentWidget()))
-	{
-		m_dragArea = new ToolBarDragAreaWidget(this);
-
-		addWidget(m_dragArea);
-	}
-
 	if (!m_bookmark)
 	{
 		return;
@@ -477,8 +534,6 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 	setVisible(definition.normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
 	setOrientation((definition.location == Qt::LeftToolBarArea || definition.location == Qt::RightToolBarArea) ? Qt::Vertical : Qt::Horizontal);
 
-	m_dragArea = nullptr;
-
 	if (m_identifier == ToolBarsManager::TabBar)
 	{
 		for (int i = (actions().count() - 1); i >= 0; --i)
@@ -519,14 +574,7 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 		return;
 	}
 
-	if (!ToolBarsManager::areToolBarsLocked() && qobject_cast<ToolBarAreaWidget*>(parentWidget()))
-	{
-		m_dragArea = new ToolBarDragAreaWidget(this);
-
-		addWidget(m_dragArea);
-	}
-
-	const bool isHorizontal(definition.location != Qt::LeftToolBarArea && definition.location != Qt::RightToolBarArea);
+	const bool isHorizontal(orientation() == Qt::Horizontal);
 
 	for (int i = 0; i < definition.entries.count(); ++i)
 	{
@@ -601,18 +649,6 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 void ToolBarWidget::setToolBarLocked(bool locked)
 {
 	setMovable(!locked);
-
-	if (locked && m_dragArea)
-	{
-		m_dragArea->deleteLater();
-		m_dragArea = nullptr;
-	}
-	else if (!locked && !m_dragArea && qobject_cast<ToolBarAreaWidget*>(parentWidget()))
-	{
-		m_dragArea = new ToolBarDragAreaWidget(this);
-
-		insertWidget(((actions().count() > 0) ? actions().at(0) : nullptr), m_dragArea);
-	}
 }
 
 QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QList<QAction*> actions, QWidget *parent)
@@ -650,21 +686,24 @@ QMenu* ToolBarWidget::createCustomizationMenu(int identifier, QList<QAction*> ac
 	return menu;
 }
 
-Qt::ToolBarArea ToolBarWidget::getArea() const
+QString ToolBarWidget::getTitle() const
 {
-	ToolBarAreaWidget *toolBarArea(qobject_cast<ToolBarAreaWidget*>(parentWidget()));
+	return getDefinition().getTitle();
+}
 
-	if (toolBarArea)
-	{
-		return toolBarArea->getArea();
-	}
+ToolBarsManager::ToolBarDefinition ToolBarWidget::getDefinition() const
+{
+	return ToolBarsManager::getToolBarDefinition(m_identifier);
+}
 
-	return Qt::NoToolBarArea;
+Qt::ToolBarArea ToolBarWidget::getArea()
+{
+	return (m_mainWindow ? m_mainWindow->toolBarArea(this) : Qt::TopToolBarArea);
 }
 
 Qt::ToolButtonStyle ToolBarWidget::getButtonStyle() const
 {
-	return ToolBarsManager::getToolBarDefinition(m_identifier).buttonStyle;
+	return getDefinition().buttonStyle;
 }
 
 int ToolBarWidget::getIdentifier() const
@@ -674,7 +713,7 @@ int ToolBarWidget::getIdentifier() const
 
 int ToolBarWidget::getIconSize() const
 {
-	const int iconSize(ToolBarsManager::getToolBarDefinition(m_identifier).iconSize);
+	const int iconSize(getDefinition().iconSize);
 
 	if (iconSize > 0)
 	{
@@ -686,20 +725,10 @@ int ToolBarWidget::getIconSize() const
 
 int ToolBarWidget::getMaximumButtonSize() const
 {
-	return ToolBarsManager::getToolBarDefinition(m_identifier).maximumButtonSize;
+	return getDefinition().maximumButtonSize;
 }
-
 bool ToolBarWidget::event(QEvent *event)
 {
-	if (event->type() == QEvent::LayoutRequest)
-	{
-		const bool result(QToolBar::event(event));
-
-		layout()->setContentsMargins(0, 0, 0, 0);
-
-		return result;
-	}
-
 	if (!GesturesManager::isTracking() && (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel))
 	{
 		QList<GesturesManager::GesturesContext> contexts;
@@ -713,6 +742,24 @@ bool ToolBarWidget::event(QEvent *event)
 		contexts.append(GesturesManager::GenericGesturesContext);
 
 		GesturesManager::startGesture(this, event, contexts);
+	}
+
+	switch (event->type())
+	{
+		case QEvent::LayoutRequest:
+			{
+				const bool result(QToolBar::event(event));
+
+				setContentsMargins(0, 0, 0, 0);
+
+				return result;
+			}
+
+			break;
+		case QEvent::MouseButtonPress:
+			return QWidget::event(event);
+		default:
+			break;
 	}
 
 	return QToolBar::event(event);

@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -86,7 +87,7 @@ public slots:
 	void markAsActive();
 	void setSearchEngine(const QString &searchEngine);
 	void setUrl(const QUrl &url, bool isTyped = true);
-	void setControlsHidden(bool hidden);
+	void setToolBarsVisible(bool areVisible);
 	void setPinned(bool isPinned);
 
 protected:
@@ -111,7 +112,7 @@ private:
 	QList<QPointer<AddressWidget> > m_addressWidgets;
 	QList<QPointer<SearchWidget> > m_searchWidgets;
 	quint64 m_identifier;
-	bool m_areControlsHidden;
+	bool m_areToolBarsVisible;
 	bool m_isAboutToClose;
 	bool m_isPinned;
 	bool m_isPrivate;

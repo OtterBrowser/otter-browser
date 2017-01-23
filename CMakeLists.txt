@@ -192,7 +192,6 @@ set(otter_src
 	src/ui/TabBarWidget.cpp
 	src/ui/TabSwitcherWidget.cpp
 	src/ui/TextLabelWidget.cpp
-	src/ui/ToolBarAreaWidget.cpp
 	src/ui/ToolBarDialog.cpp
 	src/ui/ToolBarWidget.cpp
 	src/ui/ToolButtonWidget.cpp

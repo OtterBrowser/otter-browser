@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -58,7 +58,7 @@ Window::Window(bool isPrivate, ContentsWidget *widget, QWidget *parent) : QWidge
 	m_navigationBar(nullptr),
 	m_contentsWidget(nullptr),
 	m_identifier(++m_identifierCounter),
-	m_areControlsHidden(false),
+	m_areToolBarsVisible(true),
 	m_isAboutToClose(false),
 	m_isPinned(false),
 	m_isPrivate(isPrivate)
@@ -463,19 +463,19 @@ void Window::setUrl(const QUrl &url, bool isTyped)
 	}
 }
 
-void Window::setControlsHidden(bool hidden)
+void Window::setToolBarsVisible(bool areVisible)
 {
-	m_areControlsHidden = hidden;
+	m_areToolBarsVisible = areVisible;
 
 	if (m_navigationBar)
 	{
-		if (hidden)
-		{
-			m_navigationBar->hide();
-		}
-		else if (ToolBarsManager::getToolBarDefinition(ToolBarsManager::NavigationBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar)
+		if (areVisible && ToolBarsManager::getToolBarDefinition(ToolBarsManager::NavigationBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar)
 		{
 			m_navigationBar->show();
+		}
+		else
+		{
+			m_navigationBar->hide();
 		}
 	}
 }
@@ -519,7 +519,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	if (!m_navigationBar)
 	{
 		m_navigationBar = new ToolBarWidget(ToolBarsManager::NavigationBar, this, this);
-		m_navigationBar->setVisible(!m_areControlsHidden && ToolBarsManager::getToolBarDefinition(ToolBarsManager::NavigationBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
+		m_navigationBar->setVisible(m_areToolBarsVisible && m_navigationBar->getDefinition().normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
 
 		layout()->addWidget(m_navigationBar);
 	}

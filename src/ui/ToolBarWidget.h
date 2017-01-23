@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,6 +21,7 @@
 #ifndef OTTER_TOOLBARWIDGET_H
 #define OTTER_TOOLBARWIDGET_H
 
+#include <QtCore/QMimeData>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QToolBar>
 
@@ -30,25 +32,31 @@ namespace Otter
 
 class BookmarksItem;
 class MainWindow;
-class ToolBarWidget;
 class Window;
 
-class ToolBarDragAreaWidget : public QWidget
+class ToolBarDropZoneWidget : public QToolBar
 {
+	Q_OBJECT
+
 public:
-	void paintEvent(QPaintEvent *event) override;
-	void mousePressEvent(QMouseEvent *event) override;
-	void mouseMoveEvent(QMouseEvent *event) override;
-	void mouseReleaseEvent(QMouseEvent *event) override;
+	explicit ToolBarDropZoneWidget(MainWindow *parent);
+
+	QSize sizeHint() const override;
 
 protected:
-	explicit ToolBarDragAreaWidget(ToolBarWidget *parent);
+	void paintEvent(QPaintEvent *event) override;
+	void dragEnterEvent(QDragEnterEvent *event) override;
+	void dragMoveEvent(QDragMoveEvent *event) override;
+	void dragLeaveEvent(QDragLeaveEvent *event) override;
+	void dropEvent(QDropEvent *event) override;
+	bool canDrop(const QMimeData *mimeData);
 
 private:
-	ToolBarWidget *m_toolBar;
-	QPoint m_dragStartPosition;
+	MainWindow *m_mainWindow;
+	bool m_isDropTarget;
 
-friend class ToolBarWidget;
+signals:
+	void toolBarDraggedChanged(bool isDragging);
 };
 
 class ToolBarWidget : public QToolBar
@@ -62,7 +70,9 @@ public:
 	void reload();
 	void resetGeometry();
 	void setDefinition(const ToolBarsManager::ToolBarDefinition &definition);
-	Qt::ToolBarArea getArea() const;
+	QString getTitle() const;
+	ToolBarsManager::ToolBarDefinition getDefinition() const;
+	Qt::ToolBarArea getArea();
 	Qt::ToolButtonStyle getButtonStyle() const;
 	int getIdentifier() const;
 	int getIconSize() const;
@@ -74,8 +84,9 @@ protected:
 	void paintEvent(QPaintEvent *event) override;
 	void resizeEvent(QResizeEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
-	void startToolBarDragging();
-	void endToolBarDragging();
+	void mousePressEvent(QMouseEvent *event) override;
+	void mouseMoveEvent(QMouseEvent *event) override;
+	void mouseReleaseEvent(QMouseEvent *event) override;
 
 protected slots:
 	void toolBarModified(int identifier);
@@ -93,7 +104,7 @@ private:
 	MainWindow *m_mainWindow;
 	Window *m_window;
 	BookmarksItem *m_bookmark;
-	ToolBarDragAreaWidget *m_dragArea;
+	QPoint m_dragStartPosition;
 	int m_identifier;
 
 signals:
@@ -102,8 +113,6 @@ signals:
 	void buttonStyleChanged(Qt::ToolButtonStyle buttonStyle);
 	void iconSizeChanged(int size);
 	void maximumButtonSizeChanged(int size);
-
-friend class ToolBarDragAreaWidget;
 };
 
 }

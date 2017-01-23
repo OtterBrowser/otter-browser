@@ -45,7 +45,6 @@ class MenuBarWidget;
 class StatusBarWidget;
 class TabBarWidget;
 class TabSwitcherWidget;
-class ToolBarAreaWidget;
 class ToolBarWidget;
 class WindowsManager;
 
@@ -62,7 +61,7 @@ public:
 	WorkspaceWidget* getWorkspace();
 	TabBarWidget* getTabBar();
 	WindowsManager* getWindowsManager();
-	bool areControlsHidden() const;
+	bool areToolBarsVisible() const;
 	bool isAboutToClose() const;
 	bool eventFilter(QObject *object, QEvent *event);
 
@@ -80,12 +79,11 @@ protected:
 	void keyReleaseEvent(QKeyEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
-	void startToolBarDragging();
+	void beginToolBarDragging();
 	void endToolBarDragging();
-	void moveToolBar(ToolBarWidget *toolBar, Qt::ToolBarArea area);
 	void placeSidebars();
 	void updateSidebars();
-	void setTabBar(TabBarWidget *tabBar);
+	QList<ToolBarWidget*> getToolBars(Qt::ToolBarArea area);
 	bool event(QEvent *event);
 
 protected slots:
@@ -94,8 +92,12 @@ protected slots:
 	void triggerAction(bool checked);
 	void addBookmark(const QUrl &url = QUrl(), const QString &title = QString(), const QString &description = QString(), bool warn = false);
 	void editBookmark(const QUrl &url);
-	void toolBarModified(int identifier);
-	void transferStarted();
+	void saveToolBarPositions();
+	void handleToolBarAdded(int identifier);
+	void handleToolBarModified(int identifier);
+	void handleToolBarMoved(int identifier);
+	void handleToolBarRemoved(int identifier);
+	void handleTransferStarted();
 	void updateWindowTitle(const QString &title);
 	void updateShortcuts();
 	void setCurrentWindow(Window *window);
@@ -104,10 +106,6 @@ private:
 	WindowsManager *m_windowsManager;
 	TabSwitcherWidget *m_tabSwitcher;
 	WorkspaceWidget *m_workspace;
-	ToolBarAreaWidget *m_topToolBarArea;
-	ToolBarAreaWidget *m_bottomToolBarArea;
-	ToolBarAreaWidget *m_leftToolBarArea;
-	ToolBarAreaWidget *m_rightToolBarArea;
 	TabBarWidget *m_tabBar;
 	MenuBarWidget *m_menuBar;
 	StatusBarWidget *m_statusBar;
@@ -124,16 +122,17 @@ private:
 	int m_mouseTrackerTimer;
 	int m_tabSwitcherTimer;
 	bool m_isAboutToClose;
+	bool m_isDraggingToolBar;
 	bool m_hasToolBars;
 	Ui::MainWindow *m_ui;
 
 signals:
 	void activated(MainWindow *window);
-	void requestedToolBarsActivation(Qt::ToolBarAreas areas);
-	void controlsHiddenChanged(bool hidden);
+	void areToolBarsVisibleChanged(bool areVisible);
 	void statusMessageChanged(const QString &message);
 
-friend class ToolBarAreaWidget;
+friend class ToolBarDropZoneWidget;
+friend class ToolBarWidget;
 friend class WindowsManager;
 };
 
