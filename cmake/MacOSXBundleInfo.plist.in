@@ -33,7 +33,7 @@
 <key>CFBundleIdentifier</key>
 <string>com.@CPACK_PACKAGE_VENDOR@.@CPACK_PACKAGE_NAME@@CPACK_MODULE_VERSION_SUFFIX@</string>
 <key>CFBundleName</key>
-<string>Otter Browser<string>
+<string>Otter Browser</string>
 <key>CFBundleDocumentTypes</key>
 <array>
 <dict>
