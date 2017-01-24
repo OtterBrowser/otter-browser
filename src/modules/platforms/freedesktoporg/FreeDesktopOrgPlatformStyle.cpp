@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "FreeDesktopOrgPlatformStyle.h"
+#include "../../../core/ThemesManager.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/ToolBarWidget.h"
 
@@ -32,6 +33,8 @@ FreeDesktopOrgPlatformStyle::FreeDesktopOrgPlatformStyle(const QString &name) : 
 	m_isGtkAmbianceTheme(false)
 {
 	checkForAmbianceTheme();
+
+	connect(ThemesManager::getInstance(), SIGNAL(widgetStyleChanged()), this, SLOT(checkForAmbianceTheme()));
 }
 
 void FreeDesktopOrgPlatformStyle::drawControl(QStyle::ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const

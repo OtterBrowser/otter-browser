@@ -27,12 +27,14 @@ namespace Otter
 
 class FreeDesktopOrgPlatformStyle : public Style
 {
+	Q_OBJECT
+
 public:
 	explicit FreeDesktopOrgPlatformStyle(const QString &name);
 
 	void drawControl(QStyle::ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
 
-protected:
+protected slots:
 	void checkForAmbianceTheme();
 
 private:
