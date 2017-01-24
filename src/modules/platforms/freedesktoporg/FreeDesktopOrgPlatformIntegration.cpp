@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2010 David Sansome <me@davidsansome.com>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -20,6 +20,7 @@
 **************************************************************************/
 
 #include "FreeDesktopOrgPlatformIntegration.h"
+#include "FreeDesktopOrgPlatformStyle.h"
 #include "../../../core/Application.h"
 #include "../../../core/NotificationsManager.h"
 #include "../../../core/SettingsManager.h"
@@ -281,6 +282,16 @@ void FreeDesktopOrgPlatformIntegration::updateTransfersProgress(bool clear)
 	message.setArguments(arguments);
 
 	QDBusConnection::sessionBus().send(message);
+}
+
+Style* FreeDesktopOrgPlatformIntegration::createStyle(const QString &name) const
+{
+	if (name.isEmpty() || name.toLower().startsWith(QLatin1String("gtk")))
+	{
+		return new FreeDesktopOrgPlatformStyle(name);
+	}
+
+	return nullptr;
 }
 
 QList<ApplicationInformation> FreeDesktopOrgPlatformIntegration::getApplicationsForMimeType(const QMimeType &mimeType)

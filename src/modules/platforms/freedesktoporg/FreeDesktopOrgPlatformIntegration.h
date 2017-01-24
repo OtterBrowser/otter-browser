@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2010 David Sansome <me@davidsansome.com>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -44,6 +44,7 @@ public:
 	~FreeDesktopOrgPlatformIntegration();
 
 	void runApplication(const QString &command, const QUrl &url = QUrl()) const override;
+	Style* createStyle(const QString &name) const override;
 	QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType) override;
 	bool canShowNotifications() const override;
 

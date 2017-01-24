@@ -61,6 +61,7 @@ public:
 	WorkspaceWidget* getWorkspace();
 	TabBarWidget* getTabBar();
 	WindowsManager* getWindowsManager();
+	QList<ToolBarWidget*> getToolBars(Qt::ToolBarArea area);
 	bool areToolBarsVisible() const;
 	bool isAboutToClose() const;
 	bool eventFilter(QObject *object, QEvent *event);
@@ -83,7 +84,6 @@ protected:
 	void endToolBarDragging();
 	void placeSidebars();
 	void updateSidebars();
-	QList<ToolBarWidget*> getToolBars(Qt::ToolBarArea area);
 	bool event(QEvent *event);
 
 protected slots:

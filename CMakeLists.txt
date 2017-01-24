@@ -485,6 +485,7 @@ elseif (UNIX)
 	set(otter_src
 		${otter_src}
 		src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformIntegration.cpp
+		src/modules/platforms/freedesktoporg/FreeDesktopOrgPlatformStyle.cpp
 		3rdparty/libmimeapps/ConfigReader.cpp
 		3rdparty/libmimeapps/DesktopEntry.cpp
 		3rdparty/libmimeapps/Index.cpp
