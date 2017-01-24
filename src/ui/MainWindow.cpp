@@ -1040,16 +1040,17 @@ void MainWindow::handleToolBarModified(int identifier)
 
 				if (m_menuBar && !showMenuBar)
 				{
-					m_menuBar->deleteLater();
-					m_menuBar = nullptr;
-
-					setMenuBar(nullptr);
+					m_menuBar->hide();
 				}
 				else if (!m_menuBar && showMenuBar)
 				{
 					m_menuBar = new MenuBarWidget(this);
 
 					setMenuBar(m_menuBar);
+				}
+				else if (!m_menuBar->isVisible() && showMenuBar)
+				{
+					m_menuBar->show();
 				}
 
 				getAction(ActionsManager::ShowMenuBarAction)->setChecked(showMenuBar);
