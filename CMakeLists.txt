@@ -462,6 +462,7 @@ if (WIN32)
 		${otter_src}
 		otter-browser.rc
 		src/modules/platforms/windows/WindowsPlatformIntegration.cpp
+		src/modules/platforms/windows/WindowsPlatformStyle.cpp
 	)
 elseif (APPLE)
 	find_package(Qt5MacExtras 5.3.0 QUIET)
