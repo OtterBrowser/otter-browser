@@ -144,7 +144,7 @@ private:
 	QPoint m_dragStartPosition;
 	QRect m_lineEditRectangle;
 	QRect m_historyDropdownArrowRectangle;
-	QRect m_securityBadgeRectangle;
+	QRect m_informationButtonRectangle;
 	AddressWidget::CompletionModes m_completionModes;
 	WindowsManager::OpenHints m_hints;
 	int m_removeModelTimer;

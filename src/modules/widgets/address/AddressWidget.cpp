@@ -327,58 +327,37 @@ void AddressWidget::paintEvent(QPaintEvent *event)
 	}
 
 	const WindowsManager::ContentStates state(m_window ? m_window->getContentState() : WindowsManager::UnknownContentState);
-	QString badgeIcon(QLatin1String("unknown"));
-	QColor badgeColor(245, 245, 245);
+	QString icon(QLatin1String("unknown"));
 
 	if (state.testFlag(WindowsManager::FraudContentState))
 	{
-		badgeIcon = QLatin1String("badge-fraud");
-		badgeColor = QColor(233, 111, 125);
-	}
-	else if (state.testFlag(WindowsManager::TrustedContentState))
-	{
-		badgeIcon = QLatin1String("badge-secure");
-		badgeColor = QColor(173, 232, 153);
+		icon = QLatin1String("badge-fraud");
 	}
 	else if (state.testFlag(WindowsManager::SecureContentState))
 	{
-		badgeIcon = QLatin1String("badge-secure");
-		badgeColor = QColor(245, 222, 160);
+		icon = QLatin1String("badge-secure");
 	}
 	else if (state.testFlag(WindowsManager::RemoteContentState))
 	{
-		badgeIcon = QLatin1String("badge-remote");
+		icon = QLatin1String("badge-remote");
 	}
 	else if (state.testFlag(WindowsManager::LocalContentState))
 	{
-		badgeIcon = QLatin1String("badge-local");
+		icon = QLatin1String("badge-local");
 	}
 	else if (state.testFlag(WindowsManager::ApplicationContentState))
 	{
-		badgeIcon = QLatin1String("otter-browser");
+		icon = QLatin1String("otter-browser");
 	}
 
-	panel.palette.setColor(QPalette::Base, badgeColor);
-	panel.state = QStyle::State_Active;
+	int offset((m_informationButtonRectangle.height() - 16) / 2);
 
-	painter.fillRect(m_securityBadgeRectangle, badgeColor);
-	painter.setClipRect(m_securityBadgeRectangle);
-
-	style()->drawPrimitive(QStyle::PE_PanelLineEdit, &panel, &painter, this);
-
-	QPalette linePalette(palette());
-	linePalette.setCurrentColorGroup(QPalette::Disabled);
-
-	painter.setPen(QPen(linePalette.mid().color(), 1));
-
-	const int badgeLineX((layoutDirection() == Qt::RightToLeft) ? m_securityBadgeRectangle.left() : m_securityBadgeRectangle.right());
-
-	painter.drawLine(badgeLineX, m_securityBadgeRectangle.top(), badgeLineX, m_securityBadgeRectangle.bottom());
-
-	if (!badgeIcon.isEmpty())
+	if (offset < 4)
 	{
-		ThemesManager::getIcon(badgeIcon, false).paint(&painter, m_securityBadgeRectangle.adjusted(4, 4, -4, -4));
+		offset = 4;
 	}
+
+	ThemesManager::getIcon(icon, false).paint(&painter, m_informationButtonRectangle.adjusted(offset, offset, -offset, -offset));
 }
 
 void AddressWidget::resizeEvent(QResizeEvent *event)
@@ -436,7 +415,7 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 {
 	QMenu menu(this);
 
-	if (m_securityBadgeRectangle.contains(event->pos()))
+	if (m_informationButtonRectangle.contains(event->pos()))
 	{
 		if (m_window)
 		{
@@ -485,7 +464,7 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 
 void AddressWidget::mousePressEvent(QMouseEvent *event)
 {
-	if (event->button() == Qt::LeftButton && m_securityBadgeRectangle.contains(event->pos()))
+	if (event->button() == Qt::LeftButton && m_informationButtonRectangle.contains(event->pos()))
 	{
 		m_dragStartPosition = event->pos();
 	}
@@ -501,7 +480,7 @@ void AddressWidget::mousePressEvent(QMouseEvent *event)
 
 void AddressWidget::mouseMoveEvent(QMouseEvent *event)
 {
-	if ((!m_isUsingSimpleMode && m_securityBadgeRectangle.contains(event->pos())) || ((m_isHistoryDropdownEnabled || m_isUsingSimpleMode) && m_historyDropdownArrowRectangle.contains(event->pos())))
+	if ((!m_isUsingSimpleMode && m_informationButtonRectangle.contains(event->pos())) || ((m_isHistoryDropdownEnabled || m_isUsingSimpleMode) && m_historyDropdownArrowRectangle.contains(event->pos())))
 	{
 		setCursor(Qt::ArrowCursor);
 	}
@@ -520,7 +499,7 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 {
 	if (event->button() == Qt::LeftButton)
 	{
-		if (m_securityBadgeRectangle.contains(event->pos()) && m_window)
+		if (m_informationButtonRectangle.contains(event->pos()) && m_window)
 		{
 			m_window->triggerAction(ActionsManager::WebsiteInformationAction);
 
@@ -923,7 +902,7 @@ void AddressWidget::updateLineEdit()
 
 void AddressWidget::updateIcons()
 {
-	QMargins margins(5, 0, 0, 0);
+	QMargins margins(0, 0, 0, 0);
 	const bool isRightToLeft(layoutDirection() == Qt::RightToLeft);
 
 	if (!m_isUsingSimpleMode)
@@ -1081,15 +1060,15 @@ void AddressWidget::updateGeometries()
 
 	if (!m_isUsingSimpleMode)
 	{
-		m_securityBadgeRectangle = rectangle;
+		m_informationButtonRectangle = rectangle;
 
 		if (layoutDirection() == Qt::RightToLeft)
 		{
-			m_securityBadgeRectangle.setLeft(m_securityBadgeRectangle.width() - 31);
+			m_informationButtonRectangle.setLeft(m_informationButtonRectangle.width() - height());
 		}
 		else
 		{
-			m_securityBadgeRectangle.setRight(31);
+			m_informationButtonRectangle.setRight(height());
 		}
 	}
 
@@ -1251,7 +1230,7 @@ bool AddressWidget::event(QEvent *event)
 	{
 		QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
 
-		if (helpEvent && m_securityBadgeRectangle.contains(helpEvent->pos()))
+		if (helpEvent && m_informationButtonRectangle.contains(helpEvent->pos()))
 		{
 			QToolTip::showText(helpEvent->globalPos(), tr("Show Website Information"));
 
@@ -1281,7 +1260,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
-		if (mouseEvent->button() == Qt::LeftButton && m_securityBadgeRectangle.contains(mouseEvent->pos()))
+		if (mouseEvent->button() == Qt::LeftButton && m_informationButtonRectangle.contains(mouseEvent->pos()))
 		{
 			m_dragStartPosition = mouseEvent->pos();
 		}
