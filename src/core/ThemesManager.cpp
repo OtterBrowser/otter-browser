@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -26,12 +26,13 @@
 #include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtGui/QIcon>
-#include <QtWidgets/QStyleFactory>
+#include <QtWidgets/QWidget>
 
 namespace Otter
 {
 
 ThemesManager* ThemesManager::m_instance(nullptr);
+QWidget* ThemesManager::m_probeWidget(nullptr);
 QString ThemesManager::m_iconThemePath(QLatin1String(":/icons/"));
 bool ThemesManager::m_useSystemIconTheme(false);
 
@@ -49,6 +50,10 @@ void ThemesManager::createInstance(QObject *parent)
 	if (!m_instance)
 	{
 		m_instance = new ThemesManager(parent);
+		m_probeWidget = new QWidget();
+		m_probeWidget->hide();
+		m_probeWidget->setAttribute(Qt::WA_DontShowOnScreen, true);
+		m_probeWidget->installEventFilter(m_instance);
 	}
 }
 
@@ -129,6 +134,16 @@ QIcon ThemesManager::getIcon(const QString &name, bool fromTheme)
 	}
 
 	return QIcon(iconPath + QLatin1String(".png"));
+}
+
+bool ThemesManager::eventFilter(QObject *object, QEvent *event)
+{
+	if (object == m_probeWidget && event->type() == QEvent::StyleChange)
+	{
+		emit widgetStyleChanged();
+	}
+
+	return QObject::eventFilter(object, event);
 }
 
 }
