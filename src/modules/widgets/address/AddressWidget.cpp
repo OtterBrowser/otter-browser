@@ -907,7 +907,7 @@ void AddressWidget::updateIcons()
 
 	if (!m_isUsingSimpleMode)
 	{
-		margins.setLeft(margins.left() + 31);
+		margins.setLeft(height());
 	}
 
 	if (m_urlIconLabel)
