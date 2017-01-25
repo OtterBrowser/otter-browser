@@ -912,7 +912,7 @@ void AddressWidget::updateIcons()
 
 	if (m_urlIconLabel)
 	{
-		m_urlIconLabel->move((isRightToLeft ? (width() - 54) : 36), ((height() - m_urlIconLabel->height()) / 2));
+		m_urlIconLabel->move((isRightToLeft ? (width() - height() - 18) : (height() + 2)), ((height() - m_urlIconLabel->height()) / 2));
 
 		margins.setLeft(margins.left() + 22);
 	}
