@@ -306,6 +306,8 @@ void ToolBarWidget::mouseMoveEvent(QMouseEvent *event)
 		return;
 	}
 
+	m_dragStartPosition = QPoint();
+
 	m_mainWindow->beginToolBarDragging();
 
 	QMimeData *mimeData(new QMimeData());
@@ -314,6 +316,8 @@ void ToolBarWidget::mouseMoveEvent(QMouseEvent *event)
 	QDrag *drag(new QDrag(this));
 	drag->setMimeData(mimeData);
 	drag->exec(Qt::MoveAction);
+
+	m_mainWindow->endToolBarDragging();
 }
 
 void ToolBarWidget::mouseReleaseEvent(QMouseEvent *event)
