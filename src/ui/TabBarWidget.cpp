@@ -1242,7 +1242,7 @@ void TabBarWidget::showPreview(int index, int delay)
 
 		const bool isActive(index == currentIndex());
 
-		m_previewWidget->setPreview(window->getTitle(), (isActive ? QPixmap() : window->getThumbnail()), isActive);
+		m_previewWidget->setPreview(window->getTitle(), ((isActive || m_areThumbnailsEnabled) ? QPixmap() : window->getThumbnail()), isActive);
 
 		switch (shape())
 		{
