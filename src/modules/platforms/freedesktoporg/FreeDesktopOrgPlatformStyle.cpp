@@ -42,19 +42,20 @@ void FreeDesktopOrgPlatformStyle::drawControl(QStyle::ControlElement element, co
 	if (m_isGtkAmbianceTheme && element == QStyle::CE_ToolBar)
 	{
 		const QStyleOptionToolBar *toolBarOption(qstyleoption_cast<const QStyleOptionToolBar*>(option));
+		const ToolBarWidget *toolBar(qobject_cast<const ToolBarWidget*>(widget));
+		const bool isNavigationBar(toolBar && toolBar->getIdentifier() == ToolBarsManager::NavigationBar);
 
-		if (!toolBarOption || toolBarOption->toolBarArea != Qt::TopToolBarArea)
+		if (!toolBarOption || !toolBar || (toolBarOption->toolBarArea != Qt::TopToolBarArea && !isNavigationBar))
 		{
 			return;
 		}
 
-		bool shouldFillBackground(toolBarOption->positionOfLine == QStyleOptionToolBar::Beginning || toolBarOption->positionOfLine == QStyleOptionToolBar::OnlyOne);
+		bool shouldFillBackground(!isNavigationBar && (toolBarOption->positionOfLine == QStyleOptionToolBar::Beginning || toolBarOption->positionOfLine == QStyleOptionToolBar::OnlyOne));
+		bool hasVisibleTabBar(false);
 
-		if (!shouldFillBackground && widget)
+		if (!shouldFillBackground)
 		{
-			const ToolBarWidget *toolBar(qobject_cast<const ToolBarWidget*>(widget));
-
-			if (toolBar && toolBar->getIdentifier() == ToolBarsManager::TabBar)
+			if (toolBar->getIdentifier() == ToolBarsManager::TabBar)
 			{
 				shouldFillBackground = true;
 			}
@@ -70,6 +71,8 @@ void FreeDesktopOrgPlatformStyle::drawControl(QStyle::ControlElement element, co
 					{
 						if (toolBars.at(i)->getIdentifier() == ToolBarsManager::TabBar && toolBars.at(i)->isVisible())
 						{
+							hasVisibleTabBar = true;
+
 							break;
 						}
 
@@ -77,11 +80,19 @@ void FreeDesktopOrgPlatformStyle::drawControl(QStyle::ControlElement element, co
 						{
 							shouldFillBackground = true;
 
-							break;
+							if (!isNavigationBar && !hasVisibleTabBar)
+							{
+								break;
+							}
 						}
 					}
 				}
 			}
+		}
+
+		if (!hasVisibleTabBar && isNavigationBar)
+		{
+			shouldFillBackground = true;
 		}
 
 		if (shouldFillBackground)
