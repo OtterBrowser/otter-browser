@@ -23,7 +23,6 @@
 
 #include "../core/WindowsManager.h"
 
-#include <QtGui/QDrag>
 #include <QtGui/QMovie>
 #include <QtWidgets/QProxyStyle>
 #include <QtWidgets/QTabBar>
@@ -34,19 +33,6 @@ namespace Otter
 class PreviewWidget;
 class TabBarWidget;
 class Window;
-
-class TabDrag : public QDrag
-{
-public:
-	explicit TabDrag(quint64 window, QObject *parent);
-	~TabDrag();
-
-	void timerEvent(QTimerEvent *event) override;
-
-private:
-	quint64 m_window;
-	int m_releaseTimer;
-};
 
 class TabHandleWidget : public QWidget
 {

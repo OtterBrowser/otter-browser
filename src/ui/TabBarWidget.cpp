@@ -34,6 +34,7 @@
 #include <QtCore/QtMath>
 #include <QtCore/QTimer>
 #include <QtGui/QContextMenuEvent>
+#include <QtGui/QDrag>
 #include <QtGui/QStatusTipEvent>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QCheckBox>
@@ -56,34 +57,6 @@ bool TabBarWidget::m_areThumbnailsEnabled(true);
 bool TabBarWidget::m_isLayoutReversed(false);
 bool TabBarWidget::m_isCloseButtonEnabled(true);
 bool TabBarWidget::m_isUrlIconEnabled(true);
-
-TabDrag::TabDrag(quint64 window, QObject *parent) : QDrag(parent),
-	m_window(window),
-	m_releaseTimer(0)
-{
-	m_releaseTimer = startTimer(250);
-}
-
-TabDrag::~TabDrag()
-{
-	if (!target())
-	{
-		QVariantMap parameters;
-		parameters[QLatin1String("window")] = m_window;
-
-		ActionsManager::triggerAction(ActionsManager::DetachTabAction, this, parameters);
-	}
-}
-
-void TabDrag::timerEvent(QTimerEvent *event)
-{
-	if (event->timerId() == m_releaseTimer && QGuiApplication::mouseButtons() == Qt::NoButton)
-	{
-		deleteLater();
-	}
-
-	QDrag::timerEvent(event);
-}
 
 TabHandleWidget::TabHandleWidget(Window *window, TabBarWidget *parent) : QWidget(parent),
 	m_window(window),
@@ -880,13 +853,6 @@ void TabBarWidget::mouseMoveEvent(QMouseEvent *event)
 
 			if (window)
 			{
-				QDrag *drag(new TabDrag(window->getIdentifier(), this));
-
-				connect(drag, &QDrag::destroyed, [&]()
-				{
-					m_isDetachingTab = false;
-				});
-
 				QMimeData *mimeData(new QMimeData());
 				mimeData->setText(window->getUrl().toString());
 				mimeData->setUrls(QList<QUrl>({window->getUrl()}));
@@ -895,9 +861,20 @@ void TabBarWidget::mouseMoveEvent(QMouseEvent *event)
 
 				const QPixmap thumbnail(window->getThumbnail());
 
+				QDrag *drag(new QDrag(this));
 				drag->setMimeData(mimeData);
 				drag->setPixmap(thumbnail.isNull() ? window->getIcon().pixmap(16, 16) : thumbnail);
 				drag->exec(Qt::CopyAction | Qt::MoveAction);
+
+				m_isDetachingTab = false;
+
+				if (!drag->target())
+				{
+					QVariantMap parameters;
+					parameters[QLatin1String("window")] = window->getIdentifier();
+
+					ActionsManager::triggerAction(ActionsManager::DetachTabAction, this, parameters);
+				}
 			}
 		}
 
