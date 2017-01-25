@@ -23,6 +23,8 @@
 #include <QtGui/QPainter>
 #include <QtWidgets/QStyleOption>
 
+#include <windows.h>
+
 namespace Otter
 {
 
@@ -33,11 +35,31 @@ WindowsPlatformStyle::WindowsPlatformStyle(const QString &name) : Style(name),
 
 void WindowsPlatformStyle::drawControl(QStyle::ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
 {
-	if (m_isVistaStyle && (element == QStyle::CE_ToolBar || element == QStyle::CE_MenuBarEmptyArea))
+	if (m_isVistaStyle)
 	{
-		painter->fillRect(option->rect, Qt::white);
+		switch (element)
+		{
+			case QStyle::CE_MenuBarEmptyArea:
+			case QStyle::CE_MenuBarItem:
+			case QStyle::CE_ToolBar:
+				{
+					const DWORD rawColor(GetSysColor(COLOR_WINDOW));
 
-		return;
+					painter->fillRect(option->rect, QColor((rawColor & 0xff), ((rawColor >> 8) & 0xff), ((rawColor >> 16) & 0xff)));
+
+					if (element == QStyle::CE_MenuBarItem)
+					{
+						QStyleOptionMenuItem menuItemOption(*qstyleoption_cast<const QStyleOptionMenuItem*>(option));
+						menuItemOption.palette.setColor(QPalette::Window, Qt::transparent);
+
+						Style::drawControl(element, &menuItemOption, painter, widget);
+					}
+				}
+
+				return;
+			default:
+				break;
+		}
 	}
 
 	Style::drawControl(element, option, painter, widget);
