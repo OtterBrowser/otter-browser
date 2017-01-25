@@ -18,12 +18,16 @@
 **************************************************************************/
 
 #include "WindowsPlatformStyle.h"
+#include "../../../core/ThemesManager.h"
+#include "../../../ui/MainWindow.h"
+#include "../../../ui/ToolBarWidget.h"
 
 #include <QtCore/QSysInfo>
 #include <QtGui/QPainter>
+#include <QtWidgets/QApplication>
 #include <QtWidgets/QStyleOption>
 
-#include <windows.h>
+#include <Windows.h>
 
 namespace Otter
 {
@@ -31,6 +35,10 @@ namespace Otter
 WindowsPlatformStyle::WindowsPlatformStyle(const QString &name) : Style(name),
 	m_isVistaStyle(QSysInfo::windowsVersion() >= QSysInfo::WV_VISTA)
 {
+	checkForVistaStyle();
+
+	connect(QApplication::instance(), SIGNAL(paletteChanged(QPalette)), this, SLOT(checkForVistaStyle()));
+	connect(ThemesManager::getInstance(), SIGNAL(widgetStyleChanged()), this, SLOT(checkForVistaStyle()));
 }
 
 void WindowsPlatformStyle::drawControl(QStyle::ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
@@ -43,9 +51,69 @@ void WindowsPlatformStyle::drawControl(QStyle::ControlElement element, const QSt
 			case QStyle::CE_MenuBarItem:
 			case QStyle::CE_ToolBar:
 				{
-					const DWORD rawColor(GetSysColor(COLOR_WINDOW));
+					bool shouldUseWindowBackground(true);
 
-					painter->fillRect(option->rect, QColor((rawColor & 0xff), ((rawColor >> 8) & 0xff), ((rawColor >> 16) & 0xff)));
+					if (element == QStyle::CE_ToolBar)
+					{
+						const QStyleOptionToolBar *toolBarOption(qstyleoption_cast<const QStyleOptionToolBar*>(option));
+						const ToolBarWidget *toolBar(qobject_cast<const ToolBarWidget*>(widget));
+						const bool isNavigationBar(toolBar && toolBar->getIdentifier() == ToolBarsManager::NavigationBar);
+
+						if (toolBarOption && toolBar && !(toolBar->getIdentifier() == ToolBarsManager::TabBar && toolBar->getDefinition().location == Qt::TopToolBarArea))
+						{
+							const ToolBarsManager::ToolBarDefinition tabBarDefinition(ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar));
+
+							if ((isNavigationBar || toolBarOption->toolBarArea == Qt::TopToolBarArea) && tabBarDefinition.location == Qt::TopToolBarArea)
+							{
+								MainWindow *mainWindow(MainWindow::findMainWindow(widget->parentWidget()));
+								bool hasVisibleTabBar(false);
+
+								if (mainWindow)
+								{
+									const QList<ToolBarWidget*> toolBars(mainWindow->getToolBars(Qt::TopToolBarArea));
+
+									for (int i = 0; i < toolBars.count(); ++i)
+									{
+										if (toolBars.at(i)->getIdentifier() == ToolBarsManager::TabBar && toolBars.at(i)->isVisible())
+										{
+											hasVisibleTabBar = true;
+
+											break;
+										}
+
+										if (toolBars.at(i) == toolBar && !hasVisibleTabBar)
+										{
+											shouldUseWindowBackground = false;
+
+											break;
+										}
+									}
+
+									if (isNavigationBar && hasVisibleTabBar)
+									{
+										shouldUseWindowBackground = false;
+									}
+								}
+							}
+							else if (!isNavigationBar && toolBarOption->toolBarArea != Qt::TopToolBarArea)
+							{
+								shouldUseWindowBackground = false;
+							}
+						}
+					}
+
+					const QRect rectantagle((widget && element == QStyle::CE_ToolBar) ? widget->rect() : option->rect);
+
+					if (shouldUseWindowBackground)
+					{
+						const DWORD rawColor(GetSysColor(COLOR_WINDOW));
+
+						painter->fillRect(rectantagle, QColor((rawColor & 0xff), ((rawColor >> 8) & 0xff), ((rawColor >> 16) & 0xff)));
+					}
+					else
+					{
+						painter->fillRect(rectantagle, Qt::white);
+					}
 
 					if (element == QStyle::CE_MenuBarItem)
 					{
@@ -75,6 +143,23 @@ void WindowsPlatformStyle::drawPrimitive(QStyle::PrimitiveElement element, const
 	}
 
 	Style::drawPrimitive(element, option, painter, widget);
+}
+
+void WindowsPlatformStyle::checkForVistaStyle()
+{
+	if (QSysInfo::windowsVersion() >= QSysInfo::WV_VISTA)
+	{
+		HIGHCONTRAST information = {0};
+		information.cbSize = sizeof(HIGHCONTRAST);
+
+		BOOL isSuccess(SystemParametersInfoW(SPI_GETHIGHCONTRAST, 0, &information, 0));
+
+		m_isVistaStyle = !(isSuccess && information.dwFlags & HCF_HIGHCONTRASTON);
+	}
+	else
+	{
+		m_isVistaStyle = false;
+	}
 }
 
 }

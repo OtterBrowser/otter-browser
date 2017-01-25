@@ -27,12 +27,17 @@ namespace Otter
 
 class WindowsPlatformStyle : public Style
 {
+	Q_OBJECT
+
 public:
 	explicit WindowsPlatformStyle(const QString &name);
 
 	void drawControl(QStyle::ControlElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
 	void drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget = nullptr) const override;
-	
+
+protected slots:
+	void checkForVistaStyle();
+
 private:
 	bool m_isVistaStyle;
 };
