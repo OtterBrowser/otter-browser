@@ -119,7 +119,6 @@ protected:
 	void tabInserted(int index) override;
 	void tabRemoved(int index) override;
 	void tabHovered(int index);
-	void updateStyle();
 	QStyleOptionTab createStyleOptionTab(int index) const;
 	QSize tabSizeHint(int index) const override;
 	int getDropIndex() const;
@@ -129,6 +128,7 @@ protected slots:
 	void optionChanged(int identifier, const QVariant &value);
 	void updatePreviewPosition();
 	void updatePinnedTabsAmount(Window *modifiedWindow = nullptr);
+	void updateStyle();
 	void setArea(Qt::ToolBarArea area);
 
 private:

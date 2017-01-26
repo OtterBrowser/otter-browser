@@ -515,6 +515,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	}
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
+	connect(ThemesManager::getInstance(), SIGNAL(widgetStyleChanged()), this, SLOT(updateStyle()));
 	connect(this, SIGNAL(currentChanged(int)), this, SLOT(updatePreviewPosition()));
 }
 
@@ -530,10 +531,6 @@ void TabBarWidget::changeEvent(QEvent *event)
 			break;
 		case QEvent::LayoutDirectionChange:
 			emit needsGeometriesUpdate();
-
-			break;
-		case QEvent::StyleChange:
-			updateStyle();
 
 			break;
 		default:
