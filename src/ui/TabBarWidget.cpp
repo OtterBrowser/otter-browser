@@ -338,7 +338,6 @@ void TabHandleWidget::updateGeometries()
 
 	const int controlsWidth(controlsRectangle.width());
 	const bool isActive(m_tabBarWidget->getWindow(m_tabBarWidget->currentIndex()) == m_window);
-	const bool isLayoutReversed(TabBarWidget::isLayoutReversed() && isLeftToRight());
 	const bool isCloseButtonEnabled(TabBarWidget::isCloseButtonEnabled());
 	const bool isUrlIconEnabled(TabBarWidget::isUrlIconEnabled());
 
@@ -351,7 +350,7 @@ void TabHandleWidget::updateGeometries()
 				m_closeButtonRectangle = controlsRectangle;
 				m_urlIconRectangle = controlsRectangle;
 
-				if (isLayoutReversed)
+				if (TabBarWidget::isLayoutReversed())
 				{
 					m_closeButtonRectangle.setWidth(controlsRectangle.width() / 2);
 
@@ -381,7 +380,7 @@ void TabHandleWidget::updateGeometries()
 			m_closeButtonRectangle = controlsRectangle;
 			m_urlIconRectangle = controlsRectangle;
 
-			if (isLayoutReversed)
+			if (TabBarWidget::isLayoutReversed())
 			{
 				m_closeButtonRectangle.setWidth(controlsRectangle.width() / 2);
 
@@ -403,11 +402,11 @@ void TabHandleWidget::updateGeometries()
 		{
 			m_urlIconRectangle = controlsRectangle;
 
-			if (isLayoutReversed)
+			if (TabBarWidget::isLayoutReversed())
 			{
-				m_urlIconRectangle.setLeft(controlsRectangle.width() - 16);
+				m_urlIconRectangle.setLeft(controlsRectangle.right() - 16);
 
-				m_titleRectangle.setWidth(controlsRectangle.width() - 20);
+				m_titleRectangle.setRight(controlsRectangle.right() - 20);
 			}
 			else
 			{
@@ -421,7 +420,7 @@ void TabHandleWidget::updateGeometries()
 		{
 			m_closeButtonRectangle = m_titleRectangle;
 
-			if (isLayoutReversed)
+			if (TabBarWidget::isLayoutReversed())
 			{
 				m_closeButtonRectangle.setWidth(16);
 			}
@@ -436,9 +435,9 @@ void TabHandleWidget::updateGeometries()
 			}
 			else
 			{
-				if (isLayoutReversed)
+				if (TabBarWidget::isLayoutReversed())
 				{
-					m_titleRectangle.setLeft(20);
+					m_titleRectangle.setLeft(m_titleRectangle.left() + 20);
 				}
 				else
 				{
@@ -485,7 +484,6 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	m_needsUpdateOnLeave(false)
 {
 	m_areThumbnailsEnabled = SettingsManager::getValue(SettingsManager::TabBar_EnableThumbnailsOption).toBool();
-	m_isLayoutReversed = (static_cast<QTabBar::ButtonPosition>(style()->styleHint(QStyle::SH_TabBar_CloseButtonPosition)) == QTabBar::LeftSide);
 	m_isCloseButtonEnabled = SettingsManager::getValue(SettingsManager::TabBar_ShowCloseButtonOption).toBool();
 	m_isUrlIconEnabled = SettingsManager::getValue(SettingsManager::TabBar_ShowUrlIconOption).toBool();
 
@@ -525,12 +523,13 @@ void TabBarWidget::changeEvent(QEvent *event)
 
 	switch (event->type())
 	{
-		case QEvent::FontChange:
-			optionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabHeightOption));
+		case QEvent::ApplicationLayoutDirectionChange:
+		case QEvent::LayoutDirectionChange:
+			updateStyle();
 
 			break;
-		case QEvent::LayoutDirectionChange:
-			emit needsGeometriesUpdate();
+		case QEvent::FontChange:
+			optionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabHeightOption));
 
 			break;
 		default:
@@ -1492,6 +1491,11 @@ void TabBarWidget::updateSize()
 void TabBarWidget::updateStyle()
 {
 	m_isLayoutReversed = (static_cast<QTabBar::ButtonPosition>(style()->styleHint(QStyle::SH_TabBar_CloseButtonPosition)) == QTabBar::LeftSide);
+
+	if (isRightToLeft())
+	{
+		m_isLayoutReversed = !m_isLayoutReversed;
+	}
 
 	optionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabHeightOption));
 	optionChanged(SettingsManager::TabBar_MinimumTabWidthOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabWidthOption));
