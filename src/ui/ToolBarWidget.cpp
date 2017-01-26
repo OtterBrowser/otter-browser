@@ -165,10 +165,17 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 	setAllowedAreas(Qt::NoToolBarArea);
 	setFloatable(false);
 
-	layout()->setContentsMargins(0, 0, 0, 0);
-
 	if (identifier >= 0 && identifier != ToolBarsManager::MenuBar)
 	{
+		if (identifier == ToolBarsManager::TabBar)
+		{
+			setContentsMargins(0, 0, 0, 0);
+
+			layout()->setMargin(0);
+
+			connect(ThemesManager::getInstance(), SIGNAL(widgetStyleChanged()), this, SLOT(resetGeometry()));
+		}
+
 		setToolBarLocked(ToolBarsManager::areToolBarsLocked());
 		reload();
 
@@ -731,6 +738,7 @@ int ToolBarWidget::getMaximumButtonSize() const
 {
 	return getDefinition().maximumButtonSize;
 }
+
 bool ToolBarWidget::event(QEvent *event)
 {
 	if (!GesturesManager::isTracking() && (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel))
@@ -748,22 +756,20 @@ bool ToolBarWidget::event(QEvent *event)
 		GesturesManager::startGesture(this, event, contexts);
 	}
 
-	switch (event->type())
+	if (event->type() == QEvent::MouseButtonPress)
 	{
-		case QEvent::LayoutRequest:
-			{
-				const bool result(QToolBar::event(event));
+		return QWidget::event(event);
+	}
 
-				setContentsMargins(0, 0, 0, 0);
+	if (event->type() == QEvent::LayoutRequest && m_identifier == ToolBarsManager::TabBar)
+	{
+		const bool result(QToolBar::event(event));
 
-				return result;
-			}
+		setContentsMargins(0, 0, 0, 0);
 
-			break;
-		case QEvent::MouseButtonPress:
-			return QWidget::event(event);
-		default:
-			break;
+		layout()->setMargin(0);
+
+		return result;
 	}
 
 	return QToolBar::event(event);

@@ -596,9 +596,9 @@ void TabBarWidget::paintEvent(QPaintEvent *event)
 
 		if (m_isDraggingTab && !m_isIgnoringTabDrag && m_movableTabWidget)
 		{
-			const int taboverlap(style()->pixelMetric(QStyle::PM_TabBarTabOverlap, 0, this));
+			const int tabOverlap(style()->pixelMetric(QStyle::PM_TabBarTabOverlap, 0, this));
 
-			m_movableTabWidget->setGeometry(tabOption.rect.adjusted(-taboverlap, 0, taboverlap, 0));
+			m_movableTabWidget->setGeometry(tabOption.rect.adjusted(-tabOverlap, 0, tabOverlap, 0));
 		}
 		else
 		{
@@ -1574,7 +1574,7 @@ QSize TabBarWidget::tabSizeHint(int index) const
 	if (shape() == QTabBar::RoundedNorth || shape() == QTabBar::RoundedSouth)
 	{
 		Window *window(getWindow(index));
-		const int tabHeight(qBound(m_minimumTabSize.height(), qMax((m_areThumbnailsEnabled ? 200 : 0), (parentWidget() ? parentWidget()->contentsRect().height() : height())), m_maximumTabSize.height()));
+		const int tabHeight(qBound(m_minimumTabSize.height(), qMax((m_areThumbnailsEnabled ? 200 : 0), (parentWidget() ? parentWidget()->height() : height())), m_maximumTabSize.height()));
 
 		if (window && window->isPinned())
 		{

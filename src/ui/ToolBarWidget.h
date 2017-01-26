@@ -68,7 +68,6 @@ public:
 
 	static QMenu* createCustomizationMenu(int identifier, QList<QAction*> actions = QList<QAction*>(), QWidget *parent = nullptr);
 	void reload();
-	void resetGeometry();
 	void setDefinition(const ToolBarsManager::ToolBarDefinition &definition);
 	QString getTitle() const;
 	ToolBarsManager::ToolBarDefinition getDefinition() const;
@@ -78,6 +77,9 @@ public:
 	int getIconSize() const;
 	int getMaximumButtonSize() const;
 	bool event(QEvent *event) override;
+
+public slots:
+	void resetGeometry();
 
 protected:
 	void changeEvent(QEvent *event) override;

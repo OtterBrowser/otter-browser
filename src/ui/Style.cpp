@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "Style.h"
+#include "ToolBarWidget.h"
 
 #include <QtGui/QGuiApplication>
 #include <QtGui/QPainter>
@@ -75,9 +76,28 @@ QRect Style::subElementRect(QStyle::SubElement element, const QStyleOption *opti
 
 int Style::pixelMetric(QStyle::PixelMetric metric, const QStyleOption *option, const QWidget *widget) const
 {
-	if (metric == QStyle::PM_TabBarTabHSpace && QProxyStyle::pixelMetric(metric, option, widget) == QCommonStyle::pixelMetric(metric, option, widget))
+	switch (metric)
 	{
-		return QProxyStyle::pixelMetric(QStyle::PM_TabBarTabVSpace, option, widget);
+		case QStyle::PM_TabBarTabHSpace:
+			if (QProxyStyle::pixelMetric(metric, option, widget) == QCommonStyle::pixelMetric(metric, option, widget))
+			{
+				return QProxyStyle::pixelMetric(QStyle::PM_TabBarTabVSpace, option, widget);
+			}
+
+			break;
+		case QStyle::PM_ToolBarItemMargin:
+		case QStyle::PM_ToolBarFrameWidth:
+			if (widget)
+			{
+				const ToolBarWidget *toolBar(qobject_cast<const ToolBarWidget*>(widget));
+
+				if (toolBar && toolBar->getIdentifier() == ToolBarsManager::TabBar)
+				{
+					return 0;
+				}
+			}
+		default:
+			break;
 	}
 
 	return QProxyStyle::pixelMetric(metric, option, widget);
