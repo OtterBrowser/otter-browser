@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -112,9 +112,11 @@ void NetworkProxyFactory::optionChanged(int identifier)
 				m_proxies[proxyTypes.at(i).second] = QList<QNetworkProxy>({QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(SettingsManager::Proxy_CommonServersOption).toString(), SettingsManager::getValue(SettingsManager::Proxy_CommonPortOption).toInt())});
 			}
 
-			if (SettingsManager::getValue(SettingsManager::getOptionIdentifier(QStringLiteral("Proxy/Use%1").arg(proxyTypes.at(i).second))).toBool())
+			const QString proxyName(proxyTypes.at(i).second.left(1).toUpper() + proxyTypes.at(i).second.mid(1));
+
+			if (SettingsManager::getValue(SettingsManager::getOptionIdentifier(QStringLiteral("Proxy/Use%1").arg(proxyName))).toBool())
 			{
-				m_proxies[proxyTypes.at(i).second] = QList<QNetworkProxy>({QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(SettingsManager::getOptionIdentifier(QStringLiteral("Proxy/%1Servers").arg(proxyTypes.at(i).second.left(1).toUpper() + proxyTypes.at(i).second.mid(1)))).toString(), SettingsManager::getValue(SettingsManager::getOptionIdentifier(QStringLiteral("Proxy/%1Port").arg(proxyTypes.at(i).second.left(1).toUpper() + proxyTypes.at(i).second.mid(1)))).toInt())});
+				m_proxies[proxyTypes.at(i).second] = QList<QNetworkProxy>({QNetworkProxy(proxyTypes.at(i).first, SettingsManager::getValue(SettingsManager::getOptionIdentifier(QStringLiteral("Proxy/%1Servers").arg(proxyName))).toString(), SettingsManager::getValue(SettingsManager::getOptionIdentifier(QStringLiteral("Proxy/%1Port").arg(proxyName))).toInt())});
 			}
 		}
 
