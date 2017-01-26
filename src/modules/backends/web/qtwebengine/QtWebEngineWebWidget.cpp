@@ -64,6 +64,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 	m_loadingTime(nullptr),
 	m_loadingState(WindowsManager::FinishedLoadingState),
 	m_documentLoadingProgress(0),
+	m_focusProxyTimer(0),
 #if QT_VERSION < 0x050700
 	m_scrollTimer(startTimer(1000)),
 #else
@@ -117,7 +118,15 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 
 void QtWebEngineWebWidget::timerEvent(QTimerEvent *event)
 {
-	if (event->timerId() == m_scrollTimer)
+	if (event->timerId() == m_focusProxyTimer)
+	{
+		if (focusWidget())
+		{
+			focusWidget()->removeEventFilter(this);
+			focusWidget()->installEventFilter(this);
+		}
+	}
+	else if (event->timerId() == m_scrollTimer)
 	{
 		m_webView->page()->runJavaScript(QLatin1String("[window.scrollX, window.scrollY]"), [&](const QVariant &result)
 		{
@@ -131,6 +140,25 @@ void QtWebEngineWebWidget::timerEvent(QTimerEvent *event)
 	{
 		WebWidget::timerEvent(event);
 	}
+}
+
+void QtWebEngineWebWidget::showEvent(QShowEvent *event)
+{
+	WebWidget::showEvent(event);
+
+	if (m_focusProxyTimer == 0)
+	{
+		m_focusProxyTimer = startTimer(500);
+	}
+}
+
+void QtWebEngineWebWidget::hideEvent(QHideEvent *event)
+{
+	WebWidget::hideEvent(event);
+
+	killTimer(m_focusProxyTimer);
+
+	m_focusProxyTimer = 0;
 }
 
 void QtWebEngineWebWidget::focusInEvent(QFocusEvent *event)

@@ -81,6 +81,8 @@ protected:
 	explicit QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent = nullptr);
 
 	void timerEvent(QTimerEvent *event);
+	void showEvent(QShowEvent *event);
+	void hideEvent(QHideEvent *event);
 	void focusInEvent(QFocusEvent *event);
 	void pasteText(const QString &text);
 	void updateOptions(const QUrl &url);
@@ -129,6 +131,7 @@ private:
 	QHash<QNetworkReply*, QPointer<SourceViewerWebWidget> > m_viewSourceReplies;
 	WindowsManager::LoadingState m_loadingState;
 	int m_documentLoadingProgress;
+	int m_focusProxyTimer;
 	int m_scrollTimer;
 	bool m_isEditing;
 	bool m_isFullScreen;
