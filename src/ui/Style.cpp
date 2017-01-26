@@ -60,12 +60,21 @@ QRect Style::subElementRect(QStyle::SubElement element, const QStyleOption *opti
 				}
 
 				QStyleOptionTab tabOption;
-				tabOption.cornerWidgets = QStyleOptionTab::LeftCornerWidget;
-				tabOption.leftButtonSize = QSize(1, 1);
 				tabOption.rect = option->rect;
 				tabOption.shape = QTabBar::RoundedNorth;
 
-				const int offset(QProxyStyle::subElementRect(QStyle::SE_TabBarTabLeftButton, &tabOption, widget).left() - option->rect.left());
+				if (QGuiApplication::isLeftToRight())
+				{
+					tabOption.cornerWidgets = QStyleOptionTab::LeftCornerWidget;
+					tabOption.leftButtonSize = QSize(1, 1);
+				}
+				else
+				{
+					tabOption.cornerWidgets = QStyleOptionTab::RightCornerWidget;
+					tabOption.rightButtonSize = QSize(1, 1);
+				}
+
+				const int offset(QProxyStyle::subElementRect((QGuiApplication::isLeftToRight() ? QStyle::SE_TabBarTabLeftButton : QStyle::SE_TabBarTabRightButton), &tabOption, widget).left() - option->rect.left());
 				QRect rectangle(option->rect);
 				rectangle.setLeft(rectangle.left() + offset);
 				rectangle.setRight(rectangle.right() - offset);
