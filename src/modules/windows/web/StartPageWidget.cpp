@@ -448,6 +448,12 @@ void StartPageWidget::openTile()
 	}
 
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(m_currentIndex.data(BookmarksModel::TypeRole).toInt()));
+	WindowsManager::OpenHints hints(WindowsManager::CurrentTabOpen);
+
+	if (isPrivate())
+	{
+		hints |= WindowsManager::PrivateOpen;
+	}
 
 	if (type == BookmarksModel::FolderBookmark)
 	{
@@ -456,7 +462,7 @@ void StartPageWidget::openTile()
 
 		if (mainWindow && bookmark && bookmark->rowCount() > 0)
 		{
-			mainWindow->getWindowsManager()->open(bookmark);
+			mainWindow->getWindowsManager()->open(bookmark, hints);
 		}
 
 		return;
@@ -472,7 +478,7 @@ void StartPageWidget::openTile()
 
 	if (mainWindow && url.isValid())
 	{
-		mainWindow->getWindowsManager()->open(url, WindowsManager::CurrentTabOpen);
+		mainWindow->getWindowsManager()->open(url, hints);
 	}
 }
 
@@ -602,6 +608,13 @@ int StartPageWidget::getTilesPerRow() const
 	return qMax(1, int((width() - 50) / (SettingsManager::getValue(SettingsManager::StartPage_TileWidthOption).toInt() * (SettingsManager::getValue(SettingsManager::StartPage_ZoomLevelOption).toInt() / qreal(100)))));
 }
 
+bool StartPageWidget::isPrivate() const
+{
+	WebWidget *webWidget(qobject_cast<WebWidget*>(parentWidget()));
+
+	return (webWidget && webWidget->isPrivate());
+}
+
 bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if ((object == this || object == m_listView || object == m_listView->viewport()) && (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel))
@@ -685,7 +698,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 						if (mainWindow)
 						{
-							mainWindow->getWindowsManager()->open(url, WindowsManager::calculateOpenHints(WindowsManager::DefaultOpen, Qt::LeftButton, keyEvent->modifiers()));
+							mainWindow->getWindowsManager()->open(url, WindowsManager::calculateOpenHints((isPrivate() ? WindowsManager::PrivateOpen : WindowsManager::DefaultOpen), Qt::LeftButton, keyEvent->modifiers()));
 						}
 					}
 					else if (parentWidget() && parentWidget()->parentWidget())
@@ -764,7 +777,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 						if (mainWindow)
 						{
-							mainWindow->getWindowsManager()->open(url, WindowsManager::calculateOpenHints(WindowsManager::DefaultOpen, mouseEvent->button(), mouseEvent->modifiers()));
+							mainWindow->getWindowsManager()->open(url, WindowsManager::calculateOpenHints((isPrivate() ? WindowsManager::PrivateOpen : WindowsManager::DefaultOpen), mouseEvent->button(), mouseEvent->modifiers()));
 						}
 					}
 					else if (parentWidget() && parentWidget()->parentWidget() && mouseEvent->button() != Qt::MiddleButton)
@@ -773,7 +786,14 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 						if (mainWindow && url.isValid())
 						{
-							mainWindow->getWindowsManager()->open(url, WindowsManager::CurrentTabOpen);
+							WindowsManager::OpenHints hints(WindowsManager::CurrentTabOpen);
+
+							if (isPrivate())
+							{
+								hints |= WindowsManager::PrivateOpen;
+							}
+
+							mainWindow->getWindowsManager()->open(url, hints);
 						}
 					}
 				}

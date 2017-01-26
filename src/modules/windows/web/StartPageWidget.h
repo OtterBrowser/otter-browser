@@ -75,6 +75,7 @@ protected:
 	void contextMenuEvent(QContextMenuEvent *event);
 	void wheelEvent(QWheelEvent *event);
 	int getTilesPerRow() const;
+	bool isPrivate() const;
 
 protected slots:
 	void optionChanged(int identifier, const QVariant &value);
