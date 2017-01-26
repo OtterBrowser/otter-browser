@@ -50,25 +50,52 @@ QString Style::getName() const
 
 QRect Style::subElementRect(QStyle::SubElement element, const QStyleOption *option, const QWidget *widget) const
 {
-	if (element == QStyle::SE_TabBarTabLeftButton)
+	switch (element)
 	{
-		if (qstyleoption_cast<const QStyleOptionTab*>(option))
-		{
-			return option->rect;
-		}
+		case QStyle::SE_TabBarTabLeftButton:
+			{
+				if (qstyleoption_cast<const QStyleOptionTab*>(option))
+				{
+					return option->rect;
+				}
 
-		QStyleOptionTab tabOption;
-		tabOption.cornerWidgets = QStyleOptionTab::LeftCornerWidget;
-		tabOption.leftButtonSize = QSize(1, 1);
-		tabOption.rect = option->rect;
-		tabOption.shape = QTabBar::RoundedNorth;
+				QStyleOptionTab tabOption;
+				tabOption.cornerWidgets = QStyleOptionTab::LeftCornerWidget;
+				tabOption.leftButtonSize = QSize(1, 1);
+				tabOption.rect = option->rect;
+				tabOption.shape = QTabBar::RoundedNorth;
 
-		const int offset(QProxyStyle::subElementRect(QStyle::SE_TabBarTabLeftButton, &tabOption, widget).left() - option->rect.left());
-		QRect rectangle(option->rect);
-		rectangle.setLeft(rectangle.left() + offset);
-		rectangle.setRight(rectangle.right() - offset);
+				const int offset(QProxyStyle::subElementRect(QStyle::SE_TabBarTabLeftButton, &tabOption, widget).left() - option->rect.left());
+				QRect rectangle(option->rect);
+				rectangle.setLeft(rectangle.left() + offset);
+				rectangle.setRight(rectangle.right() - offset);
 
-		return rectangle;
+				return rectangle;
+			}
+		case QStyle::SE_ToolBarHandle:
+			if (widget)
+			{
+				const ToolBarWidget *toolBar(qobject_cast<const ToolBarWidget*>(widget));
+
+				if (toolBar && toolBar->getIdentifier() == ToolBarsManager::TabBar && toolBar->isMovable())
+				{
+					const int offset(QProxyStyle::pixelMetric(QStyle::PM_ToolBarItemMargin, option, widget) + QProxyStyle::pixelMetric(QStyle::PM_ToolBarFrameWidth, option, widget));
+					QRect rectangle(QProxyStyle::subElementRect(element, option, widget));
+
+					if (QGuiApplication::isLeftToRight())
+					{
+						rectangle.translate(offset, 0);
+					}
+					else
+					{
+						rectangle.translate(-offset, 0);
+					}
+
+					return rectangle;
+				}
+			}
+		default:
+			break;
 	}
 
 	return QProxyStyle::subElementRect(element, option, widget);
@@ -87,12 +114,18 @@ int Style::pixelMetric(QStyle::PixelMetric metric, const QStyleOption *option, c
 			break;
 		case QStyle::PM_ToolBarItemMargin:
 		case QStyle::PM_ToolBarFrameWidth:
+		case QStyle::PM_ToolBarHandleExtent:
 			if (widget)
 			{
 				const ToolBarWidget *toolBar(qobject_cast<const ToolBarWidget*>(widget));
 
 				if (toolBar && toolBar->getIdentifier() == ToolBarsManager::TabBar)
 				{
+					if (QStyle::PM_ToolBarHandleExtent)
+					{
+						return (QProxyStyle::pixelMetric(metric, option, widget) + QProxyStyle::pixelMetric(QStyle::PM_ToolBarItemMargin, option, widget) + QProxyStyle::pixelMetric(QStyle::PM_ToolBarFrameWidth, option, widget));
+					}
+
 					return 0;
 				}
 			}
