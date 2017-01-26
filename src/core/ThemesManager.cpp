@@ -151,6 +151,11 @@ bool ThemesManager::eventFilter(QObject *object, QEvent *event)
 {
 	if (object == m_probeWidget && event->type() == QEvent::StyleChange)
 	{
+		if (!QApplication::style()->inherits("Otter::Style"))
+		{
+			QApplication::setStyle(createStyle(SettingsManager::getValue(SettingsManager::Interface_WidgetStyleOption).toString()));
+		}
+
 		emit widgetStyleChanged();
 	}
 
