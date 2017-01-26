@@ -932,7 +932,7 @@ void MainWindow::placeSidebars()
 	updateSidebars();
 }
 
-void MainWindow::beginToolBarDragging()
+void MainWindow::beginToolBarDragging(bool isSidebar)
 {
 	if (m_isDraggingToolBar || !QGuiApplication::mouseButtons().testFlag(Qt::LeftButton))
 	{
@@ -945,7 +945,7 @@ void MainWindow::beginToolBarDragging()
 
 	for (int i = 0; i < toolBars.count(); ++i)
 	{
-		if (toolBars.at(i)->isVisible())
+		if (toolBars.at(i)->isVisible() && (!isSidebar || toolBars.at(i)->getArea() == Qt::LeftToolBarArea || toolBars.at(i)->getArea() == Qt::RightToolBarArea))
 		{
 			insertToolBar(toolBars.at(i), new ToolBarDropZoneWidget(this));
 			insertToolBarBreak(toolBars.at(i));
@@ -956,8 +956,11 @@ void MainWindow::beginToolBarDragging()
 
 	for (int i = 0; i < 4; ++i)
 	{
-		addToolBar(areas.at(i), new ToolBarDropZoneWidget(this));
-		addToolBarBreak(areas.at(i));
+		if (!isSidebar || areas.at(i) == Qt::LeftToolBarArea ||areas.at(i) == Qt::RightToolBarArea)
+		{
+			addToolBar(areas.at(i), new ToolBarDropZoneWidget(this));
+			addToolBarBreak(areas.at(i));
+		}
 	}
 }
 

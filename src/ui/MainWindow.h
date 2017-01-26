@@ -80,7 +80,7 @@ protected:
 	void keyReleaseEvent(QKeyEvent *event);
 	void contextMenuEvent(QContextMenuEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
-	void beginToolBarDragging();
+	void beginToolBarDragging(bool isSidebar = false);
 	void endToolBarDragging();
 	void placeSidebars();
 	void updateSidebars();
