@@ -448,7 +448,12 @@ void WindowsManager::closeAll()
 
 void WindowsManager::restore(const SessionMainWindow &session)
 {
-	int index = session.index;
+	int index(session.index);
+
+	if (index >= session.windows.count())
+	{
+		index = -1;
+	}
 
 	if (session.windows.isEmpty())
 	{
