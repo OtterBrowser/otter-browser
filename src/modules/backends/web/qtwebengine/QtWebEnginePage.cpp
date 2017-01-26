@@ -50,9 +50,9 @@ QtWebEnginePage::QtWebEnginePage(bool isPrivate, QtWebEngineWebWidget *parent) :
 	m_isViewingMedia(false),
 	m_isPopup(false)
 {
-	if (isPrivate)
+	if (isPrivate && m_widget)
 	{
-		connect(profile(), SIGNAL(downloadRequested(QWebEngineDownloadItem*)), this, SLOT(downloadFile(QWebEngineDownloadItem*)));
+		connect(profile(), SIGNAL(downloadRequested(QWebEngineDownloadItem*)), m_widget->getBackend(), SLOT(downloadFile(QWebEngineDownloadItem*)));
 	}
 
 	connect(this, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
