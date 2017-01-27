@@ -1264,7 +1264,7 @@ void MainWindow::setCurrentWindow(Window *window)
 		if (m_actions[i] && Action::isLocal(m_actions[i]->getIdentifier()))
 		{
 			const int identifier(m_actions[i]->getIdentifier());
-			Action *previousAction((previousWindow && previousWindow->getContentsWidget()) ? previousWindow->getContentsWidget()->getAction(identifier) : nullptr);
+			Action *previousAction((previousWindow && !previousWindow->isAboutToClose() && previousWindow->getContentsWidget()) ? previousWindow->getContentsWidget()->getAction(identifier) : nullptr);
 			Action *currentAction(window ? window->getContentsWidget()->getAction(identifier) : nullptr);
 
 			if (previousAction)
