@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -320,6 +320,11 @@ void GesturesManager::endGesture()
 GesturesManager* GesturesManager::getInstance()
 {
 	return m_instance;
+}
+
+QObject* GesturesManager::getTrackedObject()
+{
+	return m_trackedObject;
 }
 
 GesturesManager::GestureStep GesturesManager::deserializeStep(const QString &string)
@@ -653,7 +658,35 @@ bool GesturesManager::startGesture(QObject *object, QEvent *event, QList<Gesture
 		connect(m_trackedObject, SIGNAL(destroyed(QObject*)), m_instance, SLOT(endGesture()));
 	}
 
-	return m_instance->eventFilter(m_trackedObject, event);
+	return (m_trackedObject && m_instance->eventFilter(m_trackedObject, event));
+}
+
+bool GesturesManager::continueGesture(QObject *object)
+{
+	if (!m_trackedObject)
+	{
+		return false;
+	}
+
+	releaseObject();
+
+	if (!object)
+	{
+		m_steps.clear();
+
+		qDeleteAll(m_events);
+
+		m_events.clear();
+
+		return false;
+	}
+
+	m_trackedObject = object;
+	m_trackedObject->installEventFilter(m_instance);
+
+	connect(m_trackedObject, SIGNAL(destroyed(QObject*)), m_instance, SLOT(endGesture()));
+
+	return true;
 }
 
 bool GesturesManager::triggerAction(int gestureIdentifier)

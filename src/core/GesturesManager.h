@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -51,7 +51,9 @@ public:
 	static void createInstance(QObject *parent = nullptr);
 	static void loadProfiles();
 	static GesturesManager* getInstance();
+	static QObject* getTrackedObject();
 	static bool startGesture(QObject *object, QEvent *event, QList<GesturesContext> contexts = QList<GesturesContext>({GenericGesturesContext}), const QVariantMap &parameters = QVariantMap());
+	static bool continueGesture(QObject *object);
 	static bool isTracking();
 
 protected:
