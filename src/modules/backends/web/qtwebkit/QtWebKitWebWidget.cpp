@@ -2128,6 +2128,11 @@ WebWidget* QtWebKitWebWidget::clone(bool cloneHistory, bool isPrivate, const QSt
 	return widget;
 }
 
+QWidget* QtWebKitWebWidget::getViewport()
+{
+	return m_webView;
+}
+
 Action* QtWebKitWebWidget::getAction(int identifier)
 {
 	if (identifier == ActionsManager::UndoAction && !getExistingAction(ActionsManager::UndoAction))

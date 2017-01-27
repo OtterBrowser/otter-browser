@@ -41,6 +41,7 @@ public:
 	void search(const QString &query, const QString &searchEngine);
 	void print(QPrinter *printer);
 	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = QStringList());
+	QWidget* getViewport();
 	Action* getAction(int identifier);
 	QString getTitle() const;
 	QString getSelectedText() const;

@@ -1429,6 +1429,11 @@ WebWidget* QtWebEngineWebWidget::clone(bool cloneHistory, bool isPrivate, const 
 	return widget;
 }
 
+QWidget* QtWebEngineWebWidget::getViewport()
+{
+	return (focusWidget() ? focusWidget() : m_webView);
+}
+
 Action* QtWebEngineWebWidget::getAction(int identifier)
 {
 	if (identifier == ActionsManager::UndoAction && !getExistingAction(ActionsManager::UndoAction))

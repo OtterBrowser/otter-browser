@@ -1179,6 +1179,11 @@ void WebWidget::setWindowIdentifier(quint64 identifier)
 	m_windowIdentifier = identifier;
 }
 
+QWidget* WebWidget::getViewport()
+{
+	return this;
+}
+
 Action* WebWidget::getAction(int identifier)
 {
 	if (identifier < 0)
