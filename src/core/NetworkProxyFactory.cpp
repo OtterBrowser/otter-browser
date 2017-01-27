@@ -65,12 +65,12 @@ void NetworkProxyFactory::optionChanged(int identifier)
 		{
 			QFile file(path);
 
-//			if (!file.open(QIODevice::ReadOnly | QIODevice::Text) || !m_automaticProxy->setup(file.readAll()))
-//			{
-//				Console::addMessage(tr("Failed to load proxy auto-config (PAC): %1").arg(file.errorString()), Console::NetworkCategory, Console::ErrorLevel, path);
+			if (!file.open(QIODevice::ReadOnly | QIODevice::Text) || !m_automaticProxy->setup(file.readAll()))
+			{
+				Console::addMessage(tr("Failed to load proxy auto-config (PAC): %1").arg(file.errorString()), Console::NetworkCategory, Console::ErrorLevel, path);
 
-//				m_proxyMode = SystemProxy;
-//			}
+				m_proxyMode = SystemProxy;
+			}
 
 			file.close();
 		}
