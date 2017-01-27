@@ -773,7 +773,7 @@ void SearchWidget::setWindow(Window *window)
 {
 	MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
-	if (m_window && (!sender() || sender() != m_window) && !m_window->isAboutToClose())
+	if (m_window && !m_window->isAboutToClose() && (!sender() || sender() != m_window))
 	{
 		m_window->detachSearchWidget(this);
 

@@ -182,7 +182,7 @@ void ProgressInformationWidget::setWindow(Window *window)
 			break;
 	}
 
-	if (m_window)
+	if (m_window && !m_window->isAboutToClose())
 	{
 		disconnect(m_window->getContentsWidget(), SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SLOT(updateStatus(WebWidget::PageInformation,QVariant)));
 

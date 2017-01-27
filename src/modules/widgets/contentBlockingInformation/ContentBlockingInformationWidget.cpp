@@ -92,7 +92,7 @@ void ContentBlockingInformationWidget::openElement(QAction *action)
 
 void ContentBlockingInformationWidget::toggleContentBlocking()
 {
-	if (m_window)
+	if (m_window && !m_window->isAboutToClose())
 	{
 		m_isContentBlockingEnabled = !m_window->getContentsWidget()->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption).toBool();
 
@@ -297,7 +297,7 @@ void ContentBlockingInformationWidget::updateState()
 
 void ContentBlockingInformationWidget::setWindow(Window *window)
 {
-	if (m_window)
+	if (m_window && !m_window->isAboutToClose())
 	{
 		disconnect(m_window->getContentsWidget(), SIGNAL(aboutToNavigate()), this, SLOT(clear()));
 		disconnect(m_window->getContentsWidget(), SIGNAL(requestBlocked(NetworkManager::ResourceInformation)), this, SLOT(handleRequest(NetworkManager::ResourceInformation)));

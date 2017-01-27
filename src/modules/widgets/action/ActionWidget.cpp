@@ -79,7 +79,7 @@ void ActionWidget::resetAction()
 {
 	Action *action(nullptr);
 
-	if (m_window && Action::isLocal(m_identifier) && m_window->getContentsWidget() && m_window->getContentsWidget()->getAction(m_identifier))
+	if (m_window && !m_window->isAboutToClose() && Action::isLocal(m_identifier) && m_window->getContentsWidget() && m_window->getContentsWidget()->getAction(m_identifier))
 	{
 		action = m_window->getContentsWidget()->getAction(m_identifier);
 	}
@@ -96,7 +96,7 @@ void ActionWidget::resetAction()
 
 void ActionWidget::setWindow(Window *window)
 {
-	if (m_window)
+	if (m_window && !m_window->isAboutToClose())
 	{
 		disconnect(m_window, SIGNAL(widgetChanged()), this, SLOT(resetAction()));
 	}
