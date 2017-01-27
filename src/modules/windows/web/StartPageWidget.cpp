@@ -185,7 +185,6 @@ StartPageWidget::StartPageWidget(Window *window, QWidget *parent) : QScrollArea(
 	m_listView->viewport()->setMouseTracking(true);
 	m_listView->viewport()->installEventFilter(this);
 
-	installEventFilter(this);
 	setWidget(m_contentsWidget);
 	setWidgetResizable(true);
 	setAlignment(Qt::AlignHCenter);
@@ -615,9 +614,19 @@ bool StartPageWidget::isPrivate() const
 	return (webWidget && webWidget->isPrivate());
 }
 
+bool StartPageWidget::event(QEvent *event)
+{
+	if (!GesturesManager::isTracking() && (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel))
+	{
+		GesturesManager::startGesture(this, event, QList<GesturesManager::GesturesContext>({GesturesManager::GenericGesturesContext}));
+	}
+
+	return QWidget::event(event);
+}
+
 bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if ((object == this || object == m_listView || object == m_listView->viewport()) && (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel))
+	if ((object == m_listView || object == m_listView->viewport()) && (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel))
 	{
 		if (event->type() == QEvent::Wheel)
 		{

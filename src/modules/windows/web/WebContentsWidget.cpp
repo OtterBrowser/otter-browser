@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -27,6 +27,7 @@
 #include "SelectPasswordDialog.h"
 #include "StartPageWidget.h"
 #include "../../../core/AddonsManager.h"
+#include "../../../core/GesturesManager.h"
 #include "../../../core/InputInterpreter.h"
 #include "../../../core/NetworkManagerFactory.h"
 #include "../../../core/SettingsManager.h"
@@ -96,8 +97,14 @@ void WebContentsWidget::timerEvent(QTimerEvent *event)
 
 		m_deleteStartPageTimer = 0;
 
+		m_startPageWidget->hide();
 		m_startPageWidget->deleteLater();
 		m_startPageWidget = nullptr;
+
+		if (GesturesManager::isTracking() && GesturesManager::getTrackedObject() == m_startPageWidget && m_webWidget)
+		{
+			GesturesManager::continueGesture(m_webWidget->getViewport());
+		}
 	}
 	else if (event->timerId() == m_quickFindTimer && m_searchBarWidget)
 	{
@@ -822,11 +829,21 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 			m_deleteStartPageTimer = 0;
 		}
 
+		if (GesturesManager::isTracking() && GesturesManager::getTrackedObject() == m_webWidget->getViewport())
+		{
+			GesturesManager::continueGesture(m_startPageWidget);
+		}
+
 		m_startPageWidget->show();
 	}
 	else if (!showStartPage && m_startPageWidget && m_deleteStartPageTimer == 0)
 	{
 		m_startPageWidget->hide();
+
+		if (GesturesManager::isTracking() && GesturesManager::getTrackedObject() == m_startPageWidget && m_webWidget)
+		{
+			GesturesManager::continueGesture(m_webWidget->getViewport());
+		}
 
 		m_deleteStartPageTimer = startTimer(250);
 	}

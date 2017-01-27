@@ -65,6 +65,7 @@ public:
 
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void scrollContents(const QPoint &delta);
+	bool event(QEvent *event);
 	bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
