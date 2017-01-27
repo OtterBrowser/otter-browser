@@ -294,6 +294,17 @@ void GesturesManager::loadProfiles()
 	}
 }
 
+void GesturesManager::cancelGesture()
+{
+	releaseObject();
+
+	m_steps.clear();
+
+	qDeleteAll(m_events);
+
+	m_events.clear();
+}
+
 void GesturesManager::releaseObject()
 {
 	if (m_trackedObject)
@@ -308,13 +319,7 @@ void GesturesManager::releaseObject()
 
 void GesturesManager::endGesture()
 {
-	releaseObject();
-
-	m_steps.clear();
-
-	qDeleteAll(m_events);
-
-	m_events.clear();
+	cancelGesture();
 }
 
 GesturesManager* GesturesManager::getInstance()
@@ -668,18 +673,14 @@ bool GesturesManager::continueGesture(QObject *object)
 		return false;
 	}
 
-	releaseObject();
-
 	if (!object)
 	{
-		m_steps.clear();
-
-		qDeleteAll(m_events);
-
-		m_events.clear();
+		cancelGesture();
 
 		return false;
 	}
+
+	releaseObject();
 
 	m_trackedObject = object;
 	m_trackedObject->installEventFilter(m_instance);
@@ -705,7 +706,7 @@ bool GesturesManager::triggerAction(int gestureIdentifier)
 			QCoreApplication::sendEvent(m_trackedObject, m_events[i]);
 		}
 
-		m_instance->endGesture();
+		cancelGesture();
 	}
 	else if (gestureIdentifier == ActionsManager::ContextMenuAction)
 	{
@@ -877,7 +878,7 @@ bool GesturesManager::eventFilter(QObject *object, QEvent *event)
 
 	if (m_trackedObject && mouseEvent->buttons() == Qt::NoButton)
 	{
-		endGesture();
+		cancelGesture();
 	}
 
 	return (!m_steps.isEmpty() || gesture != UNKNOWN_GESTURE);

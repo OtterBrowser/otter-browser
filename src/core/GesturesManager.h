@@ -50,6 +50,7 @@ public:
 
 	static void createInstance(QObject *parent = nullptr);
 	static void loadProfiles();
+	static void cancelGesture();
 	static GesturesManager* getInstance();
 	static QObject* getTrackedObject();
 	static bool startGesture(QObject *object, QEvent *event, QList<GesturesContext> contexts = QList<GesturesContext>({GenericGesturesContext}), const QVariantMap &parameters = QVariantMap());
