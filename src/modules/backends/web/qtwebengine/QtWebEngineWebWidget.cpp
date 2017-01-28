@@ -1560,11 +1560,6 @@ QPoint QtWebEngineWebWidget::getScrollPosition() const
 #endif
 }
 
-QRect QtWebEngineWebWidget::getProgressBarGeometry() const
-{
-	return QRect(QPoint(0, (height() - 30)), QSize(width(), 30));
-}
-
 WindowHistoryInformation QtWebEngineWebWidget::getHistory() const
 {
 	QWebEngineHistory *history(m_webView->history());

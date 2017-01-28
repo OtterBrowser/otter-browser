@@ -1542,6 +1542,11 @@ QPoint WebWidget::getClickPosition() const
 	return m_clickPosition;
 }
 
+QRect WebWidget::getProgressBarGeometry() const
+{
+	return (isVisible() ? QRect(QPoint(0, (height() - 30)), QSize(width(), 30)) : QRect());
+}
+
 WebWidget::SslInformation WebWidget::getSslInformation() const
 {
 	return SslInformation();

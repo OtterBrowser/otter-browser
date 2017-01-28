@@ -46,7 +46,6 @@ public:
 	QIcon getIcon() const;
 	QPixmap getThumbnail();
 	QPoint getScrollPosition() const;
-	QRect getProgressBarGeometry() const;
 	WindowHistoryInformation getHistory() const;
 	HitTestResult getHitTestResult(const QPoint &position);
 	WindowsManager::LoadingState getLoadingState() const;

@@ -2318,6 +2318,11 @@ QPoint QtWebKitWebWidget::getScrollPosition() const
 
 QRect QtWebKitWebWidget::getProgressBarGeometry() const
 {
+	if (!isVisible())
+	{
+		return QRect();
+	}
+
 	QRect geometry(QPoint(0, (height() - ((m_inspector && m_inspector->isVisible()) ? m_inspector->height() : 0) - 30)), QSize(width(), 30));
 	const QRect horizontalScrollBar(m_webView->page()->mainFrame()->scrollBarGeometry(Qt::Horizontal));
 	const QRect verticalScrollBar(m_webView->page()->mainFrame()->scrollBarGeometry(Qt::Vertical));

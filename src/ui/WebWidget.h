@@ -190,7 +190,7 @@ public:
 	virtual QPixmap getThumbnail() = 0;
 	QPoint getClickPosition() const;
 	virtual QPoint getScrollPosition() const = 0;
-	virtual QRect getProgressBarGeometry() const = 0;
+	virtual QRect getProgressBarGeometry() const;
 	virtual SslInformation getSslInformation() const;
 	virtual WindowHistoryInformation getHistory() const = 0;
 	virtual HitTestResult getHitTestResult(const QPoint &position);
