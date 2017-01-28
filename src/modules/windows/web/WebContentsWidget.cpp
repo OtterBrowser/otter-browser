@@ -1365,6 +1365,11 @@ QIcon WebContentsWidget::getIcon() const
 
 QPixmap WebContentsWidget::getThumbnail()
 {
+	if (m_startPageWidget && m_startPageWidget->isVisibleTo(this))
+	{
+		return m_startPageWidget->getThumbnail();
+	}
+
 	return m_webWidget->getThumbnail();
 }
 

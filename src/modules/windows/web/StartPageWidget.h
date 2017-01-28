@@ -65,6 +65,7 @@ public:
 
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void scrollContents(const QPoint &delta);
+	QPixmap getThumbnail();
 	bool event(QEvent *event);
 	bool eventFilter(QObject *object, QEvent *event);
 
@@ -95,6 +96,7 @@ private:
 	StartPageContentsWidget *m_contentsWidget;
 	QListView *m_listView;
 	SearchWidget *m_searchWidget;
+	QPixmap m_thumbnail;
 	QModelIndex m_currentIndex;
 	bool m_ignoreEnter;
 

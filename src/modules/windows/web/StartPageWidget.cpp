@@ -522,6 +522,8 @@ void StartPageWidget::updateTile(const QModelIndex &index)
 {
 	m_listView->update(index);
 	m_listView->closePersistentEditor(index);
+
+	m_thumbnail = QPixmap();
 }
 
 void StartPageWidget::updateSize()
@@ -535,6 +537,8 @@ void StartPageWidget::updateSize()
 
 	m_listView->setGridSize(QSize(tileWidth, tileHeight));
 	m_listView->setFixedSize(((qMin(amount, columns) * tileWidth) + 2), ((rows * tileHeight) + 20));
+
+	m_thumbnail = QPixmap();
 }
 
 void StartPageWidget::updateTiles()
@@ -583,6 +587,34 @@ void StartPageWidget::showContextMenu(const QPoint &position)
 	}
 
 	menu.exec(hitPosition);
+}
+
+QPixmap StartPageWidget::getThumbnail()
+{
+	if (m_thumbnail.isNull())
+	{
+		QPixmap pixmap(widget()->size());
+		pixmap.setDevicePixelRatio(devicePixelRatio());
+
+		QPainter widgetPainter(&pixmap);
+
+		widget()->render(&widgetPainter);
+
+		widgetPainter.end();
+
+		pixmap = pixmap.scaled(260, 170, Qt::KeepAspectRatio);
+
+		QPixmap thumbnail(QSize(260, 170));
+		thumbnail.setDevicePixelRatio(devicePixelRatio());
+		thumbnail.fill(Qt::white);
+
+		QPainter thumbnailPainter(&thumbnail);
+		thumbnailPainter.drawPixmap(QPoint(((pixmap.width() < 260) ? ((260 - pixmap.width()) / 2) : 0), 0), pixmap);
+
+		m_thumbnail = thumbnail;
+	}
+
+	return m_thumbnail;
 }
 
 int StartPageWidget::getTilesPerRow() const
