@@ -85,7 +85,14 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 				connect(webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
 			}
 
-			geometry.translate(0, webWidget->pos().y());
+			if (geometry.isValid())
+			{
+				geometry.translate(0, webWidget->pos().y());
+			}
+			else
+			{
+				geometry = QRect(QPoint(0, (m_window->getContentsWidget()->height() - 30)), QSize(m_window->getContentsWidget()->width(), 30));
+			}
 
 			setGeometry(geometry);
 			show();
