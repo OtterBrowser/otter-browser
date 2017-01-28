@@ -91,19 +91,29 @@ void WebContentsWidget::timerEvent(QTimerEvent *event)
 
 		handleUrlChange(m_webWidget->getRequestedUrl());
 	}
-	else if (event->timerId() == m_deleteStartPageTimer && m_startPageWidget && m_startPageWidget->findChildren<QDrag*>().isEmpty())
+	else if (event->timerId() == m_deleteStartPageTimer)
 	{
+		if (m_startPageWidget && m_startPageWidget->findChildren<QDrag*>().isEmpty())
+		{
+			return;
+		}
+
 		killTimer(m_deleteStartPageTimer);
 
 		m_deleteStartPageTimer = 0;
 
-		m_startPageWidget->hide();
-		m_startPageWidget->deleteLater();
-		m_startPageWidget = nullptr;
-
-		if (GesturesManager::isTracking() && GesturesManager::getTrackedObject() == m_startPageWidget && m_webWidget)
+		if (m_startPageWidget)
 		{
-			GesturesManager::continueGesture(m_webWidget->getViewport());
+			layout()->removeWidget(m_startPageWidget);
+
+			m_startPageWidget->hide();
+			m_startPageWidget->deleteLater();
+			m_startPageWidget = nullptr;
+
+			if (GesturesManager::isTracking() && GesturesManager::getTrackedObject() == m_startPageWidget && m_webWidget)
+			{
+				GesturesManager::continueGesture(m_webWidget->getViewport());
+			}
 		}
 	}
 	else if (event->timerId() == m_quickFindTimer && m_searchBarWidget)
@@ -199,17 +209,19 @@ void WebContentsWidget::focusInEvent(QFocusEvent *event)
 {
 	QWidget::focusInEvent(event);
 
-	m_webWidget->setFocus();
+	if (m_startPageWidget && m_startPageWidget->isVisible())
+	{
+		m_startPageWidget->setFocus();
+	}
+	else
+	{
+		m_webWidget->setFocus();
+	}
 }
 
 void WebContentsWidget::resizeEvent(QResizeEvent *event)
 {
 	ContentsWidget::resizeEvent(event);
-
-	if (m_startPageWidget)
-	{
-		m_startPageWidget->setGeometry(m_webWidget->geometry());
-	}
 
 	if (m_progressBarWidget)
 	{
@@ -817,16 +829,28 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 
 	if (showStartPage)
 	{
+		if (m_webWidget)
+		{
+			layout()->removeWidget(m_webWidget);
+
+			m_webWidget->hide();
+		}
+
 		if (!m_startPageWidget)
 		{
-			m_startPageWidget = new StartPageWidget(m_window, m_webWidget);
-			m_startPageWidget->setGeometry(m_webWidget->geometry());
+			m_startPageWidget = new StartPageWidget(m_window);
+			m_startPageWidget->setParent(this);
 		}
 		else if (m_deleteStartPageTimer != 0)
 		{
 			killTimer(m_deleteStartPageTimer);
 
 			m_deleteStartPageTimer = 0;
+		}
+
+		if (m_layout->indexOf(m_startPageWidget) < 0)
+		{
+			layout()->addWidget(m_startPageWidget);
 		}
 
 		if (GesturesManager::isTracking() && GesturesManager::getTrackedObject() == m_webWidget->getViewport())
@@ -836,16 +860,34 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 
 		m_startPageWidget->show();
 	}
-	else if (!showStartPage && m_startPageWidget && m_deleteStartPageTimer == 0)
+	else
 	{
-		m_startPageWidget->hide();
-
-		if (GesturesManager::isTracking() && GesturesManager::getTrackedObject() == m_startPageWidget && m_webWidget)
+		if (m_startPageWidget)
 		{
-			GesturesManager::continueGesture(m_webWidget->getViewport());
+			layout()->removeWidget(m_webWidget);
+
+			m_startPageWidget->hide();
 		}
 
-		m_deleteStartPageTimer = startTimer(250);
+		if (m_webWidget)
+		{
+			layout()->addWidget(m_webWidget);
+
+			m_webWidget->show();
+		}
+
+		if (m_startPageWidget)
+		{
+			if (GesturesManager::isTracking() && GesturesManager::getTrackedObject() == m_startPageWidget && m_webWidget)
+			{
+				GesturesManager::continueGesture(m_webWidget->getViewport());
+			}
+
+			if (m_deleteStartPageTimer == 0)
+			{
+				m_deleteStartPageTimer = startTimer(250);
+			}
+		}
 	}
 }
 
@@ -1118,8 +1160,14 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 	}
 
 	m_webWidget = widget;
+	m_webWidget->hide();
 
-	layout()->addWidget(m_webWidget);
+	if (!m_startPageWidget || !m_startPageWidget->isVisible())
+	{
+		layout()->addWidget(m_webWidget);
+
+		m_webWidget->show();
+	}
 
 	if (m_window)
 	{
@@ -1216,7 +1264,7 @@ void WebContentsWidget::setUrl(const QUrl &url, bool typed)
 
 	m_webWidget->setRequestedUrl(url, typed);
 
-	if (typed)
+	if (typed && (!m_startPageWidget || !m_startPageWidget->isVisible()))
 	{
 		m_webWidget->setFocus();
 	}

@@ -155,8 +155,8 @@ void StartPageContentsWidget::setBackgroundMode(StartPageContentsWidget::Backgro
 	update();
 }
 
-StartPageWidget::StartPageWidget(Window *window, QWidget *parent) : QScrollArea(parent),
-	m_window(window),
+StartPageWidget::StartPageWidget(Window *parent) : QScrollArea(parent),
+	m_window(parent),
 	m_contentsWidget(new StartPageContentsWidget(this)),
 	m_listView(new QListView(this)),
 	m_searchWidget(nullptr),
@@ -449,7 +449,7 @@ void StartPageWidget::openTile()
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(m_currentIndex.data(BookmarksModel::TypeRole).toInt()));
 	WindowsManager::OpenHints hints(WindowsManager::CurrentTabOpen);
 
-	if (isPrivate())
+	if (m_window->isPrivate())
 	{
 		hints |= WindowsManager::PrivateOpen;
 	}
@@ -556,17 +556,7 @@ void StartPageWidget::showContextMenu(const QPoint &position)
 
 	if (hitPosition.isNull())
 	{
-		WebWidget *webWidget(qobject_cast<WebWidget*>(parentWidget()));
-
-		if (webWidget && !webWidget->getClickPosition().isNull())
-		{
-			hitPosition = webWidget->mapToGlobal(webWidget->getClickPosition());
-		}
-
-		if (hitPosition.isNull())
-		{
-			hitPosition = ((m_listView->hasFocus() && m_currentIndex.isValid()) ? m_listView->mapToGlobal(m_listView->visualRect(m_currentIndex).center()) : QCursor::pos());
-		}
+		hitPosition = ((m_listView->hasFocus() && m_currentIndex.isValid()) ? m_listView->mapToGlobal(m_listView->visualRect(m_currentIndex).center()) : QCursor::pos());
 	}
 
 	const QModelIndex index(m_listView->indexAt(m_listView->mapFromGlobal(hitPosition)));
@@ -607,13 +597,6 @@ int StartPageWidget::getTilesPerRow() const
 	return qMax(1, int((width() - 50) / (SettingsManager::getValue(SettingsManager::StartPage_TileWidthOption).toInt() * (SettingsManager::getValue(SettingsManager::StartPage_ZoomLevelOption).toInt() / qreal(100)))));
 }
 
-bool StartPageWidget::isPrivate() const
-{
-	WebWidget *webWidget(qobject_cast<WebWidget*>(parentWidget()));
-
-	return (webWidget && webWidget->isPrivate());
-}
-
 bool StartPageWidget::event(QEvent *event)
 {
 	if (!GesturesManager::isTracking() && (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel))
@@ -621,7 +604,7 @@ bool StartPageWidget::event(QEvent *event)
 		GesturesManager::startGesture(this, event, QList<GesturesManager::GesturesContext>({GesturesManager::GenericGesturesContext}));
 	}
 
-	return QWidget::event(event);
+	return QScrollArea::event(event);
 }
 
 bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
@@ -707,7 +690,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 						if (mainWindow)
 						{
-							mainWindow->getWindowsManager()->open(url, WindowsManager::calculateOpenHints((isPrivate() ? WindowsManager::PrivateOpen : WindowsManager::DefaultOpen), Qt::LeftButton, keyEvent->modifiers()));
+							mainWindow->getWindowsManager()->open(url, WindowsManager::calculateOpenHints((m_window->isPrivate() ? WindowsManager::PrivateOpen : WindowsManager::DefaultOpen), Qt::LeftButton, keyEvent->modifiers()));
 						}
 					}
 					else if (parentWidget() && parentWidget()->parentWidget())
@@ -786,7 +769,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 						if (mainWindow)
 						{
-							mainWindow->getWindowsManager()->open(url, WindowsManager::calculateOpenHints((isPrivate() ? WindowsManager::PrivateOpen : WindowsManager::DefaultOpen), mouseEvent->button(), mouseEvent->modifiers()));
+							mainWindow->getWindowsManager()->open(url, WindowsManager::calculateOpenHints((m_window->isPrivate() ? WindowsManager::PrivateOpen : WindowsManager::DefaultOpen), mouseEvent->button(), mouseEvent->modifiers()));
 						}
 					}
 					else if (parentWidget() && parentWidget()->parentWidget() && mouseEvent->button() != Qt::MiddleButton)
@@ -797,7 +780,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 						{
 							WindowsManager::OpenHints hints(WindowsManager::CurrentTabOpen);
 
-							if (isPrivate())
+							if (m_window->isPrivate())
 							{
 								hints |= WindowsManager::PrivateOpen;
 							}

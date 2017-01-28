@@ -61,7 +61,7 @@ class StartPageWidget : public QScrollArea
 	Q_OBJECT
 
 public:
-	explicit StartPageWidget(Otter::Window *window, QWidget *parent = nullptr);
+	explicit StartPageWidget(Window *parent);
 
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void scrollContents(const QPoint &delta);
@@ -76,7 +76,6 @@ protected:
 	void contextMenuEvent(QContextMenuEvent *event);
 	void wheelEvent(QWheelEvent *event);
 	int getTilesPerRow() const;
-	bool isPrivate() const;
 
 protected slots:
 	void optionChanged(int identifier, const QVariant &value);
