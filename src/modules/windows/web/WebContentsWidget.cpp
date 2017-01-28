@@ -1159,10 +1159,15 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 		}
 	}
 
-	m_webWidget = widget;
-	m_webWidget->hide();
+	bool isHidden(m_showStartPage && (!m_webWidget || (m_startPageWidget && m_startPageWidget->isVisibleTo(this))));
 
-	if (!m_startPageWidget || !m_startPageWidget->isVisible())
+	m_webWidget = widget;
+
+	if (isHidden)
+	{
+		m_webWidget->hide();
+	}
+	else
 	{
 		layout()->addWidget(m_webWidget);
 
