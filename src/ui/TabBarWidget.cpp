@@ -51,8 +51,7 @@ namespace Otter
 {
 
 QIcon TabHandleWidget::m_lockedIcon;
-QMovie* TabHandleWidget::m_delayedLoadingMovie(nullptr);
-QMovie* TabHandleWidget::m_ongoingLoadingMovie(nullptr);
+QMovie* TabHandleWidget::m_loadingMovie(nullptr);
 bool TabBarWidget::m_areThumbnailsEnabled(true);
 bool TabBarWidget::m_isLayoutReversed(false);
 bool TabBarWidget::m_isCloseButtonEnabled(true);
@@ -61,7 +60,6 @@ bool TabBarWidget::m_isUrlIconEnabled(true);
 TabHandleWidget::TabHandleWidget(Window *window, TabBarWidget *parent) : QWidget(parent),
 	m_window(window),
 	m_tabBarWidget(parent),
-	m_loadingMovie(nullptr),
 	m_isCloseButtonUnderMouse(false),
 	m_wasCloseButtonPressed(false)
 {
@@ -123,7 +121,7 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 
 	if (m_urlIconRectangle.isValid())
 	{
-		if (m_loadingMovie)
+		if (m_window->getLoadingState() == WindowsManager::OngoingLoadingState && m_loadingMovie)
 		{
 			painter.drawPixmap(m_urlIconRectangle, m_loadingMovie->currentPixmap());
 		}
@@ -143,7 +141,7 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 
 			if (m_thumbnailRectangle.height() >= 16 && m_thumbnailRectangle.width() >= 16)
 			{
-				if (m_loadingMovie)
+				if (m_window->getLoadingState() == WindowsManager::OngoingLoadingState && m_loadingMovie)
 				{
 					painter.drawPixmap(QRect((m_thumbnailRectangle.left() + ((m_thumbnailRectangle.width() - 16) / 2)), (m_thumbnailRectangle.top() + ((m_thumbnailRectangle.height() - 16) / 2)), 16, 16), m_loadingMovie->currentPixmap());
 				}
@@ -164,6 +162,14 @@ void TabHandleWidget::paintEvent(QPaintEvent *event)
 
 	if (m_titleRectangle.isValid())
 	{
+		QColor color(palette().color(QPalette::Text));
+
+		if (m_window->getLoadingState() == WindowsManager::DelayedLoadingState)
+		{
+			color.setAlpha(150);
+		}
+
+		painter.setPen(color);
 		painter.drawText(m_titleRectangle, ((isRightToLeft() ? Qt::AlignRight : Qt::AlignLeft) | Qt::AlignVCenter), fontMetrics().elidedText(m_window->getTitle(), Qt::ElideRight, m_titleRectangle.width()));
 	}
 }
@@ -267,38 +273,13 @@ void TabHandleWidget::markAsNeedingAttention()
 
 void TabHandleWidget::handleLoadingStateChanged(WindowsManager::LoadingState state)
 {
-	if (m_loadingMovie)
+	if (state == WindowsManager::OngoingLoadingState)
 	{
-		disconnect(m_loadingMovie, SIGNAL(frameChanged(int)), this, SLOT(update()));
-
-		m_loadingMovie = nullptr;
-
-		update();
-	}
-
-	if (state == WindowsManager::DelayedLoadingState || state == WindowsManager::OngoingLoadingState)
-	{
-		if (state == WindowsManager::OngoingLoadingState)
+		if (!m_loadingMovie)
 		{
-			if (!m_ongoingLoadingMovie)
-			{
-				m_ongoingLoadingMovie = new QMovie(QLatin1String(":/icons/loading.gif"), QByteArray(), QCoreApplication::instance());
-				m_ongoingLoadingMovie->setSpeed(100);
-				m_ongoingLoadingMovie->start();
-			}
-
-			m_loadingMovie = m_ongoingLoadingMovie;
-		}
-		else
-		{
-			if (!m_delayedLoadingMovie)
-			{
-				m_delayedLoadingMovie = new QMovie(QLatin1String(":/icons/loading.gif"), QByteArray(), QCoreApplication::instance());
-				m_delayedLoadingMovie->setSpeed(10);
-				m_delayedLoadingMovie->start();
-			}
-
-			m_loadingMovie = m_delayedLoadingMovie;
+			m_loadingMovie = new QMovie(QLatin1String(":/icons/loading.gif"), QByteArray(), QCoreApplication::instance());
+			m_loadingMovie->setSpeed(100);
+			m_loadingMovie->start();
 		}
 
 		connect(m_loadingMovie, SIGNAL(frameChanged(int)), this, SLOT(update()));

@@ -61,7 +61,6 @@ protected slots:
 private:
 	Window *m_window;
 	TabBarWidget *m_tabBarWidget;
-	QMovie *m_loadingMovie;
 	QRect m_closeButtonRectangle;
 	QRect m_urlIconRectangle;
 	QRect m_thumbnailRectangle;
@@ -69,8 +68,7 @@ private:
 	bool m_isCloseButtonUnderMouse;
 	bool m_wasCloseButtonPressed;
 
-	static QMovie *m_delayedLoadingMovie;
-	static QMovie *m_ongoingLoadingMovie;
+	static QMovie *m_loadingMovie;
 	static QIcon m_lockedIcon;
 };
 
