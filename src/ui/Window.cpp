@@ -58,6 +58,7 @@ Window::Window(bool isPrivate, ContentsWidget *widget, QWidget *parent) : QWidge
 	m_navigationBar(nullptr),
 	m_contentsWidget(nullptr),
 	m_identifier(++m_identifierCounter),
+	m_suspendTimer(0),
 	m_areToolBarsVisible(true),
 	m_isAboutToClose(false),
 	m_isPinned(false),
@@ -80,9 +81,40 @@ Window::Window(bool isPrivate, ContentsWidget *widget, QWidget *parent) : QWidge
 	connect(this, SIGNAL(iconChanged(QIcon)), this, SLOT(handleIconChanged(QIcon)));
 }
 
+void Window::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_suspendTimer)
+	{
+		killTimer(m_suspendTimer);
+
+		m_suspendTimer = 0;
+
+		triggerAction(ActionsManager::SuspendTabAction);
+	}
+}
+
+void Window::hideEvent(QHideEvent *event)
+{
+	QWidget::hideEvent(event);
+
+	const int suspendTime(SettingsManager::getValue(SettingsManager::Browser_InactiveTabTimeUntilSuspendOption).toInt());
+
+	if (suspendTime >= 0)
+	{
+		m_suspendTimer = startTimer(suspendTime * 1000);
+	}
+}
+
 void Window::focusInEvent(QFocusEvent *event)
 {
 	QWidget::focusInEvent(event);
+
+	if (m_suspendTimer > 0)
+	{
+		killTimer(m_suspendTimer);
+
+		m_suspendTimer = 0;
+	}
 
 	AddressWidget *addressWidget(findAddressWidget());
 
@@ -272,6 +304,13 @@ void Window::search(const QString &query, const QString &searchEngine)
 
 void Window::markAsActive()
 {
+	if (m_suspendTimer > 0)
+	{
+		killTimer(m_suspendTimer);
+
+		m_suspendTimer = 0;
+	}
+
 	if (!m_contentsWidget)
 	{
 		setUrl(m_session.getUrl(), false);

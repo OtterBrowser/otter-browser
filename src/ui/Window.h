@@ -71,7 +71,7 @@ public:
 	QDateTime getLastActivity() const;
 	WindowHistoryInformation getHistory() const;
 	SessionWindow getSession() const;
-	QSize sizeHint() const;
+	QSize sizeHint() const override;
 	WindowsManager::LoadingState getLoadingState() const;
 	WindowsManager::ContentStates getContentState() const;
 	quint64 getIdentifier() const;
@@ -91,7 +91,9 @@ public slots:
 	void setPinned(bool isPinned);
 
 protected:
-	void focusInEvent(QFocusEvent *event);
+	void timerEvent(QTimerEvent *event) override;
+	void hideEvent(QHideEvent *event) override;
+	void focusInEvent(QFocusEvent *event) override;
 	void setContentsWidget(ContentsWidget *widget);
 	AddressWidget* findAddressWidget() const;
 
@@ -112,6 +114,7 @@ private:
 	QList<QPointer<AddressWidget> > m_addressWidgets;
 	QList<QPointer<SearchWidget> > m_searchWidgets;
 	quint64 m_identifier;
+	int m_suspendTimer;
 	bool m_areToolBarsVisible;
 	bool m_isAboutToClose;
 	bool m_isPinned;

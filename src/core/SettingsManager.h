@@ -79,6 +79,7 @@ public:
 		Browser_EnableTrayIconOption,
 		Browser_EnableWebglOption,
 		Browser_HomePageOption,
+		Browser_InactiveTabTimeUntilSuspendOption,
 		Browser_JavaScriptCanAccessClipboardOption,
 		Browser_JavaScriptCanChangeWindowGeometryOption,
 		Browser_JavaScriptCanCloseWindowsOption,

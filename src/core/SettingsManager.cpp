@@ -100,6 +100,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Browser_EnableTrayIconOption, true, BooleanType);
 	registerOption(Browser_EnableWebglOption, true, BooleanType);
 	registerOption(Browser_HomePageOption, QString(), StringType);
+	registerOption(Browser_InactiveTabTimeUntilSuspendOption, -1, IntegerType);
 	registerOption(Browser_JavaScriptCanAccessClipboardOption, false, BooleanType);
 	registerOption(Browser_JavaScriptCanChangeWindowGeometryOption, true, BooleanType);
 	registerOption(Browser_JavaScriptCanCloseWindowsOption, QLatin1String("ask"), EnumerationType, QStringList({QLatin1String("ask"), QLatin1String("allow"), QLatin1String("disallow")}));
