@@ -80,7 +80,7 @@ public:
 	QList<NetworkManager::ResourceInformation> getBlockedRequests() const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
-	QPixmap getThumbnail() const;
+	QPixmap getThumbnail();
 	WindowHistoryInformation getHistory() const;
 	QStringList getStyleSheets() const;
 	QList<LinkUrl> getFeeds() const;

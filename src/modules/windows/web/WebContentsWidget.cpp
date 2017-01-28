@@ -1363,7 +1363,7 @@ QIcon WebContentsWidget::getIcon() const
 	return m_webWidget->getIcon();
 }
 
-QPixmap WebContentsWidget::getThumbnail() const
+QPixmap WebContentsWidget::getThumbnail()
 {
 	return m_webWidget->getThumbnail();
 }

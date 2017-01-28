@@ -50,7 +50,7 @@ public:
 	virtual QVariant getPageInformation(WebWidget::PageInformation key) const;
 	virtual QUrl getUrl() const = 0;
 	virtual QIcon getIcon() const = 0;
-	virtual QPixmap getThumbnail() const;
+	virtual QPixmap getThumbnail();
 	virtual WindowHistoryInformation getHistory() const;
 	virtual QStringList getStyleSheets() const;
 	virtual QList<LinkUrl> getFeeds() const;
