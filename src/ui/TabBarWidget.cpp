@@ -221,7 +221,7 @@ void TabHandleWidget::mouseMoveEvent(QMouseEvent *event)
 		{
 			if (wasCloseButtonUnderMouse && !m_isCloseButtonUnderMouse)
 			{
-				m_tabBarWidget->showPreview(-1, 250);
+				m_tabBarWidget->showPreview(-1, SettingsManager::getValue(SettingsManager::TabBar_PreviewsAnimationDurationOption).toInt());
 
 				QToolTip::hideText();
 
@@ -613,7 +613,7 @@ void TabBarWidget::enterEvent(QEvent *event)
 {
 	QTabBar::enterEvent(event);
 
-	showPreview(-1, 250);
+	showPreview(-1, SettingsManager::getValue(SettingsManager::TabBar_PreviewsAnimationDurationOption).toInt());
 }
 
 void TabBarWidget::leaveEvent(QEvent *event)
@@ -777,7 +777,7 @@ void TabBarWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	if (underMouse())
 	{
-		m_previewTimer = startTimer(250);
+		m_previewTimer = startTimer(SettingsManager::getValue(SettingsManager::TabBar_PreviewsAnimationDurationOption).toInt());
 	}
 }
 

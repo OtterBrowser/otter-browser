@@ -247,6 +247,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(TabBar_MaximumTabWidthOption, 250, IntegerType);
 	registerOption(TabBar_MinimumTabWidthOption, -1, IntegerType);
 	registerOption(TabBar_OpenNextToActiveOption, true, BooleanType);
+	registerOption(TabBar_PreviewsAnimationDurationOption, 250, IntegerType);
 	registerOption(TabBar_RequireModifierToSwitchTabOnScrollOption, true, BooleanType);
 	registerOption(TabBar_ShowCloseButtonOption, true, BooleanType);
 	registerOption(TabBar_ShowUrlIconOption, true, BooleanType);

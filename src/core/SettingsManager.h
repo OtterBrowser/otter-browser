@@ -226,6 +226,7 @@ public:
 		TabBar_MaximumTabWidthOption,
 		TabBar_MinimumTabWidthOption,
 		TabBar_OpenNextToActiveOption,
+		TabBar_PreviewsAnimationDurationOption,
 		TabBar_RequireModifierToSwitchTabOnScrollOption,
 		TabBar_ShowCloseButtonOption,
 		TabBar_ShowUrlIconOption,

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "PreviewWidget.h"
+#include "../core/SettingsManager.h"
 
 #include <QtGui/QGuiApplication>
 #include <QtWidgets/QVBoxLayout>
@@ -62,7 +63,7 @@ void PreviewWidget::setPosition(const QPoint &position)
 	if (!m_moveAnimation)
 	{
 		m_moveAnimation = new QPropertyAnimation(this, QStringLiteral("pos").toLatin1());
-		m_moveAnimation->setDuration(250);
+		m_moveAnimation->setDuration(SettingsManager::getValue(SettingsManager::TabBar_PreviewsAnimationDurationOption).toInt());
 	}
 
 	if (position != m_moveAnimation->endValue().toPoint())
