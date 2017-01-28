@@ -115,6 +115,11 @@ void WebContentsWidget::timerEvent(QTimerEvent *event)
 				GesturesManager::continueGesture(m_webWidget->getViewport());
 			}
 		}
+
+		if (m_webWidget)
+		{
+			m_webWidget->setFocus();
+		}
 	}
 	else if (event->timerId() == m_quickFindTimer && m_searchBarWidget)
 	{
@@ -874,6 +879,7 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 			layout()->addWidget(m_webWidget);
 
 			m_webWidget->show();
+			m_webWidget->setFocus();
 		}
 
 		if (m_startPageWidget)
@@ -1268,11 +1274,7 @@ void WebContentsWidget::setUrl(const QUrl &url, bool typed)
 	}
 
 	m_webWidget->setRequestedUrl(url, typed);
-
-	if (typed && (!m_startPageWidget || !m_startPageWidget->isVisible()))
-	{
-		m_webWidget->setFocus();
-	}
+	m_webWidget->setFocus();
 }
 
 void WebContentsWidget::setParent(Window *window)
