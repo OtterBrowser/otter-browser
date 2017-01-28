@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ void SearchEnginesManager::createInstance(QObject *parent)
 	}
 }
 
-void SearchEnginesManager::initialize()
+void SearchEnginesManager::ensureInitialized()
 {
 	if (!m_isInitialized)
 	{
@@ -411,10 +411,7 @@ SearchEnginesManager* SearchEnginesManager::getInstance()
 
 QStandardItemModel* SearchEnginesManager::getSearchEnginesModel()
 {
-	if (!m_isInitialized)
-	{
-		initialize();
-	}
+	ensureInitialized();
 
 	if (!m_searchEnginesModel)
 	{
@@ -428,10 +425,7 @@ QStandardItemModel* SearchEnginesManager::getSearchEnginesModel()
 
 SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::getSearchEngine(const QString &identifier, bool byKeyword)
 {
-	if (!m_isInitialized)
-	{
-		initialize();
-	}
+	ensureInitialized();
 
 	if (byKeyword)
 	{
@@ -461,20 +455,14 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginesManager::getSearchEngi
 
 QStringList SearchEnginesManager::getSearchEngines()
 {
-	if (!m_isInitialized)
-	{
-		initialize();
-	}
+	ensureInitialized();
 
 	return m_searchEnginesOrder;
 }
 
 QStringList SearchEnginesManager::getSearchKeywords()
 {
-	if (!m_isInitialized)
-	{
-		initialize();
-	}
+	ensureInitialized();
 
 	return m_searchKeywords;
 }
@@ -486,10 +474,7 @@ bool SearchEnginesManager::hasSearchEngine(const QUrl &url)
 		return false;
 	}
 
-	if (!m_isInitialized)
-	{
-		initialize();
-	}
+	ensureInitialized();
 
 	QHash<QString, SearchEngineDefinition>::iterator iterator;
 
