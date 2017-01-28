@@ -84,6 +84,7 @@ protected:
 	void showEvent(QShowEvent *event);
 	void hideEvent(QHideEvent *event);
 	void focusInEvent(QFocusEvent *event);
+	void ensureInitialized();
 	void pasteText(const QString &text);
 	void updateOptions(const QUrl &url);
 	void setHistory(QDataStream &stream);
