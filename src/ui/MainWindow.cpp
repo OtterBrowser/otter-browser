@@ -1435,14 +1435,14 @@ bool MainWindow::event(QEvent *event)
 					{
 						getAction(ActionsManager::FullScreenAction)->setIcon(ThemesManager::getIcon(QLatin1String("view-restore")));
 
-						if (m_statusBar)
-						{
-							m_statusBar->hide();
-						}
-
-						if (m_menuBar)
+						if (m_menuBar && ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).fullScreenVisibility != ToolBarsManager::AlwaysVisibleToolBar)
 						{
 							m_menuBar->hide();
+						}
+
+						if (m_statusBar && ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).fullScreenVisibility != ToolBarsManager::AlwaysVisibleToolBar)
+						{
+							m_statusBar->hide();
 						}
 
 						if (m_sidebarToggle)
@@ -1456,14 +1456,14 @@ bool MainWindow::event(QEvent *event)
 					{
 						getAction(ActionsManager::FullScreenAction)->setIcon(ThemesManager::getIcon(QLatin1String("view-fullscreen")));
 
-						if (m_statusBar)
-						{
-							m_statusBar->show();
-						}
-
-						if (m_menuBar)
+						if (m_menuBar && ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar)
 						{
 							m_menuBar->show();
+						}
+
+						if (m_statusBar && ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar)
+						{
+							m_statusBar->show();
 						}
 
 						if (m_sidebarToggle)
