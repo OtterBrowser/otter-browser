@@ -131,19 +131,19 @@
         <widget class="QWidget" name="actionsWidget" native="true">
          <layout class="QVBoxLayout" name="actionsLayout">
           <item>
+           <widget class="QPushButton" name="addButton">
+            <property name="text">
+             <string>Add</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="deleteButton">
             <property name="enabled">
              <bool>false</bool>
             </property>
             <property name="text">
              <string>Delete</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="addButton">
-            <property name="text">
-             <string>Add</string>
             </property>
            </widget>
           </item>

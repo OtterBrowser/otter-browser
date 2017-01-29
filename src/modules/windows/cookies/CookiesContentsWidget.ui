@@ -160,12 +160,19 @@
       <item>
        <layout class="QVBoxLayout" name="actionsLayout">
         <item>
+         <widget class="QPushButton" name="addButton">
+          <property name="text">
+           <string>Add…</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="propertiesButton">
           <property name="enabled">
            <bool>false</bool>
           </property>
           <property name="text">
-           <string>Properties</string>
+           <string>Properties…</string>
           </property>
          </widget>
         </item>
@@ -176,13 +183,6 @@
           </property>
           <property name="text">
            <string>Delete</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="addButton">
-          <property name="text">
-           <string>Add</string>
           </property>
          </widget>
         </item>
@@ -223,7 +223,6 @@
   <tabstop>filterLineEdit</tabstop>
   <tabstop>cookiesViewWidget</tabstop>
   <tabstop>deleteButton</tabstop>
-  <tabstop>addButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>

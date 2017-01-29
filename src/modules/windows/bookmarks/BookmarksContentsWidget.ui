@@ -125,12 +125,19 @@
       <item>
        <layout class="QVBoxLayout" name="actionsLayout" stretch="0,0,0,1">
         <item>
+         <widget class="QPushButton" name="addButton">
+          <property name="text">
+           <string>Add</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="propertiesButton">
           <property name="enabled">
            <bool>false</bool>
           </property>
           <property name="text">
-           <string>Properties</string>
+           <string>Properties…</string>
           </property>
          </widget>
         </item>
@@ -141,13 +148,6 @@
           </property>
           <property name="text">
            <string>Delete</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="addButton">
-          <property name="text">
-           <string>Add</string>
           </property>
          </widget>
         </item>
@@ -173,15 +173,15 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>Otter::ItemViewWidget</class>
+   <extends>QTreeView</extends>
+   <header>src/ui/ItemViewWidget.h</header>
+  </customwidget>
+  <customwidget>
    <class>Otter::TextLabelWidget</class>
    <extends>QWidget</extends>
    <header>src/ui/TextLabelWidget.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Otter::ItemViewWidget</class>
-   <extends>QTreeView</extends>
-   <header>src/ui/ItemViewWidget.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
@@ -189,7 +189,6 @@
   <tabstop>bookmarksViewWidget</tabstop>
   <tabstop>propertiesButton</tabstop>
   <tabstop>deleteButton</tabstop>
-  <tabstop>addButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>
