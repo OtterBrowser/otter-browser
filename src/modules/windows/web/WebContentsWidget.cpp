@@ -1327,7 +1327,7 @@ WebWidget* WebContentsWidget::getWebWidget()
 
 QString WebContentsWidget::getTitle() const
 {
-	return m_webWidget->getTitle();
+	return ((m_startPageWidget && m_startPageWidget->isVisibleTo(this)) ? tr("Start Page") : m_webWidget->getTitle());
 }
 
 QString WebContentsWidget::getActiveStyleSheet() const

@@ -22,6 +22,7 @@
 #define OTTER_SESSIONSMANAGER_H
 
 #include "SettingsManager.h"
+#include "Utils.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QRect>
@@ -75,7 +76,15 @@ struct SessionWindow
 	{
 		if (historyIndex >= 0 && historyIndex < history.count())
 		{
-			return (history.at(historyIndex).title.isEmpty() ? QCoreApplication::translate("main", "(Untitled)") : history.at(historyIndex).title);
+			if (!history.at(historyIndex).title.isEmpty())
+			{
+				return history.at(historyIndex).title;
+			}
+
+			if (history.at(historyIndex).url == QLatin1String("about:start") || (SettingsManager::getValue(SettingsManager::StartPage_EnableStartPageOption).toBool() && Utils::isUrlEmpty(history.at(historyIndex).url)))
+			{
+				return QCoreApplication::translate("main", "Start Page");
+			}
 		}
 
 		return QCoreApplication::translate("main", "(Untitled)");
