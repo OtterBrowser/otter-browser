@@ -63,6 +63,7 @@ protected:
 protected slots:
 	void populateCookies();
 	void filterCookies(const QString &filter);
+	void addCookie();
 	void addCookie(const QNetworkCookie &cookie);
 	void removeCookie(const QNetworkCookie &cookie);
 	void removeCookies();

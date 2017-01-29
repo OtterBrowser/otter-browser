@@ -55,6 +55,7 @@ CookiesContentsWidget::CookiesContentsWidget(Window *window) : ContentsWidget(wi
 	connect(m_ui->cookiesViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_ui->propertiesButton, SIGNAL(clicked()), this, SLOT(cookieProperties()));
 	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(removeCookies()));
+	connect(m_ui->addButton, SIGNAL(clicked()), this, SLOT(addCookie()));
 }
 
 CookiesContentsWidget::~CookiesContentsWidget()
@@ -96,6 +97,16 @@ void CookiesContentsWidget::populateCookies()
 	connect(cookieJar, SIGNAL(cookieRemoved(QNetworkCookie)), this, SLOT(removeCookie(QNetworkCookie)));
 	connect(m_model, SIGNAL(modelReset()), this, SLOT(updateActions()));
 	connect(m_ui->cookiesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
+}
+
+void CookiesContentsWidget::addCookie()
+{
+	CookiePropertiesDialog dialog(QNetworkCookie(), this);
+
+	if (dialog.exec() == QDialog::Accepted)
+	{
+		NetworkManagerFactory::getCookieJar()->forceInsertCookie(dialog.getModifiedCookie());
+	}
 }
 
 void CookiesContentsWidget::addCookie(const QNetworkCookie &cookie)
