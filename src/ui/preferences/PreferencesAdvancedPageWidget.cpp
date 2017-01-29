@@ -301,6 +301,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 		}
 
 		m_ui->ciphersViewWidget->setModel(ciphersModel);
+		m_ui->ciphersViewWidget->setLayoutDirection(Qt::LeftToRight);
 		m_ui->ciphersAddButton->setEnabled(m_ui->ciphersAddButton->menu()->actions().count() > 0);
 	}
 	else

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -88,6 +88,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 
 	m_ui->configurationViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->configurationViewWidget->setModel(m_model);
+	m_ui->configurationViewWidget->setLayoutDirection(Qt::LeftToRight);
 	m_ui->configurationViewWidget->setItemDelegateForColumn(2, new OptionDelegate(false, this));
 	m_ui->configurationViewWidget->setFilterRoles(QSet<int>({Qt::DisplayRole, Qt::UserRole}));
 	m_ui->filterLineEdit->installEventFilter(this);
