@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -43,6 +43,9 @@ public:
 	explicit WebsitePreferencesDialog(const QUrl &url, const QList<QNetworkCookie> &cookies, QWidget *parent = nullptr);
 	~WebsitePreferencesDialog();
 
+	QList<QNetworkCookie> getCookiesToDelete() const;
+	QList<QNetworkCookie> getCookiesToInsert() const;
+
 protected:
 	void changeEvent(QEvent *event);
 
@@ -53,6 +56,8 @@ protected slots:
 	void valueChanged();
 
 private:
+	QList<QNetworkCookie> m_cookiesToDelete;
+	QList<QNetworkCookie> m_cookiesToInsert;
 	bool m_updateOverride;
 	Ui::WebsitePreferencesDialog *m_ui;
 };

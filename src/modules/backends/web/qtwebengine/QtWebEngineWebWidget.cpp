@@ -47,6 +47,7 @@
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QImageWriter>
+#include <QtWebEngineCore/QWebEngineCookieStore>
 #include <QtWebEngineWidgets/QWebEngineHistory>
 #include <QtWebEngineWidgets/QWebEngineProfile>
 #include <QtWebEngineWidgets/QWebEngineSettings>
@@ -911,6 +912,20 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				if (dialog.exec() == QDialog::Accepted)
 				{
 					updateOptions(getUrl());
+
+					const QList<QNetworkCookie> cookiesToDelete(dialog.getCookiesToDelete());
+
+					for (int i = 0; i < cookiesToDelete.count(); ++i)
+					{
+						m_page->profile()->cookieStore()->deleteCookie(cookiesToDelete.at(i));
+					}
+
+					const QList<QNetworkCookie> cookiesToInsert(dialog.getCookiesToInsert());
+
+					for (int i = 0; i < cookiesToInsert.count(); ++i)
+					{
+						m_page->profile()->cookieStore()->setCookie(cookiesToInsert.at(i));
+					}
 				}
 			}
 

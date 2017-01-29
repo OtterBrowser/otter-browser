@@ -1838,6 +1838,20 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				if (dialog.exec() == QDialog::Accepted)
 				{
 					updateOptions(getUrl());
+
+					const QList<QNetworkCookie> cookiesToDelete(dialog.getCookiesToDelete());
+
+					for (int i = 0; i < cookiesToDelete.count(); ++i)
+					{
+						m_networkManager->getCookieJar()->forceDeleteCookie(cookiesToDelete.at(i));
+					}
+
+					const QList<QNetworkCookie> cookiesToInsert(dialog.getCookiesToInsert());
+
+					for (int i = 0; i < cookiesToInsert.count(); ++i)
+					{
+						m_networkManager->getCookieJar()->forceInsertCookie(cookiesToInsert.at(i));
+					}
 				}
 			}
 
