@@ -226,7 +226,7 @@ void MainWindow::timerEvent(QTimerEvent *event)
 				if (toolBars.at(j)->getDefinition().fullScreenVisibility == ToolBarsManager::OnHoverVisibleToolBar)
 				{
 					toolBars.at(j)->show();
-					toolBars.at(i)->installEventFilter(this);
+					toolBars.at(j)->installEventFilter(this);
 				}
 			}
 		}
