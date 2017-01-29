@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 
 #include "WorkspaceWidget.h"
 #include "MainWindow.h"
+#include "Menu.h"
 #include "Window.h"
 #include "../core/SettingsManager.h"
 #include "../core/WindowsManager.h"
@@ -272,6 +273,7 @@ void WorkspaceWidget::createMdi()
 
 	m_mdi = new MdiWidget(this);
 	m_mdi->setOption(QMdiArea::DontMaximizeSubWindowOnActivation, true);
+	m_mdi->setContextMenuPolicy(Qt::CustomContextMenu);
 
 	layout()->addWidget(m_mdi);
 
@@ -296,6 +298,8 @@ void WorkspaceWidget::createMdi()
 		setActiveWindow(activeWindow, true);
 		markRestored();
 	}
+
+	connect(m_mdi, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 }
 
 void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameters)
@@ -638,6 +642,23 @@ void WorkspaceWidget::updateActions()
 	m_mainWindow->getAction(ActionsManager::RestoreTabAction)->setEnabled(!m_mdi || (activeSubWindow && (activeSubWindow->windowState().testFlag(Qt::WindowMaximized) || activeSubWindow->windowState().testFlag(Qt::WindowMinimized))));
 	m_mainWindow->getAction(ActionsManager::AlwaysOnTopTabAction)->setEnabled(activeSubWindow);
 	m_mainWindow->getAction(ActionsManager::AlwaysOnTopTabAction)->setChecked(activeSubWindow && activeSubWindow->windowFlags().testFlag(Qt::WindowStaysOnTopHint));
+}
+
+void WorkspaceWidget::showContextMenu(const QPoint &position)
+{
+	QMenu menu(this);
+	QMenu *arrangeMenu(menu.addMenu(tr("Arrange")));
+	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::RestoreTabAction, this));
+	arrangeMenu->addSeparator();
+	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::RestoreAllAction, this));
+	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::MaximizeAllAction, this));
+	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::MinimizeAllAction, this));
+	arrangeMenu->addSeparator();
+	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::CascadeAllAction, this));
+	arrangeMenu->addAction(ActionsManager::getAction(ActionsManager::TileAllAction, this));
+
+	menu.addMenu(new Menu(Menu::ToolBarsMenuRole, &menu))->setText(tr("Toolbars"));
+	menu.exec(m_mdi->mapToGlobal(position));
 }
 
 void WorkspaceWidget::setActiveWindow(Window *window, bool force)
