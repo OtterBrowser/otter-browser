@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>611</width>
+    <width>650</width>
     <height>500</height>
    </rect>
   </property>
@@ -329,9 +329,9 @@
         </widget>
        </item>
        <item row="9" column="0" colspan="3">
-        <layout class="QHBoxLayout" name="cookiesTableLayout">
+        <layout class="QHBoxLayout" name="cookiesViewLayout">
          <item>
-          <widget class="Otter::ItemViewWidget" name="cookiesTableWidget">
+          <widget class="Otter::ItemViewWidget" name="cookiesViewWidget">
            <property name="editTriggers">
             <set>QAbstractItemView::NoEditTriggers</set>
            </property>
@@ -346,7 +346,7 @@
          <item>
           <layout class="QVBoxLayout" name="cookiesButtonsLayout">
            <item>
-            <widget class="QPushButton" name="addCookieButton">
+            <widget class="QPushButton" name="cookiesAddButton">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -356,7 +356,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="editCookieButton">
+            <widget class="QPushButton" name="cookiesEditButton">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -366,7 +366,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="deleteCookieButton">
+            <widget class="QPushButton" name="cookiesDeleteButton">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -1062,10 +1062,10 @@
   <tabstop>enablePluginsOverrideCheckBox</tabstop>
   <tabstop>enablePluginsComboBox</tabstop>
   <tabstop>userStyleSheetOverrideCheckBox</tabstop>
-  <tabstop>cookiesTableWidget</tabstop>
-  <tabstop>addCookieButton</tabstop>
-  <tabstop>editCookieButton</tabstop>
-  <tabstop>deleteCookieButton</tabstop>
+  <tabstop>cookiesViewWidget</tabstop>
+  <tabstop>cookiesAddButton</tabstop>
+  <tabstop>cookiesEditButton</tabstop>
+  <tabstop>cookiesDeleteButton</tabstop>
   <tabstop>enableJavaScriptOverrideCheckBox</tabstop>
   <tabstop>enableJavaScriptCheckBox</tabstop>
   <tabstop>canChangeWindowGeometryOverrideCheckBox</tabstop>

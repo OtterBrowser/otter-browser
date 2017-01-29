@@ -115,6 +115,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	for (int i = 0; i < cookies.count(); ++i)
 	{
 		QList<QStandardItem*> items({new QStandardItem(cookies.at(i).domain()), new QStandardItem(QString(cookies.at(i).name())), new QStandardItem(cookies.at(i).path()), new QStandardItem(QString(cookies.at(i).value())), new QStandardItem(Utils::formatDateTime(cookies.at(i).expirationDate()))});
+		items[0]->setData(cookies.at(i).toRawForm(), Qt::UserRole);
 		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
@@ -124,7 +125,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 		cookiesModel->appendRow(items);
 	}
 
-	m_ui->cookiesTableWidget->setModel(cookiesModel);
+	m_ui->cookiesViewWidget->setModel(cookiesModel);
 
 	const QStringList userAgents(NetworkManagerFactory::getUserAgents());
 
@@ -189,10 +190,12 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 		connect(comboBoxes.at(i), SIGNAL(currentIndexChanged(int)), this, SLOT(valueChanged()));
 	}
 
+	connect(ContentBlockingManager::getInstance(), SIGNAL(profileModified(QString)), this, SLOT(updateContentBlockingProfile(QString)));
 	connect(m_ui->userStyleSheetFilePathWidget, SIGNAL(pathChanged(QString)), this, SLOT(valueChanged()));
+	connect(m_ui->cookiesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateCookiesActions()));
+	connect(m_ui->cookiesDeleteButton, SIGNAL(clicked(bool)), this, SLOT(removeCookie()));
 	connect(m_ui->contentBlockingProfilesViewWidget, SIGNAL(modified()), this, SLOT(valueChanged()));
 	connect(m_ui->enableCustomRulesCheckBox, SIGNAL(toggled(bool)), this, SLOT(valueChanged()));
-	connect(ContentBlockingManager::getInstance(), SIGNAL(profileModified(QString)), this, SLOT(updateContentBlockingProfile(QString)));
 	connect(m_ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
 }
 
@@ -282,6 +285,20 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 		default:
 			break;
 	}
+}
+
+void WebsitePreferencesDialog::removeCookie()
+{
+	m_cookiesToDelete.append(QNetworkCookie::parseCookies(m_ui->cookiesViewWidget->getIndex(m_ui->cookiesViewWidget->getCurrentRow()).data(Qt::UserRole).toByteArray()));
+
+	m_ui->cookiesViewWidget->removeRow();
+}
+
+void WebsitePreferencesDialog::updateCookiesActions()
+{
+	const QModelIndex index(m_ui->cookiesViewWidget->getIndex(m_ui->cookiesViewWidget->getCurrentRow()));
+
+	m_ui->cookiesDeleteButton->setEnabled(index.isValid());
 }
 
 void WebsitePreferencesDialog::updateContentBlockingProfile(const QString &name)
