@@ -336,12 +336,14 @@ void CookiesContentsWidget::showContextMenu(const QPoint &point)
 {
 	const QModelIndex index(m_ui->cookiesViewWidget->indexAt(point));
 	QMenu menu(this);
+	menu.addAction(tr("Add Cookie…"), this, SLOT(addCookie()));
+	menu.addSeparator();
 
 	if (index.isValid())
 	{
 		if (index.parent() != m_model->invisibleRootItem()->index())
 		{
-			menu.addAction(tr("Remove Cookie"), this, SLOT(removeCookies()));
+			menu.addAction(getAction(ActionsManager::DeleteAction));
 		}
 
 		menu.addAction(tr("Remove All Cookies from This Domain…"), this, SLOT(removeDomainCookies()));
@@ -462,6 +464,11 @@ Action* CookiesContentsWidget::getAction(int identifier)
 	}
 
 	Action *action(new Action(identifier, this));
+
+	if (identifier == ActionsManager::DeleteAction)
+	{
+		action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Remove Cookie"));
+	}
 
 	m_actions[identifier] = action;
 
