@@ -40,12 +40,6 @@ class CookiesContentsWidget : public ContentsWidget
 	Q_OBJECT
 
 public:
-	enum DataRole
-	{
-		PathRole = Qt::UserRole,
-		DomainRole
-	};
-
 	explicit CookiesContentsWidget(Window *window);
 	~CookiesContentsWidget();
 
