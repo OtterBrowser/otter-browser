@@ -68,6 +68,7 @@ protected slots:
 	void removeCookies();
 	void removeDomainCookies();
 	void removeAllCookies();
+	void cookieProperties();
 	void showContextMenu(const QPoint &point);
 	void updateActions();
 

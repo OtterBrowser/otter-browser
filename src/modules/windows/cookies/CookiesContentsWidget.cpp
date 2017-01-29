@@ -23,6 +23,7 @@
 #include "../../../core/HistoryManager.h"
 #include "../../../core/NetworkManagerFactory.h"
 #include "../../../core/ThemesManager.h"
+#include "../../../ui/CookiePropertiesDialog.h"
 
 #include "ui_CookiesContentsWidget.h"
 
@@ -52,6 +53,7 @@ CookiesContentsWidget::CookiesContentsWidget(Window *window) : ContentsWidget(wi
 
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), this, SLOT(filterCookies(QString)));
 	connect(m_ui->cookiesViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
+	connect(m_ui->propertiesButton, SIGNAL(clicked()), this, SLOT(cookieProperties()));
 	connect(m_ui->deleteButton, SIGNAL(clicked()), this, SLOT(removeCookies()));
 }
 
@@ -308,6 +310,17 @@ void CookiesContentsWidget::removeAllCookies()
 	}
 }
 
+void CookiesContentsWidget::cookieProperties()
+{
+	CookiePropertiesDialog dialog(getCookie(m_ui->cookiesViewWidget->currentIndex()), this);
+
+	if (dialog.exec() == QDialog::Accepted && dialog.isModified())
+	{
+		NetworkManagerFactory::getCookieJar()->forceDeleteCookie(dialog.getOriginalCookie());
+		NetworkManagerFactory::getCookieJar()->forceInsertCookie(dialog.getModifiedCookie());
+	}
+}
+
 void CookiesContentsWidget::showContextMenu(const QPoint &point)
 {
 	const QModelIndex index(m_ui->cookiesViewWidget->indexAt(point));
@@ -326,6 +339,13 @@ void CookiesContentsWidget::showContextMenu(const QPoint &point)
 	menu.addAction(tr("Remove All Cookies…"), this, SLOT(removeAllCookies()))->setEnabled(m_ui->cookiesViewWidget->model()->rowCount() > 0);
 	menu.addSeparator();
 	menu.addAction(ActionsManager::getAction(ActionsManager::ClearHistoryAction, this));
+
+	if (index.parent() != m_model->invisibleRootItem()->index())
+	{
+		menu.addSeparator();
+		menu.addAction(tr("Properties…"), this, SLOT(cookieProperties()));
+	}
+
 	menu.exec(m_ui->cookiesViewWidget->mapToGlobal(point));
 }
 
@@ -367,6 +387,7 @@ void CookiesContentsWidget::updateActions()
 {
 	const QModelIndexList indexes(m_ui->cookiesViewWidget->selectionModel()->selectedIndexes());
 
+	m_ui->propertiesButton->setEnabled(false);
 	m_ui->deleteButton->setEnabled(!indexes.isEmpty());
 
 	if (m_ui->deleteButton->isEnabled() != getAction(ActionsManager::DeleteAction)->isEnabled())
@@ -374,12 +395,11 @@ void CookiesContentsWidget::updateActions()
 		getAction(ActionsManager::DeleteAction)->setEnabled(m_ui->deleteButton->isEnabled());
 	}
 
-	m_ui->domainLineEdit->setText(QString());
-	m_ui->nameLineEdit->setText(QString());
-	m_ui->valueLineEdit->setText(QString());
-	m_ui->expiresDateTimeEdit->setDateTime(QDateTime(QDate(2000, 1, 1), QTime(0, 0, 0)));
-	m_ui->secureCheckBox->setChecked(false);
-	m_ui->httpOnlyCheckBox->setChecked(false);
+	m_ui->nameLabelWidget->clear();
+	m_ui->valueLabelWidget->clear();
+	m_ui->domainLabelWidget->clear();
+	m_ui->pathLabelWidget->clear();
+	m_ui->expiresLabelWidget->clear();
 
 	if (indexes.count() == 1)
 	{
@@ -387,12 +407,12 @@ void CookiesContentsWidget::updateActions()
 
 		if (!cookie.name().isEmpty())
 		{
-			m_ui->domainLineEdit->setText(cookie.domain());
-			m_ui->nameLineEdit->setText(QString(cookie.name()));
-			m_ui->valueLineEdit->setText(QString(cookie.value()));
-			m_ui->expiresDateTimeEdit->setDateTime(cookie.expirationDate());
-			m_ui->secureCheckBox->setChecked(cookie.isSecure());
-			m_ui->httpOnlyCheckBox->setChecked(cookie.isHttpOnly());
+			m_ui->propertiesButton->setEnabled(true);
+			m_ui->nameLabelWidget->setText(QString(cookie.name()));
+			m_ui->valueLabelWidget->setText(QString(cookie.value()));
+			m_ui->domainLabelWidget->setText(cookie.domain());
+			m_ui->pathLabelWidget->setText(cookie.path());
+			m_ui->expiresLabelWidget->setText(cookie.expirationDate().isValid() ? Utils::formatDateTime(cookie.expirationDate()) : tr("this session only"));
 		}
 	}
 }

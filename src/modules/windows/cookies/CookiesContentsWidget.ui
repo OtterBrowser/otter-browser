@@ -69,9 +69,6 @@
       </property>
       <item>
        <widget class="QWidget" name="formWidget" native="true">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -96,19 +93,6 @@
            <property name="fieldGrowthPolicy">
             <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
            </property>
-           <item row="0" column="0">
-            <widget class="QLabel" name="domainLabel">
-             <property name="text">
-              <string>Domain:</string>
-             </property>
-             <property name="textInteractionFlags">
-              <set>Qt::NoTextInteraction</set>
-             </property>
-             <property name="buddy">
-              <cstring>domainLineEdit</cstring>
-             </property>
-            </widget>
-           </item>
            <item row="1" column="0">
             <widget class="QLabel" name="nameLabel">
              <property name="text">
@@ -117,9 +101,6 @@
              <property name="textInteractionFlags">
               <set>Qt::NoTextInteraction</set>
              </property>
-             <property name="buddy">
-              <cstring>nameLineEdit</cstring>
-             </property>
             </widget>
            </item>
            <item row="2" column="0">
@@ -127,15 +108,9 @@
              <property name="text">
               <string>Value:</string>
              </property>
-             <property name="buddy">
-              <cstring>valueLineEdit</cstring>
-             </property>
             </widget>
            </item>
-           <item row="2" column="1">
-            <widget class="QLineEdit" name="valueLineEdit"/>
-           </item>
-           <item row="3" column="0">
+           <item row="5" column="0">
             <widget class="QLabel" name="expiresLabel">
              <property name="text">
               <string>Expires:</string>
@@ -143,52 +118,57 @@
              <property name="textInteractionFlags">
               <set>Qt::NoTextInteraction</set>
              </property>
-             <property name="buddy">
-              <cstring>expiresDateTimeEdit</cstring>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="domainLabel">
+             <property name="text">
+              <string>Domain:</string>
+             </property>
+             <property name="textInteractionFlags">
+              <set>Qt::NoTextInteraction</set>
              </property>
             </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="Otter::TextLabelWidget" name="valueLabelWidget" native="true"/>
            </item>
            <item row="3" column="1">
-            <widget class="QDateTimeEdit" name="expiresDateTimeEdit">
-             <property name="displayFormat">
-              <string comment="Date and time format">MM.dd.yyyy HH:mm</string>
-             </property>
-            </widget>
+            <widget class="Otter::TextLabelWidget" name="domainLabelWidget" native="true"/>
+           </item>
+           <item row="5" column="1">
+            <widget class="Otter::TextLabelWidget" name="expiresLabelWidget" native="true"/>
            </item>
            <item row="1" column="1">
-            <widget class="QLineEdit" name="nameLineEdit"/>
+            <widget class="Otter::TextLabelWidget" name="nameLabelWidget" native="true"/>
            </item>
-           <item row="0" column="1">
-            <widget class="QLineEdit" name="domainLineEdit">
-             <property name="contextMenuPolicy">
-              <enum>Qt::NoContextMenu</enum>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
+           <item row="4" column="1">
+            <widget class="Otter::TextLabelWidget" name="pathLabelWidget" native="true"/>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="pathLabel">
+             <property name="text">
+              <string>Path:</string>
              </property>
             </widget>
            </item>
           </layout>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="secureCheckBox">
-           <property name="text">
-            <string>Secure</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="httpOnlyCheckBox">
-           <property name="text">
-            <string>HttpOnly</string>
-           </property>
-          </widget>
          </item>
         </layout>
        </widget>
       </item>
       <item>
        <layout class="QVBoxLayout" name="actionsLayout">
+        <item>
+         <widget class="QPushButton" name="propertiesButton">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Properties</string>
+          </property>
+         </widget>
+        </item>
         <item>
          <widget class="QPushButton" name="deleteButton">
           <property name="enabled">
@@ -216,21 +196,11 @@
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>20</width>
-            <height>40</height>
+            <width>0</width>
+            <height>0</height>
            </size>
           </property>
          </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="applyButton">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Apply</string>
-          </property>
-         </widget>
         </item>
        </layout>
       </item>
@@ -245,19 +215,18 @@
    <extends>QTreeView</extends>
    <header>src/ui/ItemViewWidget.h</header>
   </customwidget>
+  <customwidget>
+   <class>Otter::TextLabelWidget</class>
+   <extends>QWidget</extends>
+   <header>src/ui/TextLabelWidget.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>filterLineEdit</tabstop>
   <tabstop>cookiesViewWidget</tabstop>
-  <tabstop>domainLineEdit</tabstop>
-  <tabstop>nameLineEdit</tabstop>
-  <tabstop>valueLineEdit</tabstop>
-  <tabstop>expiresDateTimeEdit</tabstop>
-  <tabstop>secureCheckBox</tabstop>
-  <tabstop>httpOnlyCheckBox</tabstop>
   <tabstop>deleteButton</tabstop>
   <tabstop>addButton</tabstop>
-  <tabstop>applyButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>
