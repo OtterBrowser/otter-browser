@@ -98,7 +98,6 @@ void CookiesContentsWidget::populateCookies()
 
 void CookiesContentsWidget::addCookie(const QNetworkCookie &cookie)
 {
-	const QByteArray rawCookie(cookie.toRawForm());
 	const QString domain(cookie.domain().startsWith(QLatin1Char('.')) ? cookie.domain().mid(1) : cookie.domain());
 	QStandardItem *domainItem(findDomain(domain));
 
@@ -106,7 +105,7 @@ void CookiesContentsWidget::addCookie(const QNetworkCookie &cookie)
 	{
 		for (int i = 0; i < domainItem->rowCount(); ++i)
 		{
-			if (domainItem->child(i, 0)->text() == cookie.name() && domainItem->child(i, 0)->data(Qt::UserRole).toByteArray() == rawCookie)
+			if (cookie.hasSameIdentifier(getCookie(domainItem->child(i, 0)->index())))
 			{
 				return;
 			}
@@ -126,7 +125,7 @@ void CookiesContentsWidget::addCookie(const QNetworkCookie &cookie)
 	}
 
 	QStandardItem *cookieItem(new QStandardItem(QString(cookie.name())));
-	cookieItem->setData(rawCookie, Qt::UserRole);
+	cookieItem->setData(cookie.toRawForm(), Qt::UserRole);
 	cookieItem->setToolTip(cookie.name());
 	cookieItem->setFlags(cookieItem->flags() | Qt::ItemNeverHasChildren);
 
@@ -136,7 +135,6 @@ void CookiesContentsWidget::addCookie(const QNetworkCookie &cookie)
 
 void CookiesContentsWidget::removeCookie(const QNetworkCookie &cookie)
 {
-	const QByteArray rawCookie(cookie.toRawForm());
 	const QString domain(cookie.domain().startsWith(QLatin1Char('.')) ? cookie.domain().mid(1) : cookie.domain());
 	QStandardItem *domainItem(findDomain(domain));
 
@@ -146,7 +144,7 @@ void CookiesContentsWidget::removeCookie(const QNetworkCookie &cookie)
 
 		for (int j = 0; j < domainItem->rowCount(); ++j)
 		{
-			if (domainItem->child(j, 0)->data(Qt::UserRole).toByteArray() == rawCookie)
+			if (cookie.hasSameIdentifier(getCookie(domainItem->child(j, 0)->index())))
 			{
 				point = m_ui->cookiesViewWidget->visualRect(domainItem->child(j, 0)->index()).center();
 
