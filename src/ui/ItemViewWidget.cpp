@@ -226,62 +226,7 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 
 void ItemViewWidget::showEvent(QShowEvent *event)
 {
-	if (m_isInitialized)
-	{
-		QTreeView::showEvent(event);
-
-		return;
-	}
-
-	const QString suffix(QLatin1String("ViewWidget"));
-	const QString type(objectName().endsWith(suffix) ? objectName().left(objectName().size() - suffix.size()) : objectName());
-
-	if (type.isEmpty())
-	{
-		return;
-	}
-
-	Settings settings(SessionsManager::getReadableDataPath(QLatin1String("views.ini")));
-	settings.beginGroup(type);
-
-	setSort(settings.getValue(QLatin1String("sortColumn"), -1).toInt(), ((settings.getValue(QLatin1String("sortOrder"), QLatin1String("ascending")).toString() == QLatin1String("ascending")) ? Qt::AscendingOrder : Qt::DescendingOrder));
-
-	const QStringList columns(settings.getValue(QLatin1String("columns")).toString().split(QLatin1Char(','), QString::SkipEmptyParts));
-	bool shouldStretchLastSection(true);
-
-	if (!columns.isEmpty())
-	{
-		for (int i = 0; i < model()->columnCount(); ++i)
-		{
-			setColumnHidden(i, true);
-		}
-
-		disconnect(m_headerWidget, SIGNAL(sectionMoved(int,int,int)), this, SLOT(saveState()));
-
-		for (int i = 0; i < columns.count(); ++i)
-		{
-			setColumnHidden(columns[i].toInt(), false);
-
-			if (m_headerWidget)
-			{
-				m_headerWidget->moveSection(m_headerWidget->visualIndex(columns[i].toInt()), i);
-
-				if (m_headerWidget->sectionResizeMode(i) == QHeaderView::Stretch)
-				{
-					shouldStretchLastSection = false;
-				}
-			}
-		}
-
-		connect(m_headerWidget, SIGNAL(sectionMoved(int,int,int)), this, SLOT(saveState()));
-	}
-
-	if (shouldStretchLastSection)
-	{
-		m_headerWidget->setStretchLastSection(true);
-	}
-
-	m_isInitialized = true;
+	ensureInitialized();
 
 	QTreeView::showEvent(event);
 }
@@ -399,6 +344,64 @@ void ItemViewWidget::optionChanged(int identifier, const QVariant &value)
 		setHorizontalScrollBarPolicy(value.toBool() ? Qt::ScrollBarAsNeeded : Qt::ScrollBarAlwaysOff);
 		setVerticalScrollBarPolicy(value.toBool() ? Qt::ScrollBarAsNeeded : Qt::ScrollBarAlwaysOff);
 	}
+}
+
+void ItemViewWidget::ensureInitialized()
+{
+	if (m_isInitialized || !model())
+	{
+		return;
+	}
+
+	const QString suffix(QLatin1String("ViewWidget"));
+	const QString type(objectName().endsWith(suffix) ? objectName().left(objectName().size() - suffix.size()) : objectName());
+
+	if (type.isEmpty())
+	{
+		return;
+	}
+
+	Settings settings(SessionsManager::getReadableDataPath(QLatin1String("views.ini")));
+	settings.beginGroup(type);
+
+	setSort(settings.getValue(QLatin1String("sortColumn"), -1).toInt(), ((settings.getValue(QLatin1String("sortOrder"), QLatin1String("ascending")).toString() == QLatin1String("ascending")) ? Qt::AscendingOrder : Qt::DescendingOrder));
+
+	const QStringList columns(settings.getValue(QLatin1String("columns")).toString().split(QLatin1Char(','), QString::SkipEmptyParts));
+	bool shouldStretchLastSection(true);
+
+	if (!columns.isEmpty())
+	{
+		for (int i = 0; i < model()->columnCount(); ++i)
+		{
+			setColumnHidden(i, true);
+		}
+
+		disconnect(m_headerWidget, SIGNAL(sectionMoved(int,int,int)), this, SLOT(saveState()));
+
+		for (int i = 0; i < columns.count(); ++i)
+		{
+			setColumnHidden(columns[i].toInt(), false);
+
+			if (m_headerWidget)
+			{
+				m_headerWidget->moveSection(m_headerWidget->visualIndex(columns[i].toInt()), i);
+
+				if (m_headerWidget->sectionResizeMode(i) == QHeaderView::Stretch)
+				{
+					shouldStretchLastSection = false;
+				}
+			}
+		}
+
+		connect(m_headerWidget, SIGNAL(sectionMoved(int,int,int)), this, SLOT(saveState()));
+	}
+
+	if (shouldStretchLastSection)
+	{
+		m_headerWidget->setStretchLastSection(true);
+	}
+
+	m_isInitialized = true;
 }
 
 void ItemViewWidget::currentChanged(const QModelIndex &current, const QModelIndex &previous)
@@ -692,6 +695,11 @@ void ItemViewWidget::setModel(QAbstractItemModel *model, bool useSortProxy)
 	if (!model)
 	{
 		return;
+	}
+
+	if (isVisible())
+	{
+		ensureInitialized();
 	}
 
 	if (!model->parent())

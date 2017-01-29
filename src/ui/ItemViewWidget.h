@@ -104,6 +104,7 @@ protected:
 	void keyPressEvent(QKeyEvent *event);
 	void dropEvent(QDropEvent *event);
 	void startDrag(Qt::DropActions supportedActions);
+	void ensureInitialized();
 	void moveRow(bool up);
 	bool applyFilter(const QModelIndex &index);
 
