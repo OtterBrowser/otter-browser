@@ -51,7 +51,10 @@ protected:
 
 protected slots:
 	void buttonClicked(QAbstractButton *button);
+	void addCookie();
+	void addCookie(const QNetworkCookie &cookie);
 	void removeCookie();
+	void cookieProperties();
 	void updateCookiesActions();
 	void updateContentBlockingProfile(const QString &name);
 	void updateValues(bool checked = false);

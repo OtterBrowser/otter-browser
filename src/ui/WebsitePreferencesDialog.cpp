@@ -20,6 +20,7 @@
 **************************************************************************/
 
 #include "WebsitePreferencesDialog.h"
+#include "CookiePropertiesDialog.h"
 #include "preferences/ContentBlockingIntervalDelegate.h"
 #include "../core/ContentBlockingManager.h"
 #include "../core/ContentBlockingProfile.h"
@@ -112,20 +113,12 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	QStandardItemModel *cookiesModel(new QStandardItemModel(this));
 	cookiesModel->setHorizontalHeaderLabels(QStringList({tr("Domain"), tr("Name"), tr("Path"), tr("Value"), tr("Expiration date")}));
 
+	m_ui->cookiesViewWidget->setModel(cookiesModel);
+
 	for (int i = 0; i < cookies.count(); ++i)
 	{
-		QList<QStandardItem*> items({new QStandardItem(cookies.at(i).domain()), new QStandardItem(QString(cookies.at(i).name())), new QStandardItem(cookies.at(i).path()), new QStandardItem(QString(cookies.at(i).value())), new QStandardItem(Utils::formatDateTime(cookies.at(i).expirationDate()))});
-		items[0]->setData(cookies.at(i).toRawForm(), Qt::UserRole);
-		items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-		items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-		items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-		items[3]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-		items[4]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-
-		cookiesModel->appendRow(items);
+		addCookie(cookies.at(i));
 	}
-
-	m_ui->cookiesViewWidget->setModel(cookiesModel);
 
 	const QStringList userAgents(NetworkManagerFactory::getUserAgents());
 
@@ -193,7 +186,9 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	connect(ContentBlockingManager::getInstance(), SIGNAL(profileModified(QString)), this, SLOT(updateContentBlockingProfile(QString)));
 	connect(m_ui->userStyleSheetFilePathWidget, SIGNAL(pathChanged(QString)), this, SLOT(valueChanged()));
 	connect(m_ui->cookiesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateCookiesActions()));
+	connect(m_ui->cookiesAddButton, SIGNAL(clicked(bool)), this, SLOT(addCookie()));
 	connect(m_ui->cookiesDeleteButton, SIGNAL(clicked(bool)), this, SLOT(removeCookie()));
+	connect(m_ui->cookiesPropertiesButton, SIGNAL(clicked(bool)), this, SLOT(cookieProperties()));
 	connect(m_ui->contentBlockingProfilesViewWidget, SIGNAL(modified()), this, SLOT(valueChanged()));
 	connect(m_ui->enableCustomRulesCheckBox, SIGNAL(toggled(bool)), this, SLOT(valueChanged()));
 	connect(m_ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonClicked(QAbstractButton*)));
@@ -287,6 +282,35 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 	}
 }
 
+void WebsitePreferencesDialog::addCookie()
+{
+	const QString domain(m_ui->websiteLineEdit->text());
+	QNetworkCookie cookie;
+	cookie.setDomain(domain.startsWith(QLatin1String("*.")) ? domain.mid(1) : domain);
+
+	CookiePropertiesDialog dialog(cookie, this);
+
+	if (dialog.exec() == QDialog::Accepted)
+	{
+		m_cookiesToInsert.append(dialog.getModifiedCookie());
+
+		addCookie(dialog.getModifiedCookie());
+	}
+}
+
+void WebsitePreferencesDialog::addCookie(const QNetworkCookie &cookie)
+{
+	QList<QStandardItem*> items({new QStandardItem(cookie.domain()), new QStandardItem(QString(cookie.name())), new QStandardItem(cookie.path()), new QStandardItem(QString(cookie.value())), new QStandardItem(cookie.isSessionCookie() ? tr("this session only") : Utils::formatDateTime(cookie.expirationDate()))});
+	items[0]->setData(cookie.toRawForm(), Qt::UserRole);
+	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+	items[2]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+	items[3]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+	items[4]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+
+	m_ui->cookiesViewWidget->getSourceModel()->appendRow(items);
+}
+
 void WebsitePreferencesDialog::removeCookie()
 {
 	m_cookiesToDelete.append(QNetworkCookie::parseCookies(m_ui->cookiesViewWidget->getIndex(m_ui->cookiesViewWidget->getCurrentRow()).data(Qt::UserRole).toByteArray()));
@@ -294,10 +318,31 @@ void WebsitePreferencesDialog::removeCookie()
 	m_ui->cookiesViewWidget->removeRow();
 }
 
+void WebsitePreferencesDialog::cookieProperties()
+{
+	const QList<QNetworkCookie> cookies(QNetworkCookie::parseCookies(m_ui->cookiesViewWidget->getIndex(m_ui->cookiesViewWidget->getCurrentRow()).data(Qt::UserRole).toByteArray()));
+
+	if (cookies.isEmpty())
+	{
+		return;
+	}
+
+	CookiePropertiesDialog dialog(cookies.first(), this);
+
+	if (dialog.exec() == QDialog::Accepted && dialog.isModified())
+	{
+		removeCookie();
+		addCookie(dialog.getModifiedCookie());
+
+		m_cookiesToInsert.append(dialog.getModifiedCookie());
+	}
+}
+
 void WebsitePreferencesDialog::updateCookiesActions()
 {
 	const QModelIndex index(m_ui->cookiesViewWidget->getIndex(m_ui->cookiesViewWidget->getCurrentRow()));
 
+	m_ui->cookiesPropertiesButton->setEnabled(index.isValid());
 	m_ui->cookiesDeleteButton->setEnabled(index.isValid());
 }
 

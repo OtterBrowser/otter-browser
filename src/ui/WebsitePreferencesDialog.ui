@@ -347,21 +347,18 @@
           <layout class="QVBoxLayout" name="cookiesButtonsLayout">
            <item>
             <widget class="QPushButton" name="cookiesAddButton">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
              <property name="text">
               <string>Add…</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="cookiesEditButton">
+            <widget class="QPushButton" name="cookiesPropertiesButton">
              <property name="enabled">
               <bool>false</bool>
              </property>
              <property name="text">
-              <string>Edit…</string>
+              <string>Properties…</string>
              </property>
             </widget>
            </item>
@@ -1064,7 +1061,7 @@
   <tabstop>userStyleSheetOverrideCheckBox</tabstop>
   <tabstop>cookiesViewWidget</tabstop>
   <tabstop>cookiesAddButton</tabstop>
-  <tabstop>cookiesEditButton</tabstop>
+  <tabstop>cookiesPropertiesButton</tabstop>
   <tabstop>cookiesDeleteButton</tabstop>
   <tabstop>enableJavaScriptOverrideCheckBox</tabstop>
   <tabstop>enableJavaScriptCheckBox</tabstop>
