@@ -105,8 +105,14 @@ void CookiesContentsWidget::addCookie(const QNetworkCookie &cookie)
 	{
 		for (int i = 0; i < domainItem->rowCount(); ++i)
 		{
-			if (cookie.hasSameIdentifier(getCookie(domainItem->child(i, 0)->index())))
+			QStandardItem *childItem(domainItem->child(i, 0));
+
+			if (childItem && cookie.hasSameIdentifier(getCookie(childItem->index())))
 			{
+				childItem->setData(cookie.toRawForm());
+
+				updateActions();
+
 				return;
 			}
 		}
