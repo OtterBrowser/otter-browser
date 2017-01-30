@@ -41,6 +41,8 @@ class QtWebKitFrame : public QObject
 public:
 	explicit QtWebKitFrame(QWebFrame *frame, QtWebKitWebWidget *parent);
 
+	void runUserScripts(const QUrl &url) const;
+
 protected:
 	void applyContentBlockingRules(const QStringList &rules, bool remove);
 

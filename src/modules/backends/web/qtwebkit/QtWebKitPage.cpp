@@ -26,6 +26,7 @@
 #include "../../../../core/NetworkManagerFactory.h"
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/ThemesManager.h"
+#include "../../../../core/UserScript.h"
 #include "../../../../core/Utils.h"
 #include "../../../../ui/ContentsDialog.h"
 
@@ -51,6 +52,16 @@ QtWebKitFrame::QtWebKitFrame(QWebFrame *frame, QtWebKitWebWidget *parent) : QObj
 	connect(frame, SIGNAL(loadFinished(bool)), this, SLOT(handleLoadFinished()));
 }
 
+void QtWebKitFrame::runUserScripts(const QUrl &url) const
+{
+	const QList<UserScript*> scripts(UserScript::getUserScriptsForUrl(url, UserScript::AnyTime, (m_frame->parentFrame() != nullptr)));
+
+	for (int i = 0; i < scripts.count(); ++i)
+	{
+		m_frame->documentElement().evaluateJavaScript(scripts.at(i)->getSource());
+	}
+}
+
 void QtWebKitFrame::applyContentBlockingRules(const QStringList &rules, bool remove)
 {
 	const QWebElement document(m_frame->documentElement());
@@ -74,7 +85,14 @@ void QtWebKitFrame::applyContentBlockingRules(const QStringList &rules, bool rem
 
 void QtWebKitFrame::handleLoadFinished()
 {
-	if (!m_widget || !m_widget->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, m_widget->getUrl()).toBool())
+	if (!m_widget)
+	{
+		return;
+	}
+
+	runUserScripts(m_widget->getUrl());
+
+	if (!m_widget->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, m_widget->getUrl()).toBool())
 	{
 		return;
 	}
