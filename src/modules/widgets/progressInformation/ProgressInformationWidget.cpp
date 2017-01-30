@@ -66,7 +66,7 @@ ProgressInformationWidget::ProgressInformationWidget(Window *window, const Actio
 	if (m_type == DocumentProgressType)
 	{
 		m_progressBar = new QProgressBar(this);
-		m_progressBar->setFormat(tr("Document: %p%"));
+		m_progressBar->setRange(0, 100);
 		m_progressBar->setAlignment(Qt::AlignCenter);
 
 		layout->addWidget(m_progressBar);
@@ -101,6 +101,7 @@ void ProgressInformationWidget::updateStatus(WebWidget::PageInformation key, con
 		case DocumentProgressType:
 			if (key == WebWidget::DocumentLoadingProgressInformation)
 			{
+				m_progressBar->setFormat((value.toInt() < 0) ? tr("Document: ?") : tr("Document: %p%"));
 				m_progressBar->setValue(value.toInt());
 			}
 
