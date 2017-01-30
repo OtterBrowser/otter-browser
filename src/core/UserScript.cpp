@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2016 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2016 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -222,6 +222,11 @@ QString UserScript::getSource()
 
 QString UserScript::checkUrlSubString(const QString &rule, const QString &urlSubString, QString generatedUrl, int position) const
 {
+	if (rule.isEmpty())
+	{
+		return urlSubString;
+	}
+
 	for (int i = 0; i < urlSubString.length(); ++i)
 	{
 		const QChar character(urlSubString.at(i));
