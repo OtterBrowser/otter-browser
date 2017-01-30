@@ -22,6 +22,8 @@
 #ifndef OTTER_WINDOW_H
 #define OTTER_WINDOW_H
 
+#include "ContentsWidget.h"
+#include "WebWidget.h"
 #include "../core/SessionsManager.h"
 #include "../core/WindowsManager.h"
 
@@ -34,13 +36,6 @@
 
 namespace Otter
 {
-
-struct LinkUrl
-{
-	QString title;
-	QString mimeType;
-	QUrl url;
-};
 
 class AddressWidget;
 class ContentsWidget;
@@ -127,6 +122,7 @@ private:
 signals:
 	void activated();
 	void aboutToClose();
+	void aboutToNavigate();
 	void needsAttention();
 	void requestedOpenBookmark(BookmarksItem *bookmark, WindowsManager::OpenHints hints);
 	void requestedOpenUrl(const QUrl &url, WindowsManager::OpenHints hints);
@@ -135,7 +131,6 @@ signals:
 	void requestedEditBookmark(const QUrl &url);
 	void requestedNewWindow(ContentsWidget *widget, WindowsManager::OpenHints hints);
 	void requestedCloseWindow(Window *window);
-	void canZoomChanged(bool can);
 	void searchEngineChanged(const QString &searchEngine);
 	void statusMessageChanged(const QString &message);
 	void titleChanged(const QString &title);
@@ -143,7 +138,10 @@ signals:
 	void iconChanged(const QIcon &icon);
 	void contentStateChanged(WindowsManager::ContentStates state);
 	void loadingStateChanged(WindowsManager::LoadingState state);
+	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
+	void requestBlocked(const NetworkManager::ResourceInformation &request);
 	void zoomChanged(int zoom);
+	void canZoomChanged(bool can);
 	void isPinnedChanged(bool isPinned);
 	void widgetChanged();
 };

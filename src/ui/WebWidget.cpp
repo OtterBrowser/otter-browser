@@ -25,6 +25,7 @@
 #include "Menu.h"
 #include "ReloadTimeDialog.h"
 #include "TransferDialog.h"
+#include "Window.h"
 #include "../core/ActionsManager.h"
 #include "../core/BookmarksManager.h"
 #include "../core/HandlersManager.h"

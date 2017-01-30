@@ -25,8 +25,9 @@
 #include "Utils.h"
 #include "../ui/ContentsWidget.h"
 #include "../ui/MainWindow.h"
-#include "../ui/WorkspaceWidget.h"
 #include "../ui/TabBarWidget.h"
+#include "../ui/Window.h"
+#include "../ui/WorkspaceWidget.h"
 
 #include <QtGui/QStatusTipEvent>
 #include <QtWidgets/QAction>

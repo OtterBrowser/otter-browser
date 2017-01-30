@@ -33,6 +33,7 @@
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/Menu.h"
 #include "../../../ui/OpenAddressDialog.h"
+#include "../../../ui/Window.h"
 
 #include <QtGui/QGuiApplication>
 #include <QtGui/QMouseEvent>

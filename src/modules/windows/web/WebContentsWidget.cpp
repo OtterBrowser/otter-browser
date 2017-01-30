@@ -39,6 +39,7 @@
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/SourceViewerWebWidget.h"
 #include "../../../ui/WebsiteInformationDialog.h"
+#include "../../../ui/Window.h"
 
 #include <QtGui/QClipboard>
 #include <QtGui/QDrag>

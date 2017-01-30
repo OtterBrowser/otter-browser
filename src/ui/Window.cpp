@@ -617,7 +617,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	emit canZoomChanged(m_contentsWidget->canZoom());
 
 	connect(this, SIGNAL(aboutToClose()), m_contentsWidget, SLOT(close()));
-	connect(m_contentsWidget, SIGNAL(webWidgetChanged()), this, SLOT(updateNavigationBar()));
+	connect(m_contentsWidget, SIGNAL(aboutToNavigate()), this, SIGNAL(aboutToNavigate()));
 	connect(m_contentsWidget, SIGNAL(needsAttention()), this, SIGNAL(needsAttention()));
 	connect(m_contentsWidget, SIGNAL(requestedAddBookmark(QUrl,QString,QString)), this, SIGNAL(requestedAddBookmark(QUrl,QString,QString)));
 	connect(m_contentsWidget, SIGNAL(requestedEditBookmark(QUrl)), this, SIGNAL(requestedEditBookmark(QUrl)));
@@ -631,8 +631,11 @@ void Window::setContentsWidget(ContentsWidget *widget)
 	connect(m_contentsWidget, SIGNAL(iconChanged(QIcon)), this, SIGNAL(iconChanged(QIcon)));
 	connect(m_contentsWidget, SIGNAL(contentStateChanged(WindowsManager::ContentStates)), this, SIGNAL(contentStateChanged(WindowsManager::ContentStates)));
 	connect(m_contentsWidget, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)));
+	connect(m_contentsWidget, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)));
+	connect(m_contentsWidget, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)), this, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)));
 	connect(m_contentsWidget, SIGNAL(zoomChanged(int)), this, SIGNAL(zoomChanged(int)));
 	connect(m_contentsWidget, SIGNAL(canZoomChanged(bool)), this, SIGNAL(canZoomChanged(bool)));
+	connect(m_contentsWidget, SIGNAL(webWidgetChanged()), this, SLOT(updateNavigationBar()));
 }
 
 AddressWidget* Window::findAddressWidget() const

@@ -25,6 +25,7 @@
 #include "../../../ui/BookmarkPropertiesDialog.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/ProxyModel.h"
+#include "../../../ui/Window.h"
 
 #include "ui_BookmarksContentsWidget.h"
 

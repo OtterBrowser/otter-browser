@@ -26,7 +26,7 @@
 #include "../core/PasswordsManager.h"
 #include "../core/SessionsManager.h"
 #include "../core/SpellCheckManager.h"
-#include "Window.h"
+#include "../core/WindowsManager.h"
 
 #include <QtGui/QHelpEvent>
 #include <QtNetwork/QSslCertificate>
@@ -39,6 +39,14 @@
 namespace Otter
 {
 
+struct LinkUrl
+{
+	QString title;
+	QString mimeType;
+	QUrl url;
+};
+
+class Action;
 class ContentsDialog;
 class Menu;
 class Transfer;
