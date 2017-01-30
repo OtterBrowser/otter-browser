@@ -139,7 +139,7 @@ void UserScript::reload()
 		}
 		else if (keyword == QLatin1String("noframes"))
 		{
-			m_shouldRunOnSubFrames = true;
+			m_shouldRunOnSubFrames = false;
 		}
 		else if (keyword == QLatin1String("run-at"))
 		{
@@ -288,7 +288,7 @@ QStringList UserScript::getMatchRules() const
 	return m_matchRules;
 }
 
-QList<UserScript*> UserScript::getUserScriptsForUrl(const QUrl &url, bool shouldRunOnSubFrames, UserScript::InjectionTime injectionTime)
+QList<UserScript*> UserScript::getUserScriptsForUrl(const QUrl &url, UserScript::InjectionTime injectionTime, bool isSubFrame)
 {
 	const QStringList scriptNames(AddonsManager::getUserScripts());
 	QList<UserScript*> scripts;
@@ -297,7 +297,7 @@ QList<UserScript*> UserScript::getUserScriptsForUrl(const QUrl &url, bool should
 	{
 		UserScript *script(AddonsManager::getUserScript(scriptNames.at(i)));
 
-		if (script->isEnabled() && script->shouldRunOnSubFrames() == shouldRunOnSubFrames && (injectionTime == AnyTime || script->getInjectionTime() == injectionTime) && script->isEnabledForUrl(url))
+		if (script->isEnabled() && (injectionTime == AnyTime || script->getInjectionTime() == injectionTime) && (!isSubFrame || script->shouldRunOnSubFrames()) && script->isEnabledForUrl(url))
 		{
 			scripts.append(script);
 		}
