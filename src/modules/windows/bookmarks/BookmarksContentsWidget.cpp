@@ -353,7 +353,7 @@ BookmarksItem* BookmarksContentsWidget::findFolder(const QModelIndex &index)
 
 QString BookmarksContentsWidget::getTitle() const
 {
-	return tr("Bookmarks Manager");
+	return tr("Bookmarks");
 }
 
 QLatin1String BookmarksContentsWidget::getType() const

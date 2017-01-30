@@ -234,7 +234,7 @@ void ConfigurationContentsWidget::showContextMenu(const QPoint &point)
 
 QString ConfigurationContentsWidget::getTitle() const
 {
-	return tr("Configuration Manager");
+	return tr("Advanced Configuration");
 }
 
 QLatin1String ConfigurationContentsWidget::getType() const

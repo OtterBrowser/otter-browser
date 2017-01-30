@@ -290,7 +290,6 @@ QIcon HistoryManager::getIcon(const QUrl &url)
 				return information.icon;
 			}
 		}
-
 	}
 
 ///TODO

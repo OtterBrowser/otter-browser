@@ -368,7 +368,7 @@ BookmarksItem* NotesContentsWidget::findFolder(const QModelIndex &index)
 
 QString NotesContentsWidget::getTitle() const
 {
-	return tr("Notes Manager");
+	return tr("Notes");
 }
 
 QLatin1String NotesContentsWidget::getType() const

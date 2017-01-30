@@ -387,7 +387,7 @@ Action* AddonsContentsWidget::getAction(int identifier)
 
 QString AddonsContentsWidget::getTitle() const
 {
-	return tr("Addons Manager");
+	return tr("Addons");
 }
 
 QLatin1String AddonsContentsWidget::getType() const

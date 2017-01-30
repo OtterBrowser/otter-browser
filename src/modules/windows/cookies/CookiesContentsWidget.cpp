@@ -479,7 +479,7 @@ Action* CookiesContentsWidget::getAction(int identifier)
 
 QString CookiesContentsWidget::getTitle() const
 {
-	return tr("Cookies Manager");
+	return tr("Cookies");
 }
 
 QLatin1String CookiesContentsWidget::getType() const
