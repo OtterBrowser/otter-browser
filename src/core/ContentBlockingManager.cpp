@@ -190,6 +190,11 @@ QStandardItemModel* ContentBlockingManager::createModel(QObject *parent, const Q
 	QStandardItemModel *model(new QStandardItemModel(parent));
 	model->setHorizontalHeaderLabels(QStringList({tr("Title"), tr("Update Interval"), tr("Last Update")}));
 
+	if (m_profiles.isEmpty())
+	{
+		getProfiles();
+	}
+
 	for (int i = 0; i < m_profiles.count(); ++i)
 	{
 		const QString name(m_profiles.at(i)->getName());
