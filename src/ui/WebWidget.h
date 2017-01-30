@@ -111,6 +111,7 @@ public:
 	{
 		UnknownInformation = 0,
 		DocumentLoadingProgressInformation,
+		TotalLoadingProgressInformation,
 		BytesReceivedInformation,
 		BytesTotalInformation,
 		RequestsBlockedInformation,

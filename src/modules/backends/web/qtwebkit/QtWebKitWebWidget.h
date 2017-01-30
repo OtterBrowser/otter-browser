@@ -157,6 +157,7 @@ protected slots:
 	void linkHovered(const QString &link);
 	void openFormRequest();
 	void viewSourceReplyFinished(QNetworkReply::NetworkError error = QNetworkReply::NoError);
+	void handleLoadProgress(int progress);
 	void handlePrintRequest(QWebFrame *frame);
 	void handleWindowCloseRequest();
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY

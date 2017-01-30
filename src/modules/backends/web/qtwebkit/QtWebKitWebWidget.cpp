@@ -160,6 +160,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(m_page, SIGNAL(featurePermissionRequested(QWebFrame*,QWebPage::Feature)), this, SLOT(handlePermissionRequest(QWebFrame*,QWebPage::Feature)));
 	connect(m_page, SIGNAL(featurePermissionRequestCanceled(QWebFrame*,QWebPage::Feature)), this, SLOT(handlePermissionCancel(QWebFrame*,QWebPage::Feature)));
 	connect(m_page, SIGNAL(loadStarted()), this, SLOT(pageLoadStarted()));
+	connect(m_page, SIGNAL(loadProgress(int)), this, SLOT(handleLoadProgress(int)));
 	connect(m_page, SIGNAL(loadFinished(bool)), this, SLOT(pageLoadFinished()));
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	connect(m_page, SIGNAL(recentlyAudibleChanged(bool)), this, SLOT(handleAudibleStateChange(bool)));
@@ -641,6 +642,11 @@ void QtWebKitWebWidget::viewSourceReplyFinished(QNetworkReply::NetworkError erro
 	m_viewSourceReplies.remove(reply);
 
 	reply->deleteLater();
+}
+
+void QtWebKitWebWidget::handleLoadProgress(int progress)
+{
+	m_networkManager->setPageInformation(TotalLoadingProgressInformation, progress);
 }
 
 void QtWebKitWebWidget::handlePrintRequest(QWebFrame *frame)

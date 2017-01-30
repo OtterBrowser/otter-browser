@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -42,6 +42,10 @@ ProgressInformationWidget::ProgressInformationWidget(Window *window, const Actio
 	{
 		m_type = DocumentProgressType;
 	}
+	else if (definition.action == QLatin1String("ProgressInformationTotalProgressWidget"))
+	{
+		m_type = TotalProgressType;
+	}
 	else if (definition.action == QLatin1String("ProgressInformationTotalSizeWidget"))
 	{
 		m_type = TotalSizeType;
@@ -63,7 +67,7 @@ ProgressInformationWidget::ProgressInformationWidget(Window *window, const Actio
 		m_type = MessageType;
 	}
 
-	if (m_type == DocumentProgressType)
+	if (m_type == DocumentProgressType || m_type == TotalProgressType)
 	{
 		m_progressBar = new QProgressBar(this);
 		m_progressBar->setRange(0, 100);
@@ -102,6 +106,14 @@ void ProgressInformationWidget::updateStatus(WebWidget::PageInformation key, con
 			if (key == WebWidget::DocumentLoadingProgressInformation)
 			{
 				m_progressBar->setFormat((value.toInt() < 0) ? tr("Document: ?") : tr("Document: %p%"));
+				m_progressBar->setValue(value.toInt());
+			}
+
+			break;
+		case TotalProgressType:
+			if (key == WebWidget::TotalLoadingProgressInformation)
+			{
+				m_progressBar->setFormat((value.toInt() < 0) ? tr("Total: ?") : tr("Total: %p%"));
 				m_progressBar->setValue(value.toInt());
 			}
 
@@ -157,6 +169,10 @@ void ProgressInformationWidget::setWindow(Window *window)
 	{
 		case DocumentProgressType:
 			type = WebWidget::DocumentLoadingProgressInformation;
+
+			break;
+		case TotalProgressType:
+			type = WebWidget::TotalLoadingProgressInformation;
 
 			break;
 		case TotalSizeType:
