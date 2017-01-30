@@ -182,7 +182,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="103"/>
         <source>Select Files</source>
-        <translation type="unfinished"/>
+        <translation>Seleziona File</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="103"/>
@@ -192,23 +192,24 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="139"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Domanda</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="140"/>
         <source>User Script with this name already exists:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Uno Script utente con questo nome già esiste:
+%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="141"/>
         <source>Do you want to replace it?</source>
-        <translation type="unfinished"/>
+        <translation>Vuoi sostituirlo?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="148"/>
         <source>Apply to all</source>
-        <translation type="unfinished"/>
+        <translation>Applica a tutto</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="193"/>
@@ -224,7 +225,7 @@
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="324"/>
         <source>Reload Addon</source>
-        <translation type="unfinished"/>
+        <translation>Ricarica Addon</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/addons/AddonsContentsWidget.cpp" line="326"/>
@@ -516,7 +517,7 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     <message>
         <location filename="../../src/ui/AuthenticationDialog.ui" line="101"/>
         <source>Remember password</source>
-        <translation type="unfinished"/>
+        <translation>Ricorda password</translation>
     </message>
 </context>
 <context>
@@ -554,7 +555,7 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="103"/>
         <source>Last visit:</source>
-        <translation type="unfinished"/>
+        <translation>Ultima visita:</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarkPropertiesDialog.ui" line="110"/>
@@ -1063,12 +1064,12 @@ Sei sicuro di voler ripristinare questa sessione comunque? </translation>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
         <source>DER encoded X.509 certificates (*.der)</source>
-        <translation type="unfinished"/>
+        <translation>DER encoded X.509 certificates (*.der)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
         <source>PEM encoded X.509 certificates (*.pem)</source>
-        <translation type="unfinished"/>
+        <translation>PEM encoded X.509 certificates (*.pem)</translation>
     </message>
     <message>
         <location filename="../../src/ui/CertificateDialog.cpp" line="114"/>
@@ -1287,7 +1288,7 @@ Esponente:%2</translation>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="35"/>
         <source>Period to clear:</source>
-        <translation type="unfinished"/>
+        <translation>Periodo da cancellare:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="42"/>
@@ -1312,7 +1313,7 @@ Esponente:%2</translation>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="78"/>
         <source>Clear forms history</source>
-        <translation type="unfinished"/>
+        <translation>Cancella dalla cronologia</translation>
     </message>
     <message>
         <location filename="../../src/ui/ClearHistoryDialog.ui" line="85"/>
@@ -1553,7 +1554,7 @@ Esponente:%2</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="51"/>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation>Tutto</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="52"/>
@@ -1563,7 +1564,7 @@ Esponente:%2</translation>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.cpp" line="53"/>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>Nessuno</translation>
     </message>
 </context>
 <context>
@@ -1621,7 +1622,7 @@ Esponente:%2</translation>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="175"/>
         <source>WebSocket</source>
-        <translation type="unfinished"/>
+        <translation>WebSocket</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/contentBlockingInformation/ContentBlockingInformationWidget.cpp" line="179"/>
@@ -1678,7 +1679,7 @@ Esponente:%2</translation>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="241"/>
         <source>Advertisements</source>
-        <translation type="unfinished"/>
+        <translation>Pubblicità</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="241"/>
@@ -1693,7 +1694,7 @@ Esponente:%2</translation>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="241"/>
         <source>Social</source>
-        <translation type="unfinished"/>
+        <translation>Social</translation>
     </message>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="241"/>
@@ -1708,7 +1709,7 @@ Esponente:%2</translation>
     <message>
         <location filename="../../src/core/ContentBlockingManager.cpp" line="449"/>
         <source>Custom Rules</source>
-        <translation type="unfinished"/>
+        <translation>Regole Personalizzate</translation>
     </message>
 </context>
 <context>
@@ -1869,27 +1870,27 @@ Esponente:%2</translation>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="45"/>
         <source>Failed to open passwords file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile aprire file password: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="98"/>
         <source>Failed to save passwords file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile salvare file password: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="191"/>
         <source>Failed to remove passwords file</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile rimuovere file password</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="320"/>
         <source>Encrypted File</source>
-        <translation type="unfinished"/>
+        <translation>File Criptato</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp" line="325"/>
         <source>Stores passwords in AES encrypted file.</source>
-        <translation type="unfinished"/>
+        <translation>Salva password in un file criptato AES.</translation>
     </message>
 </context>
 <context>
@@ -2161,7 +2162,7 @@ Esponente:%2</translation>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.ui" line="36"/>
         <source>File size:</source>
-        <translation type="unfinished"/>
+        <translation>Dimensione file:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.ui" line="43"/>
@@ -2171,12 +2172,12 @@ Esponente:%2</translation>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.ui" line="50"/>
         <source>Alternative text:</source>
-        <translation type="unfinished"/>
+        <translation>Testo alternativo: </translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.ui" line="57"/>
         <source>Long description:</source>
-        <translation type="unfinished"/>
+        <translation>Descrizione lunga:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="37"/>
@@ -2699,7 +2700,11 @@ Do you want to continue?</source>
 %1
 
 Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Si è verificato un errore SSL:
+
+&amp;1
+
+Vuoi continuare comunque?</translation>
     </message>
 </context>
 <context>
@@ -2975,29 +2980,29 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.ui" line="29"/>
         <source>Search…</source>
-        <translation type="unfinished"/>
+        <translation>Cerca...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="72"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Nome</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="72"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Valore</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="85"/>
         <source>Set #%1</source>
-        <translation type="unfinished"/>
+        <translation>Imposta #%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="167"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="223"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="242"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Domanda</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="168"/>
@@ -3010,32 +3015,32 @@ Do you want to continue?</source>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="225"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="244"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Vuoi continuare?</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="243"/>
         <source>You are about to delete all passwords.</source>
-        <translation type="unfinished"/>
+        <translation>Stai per cancellare tutte le password</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="264"/>
         <source>Remove Password</source>
-        <translation type="unfinished"/>
+        <translation>Elimina Password</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="267"/>
         <source>Remove All Passwords from This Domain…</source>
-        <translation type="unfinished"/>
+        <translation>Rimuovi Tutte le Password da Questo Dominio...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="270"/>
         <source>Remove All Passwords…</source>
-        <translation type="unfinished"/>
+        <translation>Elimina Tutte le Password...</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="373"/>
         <source>Passwords Manager</source>
-        <translation type="unfinished"/>
+        <translation>Gestore Password</translation>
     </message>
 </context>
 <context>
@@ -3446,7 +3451,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1089"/>
         <source>SSL Ciphers</source>
-        <translation type="unfinished"/>
+        <translation>Cifratura SSL</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesAdvancedPageWidget.ui" line="1169"/>
@@ -4063,7 +4068,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="233"/>
         <source>Preferred webpage language:</source>
-        <translation type="unfinished"/>
+        <translation>Lingua preferita per la pagina web:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesGeneralPageWidget.ui" line="258"/>
@@ -4286,7 +4291,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="86"/>
         <source>Update</source>
-        <translation type="unfinished"/>
+        <translation>Aggiorna</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="96"/>
@@ -4326,7 +4331,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="127"/>
         <source>File…</source>
-        <translation type="unfinished"/>
+        <translation>File...</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="128"/>
@@ -4341,7 +4346,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="201"/>
         <source>Select File</source>
-        <translation type="unfinished"/>
+        <translation>Seleziona File</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="201"/>
@@ -4369,7 +4374,7 @@ Do you want to continue?</source>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="354"/>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="433"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Errore</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="343"/>
@@ -4385,7 +4390,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="433"/>
         <source>Failed to update search engine.</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile aggiornare il motore di ricerca.</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="504"/>
@@ -4426,22 +4431,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="61"/>
         <source>Server not found</source>
-        <translation type="unfinished"/>
+        <translation>Server non trovato</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="65"/>
         <source>Connection refused</source>
-        <translation type="unfinished"/>
+        <translation>Connessione rifiutata</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="69"/>
         <source>Network error %1</source>
-        <translation type="unfinished"/>
+        <translation>Errore di rete %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="73"/>
         <source>Network error</source>
-        <translation type="unfinished"/>
+        <translation>Errore di Rete</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitFtpListingNetworkReply.cpp" line="89"/>
@@ -4508,7 +4513,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="353"/>
         <source>SSL errors occurred, do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Si sono verificati errori SSL, si desidera continuare?</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="357"/>
@@ -4575,17 +4580,17 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="641"/>
         <source>File not found</source>
-        <translation type="unfinished"/>
+        <translation>File non trovato</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="645"/>
         <source>Server not found</source>
-        <translation type="unfinished"/>
+        <translation>Server non trovato</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="650"/>
         <source>Connection refused</source>
-        <translation type="unfinished"/>
+        <translation>Connessione rifiutata</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="654"/>
@@ -4595,7 +4600,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="658"/>
         <source>Network error %1</source>
-        <translation type="unfinished"/>
+        <translation>Errore di rete %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitPage.cpp" line="674"/>
@@ -4985,37 +4990,37 @@ Si desidera sovrascriverlo? </translation>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="356"/>
         <source>Add %1</source>
-        <translation type="unfinished"/>
+        <translation>Aggiungi %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="356"/>
         <source>(untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(senza titolo)</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="559"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Errore</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="559"/>
         <source>Failed to add search engine.</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile aggiungere il motore di ricerca.</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="850"/>
         <source>Select Search Engine</source>
-        <translation type="unfinished"/>
+        <translation>Seleziona Motore di Ricerca</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="857"/>
         <source>Add Search Engine…</source>
-        <translation type="unfinished"/>
+        <translation>Modifica Motore di Ricerca...</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/search/SearchWidget.cpp" line="864"/>
         <source>Search</source>
-        <translation type="unfinished"/>
+        <translation>Cerca</translation>
     </message>
 </context>
 <context>
@@ -5023,37 +5028,37 @@ Si desidera sovrascriverlo? </translation>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="14"/>
         <source>Select Password</source>
-        <translation type="unfinished"/>
+        <translation>Seleziona Password</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="20"/>
         <source>Select set of credentials:</source>
-        <translation type="unfinished"/>
+        <translation>Seleziona set di credenziali:</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="41"/>
         <source>Remove</source>
-        <translation type="unfinished"/>
+        <translation>Rimuovi</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="38"/>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Nome</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="38"/>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Valore</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="42"/>
         <source>Set #%1</source>
-        <translation type="unfinished"/>
+        <translation>Imposta #%1</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="84"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Domanda</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="84"/>
@@ -5439,12 +5444,12 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="777"/>
         <source>Switch Tabs Using the Mouse Wheel</source>
-        <translation type="unfinished"/>
+        <translation>Cambia Scheda Usando la Rotellina del Mouse</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="781"/>
         <source>Show Thumbnails in Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Mostra Anteprima nelle Schede</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="809"/>
@@ -5454,7 +5459,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="1045"/>
         <source>Question</source>
-        <translation type="unfinished"/>
+        <translation>Domanda</translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/TabBarWidget.cpp" line="1046"/>
@@ -5464,12 +5469,12 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="1047"/>
         <source>Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Vuoi continuare?</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="1051"/>
         <source>Do not show this message again</source>
-        <translation type="unfinished"/>
+        <translation>Non mostrare più questo messaggio</translation>
     </message>
 </context>
 <context>
@@ -5477,7 +5482,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="257"/>
         <source>Close Tab</source>
-        <translation type="unfinished"/>
+        <translation>Chiudi scheda</translation>
     </message>
 </context>
 <context>
@@ -5518,7 +5523,7 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="69"/>
         <source>Bookmarks folder:</source>
-        <translation type="unfinished"/>
+        <translation>Cartella preferiti:</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarDialog.ui" line="115"/>
@@ -5811,12 +5816,12 @@ Do you want to save your changes or discard them?</source>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="268"/>
         <source>Switch Tabs Using the Mouse Wheel</source>
-        <translation type="unfinished"/>
+        <translation>Cambia Scheda Usando la Rotellina del Mouse</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="272"/>
         <source>Show Thumbnails in Tabs</source>
-        <translation type="unfinished"/>
+        <translation>Mostra Anteprima nelle Schede</translation>
     </message>
     <message>
         <location filename="../../src/ui/ToolBarWidget.cpp" line="294"/>
@@ -7223,22 +7228,22 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="71"/>
         <source>New tab</source>
-        <translation type="unfinished"/>
+        <translation>Nuova scheda </translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="72"/>
         <source>New private tab</source>
-        <translation type="unfinished"/>
+        <translation>Nuova scheda privata</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="73"/>
         <source>New window</source>
-        <translation type="unfinished"/>
+        <translation>Nuova finestra </translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="74"/>
         <source>New private window</source>
-        <translation type="unfinished"/>
+        <translation>Nuova Finestra in Privato </translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="170"/>
@@ -7875,7 +7880,7 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="405"/>
         <source>Log In</source>
-        <translation type="unfinished"/>
+        <translation>Log In</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="406"/>
@@ -8336,12 +8341,12 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="498"/>
         <source>Reset to Defaults…</source>
-        <translation type="unfinished"/>
+        <translation>Ripristina Predefiniti...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="498"/>
         <source>Reset Toolbars to Defaults…</source>
-        <translation type="unfinished"/>
+        <translation>Ripristina Toolbar a Predefinita...</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="499"/>
@@ -8382,7 +8387,7 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="506"/>
         <source>Passwords</source>
-        <translation type="unfinished"/>
+        <translation>Password</translation>
     </message>
     <message>
         <location filename="../../src/core/ActionsManager.cpp" line="507"/>
@@ -8488,84 +8493,84 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/ui/Menu.cpp" line="103"/>
         <source>Import Opera Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>Importa segnalibri di Opera...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="107"/>
         <source>Import HTML Bookmarks…</source>
-        <translation type="unfinished"/>
+        <translation>Importa segnalibri HTML...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="113"/>
         <source>Import Opera Notes…</source>
-        <translation type="unfinished"/>
+        <translation>Importa file Note di Opera...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="119"/>
         <source>Import Opera Search Engines…</source>
-        <translation type="unfinished"/>
+        <translation>Importare I Motori di Ricerca Opera...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="125"/>
         <source>Import Opera Session…</source>
-        <translation type="unfinished"/>
+        <translation>Importa Sessione Di Opera...</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="346"/>
         <source>Open All</source>
-        <translation type="unfinished"/>
+        <translation>Aprire tutto</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="358"/>
         <source>This Folder</source>
-        <translation type="unfinished"/>
+        <translation>Questa Cartella:</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="384"/>
         <location filename="../../src/ui/Menu.cpp" line="622"/>
         <location filename="../../src/ui/Menu.cpp" line="753"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Senza titolo) </translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="426"/>
         <source>Auto Detect</source>
-        <translation type="unfinished"/>
+        <translation>Rilevamento automatico</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="482"/>
         <source>Clear</source>
-        <translation type="unfinished"/>
+        <translation>Pulisi</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="572"/>
         <source>Default Style</source>
-        <translation type="unfinished"/>
+        <translation>Stile Predefinito</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="639"/>
         <source>Add New</source>
-        <translation type="unfinished"/>
+        <translation>Aggiungi Nuova</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="642"/>
         <source>Add Toolbar…</source>
-        <translation type="unfinished"/>
+        <translation>Aggiungi Barra Strumenti</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="645"/>
         <source>Add Bookmarks Bar…</source>
-        <translation type="unfinished"/>
+        <translation>Aggiungi Barra dei Segnalibri…</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="676"/>
         <source>Default User Agent</source>
-        <translation type="unfinished"/>
+        <translation>User Agent Predefinito</translation>
     </message>
     <message>
         <location filename="../../src/ui/Menu.cpp" line="706"/>
         <source>Custom User Agent…</source>
-        <translation type="unfinished"/>
+        <translation>User Agent Personalizzato</translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="718"/>
@@ -8643,47 +8648,47 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="82"/>
         <source>Addons Manager</source>
-        <translation type="unfinished"/>
+        <translation>Gestore di add-on</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="83"/>
         <source>Bookmarks Manager</source>
-        <translation type="unfinished"/>
+        <translation>Gestore Segnalibri</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="84"/>
         <source>Cache Manager</source>
-        <translation type="unfinished"/>
+        <translation>Gestione Cache</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="85"/>
         <source>Configuration Manager</source>
-        <translation type="unfinished"/>
+        <translation>Gestione configurazione </translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="86"/>
         <source>Cookies Manager</source>
-        <translation type="unfinished"/>
+        <translation>Gestione dei cookie</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="87"/>
         <source>History Manager</source>
-        <translation type="unfinished"/>
+        <translation>Cronologia</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="88"/>
         <source>Notes Manager</source>
-        <translation type="unfinished"/>
+        <translation>Gestore delle Note</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="89"/>
         <source>Passwords Manager</source>
-        <translation type="unfinished"/>
+        <translation>Gestore Password</translation>
     </message>
     <message>
         <location filename="../../src/core/AddonsManager.cpp" line="90"/>
         <source>Transfers Manager</source>
-        <translation type="unfinished"/>
+        <translation>Gestore Trasferimenti </translation>
     </message>
 </context>
 <context>
@@ -8731,22 +8736,22 @@ Clicca su installa per riavviare il browser e installare l&apos;aggiornamento op
     <message>
         <location filename="../../src/core/Application.cpp" line="123"/>
         <source>Loads URL in new tab</source>
-        <translation type="unfinished"/>
+        <translation>Carica indirizzo in una nuova scheda</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="124"/>
         <source>Loads URL in new private tab</source>
-        <translation type="unfinished"/>
+        <translation>Carica indirizzo in una nuova scheda privata</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="125"/>
         <source>Loads URL in new window</source>
-        <translation type="unfinished"/>
+        <translation>Carica indirizzo in una nuova finestra</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="126"/>
         <source>Loads URL in new private window</source>
-        <translation type="unfinished"/>
+        <translation>Carica indirizzo in una nuova finestra privata</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="127"/>
@@ -8859,7 +8864,7 @@ Errore: %2</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitNetworkManager.cpp" line="640"/>
         <source>Request blocked with rule: %1</source>
-        <translation type="unfinished"/>
+        <translation>Richiesta bloccata con regola: %1</translation>
     </message>
     <message>
         <location filename="../../src/modules/platforms/windows/WindowsPlatformIntegration.cpp" line="454"/>
@@ -8947,7 +8952,7 @@ ID Applicazione: %2</translation>
     <message>
         <location filename="../../src/core/NetworkManagerFactory.h" line="42"/>
         <source>(Untitled)</source>
-        <translation type="unfinished"/>
+        <translation>(Senza titolo) </translation>
     </message>
 </context>
 <context>
@@ -8955,7 +8960,7 @@ ID Applicazione: %2</translation>
     <message>
         <location filename="../../src/core/Utils.cpp" line="151"/>
         <source>Error</source>
-        <translation type="unfinished"/>
+        <translation>Errore</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="154"/>
@@ -8965,17 +8970,17 @@ ID Applicazione: %2</translation>
     <message>
         <location filename="../../src/core/Utils.cpp" line="164"/>
         <source>Check the file name for capitalization or other typing errors.</source>
-        <translation type="unfinished"/>
+        <translation>Controlla il nome del file per errori di capitalizzazione o altri errori di battitura.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="164"/>
         <source>Check to see if the file was moved, renamed or deleted.</source>
-        <translation type="unfinished"/>
+        <translation>Controlla che il file non sia stato spostato, rinominato oppure cancellato.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="168"/>
         <source>Check the address for typing errors.</source>
-        <translation type="unfinished"/>
+        <translation>Controlla l&apos;indirizzo per errori di battitura.</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="168"/>
@@ -9032,12 +9037,12 @@ Select another one.</source>
     <message>
         <location filename="../../src/core/Utils.cpp" line="415"/>
         <source>Open Files</source>
-        <translation type="unfinished"/>
+        <translation>Apri File</translation>
     </message>
     <message>
         <location filename="../../src/core/Utils.cpp" line="419"/>
         <source>Open File</source>
-        <translation type="unfinished"/>
+        <translation>Apri File</translation>
     </message>
 </context>
 </TS>

@@ -104,7 +104,7 @@
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="82"/>
         <source>Remove</source>
-        <translation>Šalinti</translation>
+        <translation>Pašalinti</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/AcceptLanguageDialog.ui" line="107"/>
@@ -222,7 +222,7 @@
 %1</source>
         <translation><numerusform>Nepavyko importuoti šio naudotojo scenarijaus failo:
 %1</numerusform><numerusform>Nepavyko importuoti šių naudotojo scenarijaus failo:
-%1</numerusform><numerusform>Nepavyko importuoti šių naudotojo scenarijaus failo:
+%1</numerusform><numerusform>Nepavyko importuoti šių naudotojo scenarijaus failų:
 %1</numerusform></translation>
     </message>
     <message>
@@ -330,7 +330,7 @@
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="850"/>
         <source>Remove Bookmark</source>
-        <translation>Pašalinti</translation>
+        <translation>Pašalinti adresyno įrašą</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/address/AddressWidget.cpp" line="850"/>
@@ -809,7 +809,7 @@ Ar tikrai norite jį atstatyti?</translation>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="17"/>
         <source>Remove existing bookmarks</source>
-        <translation>Šalinti esamus adresyno įrašus</translation>
+        <translation>Pašalinti esamus adresyno įrašus</translation>
     </message>
     <message>
         <location filename="../../src/ui/BookmarksImporterWidget.ui" line="51"/>
@@ -1547,7 +1547,7 @@ Skaičiaus eilė: %2</translation>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="151"/>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="210"/>
         <source>Remove</source>
-        <translation>Šalinti</translation>
+        <translation>Pašalinti</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/ContentBlockingDialog.ui" line="176"/>
@@ -1819,7 +1819,7 @@ Skaičiaus eilė: %2</translation>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="317"/>
         <source>Remove All Cookies from This Domain…</source>
-        <translation>Pašalinti visus domeno slapukus…</translation>
+        <translation>Šalinti visus domeno slapukus…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="320"/>
@@ -1860,7 +1860,7 @@ Skaičiaus eilė: %2</translation>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="58"/>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="120"/>
         <source>Remove</source>
-        <translation>Šalinti</translation>
+        <translation>Pašalinti</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="88"/>
@@ -2061,7 +2061,7 @@ Skaičiaus eilė: %2</translation>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="362"/>
         <source>Add to Bookmarks…</source>
-        <translation>Pridėti prie adresyno įrašų…</translation>
+        <translation>Įtraukti į adresyną…</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/history/HistoryContentsWidget.cpp" line="363"/>
@@ -2481,7 +2481,7 @@ Skaičiaus eilė: %2</translation>
         <location filename="../../src/ui/MainWindow.cpp" line="925"/>
         <source>You already have this address in your bookmarks.
 Do you want to continue?</source>
-        <translation>Jūs jau įrašėte šį puslapį į adresyną
+        <translation>Jūs jau įrašėte šį puslapį į adresyną.
 Ar norite tęsti?</translation>
     </message>
 </context>
@@ -2681,7 +2681,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/modules/widgets/action/NavigationActionWidget.cpp" line="191"/>
         <source>Remove Entry</source>
-        <translation>Šalinti įrašą</translation>
+        <translation>Pašalinti įrašą</translation>
     </message>
     <message>
         <location filename="../../src/modules/widgets/action/NavigationActionWidget.cpp" line="192"/>
@@ -4299,7 +4299,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="96"/>
         <source>Remove</source>
-        <translation>Pašalinti</translation>
+        <translation>Šalinti</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.ui" line="121"/>
@@ -4365,7 +4365,7 @@ Ar norite tęsti?</translation>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="302"/>
         <source>Do you really want to remove this search engine?</source>
-        <translation>Ar tikrai norite šalinti šią paieškos sistemą?</translation>
+        <translation>Ar tikrai norite pašalinti šią paieškos sistemą?</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/PreferencesSearchPageWidget.cpp" line="311"/>
@@ -5041,7 +5041,7 @@ Ar norite perrašyti egzistuojantį seansą?</translation>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.ui" line="41"/>
         <source>Remove</source>
-        <translation>Šalinti</translation>
+        <translation>Pašalinti</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="38"/>
@@ -5066,7 +5066,7 @@ Ar norite perrašyti egzistuojantį seansą?</translation>
     <message>
         <location filename="../../src/modules/windows/web/SelectPasswordDialog.cpp" line="84"/>
         <source>Do you really want to remove this credentials set?</source>
-        <translation>Ar tikrai norite šalinti šį prisijungimo duomenų rinkinį?</translation>
+        <translation>Ar tikrai norite pašalinti šį prisijungimo duomenų rinkinį?</translation>
     </message>
 </context>
 <context>
@@ -5882,7 +5882,7 @@ Norite įrašyti pakeitimus ar juos atmesti?</translation>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="280"/>
         <source>Do you really want to remove this toolbar?</source>
-        <translation>Ar tikrai norite šalinti šią įrankių juostą?</translation>
+        <translation>Ar tikrai norite pašalinti šią įrankių juostą?</translation>
     </message>
     <message>
         <location filename="../../src/core/ToolBarsManager.cpp" line="294"/>
@@ -8486,7 +8486,7 @@ Spustelėkite mygtuką Įdiegti, kad iš naujo paleistumėte naršyklę ir įdie
     <message>
         <location filename="../../src/modules/windows/bookmarks/BookmarksContentsWidget.cpp" line="329"/>
         <source>Remove Bookmark</source>
-        <translation>Šalinti adresyno įrašą</translation>
+        <translation>Pašalinti adresyno įrašą</translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/notes/NotesContentsWidget.cpp" line="336"/>
