@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -300,7 +300,7 @@ Addon::AddonType UserScript::getType() const
 
 bool UserScript::isEnabledForUrl(const QUrl &url)
 {
-	if (url.scheme() != QLatin1String("http") && url.scheme() != QLatin1String("https") && url.scheme() != QLatin1String("file") && url.scheme() != QLatin1String("ftp"))
+	if (url.scheme() != QLatin1String("http") && url.scheme() != QLatin1String("https") && url.scheme() != QLatin1String("file") && url.scheme() != QLatin1String("ftp") && url.scheme() != QLatin1String("about"))
 	{
 		return false;
 	}
@@ -317,7 +317,7 @@ bool UserScript::isEnabledForUrl(const QUrl &url)
 		isEnabled = true;
 	}
 
-	if (checkUrl(url, m_excludeRules))
+	if (isEnabled && checkUrl(url, m_excludeRules))
 	{
 		isEnabled = false;
 	}
