@@ -288,6 +288,24 @@ QStringList UserScript::getMatchRules() const
 	return m_matchRules;
 }
 
+QList<UserScript*> UserScript::getUserScriptsForUrl(const QUrl &url, bool shouldRunOnSubFrames, UserScript::InjectionTime injectionTime)
+{
+	const QStringList scriptNames(AddonsManager::getUserScripts());
+	QList<UserScript*> scripts;
+
+	for (int i = 0 ; i < scriptNames.count(); ++i)
+	{
+		UserScript *script(AddonsManager::getUserScript(scriptNames.at(i)));
+
+		if (script->isEnabled() && script->shouldRunOnSubFrames() == shouldRunOnSubFrames && script->getInjectionTime() == injectionTime && script->isEnabledForUrl(url))
+		{
+			scripts.append(script);
+		}
+	}
+
+	return scripts;
+}
+
 UserScript::InjectionTime UserScript::getInjectionTime() const
 {
 	return m_injectionTime;
