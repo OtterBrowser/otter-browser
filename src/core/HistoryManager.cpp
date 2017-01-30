@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "HistoryManager.h"
+#include "AddonsManager.h"
 #include "SessionsManager.h"
 #include "SettingsManager.h"
 #include "ThemesManager.h"
@@ -271,54 +272,25 @@ HistoryModel* HistoryManager::getTypedHistoryModel()
 
 QIcon HistoryManager::getIcon(const QUrl &url)
 {
+	if (Utils::isUrlEmpty(url))
+	{
+		return ThemesManager::getIcon(QLatin1String("tab"));
+	}
+
 	if (url.scheme() == QLatin1String("about"))
 	{
-		if (url.path() == QLatin1String("addons"))
+		const QStringList specialPages(AddonsManager::getSpecialPages());
+
+		for (int i = 0; i < specialPages.count(); ++i)
 		{
-			return ThemesManager::getIcon(QLatin1String("preferences-plugin"));
+			const AddonsManager::SpecialPageInformation information(AddonsManager::getSpecialPage(specialPages.at(i)));
+
+			if (url == information.url)
+			{
+				return information.icon;
+			}
 		}
 
-		if (url.path() == QLatin1String("bookmarks"))
-		{
-			return ThemesManager::getIcon(QLatin1String("bookmarks"));
-		}
-
-		if (url.path() == QLatin1String("cache"))
-		{
-			return ThemesManager::getIcon(QLatin1String("cache"));
-		}
-
-		if (url.path() == QLatin1String("config"))
-		{
-			return ThemesManager::getIcon(QLatin1String("configuration"));
-		}
-
-		if (url.path() == QLatin1String("cookies"))
-		{
-			return ThemesManager::getIcon(QLatin1String("cookies"));
-		}
-
-		if (url.path() == QLatin1String("history"))
-		{
-			return ThemesManager::getIcon(QLatin1String("view-history"));
-		}
-
-		if (url.path() == QLatin1String("notes"))
-		{
-			return ThemesManager::getIcon(QLatin1String("notes"));
-		}
-
-		if (url.path() == QLatin1String("passwords"))
-		{
-			return ThemesManager::getIcon(QLatin1String("dialog-password"));
-		}
-
-		if (url.path() == QLatin1String("transfers"))
-		{
-			return ThemesManager::getIcon(QLatin1String("transfers"));
-		}
-
-		return ThemesManager::getIcon(QLatin1String("text-html"));
 	}
 
 ///TODO
