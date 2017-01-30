@@ -1826,6 +1826,11 @@ void QtWebKitWebWidget::setHistory(const WindowHistoryInformation &history)
 		updateOptions(QUrl());
 		updatePageActions(QUrl());
 
+		if (m_page->getMainFrame())
+		{
+			m_page->getMainFrame()->runUserScripts(QUrl(QLatin1String("about:blank")));
+		}
+
 		return;
 	}
 
