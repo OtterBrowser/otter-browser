@@ -29,6 +29,7 @@
 #include "../../../../core/SearchEnginesManager.h"
 #include "../../../../core/ThemesManager.h"
 #include "../../../../core/TransfersManager.h"
+#include "../../../../core/UserScript.h"
 #include "../../../../core/Utils.h"
 #include "../../../../core/WebBackend.h"
 #include "../../../../ui/AuthenticationDialog.h"
@@ -50,6 +51,7 @@
 #include <QtWebEngineCore/QWebEngineCookieStore>
 #include <QtWebEngineWidgets/QWebEngineHistory>
 #include <QtWebEngineWidgets/QWebEngineProfile>
+#include <QtWebEngineWidgets/QWebEngineScript>
 #include <QtWebEngineWidgets/QWebEngineSettings>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QToolTip>
@@ -1278,6 +1280,17 @@ void QtWebEngineWebWidget::setHistory(const WindowHistoryInformation &history)
 		updateNavigationActions();
 		updateOptions(QUrl());
 		updatePageActions(QUrl());
+
+		const QList<UserScript*> scripts(UserScript::getUserScriptsForUrl(QUrl(QLatin1String("about:blank"))));
+
+		for (int i = 0; i < scripts.count(); ++i)
+		{
+#if QT_VERSION >= 0x050700
+			m_page->runJavaScript(scripts.at(i)->getSource(), QWebEngineScript::UserWorld);
+#else
+			m_page->runJavaScript(scripts.at(i)->getSource());
+#endif
+		}
 
 		return;
 	}
