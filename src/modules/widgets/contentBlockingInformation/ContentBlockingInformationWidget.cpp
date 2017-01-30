@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -94,9 +94,9 @@ void ContentBlockingInformationWidget::toggleContentBlocking()
 {
 	if (m_window && !m_window->isAboutToClose())
 	{
-		m_isContentBlockingEnabled = !m_window->getContentsWidget()->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption).toBool();
+		m_isContentBlockingEnabled = !m_window->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption).toBool();
 
-		m_window->getContentsWidget()->setOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, m_isContentBlockingEnabled);
+		m_window->setOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, m_isContentBlockingEnabled);
 
 		updateState();
 	}
@@ -107,7 +107,7 @@ void ContentBlockingInformationWidget::toggleOption(QAction *action)
 	if (action && m_window && !action->data().isNull())
 	{
 		const QString profile(action->data().toString());
-		QStringList profiles(m_window->getContentsWidget()->getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList());
+		QStringList profiles(m_window->getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList());
 
 		if (!action->isChecked())
 		{
@@ -118,7 +118,7 @@ void ContentBlockingInformationWidget::toggleOption(QAction *action)
 			profiles.append(profile);
 		}
 
-		m_window->getContentsWidget()->setOption(SettingsManager::ContentBlocking_ProfilesOption, profiles);
+		m_window->setOption(SettingsManager::ContentBlocking_ProfilesOption, profiles);
 	}
 }
 
@@ -197,7 +197,7 @@ void ContentBlockingInformationWidget::populateProfilesMenu()
 
 	QAction *enableContentBlockingAction(m_profilesMenu->addAction(tr("Enable Content Blocking"), this, SLOT(toggleContentBlocking())));
 	enableContentBlockingAction->setCheckable(true);
-	enableContentBlockingAction->setChecked(m_window->getContentsWidget()->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption).toBool());
+	enableContentBlockingAction->setChecked(m_window->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption).toBool());
 
 	m_profilesMenu->addSeparator();
 
@@ -219,7 +219,7 @@ void ContentBlockingInformationWidget::populateProfilesMenu()
 	}
 
 	const QVector<ContentBlockingProfile*> profiles(ContentBlockingManager::getProfiles());
-	const QStringList enabledProfiles(m_window->getContentsWidget()->getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList());
+	const QStringList enabledProfiles(m_window->getOption(SettingsManager::ContentBlocking_ProfilesOption).toStringList());
 
 	for (int i = 0; i < profiles.count(); ++i)
 	{
@@ -309,7 +309,7 @@ void ContentBlockingInformationWidget::setWindow(Window *window)
 	if (window)
 	{
 		m_amount = window->getContentsWidget()->getBlockedRequests().count();
-		m_isContentBlockingEnabled = (m_window->getContentsWidget()->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption).toBool());
+		m_isContentBlockingEnabled = (m_window->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption).toBool());
 
 		connect(m_window->getContentsWidget(), SIGNAL(aboutToNavigate()), this, SLOT(clear()));
 		connect(m_window->getContentsWidget(), SIGNAL(requestBlocked(NetworkManager::ResourceInformation)), this, SLOT(handleRequest(NetworkManager::ResourceInformation)));

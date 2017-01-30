@@ -801,7 +801,7 @@ void WindowsManager::setOption(int identifier, const QVariant &value)
 
 	if (window)
 	{
-		window->getContentsWidget()->setOption(identifier, value);
+		window->setOption(identifier, value);
 	}
 }
 

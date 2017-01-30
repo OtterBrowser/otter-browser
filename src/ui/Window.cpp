@@ -420,6 +420,18 @@ void Window::setSearchEngine(const QString &searchEngine)
 	emit searchEngineChanged(searchEngine);
 }
 
+void Window::setOption(int identifier, const QVariant &value)
+{
+	if (m_contentsWidget)
+	{
+		m_contentsWidget->setOption(identifier, value);
+	}
+	else
+	{
+		m_session.overrides[identifier] = value;
+	}
+}
+
 void Window::setUrl(const QUrl &url, bool isTyped)
 {
 	ContentsWidget *newWidget(nullptr);
@@ -672,6 +684,16 @@ QString Window::getTitle() const
 QLatin1String Window::getType() const
 {
 	return (m_contentsWidget ? m_contentsWidget->getType() : QLatin1String("unknown"));
+}
+
+QVariant Window::getOption(int identifier) const
+{
+	if (m_contentsWidget)
+	{
+		return m_contentsWidget->getOption(identifier);
+	}
+
+	return (m_session.overrides.contains(identifier) ? m_session.overrides[identifier] : SettingsManager::getValue(identifier, m_session.getUrl()));
 }
 
 QUrl Window::getUrl() const

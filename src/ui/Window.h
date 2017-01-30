@@ -59,12 +59,14 @@ public:
 	void detachAddressWidget(AddressWidget *widget);
 	void attachSearchWidget(SearchWidget *widget);
 	void detachSearchWidget(SearchWidget *widget);
+	void setOption(int identifier, const QVariant &value);
 	void setSession(const SessionWindow &session);
 	Window* clone(bool cloneHistory = true, QWidget *parent = nullptr);
 	ContentsWidget* getContentsWidget();
 	QString getSearchEngine() const;
 	QString getTitle() const;
 	QLatin1String getType() const;
+	QVariant getOption(int identifier) const;
 	QUrl getUrl() const;
 	QIcon getIcon() const;
 	QPixmap getThumbnail() const;
