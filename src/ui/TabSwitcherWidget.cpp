@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
 #include "TabSwitcherWidget.h"
 #include "Window.h"
 #include "../core/ThemesManager.h"
-#include "../core/WindowsManager.h"
 
 #include <QtGui/QKeyEvent>
 #include <QtGui/QMovie>
@@ -243,14 +242,45 @@ void TabSwitcherWidget::setIcon(const QIcon &icon)
 	}
 }
 
+void TabSwitcherWidget::setLoadingState(WindowsManager::LoadingState state)
+{
+	Window *window(qobject_cast<Window*>(sender()));
+
+	if (window)
+	{
+		const int row(findRow(window->getIdentifier()));
+
+		if (row >= 0)
+		{
+			QColor color(palette().color(QPalette::Text));
+
+			if (window->getLoadingState() == WindowsManager::DelayedLoadingState)
+			{
+				color.setAlpha(150);
+			}
+
+			m_model->setData(m_model->index(row, 0), color, Qt::TextColorRole);
+		}
+	}
+}
+
 QStandardItem* TabSwitcherWidget::createRow(Window *window) const
 {
+	QColor color(palette().color(QPalette::Text));
+
+	if (window->getLoadingState() == WindowsManager::DelayedLoadingState)
+	{
+		color.setAlpha(150);
+	}
+
 	QStandardItem* item(new QStandardItem(window->getIcon(), window->getTitle()));
+	item->setData(color, Qt::TextColorRole);
 	item->setData(window->getIdentifier(), Qt::UserRole);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 
 	connect(window, SIGNAL(titleChanged(QString)), this, SLOT(setTitle(QString)));
 	connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
+	connect(window, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(setLoadingState(WindowsManager::LoadingState)));
 
 	return item;
 }

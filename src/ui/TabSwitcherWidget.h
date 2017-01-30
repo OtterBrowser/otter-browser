@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 #define OTTER_TABSWITCHERWIDGET_H
 
 #include "ItemViewWidget.h"
+#include "../core/WindowsManager.h"
 
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QLabel>
@@ -29,7 +30,6 @@ namespace Otter
 {
 
 class Window;
-class WindowsManager;
 
 class TabSwitcherWidget : public QWidget
 {
@@ -49,13 +49,13 @@ public:
 	void accept();
 	void selectTab(bool next);
 	SwitcherReason getReason() const;
-	bool eventFilter(QObject *object, QEvent *event);
+	bool eventFilter(QObject *object, QEvent *event) override;
 
 protected:
-	void showEvent(QShowEvent *event);
-	void hideEvent(QHideEvent *event);
-	void keyPressEvent(QKeyEvent *event);
-	void keyReleaseEvent(QKeyEvent *event);
+	void showEvent(QShowEvent *event) override;
+	void hideEvent(QHideEvent *event) override;
+	void keyPressEvent(QKeyEvent *event) override;
+	void keyReleaseEvent(QKeyEvent *event) override;
 	QStandardItem* createRow(Window *window) const;
 	int findRow(qint64 identifier) const;
 
@@ -65,6 +65,7 @@ protected slots:
 	void tabRemoved(qint64 identifier);
 	void setTitle(const QString &title);
 	void setIcon(const QIcon &icon);
+	void setLoadingState(WindowsManager::LoadingState state);
 
 private:
 	WindowsManager *m_windowsManager;
