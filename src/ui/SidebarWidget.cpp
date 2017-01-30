@@ -132,7 +132,7 @@ void SidebarWidget::optionChanged(int identifier, const QVariant &value)
 
 		for (int i = 0; i < specialPages.count(); ++i)
 		{
-			QAction *action(menu->addAction(getPanelTitle(specialPages.at(i)), ));
+			QAction *action(menu->addAction(getPanelTitle(specialPages.at(i))));
 			action->setCheckable(true);
 			action->setChecked(panels.contains(specialPages.at(i)));
 			action->setData(specialPages.at(i));

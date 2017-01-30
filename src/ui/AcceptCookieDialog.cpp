@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -58,9 +58,9 @@ AcceptCookieDialog::AcceptCookieDialog(const QNetworkCookie &cookie, CookieJar::
 	m_ui->domainValueLabelWidget->setText(cookie.domain());
 	m_ui->nameValueLabelWidget->setText(QString(cookie.name()));
 	m_ui->valueValueLabelWidget->setText(QString(cookie.value()));
-	m_ui->expiresValueLabel->setText(cookie.expirationDate().isValid() ? cookie.expirationDate().toString(Qt::ISODate) : tr("This Session Only"));
-	m_ui->secureValueLabel->setText(cookie.isSecure() ? tr("Yes") : tr("No"));
-	m_ui->httpOnlyValueLabel->setText(cookie.isHttpOnly() ? tr("Yes") : tr("No"));
+	m_ui->expiresValueLabel->setText(cookie.expirationDate().isValid() ? cookie.expirationDate().toString(Qt::ISODate) : tr("This session only"));
+	m_ui->isSecureValueLabel->setText(cookie.isSecure() ? tr("Secure connections only") : tr("Any type of connection"));
+	m_ui->isHttpOnlyValueLabel->setText(cookie.isHttpOnly() ? tr("Yes") : tr("No"));
 	m_ui->buttonBox->addButton(tr("Accept"), QDialogButtonBox::AcceptRole);
 
 	if (operation != CookieJar::RemoveCookie && !cookie.isSessionCookie())

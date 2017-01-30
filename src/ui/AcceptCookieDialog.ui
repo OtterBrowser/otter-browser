@@ -29,19 +29,15 @@
    </item>
    <item>
     <layout class="QFormLayout" name="formLayout">
-     <item row="0" column="0">
-      <widget class="QLabel" name="domainLabel">
-       <property name="text">
-        <string>Domain:</string>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="0">
       <widget class="QLabel" name="nameLabel">
        <property name="text">
         <string>Name:</string>
        </property>
       </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="Otter::TextLabelWidget" name="nameValueLabelWidget" native="true"/>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="valueLabel">
@@ -50,56 +46,60 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
+     <item row="2" column="1">
+      <widget class="Otter::TextLabelWidget" name="valueValueLabelWidget" native="true"/>
+     </item>
+     <item row="4" column="0">
       <widget class="QLabel" name="expiresLabel">
        <property name="text">
         <string>Expiration date:</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="secureLabel">
-       <property name="text">
-        <string>Secure:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="httpOnlyLabel">
-       <property name="text">
-        <string>Is HttpOnly:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="QLabel" name="httpOnlyValueLabel">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
      <item row="4" column="1">
-      <widget class="QLabel" name="secureValueLabel">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
       <widget class="QLabel" name="expiresValueLabel">
        <property name="text">
         <string/>
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
-      <widget class="Otter::TextLabelWidget" name="valueValueLabelWidget" native="true"/>
+     <item row="5" column="0">
+      <widget class="QLabel" name="isSecureLabel">
+       <property name="text">
+        <string>Send for:</string>
+       </property>
+      </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="Otter::TextLabelWidget" name="nameValueLabelWidget" native="true"/>
+     <item row="5" column="1">
+      <widget class="QLabel" name="isSecureValueLabel">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
      </item>
-     <item row="0" column="1">
+     <item row="6" column="0">
+      <widget class="QLabel" name="isHttpOnlyLabel">
+       <property name="text">
+        <string>Accessible using JavaScript:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="QLabel" name="isHttpOnlyValueLabel">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
       <widget class="Otter::TextLabelWidget" name="domainValueLabelWidget" native="true"/>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="domainLabel">
+       <property name="text">
+        <string>Domain:</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -107,6 +107,12 @@
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
      </property>
     </spacer>
    </item>
