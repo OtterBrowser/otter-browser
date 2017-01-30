@@ -234,7 +234,7 @@ WebWidget* QtWebEngineWebBackend::createWidget(bool isPrivate, ContentsWidget *p
 
 QString QtWebEngineWebBackend::getTitle() const
 {
-	return tr("Blink Backend");
+	return tr("Blink Backend (experimental)");
 }
 
 QString QtWebEngineWebBackend::getDescription() const

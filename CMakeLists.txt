@@ -325,7 +325,7 @@ qt5_wrap_ui(otter_ui
 if (Qt5WebEngineWidgets_FOUND AND ENABLE_QTWEBENGINE)
 	add_definitions(-DOTTER_ENABLE_QTWEBENGINE)
 
-	list(APPEND OTTER_BACKENDS_WEB "QtWebEngine")
+	list(APPEND OTTER_BACKENDS_WEB "QtWebEngine (experimental)")
 
 	set(otter_src
 		${otter_src}
