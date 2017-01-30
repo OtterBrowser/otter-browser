@@ -92,6 +92,18 @@ void QtWebKitFrame::handleLoadFinished()
 
 	runUserScripts(m_widget->getUrl());
 
+	if (SettingsManager::getValue(SettingsManager::Browser_RememberPasswordsOption).toBool())
+	{
+		QFile file(QLatin1String(":/modules/backends/web/qtwebkit/resources/formExtractor.js"));
+
+		if (file.open(QIODevice::ReadOnly))
+		{
+			m_frame->documentElement().evaluateJavaScript(QString(file.readAll()).arg(m_widget->getPasswordToken()));
+
+			file.close();
+		}
+	}
+
 	if (!m_widget->getOption(SettingsManager::ContentBlocking_EnableContentBlockingOption, m_widget->getUrl()).toBool())
 	{
 		return;

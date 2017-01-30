@@ -308,9 +308,10 @@ void QtWebKitWebWidget::pageLoadStarted()
 		return;
 	}
 
+	m_thumbnail = QPixmap();
+	m_passwordToken = QUuid::createUuid().toString();
 	m_canLoadPlugins = (getOption(SettingsManager::Browser_EnablePluginsOption, getUrl()).toString() == QLatin1String("enabled"));
 	m_loadingState = WindowsManager::OngoingLoadingState;
-	m_thumbnail = QPixmap();
 
 	updateNavigationActions();
 	setStatusMessage(QString());
@@ -336,8 +337,8 @@ void QtWebKitWebWidget::pageLoadFinished()
 
 	m_networkManager->handleLoadingFinished();
 
-	m_loadingState = WindowsManager::FinishedLoadingState;
 	m_thumbnail = QPixmap();
+	m_loadingState = WindowsManager::FinishedLoadingState;
 
 	updateNavigationActions();
 	handleHistory();
@@ -345,38 +346,6 @@ void QtWebKitWebWidget::pageLoadFinished()
 
 	emit contentStateChanged(getContentState());
 	emit loadingStateChanged(WindowsManager::FinishedLoadingState);
-
-	if (!SettingsManager::getValue(SettingsManager::Browser_RememberPasswordsOption).toBool())
-	{
-		return;
-	}
-
-	m_passwordToken = QUuid::createUuid().toString();
-
-	QList<QWebFrame*> frames;
-	QList<QWebFrame*> temporaryFrames;
-	temporaryFrames.append(m_page->mainFrame());
-
-	while (!temporaryFrames.isEmpty())
-	{
-		QWebFrame *frame(temporaryFrames.takeFirst());
-
-		frames.append(frame);
-
-		temporaryFrames.append(frame->childFrames());
-	}
-
-	QFile file(QLatin1String(":/modules/backends/web/qtwebkit/resources/formExtractor.js"));
-	file.open(QIODevice::ReadOnly);
-
-	const QString script(QString(file.readAll()).arg(m_passwordToken));
-
-	file.close();
-
-	for (int j = 0; j < frames.count(); ++j)
-	{
-		frames.at(j)->documentElement().evaluateJavaScript(script);
-	}
 }
 
 void QtWebKitWebWidget::downloadFile(const QNetworkRequest &request)
