@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 - 2015 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@
 #include "MainWindow.h"
 #include "WidgetFactory.h"
 #include "../core/ActionsManager.h"
+#include "../core/AddonsManager.h"
+#include "../core/HistoryManager.h"
 #include "../core/SettingsManager.h"
 #include "../core/ThemesManager.h"
 #include "../core/WindowsManager.h"
@@ -125,78 +127,46 @@ void SidebarWidget::optionChanged(int identifier, const QVariant &value)
 		m_buttons.clear();
 
 		QMenu *menu(new QMenu(m_ui->panelsButton));
-		const QStringList chosenPanels(value.toStringList());
-		const QStringList allPanels({QLatin1String("bookmarks"), QLatin1String("cache"), QLatin1String("cookies"), QLatin1String("config"), QLatin1String("history"), QLatin1String("notes"), QLatin1String("transfers")});
+		const QStringList panels(value.toStringList());
+		const QStringList specialPages(AddonsManager::getSpecialPages());
 
-		for (int i = 0; i < allPanels.count(); ++i)
+		for (int i = 0; i < specialPages.count(); ++i)
 		{
-			QAction *action(new QAction(menu));
+			QAction *action(menu->addAction(getPanelTitle(specialPages.at(i)), ));
 			action->setCheckable(true);
-			action->setChecked(chosenPanels.contains(allPanels[i]));
-			action->setData(allPanels[i]);
-			action->setText(getPanelTitle(allPanels[i]));
+			action->setChecked(panels.contains(specialPages.at(i)));
+			action->setData(specialPages.at(i));
 
 			connect(action, SIGNAL(toggled(bool)), this, SLOT(choosePanel(bool)));
-
-			menu->addAction(action);
 		}
 
 		menu->addSeparator();
 
-		for (int i = 0; i < chosenPanels.count(); ++i)
+		for (int i = 0; i < panels.count(); ++i)
 		{
 			QToolButton *button(new QToolButton(this));
-			button->setDefaultAction(new QAction(button));
-			button->setToolTip(getPanelTitle(chosenPanels.at(i)));
-			button->setCheckable(true);
+			QAction *action(new QAction(button));
+			action->setData(panels.at(i));
+			action->setToolTip(getPanelTitle(panels.at(i)));
+
+			button->setDefaultAction(action);
 			button->setAutoRaise(true);
-			button->defaultAction()->setData(chosenPanels.at(i));
+			button->setCheckable(true);
 
-			if (chosenPanels.at(i) == QLatin1String("bookmarks"))
+			if (specialPages.contains(panels.at(i)))
 			{
-				button->setIcon(ThemesManager::getIcon(QLatin1String("bookmarks")));
+				button->setIcon(AddonsManager::getSpecialPage(panels.at(i)).icon);
 			}
-			else if (chosenPanels.at(i) == QLatin1String("cache"))
+			else if (panels.at(i).startsWith(QLatin1String("web:")))
 			{
-				button->setIcon(ThemesManager::getIcon(QLatin1String("cache")));
-			}
-			else if (chosenPanels.at(i) == QLatin1String("config"))
-			{
-				button->setIcon(ThemesManager::getIcon(QLatin1String("configuration")));
-			}
-			else if (chosenPanels.at(i) == QLatin1String("cookies"))
-			{
-				button->setIcon(ThemesManager::getIcon(QLatin1String("cookies")));
-			}
-			else if (chosenPanels.at(i) == QLatin1String("history"))
-			{
-				button->setIcon(ThemesManager::getIcon(QLatin1String("view-history")));
-			}
-			else if (chosenPanels.at(i) == QLatin1String("notes"))
-			{
-				button->setIcon(ThemesManager::getIcon(QLatin1String("notes")));
-			}
-			else if (chosenPanels.at(i) == QLatin1String("passwords"))
-			{
-				button->setIcon(ThemesManager::getIcon(QLatin1String("dialog-password")));
-			}
-			else if (chosenPanels.at(i) == QLatin1String("transfers"))
-			{
-				button->setIcon(ThemesManager::getIcon(QLatin1String("transfers")));
-			}
-			else if (chosenPanels.at(i).startsWith(QLatin1String("web:")))
-			{
-				button->setIcon(ThemesManager::getIcon(QLatin1String("text-html")));
+				button->setIcon(HistoryManager::getIcon(QUrl(panels.at(i).mid(4))));
 
-				QAction *action(new QAction(menu));
+				QAction *action(menu->addAction(getPanelTitle(panels.at(i))));
 				action->setCheckable(true);
 				action->setChecked(true);
-				action->setData(chosenPanels.at(i));
-				action->setText(getPanelTitle(chosenPanels.at(i)));
+				action->setData(panels.at(i));
 
 				connect(action, SIGNAL(toggled(bool)), this, SLOT(choosePanel(bool)));
-
-				menu->addAction(action);
 			}
 			else
 			{
@@ -207,18 +177,13 @@ void SidebarWidget::optionChanged(int identifier, const QVariant &value)
 
 			m_ui->buttonsLayout->insertWidget(qMax(0, (m_ui->buttonsLayout->count() - 2)), button);
 
-			m_buttons[chosenPanels.at(i)] = button;
+			m_buttons[panels.at(i)] = button;
 
 			connect(button->defaultAction(), SIGNAL(triggered()), this, SLOT(selectPanel()));
 		}
 
-		QAction *addWebPanelAction(new QAction(menu));
-		addWebPanelAction->setText(tr("Add Web Panel…"));
-
-		connect(addWebPanelAction, SIGNAL(triggered()), this, SLOT(addWebPanel()));
-
 		menu->addSeparator();
-		menu->addAction(addWebPanelAction);
+		menu->addAction(tr("Add Web Panel…"), this, SLOT(addWebPanel()));
 
 		if (m_ui->panelsButton->menu())
 		{
@@ -395,44 +360,14 @@ QWidget* SidebarWidget::getCurrentPanel()
 
 QString SidebarWidget::getPanelTitle(const QString &identifier)
 {
-	if (identifier == QLatin1String("bookmarks"))
-	{
-		return tr("Bookmarks");
-	}
-
-	if (identifier == QLatin1String("cache"))
-	{
-		return tr("Cache");
-	}
-
-	if (identifier == QLatin1String("cookies"))
-	{
-		return tr("Cookies");
-	}
-
-	if (identifier == QLatin1String("config"))
-	{
-		return tr("Configuration");
-	}
-
-	if (identifier == QLatin1String("history"))
-	{
-		return tr("History");
-	}
-
-	if (identifier == QLatin1String("notes"))
-	{
-		return tr("Notes");
-	}
-
-	if (identifier == QLatin1String("transfers"))
-	{
-		return tr("Transfers");
-	}
-
 	if (identifier.startsWith(QLatin1String("web:")))
 	{
 		return identifier.mid(4);
+	}
+
+	if (AddonsManager::getSpecialPages().contains(identifier))
+	{
+		return AddonsManager::getSpecialPage(identifier).getTitle();
 	}
 
 	return identifier;

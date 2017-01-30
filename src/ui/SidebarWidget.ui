@@ -36,8 +36,8 @@
      </property>
      <item>
       <widget class="QToolButton" name="panelsButton">
-       <property name="text">
-        <string/>
+       <property name="toolTip">
+        <string>Panels</string>
        </property>
        <property name="autoRaise">
         <bool>true</bool>
