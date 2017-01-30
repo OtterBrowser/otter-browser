@@ -75,20 +75,20 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 			return;
 		}
 
-		WebWidget *webWidget(contentsWidget->getWebWidget());
-		QRect geometry(webWidget->getProgressBarGeometry());
 		const ToolBarsManager::ToolBarVisibility visibility(ToolBarsManager::getToolBarDefinition(ToolBarsManager::ProgressBar).normalVisibility);
 
-		if (visibility == ToolBarsManager::AlwaysVisibleToolBar || (visibility == ToolBarsManager::AutoVisibilityToolBar && webWidget->getLoadingState() == WindowsManager::OngoingLoadingState))
+		if (visibility == ToolBarsManager::AlwaysVisibleToolBar || (visibility == ToolBarsManager::AutoVisibilityToolBar && m_window->getLoadingState() == WindowsManager::OngoingLoadingState))
 		{
+			QRect geometry(contentsWidget->getWebWidget()->getProgressBarGeometry());
+
 			if (!isVisible())
 			{
-				connect(webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
+				connect(contentsWidget->getWebWidget(), SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
 			}
 
 			if (geometry.isValid())
 			{
-				geometry.translate(0, webWidget->pos().y());
+				geometry.translate(0, contentsWidget->getWebWidget()->pos().y());
 			}
 			else
 			{
@@ -101,7 +101,7 @@ void ProgressBarWidget::timerEvent(QTimerEvent *event)
 		}
 		else
 		{
-			disconnect(webWidget, SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
+			disconnect(contentsWidget->getWebWidget(), SIGNAL(progressBarGeometryChanged()), this, SLOT(scheduleGeometryUpdate()));
 
 			hide();
 		}
