@@ -33,7 +33,8 @@ class UserScript : public Addon
 public:
 	enum InjectionTime
 	{
-		DocumentCreationTime = 0,
+		AnyTime = 0,
+		DocumentCreationTime,
 		DocumentReadyTime,
 		DeferredTime
 	};
@@ -51,7 +52,7 @@ public:
 	QStringList getExcludeRules() const;
 	QStringList getIncludeRules() const;
 	QStringList getMatchRules() const;
-	static QList<UserScript*> getUserScriptsForUrl(const QUrl &url, bool shouldRunOnSubFrames = true, InjectionTime injectionTime = DocumentReadyTime);
+	static QList<UserScript*> getUserScriptsForUrl(const QUrl &url, bool shouldRunOnSubFrames = true, InjectionTime injectionTime = AnyTime);
 	InjectionTime getInjectionTime() const;
 	AddonType getType() const;
 	bool isEnabledForUrl(const QUrl &url);

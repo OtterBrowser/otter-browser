@@ -297,7 +297,7 @@ QList<UserScript*> UserScript::getUserScriptsForUrl(const QUrl &url, bool should
 	{
 		UserScript *script(AddonsManager::getUserScript(scriptNames.at(i)));
 
-		if (script->isEnabled() && script->shouldRunOnSubFrames() == shouldRunOnSubFrames && script->getInjectionTime() == injectionTime && script->isEnabledForUrl(url))
+		if (script->isEnabled() && script->shouldRunOnSubFrames() == shouldRunOnSubFrames && (injectionTime == AnyTime || script->getInjectionTime() == injectionTime) && script->isEnabledForUrl(url))
 		{
 			scripts.append(script);
 		}
