@@ -577,27 +577,30 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	layout()->addWidget(m_contentsWidget);
 
+	if (m_contentsWidget->getType() == QLatin1String("web"))
+	{
+		WebContentsWidget *webWidget(qobject_cast<WebContentsWidget*>(m_contentsWidget));
+
+		if (webWidget)
+		{
+			webWidget->setOptions(m_session.overrides);
+		}
+	}
+
+	WindowHistoryInformation history;
+
 	if (m_session.historyIndex >= 0)
 	{
-		if (m_contentsWidget->getType() == QLatin1String("web"))
-		{
-			WebContentsWidget *webWidget(qobject_cast<WebContentsWidget*>(m_contentsWidget));
-
-			if (webWidget)
-			{
-				webWidget->setOptions(m_session.overrides);
-			}
-		}
-
-		WindowHistoryInformation history;
 		history.index = m_session.historyIndex;
 		history.entries = m_session.history;
+	}
 
-		m_contentsWidget->setHistory(history);
-		m_contentsWidget->setZoom(m_session.getZoom());
+	m_contentsWidget->setHistory(history);
+	m_contentsWidget->setZoom(m_session.getZoom());
+
+	if (m_session.historyIndex >= 0)
+	{
 		m_contentsWidget->setFocus();
-
-		m_session = SessionWindow();
 	}
 	else
 	{
@@ -608,6 +611,8 @@ void Window::setContentsWidget(ContentsWidget *widget)
 			addressWidget->setFocus();
 		}
 	}
+
+	m_session = SessionWindow();
 
 	emit widgetChanged();
 	emit titleChanged(m_contentsWidget->getTitle());
