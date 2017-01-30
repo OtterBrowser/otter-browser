@@ -39,13 +39,6 @@
 namespace Otter
 {
 
-struct LinkUrl
-{
-	QString title;
-	QString mimeType;
-	QUrl url;
-};
-
 class Action;
 class ContentsDialog;
 class Menu;
@@ -168,6 +161,13 @@ public:
 		HitTestResult()
 		{
 		}
+	};
+
+	struct LinkUrl
+	{
+		QString title;
+		QString mimeType;
+		QUrl url;
 	};
 
 	struct SslInformation

@@ -831,7 +831,7 @@ void AddressWidget::updateBookmark(const QUrl &url)
 
 void AddressWidget::updateFeeds()
 {
-	const QList<LinkUrl> feeds((SettingsManager::getValue(SettingsManager::AddressField_ShowFeedsIconOption).toBool() && m_window && m_window->getLoadingState() == WindowsManager::FinishedLoadingState) ? m_window->getContentsWidget()->getFeeds() : QList<LinkUrl>());
+	const QList<WebWidget::LinkUrl> feeds((SettingsManager::getValue(SettingsManager::AddressField_ShowFeedsIconOption).toBool() && m_window && m_window->getLoadingState() == WindowsManager::FinishedLoadingState) ? m_window->getContentsWidget()->getFeeds() : QList<WebWidget::LinkUrl>());
 
 	if (!feeds.isEmpty() && !m_feedsLabel)
 	{
@@ -1316,7 +1316,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 
 		if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
 		{
-			const QList<LinkUrl> feeds((m_window && m_window->getLoadingState() == WindowsManager::FinishedLoadingState) ? m_window->getContentsWidget()->getFeeds() : QList<LinkUrl>());
+			const QList<WebWidget::LinkUrl> feeds((m_window && m_window->getLoadingState() == WindowsManager::FinishedLoadingState) ? m_window->getContentsWidget()->getFeeds() : QList<WebWidget::LinkUrl>());
 
 			if (feeds.count() == 1 && m_window)
 			{

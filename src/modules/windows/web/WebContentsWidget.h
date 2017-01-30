@@ -83,8 +83,8 @@ public:
 	QPixmap getThumbnail();
 	WindowHistoryInformation getHistory() const;
 	QStringList getStyleSheets() const;
-	QList<LinkUrl> getFeeds() const;
-	QList<LinkUrl> getSearchEngines() const;
+	QList<WebWidget::LinkUrl> getFeeds() const;
+	QList<WebWidget::LinkUrl> getSearchEngines() const;
 	QHash<int, QVariant> getOptions() const;
 	WindowsManager::ContentStates getContentState() const;
 	WindowsManager::LoadingState getLoadingState() const;

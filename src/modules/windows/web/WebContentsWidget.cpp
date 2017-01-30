@@ -1391,12 +1391,12 @@ QStringList WebContentsWidget::getStyleSheets() const
 	return m_webWidget->getStyleSheets();
 }
 
-QList<LinkUrl> WebContentsWidget::getFeeds() const
+QList<WebWidget::LinkUrl> WebContentsWidget::getFeeds() const
 {
 	return m_webWidget->getFeeds();
 }
 
-QList<LinkUrl> WebContentsWidget::getSearchEngines() const
+QList<WebWidget::LinkUrl> WebContentsWidget::getSearchEngines() const
 {
 	return m_webWidget->getSearchEngines();
 }

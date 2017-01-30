@@ -2492,7 +2492,7 @@ QStringList QtWebKitWebWidget::getStyleSheets() const
 	return titles;
 }
 
-QList<LinkUrl> QtWebKitWebWidget::getFeeds() const
+QList<WebWidget::LinkUrl> QtWebKitWebWidget::getFeeds() const
 {
 	const QWebElementCollection elements(m_webView->page()->mainFrame()->findAllElements(QLatin1String("a[type=\"application/atom+xml\"], a[type=\"application/rss+xml\"], link[type=\"application/atom+xml\"], link[type=\"application/rss+xml\"]")));
 	QList<LinkUrl> links;
@@ -2520,7 +2520,7 @@ QList<LinkUrl> QtWebKitWebWidget::getFeeds() const
 	return links;
 }
 
-QList<LinkUrl> QtWebKitWebWidget::getSearchEngines() const
+QList<WebWidget::LinkUrl> QtWebKitWebWidget::getSearchEngines() const
 {
 	const QWebElementCollection elements(m_webView->page()->mainFrame()->findAllElements(QLatin1String("link[type=\"application/opensearchdescription+xml\"]")));
 	QList<LinkUrl> links;

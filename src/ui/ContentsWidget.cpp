@@ -323,14 +323,14 @@ QStringList ContentsWidget::getStyleSheets() const
 	return QStringList();
 }
 
-QList<LinkUrl> ContentsWidget::getFeeds() const
+QList<WebWidget::LinkUrl> ContentsWidget::getFeeds() const
 {
-	return QList<LinkUrl>();
+	return QList<WebWidget::LinkUrl>();
 }
 
-QList<LinkUrl> ContentsWidget::getSearchEngines() const
+QList<WebWidget::LinkUrl> ContentsWidget::getSearchEngines() const
 {
-	return QList<LinkUrl>();
+	return QList<WebWidget::LinkUrl>();
 }
 
 QList<NetworkManager::ResourceInformation> ContentsWidget::getBlockedRequests() const

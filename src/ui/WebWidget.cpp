@@ -1563,12 +1563,12 @@ QList<SpellCheckManager::DictionaryInformation> WebWidget::getDictionaries() con
 	return SpellCheckManager::getDictionaries();
 }
 
-QList<LinkUrl> WebWidget::getFeeds() const
+QList<WebWidget::LinkUrl> WebWidget::getFeeds() const
 {
 	return QList<LinkUrl>();
 }
 
-QList<LinkUrl> WebWidget::getSearchEngines() const
+QList<WebWidget::LinkUrl> WebWidget::getSearchEngines() const
 {
 	return QList<LinkUrl>();
 }
