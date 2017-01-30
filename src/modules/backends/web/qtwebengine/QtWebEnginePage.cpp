@@ -21,7 +21,6 @@
 #include "QtWebEnginePage.h"
 #include "QtWebEngineWebBackend.h"
 #include "QtWebEngineWebWidget.h"
-#include "../../../../core/AddonsManager.h"
 #include "../../../../core/Console.h"
 #include "../../../../core/ContentBlockingManager.h"
 #include "../../../../core/ThemesManager.h"
@@ -349,7 +348,7 @@ bool QtWebEnginePage::acceptNavigationRequest(const QUrl &url, QWebEnginePage::N
 	{
 		scripts().clear();
 
-		const QList<UserScript*> scripts(AddonsManager::getUserScriptsForUrl(url));
+		const QList<UserScript*> scripts(UserScript::getUserScriptsForUrl(url));
 
 		for (int i = 0; i < scripts.count(); ++i)
 		{
