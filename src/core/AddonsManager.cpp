@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -197,27 +197,6 @@ AddonsManager::SpecialPageInformation AddonsManager::getSpecialPage(const QStrin
 	}
 
 	return SpecialPageInformation();
-}
-
-QList<UserScript*> AddonsManager::getUserScriptsForUrl(const QUrl &url)
-{
-	if (!m_areUserScripsInitialized)
-	{
-		loadUserScripts();
-	}
-
-	QList<UserScript*> scripts;
-	QHash<QString, UserScript*>::iterator iterator;
-
-	for (iterator = m_userScripts.begin(); iterator != m_userScripts.end(); ++iterator)
-	{
-		if (iterator.value()->isEnabled() && iterator.value()->isEnabledForUrl(url))
-		{
-			scripts.append(iterator.value());
-		}
-	}
-
-	return scripts;
 }
 
 QStringList AddonsManager::getUserScripts()

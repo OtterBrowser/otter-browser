@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -108,7 +108,6 @@ public:
 	static UserScript* getUserScript(const QString &name = QString());
 	static WebBackend* getWebBackend(const QString &name = QString());
 	static SpecialPageInformation getSpecialPage(const QString &name);
-	static QList<UserScript*> getUserScriptsForUrl(const QUrl &url);
 	static QStringList getUserScripts();
 	static QStringList getWebBackends();
 	static QStringList getSpecialPages();
