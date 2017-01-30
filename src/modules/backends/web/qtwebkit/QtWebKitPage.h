@@ -61,6 +61,7 @@ public:
 	~QtWebKitPage();
 
 	void triggerAction(WebAction action, bool checked = false);
+	QtWebKitFrame* getMainFrame();
 	QVariant runScript(const QString &path, QWebElement element = QWebElement());
 	bool event(QEvent *event);
 	bool extension(Extension extension, const ExtensionOption *option = nullptr, ExtensionReturn *output = nullptr);
@@ -99,6 +100,7 @@ protected slots:
 private:
 	QtWebKitWebWidget *m_widget;
 	QtWebKitNetworkManager *m_networkManager;
+	QtWebKitFrame *m_mainFrame;
 	QList<QtWebKitPage*> m_popups;
 	bool m_ignoreJavaScriptPopups;
 	bool m_isPopup;

@@ -151,6 +151,7 @@ QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWi
 QtWebKitPage::QtWebKitPage() : QWebPage(),
 	m_widget(nullptr),
 	m_networkManager(nullptr),
+	m_mainFrame(nullptr),
 	m_ignoreJavaScriptPopups(false),
 	m_isPopup(false),
 	m_isViewingMedia(false)
@@ -200,7 +201,12 @@ void QtWebKitPage::markAsPopup()
 
 void QtWebKitPage::handleFrameCreation(QWebFrame *frame)
 {
-	new QtWebKitFrame(frame, m_widget);
+	QtWebKitFrame *frameWrapper(new QtWebKitFrame(frame, m_widget));
+
+	if (frame == mainFrame())
+	{
+		m_mainFrame = frameWrapper;
+	}
 }
 
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
@@ -353,6 +359,11 @@ void QtWebKitPage::triggerAction(QWebPage::WebAction action, bool checked)
 	}
 
 	QWebPage::triggerAction(action, checked);
+}
+
+QtWebKitFrame* QtWebKitPage::getMainFrame()
+{
+	return m_mainFrame;
 }
 
 QVariant QtWebKitPage::runScript(const QString &path, QWebElement element)
