@@ -1255,7 +1255,7 @@ void MainWindow::updateShortcuts()
 
 void MainWindow::setCurrentWindow(Window *window)
 {
-	Window *previousWindow(m_currentWindow);
+	Window *previousWindow((m_currentWindow && m_currentWindow->isAboutToClose()) ? nullptr : m_currentWindow);
 
 	m_currentWindow = window;
 
@@ -1264,7 +1264,7 @@ void MainWindow::setCurrentWindow(Window *window)
 		if (m_actions[i] && Action::isLocal(m_actions[i]->getIdentifier()))
 		{
 			const int identifier(m_actions[i]->getIdentifier());
-			Action *previousAction((previousWindow && !previousWindow->isAboutToClose() && previousWindow->getContentsWidget()) ? previousWindow->getContentsWidget()->getAction(identifier) : nullptr);
+			Action *previousAction(previousWindow ? previousWindow->getContentsWidget()->getAction(identifier) : nullptr);
 			Action *currentAction(window ? window->getContentsWidget()->getAction(identifier) : nullptr);
 
 			if (previousAction)
