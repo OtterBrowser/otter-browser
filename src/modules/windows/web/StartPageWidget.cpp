@@ -35,11 +35,11 @@
 #include "../../../ui/OpenAddressDialog.h"
 #include "../../../ui/Window.h"
 
+#include <QtCore/QtMath>
 #include <QtGui/QGuiApplication>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPainter>
 #include <QtGui/QPixmapCache>
-#include <QtCore/QtMath>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QScrollBar>
 
@@ -726,14 +726,9 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 							mainWindow->getWindowsManager()->open(url, WindowsManager::calculateOpenHints((m_window->isPrivate() ? WindowsManager::PrivateOpen : WindowsManager::DefaultOpen), Qt::LeftButton, keyEvent->modifiers()));
 						}
 					}
-					else if (parentWidget() && parentWidget()->parentWidget())
+					else
 					{
-						WebContentsWidget *contentsWidget(qobject_cast<WebContentsWidget*>(parentWidget()->parentWidget()));
-
-						if (contentsWidget)
-						{
-							contentsWidget->setUrl(url);
-						}
+						m_window->setUrl(url);
 					}
 				}
 				else if (m_currentIndex.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("add"))
@@ -743,6 +738,15 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 				return true;
 			}
+		}
+	}
+	else if (object == m_listView->viewport() && event->type() == QEvent::MouseButtonPress)
+	{
+		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+
+		if (mouseEvent)
+		{
+			m_currentIndex = m_listView->indexAt(mouseEvent->pos());
 		}
 	}
 	else if (object == m_listView->viewport() && event->type() == QEvent::MouseMove)
@@ -758,13 +762,13 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
-		if (mouseEvent)
+		if (m_ignoreEnter)
 		{
-			if (m_ignoreEnter)
-			{
-				m_ignoreEnter = false;
-			}
+			m_ignoreEnter = false;
+		}
 
+		if (mouseEvent && m_listView->indexAt(mouseEvent->pos()) == m_currentIndex)
+		{
 			m_currentIndex = m_listView->indexAt(mouseEvent->pos());
 
 			if (mouseEvent->button() == Qt::LeftButton || mouseEvent->button() == Qt::MiddleButton)
@@ -805,7 +809,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 				if (url.isValid())
 				{
-					if ((mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier))
+					if (mouseEvent->button() == Qt::LeftButton && mouseEvent->modifiers() != Qt::NoModifier)
 					{
 						MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
@@ -814,7 +818,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 							mainWindow->getWindowsManager()->open(url, WindowsManager::calculateOpenHints((m_window->isPrivate() ? WindowsManager::PrivateOpen : WindowsManager::DefaultOpen), mouseEvent->button(), mouseEvent->modifiers()));
 						}
 					}
-					else if (parentWidget() && parentWidget()->parentWidget() && mouseEvent->button() != Qt::MiddleButton)
+					else if (mouseEvent->button() != Qt::MiddleButton)
 					{
 						MainWindow *mainWindow(MainWindow::findMainWindow(this));
 
