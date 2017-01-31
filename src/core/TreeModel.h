@@ -46,8 +46,14 @@ public:
 
 	explicit TreeModel(QObject *parent = nullptr);
 
+	void insertRow(QStandardItem *item = nullptr, QStandardItem *parent = nullptr, int row = -1, ItemType type = EntryType);
+	void insertRow(const QList<QStandardItem*> &items, QStandardItem *parent = nullptr, int row = -1, ItemType type = EntryType);
 	QMimeData* mimeData(const QModelIndexList &indexes) const override;
+	QVariant data(const QModelIndex &index, int role) const override;
 	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) override;
+
+protected:
+	void setupItem(QStandardItem *item, ItemType type);
 };
 
 }

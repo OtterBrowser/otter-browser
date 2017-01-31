@@ -29,6 +29,62 @@ TreeModel::TreeModel(QObject *parent) : QStandardItemModel(parent)
 {
 }
 
+void TreeModel::setupItem(QStandardItem *item, TreeModel::ItemType type)
+{
+	item->setData(type, TypeRole);
+
+	if (type != FolderType)
+	{
+		item->setFlags(item->flags() & ~Qt::ItemIsDropEnabled);
+	}
+}
+
+void TreeModel::insertRow(QStandardItem *item, QStandardItem *parent, int row, ItemType type)
+{
+	if (!item)
+	{
+		item = new QStandardItem();
+	}
+
+	if (!parent)
+	{
+		parent = invisibleRootItem();
+	}
+
+	setupItem(item, type);
+
+	if (row >= 0)
+	{
+		parent->insertRow(row, item);
+	}
+	else
+	{
+		parent->appendRow(item);
+	}
+}
+
+void TreeModel::insertRow(const QList<QStandardItem*> &items, QStandardItem *parent, int row, ItemType type)
+{
+	if (!parent)
+	{
+		parent = invisibleRootItem();
+	}
+
+	for (int i = 0; i < items.count(); ++i)
+	{
+		setupItem(items.at(i), type);
+	}
+
+	if (row >= 0)
+	{
+		parent->insertRow(row, items);
+	}
+	else
+	{
+		parent->appendRow(items);
+	}
+}
+
 QMimeData* TreeModel::mimeData(const QModelIndexList &indexes) const
 {
 	QMimeData *mimeData(QStandardItemModel::mimeData(indexes));
@@ -39,6 +95,16 @@ QMimeData* TreeModel::mimeData(const QModelIndexList &indexes) const
 	}
 
 	return mimeData;
+}
+
+QVariant TreeModel::data(const QModelIndex &index, int role) const
+{
+	if (role == Qt::AccessibleDescriptionRole && static_cast<ItemType>(QStandardItemModel::data(index, TypeRole).toInt()) == SeparatorType)
+	{
+		return QLatin1String("separator");
+	}
+
+	return QStandardItemModel::data(index, role);
 }
 
 bool TreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
