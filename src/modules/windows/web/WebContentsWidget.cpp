@@ -880,7 +880,11 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 			layout()->addWidget(m_webWidget);
 
 			m_webWidget->show();
-			m_webWidget->setFocus();
+
+			if (!Utils::isUrlEmpty(m_webWidget->getUrl()))
+			{
+				m_webWidget->setFocus();
+			}
 		}
 
 		if (m_startPageWidget)
