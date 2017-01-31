@@ -21,6 +21,7 @@
 #ifndef OTTER_STARTPAGEWIDGET_H
 #define OTTER_STARTPAGEWIDGET_H
 
+#include <QtCore/QTime>
 #include <QtWidgets/QListView>
 #include <QtWidgets/QScrollArea>
 
@@ -62,6 +63,7 @@ class StartPageWidget : public QScrollArea
 
 public:
 	explicit StartPageWidget(Window *parent);
+	~StartPageWidget();
 
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void scrollContents(const QPoint &delta);
@@ -97,6 +99,7 @@ private:
 	QListView *m_listView;
 	SearchWidget *m_searchWidget;
 	QPixmap m_thumbnail;
+	QTime m_urlOpenTime;
 	QModelIndex m_currentIndex;
 	bool m_ignoreEnter;
 

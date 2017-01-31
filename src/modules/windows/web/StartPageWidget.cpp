@@ -36,6 +36,7 @@
 #include "../../../ui/Window.h"
 
 #include <QtCore/QtMath>
+#include <QtGui/QDrag>
 #include <QtGui/QGuiApplication>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QPainter>
@@ -196,6 +197,13 @@ StartPageWidget::StartPageWidget(Window *parent) : QScrollArea(parent),
 	connect(m_model, SIGNAL(modelModified()), this, SLOT(updateTiles()));
 	connect(m_model, SIGNAL(isReloadingTileChanged(QModelIndex)), this, SLOT(updateTile(QModelIndex)));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
+}
+
+StartPageWidget::~StartPageWidget()
+{
+#if QT_VERSION >= 0x050600
+	QDrag::cancel();
+#endif
 }
 
 void StartPageWidget::resizeEvent(QResizeEvent *event)
@@ -400,6 +408,8 @@ void StartPageWidget::triggerAction(int identifier, const QVariantMap &parameter
 
 	if (url.isValid() && mainWindow)
 	{
+		m_urlOpenTime = QTime::currentTime();
+
 		mainWindow->getWindowsManager()->open(url, hints);
 	}
 }
@@ -462,6 +472,8 @@ void StartPageWidget::openTile()
 
 		if (mainWindow && bookmark && bookmark->rowCount() > 0)
 		{
+			m_urlOpenTime = QTime::currentTime();
+
 			mainWindow->getWindowsManager()->open(bookmark, hints);
 		}
 
@@ -478,6 +490,8 @@ void StartPageWidget::openTile()
 
 	if (mainWindow && url.isValid())
 	{
+		m_urlOpenTime = QTime::currentTime();
+
 		mainWindow->getWindowsManager()->open(url, hints);
 	}
 }
@@ -723,11 +737,15 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 						if (mainWindow)
 						{
+							m_urlOpenTime = QTime::currentTime();
+
 							mainWindow->getWindowsManager()->open(url, WindowsManager::calculateOpenHints((m_window->isPrivate() ? WindowsManager::PrivateOpen : WindowsManager::DefaultOpen), Qt::LeftButton, keyEvent->modifiers()));
 						}
 					}
 					else
 					{
+						m_urlOpenTime = QTime::currentTime();
+
 						m_window->setUrl(url);
 					}
 				}
@@ -753,7 +771,7 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
-		if (mouseEvent && mouseEvent->buttons().testFlag(Qt::LeftButton) && m_window->getLoadingState() != WindowsManager::FinishedLoadingState)
+		if (mouseEvent && mouseEvent->buttons().testFlag(Qt::LeftButton) && ((m_urlOpenTime.isValid() && m_urlOpenTime.msecsTo(QTime::currentTime()) < 1000) || m_window->getLoadingState() != WindowsManager::FinishedLoadingState))
 		{
 			return true;
 		}
@@ -815,6 +833,8 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 
 						if (mainWindow)
 						{
+							m_urlOpenTime = QTime::currentTime();
+
 							mainWindow->getWindowsManager()->open(url, WindowsManager::calculateOpenHints((m_window->isPrivate() ? WindowsManager::PrivateOpen : WindowsManager::DefaultOpen), mouseEvent->button(), mouseEvent->modifiers()));
 						}
 					}
@@ -830,6 +850,8 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 							{
 								hints |= WindowsManager::PrivateOpen;
 							}
+
+							m_urlOpenTime = QTime::currentTime();
 
 							mainWindow->getWindowsManager()->open(url, hints);
 						}
