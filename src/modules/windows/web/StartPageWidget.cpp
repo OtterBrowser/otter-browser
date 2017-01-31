@@ -745,6 +745,15 @@ bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 			}
 		}
 	}
+	else if (object == m_listView->viewport() && event->type() == QEvent::MouseMove)
+	{
+		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
+
+		if (mouseEvent && mouseEvent->buttons().testFlag(Qt::LeftButton) && m_window->getLoadingState() != WindowsManager::FinishedLoadingState)
+		{
+			return true;
+		}
+	}
 	else if (object == m_listView->viewport() && event->type() == QEvent::MouseButtonRelease)
 	{
 		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));

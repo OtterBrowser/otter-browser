@@ -42,8 +42,6 @@
 #include "../../../ui/Window.h"
 
 #include <QtGui/QClipboard>
-#include <QtGui/QDrag>
-#include <QtGui/QGuiApplication>
 #include <QtGui/QMouseEvent>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QInputDialog>
@@ -94,11 +92,6 @@ void WebContentsWidget::timerEvent(QTimerEvent *event)
 	}
 	else if (event->timerId() == m_deleteStartPageTimer)
 	{
-		if (m_startPageWidget && m_startPageWidget->findChildren<QDrag*>().isEmpty())
-		{
-			return;
-		}
-
 		killTimer(m_deleteStartPageTimer);
 
 		m_deleteStartPageTimer = 0;
