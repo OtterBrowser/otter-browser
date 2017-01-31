@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2015 - 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -741,6 +741,21 @@ QStandardItem* ItemViewWidget::getItem(const QModelIndex &index) const
 QStandardItem* ItemViewWidget::getItem(int row, int column, const QModelIndex &parent) const
 {
 	return(m_sourceModel ? m_sourceModel->itemFromIndex(getIndex(row, column, parent)) : nullptr);
+}
+
+QModelIndex ItemViewWidget::getCurrentIndex(int column) const
+{
+	if (!selectionModel()->hasSelection())
+	{
+		return QModelIndex();
+	}
+
+	if (column >= 0)
+	{
+		return currentIndex().sibling(currentIndex().row(), column);
+	}
+
+	return currentIndex();
 }
 
 QModelIndex ItemViewWidget::getIndex(int row, int column, const QModelIndex &parent) const

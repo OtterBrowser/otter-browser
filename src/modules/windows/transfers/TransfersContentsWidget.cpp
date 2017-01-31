@@ -334,7 +334,7 @@ void TransfersContentsWidget::copyTransferInformation()
 
 void TransfersContentsWidget::stopResumeTransfer()
 {
-	Transfer *transfer(getTransfer(m_ui->transfersViewWidget->selectionModel()->hasSelection() ? m_ui->transfersViewWidget->selectionModel()->currentIndex() : QModelIndex()));
+	Transfer *transfer(getTransfer(m_ui->transfersViewWidget->getCurrentIndex()));
 
 	if (transfer)
 	{
@@ -353,7 +353,7 @@ void TransfersContentsWidget::stopResumeTransfer()
 
 void TransfersContentsWidget::redownloadTransfer()
 {
-	Transfer *transfer(getTransfer(m_ui->transfersViewWidget->selectionModel()->hasSelection() ? m_ui->transfersViewWidget->selectionModel()->currentIndex() : QModelIndex()));
+	Transfer *transfer(getTransfer(m_ui->transfersViewWidget->getCurrentIndex()));
 
 	if (transfer)
 	{
@@ -428,7 +428,7 @@ void TransfersContentsWidget::showContextMenu(const QPoint &point)
 
 void TransfersContentsWidget::updateActions()
 {
-	Transfer *transfer(getTransfer(m_ui->transfersViewWidget->selectionModel()->hasSelection() ? m_ui->transfersViewWidget->selectionModel()->currentIndex() : QModelIndex()));
+	Transfer *transfer(getTransfer(m_ui->transfersViewWidget->getCurrentIndex()));
 
 	if (transfer && transfer->getState() == Transfer::ErrorState)
 	{

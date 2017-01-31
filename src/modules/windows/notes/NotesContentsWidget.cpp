@@ -256,7 +256,7 @@ void NotesContentsWidget::triggerAction(int identifier, const QVariantMap &param
 void NotesContentsWidget::updateActions(bool updateText)
 {
 	const bool hasSelecion(!m_ui->notesViewWidget->selectionModel()->selectedIndexes().isEmpty());
-	const QModelIndex index(m_ui->notesViewWidget->selectionModel()->hasSelection() ? m_ui->notesViewWidget->selectionModel()->currentIndex() : QModelIndex());
+	const QModelIndex index(m_ui->notesViewWidget->getCurrentIndex());
 	const BookmarksModel::BookmarkType type(static_cast<BookmarksModel::BookmarkType>(index.data(BookmarksModel::TypeRole).toInt()));
 
 	m_ui->addressLabelWidget->setText((type == BookmarksModel::UrlBookmark) ? index.data(BookmarksModel::UrlRole).toString() : QString());
@@ -286,7 +286,7 @@ void NotesContentsWidget::updateActions(bool updateText)
 
 void NotesContentsWidget::updateText()
 {
-	const QModelIndex index(m_ui->notesViewWidget->selectionModel()->hasSelection() ? m_ui->notesViewWidget->selectionModel()->currentIndex() : QModelIndex());
+	const QModelIndex index(m_ui->notesViewWidget->getCurrentIndex());
 
 	disconnect(m_ui->notesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateActions()));
 

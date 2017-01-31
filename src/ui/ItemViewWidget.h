@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
@@ -76,6 +76,7 @@ public:
 	QSortFilterProxyModel* getProxyModel();
 	QStandardItem* getItem(const QModelIndex &index) const;
 	QStandardItem* getItem(int row, int column = 0, const QModelIndex &parent = QModelIndex()) const;
+	QModelIndex getCurrentIndex(int column = 0) const;
 	QModelIndex getIndex(int row, int column = 0, const QModelIndex &parent = QModelIndex()) const;
 	QSize sizeHint() const;
 	ViewMode getViewMode() const;
