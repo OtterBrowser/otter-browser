@@ -201,7 +201,7 @@ StartPageWidget::StartPageWidget(Window *parent) : QScrollArea(parent),
 
 StartPageWidget::~StartPageWidget()
 {
-#if QT_VERSION >= 0x050600
+#if QT_VERSION >= 0x050700
 	QDrag::cancel();
 #endif
 }
