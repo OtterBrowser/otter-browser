@@ -27,6 +27,8 @@ namespace Otter
 
 class TreeModel : public QStandardItemModel
 {
+	Q_OBJECT
+
 public:
 	enum ItemType
 	{
