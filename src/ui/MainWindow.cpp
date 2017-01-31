@@ -1041,19 +1041,20 @@ void MainWindow::handleToolBarModified(int identifier)
 			{
 				const bool showMenuBar(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
 
-				if (m_menuBar && !showMenuBar)
+				if (showMenuBar)
+				{
+					if (!m_menuBar)
+					{
+						m_menuBar = new MenuBarWidget(this);
+
+						setMenuBar(m_menuBar);
+					}
+
+					m_menuBar->show();
+				}
+				else if (!showMenuBar && m_menuBar)
 				{
 					m_menuBar->hide();
-				}
-				else if (!m_menuBar && showMenuBar)
-				{
-					m_menuBar = new MenuBarWidget(this);
-
-					setMenuBar(m_menuBar);
-				}
-				else if (!m_menuBar->isVisible() && showMenuBar)
-				{
-					m_menuBar->show();
 				}
 
 				getAction(ActionsManager::ShowMenuBarAction)->setChecked(showMenuBar);
