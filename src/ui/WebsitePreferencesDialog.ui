@@ -636,10 +636,56 @@
        <string>Network</string>
       </attribute>
       <layout class="QGridLayout" name="networkLayout">
-       <item row="2" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="userAgentOverrideCheckBox">
+       <item row="3" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="proxyOverrideCheckBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="3">
+        <spacer name="networkSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="2" column="3">
+        <widget class="QComboBox" name="userAgentComboBox"/>
+       </item>
+       <item row="1" column="1" colspan="2">
+        <widget class="QCheckBox" name="sendReferrerCheckBox">
+         <property name="text">
+          <string>Send referrer information</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="networkOverrideLabel">
+         <property name="text">
+          <string>Override</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="proxyLabel">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Proxy:</string>
+         </property>
+         <property name="buddy">
+          <cstring>proxyComboBox</cstring>
          </property>
         </widget>
        </item>
@@ -653,87 +699,14 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="sendReferrerOverrideCheckBox">
+       <item row="2" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="userAgentOverrideCheckBox">
          <property name="text">
           <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="networkOverrideLabel">
-         <property name="text">
-          <string>Override</string>
          </property>
         </widget>
        </item>
        <item row="5" column="3">
-        <spacer name="networkSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLabel" name="proxyModeLabel">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Proxy mode:</string>
-         </property>
-         <property name="buddy">
-          <cstring>proxyModeComboBox</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="proxyModeOverrideCheckBox">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="3">
-        <widget class="QComboBox" name="userAgentComboBox"/>
-       </item>
-       <item row="3" column="3">
-        <widget class="QComboBox" name="proxyModeComboBox">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <item>
-          <property name="text">
-           <string>No proxy</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>System configuration</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Manual configuration</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Automatic configuration (PAC)</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="6" column="3">
         <spacer name="networkHorizontalSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -746,220 +719,17 @@
          </property>
         </spacer>
        </item>
-       <item row="4" column="1" colspan="3">
-        <layout class="QHBoxLayout" name="proxyConfigurationLayout">
-         <item>
-          <spacer name="proxyConfigurationSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Fixed</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>0</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="proxyConfigurationModesLayout">
-           <item>
-            <widget class="QWidget" name="manualProxyConfigurationWidget" native="true">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <layout class="QGridLayout" name="manualProxyConfigurationLayout">
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item row="2" column="1">
-               <widget class="QLineEdit" name="httpProxyServersLineEdit">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="2">
-               <widget class="QSpinBox" name="httpProxyPortSpinBox">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximum">
-                 <number>65535</number>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="2">
-               <widget class="QSpinBox" name="httpsProxyPortSpinBox">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximum">
-                 <number>65535</number>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="1">
-               <widget class="QLineEdit" name="httpsProxyServersLineEdit">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="2">
-               <widget class="QSpinBox" name="socksProxyPortSpinBox">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximum">
-                 <number>65535</number>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="2">
-               <widget class="QSpinBox" name="ftpProxyPortSpinBox">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximum">
-                 <number>65535</number>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="QLabel" name="proxyPortLabel">
-                <property name="text">
-                 <string>Port</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLabel" name="proxyServerLabel">
-                <property name="text">
-                 <string>Servers</string>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="0">
-               <widget class="QCheckBox" name="ftpProxyCheckBox">
-                <property name="text">
-                 <string>FTP</string>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="0">
-               <widget class="QCheckBox" name="socksProxyCheckBox">
-                <property name="text">
-                 <string>SOCKS5</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QCheckBox" name="httpProxyCheckBox">
-                <property name="text">
-                 <string>HTTP</string>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="1">
-               <widget class="QLineEdit" name="socksProxyServersLineEdit">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0">
-               <widget class="QCheckBox" name="httpsProxyCheckBox">
-                <property name="text">
-                 <string>HTTPS</string>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="1">
-               <widget class="QLineEdit" name="ftpProxyServersLineEdit">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QCheckBox" name="allProxyCheckBox">
-                <property name="text">
-                 <string>All</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QLineEdit" name="allProxyServersLineEdit"/>
-              </item>
-              <item row="1" column="2">
-               <widget class="QSpinBox" name="allProxyPortSpinBox">
-                <property name="maximum">
-                 <number>65535</number>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="proxyProtocolabel">
-                <property name="text">
-                 <string>Protocol</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QWidget" name="automaticProxyConfigurationWidget" native="true">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <layout class="QHBoxLayout" name="automaticProxyConfigurationLayout">
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QLabel" name="automaticProxyConfigurationLabel">
-                <property name="text">
-                 <string>Path to PAC file:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="Otter::FilePathWidget" name="widget" native="true"/>
-              </item>
-             </layout>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-       <item row="1" column="1" colspan="2">
-        <widget class="QCheckBox" name="sendReferrerCheckBox">
+       <item row="1" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="sendReferrerOverrideCheckBox">
          <property name="text">
-          <string>Send referrer information</string>
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QComboBox" name="proxyComboBox">
+         <property name="enabled">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -1076,23 +846,8 @@
   <tabstop>sendReferrerOverrideCheckBox</tabstop>
   <tabstop>userAgentOverrideCheckBox</tabstop>
   <tabstop>userAgentComboBox</tabstop>
-  <tabstop>proxyModeOverrideCheckBox</tabstop>
-  <tabstop>proxyModeComboBox</tabstop>
-  <tabstop>allProxyCheckBox</tabstop>
-  <tabstop>allProxyServersLineEdit</tabstop>
-  <tabstop>allProxyPortSpinBox</tabstop>
-  <tabstop>httpProxyCheckBox</tabstop>
-  <tabstop>httpProxyServersLineEdit</tabstop>
-  <tabstop>httpProxyPortSpinBox</tabstop>
-  <tabstop>httpsProxyCheckBox</tabstop>
-  <tabstop>httpsProxyServersLineEdit</tabstop>
-  <tabstop>httpsProxyPortSpinBox</tabstop>
-  <tabstop>ftpProxyCheckBox</tabstop>
-  <tabstop>ftpProxyServersLineEdit</tabstop>
-  <tabstop>ftpProxyPortSpinBox</tabstop>
-  <tabstop>socksProxyCheckBox</tabstop>
-  <tabstop>socksProxyServersLineEdit</tabstop>
-  <tabstop>socksProxyPortSpinBox</tabstop>
+  <tabstop>proxyOverrideCheckBox</tabstop>
+  <tabstop>proxyComboBox</tabstop>
  </tabstops>
  <resources/>
  <connections/>
