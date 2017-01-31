@@ -40,9 +40,10 @@ public:
 	~UserAgentPropertiesDialog();
 
 	UserAgentDefinition getUserAgent() const;
+	bool isDefault() const;
 
 protected:
-	void changeEvent(QEvent *event);
+	void changeEvent(QEvent *event) override;
 
 private:
 	UserAgentDefinition m_userAgent;

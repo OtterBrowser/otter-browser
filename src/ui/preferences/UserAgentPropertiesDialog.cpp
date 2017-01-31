@@ -58,4 +58,9 @@ UserAgentDefinition UserAgentPropertiesDialog::getUserAgent() const
 	return userAgent;
 }
 
+bool UserAgentPropertiesDialog::isDefault() const
+{
+	return m_ui->isDefaultUserAgentCheckBox->isChecked();
+}
+
 }
