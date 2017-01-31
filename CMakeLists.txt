@@ -137,6 +137,7 @@ set(otter_src
 	src/core/ThemesManager.cpp
 	src/core/ToolBarsManager.cpp
 	src/core/TransfersManager.cpp
+	src/core/TreeModel.cpp
 	src/core/UpdateChecker.cpp
 	src/core/Updater.cpp
 	src/core/UserScript.cpp
