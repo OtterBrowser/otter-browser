@@ -45,8 +45,8 @@ BookmarksContentsWidget::BookmarksContentsWidget(Window *window) : ContentsWidge
 	m_ui->setupUi(this);
 
 	QMenu *addMenu(new QMenu(m_ui->addButton));
-	addMenu->addAction(ThemesManager::getIcon(QLatin1String("inode-directory")), tr("Add Folder"), this, SLOT(addFolder()));
-	addMenu->addAction(tr("Add Bookmark"), this, SLOT(addBookmark()));
+	addMenu->addAction(ThemesManager::getIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, SLOT(addFolder()));
+	addMenu->addAction(tr("Add Bookmark…"), this, SLOT(addBookmark()));
 	addMenu->addAction(tr("Add Separator"), this, SLOT(addSeparator()));
 
 	ProxyModel *model(new ProxyModel(BookmarksManager::getModel(), QList<QPair<QString, int> >({qMakePair(tr("Title"), BookmarksModel::TitleRole), qMakePair(tr("Address"), BookmarksModel::UrlRole), qMakePair(tr("Description"), BookmarksModel::DescriptionRole), qMakePair(tr("Keyword"), BookmarksModel::KeywordRole), qMakePair(tr("Added"), BookmarksModel::TimeAddedRole), qMakePair(tr("Modified"), BookmarksModel::TimeModifiedRole), qMakePair(tr("Visited"), BookmarksModel::TimeVisitedRole), qMakePair(tr("Visits"), BookmarksModel::VisitsRole)}), this));
@@ -163,8 +163,8 @@ void BookmarksContentsWidget::showContextMenu(const QPoint &point)
 	}
 	else if (type == BookmarksModel::UnknownBookmark)
 	{
-		menu.addAction(ThemesManager::getIcon(QLatin1String("inode-directory")), tr("Add Folder"), this, SLOT(addFolder()));
-		menu.addAction(tr("Add Bookmark"), this, SLOT(addBookmark()));
+		menu.addAction(ThemesManager::getIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, SLOT(addFolder()));
+		menu.addAction(tr("Add Bookmark…"), this, SLOT(addBookmark()));
 		menu.addAction(tr("Add Separator"), this, SLOT(addSeparator()));
 	}
 	else

@@ -44,7 +44,7 @@ NotesContentsWidget::NotesContentsWidget(Window *window) : ContentsWidget(window
 	m_ui->setupUi(this);
 
 	QMenu *addMenu(new QMenu(m_ui->addButton));
-	addMenu->addAction(ThemesManager::getIcon(QLatin1String("inode-directory")), tr("Add Folder"), this, SLOT(addFolder()));
+	addMenu->addAction(ThemesManager::getIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, SLOT(addFolder()));
 	addMenu->addAction(tr("Add Note"), this, SLOT(addNote()));
 	addMenu->addAction(tr("Add Separator"), this, SLOT(addSeparator()));
 
@@ -178,7 +178,7 @@ void NotesContentsWidget::showContextMenu(const QPoint &point)
 			menu.addSeparator();
 
 			QMenu *addMenu(menu.addMenu(tr("Add Note")));
-			addMenu->addAction(ThemesManager::getIcon(QLatin1String("inode-directory")), tr("Add Folder"), this, SLOT(addFolder()));
+			addMenu->addAction(ThemesManager::getIcon(QLatin1String("inode-directory")), tr("Add Folder…"), this, SLOT(addFolder()));
 			addMenu->addAction(tr("Add Note"), this, SLOT(addNote()));
 			addMenu->addAction(tr("Add Separator"), this, SLOT(addSeparator()));
 		}
