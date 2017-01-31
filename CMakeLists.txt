@@ -220,6 +220,7 @@ set(otter_src
 	src/ui/preferences/PreferencesGeneralPageWidget.cpp
 	src/ui/preferences/PreferencesPrivacyPageWidget.cpp
 	src/ui/preferences/PreferencesSearchPageWidget.cpp
+	src/ui/preferences/UserAgentPropertiesDialog.cpp
 	src/modules/backends/passwords/file/FilePasswordsStorageBackend.cpp
 	src/modules/importers/html/HtmlBookmarksImporter.cpp
 	src/modules/importers/opera/OperaBookmarksImporter.cpp
@@ -306,6 +307,7 @@ qt5_wrap_ui(otter_ui
 	src/ui/preferences/PreferencesGeneralPageWidget.ui
 	src/ui/preferences/PreferencesPrivacyPageWidget.ui
 	src/ui/preferences/PreferencesSearchPageWidget.ui
+	src/ui/preferences/UserAgentPropertiesDialog.ui
 	src/modules/windows/addons/AddonsContentsWidget.ui
 	src/modules/windows/bookmarks/BookmarksContentsWidget.ui
 	src/modules/windows/cache/CacheContentsWidget.ui
