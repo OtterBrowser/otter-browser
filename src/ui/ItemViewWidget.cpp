@@ -325,8 +325,6 @@ void ItemViewWidget::dropEvent(QDropEvent *event)
 
 	markAsModified();
 
-	emit modified();
-
 	QTimer::singleShot(50, this, SLOT(updateDropSelection()));
 }
 
@@ -438,8 +436,6 @@ void ItemViewWidget::moveRow(bool up)
 		notifySelectionChanged();
 
 		markAsModified();
-
-		emit modified();
 	}
 }
 
@@ -480,8 +476,6 @@ void ItemViewWidget::insertRow(const QList<QStandardItem*> &items)
 	}
 
 	markAsModified();
-
-	emit modified();
 }
 
 void ItemViewWidget::insertRow(QStandardItem *item)
@@ -512,8 +506,6 @@ void ItemViewWidget::removeRow()
 		}
 
 		markAsModified();
-
-		emit modified();
 	}
 }
 
