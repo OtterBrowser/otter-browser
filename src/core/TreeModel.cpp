@@ -107,6 +107,45 @@ QVariant TreeModel::data(const QModelIndex &index, int role) const
 	return QStandardItemModel::data(index, role);
 }
 
+QVariantList TreeModel::getAllData(int role, int column, const QModelIndex &parent) const
+{
+	QVariantList data;
+
+	for (int i = 0; i < rowCount(parent); ++i)
+	{
+		const QModelIndex rowIndex(index(i, 0, parent));
+
+		if (column < 0)
+		{
+			for (int j = 0; j < columnCount(rowIndex); ++j)
+			{
+				const QVariant value(index(i, j, parent).data(role));
+
+				if (!value.isNull())
+				{
+					data.append(value);
+				}
+			}
+		}
+		else
+		{
+			const QVariant value(index(i, column, parent).data(role));
+
+			if (!value.isNull())
+			{
+				data.append(value);
+			}
+		}
+
+		if (static_cast<ItemType>(rowIndex.data(TypeRole).toInt()) == FolderType)
+		{
+			data.append(getAllData(role, column, rowIndex));
+		}
+	}
+
+	return data;
+}
+
 bool TreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
 	Q_UNUSED(action)
