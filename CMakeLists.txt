@@ -200,7 +200,6 @@ set(otter_src
 	src/ui/TransferDialog.cpp
 	src/ui/TrayIcon.cpp
 	src/ui/UpdateCheckerDialog.cpp
-	src/ui/UserAgentsManagerDialog.cpp
 	src/ui/WebsiteInformationDialog.cpp
 	src/ui/WebsitePreferencesDialog.cpp
 	src/ui/WebWidget.cpp
@@ -292,7 +291,6 @@ qt5_wrap_ui(otter_ui
 	src/ui/ToolBarDialog.ui
 	src/ui/TransferDialog.ui
 	src/ui/UpdateCheckerDialog.ui
-	src/ui/UserAgentsManagerDialog.ui
 	src/ui/WebsiteInformationDialog.ui
 	src/ui/WebsitePreferencesDialog.ui
 	src/ui/preferences/AcceptLanguageDialog.ui
