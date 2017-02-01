@@ -1445,7 +1445,10 @@ void PreferencesAdvancedPageWidget::save()
 
 	const QString widgetStyle((m_ui->appearranceWidgetStyleComboBox->currentIndex() == 0) ? QString() : m_ui->appearranceWidgetStyleComboBox->currentText());
 
-	Application::setStyle(ThemesManager::createStyle(widgetStyle));
+	if (widgetStyle != SettingsManager::getValue(SettingsManager::Interface_WidgetStyleOption).toString())
+	{
+		Application::setStyle(ThemesManager::createStyle(widgetStyle));
+	}
 
 	SettingsManager::setValue(SettingsManager::Interface_WidgetStyleOption, widgetStyle);
 	SettingsManager::setValue(SettingsManager::Interface_StyleSheetOption, m_ui->appearranceStyleSheetFilePathWidget->getPath());
