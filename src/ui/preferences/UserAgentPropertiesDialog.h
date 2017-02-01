@@ -41,9 +41,13 @@ public:
 
 	UserAgentDefinition getUserAgent() const;
 	bool isDefault() const;
+	bool eventFilter(QObject *object, QEvent *event) override;
 
 protected:
 	void changeEvent(QEvent *event) override;
+
+protected slots:
+	void insertPlaceholder(QAction *action);
 
 private:
 	UserAgentDefinition m_userAgent;

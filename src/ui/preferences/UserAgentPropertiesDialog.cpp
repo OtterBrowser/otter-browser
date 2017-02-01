@@ -21,6 +21,9 @@
 
 #include "ui_UserAgentPropertiesDialog.h"
 
+#include <QtGui/QContextMenuEvent>
+#include <QtWidgets/QMenu>
+
 namespace Otter
 {
 
@@ -31,7 +34,10 @@ UserAgentPropertiesDialog::UserAgentPropertiesDialog(const UserAgentDefinition &
 	m_ui->setupUi(this);
 	m_ui->titleLineEdit->setText(userAgent.getTitle());
 	m_ui->valueLineEdit->setText(userAgent.value);
+	m_ui->valueLineEdit->installEventFilter(this);
 	m_ui->isDefaultUserAgentCheckBox->setChecked(isDefault);
+
+	setWindowTitle(userAgent.identifier.isEmpty() ? tr("Add User Agent") : tr ("Edit User Agent"));
 }
 
 UserAgentPropertiesDialog::~UserAgentPropertiesDialog()
@@ -49,6 +55,14 @@ void UserAgentPropertiesDialog::changeEvent(QEvent *event)
 	}
 }
 
+void UserAgentPropertiesDialog::insertPlaceholder(QAction *action)
+{
+	if (!action->data().toString().isEmpty())
+	{
+		m_ui->valueLineEdit->insert(QStringLiteral("{%1}").arg(action->data().toString()));
+	}
+}
+
 UserAgentDefinition UserAgentPropertiesDialog::getUserAgent() const
 {
 	UserAgentDefinition userAgent(m_userAgent);
@@ -61,6 +75,34 @@ UserAgentDefinition UserAgentPropertiesDialog::getUserAgent() const
 bool UserAgentPropertiesDialog::isDefault() const
 {
 	return m_ui->isDefaultUserAgentCheckBox->isChecked();
+}
+
+bool UserAgentPropertiesDialog::eventFilter(QObject *object, QEvent *event)
+{
+	if (event->type() == QEvent::ContextMenu)
+	{
+		QLineEdit *lineEdit(qobject_cast<QLineEdit*>(object));
+
+		if (lineEdit)
+		{
+			QMenu *contextMenu(lineEdit->createStandardContextMenu());
+			contextMenu->addSeparator();
+
+			QMenu *placeholdersMenu(contextMenu->addMenu(tr("Placeholders")));
+			placeholdersMenu->addAction(tr("Platform"))->setData(QLatin1String("platform"));
+			placeholdersMenu->addAction(tr("Engine Version"))->setData(QLatin1String("engineVerion"));
+			placeholdersMenu->addAction(tr("Aplication Version"))->setData(QLatin1String("applicationVersion"));
+
+			connect(placeholdersMenu, SIGNAL(triggered(QAction*)), this, SLOT(insertPlaceholder(QAction*)));
+
+			contextMenu->exec(static_cast<QContextMenuEvent*>(event)->globalPos());
+			contextMenu->deleteLater();
+
+			return true;
+		}
+	}
+
+	return QDialog::eventFilter(object, event);
 }
 
 }
