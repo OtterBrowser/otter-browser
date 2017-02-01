@@ -95,6 +95,7 @@ public slots:
 	void removeRow();
 	void moveUpRow();
 	void moveDownRow();
+	void markAsModified();
 	void setSort(int column, Qt::SortOrder order);
 	void setColumnVisibility(int column, bool hide);
 	void setFilterString(const QString filter = QString());

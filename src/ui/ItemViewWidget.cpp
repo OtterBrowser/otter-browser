@@ -323,7 +323,7 @@ void ItemViewWidget::dropEvent(QDropEvent *event)
 		++m_dropRow;
 	}
 
-	m_isModified = true;
+	markAsModified();
 
 	emit modified();
 
@@ -437,7 +437,7 @@ void ItemViewWidget::moveRow(bool up)
 		setCurrentIndex(getIndex(destinationRow, 0));
 		notifySelectionChanged();
 
-		m_isModified = true;
+		markAsModified();
 
 		emit modified();
 	}
@@ -479,7 +479,7 @@ void ItemViewWidget::insertRow(const QList<QStandardItem*> &items)
 		setCurrentIndex(getIndex(0, 0));
 	}
 
-	m_isModified = true;
+	markAsModified();
 
 	emit modified();
 }
@@ -511,7 +511,7 @@ void ItemViewWidget::removeRow()
 			m_sourceModel->removeRow(row);
 		}
 
-		m_isModified = true;
+		markAsModified();
 
 		emit modified();
 	}
@@ -525,6 +525,16 @@ void ItemViewWidget::moveUpRow()
 void ItemViewWidget::moveDownRow()
 {
 	moveRow(false);
+}
+
+void ItemViewWidget::markAsModified()
+{
+	if (!m_isModified)
+	{
+		m_isModified = true;
+
+		emit modified();
+	}
 }
 
 void ItemViewWidget::saveState()
@@ -713,7 +723,10 @@ void ItemViewWidget::setModel(QAbstractItemModel *model, bool useSortProxy)
 	}
 
 	connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(notifySelectionChanged()));
-	connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SIGNAL(modified()));
+	connect(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(markAsModified()));
+	connect(model, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(markAsModified()));
+	connect(model, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(markAsModified()));
+	connect(model, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(markAsModified()));
 }
 
 void ItemViewWidget::setViewMode(ItemViewWidget::ViewMode mode)
