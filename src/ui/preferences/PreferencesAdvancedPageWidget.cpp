@@ -201,11 +201,10 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	TreeModel *model(new TreeModel(this));
 	model->setHorizontalHeaderLabels({tr("Title"), tr("Value")});
 
-	m_ui->userAgentsViewWidget->setModel(model);
-	m_ui->userAgentsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
-
 	loadUserAgents(NetworkManagerFactory::getUserAgents(), model->invisibleRootItem());
 
+	m_ui->userAgentsViewWidget->setModel(model);
+	m_ui->userAgentsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 	m_ui->userAgentsViewWidget->expandAll();
 
 	QMenu *addUserAgentMenu(new QMenu(m_ui->userAgentsAddButton));
@@ -544,8 +543,6 @@ void PreferencesAdvancedPageWidget::updateNotificationsOptions()
 		m_ui->notificationsItemView->setData(index, m_ui->notificationsShowAlertCheckBox->isChecked(), (Qt::UserRole + 2));
 		m_ui->notificationsItemView->setData(index, m_ui->notificationsShowNotificationCheckBox->isChecked(), (Qt::UserRole + 3));
 
-		emit settingsModified();
-
 		connect(m_ui->notificationsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateNotificationsActions()));
 	}
 }
@@ -648,8 +645,6 @@ void PreferencesAdvancedPageWidget::updateDownloadsOptions()
 		m_ui->downloadsItemView->setData(index, ((mode == QLatin1String("open")) ? m_ui->downloadsApplicationComboBoxWidget->getCommand() : QString()), (Qt::UserRole + 2));
 	}
 
-	emit settingsModified();
-
 	connect(m_ui->downloadsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateDownloadsActions()));
 	connect(m_ui->downloadsButtonGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(updateDownloadsOptions()));
 }
@@ -662,7 +657,7 @@ void PreferencesAdvancedPageWidget::updateDownloadsMode()
 
 void PreferencesAdvancedPageWidget::loadUserAgents(const QStringList &userAgents, QStandardItem *parent)
 {
-	TreeModel *model(qobject_cast<TreeModel*>(m_ui->userAgentsViewWidget->getSourceModel()));
+	TreeModel *model(qobject_cast<TreeModel*>(parent->model()));
 
 	for (int i = 0; i < userAgents.count(); ++i)
 	{
@@ -928,8 +923,6 @@ void PreferencesAdvancedPageWidget::addProxyException()
 void PreferencesAdvancedPageWidget::editProxyException()
 {
 	m_ui->proxyExceptionsItemView->edit(m_ui->proxyExceptionsItemView->getIndex(m_ui->proxyExceptionsItemView->getCurrentRow()));
-
-	emit settingsModified();
 }
 
 void PreferencesAdvancedPageWidget::removeProxyException()
@@ -938,8 +931,6 @@ void PreferencesAdvancedPageWidget::removeProxyException()
 	m_ui->proxyExceptionsItemView->setFocus();
 
 	updateProxyExceptionsActions();
-
-	emit settingsModified();
 }
 
 void PreferencesAdvancedPageWidget::updateProxyExceptionsActions()
@@ -989,8 +980,6 @@ void PreferencesAdvancedPageWidget::updateUpdateChannelsActions()
 {
 	m_ui->intervalSpinBox->setEnabled(!getSelectedUpdateChannels().isEmpty());
 	m_ui->autoInstallCheckBox->setEnabled(!getSelectedUpdateChannels().isEmpty());
-
-	emit settingsModified();
 }
 
 void PreferencesAdvancedPageWidget::addKeyboardProfile()
@@ -1012,8 +1001,6 @@ void PreferencesAdvancedPageWidget::addKeyboardProfile()
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
 	m_ui->keyboardViewWidget->insertRow(item);
-
-	emit settingsModified();
 }
 
 void PreferencesAdvancedPageWidget::readdKeyboardProfile(QAction *action)
@@ -1041,8 +1028,6 @@ void PreferencesAdvancedPageWidget::readdKeyboardProfile(QAction *action)
 	m_ui->keyboardViewWidget->insertRow(item);
 
 	updateReaddKeyboardProfileMenu();
-
-	emit settingsModified();
 }
 
 void PreferencesAdvancedPageWidget::editKeyboardProfile()
@@ -1071,8 +1056,6 @@ void PreferencesAdvancedPageWidget::editKeyboardProfile()
 
 	m_ui->keyboardViewWidget->setData(index, (m_keyboardProfiles[identifier].title.isEmpty() ? tr("(Untitled)") : m_keyboardProfiles[identifier].title), Qt::DisplayRole);
 	m_ui->keyboardViewWidget->setData(index, m_keyboardProfiles[identifier].description, Qt::ToolTipRole);
-
-	emit settingsModified();
 }
 
 void PreferencesAdvancedPageWidget::cloneKeyboardProfile()
@@ -1101,8 +1084,6 @@ void PreferencesAdvancedPageWidget::cloneKeyboardProfile()
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
 	m_ui->keyboardViewWidget->insertRow(item);
-
-	emit settingsModified();
 }
 
 void PreferencesAdvancedPageWidget::removeKeyboardProfile()
@@ -1140,8 +1121,6 @@ void PreferencesAdvancedPageWidget::removeKeyboardProfile()
 		m_ui->keyboardViewWidget->removeRow();
 
 		updateReaddKeyboardProfileMenu();
-
-		emit settingsModified();
 	}
 }
 
@@ -1212,8 +1191,6 @@ void PreferencesAdvancedPageWidget::addMouseProfile()
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
 	m_ui->mouseViewWidget->insertRow(item);
-
-	emit settingsModified();
 }
 
 void PreferencesAdvancedPageWidget::readdMouseProfile(QAction *action)
@@ -1241,8 +1218,6 @@ void PreferencesAdvancedPageWidget::readdMouseProfile(QAction *action)
 	m_ui->mouseViewWidget->insertRow(item);
 
 	updateReaddMouseProfileMenu();
-
-	emit settingsModified();
 }
 
 void PreferencesAdvancedPageWidget::editMouseProfile()
@@ -1271,8 +1246,6 @@ void PreferencesAdvancedPageWidget::editMouseProfile()
 
 	m_ui->mouseViewWidget->setData(index, (m_mouseProfiles[identifier].title.isEmpty() ? tr("(Untitled)") : m_mouseProfiles[identifier].title), Qt::DisplayRole);
 	m_ui->mouseViewWidget->setData(index, m_mouseProfiles[identifier].description, Qt::ToolTipRole);
-
-	emit settingsModified();
 }
 
 void PreferencesAdvancedPageWidget::cloneMouseProfile()
@@ -1301,8 +1274,6 @@ void PreferencesAdvancedPageWidget::cloneMouseProfile()
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled);
 
 	m_ui->mouseViewWidget->insertRow(item);
-
-	emit settingsModified();
 }
 
 void PreferencesAdvancedPageWidget::removeMouseProfile()
@@ -1340,8 +1311,6 @@ void PreferencesAdvancedPageWidget::removeMouseProfile()
 		m_ui->mouseViewWidget->removeRow();
 
 		updateReaddMouseProfileMenu();
-
-		emit settingsModified();
 	}
 }
 

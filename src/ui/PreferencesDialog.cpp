@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "PreferencesDialog.h"
+#include "ItemViewWidget.h"
 #include "preferences/PreferencesAdvancedPageWidget.h"
 #include "preferences/PreferencesContentPageWidget.h"
 #include "preferences/PreferencesGeneralPageWidget.h"
@@ -176,6 +177,13 @@ void PreferencesDialog::currentTabChanged(int tab)
 	for (int i = 0; i < comboBoxes.count(); ++i)
 	{
 		connect(comboBoxes.at(i), SIGNAL(currentIndexChanged(int)), this, SLOT(markModified()));
+	}
+
+	QList<ItemViewWidget*> viewWidgets(widget->findChildren<ItemViewWidget*>());
+
+	for (int i = 0; i < viewWidgets.count(); ++i)
+	{
+		connect(viewWidgets.at(i), SIGNAL(modified()), this, SLOT(markModified()));
 	}
 }
 
