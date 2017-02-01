@@ -22,7 +22,7 @@
 #ifndef OTTER_PREFERENCESADVANCEDPAGEWIDGET_H
 #define OTTER_PREFERENCESADVANCEDPAGEWIDGET_H
 
-#include <QtCore/QVariantMap>
+#include <QtGui/QStandardItem>
 #include <QtWidgets/QWidget>
 
 namespace Otter
@@ -64,7 +64,11 @@ protected slots:
 	void updateDownloadsActions();
 	void updateDownloadsOptions();
 	void updateDownloadsMode();
-	void manageUserAgents();
+	void loadUserAgents(const QStringList &userAgents, QStandardItem *parent);
+	void saveUsuerAgents(QJsonArray *userAgents, QStandardItem *parent);
+	void addUserAgent(QAction *action);
+	void editUserAgent();
+	void updateUserAgentsActions();
 	void proxyModeChanged(int index);
 	void addProxyException();
 	void editProxyException();
@@ -92,11 +96,11 @@ protected slots:
 	void updatePageSwitcher();
 
 private:
+	QString m_defaultUserAgent;
 	QStringList m_filesToRemove;
 	QHash<QString, KeyboardProfile> m_keyboardProfiles;
 	QHash<QString, MouseProfile> m_mouseProfiles;
 	QHash<int, QVariant> m_javaScriptOptions;
-	bool m_userAgentsModified;
 	Ui::PreferencesAdvancedPageWidget *m_ui;
 
 signals:

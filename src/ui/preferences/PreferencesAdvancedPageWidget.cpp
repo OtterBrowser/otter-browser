@@ -23,8 +23,8 @@
 #include "JavaScriptPreferencesDialog.h"
 #include "KeyboardProfileDialog.h"
 #include "MouseProfileDialog.h"
+#include "UserAgentPropertiesDialog.h"
 #include "../Style.h"
-#include "../UserAgentsManagerDialog.h"
 #include "../../core/ActionsManager.h"
 #include "../../core/Application.h"
 #include "../../core/GesturesManager.h"
@@ -35,6 +35,7 @@
 #include "../../core/Settings.h"
 #include "../../core/SettingsManager.h"
 #include "../../core/ThemesManager.h"
+#include "../../core/TreeModel.h"
 #include "../../core/Utils.h"
 
 #include "ui_PreferencesAdvancedPageWidget.h"
@@ -56,7 +57,7 @@ namespace Otter
 {
 
 PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : QWidget(parent),
-	m_userAgentsModified(false),
+	m_defaultUserAgent(SettingsManager::getValue(SettingsManager::Network_UserAgentOption).toString()),
 	m_ui(new Ui::PreferencesAdvancedPageWidget)
 {
 	m_ui->setupUi(this);
@@ -197,26 +198,22 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Network_EnableReferrerOption).toBool());
 
-	const QStringList userAgents(NetworkManagerFactory::getUserAgents());
+	TreeModel *model(new TreeModel(this));
+	model->setHorizontalHeaderLabels({tr("Title"), tr("Value")});
 
-	m_ui->userAgentComboBox->addItem(tr("Default"), QLatin1String("default"));
+	m_ui->userAgentsViewWidget->setModel(model);
+	m_ui->userAgentsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
 
-	for (int i = 0; i < userAgents.count(); ++i)
-	{
-		if (userAgents.at(i).isEmpty())
-		{
-			m_ui->userAgentComboBox->insertSeparator(i);
-		}
-		else
-		{
-			const UserAgentDefinition userAgent(NetworkManagerFactory::getUserAgent(userAgents.at(i)));
+	loadUserAgents(NetworkManagerFactory::getUserAgents(), model->invisibleRootItem());
 
-			m_ui->userAgentComboBox->addItem(userAgent.getTitle(), userAgents.at(i));
-			m_ui->userAgentComboBox->setItemData((i + 1), userAgent.value, (Qt::UserRole + 1));
-		}
-	}
+	m_ui->userAgentsViewWidget->expandAll();
 
-	m_ui->userAgentComboBox->setCurrentIndex(m_ui->userAgentComboBox->findData(SettingsManager::getValue(SettingsManager::Network_UserAgentOption).toString()));
+	QMenu *addUserAgentMenu(new QMenu(m_ui->userAgentsAddButton));
+	addUserAgentMenu->addAction(ThemesManager::getIcon(QLatin1String("inode-directory")), tr("Add Folder…"))->setData(TreeModel::FolderType);
+	addUserAgentMenu->addAction(tr("Add User Agent…"))->setData(TreeModel::EntryType);
+	addUserAgentMenu->addAction(tr("Add Separator"))->setData(TreeModel::SeparatorType);
+
+	m_ui->userAgentsAddButton->setMenu(addUserAgentMenu);
 
 	QStandardItemModel *proxyExceptionsModel(new QStandardItemModel(this));
 	const QStringList currentProxyExceptions(SettingsManager::getValue(SettingsManager::Proxy_ExceptionsOption).toStringList());
@@ -425,7 +422,10 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	connect(m_ui->downloadsRemoveMimeTypeButton, SIGNAL(clicked(bool)), this, SLOT(removeDownloadsMimeType()));
 	connect(m_ui->downloadsButtonGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(updateDownloadsOptions()));
 	connect(m_ui->downloadsButtonGroup, SIGNAL(buttonToggled(int,bool)), this, SLOT(updateDownloadsMode()));
-	connect(m_ui->userAgentButton, SIGNAL(clicked()), this, SLOT(manageUserAgents()));
+	connect(m_ui->userAgentsViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateUserAgentsActions()));
+	connect(m_ui->userAgentsAddButton->menu(), SIGNAL(triggered(QAction*)), this, SLOT(addUserAgent(QAction*)));
+	connect(m_ui->userAgentsEditButton, SIGNAL(clicked()), this, SLOT(editUserAgent()));
+	connect(m_ui->userAgentsRemoveButton, SIGNAL(clicked()), m_ui->userAgentsViewWidget, SLOT(removeRow()));
 	connect(m_ui->proxyModeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(proxyModeChanged(int)));
 	connect(m_ui->proxyExceptionsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateProxyExceptionsActions()));
 	connect(m_ui->addProxyExceptionButton, SIGNAL(clicked()), this, SLOT(addProxyException()));
@@ -660,41 +660,201 @@ void PreferencesAdvancedPageWidget::updateDownloadsMode()
 	m_ui->downloadsSaveOptionsWidget->setEnabled(m_ui->downloadsSaveButton->isChecked());
 }
 
-void PreferencesAdvancedPageWidget::manageUserAgents()
+void PreferencesAdvancedPageWidget::loadUserAgents(const QStringList &userAgents, QStandardItem *parent)
 {
-	QList<UserAgentDefinition> userAgents;
+	TreeModel *model(qobject_cast<TreeModel*>(m_ui->userAgentsViewWidget->getSourceModel()));
 
-	for (int i = 1; i < m_ui->userAgentComboBox->count(); ++i)
+	for (int i = 0; i < userAgents.count(); ++i)
 	{
-		UserAgentDefinition userAgent;
-		userAgent.identifier = m_ui->userAgentComboBox->itemData(i, Qt::UserRole).toString();
-		userAgent.title = m_ui->userAgentComboBox->itemText(i);
-		userAgent.value = m_ui->userAgentComboBox->itemData(i, (Qt::UserRole + 1)).toString();
+		const UserAgentDefinition userAgent(userAgents.at(i).isEmpty() ? UserAgentDefinition() : NetworkManagerFactory::getUserAgent(userAgents.at(i)));
+		TreeModel::ItemType type(TreeModel::EntryType);
+		QList<QStandardItem*> items({new QStandardItem(userAgent.getTitle()), new QStandardItem(userAgent.value)});
 
-		userAgents.append(userAgent);
-	}
-
-	const QString selectedUserAgent(m_ui->userAgentComboBox->currentData().toString());
-	UserAgentsManagerDialog dialog(userAgents, this);
-
-	if (dialog.exec() == QDialog::Accepted)
-	{
-		m_userAgentsModified = true;
-
-		m_ui->userAgentComboBox->clear();
-
-		userAgents = dialog.getUserAgents();
-
-		m_ui->userAgentComboBox->addItem(tr("Default"), QLatin1String("default"));
-
-		for (int i = 0; i < userAgents.count(); ++i)
+		if (userAgent.isFolder)
 		{
-			m_ui->userAgentComboBox->addItem(userAgents.at(i).getTitle(), userAgents.at(i).identifier);
-			m_ui->userAgentComboBox->setItemData((i + 1), userAgents.at(i).value, (Qt::UserRole + 1));
+			type = TreeModel::FolderType;
+
+			loadUserAgents(userAgent.children, items[0]);
+		}
+		else if (userAgents.at(i).isEmpty())
+		{
+			type = TreeModel::SeparatorType;
 		}
 
-		m_ui->userAgentComboBox->setCurrentIndex(m_ui->userAgentComboBox->findData(selectedUserAgent));
+		if (type != TreeModel::SeparatorType)
+		{
+			items[0]->setData(userAgents.at(i), TreeModel::UserRole);
+		}
+
+		model->insertRow(items, parent, -1, type);
 	}
+}
+
+void PreferencesAdvancedPageWidget::saveUsuerAgents(QJsonArray *userAgents, QStandardItem *parent)
+{
+	for (int i = 0; i < parent->rowCount(); ++i)
+	{
+		QStandardItem *item(parent->child(i, 0));
+
+		if (item)
+		{
+			const TreeModel::ItemType type(static_cast<TreeModel::ItemType>(item->data(TreeModel::TypeRole).toInt()));
+
+			if (type == TreeModel::FolderType || type == TreeModel::EntryType)
+			{
+				QJsonObject userAgentObject;
+				userAgentObject.insert(QLatin1String("identifier"), item->data(TreeModel::UserRole).toString());
+				userAgentObject.insert(QLatin1String("title"), item->data(Qt::DisplayRole).toString());
+
+				if (type == TreeModel::FolderType)
+				{
+					QJsonArray userAgentsArray;
+
+					saveUsuerAgents(&userAgentsArray, item);
+
+					userAgentObject.insert(QLatin1String("children"), userAgentsArray);
+				}
+				else
+				{
+					userAgentObject.insert(QLatin1String("value"), item->index().sibling(i, 1).data(Qt::DisplayRole).toString());
+				}
+
+				userAgents->append(userAgentObject);
+			}
+			else
+			{
+				userAgents->append(QJsonValue(QLatin1String("separator")));
+			}
+		}
+	}
+}
+
+void PreferencesAdvancedPageWidget::addUserAgent(QAction *action)
+{
+	if (!action)
+	{
+		return;
+	}
+
+	TreeModel *model(qobject_cast<TreeModel*>(m_ui->userAgentsViewWidget->getSourceModel()));
+	QStandardItem *parent(model->itemFromIndex(m_ui->userAgentsViewWidget->getCurrentIndex()));
+
+	if (!parent)
+	{
+		parent = model->invisibleRootItem();
+	}
+
+	int row(-1);
+
+	if (static_cast<TreeModel::ItemType>(parent->data(TreeModel::TypeRole).toInt()) != TreeModel::FolderType)
+	{
+		row = (parent->row() + 1);
+
+		parent = parent->parent();
+	}
+
+	switch (static_cast<TreeModel::ItemType>(action->data().toInt()))
+	{
+		case TreeModel::FolderType:
+			{
+				bool result(false);
+				const QString title(QInputDialog::getText(this, tr("Folder Name"), tr("Select folder name:"), QLineEdit::Normal, QString(), &result));
+
+				if (result)
+				{
+					QList<QStandardItem*> items({new QStandardItem(title.isEmpty() ? tr("(Untitled)") : title), new QStandardItem()});
+					items[0]->setData(Utils::createIdentifier(QString(), QVariant(model->getAllData(TreeModel::UserRole, 0)).toStringList()), TreeModel::UserRole);
+
+					model->insertRow(items, parent, row, TreeModel::FolderType);
+
+					m_ui->userAgentsViewWidget->expand(items[0]->index());
+				}
+			}
+
+			break;
+		case TreeModel::EntryType:
+			{
+				UserAgentPropertiesDialog dialog(UserAgentDefinition(), false, this);
+
+				if (dialog.exec() == QDialog::Accepted)
+				{
+					UserAgentDefinition userAgent(dialog.getUserAgent());
+					userAgent.identifier = Utils::createIdentifier(QString(), QVariant(model->getAllData(TreeModel::UserRole, 0)).toStringList());
+
+					if (dialog.isDefault())
+					{
+						m_defaultUserAgent = userAgent.identifier;
+					}
+
+					QList<QStandardItem*> items({new QStandardItem(userAgent.title.isEmpty() ? tr("(Untitled)") : userAgent.title), new QStandardItem(userAgent.value)});
+					items[0]->setData(userAgent.identifier, TreeModel::UserRole);
+
+					model->insertRow(items, parent, row, TreeModel::EntryType);
+				}
+			}
+
+			break;
+		case TreeModel::SeparatorType:
+			model->insertRow(QList<QStandardItem*>({new QStandardItem(), new QStandardItem()}), parent, row, TreeModel::SeparatorType);
+
+			break;
+		default:
+			break;
+	}
+}
+
+void PreferencesAdvancedPageWidget::editUserAgent()
+{
+	const QModelIndex index(m_ui->userAgentsViewWidget->getCurrentIndex());
+
+	if (!index.isValid())
+	{
+		return;
+	}
+
+	const TreeModel::ItemType type(static_cast<TreeModel::ItemType>(index.data(TreeModel::TypeRole).toInt()));
+
+	if (type == TreeModel::FolderType)
+	{
+		bool result(false);
+		const QString title(QInputDialog::getText(this, tr("Folder Name"), tr("Select folder name:"), QLineEdit::Normal, index.data(Qt::DisplayRole).toString(), &result));
+
+		if (result)
+		{
+			m_ui->userAgentsViewWidget->setData(index, (title.isEmpty() ? tr("(Untitled)") : title), Qt::DisplayRole);
+		}
+	}
+	else if (type == TreeModel::EntryType)
+	{
+		UserAgentDefinition userAgent;
+		userAgent.identifier = index.data(TreeModel::UserRole).toString();
+		userAgent.title = index.data(Qt::DisplayRole).toString();
+		userAgent.value = index.sibling(index.row(), 1).data(Qt::DisplayRole).toString();
+
+		UserAgentPropertiesDialog dialog(userAgent, (index.data(TreeModel::UserRole).toString() == m_defaultUserAgent), this);
+
+		if (dialog.exec() == QDialog::Accepted)
+		{
+			userAgent = dialog.getUserAgent();
+
+			if (dialog.isDefault())
+			{
+				m_defaultUserAgent = index.data(TreeModel::UserRole).toString();
+			}
+
+			m_ui->userAgentsViewWidget->setData(index, (userAgent.title.isEmpty() ? tr("(Untitled)") : userAgent.title), Qt::DisplayRole);
+			m_ui->userAgentsViewWidget->setData(index.sibling(index.row(), 1), userAgent.value, Qt::DisplayRole);
+		}
+	}
+}
+
+void PreferencesAdvancedPageWidget::updateUserAgentsActions()
+{
+	const QModelIndex index(m_ui->userAgentsViewWidget->getCurrentIndex());
+	const TreeModel::ItemType type(static_cast<TreeModel::ItemType>(index.data(TreeModel::TypeRole).toInt()));
+
+	m_ui->userAgentsEditButton->setEnabled(index.isValid() && (type == TreeModel::FolderType || type == TreeModel::EntryType));
+	m_ui->userAgentsRemoveButton->setEnabled(index.isValid());
 }
 
 void PreferencesAdvancedPageWidget::proxyModeChanged(int index)
@@ -1378,7 +1538,7 @@ void PreferencesAdvancedPageWidget::save()
 	handlersSettings.save(SessionsManager::getWritableDataPath(QLatin1String("handlers.ini")));
 
 	SettingsManager::setValue(SettingsManager::Network_EnableReferrerOption, m_ui->sendReferrerCheckBox->isChecked());
-	SettingsManager::setValue(SettingsManager::Network_UserAgentOption, m_ui->userAgentComboBox->currentData().toString());
+	SettingsManager::setValue(SettingsManager::Network_UserAgentOption, m_defaultUserAgent);
 	SettingsManager::setValue(SettingsManager::Network_ProxyModeOption, m_ui->proxyModeComboBox->currentData(Qt::UserRole).toString());
 
 	if (!m_ui->allProxyServersLineEdit->text().isEmpty())
@@ -1434,19 +1594,11 @@ void PreferencesAdvancedPageWidget::save()
 
 	SettingsManager::setValue(SettingsManager::Proxy_ExceptionsOption, proxyExceptions);
 
-	if (m_userAgentsModified)
+	if (m_ui->userAgentsViewWidget->isModified())
 	{
 		QJsonArray userAgentsArray;
 
-		for (int i = 1; i < m_ui->userAgentComboBox->count(); ++i)
-		{
-			QJsonObject userAgentObject;
-			userAgentObject.insert(QLatin1String("identifier"), m_ui->userAgentComboBox->itemData(i, Qt::UserRole).toString());
-			userAgentObject.insert(QLatin1String("title"), m_ui->userAgentComboBox->itemText(i));
-			userAgentObject.insert(QLatin1String("value"), m_ui->userAgentComboBox->itemData(i, (Qt::UserRole + 1)).toString());
-
-			userAgentsArray.append(userAgentObject);
-		}
+		saveUsuerAgents(&userAgentsArray, m_ui->userAgentsViewWidget->getSourceModel()->invisibleRootItem());
 
 		JsonSettings settings;
 		settings.setArray(userAgentsArray);
