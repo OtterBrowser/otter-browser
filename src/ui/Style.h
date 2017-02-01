@@ -41,8 +41,15 @@ public:
 
 	void drawDropZone(const QLine &line, QPainter *painter);
 	virtual QString getName() const;
-	QRect subElementRect(SubElement element, const QStyleOption *option, const QWidget *widget = nullptr) const override;
-	int pixelMetric(PixelMetric metric, const QStyleOption *option = nullptr, const QWidget *widget = nullptr) const override;
+	QRect subElementRect(QStyle::SubElement element, const QStyleOption *option, const QWidget *widget = nullptr) const override;
+	int pixelMetric(QStyle::PixelMetric metric, const QStyleOption *option = nullptr, const QWidget *widget = nullptr) const override;
+	int styleHint(QStyle::StyleHint hint, const QStyleOption *option = nullptr, const QWidget *widget = nullptr, QStyleHintReturn *returnData = nullptr) const override;
+
+protected slots:
+	void optionChanged(int identifier, const QVariant &value);
+
+private:
+	bool m_areToolTipsEnabled;
 };
 
 }

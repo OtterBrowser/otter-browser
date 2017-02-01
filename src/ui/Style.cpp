@@ -19,6 +19,7 @@
 
 #include "Style.h"
 #include "ToolBarWidget.h"
+#include "../core/SettingsManager.h"
 
 #include <QtGui/QGuiApplication>
 #include <QtGui/QPainter>
@@ -28,8 +29,18 @@
 namespace Otter
 {
 
-Style::Style(const QString &name) : QProxyStyle(name.isEmpty() ? nullptr : QStyleFactory::create(name))
+Style::Style(const QString &name) : QProxyStyle(name.isEmpty() ? nullptr : QStyleFactory::create(name)),
+	m_areToolTipsEnabled(SettingsManager::getValue(SettingsManager::Browser_ToolTipsModeOption).toString() != QLatin1String("disabled"))
 {
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
+}
+
+void Style::optionChanged(int identifier, const QVariant &value)
+{
+	if (identifier == SettingsManager::Browser_ToolTipsModeOption)
+	{
+		m_areToolTipsEnabled = (value.toString() != QLatin1String("disabled"));
+	}
 }
 
 void Style::drawDropZone(const QLine &line, QPainter *painter)
@@ -143,6 +154,23 @@ int Style::pixelMetric(QStyle::PixelMetric metric, const QStyleOption *option, c
 	}
 
 	return QProxyStyle::pixelMetric(metric, option, widget);
+}
+
+int Style::styleHint(QStyle::StyleHint hint, const QStyleOption *option, const QWidget *widget, QStyleHintReturn *returnData) const
+{
+	if (!m_areToolTipsEnabled)
+	{
+		switch (hint)
+		{
+			case QStyle::SH_ToolTip_FallAsleepDelay:
+			case QStyle::SH_ToolTip_WakeUpDelay:
+				return std::numeric_limits<int>::max();
+			default:
+				break;
+		}
+	}
+
+	return QProxyStyle::styleHint(hint, option, widget, returnData);
 }
 
 }
