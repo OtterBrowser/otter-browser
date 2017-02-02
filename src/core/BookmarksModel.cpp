@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -955,7 +955,7 @@ QList<BookmarksItem*> BookmarksModel::findUrls(const QUrl &url, QStandardItem *b
 			{
 				items.append(findUrls(url, item));
 			}
-			else if (type == UrlBookmark && item->data(UrlRole).toUrl() == url)
+			else if (type == UrlBookmark && url == Utils::normalizeUrl(item->data(UrlRole).toUrl()))
 			{
 				items.append(item);
 			}
