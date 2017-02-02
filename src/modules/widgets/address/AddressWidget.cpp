@@ -35,6 +35,7 @@
 #include "../../../core/ThemesManager.h"
 #include "../../../core/Utils.h"
 
+#include <QtCore/QMetaEnum>
 #include <QtCore/QMimeData>
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
@@ -48,6 +49,8 @@
 
 namespace Otter
 {
+
+int AddressWidget::m_entryIdentifierEnumerator(-1);
 
 AddressDelegate::AddressDelegate(ViewMode mode, QObject *parent) : QItemDelegate(parent),
 	m_displayMode((SettingsManager::getValue(SettingsManager::AddressField_CompletionDisplayModeOption).toString() == QLatin1String("columns")) ? ColumnsMode : CompactMode),
@@ -198,14 +201,11 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : ComboBoxWidget(p
 	m_completionModel(new AddressCompletionModel(this)),
 	m_completionView(nullptr),
 	m_visibleView(nullptr),
-	m_bookmarkLabel(nullptr),
-	m_feedsLabel(nullptr),
-	m_loadPluginsLabel(nullptr),
-	m_urlIconLabel(nullptr),
+	m_clickedEntry(UnknownEntry),
+	m_hoveredEntry(UnknownEntry),
 	m_completionModes(NoCompletionMode),
 	m_hints(WindowsManager::DefaultOpen),
 	m_removeModelTimer(0),
-	m_isHistoryDropdownEnabled(SettingsManager::getValue(SettingsManager::AddressField_EnableHistoryDropdownOption).toBool()),
 	m_isNavigatingCompletion(false),
 	m_isUsingSimpleMode(false),
 	m_wasPopupVisible(false)
@@ -227,6 +227,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : ComboBoxWidget(p
 	setWindow(window);
 	optionChanged(SettingsManager::AddressField_CompletionModeOption, SettingsManager::getValue(SettingsManager::AddressField_CompletionModeOption));
 	optionChanged(SettingsManager::AddressField_DropActionOption, SettingsManager::getValue(SettingsManager::AddressField_DropActionOption));
+	optionChanged(SettingsManager::AddressField_LayoutOption, SettingsManager::getValue(SettingsManager::AddressField_LayoutOption));
 	optionChanged(SettingsManager::AddressField_SelectAllOnFocusOption, SettingsManager::getValue(SettingsManager::AddressField_SelectAllOnFocusOption));
 
 	m_lineEdit->setStyleSheet(QLatin1String("QLineEdit {background:transparent;}"));
@@ -239,10 +240,6 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : ComboBoxWidget(p
 
 	if (toolBar)
 	{
-		optionChanged(SettingsManager::AddressField_ShowBookmarkIconOption, SettingsManager::getValue(SettingsManager::AddressField_ShowBookmarkIconOption));
-		optionChanged(SettingsManager::AddressField_ShowFeedsIconOption, SettingsManager::getValue(SettingsManager::AddressField_ShowFeedsIconOption));
-		optionChanged(SettingsManager::AddressField_ShowUrlIconOption, SettingsManager::getValue(SettingsManager::AddressField_ShowUrlIconOption));
-
 		m_lineEdit->setPlaceholderText(tr("Enter address or search…"));
 
 		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
@@ -256,7 +253,7 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : ComboBoxWidget(p
 	connect(this, SIGNAL(activated(QString)), this, SLOT(openUrl(QString)));
 	connect(m_lineEdit, SIGNAL(textDropped(QString)), this, SLOT(handleUserInput(QString)));
 	connect(m_completionModel, SIGNAL(completionReady(QString)), this, SLOT(setCompletion(QString)));
-	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(updateBookmark()));
+	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(updateGeometries()));
 	connect(HistoryManager::getTypedHistoryModel(), SIGNAL(modelModified()), this, SLOT(updateLineEdit()));
 }
 
@@ -312,11 +309,11 @@ void AddressWidget::paintEvent(QPaintEvent *event)
 
 	style()->drawPrimitive(QStyle::PE_PanelLineEdit, &panel, &painter, this);
 
-	if (m_isHistoryDropdownEnabled || m_isUsingSimpleMode)
+	if (m_entries.contains(HistoryDropdownEntry))
 	{
 		QStyleOption arrow;
 		arrow.initFrom(this);
-		arrow.rect = m_historyDropdownArrowRectangle;
+		arrow.rect = m_entries[HistoryDropdownEntry].rectangle;
 
 		style()->drawPrimitive(QStyle::PE_IndicatorArrowDown, &arrow, &painter, this);
 	}
@@ -326,38 +323,15 @@ void AddressWidget::paintEvent(QPaintEvent *event)
 		return;
 	}
 
-	const WindowsManager::ContentStates state(m_window ? m_window->getContentState() : WindowsManager::UnknownContentState);
-	QString icon(QLatin1String("unknown"));
+	QHash<EntryIdentifier, EntryDefinition>::const_iterator iterator;
 
-	if (state.testFlag(WindowsManager::FraudContentState))
+	for (iterator = m_entries.begin(); iterator != m_entries.end(); ++iterator)
 	{
-		icon = QLatin1String("badge-fraud");
+		if (!iterator.value().icon.isNull())
+		{
+			iterator.value().icon.paint(&painter, iterator.value().rectangle, Qt::AlignCenter, iterator.value().mode);
+		}
 	}
-	else if (state.testFlag(WindowsManager::SecureContentState))
-	{
-		icon = QLatin1String("badge-secure");
-	}
-	else if (state.testFlag(WindowsManager::RemoteContentState))
-	{
-		icon = QLatin1String("badge-remote");
-	}
-	else if (state.testFlag(WindowsManager::LocalContentState))
-	{
-		icon = QLatin1String("badge-local");
-	}
-	else if (state.testFlag(WindowsManager::ApplicationContentState))
-	{
-		icon = QLatin1String("otter-browser");
-	}
-
-	int offset((m_informationButtonRectangle.height() - 16) / 2);
-
-	if (offset < 4)
-	{
-		offset = 4;
-	}
-
-	ThemesManager::getIcon(icon, false).paint(&painter, m_informationButtonRectangle.adjusted(offset, offset, -offset, -offset));
 }
 
 void AddressWidget::resizeEvent(QResizeEvent *event)
@@ -413,23 +387,10 @@ void AddressWidget::keyPressEvent(QKeyEvent *event)
 
 void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 {
+	const EntryIdentifier entry(getEntry(event->pos()));
 	QMenu menu(this);
 
-	if (m_informationButtonRectangle.contains(event->pos()))
-	{
-		if (m_window)
-		{
-			menu.addAction(m_window->getContentsWidget()->getAction(ActionsManager::WebsiteInformationAction));
-		}
-		else
-		{
-			Action *websiteInformationAction(new Action(ActionsManager::WebsiteInformationAction));
-			websiteInformationAction->setEnabled(false);
-
-			menu.addAction(websiteInformationAction);
-		}
-	}
-	else
+	if (entry == UnknownEntry || entry == AddressEntry)
 	{
 		menu.addAction(tr("Undo"), m_lineEdit, SLOT(undo()), QKeySequence(QKeySequence::Undo))->setEnabled(m_lineEdit->isUndoAvailable());
 		menu.addAction(tr("Redo"), m_lineEdit, SLOT(redo()), QKeySequence(QKeySequence::Redo))->setEnabled(m_lineEdit->isRedoAvailable());
@@ -450,6 +411,27 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 		menu.addAction(tr("Clear All"), m_lineEdit, SLOT(clear()))->setEnabled(!m_lineEdit->text().isEmpty());
 		menu.addAction(tr("Select All"), m_lineEdit, SLOT(selectAll()), QKeySequence(QKeySequence::SelectAll))->setEnabled(!m_lineEdit->text().isEmpty());
 	}
+	else
+	{
+		if (entry == WebsiteInformationEntry)
+		{
+			if (m_window)
+			{
+				menu.addAction(m_window->getContentsWidget()->getAction(ActionsManager::WebsiteInformationAction));
+			}
+			else
+			{
+				Action *websiteInformationAction(new Action(ActionsManager::WebsiteInformationAction));
+				websiteInformationAction->setEnabled(false);
+
+				menu.addAction(websiteInformationAction);
+			}
+
+			menu.addSeparator();
+		}
+
+		menu.addAction(tr("Remove this Icon"), this, SLOT(removeEntry()))->setData(entry);
+	}
 
 	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
 
@@ -464,7 +446,9 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 
 void AddressWidget::mousePressEvent(QMouseEvent *event)
 {
-	if (event->button() == Qt::LeftButton && m_informationButtonRectangle.contains(event->pos()))
+	m_clickedEntry = ((event->button() == Qt::LeftButton) ? getEntry(event->pos()) : UnknownEntry);
+
+	if (m_clickedEntry == WebsiteInformationEntry || m_clickedEntry == FaviconEntry)
 	{
 		m_dragStartPosition = event->pos();
 	}
@@ -480,13 +464,20 @@ void AddressWidget::mousePressEvent(QMouseEvent *event)
 
 void AddressWidget::mouseMoveEvent(QMouseEvent *event)
 {
-	if ((!m_isUsingSimpleMode && m_informationButtonRectangle.contains(event->pos())) || ((m_isHistoryDropdownEnabled || m_isUsingSimpleMode) && m_historyDropdownArrowRectangle.contains(event->pos())))
+	const EntryIdentifier entry(getEntry(event->pos()));
+
+	if (entry != m_hoveredEntry)
 	{
-		setCursor(Qt::ArrowCursor);
-	}
-	else
-	{
-		setCursor(Qt::IBeamCursor);
+		if (entry == UnknownEntry || entry == AddressEntry)
+		{
+			unsetCursor();
+		}
+		else
+		{
+			setCursor(Qt::ArrowCursor);
+		}
+
+		m_hoveredEntry = entry;
 	}
 
 	if (!startDrag(event))
@@ -497,31 +488,96 @@ void AddressWidget::mouseMoveEvent(QMouseEvent *event)
 
 void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-	if (event->button() == Qt::LeftButton)
+	if (event->button() == Qt::LeftButton && m_clickedEntry == getEntry(event->pos()))
 	{
-		if (m_informationButtonRectangle.contains(event->pos()) && m_window)
+		switch (m_clickedEntry)
 		{
-			m_window->triggerAction(ActionsManager::WebsiteInformationAction);
+			case WebsiteInformationEntry:
+				m_window->triggerAction(ActionsManager::WebsiteInformationAction);
 
-			event->accept();
+				event->accept();
 
-			return;
-		}
+				return;
+			case ListFeedsEntry:
+				{
+					const QList<WebWidget::LinkUrl> feeds((m_window && m_window->getLoadingState() == WindowsManager::FinishedLoadingState) ? m_window->getContentsWidget()->getFeeds() : QList<WebWidget::LinkUrl>());
 
-		if (m_historyDropdownArrowRectangle.contains(event->pos()))
-		{
-			m_popupHideTime = QTime();
+					if (feeds.count() == 1 && m_window)
+					{
+						m_window->setUrl(feeds.at(0).url);
+					}
+					else if (feeds.count() > 1)
+					{
+						QMenu menu;
 
-			if (m_wasPopupVisible)
-			{
-				hidePopup();
-			}
-			else
-			{
-				showPopup();
-			}
+						for (int i = 0; i < feeds.count(); ++i)
+						{
+							menu.addAction(feeds.at(i).title.isEmpty() ? tr("(Untitled)") : feeds.at(i).title)->setData(feeds.at(i).url);
+						}
+
+						connect(&menu, SIGNAL(triggered(QAction*)), this, SLOT(openFeed(QAction*)));
+
+						menu.exec(event->globalPos());
+					}
+
+					event->accept();
+				}
+
+				return;
+			case BookmarkEntry:
+				{
+					const QUrl url(getUrl());
+
+					if (!Utils::isUrlEmpty(url) && url.scheme() != QLatin1String("about"))
+					{
+						if (BookmarksManager::hasBookmark(url))
+						{
+							BookmarksManager::removeBookmark(url);
+						}
+						else
+						{
+							BookmarkPropertiesDialog dialog(url.adjusted(QUrl::RemovePassword), m_window->getTitle(), QString(), nullptr, -1, true, this);
+							dialog.exec();
+						}
+
+						updateGeometries();
+					}
+
+					event->accept();
+				}
+
+				return;
+			case LoadPluginsEntry:
+				m_window->getContentsWidget()->triggerAction(ActionsManager::LoadPluginsAction);
+
+				event->accept();
+
+				return;
+			case FillPasswordEntry:
+				m_window->getContentsWidget()->triggerAction(ActionsManager::FillPasswordAction);
+
+				event->accept();
+
+				return;
+			case HistoryDropdownEntry:
+				m_popupHideTime = QTime();
+
+				if (m_wasPopupVisible)
+				{
+					hidePopup();
+				}
+				else
+				{
+					showPopup();
+				}
+
+				break;
+			default:
+				break;
 		}
 	}
+
+	m_clickedEntry = UnknownEntry;
 
 	QWidget::mouseReleaseEvent(event);
 }
@@ -597,143 +653,99 @@ void AddressWidget::hideCompletion()
 
 void AddressWidget::optionChanged(int identifier, const QVariant &value)
 {
-	if (identifier == SettingsManager::AddressField_CompletionModeOption)
+	switch (identifier)
 	{
-		const QString completionMode(value.toString());
-
-		if (completionMode == QLatin1String("inlineAndPopup"))
-		{
-			m_completionModes = (InlineCompletionMode | PopupCompletionMode);
-		}
-		else if (completionMode == QLatin1String("inline"))
-		{
-			m_completionModes = InlineCompletionMode;
-		}
-		else if (completionMode == QLatin1String("popup"))
-		{
-			m_completionModes = PopupCompletionMode;
-		}
-
-		disconnect(m_lineEdit, SIGNAL(textEdited(QString)), m_completionModel, SLOT(setFilter(QString)));
-
-		if (m_completionModes != NoCompletionMode)
-		{
-			connect(m_lineEdit, SIGNAL(textEdited(QString)), m_completionModel, SLOT(setFilter(QString)));
-		}
-	}
-	else if (identifier == SettingsManager::AddressField_DropActionOption)
-	{
-		const QString dropAction(value.toString());
-
-		if (dropAction == QLatin1String("pasteAndGo"))
-		{
-			m_lineEdit->setDropMode(LineEditWidget::ReplaceAndNotifyDropMode);
-		}
-		else if (dropAction == QLatin1String("replace"))
-		{
-			m_lineEdit->setDropMode(LineEditWidget::ReplaceDropMode);
-		}
-		else
-		{
-			m_lineEdit->setDropMode(LineEditWidget::PasteDropMode);
-		}
-	}
-	else if (identifier == SettingsManager::AddressField_SelectAllOnFocusOption)
-	{
-		m_lineEdit->setSelectAllOnFocus(value.toBool());
-	}
-	else if (identifier == SettingsManager::AddressField_EnableHistoryDropdownOption)
-	{
-		m_isHistoryDropdownEnabled = value.toBool();
-
-		if (m_isHistoryDropdownEnabled || m_isUsingSimpleMode)
-		{
-			QStyleOptionFrame panel;
-			panel.initFrom(m_lineEdit);
-			panel.rect = rect();
-			panel.lineWidth = 1;
-
-			m_historyDropdownArrowRectangle = style()->subElementRect(QStyle::SE_LineEditContents, &panel, this);
-			m_historyDropdownArrowRectangle.setLeft(m_historyDropdownArrowRectangle.left() + m_historyDropdownArrowRectangle.width() - 12);
-		}
-
-		updateIcons();
-	}
-	else if (identifier == SettingsManager::AddressField_ShowBookmarkIconOption)
-	{
-		if (value.toBool() && !m_bookmarkLabel)
-		{
-			m_bookmarkLabel = new QLabel(this);
-			m_bookmarkLabel->setObjectName(QLatin1String("Bookmark"));
-			m_bookmarkLabel->setAutoFillBackground(false);
-			m_bookmarkLabel->setFixedSize(16, 16);
-			m_bookmarkLabel->setPixmap(ThemesManager::getIcon(QLatin1String("bookmarks")).pixmap(m_bookmarkLabel->size(), QIcon::Disabled));
-			m_bookmarkLabel->setCursor(Qt::ArrowCursor);
-			m_bookmarkLabel->setFocusPolicy(Qt::NoFocus);
-			m_bookmarkLabel->installEventFilter(this);
-
-			updateIcons();
-		}
-		else if (!value.toBool() && m_bookmarkLabel)
-		{
-			m_bookmarkLabel->deleteLater();
-			m_bookmarkLabel = nullptr;
-
-			updateIcons();
-		}
-	}
-	else if (identifier == SettingsManager::AddressField_ShowFeedsIconOption)
-	{
-		updateFeeds();
-	}
-	else if (identifier == SettingsManager::AddressField_ShowUrlIconOption)
-	{
-		if (value.toBool() && !m_urlIconLabel)
-		{
-			m_urlIconLabel = new QLabel(this);
-			m_urlIconLabel->setObjectName(QLatin1String("Url"));
-			m_urlIconLabel->setAutoFillBackground(false);
-			m_urlIconLabel->setFixedSize(16, 16);
-			m_urlIconLabel->setPixmap((m_window ? m_window->getIcon() : ThemesManager::getIcon(QLatin1String("tab"))).pixmap(m_urlIconLabel->size()));
-			m_urlIconLabel->setCursor(Qt::ArrowCursor);
-			m_urlIconLabel->setFocusPolicy(Qt::NoFocus);
-			m_urlIconLabel->installEventFilter(this);
-
-			if (m_window)
+		case SettingsManager::AddressField_CompletionModeOption:
 			{
-				connect(m_window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
-			}
-		}
-		else
-		{
-			if (!value.toBool() && m_urlIconLabel)
-			{
-				m_urlIconLabel->deleteLater();
-				m_urlIconLabel = nullptr;
+				const QString completionMode(value.toString());
 
-				updateIcons();
+				if (completionMode == QLatin1String("inlineAndPopup"))
+				{
+					m_completionModes = (InlineCompletionMode | PopupCompletionMode);
+				}
+				else if (completionMode == QLatin1String("inline"))
+				{
+					m_completionModes = InlineCompletionMode;
+				}
+				else if (completionMode == QLatin1String("popup"))
+				{
+					m_completionModes = PopupCompletionMode;
+				}
+
+				disconnect(m_lineEdit, SIGNAL(textEdited(QString)), m_completionModel, SLOT(setFilter(QString)));
+
+				if (m_completionModes != NoCompletionMode)
+				{
+					connect(m_lineEdit, SIGNAL(textEdited(QString)), m_completionModel, SLOT(setFilter(QString)));
+				}
 			}
 
-			if (m_window)
+			break;
+		case SettingsManager::AddressField_DropActionOption:
 			{
-				disconnect(m_window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
+				const QString dropAction(value.toString());
+
+				if (dropAction == QLatin1String("pasteAndGo"))
+				{
+					m_lineEdit->setDropMode(LineEditWidget::ReplaceAndNotifyDropMode);
+				}
+				else if (dropAction == QLatin1String("replace"))
+				{
+					m_lineEdit->setDropMode(LineEditWidget::ReplaceDropMode);
+				}
+				else
+				{
+					m_lineEdit->setDropMode(LineEditWidget::PasteDropMode);
+				}
 			}
-		}
 
-		updateIcons();
-	}
-	else if (identifier == SettingsManager::AddressField_ShowLoadPluginsIconOption && m_window)
-	{
-		if (value.toBool())
-		{
-			connect(m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
-		}
-		else
-		{
-			disconnect(m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
-		}
+			break;
+		case SettingsManager::AddressField_SelectAllOnFocusOption:
+			m_lineEdit->setSelectAllOnFocus(value.toBool());
 
-		updateLoadPlugins();
+			break;
+		case SettingsManager::AddressField_LayoutOption:
+			if (m_isUsingSimpleMode)
+			{
+				m_layout = {AddressEntry, HistoryDropdownEntry};
+			}
+			else
+			{
+				if (m_entryIdentifierEnumerator < 0)
+				{
+					m_entryIdentifierEnumerator = metaObject()->indexOfEnumerator("EntryIdentifier");
+				}
+
+				const QStringList rawLayout(value.toStringList());
+				QVector<EntryIdentifier> layout;
+				layout.reserve(rawLayout.count());
+
+				for (int i = 0; i < rawLayout.count(); ++i)
+				{
+					QString name(rawLayout.at(i) + QLatin1String("Entry"));
+					name[0] = name.at(0).toUpper();
+
+					const EntryIdentifier identifier(static_cast<EntryIdentifier>(metaObject()->enumerator(m_entryIdentifierEnumerator).keyToValue(name.toLatin1())));
+
+					if (identifier > UnknownEntry && !layout.contains(identifier))
+					{
+						layout.append(identifier);
+					}
+				}
+
+				if (!layout.contains(AddressEntry))
+				{
+					layout.prepend(AddressEntry);
+				}
+
+				m_layout = layout;
+			}
+
+			updateGeometries();
+
+			break;
+		default:
+			break;
 	}
 }
 
@@ -775,13 +787,24 @@ void AddressWidget::openUrl(const QModelIndex &index)
 	}
 }
 
-void AddressWidget::removeIcon()
+void AddressWidget::removeEntry()
 {
 	QAction *action(qobject_cast<QAction*>(sender()));
 
 	if (action)
 	{
-		SettingsManager::setValue(SettingsManager::getOptionIdentifier(QStringLiteral("AddressField/Show%1Icon").arg(action->data().toString())), false);
+		QStringList layout(SettingsManager::getValue(SettingsManager::AddressField_LayoutOption).toStringList());
+		QString name(metaObject()->enumerator(m_entryIdentifierEnumerator).valueToKey(action->data().toInt()));
+
+		if (!name.isEmpty())
+		{
+			name.chop(5);
+			name[0] = name.at(0).toLower();
+
+			layout.removeAll(name);
+
+			SettingsManager::setValue(SettingsManager::AddressField_LayoutOption, layout);
+		}
 	}
 }
 
@@ -804,153 +827,9 @@ void AddressWidget::handleUserInput(const QString &text, WindowsManager::OpenHin
 	}
 }
 
-void AddressWidget::updateBookmark(const QUrl &url)
-{
-	if (!m_bookmarkLabel)
-	{
-		return;
-	}
-
-	const QUrl bookmarkUrl(url.isEmpty() ? getUrl() : url);
-
-	if (Utils::isUrlEmpty(bookmarkUrl) || bookmarkUrl.scheme() == QLatin1String("about"))
-	{
-		m_bookmarkLabel->setEnabled(false);
-		m_bookmarkLabel->setPixmap(ThemesManager::getIcon(QLatin1String("bookmarks")).pixmap(m_bookmarkLabel->size(), QIcon::Disabled));
-		m_bookmarkLabel->setToolTip(QString());
-
-		return;
-	}
-
-	const bool hasBookmark(BookmarksManager::hasBookmark(bookmarkUrl));
-
-	m_bookmarkLabel->setEnabled(true);
-	m_bookmarkLabel->setPixmap(ThemesManager::getIcon(QLatin1String("bookmarks")).pixmap(m_bookmarkLabel->size(), (hasBookmark ? QIcon::Active : QIcon::Disabled)));
-	m_bookmarkLabel->setToolTip(hasBookmark ? tr("Remove Bookmark") : tr("Add Bookmark"));
-}
-
-void AddressWidget::updateFeeds()
-{
-	const QList<WebWidget::LinkUrl> feeds((SettingsManager::getValue(SettingsManager::AddressField_ShowFeedsIconOption).toBool() && m_window && m_window->getLoadingState() == WindowsManager::FinishedLoadingState) ? m_window->getContentsWidget()->getFeeds() : QList<WebWidget::LinkUrl>());
-
-	if (!feeds.isEmpty() && !m_feedsLabel)
-	{
-		m_feedsLabel = new QLabel(this);
-		m_feedsLabel->show();
-		m_feedsLabel->setObjectName(QLatin1String("Feeds"));
-		m_feedsLabel->setAutoFillBackground(false);
-		m_feedsLabel->setFixedSize(16, 16);
-		m_feedsLabel->setPixmap(ThemesManager::getIcon(QLatin1String("application-rss+xml")).pixmap(m_feedsLabel->size()));
-		m_feedsLabel->setCursor(Qt::ArrowCursor);
-		m_feedsLabel->setToolTip(tr("Feed List"));
-		m_feedsLabel->setFocusPolicy(Qt::NoFocus);
-		m_feedsLabel->installEventFilter(this);
-
-		updateIcons();
-	}
-	else if (feeds.isEmpty() && m_feedsLabel)
-	{
-		m_feedsLabel->deleteLater();
-		m_feedsLabel = nullptr;
-
-		updateIcons();
-	}
-}
-
-void AddressWidget::updateLoadPlugins()
-{
-	bool canLoadPlugins(false);
-
-	if (SettingsManager::getValue(SettingsManager::AddressField_ShowLoadPluginsIconOption).toBool() && m_window && !m_window->isAboutToClose())
-	{
-		Action *loadPluginsAction(m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction));
-
-		if (loadPluginsAction && loadPluginsAction->isEnabled())
-		{
-			canLoadPlugins = true;
-		}
-	}
-
-	if (canLoadPlugins && !m_loadPluginsLabel)
-	{
-		m_loadPluginsLabel = new QLabel(this);
-		m_loadPluginsLabel->show();
-		m_loadPluginsLabel->setObjectName(QLatin1String("LoadPlugins"));
-		m_loadPluginsLabel->setAutoFillBackground(false);
-		m_loadPluginsLabel->setFixedSize(16, 16);
-		m_loadPluginsLabel->setPixmap(ThemesManager::getIcon(QLatin1String("preferences-plugin")).pixmap(m_loadPluginsLabel->size()));
-		m_loadPluginsLabel->setCursor(Qt::ArrowCursor);
-		m_loadPluginsLabel->setToolTip(tr("Click to load all plugins on the page"));
-		m_loadPluginsLabel->setFocusPolicy(Qt::NoFocus);
-		m_loadPluginsLabel->installEventFilter(this);
-
-		updateIcons();
-	}
-	else if (!canLoadPlugins && m_loadPluginsLabel)
-	{
-		m_loadPluginsLabel->deleteLater();
-		m_loadPluginsLabel = nullptr;
-
-		updateIcons();
-	}
-}
-
 void AddressWidget::updateLineEdit()
 {
 	m_lineEdit->setGeometry(m_lineEditRectangle);
-}
-
-void AddressWidget::updateIcons()
-{
-	QMargins margins(0, 0, 0, 0);
-	const bool isRightToLeft(layoutDirection() == Qt::RightToLeft);
-
-	if (!m_isUsingSimpleMode)
-	{
-		margins.setLeft(height());
-	}
-
-	if (m_urlIconLabel)
-	{
-		m_urlIconLabel->move((isRightToLeft ? (width() - height() - 18) : (height() + 2)), ((height() - m_urlIconLabel->height()) / 2));
-
-		margins.setLeft(margins.left() + 22);
-	}
-
-	if (m_isHistoryDropdownEnabled || m_isUsingSimpleMode)
-	{
-		margins.setRight(margins.right() + 13);
-	}
-
-	if (m_bookmarkLabel)
-	{
-		margins.setRight(margins.right() + 22);
-
-		m_bookmarkLabel->move((isRightToLeft ? (margins.right() - 16) : (width() - margins.right())), ((height() - m_bookmarkLabel->height()) / 2));
-	}
-
-	if (m_feedsLabel)
-	{
-		margins.setRight(margins.right() + 22);
-
-		m_feedsLabel->move((isRightToLeft ? (margins.right() - 16) : (width() - margins.right())), ((height() - m_feedsLabel->height()) / 2));
-	}
-
-	if (m_loadPluginsLabel)
-	{
-		margins.setRight(margins.right() + 22);
-
-		m_loadPluginsLabel->move((isRightToLeft ? (margins.right() - 16) : (width() - margins.right())), ((height() - m_loadPluginsLabel->height()) / 2));
-	}
-
-	margins.setRight(margins.right() + 3);
-
-	m_lineEdit->resize((width() - margins.left() - margins.right()), height());
-	m_lineEdit->move(QPoint((isRightToLeft ? margins.right() : margins.left()), 0));
-
-	m_lineEditRectangle = m_lineEdit->geometry();
-
-	updateLineEdit();
 }
 
 void AddressWidget::setCompletion(const QString &filter)
@@ -1037,50 +916,292 @@ void AddressWidget::activate(Qt::FocusReason reason)
 
 void AddressWidget::updateGeometries()
 {
-	QStyleOptionFrame panel;
-	panel.initFrom(m_lineEdit);
-	panel.rect = rect();
-	panel.lineWidth = 1;
+	QHash<EntryIdentifier, EntryDefinition> entries;
+	QList<EntryDefinition> leadingEntries;
+	QList<EntryDefinition> trailingEntries;
+	QMargins margins(qMax(((height() - 16) / 2), 2), 0, 2, 0);
+	bool isLeading(true);
+	bool isRightToLeft(layoutDirection() == Qt::RightToLeft);
 
-	const QRect rectangle(style()->subElementRect(QStyle::SE_LineEditContents, &panel, this));
-
-	if (m_isHistoryDropdownEnabled || m_isUsingSimpleMode)
+	if (isRightToLeft)
 	{
-		m_historyDropdownArrowRectangle = rectangle;
+		isLeading = false;
+	}
 
-		if (layoutDirection() == Qt::RightToLeft)
+	for (int i = 0; i < m_layout.count(); ++i)
+	{
+		EntryDefinition definition;
+		definition.identifier = m_layout.at(i);
+
+		switch (m_layout.at(i))
 		{
-			m_historyDropdownArrowRectangle.setRight(13);
+			case AddressEntry:
+				isLeading = !isLeading;
+
+				break;
+			case WebsiteInformationEntry:
+				{
+					QString icon(QLatin1String("unknown"));
+					const WindowsManager::ContentStates state(m_window ? m_window->getContentState() : WindowsManager::UnknownContentState);
+
+					if (state.testFlag(WindowsManager::FraudContentState))
+					{
+						icon = QLatin1String("badge-fraud");
+					}
+					else if (state.testFlag(WindowsManager::SecureContentState))
+					{
+						icon = QLatin1String("badge-secure");
+					}
+					else if (state.testFlag(WindowsManager::RemoteContentState))
+					{
+						icon = QLatin1String("badge-remote");
+					}
+					else if (state.testFlag(WindowsManager::LocalContentState))
+					{
+						icon = QLatin1String("badge-local");
+					}
+					else if (state.testFlag(WindowsManager::ApplicationContentState))
+					{
+						icon = QLatin1String("otter-browser");
+					}
+
+					definition.title = QT_TR_NOOP("Show website information");
+					definition.icon = ThemesManager::getIcon(icon, false);
+				}
+
+				break;
+			case FaviconEntry:
+				definition.icon = (m_window ? m_window->getIcon() : ThemesManager::getIcon((SessionsManager::isPrivate() ? QLatin1String("tab-private") : QLatin1String("tab")), false));
+
+				break;
+			case ListFeedsEntry:
+				if (!m_window || m_window->isAboutToClose() || m_window->getLoadingState() != WindowsManager::FinishedLoadingState || m_window->getContentsWidget()->getFeeds().isEmpty())
+				{
+					continue;
+				}
+
+				definition.title = QT_TR_NOOP("Show feed list");
+				definition.icon = ThemesManager::getIcon(QLatin1String("application-rss+xml"), false);
+
+				break;
+			case BookmarkEntry:
+				{
+					const QUrl url(getUrl());
+
+					definition.icon = ThemesManager::getIcon(QLatin1String("bookmarks"), false);
+
+					if (BookmarksManager::hasBookmark(url))
+					{
+						definition.title = QT_TR_NOOP("Remove bookmark");
+						definition.mode = QIcon::Normal;
+					}
+					else
+					{
+						if (Utils::isUrlEmpty(url) || url.scheme() == QLatin1String("about"))
+						{
+							definition.title = QString();
+						}
+						else
+						{
+							definition.title = QT_TR_NOOP("Add bookmark");
+						}
+
+						definition.mode = QIcon::Disabled;
+					}
+				}
+
+				break;
+			case LoadPluginsEntry:
+				{
+					if (!m_window || m_window->isAboutToClose() || m_window->getLoadingState() != WindowsManager::FinishedLoadingState)
+					{
+						continue;
+					}
+
+					Action *loadPluginsAction(m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction));
+
+					if (!loadPluginsAction || !loadPluginsAction->isEnabled())
+					{
+						continue;
+					}
+
+					definition.title = QT_TR_NOOP("Load all plugins on the page");
+					definition.icon = ThemesManager::getIcon(QLatin1String("preferences-plugin"), false);
+				}
+
+				break;
+			case FillPasswordEntry:
+				{
+					const QUrl url(getUrl());
+
+					if (!m_window || m_window->isAboutToClose() || m_window->getLoadingState() != WindowsManager::FinishedLoadingState || Utils::isUrlEmpty(url) || url.scheme() == QLatin1String("about") || !PasswordsManager::hasPasswords(url, PasswordsManager::FormPassword))
+					{
+						continue;
+					}
+
+					definition.title = QT_TR_NOOP("Log in");
+					definition.icon = ThemesManager::getIcon(QLatin1String("fill-password"), false);
+				}
+
+				break;
+			default:
+				break;
+		}
+
+		if (isLeading)
+		{
+			if (isRightToLeft)
+			{
+				leadingEntries.prepend(definition);
+			}
+			else
+			{
+				leadingEntries.append(definition);
+			}
 		}
 		else
 		{
-			m_historyDropdownArrowRectangle.setLeft(m_historyDropdownArrowRectangle.width() - 13);
+			if (isRightToLeft)
+			{
+				trailingEntries.append(definition);
+			}
+			else
+			{
+				trailingEntries.prepend(definition);
+			}
 		}
 	}
 
-	if (!m_isUsingSimpleMode)
+	for (int i = 0; i < leadingEntries.count(); ++i)
 	{
-		m_informationButtonRectangle = rectangle;
+		switch (leadingEntries.at(i).identifier)
+		{
+			case WebsiteInformationEntry:
+			case FaviconEntry:
+			case ListFeedsEntry:
+			case BookmarkEntry:
+			case LoadPluginsEntry:
+			case FillPasswordEntry:
+				leadingEntries[i].rectangle = QRect(margins.left(), ((height() - 16) / 2), 16, 16);
 
-		if (layoutDirection() == Qt::RightToLeft)
-		{
-			m_informationButtonRectangle.setLeft(m_informationButtonRectangle.width() - height());
+				margins.setLeft(margins.left() + 20);
+
+				break;
+			case HistoryDropdownEntry:
+				leadingEntries[i].rectangle = QRect(margins.left(), 0, 14, height());
+
+				margins.setLeft(margins.left() + 16);
+
+				break;
+			default:
+				break;
 		}
-		else
-		{
-			m_informationButtonRectangle.setRight(height());
-		}
+
+		entries[leadingEntries.at(i).identifier] = leadingEntries.at(i);
 	}
 
-	updateIcons();
+	for (int i = 0; i < trailingEntries.count(); ++i)
+	{
+		switch (trailingEntries.at(i).identifier)
+		{
+			case WebsiteInformationEntry:
+			case FaviconEntry:
+			case ListFeedsEntry:
+			case BookmarkEntry:
+			case LoadPluginsEntry:
+			case FillPasswordEntry:
+				trailingEntries[i].rectangle = QRect((width() - margins.right() - 20), ((height() - 16) / 2), 16, 16);
+
+				margins.setRight(margins.right() + 20);
+
+				break;
+			case HistoryDropdownEntry:
+				trailingEntries[i].rectangle = QRect((width() - margins.right() - 14), 0, 14, height());
+
+				margins.setRight(margins.right() + 16);
+
+				break;
+			default:
+				break;
+		}
+
+		entries[trailingEntries.at(i).identifier] = trailingEntries.at(i);
+	}
+
+	m_entries = entries;
+
+	if (margins.left() > 0)
+	{
+		margins.setLeft(margins.left() - 2);
+	}
+
+	if (margins.right() > 0)
+	{
+		margins.setRight(margins.right() - 2);
+	}
+
+	m_lineEdit->resize((width() - margins.left() - margins.right()), height());
+	m_lineEdit->move(margins.left(), 0);
+
+	m_lineEditRectangle = m_lineEdit->geometry();
 }
 
-void AddressWidget::setIcon(const QIcon &icon)
+void AddressWidget::setWindow(Window *window)
 {
-	if (m_urlIconLabel)
+	MainWindow *mainWindow(MainWindow::findMainWindow(this));
+
+	if (m_window && !m_window->isAboutToClose() && (!sender() || sender() != m_window))
 	{
-		m_urlIconLabel->setPixmap((icon.isNull() ? ThemesManager::getIcon(QLatin1String("tab")) : icon).pixmap(m_urlIconLabel->size()));
+		m_window->detachAddressWidget(this);
+
+		disconnect(this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), m_window.data(), SLOT(handleOpenUrlRequest(QUrl,WindowsManager::OpenHints)));
+		disconnect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), m_window.data(), SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)));
+		disconnect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), m_window.data(), SLOT(handleSearchRequest(QString,QString,WindowsManager::OpenHints)));
+		disconnect(m_window.data(), SIGNAL(destroyed(QObject*)), this, SLOT(setWindow()));
+		disconnect(m_window.data(), SIGNAL(urlChanged(QUrl,bool)), this, SLOT(setUrl(QUrl,bool)));
+		disconnect(m_window.data(), SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
+		disconnect(m_window.data(), SIGNAL(contentStateChanged(WindowsManager::ContentStates)), this, SLOT(updateGeometries()));
+		disconnect(m_window.data(), SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateGeometries()));
 	}
+
+	m_window = window;
+
+	if (window)
+	{
+		if (mainWindow)
+		{
+			disconnect(this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(open(QUrl,WindowsManager::OpenHints)));
+			disconnect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(open(BookmarksItem*,WindowsManager::OpenHints)));
+			disconnect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,WindowsManager::OpenHints)));
+		}
+
+		window->attachAddressWidget(this);
+
+		connect(this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), window, SLOT(handleOpenUrlRequest(QUrl,WindowsManager::OpenHints)));
+		connect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), window, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)));
+		connect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), window, SLOT(handleSearchRequest(QString,QString,WindowsManager::OpenHints)));
+		connect(window, SIGNAL(urlChanged(QUrl,bool)), this, SLOT(setUrl(QUrl,bool)));
+		connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
+		connect(window, SIGNAL(contentStateChanged(WindowsManager::ContentStates)), this, SLOT(updateGeometries()));
+		connect(window, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateGeometries()));
+
+		ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
+
+		if (!toolBar || toolBar->getIdentifier() != ToolBarsManager::NavigationBar)
+		{
+			connect(window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
+		}
+	}
+	else if (mainWindow && !mainWindow->isAboutToClose() && !m_isUsingSimpleMode)
+	{
+		connect(this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(open(QUrl,WindowsManager::OpenHints)));
+		connect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(open(BookmarksItem*,WindowsManager::OpenHints)));
+		connect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,WindowsManager::OpenHints)));
+	}
+
+	setIcon(window ? window->getIcon() : QIcon());
+	setUrl(window ? window->getUrl() : QUrl());
+	update();
 }
 
 void AddressWidget::setText(const QString &text)
@@ -1102,8 +1223,7 @@ void AddressWidget::setUrl(const QUrl &url, bool force)
 {
 	if (!m_isUsingSimpleMode)
 	{
-		updateBookmark(url);
-		updateFeeds();
+		updateGeometries();
 	}
 
 	if (!m_window || ((force || !hasFocus()) && url.scheme() != QLatin1String("javascript")))
@@ -1117,77 +1237,12 @@ void AddressWidget::setUrl(const QUrl &url, bool force)
 	}
 }
 
-void AddressWidget::setWindow(Window *window)
+void AddressWidget::setIcon(const QIcon &icon)
 {
-	MainWindow *mainWindow(MainWindow::findMainWindow(this));
-
-	if (m_window && !m_window->isAboutToClose() && (!sender() || sender() != m_window))
+	if (m_layout.contains(FaviconEntry))
 	{
-		m_window->detachAddressWidget(this);
-
-		disconnect(this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), m_window.data(), SLOT(handleOpenUrlRequest(QUrl,WindowsManager::OpenHints)));
-		disconnect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), m_window.data(), SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)));
-		disconnect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), m_window.data(), SLOT(handleSearchRequest(QString,QString,WindowsManager::OpenHints)));
-		disconnect(m_window.data(), SIGNAL(destroyed(QObject*)), this, SLOT(setWindow()));
-		disconnect(m_window.data(), SIGNAL(urlChanged(QUrl,bool)), this, SLOT(setUrl(QUrl,bool)));
-		disconnect(m_window.data(), SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
-		disconnect(m_window.data(), SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateFeeds()));
-		disconnect(m_window.data(), SIGNAL(contentStateChanged(WindowsManager::ContentStates)), this, SLOT(update()));
-
-		if (m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction))
-		{
-			disconnect(m_window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
-		}
+		m_entries[FaviconEntry].icon = (icon.isNull() ? ThemesManager::getIcon((SessionsManager::isPrivate() ? QLatin1String("tab-private") : QLatin1String("tab")), false) : icon);
 	}
-
-	m_window = window;
-
-	if (window)
-	{
-		if (mainWindow)
-		{
-			disconnect(this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(open(QUrl,WindowsManager::OpenHints)));
-			disconnect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(open(BookmarksItem*,WindowsManager::OpenHints)));
-			disconnect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,WindowsManager::OpenHints)));
-		}
-
-		window->attachAddressWidget(this);
-
-		if (m_urlIconLabel)
-		{
-			connect(window, SIGNAL(iconChanged(QIcon)), this, SLOT(setIcon(QIcon)));
-		}
-
-		connect(this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), window, SLOT(handleOpenUrlRequest(QUrl,WindowsManager::OpenHints)));
-		connect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), window, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)));
-		connect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), window, SLOT(handleSearchRequest(QString,QString,WindowsManager::OpenHints)));
-		connect(window, SIGNAL(urlChanged(QUrl,bool)), this, SLOT(setUrl(QUrl,bool)));
-		connect(window, SIGNAL(loadingStateChanged(WindowsManager::LoadingState)), this, SLOT(updateFeeds()));
-		connect(window, SIGNAL(contentStateChanged(WindowsManager::ContentStates)), this, SLOT(update()));
-
-		ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parentWidget()));
-
-		if (!toolBar || toolBar->getIdentifier() != ToolBarsManager::NavigationBar)
-		{
-			connect(window, SIGNAL(aboutToClose()), this, SLOT(setWindow()));
-		}
-
-		if (window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction))
-		{
-			connect(window->getContentsWidget()->getAction(ActionsManager::LoadPluginsAction), SIGNAL(changed()), this, SLOT(updateLoadPlugins()));
-		}
-	}
-	else if (mainWindow && !mainWindow->isAboutToClose() && !m_isUsingSimpleMode)
-	{
-		connect(this, SIGNAL(requestedOpenUrl(QUrl,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(open(QUrl,WindowsManager::OpenHints)));
-		connect(this, SIGNAL(requestedOpenBookmark(BookmarksItem*,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(open(BookmarksItem*,WindowsManager::OpenHints)));
-		connect(this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), mainWindow->getWindowsManager(), SLOT(search(QString,QString,WindowsManager::OpenHints)));
-	}
-
-	setIcon(window ? window->getIcon() : QIcon());
-	setUrl(window ? window->getUrl() : QUrl());
-	updateLoadPlugins();
-	update();
 }
 
 QString AddressWidget::getText() const
@@ -1198,6 +1253,21 @@ QString AddressWidget::getText() const
 QUrl AddressWidget::getUrl() const
 {
 	return (m_window ? m_window->getUrl() : QUrl(QLatin1String("about:blank")));
+}
+
+AddressWidget::EntryIdentifier AddressWidget::getEntry(const QPoint &position) const
+{
+	QHash<EntryIdentifier, EntryDefinition>::const_iterator iterator;
+
+	for (iterator = m_entries.begin(); iterator != m_entries.end(); ++iterator)
+	{
+		if (iterator.value().rectangle.contains(position))
+		{
+			return iterator.key();
+		}
+	}
+
+	return UnknownEntry;
 }
 
 bool AddressWidget::startDrag(QMouseEvent *event)
@@ -1230,11 +1300,21 @@ bool AddressWidget::event(QEvent *event)
 	{
 		QHelpEvent *helpEvent(static_cast<QHelpEvent*>(event));
 
-		if (helpEvent && m_informationButtonRectangle.contains(helpEvent->pos()))
+		if (helpEvent)
 		{
-			QToolTip::showText(helpEvent->globalPos(), tr("Show Website Information"));
+			const EntryIdentifier entry(getEntry(helpEvent->pos()));
 
-			return true;
+			if (entry != UnknownEntry && entry != AddressEntry)
+			{
+				const QString title(m_entries[entry].title);
+
+				if (!title.isEmpty())
+				{
+					QToolTip::showText(helpEvent->globalPos(), tr(title.toUtf8().constData()));
+
+					return true;
+				}
+			}
 		}
 	}
 
@@ -1250,121 +1330,6 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 		if (mouseEvent && mouseEvent->button() == Qt::MiddleButton && m_lineEdit->text().isEmpty() && !QApplication::clipboard()->text().isEmpty() && SettingsManager::getValue(SettingsManager::AddressField_PasteAndGoOnMiddleClickOption).toBool())
 		{
 			handleUserInput(QApplication::clipboard()->text().trimmed(), WindowsManager::CurrentTabOpen);
-
-			event->accept();
-
-			return true;
-		}
-	}
-	else if (object == m_urlIconLabel && m_urlIconLabel && event->type() == QEvent::MouseButtonPress)
-	{
-		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
-
-		if (mouseEvent->button() == Qt::LeftButton && m_informationButtonRectangle.contains(mouseEvent->pos()))
-		{
-			m_dragStartPosition = mouseEvent->pos();
-		}
-		else
-		{
-			m_dragStartPosition = QPoint();
-		}
-
-		mouseEvent->accept();
-
-		return true;
-	}
-	else if (object == m_urlIconLabel && m_urlIconLabel && event->type() == QEvent::MouseMove)
-	{
-		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
-
-		if (mouseEvent && startDrag(mouseEvent))
-		{
-			return true;
-		}
-	}
-	else if (object == m_bookmarkLabel && m_bookmarkLabel && m_window && event->type() == QEvent::MouseButtonPress)
-	{
-		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
-
-		if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
-		{
-			if (m_bookmarkLabel->isEnabled())
-			{
-				const QUrl url(getUrl());
-
-				if (BookmarksManager::hasBookmark(url))
-				{
-					BookmarksManager::removeBookmark(url);
-				}
-				else
-				{
-					BookmarkPropertiesDialog dialog(url.adjusted(QUrl::RemovePassword), m_window->getTitle(), QString(), nullptr, -1, true, this);
-					dialog.exec();
-				}
-
-				updateBookmark(url);
-			}
-
-			event->accept();
-
-			return true;
-		}
-	}
-	else if (object == m_feedsLabel && m_feedsLabel && m_window && event->type() == QEvent::MouseButtonPress)
-	{
-		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
-
-		if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
-		{
-			const QList<WebWidget::LinkUrl> feeds((m_window && m_window->getLoadingState() == WindowsManager::FinishedLoadingState) ? m_window->getContentsWidget()->getFeeds() : QList<WebWidget::LinkUrl>());
-
-			if (feeds.count() == 1 && m_window)
-			{
-				m_window->setUrl(feeds.at(0).url);
-			}
-			else if (feeds.count() > 1)
-			{
-				QMenu menu;
-
-				for (int i = 0; i < feeds.count(); ++i)
-				{
-					menu.addAction(feeds.at(i).title.isEmpty() ? tr("(Untitled)") : feeds.at(i).title)->setData(feeds.at(i).url);
-				}
-
-				connect(&menu, SIGNAL(triggered(QAction*)), this, SLOT(openFeed(QAction*)));
-
-				menu.exec(mouseEvent->globalPos());
-			}
-
-			event->accept();
-
-			return true;
-		}
-	}
-	else if (object == m_loadPluginsLabel && m_loadPluginsLabel && m_window && event->type() == QEvent::MouseButtonPress)
-	{
-		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
-
-		if (mouseEvent && mouseEvent->button() == Qt::LeftButton)
-		{
-			m_window->getContentsWidget()->triggerAction(ActionsManager::LoadPluginsAction);
-
-			event->accept();
-
-			return true;
-		}
-	}
-	else if (object != m_lineEdit && event->type() == QEvent::ContextMenu)
-	{
-		QContextMenuEvent *contextMenuEvent(static_cast<QContextMenuEvent*>(event));
-
-		if (contextMenuEvent)
-		{
-			QMenu menu(this);
-			QAction *action(menu.addAction(tr("Remove This Icon"), this, SLOT(removeIcon())));
-			action->setData(object->objectName());
-
-			menu.exec(contextMenuEvent->globalPos());
 
 			event->accept();
 

@@ -62,15 +62,11 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(AddressField_CompletionDisplayModeOption, QLatin1String("compact"), EnumerationType, QStringList({QLatin1String("compact"), QLatin1String("columns")}));
 	registerOption(AddressField_CompletionModeOption, QLatin1String("inlineAndPopup"), EnumerationType, QStringList({QLatin1String("none"), QLatin1String("inline"), QLatin1String("popup"), QLatin1String("inlineAndPopup")}));
 	registerOption(AddressField_DropActionOption, QLatin1String("replace"), EnumerationType, QStringList({QLatin1String("replace"), QLatin1String("paste"), QLatin1String("pasteAndGo")}));
-	registerOption(AddressField_EnableHistoryDropdownOption, true, BooleanType);
 	registerOption(AddressField_HostLookupTimeoutOption, 200, IntegerType);
+	registerOption(AddressField_LayoutOption, QStringList({QLatin1String("websiteInformation"), QLatin1String("address"), QLatin1String("fillPassword"), QLatin1String("loadPlugins"), QLatin1String("listFeeds"), QLatin1String("bookmark"), QLatin1String("historyDropdown")}), ListType);
 	registerOption(AddressField_PasteAndGoOnMiddleClickOption, true, BooleanType);
 	registerOption(AddressField_SelectAllOnFocusOption, true, BooleanType);
-	registerOption(AddressField_ShowBookmarkIconOption, true, BooleanType);
 	registerOption(AddressField_ShowCompletionCategoriesOption, true, BooleanType);
-	registerOption(AddressField_ShowFeedsIconOption, true, BooleanType);
-	registerOption(AddressField_ShowLoadPluginsIconOption, true, BooleanType);
-	registerOption(AddressField_ShowUrlIconOption, false, BooleanType);
 	registerOption(AddressField_SuggestBookmarksOption, true, BooleanType);
 	registerOption(AddressField_SuggestHistoryOption, true, BooleanType);
 	registerOption(AddressField_SuggestLocalPathsOption, true, BooleanType);

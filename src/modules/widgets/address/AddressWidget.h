@@ -72,16 +72,39 @@ private:
 class AddressWidget : public ComboBoxWidget
 {
 	Q_OBJECT
+	Q_ENUMS(EntryIdentifier)
 
 public:
 	enum CompletionMode
 	{
 		NoCompletionMode = 0,
-		InlineCompletionMode = 1,
-		PopupCompletionMode = 2
+		InlineCompletionMode,
+		PopupCompletionMode
 	};
 
 	Q_DECLARE_FLAGS(CompletionModes, CompletionMode)
+
+	enum EntryIdentifier
+	{
+		UnknownEntry = 0,
+		AddressEntry,
+		WebsiteInformationEntry,
+		FaviconEntry,
+		ListFeedsEntry,
+		BookmarkEntry,
+		LoadPluginsEntry,
+		FillPasswordEntry,
+		HistoryDropdownEntry
+	};
+
+	struct EntryDefinition
+	{
+		QString title;
+		QIcon icon;
+		QRect rectangle;
+		QIcon::Mode mode = QIcon::Normal;
+		EntryIdentifier identifier = UnknownEntry;
+	};
 
 	explicit AddressWidget(Window *window, QWidget *parent = nullptr);
 
@@ -95,9 +118,9 @@ public:
 public slots:
 	void activate(Qt::FocusReason reason);
 	void handleUserInput(const QString &text, WindowsManager::OpenHints hints = WindowsManager::DefaultOpen);
+	void setWindow(Window *window = nullptr);
 	void setText(const QString &text);
 	void setUrl(const QUrl &url, bool force = false);
-	void setWindow(Window *window = nullptr);
 
 protected:
 	void changeEvent(QEvent *event);
@@ -112,7 +135,7 @@ protected:
 	void mouseReleaseEvent(QMouseEvent *event);
 	void wheelEvent(QWheelEvent *event);
 	void hideCompletion();
-	void updateGeometries();
+	EntryIdentifier getEntry(const QPoint &position) const;
 	bool startDrag(QMouseEvent *event);
 
 protected slots:
@@ -120,12 +143,9 @@ protected slots:
 	void openFeed(QAction *action);
 	void openUrl(const QString &url);
 	void openUrl(const QModelIndex &index);
-	void removeIcon();
-	void updateBookmark(const QUrl &url = QUrl());
-	void updateFeeds();
-	void updateLoadPlugins();
+	void removeEntry();
+	void updateGeometries();
 	void updateLineEdit();
-	void updateIcons();
 	void setCompletion(const QString &filter);
 	void setIcon(const QIcon &icon);
 	void setText(const QModelIndex &index);
@@ -136,22 +156,21 @@ private:
 	AddressCompletionModel *m_completionModel;
 	ItemViewWidget *m_completionView;
 	QAbstractItemView *m_visibleView;
-	QLabel *m_bookmarkLabel;
-	QLabel *m_feedsLabel;
-	QLabel *m_loadPluginsLabel;
-	QLabel *m_urlIconLabel;
 	QTime m_popupHideTime;
 	QPoint m_dragStartPosition;
 	QRect m_lineEditRectangle;
-	QRect m_historyDropdownArrowRectangle;
-	QRect m_informationButtonRectangle;
-	AddressWidget::CompletionModes m_completionModes;
+	QVector<EntryIdentifier> m_layout;
+	QHash<EntryIdentifier, EntryDefinition> m_entries;
+	EntryIdentifier m_clickedEntry;
+	EntryIdentifier m_hoveredEntry;
+	CompletionModes m_completionModes;
 	WindowsManager::OpenHints m_hints;
 	int m_removeModelTimer;
-	bool m_isHistoryDropdownEnabled;
 	bool m_isNavigatingCompletion;
 	bool m_isUsingSimpleMode;
 	bool m_wasPopupVisible;
+
+	static int m_entryIdentifierEnumerator;
 
 signals:
 	void requestedOpenBookmark(BookmarksItem *bookmark, WindowsManager::OpenHints hints);
