@@ -769,11 +769,15 @@ void PreferencesAdvancedPageWidget::addUserAgent(QAction *action)
 			break;
 		case TreeModel::EntryType:
 			{
-				UserAgentPropertiesDialog dialog(UserAgentDefinition(), false, this);
+				UserAgentDefinition userAgent;
+				userAgent.title = tr("Custom");
+				userAgent.value = NetworkManagerFactory::getUserAgent(QLatin1String("default")).value;
+
+				UserAgentPropertiesDialog dialog(userAgent, false, this);
 
 				if (dialog.exec() == QDialog::Accepted)
 				{
-					UserAgentDefinition userAgent(dialog.getUserAgent());
+					userAgent = dialog.getUserAgent();
 					userAgent.identifier = Utils::createIdentifier(QString(), QVariant(model->getAllData(TreeModel::UserRole, 0)).toStringList());
 
 					if (dialog.isDefault())
