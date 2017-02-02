@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -50,7 +50,7 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, Setting
 
 			m_comboBox->addItem(tr("No"), QLatin1String("false"));
 			m_comboBox->addItem(tr("Yes"), QLatin1String("true"));
-			m_comboBox->setCurrentIndex(m_value.toBool() ? 1 : 0);
+			m_comboBox->setCurrentIndex(value.toBool() ? 1 : 0);
 
 			connect(m_comboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(markModified()));
 
@@ -59,7 +59,7 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, Setting
 			{
 				m_widget = m_colorWidget = new ColorWidget(this);
 
-				m_colorWidget->setColor(m_value.value<QColor>());
+				m_colorWidget->setColor(value.value<QColor>());
 
 				connect(m_colorWidget, SIGNAL(colorChanged(QColor)), this, SLOT(markModified()));
 			}
@@ -74,7 +74,7 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, Setting
 		case SettingsManager::FontType:
 			m_widget = m_fontComboBox = new QFontComboBox(this);
 
-			m_fontComboBox->setCurrentFont(QFont(m_value.toString()));
+			m_fontComboBox->setCurrentFont(QFont(value.toString()));
 			m_fontComboBox->lineEdit()->selectAll();
 
 			connect(m_fontComboBox, SIGNAL(currentFontChanged(QFont)), this, SLOT(markModified()));
@@ -83,13 +83,13 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, Setting
 		case SettingsManager::IconType:
 			m_widget = m_iconWidget = new IconWidget(this);
 
-			if (m_value.type() == QVariant::String)
+			if (value.type() == QVariant::String)
 			{
-				m_iconWidget->setIcon(m_value.toString());
+				m_iconWidget->setIcon(value.toString());
 			}
 			else
 			{
-				m_iconWidget->setIcon(m_value.value<QIcon>());
+				m_iconWidget->setIcon(value.value<QIcon>());
 			}
 
 			connect(m_iconWidget, SIGNAL(iconChanged(QIcon)), this, SLOT(markModified()));
@@ -100,7 +100,7 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, Setting
 
 			m_spinBox->setMinimum(-999999999);
 			m_spinBox->setMaximum(999999999);
-			m_spinBox->setValue(m_value.toInt());
+			m_spinBox->setValue(value.toInt());
 			m_spinBox->selectAll();
 
 			connect(m_spinBox, SIGNAL(valueChanged(int)), this, SLOT(markModified()));
@@ -109,14 +109,14 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, Setting
 		case SettingsManager::PathType:
 			m_widget = m_filePathWidget = new FilePathWidget(this);
 
-			m_filePathWidget->setPath(m_value.toString());
+			m_filePathWidget->setPath(value.toString());
 			m_filePathWidget->setSelectFile(false);
 
 			connect(m_filePathWidget, SIGNAL(pathChanged(QString)), this, SLOT(markModified()));
 
 			break;
 		default:
-			m_widget = m_lineEdit = new QLineEdit(m_value.toString(), this);
+			m_widget = m_lineEdit = new QLineEdit(((value.type() == QVariant::StringList) ? value.toStringList().join(QLatin1String(", ")) : value.toString()), this);
 
 			m_lineEdit->setClearButtonEnabled(true);
 			m_lineEdit->selectAll();
@@ -218,7 +218,7 @@ void OptionWidget::setValue(const QVariant &value)
 	}
 	else if (m_lineEdit)
 	{
-		m_lineEdit->setText(value.toString());
+		m_lineEdit->setText((value.type() == QVariant::StringList) ? value.toStringList().join(QLatin1String(", ")) : value.toString());
 	}
 	else if (m_spinBox)
 	{
@@ -336,6 +336,11 @@ QVariant OptionWidget::getValue() const
 		if (m_lineEdit->text().isEmpty())
 		{
 			return QVariant();
+		}
+
+		if (SettingsManager::getOptionDefinition(SettingsManager::getOptionIdentifier(m_option)).type == SettingsManager::ListType)
+		{
+			return m_lineEdit->text().split(QLatin1String(", "), QString::SkipEmptyParts);
 		}
 
 		return m_lineEdit->text();
