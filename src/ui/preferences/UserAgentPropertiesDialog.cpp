@@ -34,8 +34,16 @@ UserAgentPropertiesDialog::UserAgentPropertiesDialog(const UserAgentDefinition &
 	m_ui->setupUi(this);
 	m_ui->titleLineEdit->setText(userAgent.getTitle());
 	m_ui->valueLineEdit->setText(userAgent.value);
-	m_ui->valueLineEdit->installEventFilter(this);
 	m_ui->isDefaultUserAgentCheckBox->setChecked(isDefault);
+
+	if (userAgent.identifier == QLatin1String("default"))
+	{
+		m_ui->valueLineEdit->setReadOnly(true);
+	}
+	else
+	{
+		m_ui->valueLineEdit->installEventFilter(this);
+	}
 
 	setWindowTitle(userAgent.identifier.isEmpty() ? tr("Add User Agent") : tr ("Edit User Agent"));
 }
