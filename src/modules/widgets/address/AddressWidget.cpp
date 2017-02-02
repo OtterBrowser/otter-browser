@@ -1237,6 +1237,8 @@ void AddressWidget::setIcon(const QIcon &icon)
 	if (m_layout.contains(FaviconEntry))
 	{
 		m_entries[FaviconEntry].icon = (icon.isNull() ? ThemesManager::getIcon((SessionsManager::isPrivate() ? QLatin1String("tab-private") : QLatin1String("tab")), false) : icon);
+
+		update();
 	}
 }
 
