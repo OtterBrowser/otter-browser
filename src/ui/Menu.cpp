@@ -711,19 +711,6 @@ void Menu::populateUserAgentMenu()
 	m_actionGroup = new QActionGroup(this);
 	m_actionGroup->setExclusive(true);
 
-	if (isRoot)
-	{
-		Action *defaultAction(addAction());
-		defaultAction->setData(QLatin1String("default"));
-		defaultAction->setCheckable(true);
-		defaultAction->setChecked(userAgent == QLatin1String("default"));
-		defaultAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Default User Agent"));
-
-		m_actionGroup->addAction(defaultAction);
-
-		addSeparator();
-	}
-
 	for (int i = 0; i < userAgents.count(); ++i)
 	{
 		if (userAgents.at(i).isEmpty())

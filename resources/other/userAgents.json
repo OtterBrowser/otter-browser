@@ -1,5 +1,11 @@
 [
 	{
+		"identifier": "default",
+		"title": "Default User Agent",
+		"value": "Mozilla/5.0 {platform} {engineVersion} {applicationVersion}"
+	},
+	"separator",
+	{
 		"identifier": "chrome",
 		"title": "Mask as Google Chrome 50 (Windows)",
 		"value": "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.21.2661.78 Safari/537.36"
