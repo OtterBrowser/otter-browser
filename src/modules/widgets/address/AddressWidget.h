@@ -108,12 +108,12 @@ public:
 
 	explicit AddressWidget(Window *window, QWidget *parent = nullptr);
 
-	void showPopup();
-	void hidePopup();
+	void showPopup() override;
+	void hidePopup() override;
 	QString getText() const;
 	QUrl getUrl() const;
-	bool event(QEvent *event);
-	bool eventFilter(QObject *object, QEvent *event);
+	bool event(QEvent *event) override;
+	bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:
 	void activate(Qt::FocusReason reason);
@@ -123,17 +123,17 @@ public slots:
 	void setUrl(const QUrl &url, bool force = false);
 
 protected:
-	void changeEvent(QEvent *event);
-	void timerEvent(QTimerEvent *event);
-	void paintEvent(QPaintEvent *event);
-	void resizeEvent(QResizeEvent *event);
-	void focusInEvent(QFocusEvent *event);
-	void keyPressEvent(QKeyEvent *event);
-	void contextMenuEvent(QContextMenuEvent *event);
-	void mousePressEvent(QMouseEvent *event);
-	void mouseMoveEvent(QMouseEvent *event);
-	void mouseReleaseEvent(QMouseEvent *event);
-	void wheelEvent(QWheelEvent *event);
+	void changeEvent(QEvent *event) override;
+	void timerEvent(QTimerEvent *event) override;
+	void paintEvent(QPaintEvent *event) override;
+	void resizeEvent(QResizeEvent *event) override;
+	void focusInEvent(QFocusEvent *event) override;
+	void keyPressEvent(QKeyEvent *event) override;
+	void contextMenuEvent(QContextMenuEvent *event) override;
+	void mousePressEvent(QMouseEvent *event) override;
+	void mouseMoveEvent(QMouseEvent *event) override;
+	void mouseReleaseEvent(QMouseEvent *event) override;
+	void wheelEvent(QWheelEvent *event) override;
 	void hideCompletion();
 	EntryIdentifier getEntry(const QPoint &position) const;
 	bool startDrag(QMouseEvent *event);

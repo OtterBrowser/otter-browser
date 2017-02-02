@@ -343,11 +343,6 @@ void AddressWidget::resizeEvent(QResizeEvent *event)
 
 void AddressWidget::focusInEvent(QFocusEvent *event)
 {
-	if (event->reason() == Qt::MouseFocusReason && m_lineEdit->childAt(mapFromGlobal(QCursor::pos())))
-	{
-		return;
-	}
-
 	ComboBoxWidget::focusInEvent(event);
 
 	activate(event->reason());
