@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -51,7 +52,8 @@ void HistoryEntryItem::setItemData(const QVariant &value, int role)
 	QStandardItem::setData(value, role);
 }
 
-HistoryModel::HistoryModel(const QString &path, QObject *parent) : QStandardItemModel(parent)
+HistoryModel::HistoryModel(const QString &path, HistoryType type, QObject *parent) : QStandardItemModel(parent),
+	m_type(type)
 {
 	QFile file(path);
 
@@ -163,6 +165,19 @@ HistoryEntryItem* HistoryModel::addEntry(const QUrl &url, const QString &title, 
 {
 	blockSignals(true);
 
+	if (m_type == TypedHistory)
+	{
+		const QUrl normalizedUrl(Utils::normalizeUrl(url));
+		
+		if (hasEntry(normalizedUrl))
+		{
+			for (int i = 0; i < m_urls[normalizedUrl].count(); ++i)
+			{
+				removeEntry(m_urls[normalizedUrl][i]->data(IdentifierRole).toULongLong());
+			}
+		}
+	}
+
 	HistoryEntryItem *entry(new HistoryEntryItem());
 	entry->setIcon(icon);
 
@@ -241,6 +256,11 @@ QList<HistoryModel::HistoryEntryMatch> HistoryModel::findEntries(const QString &
 	}
 
 	return allMatches;
+}
+
+HistoryModel::HistoryType HistoryModel::getType() const
+{
+	return m_type;
 }
 
 bool HistoryModel::save(const QString &path) const

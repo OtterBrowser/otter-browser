@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -254,7 +255,7 @@ HistoryModel* HistoryManager::getBrowsingHistoryModel()
 {
 	if (!m_browsingHistoryModel)
 	{
-		m_browsingHistoryModel = new HistoryModel(SessionsManager::getWritableDataPath(QLatin1String("browsingHistory.json")), m_instance);
+		m_browsingHistoryModel = new HistoryModel(SessionsManager::getWritableDataPath(QLatin1String("browsingHistory.json")), HistoryModel::BrowsingHistory, m_instance);
 	}
 
 	return m_browsingHistoryModel;
@@ -264,7 +265,7 @@ HistoryModel* HistoryManager::getTypedHistoryModel()
 {
 	if (!m_typedHistoryModel && m_instance)
 	{
-		m_typedHistoryModel = new HistoryModel(SessionsManager::getWritableDataPath(QLatin1String("typedHistory.json")), m_instance);
+		m_typedHistoryModel = new HistoryModel(SessionsManager::getWritableDataPath(QLatin1String("typedHistory.json")), HistoryModel::TypedHistory, m_instance);
 	}
 
 	return m_typedHistoryModel;

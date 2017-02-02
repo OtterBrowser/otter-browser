@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -52,6 +53,12 @@ public:
 		TimeVisitedRole = (Qt::UserRole + 1)
 	};
 
+	enum HistoryType
+	{
+		BrowsingHistory = 0,
+		TypedHistory
+	};
+
 	struct HistoryEntryMatch
 	{
 		HistoryEntryItem *entry = nullptr;
@@ -59,7 +66,7 @@ public:
 		bool isTypedIn = false;
 	};
 
-	explicit HistoryModel(const QString &path, QObject *parent = nullptr);
+	explicit HistoryModel(const QString &path, HistoryType type, QObject *parent = nullptr);
 
 	void clearExcessEntries(int limit);
 	void clearRecentEntries(uint period);
@@ -68,6 +75,7 @@ public:
 	HistoryEntryItem* addEntry(const QUrl &url, const QString &title, const QIcon &icon, const QDateTime &date = QDateTime::currentDateTime(), quint64 identifier = 0);
 	HistoryEntryItem* getEntry(quint64 identifier) const;
 	QList<HistoryEntryMatch> findEntries(const QString &prefix, bool markAsTypedIn = false) const;
+	HistoryType getType() const;
 	bool hasEntry(const QUrl &url) const;
 	bool save(const QString &path) const;
 	bool setData(const QModelIndex &index, const QVariant &value, int role);
@@ -75,6 +83,7 @@ public:
 private:
 	QHash<QUrl, QList<HistoryEntryItem*> > m_urls;
 	QMap<quint64, HistoryEntryItem*> m_identifiers;
+	HistoryType m_type;
 
 signals:
 	void cleared();
