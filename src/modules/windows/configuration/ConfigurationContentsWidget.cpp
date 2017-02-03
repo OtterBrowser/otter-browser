@@ -65,7 +65,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 		QString type(metaEnum.valueToKey(definition.type));
 		type.chop(4);
 
-		QList<QStandardItem*> optionItems({new QStandardItem(option.last()), new QStandardItem(type.toLower()), new QStandardItem(value.toString())});
+		QList<QStandardItem*> optionItems({new QStandardItem(option.last()), new QStandardItem(type.toLower()), new QStandardItem((value.type() == QVariant::StringList) ? value.toStringList().join(QLatin1String(", ")) : value.toString())});
 		optionItems[0]->setFlags(optionItems[0]->flags() | Qt::ItemNeverHasChildren);
 		optionItems[1]->setFlags(optionItems[1]->flags() | Qt::ItemNeverHasChildren);
 		optionItems[2]->setData(QSize(-1, 30), Qt::SizeHintRole);
