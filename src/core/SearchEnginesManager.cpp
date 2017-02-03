@@ -114,16 +114,11 @@ void SearchEnginesManager::loadSearchEngines()
 	updateSearchEnginesOptions();
 }
 
-void SearchEnginesManager::addSearchEngine(const SearchEngineDefinition &searchEngine, bool isDefault)
+void SearchEnginesManager::addSearchEngine(const SearchEngineDefinition &searchEngine)
 {
 	if (!saveSearchEngine(searchEngine))
 	{
 		return;
-	}
-
-	if (isDefault)
-	{
-		SettingsManager::setValue(SettingsManager::Search_DefaultSearchEngineOption, searchEngine.identifier);
 	}
 
 	if (m_searchEnginesOrder.contains(searchEngine.identifier))
