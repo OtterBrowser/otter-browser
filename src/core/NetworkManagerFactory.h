@@ -30,6 +30,45 @@
 namespace Otter
 {
 
+struct ProxyDefinition
+{
+	enum ProxyMode
+	{
+		NoProxy = 0,
+		SystemProxy,
+		ManualProxy,
+		AutomaticProxy
+	};
+
+	enum ProtocolType
+	{
+		AnyProtocol = 0,
+		HttpProtocol,
+		HttpsProtocol,
+		FtpProtocol,
+		SocksProtocol
+	};
+
+	struct ProxyServer
+	{
+		QString hostName;
+		int port = 8080;
+	};
+
+	QString identifier;
+	QString title;
+	QStringList children;
+	QStringList exceptions;
+	QHash<ProtocolType, ProxyServer> servers;
+	bool isFolder = false;
+	bool usesSystemAuthentication = false;
+
+	QString getTitle() const
+	{
+		return (title.isEmpty() ? QCoreApplication::translate("proxies", "(Untitled)") : QCoreApplication::translate("proxies", title.toUtf8().constData()));
+	}
+};
+
 struct UserAgentDefinition
 {
 	QString identifier;
