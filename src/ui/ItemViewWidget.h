@@ -76,6 +76,7 @@ public:
 	QSortFilterProxyModel* getProxyModel();
 	QStandardItem* getItem(const QModelIndex &index) const;
 	QStandardItem* getItem(int row, int column = 0, const QModelIndex &parent = QModelIndex()) const;
+	QModelIndex getCheckedIndex(const QModelIndex &parent = QModelIndex()) const;
 	QModelIndex getCurrentIndex(int column = 0) const;
 	QModelIndex getIndex(int row, int column = 0, const QModelIndex &parent = QModelIndex()) const;
 	QSize sizeHint() const;

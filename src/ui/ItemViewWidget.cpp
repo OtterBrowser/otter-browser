@@ -756,6 +756,33 @@ QStandardItem* ItemViewWidget::getItem(int row, int column, const QModelIndex &p
 	return(m_sourceModel ? m_sourceModel->itemFromIndex(getIndex(row, column, parent)) : nullptr);
 }
 
+QModelIndex ItemViewWidget::getCheckedIndex(const QModelIndex &parent) const
+{
+	if (!m_isExclusive || !m_sourceModel)
+	{
+		return QModelIndex();
+	}
+
+	for (int i = 0; i < m_sourceModel->rowCount(parent); ++i)
+	{
+		const QModelIndex index(m_sourceModel->index(i, 0, parent));
+
+		if (index.data(Qt::CheckStateRole).toInt() == Qt::Checked)
+		{
+			return index;
+		}
+
+		const QModelIndex result(getCheckedIndex(index));
+
+		if (result.isValid())
+		{
+			return result;
+		}
+	}
+
+	return QModelIndex();
+}
+
 QModelIndex ItemViewWidget::getCurrentIndex(int column) const
 {
 	if (!selectionModel()->hasSelection())
