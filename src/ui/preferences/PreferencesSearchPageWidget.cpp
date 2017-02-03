@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -23,6 +23,7 @@
 #include "../../core/SessionsManager.h"
 #include "../../core/SettingsManager.h"
 #include "../../core/ThemesManager.h"
+#include "../../core/TreeModel.h"
 #include "../../core/Utils.h"
 
 #include "ui_PreferencesSearchPageWidget.h"
@@ -93,14 +94,15 @@ QWidget* SearchEngineKeywordDelegate::createEditor(QWidget *parent, const QStyle
 }
 
 PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWidget(parent),
-	m_defaultSearchEngine(SettingsManager::getValue(SettingsManager::Search_DefaultSearchEngineOption).toString()),
 	m_ui(new Ui::PreferencesSearchPageWidget)
 {
 	m_ui->setupUi(this);
 
-	QStandardItemModel *searchEnginesModel(new QStandardItemModel(this));
+	TreeModel *searchEnginesModel(new TreeModel(this));
 	searchEnginesModel->setHorizontalHeaderLabels(QStringList({tr("Name"), tr("Keyword")}));
+	searchEnginesModel->setExclusive(true);
 
+	const QString defaultSearchEngine(SettingsManager::getValue(SettingsManager::Search_DefaultSearchEngineOption).toString());
 	const QStringList searchEngines(SearchEnginesManager::getSearchEngines());
 
 	for (int i = 0; i < searchEngines.count(); ++i)
@@ -114,12 +116,13 @@ PreferencesSearchPageWidget::PreferencesSearchPageWidget(QWidget *parent) : QWid
 
 		m_searchEngines[searchEngine.identifier] = qMakePair(false, searchEngine);
 
-		searchEnginesModel->appendRow(createRow(searchEngine));
+		searchEnginesModel->appendRow(createRow(searchEngine, (searchEngine.identifier == defaultSearchEngine)));
 	}
 
 	m_ui->searchViewWidget->setModel(searchEnginesModel);
 	m_ui->searchViewWidget->setItemDelegateForColumn(0, new SearchEngineTitleDelegate(this));
 	m_ui->searchViewWidget->setItemDelegateForColumn(1, new SearchEngineKeywordDelegate(this));
+	m_ui->searchViewWidget->setExclusive(true);
 	m_ui->searchSuggestionsCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Search_SearchEnginesSuggestionsOption).toBool());
 
 	QMenu *addSearchMenu(new QMenu(m_ui->addSearchButton));
@@ -175,7 +178,7 @@ void PreferencesSearchPageWidget::createSearchEngine()
 	searchEngine.title = tr("New Search Engine");
 	searchEngine.icon = ThemesManager::getIcon(QLatin1String("edit-find"));
 
-	SearchEnginePropertiesDialog dialog(searchEngine, getKeywords(m_ui->searchViewWidget->getSourceModel()), false, this);
+	SearchEnginePropertiesDialog dialog(searchEngine, getKeywords(m_ui->searchViewWidget->getSourceModel()), this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
@@ -185,11 +188,6 @@ void PreferencesSearchPageWidget::createSearchEngine()
 	searchEngine = dialog.getSearchEngine();
 
 	m_searchEngines[identifier] = qMakePair(true, searchEngine);
-
-	if (dialog.isDefault())
-	{
-		m_defaultSearchEngine = identifier;
-	}
 
 	m_ui->searchViewWidget->insertRow(createRow(searchEngine));
 
@@ -225,7 +223,7 @@ void PreferencesSearchPageWidget::editSearchEngine()
 	}
 
 	const QStringList keywords(getKeywords(m_ui->searchViewWidget->getSourceModel(), m_ui->searchViewWidget->getCurrentRow()));
-	SearchEnginePropertiesDialog dialog(m_searchEngines[identifier].second, keywords, (identifier == m_defaultSearchEngine), this);
+	SearchEnginePropertiesDialog dialog(m_searchEngines[identifier].second, keywords, this);
 
 	if (dialog.exec() == QDialog::Rejected)
 	{
@@ -240,11 +238,6 @@ void PreferencesSearchPageWidget::editSearchEngine()
 	}
 
 	m_searchEngines[identifier] = qMakePair(true, searchEngine);
-
-	if (dialog.isDefault())
-	{
-		m_defaultSearchEngine = identifier;
-	}
 
 	m_ui->searchViewWidget->setData(index, searchEngine.title, Qt::DisplayRole);
 	m_ui->searchViewWidget->setData(index, searchEngine.description, Qt::ToolTipRole);
@@ -524,6 +517,7 @@ void PreferencesSearchPageWidget::save()
 	m_filesToRemove.clear();
 
 	QStringList searchEnginesOrder;
+	QString defaultSearchEngine;
 
 	for (int i = 0; i < m_ui->searchViewWidget->getRowCount(); ++i)
 	{
@@ -533,6 +527,11 @@ void PreferencesSearchPageWidget::save()
 		if (!identifier.isEmpty())
 		{
 			searchEnginesOrder.append(identifier);
+
+			if (m_ui->searchViewWidget->getIndex(i, 0).data(Qt::CheckStateRole) == Qt::Checked)
+			{
+				defaultSearchEngine = identifier;
+			}
 		}
 
 		if (m_searchEngines.contains(identifier) && m_searchEngines[identifier].second.keyword != keyword)
@@ -561,7 +560,7 @@ void PreferencesSearchPageWidget::save()
 		SettingsManager::setValue(SettingsManager::Search_SearchEnginesOrderOption, searchEnginesOrder);
 	}
 
-	SettingsManager::setValue(SettingsManager::Search_DefaultSearchEngineOption, m_defaultSearchEngine);
+	SettingsManager::setValue(SettingsManager::Search_DefaultSearchEngineOption, defaultSearchEngine);
 	SettingsManager::setValue(SettingsManager::Search_SearchEnginesSuggestionsOption, m_ui->searchSuggestionsCheckBox->isChecked());
 
 	updateReaddSearchEngineMenu();
@@ -589,13 +588,19 @@ QStringList PreferencesSearchPageWidget::getKeywords(const QAbstractItemModel *m
 	return keywords;
 }
 
-QList<QStandardItem*> PreferencesSearchPageWidget::createRow(const SearchEnginesManager::SearchEngineDefinition &searchEngine) const
+QList<QStandardItem*> PreferencesSearchPageWidget::createRow(const SearchEnginesManager::SearchEngineDefinition &searchEngine, bool isDefault) const
 {
 	QList<QStandardItem*> items({new QStandardItem(searchEngine.icon, searchEngine.title), new QStandardItem(searchEngine.keyword)});
+	items[0]->setCheckable(true);
 	items[0]->setData(searchEngine.identifier, IdentifierRole);
 	items[0]->setToolTip(searchEngine.description);
-	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
+	items[0]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsUserCheckable);
 	items[1]->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
+
+	if (isDefault)
+	{
+		items[0]->setData(Qt::Checked, Qt::CheckStateRole);
+	}
 
 	if (searchEngine.icon.isNull())
 	{

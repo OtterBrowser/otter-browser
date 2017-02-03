@@ -1603,11 +1603,11 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 					}
 				}
 
-				SearchEnginePropertiesDialog dialog(searchEngine, SearchEnginesManager::getSearchKeywords(), false, this);
+				SearchEnginePropertiesDialog dialog(searchEngine, SearchEnginesManager::getSearchKeywords(), this);
 
 				if (dialog.exec() == QDialog::Accepted)
 				{
-					SearchEnginesManager::addSearchEngine(dialog.getSearchEngine(), dialog.isDefault());
+					SearchEnginesManager::addSearchEngine(dialog.getSearchEngine());
 				}
 			}
 

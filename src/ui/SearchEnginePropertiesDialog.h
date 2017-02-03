@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -38,11 +38,10 @@ class SearchEnginePropertiesDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit SearchEnginePropertiesDialog(const SearchEnginesManager::SearchEngineDefinition &searchEngine, const QStringList &keywords, bool isDefault, QWidget *parent = nullptr);
+	explicit SearchEnginePropertiesDialog(const SearchEnginesManager::SearchEngineDefinition &searchEngine, const QStringList &keywords, QWidget *parent = nullptr);
 	~SearchEnginePropertiesDialog();
 
 	SearchEnginesManager::SearchEngineDefinition getSearchEngine() const;
-	bool isDefault() const;
 	bool eventFilter(QObject *object, QEvent *event);
 
 protected:

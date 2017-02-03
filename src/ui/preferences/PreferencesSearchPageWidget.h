@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -74,7 +74,7 @@ protected:
 	void changeEvent(QEvent *event) override;
 	void addSearchEngine(const QString &path, const QString &identifier, bool isReadding);
 	void updateReaddSearchEngineMenu();
-	QList<QStandardItem*> createRow(const SearchEnginesManager::SearchEngineDefinition &searchEngine) const;
+	QList<QStandardItem*> createRow(const SearchEnginesManager::SearchEngineDefinition &searchEngine, bool isDefault = false) const;
 
 protected slots:
 	void createSearchEngine();
@@ -88,7 +88,6 @@ protected slots:
 	void save();
 
 private:
-	QString m_defaultSearchEngine;
 	QStringList m_filesToRemove;
 	QHash<QString, SearchEngineFetchJob*> m_updateJobs;
 	QHash<QString, QPair<bool, SearchEnginesManager::SearchEngineDefinition> > m_searchEngines;

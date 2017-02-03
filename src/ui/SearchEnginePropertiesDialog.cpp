@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
 namespace Otter
 {
 
-SearchEnginePropertiesDialog::SearchEnginePropertiesDialog(const SearchEnginesManager::SearchEngineDefinition &searchEngine, const QStringList &keywords, bool isDefault, QWidget *parent) : Dialog(parent),
+SearchEnginePropertiesDialog::SearchEnginePropertiesDialog(const SearchEnginesManager::SearchEngineDefinition &searchEngine, const QStringList &keywords, QWidget *parent) : Dialog(parent),
 	m_currentLineEdit(nullptr),
 	m_identifier(searchEngine.identifier),
 	m_keywords(keywords),
@@ -45,7 +45,6 @@ SearchEnginePropertiesDialog::SearchEnginePropertiesDialog(const SearchEnginesMa
 	m_ui->encodingLineEdit->setText(searchEngine.encoding);
 	m_ui->formAddressLineEdit->setText(searchEngine.formUrl.toString());
 	m_ui->updateAddressLineEdit->setText(searchEngine.selfUrl.toString());
-	m_ui->defaultSearchEngineCheckBox->setChecked(isDefault);
 
 	connect(m_ui->resultsPostMethodCheckBox, SIGNAL(toggled(bool)), m_ui->resultsPostWidget, SLOT(setEnabled(bool)));
 	connect(m_ui->suggestionsPostMethodCheckBox, SIGNAL(toggled(bool)), m_ui->suggestionsPostWidget, SLOT(setEnabled(bool)));
@@ -110,11 +109,6 @@ SearchEnginesManager::SearchEngineDefinition SearchEnginePropertiesDialog::getSe
 	searchEngine.suggestionsUrl.parameters = QUrlQuery(m_ui->suggestionsQueryLineEdit->text());
 
 	return searchEngine;
-}
-
-bool SearchEnginePropertiesDialog::isDefault() const
-{
-	return m_ui->defaultSearchEngineCheckBox->isChecked();
 }
 
 bool SearchEnginePropertiesDialog::eventFilter(QObject *object, QEvent *event)

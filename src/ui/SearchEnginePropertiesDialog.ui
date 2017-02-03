@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>550</width>
-    <height>500</height>
+    <width>600</width>
+    <height>460</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Edit Search Engine</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,1,0">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0">
    <item>
     <layout class="QFormLayout" name="formLayout">
      <item row="1" column="0">
@@ -122,13 +122,6 @@
       </widget>
      </item>
     </layout>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="defaultSearchEngineCheckBox">
-     <property name="text">
-      <string>Set as default search engine</string>
-     </property>
-    </widget>
    </item>
    <item>
     <widget class="QTabWidget" name="tabWidget">
@@ -390,7 +383,6 @@
   <tabstop>encodingLineEdit</tabstop>
   <tabstop>formAddressLineEdit</tabstop>
   <tabstop>updateAddressLineEdit</tabstop>
-  <tabstop>defaultSearchEngineCheckBox</tabstop>
   <tabstop>tabWidget</tabstop>
   <tabstop>resultsAddressLineEdit</tabstop>
   <tabstop>resultsQueryLineEdit</tabstop>

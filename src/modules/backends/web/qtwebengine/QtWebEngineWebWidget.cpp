@@ -802,14 +802,14 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 					searchEngine.resultsUrl.method = result.toMap().value(QLatin1String("method")).toString();
 					searchEngine.resultsUrl.parameters = parameters;
 
-					SearchEnginePropertiesDialog dialog(searchEngine, keywords, false, this);
+					SearchEnginePropertiesDialog dialog(searchEngine, keywords, this);
 
 					if (dialog.exec() == QDialog::Rejected)
 					{
 						return;
 					}
 
-					SearchEnginesManager::addSearchEngine(dialog.getSearchEngine(), dialog.isDefault());
+					SearchEnginesManager::addSearchEngine(dialog.getSearchEngine());
 				});
 
 				file.close();
