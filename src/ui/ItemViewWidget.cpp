@@ -202,6 +202,7 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 	m_dragRow(-1),
 	m_dropRow(-1),
 	m_canGatherExpanded(false),
+	m_isExclusive(false),
 	m_isModified(false),
 	m_isInitialized(false)
 {
@@ -625,6 +626,13 @@ void ItemViewWidget::setColumnVisibility(int column, bool hide)
 	saveState();
 }
 
+void ItemViewWidget::setExclusive(bool isExclusive)
+{
+	m_isExclusive = isExclusive;
+
+	update();
+}
+
 void ItemViewWidget::setFilterString(const QString filter)
 {
 	if (filter == m_filterString || !model())
@@ -821,6 +829,11 @@ bool ItemViewWidget::canMoveDown() const
 	const int rowCount(getRowCount());
 
 	return (currentRow >= 0 && rowCount > 1 && currentRow < (rowCount - 1));
+}
+
+bool ItemViewWidget::isExclusive() const
+{
+	return m_isExclusive;
 }
 
 bool ItemViewWidget::applyFilter(const QModelIndex &index)

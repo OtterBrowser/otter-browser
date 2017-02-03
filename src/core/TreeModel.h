@@ -50,13 +50,21 @@ public:
 
 	void insertRow(QStandardItem *item = nullptr, QStandardItem *parent = nullptr, int row = -1, ItemType type = EntryType);
 	void insertRow(const QList<QStandardItem*> &items, QStandardItem *parent = nullptr, int row = -1, ItemType type = EntryType);
+	void setExclusive(bool isExclusive);
 	QMimeData* mimeData(const QModelIndexList &indexes) const override;
 	QVariant data(const QModelIndex &index, int role) const override;
 	QVariantList getAllData(int role, int column = -1, const QModelIndex &parent = QModelIndex()) const;
 	bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent) override;
+	bool isExclusive() const;
+	bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
 
 protected:
 	void setupItem(QStandardItem *item, ItemType type);
+	void resetCheckState(const QModelIndex &parent);
+
+private:
+	bool m_isExclusive;
+	bool m_isIgnoringCheckStateReset;
 };
 
 }

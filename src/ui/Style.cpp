@@ -18,6 +18,7 @@
 **************************************************************************/
 
 #include "Style.h"
+#include "ItemViewWidget.h"
 #include "ToolBarWidget.h"
 #include "../core/SettingsManager.h"
 
@@ -53,6 +54,28 @@ void Style::drawDropZone(const QLine &line, QPainter *painter)
 	painter->drawPoint(line.p2());
 	painter->restore();
 }
+
+void Style::drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption *option, QPainter *painter, const QWidget *widget) const
+{
+	if (element == QStyle::PE_IndicatorItemViewItemCheck && widget)
+	{
+		const ItemViewWidget *view(qobject_cast<const ItemViewWidget*>(widget));
+
+		if (view && view->isExclusive())
+		{
+			QStyleOptionButton buttonOption;
+			buttonOption.rect = option->rect;
+			buttonOption.state = option->state;
+
+			drawControl(QStyle::CE_RadioButton, &buttonOption, painter);
+
+			return;
+		}
+	}
+
+	QProxyStyle::drawPrimitive(element, option, painter, widget);
+}
+
 
 QString Style::getName() const
 {

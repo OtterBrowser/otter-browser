@@ -25,7 +25,9 @@
 namespace Otter
 {
 
-TreeModel::TreeModel(QObject *parent) : QStandardItemModel(parent)
+TreeModel::TreeModel(QObject *parent) : QStandardItemModel(parent),
+	m_isExclusive(false),
+	m_isIgnoringCheckStateReset(true)
 {
 }
 
@@ -36,6 +38,24 @@ void TreeModel::setupItem(QStandardItem *item, TreeModel::ItemType type)
 	if (type != FolderType)
 	{
 		item->setFlags(item->flags() & ~Qt::ItemIsDropEnabled);
+	}
+}
+
+void TreeModel::resetCheckState(const QModelIndex &parent)
+{
+	for (int i = 0; i < rowCount(parent); ++i)
+	{
+		const QModelIndex index(this->index(i, 0, parent));
+
+		if (index.data(Qt::CheckStateRole).toInt() != Qt::Unchecked)
+		{
+			setData(index, Qt::Unchecked, Qt::CheckStateRole);
+		}
+
+		if (static_cast<ItemType>(index.data(TypeRole).toInt()) == FolderType)
+		{
+			resetCheckState(index);
+		}
 	}
 }
 
@@ -83,6 +103,11 @@ void TreeModel::insertRow(const QList<QStandardItem*> &items, QStandardItem *par
 	{
 		parent->appendRow(items);
 	}
+}
+
+void TreeModel::setExclusive(bool isExclusive)
+{
+	m_isExclusive = isExclusive;
 }
 
 QMimeData* TreeModel::mimeData(const QModelIndexList &indexes) const
@@ -191,6 +216,33 @@ bool TreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int r
 	}
 
 	return true;
+}
+
+bool TreeModel::isExclusive() const
+{
+	return m_isExclusive;
+}
+
+bool TreeModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+	if (role == Qt::CheckStateRole && m_isExclusive)
+	{
+		if (m_isIgnoringCheckStateReset && !value.toBool())
+		{
+			return false;
+		}
+
+		if (value.toBool())
+		{
+			m_isIgnoringCheckStateReset = false;
+
+			resetCheckState(QModelIndex());
+
+			m_isIgnoringCheckStateReset = true;
+		}
+	}
+
+	return QStandardItemModel::setData(index, value, role);
 }
 
 }

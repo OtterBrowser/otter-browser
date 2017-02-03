@@ -87,6 +87,7 @@ public:
 	int getColumnCount(const QModelIndex &parent = QModelIndex()) const;
 	bool canMoveUp() const;
 	bool canMoveDown() const;
+	bool isExclusive() const;
 	bool isModified() const;
 
 public slots:
@@ -98,6 +99,7 @@ public slots:
 	void markAsModified();
 	void setSort(int column, Qt::SortOrder order);
 	void setColumnVisibility(int column, bool hide);
+	void setExclusive(bool isExclusive);
 	void setFilterString(const QString filter = QString());
 	void setFilterRoles(const QSet<int> &roles);
 
@@ -131,6 +133,7 @@ private:
 	int m_dragRow;
 	int m_dropRow;
 	bool m_canGatherExpanded;
+	bool m_isExclusive;
 	bool m_isModified;
 	bool m_isInitialized;
 
