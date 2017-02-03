@@ -32,7 +32,7 @@ ProxyPropertiesDialog::ProxyPropertiesDialog(const ProxyDefinition &proxy, QWidg
 
 ///TODO
 
-	setWindowTitle(userAgent.identifier.isEmpty() ? tr("Add Proxy") : tr ("Edit Proxy"));
+	setWindowTitle(proxy.identifier.isEmpty() ? tr("Add Proxy") : tr ("Edit Proxy"));
 }
 
 ProxyPropertiesDialog::~ProxyPropertiesDialog()
