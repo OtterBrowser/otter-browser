@@ -23,6 +23,7 @@
 #include "JavaScriptPreferencesDialog.h"
 #include "KeyboardProfileDialog.h"
 #include "MouseProfileDialog.h"
+#include "ProxyPropertiesDialog.h"
 #include "UserAgentPropertiesDialog.h"
 #include "../Style.h"
 #include "../../core/ActionsManager.h"
