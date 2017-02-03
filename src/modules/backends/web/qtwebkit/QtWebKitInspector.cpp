@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,15 +19,17 @@
 
 #include "QtWebKitInspector.h"
 #include "QtWebKitWebWidget.h"
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 #include "../../../../core/ThemesManager.h"
+#endif
 
 namespace Otter
 {
 
-QtWebKitInspector::QtWebKitInspector(QtWebKitWebWidget *parent) : QWebInspector(parent),
-	m_widget(parent)
+QtWebKitInspector::QtWebKitInspector(QtWebKitWebWidget *parent) : QWebInspector(parent)
 #ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
-	, m_closeButton(new QToolButton(this))
+	, m_widget(parent),
+	m_closeButton(new QToolButton(this))
 #endif
 {
 	setMinimumHeight(200);
@@ -46,6 +48,7 @@ QtWebKitInspector::QtWebKitInspector(QtWebKitWebWidget *parent) : QWebInspector(
 #endif
 }
 
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 void QtWebKitInspector::childEvent(QChildEvent *event)
 {
 	QWebInspector::childEvent(event);
@@ -61,7 +64,6 @@ void QtWebKitInspector::childEvent(QChildEvent *event)
 	}
 }
 
-#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 void QtWebKitInspector::showEvent(QShowEvent *event)
 {
 	QWebInspector::showEvent(event);

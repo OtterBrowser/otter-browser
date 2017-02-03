@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,9 @@
 #define OTTER_QTWEBKITINSPECTOR_H
 
 #include <QtWebKitWidgets/QWebInspector>
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 #include <QtWidgets/QToolButton>
+#endif
 
 namespace Otter
 {
@@ -35,19 +37,17 @@ class QtWebKitInspector : public QWebInspector
 public:
 	explicit QtWebKitInspector(QtWebKitWebWidget *parent);
 
+#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 protected:
 	void childEvent(QChildEvent *event);
-#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 	void showEvent(QShowEvent *event);
 	void resizeEvent(QResizeEvent *event);
 
 protected slots:
 	void hideInspector();
-#endif
 
 private:
 	QtWebKitWebWidget *m_widget;
-#ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 	QToolButton *m_closeButton;
 #endif
 };
