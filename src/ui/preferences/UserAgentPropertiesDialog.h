@@ -36,11 +36,10 @@ class UserAgentPropertiesDialog : public Dialog
 	Q_OBJECT
 
 public:
-	explicit UserAgentPropertiesDialog(const UserAgentDefinition &userAgent, bool isDefault, QWidget *parent = nullptr);
+	explicit UserAgentPropertiesDialog(const UserAgentDefinition &userAgent, QWidget *parent = nullptr);
 	~UserAgentPropertiesDialog();
 
 	UserAgentDefinition getUserAgent() const;
-	bool isDefault() const;
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 protected:

@@ -27,14 +27,13 @@
 namespace Otter
 {
 
-UserAgentPropertiesDialog::UserAgentPropertiesDialog(const UserAgentDefinition &userAgent, bool isDefault, QWidget *parent) : Dialog(parent),
+UserAgentPropertiesDialog::UserAgentPropertiesDialog(const UserAgentDefinition &userAgent, QWidget *parent) : Dialog(parent),
 	m_userAgent(userAgent),
 	m_ui(new Ui::UserAgentPropertiesDialog)
 {
 	m_ui->setupUi(this);
 	m_ui->titleLineEdit->setText(userAgent.getTitle());
 	m_ui->valueLineEdit->setText(userAgent.value);
-	m_ui->isDefaultUserAgentCheckBox->setChecked(isDefault);
 
 	if (userAgent.identifier == QLatin1String("default"))
 	{
@@ -78,11 +77,6 @@ UserAgentDefinition UserAgentPropertiesDialog::getUserAgent() const
 	userAgent.value = m_ui->valueLineEdit->text();
 
 	return userAgent;
-}
-
-bool UserAgentPropertiesDialog::isDefault() const
-{
-	return m_ui->isDefaultUserAgentCheckBox->isChecked();
 }
 
 bool UserAgentPropertiesDialog::eventFilter(QObject *object, QEvent *event)

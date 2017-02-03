@@ -57,7 +57,6 @@ namespace Otter
 {
 
 PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : QWidget(parent),
-	m_defaultUserAgent(SettingsManager::getValue(SettingsManager::Network_UserAgentOption).toString()),
 	m_ui(new Ui::PreferencesAdvancedPageWidget)
 {
 	m_ui->setupUi(this);
@@ -198,13 +197,15 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Network_EnableReferrerOption).toBool());
 
-	TreeModel *model(new TreeModel(this));
-	model->setHorizontalHeaderLabels({tr("Title"), tr("Value")});
+	TreeModel *userAgentsModel(new TreeModel(this));
+	userAgentsModel->setHorizontalHeaderLabels({tr("Title"), tr("Value")});
+	userAgentsModel->setExclusive(true);
 
-	loadUserAgents(NetworkManagerFactory::getUserAgents(), model->invisibleRootItem());
+	loadUserAgents(NetworkManagerFactory::getUserAgents(), userAgentsModel->invisibleRootItem(), SettingsManager::getValue(SettingsManager::Network_UserAgentOption).toString());
 
-	m_ui->userAgentsViewWidget->setModel(model);
+	m_ui->userAgentsViewWidget->setModel(userAgentsModel);
 	m_ui->userAgentsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->userAgentsViewWidget->setExclusive(true);
 	m_ui->userAgentsViewWidget->expandAll();
 
 	QMenu *addUserAgentMenu(new QMenu(m_ui->userAgentsAddButton));
@@ -655,7 +656,7 @@ void PreferencesAdvancedPageWidget::updateDownloadsMode()
 	m_ui->downloadsSaveOptionsWidget->setEnabled(m_ui->downloadsSaveButton->isChecked());
 }
 
-void PreferencesAdvancedPageWidget::loadUserAgents(const QStringList &userAgents, QStandardItem *parent)
+void PreferencesAdvancedPageWidget::loadUserAgents(const QStringList &userAgents, QStandardItem *parent, const QString &defaultUserAgent)
 {
 	TreeModel *model(qobject_cast<TreeModel*>(parent->model()));
 
@@ -669,11 +670,20 @@ void PreferencesAdvancedPageWidget::loadUserAgents(const QStringList &userAgents
 		{
 			type = TreeModel::FolderType;
 
-			loadUserAgents(userAgent.children, items[0]);
+			loadUserAgents(userAgent.children, items[0], defaultUserAgent);
 		}
 		else if (userAgents.at(i).isEmpty())
 		{
 			type = TreeModel::SeparatorType;
+		}
+		else
+		{
+			items[0]->setCheckable(true);
+
+			if (userAgent.identifier == defaultUserAgent)
+			{
+				items[0]->setData(Qt::Checked, Qt::CheckStateRole);
+			}
 		}
 
 		if (type != TreeModel::SeparatorType)
@@ -773,17 +783,12 @@ void PreferencesAdvancedPageWidget::addUserAgent(QAction *action)
 				userAgent.title = tr("Custom");
 				userAgent.value = NetworkManagerFactory::getUserAgent(QLatin1String("default")).value;
 
-				UserAgentPropertiesDialog dialog(userAgent, false, this);
+				UserAgentPropertiesDialog dialog(userAgent, this);
 
 				if (dialog.exec() == QDialog::Accepted)
 				{
 					userAgent = dialog.getUserAgent();
 					userAgent.identifier = Utils::createIdentifier(QString(), QVariant(model->getAllData(TreeModel::UserRole, 0)).toStringList());
-
-					if (dialog.isDefault())
-					{
-						m_defaultUserAgent = userAgent.identifier;
-					}
 
 					QList<QStandardItem*> items({new QStandardItem(userAgent.title.isEmpty() ? tr("(Untitled)") : userAgent.title), new QStandardItem(userAgent.value)});
 					items[0]->setData(userAgent.identifier, TreeModel::UserRole);
@@ -830,16 +835,11 @@ void PreferencesAdvancedPageWidget::editUserAgent()
 		userAgent.title = index.data(Qt::DisplayRole).toString();
 		userAgent.value = index.sibling(index.row(), 1).data(Qt::DisplayRole).toString();
 
-		UserAgentPropertiesDialog dialog(userAgent, (index.data(TreeModel::UserRole).toString() == m_defaultUserAgent), this);
+		UserAgentPropertiesDialog dialog(userAgent, this);
 
 		if (dialog.exec() == QDialog::Accepted)
 		{
 			userAgent = dialog.getUserAgent();
-
-			if (dialog.isDefault())
-			{
-				m_defaultUserAgent = index.data(TreeModel::UserRole).toString();
-			}
 
 			m_ui->userAgentsViewWidget->setData(index, (userAgent.title.isEmpty() ? tr("(Untitled)") : userAgent.title), Qt::DisplayRole);
 			m_ui->userAgentsViewWidget->setData(index.sibling(index.row(), 1), userAgent.value, Qt::DisplayRole);
@@ -1514,7 +1514,7 @@ void PreferencesAdvancedPageWidget::save()
 	handlersSettings.save(SessionsManager::getWritableDataPath(QLatin1String("handlers.ini")));
 
 	SettingsManager::setValue(SettingsManager::Network_EnableReferrerOption, m_ui->sendReferrerCheckBox->isChecked());
-	SettingsManager::setValue(SettingsManager::Network_UserAgentOption, m_defaultUserAgent);
+	SettingsManager::setValue(SettingsManager::Network_UserAgentOption, m_ui->userAgentsViewWidget->getCheckedIndex().data(TreeModel::UserRole).toString());
 	SettingsManager::setValue(SettingsManager::Network_ProxyModeOption, m_ui->proxyModeComboBox->currentData(Qt::UserRole).toString());
 
 	if (!m_ui->allProxyServersLineEdit->text().isEmpty())

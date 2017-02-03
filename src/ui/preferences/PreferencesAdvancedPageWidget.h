@@ -64,7 +64,7 @@ protected slots:
 	void updateDownloadsActions();
 	void updateDownloadsOptions();
 	void updateDownloadsMode();
-	void loadUserAgents(const QStringList &userAgents, QStandardItem *parent);
+	void loadUserAgents(const QStringList &userAgents, QStandardItem *parent, const QString &defaultUserAgent);
 	void saveUsuerAgents(QJsonArray *userAgents, QStandardItem *parent);
 	void addUserAgent(QAction *action);
 	void editUserAgent();
@@ -96,7 +96,6 @@ protected slots:
 	void updatePageSwitcher();
 
 private:
-	QString m_defaultUserAgent;
 	QStringList m_filesToRemove;
 	QHash<QString, KeyboardProfile> m_keyboardProfiles;
 	QHash<QString, MouseProfile> m_mouseProfiles;
