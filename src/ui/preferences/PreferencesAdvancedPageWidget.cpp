@@ -154,7 +154,6 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->enableImagesComboBox->setCurrentIndex((enableImagesIndex < 0) ? 0 : enableImagesIndex);
 	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_EnableJavaScriptOption).toBool());
 	m_ui->javaScriptOptionsButton->setEnabled(m_ui->enableJavaScriptCheckBox->isChecked());
-	m_ui->enableJavaCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_EnableJavaOption).toBool());
 	m_ui->enablePluginsComboBox->addItem(tr("Enabled"), QLatin1String("enabled"));
 	m_ui->enablePluginsComboBox->addItem(tr("On demand"), QLatin1String("onDemand"));
 	m_ui->enablePluginsComboBox->addItem(tr("Disabled"), QLatin1String("disabled"));
@@ -1481,7 +1480,6 @@ void PreferencesAdvancedPageWidget::save()
 
 	SettingsManager::setValue(SettingsManager::Browser_EnableImagesOption, m_ui->enableImagesComboBox->currentData(Qt::UserRole).toString());
 	SettingsManager::setValue(SettingsManager::Browser_EnableJavaScriptOption, m_ui->enableJavaScriptCheckBox->isChecked());
-	SettingsManager::setValue(SettingsManager::Browser_EnableJavaOption, m_ui->enableJavaCheckBox->isChecked());
 	SettingsManager::setValue(SettingsManager::Browser_EnablePluginsOption, m_ui->enablePluginsComboBox->currentData(Qt::UserRole).toString());
 	SettingsManager::setValue(SettingsManager::Content_UserStyleSheetOption, m_ui->userStyleSheetFilePathWidget->getPath());
 

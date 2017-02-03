@@ -226,7 +226,6 @@ public:
 		PluginsPolicyAction,
 		LoadPluginsAction,
 		EnableJavaScriptAction,
-		EnableJavaAction,
 		EnableReferrerAction,
 		ProxyMenuAction,
 		EnableProxyAction,

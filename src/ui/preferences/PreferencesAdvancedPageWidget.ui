@@ -344,7 +344,7 @@
       </layout>
      </widget>
      <widget class="QWidget" name="contentPage">
-      <layout class="QVBoxLayout" name="contentPageLayout" stretch="0,0,0,0,0,0,1">
+      <layout class="QVBoxLayout" name="contentPageLayout" stretch="0,0,0,0,0,1">
        <item>
         <widget class="QLabel" name="contentGeneralHeader">
          <property name="font">
@@ -392,13 +392,6 @@
           </widget>
          </item>
         </layout>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="enableJavaCheckBox">
-         <property name="text">
-          <string>Enable Java</string>
-         </property>
-        </widget>
        </item>
        <item>
         <layout class="QHBoxLayout" name="enablePluginsLayout">

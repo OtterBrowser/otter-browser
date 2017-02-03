@@ -90,11 +90,12 @@ void QtWebKitWebBackend::optionChanged(int identifier)
 		return;
 	}
 
+	const bool arePluginsEnabled(SettingsManager::getValue(SettingsManager::Browser_EnablePluginsOption).toString() != QLatin1String("disabled"));
 	QWebSettings *globalSettings(QWebSettings::globalSettings());
 	globalSettings->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
 	globalSettings->setAttribute(QWebSettings::AutoLoadImages, (SettingsManager::getValue(SettingsManager::Browser_EnableImagesOption).toString() != QLatin1String("onlyCached")));
-	globalSettings->setAttribute(QWebSettings::PluginsEnabled, SettingsManager::getValue(SettingsManager::Browser_EnablePluginsOption).toString() != QLatin1String("disabled"));
-	globalSettings->setAttribute(QWebSettings::JavaEnabled, SettingsManager::getValue(SettingsManager::Browser_EnableJavaOption).toBool());
+	globalSettings->setAttribute(QWebSettings::PluginsEnabled, arePluginsEnabled);
+	globalSettings->setAttribute(QWebSettings::JavaEnabled, arePluginsEnabled);
 	globalSettings->setAttribute(QWebSettings::JavascriptEnabled, SettingsManager::getValue(SettingsManager::Browser_EnableJavaScriptOption).toBool());
 	globalSettings->setAttribute(QWebSettings::JavascriptCanAccessClipboard, SettingsManager::getValue(SettingsManager::Browser_JavaScriptCanAccessClipboardOption).toBool());
 	globalSettings->setAttribute(QWebSettings::JavascriptCanCloseWindows, true);

@@ -515,10 +515,6 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 			m_webWidget->setOption(SettingsManager::Browser_EnableJavaScriptOption, Action::calculateCheckedState(parameters));
 
 			break;
-		case ActionsManager::EnableJavaAction:
-			m_webWidget->setOption(SettingsManager::Browser_EnableJavaOption, Action::calculateCheckedState(parameters));
-
-			break;
 		case ActionsManager::EnableReferrerAction:
 			m_webWidget->setOption(SettingsManager::Network_EnableReferrerOption, Action::calculateCheckedState(parameters));
 
@@ -610,9 +606,6 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 					showAllImagesAction->setChecked(true);
 				}
 
-				menu.addAction(m_webWidget->getAction(ActionsManager::EnableJavaScriptAction));
-				menu.addAction(m_webWidget->getAction(ActionsManager::EnableJavaAction));
-
 				QMenu *enablePluginsMenu(menu.addMenu(tr("Plugins")));
 				QAction *enablePluginsAction(enablePluginsMenu->addAction(tr("Enabled")));
 				enablePluginsAction->setCheckable(true);
@@ -649,6 +642,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 					onDemandPluginsAction->setChecked(true);
 				}
 
+				menu.addAction(m_webWidget->getAction(ActionsManager::EnableJavaScriptAction));
 				menu.addSeparator();
 
 				QAction *enableCookiesAction(menu.addAction(tr("Enable Cookies")));

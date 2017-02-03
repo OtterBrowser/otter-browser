@@ -842,10 +842,11 @@ void QtWebKitWebWidget::updateRedoText(const QString &text)
 void QtWebKitWebWidget::updateOptions(const QUrl &url)
 {
 	const QString encoding(getOption(SettingsManager::Content_DefaultCharacterEncodingOption, url).toString());
+	const bool arePluginsEnabled(getOption(SettingsManager::Browser_EnablePluginsOption, url).toString() != QLatin1String("disabled"));
 	QWebSettings *settings(m_webView->page()->settings());
 	settings->setAttribute(QWebSettings::AutoLoadImages, (getOption(SettingsManager::Browser_EnableImagesOption, url).toString() != QLatin1String("onlyCached")));
-	settings->setAttribute(QWebSettings::PluginsEnabled, getOption(SettingsManager::Browser_EnablePluginsOption, url).toString() != QLatin1String("disabled"));
-	settings->setAttribute(QWebSettings::JavaEnabled, getOption(SettingsManager::Browser_EnableJavaOption, url).toBool());
+	settings->setAttribute(QWebSettings::PluginsEnabled, arePluginsEnabled);
+	settings->setAttribute(QWebSettings::JavaEnabled, arePluginsEnabled);
 	settings->setAttribute(QWebSettings::JavascriptEnabled, getOption(SettingsManager::Browser_EnableJavaScriptOption, url).toBool());
 	settings->setAttribute(QWebSettings::JavascriptCanAccessClipboard, getOption(SettingsManager::Browser_JavaScriptCanAccessClipboardOption, url).toBool());
 	settings->setAttribute(QWebSettings::JavascriptCanCloseWindows, getOption(SettingsManager::Browser_JavaScriptCanCloseWindowsOption, url).toBool());

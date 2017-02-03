@@ -610,11 +610,6 @@ void WebWidget::updatePageActions(const QUrl &url)
 		m_actions[ActionsManager::EnableJavaScriptAction]->setChecked(getOption(SettingsManager::Browser_EnableJavaScriptOption, url).toBool());
 	}
 
-	if (m_actions.contains(ActionsManager::EnableJavaAction))
-	{
-		m_actions[ActionsManager::EnableJavaAction]->setChecked(getOption(SettingsManager::Browser_EnableJavaOption, url).toBool());
-	}
-
 	if (m_actions.contains(ActionsManager::EnableReferrerAction))
 	{
 		m_actions[ActionsManager::EnableReferrerAction]->setChecked(getOption(SettingsManager::Network_EnableReferrerOption, url).toBool());
@@ -1289,10 +1284,6 @@ Action* WebWidget::getAction(int identifier)
 			break;
 		case ActionsManager::EnableJavaScriptAction:
 			action->setChecked(getOption(SettingsManager::Browser_EnableJavaScriptOption, getUrl()).toBool());
-
-			break;
-		case ActionsManager::EnableJavaAction:
-			action->setChecked(getOption(SettingsManager::Browser_EnableJavaOption, getUrl()).toBool());
 
 			break;
 		case ActionsManager::EnableReferrerAction:

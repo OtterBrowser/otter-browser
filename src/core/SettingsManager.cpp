@@ -79,7 +79,6 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Browser_EnableFullScreenOption, QLatin1String("ask"), EnumerationType, QStringList({QLatin1String("ask"), QLatin1String("allow"), QLatin1String("disallow")}));
 	registerOption(Browser_EnableGeolocationOption, QLatin1String("ask"), EnumerationType, QStringList({QLatin1String("ask"), QLatin1String("allow"), QLatin1String("disallow")}));
 	registerOption(Browser_EnableImagesOption, QLatin1String("enable"), EnumerationType, QStringList({QLatin1String("enable"), QLatin1String("onlyCached"), QLatin1String("disabled")}));
-	registerOption(Browser_EnableJavaOption, true, BooleanType);
 	registerOption(Browser_EnableJavaScriptOption, true, BooleanType);
 	registerOption(Browser_EnableLocalStorageOption, true, BooleanType);
 	registerOption(Browser_EnableMediaCaptureAudioOption, QLatin1String("ask"), EnumerationType, QStringList({QLatin1String("ask"), QLatin1String("allow"), QLatin1String("disallow")}));

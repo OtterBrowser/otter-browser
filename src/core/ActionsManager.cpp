@@ -298,7 +298,6 @@ bool Action::isLocal(int identifier)
 		case ActionsManager::PluginsPolicyAction:
 		case ActionsManager::LoadPluginsAction:
 		case ActionsManager::EnableJavaScriptAction:
-		case ActionsManager::EnableJavaAction:
 		case ActionsManager::EnableReferrerAction:
 		case ActionsManager::ProxyMenuAction:
 		case ActionsManager::EnableProxyAction:
@@ -508,7 +507,6 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(PluginsPolicyAction, QT_TRANSLATE_NOOP("actions", "Plugins"));
 	registerAction(LoadPluginsAction, QT_TRANSLATE_NOOP("actions", "Load Plugins"), QString(), ThemesManager::getIcon(QLatin1String("preferences-plugin")));
 	registerAction(EnableJavaScriptAction, QT_TRANSLATE_NOOP("actions", "Enable JavaScript"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag | IsCheckedFlag));
-	registerAction(EnableJavaAction, QT_TRANSLATE_NOOP("actions", "Enable Java"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag | IsCheckedFlag));
 	registerAction(EnableReferrerAction, QT_TRANSLATE_NOOP("actions", "Enable Referrer"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag | IsCheckedFlag));
 	registerAction(ProxyMenuAction, QT_TRANSLATE_NOOP("actions", "Proxy"));
 	registerAction(EnableProxyAction, QT_TRANSLATE_NOOP("actions", "Enable Proxy"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag | IsCheckedFlag));

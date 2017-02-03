@@ -58,7 +58,6 @@ public:
 		Browser_EnableFullScreenOption,
 		Browser_EnableGeolocationOption,
 		Browser_EnableImagesOption,
-		Browser_EnableJavaOption,
 		Browser_EnableJavaScriptOption,
 		Browser_EnableLocalStorageOption,
 		Browser_EnableMediaCaptureAudioOption,
