@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
+    <width>550</width>
     <height>120</height>
    </rect>
   </property>
@@ -37,7 +37,18 @@
       <widget class="QLineEdit" name="titleLineEdit"/>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="valueLineEdit"/>
+      <layout class="QHBoxLayout" name="valueLayout">
+       <item>
+        <widget class="QLineEdit" name="valueLineEdit"/>
+       </item>
+       <item>
+        <widget class="QToolButton" name="previewButton">
+         <property name="toolTip">
+          <string>Preview</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>

@@ -18,11 +18,15 @@
 **************************************************************************/
 
 #include "UserAgentPropertiesDialog.h"
+#include "../../core/AddonsManager.h"
+#include "../../core/ThemesManager.h"
+#include "../../core/WebBackend.h"
 
 #include "ui_UserAgentPropertiesDialog.h"
 
 #include <QtGui/QContextMenuEvent>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QToolTip>
 
 namespace Otter
 {
@@ -34,6 +38,7 @@ UserAgentPropertiesDialog::UserAgentPropertiesDialog(const UserAgentDefinition &
 	m_ui->setupUi(this);
 	m_ui->titleLineEdit->setText(userAgent.getTitle());
 	m_ui->valueLineEdit->setText(userAgent.value);
+	m_ui->previewButton->setIcon(ThemesManager::getIcon(QLatin1String("document-preview")));
 
 	if (userAgent.identifier == QLatin1String("default"))
 	{
@@ -45,6 +50,8 @@ UserAgentPropertiesDialog::UserAgentPropertiesDialog(const UserAgentDefinition &
 	}
 
 	setWindowTitle(userAgent.identifier.isEmpty() ? tr("Add User Agent") : tr ("Edit User Agent"));
+
+	connect(m_ui->previewButton, SIGNAL(clicked(bool)), this, SLOT(showPreview()));
 }
 
 UserAgentPropertiesDialog::~UserAgentPropertiesDialog()
@@ -68,6 +75,11 @@ void UserAgentPropertiesDialog::insertPlaceholder(QAction *action)
 	{
 		m_ui->valueLineEdit->insert(QStringLiteral("{%1}").arg(action->data().toString()));
 	}
+}
+
+void UserAgentPropertiesDialog::showPreview()
+{
+	QToolTip::showText(m_ui->valueLineEdit->mapToGlobal(m_ui->valueLineEdit->rect().bottomLeft()), AddonsManager::getWebBackend()->getUserAgent(m_ui->valueLineEdit->text()));
 }
 
 UserAgentDefinition UserAgentPropertiesDialog::getUserAgent() const

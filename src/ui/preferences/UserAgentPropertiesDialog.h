@@ -47,6 +47,7 @@ protected:
 
 protected slots:
 	void insertPlaceholder(QAction *action);
+	void showPreview();
 
 private:
 	UserAgentDefinition m_userAgent;
