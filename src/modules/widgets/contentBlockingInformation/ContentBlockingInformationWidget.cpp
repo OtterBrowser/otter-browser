@@ -335,7 +335,7 @@ QString ContentBlockingInformationWidget::getText() const
 		}
 	}
 
-	return tr("Blocked Elements: %1").arg(m_amount);
+	return tr("Blocked Elements: {amount}").replace(QLatin1String("{amount}"), QString::number(m_amount));
 }
 
 QIcon ContentBlockingInformationWidget::getIcon() const
