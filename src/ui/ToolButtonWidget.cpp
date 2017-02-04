@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ ToolButtonWidget::ToolButtonWidget(const ActionsManager::ActionEntryDefinition &
 	if (menu)
 	{
 		setPopupMode(QToolButton::InstantPopup);
-		setText(definition.options.value(QLatin1String("text"), tr("Menu")).toString());
+		setText(definition.options.value(QLatin1String("text")).toString());
 	}
 
 	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
