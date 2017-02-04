@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -271,10 +271,54 @@ void ToolBarDialog::editEntry()
 		widgets.append(qMakePair(tr("Show search engine:"), searchEngineWidget));
 		widgets.append(qMakePair(tr("Show search button:"), new OptionWidget(QLatin1String("showSearchButton"), options.value(QLatin1String("showSearchButton"), true), SettingsManager::BooleanType, this)));
 	}
-	else if (identifier == QLatin1String("ContentBlockingInformationWidget") || identifier == QLatin1String("MenuButtonWidget") || identifier == QLatin1String("PanelChooserWidget") || identifier.startsWith(QLatin1String("bookmarks:")) || identifier.endsWith(QLatin1String("Action")) || identifier.endsWith(QLatin1String("Menu")))
+	else if (identifier == QLatin1String("ContentBlockingInformationWidget") || identifier == QLatin1String("MenuButtonWidget") || identifier.startsWith(QLatin1String("bookmarks:")) || identifier.endsWith(QLatin1String("Action")) || identifier.endsWith(QLatin1String("Menu")))
 	{
-		widgets.append(qMakePair(tr("Custom icon:"), new OptionWidget(QLatin1String("icon"), options.value(QLatin1String("icon")), SettingsManager::IconType, this)));
-		widgets.append(qMakePair(tr("Custom text:"), new OptionWidget(QLatin1String("text"), options.value(QLatin1String("text")), SettingsManager::StringType, this)));
+		OptionWidget *iconOptionWidget(new OptionWidget(QLatin1String("icon"), QVariant(), SettingsManager::IconType, this));
+		OptionWidget *textOptionWidget(new OptionWidget(QLatin1String("text"), QVariant(), SettingsManager::StringType, this));
+
+		if (identifier == QLatin1String("ClosedWindowsMenu"))
+		{
+			iconOptionWidget->setDefaultValue(ThemesManager::getIcon(QLatin1String("user-trash")));
+		}
+		else if (identifier == QLatin1String("ContentBlockingInformationWidget"))
+		{
+			iconOptionWidget->setDefaultValue(ThemesManager::getIcon(QLatin1String("content-blocking")));
+			textOptionWidget->setDefaultValue(tr("Blocked Elements: {amount}"));
+		}
+		else if (identifier == QLatin1String("MenuButtonWidget"))
+		{
+			iconOptionWidget->setDefaultValue(ThemesManager::getIcon(QLatin1String("otter-browser"), false));
+			textOptionWidget->setDefaultValue(tr("Menu"));
+		}
+		else if (identifier.startsWith(QLatin1String("bookmarks:")))
+		{
+			BookmarksItem *bookmark(identifier.startsWith(QLatin1String("bookmarks:/")) ? BookmarksManager::getModel()->getItem(identifier.mid(11)) : BookmarksManager::getBookmark(identifier.mid(10).toULongLong()));
+
+			if (bookmark)
+			{
+				iconOptionWidget->setDefaultValue(bookmark->data(Qt::DecorationRole).value<QIcon>());
+				textOptionWidget->setDefaultValue(bookmark->data(BookmarksModel::TitleRole).isValid() ? bookmark->data(BookmarksModel::TitleRole).toString() : tr("(Untitled)"));
+			}
+		}
+		else if (identifier.endsWith(QLatin1String("Action")))
+		{
+			const int actionIdentifier(ActionsManager::getActionIdentifier(identifier.left(identifier.length() - 6)));
+
+			if (actionIdentifier >= 0)
+			{
+				const ActionsManager::ActionDefinition definition(ActionsManager::getActionDefinition(actionIdentifier));
+
+				iconOptionWidget->setDefaultValue(definition.icon);
+				textOptionWidget->setDefaultValue(QCoreApplication::translate("actions", (definition.description.isEmpty() ? definition.text : definition.description).toUtf8().constData()));
+			}
+		}
+
+		iconOptionWidget->setValue(options.value(QLatin1String("icon"), iconOptionWidget->getDefaultValue()));
+		textOptionWidget->setValue(options.value(QLatin1String("text"), textOptionWidget->getDefaultValue()));
+		textOptionWidget->setButtons(textOptionWidget->getDefaultValue().isNull() ? OptionWidget::NoButtons : OptionWidget::ResetButton);
+
+		widgets.append(qMakePair(tr("Icon:"), iconOptionWidget));
+		widgets.append(qMakePair(tr("Text:"), textOptionWidget));
 	}
 
 	if (widgets.isEmpty())
@@ -309,7 +353,7 @@ void ToolBarDialog::editEntry()
 
 	for (int i = 0; i < widgets.count(); ++i)
 	{
-		if (widgets.at(i).second->getValue().isNull())
+		if (widgets.at(i).second->getValue() == widgets.at(i).second->getDefaultValue())
 		{
 			options.remove(widgets.at(i).second->getOption());
 		}
@@ -517,7 +561,11 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 				icon = ThemesManager::getIcon(data);
 			}
 
-			if (!icon.isNull())
+			if (data.isEmpty())
+			{
+				item->setData(QColor(Qt::transparent), Qt::DecorationRole);
+			}
+			else if (!icon.isNull())
 			{
 				item->setIcon(icon);
 			}
