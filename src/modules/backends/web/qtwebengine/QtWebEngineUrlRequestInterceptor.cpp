@@ -31,7 +31,7 @@ namespace Otter
 {
 
 QtWebEngineUrlRequestInterceptor::QtWebEngineUrlRequestInterceptor(QObject *parent) : QWebEngineUrlRequestInterceptor(parent),
-	m_areImagesEnabled(SettingsManager::getValue(SettingsManager::Browser_EnableImagesOption).toString() != QLatin1String("disabled"))
+	m_areImagesEnabled(SettingsManager::getValue(SettingsManager::Permissions_EnableImagesOption).toString() != QLatin1String("disabled"))
 {
 	QTimer::singleShot(1800000, this, SLOT(clearContentBlockingInformation()));
 
@@ -41,9 +41,9 @@ QtWebEngineUrlRequestInterceptor::QtWebEngineUrlRequestInterceptor(QObject *pare
 
 void QtWebEngineUrlRequestInterceptor::optionChanged(int identifier)
 {
-	if (identifier == SettingsManager::Browser_EnableImagesOption)
+	if (identifier == SettingsManager::Permissions_EnableImagesOption)
 	{
-		m_areImagesEnabled = (SettingsManager::getValue(SettingsManager::Browser_EnableImagesOption).toString() != QLatin1String("disabled"));
+		m_areImagesEnabled = (SettingsManager::getValue(SettingsManager::Permissions_EnableImagesOption).toString() != QLatin1String("disabled"));
 	}
 	else if (identifier == SettingsManager::ContentBlocking_ProfilesOption)
 	{

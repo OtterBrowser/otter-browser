@@ -73,15 +73,15 @@ void QtWebEngineWebBackend::optionChanged(int identifier)
 	}
 
 	QWebEngineSettings *globalSettings(QWebEngineSettings::globalSettings());
-	globalSettings->setAttribute(QWebEngineSettings::AutoLoadImages, (SettingsManager::getValue(SettingsManager::Browser_EnableImagesOption).toString() != QLatin1String("onlyCached")));
-	globalSettings->setAttribute(QWebEngineSettings::PluginsEnabled, SettingsManager::getValue(SettingsManager::Browser_EnablePluginsOption).toString() != QLatin1String("disabled"));
-	globalSettings->setAttribute(QWebEngineSettings::JavascriptEnabled, SettingsManager::getValue(SettingsManager::Browser_EnableJavaScriptOption).toBool());
-	globalSettings->setAttribute(QWebEngineSettings::JavascriptCanAccessClipboard, SettingsManager::getValue(SettingsManager::Browser_JavaScriptCanAccessClipboardOption).toBool());
-	globalSettings->setAttribute(QWebEngineSettings::JavascriptCanOpenWindows, SettingsManager::getValue(SettingsManager::Browser_JavaScriptCanOpenWindowsOption).toBool());
+	globalSettings->setAttribute(QWebEngineSettings::AutoLoadImages, (SettingsManager::getValue(SettingsManager::Permissions_EnableImagesOption).toString() != QLatin1String("onlyCached")));
+	globalSettings->setAttribute(QWebEngineSettings::PluginsEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnablePluginsOption).toString() != QLatin1String("disabled"));
+	globalSettings->setAttribute(QWebEngineSettings::JavascriptEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableJavaScriptOption).toBool());
+	globalSettings->setAttribute(QWebEngineSettings::JavascriptCanAccessClipboard, SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanAccessClipboardOption).toBool());
+	globalSettings->setAttribute(QWebEngineSettings::JavascriptCanOpenWindows, SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toBool());
 #if QT_VERSION >= 0x050700
-	globalSettings->setAttribute(QWebEngineSettings::WebGLEnabled, SettingsManager::getValue(SettingsManager::Browser_EnableWebglOption).toBool());
+	globalSettings->setAttribute(QWebEngineSettings::WebGLEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableWebglOption).toBool());
 #endif
-	globalSettings->setAttribute(QWebEngineSettings::LocalStorageEnabled, SettingsManager::getValue(SettingsManager::Browser_EnableLocalStorageOption).toBool());
+	globalSettings->setAttribute(QWebEngineSettings::LocalStorageEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableLocalStorageOption).toBool());
 	globalSettings->setFontSize(QWebEngineSettings::DefaultFontSize, SettingsManager::getValue(SettingsManager::Content_DefaultFontSizeOption).toInt());
 	globalSettings->setFontSize(QWebEngineSettings::DefaultFixedFontSize, SettingsManager::getValue(SettingsManager::Content_DefaultFixedFontSizeOption).toInt());
 	globalSettings->setFontSize(QWebEngineSettings::MinimumFontSize, SettingsManager::getValue(SettingsManager::Content_MinimumFontSizeOption).toInt());
@@ -223,7 +223,7 @@ WebWidget* QtWebEngineWebBackend::createWidget(bool isPrivate, ContentsWidget *p
 			QWebEngineProfile::defaultProfile()->setPersistentStoragePath(cachePath + QLatin1String("/persistentStorage/"));
 		}
 
-		optionChanged(SettingsManager::Browser_EnableFullScreenOption);
+		optionChanged(SettingsManager::Permissions_EnableFullScreenOption);
 
 		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
 		connect(QWebEngineProfile::defaultProfile(), SIGNAL(downloadRequested(QWebEngineDownloadItem*)), this, SLOT(downloadFile(QWebEngineDownloadItem*)));

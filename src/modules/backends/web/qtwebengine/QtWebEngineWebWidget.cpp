@@ -1040,7 +1040,7 @@ void QtWebEngineWebWidget::handleFullScreenRequest(QWebEngineFullScreenRequest r
 
 	if (request.toggleOn())
 	{
-		const QString value(SettingsManager::getValue(SettingsManager::Browser_EnableFullScreenOption, request.origin()).toString());
+		const QString value(SettingsManager::getValue(SettingsManager::Permissions_EnableFullScreenOption, request.origin()).toString());
 
 		if (value == QLatin1String("allow"))
 		{
@@ -1085,7 +1085,7 @@ void QtWebEngineWebWidget::handlePermissionCancel(const QUrl &url, QWebEnginePag
 
 void QtWebEngineWebWidget::handleWindowCloseRequest()
 {
-	const QString mode(SettingsManager::getValue(SettingsManager::Browser_JavaScriptCanCloseWindowsOption, getUrl()).toString());
+	const QString mode(SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanCloseWindowsOption, getUrl()).toString());
 
 	if (mode != QLatin1String("ask"))
 	{
@@ -1106,7 +1106,7 @@ void QtWebEngineWebWidget::handleWindowCloseRequest()
 
 	if (dialog.getCheckBoxState())
 	{
-		SettingsManager::setValue(SettingsManager::Browser_JavaScriptCanCloseWindowsOption, (dialog.isAccepted() ? QLatin1String("allow") : QLatin1String("disallow")));
+		SettingsManager::setValue(SettingsManager::Permissions_ScriptsCanCloseWindowsOption, (dialog.isAccepted() ? QLatin1String("allow") : QLatin1String("disallow")));
 	}
 
 	if (dialog.isAccepted())
@@ -1240,21 +1240,21 @@ void QtWebEngineWebWidget::updateOptions(const QUrl &url)
 {
 	const QString encoding(getOption(SettingsManager::Content_DefaultCharacterEncodingOption, url).toString());
 	QWebEngineSettings *settings(m_page->settings());
-	settings->setAttribute(QWebEngineSettings::AutoLoadImages, (getOption(SettingsManager::Browser_EnableImagesOption, url).toString() != QLatin1String("onlyCached")));
-	settings->setAttribute(QWebEngineSettings::JavascriptEnabled, getOption(SettingsManager::Browser_EnableJavaScriptOption, url).toBool());
-	settings->setAttribute(QWebEngineSettings::JavascriptCanAccessClipboard, getOption(SettingsManager::Browser_JavaScriptCanAccessClipboardOption, url).toBool());
-	settings->setAttribute(QWebEngineSettings::JavascriptCanOpenWindows, getOption(SettingsManager::Browser_JavaScriptCanOpenWindowsOption, url).toBool());
+	settings->setAttribute(QWebEngineSettings::AutoLoadImages, (getOption(SettingsManager::Permissions_EnableImagesOption, url).toString() != QLatin1String("onlyCached")));
+	settings->setAttribute(QWebEngineSettings::JavascriptEnabled, getOption(SettingsManager::Permissions_EnableJavaScriptOption, url).toBool());
+	settings->setAttribute(QWebEngineSettings::JavascriptCanAccessClipboard, getOption(SettingsManager::Permissions_ScriptsCanAccessClipboardOption, url).toBool());
+	settings->setAttribute(QWebEngineSettings::JavascriptCanOpenWindows, getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, url).toBool());
 #if QT_VERSION >= 0x050700
-	settings->setAttribute(QWebEngineSettings::WebGLEnabled, getOption(SettingsManager::Browser_EnableWebglOption, url).toBool());
+	settings->setAttribute(QWebEngineSettings::WebGLEnabled, getOption(SettingsManager::Permissions_EnableWebglOption, url).toBool());
 #endif
-	settings->setAttribute(QWebEngineSettings::LocalStorageEnabled, getOption(SettingsManager::Browser_EnableLocalStorageOption, url).toBool());
+	settings->setAttribute(QWebEngineSettings::LocalStorageEnabled, getOption(SettingsManager::Permissions_EnableLocalStorageOption, url).toBool());
 	settings->setDefaultTextEncoding((encoding == QLatin1String("auto")) ? QString() : encoding);
 
 	m_page->profile()->setHttpUserAgent(getBackend()->getUserAgent(NetworkManagerFactory::getUserAgent(getOption(SettingsManager::Network_UserAgentOption, url).toString()).value));
 
 	disconnect(m_page, SIGNAL(geometryChangeRequested(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
 
-	if (getOption(SettingsManager::Browser_JavaScriptCanChangeWindowGeometryOption, url).toBool())
+	if (getOption(SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption, url).toBool())
 	{
 		connect(m_page, SIGNAL(geometryChangeRequested(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
 	}

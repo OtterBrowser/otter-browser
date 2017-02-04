@@ -90,20 +90,20 @@ void QtWebKitWebBackend::optionChanged(int identifier)
 		return;
 	}
 
-	const bool arePluginsEnabled(SettingsManager::getValue(SettingsManager::Browser_EnablePluginsOption).toString() != QLatin1String("disabled"));
+	const bool arePluginsEnabled(SettingsManager::getValue(SettingsManager::Permissions_EnablePluginsOption).toString() != QLatin1String("disabled"));
 	QWebSettings *globalSettings(QWebSettings::globalSettings());
 	globalSettings->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
-	globalSettings->setAttribute(QWebSettings::AutoLoadImages, (SettingsManager::getValue(SettingsManager::Browser_EnableImagesOption).toString() != QLatin1String("onlyCached")));
+	globalSettings->setAttribute(QWebSettings::AutoLoadImages, (SettingsManager::getValue(SettingsManager::Permissions_EnableImagesOption).toString() != QLatin1String("onlyCached")));
 	globalSettings->setAttribute(QWebSettings::PluginsEnabled, arePluginsEnabled);
 	globalSettings->setAttribute(QWebSettings::JavaEnabled, arePluginsEnabled);
-	globalSettings->setAttribute(QWebSettings::JavascriptEnabled, SettingsManager::getValue(SettingsManager::Browser_EnableJavaScriptOption).toBool());
-	globalSettings->setAttribute(QWebSettings::JavascriptCanAccessClipboard, SettingsManager::getValue(SettingsManager::Browser_JavaScriptCanAccessClipboardOption).toBool());
+	globalSettings->setAttribute(QWebSettings::JavascriptEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableJavaScriptOption).toBool());
+	globalSettings->setAttribute(QWebSettings::JavascriptCanAccessClipboard, SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanAccessClipboardOption).toBool());
 	globalSettings->setAttribute(QWebSettings::JavascriptCanCloseWindows, true);
-	globalSettings->setAttribute(QWebSettings::JavascriptCanOpenWindows, SettingsManager::getValue(SettingsManager::Browser_JavaScriptCanOpenWindowsOption).toBool());
-	globalSettings->setAttribute(QWebSettings::WebGLEnabled, SettingsManager::getValue(SettingsManager::Browser_EnableWebglOption).toBool());
-	globalSettings->setAttribute(QWebSettings::LocalStorageEnabled, SettingsManager::getValue(SettingsManager::Browser_EnableLocalStorageOption).toBool());
-	globalSettings->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, SettingsManager::getValue(SettingsManager::Browser_EnableOfflineStorageDatabaseOption).toBool());
-	globalSettings->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, SettingsManager::getValue(SettingsManager::Browser_EnableOfflineWebApplicationCacheOption).toBool());
+	globalSettings->setAttribute(QWebSettings::JavascriptCanOpenWindows, SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toBool());
+	globalSettings->setAttribute(QWebSettings::WebGLEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableWebglOption).toBool());
+	globalSettings->setAttribute(QWebSettings::LocalStorageEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableLocalStorageOption).toBool());
+	globalSettings->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableOfflineStorageDatabaseOption).toBool());
+	globalSettings->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableOfflineWebApplicationCacheOption).toBool());
 	globalSettings->setAttribute(QWebSettings::ZoomTextOnly, SettingsManager::getValue(SettingsManager::Content_ZoomTextOnlyOption).toBool());
 	globalSettings->setFontSize(QWebSettings::DefaultFontSize, SettingsManager::getValue(SettingsManager::Content_DefaultFontSizeOption).toInt());
 	globalSettings->setFontSize(QWebSettings::DefaultFixedFontSize, SettingsManager::getValue(SettingsManager::Content_DefaultFixedFontSizeOption).toInt());
@@ -196,7 +196,7 @@ WebWidget* QtWebKitWebBackend::createWidget(bool isPrivate, ContentsWidget *pare
 		QWebSettings::globalSettings()->setAttribute(QWebSettings::FullScreenSupportEnabled, true);
 #endif
 
-		optionChanged(SettingsManager::Browser_EnableFullScreenOption);
+		optionChanged(SettingsManager::Permissions_EnableFullScreenOption);
 
 		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
 	}

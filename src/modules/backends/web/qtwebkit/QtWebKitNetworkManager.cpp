@@ -108,7 +108,7 @@ void QtWebKitNetworkManager::addContentBlockingException(const QUrl &url, Networ
 {
 	m_contentBlockingExceptions.insert(url);
 
-	if (resourceType == NetworkManager::ImageType && m_widget->getOption(SettingsManager::Browser_EnableImagesOption, m_widget->getUrl()).toString() == QLatin1String("onlyCached"))
+	if (resourceType == NetworkManager::ImageType && m_widget->getOption(SettingsManager::Permissions_EnableImagesOption, m_widget->getUrl()).toString() == QLatin1String("onlyCached"))
 	{
 		m_areImagesEnabled = false;
 	}
@@ -456,7 +456,7 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 		m_doNotTrackPolicy = NetworkManagerFactory::SkipTrackPolicy;
 	}
 
-	m_areImagesEnabled = (m_widget->getOption(SettingsManager::Browser_EnableImagesOption, url).toString() != QLatin1String("disabled"));
+	m_areImagesEnabled = (m_widget->getOption(SettingsManager::Permissions_EnableImagesOption, url).toString() != QLatin1String("disabled"));
 	m_canSendReferrer = m_widget->getOption(SettingsManager::Network_EnableReferrerOption, url).toBool();
 
 	const QString generalCookiesPolicyValue(m_widget->getOption(SettingsManager::Network_CookiesPolicyOption, url).toString());

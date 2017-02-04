@@ -30,11 +30,11 @@ JavaScriptPreferencesDialog::JavaScriptPreferencesDialog(const QHash<int, QVaria
 	m_ui(new Ui::JavaScriptPreferencesDialog)
 {
 	m_ui->setupUi(this);
-	m_ui->canChangeWindowGeometryCheckBox->setChecked(options.value(SettingsManager::Browser_JavaScriptCanChangeWindowGeometryOption).toBool());
-	m_ui->canShowStatusMessagesCheckBox->setChecked(options.value(SettingsManager::Browser_JavaScriptCanShowStatusMessagesOption).toBool());
-	m_ui->canAccessClipboardCheckBox->setChecked(options.value(SettingsManager::Browser_JavaScriptCanAccessClipboardOption).toBool());
-	m_ui->canDisableContextMenuCheckBox->setChecked(options.value(SettingsManager::Browser_JavaScriptCanDisableContextMenuOption).toBool());
-	m_ui->canOpenWindowsCheckBox->setChecked(options.value(SettingsManager::Browser_JavaScriptCanOpenWindowsOption).toBool());
+	m_ui->canChangeWindowGeometryCheckBox->setChecked(options.value(SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption).toBool());
+	m_ui->canShowStatusMessagesCheckBox->setChecked(options.value(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption).toBool());
+	m_ui->canAccessClipboardCheckBox->setChecked(options.value(SettingsManager::Permissions_ScriptsCanAccessClipboardOption).toBool());
+	m_ui->canDisableContextMenuCheckBox->setChecked(options.value(SettingsManager::Permissions_ScriptsCanDisableContextMenuOption).toBool());
+	m_ui->canOpenWindowsCheckBox->setChecked(options.value(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toBool());
 	m_ui->canCloseWindowsComboBox->addItem(tr("Ask"), QLatin1String("ask"));
 	m_ui->canCloseWindowsComboBox->addItem(tr("Always"), QLatin1String("allow"));
 	m_ui->canCloseWindowsComboBox->addItem(tr("Never"), QLatin1String("disallow"));
@@ -42,11 +42,11 @@ JavaScriptPreferencesDialog::JavaScriptPreferencesDialog(const QHash<int, QVaria
 	m_ui->enableFullScreenComboBox->addItem(tr("Always"), QLatin1String("allow"));
 	m_ui->enableFullScreenComboBox->addItem(tr("Never"), QLatin1String("disallow"));
 
-	const int canCloseWindowsIndex(m_ui->canCloseWindowsComboBox->findData(options.value(SettingsManager::Browser_JavaScriptCanCloseWindowsOption).toString()));
+	const int canCloseWindowsIndex(m_ui->canCloseWindowsComboBox->findData(options.value(SettingsManager::Permissions_ScriptsCanCloseWindowsOption).toString()));
 
 	m_ui->canCloseWindowsComboBox->setCurrentIndex((canCloseWindowsIndex < 0) ? 0 : canCloseWindowsIndex);
 
-	const int enableFullScreenIndex(m_ui->enableFullScreenComboBox->findData(options.value(SettingsManager::Browser_EnableFullScreenOption).toString()));
+	const int enableFullScreenIndex(m_ui->enableFullScreenComboBox->findData(options.value(SettingsManager::Permissions_EnableFullScreenOption).toString()));
 
 	m_ui->enableFullScreenComboBox->setCurrentIndex((enableFullScreenIndex < 0) ? 0 : enableFullScreenIndex);
 
@@ -72,13 +72,13 @@ void JavaScriptPreferencesDialog::changeEvent(QEvent *event)
 QHash<int, QVariant> JavaScriptPreferencesDialog::getOptions() const
 {
 	QHash<int, QVariant> options;
-	options[SettingsManager::Browser_JavaScriptCanChangeWindowGeometryOption] = m_ui->canChangeWindowGeometryCheckBox->isChecked();
-	options[SettingsManager::Browser_JavaScriptCanShowStatusMessagesOption] = m_ui->canShowStatusMessagesCheckBox->isChecked();
-	options[SettingsManager::Browser_JavaScriptCanAccessClipboardOption] = m_ui->canAccessClipboardCheckBox->isChecked();
-	options[SettingsManager::Browser_JavaScriptCanDisableContextMenuOption] = m_ui->canDisableContextMenuCheckBox->isChecked();
-	options[SettingsManager::Browser_JavaScriptCanOpenWindowsOption] = m_ui->canOpenWindowsCheckBox->isChecked();
-	options[SettingsManager::Browser_JavaScriptCanCloseWindowsOption] = m_ui->canCloseWindowsComboBox->currentData().toString();
-	options[SettingsManager::Browser_EnableFullScreenOption] = m_ui->enableFullScreenComboBox->currentData().toString();
+	options[SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption] = m_ui->canChangeWindowGeometryCheckBox->isChecked();
+	options[SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption] = m_ui->canShowStatusMessagesCheckBox->isChecked();
+	options[SettingsManager::Permissions_ScriptsCanAccessClipboardOption] = m_ui->canAccessClipboardCheckBox->isChecked();
+	options[SettingsManager::Permissions_ScriptsCanDisableContextMenuOption] = m_ui->canDisableContextMenuCheckBox->isChecked();
+	options[SettingsManager::Permissions_ScriptsCanOpenWindowsOption] = m_ui->canOpenWindowsCheckBox->isChecked();
+	options[SettingsManager::Permissions_ScriptsCanCloseWindowsOption] = m_ui->canCloseWindowsComboBox->currentData().toString();
+	options[SettingsManager::Permissions_EnableFullScreenOption] = m_ui->enableFullScreenComboBox->currentData().toString();
 
 	return options;
 }

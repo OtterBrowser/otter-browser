@@ -133,7 +133,7 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 
 	QShortcut *selectAllShortcut(new QShortcut(QKeySequence(QKeySequence::SelectAll), this, 0, 0, Qt::WidgetWithChildrenShortcut));
 
-	optionChanged(SettingsManager::Browser_JavaScriptCanShowStatusMessagesOption, SettingsManager::getValue(SettingsManager::Browser_JavaScriptCanShowStatusMessagesOption));
+	optionChanged(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption, SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption));
 	optionChanged(SettingsManager::Content_BackgroundColorOption, SettingsManager::getValue(SettingsManager::Content_BackgroundColorOption));
 	optionChanged(SettingsManager::History_BrowsingLimitAmountWindowOption, SettingsManager::getValue(SettingsManager::History_BrowsingLimitAmountWindowOption));
 	updateEditActions();
@@ -255,7 +255,7 @@ void QtWebKitWebWidget::print(QPrinter *printer)
 
 void QtWebKitWebWidget::optionChanged(int identifier, const QVariant &value)
 {
-	if (identifier == SettingsManager::Browser_JavaScriptCanShowStatusMessagesOption)
+	if (identifier == SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption)
 	{
 		disconnect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
 
@@ -310,7 +310,7 @@ void QtWebKitWebWidget::pageLoadStarted()
 
 	m_thumbnail = QPixmap();
 	m_passwordToken = QUuid::createUuid().toString();
-	m_canLoadPlugins = (getOption(SettingsManager::Browser_EnablePluginsOption, getUrl()).toString() == QLatin1String("enabled"));
+	m_canLoadPlugins = (getOption(SettingsManager::Permissions_EnablePluginsOption, getUrl()).toString() == QLatin1String("enabled"));
 	m_loadingState = WindowsManager::OngoingLoadingState;
 
 	updateNavigationActions();
@@ -632,7 +632,7 @@ void QtWebKitWebWidget::handleHistory()
 
 void QtWebKitWebWidget::handleWindowCloseRequest()
 {
-	const QString mode(SettingsManager::getValue(SettingsManager::Browser_JavaScriptCanCloseWindowsOption, getUrl()).toString());
+	const QString mode(SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanCloseWindowsOption, getUrl()).toString());
 
 	if (mode != QLatin1String("ask"))
 	{
@@ -651,7 +651,7 @@ void QtWebKitWebWidget::handleWindowCloseRequest()
 
 	if (dialog.getCheckBoxState())
 	{
-		SettingsManager::setValue(SettingsManager::Browser_JavaScriptCanCloseWindowsOption, (dialog.isAccepted() ? QLatin1String("allow") : QLatin1String("disallow")));
+		SettingsManager::setValue(SettingsManager::Permissions_ScriptsCanCloseWindowsOption, (dialog.isAccepted() ? QLatin1String("allow") : QLatin1String("disallow")));
 	}
 
 	if (dialog.isAccepted())
@@ -667,7 +667,7 @@ void QtWebKitWebWidget::handleFullScreenRequest(QWebFullScreenRequest request)
 
 	if (request.toggleOn())
 	{
-		const QString value(SettingsManager::getValue(SettingsManager::Browser_EnableFullScreenOption, request.origin()).toString());
+		const QString value(SettingsManager::getValue(SettingsManager::Permissions_EnableFullScreenOption, request.origin()).toString());
 
 		if (value == QLatin1String("allow"))
 		{
@@ -842,19 +842,19 @@ void QtWebKitWebWidget::updateRedoText(const QString &text)
 void QtWebKitWebWidget::updateOptions(const QUrl &url)
 {
 	const QString encoding(getOption(SettingsManager::Content_DefaultCharacterEncodingOption, url).toString());
-	const bool arePluginsEnabled(getOption(SettingsManager::Browser_EnablePluginsOption, url).toString() != QLatin1String("disabled"));
+	const bool arePluginsEnabled(getOption(SettingsManager::Permissions_EnablePluginsOption, url).toString() != QLatin1String("disabled"));
 	QWebSettings *settings(m_webView->page()->settings());
-	settings->setAttribute(QWebSettings::AutoLoadImages, (getOption(SettingsManager::Browser_EnableImagesOption, url).toString() != QLatin1String("onlyCached")));
+	settings->setAttribute(QWebSettings::AutoLoadImages, (getOption(SettingsManager::Permissions_EnableImagesOption, url).toString() != QLatin1String("onlyCached")));
 	settings->setAttribute(QWebSettings::PluginsEnabled, arePluginsEnabled);
 	settings->setAttribute(QWebSettings::JavaEnabled, arePluginsEnabled);
-	settings->setAttribute(QWebSettings::JavascriptEnabled, getOption(SettingsManager::Browser_EnableJavaScriptOption, url).toBool());
-	settings->setAttribute(QWebSettings::JavascriptCanAccessClipboard, getOption(SettingsManager::Browser_JavaScriptCanAccessClipboardOption, url).toBool());
-	settings->setAttribute(QWebSettings::JavascriptCanCloseWindows, getOption(SettingsManager::Browser_JavaScriptCanCloseWindowsOption, url).toBool());
-	settings->setAttribute(QWebSettings::JavascriptCanOpenWindows, getOption(SettingsManager::Browser_JavaScriptCanOpenWindowsOption, url).toBool());
-	settings->setAttribute(QWebSettings::WebGLEnabled, getOption(SettingsManager::Browser_EnableWebglOption, url).toBool());
-	settings->setAttribute(QWebSettings::LocalStorageEnabled, getOption(SettingsManager::Browser_EnableLocalStorageOption, url).toBool());
-	settings->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, getOption(SettingsManager::Browser_EnableOfflineStorageDatabaseOption, url).toBool());
-	settings->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, getOption(SettingsManager::Browser_EnableOfflineWebApplicationCacheOption, url).toBool());
+	settings->setAttribute(QWebSettings::JavascriptEnabled, getOption(SettingsManager::Permissions_EnableJavaScriptOption, url).toBool());
+	settings->setAttribute(QWebSettings::JavascriptCanAccessClipboard, getOption(SettingsManager::Permissions_ScriptsCanAccessClipboardOption, url).toBool());
+	settings->setAttribute(QWebSettings::JavascriptCanCloseWindows, getOption(SettingsManager::Permissions_ScriptsCanCloseWindowsOption, url).toBool());
+	settings->setAttribute(QWebSettings::JavascriptCanOpenWindows, getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, url).toBool());
+	settings->setAttribute(QWebSettings::WebGLEnabled, getOption(SettingsManager::Permissions_EnableWebglOption, url).toBool());
+	settings->setAttribute(QWebSettings::LocalStorageEnabled, getOption(SettingsManager::Permissions_EnableLocalStorageOption, url).toBool());
+	settings->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, getOption(SettingsManager::Permissions_EnableOfflineStorageDatabaseOption, url).toBool());
+	settings->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, getOption(SettingsManager::Permissions_EnableOfflineWebApplicationCacheOption, url).toBool());
 	settings->setDefaultTextEncoding((encoding == QLatin1String("auto")) ? QString() : encoding);
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	settings->setAttribute(QWebSettings::MediaEnabled, getOption(QtWebKitWebBackend::getOptionIdentifier(QtWebKitWebBackend::QtWebKitBackend_EnableMediaOption), url).toBool());
@@ -871,12 +871,12 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 	disconnect(m_webView->page(), SIGNAL(geometryChangeRequested(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
 	disconnect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
 
-	if (getOption(SettingsManager::Browser_JavaScriptCanChangeWindowGeometryOption, url).toBool())
+	if (getOption(SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption, url).toBool())
 	{
 		connect(m_webView->page(), SIGNAL(geometryChangeRequested(QRect)), this, SIGNAL(requestedGeometryChange(QRect)));
 	}
 
-	if (getOption(SettingsManager::Browser_JavaScriptCanShowStatusMessagesOption, url).toBool())
+	if (getOption(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption, url).toBool())
 	{
 		connect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
 	}
@@ -889,7 +889,7 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 
 	m_networkManager->updateOptions(url);
 
-	m_canLoadPlugins = (getOption(SettingsManager::Browser_EnablePluginsOption, url).toString() == QLatin1String("enabled"));
+	m_canLoadPlugins = (getOption(SettingsManager::Permissions_EnablePluginsOption, url).toString() == QLatin1String("enabled"));
 }
 
 void QtWebKitWebWidget::clearOptions()
@@ -1024,7 +1024,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				const QWebHitTestResult nativeResult(m_webView->page()->mainFrame()->hitTestContent(getClickPosition()));
 				nativeResult.element().evaluateJavaScript(QLatin1String("var event = document.createEvent('MouseEvents'); event.initEvent('click', true, true); this.dispatchEvent(event)"));
 
-				m_webView->page()->settings()->setAttribute(QWebSettings::JavascriptCanOpenWindows, getOption(SettingsManager::Browser_JavaScriptCanOpenWindowsOption, getUrl()).toBool());
+				m_webView->page()->settings()->setAttribute(QWebSettings::JavascriptCanOpenWindows, getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, getUrl()).toBool());
 
 				setClickPosition(QPoint());
 			}
@@ -2689,7 +2689,7 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
-		if (event->type() == QEvent::MouseButtonPress && mouseEvent && mouseEvent->button() == Qt::LeftButton && SettingsManager::getValue(SettingsManager::Browser_EnablePluginsOption, getUrl()).toString() == QLatin1String("onDemand"))
+		if (event->type() == QEvent::MouseButtonPress && mouseEvent && mouseEvent->button() == Qt::LeftButton && SettingsManager::getValue(SettingsManager::Permissions_EnablePluginsOption, getUrl()).toString() == QLatin1String("onDemand"))
 		{
 			QWidget *widget(childAt(mouseEvent->pos()));
 			const QWebHitTestResult hitResult(m_webView->page()->mainFrame()->hitTestContent(mouseEvent->pos()));

@@ -149,16 +149,16 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	m_ui->enableImagesComboBox->addItem(tr("Cached images"), QLatin1String("onlyCached"));
 	m_ui->enableImagesComboBox->addItem(tr("No images"), QLatin1String("disabled"));
 
-	const int enableImagesIndex(m_ui->enableImagesComboBox->findData(SettingsManager::getValue(SettingsManager::Browser_EnableImagesOption).toString()));
+	const int enableImagesIndex(m_ui->enableImagesComboBox->findData(SettingsManager::getValue(SettingsManager::Permissions_EnableImagesOption).toString()));
 
 	m_ui->enableImagesComboBox->setCurrentIndex((enableImagesIndex < 0) ? 0 : enableImagesIndex);
-	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_EnableJavaScriptOption).toBool());
+	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Permissions_EnableJavaScriptOption).toBool());
 	m_ui->javaScriptOptionsButton->setEnabled(m_ui->enableJavaScriptCheckBox->isChecked());
 	m_ui->enablePluginsComboBox->addItem(tr("Enabled"), QLatin1String("enabled"));
 	m_ui->enablePluginsComboBox->addItem(tr("On demand"), QLatin1String("onDemand"));
 	m_ui->enablePluginsComboBox->addItem(tr("Disabled"), QLatin1String("disabled"));
 
-	const int enablePluginsIndex(m_ui->enablePluginsComboBox->findData(SettingsManager::getValue(SettingsManager::Browser_EnablePluginsOption).toString()));
+	const int enablePluginsIndex(m_ui->enablePluginsComboBox->findData(SettingsManager::getValue(SettingsManager::Permissions_EnablePluginsOption).toString()));
 
 	m_ui->enablePluginsComboBox->setCurrentIndex((enablePluginsIndex < 0) ? 1 : enablePluginsIndex);
 	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(SettingsManager::Content_UserStyleSheetOption).toString());
@@ -1372,7 +1372,7 @@ void PreferencesAdvancedPageWidget::updateJavaScriptOptions()
 
 	if (!isSet)
 	{
-		const QList<int> javaScriptOptions({SettingsManager::Browser_EnableFullScreenOption, SettingsManager::Browser_JavaScriptCanAccessClipboardOption, SettingsManager::Browser_JavaScriptCanChangeWindowGeometryOption, SettingsManager::Browser_JavaScriptCanCloseWindowsOption, SettingsManager::Browser_JavaScriptCanDisableContextMenuOption, SettingsManager::Browser_JavaScriptCanOpenWindowsOption, SettingsManager::Browser_JavaScriptCanShowStatusMessagesOption});
+		const QList<int> javaScriptOptions({SettingsManager::Permissions_EnableFullScreenOption, SettingsManager::Permissions_ScriptsCanAccessClipboardOption, SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption, SettingsManager::Permissions_ScriptsCanCloseWindowsOption, SettingsManager::Permissions_ScriptsCanDisableContextMenuOption, SettingsManager::Permissions_ScriptsCanOpenWindowsOption, SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption});
 
 		for (int i = 0; i < javaScriptOptions.count(); ++i)
 		{
@@ -1478,9 +1478,9 @@ void PreferencesAdvancedPageWidget::save()
 		}
 	}
 
-	SettingsManager::setValue(SettingsManager::Browser_EnableImagesOption, m_ui->enableImagesComboBox->currentData(Qt::UserRole).toString());
-	SettingsManager::setValue(SettingsManager::Browser_EnableJavaScriptOption, m_ui->enableJavaScriptCheckBox->isChecked());
-	SettingsManager::setValue(SettingsManager::Browser_EnablePluginsOption, m_ui->enablePluginsComboBox->currentData(Qt::UserRole).toString());
+	SettingsManager::setValue(SettingsManager::Permissions_EnableImagesOption, m_ui->enableImagesComboBox->currentData(Qt::UserRole).toString());
+	SettingsManager::setValue(SettingsManager::Permissions_EnableJavaScriptOption, m_ui->enableJavaScriptCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::Permissions_EnablePluginsOption, m_ui->enablePluginsComboBox->currentData(Qt::UserRole).toString());
 	SettingsManager::setValue(SettingsManager::Content_UserStyleSheetOption, m_ui->userStyleSheetFilePathWidget->getPath());
 
 	Settings handlersSettings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));

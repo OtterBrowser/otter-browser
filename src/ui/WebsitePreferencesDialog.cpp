@@ -138,8 +138,8 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 
 	m_ui->encodingOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Content_DefaultCharacterEncodingOption));
 	m_ui->popupsPolicyOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Content_PopupsPolicyOption));
-	m_ui->enableImagesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Browser_EnableImagesOption));
-	m_ui->enablePluginsOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Browser_EnablePluginsOption));
+	m_ui->enableImagesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Permissions_EnableImagesOption));
+	m_ui->enablePluginsOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Permissions_EnablePluginsOption));
 	m_ui->userStyleSheetOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Content_UserStyleSheetOption));
 	m_ui->doNotTrackOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Network_DoNotTrackPolicyOption));
 	m_ui->rememberBrowsingHistoryOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::History_RememberBrowsingOption));
@@ -147,14 +147,14 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	m_ui->cookiesPolicyOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Network_CookiesPolicyOption));
 	m_ui->keepCookiesModeOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Network_CookiesKeepModeOption));
 	m_ui->thirdPartyCookiesPolicyOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Network_ThirdPartyCookiesPolicyOption));
-	m_ui->enableJavaScriptOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Browser_EnableJavaScriptOption));
-	m_ui->canChangeWindowGeometryOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Browser_JavaScriptCanChangeWindowGeometryOption));
-	m_ui->canShowStatusMessagesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Browser_JavaScriptCanShowStatusMessagesOption));
-	m_ui->canAccessClipboardOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Browser_JavaScriptCanAccessClipboardOption));
-	m_ui->canDisableContextMenuOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Browser_JavaScriptCanDisableContextMenuOption));
-	m_ui->canOpenWindowsOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Browser_JavaScriptCanOpenWindowsOption));
-	m_ui->canCloseWindowsOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Browser_JavaScriptCanCloseWindowsOption));
-	m_ui->enableFullScreenOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Browser_EnableFullScreenOption));
+	m_ui->enableJavaScriptOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Permissions_EnableJavaScriptOption));
+	m_ui->canChangeWindowGeometryOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption));
+	m_ui->canShowStatusMessagesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption));
+	m_ui->canAccessClipboardOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Permissions_ScriptsCanAccessClipboardOption));
+	m_ui->canDisableContextMenuOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Permissions_ScriptsCanDisableContextMenuOption));
+	m_ui->canOpenWindowsOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Permissions_ScriptsCanOpenWindowsOption));
+	m_ui->canCloseWindowsOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Permissions_ScriptsCanCloseWindowsOption));
+	m_ui->enableFullScreenOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Permissions_EnableFullScreenOption));
 	m_ui->sendReferrerOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Network_EnableReferrerOption));
 	m_ui->userAgentOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Network_UserAgentOption));
 	m_ui->contentBlockingProfilesOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::ContentBlocking_ProfilesOption));
@@ -219,22 +219,22 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 		case QDialogButtonBox::AcceptRole:
 			SettingsManager::setValue(SettingsManager::Content_DefaultCharacterEncodingOption, (m_ui->encodingOverrideCheckBox->isChecked() ? m_ui->encodingComboBox->currentData(Qt::UserRole).toString() : QVariant()), url);
 			SettingsManager::setValue(SettingsManager::Content_PopupsPolicyOption, (m_ui->popupsPolicyOverrideCheckBox->isChecked() ? m_ui->popupsPolicyComboBox->currentData(Qt::UserRole).toString() : QVariant()), url);
-			SettingsManager::setValue(SettingsManager::Browser_EnableImagesOption, (m_ui->enableImagesOverrideCheckBox->isChecked() ? m_ui->enableImagesComboBox->currentData(Qt::UserRole).toString() : QVariant()), url);
-			SettingsManager::setValue(SettingsManager::Browser_EnablePluginsOption, (m_ui->enablePluginsOverrideCheckBox->isChecked() ? m_ui->enablePluginsComboBox->currentData(Qt::UserRole).toString() : QVariant()), url);
+			SettingsManager::setValue(SettingsManager::Permissions_EnableImagesOption, (m_ui->enableImagesOverrideCheckBox->isChecked() ? m_ui->enableImagesComboBox->currentData(Qt::UserRole).toString() : QVariant()), url);
+			SettingsManager::setValue(SettingsManager::Permissions_EnablePluginsOption, (m_ui->enablePluginsOverrideCheckBox->isChecked() ? m_ui->enablePluginsComboBox->currentData(Qt::UserRole).toString() : QVariant()), url);
 			SettingsManager::setValue(SettingsManager::Content_UserStyleSheetOption, (m_ui->userStyleSheetOverrideCheckBox->isChecked() ? m_ui->userStyleSheetFilePathWidget->getPath() : QVariant()), url);
 			SettingsManager::setValue(SettingsManager::Network_DoNotTrackPolicyOption, (m_ui->doNotTrackOverrideCheckBox->isChecked() ? m_ui->doNotTrackComboBox->currentData().toString() : QVariant()), url);
 			SettingsManager::setValue(SettingsManager::History_RememberBrowsingOption, (m_ui->rememberBrowsingHistoryOverrideCheckBox->isChecked() ? m_ui->rememberBrowsingHistoryCheckBox->isChecked() : QVariant()), url);
 			SettingsManager::setValue(SettingsManager::Network_CookiesPolicyOption, (m_ui->enableCookiesOverrideCheckBox->isChecked() ? (m_ui->enableCookiesCheckBox->isChecked() ? m_ui->cookiesPolicyComboBox->currentData().toString() : QLatin1String("ignore")) : QVariant()), url);
 			SettingsManager::setValue(SettingsManager::Network_CookiesKeepModeOption, (m_ui->keepCookiesModeOverrideCheckBox->isChecked() ? m_ui->keepCookiesModeComboBox->currentData().toString() : QVariant()), url);
 			SettingsManager::setValue(SettingsManager::Network_ThirdPartyCookiesPolicyOption, (m_ui->thirdPartyCookiesPolicyOverrideCheckBox->isChecked() ? m_ui->thirdPartyCookiesPolicyComboBox->currentData().toString() : QVariant()), url);
-			SettingsManager::setValue(SettingsManager::Browser_EnableJavaScriptOption, (m_ui->enableJavaScriptOverrideCheckBox->isChecked() ? m_ui->enableJavaScriptCheckBox->isChecked() : QVariant()), url);
-			SettingsManager::setValue(SettingsManager::Browser_JavaScriptCanChangeWindowGeometryOption, (m_ui->canChangeWindowGeometryOverrideCheckBox->isChecked() ? m_ui->canChangeWindowGeometryCheckBox->isChecked() : QVariant()), url);
-			SettingsManager::setValue(SettingsManager::Browser_JavaScriptCanShowStatusMessagesOption, (m_ui->canShowStatusMessagesOverrideCheckBox->isChecked() ? m_ui->canShowStatusMessagesCheckBox->isChecked() : QVariant()), url);
-			SettingsManager::setValue(SettingsManager::Browser_JavaScriptCanAccessClipboardOption, (m_ui->canAccessClipboardOverrideCheckBox->isChecked() ? m_ui->canAccessClipboardCheckBox->isChecked() : QVariant()), url);
-			SettingsManager::setValue(SettingsManager::Browser_JavaScriptCanDisableContextMenuOption, (m_ui->canDisableContextMenuOverrideCheckBox->isChecked() ? m_ui->canDisableContextMenuCheckBox->isChecked() : QVariant()), url);
-			SettingsManager::setValue(SettingsManager::Browser_JavaScriptCanOpenWindowsOption, (m_ui->canOpenWindowsOverrideCheckBox->isChecked() ? m_ui->canOpenWindowsCheckBox->isChecked() : QVariant()), url);
-			SettingsManager::setValue(SettingsManager::Browser_JavaScriptCanCloseWindowsOption, (m_ui->canCloseWindowsOverrideCheckBox->isChecked() ? m_ui->canCloseWindowsComboBox->currentData().toString() : QVariant()), url);
-			SettingsManager::setValue(SettingsManager::Browser_EnableFullScreenOption, (m_ui->enableFullScreenOverrideCheckBox->isChecked() ? m_ui->enableFullScreenComboBox->currentData().toString() : QVariant()), url);
+			SettingsManager::setValue(SettingsManager::Permissions_EnableJavaScriptOption, (m_ui->enableJavaScriptOverrideCheckBox->isChecked() ? m_ui->enableJavaScriptCheckBox->isChecked() : QVariant()), url);
+			SettingsManager::setValue(SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption, (m_ui->canChangeWindowGeometryOverrideCheckBox->isChecked() ? m_ui->canChangeWindowGeometryCheckBox->isChecked() : QVariant()), url);
+			SettingsManager::setValue(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption, (m_ui->canShowStatusMessagesOverrideCheckBox->isChecked() ? m_ui->canShowStatusMessagesCheckBox->isChecked() : QVariant()), url);
+			SettingsManager::setValue(SettingsManager::Permissions_ScriptsCanAccessClipboardOption, (m_ui->canAccessClipboardOverrideCheckBox->isChecked() ? m_ui->canAccessClipboardCheckBox->isChecked() : QVariant()), url);
+			SettingsManager::setValue(SettingsManager::Permissions_ScriptsCanDisableContextMenuOption, (m_ui->canDisableContextMenuOverrideCheckBox->isChecked() ? m_ui->canDisableContextMenuCheckBox->isChecked() : QVariant()), url);
+			SettingsManager::setValue(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, (m_ui->canOpenWindowsOverrideCheckBox->isChecked() ? m_ui->canOpenWindowsCheckBox->isChecked() : QVariant()), url);
+			SettingsManager::setValue(SettingsManager::Permissions_ScriptsCanCloseWindowsOption, (m_ui->canCloseWindowsOverrideCheckBox->isChecked() ? m_ui->canCloseWindowsComboBox->currentData().toString() : QVariant()), url);
+			SettingsManager::setValue(SettingsManager::Permissions_EnableFullScreenOption, (m_ui->enableFullScreenOverrideCheckBox->isChecked() ? m_ui->enableFullScreenComboBox->currentData().toString() : QVariant()), url);
 			SettingsManager::setValue(SettingsManager::Network_EnableReferrerOption, (m_ui->sendReferrerOverrideCheckBox->isChecked() ? m_ui->sendReferrerCheckBox->isChecked() : QVariant()), url);
 			SettingsManager::setValue(SettingsManager::Network_UserAgentOption, (m_ui->userAgentOverrideCheckBox->isChecked() ? m_ui->userAgentComboBox->currentData(Qt::UserRole).toString() : QVariant()), url);
 
@@ -392,27 +392,27 @@ void WebsitePreferencesDialog::updateValues(bool checked)
 
 	m_ui->popupsPolicyComboBox->setCurrentIndex((popupsPolicyIndex < 0) ? 0 : popupsPolicyIndex);
 
-	const int enableImagesIndex(m_ui->enableImagesComboBox->findData(SettingsManager::getValue(SettingsManager::Browser_EnableImagesOption, (m_ui->enableImagesOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
+	const int enableImagesIndex(m_ui->enableImagesComboBox->findData(SettingsManager::getValue(SettingsManager::Permissions_EnableImagesOption, (m_ui->enableImagesOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
 
 	m_ui->enableImagesComboBox->setCurrentIndex((enableImagesIndex < 0) ? 0 : enableImagesIndex);
 
-	const int enablePluginsIndex(m_ui->enablePluginsComboBox->findData(SettingsManager::getValue(SettingsManager::Browser_EnablePluginsOption, (m_ui->enablePluginsOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
+	const int enablePluginsIndex(m_ui->enablePluginsComboBox->findData(SettingsManager::getValue(SettingsManager::Permissions_EnablePluginsOption, (m_ui->enablePluginsOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
 
 	m_ui->enablePluginsComboBox->setCurrentIndex((enablePluginsIndex < 0) ? 1 : enablePluginsIndex);
 	m_ui->userStyleSheetFilePathWidget->setPath(SettingsManager::getValue(SettingsManager::Content_UserStyleSheetOption, (m_ui->userStyleSheetOverrideCheckBox->isChecked() ? url : QUrl())).toString());
 	m_ui->userStyleSheetFilePathWidget->setFilters(QStringList(tr("Style sheets (*.css)")));
-	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_EnableJavaScriptOption, (m_ui->enableJavaScriptOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
-	m_ui->canChangeWindowGeometryCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_JavaScriptCanChangeWindowGeometryOption, (m_ui->canChangeWindowGeometryOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
-	m_ui->canShowStatusMessagesCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_JavaScriptCanShowStatusMessagesOption, (m_ui->canShowStatusMessagesOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
-	m_ui->canAccessClipboardCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_JavaScriptCanAccessClipboardOption, (m_ui->canAccessClipboardOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
-	m_ui->canDisableContextMenuCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_JavaScriptCanDisableContextMenuOption, (m_ui->canDisableContextMenuOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
-	m_ui->canOpenWindowsCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_JavaScriptCanOpenWindowsOption, (m_ui->canOpenWindowsCheckBox->isChecked() ? url : QUrl())).toBool());
+	m_ui->enableJavaScriptCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Permissions_EnableJavaScriptOption, (m_ui->enableJavaScriptOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
+	m_ui->canChangeWindowGeometryCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption, (m_ui->canChangeWindowGeometryOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
+	m_ui->canShowStatusMessagesCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption, (m_ui->canShowStatusMessagesOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
+	m_ui->canAccessClipboardCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanAccessClipboardOption, (m_ui->canAccessClipboardOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
+	m_ui->canDisableContextMenuCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanDisableContextMenuOption, (m_ui->canDisableContextMenuOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
+	m_ui->canOpenWindowsCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, (m_ui->canOpenWindowsCheckBox->isChecked() ? url : QUrl())).toBool());
 
-	const int canCloseWindowsIndex(m_ui->canCloseWindowsComboBox->findData(SettingsManager::getValue(SettingsManager::Browser_JavaScriptCanCloseWindowsOption, (m_ui->canCloseWindowsOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
+	const int canCloseWindowsIndex(m_ui->canCloseWindowsComboBox->findData(SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanCloseWindowsOption, (m_ui->canCloseWindowsOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
 
 	m_ui->canCloseWindowsComboBox->setCurrentIndex((canCloseWindowsIndex < 0) ? 0 : canCloseWindowsIndex);
 
-	const int enableFullScreenIndex(m_ui->enableFullScreenComboBox->findData(SettingsManager::getValue(SettingsManager::Browser_EnableFullScreenOption, (m_ui->enableFullScreenOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
+	const int enableFullScreenIndex(m_ui->enableFullScreenComboBox->findData(SettingsManager::getValue(SettingsManager::Permissions_EnableFullScreenOption, (m_ui->enableFullScreenOverrideCheckBox->isChecked() ? url : QUrl())).toString()));
 
 	m_ui->enableFullScreenComboBox->setCurrentIndex((enableFullScreenIndex < 0) ? 0 : enableFullScreenIndex);
 

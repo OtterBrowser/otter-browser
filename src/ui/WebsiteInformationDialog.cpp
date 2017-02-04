@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -120,7 +120,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		m_ui->thirdPartyCookiesValueLabel->setText(tr("Always"));
 	}
 
-	const QString pluginsPolicy(widget->getOption(SettingsManager::Browser_EnablePluginsOption).toString());
+	const QString pluginsPolicy(widget->getOption(SettingsManager::Permissions_EnablePluginsOption).toString());
 
 	if (pluginsPolicy == QLatin1String("enabled"))
 	{
@@ -135,7 +135,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		m_ui->pluginsValueLabel->setText(tr("On demand"));
 	}
 
-	const QString imagesPolicy(widget->getOption(SettingsManager::Browser_EnableImagesOption).toString());
+	const QString imagesPolicy(widget->getOption(SettingsManager::Permissions_EnableImagesOption).toString());
 
 	if (imagesPolicy == QLatin1String("onlyCached"))
 	{
@@ -150,9 +150,9 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		m_ui->imagesValueLabel->setText(tr("Always"));
 	}
 
-	m_ui->javascriptValueLabel->setText(widget->getOption(SettingsManager::Browser_EnableJavaScriptOption).toBool() ? tr("Always") : tr("Never"));
+	m_ui->javascriptValueLabel->setText(widget->getOption(SettingsManager::Permissions_EnableJavaScriptOption).toBool() ? tr("Always") : tr("Never"));
 
-	const QString geolocationPolicy(widget->getOption(SettingsManager::Browser_EnableGeolocationOption).toString());
+	const QString geolocationPolicy(widget->getOption(SettingsManager::Permissions_EnableGeolocationOption).toString());
 
 	if (geolocationPolicy == QLatin1String("enabled"))
 	{
@@ -167,7 +167,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		m_ui->geolocationValueLabel->setText(tr("Always ask"));
 	}
 
-	const QString fullScreenPolicy(widget->getOption(SettingsManager::Browser_EnableFullScreenOption).toString());
+	const QString fullScreenPolicy(widget->getOption(SettingsManager::Permissions_EnableFullScreenOption).toString());
 
 	if (fullScreenPolicy == QLatin1String("enabled"))
 	{
@@ -182,7 +182,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		m_ui->fullScreenValueLabel->setText(tr("Always ask"));
 	}
 
-	const QString notificationsPolicy(widget->getOption(SettingsManager::Browser_EnableNotificationsOption).toString());
+	const QString notificationsPolicy(widget->getOption(SettingsManager::Permissions_EnableNotificationsOption).toString());
 
 	if (notificationsPolicy == QLatin1String("enabled"))
 	{

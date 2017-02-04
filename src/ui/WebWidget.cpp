@@ -513,7 +513,7 @@ void WebWidget::showContextMenu(const QPoint &position)
 
 	const QPoint hitPosition(position.isNull() ? m_clickPosition : position);
 
-	if (isScrollBar(hitPosition) || (SettingsManager::getValue(SettingsManager::Browser_JavaScriptCanDisableContextMenuOption).toBool() && !canShowContextMenu(hitPosition)))
+	if (isScrollBar(hitPosition) || (SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanDisableContextMenuOption).toBool() && !canShowContextMenu(hitPosition)))
 	{
 		return;
 	}
@@ -607,7 +607,7 @@ void WebWidget::updatePageActions(const QUrl &url)
 
 	if (m_actions.contains(ActionsManager::EnableJavaScriptAction))
 	{
-		m_actions[ActionsManager::EnableJavaScriptAction]->setChecked(getOption(SettingsManager::Browser_EnableJavaScriptOption, url).toBool());
+		m_actions[ActionsManager::EnableJavaScriptAction]->setChecked(getOption(SettingsManager::Permissions_EnableJavaScriptOption, url).toBool());
 	}
 
 	if (m_actions.contains(ActionsManager::EnableReferrerAction))
@@ -1029,36 +1029,36 @@ void WebWidget::setPermission(FeaturePermission feature, const QUrl &url, Permis
 	switch (feature)
 	{
 		case FullScreenFeature:
-			SettingsManager::setValue(SettingsManager::Browser_EnableFullScreenOption, value, url);
+			SettingsManager::setValue(SettingsManager::Permissions_EnableFullScreenOption, value, url);
 
 			return;
 		case GeolocationFeature:
-			SettingsManager::setValue(SettingsManager::Browser_EnableGeolocationOption, value, url);
+			SettingsManager::setValue(SettingsManager::Permissions_EnableGeolocationOption, value, url);
 
 			return;
 		case NotificationsFeature:
-			SettingsManager::setValue(SettingsManager::Browser_EnableNotificationsOption, value, url);
+			SettingsManager::setValue(SettingsManager::Permissions_EnableNotificationsOption, value, url);
 
 			return;
 		case PointerLockFeature:
-			SettingsManager::setValue(SettingsManager::Browser_EnablePointerLockOption, value, url);
+			SettingsManager::setValue(SettingsManager::Permissions_EnablePointerLockOption, value, url);
 
 			return;
 		case CaptureAudioFeature:
-			SettingsManager::setValue(SettingsManager::Browser_EnableMediaCaptureAudioOption, value, url);
+			SettingsManager::setValue(SettingsManager::Permissions_EnableMediaCaptureAudioOption, value, url);
 
 			return;
 		case CaptureVideoFeature:
-			SettingsManager::setValue(SettingsManager::Browser_EnableMediaCaptureVideoOption, value, url);
+			SettingsManager::setValue(SettingsManager::Permissions_EnableMediaCaptureVideoOption, value, url);
 
 			return;
 		case CaptureAudioVideoFeature:
-			SettingsManager::setValue(SettingsManager::Browser_EnableMediaCaptureAudioOption, value, url);
-			SettingsManager::setValue(SettingsManager::Browser_EnableMediaCaptureVideoOption, value, url);
+			SettingsManager::setValue(SettingsManager::Permissions_EnableMediaCaptureAudioOption, value, url);
+			SettingsManager::setValue(SettingsManager::Permissions_EnableMediaCaptureVideoOption, value, url);
 
 			return;
 		case PlaybackAudioFeature:
-			SettingsManager::setValue(SettingsManager::Browser_EnableMediaPlaybackAudioOption, value, url);
+			SettingsManager::setValue(SettingsManager::Permissions_EnableMediaPlaybackAudioOption, value, url);
 
 			return;
 		default:
@@ -1283,7 +1283,7 @@ Action* WebWidget::getAction(int identifier)
 
 			break;
 		case ActionsManager::EnableJavaScriptAction:
-			action->setChecked(getOption(SettingsManager::Browser_EnableJavaScriptOption, getUrl()).toBool());
+			action->setChecked(getOption(SettingsManager::Permissions_EnableJavaScriptOption, getUrl()).toBool());
 
 			break;
 		case ActionsManager::EnableReferrerAction:
@@ -1620,33 +1620,33 @@ WebWidget::PermissionPolicy WebWidget::getPermission(WebWidget::FeaturePermissio
 	switch (feature)
 	{
 		case FullScreenFeature:
-			value = getOption(SettingsManager::Browser_EnableFullScreenOption, url).toString();
+			value = getOption(SettingsManager::Permissions_EnableFullScreenOption, url).toString();
 
 			break;
 		case GeolocationFeature:
-			value = getOption(SettingsManager::Browser_EnableGeolocationOption, url).toString();
+			value = getOption(SettingsManager::Permissions_EnableGeolocationOption, url).toString();
 
 			break;
 		case NotificationsFeature:
-			value = getOption(SettingsManager::Browser_EnableNotificationsOption, url).toString();
+			value = getOption(SettingsManager::Permissions_EnableNotificationsOption, url).toString();
 
 			break;
 		case PointerLockFeature:
-			value = getOption(SettingsManager::Browser_EnablePointerLockOption, url).toString();
+			value = getOption(SettingsManager::Permissions_EnablePointerLockOption, url).toString();
 
 			break;
 		case CaptureAudioFeature:
-			value = getOption(SettingsManager::Browser_EnableMediaCaptureAudioOption, url).toString();
+			value = getOption(SettingsManager::Permissions_EnableMediaCaptureAudioOption, url).toString();
 
 			break;
 		case CaptureVideoFeature:
-			value = getOption(SettingsManager::Browser_EnableMediaCaptureVideoOption, url).toString();
+			value = getOption(SettingsManager::Permissions_EnableMediaCaptureVideoOption, url).toString();
 
 			break;
 		case CaptureAudioVideoFeature:
 			{
-				const QString valueCaptureAudio(getOption(SettingsManager::Browser_EnableMediaCaptureAudioOption, url).toString());
-				const QString valueCaptureVideo(getOption(SettingsManager::Browser_EnableMediaCaptureVideoOption, url).toString());
+				const QString valueCaptureAudio(getOption(SettingsManager::Permissions_EnableMediaCaptureAudioOption, url).toString());
+				const QString valueCaptureVideo(getOption(SettingsManager::Permissions_EnableMediaCaptureVideoOption, url).toString());
 
 				if (valueCaptureAudio == QLatin1String("allow") && valueCaptureVideo == QLatin1String("allow"))
 				{
@@ -1664,7 +1664,7 @@ WebWidget::PermissionPolicy WebWidget::getPermission(WebWidget::FeaturePermissio
 
 			break;
 		case PlaybackAudioFeature:
-			value = getOption(SettingsManager::Browser_EnableMediaPlaybackAudioOption, url).toString();
+			value = getOption(SettingsManager::Permissions_EnableMediaPlaybackAudioOption, url).toString();
 
 			break;
 		default:

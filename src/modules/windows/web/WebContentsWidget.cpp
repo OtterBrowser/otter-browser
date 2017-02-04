@@ -512,7 +512,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			break;
 		case ActionsManager::EnableJavaScriptAction:
-			m_webWidget->setOption(SettingsManager::Browser_EnableJavaScriptOption, Action::calculateCheckedState(parameters));
+			m_webWidget->setOption(SettingsManager::Permissions_EnableJavaScriptOption, Action::calculateCheckedState(parameters));
 
 			break;
 		case ActionsManager::EnableReferrerAction:
@@ -589,7 +589,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				enableImagesGroup.addAction(showCachedImagesAction);
 				enableImagesGroup.addAction(noImagesAction);
 
-				const QString enableImagesPolicy(m_webWidget->getOption(SettingsManager::Browser_EnableImagesOption).toString());
+				const QString enableImagesPolicy(m_webWidget->getOption(SettingsManager::Permissions_EnableImagesOption).toString());
 
 				for (int i = 0; i < enableImagesGroup.actions().count(); ++i)
 				{
@@ -625,7 +625,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				enablePluginsGroup.addAction(onDemandPluginsAction);
 				enablePluginsGroup.addAction(disablePluginsAction);
 
-				const QString enablePluginsPolicy(m_webWidget->getOption(SettingsManager::Browser_EnablePluginsOption).toString());
+				const QString enablePluginsPolicy(m_webWidget->getOption(SettingsManager::Permissions_EnablePluginsOption).toString());
 
 				for (int i = 0; i < enablePluginsGroup.actions().count(); ++i)
 				{
