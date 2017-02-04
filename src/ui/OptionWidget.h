@@ -51,6 +51,7 @@ public:
 	explicit OptionWidget(const QString &option, const QVariant &value, SettingsManager::OptionType type, QWidget *parent = nullptr);
 
 	void setIndex(const QModelIndex &index);
+	void setDefaultValue(const QVariant &value);
 	void setValue(const QVariant &value);
 	void setChoices(const QStringList &choices);
 	void setChoices(const QList<EnumerationChoice> &choices);
@@ -58,8 +59,10 @@ public:
 	void setSizePolicy(QSizePolicy::Policy horizontal, QSizePolicy::Policy vertical);
 	void setSizePolicy(QSizePolicy policy);
 	QString getOption() const;
+	QVariant getDefaultValue() const;
 	QVariant getValue() const;
 	QModelIndex getIndex() const;
+	bool isModified() const;
 
 protected:
 	void focusInEvent(QFocusEvent *event);
@@ -81,8 +84,10 @@ private:
 	QPushButton *m_resetButton;
 	QPushButton *m_saveButton;
 	QString m_option;
+	QVariant m_defaultValue;
 	QVariant m_value;
 	QModelIndex m_index;
+	bool m_isModified;
 
 signals:
 	void commitData(QWidget *editor);

@@ -41,7 +41,8 @@ OptionWidget::OptionWidget(const QString &option, const QVariant &value, Setting
 	m_resetButton(nullptr),
 	m_saveButton(nullptr),
 	m_option(option),
-	m_value(value)
+	m_value(value),
+	m_isModified(false)
 {
 	switch (type)
 	{
@@ -156,6 +157,8 @@ void OptionWidget::focusInEvent(QFocusEvent *event)
 
 void OptionWidget::markModified()
 {
+	m_isModified = true;
+
 	if (m_resetButton)
 	{
 		m_resetButton->setEnabled(getValue() != SettingsManager::getOptionDefinition(SettingsManager::getOptionIdentifier(m_option)).defaultValue);
@@ -168,9 +171,9 @@ void OptionWidget::markModified()
 
 void OptionWidget::reset()
 {
-	const QVariant value(SettingsManager::getOptionDefinition(SettingsManager::getOptionIdentifier(m_option)).defaultValue);
+	setValue(getDefaultValue());
 
-	setValue(value);
+	m_isModified = false;
 
 	m_resetButton->setEnabled(false);
 }
@@ -183,6 +186,11 @@ void OptionWidget::save()
 void OptionWidget::setIndex(const QModelIndex &index)
 {
 	m_index = index;
+}
+
+void OptionWidget::setDefaultValue(const QVariant &value)
+{
+	m_defaultValue = value;
 }
 
 void OptionWidget::setValue(const QVariant &value)
@@ -304,6 +312,11 @@ QString OptionWidget::getOption() const
 	return m_option;
 }
 
+QVariant OptionWidget::getDefaultValue() const
+{
+	return (m_defaultValue.isNull() ? SettingsManager::getOptionDefinition(SettingsManager::getOptionIdentifier(m_option)).defaultValue : m_defaultValue);
+}
+
 QVariant OptionWidget::getValue() const
 {
 	if (m_colorWidget)
@@ -357,6 +370,11 @@ QVariant OptionWidget::getValue() const
 QModelIndex OptionWidget::getIndex() const
 {
 	return m_index;
+}
+
+bool OptionWidget::isModified() const
+{
+	return m_isModified;
 }
 
 }
