@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -32,17 +32,13 @@ namespace Otter
 
 IconWidget::IconWidget(QWidget *parent) : QToolButton(parent)
 {
-	QMenu *menu(new QMenu(this));
-	menu->addAction(tr("Select From File…"), this, SLOT(selectFromFile()));
-	menu->addAction(tr("Select From Theme…"), this, SLOT(selectFromTheme()));
-	menu->addSeparator();
-	menu->addAction(ThemesManager::getIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(clear()))->setEnabled(false);
-
-	setMenu(menu);
+	setMenu(new QMenu(this));
 	setToolTip(tr("Select Icon"));
 	setPopupMode(QToolButton::InstantPopup);
 	setMinimumSize(16, 16);
 	setMaximumSize(64, 64);
+
+	connect(menu(), SIGNAL(aboutToShow()), this, SLOT(updateMenu()));
 }
 
 void IconWidget::resizeEvent(QResizeEvent *event)
@@ -54,15 +50,39 @@ void IconWidget::resizeEvent(QResizeEvent *event)
 	setIconSize(QSize(iconSize, iconSize));
 }
 
+QString IconWidget::createData(const QIcon &icon) const
+{
+	QByteArray data;
+	QBuffer buffer(&data);
+	buffer.open(QIODevice::WriteOnly);
+
+	icon.pixmap(16, 16).save(&buffer, "PNG");
+
+	return QLatin1String("data:image/png;base64,") + data.toBase64();
+}
+
+QIcon IconWidget::createIcon(const QString &data) const
+{
+	if (data.startsWith(QLatin1String("data:image/")))
+	{
+		return QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8()))));
+	}
+
+	return ThemesManager::getIcon(data);
+}
+
 void IconWidget::clear()
 {
 	m_icon = QString();
 
-	QToolButton::setIcon(m_placeholderIcon);
-
-	menu()->actions().at(3)->setEnabled(false);
+	QToolButton::setIcon(QIcon());
 
 	emit iconChanged(QIcon());
+}
+
+void IconWidget::reset()
+{
+	setIcon(m_defaultIcon);
 }
 
 void IconWidget::selectFromFile()
@@ -87,8 +107,6 @@ void IconWidget::selectFromFile()
 
 	QToolButton::setIcon(icon);
 
-	menu()->actions().at(3)->setEnabled(true);
-
 	emit iconChanged(icon);
 }
 
@@ -102,6 +120,22 @@ void IconWidget::selectFromTheme()
 	}
 }
 
+void IconWidget::updateMenu()
+{
+	menu()->clear();
+	menu()->addAction(tr("Select From File…"), this, SLOT(selectFromFile()));
+	menu()->addAction(tr("Select From Theme…"), this, SLOT(selectFromTheme()));
+
+	if (!m_defaultIcon.isEmpty())
+	{
+		menu()->addSeparator();
+		menu()->addAction(tr("Reset"), this, SLOT(reset()))->setEnabled(m_icon != m_defaultIcon);
+	}
+
+	menu()->addSeparator();
+	menu()->addAction(ThemesManager::getIcon(QLatin1String("edit-clear")), tr("Clear"), this, SLOT(clear()))->setEnabled(!icon().isNull());
+}
+
 void IconWidget::setIcon(const QString &data)
 {
 	m_icon = data;
@@ -113,20 +147,9 @@ void IconWidget::setIcon(const QString &data)
 		return;
 	}
 
-	QIcon icon;
-
-	if (data.startsWith(QLatin1String("data:image/")))
-	{
-		icon = QIcon(QPixmap::fromImage(QImage::fromData(QByteArray::fromBase64(data.mid(data.indexOf(QLatin1String("base64,")) + 7).toUtf8()))));
-	}
-	else
-	{
-		icon = ThemesManager::getIcon(data);
-	}
+	const QIcon icon(createIcon(data));
 
 	QToolButton::setIcon(icon);
-
-	menu()->actions().at(3)->setEnabled(true);
 
 	emit iconChanged(icon);
 }
@@ -140,29 +163,26 @@ void IconWidget::setIcon(const QIcon &icon)
 		return;
 	}
 
-	QByteArray data;
-	QBuffer buffer(&data);
-	buffer.open(QIODevice::WriteOnly);
-
-	icon.pixmap(16, 16).save(&buffer, "PNG");
-
-	m_icon = QStringLiteral("data:image/png;base64,%1").arg(QString(data.toBase64()));
+	m_icon = createData(icon);
 
 	QToolButton::setIcon(icon);
-
-	menu()->actions().at(3)->setEnabled(true);
 
 	emit iconChanged(icon);
 }
 
-void IconWidget::setPlaceholderIcon(const QIcon &icon)
+void IconWidget::setDefaultIcon(const QString &data)
 {
-	m_placeholderIcon = icon;
+	m_defaultIcon = data;
 
 	if (m_icon.isEmpty())
 	{
-		QToolButton::setIcon(m_placeholderIcon);
+		setIcon(m_defaultIcon);
 	}
+}
+
+void IconWidget::setDefaultIcon(const QIcon &icon)
+{
+	setDefaultIcon(createData(icon));
 }
 
 QString IconWidget::getIcon() const

@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -34,22 +35,27 @@ public:
 
 	void setIcon(const QString &data);
 	void setIcon(const QIcon &icon);
-	void setPlaceholderIcon(const QIcon &icon);
+	void setDefaultIcon(const QString &data);
+	void setDefaultIcon(const QIcon &icon);
 	QString getIcon() const;
 	int heightForWidth(int width) const;
 	bool hasHeightForWidth() const;
 
 protected:
 	void resizeEvent(QResizeEvent *event);
+	QString createData(const QIcon &icon) const;
+	QIcon createIcon(const QString &data) const;
 
 protected slots:
 	void clear();
+	void reset();
 	void selectFromFile();
 	void selectFromTheme();
+	void updateMenu();
 
 private:
 	QString m_icon;
-	QIcon m_placeholderIcon;
+	QString m_defaultIcon;
 
 signals:
 	void iconChanged(const QIcon &icon);
