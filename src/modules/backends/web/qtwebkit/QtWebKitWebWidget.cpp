@@ -2773,6 +2773,11 @@ bool QtWebKitWebWidget::eventFilter(QObject *object, QEvent *event)
 
 				triggerAction(ActionsManager::ContextMenuAction, parameters);
 			}
+
+			if (!getOption(SettingsManager::Permissions_ScriptsCanReceiveRightClicksOption).toBool())
+			{
+				return true;
+			}
 		}
 		else if (event->type() == QEvent::Move || event->type() == QEvent::Resize)
 		{
