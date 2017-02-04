@@ -191,6 +191,18 @@ void OptionWidget::setIndex(const QModelIndex &index)
 void OptionWidget::setDefaultValue(const QVariant &value)
 {
 	m_defaultValue = value;
+
+	if (m_iconWidget)
+	{
+		if (value.type() == QVariant::Icon)
+		{
+			m_iconWidget->setDefaultIcon(value.value<QIcon>());
+		}
+		else
+		{
+			m_iconWidget->setDefaultIcon(value.toString());
+		}
+	}
 }
 
 void OptionWidget::setValue(const QVariant &value)
