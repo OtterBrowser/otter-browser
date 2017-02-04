@@ -513,7 +513,7 @@ void WebWidget::showContextMenu(const QPoint &position)
 
 	const QPoint hitPosition(position.isNull() ? m_clickPosition : position);
 
-	if (isScrollBar(hitPosition) || (SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanDisableContextMenuOption).toBool() && !canShowContextMenu(hitPosition)))
+	if (isScrollBar(hitPosition) || !canShowContextMenu(hitPosition))
 	{
 		return;
 	}

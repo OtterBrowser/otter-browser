@@ -2608,6 +2608,11 @@ bool QtWebKitWebWidget::canGoForward() const
 
 bool QtWebKitWebWidget::canShowContextMenu(const QPoint &position) const
 {
+	if (!getOption(SettingsManager::Permissions_ScriptsCanReceiveRightClicksOption).toBool())
+	{
+		return true;
+	}
+
 	QContextMenuEvent menuEvent(QContextMenuEvent::Other, position, m_webView->mapToGlobal(position), Qt::NoModifier);
 
 	return !m_page->swallowContextMenuEvent(&menuEvent);

@@ -184,8 +184,8 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Permissions_ScriptsCanAccessClipboardOption, false, BooleanType);
 	registerOption(Permissions_ScriptsCanChangeWindowGeometryOption, true, BooleanType);
 	registerOption(Permissions_ScriptsCanCloseWindowsOption, QLatin1String("ask"), EnumerationType, QStringList({QLatin1String("ask"), QLatin1String("allow"), QLatin1String("disallow")}));
-	registerOption(Permissions_ScriptsCanDisableContextMenuOption, true, BooleanType);
 	registerOption(Permissions_ScriptsCanOpenWindowsOption, true, BooleanType);
+	registerOption(Permissions_ScriptsCanReceiveRightClicksOption, true, BooleanType);
 	registerOption(Permissions_ScriptsCanShowStatusMessagesOption, false, BooleanType);
 	registerOption(Proxy_AutomaticConfigurationPathOption, QString(), PathType);
 	registerOption(Proxy_CommonPortOption, 8080, IntegerType);

@@ -439,9 +439,9 @@
       </attribute>
       <layout class="QGridLayout" name="scriptingLayout" columnstretch="0,0,0">
        <item row="6" column="1">
-        <widget class="QCheckBox" name="canDisableContextMenuCheckBox">
+        <widget class="QCheckBox" name="canReceiveRightClicksCheckBox">
          <property name="text">
-          <string>Allow to disable context menu</string>
+          <string>Allow to receive right mouse button clicks</string>
          </property>
         </widget>
        </item>
@@ -473,7 +473,7 @@
         </spacer>
        </item>
        <item row="6" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="canDisableContextMenuOverrideCheckBox">
+        <widget class="QCheckBox" name="canReceiveRightClicksOverrideCheckBox">
          <property name="text">
           <string/>
          </property>

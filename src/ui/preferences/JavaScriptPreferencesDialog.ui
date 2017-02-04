@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>300</height>
+    <height>305</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -58,9 +58,9 @@
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="canDisableContextMenuCheckBox">
+    <widget class="QCheckBox" name="canReceiveRightClicksCheckBox">
      <property name="text">
-      <string>Allow to disable context menu</string>
+      <string>Allow to receive right mouse button clicks</string>
      </property>
     </widget>
    </item>

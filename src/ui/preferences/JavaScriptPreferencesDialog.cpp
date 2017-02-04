@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ JavaScriptPreferencesDialog::JavaScriptPreferencesDialog(const QHash<int, QVaria
 	m_ui->canChangeWindowGeometryCheckBox->setChecked(options.value(SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption).toBool());
 	m_ui->canShowStatusMessagesCheckBox->setChecked(options.value(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption).toBool());
 	m_ui->canAccessClipboardCheckBox->setChecked(options.value(SettingsManager::Permissions_ScriptsCanAccessClipboardOption).toBool());
-	m_ui->canDisableContextMenuCheckBox->setChecked(options.value(SettingsManager::Permissions_ScriptsCanDisableContextMenuOption).toBool());
+	m_ui->canReceiveRightClicksCheckBox->setChecked(options.value(SettingsManager::Permissions_ScriptsCanReceiveRightClicksOption).toBool());
 	m_ui->canOpenWindowsCheckBox->setChecked(options.value(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toBool());
 	m_ui->canCloseWindowsComboBox->addItem(tr("Ask"), QLatin1String("ask"));
 	m_ui->canCloseWindowsComboBox->addItem(tr("Always"), QLatin1String("allow"));
@@ -75,7 +75,7 @@ QHash<int, QVariant> JavaScriptPreferencesDialog::getOptions() const
 	options[SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption] = m_ui->canChangeWindowGeometryCheckBox->isChecked();
 	options[SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption] = m_ui->canShowStatusMessagesCheckBox->isChecked();
 	options[SettingsManager::Permissions_ScriptsCanAccessClipboardOption] = m_ui->canAccessClipboardCheckBox->isChecked();
-	options[SettingsManager::Permissions_ScriptsCanDisableContextMenuOption] = m_ui->canDisableContextMenuCheckBox->isChecked();
+	options[SettingsManager::Permissions_ScriptsCanReceiveRightClicksOption] = m_ui->canReceiveRightClicksCheckBox->isChecked();
 	options[SettingsManager::Permissions_ScriptsCanOpenWindowsOption] = m_ui->canOpenWindowsCheckBox->isChecked();
 	options[SettingsManager::Permissions_ScriptsCanCloseWindowsOption] = m_ui->canCloseWindowsComboBox->currentData().toString();
 	options[SettingsManager::Permissions_EnableFullScreenOption] = m_ui->enableFullScreenComboBox->currentData().toString();
