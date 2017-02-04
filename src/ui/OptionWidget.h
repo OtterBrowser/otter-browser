@@ -41,6 +41,15 @@ class OptionWidget : public QWidget
 	Q_OBJECT
 
 public:
+	enum ButtonType
+	{
+		NoButtons = 0,
+		ResetButton,
+		SaveButton
+	};
+
+	Q_DECLARE_FLAGS(ButtonTypes, ButtonType)
+
 	struct EnumerationChoice
 	{
 		QString text;
@@ -55,7 +64,7 @@ public:
 	void setValue(const QVariant &value);
 	void setChoices(const QStringList &choices);
 	void setChoices(const QList<EnumerationChoice> &choices);
-	void setControlsVisible(bool isVisible);
+	void setButtons(ButtonTypes buttons);
 	void setSizePolicy(QSizePolicy::Policy horizontal, QSizePolicy::Policy vertical);
 	void setSizePolicy(QSizePolicy policy);
 	QString getOption() const;
@@ -94,5 +103,7 @@ signals:
 };
 
 }
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::OptionWidget::ButtonTypes)
 
 #endif

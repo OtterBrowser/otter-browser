@@ -268,26 +268,33 @@ void OptionWidget::setChoices(const QList<OptionWidget::EnumerationChoice> &choi
 	m_comboBox->setCurrentIndex(qMax(0, m_comboBox->findData(m_value)));
 }
 
-void OptionWidget::setControlsVisible(bool isVisible)
+void OptionWidget::setButtons(ButtonTypes buttons)
 {
-	if (isVisible && !m_resetButton)
+	if (buttons.testFlag(ResetButton) && !m_resetButton)
 	{
 		m_resetButton = new QPushButton(tr("Defaults"), this);
-		m_resetButton->setEnabled(getValue() != SettingsManager::getOptionDefinition(SettingsManager::getOptionIdentifier(m_option)).defaultValue);
-
-		m_saveButton = new QPushButton(tr("Save"), this);
+		m_resetButton->setEnabled(getValue() != getDefaultValue());
 
 		layout()->addWidget(m_resetButton);
-		layout()->addWidget(m_saveButton);
 
 		connect(m_resetButton, SIGNAL(clicked()), this, SLOT(reset()));
-		connect(m_saveButton, SIGNAL(clicked()), this, SLOT(save()));
 	}
-	else if (!isVisible && m_resetButton)
+	else if (!buttons.testFlag(ResetButton) && m_resetButton)
 	{
 		m_resetButton->deleteLater();
 		m_resetButton = nullptr;
+	}
 
+	if (buttons.testFlag(SaveButton) && !m_saveButton)
+	{
+		m_saveButton = new QPushButton(tr("Save"), this);
+
+		layout()->addWidget(m_saveButton);
+
+		connect(m_saveButton, SIGNAL(clicked()), this, SLOT(save()));
+	}
+	else if (!buttons.testFlag(SaveButton) && m_saveButton)
+	{
 		m_saveButton->deleteLater();
 		m_saveButton = nullptr;
 	}
