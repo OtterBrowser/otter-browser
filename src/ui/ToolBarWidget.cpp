@@ -739,6 +739,11 @@ int ToolBarWidget::getMaximumButtonSize() const
 	return getDefinition().maximumButtonSize;
 }
 
+bool ToolBarWidget::shouldBeVisible(bool isFullScreen) const
+{
+	return ((isFullScreen ? getDefinition().fullScreenVisibility : getDefinition().normalVisibility) == ToolBarsManager::AlwaysVisibleToolBar);
+}
+
 bool ToolBarWidget::event(QEvent *event)
 {
 	if (!GesturesManager::isTracking() && (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel))

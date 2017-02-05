@@ -76,6 +76,7 @@ public:
 	int getIdentifier() const;
 	int getIconSize() const;
 	int getMaximumButtonSize() const;
+	bool shouldBeVisible(bool isFullScreen) const;
 	bool event(QEvent *event) override;
 
 public slots:

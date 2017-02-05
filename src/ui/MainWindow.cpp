@@ -1023,12 +1023,14 @@ void MainWindow::handleToolBarAdded(int identifier)
 			return (first->getDefinition().row > second->getDefinition().row);
 		});
 
+		const bool isFullScreen(windowState().testFlag(Qt::WindowFullScreen));
+
 		for (int i = 0; i < toolBars.count(); ++i)
 		{
 			addToolBar(definition.location, toolBars.at(i));
 			addToolBarBreak(definition.location);
 
-			toolBars.at(i)->show();
+			toolBars.at(i)->setVisible(toolBars.at(i)->shouldBeVisible(isFullScreen));
 		}
 	}
 }
@@ -1123,12 +1125,14 @@ void MainWindow::handleToolBarMoved(int identifier)
 		return (first->getDefinition().row > second->getDefinition().row);
 	});
 
+	const bool isFullScreen(windowState().testFlag(Qt::WindowFullScreen));
+
 	for (int i = 0; i < toolBars.count(); ++i)
 	{
 		addToolBar(definition.location, toolBars.at(i));
 		addToolBarBreak(definition.location);
 
-		toolBars.at(i)->show();
+		toolBars.at(i)->setVisible(toolBars.at(i)->shouldBeVisible(isFullScreen));
 	}
 }
 
@@ -1491,15 +1495,12 @@ bool MainWindow::event(QEvent *event)
 
 					for (int i = 0; i < toolBars.count(); ++i)
 					{
-						const ToolBarsManager::ToolBarDefinition definition(toolBars.at(i)->getDefinition());
-						const ToolBarsManager::ToolBarVisibility visibility(isFullScreen ? definition.fullScreenVisibility : definition.normalVisibility);
-
-						if (visibility == ToolBarsManager::AlwaysVisibleToolBar)
+						if (toolBars.at(i)->shouldBeVisible(isFullScreen))
 						{
 							toolBars.at(i)->removeEventFilter(this);
 							toolBars.at(i)->show();
 						}
-						else if (visibility == ToolBarsManager::AlwaysHiddenToolBar || visibility == ToolBarsManager::OnHoverVisibleToolBar)
+						else
 						{
 							toolBars.at(i)->hide();
 						}
