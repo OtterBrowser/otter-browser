@@ -36,7 +36,6 @@
 #include "../../core/Settings.h"
 #include "../../core/SettingsManager.h"
 #include "../../core/ThemesManager.h"
-#include "../../core/TreeModel.h"
 #include "../../core/Utils.h"
 
 #include "ui_PreferencesAdvancedPageWidget.h"
@@ -197,11 +196,8 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Network_EnableReferrerOption).toBool());
 
-	TreeModel *userAgentsModel(new TreeModel(this));
+	TreeModel *userAgentsModel(new UserAgentsModel(SettingsManager::getValue(SettingsManager::Network_UserAgentOption).toString(), true, this));
 	userAgentsModel->setHorizontalHeaderLabels({tr("Title"), tr("Value")});
-	userAgentsModel->setExclusive(true);
-
-	loadUserAgents(NetworkManagerFactory::getUserAgents(), userAgentsModel->invisibleRootItem(), SettingsManager::getValue(SettingsManager::Network_UserAgentOption).toString());
 
 	m_ui->userAgentsViewWidget->setModel(userAgentsModel);
 	m_ui->userAgentsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
@@ -656,45 +652,6 @@ void PreferencesAdvancedPageWidget::updateDownloadsMode()
 	m_ui->downloadsSaveOptionsWidget->setEnabled(m_ui->downloadsSaveButton->isChecked());
 }
 
-void PreferencesAdvancedPageWidget::loadUserAgents(const QStringList &userAgents, QStandardItem *parent, const QString &defaultUserAgent)
-{
-	TreeModel *model(qobject_cast<TreeModel*>(parent->model()));
-
-	for (int i = 0; i < userAgents.count(); ++i)
-	{
-		const UserAgentDefinition userAgent(userAgents.at(i).isEmpty() ? UserAgentDefinition() : NetworkManagerFactory::getUserAgent(userAgents.at(i)));
-		TreeModel::ItemType type(TreeModel::EntryType);
-		QList<QStandardItem*> items({new QStandardItem(userAgent.getTitle()), new QStandardItem(userAgent.value)});
-
-		if (userAgent.isFolder)
-		{
-			type = TreeModel::FolderType;
-
-			loadUserAgents(userAgent.children, items[0], defaultUserAgent);
-		}
-		else if (userAgents.at(i).isEmpty())
-		{
-			type = TreeModel::SeparatorType;
-		}
-		else
-		{
-			items[0]->setCheckable(true);
-
-			if (userAgent.identifier == defaultUserAgent)
-			{
-				items[0]->setData(Qt::Checked, Qt::CheckStateRole);
-			}
-		}
-
-		if (type != TreeModel::SeparatorType)
-		{
-			items[0]->setData(userAgents.at(i), TreeModel::UserRole);
-		}
-
-		model->insertRow(items, parent, -1, type);
-	}
-}
-
 void PreferencesAdvancedPageWidget::saveUsuerAgents(QJsonArray *userAgents, QStandardItem *parent)
 {
 	for (int i = 0; i < parent->rowCount(); ++i)
@@ -708,7 +665,7 @@ void PreferencesAdvancedPageWidget::saveUsuerAgents(QJsonArray *userAgents, QSta
 			if (type == TreeModel::FolderType || type == TreeModel::EntryType)
 			{
 				QJsonObject userAgentObject;
-				userAgentObject.insert(QLatin1String("identifier"), item->data(TreeModel::UserRole).toString());
+				userAgentObject.insert(QLatin1String("identifier"), item->data(UserAgentsModel::IdentifierRole).toString());
 				userAgentObject.insert(QLatin1String("title"), item->data(Qt::DisplayRole).toString());
 
 				if (type == TreeModel::FolderType)
@@ -768,7 +725,7 @@ void PreferencesAdvancedPageWidget::addUserAgent(QAction *action)
 				if (result)
 				{
 					QList<QStandardItem*> items({new QStandardItem(title.isEmpty() ? tr("(Untitled)") : title), new QStandardItem()});
-					items[0]->setData(Utils::createIdentifier(QString(), QVariant(model->getAllData(TreeModel::UserRole, 0)).toStringList()), TreeModel::UserRole);
+					items[0]->setData(Utils::createIdentifier(QString(), QVariant(model->getAllData(UserAgentsModel::IdentifierRole, 0)).toStringList()), UserAgentsModel::IdentifierRole);
 
 					model->insertRow(items, parent, row, TreeModel::FolderType);
 
@@ -788,10 +745,10 @@ void PreferencesAdvancedPageWidget::addUserAgent(QAction *action)
 				if (dialog.exec() == QDialog::Accepted)
 				{
 					userAgent = dialog.getUserAgent();
-					userAgent.identifier = Utils::createIdentifier(QString(), QVariant(model->getAllData(TreeModel::UserRole, 0)).toStringList());
+					userAgent.identifier = Utils::createIdentifier(QString(), QVariant(model->getAllData(UserAgentsModel::IdentifierRole, 0)).toStringList());
 
 					QList<QStandardItem*> items({new QStandardItem(userAgent.title.isEmpty() ? tr("(Untitled)") : userAgent.title), new QStandardItem(userAgent.value)});
-					items[0]->setData(userAgent.identifier, TreeModel::UserRole);
+					items[0]->setData(userAgent.identifier, UserAgentsModel::IdentifierRole);
 
 					model->insertRow(items, parent, row, TreeModel::EntryType);
 				}
@@ -831,7 +788,7 @@ void PreferencesAdvancedPageWidget::editUserAgent()
 	else if (type == TreeModel::EntryType)
 	{
 		UserAgentDefinition userAgent;
-		userAgent.identifier = index.data(TreeModel::UserRole).toString();
+		userAgent.identifier = index.data(UserAgentsModel::IdentifierRole).toString();
 		userAgent.title = index.data(Qt::DisplayRole).toString();
 		userAgent.value = index.sibling(index.row(), 1).data(Qt::DisplayRole).toString();
 
@@ -1513,7 +1470,7 @@ void PreferencesAdvancedPageWidget::save()
 	handlersSettings.save(SessionsManager::getWritableDataPath(QLatin1String("handlers.ini")));
 
 	SettingsManager::setValue(SettingsManager::Network_EnableReferrerOption, m_ui->sendReferrerCheckBox->isChecked());
-	SettingsManager::setValue(SettingsManager::Network_UserAgentOption, m_ui->userAgentsViewWidget->getCheckedIndex().data(TreeModel::UserRole).toString());
+	SettingsManager::setValue(SettingsManager::Network_UserAgentOption, m_ui->userAgentsViewWidget->getCheckedIndex().data(UserAgentsModel::IdentifierRole).toString());
 	SettingsManager::setValue(SettingsManager::Network_ProxyModeOption, m_ui->proxyModeComboBox->currentData(Qt::UserRole).toString());
 
 	if (!m_ui->allProxyServersLineEdit->text().isEmpty())

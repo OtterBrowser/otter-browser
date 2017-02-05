@@ -64,7 +64,6 @@ protected slots:
 	void updateDownloadsActions();
 	void updateDownloadsOptions();
 	void updateDownloadsMode();
-	void loadUserAgents(const QStringList &userAgents, QStandardItem *parent, const QString &defaultUserAgent);
 	void saveUsuerAgents(QJsonArray *userAgents, QStandardItem *parent);
 	void addUserAgent(QAction *action);
 	void editUserAgent();
