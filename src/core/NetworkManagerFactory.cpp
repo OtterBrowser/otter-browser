@@ -53,6 +53,72 @@ bool NetworkManagerFactory::m_isWorkingOffline(false);
 bool NetworkManagerFactory::m_isInitialized(false);
 bool NetworkManagerFactory::m_isUsingSystemProxyAuthentication(false);
 
+UserAgentsModel::UserAgentsModel(const QString &selectedUserAgent, bool isEditor, QObject *parent) : TreeModel(parent),
+	m_isEditor(isEditor)
+{
+	if (isEditor)
+	{
+		setExclusive(true);
+	}
+
+	populateUserAgents(NetworkManagerFactory::getUserAgents(), invisibleRootItem(), selectedUserAgent);
+}
+
+void UserAgentsModel::populateUserAgents(const QStringList &userAgents, QStandardItem *parent, const QString &selectedUserAgent)
+{
+	for (int i = 0; i < userAgents.count(); ++i)
+	{
+		const UserAgentDefinition userAgent(userAgents.at(i).isEmpty() ? UserAgentDefinition() : NetworkManagerFactory::getUserAgent(userAgents.at(i)));
+		ItemType type(EntryType);
+		QList<QStandardItem*> items({new QStandardItem(userAgent.identifier.isEmpty() ? QString() : userAgent.getTitle())});
+
+		if (m_isEditor)
+		{
+			items.append(new QStandardItem(userAgent.value));
+			items[0]->setFlags(items[0]->flags() | Qt::ItemIsDragEnabled);
+			items[1]->setFlags(items[1]->flags() | Qt::ItemIsDragEnabled);
+		}
+
+		if (userAgent.isFolder)
+		{
+			type = FolderType;
+
+			if (!m_isEditor)
+			{
+				items[0]->setFlags(items[0]->flags() & ~Qt::ItemIsSelectable);
+			}
+
+			populateUserAgents(userAgent.children, items[0], selectedUserAgent);
+		}
+		else if (userAgents.at(i).isEmpty())
+		{
+			type = SeparatorType;
+
+			if (!m_isEditor)
+			{
+				items[0]->setFlags(items[0]->flags() & ~Qt::ItemIsSelectable);
+			}
+		}
+		else
+		{
+			items[0]->setData(userAgents.at(i), IdentifierRole);
+			items[0]->setData(userAgent.value, UserAgentRole);
+
+			if (m_isEditor)
+			{
+				items[0]->setCheckable(true);
+
+				if (userAgent.identifier == selectedUserAgent)
+				{
+					items[0]->setData(Qt::Checked, Qt::CheckStateRole);
+				}
+			}
+		}
+
+		insertRow(items, parent, -1, type);
+	}
+}
+
 NetworkManagerFactory::NetworkManagerFactory(QObject *parent) : QObject(parent)
 {
 	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Default User Agent"))

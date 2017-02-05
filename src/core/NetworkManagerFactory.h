@@ -21,6 +21,8 @@
 #ifndef OTTER_NETWORKMANAGERFACTORY_H
 #define OTTER_NETWORKMANAGERFACTORY_H
 
+#include "TreeModel.h"
+
 #include <QtCore/QCoreApplication>
 #include <QtNetwork/QAuthenticator>
 #include <QtNetwork/QNetworkCookieJar>
@@ -86,6 +88,26 @@ struct UserAgentDefinition
 class CookieJar;
 class NetworkCache;
 class NetworkManager;
+class NetworkManagerFactory;
+
+class UserAgentsModel : public TreeModel
+{
+public:
+	enum ItemRole
+	{
+		TitleRole = TreeModel::TitleRole,
+		IdentifierRole = TreeModel::UserRole,
+		UserAgentRole
+	};
+
+	UserAgentsModel(const QString &selectedUserAgent, bool isEditor, QObject *parent = nullptr);
+
+protected:
+	void populateUserAgents(const QStringList &userAgents, QStandardItem *parent, const QString &selectedUserAgent);
+
+private:
+	bool m_isEditor;
+};
 
 class NetworkManagerFactory : public QObject
 {
