@@ -173,12 +173,11 @@ QVariantList TreeModel::getAllData(int role, int column, const QModelIndex &pare
 
 bool TreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
 {
-	Q_UNUSED(action)
 	Q_UNUSED(column)
 
 	if (static_cast<ItemType>(parent.data(TypeRole).toInt()) != FolderType)
 	{
-		return QStandardItemModel::dropMimeData(data, action, row, column, parent);
+		return QStandardItemModel::dropMimeData(data, action, row, 0, parent);
 	}
 
 	QStandardItem *item(itemFromIndex(data->property("x-item-index").toModelIndex()));
