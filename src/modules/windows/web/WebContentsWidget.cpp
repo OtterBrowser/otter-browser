@@ -573,15 +573,15 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				QMenu *enableImagesMenu(menu.addMenu(tr("Images")));
 				QAction *showAllImagesAction(enableImagesMenu->addAction(tr("All Images")));
 				showAllImagesAction->setCheckable(true);
-				showAllImagesAction->setData(QVariantList({QLatin1String("Browser/EnableImages"), QLatin1String("enabled")}));
+				showAllImagesAction->setData(QVariantList({QLatin1String("Permissions/EnableImages"), QLatin1String("enabled")}));
 
 				QAction *showCachedImagesAction(enableImagesMenu->addAction(tr("Cached Images")));
 				showCachedImagesAction->setCheckable(true);
-				showCachedImagesAction->setData(QVariantList({QLatin1String("Browser/EnableImages"), QLatin1String("onlyCached")}));
+				showCachedImagesAction->setData(QVariantList({QLatin1String("Permissions/EnableImages"), QLatin1String("onlyCached")}));
 
 				QAction *noImagesAction(enableImagesMenu->addAction(tr("No Images")));
 				noImagesAction->setCheckable(true);
-				noImagesAction->setData(QVariantList({QLatin1String("Browser/EnableImages"), QLatin1String("disabled")}));
+				noImagesAction->setData(QVariantList({QLatin1String("Permissions/EnableImages"), QLatin1String("disabled")}));
 
 				QActionGroup enableImagesGroup(this);
 				enableImagesGroup.setExclusive(true);
@@ -609,15 +609,15 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				QMenu *enablePluginsMenu(menu.addMenu(tr("Plugins")));
 				QAction *enablePluginsAction(enablePluginsMenu->addAction(tr("Enabled")));
 				enablePluginsAction->setCheckable(true);
-				enablePluginsAction->setData(QVariantList({QLatin1String("Browser/EnablePlugins"), QLatin1String("enabled")}));
+				enablePluginsAction->setData(QVariantList({QLatin1String("Permissions/EnablePlugins"), QLatin1String("enabled")}));
 
 				QAction *onDemandPluginsAction(enablePluginsMenu->addAction(tr("On Demand")));
 				onDemandPluginsAction->setCheckable(true);
-				onDemandPluginsAction->setData(QVariantList({QLatin1String("Browser/EnablePlugins"), QLatin1String("onDemand")}));
+				onDemandPluginsAction->setData(QVariantList({QLatin1String("Permissions/EnablePlugins"), QLatin1String("onDemand")}));
 
 				QAction *disablePluginsAction(enablePluginsMenu->addAction(tr("Disabled")));
 				disablePluginsAction->setCheckable(true);
-				disablePluginsAction->setData(QVariantList({QLatin1String("Browser/EnablePlugins"), QLatin1String("disabled")}));
+				disablePluginsAction->setData(QVariantList({QLatin1String("Permissions/EnablePlugins"), QLatin1String("disabled")}));
 
 				QActionGroup enablePluginsGroup(this);
 				enablePluginsGroup.setExclusive(true);
