@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -69,20 +69,17 @@ Settings::Settings(const QString &path, QObject *parent) : QObject(parent)
 		}
 		else if (!line.isEmpty())
 		{
-			if (line.contains(QLatin1Char('=')))
+			const QString key(line.section(QLatin1Char('='), 0, 0));
+			const QVariant value(line.contains(QLatin1Char('=')) ? QVariant(line.section(QLatin1Char('='), 1, -1)) : QVariant());
+
+			if (!key.isEmpty())
 			{
-				const QString key(line.section(QLatin1Char('='), 0, 0));
-				const QVariant value(QVariant(line.section(QLatin1Char('='), 1, -1)));
-
-				if (!key.isEmpty())
+				if (!m_data.contains(group))
 				{
-					if (!m_data.contains(group))
-					{
-						m_data[group] = QVariantMap();
-					}
-
-					m_data[group][key] = value;
+					m_data[group] = QVariantMap();
 				}
+
+				m_data[group][key] = value;
 			}
 		}
 		else if (isHeader)
