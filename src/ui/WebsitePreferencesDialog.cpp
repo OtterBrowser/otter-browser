@@ -120,17 +120,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 		addCookie(cookies.at(i));
 	}
 
-	ItemViewWidget *userAgentsViewWidget(new ItemViewWidget(m_ui->userAgentComboBox));
-	userAgentsViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
-	userAgentsViewWidget->setHeaderHidden(true);
-	userAgentsViewWidget->setItemsExpandable(false);
-	userAgentsViewWidget->setRootIsDecorated(false);
-	userAgentsViewWidget->header()->setStretchLastSection(true);
-
 	m_ui->userAgentComboBox->setModel(new UserAgentsModel(QString(), false, this));
-	m_ui->userAgentComboBox->setView(userAgentsViewWidget);
-
-	userAgentsViewWidget->expandAll();
 
 	m_ui->encodingOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Content_DefaultCharacterEncodingOption));
 	m_ui->popupsPolicyOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Content_PopupsPolicyOption));
@@ -430,13 +420,7 @@ void WebsitePreferencesDialog::updateValues(bool checked)
 
 	m_ui->thirdPartyCookiesPolicyComboBox->setCurrentIndex((thirdPartyCookiesPolicyIndex < 0) ? 0 : thirdPartyCookiesPolicyIndex);
 	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Network_EnableReferrerOption, (m_ui->sendReferrerOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
-
-	const QModelIndex userAgentIndex(m_ui->userAgentComboBox->model()->match(m_ui->userAgentComboBox->model()->index(0, 0), UserAgentsModel::IdentifierRole, SettingsManager::getValue(SettingsManager::Network_UserAgentOption, (m_ui->userAgentOverrideCheckBox->isChecked() ? url : QUrl())).toString(), 1, Qt::MatchRecursive).value(0));
-
-	m_ui->userAgentComboBox->setRootModelIndex(userAgentIndex.parent());
-	m_ui->userAgentComboBox->setModelColumn(0);
-	m_ui->userAgentComboBox->setCurrentIndex(userAgentIndex.row());
-	m_ui->userAgentComboBox->setRootModelIndex(QModelIndex());
+	m_ui->userAgentComboBox->setCurrentIndex(m_ui->userAgentComboBox->model()->match(m_ui->userAgentComboBox->model()->index(0, 0), UserAgentsModel::IdentifierRole, SettingsManager::getValue(SettingsManager::Network_UserAgentOption, (m_ui->userAgentOverrideCheckBox->isChecked() ? url : QUrl())).toString(), 1, Qt::MatchRecursive).value(0));
 
 	const QStringList contentBlockingProfiles(SettingsManager::getValue(SettingsManager::ContentBlocking_ProfilesOption, url).toStringList());
 

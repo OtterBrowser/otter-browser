@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 **************************************************************************/
 
 #include "BookmarksComboBoxWidget.h"
+#include "ItemViewWidget.h"
 #include "../core/BookmarksManager.h"
 #include "../core/NotesManager.h"
 
@@ -28,19 +29,11 @@
 namespace Otter
 {
 
-BookmarksComboBoxWidget::BookmarksComboBoxWidget(QWidget *parent) : QComboBox(parent),
-	m_view(new QTreeView(this)),
+BookmarksComboBoxWidget::BookmarksComboBoxWidget(QWidget *parent) : ComboBoxWidget(parent),
 	m_mode(BookmarksModel::BookmarksMode)
 {
-	setView(m_view);
 	setModel(BookmarksManager::getModel());
 	updateBranch();
-
-	m_view->viewport()->installEventFilter(this);
-	m_view->setHeaderHidden(true);
-	m_view->setItemsExpandable(false);
-	m_view->setRootIsDecorated(false);
-	m_view->setStyleSheet(QLatin1String("QTreeView::branch { border-image:url(invalid.png); }"));
 
 	connect(model(), SIGNAL(layoutChanged()), this, SLOT(updateBranch()));
 }
@@ -88,22 +81,20 @@ void BookmarksComboBoxWidget::updateBranch(QStandardItem *branch)
 			}
 			else
 			{
-				m_view->setRowHidden(i, branch->index(), true);
+				getView()->setRowHidden(i, branch->index(), true);
 			}
 		}
 	}
 
-	m_view->expandAll();
+	getView()->expandAll();
 }
 
 void BookmarksComboBoxWidget::setCurrentFolder(BookmarksItem *folder)
 {
-	const QModelIndex index(folder ? folder->index() : QModelIndex());
-
-	setRootModelIndex(index.parent());
-	setModelColumn(0);
-	setCurrentIndex(index.row());
-	setRootModelIndex(QModelIndex());
+	if (folder)
+	{
+		setCurrentIndex(folder->index());
+	}
 }
 
 void BookmarksComboBoxWidget::setMode(BookmarksModel::FormatMode mode)

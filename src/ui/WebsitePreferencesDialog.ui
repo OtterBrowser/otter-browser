@@ -646,7 +646,7 @@
         </spacer>
        </item>
        <item row="2" column="3">
-        <widget class="QComboBox" name="userAgentComboBox"/>
+        <widget class="Otter::ComboBoxWidget" name="userAgentComboBox"/>
        </item>
        <item row="1" column="1" colspan="2">
         <widget class="QCheckBox" name="sendReferrerCheckBox">
@@ -800,6 +800,11 @@
    <extends>QWidget</extends>
    <header>src/ui/FilePathWidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Otter::ComboBoxWidget</class>
+   <extends>QComboBox</extends>
+   <header>src/ui/ComboBoxWidget.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>

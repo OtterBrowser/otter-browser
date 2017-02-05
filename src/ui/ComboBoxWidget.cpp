@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -27,14 +27,48 @@ ComboBoxWidget::ComboBoxWidget(QWidget *parent) : QComboBox(parent),
 	m_view(new ItemViewWidget(this))
 {
 	m_view->header()->setStretchLastSection(true);
-	m_view->header()->hide();
+	m_view->setViewMode(ItemViewWidget::TreeViewMode);
+	m_view->setHeaderHidden(true);
+	m_view->setItemsExpandable(false);
+	m_view->setRootIsDecorated(false);
+	m_view->setStyleSheet(QLatin1String("QTreeView::branch {border-image:url(invalid.png);}"));
 
 	setView(m_view);
+}
+
+void ComboBoxWidget::setCurrentIndex(const QModelIndex &index)
+{
+	if (!index.isValid())
+	{
+		QComboBox::setCurrentIndex(-1);
+
+		return;
+	}
+
+	setRootModelIndex(index.parent());
+	setModelColumn(0);
+	setCurrentIndex(index.row());
+	setRootModelIndex(QModelIndex());
+}
+
+void ComboBoxWidget::setCurrentIndex(int index)
+{
+	QComboBox::setCurrentIndex(index);
 }
 
 ItemViewWidget* ComboBoxWidget::getView() const
 {
 	return m_view;
+}
+
+bool ComboBoxWidget::event(QEvent *event)
+{
+	if (event->type() == QEvent::DynamicPropertyChange)
+	{
+		m_view->expandAll();
+	}
+
+	return QComboBox::event(event);
 }
 
 }
