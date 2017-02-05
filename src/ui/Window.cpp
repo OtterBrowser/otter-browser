@@ -577,7 +577,7 @@ void Window::setContentsWidget(ContentsWidget *widget)
 
 	layout()->addWidget(m_contentsWidget);
 
-	if (m_contentsWidget->getType() == QLatin1String("web"))
+	if (m_contentsWidget->getType() == QLatin1String("web") && !m_session.overrides.isEmpty())
 	{
 		WebContentsWidget *webWidget(qobject_cast<WebContentsWidget*>(m_contentsWidget));
 
