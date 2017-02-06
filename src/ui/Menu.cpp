@@ -45,7 +45,8 @@ namespace Otter
 Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 	m_actionGroup(nullptr),
 	m_bookmark(nullptr),
-	m_role(role)
+	m_role(role),
+	m_option(-1)
 {
 	switch (role)
 	{
@@ -349,6 +350,128 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 			}
 		}
 	}
+}
+
+void Menu::load(int option)
+{
+	const QStringList choices(SettingsManager::getOptionDefinition(option).choices);
+
+	if (choices.isEmpty())
+	{
+		return;
+	}
+
+	m_option = option;
+
+	switch (option)
+	{
+		case SettingsManager::Content_PopupsPolicyOption:
+			m_title = QT_TRANSLATE_NOOP("actions", "Pop-Ups");
+
+			break;
+		case SettingsManager::Permissions_EnableFullScreenOption:
+			m_title = QT_TRANSLATE_NOOP("actions", "Full Screen");
+
+			break;
+		case SettingsManager::Permissions_EnableGeolocationOption:
+			m_title = QT_TRANSLATE_NOOP("actions", "Geolocation");
+
+			break;
+		case SettingsManager::Permissions_EnableImagesOption:
+			m_title = QT_TRANSLATE_NOOP("actions", "Images");
+
+			break;
+		case SettingsManager::Permissions_EnableMediaCaptureAudioOption:
+			m_title = QT_TRANSLATE_NOOP("actions", "Capture Audio");
+
+			break;
+		case SettingsManager::Permissions_EnableMediaCaptureVideoOption:
+			m_title = QT_TRANSLATE_NOOP("actions", "Capture Video");
+
+			break;
+		case SettingsManager::Permissions_EnableMediaPlaybackAudioOption:
+			m_title = QT_TRANSLATE_NOOP("actions", "Playback Audio");
+
+			break;
+		case SettingsManager::Permissions_EnableNotificationsOption:
+			m_title = QT_TRANSLATE_NOOP("actions", "Notifications");
+
+			break;
+		case SettingsManager::Permissions_EnablePluginsOption:
+			m_title = QT_TRANSLATE_NOOP("actions", "Plugins");
+
+			break;
+		case SettingsManager::Permissions_EnablePointerLockOption:
+			m_title = QT_TRANSLATE_NOOP("actions", "Pointer Lock");
+
+			break;
+		case SettingsManager::Permissions_ScriptsCanCloseWindowsOption:
+			m_title = QT_TRANSLATE_NOOP("actions", "Closing Windows by JavaScript");
+
+			break;
+		default:
+			return;
+	}
+
+	setTitle(QCoreApplication::translate("actions", m_title.toUtf8().constData()));
+
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
+	const QString value(mainWindow ? mainWindow->getWindowsManager()->getOption(m_option).toString() : QString());
+	QActionGroup *group(new QActionGroup(this));
+	group->setExclusive(true);
+
+	for (int i = 0; i < choices.count(); ++i)
+	{
+		Action *action(addAction());
+		action->setCheckable(true);
+		action->setChecked(choices.at(i) == value);
+		action->setData(choices.at(i));
+
+		group->addAction(action);
+
+		if (choices.at(i) == QLatin1String("ask"))
+		{
+			action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Ask What to Do"));
+		}
+		else if (choices.at(i) == QLatin1String("allow"))
+		{
+			action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Always Allow"));
+		}
+		else if (choices.at(i) == QLatin1String("disallow"))
+		{
+			action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Always Deny"));
+		}
+		else if (choices.at(i) == QLatin1String("openAll"))
+		{
+			action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Open All"));
+		}
+		else if (choices.at(i) == QLatin1String("openAllInBackground"))
+		{
+			action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Open in Background"));
+		}
+		else if (choices.at(i) == QLatin1String("blockAll"))
+		{
+			action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Block All"));
+		}
+		else if (choices.at(i) == QLatin1String("onlyCached"))
+		{
+			action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Only Cached"));
+		}
+		else if (choices.at(i) == QLatin1String("enabled"))
+		{
+			action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Enabled"));
+		}
+		else if (choices.at(i) == QLatin1String("onDemand"))
+		{
+			action->setOverrideText(QT_TRANSLATE_NOOP("actions", "On Demand"));
+		}
+		else if (choices.at(i) == QLatin1String("disabled"))
+		{
+			action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Disabled"));
+		}
+	}
+
+	connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectOption(QAction*)));
 }
 
 void Menu::populateModelMenu()
@@ -935,6 +1058,16 @@ void Menu::selectCharacterEncoding(QAction *action)
 	}
 
 	mainWindow->getWindowsManager()->setOption(SettingsManager::Content_DefaultCharacterEncodingOption, encoding.toLower());
+}
+
+void Menu::selectOption(QAction *action)
+{
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
+
+	if (mainWindow)
+	{
+		mainWindow->getWindowsManager()->setOption(m_option, action->data().toString());
+	}
 }
 
 void Menu::selectStyleSheet(QAction *action)

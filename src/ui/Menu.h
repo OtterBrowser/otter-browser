@@ -54,6 +54,7 @@ public:
 
 	void load(const QString &path, const QStringList &options = QStringList());
 	void load(const QJsonObject &definition, const QStringList &options = QStringList());
+	void load(int option);
 	Action* addAction(int identifier = -1, bool useGlobal = false);
 	MenuRole getRole() const;
 	static MenuRole getRole(const QString &identifier);
@@ -79,6 +80,7 @@ protected slots:
 	void openImporter(QAction *action);
 	void openSession(QAction *action);
 	void selectCharacterEncoding(QAction *action);
+	void selectOption(QAction *action);
 	void selectStyleSheet(QAction *action);
 	void selectUserAgent(QAction *action);
 	void selectWindow(QAction *action);
@@ -90,6 +92,7 @@ private:
 	BookmarksItem *m_bookmark;
 	QString m_title;
 	MenuRole m_role;
+	int m_option;
 };
 
 }
