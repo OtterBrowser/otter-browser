@@ -73,6 +73,9 @@ void QtWebEngineWebBackend::optionChanged(int identifier)
 	}
 
 	QWebEngineSettings *globalSettings(QWebEngineSettings::globalSettings());
+#if QT_VERSION >= 0x050800
+	globalSettings->setAttribute(QWebEngineSettings::FocusOnNavigationEnabled, false);
+#endif
 	globalSettings->setAttribute(QWebEngineSettings::AutoLoadImages, (SettingsManager::getValue(SettingsManager::Permissions_EnableImagesOption).toString() != QLatin1String("onlyCached")));
 	globalSettings->setAttribute(QWebEngineSettings::PluginsEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnablePluginsOption).toString() != QLatin1String("disabled"));
 	globalSettings->setAttribute(QWebEngineSettings::JavascriptEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableJavaScriptOption).toBool());
