@@ -71,6 +71,7 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 	const int buttonStyleIndex(m_ui->buttonStyleComboBox->findData(m_definition.buttonStyle));
 
 	m_ui->buttonStyleComboBox->setCurrentIndex((buttonStyleIndex < 0) ? 1 : buttonStyleIndex);
+	m_ui->hasToggleCheckBox->setChecked(definition.hasToggle);
 
 	if (m_definition.bookmarksPath.isEmpty())
 	{
@@ -614,6 +615,7 @@ ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition() const
 	definition.buttonStyle = static_cast<Qt::ToolButtonStyle>(m_ui->buttonStyleComboBox->currentData().toInt());
 	definition.iconSize = m_ui->iconSizeSpinBox->value();
 	definition.maximumButtonSize = m_ui->maximumButtonSizeSpinBox->value();
+	definition.hasToggle = m_ui->hasToggleCheckBox->isChecked();
 
 	for (int i = 0; i < m_ui->currentEntriesItemView->model()->rowCount(); ++i)
 	{

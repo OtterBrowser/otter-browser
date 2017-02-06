@@ -65,6 +65,7 @@ public:
 		int maximumButtonSize = -1;
 		int row = -1;
 		bool canReset = false;
+		bool hasToggle = false;
 		bool isDefault = false;
 		bool wasRemoved = false;
 

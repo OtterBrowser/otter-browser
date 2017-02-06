@@ -23,6 +23,7 @@
 
 #include <QtCore/QMimeData>
 #include <QtWidgets/QMenu>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QToolBar>
 
 #include "../core/ToolBarsManager.h"
@@ -107,8 +108,10 @@ private:
 	MainWindow *m_mainWindow;
 	Window *m_window;
 	BookmarksItem *m_bookmark;
+	QPushButton *m_toggleButton;
 	QPoint m_dragStartPosition;
 	int m_identifier;
+	bool m_isInitialized;
 
 signals:
 	void windowChanged(Window *window);

@@ -170,6 +170,11 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 
 			definitionObject.insert(QLatin1String("row"), QJsonValue(m_definitions[i].row));
 
+			if (m_definitions[i].hasToggle)
+			{
+				definitionObject.insert(QLatin1String("hasToggle"), QJsonValue(true));
+			}
+
 			if (!m_definitions[i].entries.isEmpty())
 			{
 				QJsonArray actionsArray;
@@ -505,6 +510,7 @@ QHash<QString, ToolBarsManager::ToolBarDefinition> ToolBarsManager::loadToolBars
 		toolBar.iconSize = toolBarObject.value(QLatin1String("iconSize")).toInt();
 		toolBar.maximumButtonSize = toolBarObject.value(QLatin1String("maximumButtonSize")).toInt();
 		toolBar.row = toolBarObject.value(QLatin1String("row")).toInt();
+		toolBar.hasToggle = toolBarObject.value(QLatin1String("hasToggle")).toBool();
 		toolBar.isDefault = isDefault;
 
 		if (toolBar.normalVisibility == OnHoverVisibleToolBar)
