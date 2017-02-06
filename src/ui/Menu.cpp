@@ -410,7 +410,9 @@ void Menu::load(int option)
 
 			break;
 		default:
-			return;
+			m_title = SettingsManager::getOptionName(option);
+
+			break;
 	}
 
 	setTitle(QCoreApplication::translate("actions", m_title.toUtf8().constData()));
@@ -468,6 +470,10 @@ void Menu::load(int option)
 		else if (choices.at(i) == QLatin1String("disabled"))
 		{
 			action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Disabled"));
+		}
+		else
+		{
+			action->setOverrideText(choices.at(i));
 		}
 	}
 
