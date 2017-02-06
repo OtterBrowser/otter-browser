@@ -79,10 +79,8 @@ protected slots:
 	void openBookmark();
 	void openImporter(QAction *action);
 	void openSession(QAction *action);
-	void selectCharacterEncoding(QAction *action);
 	void selectOption(QAction *action);
 	void selectStyleSheet(QAction *action);
-	void selectUserAgent(QAction *action);
 	void selectWindow(QAction *action);
 	void updateClosedWindowsMenu();
 	void setToolBarVisibility(bool visible);

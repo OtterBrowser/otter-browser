@@ -75,8 +75,10 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 
 			break;
 		case CharacterEncodingMenuRole:
+			m_option = SettingsManager::Content_DefaultCharacterEncodingOption;
+
 			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateCharacterEncodingMenu()));
-			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectCharacterEncoding(QAction*)));
+			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectOption(QAction*)));
 
 			break;
 		case ClosedWindowsMenu:
@@ -144,8 +146,10 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 
 			break;
 		case UserAgentMenuRole:
+			m_option = SettingsManager::Network_UserAgentOption;
+
 			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateUserAgentMenu()));
-			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectUserAgent(QAction*)));
+			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectOption(QAction*)));
 
 			break;
 		case WindowsMenuRole:
@@ -627,7 +631,7 @@ void Menu::populateCharacterEncodingMenu()
 		m_actionGroup->setExclusive(true);
 
 		Action *defaultAction(addAction());
-		defaultAction->setData(-1);
+		defaultAction->setData(QLatin1String("auto"));
 		defaultAction->setCheckable(true);
 		defaultAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Auto Detect"));
 
@@ -645,7 +649,7 @@ void Menu::populateCharacterEncodingMenu()
 			}
 
 			QAction *textCodecAction(QMenu::addAction(Utils::elideText(codec->name(), this)));
-			textCodecAction->setData(textCodecs.at(i));
+			textCodecAction->setData(codec->name().toLower());
 			textCodecAction->setCheckable(true);
 
 			m_actionGroup->addAction(textCodecAction);
@@ -1078,30 +1082,6 @@ void Menu::openSession(QAction *action)
 	}
 }
 
-void Menu::selectCharacterEncoding(QAction *action)
-{
-	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-
-	if (!mainWindow)
-	{
-		return;
-	}
-
-	QString encoding(QLatin1String("auto"));
-
-	if (action && action->data().toInt() > 0)
-	{
-		QTextCodec *codec(QTextCodec::codecForMib(action->data().toInt()));
-
-		if (codec)
-		{
-			encoding = codec->name();
-		}
-	}
-
-	mainWindow->getWindowsManager()->setOption(SettingsManager::Content_DefaultCharacterEncodingOption, encoding.toLower());
-}
-
 void Menu::selectOption(QAction *action)
 {
 	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
@@ -1126,16 +1106,6 @@ void Menu::selectStyleSheet(QAction *action)
 	if (window && action)
 	{
 		window->getContentsWidget()->setActiveStyleSheet(action->data().isNull() ? action->text() : QString());
-	}
-}
-
-void Menu::selectUserAgent(QAction *action)
-{
-	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
-
-	if (action && mainWindow)
-	{
-		mainWindow->getWindowsManager()->setOption(SettingsManager::Network_UserAgentOption, action->data().toString());
 	}
 }
 
