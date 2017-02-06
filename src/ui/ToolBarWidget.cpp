@@ -171,17 +171,20 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 	{
 		if (identifier == ToolBarsManager::TabBar)
 		{
+			m_isInitialized = true;
+
 			setContentsMargins(0, 0, 0, 0);
 
 			layout()->setMargin(0);
 
+			reload();
+
 			connect(ThemesManager::getInstance(), SIGNAL(widgetStyleChanged()), this, SLOT(resetGeometry()));
+			connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
 		}
 
 		setToolBarLocked(ToolBarsManager::areToolBarsLocked());
-		reload();
 
-		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
 		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarRemoved(int)), this, SLOT(toolBarRemoved(int)));
 		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarsLockedChanged(bool)), this, SLOT(setToolBarLocked(bool)));
 	}
@@ -278,6 +281,20 @@ void ToolBarWidget::paintEvent(QPaintEvent *event)
 	}
 
 	style()->drawPrimitive(QStyle::PE_FrameTabBarBase, &tabBarBaseOption, &painter, this);
+}
+
+void ToolBarWidget::showEvent(QShowEvent *event)
+{
+	if (!m_isInitialized)
+	{
+		m_isInitialized = true;
+
+		reload();
+
+		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
+	}
+
+	QToolBar::showEvent(event);
 }
 
 void ToolBarWidget::resizeEvent(QResizeEvent *event)
