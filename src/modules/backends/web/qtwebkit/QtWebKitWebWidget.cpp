@@ -1351,7 +1351,18 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 			return;
 		case ActionsManager::FastForwardAction:
-			m_webView->page()->history()->goToItem(m_webView->page()->history()->itemAt(m_webView->page()->history()->count() - 1));
+			{
+				const QUrl url(m_webView->page()->mainFrame()->evaluateJavaScript(getFastForwardScript(true)).toUrl());
+
+				if (url.isValid())
+				{
+					setUrl(url);
+				}
+				else if (canGoForward())
+				{
+					m_webView->page()->triggerAction(QWebPage::Forward);
+				}
+			}
 
 			return;
 		case ActionsManager::StopAction:
@@ -2604,6 +2615,16 @@ bool QtWebKitWebWidget::canGoBack() const
 bool QtWebKitWebWidget::canGoForward() const
 {
 	return m_webView->history()->canGoForward();
+}
+
+bool QtWebKitWebWidget::canFastForward() const
+{
+	if (canGoForward())
+	{
+		return true;
+	}
+
+	return m_webView->page()->mainFrame()->evaluateJavaScript(getFastForwardScript(false)).toBool();
 }
 
 bool QtWebKitWebWidget::canShowContextMenu(const QPoint &position) const

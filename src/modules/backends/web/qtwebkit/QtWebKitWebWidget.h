@@ -139,6 +139,7 @@ protected:
 	bool canLoadPlugins() const;
 	bool canGoBack() const;
 	bool canGoForward() const;
+	bool canFastForward() const;
 	bool canShowContextMenu(const QPoint &position) const;
 	bool canViewSource() const;
 	bool isInspecting() const;
