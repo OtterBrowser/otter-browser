@@ -365,6 +365,18 @@ void Menu::load(int option)
 
 	switch (option)
 	{
+		case SettingsManager::Network_CookiesKeepModeOption:
+			m_title = QT_TRANSLATE_NOOP("actions", "Keep Cookie Until");
+
+			break;
+		case SettingsManager::Network_CookiesPolicyOption:
+			m_title = QT_TRANSLATE_NOOP("actions", "Accept Cookies");
+
+			break;
+		case SettingsManager::Network_ThirdPartyCookiesPolicyOption:
+			m_title = QT_TRANSLATE_NOOP("actions", "Accept Third-party Cookies");
+
+			break;
 		case SettingsManager::Content_PopupsPolicyOption:
 			m_title = QT_TRANSLATE_NOOP("actions", "Pop-Ups");
 
@@ -442,6 +454,30 @@ void Menu::load(int option)
 		else if (choices.at(i) == QLatin1String("disallow"))
 		{
 			action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Always Deny"));
+		}
+		else if (choices.at(i) == QLatin1String("keepUntilExpires"))
+		{
+			action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Expires"));
+		}
+		else if (choices.at(i) == QLatin1String("keepUntilExit"))
+		{
+			action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Current Sessions is Closed"));
+		}
+		else if (choices.at(i) == QLatin1String("acceptAll"))
+		{
+			action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Always"));
+		}
+		else if (choices.at(i) == QLatin1String("acceptExisting"))
+		{
+			action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Only Existing"));
+		}
+		else if (choices.at(i) == QLatin1String("readOnly"))
+		{
+			action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Only Read Existing"));
+		}
+		else if (choices.at(i) == QLatin1String("ignore"))
+		{
+			action->setOverrideText(QT_TRANSLATE_NOOP("actions", "Ignore"));
 		}
 		else if (choices.at(i) == QLatin1String("openAll"))
 		{
