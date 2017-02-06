@@ -760,7 +760,9 @@ int ToolBarWidget::getMaximumButtonSize() const
 
 bool ToolBarWidget::shouldBeVisible(bool isFullScreen) const
 {
-	return ((isFullScreen ? getDefinition().fullScreenVisibility : getDefinition().normalVisibility) == ToolBarsManager::AlwaysVisibleToolBar);
+	const ToolBarsManager::ToolBarDefinition definition(getDefinition());
+
+	return (definition.hasToggle || ((isFullScreen ? definition.fullScreenVisibility : definition.normalVisibility) == ToolBarsManager::AlwaysVisibleToolBar));
 }
 
 bool ToolBarWidget::event(QEvent *event)
