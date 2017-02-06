@@ -545,16 +545,20 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				menu.addAction(m_webWidget->getAction(ActionsManager::EnableJavaScriptAction));
 				menu.addSeparator();
 
-				QAction *enableCookiesAction(menu.addAction(tr("Enable Cookies")));
-				enableCookiesAction->setCheckable(true);
-				enableCookiesAction->setEnabled(false);
+				Menu *cookiesPolicyMenu(new Menu(Menu::NoMenuRole, &menu));
+				cookiesPolicyMenu->load(SettingsManager::Network_CookiesPolicyOption);
 
+				Menu *thirdPartyCookiesPolicyMenu(new Menu(Menu::NoMenuRole, &menu));
+				thirdPartyCookiesPolicyMenu->load(SettingsManager::Network_ThirdPartyCookiesPolicyOption);
+
+				Menu *keepCookiesModeMenu(new Menu(Menu::NoMenuRole, &menu));
+				keepCookiesModeMenu->load(SettingsManager::Network_CookiesKeepModeOption);
+
+				menu.addMenu(cookiesPolicyMenu);
+				menu.addMenu(thirdPartyCookiesPolicyMenu);
+				menu.addMenu(keepCookiesModeMenu);
+				menu.addMenu(tr("Proxy"))->setEnabled(false);
 				menu.addAction(m_webWidget->getAction(ActionsManager::EnableReferrerAction));
-
-				QAction *enableProxyAction(menu.addAction(tr("Enable Proxy")));
-				enableProxyAction->setCheckable(true);
-				enableProxyAction->setEnabled(false);
-
 				menu.addSeparator();
 				menu.addAction(tr("Reset Options"), m_webWidget, SLOT(clearOptions()))->setEnabled(!m_webWidget->getOptions().isEmpty());
 				menu.addSeparator();
