@@ -3,6 +3,7 @@
 * Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2017 Piktas Zuikis <piktas.zuikis@inbox.lt>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -31,12 +32,15 @@
 #include "../core/HandlersManager.h"
 #include "../core/NotesManager.h"
 #include "../core/SearchEnginesManager.h"
+#include "../core/Settings.h"
 #include "../core/SettingsManager.h"
 #include "../core/ThemesManager.h"
 #include "../core/TransfersManager.h"
 #include "../core/Utils.h"
 
 #include <QtCore/QDir>
+#include <QtCore/QJsonArray>
+#include <QtCore/QJsonDocument>
 #include <QtCore/QMimeData>
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QTimer>
@@ -50,6 +54,8 @@
 
 namespace Otter
 {
+
+QString WebWidget::m_fastForwardScript;
 
 WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : QWidget(parent),
 	m_backend(backend),
@@ -640,7 +646,7 @@ void WebWidget::updateNavigationActions()
 
 	if (m_actions.contains(ActionsManager::FastForwardAction))
 	{
-		m_actions[ActionsManager::FastForwardAction]->setEnabled(canGoForward());
+		m_actions[ActionsManager::FastForwardAction]->setEnabled(canFastForward());
 	}
 
 	if (m_actions.contains(ActionsManager::StopAction))
@@ -1484,6 +1490,51 @@ QString WebWidget::suggestSaveFileName(SaveFormat format) const
 	return fileName;
 }
 
+QString WebWidget::getFastForwardScript(bool isSelectingTheBestLink)
+{
+	if (m_fastForwardScript.isEmpty())
+	{
+		Settings settings(SessionsManager::getReadableDataPath(QLatin1String("fastforward.ini")));
+		QFile file(SessionsManager::getReadableDataPath(QLatin1String("fastforward.js")));
+
+		if (!file.open(QIODevice::ReadOnly))
+		{
+			return QString();
+		}
+
+		QString script(file.readAll());
+
+		file.close();
+
+		const QStringList categories({QLatin1String("Href"), QLatin1String("Class"), QLatin1String("Id"), QLatin1String("Text")});
+
+		for (int i = 0; i < categories.count(); ++i)
+		{
+			settings.beginGroup(categories.at(i));
+
+			const QStringList keys(settings.getKeys());
+			QJsonArray tokensArray;
+
+			for (int j = 0; j < keys.length(); ++j)
+			{
+				QJsonObject tokenObject;
+				tokenObject.insert(QLatin1Literal("value"), keys.at(j).toUpper());
+				tokenObject.insert(QLatin1Literal("score"), settings.getValue(keys.at(j)).toInt());
+
+				tokensArray.append(tokenObject);
+			}
+
+			settings.endGroup();
+
+			script.replace(QStringLiteral("{%1Tokens}").arg(categories.at(i).toLower()), QString::fromUtf8(QJsonDocument(tokensArray).toJson(QJsonDocument::Compact)));
+		}
+
+		m_fastForwardScript = script;
+	}
+
+	return QString(m_fastForwardScript).replace(QLatin1String("{isSelectingTheBestLink}"), QLatin1String(isSelectingTheBestLink ? "true" : "false"));
+}
+
 QString WebWidget::getActiveStyleSheet() const
 {
 	return QString();
@@ -1731,6 +1782,11 @@ bool WebWidget::canGoBack() const
 }
 
 bool WebWidget::canGoForward() const
+{
+	return false;
+}
+
+bool WebWidget::canFastForward() const
 {
 	return false;
 }
