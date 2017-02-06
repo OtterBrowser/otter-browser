@@ -66,6 +66,7 @@ protected:
 
 protected slots:
 	void populateModelMenu();
+	void populateOptionMenu();
 	void populateCharacterEncodingMenu();
 	void populateClosedWindowsMenu();
 	void populateSessionsMenu();
