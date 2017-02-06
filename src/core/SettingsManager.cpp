@@ -169,7 +169,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Paths_SaveFileOption, QStandardPaths::writableLocation(QStandardPaths::DownloadLocation), PathType);
 	registerOption(Permissions_EnableFullScreenOption, QLatin1String("ask"), EnumerationType, QStringList({QLatin1String("ask"), QLatin1String("allow"), QLatin1String("disallow")}));
 	registerOption(Permissions_EnableGeolocationOption, QLatin1String("ask"), EnumerationType, QStringList({QLatin1String("ask"), QLatin1String("allow"), QLatin1String("disallow")}));
-	registerOption(Permissions_EnableImagesOption, QLatin1String("enable"), EnumerationType, QStringList({QLatin1String("enable"), QLatin1String("onlyCached"), QLatin1String("disabled")}));
+	registerOption(Permissions_EnableImagesOption, QLatin1String("enabled"), EnumerationType, QStringList({QLatin1String("enabled"), QLatin1String("onlyCached"), QLatin1String("disabled")}));
 	registerOption(Permissions_EnableJavaScriptOption, true, BooleanType);
 	registerOption(Permissions_EnableLocalStorageOption, true, BooleanType);
 	registerOption(Permissions_EnableMediaCaptureAudioOption, QLatin1String("ask"), EnumerationType, QStringList({QLatin1String("ask"), QLatin1String("allow"), QLatin1String("disallow")}));
