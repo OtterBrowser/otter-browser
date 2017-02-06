@@ -37,6 +37,7 @@
 #include "../../../ui/CertificateDialog.h"
 #include "../../../ui/ContentsDialog.h"
 #include "../../../ui/MainWindow.h"
+#include "../../../ui/Menu.h"
 #include "../../../ui/SourceViewerWebWidget.h"
 #include "../../../ui/WebsiteInformationDialog.h"
 #include "../../../ui/Window.h"
@@ -529,119 +530,18 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				m_isTabPreferencesMenuVisible = true;
 
 				QMenu menu;
-				QMenu *popupsPolicyMenu(menu.addMenu(tr("Pop-Ups")));
-				QAction *openAllPopupsAction(popupsPolicyMenu->addAction(tr("Open All")));
-				openAllPopupsAction->setCheckable(true);
-				openAllPopupsAction->setData(QVariantList({QLatin1String("Content/PopupsPolicy"), QLatin1String("openAll")}));
+				Menu *popupsPolicyMenu(new Menu(Menu::NoMenuRole, &menu));
+				popupsPolicyMenu->load(SettingsManager::Content_PopupsPolicyOption);
 
-				QAction *openAllPopupsInBackgroundAction(popupsPolicyMenu->addAction(tr("Open in Background")));
-				openAllPopupsInBackgroundAction->setCheckable(true);
-				openAllPopupsInBackgroundAction->setData(QVariantList({QLatin1String("Content/PopupsPolicy"), QLatin1String("openAllInBackground")}));
+				Menu *enableImagesMenu(new Menu(Menu::NoMenuRole, &menu));
+				enableImagesMenu->load(SettingsManager::Permissions_EnableImagesOption);
 
-				QAction *blockAllPopupsAction(popupsPolicyMenu->addAction(tr("Block All")));
-				blockAllPopupsAction->setCheckable(true);
-				blockAllPopupsAction->setData(QVariantList({QLatin1String("Content/PopupsPolicy"), QLatin1String("blockAll")}));
+				Menu *enablePluginsMenu(new Menu(Menu::NoMenuRole, &menu));
+				enablePluginsMenu->load(SettingsManager::Permissions_EnablePluginsOption);
 
-				QAction *popupsAskAction(popupsPolicyMenu->addAction(tr("Ask What to Do")));
-				popupsAskAction->setCheckable(true);
-				popupsAskAction->setData(QVariantList({QLatin1String("Content/PopupsPolicy"), QLatin1String("ask")}));
-
-				QActionGroup popupsPolicyGroup(this);
-				popupsPolicyGroup.setExclusive(true);
-				popupsPolicyGroup.addAction(openAllPopupsAction);
-				popupsPolicyGroup.addAction(openAllPopupsInBackgroundAction);
-				popupsPolicyGroup.addAction(blockAllPopupsAction);
-				popupsPolicyGroup.addAction(popupsAskAction);
-
-				const QString popupsPolicy(m_webWidget->getOption(SettingsManager::Content_PopupsPolicyOption).toString());
-
-				for (int i = 0; i < popupsPolicyGroup.actions().count(); ++i)
-				{
-					if (popupsPolicy == popupsPolicyGroup.actions().at(i)->data().toList().value(1).toString())
-					{
-						popupsPolicyGroup.actions().at(i)->setChecked(true);
-
-						break;
-					}
-				}
-
-				if (!popupsPolicyGroup.checkedAction())
-				{
-					popupsAskAction->setChecked(true);
-				}
-
-				QMenu *enableImagesMenu(menu.addMenu(tr("Images")));
-				QAction *showAllImagesAction(enableImagesMenu->addAction(tr("All Images")));
-				showAllImagesAction->setCheckable(true);
-				showAllImagesAction->setData(QVariantList({QLatin1String("Permissions/EnableImages"), QLatin1String("enabled")}));
-
-				QAction *showCachedImagesAction(enableImagesMenu->addAction(tr("Cached Images")));
-				showCachedImagesAction->setCheckable(true);
-				showCachedImagesAction->setData(QVariantList({QLatin1String("Permissions/EnableImages"), QLatin1String("onlyCached")}));
-
-				QAction *noImagesAction(enableImagesMenu->addAction(tr("No Images")));
-				noImagesAction->setCheckable(true);
-				noImagesAction->setData(QVariantList({QLatin1String("Permissions/EnableImages"), QLatin1String("disabled")}));
-
-				QActionGroup enableImagesGroup(this);
-				enableImagesGroup.setExclusive(true);
-				enableImagesGroup.addAction(showAllImagesAction);
-				enableImagesGroup.addAction(showCachedImagesAction);
-				enableImagesGroup.addAction(noImagesAction);
-
-				const QString enableImagesPolicy(m_webWidget->getOption(SettingsManager::Permissions_EnableImagesOption).toString());
-
-				for (int i = 0; i < enableImagesGroup.actions().count(); ++i)
-				{
-					if (enableImagesPolicy == enableImagesGroup.actions().at(i)->data().toList().value(1).toString())
-					{
-						enableImagesGroup.actions().at(i)->setChecked(true);
-
-						break;
-					}
-				}
-
-				if (!enableImagesGroup.checkedAction())
-				{
-					showAllImagesAction->setChecked(true);
-				}
-
-				QMenu *enablePluginsMenu(menu.addMenu(tr("Plugins")));
-				QAction *enablePluginsAction(enablePluginsMenu->addAction(tr("Enabled")));
-				enablePluginsAction->setCheckable(true);
-				enablePluginsAction->setData(QVariantList({QLatin1String("Permissions/EnablePlugins"), QLatin1String("enabled")}));
-
-				QAction *onDemandPluginsAction(enablePluginsMenu->addAction(tr("On Demand")));
-				onDemandPluginsAction->setCheckable(true);
-				onDemandPluginsAction->setData(QVariantList({QLatin1String("Permissions/EnablePlugins"), QLatin1String("onDemand")}));
-
-				QAction *disablePluginsAction(enablePluginsMenu->addAction(tr("Disabled")));
-				disablePluginsAction->setCheckable(true);
-				disablePluginsAction->setData(QVariantList({QLatin1String("Permissions/EnablePlugins"), QLatin1String("disabled")}));
-
-				QActionGroup enablePluginsGroup(this);
-				enablePluginsGroup.setExclusive(true);
-				enablePluginsGroup.addAction(enablePluginsAction);
-				enablePluginsGroup.addAction(onDemandPluginsAction);
-				enablePluginsGroup.addAction(disablePluginsAction);
-
-				const QString enablePluginsPolicy(m_webWidget->getOption(SettingsManager::Permissions_EnablePluginsOption).toString());
-
-				for (int i = 0; i < enablePluginsGroup.actions().count(); ++i)
-				{
-					if (enablePluginsPolicy == enablePluginsGroup.actions().at(i)->data().toList().value(1).toString())
-					{
-						enablePluginsGroup.actions().at(i)->setChecked(true);
-
-						break;
-					}
-				}
-
-				if (!enablePluginsGroup.checkedAction())
-				{
-					onDemandPluginsAction->setChecked(true);
-				}
-
+				menu.addMenu(popupsPolicyMenu);
+				menu.addMenu(enableImagesMenu);
+				menu.addMenu(enablePluginsMenu);
 				menu.addAction(m_webWidget->getAction(ActionsManager::EnableJavaScriptAction));
 				menu.addSeparator();
 
@@ -659,22 +559,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				menu.addAction(tr("Reset Options"), m_webWidget, SLOT(clearOptions()))->setEnabled(!m_webWidget->getOptions().isEmpty());
 				menu.addSeparator();
 				menu.addAction(m_webWidget->getAction(ActionsManager::WebsitePreferencesAction));
-
-				QAction *triggeredAction(menu.exec(QCursor::pos()));
-
-				if (triggeredAction && (triggeredAction->data().type() == QVariant::List || triggeredAction->data().type() == QVariant::String))
-				{
-					if (triggeredAction->data().type() == QVariant::List)
-					{
-						QVariantList actionData(triggeredAction->data().toList());
-
-						m_webWidget->setOption(SettingsManager::getOptionIdentifier(actionData.value(0).toString()), actionData.value(1).toString());
-					}
-					else
-					{
-						m_webWidget->setOption(SettingsManager::getOptionIdentifier(triggeredAction->data().toString()), triggeredAction->isChecked());
-					}
-				}
+				menu.exec(QCursor::pos());
 
 				m_isTabPreferencesMenuVisible = false;
 			}
