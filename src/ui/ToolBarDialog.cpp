@@ -83,6 +83,11 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 		m_ui->entriesEditorWidget->hide();
 	}
 
+	if (definition.identifier == ToolBarsManager::MenuBar || definition.identifier == ToolBarsManager::ProgressBar || definition.identifier == ToolBarsManager::StatusBar)
+	{
+		m_ui->hasToggleCheckBox->hide();
+	}
+
 	QStandardItemModel *availableEntriesModel(new QStandardItemModel(this));
 	availableEntriesModel->appendRow(createEntry(QLatin1String("separator")));
 	availableEntriesModel->appendRow(createEntry(QLatin1String("spacer")));
