@@ -95,9 +95,19 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 			definitionObject.insert(QLatin1String("identifier"), QJsonValue(identifier));
 			definitionObject.insert(QLatin1String("title"), QJsonValue(m_definitions[i].title));
 
-			if (!m_definitions[i].bookmarksPath.isEmpty())
+			switch (m_definitions[i].type)
 			{
-				definitionObject.insert(QLatin1String("bookmarksPath"), QJsonValue(m_definitions[i].bookmarksPath));
+				case BookmarksBarType:
+					definitionObject.insert(QLatin1String("bookmarksPath"), QJsonValue(m_definitions[i].bookmarksPath));
+
+					break;
+				case SideBarType:
+					definitionObject.insert(QLatin1String("currentPanel"), QJsonValue(m_definitions[i].currentPanel));
+					definitionObject.insert(QLatin1String("panels"), QJsonArray::fromStringList(m_definitions[i].panels));
+
+					break;
+				default:
+					break;
 			}
 
 			definitionObject.insert(QLatin1String("normalVisibility"), QJsonValue(visibilityModes.value(m_definitions[i].normalVisibility)));
@@ -505,6 +515,9 @@ QHash<QString, ToolBarsManager::ToolBarDefinition> ToolBarsManager::loadToolBars
 		ToolBarDefinition toolBar;
 		toolBar.title = toolBarObject.value(QLatin1String("title")).toString();
 		toolBar.bookmarksPath = toolBarObject.value(QLatin1String("bookmarksPath")).toString();
+		toolBar.currentPanel = toolBarObject.value(QLatin1String("currentPanel")).toString();
+		toolBar.panels = toolBarObject.value(QLatin1String("panels")).toVariant().toStringList();
+		toolBar.type = (toolBarObject.contains(QLatin1String("bookmarksPath")) ? BookmarksBarType : (toolBarObject.contains(QLatin1String("currentPanel")) ? SideBarType : ActionsBarType));
 		toolBar.normalVisibility = visibilityModes.value(toolBarObject.value(QLatin1String("normalVisibility")).toString(), AlwaysVisibleToolBar);
 		toolBar.fullScreenVisibility = visibilityModes.value(toolBarObject.value(QLatin1String("fullScreenVisibility")).toString(), AlwaysHiddenToolBar);
 		toolBar.iconSize = toolBarObject.value(QLatin1String("iconSize")).toInt();

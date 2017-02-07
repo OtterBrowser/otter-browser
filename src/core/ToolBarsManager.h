@@ -44,12 +44,19 @@ public:
 		OtherToolBar
 	};
 
+	enum ToolBarType
+	{
+		ActionsBarType = 0,
+		BookmarksBarType,
+		SideBarType
+	};
+
 	enum ToolBarVisibility
 	{
 		AlwaysVisibleToolBar = 0,
-		OnHoverVisibleToolBar = 1,
-		AutoVisibilityToolBar = 2,
-		AlwaysHiddenToolBar = 3
+		OnHoverVisibleToolBar,
+		AutoVisibilityToolBar,
+		AlwaysHiddenToolBar
 	};
 
 	struct ToolBarDefinition
@@ -59,6 +66,7 @@ public:
 		QString currentPanel;
 		QStringList panels;
 		QList<ActionsManager::ActionEntryDefinition> entries;
+		ToolBarType type = ActionsBarType;
 		ToolBarVisibility normalVisibility = AlwaysVisibleToolBar;
 		ToolBarVisibility fullScreenVisibility = AlwaysHiddenToolBar;
 		Qt::ToolBarArea location = Qt::NoToolBarArea;
