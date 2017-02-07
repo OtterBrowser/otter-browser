@@ -200,13 +200,27 @@ void ToolBarWidget::changeEvent(QEvent *event)
 {
 	QToolBar::changeEvent(event);
 
-	if (event->type() == QEvent::StyleChange)
+	switch (event->type())
 	{
-		const int iconSize(getIconSize());
+		case QEvent::LanguageChange:
+			if (m_toggleButton)
+			{
+				m_toggleButton->setToolTip(tr("Toggle Visibility"));
+			}
 
-		setIconSize(QSize(iconSize, iconSize));
+			break;
+		case QEvent::StyleChange:
+			{
+				const int iconSize(getIconSize());
 
-		emit iconSizeChanged(iconSize);
+				setIconSize(QSize(iconSize, iconSize));
+
+				emit iconSizeChanged(iconSize);
+			}
+
+			break;
+		default:
+			break;
 	}
 }
 
@@ -307,6 +321,34 @@ void ToolBarWidget::resizeEvent(QResizeEvent *event)
 	if (tabBar)
 	{
 		QTimer::singleShot(200, tabBar, SLOT(updateSize()));
+	}
+
+	if (m_toggleButton && m_toggleButton->isVisible())
+	{
+		updateToggleGeometry();
+	}
+}
+
+void ToolBarWidget::enterEvent(QEvent *event)
+{
+	QToolBar::enterEvent(event);
+
+	if (m_toggleButton && !m_isCollapsed)
+	{
+		updateToggleGeometry();
+
+		m_toggleButton->show();
+		m_toggleButton->raise();
+	}
+}
+
+void ToolBarWidget::leaveEvent(QEvent *event)
+{
+	QToolBar::leaveEvent(event);
+
+	if (m_toggleButton && !m_isCollapsed)
+	{
+		m_toggleButton->hide();
 	}
 }
 
@@ -569,6 +611,46 @@ void ToolBarWidget::notifyWindowChanged(quint64 identifier)
 	emit windowChanged(m_window);
 }
 
+void ToolBarWidget::updateToggleGeometry()
+{
+	if (!m_toggleButton)
+	{
+		return;
+	}
+
+	const bool isHorizontal(orientation() == Qt::Horizontal);
+
+	m_toggleButton->setParent(this);
+	m_toggleButton->setMaximumSize((isHorizontal ? QWIDGETSIZE_MAX : 6), (isHorizontal ? 6 : QWIDGETSIZE_MAX));
+
+	if (m_isCollapsed)
+	{
+		return;
+	}
+
+	m_toggleButton->resize((isHorizontal ? width() : 6), (isHorizontal ? 6 : height()));
+
+	switch (getArea())
+	{
+		case Qt::BottomToolBarArea:
+			m_toggleButton->move(0, 0);
+
+			break;
+		case Qt::LeftToolBarArea:
+			m_toggleButton->move((width() - 6), 0);
+
+			break;
+		case Qt::RightToolBarArea:
+			m_toggleButton->move(6, 0);
+
+			break;
+		default:
+			m_toggleButton->move(0, (height() - 6));
+
+			break;
+	}
+}
+
 void ToolBarWidget::updateVisibility()
 {
 	if (m_identifier == ToolBarsManager::TabBar && ToolBarsManager::getToolBarDefinition(ToolBarsManager::TabBar).normalVisibility == ToolBarsManager::AutoVisibilityToolBar && m_mainWindow->getTabBar())
@@ -614,22 +696,22 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 		if (!m_toggleButton)
 		{
 			m_toggleButton = new QPushButton(this);
+			m_toggleButton->setToolTip(tr("Toggle Visibility"));
 			m_toggleButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 			connect(m_toggleButton, SIGNAL(clicked(bool)), this, SLOT(toggleVisibility()));
 		}
 
+		updateToggleGeometry();
+
 		if (m_isCollapsed)
 		{
 			m_toggleButton->show();
-			m_toggleButton->setMaximumSize((isHorizontal ? QWIDGETSIZE_MAX : 6), (isHorizontal ? 6 : QWIDGETSIZE_MAX));
 
 			addWidget(m_toggleButton);
 
 			return;
 		}
-
-		m_toggleButton->hide();
 	}
 
 	const int iconSize(getIconSize());
