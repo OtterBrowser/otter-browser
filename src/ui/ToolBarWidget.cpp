@@ -183,6 +183,24 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 			connect(ThemesManager::getInstance(), SIGNAL(widgetStyleChanged()), this, SLOT(resetGeometry()));
 			connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
 		}
+		else
+		{
+			const ToolBarsManager::ToolBarDefinition definition(getDefinition());
+
+			for (int i = 0; i < definition.entries.count(); ++i)
+			{
+				if (definition.entries.at(i).action == QLatin1String("AddressWidget") || definition.entries.at(i).action == QLatin1String("SearchWidget"))
+				{
+					m_isInitialized = true;
+
+					reload();
+
+					connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
+
+					break;
+				}
+			}
+		}
 
 		setToolBarLocked(ToolBarsManager::areToolBarsLocked());
 
