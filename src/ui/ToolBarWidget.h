@@ -101,6 +101,7 @@ protected slots:
 	void bookmarkRemoved(BookmarksItem *bookmark);
 	void bookmarkTrashed(BookmarksItem *bookmark);
 	void loadBookmarks();
+	void toggleVisibility();
 	void notifyWindowChanged(quint64 identifier);
 	void updateVisibility();
 	void setToolBarLocked(bool locked);
@@ -112,6 +113,7 @@ private:
 	QPushButton *m_toggleButton;
 	QPoint m_dragStartPosition;
 	int m_identifier;
+	bool m_isCollapsed;
 	bool m_isInitialized;
 
 signals:

@@ -161,7 +161,8 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 	m_bookmark(nullptr),
 	m_toggleButton(nullptr),
 	m_identifier(identifier),
-	m_isInitialized(false)
+	m_isInitialized(false),
+	m_isCollapsed(false)
 {
 	setAcceptDrops(true);
 	setAllowedAreas(Qt::NoToolBarArea);
@@ -542,6 +543,25 @@ void ToolBarWidget::loadBookmarks()
 	}
 }
 
+void ToolBarWidget::toggleVisibility()
+{
+	const bool isFullScreen(m_mainWindow ? m_mainWindow->windowState().testFlag(Qt::WindowFullScreen) : false);
+	ToolBarsManager::ToolBarDefinition definition(getDefinition());
+	ToolBarsManager::ToolBarVisibility visibility(isFullScreen ? definition.fullScreenVisibility : definition.normalVisibility);
+	visibility = ((visibility == ToolBarsManager::AlwaysVisibleToolBar) ? ToolBarsManager::AlwaysHiddenToolBar : ToolBarsManager::AlwaysVisibleToolBar);
+
+	if (isFullScreen)
+	{
+		definition.fullScreenVisibility = visibility;
+	}
+	else
+	{
+		definition.normalVisibility = visibility;
+	}
+
+	ToolBarsManager::setToolBar(definition);
+}
+
 void ToolBarWidget::notifyWindowChanged(quint64 identifier)
 {
 	m_window = m_mainWindow->getWindowsManager()->getWindowByIdentifier(identifier);
@@ -560,15 +580,23 @@ void ToolBarWidget::updateVisibility()
 void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &definition)
 {
 	QWidget *tabBar((m_identifier == ToolBarsManager::TabBar && m_mainWindow) ? m_mainWindow->getTabBar() : nullptr);
+	const bool isFullScreen(m_mainWindow ? m_mainWindow->windowState().testFlag(Qt::WindowFullScreen) : false);
+	const bool isHorizontal(definition.location != Qt::LeftToolBarArea && definition.location != Qt::RightToolBarArea);
 
-	setVisible(definition.normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
-	setOrientation((definition.location == Qt::LeftToolBarArea || definition.location == Qt::RightToolBarArea) ? Qt::Vertical : Qt::Horizontal);
+	m_isCollapsed = (definition.hasToggle && ((isFullScreen ? definition.fullScreenVisibility : definition.normalVisibility) != ToolBarsManager::AlwaysVisibleToolBar));
+
+	setVisible(definition.hasToggle || shouldBeVisible(isFullScreen));
+	setOrientation(isHorizontal ? Qt::Horizontal : Qt::Vertical);
 
 	if (m_identifier == ToolBarsManager::TabBar)
 	{
 		for (int i = (actions().count() - 1); i >= 0; --i)
 		{
-			if (widgetForAction(actions().at(i)) != tabBar)
+			if (widgetForAction(actions().at(i)) == tabBar)
+			{
+				tabBar->setVisible(!m_isCollapsed);
+			}
+			else
 			{
 				removeAction(actions().at(i));
 			}
@@ -579,6 +607,29 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 	else
 	{
 		clear();
+	}
+
+	if (definition.hasToggle)
+	{
+		if (!m_toggleButton)
+		{
+			m_toggleButton = new QPushButton(this);
+			m_toggleButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+			connect(m_toggleButton, SIGNAL(clicked(bool)), this, SLOT(toggleVisibility()));
+		}
+
+		if (m_isCollapsed)
+		{
+			m_toggleButton->show();
+			m_toggleButton->setMaximumSize((isHorizontal ? QWIDGETSIZE_MAX : 6), (isHorizontal ? 6 : QWIDGETSIZE_MAX));
+
+			addWidget(m_toggleButton);
+
+			return;
+		}
+
+		m_toggleButton->hide();
 	}
 
 	const int iconSize(getIconSize());
@@ -603,8 +654,6 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 
 		return;
 	}
-
-	const bool isHorizontal(orientation() == Qt::Horizontal);
 
 	for (int i = 0; i < definition.entries.count(); ++i)
 	{
