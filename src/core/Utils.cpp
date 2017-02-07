@@ -28,12 +28,14 @@
 #include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
+#include <QtCore/QMimeData>
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QRegularExpression>
 #include <QtCore/QTextStream>
 #include <QtCore/QTime>
 #include <QtCore/QtMath>
 #include <QtGui/QDesktopServices>
+#include <QtGui/QDrag>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDesktopWidget>
 #include <QtWidgets/QFileDialog>
@@ -62,6 +64,34 @@ void runApplication(const QString &command, const QUrl &url)
 	{
 		QDesktopServices::openUrl(QUrl(url));
 	}
+}
+
+void startLinkDrag(const QUrl &url, const QString &title, const QPixmap &pixmap, QObject *parent)
+{
+	PlatformIntegration *integration(Application::getPlatformIntegration());
+
+	if (integration)
+	{
+		integration->startLinkDrag(url, title, pixmap, parent);
+
+		return;
+	}
+
+	QDrag *drag(new QDrag(parent));
+	QMimeData *mimeData(new QMimeData());
+	mimeData->setText(url.toString());
+	mimeData->setUrls({url});
+
+	if (!title.isEmpty())
+	{
+		mimeData->setProperty("x-url-title", title);
+	}
+
+	mimeData->setProperty("x-url-string", url.toString());
+
+	drag->setMimeData(mimeData);
+	drag->setPixmap(pixmap);
+	drag->exec(Qt::CopyAction);
 }
 
 QString matchUrl(const QUrl &url, const QString &prefix)

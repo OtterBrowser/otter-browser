@@ -23,7 +23,6 @@
 
 #include "../../../core/PlatformIntegration.h"
 
-#include <QtCore/QObject>
 #include <QtCore/QProcessEnvironment>
 #include <QtCore/QSettings>
 #include <QtWinExtras/QtWin>
@@ -93,22 +92,23 @@ class WindowsPlatformIntegration : public PlatformIntegration
 public:
 	explicit WindowsPlatformIntegration(Application *parent);
 
-	void runApplication(const QString &command, const QUrl &url = QUrl()) const;
-	Style *createStyle(const QString &name) const;
-	QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType);
-	QString getPlatform() const;
-	bool canShowNotifications() const;
-	bool canSetAsDefaultBrowser() const;
-	bool isDefaultBrowser() const;
+	void runApplication(const QString &command, const QUrl &url = QUrl()) const override;
+	void startLinkDrag(const QUrl &url, const QString &title, const QPixmap &pixmap, QObject *parent = nullptr) const override;
+	Style* createStyle(const QString &name) const override;
+	QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType) override;
+	QString getPlatform() const override;
+	bool canShowNotifications() const override;
+	bool canSetAsDefaultBrowser() const override;
+	bool isDefaultBrowser() const override;
 
 public slots:
-	void showNotification(Notification *notification);
-	bool setAsDefaultBrowser();
+	void showNotification(Notification *notification) override;
+	bool setAsDefaultBrowser() override;
 
 protected:
 	void timerEvent(QTimerEvent *event);
 	void getApplicationInformation(ApplicationInformation &information);
-	QString getUpdaterBinary() const;
+	QString getUpdaterBinary() const override;
 	bool registerToSystem();
 	bool isBrowserRegistered() const;
 

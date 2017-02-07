@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -25,7 +25,9 @@
 #include "Utils.h"
 
 #include <QtCore/QDir>
+#include <QtCore/QMimeData>
 #include <QtCore/QProcess>
+#include <QtGui/QDrag>
 #include <QtWidgets/QMessageBox>
 
 namespace Otter
@@ -39,6 +41,25 @@ void PlatformIntegration::runApplication(const QString &command, const QUrl &url
 {
 	Q_UNUSED(command)
 	Q_UNUSED(url)
+}
+
+void PlatformIntegration::startLinkDrag(const QUrl &url, const QString &title, const QPixmap &pixmap, QObject *parent) const
+{
+	QDrag *drag(new QDrag(parent));
+	QMimeData *mimeData(new QMimeData());
+	mimeData->setText(url.toString());
+	mimeData->setUrls({url});
+
+	if (!title.isEmpty())
+	{
+		mimeData->setProperty("x-url-title", title);
+	}
+
+	mimeData->setProperty("x-url-string", url.toString());
+
+	drag->setMimeData(mimeData);
+	drag->setPixmap(pixmap);
+	drag->exec(Qt::CopyAction);
 }
 
 Style* PlatformIntegration::createStyle(const QString &name) const

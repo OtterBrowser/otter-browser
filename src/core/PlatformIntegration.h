@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2015 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -41,6 +41,7 @@ public:
 	explicit PlatformIntegration(Application *parent);
 
 	virtual void runApplication(const QString &command, const QUrl &url = QUrl()) const;
+	virtual void startLinkDrag(const QUrl &url, const QString &title, const QPixmap &pixmap, QObject *parent = nullptr) const;
 	virtual Style* createStyle(const QString &name) const;
 	virtual QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType);
 	virtual QString getPlatform() const;

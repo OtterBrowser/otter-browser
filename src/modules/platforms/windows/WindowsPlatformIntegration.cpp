@@ -34,8 +34,11 @@
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
+#include <QtCore/QMimeData>
+#include <QtCore/QTemporaryDir>
 #include <QtCore/QtMath>
 #include <QtGui/QDesktopServices>
+#include <QtGui/QDrag>
 #include <QtWidgets/QFileIconProvider>
 #include <QtWinExtras/QWinJumpList>
 #include <QtWinExtras/QWinJumpListCategory>
@@ -231,6 +234,39 @@ void WindowsPlatformIntegration::getApplicationInformation(ApplicationInformatio
 	}
 
 	information.icon = QFileIconProvider().icon(fileInformation);
+}
+
+void WindowsPlatformIntegration::startLinkDrag(const QUrl &url, const QString &title, const QPixmap &pixmap, QObject *parent) const
+{
+	QDrag *drag(new QDrag(parent));
+	QMimeData *mimeData(new QMimeData());
+	mimeData->setText(url.toString());
+
+	QTemporaryDir directory;
+	QFile file(directory.path() + QDir::separator() + (url.host().isEmpty() ? QLatin1String("localhost") : url.host()) + QLatin1String(".url"));
+
+	if (file.open(QIODevice::WriteOnly))
+	{
+		file.write((QLatin1String("[InternetShortcut]\r\nURL=") + url.toString()).toUtf8());
+		file.close();
+
+		mimeData->setUrls({url, QUrl::fromLocalFile(file.fileName())});
+	}
+	else
+	{
+		mimeData->setUrls({url});
+	}
+
+	if (!title.isEmpty())
+	{
+		mimeData->setProperty("x-url-title", title);
+	}
+
+	mimeData->setProperty("x-url-string", url.toString());
+
+	drag->setMimeData(mimeData);
+	drag->setPixmap(pixmap);
+	drag->exec(Qt::MoveAction);
 }
 
 Style* WindowsPlatformIntegration::createStyle(const QString &name) const

@@ -36,16 +36,9 @@
 #include "../../../core/Utils.h"
 
 #include <QtCore/QMetaEnum>
-#include <QtCore/QMimeData>
-#if defined(Q_OS_WIN32)
-#include <QtCore/QTemporaryDir>
-#endif
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
-#include <QtGui/QDrag>
 #include <QtGui/QPainter>
-#include <QtWidgets/QAbstractItemView>
-#include <QtWidgets/QApplication>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QStyleOptionFrame>
 #include <QtWidgets/QToolTip>
@@ -1274,44 +1267,14 @@ bool AddressWidget::startDrag(QMouseEvent *event)
 {
 	const QUrl url(getUrl());
 
-	if (!event->buttons().testFlag(Qt::LeftButton) || m_dragStartPosition.isNull() || (event->pos() - m_dragStartPosition).manhattanLength() < QApplication::startDragDistance())
+	if (event->buttons().testFlag(Qt::LeftButton) && !m_dragStartPosition.isNull() && (event->pos() - m_dragStartPosition).manhattanLength() >= QApplication::startDragDistance() && url.isValid())
 	{
-		return false;
+		Utils::startLinkDrag(url, (m_window ? m_window->getTitle() : QString()), ((m_window ? m_window->getIcon() : ThemesManager::getIcon(QLatin1String("tab"))).pixmap(16, 16)), this);
+
+		return true;
 	}
 
-	QDrag *drag(new QDrag(this));
-	QMimeData *mimeData(new QMimeData());
-	mimeData->setText(url.toString());
-
-#if defined(Q_OS_WIN32)
-	QTemporaryDir directory;
-	QFile file(directory.path() + QDir::separator() + (url.host().isEmpty() ? QLatin1String("localhost") : url.host()) + QLatin1String(".url"));
-
-	if (file.open(QIODevice::WriteOnly))
-	{
-		file.write((QLatin1String("[InternetShortcut]\r\nURL=") + url.toString()).toUtf8());
-		file.close();
-
-		mimeData->setUrls({url, QUrl::fromLocalFile(file.fileName())});
-	}
-	else
-	{
-		mimeData->setUrls({url});
-	}
-#else
-	mimeData->setUrls({url});
-#endif
-
-	if (m_window)
-	{
-		mimeData->setProperty("x-url-title", m_window->getTitle());
-	}
-
-	drag->setMimeData(mimeData);
-	drag->setPixmap((m_window ? m_window->getIcon() : ThemesManager::getIcon(QLatin1String("tab"))).pixmap(16, 16));
-	drag->exec(Qt::CopyAction);
-
-	return true;
+	return false;
 }
 
 bool AddressWidget::event(QEvent *event)

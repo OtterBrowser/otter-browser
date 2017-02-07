@@ -48,6 +48,7 @@ namespace Utils
 {
 
 void runApplication(const QString &command, const QUrl &url = QUrl());
+void startLinkDrag(const QUrl &url, const QString &title, const QPixmap &pixmap, QObject *parent = nullptr);
 QString matchUrl(const QUrl &url, const QString &prefix);
 QString createIdentifier(const QString &base, const QStringList &exclude, bool toLowerCase = true);
 QString createErrorPage(const QUrl &url, const QString &title, const QString &description);
