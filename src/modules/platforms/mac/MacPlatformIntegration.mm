@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -29,8 +29,10 @@
 
 #include <QtCore/QDateTime>
 #include <QtCore/QFileInfo>
+#include <QtCore/QMimeData>
 #include <QtCore/QSysInfo>
 #include <QtCore/QTemporaryFile>
+#include <QtCore/QXmlStreamWriter>
 #include <QtGui/QDesktopServices>
 #include <QtMacExtras/QtMac>
 
@@ -162,6 +164,15 @@ static MacPlatformIntegrationDockIconView *getSharedDockIconView = nil;
 namespace Otter
 {
 
+MacPlatformLinkDrag::MacPlatformLinkDrag(QObject *parent) : QDrag(parent)
+{
+}
+
+QString MacPlatformLinkDrag::getPath() const
+{
+	return m_directory.path();
+}
+
 MacPlatformIntegration::MacPlatformIntegration(Application *parent) : PlatformIntegration(parent),
 	m_notificationIdentifier(0),
 	m_notificationsWatcherTimer(0)
@@ -259,6 +270,50 @@ void MacPlatformIntegration::runApplication(const QString &command, const QUrl &
 	}
 
 	[[NSWorkspace sharedWorkspace] openFile:url.toLocalFile().toNSString() withApplication:command.toNSString()];
+}
+
+void MacPlatformIntegration::startLinkDrag(const QUrl &url, const QString &title, const QPixmap &pixmap, QObject *parent) const
+{
+	MacPlatformLinkDrag *drag(new MacPlatformLinkDrag(parent));
+	QMimeData *mimeData(new QMimeData());
+	mimeData->setText(url.toString());
+
+	QFile file(drag->getPath() + QDir::separator() + (url.host().isEmpty() ? QLatin1String("localhost") : url.host()) + QLatin1String(".webloc"));
+
+	if (file.open(QIODevice::WriteOnly))
+	{
+		QXmlStreamWriter stream(&file);
+		stream.setAutoFormatting(true);
+		stream.writeStartDocument();
+		stream.writeDTD(QLatin1String("<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">"));
+		stream.writeStartElement(QLatin1String("plist"));
+		stream.writeAttribute(QLatin1String("version"), QLatin1String("1.0"));
+		stream.writeStartElement(QLatin1String("dict"));
+		stream.writeTextElement(QLatin1String("key"), QLatin1String("URL"));
+		stream.writeTextElement(QLatin1String("string"), url.toString());
+		stream.writeEndElement();
+		stream.writeEndElement();
+		stream.writeEndDocument();
+
+		file.close();
+
+		mimeData->setUrls({QUrl::fromLocalFile(file.fileName())});
+	}
+	else
+	{
+		mimeData->setUrls({url});
+	}
+
+	if (!title.isEmpty())
+	{
+		mimeData->setProperty("x-url-title", title);
+	}
+
+	mimeData->setProperty("x-url-string", url.toString());
+
+	drag->setMimeData(mimeData);
+	drag->setPixmap(pixmap);
+	drag->exec(Qt::MoveAction);
 }
 
 void MacPlatformIntegration::updateTransfersProgress()

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -23,10 +23,23 @@
 #include "../../../core/Utils.h"
 #include "../../../core/PlatformIntegration.h"
 
+#include <QtCore/QTemporaryDir>
+#include <QtGui/QDrag>
 #include <QtWidgets/QAction>
 
 namespace Otter
 {
+
+class MacPlatformLinkDrag : public QDrag
+{
+public:
+	explicit MacPlatformLinkDrag(QObject *parent);
+
+	QString getPath() const;
+
+private:
+	QTemporaryDir m_directory;
+};
 
 class MacPlatformIntegration : public PlatformIntegration
 {
@@ -37,10 +50,13 @@ public:
 
 	void markNotificationClicked(quint64 identifier);
 	void runApplication(const QString &command, const QUrl &url = QUrl()) const override;
-	void showNotification(Notification *notification) override;
+	void startLinkDrag(const QUrl &url, const QString &title, const QPixmap &pixmap, QObject *parent = nullptr) const override;
 	Style* createStyle(const QString &name) const override;
 	QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType) override;
 	bool canShowNotifications() const override;
+
+public slots:
+	void showNotification(Notification *notification) override;
 
 protected:
 	void timerEvent(QTimerEvent *event) override;
