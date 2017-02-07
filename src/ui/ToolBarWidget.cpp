@@ -395,7 +395,7 @@ void ToolBarWidget::mouseMoveEvent(QMouseEvent *event)
 
 	m_dragStartPosition = QPoint();
 
-	m_mainWindow->beginToolBarDragging();
+	m_mainWindow->beginToolBarDragging(getDefinition().type == ToolBarsManager::SideBarType);
 
 	QMimeData *mimeData(new QMimeData());
 	mimeData->setProperty("x-toolbar-identifier", m_identifier);
