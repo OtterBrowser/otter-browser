@@ -39,6 +39,7 @@ public:
 		TabBar,
 		NavigationBar,
 		ProgressBar,
+		SideBar,
 		StatusBar,
 		OtherToolBar
 	};
@@ -55,6 +56,8 @@ public:
 	{
 		QString title;
 		QString bookmarksPath;
+		QString currentPanel;
+		QStringList panels;
 		QList<ActionsManager::ActionEntryDefinition> entries;
 		ToolBarVisibility normalVisibility = AlwaysVisibleToolBar;
 		ToolBarVisibility fullScreenVisibility = AlwaysHiddenToolBar;
