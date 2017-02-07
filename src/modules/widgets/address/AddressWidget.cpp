@@ -37,6 +37,9 @@
 
 #include <QtCore/QMetaEnum>
 #include <QtCore/QMimeData>
+#if defined(Q_OS_WIN32)
+#include <QtCore/QTemporaryDir>
+#endif
 #include <QtGui/QClipboard>
 #include <QtGui/QContextMenuEvent>
 #include <QtGui/QDrag>
@@ -1269,6 +1272,8 @@ AddressWidget::EntryIdentifier AddressWidget::getEntry(const QPoint &position) c
 
 bool AddressWidget::startDrag(QMouseEvent *event)
 {
+	const QUrl url(getUrl());
+
 	if (!event->buttons().testFlag(Qt::LeftButton) || m_dragStartPosition.isNull() || (event->pos() - m_dragStartPosition).manhattanLength() < QApplication::startDragDistance())
 	{
 		return false;
@@ -1276,8 +1281,26 @@ bool AddressWidget::startDrag(QMouseEvent *event)
 
 	QDrag *drag(new QDrag(this));
 	QMimeData *mimeData(new QMimeData());
-	mimeData->setText(getUrl().toString());
-	mimeData->setUrls(QList<QUrl>({getUrl()}));
+	mimeData->setText(url.toString());
+
+#if defined(Q_OS_WIN32)
+	QTemporaryDir directory;
+	QFile file(directory.path() + QDir::separator() + (url.host().isEmpty() ? QLatin1String("localhost") : url.host()) + QLatin1String(".url"));
+
+	if (file.open(QIODevice::WriteOnly))
+	{
+		file.write((QLatin1String("[InternetShortcut]\r\nURL=") + url.toString()).toUtf8());
+		file.close();
+
+		mimeData->setUrls({url, QUrl::fromLocalFile(file.fileName())});
+	}
+	else
+	{
+		mimeData->setUrls({url});
+	}
+#else
+	mimeData->setUrls({url});
+#endif
 
 	if (m_window)
 	{
