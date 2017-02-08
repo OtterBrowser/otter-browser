@@ -580,10 +580,7 @@ void ToolBarWidget::handleToolBarModified(int identifier)
 {
 	if (identifier == m_identifier)
 	{
-		if (getDefinition().type != ToolBarsManager::SideBarType)
-		{
-			reload();
-		}
+		reload();
 
 		emit toolBarModified();
 	}
