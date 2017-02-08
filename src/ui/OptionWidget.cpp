@@ -161,7 +161,7 @@ void OptionWidget::markModified()
 
 	if (m_resetButton)
 	{
-		m_resetButton->setEnabled(getValue() != SettingsManager::getOptionDefinition(SettingsManager::getOptionIdentifier(m_option)).defaultValue);
+		m_resetButton->setEnabled(getValue() != getDefaultValue());
 	}
 	else
 	{
