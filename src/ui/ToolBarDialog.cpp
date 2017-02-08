@@ -20,11 +20,14 @@
 #include "ToolBarDialog.h"
 #include "Menu.h"
 #include "OptionWidget.h"
+#include "SidebarWidget.h"
 #include "../core/ActionsManager.h"
+#include "../core/AddonsManager.h"
 #include "../core/BookmarksManager.h"
 #include "../core/BookmarksModel.h"
 #include "../core/SearchEnginesManager.h"
 #include "../core/ThemesManager.h"
+#include "../core/TreeModel.h"
 
 #include "ui_ToolBarDialog.h"
 
@@ -37,14 +40,28 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 	m_definition(definition),
 	m_ui(new Ui::ToolBarDialog)
 {
+	if (definition.title.isEmpty())
+	{
+		switch (definition.type)
+		{
+			case ToolBarsManager::BookmarksBarType:
+				m_definition.title = tr("Bookmarks Bar");
+
+				break;
+			case ToolBarsManager::SideBarType:
+				m_definition.title = tr("Sidebar");
+
+				break;
+			default:
+				m_definition.title = tr("Toolbar");
+
+				break;
+		}
+	}
+
 	m_ui->setupUi(this);
-	m_ui->removeButton->setIcon(ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-previous") : QLatin1String("go-next")));
-	m_ui->addButton->setIcon(ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-next") : QLatin1String("go-previous")));
-	m_ui->moveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("go-up")));
-	m_ui->moveDownButton->setIcon(ThemesManager::getIcon(QLatin1String("go-down")));
-	m_ui->addEntryButton->setMenu(new QMenu(m_ui->addEntryButton));
-	m_ui->buttonBox->button(QDialogButtonBox::RestoreDefaults)->setEnabled(m_definition.canReset);
-	m_ui->titleLineEdit->setText(m_definition.getTitle().isEmpty() ? tr("Custom Toolbar") : m_definition.getTitle());
+	m_ui->stackedWidget->setCurrentIndex(definition.type);
+	m_ui->titleLineEdit->setText(m_definition.getTitle());
 	m_ui->iconSizeSpinBox->setValue(qMax(0, m_definition.iconSize));
 	m_ui->maximumButtonSizeSpinBox->setValue(qMax(0, m_definition.maximumButtonSize));
 	m_ui->normalVisibilityComboBox->addItem(tr("Always visible"), ToolBarsManager::AlwaysVisibleToolBar);
@@ -72,21 +89,61 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 
 	m_ui->buttonStyleComboBox->setCurrentIndex((buttonStyleIndex < 0) ? 1 : buttonStyleIndex);
 	m_ui->hasToggleCheckBox->setChecked(definition.hasToggle);
-
-	if (m_definition.bookmarksPath.isEmpty())
-	{
-		m_ui->bookmarksWidget->hide();
-	}
-	else
-	{
-		m_ui->folderComboBox->setCurrentFolder(BookmarksManager::getModel()->getItem(m_definition.bookmarksPath));
-		m_ui->entriesEditorWidget->hide();
-	}
+	m_ui->buttonBox->button(QDialogButtonBox::RestoreDefaults)->setEnabled(m_definition.canReset);
 
 	if (definition.identifier == ToolBarsManager::MenuBar || definition.identifier == ToolBarsManager::ProgressBar || definition.identifier == ToolBarsManager::StatusBar)
 	{
 		m_ui->hasToggleCheckBox->hide();
 	}
+
+	connect(m_ui->buttonBox->button(QDialogButtonBox::RestoreDefaults), SIGNAL(clicked()), this, SLOT(restoreDefaults()));
+
+	switch (definition.type)
+	{
+		case ToolBarsManager::BookmarksBarType:
+			m_ui->folderComboBox->setCurrentFolder(BookmarksManager::getModel()->getItem(definition.bookmarksPath));
+
+			break;
+		case ToolBarsManager::SideBarType:
+			{
+				TreeModel *panelsModel(new TreeModel(this));
+				const QStringList specialPages(AddonsManager::getSpecialPages());
+
+				for (int i = 0; i < definition.panels.count(); ++i)
+				{
+					QStandardItem *item(new QStandardItem(SidebarWidget::getPanelTitle(definition.panels.at(i))));
+					item->setCheckable(true);
+					item->setCheckState(Qt::Checked);
+					item->setData(definition.panels.at(i), Qt::UserRole);
+
+					panelsModel->insertRow(item);
+				}
+
+				for (int i = 0; i < specialPages.count(); ++i)
+				{
+					if (!definition.panels.contains(specialPages.at(i)))
+					{
+						QStandardItem *item(new QStandardItem(SidebarWidget::getPanelTitle(specialPages.at(i))));
+						item->setCheckable(true);
+						item->setData(specialPages.at(i), Qt::UserRole);
+
+						panelsModel->insertRow(item);
+					}
+				}
+
+				m_ui->panelsViewWidget->setModel(panelsModel);
+			}
+
+			break;
+		default:
+			return;
+	}
+
+	m_ui->removeButton->setIcon(ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-previous") : QLatin1String("go-next")));
+	m_ui->addButton->setIcon(ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-next") : QLatin1String("go-previous")));
+	m_ui->moveUpButton->setIcon(ThemesManager::getIcon(QLatin1String("go-up")));
+	m_ui->moveDownButton->setIcon(ThemesManager::getIcon(QLatin1String("go-down")));
+	m_ui->addEntryButton->setMenu(new QMenu(m_ui->addEntryButton));
 
 	QStandardItemModel *availableEntriesModel(new QStandardItemModel(this));
 	availableEntriesModel->appendRow(createEntry(QLatin1String("separator")));
@@ -160,7 +217,6 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 	connect(m_ui->availableEntriesFilterLineEdit, SIGNAL(textChanged(QString)), m_ui->availableEntriesItemView, SLOT(setFilterString(QString)));
 	connect(m_ui->currentEntriesFilterLineEdit, SIGNAL(textChanged(QString)), m_ui->currentEntriesItemView, SLOT(setFilterString(QString)));
 	connect(m_ui->editEntryButton, SIGNAL(clicked(bool)), this, SLOT(editEntry()));
-	connect(m_ui->buttonBox->button(QDialogButtonBox::RestoreDefaults), SIGNAL(clicked()), this, SLOT(restoreDefaults()));
 }
 
 ToolBarDialog::~ToolBarDialog()
@@ -622,14 +678,33 @@ ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition() const
 	definition.maximumButtonSize = m_ui->maximumButtonSizeSpinBox->value();
 	definition.hasToggle = m_ui->hasToggleCheckBox->isChecked();
 
-	for (int i = 0; i < m_ui->currentEntriesItemView->model()->rowCount(); ++i)
+	switch (definition.type)
 	{
-		definition.entries.append(getEntry(m_ui->currentEntriesItemView->getItem(i)));
-	}
+		case ToolBarsManager::BookmarksBarType:
+			definition.bookmarksPath = QLatin1Char('#') + QString::number(m_ui->folderComboBox->getCurrentFolder()->data(BookmarksModel::IdentifierRole).toULongLong());
 
-	if (!definition.bookmarksPath.isEmpty())
-	{
-		definition.bookmarksPath = QLatin1Char('#') + QString::number(m_ui->folderComboBox->getCurrentFolder()->data(BookmarksModel::IdentifierRole).toULongLong());
+			break;
+		case ToolBarsManager::SideBarType:
+			definition.currentPanel = m_definition.currentPanel;
+
+			for (int i = 0; i < m_ui->panelsViewWidget->model()->rowCount(); ++i)
+			{
+				QStandardItem *item(m_ui->currentEntriesItemView->getItem(i));
+
+				if (item->data(Qt::CheckStateRole).toInt() == Qt::Checked)
+				{
+					definition.panels.append(item->data(Qt::UserRole).toString());
+				}
+			}
+
+			break;
+		default:
+			for (int i = 0; i < m_ui->currentEntriesItemView->model()->rowCount(); ++i)
+			{
+				definition.entries.append(getEntry(m_ui->currentEntriesItemView->getItem(i)));
+			}
+
+			break;
 	}
 
 	return definition;
