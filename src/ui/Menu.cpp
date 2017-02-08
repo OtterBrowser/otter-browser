@@ -876,6 +876,9 @@ void Menu::populateToolBarsMenu()
 	Action *addBookmarksBarAction(addNewMenu->addAction());
 	addBookmarksBarAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Add Bookmarks Bar…"));
 
+	Action *addSideBarAction(addNewMenu->addAction());
+	addSideBarAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Add Sidebar…"));
+
 	addSeparator();
 	addAction(ActionsManager::LockToolBarsAction, true);
 	addSeparator();
@@ -883,6 +886,7 @@ void Menu::populateToolBarsMenu()
 
 	connect(addToolBarAction, SIGNAL(triggered()), ToolBarsManager::getInstance(), SLOT(addToolBar()));
 	connect(addBookmarksBarAction, SIGNAL(triggered()), ToolBarsManager::getInstance(), SLOT(addBookmarksBar()));
+	connect(addSideBarAction, SIGNAL(triggered()), ToolBarsManager::getInstance(), SLOT(addSideBar()));
 }
 
 void Menu::populateUserAgentMenu()
