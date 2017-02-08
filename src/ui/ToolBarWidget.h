@@ -97,15 +97,15 @@ protected:
 	void updateToggleGeometry();
 
 protected slots:
-	void toolBarModified(int identifier);
-	void toolBarRemoved(int identifier);
-	void bookmarkAdded(BookmarksItem *bookmark);
-	void bookmarkMoved(BookmarksItem *bookmark, BookmarksItem *previousParent);
-	void bookmarkRemoved(BookmarksItem *bookmark);
-	void bookmarkTrashed(BookmarksItem *bookmark);
 	void loadBookmarks();
 	void toggleVisibility();
 	void notifyWindowChanged(quint64 identifier);
+	void handleToolBarModified(int identifier);
+	void handleToolBarRemoved(int identifier);
+	void handleBookmarkAdded(BookmarksItem *bookmark);
+	void handleBookmarkMoved(BookmarksItem *bookmark, BookmarksItem *previousParent);
+	void handleBookmarkRemoved(BookmarksItem *bookmark);
+	void handleBookmarkTrashed(BookmarksItem *bookmark);
 	void updateVisibility();
 	void setToolBarLocked(bool locked);
 
@@ -125,6 +125,7 @@ signals:
 	void buttonStyleChanged(Qt::ToolButtonStyle buttonStyle);
 	void iconSizeChanged(int size);
 	void maximumButtonSizeChanged(int size);
+	void toolBarModified();
 };
 
 }

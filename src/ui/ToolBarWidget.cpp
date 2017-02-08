@@ -22,6 +22,7 @@
 #include "ContentsWidget.h"
 #include "MainWindow.h"
 #include "Menu.h"
+#include "SidebarWidget.h"
 #include "TabBarWidget.h"
 #include "WidgetFactory.h"
 #include "Window.h"
@@ -181,7 +182,7 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 			reload();
 
 			connect(ThemesManager::getInstance(), SIGNAL(widgetStyleChanged()), this, SLOT(resetGeometry()));
-			connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
+			connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(handleToolBarModified(int)));
 		}
 		else
 		{
@@ -195,7 +196,7 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 
 					reload();
 
-					connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
+					connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(handleToolBarModified(int)));
 
 					break;
 				}
@@ -204,7 +205,7 @@ ToolBarWidget::ToolBarWidget(int identifier, Window *window, QWidget *parent) : 
 
 		setToolBarLocked(ToolBarsManager::areToolBarsLocked());
 
-		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarRemoved(int)), this, SLOT(toolBarRemoved(int)));
+		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarRemoved(int)), this, SLOT(handleToolBarRemoved(int)));
 		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarsLockedChanged(bool)), this, SLOT(setToolBarLocked(bool)));
 	}
 
@@ -324,7 +325,7 @@ void ToolBarWidget::showEvent(QShowEvent *event)
 
 		reload();
 
-		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(toolBarModified(int)));
+		connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(handleToolBarModified(int)));
 	}
 
 	QToolBar::showEvent(event);
@@ -522,60 +523,6 @@ void ToolBarWidget::resetGeometry()
 	setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
 }
 
-void ToolBarWidget::toolBarModified(int identifier)
-{
-	if (identifier == m_identifier)
-	{
-		reload();
-	}
-}
-
-void ToolBarWidget::toolBarRemoved(int identifier)
-{
-	if (identifier == m_identifier)
-	{
-		deleteLater();
-	}
-}
-
-void ToolBarWidget::bookmarkAdded(BookmarksItem *bookmark)
-{
-	if (bookmark->parent() == m_bookmark)
-	{
-		loadBookmarks();
-	}
-}
-
-void ToolBarWidget::bookmarkMoved(BookmarksItem *bookmark, BookmarksItem *previousParent)
-{
-	if (bookmark->parent() == m_bookmark || previousParent == m_bookmark)
-	{
-		loadBookmarks();
-	}
-}
-
-void ToolBarWidget::bookmarkRemoved(BookmarksItem *bookmark)
-{
-	if (bookmark == m_bookmark)
-	{
-		m_bookmark = nullptr;
-
-		loadBookmarks();
-	}
-	else if (bookmark->parent() == m_bookmark)
-	{
-		loadBookmarks();
-	}
-}
-
-void ToolBarWidget::bookmarkTrashed(BookmarksItem *bookmark)
-{
-	if (bookmark->parent() == m_bookmark)
-	{
-		loadBookmarks();
-	}
-}
-
 void ToolBarWidget::loadBookmarks()
 {
 	clear();
@@ -627,6 +574,65 @@ void ToolBarWidget::notifyWindowChanged(quint64 identifier)
 	m_window = m_mainWindow->getWindowsManager()->getWindowByIdentifier(identifier);
 
 	emit windowChanged(m_window);
+}
+
+void ToolBarWidget::handleToolBarModified(int identifier)
+{
+	if (identifier == m_identifier)
+	{
+		if (getDefinition().type != ToolBarsManager::SideBarType)
+		{
+			reload();
+		}
+
+		emit toolBarModified();
+	}
+}
+
+void ToolBarWidget::handleToolBarRemoved(int identifier)
+{
+	if (identifier == m_identifier)
+	{
+		deleteLater();
+	}
+}
+
+void ToolBarWidget::handleBookmarkAdded(BookmarksItem *bookmark)
+{
+	if (bookmark->parent() == m_bookmark)
+	{
+		loadBookmarks();
+	}
+}
+
+void ToolBarWidget::handleBookmarkMoved(BookmarksItem *bookmark, BookmarksItem *previousParent)
+{
+	if (bookmark->parent() == m_bookmark || previousParent == m_bookmark)
+	{
+		loadBookmarks();
+	}
+}
+
+void ToolBarWidget::handleBookmarkRemoved(BookmarksItem *bookmark)
+{
+	if (bookmark == m_bookmark)
+	{
+		m_bookmark = nullptr;
+
+		loadBookmarks();
+	}
+	else if (bookmark->parent() == m_bookmark)
+	{
+		loadBookmarks();
+	}
+}
+
+void ToolBarWidget::handleBookmarkTrashed(BookmarksItem *bookmark)
+{
+	if (bookmark->parent() == m_bookmark)
+	{
+		loadBookmarks();
+	}
 }
 
 void ToolBarWidget::updateToggleGeometry()
@@ -740,19 +746,26 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 	emit buttonStyleChanged(definition.buttonStyle);
 	emit iconSizeChanged(iconSize);
 
-	if (definition.type == ToolBarsManager::BookmarksBarType)
+	switch (definition.type)
 	{
-		m_bookmark = (definition.bookmarksPath.startsWith(QLatin1Char('#')) ? BookmarksManager::getBookmark(definition.bookmarksPath.mid(1).toULongLong()) : BookmarksManager::getModel()->getItem(definition.bookmarksPath));
+		case ToolBarsManager::BookmarksBarType:
+			m_bookmark = (definition.bookmarksPath.startsWith(QLatin1Char('#')) ? BookmarksManager::getBookmark(definition.bookmarksPath.mid(1).toULongLong()) : BookmarksManager::getModel()->getItem(definition.bookmarksPath));
 
-		loadBookmarks();
+			loadBookmarks();
 
-		connect(BookmarksManager::getModel(), SIGNAL(bookmarkAdded(BookmarksItem*)), this, SLOT(bookmarkAdded(BookmarksItem*)));
-		connect(BookmarksManager::getModel(), SIGNAL(bookmarkMoved(BookmarksItem*,BookmarksItem*,int)), this, SLOT(bookmarkMoved(BookmarksItem*,BookmarksItem*)));
-		connect(BookmarksManager::getModel(), SIGNAL(bookmarkTrashed(BookmarksItem*)), this, SLOT(bookmarkTrashed(BookmarksItem*)));
-		connect(BookmarksManager::getModel(), SIGNAL(bookmarkRestored(BookmarksItem*)), this, SLOT(bookmarkTrashed(BookmarksItem*)));
-		connect(BookmarksManager::getModel(), SIGNAL(bookmarkRemoved(BookmarksItem*)), this, SLOT(bookmarkRemoved(BookmarksItem*)));
+			connect(BookmarksManager::getModel(), SIGNAL(bookmarkAdded(BookmarksItem*)), this, SLOT(handleBookmarkAdded(BookmarksItem*)));
+			connect(BookmarksManager::getModel(), SIGNAL(bookmarkMoved(BookmarksItem*,BookmarksItem*,int)), this, SLOT(handleBookmarkMoved(BookmarksItem*,BookmarksItem*)));
+			connect(BookmarksManager::getModel(), SIGNAL(bookmarkTrashed(BookmarksItem*)), this, SLOT(handleBookmarkTrashed(BookmarksItem*)));
+			connect(BookmarksManager::getModel(), SIGNAL(bookmarkRestored(BookmarksItem*)), this, SLOT(handleBookmarkTrashed(BookmarksItem*)));
+			connect(BookmarksManager::getModel(), SIGNAL(bookmarkRemoved(BookmarksItem*)), this, SLOT(handleBookmarkRemoved(BookmarksItem*)));
 
-		return;
+			return;
+		case ToolBarsManager::SideBarType:
+			addWidget(new SidebarWidget(this));
+
+			return;
+		default:
+			break;
 	}
 
 	for (int i = 0; i < definition.entries.count(); ++i)
