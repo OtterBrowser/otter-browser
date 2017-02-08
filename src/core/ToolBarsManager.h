@@ -100,6 +100,7 @@ public:
 public slots:
 	void addToolBar();
 	void addBookmarksBar();
+	void addSideBar();
 	void configureToolBar(int identifier = -1);
 	void resetToolBar(int identifier = -1);
 	void removeToolBar(int identifier = -1);

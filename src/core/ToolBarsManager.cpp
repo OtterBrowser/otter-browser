@@ -230,6 +230,21 @@ void ToolBarsManager::addBookmarksBar()
 {
 	ToolBarDefinition definition;
 	definition.bookmarksPath = QLatin1String("/");
+	definition.type = BookmarksBarType;
+
+	ToolBarDialog dialog(definition);
+
+	if (dialog.exec() == QDialog::Accepted)
+	{
+		setToolBar(dialog.getDefinition());
+	}
+}
+
+void ToolBarsManager::addSideBar()
+{
+	ToolBarDefinition definition;
+	definition.panels = QStringList({QLatin1String("bookmarks"), QLatin1String("history"), QLatin1String("notes"), QLatin1String("passwords"), QLatin1String("transfers")});
+	definition.type = SideBarType;
 
 	ToolBarDialog dialog(definition);
 
