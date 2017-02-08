@@ -31,8 +31,6 @@
 
 #include "ui_ToolBarDialog.h"
 
-#include <QtWidgets/QMenu>
-
 namespace Otter
 {
 
@@ -103,7 +101,7 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 		case ToolBarsManager::BookmarksBarType:
 			m_ui->folderComboBox->setCurrentFolder(BookmarksManager::getModel()->getItem(definition.bookmarksPath));
 
-			break;
+			return;
 		case ToolBarsManager::SideBarType:
 			{
 				TreeModel *panelsModel(new TreeModel(this));
@@ -134,9 +132,9 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 				m_ui->panelsViewWidget->setModel(panelsModel);
 			}
 
-			break;
-		default:
 			return;
+		default:
+			break;
 	}
 
 	m_ui->removeButton->setIcon(ThemesManager::getIcon(QGuiApplication::isLeftToRight() ? QLatin1String("go-previous") : QLatin1String("go-next")));
