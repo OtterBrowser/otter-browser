@@ -687,7 +687,7 @@ ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition() const
 
 			for (int i = 0; i < m_ui->panelsViewWidget->model()->rowCount(); ++i)
 			{
-				QStandardItem *item(m_ui->currentEntriesItemView->getItem(i));
+				QStandardItem *item(m_ui->panelsViewWidget->getItem(i));
 
 				if (item->data(Qt::CheckStateRole).toInt() == Qt::Checked)
 				{
