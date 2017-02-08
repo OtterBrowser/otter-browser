@@ -48,6 +48,7 @@ ToolBarsManager::ToolBarsManager(QObject *parent) : QObject(parent),
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Tab Bar"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Navigation Bar"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Progress Bar"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Sidebar"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Status Bar"))
 }
 
