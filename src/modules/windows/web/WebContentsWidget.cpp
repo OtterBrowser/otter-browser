@@ -32,6 +32,7 @@
 #include "../../../core/NetworkManagerFactory.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/ThemesManager.h"
+#include "../../../core/ToolBarsManager.h"
 #include "../../../core/Utils.h"
 #include "../../../core/WebBackend.h"
 #include "../../../ui/CertificateDialog.h"

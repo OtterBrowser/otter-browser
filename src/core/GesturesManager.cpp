@@ -24,8 +24,8 @@
 #include "SettingsManager.h"
 #include "../ui/MainWindow.h"
 
+#include <QtCore/QPointer>
 #include <QtCore/QRegularExpression>
-#include <QtCore/QSettings>
 #include <QtWidgets/QApplication>
 
 #include <limits>
