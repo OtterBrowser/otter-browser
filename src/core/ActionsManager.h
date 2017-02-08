@@ -292,6 +292,7 @@ public:
 	{
 		QString action;
 		QVariantMap options;
+		QVariantMap parameters;
 		QList<ActionEntryDefinition> entries;
 	};
 

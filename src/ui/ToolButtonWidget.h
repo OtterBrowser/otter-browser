@@ -40,6 +40,7 @@ public:
 	virtual QString getText() const;
 	virtual QIcon getIcon() const;
 	QVariantMap getOptions() const;
+	QVariantMap getParameters() const;
 	bool isCustomized() const;
 
 public slots:
@@ -58,6 +59,7 @@ protected slots:
 
 private:
 	QVariantMap m_options;
+	QVariantMap m_parameters;
 	bool m_isCustomized;
 };
 

@@ -32,6 +32,7 @@ namespace Otter
 {
 
 ToolButtonWidget::ToolButtonWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent) : QToolButton(parent),
+	m_parameters(definition.parameters),
 	m_isCustomized(false)
 {
 	setAutoRaise(true);
@@ -238,6 +239,11 @@ QIcon ToolButtonWidget::getIcon() const
 QVariantMap ToolButtonWidget::getOptions() const
 {
 	return m_options;
+}
+
+QVariantMap ToolButtonWidget::getParameters() const
+{
+	return m_parameters;
 }
 
 bool ToolButtonWidget::isCustomized() const

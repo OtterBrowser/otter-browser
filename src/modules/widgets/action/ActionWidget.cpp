@@ -72,6 +72,23 @@ void ActionWidget::mouseReleaseEvent(QMouseEvent *event)
 		return;
 	}
 
+	if (!getParameters().isEmpty())
+	{
+		ActionsManager::triggerAction(m_identifier, this, getParameters());
+
+		QAction *action(defaultAction());
+
+		setDefaultAction(nullptr);
+
+		ToolButtonWidget::mouseReleaseEvent(event);
+
+		setDefaultAction(action);
+		setText(getText());
+		setIcon(getIcon());
+
+		return;
+	}
+
 	ToolButtonWidget::mouseReleaseEvent(event);
 }
 
