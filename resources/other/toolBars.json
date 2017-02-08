@@ -50,6 +50,21 @@
 		]
 	},
 	{
+		"identifier": "SideBar",
+		"title": "Sidebar",
+		"location": "left",
+		"normalVisibility": "hidden",
+		"currentPanel": "",
+		"panels":
+		[
+			"bookmarks",
+			"history",
+			"notes",
+			"passwords",
+			"transfers"
+		]
+	},
+	{
 		"identifier": "StatusBar",
 		"title": "Status Bar",
 		"iconSize": 20,
