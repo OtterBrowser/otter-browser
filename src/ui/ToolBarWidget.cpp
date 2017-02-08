@@ -740,7 +740,7 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 	emit buttonStyleChanged(definition.buttonStyle);
 	emit iconSizeChanged(iconSize);
 
-	if (!definition.bookmarksPath.isEmpty())
+	if (definition.type == ToolBarsManager::BookmarksBarType)
 	{
 		m_bookmark = (definition.bookmarksPath.startsWith(QLatin1Char('#')) ? BookmarksManager::getBookmark(definition.bookmarksPath.mid(1).toULongLong()) : BookmarksManager::getModel()->getItem(definition.bookmarksPath));
 
