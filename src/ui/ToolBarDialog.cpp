@@ -112,7 +112,7 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 					QStandardItem *item(new QStandardItem(SidebarWidget::getPanelTitle(definition.panels.at(i))));
 					item->setCheckable(true);
 					item->setCheckState(Qt::Checked);
-					item->setData(definition.panels.at(i), Qt::UserRole);
+					item->setData(definition.panels.at(i), TreeModel::UserRole);
 
 					panelsModel->insertRow(item);
 				}
@@ -123,7 +123,7 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 					{
 						QStandardItem *item(new QStandardItem(SidebarWidget::getPanelTitle(specialPages.at(i))));
 						item->setCheckable(true);
-						item->setData(specialPages.at(i), Qt::UserRole);
+						item->setData(specialPages.at(i), TreeModel::UserRole);
 
 						panelsModel->insertRow(item);
 					}
@@ -684,6 +684,7 @@ ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition() const
 			break;
 		case ToolBarsManager::SideBarType:
 			definition.currentPanel = m_definition.currentPanel;
+			definition.panels.clear();
 
 			for (int i = 0; i < m_ui->panelsViewWidget->model()->rowCount(); ++i)
 			{
@@ -691,7 +692,7 @@ ToolBarsManager::ToolBarDefinition ToolBarDialog::getDefinition() const
 
 				if (item->data(Qt::CheckStateRole).toInt() == Qt::Checked)
 				{
-					definition.panels.append(item->data(Qt::UserRole).toString());
+					definition.panels.append(item->data(TreeModel::UserRole).toString());
 				}
 			}
 
