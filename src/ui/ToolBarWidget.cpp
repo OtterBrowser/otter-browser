@@ -763,6 +763,8 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 			if (m_toggleButton)
 			{
 				m_toggleButton->show();
+
+				updateToggleGeometry();
 			}
 
 			return;
