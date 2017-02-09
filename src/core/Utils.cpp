@@ -28,7 +28,6 @@
 #include <QtCore/QDir>
 #include <QtCore/QFile>
 #include <QtCore/QFileInfo>
-#include <QtCore/QMimeData>
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QRegularExpression>
 #include <QtCore/QTextStream>
@@ -337,6 +336,46 @@ QUrl normalizeUrl(QUrl url)
 	return url;
 }
 
+QStringList getOpenPaths(const QStringList &fileNames, QStringList filters, bool selectMultiple)
+{
+	Q_UNUSED(fileNames)
+
+	QStringList paths;
+
+	filters.append(QCoreApplication::translate("utils", "All files (*)"));
+
+	if (selectMultiple)
+	{
+		paths = QFileDialog::getOpenFileNames(Application::getActiveWindow(), QCoreApplication::translate("utils", "Open Files"), SettingsManager::getValue(SettingsManager::Paths_OpenFileOption).toString(), filters.join(QLatin1String(";;")));
+	}
+	else
+	{
+		const QString path(QFileDialog::getOpenFileName(Application::getActiveWindow(), QCoreApplication::translate("utils", "Open File"), SettingsManager::getValue(SettingsManager::Paths_OpenFileOption).toString(), filters.join(QLatin1String(";;"))));
+
+		if (!path.isEmpty())
+		{
+			paths = QStringList(path);
+		}
+	}
+
+	if (!paths.isEmpty())
+	{
+		SettingsManager::setValue(SettingsManager::Paths_OpenFileOption, QFileInfo(paths.first()).dir().canonicalPath());
+	}
+
+	return paths;
+}
+
+QList<QUrl> extractUrls(const QMimeData *mimeData)
+{
+	if (mimeData->property("x-url-string").isNull())
+	{
+		return mimeData->urls();
+	}
+
+	return QList<QUrl>({QUrl(mimeData->property("x-url-string").toString())});
+}
+
 QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType)
 {
 	PlatformIntegration *integration(Application::getPlatformIntegration());
@@ -430,36 +469,6 @@ SaveInformation getSavePath(const QString &fileName, QString path, QStringList f
 	information.path = path;
 
 	return information;
-}
-
-QStringList getOpenPaths(const QStringList &fileNames, QStringList filters, bool selectMultiple)
-{
-	Q_UNUSED(fileNames)
-
-	QStringList paths;
-
-	filters.append(QCoreApplication::translate("utils", "All files (*)"));
-
-	if (selectMultiple)
-	{
-		paths = QFileDialog::getOpenFileNames(Application::getActiveWindow(), QCoreApplication::translate("utils", "Open Files"), SettingsManager::getValue(SettingsManager::Paths_OpenFileOption).toString(), filters.join(QLatin1String(";;")));
-	}
-	else
-	{
-		const QString path(QFileDialog::getOpenFileName(Application::getActiveWindow(), QCoreApplication::translate("utils", "Open File"), SettingsManager::getValue(SettingsManager::Paths_OpenFileOption).toString(), filters.join(QLatin1String(";;"))));
-
-		if (!path.isEmpty())
-		{
-			paths = QStringList(path);
-		}
-	}
-
-	if (!paths.isEmpty())
-	{
-		SettingsManager::setValue(SettingsManager::Paths_OpenFileOption, QFileInfo(paths.first()).dir().canonicalPath());
-	}
-
-	return paths;
 }
 
 bool isUrlEmpty(const QUrl &url)

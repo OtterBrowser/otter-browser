@@ -1049,7 +1049,7 @@ bool BookmarksModel::dropMimeData(const QMimeData *data, Qt::DropAction action, 
 
 		if (data->hasUrls())
 		{
-			const QList<QUrl> urls(data->urls());
+			const QList<QUrl> urls(Utils::extractUrls(data));
 
 			for (int i = 0; i < urls.count(); ++i)
 			{

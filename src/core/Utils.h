@@ -21,6 +21,7 @@
 #ifndef OTTER_UTILS_H
 #define OTTER_UTILS_H
 
+#include <QtCore/QMimeData>
 #include <QtCore/QMimeType>
 #include <QtCore/QUrl>
 #include <QtGui/QIcon>
@@ -62,6 +63,7 @@ QString normalizePath(const QString &path);
 QUrl normalizeUrl(QUrl url);
 SaveInformation getSavePath(const QString &fileName, QString path = QString(), QStringList filters = QStringList(), bool forceAsk = false);
 QStringList getOpenPaths(const QStringList &fileNames = QStringList(), QStringList filters = QStringList(), bool selectMultiple = false);
+QList<QUrl> extractUrls(const QMimeData *mimeData);
 QList<ApplicationInformation> getApplicationsForMimeType(const QMimeType &mimeType);
 bool isUrlEmpty(const QUrl &url);
 
