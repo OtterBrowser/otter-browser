@@ -365,7 +365,7 @@ void ToolBarWidget::leaveEvent(QEvent *event)
 {
 	QToolBar::leaveEvent(event);
 
-	if (m_toggleButton && !m_isCollapsed)
+	if (m_toggleButton && !m_isCollapsed && getDefinition().type != ToolBarsManager::SideBarType)
 	{
 		m_toggleButton->hide();
 	}
@@ -662,7 +662,7 @@ void ToolBarWidget::updateToggleGeometry()
 
 			break;
 		case Qt::RightToolBarArea:
-			m_toggleButton->move(6, 0);
+			m_toggleButton->move(0, 0);
 
 			break;
 		default:
@@ -759,6 +759,11 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 			return;
 		case ToolBarsManager::SideBarType:
 			addWidget(new SidebarWidget(this));
+
+			if (m_toggleButton)
+			{
+				m_toggleButton->show();
+			}
 
 			return;
 		default:

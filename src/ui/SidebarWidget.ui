@@ -80,6 +80,16 @@
      </layout>
     </widget>
    </item>
+   <item>
+    <spacer name="toggleSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+    </spacer>
+   </item>
   </layout>
  </widget>
  <resources/>

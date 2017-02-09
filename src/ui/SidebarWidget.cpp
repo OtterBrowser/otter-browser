@@ -240,6 +240,8 @@ void SidebarWidget::updateLayout()
 	const Qt::ToolBarArea area(m_toolBarWidget->getArea());
 	QBoxLayout::Direction direction((area == Qt::RightToolBarArea) ? QBoxLayout::RightToLeft : QBoxLayout::LeftToRight);
 
+	m_ui->toggleSpacer->changeSize((m_toolBarWidget->getDefinition().hasToggle ? 6 : 0), 0, QSizePolicy::Fixed);
+
 	if (QGuiApplication::isRightToLeft())
 	{
 		direction = ((direction == QBoxLayout::LeftToRight) ? QBoxLayout::RightToLeft : QBoxLayout::LeftToRight);
