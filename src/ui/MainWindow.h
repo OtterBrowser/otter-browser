@@ -57,7 +57,6 @@ public:
 	Action* getAction(int identifier);
 	WorkspaceWidget* getWorkspace();
 	TabBarWidget* getTabBar();
-	ToolBarWidget* getToolBar(const QString &identifier);
 	WindowsManager* getWindowsManager();
 	QList<ToolBarWidget*> getToolBars(Qt::ToolBarArea area);
 	bool areToolBarsVisible() const;

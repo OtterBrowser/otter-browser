@@ -1275,21 +1275,6 @@ TabBarWidget* MainWindow::getTabBar()
 	return m_tabBar;
 }
 
-ToolBarWidget* MainWindow::getToolBar(const QString &identifier)
-{
-	QList<ToolBarWidget*> toolBars(findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly));
-
-	for (int i = 0; i < toolBars.count(); ++i)
-	{
-		if (toolBars.at(i)->getIdentifier() == identifier)
-		{
-			return toolBars.at(i);
-		}
-	}
-
-	return nullptr;
-}
-
 WindowsManager* MainWindow::getWindowsManager()
 {
 	return m_windowsManager;
