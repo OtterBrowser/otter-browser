@@ -25,6 +25,7 @@
 #include "../../../ui/ContentsWidget.h"
 #include "../../../ui/WebWidget.h"
 
+#include <QtWidgets/QSplitter>
 #include <QtWidgets/QVBoxLayout>
 
 namespace Otter
@@ -136,6 +137,7 @@ protected slots:
 private:
 	QPointer<WebsiteInformationDialog> m_websiteInformationDialog;
 	QVBoxLayout *m_layout;
+	QSplitter *m_splitter;
 	WebWidget *m_webWidget;
 	Window *m_window;
 	StartPageWidget *m_startPageWidget;

@@ -1181,6 +1181,11 @@ void WebWidget::setWindowIdentifier(quint64 identifier)
 	m_windowIdentifier = identifier;
 }
 
+QWidget* WebWidget::getInspector()
+{
+	return nullptr;
+}
+
 QWidget* WebWidget::getViewport()
 {
 	return this;

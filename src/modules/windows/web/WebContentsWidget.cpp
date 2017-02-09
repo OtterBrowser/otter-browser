@@ -57,6 +57,7 @@ QMap<int, QPixmap> WebContentsWidget::m_scrollCursors;
 WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *window) : ContentsWidget(window),
 	m_websiteInformationDialog(nullptr),
 	m_layout(new QVBoxLayout(this)),
+	m_splitter(new QSplitter(Qt::Vertical, this)),
 	m_webWidget(nullptr),
 	m_window(window),
 	m_startPageWidget(nullptr),
@@ -73,8 +74,11 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	m_showStartPage(SettingsManager::getValue(SettingsManager::StartPage_EnableStartPageOption).toBool()),
 	m_ignoreRelease(false)
 {
+	m_splitter->hide();
+
 	m_layout->setContentsMargins(0, 0, 0, 0);
 	m_layout->setSpacing(0);
+	m_layout->addWidget(m_splitter);
 
 	setLayout(m_layout);
 	setFocusPolicy(Qt::StrongFocus);
@@ -521,6 +525,22 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 			m_webWidget->setOption(SettingsManager::Network_EnableReferrerOption, Action::calculateCheckedState(parameters));
 
 			break;
+		case ActionsManager::InspectPageAction:
+		case ActionsManager::InspectElementAction:
+			if (m_webWidget)
+			{
+				QWidget *inspector(m_webWidget->getInspector());
+
+				if (inspector && m_splitter->indexOf(inspector) < 0)
+				{
+					m_splitter->show();
+					m_splitter->addWidget(inspector);
+				}
+
+				m_webWidget->triggerAction(identifier, parameters);
+			}
+
+			break;
 		case ActionsManager::QuickPreferencesAction:
 			{
 				if (m_isTabPreferencesMenuVisible)
@@ -714,8 +734,7 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 	{
 		if (m_webWidget)
 		{
-			layout()->removeWidget(m_webWidget);
-
+			m_webWidget->setParent(this);
 			m_webWidget->hide();
 		}
 
@@ -747,14 +766,14 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 	{
 		if (m_startPageWidget)
 		{
-			layout()->removeWidget(m_webWidget);
-
+			m_webWidget->setParent(this);
 			m_startPageWidget->hide();
 		}
 
 		if (m_webWidget)
 		{
-			layout()->addWidget(m_webWidget);
+			m_splitter->show();
+			m_splitter->addWidget(m_webWidget);
 
 			m_webWidget->show();
 
@@ -1028,8 +1047,6 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 		m_webWidget->close();
 		m_webWidget->deleteLater();
 
-		layout()->removeWidget(m_webWidget);
-
 		handleLoadingStateChange(WindowsManager::FinishedLoadingState);
 	}
 
@@ -1045,6 +1062,8 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 		{
 			m_createStartPageTimer = startTimer(50);
 		}
+
+		connect(m_splitter, SIGNAL(splitterMoved(int,int)), widget, SIGNAL(progressBarGeometryChanged()));
 	}
 
 	bool isHidden(m_showStartPage && (!m_webWidget || (m_startPageWidget && m_startPageWidget->isVisibleTo(this))));
@@ -1057,7 +1076,8 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 	}
 	else
 	{
-		layout()->addWidget(m_webWidget);
+		m_splitter->show();
+		m_splitter->addWidget(m_webWidget);
 
 		m_webWidget->show();
 	}

@@ -82,7 +82,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	m_pluginFactory(new QtWebKitPluginFactory(this)),
 	m_inspector(nullptr),
 	m_networkManager(networkManager),
-	m_splitter(new QSplitter(Qt::Vertical, this)),
 	m_loadingState(WindowsManager::FinishedLoadingState),
 	m_transfersTimer(0),
 	m_canLoadPlugins(false),
@@ -91,12 +90,8 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	m_isTyped(false),
 	m_isNavigating(false)
 {
-	m_splitter->addWidget(m_webView);
-	m_splitter->setChildrenCollapsible(false);
-	m_splitter->setContentsMargins(0, 0, 0, 0);
-
 	QVBoxLayout *layout(new QVBoxLayout(this));
-	layout->addWidget(m_splitter);
+	layout->addWidget(m_webView);
 	layout->setContentsMargins(0, 0, 0, 0);
 
 	setLayout(layout);
@@ -172,7 +167,6 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 	connect(m_networkManager, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)), this, SIGNAL(pageInformationChanged(WebWidget::PageInformation,QVariant)));
 	connect(m_networkManager, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)), this, SIGNAL(requestBlocked(NetworkManager::ResourceInformation)));
 	connect(m_networkManager, SIGNAL(contentStateChanged(WindowsManager::ContentStates)), this, SLOT(notifyContentStateChanged()));
-	connect(m_splitter, SIGNAL(splitterMoved(int,int)), this, SIGNAL(progressBarGeometryChanged()));
 	connect(selectAllShortcut, SIGNAL(activated()), getAction(ActionsManager::SelectAllAction), SLOT(trigger()));
 }
 
@@ -1738,12 +1732,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 			{
 				if (!m_inspector)
 				{
-					m_page->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
-
-					m_inspector = new QtWebKitInspector(this);
-					m_inspector->setPage(m_webView->page());
-
-					m_splitter->addWidget(m_inspector);
+					getInspector();
 				}
 
 				const bool result(calculateCheckedState(ActionsManager::InspectPageAction, parameters));
@@ -2095,6 +2084,19 @@ WebWidget* QtWebKitWebWidget::clone(bool cloneHistory, bool isPrivate, const QSt
 	widget->setZoom(getZoom());
 
 	return widget;
+}
+
+QWidget* QtWebKitWebWidget::getInspector()
+{
+	if (!m_inspector)
+	{
+		m_page->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
+
+		m_inspector = new QtWebKitInspector(this);
+		m_inspector->setPage(m_webView->page());
+	}
+
+	return m_inspector;
 }
 
 QWidget* QtWebKitWebWidget::getViewport()

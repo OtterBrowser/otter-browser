@@ -29,7 +29,6 @@
 #include <QtWebKitWidgets/QWebInspector>
 #include <QtWebKitWidgets/QWebPage>
 #include <QtWebKitWidgets/QWebView>
-#include <QtWidgets/QSplitter>
 #include <QtWidgets/QToolButton>
 
 namespace Otter
@@ -53,6 +52,7 @@ public:
 	void search(const QString &query, const QString &searchEngine);
 	void print(QPrinter *printer);
 	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = QStringList());
+	QWidget* getInspector();
 	QWidget* getViewport();
 	Action* getAction(int identifier);
 	QString getDefaultCharacterEncoding() const;
@@ -182,7 +182,6 @@ private:
 	QtWebKitPluginFactory *m_pluginFactory;
 	QtWebKitInspector *m_inspector;
 	QtWebKitNetworkManager *m_networkManager;
-	QSplitter *m_splitter;
 	QString m_passwordToken;
 	QString m_pluginToken;
 	QPixmap m_thumbnail;
