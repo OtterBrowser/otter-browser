@@ -62,8 +62,10 @@ SidebarWidget::SidebarWidget(ToolBarWidget *parent) : QWidget(parent),
 	m_ui->panelsButton->setPopupMode(QToolButton::InstantPopup);
 	m_ui->panelsButton->setIcon(ThemesManager::getIcon(QLatin1String("list-add")));
 
+	updateLayout();
 	updatePanels();
 
+	connect(parent, SIGNAL(toolBarModified()), this, SLOT(updateLayout()));
 	connect(parent, SIGNAL(toolBarModified()), this, SLOT(updatePanels()));
 }
 
@@ -76,29 +78,40 @@ void SidebarWidget::changeEvent(QEvent *event)
 {
 	QWidget::changeEvent(event);
 
-	if (event->type() == QEvent::LanguageChange)
+	switch (event->type())
 	{
-		m_ui->retranslateUi(this);
-
-		QHash<QString, QToolButton*>::iterator iterator;
-
-		for (iterator = m_buttons.begin(); iterator != m_buttons.end(); ++iterator)
-		{
-			iterator.value()->setToolTip(getPanelTitle(iterator.key()));
-		}
-
-		if (m_ui->panelsButton->menu())
-		{
-			QList<QAction*> actions(m_ui->panelsButton->menu()->actions());
-
-			for (int i = 0; i < actions.count(); ++i)
+		case QEvent::LanguageChange:
 			{
-				if (!actions[i]->data().toString().isEmpty())
+				m_ui->retranslateUi(this);
+
+				QHash<QString, QToolButton*>::iterator iterator;
+
+				for (iterator = m_buttons.begin(); iterator != m_buttons.end(); ++iterator)
 				{
-					actions[i]->setText(getPanelTitle(actions[i]->data().toString()));
+					iterator.value()->setToolTip(getPanelTitle(iterator.key()));
+				}
+
+				if (m_ui->panelsButton->menu())
+				{
+					QList<QAction*> actions(m_ui->panelsButton->menu()->actions());
+
+					for (int i = 0; i < actions.count(); ++i)
+					{
+						if (!actions[i]->data().toString().isEmpty())
+						{
+							actions[i]->setText(getPanelTitle(actions[i]->data().toString()));
+						}
+					}
 				}
 			}
-		}
+
+			break;
+		case QEvent::LayoutDirectionChange:
+			updateLayout();
+
+			break;
+		default:
+			break;
 	}
 }
 
@@ -218,6 +231,44 @@ void SidebarWidget::selectPanel(const QString &identifier)
 		definition.currentPanel = identifier;
 
 		ToolBarsManager::setToolBar(definition);
+	}
+}
+
+void SidebarWidget::updateLayout()
+{
+	QToolBar *toolbar(findChild<QToolBar*>());
+	const Qt::ToolBarArea area(m_toolBarWidget->getArea());
+	QBoxLayout::Direction direction((area == Qt::RightToolBarArea) ? QBoxLayout::RightToLeft : QBoxLayout::LeftToRight);
+
+	if (QGuiApplication::isRightToLeft())
+	{
+		direction = ((direction == QBoxLayout::LeftToRight) ? QBoxLayout::RightToLeft : QBoxLayout::LeftToRight);
+	}
+
+	qobject_cast<QBoxLayout*>(layout())->setDirection(direction);
+
+	if (!toolbar)
+	{
+		return;
+	}
+
+	toolbar->setLayoutDirection((area == Qt::LeftToolBarArea) ? Qt::LeftToRight : Qt::RightToLeft);
+
+	QList<QWidget*> widgets(toolbar->findChildren<QWidget*>());
+
+	for (int i = 0; i < widgets.count(); ++i)
+	{
+		widgets[i]->setLayoutDirection(QGuiApplication::isLeftToRight() ? Qt::LeftToRight : Qt::RightToLeft);
+
+		ActionWidget *widget(qobject_cast<ActionWidget*>(widgets.at(i)));
+
+		if (widget && widget->getIdentifier() == ActionsManager::OpenPanelAction)
+		{
+			QVariantMap options(widget->getOptions());
+			options[QLatin1String("icon")] = ((area == Qt::LeftToolBarArea) ? QLatin1String("arrow-right") : QLatin1String("arrow-left"));
+
+			widget->setOptions(options);
+		}
 	}
 }
 
