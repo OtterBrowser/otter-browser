@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -38,10 +38,10 @@ public:
 	explicit ActionWidget(int identifier, Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = nullptr);
 
 	Window* getWindow() const;
+	int getIdentifier() const;
 
 protected:
 	void mouseReleaseEvent(QMouseEvent *event);
-	int getIdentifier() const;
 	bool event(QEvent *event);
 
 protected slots:
