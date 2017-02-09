@@ -245,6 +245,7 @@ void ToolBarsManager::addSideBar()
 {
 	ToolBarDefinition definition;
 	definition.panels = QStringList({QLatin1String("bookmarks"), QLatin1String("history"), QLatin1String("notes"), QLatin1String("passwords"), QLatin1String("transfers")});
+	definition.location = Qt::LeftToolBarArea;
 	definition.type = SideBarType;
 
 	ToolBarDialog dialog(definition);
@@ -365,7 +366,11 @@ void ToolBarsManager::setToolBar(ToolBarsManager::ToolBarDefinition definition)
 
 		m_definitions.append(definition);
 		m_definitions[identifier].identifier = identifier;
-		m_definitions[identifier].location = Qt::TopToolBarArea;
+
+		if (m_definitions[identifier].location == Qt::NoToolBarArea)
+		{
+			m_definitions[identifier].location = Qt::TopToolBarArea;
+		}
 
 		emit m_instance->toolBarAdded(identifier);
 	}
