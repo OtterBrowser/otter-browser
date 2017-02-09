@@ -24,14 +24,13 @@
 #include "../core/ActionsManager.h"
 #include "../core/AddonsManager.h"
 #include "../core/HistoryManager.h"
-#include "../core/SettingsManager.h"
 #include "../core/ThemesManager.h"
 #include "../core/WindowsManager.h"
+#include "../modules/widgets/action/ActionWidget.h"
 #include "../modules/widgets/panelChooser/PanelChooserWidget.h"
 
 #include "ui_SidebarWidget.h"
 
-#include <QtGui/QIcon>
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QToolBar>
@@ -39,49 +38,38 @@
 namespace Otter
 {
 
-SidebarWidget::SidebarWidget(QWidget *parent) : QWidget(parent),
-	m_resizeTimer(0),
+SidebarWidget::SidebarWidget(ToolBarWidget *parent) : QWidget(parent),
+	m_toolBarWidget(parent),
 	m_ui(new Ui::SidebarWidget)
 {
 	m_ui->setupUi(this);
 
+	ActionsManager::ActionEntryDefinition definition;
+	definition.parameters[QLatin1String("sidebar")] = m_toolBarWidget->getIdentifier();
+
 	QToolBar *toolbar(new QToolBar(this));
 	toolbar->setIconSize(QSize(16, 16));
-	toolbar->addWidget(new PanelChooserWidget(ActionsManager::ActionEntryDefinition(), this));
-	toolbar->addAction(ActionsManager::getAction(ActionsManager::OpenPanelAction, this));
+	toolbar->addWidget(new PanelChooserWidget(definition, this));
+	toolbar->addWidget(new ActionWidget(ActionsManager::OpenPanelAction, nullptr, definition, this));
 
 	QWidget *spacer(new QWidget(toolbar));
 	spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
 	toolbar->addWidget(spacer);
-	toolbar->addAction(ActionsManager::getAction(ActionsManager::ClosePanelAction, this));
+	toolbar->addWidget(new ActionWidget(ActionsManager::ClosePanelAction, nullptr, definition, this));
 
 	m_ui->panelLayout->addWidget(toolbar);
 	m_ui->panelsButton->setPopupMode(QToolButton::InstantPopup);
 	m_ui->panelsButton->setIcon(ThemesManager::getIcon(QLatin1String("list-add")));
 
-	optionChanged(SettingsManager::Sidebar_CurrentPanelOption, SettingsManager::getValue(SettingsManager::Sidebar_CurrentPanelOption));
-	optionChanged(SettingsManager::Sidebar_PanelsOption, SettingsManager::getValue(SettingsManager::Sidebar_PanelsOption));
-	optionChanged(SettingsManager::Sidebar_ReverseOption, SettingsManager::getValue(SettingsManager::Sidebar_ReverseOption));
+	updatePanels();
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
+	connect(parent, SIGNAL(toolBarModified()), this, SLOT(updatePanels()));
 }
 
 SidebarWidget::~SidebarWidget()
 {
 	delete m_ui;
-}
-
-void SidebarWidget::timerEvent(QTimerEvent *event)
-{
-	if (event->timerId() == m_resizeTimer)
-	{
-		SettingsManager::setValue(SettingsManager::Sidebar_WidthOption, width());
-
-		killTimer(m_resizeTimer);
-
-		m_resizeTimer = 0;
-	}
 }
 
 void SidebarWidget::changeEvent(QEvent *event)
@@ -114,133 +102,6 @@ void SidebarWidget::changeEvent(QEvent *event)
 	}
 }
 
-void SidebarWidget::optionChanged(int identifier, const QVariant &value)
-{
-	if (identifier == SettingsManager::Sidebar_CurrentPanelOption)
-	{
-		selectPanel(value.toString());
-	}
-	else if (identifier == SettingsManager::Sidebar_PanelsOption)
-	{
-		qDeleteAll(m_buttons.begin(), m_buttons.end());
-
-		m_buttons.clear();
-
-		QMenu *menu(new QMenu(m_ui->panelsButton));
-		const QStringList panels(value.toStringList());
-		const QStringList specialPages(AddonsManager::getSpecialPages());
-
-		for (int i = 0; i < specialPages.count(); ++i)
-		{
-			QAction *action(menu->addAction(getPanelTitle(specialPages.at(i))));
-			action->setCheckable(true);
-			action->setChecked(panels.contains(specialPages.at(i)));
-			action->setData(specialPages.at(i));
-
-			connect(action, SIGNAL(toggled(bool)), this, SLOT(choosePanel(bool)));
-		}
-
-		menu->addSeparator();
-
-		for (int i = 0; i < panels.count(); ++i)
-		{
-			QToolButton *button(new QToolButton(this));
-			QAction *action(new QAction(button));
-			action->setData(panels.at(i));
-			action->setToolTip(getPanelTitle(panels.at(i)));
-
-			button->setDefaultAction(action);
-			button->setAutoRaise(true);
-			button->setCheckable(true);
-
-			if (specialPages.contains(panels.at(i)))
-			{
-				button->setIcon(AddonsManager::getSpecialPage(panels.at(i)).icon);
-			}
-			else if (panels.at(i).startsWith(QLatin1String("web:")))
-			{
-				button->setIcon(HistoryManager::getIcon(QUrl(panels.at(i).mid(4))));
-
-				QAction *action(menu->addAction(getPanelTitle(panels.at(i))));
-				action->setCheckable(true);
-				action->setChecked(true);
-				action->setData(panels.at(i));
-
-				connect(action, SIGNAL(toggled(bool)), this, SLOT(choosePanel(bool)));
-			}
-			else
-			{
-				button->deleteLater();
-
-				continue;
-			}
-
-			m_ui->buttonsLayout->insertWidget(qMax(0, (m_ui->buttonsLayout->count() - 2)), button);
-
-			m_buttons[panels.at(i)] = button;
-
-			connect(button->defaultAction(), SIGNAL(triggered()), this, SLOT(selectPanel()));
-		}
-
-		menu->addSeparator();
-		menu->addAction(tr("Add Web Panel…"), this, SLOT(addWebPanel()));
-
-		if (m_ui->panelsButton->menu())
-		{
-			m_ui->panelsButton->menu()->deleteLater();
-		}
-
-		m_ui->panelsButton->setMenu(menu);
-	}
-	else if (identifier == SettingsManager::Sidebar_ReverseOption)
-	{
-		Qt::ToolBarArea area(QGuiApplication::isLeftToRight() ? Qt::LeftToolBarArea : Qt::RightToolBarArea);
-
-		if (value.toBool())
-		{
-			if (area == Qt::LeftToolBarArea)
-			{
-				area = Qt::RightToolBarArea;
-			}
-			else
-			{
-				area = Qt::LeftToolBarArea;
-			}
-		}
-
-		qobject_cast<QBoxLayout*>(layout())->setDirection(value.toBool() ? QBoxLayout::RightToLeft : QBoxLayout::LeftToRight);
-
-		QToolBar *toolbar(findChild<QToolBar*>());
-
-		if (toolbar)
-		{
-			toolbar->setLayoutDirection((area == Qt::LeftToolBarArea) ? Qt::LeftToRight : Qt::RightToLeft);
-
-			QList<QWidget*> widgets(toolbar->findChildren<QWidget*>());
-
-			for (int i = 0; i < widgets.count(); ++i)
-			{
-				widgets[i]->setLayoutDirection(QGuiApplication::isLeftToRight() ? Qt::LeftToRight : Qt::RightToLeft);
-			}
-		}
-
-		ActionsManager::getAction(ActionsManager::OpenPanelAction, this)->setIcon(ThemesManager::getIcon((area == Qt::LeftToolBarArea) ? QLatin1String("arrow-right") : QLatin1String("arrow-left")));
-	}
-}
-
-void SidebarWidget::scheduleSizeSave()
-{
-	if (isVisible() && !SettingsManager::getValue(SettingsManager::Sidebar_CurrentPanelOption).toString().isEmpty())
-	{
-		if (m_resizeTimer > 0)
-		{
-			killTimer(m_resizeTimer);
-		}
-
-		m_resizeTimer = startTimer(500);
-	}
-}
-
 void SidebarWidget::addWebPanel()
 {
 	MainWindow *mainWindow(MainWindow::findMainWindow(this));
@@ -255,10 +116,10 @@ void SidebarWidget::addWebPanel()
 
 	if (!url.isEmpty())
 	{
-		QStringList panels(SettingsManager::getValue(SettingsManager::Sidebar_PanelsOption).toStringList());
-		panels.append(QLatin1String("web:") + url);
+		ToolBarsManager::ToolBarDefinition definition(m_toolBarWidget->getDefinition());
+		definition.panels.append(QLatin1String("web:") + url);
 
-		SettingsManager::setValue(SettingsManager::Sidebar_PanelsOption, panels);
+		ToolBarsManager::setToolBar(definition);
 	}
 }
 
@@ -271,18 +132,18 @@ void SidebarWidget::choosePanel(bool checked)
 		return;
 	}
 
-	QStringList chosenPanels(SettingsManager::getValue(SettingsManager::Sidebar_PanelsOption).toStringList());
+	ToolBarsManager::ToolBarDefinition definition(m_toolBarWidget->getDefinition());
 
 	if (checked)
 	{
-		chosenPanels.append(action->data().toString());
+		definition.panels.append(action->data().toString());
 	}
 	else
 	{
-		chosenPanels.removeAll(action->data().toString());
+		definition.panels.removeAll(action->data().toString());
 	}
 
-	SettingsManager::setValue(SettingsManager::Sidebar_PanelsOption, chosenPanels);
+	ToolBarsManager::setToolBar(definition);
 }
 
 void SidebarWidget::selectPanel()
@@ -350,12 +211,96 @@ void SidebarWidget::selectPanel(const QString &identifier)
 
 	m_currentPanel = identifier;
 
-	SettingsManager::setValue(SettingsManager::Sidebar_CurrentPanelOption, identifier);
+	ToolBarsManager::ToolBarDefinition definition(m_toolBarWidget->getDefinition());
+
+	if (identifier != definition.currentPanel)
+	{
+		definition.currentPanel = identifier;
+
+		ToolBarsManager::setToolBar(definition);
+	}
 }
 
-QWidget* SidebarWidget::getCurrentPanel()
+void SidebarWidget::updatePanels()
 {
-	return m_panels.value(m_currentPanel);
+	const ToolBarsManager::ToolBarDefinition definition(m_toolBarWidget->getDefinition());
+
+	if (m_buttons.keys().toSet() == definition.panels.toSet())
+	{
+		return;
+	}
+
+	qDeleteAll(m_buttons.begin(), m_buttons.end());
+
+	m_buttons.clear();
+
+	QMenu *menu(new QMenu(m_ui->panelsButton));
+	const QStringList panels(definition.panels);
+	const QStringList specialPages(AddonsManager::getSpecialPages());
+
+	for (int i = 0; i < specialPages.count(); ++i)
+	{
+		QAction *action(menu->addAction(getPanelTitle(specialPages.at(i))));
+		action->setCheckable(true);
+		action->setChecked(panels.contains(specialPages.at(i)));
+		action->setData(specialPages.at(i));
+
+		connect(action, SIGNAL(toggled(bool)), this, SLOT(choosePanel(bool)));
+	}
+
+	menu->addSeparator();
+
+	for (int i = 0; i < panels.count(); ++i)
+	{
+		QToolButton *button(new QToolButton(this));
+		QAction *action(new QAction(button));
+		action->setData(panels.at(i));
+		action->setToolTip(getPanelTitle(panels.at(i)));
+
+		button->setDefaultAction(action);
+		button->setAutoRaise(true);
+		button->setCheckable(true);
+
+		if (specialPages.contains(panels.at(i)))
+		{
+			button->setIcon(AddonsManager::getSpecialPage(panels.at(i)).icon);
+		}
+		else if (panels.at(i).startsWith(QLatin1String("web:")))
+		{
+			button->setIcon(HistoryManager::getIcon(QUrl(panels.at(i).mid(4))));
+
+			QAction *action(menu->addAction(getPanelTitle(panels.at(i))));
+			action->setCheckable(true);
+			action->setChecked(true);
+			action->setData(panels.at(i));
+
+			connect(action, SIGNAL(toggled(bool)), this, SLOT(choosePanel(bool)));
+		}
+		else
+		{
+			button->deleteLater();
+
+			continue;
+		}
+
+		m_ui->buttonsLayout->insertWidget(qMax(0, (m_ui->buttonsLayout->count() - 2)), button);
+
+		m_buttons[panels.at(i)] = button;
+
+		connect(button->defaultAction(), SIGNAL(triggered()), this, SLOT(selectPanel()));
+	}
+
+	menu->addSeparator();
+	menu->addAction(tr("Add Web Panel…"), this, SLOT(addWebPanel()));
+
+	if (m_ui->panelsButton->menu())
+	{
+		m_ui->panelsButton->menu()->deleteLater();
+	}
+
+	m_ui->panelsButton->setMenu(menu);
+
+	selectPanel(definition.currentPanel);
 }
 
 QString SidebarWidget::getPanelTitle(const QString &identifier)
@@ -373,14 +318,29 @@ QString SidebarWidget::getPanelTitle(const QString &identifier)
 	return identifier;
 }
 
+QUrl SidebarWidget::getPanelUrl(const QString &identifier)
+{
+	if (identifier.startsWith(QLatin1String("web:")))
+	{
+		return QUrl(identifier.mid(4));
+	}
+
+	if (AddonsManager::getSpecialPages().contains(identifier))
+	{
+		return AddonsManager::getSpecialPage(identifier).url;
+	}
+
+	return QUrl();
+}
+
 QSize SidebarWidget::sizeHint() const
 {
-	if (SettingsManager::getValue(SettingsManager::Sidebar_CurrentPanelOption).toString().isEmpty())
+	if (m_currentPanel.isEmpty())
 	{
 		return m_ui->buttonsLayout->sizeHint();
 	}
 
-	return QSize(SettingsManager::getValue(SettingsManager::Sidebar_WidthOption).toInt(), m_ui->buttonsLayout->sizeHint().height());
+	return QSize(250, m_ui->buttonsLayout->sizeHint().height());
 }
 
 }

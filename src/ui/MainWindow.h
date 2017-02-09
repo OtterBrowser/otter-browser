@@ -22,15 +22,12 @@
 #ifndef OTTER_MAINWINDOW_H
 #define OTTER_MAINWINDOW_H
 
-#include "SidebarWidget.h"
 #include "../core/Application.h"
 #include "../core/SessionsManager.h"
 #include "../core/WindowsManager.h"
-#include "../modules/widgets/action/ActionWidget.h"
 
 #include <QtWidgets/QShortcut>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QSplitter>
 
 namespace Otter
 {
@@ -60,6 +57,7 @@ public:
 	Action* getAction(int identifier);
 	WorkspaceWidget* getWorkspace();
 	TabBarWidget* getTabBar();
+	ToolBarWidget* getToolBar(const QString &identifier);
 	WindowsManager* getWindowsManager();
 	QList<ToolBarWidget*> getToolBars(Qt::ToolBarArea area);
 	bool areToolBarsVisible() const;
@@ -82,8 +80,6 @@ protected:
 	void mouseReleaseEvent(QMouseEvent *event);
 	void beginToolBarDragging(bool isSidebar = false);
 	void endToolBarDragging();
-	void placeSidebars();
-	void updateSidebars();
 	bool event(QEvent *event);
 
 protected slots:
@@ -109,9 +105,6 @@ private:
 	TabBarWidget *m_tabBar;
 	MenuBarWidget *m_menuBar;
 	StatusBarWidget *m_statusBar;
-	ActionWidget *m_sidebarToggle;
-	SidebarWidget *m_sidebar;
-	QSplitter *m_splitter;
 	Window *m_currentWindow;
 	QString m_currentBookmark;
 	QString m_windowTitle;

@@ -21,6 +21,7 @@
 #ifndef OTTER_SIDEBARWIDGET_H
 #define OTTER_SIDEBARWIDGET_H
 
+#include "ToolBarWidget.h"
 #include "../core/WindowsManager.h"
 
 #include <QtWidgets/QToolButton>
@@ -39,32 +40,28 @@ class SidebarWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit SidebarWidget(QWidget *parent = nullptr);
+	explicit SidebarWidget(ToolBarWidget *parent);
 	~SidebarWidget();
 
-	void selectPanel(const QString &identifier);
-	QWidget *getCurrentPanel();
 	static QString getPanelTitle(const QString &identifier);
+	static QUrl getPanelUrl(const QString &identifier);
 	QSize sizeHint() const;
 
-public slots:
-	void scheduleSizeSave();
-
 protected:
-	void timerEvent(QTimerEvent *event);
 	void changeEvent(QEvent *event);
+	void selectPanel(const QString &identifier);
 
 protected slots:
-	void optionChanged(int identifier, const QVariant &value);
 	void addWebPanel();
 	void choosePanel(bool checked);
 	void selectPanel();
+	void updatePanels();
 
 private:
+	ToolBarWidget *m_toolBarWidget;
 	QString m_currentPanel;
 	QHash<QString, QToolButton*> m_buttons;
 	QHash<QString, QWidget*> m_panels;
-	int m_resizeTimer;
 	Ui::SidebarWidget *m_ui;
 };
 

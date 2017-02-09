@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 Piotr Wójcik <chocimier@tlen.pl>
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 **************************************************************************/
 
 #include "PanelChooserWidget.h"
-#include "../../../core/SettingsManager.h"
 #include "../../../ui/SidebarWidget.h"
 
 #include <QtWidgets/QMenu>
@@ -32,11 +31,11 @@ PanelChooserWidget::PanelChooserWidget(const ActionsManager::ActionEntryDefiniti
 	setMenu(new QMenu(this));
 	setPopupMode(QToolButton::InstantPopup);
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-	optionChanged(SettingsManager::Sidebar_CurrentPanelOption, SettingsManager::getValue(SettingsManager::Sidebar_CurrentPanelOption));
+	updateText();
 
+	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(handleToolBarModified(int)));
 	connect(menu(), SIGNAL(aboutToShow()), this, SLOT(menuAboutToShow()));
 	connect(menu(), SIGNAL(triggered(QAction*)), this, SLOT(selectPanel(QAction*)));
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
 }
 
 void PanelChooserWidget::changeEvent(QEvent *event)
@@ -45,15 +44,7 @@ void PanelChooserWidget::changeEvent(QEvent *event)
 
 	if (event->type() == QEvent::LanguageChange)
 	{
-		setText(SidebarWidget::getPanelTitle(SettingsManager::getValue(SettingsManager::Sidebar_CurrentPanelOption).toString()));
-	}
-}
-
-void PanelChooserWidget::optionChanged(int identifier, const QVariant &value)
-{
-	if (identifier == SettingsManager::Sidebar_CurrentPanelOption)
-	{
-		setText(SidebarWidget::getPanelTitle(value.toString()));
+		updateText();
 	}
 }
 
@@ -61,22 +52,70 @@ void PanelChooserWidget::menuAboutToShow()
 {
 	menu()->clear();
 
-	const QStringList panels(SettingsManager::getValue(SettingsManager::Sidebar_PanelsOption).toStringList());
+	const int identifier(getSideBarIdentifier());
 
-	for (int i = 0; i < panels.count(); ++i)
+	if (identifier >= 0)
 	{
-		menu()->addAction(SidebarWidget::getPanelTitle(panels[i]))->setData(panels[i]);
+		const QStringList panels(ToolBarsManager::getToolBarDefinition(identifier).panels);
+
+		for (int i = 0; i < panels.count(); ++i)
+		{
+			menu()->addAction(SidebarWidget::getPanelTitle(panels[i]))->setData(panels[i]);
+		}
 	}
 }
 
 void PanelChooserWidget::selectPanel(QAction *action)
 {
-	SettingsManager::setValue(SettingsManager::Sidebar_CurrentPanelOption, action->data());
+	const int identifier(getSideBarIdentifier());
+
+	if (identifier >= 0)
+	{
+		ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(identifier));
+		definition.currentPanel = action->data().toString();
+
+		ToolBarsManager::setToolBar(definition);
+	}
+}
+
+void PanelChooserWidget::handleToolBarModified(int identifier)
+{
+	if (identifier == getSideBarIdentifier())
+	{
+		updateText();
+	}
+}
+
+void PanelChooserWidget::updateText()
+{
+	const int identifier(getSideBarIdentifier());
+
+	if (identifier >= 0)
+	{
+		setText(SidebarWidget::getPanelTitle(ToolBarsManager::getToolBarDefinition(identifier).currentPanel));
+	}
 }
 
 QSize PanelChooserWidget::minimumSizeHint() const
 {
 	return QSize(0, 0);
+}
+
+int PanelChooserWidget::getSideBarIdentifier() const
+{
+	const QVariant toolBar(getParameters().value(QLatin1String("sidebar")));
+
+	if (toolBar.isNull())
+	{
+		return -1;
+	}
+
+	if (toolBar.type() == QVariant::Int)
+	{
+		return toolBar.toInt();
+	}
+
+	return ToolBarsManager::getToolBarIdentifier(toolBar.toString());
 }
 
 }

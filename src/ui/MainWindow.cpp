@@ -33,6 +33,7 @@
 #include "ReportDialog.h"
 #include "SaveSessionDialog.h"
 #include "SessionsManagerDialog.h"
+#include "SidebarWidget.h"
 #include "StatusBarWidget.h"
 #include "TabBarWidget.h"
 #include "TabSwitcherWidget.h"
@@ -57,7 +58,6 @@
 
 #include <QtGui/QCloseEvent>
 #include <QtWidgets/QMessageBox>
-#include <QtWidgets/QVBoxLayout>
 
 namespace Otter
 {
@@ -69,9 +69,6 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 	m_tabBar(nullptr),
 	m_menuBar(nullptr),
 	m_statusBar(nullptr),
-	m_sidebarToggle(nullptr),
-	m_sidebar(nullptr),
-	m_splitter(new QSplitter(this)),
 	m_currentWindow(nullptr),
 	m_mouseTrackerTimer(0),
 	m_tabSwitcherTimer(0),
@@ -127,15 +124,10 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 		m_tabBar->hide();
 	}
 
-	m_splitter->setChildrenCollapsible(false);
-	m_splitter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	m_splitter->addWidget(m_workspace);
-
-	setCentralWidget(m_splitter);
+	setCentralWidget(m_workspace);
 
 	getAction(ActionsManager::WorkOfflineAction)->setChecked(SettingsManager::getValue(SettingsManager::Network_WorkOfflineOption).toBool());
 	getAction(ActionsManager::ShowMenuBarAction)->setChecked(ToolBarsManager::getToolBarDefinition(ToolBarsManager::MenuBar).normalVisibility != ToolBarsManager::AlwaysHiddenToolBar);
-	getAction(ActionsManager::ShowSidebarAction)->setChecked(SettingsManager::getValue(SettingsManager::Sidebar_VisibleOption).toBool());
 	getAction(ActionsManager::LockToolBarsAction)->setChecked(ToolBarsManager::areToolBarsLocked());
 	getAction(ActionsManager::ExitAction)->setMenuRole(QAction::QuitRole);
 	getAction(ActionsManager::PreferencesAction)->setMenuRole(QAction::PreferencesRole);
@@ -155,9 +147,6 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 
 		setStatusBar(m_statusBar);
 	}
-
-	optionChanged(SettingsManager::Sidebar_ShowToggleEdgeOption, SettingsManager::getValue(SettingsManager::Sidebar_ShowToggleEdgeOption));
-	optionChanged(SettingsManager::Sidebar_VisibleOption, SettingsManager::getValue(SettingsManager::Sidebar_VisibleOption));
 
 	connect(ActionsManager::getInstance(), SIGNAL(shortcutsChanged()), this, SLOT(updateShortcuts()));
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
@@ -370,59 +359,16 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 
 void MainWindow::optionChanged(int identifier, const QVariant &value)
 {
-	if (identifier == SettingsManager::Network_WorkOfflineOption)
+	switch (identifier)
 	{
-		getAction(ActionsManager::WorkOfflineAction)->setChecked(value.toBool());
-	}
-	else if (identifier == SettingsManager::Interface_LockToolBarsOption)
-	{
-		getAction(ActionsManager::LockToolBarsAction)->setChecked(value.toBool());
-	}
-	else if (identifier == SettingsManager::Sidebar_CurrentPanelOption || identifier == SettingsManager::Sidebar_ReverseOption)
-	{
-		placeSidebars();
-	}
-	else if (identifier == SettingsManager::Sidebar_ShowToggleEdgeOption)
-	{
-		if (m_sidebarToggle && !value.toBool())
-		{
-			m_sidebarToggle->deleteLater();
-			m_sidebarToggle = nullptr;
+		case SettingsManager::Interface_LockToolBarsOption:
+			getAction(ActionsManager::LockToolBarsAction)->setChecked(value.toBool());
 
-			placeSidebars();
-		}
-		else if (!m_sidebarToggle && value.toBool())
-		{
-			m_sidebarToggle = new ActionWidget(ActionsManager::ShowSidebarAction, nullptr, ActionsManager::ActionEntryDefinition(), this);
-			m_sidebarToggle->setFixedWidth(6);
-			m_sidebarToggle->setText(QString());
-			m_sidebarToggle->setVisible(!areToolBarsVisible());
+			break;
+		case SettingsManager::Network_WorkOfflineOption:
+			getAction(ActionsManager::WorkOfflineAction)->setChecked(value.toBool());
 
-			placeSidebars();
-		}
-	}
-	else if (identifier == SettingsManager::Sidebar_VisibleOption)
-	{
-		if (m_sidebar && !value.toBool())
-		{
-			m_sidebar->hide();
-
-			placeSidebars();
-		}
-		else if (value.toBool())
-		{
-			if (!m_sidebar)
-			{
-				m_sidebar = new SidebarWidget(this);
-				m_sidebar->show();
-
-				connect(m_splitter, SIGNAL(splitterMoved(int,int)), m_sidebar, SLOT(scheduleSizeSave()));
-			}
-
-			m_sidebar->show();
-
-			placeSidebars();
-		}
+			break;
 	}
 }
 
@@ -598,23 +544,58 @@ void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
 
 			break;
 		case ActionsManager::ShowSidebarAction:
-			SettingsManager::setValue(SettingsManager::Sidebar_VisibleOption, Action::calculateCheckedState(parameters, getAction(ActionsManager::ShowSidebarAction)));
+			{
+				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(parameters.value(QLatin1String("sidebar"), ToolBarsManager::SideBar).toInt()));
+
+				if (definition.identifier >= 0)
+				{
+					const bool isFullScreen(windowState().testFlag(Qt::WindowFullScreen));
+					ToolBarsManager::ToolBarVisibility visibility(isFullScreen ? definition.fullScreenVisibility : definition.normalVisibility);
+					const bool fallback(!parameters.value(QLatin1String("panel")).toString().isEmpty() || !(visibility == ToolBarsManager::AlwaysVisibleToolBar));
+					const bool isChecked(parameters.contains(QLatin1String("sidebar")) ? parameters.value(QLatin1String("isChecked"), fallback).toBool() : fallback);
+
+					visibility = (isChecked ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
+
+					if (isFullScreen)
+					{
+						definition.fullScreenVisibility = visibility;
+					}
+					else
+					{
+						definition.normalVisibility = visibility;
+					}
+
+					if (parameters.contains(QLatin1String("panel")))
+					{
+						definition.currentPanel = parameters.value(QLatin1String("panel")).toString();
+					}
+
+					ToolBarsManager::setToolBar(definition);
+				}
+			}
 
 			break;
 		case ActionsManager::OpenPanelAction:
-			if (m_sidebar)
 			{
-				ContentsWidget *widget(qobject_cast<ContentsWidget*>(m_sidebar->getCurrentPanel()));
+				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(parameters.value(QLatin1String("sidebar"), ToolBarsManager::SideBar).toInt()));
 
-				if (widget)
+				if (definition.identifier >= 0 && !definition.currentPanel.isEmpty())
 				{
-					m_windowsManager->open(widget->getUrl(), WindowsManager::NewTabOpen);
+					m_windowsManager->open(SidebarWidget::getPanelUrl(definition.currentPanel), WindowsManager::NewTabOpen);
 				}
 			}
 
 			break;
 		case ActionsManager::ClosePanelAction:
-			SettingsManager::setValue(SettingsManager::Sidebar_CurrentPanelOption, QString());
+			{
+				ToolBarsManager::ToolBarDefinition definition(ToolBarsManager::getToolBarDefinition(parameters.value(QLatin1String("sidebar"), ToolBarsManager::SideBar).toInt()));
+				definition.currentPanel = QString();
+
+				if (definition.identifier >= 0)
+				{
+					ToolBarsManager::setToolBar(definition);
+				}
+			}
 
 			break;
 		case ActionsManager::ShowErrorConsoleAction:
@@ -902,36 +883,6 @@ void MainWindow::editBookmark(const QUrl &url)
 	}
 }
 
-void MainWindow::placeSidebars()
-{
-	if (!m_hasToolBars)
-	{
-		return;
-	}
-
-	if (m_sidebarToggle)
-	{
-		m_splitter->addWidget(m_sidebarToggle);
-	}
-
-	if (m_sidebar)
-	{
-		m_splitter->addWidget(m_sidebar);
-	}
-
-	m_splitter->addWidget(m_workspace);
-
-	if (SettingsManager::getValue(SettingsManager::Sidebar_ReverseOption).toBool())
-	{
-		for (int i = m_splitter->count() - 1; i >= 0; --i)
-		{
-			m_splitter->addWidget(m_splitter->widget(i));
-		}
-	}
-
-	updateSidebars();
-}
-
 void MainWindow::beginToolBarDragging(bool isSidebar)
 {
 	if (m_isDraggingToolBar || !QGuiApplication::mouseButtons().testFlag(Qt::LeftButton))
@@ -1175,55 +1126,11 @@ void MainWindow::handleTransferStarted()
 	{
 		QVariantMap parameters;
 		parameters[QLatin1String("isChecked")] = true;
+		parameters[QLatin1String("sidebar")] = ToolBarsManager::SideBar;
+		parameters[QLatin1String("panel")] = QLatin1String("transfers");
 
 		triggerAction(ActionsManager::ShowSidebarAction, parameters);
-
-		m_sidebar->selectPanel(QLatin1String("transfers"));
 	}
-}
-
-void MainWindow::updateSidebars()
-{
-	QList<int> sizes;
-	const int sidebarSize((m_sidebar && m_sidebar->isVisible()) ? m_sidebar->sizeHint().width() : 0);
-	const int sidebarToggleSize(m_sidebarToggle ? m_sidebarToggle->width() : 0);
-	const bool isReversed(SettingsManager::getValue(SettingsManager::Sidebar_ReverseOption).toBool());
-
-	if (m_sidebarToggle)
-	{
-		sizes.append(sidebarToggleSize);
-	}
-
-	if (m_sidebar && m_sidebar->isVisible())
-	{
-		sizes.append(sidebarSize);
-	}
-
-	sizes.append(m_splitter->width() - sidebarSize - sidebarToggleSize - ((sizes.count() - 1) * m_splitter->handleWidth()));
-
-	if (isReversed)
-	{
-		QList<int> sizesCopy(sizes);
-
-		sizes.clear();
-
-		for (int i = sizesCopy.count() - 1; i >= 0; --i)
-		{
-			sizes.append(sizesCopy[i]);
-		}
-	}
-
-	const int sidebarToggleIndex(m_sidebarToggle ? (m_splitter->indexOf(m_sidebarToggle) + (isReversed ? 0 : 1)) : -1);
-
-	for (int i = 0; i < m_splitter->count(); ++i)
-	{
-		if (m_splitter->handle(i))
-		{
-			m_splitter->handle(i)->setMaximumWidth((i == sidebarToggleIndex || !m_sidebar || !m_sidebar->isVisible()) ? 0 : QWIDGETSIZE_MAX);
-		}
-	}
-
-	m_splitter->setSizes(sizes);
 }
 
 void MainWindow::updateWindowTitle(const QString &title)
@@ -1368,6 +1275,21 @@ TabBarWidget* MainWindow::getTabBar()
 	return m_tabBar;
 }
 
+ToolBarWidget* MainWindow::getToolBar(const QString &identifier)
+{
+	QList<ToolBarWidget*> toolBars(findChildren<ToolBarWidget*>(QString(), Qt::FindDirectChildrenOnly));
+
+	for (int i = 0; i < toolBars.count(); ++i)
+	{
+		if (toolBars.at(i)->getIdentifier() == identifier)
+		{
+			return toolBars.at(i);
+		}
+	}
+
+	return nullptr;
+}
+
 WindowsManager* MainWindow::getWindowsManager()
 {
 	return m_windowsManager;
@@ -1450,11 +1372,6 @@ bool MainWindow::event(QEvent *event)
 							m_statusBar->hide();
 						}
 
-						if (m_sidebarToggle)
-						{
-							m_sidebarToggle->hide();
-						}
-
 						m_workspace->installEventFilter(this);
 					}
 					else
@@ -1469,11 +1386,6 @@ bool MainWindow::event(QEvent *event)
 						if (m_statusBar && ToolBarsManager::getToolBarDefinition(ToolBarsManager::StatusBar).normalVisibility == ToolBarsManager::AlwaysVisibleToolBar)
 						{
 							m_statusBar->show();
-						}
-
-						if (m_sidebarToggle)
-						{
-							m_sidebarToggle->show();
 						}
 
 						m_workspace->removeEventFilter(this);
@@ -1526,8 +1438,6 @@ bool MainWindow::event(QEvent *event)
 		case QEvent::WindowActivate:
 			emit activated(this);
 		case QEvent::Resize:
-			updateSidebars();
-
 			if (m_tabSwitcher && m_tabSwitcher->isVisible())
 			{
 				m_tabSwitcher->resize(size());

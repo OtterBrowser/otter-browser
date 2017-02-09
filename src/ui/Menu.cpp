@@ -861,7 +861,6 @@ void Menu::populateToolBarsMenu()
 		connect(action, SIGNAL(toggled(bool)), this, SLOT(setToolBarVisibility(bool)));
 	}
 
-	addAction(ActionsManager::ShowSidebarAction, true);
 	addAction(ActionsManager::ShowErrorConsoleAction, true);
 	addSeparator();
 

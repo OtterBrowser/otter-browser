@@ -216,12 +216,6 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Sessions_OpenInExistingWindowOption, false, BooleanType);
 	registerOption(Sessions_OptionsExludedFromInheritingOption, QStringList(QLatin1String("Content/PageReloadTime")), ListType);
 	registerOption(Sessions_OptionsExludedFromSavingOption, QStringList(), ListType);
-	registerOption(Sidebar_CurrentPanelOption, QString(), StringType);
-	registerOption(Sidebar_PanelsOption, QStringList({QLatin1String("bookmarks"), QLatin1String("history"), QLatin1String("notes"), QLatin1String("transfers")}), ListType);
-	registerOption(Sidebar_ReverseOption, false, BooleanType);
-	registerOption(Sidebar_ShowToggleEdgeOption, false, BooleanType);
-	registerOption(Sidebar_VisibleOption, false, BooleanType);
-	registerOption(Sidebar_WidthOption, 300, IntegerType);
 	registerOption(SourceViewer_ShowLineNumbersOption, true, BooleanType);
 	registerOption(SourceViewer_WrapLinesOption, false, BooleanType);
 	registerOption(StartPage_BackgroundColorOption, QString(), ColorType);
