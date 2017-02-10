@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@
 #define OTTER_NETWORKPROXYFACTORY_H
 
 #include "NetworkAutomaticProxy.h"
+#include "NetworkManagerFactory.h"
 
 #include <QtNetwork/QNetworkProxy>
 #include <QtNetwork/QNetworkReply>
@@ -32,19 +33,10 @@ namespace Otter
 class NetworkProxyFactory : public QObject, public QNetworkProxyFactory
 {
 	Q_OBJECT
-	Q_ENUMS(ProxyMode)
 
 public:
 	explicit NetworkProxyFactory();
 	~NetworkProxyFactory();
-
-	enum ProxyMode
-	{
-		NoProxy = 0,
-		ManualProxy = 1,
-		SystemProxy = 2,
-		AutomaticProxy = 3
-	};
 
 	QList<QNetworkProxy> queryProxy(const QNetworkProxyQuery &query);
 
@@ -57,7 +49,7 @@ private:
 	QNetworkReply *m_pacNetworkReply;
 	QStringList m_proxyExceptions;
 	QHash<QString, QList<QNetworkProxy> > m_proxies;
-	ProxyMode m_proxyMode;
+	ProxyDefinition::ProxyMode m_proxyMode;
 };
 
 }

@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,6 @@
 #include "NetworkProxyFactory.h"
 #include "Console.h"
 #include "NetworkManager.h"
-#include "NetworkManagerFactory.h"
 #include "SettingsManager.h"
 
 #include <QtCore/QFile>
@@ -33,7 +32,7 @@ namespace Otter
 NetworkProxyFactory::NetworkProxyFactory() : QObject(), QNetworkProxyFactory(),
 	m_automaticProxy(nullptr),
 	m_pacNetworkReply(nullptr),
-	m_proxyMode(SystemProxy)
+	m_proxyMode(ProxyDefinition::SystemProxy)
 {
 	optionChanged(SettingsManager::Network_ProxyModeOption);
 
@@ -50,9 +49,9 @@ NetworkProxyFactory::~NetworkProxyFactory()
 
 void NetworkProxyFactory::optionChanged(int identifier)
 {
-	if ((identifier == SettingsManager::Network_ProxyModeOption && SettingsManager::getValue(identifier) == QLatin1String("automatic")) || (identifier == SettingsManager::Proxy_AutomaticConfigurationPathOption && m_proxyMode == AutomaticProxy))
+	if ((identifier == SettingsManager::Network_ProxyModeOption && SettingsManager::getValue(identifier) == QLatin1String("automatic")) || (identifier == SettingsManager::Proxy_AutomaticConfigurationPathOption && m_proxyMode == ProxyDefinition::AutomaticProxy))
 	{
-		m_proxyMode = AutomaticProxy;
+		m_proxyMode = ProxyDefinition::AutomaticProxy;
 
 		if (!m_automaticProxy)
 		{
@@ -69,7 +68,7 @@ void NetworkProxyFactory::optionChanged(int identifier)
 			{
 				Console::addMessage(tr("Failed to load proxy auto-config (PAC): %1").arg(file.errorString()), Console::NetworkCategory, Console::ErrorLevel, path);
 
-				m_proxyMode = SystemProxy;
+				m_proxyMode = ProxyDefinition::SystemProxy;
 			}
 
 			file.close();
@@ -91,13 +90,13 @@ void NetworkProxyFactory::optionChanged(int identifier)
 			{
 				Console::addMessage(tr("Failed to load proxy auto-config (PAC). Invalid URL: %1").arg(url.url()), Console::NetworkCategory, Console::ErrorLevel);
 
-				m_proxyMode = SystemProxy;
+				m_proxyMode = ProxyDefinition::SystemProxy;
 			}
 		}
 	}
-	else if ((identifier == SettingsManager::Network_ProxyModeOption && SettingsManager::getValue(identifier) == QLatin1String("manual")) || (SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Proxy/")) && m_proxyMode == ManualProxy))
+	else if ((identifier == SettingsManager::Network_ProxyModeOption && SettingsManager::getValue(identifier) == QLatin1String("manual")) || (SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Proxy/")) && m_proxyMode == ProxyDefinition::ManualProxy))
 	{
-		m_proxyMode = ManualProxy;
+		m_proxyMode = ProxyDefinition::ManualProxy;
 
 		m_proxies.clear();
 		m_proxies[QLatin1String("NoProxy")] = QList<QNetworkProxy>({QNetworkProxy(QNetworkProxy::NoProxy)});
@@ -130,11 +129,11 @@ void NetworkProxyFactory::optionChanged(int identifier)
 
 		if (value == QLatin1String("system"))
 		{
-			m_proxyMode = SystemProxy;
+			m_proxyMode = ProxyDefinition::SystemProxy;
 		}
 		else
 		{
-			m_proxyMode = NoProxy;
+			m_proxyMode = ProxyDefinition::NoProxy;
 			m_proxies[QLatin1String("NoProxy")] = QList<QNetworkProxy>({QNetworkProxy(QNetworkProxy::NoProxy)});
 		}
 	}
@@ -146,7 +145,7 @@ void NetworkProxyFactory::setupAutomaticProxy()
 	{
 		Console::addMessage(tr("Failed to load proxy auto-config (PAC): %1").arg(m_pacNetworkReply->errorString()), Console::NetworkCategory, Console::ErrorLevel, m_pacNetworkReply->url().url());
 
-		m_proxyMode = SystemProxy;
+		m_proxyMode = ProxyDefinition::SystemProxy;
 	}
 
 	m_pacNetworkReply->deleteLater();
@@ -154,12 +153,12 @@ void NetworkProxyFactory::setupAutomaticProxy()
 
 QList<QNetworkProxy> NetworkProxyFactory::queryProxy(const QNetworkProxyQuery &query)
 {
-	if (m_proxyMode == SystemProxy)
+	if (m_proxyMode == ProxyDefinition::SystemProxy)
 	{
 		return QNetworkProxyFactory::systemProxyForQuery(query);
 	}
 
-	if (m_proxyMode == ManualProxy)
+	if (m_proxyMode == ProxyDefinition::ManualProxy)
 	{
 		const QString host(query.peerHostName());
 
@@ -206,7 +205,7 @@ QList<QNetworkProxy> NetworkProxyFactory::queryProxy(const QNetworkProxyQuery &q
 		return m_proxies[QLatin1String("NoProxy")];
 	}
 
-	if (m_proxyMode == AutomaticProxy && m_automaticProxy)
+	if (m_proxyMode == ProxyDefinition::AutomaticProxy && m_automaticProxy)
 	{
 		return m_automaticProxy->getProxy(query.url().toString(), query.peerHostName());
 	}
