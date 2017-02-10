@@ -259,10 +259,8 @@ void Menu::load(const QJsonObject &definition, const QStringList &options)
 		clear();
 	}
 
-	m_title = definition.value(QLatin1String("title")).toString();
-
 	setObjectName(identifier);
-	setTitle(QCoreApplication::translate("actions", m_title.toUtf8().constData()));
+	setTitle(definition.value(QLatin1String("title")).toString());
 
 	const QJsonArray actions(definition.value(QLatin1String("actions")).toArray());
 
@@ -370,68 +368,66 @@ void Menu::load(int option)
 	switch (option)
 	{
 		case SettingsManager::Network_CookiesKeepModeOption:
-			m_title = QT_TRANSLATE_NOOP("actions", "Keep Cookie Until");
+			setTitle(QT_TRANSLATE_NOOP("actions", "Keep Cookie Until"));
 
 			break;
 		case SettingsManager::Network_CookiesPolicyOption:
-			m_title = QT_TRANSLATE_NOOP("actions", "Accept Cookies");
+			setTitle(QT_TRANSLATE_NOOP("actions", "Accept Cookies"));
 
 			break;
 		case SettingsManager::Network_ThirdPartyCookiesPolicyOption:
-			m_title = QT_TRANSLATE_NOOP("actions", "Accept Third-party Cookies");
+			setTitle(QT_TRANSLATE_NOOP("actions", "Accept Third-party Cookies"));
 
 			break;
 		case SettingsManager::Content_PopupsPolicyOption:
-			m_title = QT_TRANSLATE_NOOP("actions", "Pop-Ups");
+			setTitle(QT_TRANSLATE_NOOP("actions", "Pop-Ups"));
 
 			break;
 		case SettingsManager::Permissions_EnableFullScreenOption:
-			m_title = QT_TRANSLATE_NOOP("actions", "Full Screen");
+			setTitle(QT_TRANSLATE_NOOP("actions", "Full Screen"));
 
 			break;
 		case SettingsManager::Permissions_EnableGeolocationOption:
-			m_title = QT_TRANSLATE_NOOP("actions", "Geolocation");
+			setTitle(QT_TRANSLATE_NOOP("actions", "Geolocation"));
 
 			break;
 		case SettingsManager::Permissions_EnableImagesOption:
-			m_title = QT_TRANSLATE_NOOP("actions", "Images");
+			setTitle(QT_TRANSLATE_NOOP("actions", "Images"));
 
 			break;
 		case SettingsManager::Permissions_EnableMediaCaptureAudioOption:
-			m_title = QT_TRANSLATE_NOOP("actions", "Capture Audio");
+			setTitle(QT_TRANSLATE_NOOP("actions", "Capture Audio"));
 
 			break;
 		case SettingsManager::Permissions_EnableMediaCaptureVideoOption:
-			m_title = QT_TRANSLATE_NOOP("actions", "Capture Video");
+			setTitle(QT_TRANSLATE_NOOP("actions", "Capture Video"));
 
 			break;
 		case SettingsManager::Permissions_EnableMediaPlaybackAudioOption:
-			m_title = QT_TRANSLATE_NOOP("actions", "Playback Audio");
+			setTitle(QT_TRANSLATE_NOOP("actions", "Playback Audio"));
 
 			break;
 		case SettingsManager::Permissions_EnableNotificationsOption:
-			m_title = QT_TRANSLATE_NOOP("actions", "Notifications");
+			setTitle(QT_TRANSLATE_NOOP("actions", "Notifications"));
 
 			break;
 		case SettingsManager::Permissions_EnablePluginsOption:
-			m_title = QT_TRANSLATE_NOOP("actions", "Plugins");
+			setTitle(QT_TRANSLATE_NOOP("actions", "Plugins"));
 
 			break;
 		case SettingsManager::Permissions_EnablePointerLockOption:
-			m_title = QT_TRANSLATE_NOOP("actions", "Pointer Lock");
+			setTitle(QT_TRANSLATE_NOOP("actions", "Pointer Lock"));
 
 			break;
 		case SettingsManager::Permissions_ScriptsCanCloseWindowsOption:
-			m_title = QT_TRANSLATE_NOOP("actions", "Closing Windows by JavaScript");
+			setTitle(QT_TRANSLATE_NOOP("actions", "Closing Windows by JavaScript"));
 
 			break;
 		default:
-			m_title = SettingsManager::getOptionName(option);
+			setTitle(SettingsManager::getOptionName(option));
 
 			break;
 	}
-
-	setTitle(QCoreApplication::translate("actions", m_title.toUtf8().constData()));
 
 	connect(this, SIGNAL(aboutToShow()), this, SLOT(populateOptionMenu()));
 	connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectOption(QAction*)));
@@ -1223,6 +1219,13 @@ void Menu::setToolBarVisibility(bool visible)
 
 		ToolBarsManager::setToolBar(definition);
 	}
+}
+
+void Menu::setTitle(const QString &title)
+{
+	m_title = title;
+
+	QMenu::setTitle(QCoreApplication::translate("actions", m_title.toUtf8().constData()));
 }
 
 Action* Menu::addAction(int identifier, bool useGlobal)

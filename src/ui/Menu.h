@@ -56,6 +56,7 @@ public:
 	void load(const QString &path, const QStringList &options = QStringList());
 	void load(const QJsonObject &definition, const QStringList &options = QStringList());
 	void load(int option);
+	void setTitle(const QString &title);
 	Action* addAction(int identifier = -1, bool useGlobal = false);
 	MenuRole getRole() const;
 	static MenuRole getRole(const QString &identifier);
