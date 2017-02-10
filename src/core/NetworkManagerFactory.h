@@ -89,6 +89,7 @@ class CookieJar;
 class NetworkCache;
 class NetworkManager;
 class NetworkManagerFactory;
+class NetworkProxyFactory;
 
 class UserAgentsModel : public TreeModel
 {
@@ -153,6 +154,7 @@ protected slots:
 private:
 	static NetworkManagerFactory *m_instance;
 	static NetworkManager *m_networkManager;
+	static NetworkProxyFactory *m_proxyFactory;
 	static NetworkCache *m_cache;
 	static CookieJar *m_cookieJar;
 	static QString m_acceptLanguage;

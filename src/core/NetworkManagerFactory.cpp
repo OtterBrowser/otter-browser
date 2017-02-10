@@ -42,6 +42,7 @@ namespace Otter
 
 NetworkManagerFactory* NetworkManagerFactory::m_instance(nullptr);
 NetworkManager* NetworkManagerFactory::m_networkManager(nullptr);
+NetworkProxyFactory* NetworkManagerFactory::m_proxyFactory(nullptr);
 NetworkCache* NetworkManagerFactory::m_cache(nullptr);
 CookieJar* NetworkManagerFactory::m_cookieJar(nullptr);
 QString NetworkManagerFactory::m_acceptLanguage;
@@ -138,9 +139,10 @@ void NetworkManagerFactory::createInstance(QObject *parent)
 {
 	if (!m_instance)
 	{
-		QNetworkProxyFactory::setApplicationProxyFactory(new NetworkProxyFactory());
-
 		m_instance = new NetworkManagerFactory(parent);
+		m_proxyFactory = new NetworkProxyFactory();
+
+		QNetworkProxyFactory::setApplicationProxyFactory(m_proxyFactory);
 
 		ContentBlockingManager::createInstance(m_instance);
 	}

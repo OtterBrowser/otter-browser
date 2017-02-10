@@ -35,7 +35,7 @@ class NetworkProxyFactory : public QObject, public QNetworkProxyFactory
 	Q_OBJECT
 
 public:
-	explicit NetworkProxyFactory();
+	explicit NetworkProxyFactory(QObject *parent = nullptr);
 	~NetworkProxyFactory();
 
 	QList<QNetworkProxy> queryProxy(const QNetworkProxyQuery &query);
