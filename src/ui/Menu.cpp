@@ -52,7 +52,6 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Edit"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "View"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "History"))
-	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Bookmarks"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Tools"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Help"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Page"))
@@ -66,6 +65,7 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 		case BookmarkSelectorMenuRole:
 		case NotesMenuRole:
 			{
+				setTitle((role == NotesMenuRole) ? QT_TRANSLATE_NOOP("actions", "Notes") : QT_TRANSLATE_NOOP("actions", "Bookmarks"));
 				installEventFilter(this);
 
 				Menu *parentMenu(qobject_cast<Menu*>(parent));
