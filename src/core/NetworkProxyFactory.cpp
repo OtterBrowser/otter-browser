@@ -103,18 +103,14 @@ void NetworkProxyFactory::optionChanged(int identifier)
 		m_proxies[-1] = QList<QNetworkProxy>({QNetworkProxy(QNetworkProxy::NoProxy)});
 
 		const bool useCommon(SettingsManager::getValue(SettingsManager::Proxy_UseCommonOption).toBool());
-		const QList<QPair<ProxyDefinition::ProtocolType, QNetworkProxy::ProxyType> > proxyTypes({qMakePair(ProxyDefinition::HttpProtocol, QNetworkProxy::HttpProxy), qMakePair(ProxyDefinition::HttpsProtocol, QNetworkProxy::HttpProxy), qMakePair(ProxyDefinition::FtpProtocol, QNetworkProxy::FtpCachingProxy), qMakePair(ProxyDefinition::SocksProtocol, QNetworkProxy::Socks5Proxy)});
+		const QList<ProxyDefinition::ProtocolType> protocols({ProxyDefinition::HttpProtocol, ProxyDefinition::HttpsProtocol, ProxyDefinition::FtpProtocol, ProxyDefinition::SocksProtocol});
 
-		for (int i = 0; i < proxyTypes.count(); ++i)
+		for (int i = 0; i < protocols.count(); ++i)
 		{
-			if (useCommon && proxyTypes.at(i).second != QNetworkProxy::Socks5Proxy)
-			{
-				m_proxies[proxyTypes.at(i).first] = QList<QNetworkProxy>({QNetworkProxy(proxyTypes.at(i).second, SettingsManager::getValue(SettingsManager::Proxy_CommonServersOption).toString(), SettingsManager::getValue(SettingsManager::Proxy_CommonPortOption).toInt())});
-			}
-
 			QString proxyName;
+			QNetworkProxy::ProxyType proxyType(QNetworkProxy::HttpProxy);
 
-			switch (proxyTypes.at(i).first)
+			switch (protocols.at(i))
 			{
 				case ProxyDefinition::HttpProtocol:
 					proxyName = QLatin1String("Http");
@@ -126,19 +122,25 @@ void NetworkProxyFactory::optionChanged(int identifier)
 					break;
 				case ProxyDefinition::FtpProtocol:
 					proxyName = QLatin1String("Ftp");
+					proxyType = QNetworkProxy::FtpCachingProxy;
 
 					break;
 				case ProxyDefinition::SocksProtocol:
 					proxyName = QLatin1String("Socks");
+					proxyType = QNetworkProxy::Socks5Proxy;
 
 					break;
 				default:
 					break;
 			}
 
-			if (!proxyName.isEmpty() && SettingsManager::getValue(SettingsManager::getOptionIdentifier(QLatin1String("Proxy/Use") + proxyName)).toBool())
+			if (useCommon && protocols.at(i) != ProxyDefinition::SocksProtocol)
 			{
-				m_proxies[proxyTypes.at(i).first] = QList<QNetworkProxy>({QNetworkProxy(proxyTypes.at(i).second, SettingsManager::getValue(SettingsManager::getOptionIdentifier(QStringLiteral("Proxy/%1Servers").arg(proxyName))).toString(), SettingsManager::getValue(SettingsManager::getOptionIdentifier(QStringLiteral("Proxy/%1Port").arg(proxyName))).toInt())});
+				m_proxies[protocols.at(i)] = QList<QNetworkProxy>({QNetworkProxy(proxyType, SettingsManager::getValue(SettingsManager::Proxy_CommonServersOption).toString(), SettingsManager::getValue(SettingsManager::Proxy_CommonPortOption).toInt())});
+			}
+			else if (!proxyName.isEmpty() && SettingsManager::getValue(SettingsManager::getOptionIdentifier(QLatin1String("Proxy/Use") + proxyName)).toBool())
+			{
+				m_proxies[protocols.at(i)] = QList<QNetworkProxy>({QNetworkProxy(proxyType, SettingsManager::getValue(SettingsManager::getOptionIdentifier(QStringLiteral("Proxy/%1Servers").arg(proxyName))).toString(), SettingsManager::getValue(SettingsManager::getOptionIdentifier(QStringLiteral("Proxy/%1Port").arg(proxyName))).toInt())});
 			}
 		}
 
