@@ -39,7 +39,7 @@ public:
 	explicit NetworkProxyFactory(QObject *parent = nullptr);
 	~NetworkProxyFactory();
 
-	QList<QNetworkProxy> queryProxy(const QNetworkProxyQuery &query);
+	QList<QNetworkProxy> queryProxy(const QNetworkProxyQuery &query) override;
 
 protected slots:
 	void optionChanged(int identifier);
@@ -49,7 +49,7 @@ private:
 	NetworkAutomaticProxy *m_automaticProxy;
 	QNetworkReply *m_pacNetworkReply;
 	QStringList m_proxyExceptions;
-	QHash<QString, QList<QNetworkProxy> > m_proxies;
+	QMap<int, QList<QNetworkProxy> > m_proxies;
 	ProxyDefinition::ProxyMode m_proxyMode;
 };
 
