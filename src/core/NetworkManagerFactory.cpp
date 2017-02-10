@@ -139,8 +139,8 @@ void NetworkManagerFactory::createInstance(QObject *parent)
 {
 	if (!m_instance)
 	{
-		m_instance = new NetworkManagerFactory(parent);
 		m_proxyFactory = new NetworkProxyFactory();
+		m_instance = new NetworkManagerFactory(parent);
 
 		QNetworkProxyFactory::setApplicationProxyFactory(m_proxyFactory);
 
@@ -181,62 +181,69 @@ void NetworkManagerFactory::initialize()
 
 void NetworkManagerFactory::optionChanged(int identifier, const QVariant &value)
 {
-	if (identifier == SettingsManager::Network_AcceptLanguageOption)
+	switch (identifier)
 	{
-		m_acceptLanguage = ((value.toString().isEmpty()) ? QLatin1String(" ") : value.toString().replace(QLatin1String("system"), QLocale::system().bcp47Name()));
-	}
-	else if (identifier == SettingsManager::Network_DoNotTrackPolicyOption)
-	{
-		const QString policyValue(value.toString());
+		case SettingsManager::Network_AcceptLanguageOption:
+			m_acceptLanguage = ((value.toString().isEmpty()) ? QLatin1String(" ") : value.toString().replace(QLatin1String("system"), QLocale::system().bcp47Name()));
 
-		if (policyValue == QLatin1String("allow"))
-		{
-			m_doNotTrackPolicy = AllowToTrackPolicy;
-		}
-		else if (policyValue == QLatin1String("doNotAllow"))
-		{
-			m_doNotTrackPolicy = DoNotAllowToTrackPolicy;
-		}
-		else
-		{
-			m_doNotTrackPolicy = SkipTrackPolicy;
-		}
-	}
-	else if (identifier == SettingsManager::Network_EnableReferrerOption)
-	{
-		m_canSendReferrer = value.toBool();
-	}
-	else if (identifier == SettingsManager::Network_WorkOfflineOption)
-	{
-		m_isWorkingOffline = value.toBool();
-	}
-	else if (identifier == SettingsManager::Proxy_UseSystemAuthenticationOption)
-	{
-		m_isUsingSystemProxyAuthentication = value.toBool();
-	}
-	else if (identifier == SettingsManager::Security_CiphersOption)
-	{
-		if (value.toString() == QLatin1String("default"))
-		{
-			QSslSocket::setDefaultCiphers(m_defaultCiphers);
-
-			return;
-		}
-
-		const QStringList selectedCiphers(value.toStringList());
-		QList<QSslCipher> ciphers;
-
-		for (int i = 0; i < selectedCiphers.count(); ++i)
-		{
-			const QSslCipher cipher(selectedCiphers.at(i));
-
-			if (!cipher.isNull())
+			break;
+		case SettingsManager::Network_DoNotTrackPolicyOption:
 			{
-				ciphers.append(cipher);
-			}
-		}
+				const QString policyValue(value.toString());
 
-		QSslSocket::setDefaultCiphers(ciphers);
+				if (policyValue == QLatin1String("allow"))
+				{
+					m_doNotTrackPolicy = AllowToTrackPolicy;
+				}
+				else if (policyValue == QLatin1String("doNotAllow"))
+				{
+					m_doNotTrackPolicy = DoNotAllowToTrackPolicy;
+				}
+				else
+				{
+					m_doNotTrackPolicy = SkipTrackPolicy;
+				}
+			}
+
+			break;
+		case SettingsManager::Network_EnableReferrerOption:
+			m_canSendReferrer = value.toBool();
+
+			break;
+		case SettingsManager::Network_WorkOfflineOption:
+			m_isWorkingOffline = value.toBool();
+
+			break;
+		case SettingsManager::Proxy_UseSystemAuthenticationOption:
+			m_isUsingSystemProxyAuthentication = value.toBool();
+
+			break;
+		case SettingsManager::Security_CiphersOption:
+			if (value.toString() == QLatin1String("default"))
+			{
+				QSslSocket::setDefaultCiphers(m_defaultCiphers);
+			}
+			else
+			{
+				const QStringList selectedCiphers(value.toStringList());
+				QList<QSslCipher> ciphers;
+
+				for (int i = 0; i < selectedCiphers.count(); ++i)
+				{
+					const QSslCipher cipher(selectedCiphers.at(i));
+
+					if (!cipher.isNull())
+					{
+						ciphers.append(cipher);
+					}
+				}
+
+				QSslSocket::setDefaultCiphers(ciphers);
+			}
+
+			break;
+		default:
+			break;
 	}
 }
 
