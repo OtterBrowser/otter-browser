@@ -158,7 +158,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Network_CookiesPolicyOption, QLatin1String("acceptAll"), EnumerationType, QStringList({QLatin1String("acceptAll"), QLatin1String("acceptExisting"), QLatin1String("readOnly"), QLatin1String("ignore")}));
 	registerOption(Network_DoNotTrackPolicyOption, QLatin1String("skip"), EnumerationType, QStringList({QLatin1String("skip"), QLatin1String("allow"), QLatin1String("doNotAllow")}));
 	registerOption(Network_EnableReferrerOption, true, BooleanType);
-	registerOption(Network_ProxyModeOption, QLatin1String("system"), EnumerationType, QStringList({QLatin1String("noproxy"), QLatin1String("manual"), QLatin1String("system"), QLatin1String("automatic")}));
+	registerOption(Network_ProxyModeOption, QLatin1String("system"), EnumerationType, QStringList({QLatin1String("noProxy"), QLatin1String("manual"), QLatin1String("system"), QLatin1String("automatic")}));
 	registerOption(Network_ThirdPartyCookiesAcceptedHostsOption, QStringList(), ListType);
 	registerOption(Network_ThirdPartyCookiesPolicyOption, QLatin1String("acceptAll"), EnumerationType, QStringList({QLatin1String("acceptAll"), QLatin1String("acceptExisting"), QLatin1String("ignore")}));
 	registerOption(Network_ThirdPartyCookiesRejectedHostsOption, QStringList(), ListType);

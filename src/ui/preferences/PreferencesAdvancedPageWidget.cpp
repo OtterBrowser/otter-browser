@@ -221,7 +221,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->proxyExceptionsItemView->setModel(proxyExceptionsModel);
 
-	m_ui->proxyModeComboBox->addItem(tr("No proxy"), QLatin1String("noroxy"));
+	m_ui->proxyModeComboBox->addItem(tr("No proxy"), QLatin1String("noProxy"));
 	m_ui->proxyModeComboBox->addItem(tr("System configuration"), QLatin1String("system"));
 	m_ui->proxyModeComboBox->addItem(tr("Manual configuration"), QLatin1String("manual"));
 	m_ui->proxyModeComboBox->addItem(tr("Automatic configuration (PAC)"), QLatin1String("automatic"));
