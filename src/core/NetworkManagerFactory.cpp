@@ -170,6 +170,7 @@ void NetworkManagerFactory::initialize()
 		}
 	}
 
+	loadProxies();
 	loadUserAgents();
 
 	m_instance->optionChanged(SettingsManager::Network_AcceptLanguageOption, SettingsManager::getValue(SettingsManager::Network_AcceptLanguageOption));
@@ -268,6 +269,30 @@ void NetworkManagerFactory::clearCache(int period)
 	}
 }
 
+void NetworkManagerFactory::loadProxies()
+{
+	m_proxies.clear();
+
+	QFile file(SessionsManager::getReadableDataPath(QLatin1String("proxies.json")));
+
+	if (!file.open(QIODevice::ReadOnly))
+	{
+		return;
+	}
+
+	const QJsonArray proxies(QJsonDocument::fromJson(file.readAll()).array());
+	ProxyDefinition root;
+
+	for (int i = 0; i < proxies.count(); ++i)
+	{
+		readProxy(proxies.at(i), &root);
+	}
+
+	m_proxies[QLatin1String("root")] = root;
+
+	file.close();
+}
+
 void NetworkManagerFactory::loadUserAgents()
 {
 	m_userAgents.clear();
@@ -292,6 +317,105 @@ void NetworkManagerFactory::loadUserAgents()
 	file.close();
 }
 
+void NetworkManagerFactory::readProxy(const QJsonValue &value, ProxyDefinition *parent)
+{
+	if (!value.isObject())
+	{
+		if (value.isString() && value.toString() == QLatin1String("separator"))
+		{
+			parent->children.append(QString());
+		}
+
+		return;
+	}
+
+	const QJsonObject proxyObject(value.toObject());
+	const QString identifier(proxyObject.value(QLatin1String("identifier")).toString());
+
+	if (!m_proxies.contains(identifier))
+	{
+		ProxyDefinition proxy;
+		proxy.identifier = identifier;
+		proxy.title = proxyObject.value(QLatin1String("title")).toString();
+
+		if (proxyObject.contains(QLatin1String("children")))
+		{
+			proxy.isFolder = true;
+
+			const QJsonArray childrenArray(proxyObject.value(QLatin1String("children")).toArray());
+
+			for (int i = 0; i < childrenArray.count(); ++i)
+			{
+				readProxy(childrenArray.at(i), &proxy);
+			}
+		}
+		else
+		{
+			if (proxyObject.contains(QLatin1String("servers")))
+			{
+				const QJsonArray serversArray(proxyObject.value(QLatin1String("servers")).toArray());
+
+				for (int i = 0; i < serversArray.count(); ++i)
+				{
+					const QJsonObject serverObject(serversArray.at(i).toObject());
+					const QString protocol(serverObject.value(QLatin1String("protocol")).toString());
+					ProxyDefinition::ProxyServer server;
+					server.hostName = serverObject.value(QLatin1String("hostName")).toString();
+					server.port = serverObject.value(QLatin1String("port")).toInt();
+
+					if (protocol == QLatin1String("http"))
+					{
+						proxy.servers[ProxyDefinition::HttpProtocol] = server;
+					}
+					else if (protocol == QLatin1String("https"))
+					{
+						proxy.servers[ProxyDefinition::HttpsProtocol] = server;
+					}
+					else if (protocol == QLatin1String("ftp"))
+					{
+						proxy.servers[ProxyDefinition::FtpProtocol] = server;
+					}
+					else if (protocol == QLatin1String("socks"))
+					{
+						proxy.servers[ProxyDefinition::SocksProtocol] = server;
+					}
+					else
+					{
+						proxy.servers[ProxyDefinition::AnyProtocol] = server;
+					}
+				}
+			}
+
+			const QString mode(proxyObject.value(QLatin1String("mode")).toString());
+
+			if (mode == QLatin1String("noProxy"))
+			{
+				proxy.mode = ProxyDefinition::NoProxy;
+			}
+			else if (mode == QLatin1String("manualProxy"))
+			{
+				proxy.mode = ProxyDefinition::ManualProxy;
+			}
+			else if (mode == QLatin1String("automaticProxy"))
+			{
+				proxy.mode = ProxyDefinition::AutomaticProxy;
+			}
+			else
+			{
+				proxy.mode = ProxyDefinition::SystemProxy;
+			}
+
+			proxy.path = proxyObject.value(QLatin1String("path")).toString();
+			proxy.exceptions = proxyObject.value(QLatin1String("exceptions")).toVariant().toStringList();
+			proxy.usesSystemAuthentication = proxyObject.value(QLatin1String("usesSystemAuthentication")).toBool(false);
+		}
+
+		m_proxies[identifier] = proxy;
+	}
+
+	parent->children.append(identifier);
+}
+
 void NetworkManagerFactory::readUserAgent(const QJsonValue &value, UserAgentDefinition *parent)
 {
 	if (!value.isObject())
@@ -304,29 +428,29 @@ void NetworkManagerFactory::readUserAgent(const QJsonValue &value, UserAgentDefi
 		return;
 	}
 
-	const QJsonObject object(value.toObject());
-	const QString identifier(object.value(QLatin1String("identifier")).toString());
+	const QJsonObject userAgentObject(value.toObject());
+	const QString identifier(userAgentObject.value(QLatin1String("identifier")).toString());
 
 	if (!m_userAgents.contains(identifier))
 	{
 		UserAgentDefinition userAgent;
 		userAgent.identifier = identifier;
-		userAgent.title = object.value(QLatin1String("title")).toString();
+		userAgent.title = userAgentObject.value(QLatin1String("title")).toString();
 
-		if (object.contains(QLatin1String("children")))
+		if (userAgentObject.contains(QLatin1String("children")))
 		{
 			userAgent.isFolder = true;
 
-			const QJsonArray children(object.value(QLatin1String("children")).toArray());
+			const QJsonArray childrenArray(userAgentObject.value(QLatin1String("children")).toArray());
 
-			for (int i = 0; i < children.count(); ++i)
+			for (int i = 0; i < childrenArray.count(); ++i)
 			{
-				readUserAgent(children.at(i), &userAgent);
+				readUserAgent(childrenArray.at(i), &userAgent);
 			}
 		}
 		else
 		{
-			userAgent.value = object.value(QLatin1String("value")).toString();
+			userAgent.value = userAgentObject.value(QLatin1String("value")).toString();
 		}
 
 		m_userAgents[identifier] = userAgent;

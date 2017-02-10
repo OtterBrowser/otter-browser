@@ -127,6 +127,7 @@ public:
 	static void initialize();
 	static void clearCookies(int period = 0);
 	static void clearCache(int period = 0);
+	static void loadProxies();
 	static void loadUserAgents();
 	static void notifyAuthenticated(QAuthenticator *authenticator, bool wasAccepted);
 	static NetworkManagerFactory* getInstance();
@@ -148,6 +149,7 @@ public:
 protected:
 	explicit NetworkManagerFactory(QObject *parent = nullptr);
 
+	static void readProxy(const QJsonValue &value, ProxyDefinition *parent);
 	static void readUserAgent(const QJsonValue &value, UserAgentDefinition *parent);
 
 protected slots:
