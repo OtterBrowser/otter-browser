@@ -211,49 +211,6 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->userAgentsAddButton->setMenu(addUserAgentMenu);
 
-	QStandardItemModel *proxyExceptionsModel(new QStandardItemModel(this));
-	const QStringList currentProxyExceptions(SettingsManager::getValue(SettingsManager::Proxy_ExceptionsOption).toStringList());
-
-	for (int i = 0; i < currentProxyExceptions.count(); ++i)
-	{
-		proxyExceptionsModel->appendRow(new QStandardItem(currentProxyExceptions.at(i)));
-	}
-
-	m_ui->proxyExceptionsItemView->setModel(proxyExceptionsModel);
-
-	m_ui->proxyModeComboBox->addItem(tr("No proxy"), QLatin1String("noProxy"));
-	m_ui->proxyModeComboBox->addItem(tr("System configuration"), QLatin1String("system"));
-	m_ui->proxyModeComboBox->addItem(tr("Manual configuration"), QLatin1String("manual"));
-	m_ui->proxyModeComboBox->addItem(tr("Automatic configuration (PAC)"), QLatin1String("automatic"));
-
-	const int proxyIndex(m_ui->proxyModeComboBox->findData(SettingsManager::getValue(SettingsManager::Network_ProxyModeOption).toString()));
-
-	m_ui->proxyModeComboBox->setCurrentIndex((proxyIndex < 0) ? 1 : proxyIndex);
-
-	if (proxyIndex == 2 || proxyIndex == 3)
-	{
-		proxyModeChanged(proxyIndex);
-	}
-
-	m_ui->allProxyCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Proxy_UseCommonOption).toBool());
-	m_ui->httpProxyCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Proxy_UseHttpOption).toBool());
-	m_ui->httpsProxyCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Proxy_UseHttpsOption).toBool());
-	m_ui->ftpProxyCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Proxy_UseFtpOption).toBool());
-	m_ui->socksProxyCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Proxy_UseSocksOption).toBool());
-	m_ui->allProxyServersLineEdit->setText(SettingsManager::getValue(SettingsManager::Proxy_CommonServersOption).toString());
-	m_ui->httpProxyServersLineEdit->setText(SettingsManager::getValue(SettingsManager::Proxy_HttpServersOption).toString());
-	m_ui->httpsProxyServersLineEdit->setText(SettingsManager::getValue(SettingsManager::Proxy_HttpsServersOption).toString());
-	m_ui->ftpProxyServersLineEdit->setText(SettingsManager::getValue(SettingsManager::Proxy_FtpServersOption).toString());
-	m_ui->socksProxyServersLineEdit->setText(SettingsManager::getValue(SettingsManager::Proxy_SocksServersOption).toString());
-	m_ui->allProxyPortSpinBox->setValue(SettingsManager::getValue(SettingsManager::Proxy_CommonPortOption).toInt());
-	m_ui->httpProxyPortSpinBox->setValue(SettingsManager::getValue(SettingsManager::Proxy_HttpPortOption).toInt());
-	m_ui->httpsProxyPortSpinBox->setValue(SettingsManager::getValue(SettingsManager::Proxy_HttpsPortOption).toInt());
-	m_ui->ftpProxyPortSpinBox->setValue(SettingsManager::getValue(SettingsManager::Proxy_FtpPortOption).toInt());
-	m_ui->socksProxyPortSpinBox->setValue(SettingsManager::getValue(SettingsManager::Proxy_SocksPortOption).toInt());
-	m_ui->automaticProxyConfigurationFilePathWidget->setPath(SettingsManager::getValue(SettingsManager::Proxy_AutomaticConfigurationPathOption).toString());
-	m_ui->automaticProxyConfigurationFilePathWidget->setFilters(QStringList(tr("Proxy configuration files (*.pac)")));
-	m_ui->proxySystemAuthentication->setChecked(SettingsManager::getValue(SettingsManager::Proxy_UseSystemAuthenticationOption).toBool());
-
 	m_ui->ciphersAddButton->setMenu(new QMenu(m_ui->ciphersAddButton));
 
 	if (QSslSocket::supportsSsl())
@@ -422,11 +379,6 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	connect(m_ui->userAgentsAddButton->menu(), SIGNAL(triggered(QAction*)), this, SLOT(addUserAgent(QAction*)));
 	connect(m_ui->userAgentsEditButton, SIGNAL(clicked()), this, SLOT(editUserAgent()));
 	connect(m_ui->userAgentsRemoveButton, SIGNAL(clicked()), m_ui->userAgentsViewWidget, SLOT(removeRow()));
-	connect(m_ui->proxyModeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(proxyModeChanged(int)));
-	connect(m_ui->proxyExceptionsItemView, SIGNAL(needsActionsUpdate()), this, SLOT(updateProxyExceptionsActions()));
-	connect(m_ui->addProxyExceptionButton, SIGNAL(clicked()), this, SLOT(addProxyException()));
-	connect(m_ui->editProxyExceptionButton, SIGNAL(clicked()), this, SLOT(editProxyException()));
-	connect(m_ui->removeProxyExceptionButton, SIGNAL(clicked()), this, SLOT(removeProxyException()));
 	connect(m_ui->ciphersViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->ciphersMoveDownButton, SLOT(setEnabled(bool)));
 	connect(m_ui->ciphersViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->ciphersMoveUpButton, SLOT(setEnabled(bool)));
 	connect(m_ui->ciphersViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateCiphersActions()));
@@ -811,95 +763,6 @@ void PreferencesAdvancedPageWidget::updateUserAgentsActions()
 
 	m_ui->userAgentsEditButton->setEnabled(index.isValid() && (type == TreeModel::FolderType || type == TreeModel::EntryType));
 	m_ui->userAgentsRemoveButton->setEnabled(index.isValid());
-}
-
-void PreferencesAdvancedPageWidget::proxyModeChanged(int index)
-{
-	if (index == 2)
-	{
-		m_ui->manualProxyConfigurationWidget->setEnabled(true);
-		m_ui->allProxyCheckBox->setEnabled(true);
-		m_ui->allProxyServersLineEdit->setEnabled(true);
-		m_ui->allProxyPortSpinBox->setEnabled(true);
-		m_ui->proxyExceptionsWidget->setEnabled(true);
-
-		if (!m_ui->allProxyCheckBox->isChecked())
-		{
-			m_ui->httpProxyCheckBox->setEnabled(true);
-			m_ui->httpsProxyCheckBox->setEnabled(true);
-			m_ui->ftpProxyCheckBox->setEnabled(true);
-			m_ui->socksProxyCheckBox->setEnabled(true);
-			m_ui->httpProxyServersLineEdit->setEnabled(true);
-			m_ui->httpProxyPortSpinBox->setEnabled(true);
-			m_ui->httpsProxyServersLineEdit->setEnabled(true);
-			m_ui->httpsProxyPortSpinBox->setEnabled(true);
-			m_ui->ftpProxyServersLineEdit->setEnabled(true);
-			m_ui->ftpProxyPortSpinBox->setEnabled(true);
-			m_ui->socksProxyServersLineEdit->setEnabled(true);
-			m_ui->socksProxyPortSpinBox->setEnabled(true);
-		}
-
-		updateProxyExceptionsActions();
-	}
-	else
-	{
-		m_ui->manualProxyConfigurationWidget->setDisabled(true);
-		m_ui->allProxyCheckBox->setChecked(false);
-		m_ui->httpProxyCheckBox->setChecked(false);
-		m_ui->httpsProxyCheckBox->setChecked(false);
-		m_ui->ftpProxyCheckBox->setChecked(false);
-		m_ui->socksProxyCheckBox->setChecked(false);
-		m_ui->proxyExceptionsWidget->setEnabled(false);
-	}
-
-	if (index == 3)
-	{
-		m_ui->automaticProxyConfigurationWidget->setEnabled(true);
-		m_ui->automaticProxyConfigurationFilePathWidget->setEnabled(true);
-	}
-	else
-	{
-		m_ui->automaticProxyConfigurationWidget->setEnabled(false);
-		m_ui->automaticProxyConfigurationFilePathWidget->setEnabled(false);
-	}
-
-	if (index == 0)
-	{
-		m_ui->proxySystemAuthentication->setEnabled(false);
-		m_ui->proxySystemAuthentication->setChecked(false);
-	}
-	else
-	{
-		m_ui->proxySystemAuthentication->setEnabled(true);
-	}
-}
-
-void PreferencesAdvancedPageWidget::addProxyException()
-{
-	m_ui->proxyExceptionsItemView->insertRow();
-
-	editProxyException();
-}
-
-void PreferencesAdvancedPageWidget::editProxyException()
-{
-	m_ui->proxyExceptionsItemView->edit(m_ui->proxyExceptionsItemView->getIndex(m_ui->proxyExceptionsItemView->getCurrentRow()));
-}
-
-void PreferencesAdvancedPageWidget::removeProxyException()
-{
-	m_ui->proxyExceptionsItemView->removeRow();
-	m_ui->proxyExceptionsItemView->setFocus();
-
-	updateProxyExceptionsActions();
-}
-
-void PreferencesAdvancedPageWidget::updateProxyExceptionsActions()
-{
-	const bool isEditable(m_ui->proxyExceptionsItemView->getCurrentRow() >= 0);
-
-	m_ui->editProxyExceptionButton->setEnabled(isEditable);
-	m_ui->removeProxyExceptionButton->setEnabled(isEditable);
 }
 
 void PreferencesAdvancedPageWidget::addCipher(QAction *action)
@@ -1471,60 +1334,6 @@ void PreferencesAdvancedPageWidget::save()
 
 	SettingsManager::setValue(SettingsManager::Network_EnableReferrerOption, m_ui->sendReferrerCheckBox->isChecked());
 	SettingsManager::setValue(SettingsManager::Network_UserAgentOption, m_ui->userAgentsViewWidget->getCheckedIndex().data(UserAgentsModel::IdentifierRole).toString());
-	SettingsManager::setValue(SettingsManager::Network_ProxyModeOption, m_ui->proxyModeComboBox->currentData(Qt::UserRole).toString());
-
-	if (!m_ui->allProxyServersLineEdit->text().isEmpty())
-	{
-		SettingsManager::setValue(SettingsManager::Proxy_UseCommonOption, m_ui->allProxyCheckBox->isChecked());
-	}
-
-	if (!m_ui->httpProxyServersLineEdit->text().isEmpty())
-	{
-		SettingsManager::setValue(SettingsManager::Proxy_UseHttpOption, m_ui->httpProxyCheckBox->isChecked());
-	}
-
-	if (!m_ui->httpsProxyServersLineEdit->text().isEmpty())
-	{
-		SettingsManager::setValue(SettingsManager::Proxy_UseHttpsOption, m_ui->httpsProxyCheckBox->isChecked());
-	}
-
-	if (!m_ui->ftpProxyServersLineEdit->text().isEmpty())
-	{
-		SettingsManager::setValue(SettingsManager::Proxy_UseFtpOption, m_ui->ftpProxyCheckBox->isChecked());
-	}
-
-	if (!m_ui->socksProxyServersLineEdit->text().isEmpty())
-	{
-		SettingsManager::setValue(SettingsManager::Proxy_UseSocksOption, m_ui->socksProxyCheckBox->isChecked());
-	}
-
-	SettingsManager::setValue(SettingsManager::Proxy_CommonServersOption, m_ui->allProxyServersLineEdit->text());
-	SettingsManager::setValue(SettingsManager::Proxy_HttpServersOption, m_ui->httpProxyServersLineEdit->text());
-	SettingsManager::setValue(SettingsManager::Proxy_HttpsServersOption, m_ui->httpsProxyServersLineEdit->text());
-	SettingsManager::setValue(SettingsManager::Proxy_FtpServersOption, m_ui->ftpProxyServersLineEdit->text());
-	SettingsManager::setValue(SettingsManager::Proxy_SocksServersOption, m_ui->socksProxyServersLineEdit->text());
-	SettingsManager::setValue(SettingsManager::Proxy_CommonPortOption, m_ui->allProxyPortSpinBox->value());
-	SettingsManager::setValue(SettingsManager::Proxy_HttpPortOption, m_ui->httpProxyPortSpinBox->value());
-	SettingsManager::setValue(SettingsManager::Proxy_HttpsPortOption, m_ui->httpsProxyPortSpinBox->value());
-	SettingsManager::setValue(SettingsManager::Proxy_FtpPortOption, m_ui->ftpProxyPortSpinBox->value());
-	SettingsManager::setValue(SettingsManager::Proxy_SocksPortOption, m_ui->socksProxyPortSpinBox->value());
-	SettingsManager::setValue(SettingsManager::Proxy_AutomaticConfigurationPathOption, m_ui->automaticProxyConfigurationFilePathWidget->getPath());
-	SettingsManager::setValue(SettingsManager::Proxy_UseSystemAuthenticationOption, m_ui->proxySystemAuthentication->isChecked());
-
-	QStandardItemModel *proxyListModel(m_ui->proxyExceptionsItemView->getSourceModel());
-	QStringList proxyExceptions;
-
-	for (int i = 0; i < proxyListModel->rowCount(); ++i)
-	{
-		const QString value(proxyListModel->item(i)->text());
-
-		if (!value.isEmpty())
-		{
-			proxyExceptions.append(value);
-		}
-	}
-
-	SettingsManager::setValue(SettingsManager::Proxy_ExceptionsOption, proxyExceptions);
 
 	if (m_ui->userAgentsViewWidget->isModified())
 	{

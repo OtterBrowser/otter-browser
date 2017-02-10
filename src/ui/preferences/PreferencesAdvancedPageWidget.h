@@ -68,11 +68,6 @@ protected slots:
 	void addUserAgent(QAction *action);
 	void editUserAgent();
 	void updateUserAgentsActions();
-	void proxyModeChanged(int index);
-	void addProxyException();
-	void editProxyException();
-	void removeProxyException();
-	void updateProxyExceptionsActions();
 	void addCipher(QAction *action);
 	void removeCipher();
 	void updateCiphersActions();
