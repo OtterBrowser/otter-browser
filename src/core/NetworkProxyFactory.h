@@ -24,7 +24,6 @@
 #include "NetworkManagerFactory.h"
 
 #include <QtNetwork/QNetworkProxy>
-#include <QtNetwork/QNetworkReply>
 
 namespace Otter
 {
@@ -43,11 +42,9 @@ public:
 
 protected slots:
 	void optionChanged(int identifier);
-	void setupAutomaticProxy();
 
 private:
 	NetworkAutomaticProxy *m_automaticProxy;
-	QNetworkReply *m_pacNetworkReply;
 	QStringList m_proxyExceptions;
 	QMap<int, QList<QNetworkProxy> > m_proxies;
 	ProxyDefinition::ProxyMode m_proxyMode;

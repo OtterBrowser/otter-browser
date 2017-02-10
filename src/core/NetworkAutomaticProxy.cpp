@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,11 +18,14 @@
 *
 **************************************************************************/
 
-#include "Console.h"
 #include "NetworkAutomaticProxy.h"
+#include "Console.h"
+#include "NetworkManager.h"
+#include "NetworkManagerFactory.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDate>
+#include <QtCore/QFile>
 #include <QtNetwork/QHostInfo>
 #include <QtNetwork/QNetworkInterface>
 
@@ -286,7 +289,10 @@ bool PacUtils::isInRange(const QVariant &valueOne, const QVariant &valueTwo, con
 	return (actualValue >= valueOne && actualValue <= valueTwo);
 }
 
-NetworkAutomaticProxy::NetworkAutomaticProxy(QObject *parent) : QObject(parent)
+NetworkAutomaticProxy::NetworkAutomaticProxy(const QString &path, QObject *parent) : QObject(parent),
+	m_reply(nullptr),
+	m_path(path),
+	m_isValid(false)
 {
 	m_engine.globalObject().setProperty(QLatin1String("PacUtils"), m_engine.newQObject(new PacUtils(this)));
 
@@ -299,6 +305,64 @@ NetworkAutomaticProxy::NetworkAutomaticProxy(QObject *parent) : QObject(parent)
 
 	m_proxies.insert(QLatin1String("ERROR"), QList<QNetworkProxy>({QNetworkProxy(QNetworkProxy::DefaultProxy)}));
 	m_proxies.insert(QLatin1String("DIRECT"), QList<QNetworkProxy>({QNetworkProxy(QNetworkProxy::NoProxy)}));
+
+	setPath(path);
+}
+
+void NetworkAutomaticProxy::setPath(const QString &path)
+{
+	if (QFile::exists(path))
+	{
+		QFile file(path);
+
+		if (file.open(QIODevice::ReadOnly | QIODevice::Text) && setup(file.readAll()))
+		{
+			m_isValid = true;
+
+			file.close();
+		}
+		else
+		{
+			Console::addMessage(tr("Failed to load proxy auto-config (PAC): %1").arg(file.errorString()), Console::NetworkCategory, Console::ErrorLevel, path);
+		}
+	}
+	else
+	{
+		const QUrl url(path);
+
+		if (url.isValid())
+		{
+			QNetworkRequest request(url);
+			request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
+
+			m_reply = NetworkManagerFactory::getNetworkManager()->get(request);
+
+			connect(m_reply, SIGNAL(finished()), this, SLOT(setup()));
+		}
+		else
+		{
+			Console::addMessage(tr("Failed to load proxy auto-config (PAC). Invalid URL: %1").arg(url.url()), Console::NetworkCategory, Console::ErrorLevel);
+		}
+	}
+}
+
+void NetworkAutomaticProxy::setup()
+{
+	if (m_reply->error() == QNetworkReply::NoError && setup(m_reply->readAll()))
+	{
+		m_isValid = true;
+	}
+	else
+	{
+		Console::addMessage(tr("Failed to load proxy auto-config (PAC): %1").arg(m_reply->errorString()), Console::NetworkCategory, Console::ErrorLevel, m_reply->url().url());
+	}
+
+	m_reply->deleteLater();
+}
+
+QString NetworkAutomaticProxy::getPath() const
+{
+	return m_path;
 }
 
 QList<QNetworkProxy> NetworkAutomaticProxy::getProxy(const QString &url, const QString &host)
@@ -356,6 +420,11 @@ QList<QNetworkProxy> NetworkAutomaticProxy::getProxy(const QString &url, const Q
 	m_proxies.insert(configuration, proxiesForQuery);
 
 	return m_proxies[configuration];
+}
+
+bool NetworkAutomaticProxy::isValid()
+{
+	return m_isValid;
 }
 
 bool NetworkAutomaticProxy::setup(const QString &script)

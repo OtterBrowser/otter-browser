@@ -19,20 +19,14 @@
 **************************************************************************/
 
 #include "NetworkProxyFactory.h"
-#include "Console.h"
 #include "NetworkAutomaticProxy.h"
-#include "NetworkManager.h"
 #include "SettingsManager.h"
-
-#include <QtCore/QFile>
-#include <QtNetwork/QNetworkProxy>
 
 namespace Otter
 {
 
 NetworkProxyFactory::NetworkProxyFactory(QObject *parent) : QObject(parent), QNetworkProxyFactory(),
 	m_automaticProxy(nullptr),
-	m_pacNetworkReply(nullptr),
 	m_proxyMode(ProxyDefinition::SystemProxy)
 {
 	optionChanged(SettingsManager::Network_ProxyModeOption);
@@ -54,45 +48,15 @@ void NetworkProxyFactory::optionChanged(int identifier)
 	{
 		m_proxyMode = ProxyDefinition::AutomaticProxy;
 
-		if (!m_automaticProxy)
-		{
-			m_automaticProxy = new NetworkAutomaticProxy();
-		}
-
 		const QString path(SettingsManager::getValue(SettingsManager::Proxy_AutomaticConfigurationPathOption).toString());
 
-		if (QFile::exists(path))
+		if (m_automaticProxy)
 		{
-			QFile file(path);
-
-			if (!file.open(QIODevice::ReadOnly | QIODevice::Text) || !m_automaticProxy->setup(file.readAll()))
-			{
-				Console::addMessage(tr("Failed to load proxy auto-config (PAC): %1").arg(file.errorString()), Console::NetworkCategory, Console::ErrorLevel, path);
-
-				m_proxyMode = ProxyDefinition::SystemProxy;
-			}
-
-			file.close();
+			m_automaticProxy->setPath(path);
 		}
 		else
 		{
-			const QUrl url(path);
-
-			if (url.isValid())
-			{
-				QNetworkRequest request(url);
-				request.setHeader(QNetworkRequest::UserAgentHeader, NetworkManagerFactory::getUserAgent());
-
-				m_pacNetworkReply = NetworkManagerFactory::getNetworkManager()->get(request);
-
-				connect(m_pacNetworkReply, SIGNAL(finished()), this, SLOT(setupAutomaticProxy()));
-			}
-			else
-			{
-				Console::addMessage(tr("Failed to load proxy auto-config (PAC). Invalid URL: %1").arg(url.url()), Console::NetworkCategory, Console::ErrorLevel);
-
-				m_proxyMode = ProxyDefinition::SystemProxy;
-			}
+			m_automaticProxy = new NetworkAutomaticProxy(path);
 		}
 	}
 	else if ((identifier == SettingsManager::Network_ProxyModeOption && SettingsManager::getValue(identifier) == QLatin1String("manual")) || (SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Proxy/")) && m_proxyMode == ProxyDefinition::ManualProxy))
@@ -164,18 +128,6 @@ void NetworkProxyFactory::optionChanged(int identifier)
 	}
 }
 
-void NetworkProxyFactory::setupAutomaticProxy()
-{
-	if (m_pacNetworkReply->error() != QNetworkReply::NoError || !m_automaticProxy->setup(m_pacNetworkReply->readAll()))
-	{
-		Console::addMessage(tr("Failed to load proxy auto-config (PAC): %1").arg(m_pacNetworkReply->errorString()), Console::NetworkCategory, Console::ErrorLevel, m_pacNetworkReply->url().url());
-
-		m_proxyMode = ProxyDefinition::SystemProxy;
-	}
-
-	m_pacNetworkReply->deleteLater();
-}
-
 QList<QNetworkProxy> NetworkProxyFactory::queryProxy(const QNetworkProxyQuery &query)
 {
 	switch (m_proxyMode)
@@ -232,12 +184,12 @@ QList<QNetworkProxy> NetworkProxyFactory::queryProxy(const QNetworkProxyQuery &q
 
 			break;
 		case ProxyDefinition::AutomaticProxy:
-			if (m_automaticProxy)
+			if (m_automaticProxy && m_automaticProxy->isValid())
 			{
 				return m_automaticProxy->getProxy(query.url().toString(), query.peerHostName());
 			}
 
-			break;
+			return QNetworkProxyFactory::systemProxyForQuery(query);
 		default:
 			break;
 	}
