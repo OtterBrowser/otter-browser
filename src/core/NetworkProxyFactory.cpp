@@ -20,6 +20,7 @@
 
 #include "NetworkProxyFactory.h"
 #include "Console.h"
+#include "NetworkAutomaticProxy.h"
 #include "NetworkManager.h"
 #include "SettingsManager.h"
 

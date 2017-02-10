@@ -21,7 +21,6 @@
 #ifndef OTTER_NETWORKPROXYFACTORY_H
 #define OTTER_NETWORKPROXYFACTORY_H
 
-#include "NetworkAutomaticProxy.h"
 #include "NetworkManagerFactory.h"
 
 #include <QtNetwork/QNetworkProxy>
@@ -29,6 +28,8 @@
 
 namespace Otter
 {
+
+class NetworkAutomaticProxy;
 
 class NetworkProxyFactory : public QObject, public QNetworkProxyFactory
 {
