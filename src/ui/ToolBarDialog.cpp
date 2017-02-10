@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -147,7 +148,7 @@ ToolBarDialog::ToolBarDialog(const ToolBarsManager::ToolBarDefinition &definitio
 	availableEntriesModel->appendRow(createEntry(QLatin1String("separator")));
 	availableEntriesModel->appendRow(createEntry(QLatin1String("spacer")));
 
-	const QStringList widgets({QLatin1String("CustomMenu"), QLatin1String("ClosedWindowsMenu"), QLatin1String("AddressWidget"), QLatin1String("ContentBlockingInformationWidget"), QLatin1String("MenuButtonWidget"), QLatin1String("PanelChooserWidget"), QLatin1String("SearchWidget"), QLatin1String("StatusMessageWidget"), QLatin1String("ZoomWidget")});
+	const QStringList widgets({QLatin1String("CustomMenu"), QLatin1String("ClosedWindowsMenu"), QLatin1String("AddressWidget"), QLatin1String("ConfigurationOptionWidget"), QLatin1String("ContentBlockingInformationWidget"), QLatin1String("MenuButtonWidget"), QLatin1String("PanelChooserWidget"), QLatin1String("SearchWidget"), QLatin1String("StatusMessageWidget"), QLatin1String("ZoomWidget")});
 
 	for (int i = 0; i < widgets.count(); ++i)
 	{
@@ -331,7 +332,7 @@ void ToolBarDialog::editEntry()
 		widgets.append(qMakePair(tr("Show search engine:"), searchEngineWidget));
 		widgets.append(qMakePair(tr("Show search button:"), new OptionWidget(QLatin1String("showSearchButton"), options.value(QLatin1String("showSearchButton"), true), SettingsManager::BooleanType, this)));
 	}
-	else if (identifier == QLatin1String("ContentBlockingInformationWidget") || identifier == QLatin1String("MenuButtonWidget") || identifier.startsWith(QLatin1String("bookmarks:")) || identifier.endsWith(QLatin1String("Action")) || identifier.endsWith(QLatin1String("Menu")))
+	else if (identifier == QLatin1String("ConfigurationOptionWidget") || identifier == QLatin1String("ContentBlockingInformationWidget") || identifier == QLatin1String("MenuButtonWidget") || identifier.startsWith(QLatin1String("bookmarks:")) || identifier.endsWith(QLatin1String("Action")) || identifier.endsWith(QLatin1String("Menu")))
 	{
 		OptionWidget *iconOptionWidget(new OptionWidget(QLatin1String("icon"), QVariant(), SettingsManager::IconType, this));
 		OptionWidget *textOptionWidget(new OptionWidget(QLatin1String("text"), QVariant(), SettingsManager::StringType, this));
@@ -339,6 +340,21 @@ void ToolBarDialog::editEntry()
 		if (identifier == QLatin1String("ClosedWindowsMenu"))
 		{
 			iconOptionWidget->setDefaultValue(ThemesManager::getIcon(QLatin1String("user-trash")));
+		}
+		else if (identifier == QLatin1String("ConfigurationOptionWidget"))
+		{
+			const QStringList choices(SettingsManager::getOptions());
+			OptionWidget *optionNameWidget(new OptionWidget(QLatin1String("optionName"), options.value(QLatin1String("optionName")), SettingsManager::EnumerationType, this));
+			optionNameWidget->setChoices(SettingsManager::getOptions());
+
+			widgets.append(qMakePair(tr("Option:"), optionNameWidget));
+
+			textOptionWidget->setDefaultValue(options.value(QLatin1String("optionName"), choices.first()).toString().section(QLatin1Char('/'), -1));
+
+			connect(optionNameWidget, &OptionWidget::commitData, [&]()
+			{
+				textOptionWidget->setDefaultValue(optionNameWidget->getValue().toString().section(QLatin1Char('/'), -1));
+			});
 		}
 		else if (identifier == QLatin1String("ContentBlockingInformationWidget"))
 		{
@@ -455,7 +471,7 @@ void ToolBarDialog::updateActions()
 
 	m_ui->addButton->setEnabled(!sourceIdentifier.isEmpty() && (!(m_ui->currentEntriesItemView->currentIndex().data(IdentifierRole).toString() == QLatin1String("CustomMenu") || m_ui->currentEntriesItemView->currentIndex().parent().data(IdentifierRole).toString() == QLatin1String("CustomMenu")) || (sourceIdentifier == QLatin1String("separator") || sourceIdentifier.endsWith(QLatin1String("Action")) || sourceIdentifier.endsWith(QLatin1String("Menu")))));
 	m_ui->removeButton->setEnabled(m_ui->currentEntriesItemView->currentIndex().isValid() && targetIdentifier != QLatin1String("MenuBarWidget") && targetIdentifier != QLatin1String("TabBarWidget"));
-	m_ui->editEntryButton->setEnabled(targetIdentifier == QLatin1String("ContentBlockingInformationWidget") || targetIdentifier == QLatin1String("MenuButtonWidget") || targetIdentifier == QLatin1String("PanelChooserWidget") || targetIdentifier == QLatin1String("SearchWidget") || targetIdentifier.startsWith(QLatin1String("bookmarks:")) || targetIdentifier.endsWith(QLatin1String("Action")) || targetIdentifier.endsWith(QLatin1String("Menu")));
+	m_ui->editEntryButton->setEnabled(targetIdentifier == QLatin1String("ConfigurationOptionWidget") || targetIdentifier == QLatin1String("ContentBlockingInformationWidget") || targetIdentifier == QLatin1String("MenuButtonWidget") || targetIdentifier == QLatin1String("PanelChooserWidget") || targetIdentifier == QLatin1String("SearchWidget") || targetIdentifier.startsWith(QLatin1String("bookmarks:")) || targetIdentifier.endsWith(QLatin1String("Action")) || targetIdentifier.endsWith(QLatin1String("Menu")));
 }
 
 QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVariantMap &options)
@@ -487,6 +503,17 @@ QStandardItem* ToolBarDialog::createEntry(const QString &identifier, const QVari
 	else if (identifier == QLatin1String("AddressWidget"))
 	{
 		item->setText(tr("Address Field"));
+	}
+	else if (identifier == QLatin1String("ConfigurationOptionWidget"))
+	{
+		if (options.contains(QLatin1String("optionName")) && !options.value("optionName").toString().isEmpty())
+		{
+			item->setText(tr("Configuration Widget (%1)").arg(options.value("optionName").toString()));
+		}
+		else
+		{
+			item->setText(tr("Configuration Widget"));
+		}
 	}
 	else if (identifier == QLatin1String("ContentBlockingInformationWidget"))
 	{
