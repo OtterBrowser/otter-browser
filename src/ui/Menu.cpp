@@ -131,6 +131,13 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 			}
 
 			break;
+		case ProxyMenuRole:
+			m_option = SettingsManager::Network_ProxyOption;
+
+			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateProxiesMenu()));
+			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectOption(QAction*)));
+
+			break;
 		case SessionsMenuRole:
 			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateSessionsMenu()));
 			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(openSession(QAction*)));
@@ -744,6 +751,59 @@ void Menu::populateClosedWindowsMenu()
 	connect(clearAction, SIGNAL(triggered()), this, SLOT(clearClosedWindows()));
 }
 
+void Menu::populateProxiesMenu()
+{
+	if (m_actionGroup)
+	{
+		m_actionGroup->deleteLater();
+
+		clear();
+	}
+
+	MainWindow *mainWindow(MainWindow::findMainWindow(parent()));
+	const QString proxy(mainWindow ? mainWindow->getWindowsManager()->getOption(SettingsManager::Network_ProxyOption).toString() : QString());
+	const QStringList proxies((!menuAction() || menuAction()->data().toString().isEmpty()) ? NetworkManagerFactory::getProxies() : NetworkManagerFactory::getProxy(menuAction()->data().toString()).children);
+
+	m_actionGroup = new QActionGroup(this);
+	m_actionGroup->setExclusive(true);
+
+	for (int i = 0; i < proxies.count(); ++i)
+	{
+		if (proxies.at(i).isEmpty())
+		{
+			addSeparator();
+		}
+		else
+		{
+			const ProxyDefinition definition(NetworkManagerFactory::getProxy(proxies.at(i)));
+			Action *action(addAction());
+			action->setData(proxies.at(i));
+			action->setText(Utils::elideText(definition.getTitle(), this));
+
+			if (definition.isFolder)
+			{
+				action->setIcon(ThemesManager::getIcon(QLatin1String("inode-directory")));
+
+				if (definition.children.count() > 0)
+				{
+					action->setMenu(new Menu(m_role, this));
+				}
+				else
+				{
+					action->setEnabled(false);
+				}
+			}
+			else
+			{
+				action->setCheckable(true);
+				action->setChecked(proxy == proxies.at(i));
+			}
+
+			m_actionGroup->addAction(action);
+		}
+	}
+}
+
 void Menu::populateSessionsMenu()
 {
 	if (m_actionGroup)
@@ -1199,6 +1259,11 @@ Menu::MenuRole Menu::getRole(const QString &identifier)
 	if (identifier == QLatin1String("ImportExportMenu"))
 	{
 		return ImportExportMenuRole;
+	}
+
+	if (identifier == QLatin1String("ProxyMenu"))
+	{
+		return ProxyMenuRole;
 	}
 
 	if (identifier == QLatin1String("SessionsMenu"))

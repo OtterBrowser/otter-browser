@@ -578,7 +578,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 				menu.addMenu(cookiesPolicyMenu);
 				menu.addMenu(thirdPartyCookiesPolicyMenu);
 				menu.addMenu(keepCookiesModeMenu);
-				menu.addMenu(tr("Proxy"))->setEnabled(false);
+				menu.addMenu(new Menu(Menu::ProxyMenuRole, &menu));
 				menu.addAction(m_webWidget->getAction(ActionsManager::EnableReferrerAction));
 				menu.addSeparator();
 				menu.addAction(tr("Reset Options"), m_webWidget, SLOT(clearOptions()))->setEnabled(!m_webWidget->getOptions().isEmpty());
