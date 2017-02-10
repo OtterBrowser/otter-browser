@@ -46,6 +46,7 @@ NetworkProxyFactory* NetworkManagerFactory::m_proxyFactory(nullptr);
 NetworkCache* NetworkManagerFactory::m_cache(nullptr);
 CookieJar* NetworkManagerFactory::m_cookieJar(nullptr);
 QString NetworkManagerFactory::m_acceptLanguage;
+QMap<QString, ProxyDefinition> NetworkManagerFactory::m_proxies;
 QMap<QString, UserAgentDefinition> NetworkManagerFactory::m_userAgents;
 NetworkManagerFactory::DoNotTrackPolicy NetworkManagerFactory::m_doNotTrackPolicy(NetworkManagerFactory::SkipTrackPolicy);
 QList<QSslCipher> NetworkManagerFactory::m_defaultCiphers;
@@ -384,6 +385,16 @@ QString NetworkManagerFactory::getUserAgent()
 	return AddonsManager::getWebBackend()->getUserAgent();
 }
 
+QStringList NetworkManagerFactory::getProxies()
+{
+	if (!m_isInitialized)
+	{
+		m_instance->initialize();
+	}
+
+	return m_proxies[QLatin1String("root")].children;
+}
+
 QStringList NetworkManagerFactory::getUserAgents()
 {
 	if (!m_isInitialized)
@@ -397,6 +408,26 @@ QStringList NetworkManagerFactory::getUserAgents()
 QList<QSslCipher> NetworkManagerFactory::getDefaultCiphers()
 {
 	return m_defaultCiphers;
+}
+
+ProxyDefinition NetworkManagerFactory::getProxy(const QString &identifier)
+{
+	if (!m_isInitialized)
+	{
+		m_instance->initialize();
+	}
+
+	if (identifier.isEmpty() || !m_proxies.contains(identifier))
+	{
+		ProxyDefinition proxy;
+		proxy.identifier = QLatin1String("systemProxy");
+		proxy.title = QT_TRANSLATE_NOOP("proxies", "System Configuration");
+		proxy.mode = ProxyDefinition::SystemProxy;
+
+		return proxy;
+	}
+
+	return m_proxies[identifier];
 }
 
 UserAgentDefinition NetworkManagerFactory::getUserAgent(const QString &identifier)
@@ -420,7 +451,7 @@ UserAgentDefinition NetworkManagerFactory::getUserAgent(const QString &identifie
 	{
 		UserAgentDefinition userAgent;
 		userAgent.identifier = QLatin1String("default");
-		userAgent.title = tr("Default");
+		userAgent.title = QT_TRANSLATE_NOOP("userAgents", "Default User Agent");
 		userAgent.value = QLatin1String("Mozilla/5.0 {platform} {engineVersion} {applicationVersion}");
 
 		return userAgent;

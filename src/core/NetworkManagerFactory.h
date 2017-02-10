@@ -135,8 +135,10 @@ public:
 	static CookieJar* getCookieJar();
 	static QString getAcceptLanguage();
 	static QString getUserAgent();
+	static QStringList getProxies();
 	static QStringList getUserAgents();
 	static QList<QSslCipher> getDefaultCiphers();
+	static ProxyDefinition getProxy(const QString &identifier);
 	static UserAgentDefinition getUserAgent(const QString &identifier);
 	static DoNotTrackPolicy getDoNotTrackPolicy();
 	static bool canSendReferrer();
@@ -158,6 +160,7 @@ private:
 	static NetworkCache *m_cache;
 	static CookieJar *m_cookieJar;
 	static QString m_acceptLanguage;
+	static QMap<QString, ProxyDefinition> m_proxies;
 	static QMap<QString, UserAgentDefinition> m_userAgents;
 	static QList<QSslCipher> m_defaultCiphers;
 	static DoNotTrackPolicy m_doNotTrackPolicy;
