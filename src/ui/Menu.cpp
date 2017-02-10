@@ -48,6 +48,18 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 	m_role(role),
 	m_option(-1)
 {
+	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "File"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Edit"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "View"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "History"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Bookmarks"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Tools"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Help"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Page"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Print"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Settings"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Frame"))
+
 	switch (role)
 	{
 		case BookmarksMenuRole:
@@ -75,6 +87,8 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 
 			break;
 		case CharacterEncodingMenuRole:
+			setTitle(QT_TRANSLATE_NOOP("actions", "Character Encoding"));
+
 			m_option = SettingsManager::Content_DefaultCharacterEncodingOption;
 
 			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateCharacterEncodingMenu()));
@@ -83,6 +97,7 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 			break;
 		case ClosedWindowsMenu:
 			{
+				setTitle(QT_TRANSLATE_NOOP("actions", "Closed Tabs and Windows"));
 				setIcon(ThemesManager::getIcon(QLatin1String("user-trash")));
 
 				MainWindow *mainWindow(MainWindow::findMainWindow(parent));
@@ -101,6 +116,8 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 			break;
 		case ImportExportMenuRole:
 			{
+				setTitle(QT_TRANSLATE_NOOP("actions", "Import and Export"));
+
 				Action *importOperaBookmarksAction(addAction());
 				importOperaBookmarksAction->setData(QLatin1String("OperaBookmarks"));
 				importOperaBookmarksAction->setOverrideText(QT_TRANSLATE_NOOP("actions", "Import Opera Bookmarks…"));
@@ -132,6 +149,8 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 
 			break;
 		case ProxyMenuRole:
+			setTitle(QT_TRANSLATE_NOOP("actions", "Proxy"));
+
 			m_option = SettingsManager::Network_ProxyOption;
 
 			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateProxiesMenu()));
@@ -139,20 +158,28 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 
 			break;
 		case SessionsMenuRole:
+			setTitle(QT_TRANSLATE_NOOP("actions", "Sessions"));
+
 			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateSessionsMenu()));
 			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(openSession(QAction*)));
 
 			break;
 		case StyleSheetsMenuRole:
+			setTitle(QT_TRANSLATE_NOOP("actions", "Style"));
+
 			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateStyleSheetsMenu()));
 			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectStyleSheet(QAction*)));
 
 			break;
 		case ToolBarsMenuRole:
+			setTitle(QT_TRANSLATE_NOOP("actions", "Toolbars"));
+
 			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateToolBarsMenu()));
 
 			break;
 		case UserAgentMenuRole:
+			setTitle(QT_TRANSLATE_NOOP("actions", "User Agent"));
+
 			m_option = SettingsManager::Network_UserAgentOption;
 
 			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateUserAgentMenu()));
@@ -160,6 +187,8 @@ Menu::Menu(MenuRole role, QWidget *parent) : QMenu(parent),
 
 			break;
 		case WindowsMenuRole:
+			setTitle(QT_TRANSLATE_NOOP("actions", "Tabs and Windows"));
+
 			connect(this, SIGNAL(aboutToShow()), this, SLOT(populateWindowsMenu()));
 			connect(this, SIGNAL(triggered(QAction*)), this, SLOT(selectWindow(QAction*)));
 

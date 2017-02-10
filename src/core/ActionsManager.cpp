@@ -342,27 +342,6 @@ int Shortcut::getIdentifier() const
 ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	m_reloadTimer(0)
 {
-	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "File"));
-	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Sessions"));
-	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Import and Export"));
-	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Edit"));
-	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "View"));
-	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Toolbars"));
-	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "User Agent"));
-	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Style"));
-	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Character Encoding"));
-	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "History"));
-	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Closed Tabs and Windows"));
-	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Bookmarks"));
-	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Tools"));
-	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Help"));
-	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Tabs and Windows"));
-	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Page"));
-	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Print"));
-	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Settings"));
-	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Frame"));
-	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Proxy"));
-
 	m_definitions.reserve(ActionsManager::OtherAction);
 
 	registerAction(NewTabAction, QT_TRANSLATE_NOOP("actions", "New Tab"), QString(), ThemesManager::getIcon(QLatin1String("tab-new")));
