@@ -137,6 +137,7 @@ public:
 		Network_CookiesPolicyOption,
 		Network_DoNotTrackPolicyOption,
 		Network_EnableReferrerOption,
+		Network_ProxyOption,
 		Network_ProxyModeOption,
 		Network_ThirdPartyCookiesAcceptedHostsOption,
 		Network_ThirdPartyCookiesPolicyOption,
