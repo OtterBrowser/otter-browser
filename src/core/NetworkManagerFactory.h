@@ -25,8 +25,6 @@
 
 #include <QtCore/QCoreApplication>
 #include <QtNetwork/QAuthenticator>
-#include <QtNetwork/QNetworkCookieJar>
-#include <QtNetwork/QNetworkDiskCache>
 #include <QtNetwork/QSslCipher>
 
 namespace Otter
@@ -59,9 +57,11 @@ struct ProxyDefinition
 
 	QString identifier;
 	QString title;
+	QString path;
 	QStringList children;
 	QStringList exceptions;
 	QHash<ProtocolType, ProxyServer> servers;
+	ProxyMode mode = SystemProxy;
 	bool isFolder = false;
 	bool usesSystemAuthentication = false;
 
