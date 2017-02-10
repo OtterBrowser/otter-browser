@@ -135,6 +135,7 @@
         <file>other/fastforward.js</file>
         <file>other/handlers.ini</file>
         <file>other/notifications.ini</file>
+        <file>other/proxies.json</file>
         <file>other/syntaxHighlighting.json</file>
         <file>other/toolBars.json</file>
         <file>other/userAgents.json</file>

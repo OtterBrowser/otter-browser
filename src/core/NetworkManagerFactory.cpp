@@ -122,6 +122,8 @@ void UserAgentsModel::populateUserAgents(const QStringList &userAgents, QStandar
 
 NetworkManagerFactory::NetworkManagerFactory(QObject *parent) : QObject(parent)
 {
+	Q_UNUSED(QT_TRANSLATE_NOOP("proxies", "No Proxy"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("proxies", "System Configuration"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Default User Agent"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Google Chrome 50 (Windows)"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Mozilla Firefox 45 (Windows)"))
