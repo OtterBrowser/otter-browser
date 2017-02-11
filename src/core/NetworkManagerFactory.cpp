@@ -80,6 +80,8 @@ void ProxiesModel::populateProxies(const QStringList &proxies, QStandardItem *pa
 
 		if (proxy.isFolder)
 		{
+			item->setData(proxies.at(i), IdentifierRole);
+
 			type = FolderType;
 
 			if (!m_isEditor)
@@ -413,7 +415,26 @@ void NetworkManagerFactory::readProxy(const QJsonValue &value, ProxyDefinition *
 		}
 		else
 		{
-			if (proxyObject.contains(QLatin1String("servers")))
+			const QString type(proxyObject.value(QLatin1String("type")).toString());
+
+			if (type == QLatin1String("noProxy"))
+			{
+				proxy.type = ProxyDefinition::NoProxy;
+			}
+			else if (type == QLatin1String("manualProxy"))
+			{
+				proxy.type = ProxyDefinition::ManualProxy;
+			}
+			else if (type == QLatin1String("automaticProxy"))
+			{
+				proxy.type = ProxyDefinition::AutomaticProxy;
+			}
+			else
+			{
+				proxy.type = ProxyDefinition::SystemProxy;
+			}
+
+			if (proxy.type == ProxyDefinition::ManualProxy && proxyObject.contains(QLatin1String("servers")))
 			{
 				const QJsonArray serversArray(proxyObject.value(QLatin1String("servers")).toArray());
 
@@ -446,25 +467,6 @@ void NetworkManagerFactory::readProxy(const QJsonValue &value, ProxyDefinition *
 						proxy.servers[ProxyDefinition::AnyProtocol] = server;
 					}
 				}
-			}
-
-			const QString mode(proxyObject.value(QLatin1String("mode")).toString());
-
-			if (mode == QLatin1String("noProxy"))
-			{
-				proxy.type = ProxyDefinition::NoProxy;
-			}
-			else if (mode == QLatin1String("manualProxy"))
-			{
-				proxy.type = ProxyDefinition::ManualProxy;
-			}
-			else if (mode == QLatin1String("automaticProxy"))
-			{
-				proxy.type = ProxyDefinition::AutomaticProxy;
-			}
-			else
-			{
-				proxy.type = ProxyDefinition::SystemProxy;
 			}
 
 			proxy.path = proxyObject.value(QLatin1String("path")).toString();
