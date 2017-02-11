@@ -44,6 +44,9 @@ public:
 protected:
 	void changeEvent(QEvent *event);
 
+protected slots:
+	void updateProxyType();
+
 private:
 	ProxyDefinition m_proxy;
 	Ui::ProxyPropertiesDialog *m_ui;
