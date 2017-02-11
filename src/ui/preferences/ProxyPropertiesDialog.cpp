@@ -174,8 +174,57 @@ void ProxyPropertiesDialog::updateProxyType()
 ProxyDefinition ProxyPropertiesDialog::getProxy() const
 {
 	ProxyDefinition proxy(m_proxy);
+	proxy.title = m_ui->titleLineEdit->text();
+	proxy.usesSystemAuthentication = m_ui->usesSystemAuthenticationCheckBox->isChecked();
+	proxy.exceptions.clear();
+	proxy.servers.clear();
 
-///TODO
+	if (m_ui->automaticConfigurationCheckBox->isChecked())
+	{
+		proxy.type = ProxyDefinition::AutomaticProxy;
+		proxy.path = m_ui->automaticConfigurationFilePathWidget->getPath();
+	}
+	else
+	{
+		proxy.type = ProxyDefinition::ManualProxy;
+
+		if (m_ui->allCheckBox->isChecked())
+		{
+			proxy.servers[ProxyDefinition::AnyProtocol] = ProxyDefinition::ProxyServer(m_ui->allServersLineEdit->text(), m_ui->allPortSpinBox->value());
+		}
+		else
+		{
+			if (m_ui->httpCheckBox->isChecked())
+			{
+				proxy.servers[ProxyDefinition::HttpProtocol] = ProxyDefinition::ProxyServer(m_ui->httpServersLineEdit->text(), m_ui->httpPortSpinBox->value());
+			}
+
+			if (m_ui->httpsCheckBox->isChecked())
+			{
+				proxy.servers[ProxyDefinition::HttpsProtocol] = ProxyDefinition::ProxyServer(m_ui->httpsServersLineEdit->text(), m_ui->httpsPortSpinBox->value());
+			}
+
+			if (m_ui->ftpCheckBox->isChecked())
+			{
+				proxy.servers[ProxyDefinition::FtpProtocol] = ProxyDefinition::ProxyServer(m_ui->ftpServersLineEdit->text(), m_ui->ftpPortSpinBox->value());
+			}
+
+			if (m_ui->socksCheckBox->isChecked())
+			{
+				proxy.servers[ProxyDefinition::SocksProtocol] = ProxyDefinition::ProxyServer(m_ui->socksServersLineEdit->text(), m_ui->socksPortSpinBox->value());
+			}
+		}
+	}
+
+	for (int i = 0; i < m_ui->exceptionsItemViewWidget->getRowCount(); ++i)
+	{
+		const QString exception(m_ui->exceptionsItemViewWidget->getIndex(i).data(Qt::DisplayRole).toString().simplified());
+
+		if (!exception.isEmpty())
+		{
+			proxy.exceptions.append(exception);
+		}
+	}
 
 	return proxy;
 }
