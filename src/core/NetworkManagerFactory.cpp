@@ -452,19 +452,19 @@ void NetworkManagerFactory::readProxy(const QJsonValue &value, ProxyDefinition *
 
 			if (mode == QLatin1String("noProxy"))
 			{
-				proxy.mode = ProxyDefinition::NoProxy;
+				proxy.type = ProxyDefinition::NoProxy;
 			}
 			else if (mode == QLatin1String("manualProxy"))
 			{
-				proxy.mode = ProxyDefinition::ManualProxy;
+				proxy.type = ProxyDefinition::ManualProxy;
 			}
 			else if (mode == QLatin1String("automaticProxy"))
 			{
-				proxy.mode = ProxyDefinition::AutomaticProxy;
+				proxy.type = ProxyDefinition::AutomaticProxy;
 			}
 			else
 			{
-				proxy.mode = ProxyDefinition::SystemProxy;
+				proxy.type = ProxyDefinition::SystemProxy;
 			}
 
 			proxy.path = proxyObject.value(QLatin1String("path")).toString();
@@ -608,7 +608,7 @@ ProxyDefinition NetworkManagerFactory::getProxy(const QString &identifier)
 		ProxyDefinition proxy;
 		proxy.identifier = QLatin1String("systemProxy");
 		proxy.title = QT_TRANSLATE_NOOP("proxies", "System Configuration");
-		proxy.mode = ProxyDefinition::SystemProxy;
+		proxy.type = ProxyDefinition::SystemProxy;
 
 		return proxy;
 	}

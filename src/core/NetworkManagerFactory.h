@@ -32,7 +32,7 @@ namespace Otter
 
 struct ProxyDefinition
 {
-	enum ProxyMode
+	enum ProxyType
 	{
 		NoProxy = 0,
 		SystemProxy,
@@ -61,7 +61,7 @@ struct ProxyDefinition
 	QStringList children;
 	QStringList exceptions;
 	QHash<ProtocolType, ProxyServer> servers;
-	ProxyMode mode = SystemProxy;
+	ProxyType type = SystemProxy;
 	bool isFolder = false;
 	bool usesSystemAuthentication = false;
 

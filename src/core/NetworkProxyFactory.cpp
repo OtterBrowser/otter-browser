@@ -44,7 +44,7 @@ void NetworkProxyFactory::setProxy(const QString &identifier)
 	m_proxies.clear();
 	m_proxies[-1] = QList<QNetworkProxy>({QNetworkProxy(QNetworkProxy::NoProxy)});
 
-	switch (m_definition.mode)
+	switch (m_definition.type)
 	{
 		case ProxyDefinition::ManualProxy:
 			{
@@ -87,7 +87,7 @@ void NetworkProxyFactory::setProxy(const QString &identifier)
 
 QList<QNetworkProxy> NetworkProxyFactory::queryProxy(const QNetworkProxyQuery &query)
 {
-	switch (m_definition.mode)
+	switch (m_definition.type)
 	{
 		case ProxyDefinition::SystemProxy:
 			return QNetworkProxyFactory::systemProxyForQuery(query);
