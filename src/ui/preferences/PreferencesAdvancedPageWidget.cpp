@@ -30,7 +30,6 @@
 #include "../../core/Application.h"
 #include "../../core/GesturesManager.h"
 #include "../../core/JsonSettings.h"
-#include "../../core/NetworkManagerFactory.h"
 #include "../../core/NotificationsManager.h"
 #include "../../core/SessionsManager.h"
 #include "../../core/Settings.h"
@@ -211,6 +210,21 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	m_ui->userAgentsAddButton->setMenu(addUserAgentMenu);
 
+	TreeModel *proxiesModel(new ProxiesModel(SettingsManager::getValue(SettingsManager::Network_ProxyOption).toString(), true, this));
+	proxiesModel->setHorizontalHeaderLabels({tr("Title")});
+
+	m_ui->proxiesViewWidget->setModel(proxiesModel);
+	m_ui->proxiesViewWidget->setViewMode(ItemViewWidget::TreeViewMode);
+	m_ui->proxiesViewWidget->setExclusive(true);
+	m_ui->proxiesViewWidget->expandAll();
+
+	QMenu *addProxyMenu(new QMenu(m_ui->proxiesAddButton));
+	addProxyMenu->addAction(ThemesManager::getIcon(QLatin1String("inode-directory")), tr("Add Folder…"))->setData(TreeModel::FolderType);
+	addProxyMenu->addAction(tr("Add Proxy…"))->setData(TreeModel::EntryType);
+	addProxyMenu->addAction(tr("Add Separator"))->setData(TreeModel::SeparatorType);
+
+	m_ui->proxiesAddButton->setMenu(addProxyMenu);
+
 	m_ui->ciphersAddButton->setMenu(new QMenu(m_ui->ciphersAddButton));
 
 	if (QSslSocket::supportsSsl())
@@ -379,6 +393,10 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	connect(m_ui->userAgentsAddButton->menu(), SIGNAL(triggered(QAction*)), this, SLOT(addUserAgent(QAction*)));
 	connect(m_ui->userAgentsEditButton, SIGNAL(clicked()), this, SLOT(editUserAgent()));
 	connect(m_ui->userAgentsRemoveButton, SIGNAL(clicked()), m_ui->userAgentsViewWidget, SLOT(removeRow()));
+	connect(m_ui->proxiesViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateProxiesActions()));
+	connect(m_ui->proxiesAddButton->menu(), SIGNAL(triggered(QAction*)), this, SLOT(addProxy(QAction*)));
+	connect(m_ui->proxiesEditButton, SIGNAL(clicked()), this, SLOT(editProxy()));
+	connect(m_ui->proxiesRemoveButton, SIGNAL(clicked()), m_ui->proxiesViewWidget, SLOT(removeRow()));
 	connect(m_ui->ciphersViewWidget, SIGNAL(canMoveDownChanged(bool)), m_ui->ciphersMoveDownButton, SLOT(setEnabled(bool)));
 	connect(m_ui->ciphersViewWidget, SIGNAL(canMoveUpChanged(bool)), m_ui->ciphersMoveUpButton, SLOT(setEnabled(bool)));
 	connect(m_ui->ciphersViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateCiphersActions()));
@@ -604,45 +622,6 @@ void PreferencesAdvancedPageWidget::updateDownloadsMode()
 	m_ui->downloadsSaveOptionsWidget->setEnabled(m_ui->downloadsSaveButton->isChecked());
 }
 
-void PreferencesAdvancedPageWidget::saveUsuerAgents(QJsonArray *userAgents, QStandardItem *parent)
-{
-	for (int i = 0; i < parent->rowCount(); ++i)
-	{
-		QStandardItem *item(parent->child(i, 0));
-
-		if (item)
-		{
-			const TreeModel::ItemType type(static_cast<TreeModel::ItemType>(item->data(TreeModel::TypeRole).toInt()));
-
-			if (type == TreeModel::FolderType || type == TreeModel::EntryType)
-			{
-				QJsonObject userAgentObject;
-				userAgentObject.insert(QLatin1String("identifier"), item->data(UserAgentsModel::IdentifierRole).toString());
-				userAgentObject.insert(QLatin1String("title"), item->data(Qt::DisplayRole).toString());
-
-				if (type == TreeModel::FolderType)
-				{
-					QJsonArray userAgentsArray;
-
-					saveUsuerAgents(&userAgentsArray, item);
-
-					userAgentObject.insert(QLatin1String("children"), userAgentsArray);
-				}
-				else
-				{
-					userAgentObject.insert(QLatin1String("value"), item->index().sibling(i, 1).data(Qt::DisplayRole).toString());
-				}
-
-				userAgents->append(userAgentObject);
-			}
-			else
-			{
-				userAgents->append(QJsonValue(QLatin1String("separator")));
-			}
-		}
-	}
-}
-
 void PreferencesAdvancedPageWidget::addUserAgent(QAction *action)
 {
 	if (!action)
@@ -763,6 +742,279 @@ void PreferencesAdvancedPageWidget::updateUserAgentsActions()
 
 	m_ui->userAgentsEditButton->setEnabled(index.isValid() && (type == TreeModel::FolderType || type == TreeModel::EntryType));
 	m_ui->userAgentsRemoveButton->setEnabled(index.isValid());
+}
+
+void PreferencesAdvancedPageWidget::saveUsuerAgents(QJsonArray *userAgents, QStandardItem *parent)
+{
+	for (int i = 0; i < parent->rowCount(); ++i)
+	{
+		QStandardItem *item(parent->child(i, 0));
+
+		if (item)
+		{
+			const TreeModel::ItemType type(static_cast<TreeModel::ItemType>(item->data(TreeModel::TypeRole).toInt()));
+
+			if (type == TreeModel::FolderType || type == TreeModel::EntryType)
+			{
+				QJsonObject userAgentObject;
+				userAgentObject.insert(QLatin1String("identifier"), item->data(UserAgentsModel::IdentifierRole).toString());
+				userAgentObject.insert(QLatin1String("title"), item->data(Qt::DisplayRole).toString());
+
+				if (type == TreeModel::FolderType)
+				{
+					QJsonArray userAgentsArray;
+
+					saveUsuerAgents(&userAgentsArray, item);
+
+					userAgentObject.insert(QLatin1String("children"), userAgentsArray);
+				}
+				else
+				{
+					userAgentObject.insert(QLatin1String("value"), item->index().sibling(i, 1).data(Qt::DisplayRole).toString());
+				}
+
+				userAgents->append(userAgentObject);
+			}
+			else
+			{
+				userAgents->append(QJsonValue(QLatin1String("separator")));
+			}
+		}
+	}
+}
+
+void PreferencesAdvancedPageWidget::addProxy(QAction *action)
+{
+	if (!action)
+	{
+		return;
+	}
+
+	TreeModel *model(qobject_cast<TreeModel*>(m_ui->proxiesViewWidget->getSourceModel()));
+	QStandardItem *parent(model->itemFromIndex(m_ui->proxiesViewWidget->getCurrentIndex()));
+
+	if (!parent)
+	{
+		parent = model->invisibleRootItem();
+	}
+
+	int row(-1);
+
+	if (static_cast<TreeModel::ItemType>(parent->data(TreeModel::TypeRole).toInt()) != TreeModel::FolderType)
+	{
+		row = (parent->row() + 1);
+
+		parent = parent->parent();
+	}
+
+	switch (static_cast<TreeModel::ItemType>(action->data().toInt()))
+	{
+		case TreeModel::FolderType:
+			{
+				bool result(false);
+				const QString title(QInputDialog::getText(this, tr("Folder Name"), tr("Select folder name:"), QLineEdit::Normal, QString(), &result));
+
+				if (result)
+				{
+					QStandardItem *item(new QStandardItem(title.isEmpty() ? tr("(Untitled)") : title));
+					item->setData(Utils::createIdentifier(QString(), QVariant(model->getAllData(ProxiesModel::IdentifierRole, 0)).toStringList()), ProxiesModel::IdentifierRole);
+
+					model->insertRow(item, parent, row, TreeModel::FolderType);
+
+					m_ui->proxiesViewWidget->expand(item->index());
+				}
+			}
+
+			break;
+		case TreeModel::EntryType:
+			{
+				ProxyDefinition proxy;
+				proxy.title = tr("Custom");
+
+				ProxyPropertiesDialog dialog(proxy, this);
+
+				if (dialog.exec() == QDialog::Accepted)
+				{
+					proxy = dialog.getProxy();
+					proxy.identifier = Utils::createIdentifier(QString(), QVariant(model->getAllData(ProxiesModel::IdentifierRole, 0)).toStringList());
+
+					m_proxies[proxy.identifier] = proxy;
+
+					QStandardItem *item(new QStandardItem(proxy.title.isEmpty() ? tr("(Untitled)") : proxy.title));
+					item->setData(proxy.identifier, ProxiesModel::IdentifierRole);
+
+					model->insertRow(item, parent, row, TreeModel::EntryType);
+				}
+			}
+
+			break;
+		case TreeModel::SeparatorType:
+			model->insertRow(new QStandardItem(), parent, row, TreeModel::SeparatorType);
+
+			break;
+		default:
+			break;
+	}
+}
+
+void PreferencesAdvancedPageWidget::editProxy()
+{
+	const QModelIndex index(m_ui->proxiesViewWidget->getCurrentIndex());
+
+	if (!index.isValid())
+	{
+		return;
+	}
+
+	const TreeModel::ItemType type(static_cast<TreeModel::ItemType>(index.data(TreeModel::TypeRole).toInt()));
+
+	if (type == TreeModel::FolderType)
+	{
+		bool result(false);
+		const QString title(QInputDialog::getText(this, tr("Folder Name"), tr("Select folder name:"), QLineEdit::Normal, index.data(Qt::DisplayRole).toString(), &result));
+
+		if (result)
+		{
+			m_ui->proxiesViewWidget->setData(index, (title.isEmpty() ? tr("(Untitled)") : title), Qt::DisplayRole);
+		}
+	}
+	else if (type == TreeModel::EntryType)
+	{
+		const QString identifier(index.data(ProxiesModel::IdentifierRole).toString());
+		ProxyPropertiesDialog dialog((m_proxies.value(identifier, NetworkManagerFactory::getProxy(identifier))), this);
+
+		if (dialog.exec() == QDialog::Accepted)
+		{
+			const ProxyDefinition proxy(dialog.getProxy());
+
+			m_proxies[identifier] = proxy;
+
+			m_ui->proxiesViewWidget->setData(index, (proxy.title.isEmpty() ? tr("(Untitled)") : proxy.title), Qt::DisplayRole);
+		}
+	}
+}
+
+void PreferencesAdvancedPageWidget::updateProxiesActions()
+{
+	const QModelIndex index(m_ui->proxiesViewWidget->getCurrentIndex());
+	const QString identifier(index.data(ProxiesModel::IdentifierRole).toString());
+	const TreeModel::ItemType type(static_cast<TreeModel::ItemType>(index.data(TreeModel::TypeRole).toInt()));
+	const bool isReadOnly(identifier == QLatin1String("noProxy") || identifier == QLatin1String("system"));
+
+	m_ui->proxiesEditButton->setEnabled(index.isValid() && !isReadOnly && (type == TreeModel::FolderType || type == TreeModel::EntryType));
+	m_ui->proxiesRemoveButton->setEnabled(index.isValid() && !isReadOnly);
+}
+
+void PreferencesAdvancedPageWidget::saveProxies(QJsonArray *proxies, QStandardItem *parent)
+{
+	for (int i = 0; i < parent->rowCount(); ++i)
+	{
+		QStandardItem *item(parent->child(i, 0));
+
+		if (item)
+		{
+			const TreeModel::ItemType type(static_cast<TreeModel::ItemType>(item->data(TreeModel::TypeRole).toInt()));
+
+			if (type == TreeModel::FolderType)
+			{
+				QJsonArray proxiesArray;
+
+				saveProxies(&proxiesArray, item);
+
+				QJsonObject proxyObject;
+				proxyObject.insert(QLatin1String("identifier"), item->data(ProxiesModel::IdentifierRole).toString());
+				proxyObject.insert(QLatin1String("title"), item->data(Qt::DisplayRole).toString());
+				proxyObject.insert(QLatin1String("children"), proxiesArray);
+
+				proxies->append(proxyObject);
+			}
+			else if (type == TreeModel::EntryType)
+			{
+				const QString identifier(item->data(ProxiesModel::IdentifierRole).toString());
+				const ProxyDefinition proxy(m_proxies.value(identifier, NetworkManagerFactory::getProxy(identifier)));
+				QJsonObject proxyObject;
+				proxyObject.insert(QLatin1String("identifier"), identifier);
+				proxyObject.insert(QLatin1String("title"), item->data(Qt::DisplayRole).toString());
+
+				switch (proxy.type)
+				{
+					case ProxyDefinition::NoProxy:
+						proxyObject.insert(QLatin1String("type"), QLatin1String("noProxy"));
+
+						break;
+					case ProxyDefinition::ManualProxy:
+						{
+							QJsonArray serversArray;
+							QHash<ProxyDefinition::ProtocolType, ProxyDefinition::ProxyServer>::const_iterator iterator;
+
+							for (iterator = proxy.servers.constBegin(); iterator != proxy.servers.constEnd(); ++iterator)
+							{
+								QString protocol(QLatin1String("any"));
+
+								switch (iterator.key())
+								{
+									case ProxyDefinition::HttpProtocol:
+										protocol = QLatin1String("http");
+
+										break;
+									case ProxyDefinition::HttpsProtocol:
+										protocol = QLatin1String("https");
+
+										break;
+									case ProxyDefinition::FtpProtocol:
+										protocol = QLatin1String("ftp");
+
+										break;
+									case ProxyDefinition::SocksProtocol:
+										protocol = QLatin1String("socks");
+
+										break;
+									default:
+										break;
+								}
+
+								QJsonObject serverObject;
+								serverObject.insert(QLatin1String("protocol"), protocol);
+								serverObject.insert(QLatin1String("hostName"), iterator.value().hostName);
+								serverObject.insert(QLatin1String("port"), iterator.value().port);
+
+								serversArray.append(serverObject);
+							}
+
+							proxyObject.insert(QLatin1String("type"), QLatin1String("manualProxy"));
+							proxyObject.insert(QLatin1String("servers"), serversArray);
+						}
+
+						break;
+					case ProxyDefinition::AutomaticProxy:
+						proxyObject.insert(QLatin1String("type"), QLatin1String("automaticProxy"));
+						proxyObject.insert(QLatin1String("path"), proxy.path);
+
+						break;
+					default:
+						proxyObject.insert(QLatin1String("type"), QLatin1String("systemProxy"));
+
+						break;
+				}
+
+				if (!proxy.exceptions.isEmpty())
+				{
+					proxyObject.insert(QLatin1String("exceptions"), QJsonArray::fromStringList(proxy.exceptions));
+				}
+
+				if (proxy.usesSystemAuthentication)
+				{
+					proxyObject.insert(QLatin1String("usesSystemAuthentication"), true);
+				}
+
+				proxies->append(proxyObject);
+			}
+			else
+			{
+				proxies->append(QJsonValue(QLatin1String("separator")));
+			}
+		}
+	}
 }
 
 void PreferencesAdvancedPageWidget::addCipher(QAction *action)
@@ -1346,6 +1598,21 @@ void PreferencesAdvancedPageWidget::save()
 		settings.save(SessionsManager::getWritableDataPath(QLatin1String("userAgents.json")));
 
 		NetworkManagerFactory::loadUserAgents();
+	}
+
+	SettingsManager::setValue(SettingsManager::Network_ProxyOption, m_ui->proxiesViewWidget->getCheckedIndex().data(ProxiesModel::IdentifierRole).toString());
+
+	if (m_ui->proxiesViewWidget->isModified())
+	{
+		QJsonArray proxiesArray;
+
+		saveProxies(&proxiesArray, m_ui->proxiesViewWidget->getSourceModel()->invisibleRootItem());
+
+		JsonSettings settings;
+		settings.setArray(proxiesArray);
+		settings.save(SessionsManager::getWritableDataPath(QLatin1String("proxies.json")));
+
+		NetworkManagerFactory::loadProxies();
 	}
 
 	if (m_ui->ciphersViewWidget->isModified())

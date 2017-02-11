@@ -22,6 +22,8 @@
 #ifndef OTTER_PREFERENCESADVANCEDPAGEWIDGET_H
 #define OTTER_PREFERENCESADVANCEDPAGEWIDGET_H
 
+#include "../../core/NetworkManagerFactory.h"
+
 #include <QtGui/QStandardItem>
 #include <QtWidgets/QWidget>
 
@@ -64,10 +66,14 @@ protected slots:
 	void updateDownloadsActions();
 	void updateDownloadsOptions();
 	void updateDownloadsMode();
-	void saveUsuerAgents(QJsonArray *userAgents, QStandardItem *parent);
 	void addUserAgent(QAction *action);
 	void editUserAgent();
 	void updateUserAgentsActions();
+	void saveUsuerAgents(QJsonArray *userAgents, QStandardItem *parent);
+	void addProxy(QAction *action);
+	void editProxy();
+	void updateProxiesActions();
+	void saveProxies(QJsonArray *proxies, QStandardItem *parent);
 	void addCipher(QAction *action);
 	void removeCipher();
 	void updateCiphersActions();
@@ -93,6 +99,7 @@ private:
 	QStringList m_filesToRemove;
 	QHash<QString, KeyboardProfile> m_keyboardProfiles;
 	QHash<QString, MouseProfile> m_mouseProfiles;
+	QHash<QString, ProxyDefinition> m_proxies;
 	QHash<int, QVariant> m_javaScriptOptions;
 	Ui::PreferencesAdvancedPageWidget *m_ui;
 
