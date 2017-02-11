@@ -54,6 +54,69 @@ bool NetworkManagerFactory::m_canSendReferrer(true);
 bool NetworkManagerFactory::m_isInitialized(false);
 bool NetworkManagerFactory::m_isWorkingOffline(false);
 
+ProxiesModel::ProxiesModel(const QString &selectedProxy, bool isEditor, QObject *parent) : TreeModel(parent),
+	m_isEditor(isEditor)
+{
+	if (isEditor)
+	{
+		setExclusive(true);
+	}
+
+	populateProxies(NetworkManagerFactory::getProxies(), invisibleRootItem(), selectedProxy);
+}
+
+void ProxiesModel::populateProxies(const QStringList &proxies, QStandardItem *parent, const QString &selectedProxy)
+{
+	for (int i = 0; i < proxies.count(); ++i)
+	{
+		const ProxyDefinition proxy(proxies.at(i).isEmpty() ? ProxyDefinition() : NetworkManagerFactory::getProxy(proxies.at(i)));
+		ItemType type(EntryType);
+		QStandardItem *item(new QStandardItem(proxy.identifier.isEmpty() ? QString() : proxy.getTitle()));
+
+		if (m_isEditor)
+		{
+			item->setFlags(item->flags() | Qt::ItemIsDragEnabled);
+		}
+
+		if (proxy.isFolder)
+		{
+			type = FolderType;
+
+			if (!m_isEditor)
+			{
+				item->setFlags(item->flags() & ~Qt::ItemIsSelectable);
+			}
+
+			populateProxies(proxy.children, item, selectedProxy);
+		}
+		else if (proxies.at(i).isEmpty())
+		{
+			type = SeparatorType;
+
+			if (!m_isEditor)
+			{
+				item->setFlags(item->flags() & ~Qt::ItemIsSelectable);
+			}
+		}
+		else
+		{
+			item->setData(proxies.at(i), IdentifierRole);
+
+			if (m_isEditor)
+			{
+				item->setCheckable(true);
+
+				if (proxy.identifier == selectedProxy)
+				{
+					item->setData(Qt::Checked, Qt::CheckStateRole);
+				}
+			}
+		}
+
+		insertRow(item, parent, -1, type);
+	}
+}
+
 UserAgentsModel::UserAgentsModel(const QString &selectedUserAgent, bool isEditor, QObject *parent) : TreeModel(parent),
 	m_isEditor(isEditor)
 {

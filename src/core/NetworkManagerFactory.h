@@ -91,6 +91,24 @@ class NetworkManager;
 class NetworkManagerFactory;
 class NetworkProxyFactory;
 
+class ProxiesModel : public TreeModel
+{
+public:
+	enum ItemRole
+	{
+		TitleRole = TreeModel::TitleRole,
+		IdentifierRole = TreeModel::UserRole
+	};
+
+	explicit ProxiesModel(const QString &selectedProxy, bool isEditor, QObject *parent = nullptr);
+
+protected:
+	void populateProxies(const QStringList &proxies, QStandardItem *parent, const QString &selectedProxy);
+
+private:
+	bool m_isEditor;
+};
+
 class UserAgentsModel : public TreeModel
 {
 public:
@@ -101,7 +119,7 @@ public:
 		UserAgentRole
 	};
 
-	UserAgentsModel(const QString &selectedUserAgent, bool isEditor, QObject *parent = nullptr);
+	explicit UserAgentsModel(const QString &selectedUserAgent, bool isEditor, QObject *parent = nullptr);
 
 protected:
 	void populateUserAgents(const QStringList &userAgents, QStandardItem *parent, const QString &selectedUserAgent);
