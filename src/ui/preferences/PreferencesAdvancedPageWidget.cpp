@@ -889,6 +889,7 @@ void PreferencesAdvancedPageWidget::editProxy()
 
 			m_proxies[identifier] = proxy;
 
+			m_ui->proxiesViewWidget->markAsModified();
 			m_ui->proxiesViewWidget->setData(index, (proxy.title.isEmpty() ? tr("(Untitled)") : proxy.title), Qt::DisplayRole);
 		}
 	}
