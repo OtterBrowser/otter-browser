@@ -287,7 +287,7 @@ void QtWebKitNetworkManager::handleAuthenticationRequired(QNetworkReply *reply, 
 
 void QtWebKitNetworkManager::handleProxyAuthenticationRequired(const QNetworkProxy &proxy, QAuthenticator *authenticator)
 {
-	if (NetworkManagerFactory::isUsingSystemProxyAuthentication())
+	if (NetworkManagerFactory::usesSystemProxyAuthentication())
 	{
 		authenticator->setUser(QString());
 

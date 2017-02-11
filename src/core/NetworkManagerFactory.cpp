@@ -51,9 +51,8 @@ QMap<QString, UserAgentDefinition> NetworkManagerFactory::m_userAgents;
 NetworkManagerFactory::DoNotTrackPolicy NetworkManagerFactory::m_doNotTrackPolicy(NetworkManagerFactory::SkipTrackPolicy);
 QList<QSslCipher> NetworkManagerFactory::m_defaultCiphers;
 bool NetworkManagerFactory::m_canSendReferrer(true);
-bool NetworkManagerFactory::m_isWorkingOffline(false);
 bool NetworkManagerFactory::m_isInitialized(false);
-bool NetworkManagerFactory::m_isUsingSystemProxyAuthentication(false);
+bool NetworkManagerFactory::m_isWorkingOffline(false);
 
 UserAgentsModel::UserAgentsModel(const QString &selectedUserAgent, bool isEditor, QObject *parent) : TreeModel(parent),
 	m_isEditor(isEditor)
@@ -176,8 +175,8 @@ void NetworkManagerFactory::initialize()
 	m_instance->optionChanged(SettingsManager::Network_AcceptLanguageOption, SettingsManager::getValue(SettingsManager::Network_AcceptLanguageOption));
 	m_instance->optionChanged(SettingsManager::Network_DoNotTrackPolicyOption, SettingsManager::getValue(SettingsManager::Network_DoNotTrackPolicyOption));
 	m_instance->optionChanged(SettingsManager::Network_EnableReferrerOption, SettingsManager::getValue(SettingsManager::Network_EnableReferrerOption));
+	m_instance->optionChanged(SettingsManager::Network_ProxyOption, SettingsManager::getValue(SettingsManager::Network_ProxyOption));
 	m_instance->optionChanged(SettingsManager::Network_WorkOfflineOption, SettingsManager::getValue(SettingsManager::Network_WorkOfflineOption));
-	m_instance->optionChanged(SettingsManager::Proxy_UseSystemAuthenticationOption, SettingsManager::getValue(SettingsManager::Proxy_UseSystemAuthenticationOption));
 	m_instance->optionChanged(SettingsManager::Security_CiphersOption, SettingsManager::getValue(SettingsManager::Security_CiphersOption));
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), m_instance, SLOT(optionChanged(int,QVariant)));
@@ -214,12 +213,12 @@ void NetworkManagerFactory::optionChanged(int identifier, const QVariant &value)
 			m_canSendReferrer = value.toBool();
 
 			break;
-		case SettingsManager::Network_WorkOfflineOption:
-			m_isWorkingOffline = value.toBool();
+		case SettingsManager::Network_ProxyOption:
+			m_proxyFactory->setProxy(value.toString());
 
 			break;
-		case SettingsManager::Proxy_UseSystemAuthenticationOption:
-			m_isUsingSystemProxyAuthentication = value.toBool();
+		case SettingsManager::Network_WorkOfflineOption:
+			m_isWorkingOffline = value.toBool();
 
 			break;
 		case SettingsManager::Security_CiphersOption:
@@ -599,9 +598,9 @@ bool NetworkManagerFactory::isWorkingOffline()
 	return m_isWorkingOffline;
 }
 
-bool NetworkManagerFactory::isUsingSystemProxyAuthentication()
+bool NetworkManagerFactory::usesSystemProxyAuthentication()
 {
-	return m_isUsingSystemProxyAuthentication;
+	return m_proxyFactory->usesSystemAuthentication();
 }
 
 }

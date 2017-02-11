@@ -38,16 +38,17 @@ public:
 	explicit NetworkProxyFactory(QObject *parent = nullptr);
 	~NetworkProxyFactory();
 
+	void setProxy(const QString &identifier);
 	QList<QNetworkProxy> queryProxy(const QNetworkProxyQuery &query) override;
+	bool usesSystemAuthentication();
 
-protected slots:
-	void optionChanged(int identifier);
+protected:
+	QNetworkProxy::ProxyType getProxyType(ProxyDefinition::ProtocolType protocol);
 
 private:
 	NetworkAutomaticProxy *m_automaticProxy;
-	QStringList m_proxyExceptions;
+	ProxyDefinition m_definition;
 	QMap<int, QList<QNetworkProxy> > m_proxies;
-	ProxyDefinition::ProxyMode m_proxyMode;
 };
 
 }

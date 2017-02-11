@@ -144,7 +144,7 @@ public:
 	static DoNotTrackPolicy getDoNotTrackPolicy();
 	static bool canSendReferrer();
 	static bool isWorkingOffline();
-	static bool isUsingSystemProxyAuthentication();
+	static bool usesSystemProxyAuthentication();
 
 protected:
 	explicit NetworkManagerFactory(QObject *parent = nullptr);
@@ -167,9 +167,8 @@ private:
 	static QList<QSslCipher> m_defaultCiphers;
 	static DoNotTrackPolicy m_doNotTrackPolicy;
 	static bool m_canSendReferrer;
-	static bool m_isWorkingOffline;
 	static bool m_isInitialized;
-	static bool m_isUsingSystemProxyAuthentication;
+	static bool m_isWorkingOffline;
 
 signals:
 	void authenticated(QAuthenticator *authenticator, bool wasAccepted);

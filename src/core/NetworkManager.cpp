@@ -77,7 +77,7 @@ void NetworkManager::handleAuthenticationRequired(QNetworkReply *reply, QAuthent
 
 void NetworkManager::handleProxyAuthenticationRequired(const QNetworkProxy &proxy, QAuthenticator *authenticator)
 {
-	if (NetworkManagerFactory::isUsingSystemProxyAuthentication())
+	if (NetworkManagerFactory::usesSystemProxyAuthentication())
 	{
 		authenticator->setUser(QString());
 

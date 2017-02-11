@@ -20,18 +20,13 @@
 
 #include "NetworkProxyFactory.h"
 #include "NetworkAutomaticProxy.h"
-#include "SettingsManager.h"
 
 namespace Otter
 {
 
 NetworkProxyFactory::NetworkProxyFactory(QObject *parent) : QObject(parent), QNetworkProxyFactory(),
-	m_automaticProxy(nullptr),
-	m_proxyMode(ProxyDefinition::SystemProxy)
+	m_automaticProxy(nullptr)
 {
-	optionChanged(SettingsManager::Network_ProxyModeOption);
-
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
 }
 
 NetworkProxyFactory::~NetworkProxyFactory()
@@ -42,95 +37,57 @@ NetworkProxyFactory::~NetworkProxyFactory()
 	}
 }
 
-void NetworkProxyFactory::optionChanged(int identifier)
+void NetworkProxyFactory::setProxy(const QString &identifier)
 {
-	if ((identifier == SettingsManager::Network_ProxyModeOption && SettingsManager::getValue(identifier) == QLatin1String("automatic")) || (identifier == SettingsManager::Proxy_AutomaticConfigurationPathOption && m_proxyMode == ProxyDefinition::AutomaticProxy))
+	m_definition = NetworkManagerFactory::getProxy(identifier);
+
+	m_proxies.clear();
+	m_proxies[-1] = QList<QNetworkProxy>({QNetworkProxy(QNetworkProxy::NoProxy)});
+
+	switch (m_definition.mode)
 	{
-		m_proxyMode = ProxyDefinition::AutomaticProxy;
-
-		const QString path(SettingsManager::getValue(SettingsManager::Proxy_AutomaticConfigurationPathOption).toString());
-
-		if (m_automaticProxy)
-		{
-			m_automaticProxy->setPath(path);
-		}
-		else
-		{
-			m_automaticProxy = new NetworkAutomaticProxy(path);
-		}
-	}
-	else if ((identifier == SettingsManager::Network_ProxyModeOption && SettingsManager::getValue(identifier) == QLatin1String("manual")) || (SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Proxy/")) && m_proxyMode == ProxyDefinition::ManualProxy))
-	{
-		m_proxyMode = ProxyDefinition::ManualProxy;
-
-		m_proxies.clear();
-		m_proxies[-1] = QList<QNetworkProxy>({QNetworkProxy(QNetworkProxy::NoProxy)});
-
-		const bool useCommon(SettingsManager::getValue(SettingsManager::Proxy_UseCommonOption).toBool());
-		const QList<ProxyDefinition::ProtocolType> protocols({ProxyDefinition::HttpProtocol, ProxyDefinition::HttpsProtocol, ProxyDefinition::FtpProtocol, ProxyDefinition::SocksProtocol});
-
-		for (int i = 0; i < protocols.count(); ++i)
-		{
-			QString proxyName;
-			QNetworkProxy::ProxyType proxyType(QNetworkProxy::HttpProxy);
-
-			switch (protocols.at(i))
+		case ProxyDefinition::ManualProxy:
 			{
-				case ProxyDefinition::HttpProtocol:
-					proxyName = QLatin1String("Http");
+				QHash<ProxyDefinition::ProtocolType, ProxyDefinition::ProxyServer>::iterator iterator;
 
-					break;
-				case ProxyDefinition::HttpsProtocol:
-					proxyName = QLatin1String("Https");
+				for (iterator = m_definition.servers.begin(); iterator != m_definition.servers.end(); ++iterator)
+				{
+					if (iterator.key() == ProxyDefinition::AnyProtocol)
+					{
+						const QList<ProxyDefinition::ProtocolType> protocols({ProxyDefinition::HttpProtocol, ProxyDefinition::HttpsProtocol, ProxyDefinition::FtpProtocol, ProxyDefinition::SocksProtocol});
 
-					break;
-				case ProxyDefinition::FtpProtocol:
-					proxyName = QLatin1String("Ftp");
-					proxyType = QNetworkProxy::FtpCachingProxy;
-
-					break;
-				case ProxyDefinition::SocksProtocol:
-					proxyName = QLatin1String("Socks");
-					proxyType = QNetworkProxy::Socks5Proxy;
-
-					break;
-				default:
-					break;
+						for (int i = 0; i < protocols.count(); ++i)
+						{
+							m_proxies[iterator.key()] = QList<QNetworkProxy>({QNetworkProxy(getProxyType(protocols.at(i)), iterator.value().hostName, iterator.value().port)});
+						}
+					}
+					else
+					{
+						m_proxies[iterator.key()] = QList<QNetworkProxy>({QNetworkProxy(getProxyType(iterator.key()), iterator.value().hostName, iterator.value().port)});
+					}
+				}
 			}
 
-			if (useCommon && protocols.at(i) != ProxyDefinition::SocksProtocol)
+			break;
+		case ProxyDefinition::AutomaticProxy:
+			if (m_automaticProxy)
 			{
-				m_proxies[protocols.at(i)] = QList<QNetworkProxy>({QNetworkProxy(proxyType, SettingsManager::getValue(SettingsManager::Proxy_CommonServersOption).toString(), SettingsManager::getValue(SettingsManager::Proxy_CommonPortOption).toInt())});
+				m_automaticProxy->setPath(m_definition.path);
 			}
-			else if (!proxyName.isEmpty() && SettingsManager::getValue(SettingsManager::getOptionIdentifier(QLatin1String("Proxy/Use") + proxyName)).toBool())
+			else
 			{
-				m_proxies[protocols.at(i)] = QList<QNetworkProxy>({QNetworkProxy(proxyType, SettingsManager::getValue(SettingsManager::getOptionIdentifier(QStringLiteral("Proxy/%1Servers").arg(proxyName))).toString(), SettingsManager::getValue(SettingsManager::getOptionIdentifier(QStringLiteral("Proxy/%1Port").arg(proxyName))).toInt())});
+				m_automaticProxy = new NetworkAutomaticProxy(m_definition.path);
 			}
-		}
 
-		m_proxyExceptions = SettingsManager::getValue(SettingsManager::Proxy_ExceptionsOption).toStringList();
-	}
-	else if (identifier == SettingsManager::Network_ProxyModeOption)
-	{
-		m_proxies.clear();
-
-		const QString value(SettingsManager::getValue(identifier).toString());
-
-		if (value == QLatin1String("system"))
-		{
-			m_proxyMode = ProxyDefinition::SystemProxy;
-		}
-		else
-		{
-			m_proxyMode = ProxyDefinition::NoProxy;
-			m_proxies[-1] = QList<QNetworkProxy>({QNetworkProxy(QNetworkProxy::NoProxy)});
-		}
+			break;
+		default:
+			break;
 	}
 }
 
 QList<QNetworkProxy> NetworkProxyFactory::queryProxy(const QNetworkProxyQuery &query)
 {
-	switch (m_proxyMode)
+	switch (m_definition.mode)
 	{
 		case ProxyDefinition::SystemProxy:
 			return QNetworkProxyFactory::systemProxyForQuery(query);
@@ -139,19 +96,19 @@ QList<QNetworkProxy> NetworkProxyFactory::queryProxy(const QNetworkProxyQuery &q
 			{
 				const QString host(query.peerHostName());
 
-				for (int i = 0; i < m_proxyExceptions.count(); ++i)
+				for (int i = 0; i < m_definition.exceptions.count(); ++i)
 				{
-					if (m_proxyExceptions.at(i).contains(QLatin1Char('/')))
+					if (m_definition.exceptions.at(i).contains(QLatin1Char('/')))
 					{
 						const QHostAddress address(host);
-						const QPair<QHostAddress, int> subnet(QHostAddress::parseSubnet(m_proxyExceptions.at(i)));
+						const QPair<QHostAddress, int> subnet(QHostAddress::parseSubnet(m_definition.exceptions.at(i)));
 
 						if (!address.isNull() && subnet.second != -1 && address.isInSubnet(subnet))
 						{
 							return m_proxies[-1];
 						}
 					}
-					else if (host.contains(m_proxyExceptions.at(i), Qt::CaseInsensitive))
+					else if (host.contains(m_definition.exceptions.at(i), Qt::CaseInsensitive))
 					{
 						return m_proxies[-1];
 					}
@@ -197,5 +154,27 @@ QList<QNetworkProxy> NetworkProxyFactory::queryProxy(const QNetworkProxyQuery &q
 	return m_proxies[-1];
 }
 
+QNetworkProxy::ProxyType NetworkProxyFactory::getProxyType(ProxyDefinition::ProtocolType protocol)
+{
+	switch (protocol)
+	{
+		case ProxyDefinition::HttpProtocol:
+		case ProxyDefinition::HttpsProtocol:
+			return QNetworkProxy::HttpProxy;
+		case ProxyDefinition::FtpProtocol:
+			return QNetworkProxy::FtpCachingProxy;
+		case ProxyDefinition::SocksProtocol:
+			return QNetworkProxy::Socks5Proxy;
+		default:
+			break;
+	}
+
+	return QNetworkProxy::DefaultProxy;
 }
 
+bool NetworkProxyFactory::usesSystemAuthentication()
+{
+	return m_definition.usesSystemAuthentication;
+}
+
+}
