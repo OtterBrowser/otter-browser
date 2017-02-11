@@ -522,12 +522,9 @@ void ItemViewWidget::moveDownRow()
 
 void ItemViewWidget::markAsModified()
 {
-	if (!m_isModified)
-	{
-		m_isModified = true;
+	m_isModified = true;
 
-		emit modified();
-	}
+	emit modified();
 }
 
 void ItemViewWidget::saveState()
