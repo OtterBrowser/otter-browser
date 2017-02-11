@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -32,6 +33,7 @@
 namespace Otter
 {
 
+class NetworkProxyFactory;
 class QtWebKitCookieJar;
 class QtWebKitWebWidget;
 class WebBackend;
@@ -86,6 +88,7 @@ private:
 	QtWebKitWebWidget *m_widget;
 	CookieJar *m_cookieJar;
 	QtWebKitCookieJar *m_cookieJarProxy;
+	NetworkProxyFactory *m_proxyFactory;
 	QNetworkReply *m_baseReply;
 	QString m_acceptLanguage;
 	QString m_userAgent;

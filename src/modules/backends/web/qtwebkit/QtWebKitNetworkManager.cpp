@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 * Copyright (C) 2015 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
@@ -28,6 +28,7 @@
 #include "../../../../core/LocalListingNetworkReply.h"
 #include "../../../../core/NetworkCache.h"
 #include "../../../../core/NetworkManagerFactory.h"
+#include "../../../../core/NetworkProxyFactory.h"
 #include "../../../../core/PasswordsManager.h"
 #include "../../../../core/SettingsManager.h"
 #include "../../../../core/ThemesManager.h"
@@ -52,6 +53,7 @@ QtWebKitNetworkManager::QtWebKitNetworkManager(bool isPrivate, QtWebKitCookieJar
 	m_widget(parent),
 	m_cookieJar(nullptr),
 	m_cookieJarProxy(cookieJarProxy),
+	m_proxyFactory(nullptr),
 	m_baseReply(nullptr),
 	m_contentState(WindowsManager::UnknownContentState),
 	m_doNotTrackPolicy(NetworkManagerFactory::SkipTrackPolicy),
@@ -287,7 +289,7 @@ void QtWebKitNetworkManager::handleAuthenticationRequired(QNetworkReply *reply, 
 
 void QtWebKitNetworkManager::handleProxyAuthenticationRequired(const QNetworkProxy &proxy, QAuthenticator *authenticator)
 {
-	if (NetworkManagerFactory::usesSystemProxyAuthentication())
+	if ((m_proxyFactory && m_proxyFactory->usesSystemAuthentication()) || (!m_proxyFactory && NetworkManagerFactory::usesSystemProxyAuthentication()))
 	{
 		authenticator->setUser(QString());
 
@@ -504,6 +506,18 @@ void QtWebKitNetworkManager::updateOptions(const QUrl &url)
 	}
 
 	m_cookieJarProxy->setup(m_widget->getOption(SettingsManager::Network_ThirdPartyCookiesAcceptedHostsOption, url).toStringList(), m_widget->getOption(SettingsManager::Network_ThirdPartyCookiesRejectedHostsOption, url).toStringList(), generalCookiesPolicy, thirdPartyCookiesPolicy, keepMode);
+
+	if (!m_proxyFactory && (m_widget->hasOption(SettingsManager::Network_ProxyOption) || SettingsManager::hasOverride(url, SettingsManager::Network_ProxyOption)))
+	{
+		m_proxyFactory = new NetworkProxyFactory(this);
+
+		setProxyFactory(m_proxyFactory);
+	}
+
+	if (m_proxyFactory)
+	{
+		m_proxyFactory->setProxy(m_widget->getOption(SettingsManager::Network_ProxyOption, url).toString());
+	}
 }
 
 void QtWebKitNetworkManager::setPageInformation(WebWidget::PageInformation key, const QVariant &value)
