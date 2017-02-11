@@ -45,6 +45,10 @@ protected:
 	void changeEvent(QEvent *event);
 
 protected slots:
+	void addException();
+	void editException();
+	void removeException();
+	void updateExceptionsActions();
 	void updateProxyType();
 
 private:

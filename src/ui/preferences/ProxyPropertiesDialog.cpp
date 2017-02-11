@@ -94,6 +94,10 @@ ProxyPropertiesDialog::ProxyPropertiesDialog(const ProxyDefinition &proxy, QWidg
 
 	connect(m_ui->buttonGroup, SIGNAL(buttonClicked(int)), this, SLOT(updateProxyType()));
 	connect(m_ui->allCheckBox, SIGNAL(clicked(bool)), this, SLOT(updateProxyType()));
+	connect(m_ui->exceptionsItemViewWidget, SIGNAL(needsActionsUpdate()), this, SLOT(updateExceptionsActions()));
+	connect(m_ui->addExceptionButton, SIGNAL(clicked()), this, SLOT(addException()));
+	connect(m_ui->editExceptionButton, SIGNAL(clicked()), this, SLOT(editException()));
+	connect(m_ui->removeExceptionButton, SIGNAL(clicked()), this, SLOT(removeException()));
 }
 
 ProxyPropertiesDialog::~ProxyPropertiesDialog()
@@ -109,6 +113,34 @@ void ProxyPropertiesDialog::changeEvent(QEvent *event)
 	{
 		m_ui->retranslateUi(this);
 	}
+}
+
+void ProxyPropertiesDialog::addException()
+{
+	m_ui->exceptionsItemViewWidget->insertRow();
+
+	editException();
+}
+
+void ProxyPropertiesDialog::editException()
+{
+	m_ui->exceptionsItemViewWidget->edit(m_ui->exceptionsItemViewWidget->getIndex(m_ui->exceptionsItemViewWidget->getCurrentRow()));
+}
+
+void ProxyPropertiesDialog::removeException()
+{
+	m_ui->exceptionsItemViewWidget->removeRow();
+	m_ui->exceptionsItemViewWidget->setFocus();
+
+	updateExceptionsActions();
+}
+
+void ProxyPropertiesDialog::updateExceptionsActions()
+{
+	const bool isEditable(m_ui->exceptionsItemViewWidget->getCurrentRow() >= 0);
+
+	m_ui->editExceptionButton->setEnabled(isEditable);
+	m_ui->removeExceptionButton->setEnabled(isEditable);
 }
 
 void ProxyPropertiesDialog::updateProxyType()
