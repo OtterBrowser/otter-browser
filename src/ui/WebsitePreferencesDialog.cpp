@@ -121,6 +121,7 @@ WebsitePreferencesDialog::WebsitePreferencesDialog(const QUrl &url, const QList<
 	}
 
 	m_ui->userAgentComboBox->setModel(new UserAgentsModel(QString(), false, this));
+	m_ui->proxyComboBox->setModel(new ProxiesModel(QString(), false, this));
 
 	m_ui->encodingOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Content_DefaultCharacterEncodingOption));
 	m_ui->popupsPolicyOverrideCheckBox->setChecked(SettingsManager::hasOverride(url, SettingsManager::Content_PopupsPolicyOption));
@@ -223,6 +224,7 @@ void WebsitePreferencesDialog::buttonClicked(QAbstractButton *button)
 			SettingsManager::setValue(SettingsManager::Permissions_EnableFullScreenOption, (m_ui->enableFullScreenOverrideCheckBox->isChecked() ? m_ui->enableFullScreenComboBox->currentData().toString() : QVariant()), url);
 			SettingsManager::setValue(SettingsManager::Network_EnableReferrerOption, (m_ui->sendReferrerOverrideCheckBox->isChecked() ? m_ui->sendReferrerCheckBox->isChecked() : QVariant()), url);
 			SettingsManager::setValue(SettingsManager::Network_UserAgentOption, (m_ui->userAgentOverrideCheckBox->isChecked() ? m_ui->userAgentComboBox->currentData(UserAgentsModel::IdentifierRole).toString() : QVariant()), url);
+			SettingsManager::setValue(SettingsManager::Network_ProxyOption, (m_ui->proxyOverrideCheckBox->isChecked() ? m_ui->proxyComboBox->currentData(ProxiesModel::IdentifierRole).toString() : QVariant()), url);
 
 			if (m_ui->contentBlockingProfilesOverrideCheckBox->isChecked())
 			{
@@ -421,6 +423,7 @@ void WebsitePreferencesDialog::updateValues(bool checked)
 	m_ui->thirdPartyCookiesPolicyComboBox->setCurrentIndex((thirdPartyCookiesPolicyIndex < 0) ? 0 : thirdPartyCookiesPolicyIndex);
 	m_ui->sendReferrerCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Network_EnableReferrerOption, (m_ui->sendReferrerOverrideCheckBox->isChecked() ? url : QUrl())).toBool());
 	m_ui->userAgentComboBox->setCurrentIndex(m_ui->userAgentComboBox->model()->match(m_ui->userAgentComboBox->model()->index(0, 0), UserAgentsModel::IdentifierRole, SettingsManager::getValue(SettingsManager::Network_UserAgentOption, (m_ui->userAgentOverrideCheckBox->isChecked() ? url : QUrl())).toString(), 1, Qt::MatchRecursive).value(0));
+	m_ui->proxyComboBox->setCurrentIndex(m_ui->proxyComboBox->model()->match(m_ui->proxyComboBox->model()->index(0, 0), ProxiesModel::IdentifierRole, SettingsManager::getValue(SettingsManager::Network_ProxyOption, (m_ui->proxyOverrideCheckBox->isChecked() ? url : QUrl())).toString(), 1, Qt::MatchRecursive).value(0));
 
 	const QStringList contentBlockingProfiles(SettingsManager::getValue(SettingsManager::ContentBlocking_ProfilesOption, url).toStringList());
 
