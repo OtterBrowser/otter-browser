@@ -291,16 +291,9 @@ bool Action::isLocal(int identifier)
 		case ActionsManager::ActivateContentAction:
 		case ActionsManager::BookmarkPageAction:
 		case ActionsManager::QuickBookmarkAccessAction:
-		case ActionsManager::PopupsPolicyAction:
-		case ActionsManager::ImagesPolicyAction:
-		case ActionsManager::CookiesPolicyAction:
-		case ActionsManager::ThirdPartyCookiesPolicyAction:
-		case ActionsManager::PluginsPolicyAction:
 		case ActionsManager::LoadPluginsAction:
 		case ActionsManager::EnableJavaScriptAction:
 		case ActionsManager::EnableReferrerAction:
-		case ActionsManager::ProxyMenuAction:
-		case ActionsManager::EnableProxyAction:
 		case ActionsManager::ViewSourceAction:
 		case ActionsManager::OpenPageInApplicationAction:
 		case ActionsManager::ValidateAction:
@@ -479,17 +472,10 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(BookmarkAllOpenPagesAction, QT_TRANSLATE_NOOP("actions", "Bookmark All Open Pages"));
 	registerAction(OpenBookmarkAction, QT_TRANSLATE_NOOP("actions", "Open Bookmark"));
 	registerAction(QuickBookmarkAccessAction, QT_TRANSLATE_NOOP("actions", "Quick Bookmark Access"));
-	registerAction(PopupsPolicyAction, QT_TRANSLATE_NOOP("actions", "Block pop-ups"));
-	registerAction(ImagesPolicyAction, QT_TRANSLATE_NOOP("actions", "Load Images"));
 	registerAction(CookiesAction, QT_TRANSLATE_NOOP("actions", "Cookies"));
-	registerAction(CookiesPolicyAction, QT_TRANSLATE_NOOP("actions", "Cookies Policy"));
-	registerAction(ThirdPartyCookiesPolicyAction, QT_TRANSLATE_NOOP("actions", "Third-party Cookies Policy"));
-	registerAction(PluginsPolicyAction, QT_TRANSLATE_NOOP("actions", "Plugins"));
 	registerAction(LoadPluginsAction, QT_TRANSLATE_NOOP("actions", "Load Plugins"), QString(), ThemesManager::getIcon(QLatin1String("preferences-plugin")));
 	registerAction(EnableJavaScriptAction, QT_TRANSLATE_NOOP("actions", "Enable JavaScript"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag | IsCheckedFlag));
 	registerAction(EnableReferrerAction, QT_TRANSLATE_NOOP("actions", "Enable Referrer"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag | IsCheckedFlag));
-	registerAction(ProxyMenuAction, QT_TRANSLATE_NOOP("actions", "Proxy"));
-	registerAction(EnableProxyAction, QT_TRANSLATE_NOOP("actions", "Enable Proxy"), QString(), QIcon(), (IsEnabledFlag | IsCheckableFlag | IsCheckedFlag));
 	registerAction(ViewSourceAction, QT_TRANSLATE_NOOP("actions", "View Source"), QString(), QIcon(), NoFlags);
 	registerAction(OpenPageInApplicationAction, QT_TRANSLATE_NOOP("actions", "Open with…"), QT_TRANSLATE_NOOP("actions", "Open Current Page with External Application"), QIcon(), (IsEnabledFlag | IsMenuFlag));
 	registerAction(ValidateAction, QT_TRANSLATE_NOOP("actions", "Validate"));
