@@ -167,7 +167,6 @@ QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWi
 	setNetworkAccessManager(m_networkManager);
 	setForwardUnsupportedContent(true);
 	updateStyleSheets();
-	optionChanged(SettingsManager::Interface_ShowScrollBarsOption);
 	handleFrameCreation(mainFrame());
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
