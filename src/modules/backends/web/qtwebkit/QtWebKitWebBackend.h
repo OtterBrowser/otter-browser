@@ -42,18 +42,19 @@ public:
 	explicit QtWebKitWebBackend(QObject *parent = nullptr);
 	~QtWebKitWebBackend();
 
-	WebWidget* createWidget(bool isPrivate = false, ContentsWidget *parent = nullptr);
-	QString getTitle() const;
-	QString getDescription() const;
-	QString getVersion() const;
-	QString getEngineVersion() const;
-	QString getSslVersion() const;
-	QString getUserAgent(const QString &pattern = QString()) const;
-	QUrl getHomePage() const;
-	QIcon getIcon() const;
-	QList<SpellCheckManager::DictionaryInformation> getDictionaries() const;
+	WebWidget* createWidget(bool isPrivate = false, ContentsWidget *parent = nullptr) override;
+	QString getTitle() const override;
+	QString getDescription() const override;
+	QString getVersion() const override;
+	QString getEngineVersion() const override;
+	QString getSslVersion() const override;
+	QString getUserAgent(const QString &pattern = QString()) const override;
+	QUrl getHomePage() const override;
+	QIcon getIcon() const override;
+	QList<SpellCheckManager::DictionaryInformation> getDictionaries() const override;
+	BackendCapabilities getCapabilities() const override;
 	static int getOptionIdentifier(OptionIdentifier identifier);
-	bool requestThumbnail(const QUrl &url, const QSize &size);
+	bool requestThumbnail(const QUrl &url, const QSize &size) override;
 
 protected:
 	static QtWebKitWebBackend* getInstance();

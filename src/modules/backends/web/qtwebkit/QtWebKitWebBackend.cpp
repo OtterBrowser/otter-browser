@@ -296,6 +296,11 @@ QList<SpellCheckManager::DictionaryInformation> QtWebKitWebBackend::getDictionar
 	return SpellCheckManager::getDictionaries();
 }
 
+WebBackend::BackendCapabilities QtWebKitWebBackend::getCapabilities() const
+{
+	return (CacheManagementCapability | CookiesManagementCapability | PasswordsManagementCapability | PluginsOnDemandCapability | UserScriptsCapability | UserStyleSheetsCapability | GlobalCookiesPolicyCapability | GlobalContentFilteringCapability | GlobalDoNotTrackCapability | GlobalProxyCapability | GlobalReferrerCapability | GlobalUserAgentCapability | TabCookiesPolicyCapability | TabContentFilteringCapability | TabDoNotTrackCapability | TabProxyCapability | TabReferrerCapability | TabUserAgentCapability);
+}
+
 int QtWebKitWebBackend::getOptionIdentifier(QtWebKitWebBackend::OptionIdentifier identifier)
 {
 	switch (identifier)
