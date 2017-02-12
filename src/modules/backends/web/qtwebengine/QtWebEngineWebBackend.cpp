@@ -302,6 +302,11 @@ QIcon QtWebEngineWebBackend::getIcon() const
 	return QIcon();
 }
 
+WebBackend::BackendCapabilities QtWebEngineWebBackend::getCapabilities() const
+{
+	return (UserScriptsCapability | GlobalCookiesPolicyCapability | GlobalContentFilteringCapability | GlobalDoNotTrackCapability | GlobalProxyCapability | GlobalReferrerCapability | GlobalUserAgentCapability);
+}
+
 bool QtWebEngineWebBackend::requestThumbnail(const QUrl &url, const QSize &size)
 {
 	Q_UNUSED(url)

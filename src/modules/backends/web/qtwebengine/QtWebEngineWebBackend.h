@@ -38,17 +38,18 @@ class QtWebEngineWebBackend : public WebBackend
 public:
 	explicit QtWebEngineWebBackend(QObject *parent = nullptr);
 
-	WebWidget* createWidget(bool isPrivate = false, ContentsWidget *parent = nullptr);
-	QString getTitle() const;
-	QString getDescription() const;
-	QString getVersion() const;
-	QString getEngineVersion() const;
-	QString getSslVersion() const;
-	QString getUserAgent(const QString &pattern = QString()) const;
+	WebWidget* createWidget(bool isPrivate = false, ContentsWidget *parent = nullptr) override;
+	QString getTitle() const override;
+	QString getDescription() const override;
+	QString getVersion() const override;
+	QString getEngineVersion() const override;
+	QString getSslVersion() const override;
+	QString getUserAgent(const QString &pattern = QString()) const override;
 	QStringList getBlockedElements(const QString &domain) const;
-	QUrl getHomePage() const;
-	QIcon getIcon() const;
-	bool requestThumbnail(const QUrl &url, const QSize &size);
+	QUrl getHomePage() const override;
+	QIcon getIcon() const override;
+	WebBackend::BackendCapabilities getCapabilities() const override;
+	bool requestThumbnail(const QUrl &url, const QSize &size) override;
 
 protected slots:
 	void optionChanged(int identifier);
