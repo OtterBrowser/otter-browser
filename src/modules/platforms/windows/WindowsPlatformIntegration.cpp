@@ -442,12 +442,11 @@ QString WindowsPlatformIntegration::getUpdaterBinary() const
 
 QString WindowsPlatformIntegration::getPlatform() const
 {
-#if QT_VERSION >= 0x050400
 	if (QSysInfo::buildCpuArchitecture() == QLatin1String("x86_64"))
 	{
 		return QLatin1String("win64");
 	}
-#endif
+
 	return QLatin1String("win32");
 }
 

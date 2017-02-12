@@ -39,7 +39,7 @@
 
 using namespace Otter;
 
-#if !defined(Q_OS_WIN32) && QT_VERSION >= 0x050400
+#if !defined(Q_OS_WIN32)
 void otterMessageHander(QtMsgType type, const QMessageLogContext &context, const QString &message)
 {
 	if (message.trimmed().startsWith(QLatin1String("OpenType support missing")) || message.startsWith(QLatin1String("libpng warning: iCCP:")) || message.startsWith(QLatin1String("OpenType support missing for script")) || message.startsWith(QLatin1String("QNetworkReplyImplPrivate::error: Internal problem, this method must only be called once")) || message.startsWith(QLatin1String("QBasicTimer::start: QBasicTimer can only be used with threads started with QThread")) || message.contains(QLatin1String("::_q_startOperation was called more than once")))
@@ -98,7 +98,7 @@ bool otterCrashDumpHandler(const google_breakpad::MinidumpDescriptor &descriptor
 
 int main(int argc, char *argv[])
 {
-#if !defined(Q_OS_WIN32) && QT_VERSION >= 0x050400
+#if !defined(Q_OS_WIN32)
 	qSetMessagePattern(QLatin1String("%{if-category}%{category}: %{endif}%{message}\n"));
 	qInstallMessageHandler(otterMessageHander);
 #endif

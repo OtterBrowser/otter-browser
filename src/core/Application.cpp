@@ -65,9 +65,7 @@
 #include <QtCore/QLocale>
 #include <QtCore/QRegularExpression>
 #include <QtCore/QStandardPaths>
-#if QT_VERSION >= 0x050400
 #include <QtCore/QStorageInfo>
-#endif
 #include <QtCore/QTranslator>
 #include <QtGui/QDesktopServices>
 #include <QtNetwork/QLocalSocket>
@@ -310,7 +308,6 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 
 	SettingsManager::createInstance(profilePath, this);
 
-#if QT_VERSION >= 0x050400
 	if (!isReadOnly)
 	{
 		QStorageInfo storageInformation(profilePath);
@@ -366,7 +363,6 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 			}
 		}
 	}
-#endif
 
 	SessionsManager::createInstance(profilePath, cachePath, isPrivate, isReadOnly, this);
 
@@ -927,7 +923,6 @@ QString Application::createReport(ReportOptions options)
 	if (options.testFlag(EnvironmentReport))
 	{
 		stream << QLatin1String("Environment:\n\t");
-#if QT_VERSION >= 0x050400
 		stream.setFieldWidth(30);
 		stream << QLatin1String("System Name");
 		stream << QSysInfo::prettyProductName();
@@ -948,7 +943,6 @@ QString Application::createReport(ReportOptions options)
 		stream << QSysInfo::currentCpuArchitecture();
 		stream.setFieldWidth(0);
 		stream << QLatin1String("\n\t");
-#endif
 		stream.setFieldWidth(30);
 		stream << QLatin1String("Locale");
 		stream << QLocale::system().name();
