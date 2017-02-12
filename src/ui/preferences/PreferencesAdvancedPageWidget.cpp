@@ -679,6 +679,7 @@ void PreferencesAdvancedPageWidget::addUserAgent(QAction *action)
 					userAgent.identifier = Utils::createIdentifier(QString(), QVariant(model->getAllData(UserAgentsModel::IdentifierRole, 0)).toStringList());
 
 					QList<QStandardItem*> items({new QStandardItem(userAgent.title.isEmpty() ? tr("(Untitled)") : userAgent.title), new QStandardItem(userAgent.value)});
+					items[0]->setCheckable(true);
 					items[0]->setData(userAgent.identifier, UserAgentsModel::IdentifierRole);
 
 					model->insertRow(items, parent, row, TreeModel::EntryType);
@@ -841,6 +842,7 @@ void PreferencesAdvancedPageWidget::addProxy(QAction *action)
 					m_proxies[proxy.identifier] = proxy;
 
 					QStandardItem *item(new QStandardItem(proxy.title.isEmpty() ? tr("(Untitled)") : proxy.title));
+					item->setCheckable(true);
 					item->setData(proxy.identifier, ProxiesModel::IdentifierRole);
 
 					model->insertRow(item, parent, row, TreeModel::EntryType);
