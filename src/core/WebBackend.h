@@ -34,15 +34,41 @@ class WebBackend : public Addon
 	Q_OBJECT
 
 public:
+	enum BackendCapability
+	{
+		NoCapabilities = 0,
+		CacheManagementCapability = 1,
+		CookiesManagementCapability = 2,
+		PasswordsManagementCapability = 4,
+		PluginsOnDemandCapability = 8,
+		UserScriptsCapability = 16,
+		UserStyleSheetsCapability = 32,
+		GlobalCookiesPolicyCapability = 64,
+		GlobalContentFilteringCapability = 128,
+		GlobalDoNotTrackCapability = 256,
+		GlobalProxyCapability = 512,
+		GlobalReferrerCapability = 1024,
+		GlobalUserAgentCapability = 2048,
+		TabCookiesPolicyCapability = 4096,
+		TabContentFilteringCapability = 8192,
+		TabDoNotTrackCapability = 16384,
+		TabProxyCapability = 32768,
+		TabReferrerCapability = 65536,
+		TabUserAgentCapability = 131072
+	};
+
+	Q_DECLARE_FLAGS(BackendCapabilities, BackendCapability)
+
 	explicit WebBackend(QObject *parent = nullptr);
 
 	virtual WebWidget* createWidget(bool isPrivate = false, ContentsWidget *parent = nullptr) = 0;
 	virtual QString getEngineVersion() const = 0;
 	virtual QString getSslVersion() const = 0;
 	virtual QString getUserAgent(const QString &pattern = QString()) const = 0;
-	QUrl getUpdateUrl() const;
+	QUrl getUpdateUrl() const override;
 	virtual QList<SpellCheckManager::DictionaryInformation> getDictionaries() const;
-	AddonType getType() const;
+	AddonType getType() const override;
+	virtual BackendCapabilities getCapabilities() const;
 	virtual bool requestThumbnail(const QUrl &url, const QSize &size) = 0;
 
 signals:
@@ -50,5 +76,7 @@ signals:
 };
 
 }
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Otter::WebBackend::BackendCapabilities)
 
 #endif
