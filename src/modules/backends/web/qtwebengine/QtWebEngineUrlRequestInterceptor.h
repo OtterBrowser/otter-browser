@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2016 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -36,7 +36,7 @@ public:
 	explicit QtWebEngineUrlRequestInterceptor(QObject *parent = nullptr);
 
 	QStringList getBlockedElements(const QString &domain) const;
-	void interceptRequest(QWebEngineUrlRequestInfo &request);
+	void interceptRequest(QWebEngineUrlRequestInfo &request) override;
 
 protected slots:
 	void optionChanged(int identifier);

@@ -42,14 +42,14 @@ public:
 
 protected:
 	void markAsPopup();
-	void javaScriptAlert(const QUrl &url, const QString &message);
-	void javaScriptConsoleMessage(JavaScriptConsoleMessageLevel level, const QString &note, int line, const QString &source);
-	QWebEnginePage* createWindow(WebWindowType type);
+	void javaScriptAlert(const QUrl &url, const QString &message) override;
+	void javaScriptConsoleMessage(JavaScriptConsoleMessageLevel level, const QString &note, int line, const QString &source) override;
+	QWebEnginePage* createWindow(WebWindowType type) override;
 	QString createJavaScriptList(QStringList rules) const;
-	QStringList chooseFiles(FileSelectionMode mode, const QStringList &oldFiles, const QStringList &acceptedMimeTypes);
-	bool acceptNavigationRequest(const QUrl &url, QWebEnginePage::NavigationType type, bool isMainFrame);
-	bool javaScriptConfirm(const QUrl &url, const QString &message);
-	bool javaScriptPrompt(const QUrl &url, const QString &message, const QString &defaultValue, QString *result);
+	QStringList chooseFiles(FileSelectionMode mode, const QStringList &oldFiles, const QStringList &acceptedMimeTypes) override;
+	bool acceptNavigationRequest(const QUrl &url, QWebEnginePage::NavigationType type, bool isMainFrame) override;
+	bool javaScriptConfirm(const QUrl &url, const QString &message) override;
+	bool javaScriptPrompt(const QUrl &url, const QString &message, const QString &defaultValue, QString *result) override;
 
 protected slots:
 	void pageLoadFinished();
