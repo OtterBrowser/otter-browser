@@ -49,57 +49,56 @@ class QtWebKitWebWidget : public WebWidget
 public:
 	~QtWebKitWebWidget();
 
-	void search(const QString &query, const QString &searchEngine);
-	void print(QPrinter *printer);
-	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = QStringList());
-	QWidget* getInspector();
-	QWidget* getViewport();
-	Action* getAction(int identifier);
-	QString getDefaultCharacterEncoding() const;
-	QString getTitle() const;
-	QString getActiveStyleSheet() const;
-	QString getSelectedText() const;
-	QVariant getPageInformation(WebWidget::PageInformation key) const;
+	void search(const QString &query, const QString &searchEngine) override;
+	void print(QPrinter *printer) override;
+	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = QStringList()) override;
+	QWidget* getInspector() override;
+	QWidget* getViewport() override;
+	Action* getAction(int identifier) override;
+	QString getTitle() const override;
+	QString getActiveStyleSheet() const override;
+	QString getSelectedText() const override;
+	QVariant getPageInformation(WebWidget::PageInformation key) const override;
 	QStringList getBlockedElements() const;
-	QUrl getUrl() const;
-	QIcon getIcon() const;
-	QPixmap getThumbnail();
-	QPoint getScrollPosition() const;
-	QRect getProgressBarGeometry() const;
-	WebWidget::SslInformation getSslInformation() const;
-	WindowHistoryInformation getHistory() const;
-	HitTestResult getHitTestResult(const QPoint &position);
-	QStringList getStyleSheets() const;
-	QList<LinkUrl> getFeeds() const;
-	QList<LinkUrl> getSearchEngines() const;
-	QList<NetworkManager::ResourceInformation> getBlockedRequests() const;
-	QHash<QByteArray, QByteArray> getHeaders() const;
-	WindowsManager::ContentStates getContentState() const;
-	WindowsManager::LoadingState getLoadingState() const;
-	int getZoom() const;
-	bool hasSelection() const;
+	QUrl getUrl() const override;
+	QIcon getIcon() const override;
+	QPixmap getThumbnail() override;
+	QPoint getScrollPosition() const override;
+	QRect getProgressBarGeometry() const override;
+	WebWidget::SslInformation getSslInformation() const override;
+	WindowHistoryInformation getHistory() const override;
+	HitTestResult getHitTestResult(const QPoint &position) override;
+	QStringList getStyleSheets() const override;
+	QList<LinkUrl> getFeeds() const override;
+	QList<LinkUrl> getSearchEngines() const override;
+	QList<NetworkManager::ResourceInformation> getBlockedRequests() const override;
+	QHash<QByteArray, QByteArray> getHeaders() const override;
+	WindowsManager::ContentStates getContentState() const override;
+	WindowsManager::LoadingState getLoadingState() const override;
+	int getZoom() const override;
+	bool hasSelection() const override;
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
-	bool isAudible() const;
-	bool isAudioMuted() const;
+	bool isAudible() const override;
+	bool isAudioMuted() const override;
 #endif
-	bool isFullScreen() const;
-	bool isPrivate() const;
-	bool findInPage(const QString &text, FindFlags flags = NoFlagsFind);
-	bool eventFilter(QObject *object, QEvent *event);
+	bool isFullScreen() const override;
+	bool isPrivate() const override;
+	bool findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;
+	bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:
-	void clearOptions();
-	void goToHistoryIndex(int index);
-	void removeHistoryIndex(int index, bool purge = false);
-	void fillPassword(const PasswordsManager::PasswordInformation &password);
-	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
-	void setActiveStyleSheet(const QString &styleSheet);
-	void setPermission(FeaturePermission feature, const QUrl &url, PermissionPolicies policies);
-	void setOption(int identifier, const QVariant &value);
-	void setScrollPosition(const QPoint &position);
-	void setHistory(const WindowHistoryInformation &history);
-	void setZoom(int zoom);
-	void setUrl(const QUrl &url, bool isTyped = true);
+	void clearOptions() override;
+	void goToHistoryIndex(int index) override;
+	void removeHistoryIndex(int index, bool purge = false) override;
+	void fillPassword(const PasswordsManager::PasswordInformation &password) override;
+	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap()) override;
+	void setActiveStyleSheet(const QString &styleSheet) override;
+	void setPermission(FeaturePermission feature, const QUrl &url, PermissionPolicies policies) override;
+	void setOption(int identifier, const QVariant &value) override;
+	void setScrollPosition(const QPoint &position) override;
+	void setHistory(const WindowHistoryInformation &history) override;
+	void setZoom(int zoom) override;
+	void setUrl(const QUrl &url, bool isTyped = true) override;
 
 protected:
 	enum HistoryEntryData
@@ -111,10 +110,10 @@ protected:
 
 	explicit QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebKitNetworkManager *networkManager = nullptr, ContentsWidget *parent = nullptr);
 
-	void timerEvent(QTimerEvent *event);
-	void showEvent(QShowEvent *event);
-	void hideEvent(QHideEvent *event);
-	void focusInEvent(QFocusEvent *event);
+	void timerEvent(QTimerEvent *event) override;
+	void showEvent(QShowEvent *event) override;
+	void hideEvent(QHideEvent *event) override;
+	void focusInEvent(QFocusEvent *event) override;
 	void clearPluginToken();
 	void resetSpellCheck(QWebElement element);
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
@@ -122,7 +121,7 @@ protected:
 #endif
 	void openRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
 	void openFormRequest(const QUrl &url, QNetworkAccessManager::Operation operation, QIODevice *outgoingData);
-	void pasteText(const QString &text);
+	void pasteText(const QString &text) override;
 	void startDelayedTransfer(Transfer *transfer);
 	void handleHistory();
 #ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
@@ -130,21 +129,21 @@ protected:
 #else
 	void setHistory(const QVariantMap &history);
 #endif
-	void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = QStringList());
+	void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = QStringList()) override;
 	QWebPage* getPage();
 	QString getPasswordToken() const;
 	QString getPluginToken() const;
 	QUrl resolveUrl(QWebFrame *frame, const QUrl &url) const;
-	int getAmountOfNotLoadedPlugins() const;
+	int getAmountOfNotLoadedPlugins() const override;
 	bool canLoadPlugins() const;
-	bool canGoBack() const;
-	bool canGoForward() const;
-	bool canFastForward() const;
-	bool canShowContextMenu(const QPoint &position) const;
-	bool canViewSource() const;
-	bool isInspecting() const;
+	bool canGoBack() const override;
+	bool canGoForward() const override;
+	bool canFastForward() const override;
+	bool canShowContextMenu(const QPoint &position) const override;
+	bool canViewSource() const override;
+	bool isInspecting() const override;
 	bool isNavigating() const;
-	bool isScrollBar(const QPoint &position) const;
+	bool isScrollBar(const QPoint &position) const override;
 
 protected slots:
 	void optionChanged(int identifier, const QVariant &value);

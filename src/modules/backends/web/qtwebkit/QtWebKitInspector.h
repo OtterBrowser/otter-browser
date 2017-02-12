@@ -39,9 +39,9 @@ public:
 
 #ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 protected:
-	void childEvent(QChildEvent *event);
-	void showEvent(QShowEvent *event);
-	void resizeEvent(QResizeEvent *event);
+	void childEvent(QChildEvent *event) override;
+	void showEvent(QShowEvent *event) override;
+	void resizeEvent(QResizeEvent *event) override;
 
 protected slots:
 	void hideInspector();

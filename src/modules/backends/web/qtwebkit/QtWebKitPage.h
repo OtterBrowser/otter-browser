@@ -62,13 +62,13 @@ public:
 	explicit QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWidget *parent);
 	~QtWebKitPage();
 
-	void triggerAction(WebAction action, bool checked = false);
+	void triggerAction(WebAction action, bool checked = false) override;
 	QtWebKitFrame* getMainFrame();
 	QVariant runScript(const QString &path, QWebElement element = QWebElement());
-	bool event(QEvent *event);
-	bool extension(Extension extension, const ExtensionOption *option = nullptr, ExtensionReturn *output = nullptr);
-	bool shouldInterruptJavaScript();
-	bool supportsExtension(Extension extension) const;
+	bool event(QEvent *event) override;
+	bool extension(Extension extension, const ExtensionOption *option = nullptr, ExtensionReturn *output = nullptr) override;
+	bool shouldInterruptJavaScript() override;
+	bool supportsExtension(Extension extension) const override;
 	bool isViewingMedia() const;
 
 public slots:
@@ -78,17 +78,17 @@ protected:
 	QtWebKitPage();
 
 	void markAsPopup();
-	void javaScriptAlert(QWebFrame *frame, const QString &message);
+	void javaScriptAlert(QWebFrame *frame, const QString &message) override;
 #ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
 	void javaScriptConsoleMessage(const QString &note, int line, const QString &source);
 #endif
-	QWebPage* createWindow(WebWindowType type);
-	QString chooseFile(QWebFrame *frame, const QString &suggestedFile);
-	QString userAgentForUrl(const QUrl &url) const;
+	QWebPage* createWindow(WebWindowType type) override;
+	QString chooseFile(QWebFrame *frame, const QString &suggestedFile) override;
+	QString userAgentForUrl(const QUrl &url) const override;
 	QString getDefaultUserAgent() const;
-	bool acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, QWebPage::NavigationType type);
-	bool javaScriptConfirm(QWebFrame *frame, const QString &message);
-	bool javaScriptPrompt(QWebFrame *frame, const QString &message, const QString &defaultValue, QString *result);
+	bool acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request, QWebPage::NavigationType type) override;
+	bool javaScriptConfirm(QWebFrame *frame, const QString &message) override;
+	bool javaScriptPrompt(QWebFrame *frame, const QString &message, const QString &defaultValue, QString *result) override;
 
 protected slots:
 	void optionChanged(int identifier);

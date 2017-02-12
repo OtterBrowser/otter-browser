@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2014 Martin Rejda <rejdi@otter.ksp.sk>
-* Copyright (C) 2014 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2014 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -35,8 +35,8 @@ class QtWebKitPluginFactory : public QWebPluginFactory
 public:
 	explicit QtWebKitPluginFactory(QtWebKitWebWidget *parent);
 
-	QObject* create(const QString &mimeType, const QUrl &url, const QStringList &argumentNames, const QStringList &argumentValues) const;
-	QList<QWebPluginFactory::Plugin> plugins() const;
+	QObject* create(const QString &mimeType, const QUrl &url, const QStringList &argumentNames, const QStringList &argumentValues) const override;
+	QList<QWebPluginFactory::Plugin> plugins() const override;
 
 private:
 	QtWebKitWebWidget *m_widget;

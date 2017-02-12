@@ -1,6 +1,8 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2015 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2012 by Lindsay Mathieson <lindsay dot mathieson at gmail dot com>
+* Copyright (C) 2012 by Andrea Diamantini <adjam7 at gmail dot com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -34,16 +36,16 @@ public:
 	explicit QtWebKitSpellChecker();
 	~QtWebKitSpellChecker();
 
-	void toggleContinousSpellChecking();
-	void toggleGrammarChecking();
-	void checkSpellingOfString(const QString &word, int *misspellingLocation, int *misspellingLength);
-	void checkGrammarOfString(const QString &word, QList<GrammarDetail> &detail, int *badGrammarLocation, int *badGrammarLength);
-	void learnWord(const QString &word);
-	void ignoreWordInSpellDocument(const QString &word);
-	void guessesForWord(const QString &word, const QString &context, QStringList &guesses);
-	QString autoCorrectSuggestionForMisspelledWord(const QString &word);
-	bool isContinousSpellCheckingEnabled() const;
-	bool isGrammarCheckingEnabled();
+	void toggleContinousSpellChecking() override;
+	void toggleGrammarChecking() override;
+	void checkSpellingOfString(const QString &word, int *misspellingLocation, int *misspellingLength) override;
+	void checkGrammarOfString(const QString &word, QList<GrammarDetail> &detail, int *badGrammarLocation, int *badGrammarLength) override;
+	void learnWord(const QString &word) override;
+	void ignoreWordInSpellDocument(const QString &word) override;
+	void guessesForWord(const QString &word, const QString &context, QStringList &guesses) override;
+	QString autoCorrectSuggestionForMisspelledWord(const QString &word) override;
+	bool isContinousSpellCheckingEnabled() const override;
+	bool isGrammarCheckingEnabled() override;
 
 protected:
 	static bool isValidWord(const QString &string);

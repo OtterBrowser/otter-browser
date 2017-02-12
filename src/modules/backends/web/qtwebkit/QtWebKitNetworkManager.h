@@ -54,7 +54,7 @@ public:
 	WindowsManager::ContentStates getContentState() const;
 
 protected:
-	void timerEvent(QTimerEvent *event);
+	void timerEvent(QTimerEvent *event) override;
 	void addContentBlockingException(const QUrl &url, NetworkManager::ResourceType resourceType);
 	void resetStatistics();
 	void registerTransfer(QNetworkReply *reply);
@@ -64,7 +64,7 @@ protected:
 	void setFormRequest(const QUrl &url);
 	void setWidget(QtWebKitWebWidget *widget);
 	QtWebKitNetworkManager *clone();
-	QNetworkReply* createRequest(Operation operation, const QNetworkRequest &request, QIODevice *outgoingData);
+	QNetworkReply* createRequest(Operation operation, const QNetworkRequest &request, QIODevice *outgoingData) override;
 	QString getUserAgent() const;
 
 protected slots:
