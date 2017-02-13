@@ -669,6 +669,7 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 			return false;
 		}
 
+		const QUrl url((errorOption->url.isEmpty() && m_widget) ? m_widget->getRequestedUrl() : errorOption->url);
 		QString domain;
 
 		if (errorOption->domain == QWebPage::QtNetwork)
@@ -684,7 +685,7 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 			domain = QLatin1String("HTTP");
 		}
 
-		Console::addMessage(tr("%1 error #%2: %3").arg(domain).arg(errorOption->error).arg(errorOption->errorString), Console::NetworkCategory, Console::ErrorLevel, errorOption->url.toString(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
+		Console::addMessage(tr("%1 error #%2: %3").arg(domain).arg(errorOption->error).arg(errorOption->errorString), Console::NetworkCategory, Console::ErrorLevel, url.toString(), -1, (m_widget ? m_widget->getWindowIdentifier() : 0));
 
 		if (errorOption->domain == QWebPage::WebKit && (errorOption->error == 102 || errorOption->error == 203))
 		{
@@ -717,8 +718,8 @@ bool QtWebKitPage::extension(QWebPage::Extension extension, const QWebPage::Exte
 			title = tr("Network error %1").arg(errorOption->error);
 		}
 
-		errorOutput->baseUrl = errorOption->url;
-		errorOutput->content = Utils::createErrorPage(errorOption->url, title, errorOption->errorString).toUtf8();
+		errorOutput->baseUrl = url;
+		errorOutput->content = Utils::createErrorPage(url, title, errorOption->errorString).toUtf8();
 
 		return true;
 	}
