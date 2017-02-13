@@ -41,7 +41,7 @@ public:
 	void addPopup(const QUrl &url);
 
 protected:
-	void changeEvent(QEvent *event);
+	void changeEvent(QEvent *event) override;
 
 protected slots:
 	void optionChanged(int identifier);

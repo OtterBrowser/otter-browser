@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ public:
 
 	void selectAll();
 	void setQuery(const QString &query);
-	void setVisible(bool visible);
+	void setVisible(bool visible) override;
 	QString getQuery() const;
 	WebWidget::FindFlags getFlags() const;
 
@@ -48,8 +48,8 @@ public slots:
 	void setResultsFound(bool found);
 
 protected:
-	void changeEvent(QEvent *event);
-	void keyPressEvent(QKeyEvent *event);
+	void changeEvent(QEvent *event) override;
+	void keyPressEvent(QKeyEvent *event) override;
 
 protected slots:
 	void notifyRequestedSearch();

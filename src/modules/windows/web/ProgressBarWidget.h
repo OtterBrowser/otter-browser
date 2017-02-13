@@ -40,7 +40,7 @@ public slots:
 	void scheduleGeometryUpdate();
 
 protected:
-	void timerEvent(QTimerEvent *event);
+	void timerEvent(QTimerEvent *event) override;
 
 protected slots:
 	void updateLoadingState(WindowsManager::LoadingState state);

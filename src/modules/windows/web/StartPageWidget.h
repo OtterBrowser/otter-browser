@@ -49,7 +49,7 @@ public:
 	void setBackgroundMode(BackgroundMode mode);
 
 protected:
-	void paintEvent(QPaintEvent *event);
+	void paintEvent(QPaintEvent *event) override;
 
 private:
 	QString m_path;
@@ -68,16 +68,16 @@ public:
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void scrollContents(const QPoint &delta);
 	QPixmap getThumbnail();
-	bool event(QEvent *event);
-	bool eventFilter(QObject *object, QEvent *event);
+	bool event(QEvent *event) override;
+	bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:
 	void showContextMenu(const QPoint &position = QPoint());
 
 protected:
-	void resizeEvent(QResizeEvent *event);
-	void contextMenuEvent(QContextMenuEvent *event);
-	void wheelEvent(QWheelEvent *event);
+	void resizeEvent(QResizeEvent *event) override;
+	void contextMenuEvent(QContextMenuEvent *event) override;
+	void wheelEvent(QWheelEvent *event) override;
 	int getTilesPerRow() const;
 
 protected slots:
