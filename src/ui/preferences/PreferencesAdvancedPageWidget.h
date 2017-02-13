@@ -48,8 +48,8 @@ public:
 	~PreferencesAdvancedPageWidget();
 
 protected:
-	void changeEvent(QEvent *event);
-	void resizeEvent(QResizeEvent *event);
+	void changeEvent(QEvent *event) override;
+	void resizeEvent(QResizeEvent *event) override;
 	void updateReaddKeyboardProfileMenu();
 	void updateReaddMouseProfileMenu();
 	QString createProfileIdentifier(ItemViewWidget *view, const QString &base = QString()) const;

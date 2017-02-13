@@ -42,7 +42,7 @@ public:
 	ProxyDefinition getProxy() const;
 
 protected:
-	void changeEvent(QEvent *event);
+	void changeEvent(QEvent *event) override;
 
 protected slots:
 	void addException();

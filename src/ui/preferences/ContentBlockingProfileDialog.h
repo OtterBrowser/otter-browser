@@ -43,7 +43,7 @@ public:
 	ContentBlockingProfile* getProfile();
 
 protected:
-	void changeEvent(QEvent *event);
+	void changeEvent(QEvent *event) override;
 
 protected slots:
 	void save();

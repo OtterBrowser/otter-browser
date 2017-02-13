@@ -41,7 +41,7 @@ public:
 	~PreferencesGeneralPageWidget();
 
 protected:
-	void changeEvent(QEvent *event);
+	void changeEvent(QEvent *event) override;
 
 protected slots:
 	void useCurrentAsHomePage();

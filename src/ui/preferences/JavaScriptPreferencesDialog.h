@@ -42,7 +42,7 @@ public:
 	QHash<int, QVariant> getOptions() const;
 
 protected:
-	void changeEvent(QEvent *event);
+	void changeEvent(QEvent *event) override;
 
 private:
 	Ui::JavaScriptPreferencesDialog *m_ui;
