@@ -738,6 +738,8 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 			m_webWidget->hide();
 		}
 
+		m_splitter->hide();
+
 		if (!m_startPageWidget)
 		{
 			m_startPageWidget = new StartPageWidget(m_window);
