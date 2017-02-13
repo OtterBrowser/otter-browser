@@ -688,7 +688,7 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 
 	m_isCollapsed = (definition.hasToggle && ((isFullScreen ? definition.fullScreenVisibility : definition.normalVisibility) != ToolBarsManager::AlwaysVisibleToolBar));
 
-	setVisible(definition.hasToggle || shouldBeVisible(isFullScreen));
+	setVisible(m_identifier == ToolBarsManager::ProgressBar || definition.hasToggle || shouldBeVisible(isFullScreen));
 	setOrientation(isHorizontal ? Qt::Horizontal : Qt::Vertical);
 
 	if (m_identifier == ToolBarsManager::TabBar)
