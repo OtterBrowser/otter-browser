@@ -80,7 +80,7 @@ protected:
 	void markAsPopup();
 	void javaScriptAlert(QWebFrame *frame, const QString &message) override;
 #ifdef OTTER_ENABLE_QTWEBKIT_LEGACY
-	void javaScriptConsoleMessage(const QString &note, int line, const QString &source);
+	void javaScriptConsoleMessage(const QString &note, int line, const QString &source) override;
 #endif
 	QWebPage* createWindow(WebWindowType type) override;
 	QString chooseFile(QWebFrame *frame, const QString &suggestedFile) override;
