@@ -72,6 +72,46 @@ tbody tr:nth-child(odd)
 {
 	background:rgba(225, 225, 225, 0.5);
 }
+
+@media (max-width:800px)
+{
+	tr td:nth-child(3), tr th:nth-child(3)
+	{
+		display:none;
+	}
+}
+
+@media (max-width:700px)
+{
+	tr td:nth-child(2), tr th:nth-child(2)
+	{
+		display:none;
+	}
+}
+
+@media (max-width:600px)
+{
+	tr td:nth-child(4), tr th:nth-child(4)
+	{
+		display:none;
+	}
+}
+
+@media (max-width:500px)
+{
+	html
+	{
+		padding:0;
+		background:#FFF linear-gradient(to bottom, #FAFAFA 0%, #FCFCFC 53%, #FFF 100%) top repeat-x;
+	}
+	body
+	{
+		padding:10px;
+		border:none;
+		border-radius:0;
+		box-shadow:none;
+	}
+}
 </style>
 </head>
 <body>
