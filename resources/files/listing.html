@@ -52,12 +52,17 @@ table a
 }
 td, th
 {
-	padding:6px 8px;
+	padding:4px 8px;
+	line-height:24px;
 	text-align:left;
 }
 tr td:first-child
 {
+	padding:2px 8px 2px 30px;
 	border-radius:6px 0 0 6px;
+	background-position:8px center;
+	background-repeat:no-repeat;
+	background-size:16px 16px;
 }
 tr td:last-child
 {
@@ -83,7 +88,7 @@ tbody tr:nth-child(odd)
 </thead>
 <tbody>
 <!--entry:begin--><tr>
-<td><a href="{url}"><img src="{icon}" alt="{mimeType}"> {name}</a></td>
+<td style="background-image:url('{icon}');"><a href="{url}" title="{mimeType}">{name}</a></td>
 <td>{comment}</td>
 <td>{size}</td>
 <td>{lastModified}</td>
