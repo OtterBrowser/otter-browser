@@ -488,7 +488,7 @@ Action* SourceViewerWebWidget::getAction(int identifier)
 
 QString SourceViewerWebWidget::getTitle() const
 {
-	return tr("Source Viewer");
+	return (m_url.isValid() ? tr("Source Viewer: %1").arg(m_url.toDisplayString().mid(12)) : tr("Source Viewer"));
 }
 
 QString SourceViewerWebWidget::getSelectedText() const
