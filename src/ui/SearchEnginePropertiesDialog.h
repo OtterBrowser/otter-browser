@@ -42,10 +42,10 @@ public:
 	~SearchEnginePropertiesDialog();
 
 	SearchEnginesManager::SearchEngineDefinition getSearchEngine() const;
-	bool eventFilter(QObject *object, QEvent *event);
+	bool eventFilter(QObject *object, QEvent *event) override;
 
 protected:
-	void changeEvent(QEvent *event);
+	void changeEvent(QEvent *event) override;
 
 protected slots:
 	void insertPlaceholder(QAction *action);

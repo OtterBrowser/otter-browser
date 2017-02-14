@@ -48,10 +48,10 @@ public:
 	~ToolBarDialog();
 
 	ToolBarsManager::ToolBarDefinition getDefinition() const;
-	bool eventFilter(QObject *object, QEvent *event);
+	bool eventFilter(QObject *object, QEvent *event) override;
 
 protected:
-	void changeEvent(QEvent *event);
+	void changeEvent(QEvent *event) override;
 	void addEntry(const ActionsManager::ActionEntryDefinition &entry, QStandardItem *parent = nullptr);
 	QStandardItem* createEntry(const QString &identifier, const QVariantMap &options = QVariantMap());
 	ActionsManager::ActionEntryDefinition getEntry(QStandardItem *item) const;

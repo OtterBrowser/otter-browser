@@ -45,7 +45,7 @@ public:
 	bool isModified() const;
 
 protected:
-	void changeEvent(QEvent *event);
+	void changeEvent(QEvent *event) override;
 
 private:
 	QNetworkCookie m_cookie;

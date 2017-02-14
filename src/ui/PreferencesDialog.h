@@ -40,7 +40,7 @@ public:
 	~PreferencesDialog();
 
 protected:
-	void changeEvent(QEvent *event);
+	void changeEvent(QEvent *event) override;
 
 protected slots:
 	void currentTabChanged(int tab);

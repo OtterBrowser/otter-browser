@@ -54,7 +54,7 @@ public slots:
 	void authenticated(QAuthenticator *authenticator, bool wasAccepted);
 
 protected:
-	void changeEvent(QEvent *event);
+	void changeEvent(QEvent *event) override;
 
 protected slots:
 	void setup();
