@@ -1068,7 +1068,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 		connect(m_splitter, SIGNAL(splitterMoved(int,int)), widget, SIGNAL(progressBarGeometryChanged()));
 	}
 
-	bool isHidden(m_showStartPage && (!m_webWidget || (m_startPageWidget && m_startPageWidget->isVisibleTo(this))));
+	bool isHidden(m_showStartPage && Utils::isUrlEmpty(widget->getUrl()) && (!m_webWidget || (m_startPageWidget && m_startPageWidget->isVisibleTo(this))));
 
 	m_webWidget = widget;
 
