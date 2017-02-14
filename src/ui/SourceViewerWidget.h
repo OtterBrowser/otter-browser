@@ -63,7 +63,7 @@ public:
 	explicit SyntaxHighlighter(QTextDocument *parent);
 
 protected:
-	void highlightBlock(const QString &text);
+	void highlightBlock(const QString &text) override;
 
 private:
 	static QMap<HighlightingSyntax, QMap<HighlightingState, QTextCharFormat> > m_formats;
@@ -83,11 +83,11 @@ public slots:
 	void setAmount(int amount = -1);
 
 protected:
-	void paintEvent(QPaintEvent *event);
-	void mousePressEvent(QMouseEvent *event);
-	void mouseMoveEvent(QMouseEvent *event);
-	void mouseReleaseEvent(QMouseEvent *event);
-	bool event(QEvent *event);
+	void paintEvent(QPaintEvent *event) override;
+	void mousePressEvent(QMouseEvent *event) override;
+	void mouseMoveEvent(QMouseEvent *event) override;
+	void mouseReleaseEvent(QMouseEvent *event) override;
+	bool event(QEvent *event) override;
 
 private:
 	SourceViewerWidget *m_sourceViewer;
@@ -106,9 +106,9 @@ public:
 	bool findText(const QString &text, WebWidget::FindFlags flags = WebWidget::NoFlagsFind);
 
 protected:
-	void resizeEvent(QResizeEvent *event);
-	void focusInEvent(QFocusEvent *event);
-	void wheelEvent(QWheelEvent *event);
+	void resizeEvent(QResizeEvent *event) override;
+	void focusInEvent(QFocusEvent *event) override;
+	void wheelEvent(QWheelEvent *event) override;
 
 protected slots:
 	void optionChanged(int identifier, const QVariant &value);

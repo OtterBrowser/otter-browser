@@ -37,42 +37,42 @@ class SourceViewerWebWidget : public WebWidget
 public:
 	explicit SourceViewerWebWidget(bool isPrivate, ContentsWidget *parent = nullptr);
 
-	void print(QPrinter *printer);
-	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = QStringList());
-	Action* getAction(int identifier);
-	QString getTitle() const;
-	QString getSelectedText() const;
-	QUrl getUrl() const;
-	QIcon getIcon() const;
-	QPixmap getThumbnail();
-	QPoint getScrollPosition() const;
-	WindowHistoryInformation getHistory() const;
-	HitTestResult getHitTestResult(const QPoint &position);
-	WindowsManager::LoadingState getLoadingState() const;
-	int getZoom() const;
-	bool hasSelection() const;
-	bool isPrivate() const;
-	bool findInPage(const QString &text, FindFlags flags = NoFlagsFind);
+	void print(QPrinter *printer) override;
+	WebWidget* clone(bool cloneHistory = true, bool isPrivate = false, const QStringList &excludedOptions = QStringList()) override;
+	Action* getAction(int identifier) override;
+	QString getTitle() const override;
+	QString getSelectedText() const override;
+	QUrl getUrl() const override;
+	QIcon getIcon() const override;
+	QPixmap getThumbnail() override;
+	QPoint getScrollPosition() const override;
+	WindowHistoryInformation getHistory() const override;
+	HitTestResult getHitTestResult(const QPoint &position) override;
+	WindowsManager::LoadingState getLoadingState() const override;
+	int getZoom() const override;
+	bool hasSelection() const override;
+	bool isPrivate() const override;
+	bool findInPage(const QString &text, FindFlags flags = NoFlagsFind) override;
 
 public slots:
-	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
-	void goToHistoryIndex(int index);
-	void removeHistoryIndex(int index, bool purge = false);
-	void setOption(int identifier, const QVariant &value);
-	void setScrollPosition(const QPoint &position);
-	void setHistory(const WindowHistoryInformation &history);
-	void setZoom(int zoom);
-	void setUrl(const QUrl &url, bool typed = true);
+	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap()) override;
+	void goToHistoryIndex(int index) override;
+	void removeHistoryIndex(int index, bool purge = false) override;
+	void setOption(int identifier, const QVariant &value) override;
+	void setScrollPosition(const QPoint &position) override;
+	void setHistory(const WindowHistoryInformation &history) override;
+	void setZoom(int zoom) override;
+	void setUrl(const QUrl &url, bool typed = true) override;
 	void setContents(const QByteArray &contents, const QString &contentType);
 
 protected:
-	void pasteText(const QString &text);
-	void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = QStringList());
+	void pasteText(const QString &text) override;
+	void setOptions(const QHash<int, QVariant> &options, const QStringList &excludedOptions = QStringList()) override;
 
 protected slots:
 	void viewSourceReplyFinished();
 	void handleZoomChange();
-	void showContextMenu(const QPoint &position = QPoint(-1, -1));
+	void showContextMenu(const QPoint &position = QPoint(-1, -1)) override;
 	void setShowLineNumbers(bool show);
 
 private:
