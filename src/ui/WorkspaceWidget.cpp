@@ -52,7 +52,7 @@ bool MdiWidget::eventFilter(QObject *object, QEvent *event)
 {
 	if (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease)
 	{
-		 return QAbstractScrollArea::eventFilter(object, event);
+		return QAbstractScrollArea::eventFilter(object, event);
 	}
 
 	return QMdiArea::eventFilter(object, event);
