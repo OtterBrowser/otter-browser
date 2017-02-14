@@ -590,20 +590,15 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 				properties[QLatin1String("alternativeText")] = m_hitResult.alternateText;
 				properties[QLatin1String("longDescription")] = m_hitResult.longDescription;
 
-				ContentsWidget *parent(qobject_cast<ContentsWidget*>(parentWidget()));
+				ImagePropertiesDialog *imagePropertiesDialog(new ImagePropertiesDialog(m_hitResult.imageUrl, properties, nullptr, this));
+				imagePropertiesDialog->setButtonsVisible(false);
 
-				if (parent)
-				{
-					ImagePropertiesDialog *imagePropertiesDialog(new ImagePropertiesDialog(m_hitResult.imageUrl, properties, nullptr, this));
-					imagePropertiesDialog->setButtonsVisible(false);
+				ContentsDialog *dialog(new ContentsDialog(ThemesManager::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this));
 
-					ContentsDialog *dialog(new ContentsDialog(ThemesManager::getIcon(QLatin1String("dialog-information")), imagePropertiesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::Close, imagePropertiesDialog, this));
+				connect(this, SIGNAL(aboutToReload()), dialog, SLOT(close()));
+				connect(imagePropertiesDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
 
-					connect(this, SIGNAL(aboutToReload()), dialog, SLOT(close()));
-					connect(imagePropertiesDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
-
-					showDialog(dialog, false);
-				}
+				showDialog(dialog, false);
 			}
 			else
 			{
