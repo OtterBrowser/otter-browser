@@ -294,6 +294,7 @@ protected slots:
 	void setStatusMessage(const QString &message, bool override = false);
 
 private:
+	ContentsWidget *m_parent;
 	WebBackend *m_backend;
 	Menu *m_pasteNoteMenu;
 	QMenu *m_linkApplicationsMenu;

@@ -58,6 +58,7 @@ namespace Otter
 QString WebWidget::m_fastForwardScript;
 
 WebWidget::WebWidget(bool isPrivate, WebBackend *backend, ContentsWidget *parent) : QWidget(parent),
+	m_parent(parent),
 	m_backend(backend),
 	m_pasteNoteMenu(nullptr),
 	m_linkApplicationsMenu(nullptr),
@@ -500,11 +501,9 @@ void WebWidget::updateHitTestResult(const QPoint &position)
 
 void WebWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 {
-	ContentsWidget *parent(qobject_cast<ContentsWidget*>(parentWidget()));
-
-	if (parent)
+	if (m_parent)
 	{
-		parent->showDialog(dialog, lockEventLoop);
+		m_parent->showDialog(dialog, lockEventLoop);
 	}
 }
 
