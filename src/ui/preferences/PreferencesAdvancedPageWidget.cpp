@@ -742,7 +742,7 @@ void PreferencesAdvancedPageWidget::updateUserAgentsActions()
 	const TreeModel::ItemType type(static_cast<TreeModel::ItemType>(index.data(TreeModel::TypeRole).toInt()));
 
 	m_ui->userAgentsEditButton->setEnabled(index.isValid() && (type == TreeModel::FolderType || type == TreeModel::EntryType));
-	m_ui->userAgentsRemoveButton->setEnabled(index.isValid());
+	m_ui->userAgentsRemoveButton->setEnabled(index.isValid() && index.data(UserAgentsModel::IdentifierRole).toString() != QLatin1String("default"));
 }
 
 void PreferencesAdvancedPageWidget::saveUsuerAgents(QJsonArray *userAgents, QStandardItem *parent)
