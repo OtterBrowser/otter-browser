@@ -223,6 +223,7 @@
         <translation><numerusform>Nie udało się zaimportować następującego pliku skryptu użytkownika:
 %1</numerusform><numerusform>Nie udało się zaimportować następujących plików skryptów użytkownika:
 %1</numerusform><numerusform>Nie udało się zaimportować następujących plików skryptów użytkownika:
+%1</numerusform><numerusform>Nie udało się zaimportować następujących plików skryptów użytkownika:
 %1</numerusform></translation>
     </message>
     <message>
@@ -426,7 +427,7 @@ To może doprowadzić do nieprawidłowego działania lub nawet utraty danych.</t
         <source>SSL support is not available or incomplete.
 Some websites may work incorrectly or do not work at all.</source>
         <translation>Obsługa SSL jest niedostępna lub niekompletna.
-Niektóre witryny mogą działać nieprawidłowo lub wcale.</translation>
+Niektóre witryny mogą działać nieprawidłowo lub nie działać wcale.</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="598"/>
@@ -449,7 +450,7 @@ Czy pomimo tego jesteś pewien, że chcesz przywrócić tę sesję?</translation
     <message numerus="yes">
         <location filename="../../src/core/Application.cpp" line="1035"/>
         <source>You are about to quit while %n files are still being downloaded.</source>
-        <translation><numerusform>Zamierzasz zakończyć pracę programu, podczas gdy %n plik jest jeszcze w trakcie pobierania.</numerusform><numerusform>Zamierzasz zakończyć pracę programu, podczas gdy %n pliki są jeszcze w trakcie pobierania.</numerusform><numerusform>Zamierzasz zakończyć pracę programu, podczas gdy %n plików jest jeszcze w trakcie pobierania.</numerusform></translation>
+        <translation><numerusform>Zamierzasz zakończyć pracę programu, podczas gdy %n plik jest jeszcze w trakcie pobierania.</numerusform><numerusform>Zamierzasz zakończyć pracę programu, podczas gdy %n pliki są jeszcze w trakcie pobierania.</numerusform><numerusform>Zamierzasz zakończyć pracę programu, podczas gdy %n plików jest jeszcze w trakcie pobierania.</numerusform><numerusform>Zamierzasz zakończyć pracę programu, podczas gdy %n plików jest jeszcze w trakcie pobierania.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="1042"/>
@@ -1659,7 +1660,7 @@ Wykładnik: %2</translation>
     <message numerus="yes">
         <location filename="../../src/ui/preferences/ContentBlockingIntervalDelegate.cpp" line="76"/>
         <source>%n day(s)</source>
-        <translation><numerusform>%n dzień</numerusform><numerusform>%n dni</numerusform><numerusform>%n dni</numerusform></translation>
+        <translation><numerusform>%n dzień</numerusform><numerusform>%n dni</numerusform><numerusform>%n dni</numerusform><numerusform>%n dni</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1798,7 +1799,7 @@ Wykładnik: %2</translation>
     <message numerus="yes">
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="272"/>
         <source>You are about to delete %n cookie(s).</source>
-        <translation><numerusform>Zamierzasz usunąć %n ciasteczko.</numerusform><numerusform>Zamierzasz usunąć %n ciasteczka.</numerusform><numerusform>Zamierzasz usunąć %n ciasteczek.</numerusform></translation>
+        <translation><numerusform>Zamierzasz usunąć %n ciasteczko.</numerusform><numerusform>Zamierzasz usunąć %n ciasteczka.</numerusform><numerusform>Zamierzasz usunąć %n ciasteczek.</numerusform><numerusform>Zamierzasz usunąć %n ciasteczek.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/cookies/CookiesContentsWidget.cpp" line="273"/>
@@ -1842,7 +1843,7 @@ Wykładnik: %2</translation>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="26"/>
         <source>Always ACCEPT third-party cookies from:</source>
-        <translation>Zawsze AKCEPTUJ ciasteczka z innych witryn z:</translation>
+        <translation>Zawsze AKCEPTUJ ciasteczka z następujących innych witryn:</translation>
     </message>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="44"/>
@@ -1865,7 +1866,7 @@ Wykładnik: %2</translation>
     <message>
         <location filename="../../src/ui/preferences/CookiesExceptionsDialog.ui" line="88"/>
         <source>Always REJECT third-party cookies from:</source>
-        <translation>Zawsze ODRZUCAJ ciasteczka z innych witryn z:</translation>
+        <translation>Zawsze ODRZUCAJ ciasteczka z następujących innych witryn:</translation>
     </message>
 </context>
 <context>
@@ -2212,7 +2213,7 @@ Wykładnik: %2</translation>
     <message numerus="yes">
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="96"/>
         <source>%1 x %2 pixels @ %3 bits per pixel in %n frame(s)</source>
-        <translation><numerusform>%1 x %2 pikseli @ %3 bitów na piksel w %n ramce</numerusform><numerusform>%1 x %2 pikseli @ %3 bitów na piksel w %n ramkach</numerusform><numerusform>%1 x %2 pikseli @ %3 bitów na piksel w %n ramkach</numerusform></translation>
+        <translation><numerusform>%1 x %2 pikseli @ %3 bitów na piksel w %n ramce</numerusform><numerusform>%1 x %2 pikseli @ %3 bitów na piksel w %n ramkach</numerusform><numerusform>%1 x %2 pikseli @ %3 bitów na piksel w %n ramkach</numerusform><numerusform>%1 x %2 pikseli @ %3 bitów na piksel w %n ramkach</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/ImagePropertiesDialog.cpp" line="100"/>
@@ -2549,7 +2550,7 @@ Czy chcesz kontynuować?</translation>
     <message numerus="yes">
         <location filename="../../src/ui/Menu.cpp" line="554"/>
         <source>%1 (%n tab(s))</source>
-        <translation><numerusform>%1 (%n karta)</numerusform><numerusform>%1 (%n karty)</numerusform><numerusform>%1 (%n kart)</numerusform></translation>
+        <translation><numerusform>%1 (%n karta)</numerusform><numerusform>%1 (%n karty)</numerusform><numerusform>%1 (%n kart)</numerusform><numerusform>%1 (%n kart)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3011,7 +3012,7 @@ Czy chcesz kontynuować?</translation>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="168"/>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="224"/>
         <source>You are about to delete %n password(s).</source>
-        <translation><numerusform>Zamierzasz usunąć %n hasło.</numerusform><numerusform>Zamierzasz usunąć %n hasła.</numerusform><numerusform>Zamierzasz usunąć %n haseł.</numerusform></translation>
+        <translation><numerusform>Zamierzasz usunąć %n hasło.</numerusform><numerusform>Zamierzasz usunąć %n hasła.</numerusform><numerusform>Zamierzasz usunąć %n haseł.</numerusform><numerusform>Zamierzasz usunąć %n haseł.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/modules/windows/passwords/PasswordsContentsWidget.cpp" line="169"/>
@@ -3177,7 +3178,7 @@ Czy chcesz kontynuować?</translation>
     <message numerus="yes">
         <location filename="../../src/modules/windows/web/PopupsBarWidget.cpp" line="118"/>
         <source>%1 wants to open %n pop-up window(s).</source>
-        <translation><numerusform>%1 chce otworzyć %n wyskakujące okno.</numerusform><numerusform>%1 chce otworzyć %n wyskakujące okna.</numerusform><numerusform>%1 chce otworzyć %n wyskakujących okien.</numerusform></translation>
+        <translation><numerusform>%1 chce otworzyć %n wyskakujące okno.</numerusform><numerusform>%1 chce otworzyć %n wyskakujące okna.</numerusform><numerusform>%1 chce otworzyć %n wyskakujących okien.</numerusform><numerusform>%1 chce otworzyć %n wyskakujących okien.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4635,7 +4636,7 @@ Czy chcesz kontynuować?</translation>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="219"/>
         <source>WebKit Backend</source>
-        <translation>WebKit Backend</translation>
+        <translation>Backend WebKit</translation>
     </message>
     <message>
         <location filename="../../src/modules/backends/web/qtwebkit/QtWebKitWebBackend.cpp" line="225"/>
@@ -5129,12 +5130,12 @@ Czy chcesz ją nadpisać?</translation>
     <message numerus="yes">
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
         <source>%n window(s) (%1)</source>
-        <translation><numerusform>%n okno (%1)</numerusform><numerusform>%n okna (%1)</numerusform><numerusform>%n okien (%1)</numerusform></translation>
+        <translation><numerusform>%n okno (%1)</numerusform><numerusform>%n okna (%1)</numerusform><numerusform>%n okien (%1)</numerusform><numerusform>%n okien (%1)</numerusform></translation>
     </message>
     <message numerus="yes">
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="69"/>
         <source>%n tab(s)</source>
-        <translation><numerusform>%n karta</numerusform><numerusform>%n karty</numerusform><numerusform>%n kart</numerusform></translation>
+        <translation><numerusform>%n karta</numerusform><numerusform>%n karty</numerusform><numerusform>%n kart</numerusform><numerusform>%n kart</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/SessionsManagerDialog.cpp" line="105"/>
@@ -5467,7 +5468,7 @@ Czy chcesz zapisać swoje zmiany czy je porzucić?</translation>
     <message numerus="yes">
         <location filename="../../src/ui/TabBarWidget.cpp" line="1046"/>
         <source>You are about to open %n URL(s).</source>
-        <translation><numerusform>Zamierzasz otworzyć %n adres URL.</numerusform><numerusform>Zamierzasz otworzyć %n adresy URL.</numerusform><numerusform>Zamierzasz otworzyć %n adresów URL.</numerusform></translation>
+        <translation><numerusform>Zamierzasz otworzyć %n adres URL.</numerusform><numerusform>Zamierzasz otworzyć %n adresy URL.</numerusform><numerusform>Zamierzasz otworzyć %n adresów URL.</numerusform><numerusform>Zamierzasz otworzyć %n adresów URL.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/TabBarWidget.cpp" line="1047"/>
@@ -6696,7 +6697,7 @@ Kliknij przycisk &quot;Zainstaluj&quot;, aby uruchomić ponownie przeglądarkę 
     <message numerus="yes">
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="86"/>
         <source>%1 (%n blocked)</source>
-        <translation><numerusform>%1 (%n zablokowany)</numerusform><numerusform>%1 (%n zablokowane)</numerusform><numerusform>%1 (%n zablokowanych)</numerusform></translation>
+        <translation><numerusform>%1 (%n zablokowany)</numerusform><numerusform>%1 (%n zablokowane)</numerusform><numerusform>%1 (%n zablokowanych)</numerusform><numerusform>%1 (%n zablokowanych)</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/ui/WebsiteInformationDialog.cpp" line="93"/>
@@ -7206,7 +7207,7 @@ Kliknij przycisk &quot;Zainstaluj&quot;, aby uruchomić ponownie przeglądarkę 
     <message numerus="yes">
         <location filename="../../src/core/WindowsManager.cpp" line="324"/>
         <source>You are about to open %n bookmark(s).</source>
-        <translation><numerusform>Zamierzasz otworzyć %n zakładkę.</numerusform><numerusform>Zamierzasz otworzyć %n zakładki.</numerusform><numerusform>Zamierzasz otworzyć %n zakładek.</numerusform></translation>
+        <translation><numerusform>Zamierzasz otworzyć %n zakładkę.</numerusform><numerusform>Zamierzasz otworzyć %n zakładki.</numerusform><numerusform>Zamierzasz otworzyć %n zakładek.</numerusform><numerusform>Zamierzasz otworzyć %n zakładek.</numerusform></translation>
     </message>
     <message>
         <location filename="../../src/core/WindowsManager.cpp" line="325"/>
@@ -8719,7 +8720,7 @@ Kliknij przycisk &quot;Zainstaluj&quot;, aby uruchomić ponownie przeglądarkę 
     <message>
         <location filename="../../src/core/Application.cpp" line="119"/>
         <source>Restores session &lt;session&gt; if it exists</source>
-        <translation>Przywraca sesję &lt;session&gt; , jeśli istnieje</translation>
+        <translation>Przywraca sesję &lt;session&gt;, jeśli istnieje</translation>
     </message>
     <message>
         <location filename="../../src/core/Application.cpp" line="120"/>
