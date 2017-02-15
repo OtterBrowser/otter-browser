@@ -35,12 +35,14 @@ namespace Otter
 
 Migrator::Migrator(QObject *parent) : QObject(parent)
 {
+	registerMigration(QLatin1String("optionsRename"), QT_TRANSLATE_NOOP("migrations", "Options"));
 	registerMigration(QLatin1String("sessionsIniToJson"), QT_TRANSLATE_NOOP("migrations", "Sessions"));
 }
 
 void Migrator::run()
 {
 	QSet<QString> newMigrations;
+	newMigrations.insert(QLatin1String("optionsRename"));
 
 	if (!QDir(SessionsManager::getWritableDataPath(QLatin1String("sessions"))).entryList(QStringList(QLatin1String("*.ini")), QDir::Files).isEmpty())
 	{
@@ -80,6 +82,65 @@ void Migrator::run()
 		if (!flags.testFlag(ProceedMigration))
 		{
 			continue;
+		}
+
+		if (*iterator == QLatin1String("optionsRename"))
+		{
+			QMap<QString, SettingsManager::OptionIdentifier> optionsMap;
+			optionsMap[QLatin1String("Browser/EnableFullScreen")] = SettingsManager::Permissions_EnableFullScreenOption;
+			optionsMap[QLatin1String("Browser/EnableGeolocation")] = SettingsManager::Permissions_EnableGeolocationOption;
+			optionsMap[QLatin1String("Browser/EnableImages")] = SettingsManager::Permissions_EnableImagesOption;
+			optionsMap[QLatin1String("Browser/EnableJavaScript")] = SettingsManager::Permissions_EnableJavaScriptOption;
+			optionsMap[QLatin1String("Browser/EnableLocalStorage")] = SettingsManager::Permissions_EnableLocalStorageOption;
+			optionsMap[QLatin1String("Browser/EnableMediaCaptureAudio")] = SettingsManager::Permissions_EnableMediaCaptureAudioOption;
+			optionsMap[QLatin1String("Browser/EnableMediaCaptureVideo")] = SettingsManager::Permissions_EnableMediaCaptureVideoOption;
+			optionsMap[QLatin1String("Browser/EnableMediaPlaybackAudio")] = SettingsManager::Permissions_EnableMediaPlaybackAudioOption;
+			optionsMap[QLatin1String("Browser/EnableNotifications")] = SettingsManager::Permissions_EnableNotificationsOption;
+			optionsMap[QLatin1String("Browser/EnableOfflineStorageDatabase")] = SettingsManager::Permissions_EnableOfflineStorageDatabaseOption;
+			optionsMap[QLatin1String("Browser/EnableOfflineWebApplicationCache")] = SettingsManager::Permissions_EnableOfflineWebApplicationCacheOption;
+			optionsMap[QLatin1String("Browser/EnablePlugins")] = SettingsManager::Permissions_EnablePluginsOption;
+			optionsMap[QLatin1String("Browser/EnablePointerLock")] = SettingsManager::Permissions_EnablePointerLockOption;
+			optionsMap[QLatin1String("Browser/EnableWebgl")] = SettingsManager::Permissions_EnableWebglOption;
+			optionsMap[QLatin1String("Browser/JavaScriptCanAccessClipboard")] = SettingsManager::Permissions_ScriptsCanAccessClipboardOption;
+			optionsMap[QLatin1String("Browser/JavaScriptCanChangeWindowGeometry")] = SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption;
+			optionsMap[QLatin1String("Browser/JavaScriptCanCloseWindows")] = SettingsManager::Permissions_ScriptsCanCloseWindowsOption;
+			optionsMap[QLatin1String("Content/PopupsPolicy")] = SettingsManager::Permissions_ScriptsCanOpenWindowsOption;
+			optionsMap[QLatin1String("Browser/JavaScriptCanDisableContextMen")] = SettingsManager::Permissions_ScriptsCanReceiveRightClicksOption;
+			optionsMap[QLatin1String("Browser/JavaScriptCanShowStatusMessages")] = SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption;
+
+			QMap<QString, SettingsManager::OptionIdentifier>::iterator optionsIterator;
+			QSettings configuration(SessionsManager::getWritableDataPath(QLatin1String("otter.conf")), QSettings::IniFormat);
+			const QStringList configurationKeys(configuration.allKeys());
+
+			for (optionsIterator = optionsMap.begin(); optionsIterator != optionsMap.end(); ++optionsIterator)
+			{
+				if (configurationKeys.contains(optionsIterator.key()))
+				{
+					configuration.setValue(SettingsManager::getOptionName(optionsIterator.value()), configuration.value(optionsIterator.key()).toString());
+					configuration.remove(optionsIterator.key());
+				}
+			}
+
+			QSettings overrides(SessionsManager::getWritableDataPath(QLatin1String("override.ini")), QSettings::IniFormat);
+			const QStringList overridesGroups(overrides.childGroups());
+
+			for (int i = 0; i < overridesGroups.count(); ++i)
+			{
+				overrides.beginGroup(overridesGroups.at(i));
+
+				const QStringList overridesKeys(overrides.allKeys());
+
+				for (optionsIterator = optionsMap.begin(); optionsIterator != optionsMap.end(); ++optionsIterator)
+				{
+					if (overridesKeys.contains(optionsIterator.key()))
+					{
+						overrides.setValue(SettingsManager::getOptionName(optionsIterator.value()), overrides.value(optionsIterator.key()).toString());
+						overrides.remove(optionsIterator.key());
+					}
+				}
+
+				overrides.endGroup();
+			}
 		}
 
 		if (*iterator == QLatin1String("sessionsIniToJson"))
@@ -172,13 +233,18 @@ void Migrator::createBackup(const QString &identifier)
 	QString sourcePath;
 	QStringList sourceFilters(QLatin1String("*"));
 
-	if (identifier == QLatin1String("sessionsIniToJson"))
+	if (identifier == QLatin1String("optionsRename"))
+	{
+		sourcePath = QString();
+		sourceFilters = QStringList({QLatin1String("otter.conf"), QLatin1String("override.ini")});
+	}
+	else if (identifier == QLatin1String("sessionsIniToJson"))
 	{
 		sourcePath = QLatin1String("sessions");
 		sourceFilters = QStringList(QLatin1String("*.ini"));
 	}
 
-	if (sourcePath.isEmpty())
+	if (sourcePath.isEmpty() && sourceFilters.isEmpty())
 	{
 		return;
 	}
