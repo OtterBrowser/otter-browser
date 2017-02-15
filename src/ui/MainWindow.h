@@ -61,7 +61,7 @@ public:
 	QList<ToolBarWidget*> getToolBars(Qt::ToolBarArea area);
 	bool areToolBarsVisible() const;
 	bool isAboutToClose() const;
-	bool eventFilter(QObject *object, QEvent *event);
+	bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
@@ -71,15 +71,15 @@ public slots:
 	void raiseWindow();
 
 protected:
-	void timerEvent(QTimerEvent *event);
-	void closeEvent(QCloseEvent *event);
-	void keyPressEvent(QKeyEvent *event);
-	void keyReleaseEvent(QKeyEvent *event);
-	void contextMenuEvent(QContextMenuEvent *event);
-	void mouseReleaseEvent(QMouseEvent *event);
+	void timerEvent(QTimerEvent *event) override;
+	void closeEvent(QCloseEvent *event) override;
+	void keyPressEvent(QKeyEvent *event) override;
+	void keyReleaseEvent(QKeyEvent *event) override;
+	void contextMenuEvent(QContextMenuEvent *event) override;
+	void mouseReleaseEvent(QMouseEvent *event) override;
 	void beginToolBarDragging(bool isSidebar = false);
 	void endToolBarDragging();
-	bool event(QEvent *event);
+	bool event(QEvent *event) override;
 
 protected slots:
 	void optionChanged(int identifier, const QVariant &value);
