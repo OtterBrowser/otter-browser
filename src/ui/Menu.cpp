@@ -408,10 +408,6 @@ void Menu::load(int option)
 			setTitle(QT_TRANSLATE_NOOP("actions", "Accept Third-party Cookies"));
 
 			break;
-		case SettingsManager::Permissions_ScriptsCanOpenWindowsOption:
-			setTitle(QT_TRANSLATE_NOOP("actions", "Pop-Ups"));
-
-			break;
 		case SettingsManager::Permissions_EnableFullScreenOption:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Full Screen"));
 
@@ -450,6 +446,10 @@ void Menu::load(int option)
 			break;
 		case SettingsManager::Permissions_ScriptsCanCloseWindowsOption:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Closing Windows by JavaScript"));
+
+			break;
+		case SettingsManager::Permissions_ScriptsCanOpenWindowsOption:
+			setTitle(QT_TRANSLATE_NOOP("actions", "Pop-Ups"));
 
 			break;
 		default:
