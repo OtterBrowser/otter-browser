@@ -195,7 +195,7 @@ NetworkManagerFactory::NetworkManagerFactory(QObject *parent) : QObject(parent)
 	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Microsoft Edge 25 (Windows)"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Internet Explorer 10.0 (Windows)"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Opera 12.16 (Windows)"))
-	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Safari 9.0 (MacOS)"))
+	Q_UNUSED(QT_TRANSLATE_NOOP("userAgents", "Mask as Safari 9.0 (macOS)"))
 
 	QNetworkConfigurationManager *networkConfigurationManager(new QNetworkConfigurationManager(this));
 
