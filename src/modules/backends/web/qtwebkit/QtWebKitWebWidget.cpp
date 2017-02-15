@@ -844,7 +844,7 @@ void QtWebKitWebWidget::updateOptions(const QUrl &url)
 	settings->setAttribute(QWebSettings::JavascriptEnabled, getOption(SettingsManager::Permissions_EnableJavaScriptOption, url).toBool());
 	settings->setAttribute(QWebSettings::JavascriptCanAccessClipboard, getOption(SettingsManager::Permissions_ScriptsCanAccessClipboardOption, url).toBool());
 	settings->setAttribute(QWebSettings::JavascriptCanCloseWindows, getOption(SettingsManager::Permissions_ScriptsCanCloseWindowsOption, url).toBool());
-	settings->setAttribute(QWebSettings::JavascriptCanOpenWindows, getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, url).toBool());
+	settings->setAttribute(QWebSettings::JavascriptCanOpenWindows, (getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, url).toString() != QLatin1String("blockAll")));
 	settings->setAttribute(QWebSettings::WebGLEnabled, getOption(SettingsManager::Permissions_EnableWebglOption, url).toBool());
 	settings->setAttribute(QWebSettings::LocalStorageEnabled, getOption(SettingsManager::Permissions_EnableLocalStorageOption, url).toBool());
 	settings->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, getOption(SettingsManager::Permissions_EnableOfflineStorageDatabaseOption, url).toBool());
@@ -1018,7 +1018,7 @@ void QtWebKitWebWidget::triggerAction(int identifier, const QVariantMap &paramet
 				const QWebHitTestResult nativeResult(m_webView->page()->mainFrame()->hitTestContent(getClickPosition()));
 				nativeResult.element().evaluateJavaScript(QLatin1String("var event = document.createEvent('MouseEvents'); event.initEvent('click', true, true); this.dispatchEvent(event)"));
 
-				m_webView->page()->settings()->setAttribute(QWebSettings::JavascriptCanOpenWindows, getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, getUrl()).toBool());
+				m_webView->page()->settings()->setAttribute(QWebSettings::JavascriptCanOpenWindows, (getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, getUrl()).toString() != QLatin1String("blockAll")));
 
 				setClickPosition(QPoint());
 			}

@@ -1447,7 +1447,7 @@ void PreferencesAdvancedPageWidget::updateJavaScriptOptions()
 
 	if (!isSet)
 	{
-		const QList<int> javaScriptOptions({SettingsManager::Permissions_EnableFullScreenOption, SettingsManager::Permissions_ScriptsCanAccessClipboardOption, SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption, SettingsManager::Permissions_ScriptsCanCloseWindowsOption, SettingsManager::Permissions_ScriptsCanOpenWindowsOption, SettingsManager::Permissions_ScriptsCanReceiveRightClicksOption, SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption});
+		const QList<int> javaScriptOptions({SettingsManager::Permissions_EnableFullScreenOption, SettingsManager::Permissions_ScriptsCanAccessClipboardOption, SettingsManager::Permissions_ScriptsCanChangeWindowGeometryOption, SettingsManager::Permissions_ScriptsCanCloseWindowsOption, SettingsManager::Permissions_ScriptsCanReceiveRightClicksOption, SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption});
 
 		for (int i = 0; i < javaScriptOptions.count(); ++i)
 		{

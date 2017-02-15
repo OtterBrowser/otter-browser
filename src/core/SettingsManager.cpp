@@ -117,7 +117,6 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Content_LinkColorOption, QLatin1String("#0000EE"), ColorType);
 	registerOption(Content_MinimumFontSizeOption, -1, IntegerType);
 	registerOption(Content_PageReloadTimeOption, -1, IntegerType);
-	registerOption(Content_PopupsPolicyOption, QLatin1String("ask"), EnumerationType, QStringList({QLatin1String("ask"), QLatin1String("blockAll"), QLatin1String("openAll"), QLatin1String("openAllInBackground")}));
 	registerOption(Content_SansSerifFontOption, QLatin1String("DejaVu Sans"), FontType);
 	registerOption(Content_SerifFontOption, QLatin1String("DejaVu Serif"), FontType);
 	registerOption(Content_StandardFontOption, QLatin1String("DejaVu Serif"), FontType);
@@ -184,7 +183,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Permissions_ScriptsCanAccessClipboardOption, false, BooleanType);
 	registerOption(Permissions_ScriptsCanChangeWindowGeometryOption, true, BooleanType);
 	registerOption(Permissions_ScriptsCanCloseWindowsOption, QLatin1String("ask"), EnumerationType, QStringList({QLatin1String("ask"), QLatin1String("allow"), QLatin1String("disallow")}));
-	registerOption(Permissions_ScriptsCanOpenWindowsOption, true, BooleanType);
+	registerOption(Permissions_ScriptsCanOpenWindowsOption, QLatin1String("ask"), EnumerationType, QStringList({QLatin1String("ask"), QLatin1String("blockAll"), QLatin1String("openAll"), QLatin1String("openAllInBackground")}));
 	registerOption(Permissions_ScriptsCanReceiveRightClicksOption, true, BooleanType);
 	registerOption(Permissions_ScriptsCanShowStatusMessagesOption, false, BooleanType);
 	registerOption(Search_DefaultQuickSearchEngineOption, QLatin1String("duckduckgo"), EnumerationType, QStringList(QLatin1String("duckduckgo")));

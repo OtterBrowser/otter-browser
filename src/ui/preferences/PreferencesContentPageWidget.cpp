@@ -43,7 +43,7 @@ PreferencesContentPageWidget::PreferencesContentPageWidget(QWidget *parent) :
 	m_ui->fixedFontSizeSpinBox->setValue(SettingsManager::getValue(SettingsManager::Content_DefaultFixedFontSizeOption).toInt());
 	m_ui->minimumFontSizeSpinBox->setValue(SettingsManager::getValue(SettingsManager::Content_MinimumFontSizeOption).toInt());
 
-	const int popupsPolicyIndex(m_ui->popupsComboBox->findData(SettingsManager::getValue(SettingsManager::Content_PopupsPolicyOption).toString()));
+	const int popupsPolicyIndex(m_ui->popupsComboBox->findData(SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toString()));
 
 	m_ui->popupsComboBox->setCurrentIndex((popupsPolicyIndex < 0) ? 0 : popupsPolicyIndex);
 
@@ -161,7 +161,7 @@ void PreferencesContentPageWidget::colorChanged(QWidget *editor)
 
 void PreferencesContentPageWidget::save()
 {
-	SettingsManager::setValue(SettingsManager::Content_PopupsPolicyOption, m_ui->popupsComboBox->currentData().toString());
+	SettingsManager::setValue(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, m_ui->popupsComboBox->currentData().toString());
 	SettingsManager::setValue(SettingsManager::Content_DefaultZoomOption, m_ui->defaultZoomSpinBox->value());
 	SettingsManager::setValue(SettingsManager::Content_ZoomTextOnlyOption, m_ui->zoomTextOnlyCheckBox->isChecked());
 	SettingsManager::setValue(SettingsManager::Content_DefaultFontSizeOption, m_ui->proportionalFontSizeSpinBox->value());

@@ -34,7 +34,6 @@ JavaScriptPreferencesDialog::JavaScriptPreferencesDialog(const QHash<int, QVaria
 	m_ui->canShowStatusMessagesCheckBox->setChecked(options.value(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption).toBool());
 	m_ui->canAccessClipboardCheckBox->setChecked(options.value(SettingsManager::Permissions_ScriptsCanAccessClipboardOption).toBool());
 	m_ui->canReceiveRightClicksCheckBox->setChecked(options.value(SettingsManager::Permissions_ScriptsCanReceiveRightClicksOption).toBool());
-	m_ui->canOpenWindowsCheckBox->setChecked(options.value(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toBool());
 	m_ui->canCloseWindowsComboBox->addItem(tr("Ask"), QLatin1String("ask"));
 	m_ui->canCloseWindowsComboBox->addItem(tr("Always"), QLatin1String("allow"));
 	m_ui->canCloseWindowsComboBox->addItem(tr("Never"), QLatin1String("disallow"));
@@ -76,7 +75,6 @@ QHash<int, QVariant> JavaScriptPreferencesDialog::getOptions() const
 	options[SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption] = m_ui->canShowStatusMessagesCheckBox->isChecked();
 	options[SettingsManager::Permissions_ScriptsCanAccessClipboardOption] = m_ui->canAccessClipboardCheckBox->isChecked();
 	options[SettingsManager::Permissions_ScriptsCanReceiveRightClicksOption] = m_ui->canReceiveRightClicksCheckBox->isChecked();
-	options[SettingsManager::Permissions_ScriptsCanOpenWindowsOption] = m_ui->canOpenWindowsCheckBox->isChecked();
 	options[SettingsManager::Permissions_ScriptsCanCloseWindowsOption] = m_ui->canCloseWindowsComboBox->currentData().toString();
 	options[SettingsManager::Permissions_EnableFullScreenOption] = m_ui->enableFullScreenComboBox->currentData().toString();
 

@@ -96,7 +96,6 @@ public:
 		Content_LinkColorOption,
 		Content_MinimumFontSizeOption,
 		Content_PageReloadTimeOption,
-		Content_PopupsPolicyOption,
 		Content_SansSerifFontOption,
 		Content_SerifFontOption,
 		Content_StandardFontOption,

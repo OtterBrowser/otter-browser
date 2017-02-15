@@ -553,7 +553,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 
 				QMenu menu;
 				Menu *popupsPolicyMenu(new Menu(Menu::NoMenuRole, &menu));
-				popupsPolicyMenu->load(SettingsManager::Content_PopupsPolicyOption);
+				popupsPolicyMenu->load(SettingsManager::Permissions_ScriptsCanOpenWindowsOption);
 
 				Menu *enableImagesMenu(new Menu(Menu::NoMenuRole, &menu));
 				enableImagesMenu->load(SettingsManager::Permissions_EnableImagesOption);

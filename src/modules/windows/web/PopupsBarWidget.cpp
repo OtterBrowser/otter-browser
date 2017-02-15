@@ -69,7 +69,7 @@ PopupsBarWidget::PopupsBarWidget(const QUrl &parentUrl, QWidget *parent) : QWidg
 	m_popupsMenu->addAction(tr("Open All"));
 	m_popupsMenu->addSeparator();
 
-	optionChanged(SettingsManager::Content_PopupsPolicyOption);
+	optionChanged(SettingsManager::Permissions_ScriptsCanOpenWindowsOption);
 
 	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
 	connect(m_popupsGroup, SIGNAL(triggered(QAction*)), this, SLOT(setPolicy(QAction*)));
@@ -94,7 +94,7 @@ void PopupsBarWidget::changeEvent(QEvent *event)
 
 void PopupsBarWidget::optionChanged(int identifier)
 {
-	if (identifier == SettingsManager::Content_PopupsPolicyOption)
+	if (identifier == SettingsManager::Permissions_ScriptsCanOpenWindowsOption)
 	{
 		const QString popupsPolicy(SettingsManager::getValue(identifier, m_parentUrl).toString());
 
@@ -147,7 +147,7 @@ void PopupsBarWidget::setPolicy(QAction *action)
 {
 	if (action)
 	{
-		SettingsManager::setValue(SettingsManager::Content_PopupsPolicyOption, action->data(), m_parentUrl);
+		SettingsManager::setValue(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, action->data(), m_parentUrl);
 	}
 }
 

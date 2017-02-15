@@ -438,6 +438,20 @@
        <string>Scripting</string>
       </attribute>
       <layout class="QGridLayout" name="scriptingLayout" columnstretch="0,0,0">
+       <item row="3" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="canShowStatusMessagesOverrideCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="canChangeWindowGeometryOverrideCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
        <item row="6" column="1">
         <widget class="QCheckBox" name="canReceiveRightClicksCheckBox">
          <property name="text">
@@ -459,7 +473,7 @@
          </property>
         </widget>
        </item>
-       <item row="10" column="1">
+       <item row="9" column="1">
         <spacer name="scriptingHorizontalSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -479,7 +493,7 @@
          </property>
         </widget>
        </item>
-       <item row="8" column="1">
+       <item row="7" column="1">
         <widget class="QLabel" name="canCloseWindowsLabel">
          <property name="text">
           <string>Allow to close windows:</string>
@@ -503,13 +517,6 @@
         <widget class="QCheckBox" name="canChangeWindowGeometryCheckBox">
          <property name="text">
           <string>Allow moving and resizing of windows</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="canShowStatusMessagesOverrideCheckBox">
-         <property name="text">
-          <string/>
          </property>
         </widget>
        </item>
@@ -544,36 +551,18 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="canChangeWindowGeometryOverrideCheckBox">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
+       <item row="7" column="2">
+        <widget class="QComboBox" name="canCloseWindowsComboBox"/>
        </item>
        <item row="7" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="canOpenWindowsOverrideCheckBox">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0" alignment="Qt::AlignHCenter">
         <widget class="QCheckBox" name="canCloseWindowsOverrideCheckBox">
          <property name="text">
           <string/>
          </property>
         </widget>
        </item>
-       <item row="7" column="1">
-        <widget class="QCheckBox" name="canOpenWindowsCheckBox">
-         <property name="text">
-          <string>Allow to open windows</string>
-         </property>
-        </widget>
-       </item>
        <item row="8" column="2">
-        <widget class="QComboBox" name="canCloseWindowsComboBox"/>
+        <widget class="QComboBox" name="enableFullScreenComboBox"/>
        </item>
        <item row="5" column="1">
         <widget class="QCheckBox" name="canAccessClipboardCheckBox">
@@ -582,7 +571,7 @@
          </property>
         </widget>
        </item>
-       <item row="11" column="1">
+       <item row="10" column="1">
         <spacer name="scriptingSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -595,23 +584,20 @@
          </property>
         </spacer>
        </item>
-       <item row="9" column="1">
+       <item row="8" column="0" alignment="Qt::AlignHCenter">
+        <widget class="QCheckBox" name="enableFullScreenOverrideCheckBox">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
         <widget class="QLabel" name="enableFullScreenLabel">
          <property name="text">
           <string>Allow to enter full screen mode:</string>
          </property>
          <property name="buddy">
           <cstring>enableFullScreenComboBox</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="2">
-        <widget class="QComboBox" name="enableFullScreenComboBox"/>
-       </item>
-       <item row="9" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QCheckBox" name="enableFullScreenOverrideCheckBox">
-         <property name="text">
-          <string/>
          </property>
         </widget>
        </item>

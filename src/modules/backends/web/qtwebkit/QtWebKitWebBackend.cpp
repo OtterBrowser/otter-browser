@@ -99,7 +99,7 @@ void QtWebKitWebBackend::optionChanged(int identifier)
 	globalSettings->setAttribute(QWebSettings::JavascriptEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableJavaScriptOption).toBool());
 	globalSettings->setAttribute(QWebSettings::JavascriptCanAccessClipboard, SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanAccessClipboardOption).toBool());
 	globalSettings->setAttribute(QWebSettings::JavascriptCanCloseWindows, true);
-	globalSettings->setAttribute(QWebSettings::JavascriptCanOpenWindows, SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toBool());
+	globalSettings->setAttribute(QWebSettings::JavascriptCanOpenWindows, (SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toString() != QLatin1String("blockAll")));
 	globalSettings->setAttribute(QWebSettings::WebGLEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableWebglOption).toBool());
 	globalSettings->setAttribute(QWebSettings::LocalStorageEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableLocalStorageOption).toBool());
 	globalSettings->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableOfflineStorageDatabaseOption).toBool());

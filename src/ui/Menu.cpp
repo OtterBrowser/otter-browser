@@ -408,7 +408,7 @@ void Menu::load(int option)
 			setTitle(QT_TRANSLATE_NOOP("actions", "Accept Third-party Cookies"));
 
 			break;
-		case SettingsManager::Content_PopupsPolicyOption:
+		case SettingsManager::Permissions_ScriptsCanOpenWindowsOption:
 			setTitle(QT_TRANSLATE_NOOP("actions", "Pop-Ups"));
 
 			break;

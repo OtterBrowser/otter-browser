@@ -217,7 +217,7 @@ QWebEnginePage* QtWebEnginePage::createWindow(QWebEnginePage::WebWindowType type
 
 		if (!m_widget || m_widget->getLastUrlClickTime().isNull() || m_widget->getLastUrlClickTime().secsTo(QDateTime::currentDateTime()) > 1)
 		{
-			const QString popupsPolicy(SettingsManager::getValue(SettingsManager::Content_PopupsPolicyOption, (m_widget ? m_widget->getRequestedUrl() : QUrl())).toString());
+			const QString popupsPolicy(SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanOpenWindowsOption, (m_widget ? m_widget->getRequestedUrl() : QUrl())).toString());
 
 			if (popupsPolicy == QLatin1String("blockAll"))
 			{

@@ -197,7 +197,7 @@ WebsiteInformationDialog::WebsiteInformationDialog(WebWidget *widget, QWidget *p
 		m_ui->notificationsValueLabel->setText(tr("Always ask"));
 	}
 
-	const QString popupsPolicy(widget->getOption(SettingsManager::Content_PopupsPolicyOption).toString());
+	const QString popupsPolicy(widget->getOption(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toString());
 
 	if (popupsPolicy == QLatin1String("openAll"))
 	{
