@@ -21,6 +21,7 @@
 #include "SessionsManager.h"
 #include "Settings.h"
 #include "SettingsManager.h"
+#include "ToolBarsManager.h"
 
 #include <QtCore/QDate>
 #include <QtCore/QDir>
@@ -168,6 +169,17 @@ void Migrator::run()
 						file.close();
 					}
 				}
+			}
+
+			if (configurationKeys.contains(QLatin1String("Sidebar/PanelsOption")) || configurationKeys.contains(QLatin1String("Sidebar/ShowToggleEdgeOption")) || configurationKeys.contains(QLatin1String("Sidebar/VisibleOption")))
+			{
+				ToolBarsManager::ToolBarDefinition sidebarDefiniton(ToolBarsManager::getToolBarDefinition(ToolBarsManager::SideBar));
+				sidebarDefiniton.currentPanel = configuration.value(QLatin1String("Sidebar/CurrentPanelOption")).toString();
+				sidebarDefiniton.normalVisibility = (configuration.value(QLatin1String("Sidebar/VisibleOption")).toBool() ? ToolBarsManager::AlwaysVisibleToolBar : ToolBarsManager::AlwaysHiddenToolBar);
+				sidebarDefiniton.panels = configuration.value(QLatin1String("Sidebar/PanelsOption")).toStringList();
+				sidebarDefiniton.hasToggle = configuration.value(QLatin1String("Sidebar/ShowToggleEdgeOption")).toBool();
+
+				ToolBarsManager::setToolBar(sidebarDefiniton);
 			}
 		}
 
