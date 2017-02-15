@@ -26,6 +26,7 @@
 #include <QtCore/QDir>
 #include <QtCore/QSet>
 #include <QtCore/QSettings>
+#include <QtCore/QTextStream>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QPushButton>
@@ -141,6 +142,33 @@ void Migrator::run()
 
 				overrides.endGroup();
 			}
+
+			const QStringList sessions(SessionsManager::getSessions());
+
+			for (int i = 0; i < sessions.count(); ++i)
+			{
+				QFile file(SessionsManager::getSessionPath(sessions.at(i)));
+
+				if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+				{
+					QString data(file.readAll());
+
+					for (optionsIterator = optionsMap.begin(); optionsIterator != optionsMap.end(); ++optionsIterator)
+					{
+						data.replace(QLatin1Char('"') + optionsIterator.key() + QLatin1String("\": "), QLatin1Char('"') + SettingsManager::getOptionName(optionsIterator.value()) + QLatin1String("\": "));
+					}
+
+					file.close();
+
+					if (file.open(QIODevice::WriteOnly | QIODevice::Text))
+					{
+						QTextStream stream(&file);
+						stream << data;
+
+						file.close();
+					}
+				}
+			}
 		}
 
 		if (*iterator == QLatin1String("sessionsIniToJson"))
@@ -231,11 +259,10 @@ void Migrator::run()
 void Migrator::createBackup(const QString &identifier)
 {
 	QString sourcePath;
-	QStringList sourceFilters(QLatin1String("*"));
+	QStringList sourceFilters;
 
 	if (identifier == QLatin1String("optionsRename"))
 	{
-		sourcePath = QString();
 		sourceFilters = QStringList({QLatin1String("otter.conf"), QLatin1String("override.ini")});
 	}
 	else if (identifier == QLatin1String("sessionsIniToJson"))
