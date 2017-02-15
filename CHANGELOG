@@ -1,3 +1,16 @@
+0.9.?? (2017-??-??):
+- reworked toolbars:
+-- added support for visibility toggle button (collapsing contents);
+-- fixed unified toolbar and titlebar style under macOS X;
+- improved sidebar(s):
+-- added ability to add new sidebars;
+-- allow to change their location by drag and drop;
+- improved User Agents configuration;
+- added support for managing multiple proxy configurations and setting them per page or host;
+- improved styling under Windows, Unity and macOS X;
+- added support for configurable Fast Forward;
+- lots of various fixes.
+
 0.9.12 (2017-01-01):
 - greatly improved tab bar:
 -- allow to detach tabs by dragging them away;
