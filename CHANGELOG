@@ -25,7 +25,7 @@
 - improved KDE5 and Unity integration:
 -- added support for progress information;
 -- added support for desktop actions;
-- several MacOS X specific fixes and improvements:
+- several macOS X specific fixes and improvements:
 -- improved rendering of platform style;
 -- added dock icon menu;
 -- added support for listing applications associated with given MIME type;
@@ -99,7 +99,7 @@
 - added initial support for auto updates;
 - added dialog allowing to decide what to do with downloaded file;
 - MDI actions are now enabled by default;
-- multiple fixes and improvements for MacOS X;
+- multiple fixes and improvements for macOS X;
 - allow to specify default arguments using arguments.txt;
 - various minor fixes and improvements.
 
