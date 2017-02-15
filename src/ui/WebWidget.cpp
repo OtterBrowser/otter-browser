@@ -991,6 +991,18 @@ void WebWidget::updateBookmarkActions()
 	updateLinkActions();
 }
 
+void WebWidget::setParent(QWidget *parent)
+{
+	QWidget::setParent(parent);
+
+	ContentsWidget *contentsWidget(qobject_cast<ContentsWidget*>(parent));
+
+	if (contentsWidget)
+	{
+		m_parent = contentsWidget;
+	}
+}
+
 void WebWidget::setActiveStyleSheet(const QString &styleSheet)
 {
 	Q_UNUSED(styleSheet)
