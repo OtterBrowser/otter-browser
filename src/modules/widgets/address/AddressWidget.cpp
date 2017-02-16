@@ -322,7 +322,7 @@ void AddressWidget::keyPressEvent(QKeyEvent *event)
 	else if (m_window && event->key() == Qt::Key_Escape)
 	{
 		const QUrl url(m_window->getUrl());
-		const QString text(text().trimmed());
+		const QString text(this->text().trimmed());
 
 		if (text.isEmpty() || text != url.toString())
 		{
