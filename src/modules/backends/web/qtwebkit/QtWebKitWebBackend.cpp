@@ -81,41 +81,53 @@ QtWebKitWebBackend::~QtWebKitWebBackend()
 
 void QtWebKitWebBackend::optionChanged(int identifier)
 {
-	if (identifier == SettingsManager::Cache_PagesInMemoryLimitOption)
+	switch (identifier)
 	{
-		QWebSettings::setMaximumPagesInCache(SettingsManager::getValue(SettingsManager::Cache_PagesInMemoryLimitOption).toInt());
-	}
-	else if (!(SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Browser/")) || SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Content/"))))
-	{
-		return;
+		case SettingsManager::Browser_OfflineStorageLimitOption:
+			QWebSettings::globalSettings()->setOfflineStorageDefaultQuota(SettingsManager::getValue(SettingsManager::Browser_OfflineStorageLimitOption).toInt() * 1024);
+
+			return;
+		case SettingsManager::Browser_OfflineWebApplicationCacheLimitOption:
+			QWebSettings::globalSettings()->setOfflineWebApplicationCacheQuota(SettingsManager::getValue(SettingsManager::Browser_OfflineWebApplicationCacheLimitOption).toInt() * 1024);
+
+			return;
+		case SettingsManager::Cache_PagesInMemoryLimitOption:
+			QWebSettings::setMaximumPagesInCache(SettingsManager::getValue(SettingsManager::Cache_PagesInMemoryLimitOption).toInt());
+
+			return;
+		default:
+			break;
 	}
 
-	const bool arePluginsEnabled(SettingsManager::getValue(SettingsManager::Permissions_EnablePluginsOption).toString() != QLatin1String("disabled"));
-	QWebSettings *globalSettings(QWebSettings::globalSettings());
-	globalSettings->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
-	globalSettings->setAttribute(QWebSettings::AutoLoadImages, (SettingsManager::getValue(SettingsManager::Permissions_EnableImagesOption).toString() != QLatin1String("onlyCached")));
-	globalSettings->setAttribute(QWebSettings::PluginsEnabled, arePluginsEnabled);
-	globalSettings->setAttribute(QWebSettings::JavaEnabled, arePluginsEnabled);
-	globalSettings->setAttribute(QWebSettings::JavascriptEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableJavaScriptOption).toBool());
-	globalSettings->setAttribute(QWebSettings::JavascriptCanAccessClipboard, SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanAccessClipboardOption).toBool());
-	globalSettings->setAttribute(QWebSettings::JavascriptCanCloseWindows, true);
-	globalSettings->setAttribute(QWebSettings::JavascriptCanOpenWindows, (SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toString() != QLatin1String("blockAll")));
-	globalSettings->setAttribute(QWebSettings::WebGLEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableWebglOption).toBool());
-	globalSettings->setAttribute(QWebSettings::LocalStorageEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableLocalStorageOption).toBool());
-	globalSettings->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableOfflineStorageDatabaseOption).toBool());
-	globalSettings->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableOfflineWebApplicationCacheOption).toBool());
-	globalSettings->setAttribute(QWebSettings::ZoomTextOnly, SettingsManager::getValue(SettingsManager::Content_ZoomTextOnlyOption).toBool());
-	globalSettings->setFontSize(QWebSettings::DefaultFontSize, SettingsManager::getValue(SettingsManager::Content_DefaultFontSizeOption).toInt());
-	globalSettings->setFontSize(QWebSettings::DefaultFixedFontSize, SettingsManager::getValue(SettingsManager::Content_DefaultFixedFontSizeOption).toInt());
-	globalSettings->setFontSize(QWebSettings::MinimumFontSize, SettingsManager::getValue(SettingsManager::Content_MinimumFontSizeOption).toInt());
-	globalSettings->setFontFamily(QWebSettings::StandardFont, SettingsManager::getValue(SettingsManager::Content_StandardFontOption).toString());
-	globalSettings->setFontFamily(QWebSettings::FixedFont, SettingsManager::getValue(SettingsManager::Content_FixedFontOption).toString());
-	globalSettings->setFontFamily(QWebSettings::SerifFont, SettingsManager::getValue(SettingsManager::Content_SerifFontOption).toString());
-	globalSettings->setFontFamily(QWebSettings::SansSerifFont, SettingsManager::getValue(SettingsManager::Content_SansSerifFontOption).toString());
-	globalSettings->setFontFamily(QWebSettings::CursiveFont, SettingsManager::getValue(SettingsManager::Content_CursiveFontOption).toString());
-	globalSettings->setFontFamily(QWebSettings::FantasyFont, SettingsManager::getValue(SettingsManager::Content_FantasyFontOption).toString());
-	globalSettings->setOfflineStorageDefaultQuota(SettingsManager::getValue(SettingsManager::Browser_OfflineStorageLimitOption).toInt() * 1024);
-	globalSettings->setOfflineWebApplicationCacheQuota(SettingsManager::getValue(SettingsManager::Browser_OfflineWebApplicationCacheLimitOption).toInt() * 1024);
+	if (SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Content/")))
+	{
+		QWebSettings::globalSettings()->setAttribute(QWebSettings::ZoomTextOnly, SettingsManager::getValue(SettingsManager::Content_ZoomTextOnlyOption).toBool());
+		QWebSettings::globalSettings()->setFontSize(QWebSettings::DefaultFontSize, SettingsManager::getValue(SettingsManager::Content_DefaultFontSizeOption).toInt());
+		QWebSettings::globalSettings()->setFontSize(QWebSettings::DefaultFixedFontSize, SettingsManager::getValue(SettingsManager::Content_DefaultFixedFontSizeOption).toInt());
+		QWebSettings::globalSettings()->setFontSize(QWebSettings::MinimumFontSize, SettingsManager::getValue(SettingsManager::Content_MinimumFontSizeOption).toInt());
+		QWebSettings::globalSettings()->setFontFamily(QWebSettings::StandardFont, SettingsManager::getValue(SettingsManager::Content_StandardFontOption).toString());
+		QWebSettings::globalSettings()->setFontFamily(QWebSettings::FixedFont, SettingsManager::getValue(SettingsManager::Content_FixedFontOption).toString());
+		QWebSettings::globalSettings()->setFontFamily(QWebSettings::SerifFont, SettingsManager::getValue(SettingsManager::Content_SerifFontOption).toString());
+		QWebSettings::globalSettings()->setFontFamily(QWebSettings::SansSerifFont, SettingsManager::getValue(SettingsManager::Content_SansSerifFontOption).toString());
+		QWebSettings::globalSettings()->setFontFamily(QWebSettings::CursiveFont, SettingsManager::getValue(SettingsManager::Content_CursiveFontOption).toString());
+		QWebSettings::globalSettings()->setFontFamily(QWebSettings::FantasyFont, SettingsManager::getValue(SettingsManager::Content_FantasyFontOption).toString());
+	}
+	else if (SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Permissions/")))
+	{
+		const bool arePluginsEnabled(SettingsManager::getValue(SettingsManager::Permissions_EnablePluginsOption).toString() != QLatin1String("disabled"));
+
+		QWebSettings::globalSettings()->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
+		QWebSettings::globalSettings()->setAttribute(QWebSettings::AutoLoadImages, (SettingsManager::getValue(SettingsManager::Permissions_EnableImagesOption).toString() != QLatin1String("onlyCached")));
+		QWebSettings::globalSettings()->setAttribute(QWebSettings::PluginsEnabled, arePluginsEnabled);
+		QWebSettings::globalSettings()->setAttribute(QWebSettings::JavaEnabled, arePluginsEnabled);
+		QWebSettings::globalSettings()->setAttribute(QWebSettings::JavascriptEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableJavaScriptOption).toBool());
+		QWebSettings::globalSettings()->setAttribute(QWebSettings::JavascriptCanAccessClipboard, SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanAccessClipboardOption).toBool());
+		QWebSettings::globalSettings()->setAttribute(QWebSettings::JavascriptCanOpenWindows, (SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toString() != QLatin1String("blockAll")));
+		QWebSettings::globalSettings()->setAttribute(QWebSettings::WebGLEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableWebglOption).toBool());
+		QWebSettings::globalSettings()->setAttribute(QWebSettings::LocalStorageEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableLocalStorageOption).toBool());
+		QWebSettings::globalSettings()->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableOfflineStorageDatabaseOption).toBool());
+		QWebSettings::globalSettings()->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableOfflineWebApplicationCacheOption).toBool());
+	}
 }
 
 void QtWebKitWebBackend::pageLoaded(bool success)
@@ -181,21 +193,24 @@ WebWidget* QtWebKitWebBackend::createWidget(bool isPrivate, ContentsWidget *pare
 	{
 		m_isInitialized = true;
 
+		QWebHistoryInterface::setDefaultInterface(new QtWebKitHistoryInterface(this));
+
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 		QStringList pluginSearchPaths(QWebSettings::pluginSearchPaths());
 		pluginSearchPaths.append(QCoreApplication::applicationDirPath());
 
 		QWebSettings::setPluginSearchPaths(pluginSearchPaths);
 #endif
-
-		QWebHistoryInterface::setDefaultInterface(new QtWebKitHistoryInterface(this));
-
 		QWebSettings::setMaximumPagesInCache(SettingsManager::getValue(SettingsManager::Cache_PagesInMemoryLimitOption).toInt());
 		QWebSettings::globalSettings()->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 		QWebSettings::globalSettings()->setAttribute(QWebSettings::FullScreenSupportEnabled, true);
 #endif
+		QWebSettings::globalSettings()->setAttribute(QWebSettings::JavascriptCanCloseWindows, true);
+		QWebSettings::globalSettings()->setOfflineStorageDefaultQuota(SettingsManager::getValue(SettingsManager::Browser_OfflineStorageLimitOption).toInt() * 1024);
+		QWebSettings::globalSettings()->setOfflineWebApplicationCacheQuota(SettingsManager::getValue(SettingsManager::Browser_OfflineWebApplicationCacheLimitOption).toInt() * 1024);
 
+		optionChanged(SettingsManager::Content_DefaultFontSizeOption);
 		optionChanged(SettingsManager::Permissions_EnableFullScreenOption);
 
 		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
