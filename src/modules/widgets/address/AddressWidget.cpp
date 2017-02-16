@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -23,7 +23,6 @@
 #include "../../../ui/BookmarkPropertiesDialog.h"
 #include "../../../ui/ContentsWidget.h"
 #include "../../../ui/ItemViewWidget.h"
-#include "../../../ui/LineEditWidget.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/ToolBarWidget.h"
 #include "../../../ui/Window.h"
@@ -112,7 +111,7 @@ void AddressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
 	icon.paint(painter, decorationRectangle, option.decorationAlignment);
 
 	QString url(index.data(Qt::DisplayRole).toString());
-	const QString description((m_viewMode == HistoryMode) ? Utils::formatDateTime(index.data(HistoryModel::TimeVisitedRole).toDateTime()) : index.data(AddressCompletionModel::TitleRole).toString());
+	const QString description((m_viewMode == HistoryMode) ? Utils::formatDateTime(index.data(AddressCompletionModel::TimeVisitedRole).toDateTime()) : index.data(AddressCompletionModel::TitleRole).toString());
 	QStyleOptionViewItem linkOption(option);
 
 	if (static_cast<AddressCompletionModel::EntryType>(index.data(AddressCompletionModel::TypeRole).toInt()) != AddressCompletionModel::SearchSuggestionType)
@@ -191,20 +190,17 @@ QSize AddressDelegate::sizeHint(const QStyleOptionViewItem &option, const QModel
 	return size;
 }
 
-AddressWidget::AddressWidget(Window *window, QWidget *parent) : ComboBoxWidget(parent),
+AddressWidget::AddressWidget(Window *window, QWidget *parent) : LineEditWidget(parent),
 	m_window(nullptr),
-	m_lineEdit(new LineEditWidget(this)),
 	m_completionModel(new AddressCompletionModel(this)),
 	m_completionView(nullptr),
-	m_visibleView(nullptr),
 	m_clickedEntry(UnknownEntry),
 	m_hoveredEntry(UnknownEntry),
 	m_completionModes(NoCompletionMode),
 	m_hints(WindowsManager::DefaultOpen),
-	m_removeModelTimer(0),
 	m_isNavigatingCompletion(false),
 	m_isUsingSimpleMode(false),
-	m_wasPopupVisible(false)
+	m_isTypedHistoryCompletion(false)
 {
 	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
@@ -213,30 +209,17 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : ComboBoxWidget(p
 		m_isUsingSimpleMode = true;
 	}
 
-	setEditable(true);
-	setLineEdit(m_lineEdit);
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	setMinimumWidth(100);
-	setItemDelegate(new AddressDelegate(AddressDelegate::HistoryMode, this));
-	setInsertPolicy(QComboBox::NoInsert);
-	setMouseTracking(true);
 	setWindow(window);
 	optionChanged(SettingsManager::AddressField_CompletionModeOption, SettingsManager::getValue(SettingsManager::AddressField_CompletionModeOption));
 	optionChanged(SettingsManager::AddressField_DropActionOption, SettingsManager::getValue(SettingsManager::AddressField_DropActionOption));
 	optionChanged(SettingsManager::AddressField_LayoutOption, SettingsManager::getValue(SettingsManager::AddressField_LayoutOption));
 	optionChanged(SettingsManager::AddressField_SelectAllOnFocusOption, SettingsManager::getValue(SettingsManager::AddressField_SelectAllOnFocusOption));
 
-	m_lineEdit->setStyleSheet(QLatin1String("QLineEdit {background:transparent;}"));
-	m_lineEdit->installEventFilter(this);
-
-	view()->installEventFilter(this);
-	view()->viewport()->setAttribute(Qt::WA_Hover);
-	view()->viewport()->setMouseTracking(true);
-	view()->viewport()->installEventFilter(this);
-
 	if (toolBar)
 	{
-		m_lineEdit->setPlaceholderText(tr("Enter address or search…"));
+		setPlaceholderText(tr("Enter address or search…"));
 
 		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
 
@@ -246,23 +229,21 @@ AddressWidget::AddressWidget(Window *window, QWidget *parent) : ComboBoxWidget(p
 		}
 	}
 
-	connect(this, SIGNAL(activated(QString)), this, SLOT(openUrl(QString)));
-	connect(m_lineEdit, SIGNAL(textDropped(QString)), this, SLOT(handleUserInput(QString)));
+	connect(this, SIGNAL(textDropped(QString)), this, SLOT(handleUserInput(QString)));
 	connect(m_completionModel, SIGNAL(completionReady(QString)), this, SLOT(setCompletion(QString)));
 	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(updateGeometries()));
-	connect(HistoryManager::getTypedHistoryModel(), SIGNAL(modelModified()), this, SLOT(updateLineEdit()));
 }
 
 void AddressWidget::changeEvent(QEvent *event)
 {
-	ComboBoxWidget::changeEvent(event);
+	LineEditWidget::changeEvent(event);
 
 	switch (event->type())
 	{
 		case QEvent::LanguageChange:
 			if (!m_isUsingSimpleMode)
 			{
-				m_lineEdit->setPlaceholderText(tr("Enter address or search…"));
+				setPlaceholderText(tr("Enter address or search…"));
 			}
 
 			break;
@@ -275,35 +256,11 @@ void AddressWidget::changeEvent(QEvent *event)
 	}
 }
 
-void AddressWidget::timerEvent(QTimerEvent *event)
-{
-	if (event->timerId() == m_removeModelTimer)
-	{
-		killTimer(m_removeModelTimer);
-
-		m_removeModelTimer = 0;
-
-		const QString text(m_lineEdit->text());
-
-		setModel(new QStandardItemModel(this));
-		updateLineEdit();
-
-		m_lineEdit->setText(text);
-	}
-}
-
 void AddressWidget::paintEvent(QPaintEvent *event)
 {
-	Q_UNUSED(event)
+	LineEditWidget::paintEvent(event);
 
 	QPainter painter(this);
-	QStyleOptionFrame panel;
-	panel.initFrom(m_lineEdit);
-	panel.rect = rect();
-	panel.palette = palette();
-	panel.lineWidth = 1;
-
-	style()->drawPrimitive(QStyle::PE_PanelLineEdit, &panel, &painter, this);
 
 	if (m_entries.contains(HistoryDropdownEntry))
 	{
@@ -330,39 +287,50 @@ void AddressWidget::paintEvent(QPaintEvent *event)
 	}
 }
 
+void AddressWidget::dragEnterEvent(QDragEnterEvent *event)
+{
+	if (event->mimeData()->hasUrls())
+	{
+		event->accept();
+	}
+
+	LineEditWidget::dragEnterEvent(event);
+}
+
 void AddressWidget::resizeEvent(QResizeEvent *event)
 {
-	ComboBoxWidget::resizeEvent(event);
+	LineEditWidget::resizeEvent(event);
 
 	updateGeometries();
 }
 
 void AddressWidget::focusInEvent(QFocusEvent *event)
 {
-	ComboBoxWidget::focusInEvent(event);
+	LineEditWidget::focusInEvent(event);
 
 	activate(event->reason());
 }
 
 void AddressWidget::keyPressEvent(QKeyEvent *event)
 {
-	ComboBoxWidget::keyPressEvent(event);
-
-	if (event->key() == Qt::Key_Down && !view()->isVisible())
+	if (event->key() == Qt::Key_Down && (!m_completionView || !m_completionView->isVisible()))
 	{
-		showPopup();
+		m_completionModel->setFilter(QString(), AddressCompletionModel::TypedHistoryCompletionType);
+
+		showCompletion(true);
 	}
 	else if (m_window && event->key() == Qt::Key_Escape)
 	{
 		const QUrl url(m_window->getUrl());
+		const QString text(text().trimmed());
 
-		if (m_lineEdit->text().trimmed().isEmpty() || m_lineEdit->text().trimmed() != url.toString())
+		if (text.isEmpty() || text != url.toString())
 		{
 			setText(Utils::isUrlEmpty(url) ? QString() : url.toString());
 
-			if (!m_lineEdit->text().trimmed().isEmpty() && SettingsManager::getValue(SettingsManager::AddressField_SelectAllOnFocusOption).toBool())
+			if (!text.isEmpty() && SettingsManager::getValue(SettingsManager::AddressField_SelectAllOnFocusOption).toBool())
 			{
-				m_lineEdit->selectAll();
+				selectAll();
 			}
 		}
 		else
@@ -372,8 +340,10 @@ void AddressWidget::keyPressEvent(QKeyEvent *event)
 	}
 	else if (!m_isUsingSimpleMode && (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return))
 	{
-		handleUserInput(m_lineEdit->text().trimmed(), WindowsManager::calculateOpenHints(WindowsManager::CurrentTabOpen, Qt::LeftButton, event->modifiers()));
+		handleUserInput(text().trimmed(), WindowsManager::calculateOpenHints(WindowsManager::CurrentTabOpen, Qt::LeftButton, event->modifiers()));
 	}
+
+	LineEditWidget::keyPressEvent(event);
 }
 
 void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
@@ -383,24 +353,24 @@ void AddressWidget::contextMenuEvent(QContextMenuEvent *event)
 
 	if (entry == UnknownEntry || entry == AddressEntry)
 	{
-		menu.addAction(tr("Undo"), m_lineEdit, SLOT(undo()), QKeySequence(QKeySequence::Undo))->setEnabled(m_lineEdit->isUndoAvailable());
-		menu.addAction(tr("Redo"), m_lineEdit, SLOT(redo()), QKeySequence(QKeySequence::Redo))->setEnabled(m_lineEdit->isRedoAvailable());
+		menu.addAction(ThemesManager::getIcon(QLatin1String("edit-undo")), tr("Undo"), this, SLOT(undo()), QKeySequence(QKeySequence::Undo))->setEnabled(isUndoAvailable());
+		menu.addAction(ThemesManager::getIcon(QLatin1String("edit-redo")), tr("Redo"), this, SLOT(redo()), QKeySequence(QKeySequence::Redo))->setEnabled(isRedoAvailable());
 		menu.addSeparator();
-		menu.addAction(tr("Cut"), m_lineEdit, SLOT(cut()), QKeySequence(QKeySequence::Cut))->setEnabled(m_lineEdit->hasSelectedText());
-		menu.addAction(tr("Copy"), m_lineEdit, SLOT(copy()), QKeySequence(QKeySequence::Copy))->setEnabled(m_lineEdit->hasSelectedText());
-		menu.addAction(tr("Paste"), m_lineEdit, SLOT(paste()), QKeySequence(QKeySequence::Paste))->setEnabled(!QApplication::clipboard()->text().isEmpty());
+		menu.addAction(ThemesManager::getIcon(QLatin1String("edit-cut")), tr("Cut"), this, SLOT(cut()), QKeySequence(QKeySequence::Cut))->setEnabled(hasSelectedText());
+		menu.addAction(ThemesManager::getIcon(QLatin1String("edit-copy")), tr("Copy"), this, SLOT(copy()), QKeySequence(QKeySequence::Copy))->setEnabled(hasSelectedText());
+		menu.addAction(ThemesManager::getIcon(QLatin1String("edit-paste")), tr("Paste"), this, SLOT(paste()), QKeySequence(QKeySequence::Paste))->setEnabled(!QApplication::clipboard()->text().isEmpty());
 
 		if (!m_isUsingSimpleMode)
 		{
 			menu.addAction(ActionsManager::getAction(ActionsManager::PasteAndGoAction, this));
 		}
 
-		menu.addAction(tr("Delete"), m_lineEdit, SLOT(deleteText()), QKeySequence(QKeySequence::Delete))->setEnabled(m_lineEdit->hasSelectedText());
+		menu.addAction(ThemesManager::getIcon(QLatin1String("edit-delete")), tr("Delete"), this, SLOT(deleteText()), QKeySequence(QKeySequence::Delete))->setEnabled(hasSelectedText());
 		menu.addSeparator();
-		menu.addAction(tr("Copy to Note"), m_lineEdit, SLOT(copyToNote()))->setEnabled(!m_lineEdit->text().isEmpty());
+		menu.addAction(tr("Copy to Note"), this, SLOT(copyToNote()))->setEnabled(!text().isEmpty());
 		menu.addSeparator();
-		menu.addAction(tr("Clear All"), m_lineEdit, SLOT(clear()))->setEnabled(!m_lineEdit->text().isEmpty());
-		menu.addAction(tr("Select All"), m_lineEdit, SLOT(selectAll()), QKeySequence(QKeySequence::SelectAll))->setEnabled(!m_lineEdit->text().isEmpty());
+		menu.addAction(tr("Clear All"), this, SLOT(clear()))->setEnabled(!text().isEmpty());
+		menu.addAction(ThemesManager::getIcon(QLatin1String("edit-select-all")), tr("Select All"), this, SLOT(selectAll()), QKeySequence(QKeySequence::SelectAll))->setEnabled(!text().isEmpty());
 	}
 	else
 	{
@@ -448,9 +418,7 @@ void AddressWidget::mousePressEvent(QMouseEvent *event)
 		m_dragStartPosition = QPoint();
 	}
 
-	m_wasPopupVisible = (m_popupHideTime.isValid() && m_popupHideTime.msecsTo(QTime::currentTime()) < 100);
-
-	QWidget::mousePressEvent(event);
+	LineEditWidget::mousePressEvent(event);
 }
 
 void AddressWidget::mouseMoveEvent(QMouseEvent *event)
@@ -473,7 +441,7 @@ void AddressWidget::mouseMoveEvent(QMouseEvent *event)
 
 	if (!startDrag(event))
 	{
-		ComboBoxWidget::mouseMoveEvent(event);
+		LineEditWidget::mouseMoveEvent(event);
 	}
 }
 
@@ -551,16 +519,15 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 
 				return;
 			case HistoryDropdownEntry:
-				m_popupHideTime = QTime();
 
-				if (m_wasPopupVisible)
+				if (!m_isTypedHistoryCompletion)
 				{
-					hidePopup();
+					m_completionModel->setFilter(QString(), AddressCompletionModel::TypedHistoryCompletionType);
+
+					showCompletion(true);
 				}
-				else
-				{
-					showPopup();
-				}
+
+				m_isTypedHistoryCompletion = !m_isTypedHistoryCompletion;
 
 				break;
 			default:
@@ -568,61 +535,16 @@ void AddressWidget::mouseReleaseEvent(QMouseEvent *event)
 		}
 	}
 
+	if (event->button() == Qt::MiddleButton && text().isEmpty() && !QApplication::clipboard()->text().isEmpty() && SettingsManager::getValue(SettingsManager::AddressField_PasteAndGoOnMiddleClickOption).toBool())
+	{
+		handleUserInput(QApplication::clipboard()->text().trimmed(), WindowsManager::CurrentTabOpen);
+
+		event->accept();
+	}
+
 	m_clickedEntry = UnknownEntry;
 
-	QWidget::mouseReleaseEvent(event);
-}
-
-void AddressWidget::wheelEvent(QWheelEvent *event)
-{
-	event->ignore();
-}
-
-void AddressWidget::showPopup()
-{
-	if (m_removeModelTimer > 0)
-	{
-		killTimer(m_removeModelTimer);
-
-		m_removeModelTimer = 0;
-	}
-
-	if (view() && view()->isVisible())
-	{
-		return;
-	}
-
-	const QString text(m_lineEdit->text());
-
-	if (model() && model() != HistoryManager::getTypedHistoryModel())
-	{
-		model()->deleteLater();
-	}
-
-	setModel(HistoryManager::getTypedHistoryModel());
-	updateLineEdit();
-
-	m_lineEdit->setText(text);
-
-	m_visibleView = view();
-
-	ComboBoxWidget::showPopup();
-}
-
-void AddressWidget::hidePopup()
-{
-	m_popupHideTime = QTime::currentTime();
-
-	ComboBoxWidget::hidePopup();
-
-	QString statusTip;
-	QStatusTipEvent statusTipEvent(statusTip);
-
-	QApplication::sendEvent(this, &statusTipEvent);
-
-	m_visibleView = nullptr;
-
-	m_removeModelTimer = startTimer(250);
+	LineEditWidget::mouseReleaseEvent(event);
 }
 
 void AddressWidget::hideCompletion()
@@ -637,8 +559,6 @@ void AddressWidget::hideCompletion()
 		QStatusTipEvent statusTipEvent(statusTip);
 
 		QApplication::sendEvent(this, &statusTipEvent);
-
-		m_visibleView = nullptr;
 	}
 }
 
@@ -663,11 +583,11 @@ void AddressWidget::optionChanged(int identifier, const QVariant &value)
 					m_completionModes = PopupCompletionMode;
 				}
 
-				disconnect(m_lineEdit, SIGNAL(textEdited(QString)), m_completionModel, SLOT(setFilter(QString)));
+				disconnect(this, SIGNAL(textEdited(QString)), m_completionModel, SLOT(setFilter(QString)));
 
 				if (m_completionModes != NoCompletionMode)
 				{
-					connect(m_lineEdit, SIGNAL(textEdited(QString)), m_completionModel, SLOT(setFilter(QString)));
+					connect(this, SIGNAL(textEdited(QString)), m_completionModel, SLOT(setFilter(QString)));
 				}
 			}
 
@@ -678,21 +598,21 @@ void AddressWidget::optionChanged(int identifier, const QVariant &value)
 
 				if (dropAction == QLatin1String("pasteAndGo"))
 				{
-					m_lineEdit->setDropMode(LineEditWidget::ReplaceAndNotifyDropMode);
+					setDropMode(LineEditWidget::ReplaceAndNotifyDropMode);
 				}
 				else if (dropAction == QLatin1String("replace"))
 				{
-					m_lineEdit->setDropMode(LineEditWidget::ReplaceDropMode);
+					setDropMode(LineEditWidget::ReplaceDropMode);
 				}
 				else
 				{
-					m_lineEdit->setDropMode(LineEditWidget::PasteDropMode);
+					setDropMode(LineEditWidget::PasteDropMode);
 				}
 			}
 
 			break;
 		case SettingsManager::AddressField_SelectAllOnFocusOption:
-			m_lineEdit->setSelectAllOnFocus(value.toBool());
+			setSelectAllOnFocus(value.toBool());
 
 			break;
 		case SettingsManager::AddressField_LayoutOption:
@@ -752,7 +672,6 @@ void AddressWidget::openUrl(const QString &url)
 {
 	setUrl(url);
 	handleUserInput(url, WindowsManager::CurrentTabOpen);
-	updateLineEdit();
 }
 
 void AddressWidget::openUrl(const QModelIndex &index)
@@ -774,7 +693,6 @@ void AddressWidget::openUrl(const QModelIndex &index)
 
 		setUrl(url);
 		handleUserInput(url, WindowsManager::CurrentTabOpen);
-		updateLineEdit();
 	}
 }
 
@@ -818,68 +736,22 @@ void AddressWidget::handleUserInput(const QString &text, WindowsManager::OpenHin
 	}
 }
 
-void AddressWidget::updateLineEdit()
-{
-	m_lineEdit->setGeometry(m_lineEditRectangle);
-}
-
 void AddressWidget::setCompletion(const QString &filter)
 {
+	m_isTypedHistoryCompletion = false;
+
 	if (filter.isEmpty() || m_completionModel->rowCount() == 0)
 	{
 		hideCompletion();
 
-		m_lineEdit->setCompletion(QString());
-		m_lineEdit->setFocus();
+		LineEditWidget::setCompletion(QString());
 
 		return;
 	}
 
 	if (m_completionModes.testFlag(PopupCompletionMode))
 	{
-		if (!m_completionView)
-		{
-			m_completionView = new ItemViewWidget();
-			m_completionView->setWindowFlags(Qt::Popup);
-			m_completionView->setFocusPolicy(Qt::NoFocus);
-			m_completionView->setFocusProxy(m_lineEdit);
-			m_completionView->setModel(m_completionModel);
-			m_completionView->setItemDelegate(new AddressDelegate(AddressDelegate::CompletionMode, m_completionView));
-			m_completionView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-			m_completionView->setFixedWidth(width());
-			m_completionView->installEventFilter(this);
-			m_completionView->header()->setStretchLastSection(true);
-			m_completionView->header()->hide();
-			m_completionView->viewport()->setAttribute(Qt::WA_Hover);
-			m_completionView->viewport()->setMouseTracking(true);
-			m_completionView->viewport()->installEventFilter(this);
-
-			connect(m_completionView, SIGNAL(clicked(QModelIndex)), this, SLOT(openUrl(QModelIndex)));
-			connect(m_completionView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(setText(QModelIndex)));
-
-			m_completionView->move(mapToGlobal(contentsRect().bottomLeft()));
-			m_completionView->show();
-
-			m_visibleView = m_completionView;
-		}
-
-		int completionHeight(5);
-
-		if (m_completionModel->rowCount() < 20)
-		{
-			for (int i = 0; i < m_completionModel->rowCount(); ++i)
-			{
-				completionHeight += m_completionView->sizeHintForRow(i);
-			}
-		}
-		else
-		{
-			completionHeight += (20 * m_completionView->sizeHintForRow(0));
-		}
-
-		m_completionView->setFixedHeight(completionHeight);
-		m_completionView->viewport()->setFixedHeight(completionHeight - 3);
-		m_completionView->setCurrentIndex(m_completionModel->index(0, 0));
+		showCompletion(false);
 	}
 
 	if (m_completionModes.testFlag(InlineCompletionMode))
@@ -892,7 +764,7 @@ void AddressWidget::setCompletion(const QString &filter)
 
 			if (!matchedText.isEmpty())
 			{
-				m_lineEdit->setCompletion(matchedText);
+				LineEditWidget::setCompletion(matchedText);
 
 				break;
 			}
@@ -900,9 +772,49 @@ void AddressWidget::setCompletion(const QString &filter)
 	}
 }
 
-void AddressWidget::activate(Qt::FocusReason reason)
+void AddressWidget::showCompletion(bool isTypedHistory)
 {
-	m_lineEdit->activate(reason);
+	if (!m_completionView)
+	{
+		m_completionView = new ItemViewWidget();
+		m_completionView->setWindowFlags(Qt::Popup);
+		m_completionView->setFocusPolicy(Qt::NoFocus);
+		m_completionView->setFocusProxy(this);
+		m_completionView->setModel(m_completionModel);
+		m_completionView->setItemDelegate(new AddressDelegate(isTypedHistory ? AddressDelegate::HistoryMode : AddressDelegate::CompletionMode, m_completionView));
+		m_completionView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+		m_completionView->setFixedWidth(width());
+		m_completionView->installEventFilter(this);
+		m_completionView->header()->setStretchLastSection(true);
+		m_completionView->header()->hide();
+		m_completionView->viewport()->setAttribute(Qt::WA_Hover);
+		m_completionView->viewport()->setMouseTracking(true);
+		m_completionView->viewport()->installEventFilter(this);
+
+		connect(m_completionView, SIGNAL(clicked(QModelIndex)), this, SLOT(openUrl(QModelIndex)));
+		connect(m_completionView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(setTextFromIndex(QModelIndex)));
+
+		m_completionView->move(mapToGlobal(contentsRect().bottomLeft()));
+		m_completionView->show();
+	}
+
+	int completionHeight(5);
+
+	if (m_completionModel->rowCount() < 20)
+	{
+		for (int i = 0; i < m_completionModel->rowCount(); ++i)
+		{
+			completionHeight += m_completionView->sizeHintForRow(i);
+		}
+	}
+	else
+	{
+		completionHeight += (20 * m_completionView->sizeHintForRow(0));
+	}
+
+	m_completionView->setFixedHeight(completionHeight);
+	m_completionView->viewport()->setFixedHeight(completionHeight - 3);
+	m_completionView->setCurrentIndex(m_completionModel->index(0, 0));
 }
 
 void AddressWidget::updateGeometries()
@@ -1131,10 +1043,7 @@ void AddressWidget::updateGeometries()
 		margins.setRight(margins.right() - 2);
 	}
 
-	m_lineEdit->resize((width() - margins.left() - margins.right()), height());
-	m_lineEdit->move(margins.left(), 0);
-
-	m_lineEditRectangle = m_lineEdit->geometry();
+	setTextMargins(margins);
 }
 
 void AddressWidget::setWindow(Window *window)
@@ -1195,18 +1104,13 @@ void AddressWidget::setWindow(Window *window)
 	update();
 }
 
-void AddressWidget::setText(const QString &text)
-{
-	m_lineEdit->setText(text);
-}
-
-void AddressWidget::setText(const QModelIndex &index)
+void AddressWidget::setTextFromIndex(const QModelIndex &index)
 {
 	if (m_isNavigatingCompletion)
 	{
 		m_isNavigatingCompletion = false;
 
-		m_lineEdit->setText(index.data(AddressCompletionModel::TextRole).toString());
+		setText(index.data(AddressCompletionModel::TextRole).toString());
 	}
 }
 
@@ -1222,9 +1126,8 @@ void AddressWidget::setUrl(const QUrl &url, bool force)
 		const QString text(Utils::isUrlEmpty(url) ? QString() : url.toString());
 
 		setToolTip(text);
-
-		m_lineEdit->setText(text);
-		m_lineEdit->setCursorPosition(0);
+		setText(text);
+		setCursorPosition(0);
 	}
 }
 
@@ -1236,11 +1139,6 @@ void AddressWidget::setIcon(const QIcon &icon)
 
 		update();
 	}
-}
-
-QString AddressWidget::getText() const
-{
-	return m_lineEdit->text();
 }
 
 QUrl AddressWidget::getUrl() const
@@ -1301,44 +1199,22 @@ bool AddressWidget::event(QEvent *event)
 		}
 	}
 
-	return ComboBoxWidget::event(event);
+	return LineEditWidget::event(event);
 }
 
 bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if (object == m_lineEdit && event->type() == QEvent::MouseButtonRelease)
-	{
-		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
-
-		if (mouseEvent && mouseEvent->button() == Qt::MiddleButton && m_lineEdit->text().isEmpty() && !QApplication::clipboard()->text().isEmpty() && SettingsManager::getValue(SettingsManager::AddressField_PasteAndGoOnMiddleClickOption).toBool())
-		{
-			handleUserInput(QApplication::clipboard()->text().trimmed(), WindowsManager::CurrentTabOpen);
-
-			event->accept();
-
-			return true;
-		}
-	}
-	else if (object == m_lineEdit && event->type() == QEvent::DragEnter)
-	{
-		QDragEnterEvent *dragEnterEvent(static_cast<QDragEnterEvent*>(event));
-
-		if (dragEnterEvent && dragEnterEvent->mimeData()->hasUrls())
-		{
-			event->accept();
-		}
-	}
-	else if (object == m_completionView && event->type() == QEvent::KeyPress)
+	if (object == m_completionView && event->type() == QEvent::KeyPress)
 	{
 		QKeyEvent *keyEvent(static_cast<QKeyEvent*>(event));
 
 		if (keyEvent)
 		{
-			m_lineEdit->event(event);
+			LineEditWidget::event(event);
 
 			if (event->isAccepted())
 			{
-				if (!m_lineEdit->hasFocus())
+				if (!hasFocus())
 				{
 					hideCompletion();
 				}
@@ -1370,11 +1246,9 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 
 					hideCompletion();
 
-					m_lineEdit->setFocus();
-
 					if (keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return)
 					{
-						openUrl(m_lineEdit->text());
+						openUrl(text());
 					}
 
 					break;
@@ -1389,23 +1263,21 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 	{
 		hideCompletion();
 
-		m_lineEdit->setFocus();
-
 		return true;
 	}
 	else if (object == m_completionView && (event->type() == QEvent::InputMethod || event->type() == QEvent::ShortcutOverride))
 	{
-		QApplication::sendEvent(m_lineEdit, event);
+		QApplication::sendEvent(this, event);
 	}
-	else if (m_visibleView && object == m_visibleView->viewport() && event->type() == QEvent::MouseMove)
+	else if (m_completionView && object == m_completionView->viewport() && event->type() == QEvent::MouseMove)
 	{
 		QMouseEvent *mouseEvent(static_cast<QMouseEvent*>(event));
 
 		if (mouseEvent)
 		{
-			const QModelIndex index(m_visibleView->indexAt(mouseEvent->pos()));
+			const QModelIndex index(m_completionView->indexAt(mouseEvent->pos()));
 
-			if (index.isValid() && m_visibleView == m_completionView)
+			if (index.isValid())
 			{
 				m_completionView->setCurrentIndex(index);
 			}
@@ -1415,7 +1287,7 @@ bool AddressWidget::eventFilter(QObject *object, QEvent *event)
 			QApplication::sendEvent(this, &statusTipEvent);
 		}
 	}
-	else if (object == m_visibleView && (event->type() == QEvent::Close || event->type() == QEvent::Hide || event->type() == QEvent::Leave))
+	else if (object == m_completionView && (event->type() == QEvent::Close || event->type() == QEvent::Hide || event->type() == QEvent::Leave))
 	{
 		QString statusTip;
 		QStatusTipEvent statusTipEvent(statusTip);

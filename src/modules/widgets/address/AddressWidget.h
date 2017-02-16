@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2014 - 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2014 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2014 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@
 #define OTTER_ADDRESSWIDGET_H
 
 #include "../../../core/WindowsManager.h"
-#include "../../../ui/ComboBoxWidget.h"
+#include "../../../ui/LineEditWidget.h"
 
 #include <QtCore/QPointer>
 #include <QtCore/QTime>
@@ -69,7 +69,7 @@ private:
 	ViewMode m_viewMode;
 };
 
-class AddressWidget : public ComboBoxWidget
+class AddressWidget : public LineEditWidget
 {
 	Q_OBJECT
 	Q_ENUMS(EntryIdentifier)
@@ -108,23 +108,18 @@ public:
 
 	explicit AddressWidget(Window *window, QWidget *parent = nullptr);
 
-	void showPopup() override;
-	void hidePopup() override;
-	QString getText() const;
 	QUrl getUrl() const;
 	bool event(QEvent *event) override;
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:
-	void activate(Qt::FocusReason reason);
 	void handleUserInput(const QString &text, WindowsManager::OpenHints hints = WindowsManager::DefaultOpen);
 	void setWindow(Window *window = nullptr);
-	void setText(const QString &text);
 	void setUrl(const QUrl &url, bool force = false);
 
 protected:
+	void dragEnterEvent(QDragEnterEvent *event) override;
 	void changeEvent(QEvent *event) override;
-	void timerEvent(QTimerEvent *event) override;
 	void paintEvent(QPaintEvent *event) override;
 	void resizeEvent(QResizeEvent *event) override;
 	void focusInEvent(QFocusEvent *event) override;
@@ -133,8 +128,8 @@ protected:
 	void mousePressEvent(QMouseEvent *event) override;
 	void mouseMoveEvent(QMouseEvent *event) override;
 	void mouseReleaseEvent(QMouseEvent *event) override;
-	void wheelEvent(QWheelEvent *event) override;
 	void hideCompletion();
+	void showCompletion(bool isTypedHistory);
 	EntryIdentifier getEntry(const QPoint &position) const;
 	bool startDrag(QMouseEvent *event);
 
@@ -145,30 +140,24 @@ protected slots:
 	void openUrl(const QModelIndex &index);
 	void removeEntry();
 	void updateGeometries();
-	void updateLineEdit();
 	void setCompletion(const QString &filter);
 	void setIcon(const QIcon &icon);
-	void setText(const QModelIndex &index);
+	void setTextFromIndex(const QModelIndex &index);
 
 private:
 	QPointer<Window> m_window;
-	LineEditWidget *m_lineEdit;
 	AddressCompletionModel *m_completionModel;
 	ItemViewWidget *m_completionView;
-	QAbstractItemView *m_visibleView;
-	QTime m_popupHideTime;
 	QPoint m_dragStartPosition;
-	QRect m_lineEditRectangle;
 	QVector<EntryIdentifier> m_layout;
 	QHash<EntryIdentifier, EntryDefinition> m_entries;
 	EntryIdentifier m_clickedEntry;
 	EntryIdentifier m_hoveredEntry;
 	CompletionModes m_completionModes;
 	WindowsManager::OpenHints m_hints;
-	int m_removeModelTimer;
 	bool m_isNavigatingCompletion;
 	bool m_isUsingSimpleMode;
-	bool m_wasPopupVisible;
+	bool m_isTypedHistoryCompletion;
 
 	static int m_entryIdentifierEnumerator;
 

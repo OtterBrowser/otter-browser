@@ -1,6 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -76,7 +77,7 @@ void OpenAddressDialog::keyPressEvent(QKeyEvent *event)
 
 void OpenAddressDialog::handleUserInput()
 {
-	if (m_addressWidget->lineEdit()->text().trimmed().isEmpty())
+	if (m_addressWidget->text().trimmed().isEmpty())
 	{
 		close();
 	}
@@ -89,13 +90,13 @@ void OpenAddressDialog::handleUserInput()
 		connect(m_inputInterpreter, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)), this, SIGNAL(requestedSearch(QString,QString,WindowsManager::OpenHints)));
 		connect(m_inputInterpreter, SIGNAL(destroyed()), this, SLOT(accept()));
 
-		m_inputInterpreter->interpret(m_addressWidget->lineEdit()->text(), WindowsManager::calculateOpenHints(WindowsManager::CurrentTabOpen));
+		m_inputInterpreter->interpret(m_addressWidget->text(), WindowsManager::calculateOpenHints(WindowsManager::CurrentTabOpen));
 	}
 }
 
 void OpenAddressDialog::setText(const QString &text)
 {
-	m_addressWidget->lineEdit()->setText(text);
+	m_addressWidget->setText(text);
 	m_addressWidget->activate(Qt::OtherFocusReason);
 }
 
