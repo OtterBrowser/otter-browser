@@ -59,41 +59,44 @@ QtWebEngineWebBackend::QtWebEngineWebBackend(QObject *parent) : WebBackend(paren
 
 void QtWebEngineWebBackend::optionChanged(int identifier)
 {
-	if (identifier == SettingsManager::Network_AcceptLanguageOption)
+	switch (identifier)
 	{
-		QWebEngineProfile::defaultProfile()->setHttpAcceptLanguage(NetworkManagerFactory::getAcceptLanguage());
-	}
-	else if (identifier == SettingsManager::Network_UserAgentOption)
-	{
-		QWebEngineProfile::defaultProfile()->setHttpUserAgent(getUserAgent());
-	}
-	else if (!(SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Browser/")) || SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Content/"))))
-	{
-		return;
+		case SettingsManager::Network_AcceptLanguageOption:
+			QWebEngineProfile::defaultProfile()->setHttpAcceptLanguage(NetworkManagerFactory::getAcceptLanguage());
+
+			return;
+		case SettingsManager::Network_UserAgentOption:
+			QWebEngineProfile::defaultProfile()->setHttpUserAgent(getUserAgent());
+
+			return;
+		default:
+			break;
 	}
 
-	QWebEngineSettings *globalSettings(QWebEngineSettings::globalSettings());
-#if QT_VERSION >= 0x050800
-	globalSettings->setAttribute(QWebEngineSettings::FocusOnNavigationEnabled, false);
-#endif
-	globalSettings->setAttribute(QWebEngineSettings::AutoLoadImages, (SettingsManager::getValue(SettingsManager::Permissions_EnableImagesOption).toString() != QLatin1String("onlyCached")));
-	globalSettings->setAttribute(QWebEngineSettings::PluginsEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnablePluginsOption).toString() != QLatin1String("disabled"));
-	globalSettings->setAttribute(QWebEngineSettings::JavascriptEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableJavaScriptOption).toBool());
-	globalSettings->setAttribute(QWebEngineSettings::JavascriptCanAccessClipboard, SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanAccessClipboardOption).toBool());
-	globalSettings->setAttribute(QWebEngineSettings::JavascriptCanOpenWindows, (SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toString() != QLatin1String("blockAll")));
+	if (SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Content/")))
+	{
+		QWebEngineSettings::globalSettings()->setFontSize(QWebEngineSettings::DefaultFontSize, SettingsManager::getValue(SettingsManager::Content_DefaultFontSizeOption).toInt());
+		QWebEngineSettings::globalSettings()->setFontSize(QWebEngineSettings::DefaultFixedFontSize, SettingsManager::getValue(SettingsManager::Content_DefaultFixedFontSizeOption).toInt());
+		QWebEngineSettings::globalSettings()->setFontSize(QWebEngineSettings::MinimumFontSize, SettingsManager::getValue(SettingsManager::Content_MinimumFontSizeOption).toInt());
+		QWebEngineSettings::globalSettings()->setFontFamily(QWebEngineSettings::StandardFont, SettingsManager::getValue(SettingsManager::Content_StandardFontOption).toString());
+		QWebEngineSettings::globalSettings()->setFontFamily(QWebEngineSettings::FixedFont, SettingsManager::getValue(SettingsManager::Content_FixedFontOption).toString());
+		QWebEngineSettings::globalSettings()->setFontFamily(QWebEngineSettings::SerifFont, SettingsManager::getValue(SettingsManager::Content_SerifFontOption).toString());
+		QWebEngineSettings::globalSettings()->setFontFamily(QWebEngineSettings::SansSerifFont, SettingsManager::getValue(SettingsManager::Content_SansSerifFontOption).toString());
+		QWebEngineSettings::globalSettings()->setFontFamily(QWebEngineSettings::CursiveFont, SettingsManager::getValue(SettingsManager::Content_CursiveFontOption).toString());
+		QWebEngineSettings::globalSettings()->setFontFamily(QWebEngineSettings::FantasyFont, SettingsManager::getValue(SettingsManager::Content_FantasyFontOption).toString());
+	}
+	else if (SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Permissions/")))
+	{
+		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::AutoLoadImages, (SettingsManager::getValue(SettingsManager::Permissions_EnableImagesOption).toString() != QLatin1String("onlyCached")));
+		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::PluginsEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnablePluginsOption).toString() != QLatin1String("disabled"));
+		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::JavascriptEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableJavaScriptOption).toBool());
+		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::JavascriptCanAccessClipboard, SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanAccessClipboardOption).toBool());
+		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::JavascriptCanOpenWindows, (SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanOpenWindowsOption).toString() != QLatin1String("blockAll")));
 #if QT_VERSION >= 0x050700
-	globalSettings->setAttribute(QWebEngineSettings::WebGLEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableWebglOption).toBool());
+		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::WebGLEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableWebglOption).toBool());
 #endif
-	globalSettings->setAttribute(QWebEngineSettings::LocalStorageEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableLocalStorageOption).toBool());
-	globalSettings->setFontSize(QWebEngineSettings::DefaultFontSize, SettingsManager::getValue(SettingsManager::Content_DefaultFontSizeOption).toInt());
-	globalSettings->setFontSize(QWebEngineSettings::DefaultFixedFontSize, SettingsManager::getValue(SettingsManager::Content_DefaultFixedFontSizeOption).toInt());
-	globalSettings->setFontSize(QWebEngineSettings::MinimumFontSize, SettingsManager::getValue(SettingsManager::Content_MinimumFontSizeOption).toInt());
-	globalSettings->setFontFamily(QWebEngineSettings::StandardFont, SettingsManager::getValue(SettingsManager::Content_StandardFontOption).toString());
-	globalSettings->setFontFamily(QWebEngineSettings::FixedFont, SettingsManager::getValue(SettingsManager::Content_FixedFontOption).toString());
-	globalSettings->setFontFamily(QWebEngineSettings::SerifFont, SettingsManager::getValue(SettingsManager::Content_SerifFontOption).toString());
-	globalSettings->setFontFamily(QWebEngineSettings::SansSerifFont, SettingsManager::getValue(SettingsManager::Content_SansSerifFontOption).toString());
-	globalSettings->setFontFamily(QWebEngineSettings::CursiveFont, SettingsManager::getValue(SettingsManager::Content_CursiveFontOption).toString());
-	globalSettings->setFontFamily(QWebEngineSettings::FantasyFont, SettingsManager::getValue(SettingsManager::Content_FantasyFontOption).toString());
+		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::LocalStorageEnabled, SettingsManager::getValue(SettingsManager::Permissions_EnableLocalStorageOption).toBool());
+	}
 }
 
 void QtWebEngineWebBackend::downloadFile(QWebEngineDownloadItem *item)
@@ -209,6 +212,9 @@ WebWidget* QtWebEngineWebBackend::createWidget(bool isPrivate, ContentsWidget *p
 		QWebEngineProfile::defaultProfile()->setRequestInterceptor(m_requestInterceptor);
 
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::FullScreenSupportEnabled, true);
+#if QT_VERSION >= 0x050800
+		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::FocusOnNavigationEnabled, false);
+#endif
 
 		const QString cachePath(SessionsManager::getCachePath());
 
@@ -226,6 +232,7 @@ WebWidget* QtWebEngineWebBackend::createWidget(bool isPrivate, ContentsWidget *p
 			QWebEngineProfile::defaultProfile()->setPersistentStoragePath(cachePath + QLatin1String("/persistentStorage/"));
 		}
 
+		optionChanged(SettingsManager::Content_DefaultFontSizeOption);
 		optionChanged(SettingsManager::Permissions_EnableFullScreenOption);
 
 		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
