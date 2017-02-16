@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2016 Jan Bajer aka bajasoft <jbajer@gmail.com>
+* Copyright (C) 2016 - 2017 Jan Bajer aka bajasoft <jbajer@gmail.com>
 * Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -40,9 +40,10 @@ public:
 		UnknownCompletionType = 0,
 		BookmarksCompletionType = 1,
 		HistoryCompletionType = 2,
-		SearchSuggestionsCompletionType = 4,
-		SpecialPagesCompletionType = 8,
-		LocalPathSuggestionsCompletionType = 16
+		TypedHistoryCompletionType = 4,
+		SearchSuggestionsCompletionType = 8,
+		SpecialPagesCompletionType = 16,
+		LocalPathSuggestionsCompletionType = 32
 	};
 
 	Q_DECLARE_FLAGS(CompletionTypes, CompletionType)
@@ -66,7 +67,8 @@ public:
 		TitleRole = Qt::UserRole,
 		MatchRole,
 		KeywordRole,
-		TypeRole
+		TypeRole,
+		TimeVisitedRole
 	};
 
 	struct CompletionEntry
@@ -77,9 +79,10 @@ public:
 		QString keyword;
 		QUrl url;
 		QIcon icon;
+		QDateTime timeVisited;
 		EntryType type;
 
-		explicit CompletionEntry(const QUrl &urlValue, const QString &titleValue, const QString &matchValue, const QIcon &iconValue, EntryType typeValue) : title(titleValue), match(matchValue), url(urlValue), icon(iconValue), type(typeValue)
+		explicit CompletionEntry(const QUrl &urlValue, const QString &titleValue, const QString &matchValue, const QIcon &iconValue, const QDateTime timeVisitedValue, EntryType typeValue) : title(titleValue), match(matchValue), url(urlValue), icon(iconValue), timeVisited(timeVisitedValue), type(typeValue)
 		{
 		}
 	};
@@ -93,7 +96,7 @@ public:
 	bool event(QEvent *event);
 
 public slots:
-	void setFilter(const QString &filter = QString());
+	void setFilter(const QString &filter = QString(), CompletionTypes types = UnknownCompletionType);
 
 protected:
 	void timerEvent(QTimerEvent *event);

@@ -45,7 +45,7 @@ public:
 	static HistoryModel* getTypedHistoryModel();
 	static QIcon getIcon(const QUrl &url);
 	static HistoryEntryItem* getEntry(quint64 identifier);
-	static QList<HistoryModel::HistoryEntryMatch> findEntries(const QString &prefix);
+	static QList<HistoryModel::HistoryEntryMatch> findEntries(const QString &prefix, bool isTypedInOnly = false);
 	static quint64 addEntry(const QUrl &url, const QString &title, const QIcon &icon, bool isTypedIn = false);
 	static bool hasEntry(const QUrl &url);
 

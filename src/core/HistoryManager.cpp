@@ -308,21 +308,25 @@ HistoryEntryItem* HistoryManager::getEntry(quint64 identifier)
 	return m_browsingHistoryModel->getEntry(identifier);
 }
 
-QList<HistoryModel::HistoryEntryMatch> HistoryManager::findEntries(const QString &prefix)
+QList<HistoryModel::HistoryEntryMatch> HistoryManager::findEntries(const QString &prefix, bool isTypedInOnly)
 {
 	if (!m_typedHistoryModel)
 	{
 		getTypedHistoryModel();
 	}
 
-	if (!m_browsingHistoryModel)
+	if (!isTypedInOnly && !m_browsingHistoryModel)
 	{
 		getBrowsingHistoryModel();
 	}
 
 	QList<HistoryModel::HistoryEntryMatch> entries;
 	entries.append(m_typedHistoryModel->findEntries(prefix, true));
-	entries.append(m_browsingHistoryModel->findEntries(prefix));
+
+	if (!isTypedInOnly)
+	{
+		entries.append(m_browsingHistoryModel->findEntries(prefix));
+	}
 
 	return entries;
 }
