@@ -32,6 +32,7 @@
 
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QLineEdit>
+#include <QtWidgets/QSpinBox>
 
 namespace Otter
 {
@@ -158,13 +159,6 @@ void PreferencesDialog::currentTabChanged(int tab)
 	}
 
 	QWidget *widget(m_ui->tabWidget->widget(tab));
-	QList<QLineEdit*> lineEdits(widget->findChildren<QLineEdit*>());
-
-	for (int i = 0; i < lineEdits.count(); ++i)
-	{
-		connect(lineEdits.at(i), SIGNAL(textChanged(QString)), this, SLOT(markModified()));
-	}
-
 	QList<QAbstractButton*> buttons(widget->findChildren<QAbstractButton*>());
 
 	for (int i = 0; i < buttons.count(); ++i)
@@ -177,6 +171,20 @@ void PreferencesDialog::currentTabChanged(int tab)
 	for (int i = 0; i < comboBoxes.count(); ++i)
 	{
 		connect(comboBoxes.at(i), SIGNAL(currentIndexChanged(int)), this, SLOT(markModified()));
+	}
+
+	QList<QLineEdit*> lineEdits(widget->findChildren<QLineEdit*>());
+
+	for (int i = 0; i < lineEdits.count(); ++i)
+	{
+		connect(lineEdits.at(i), SIGNAL(textChanged(QString)), this, SLOT(markModified()));
+	}
+
+	QList<QSpinBox*> spinBoxes(widget->findChildren<QSpinBox*>());
+
+	for (int i = 0; i < spinBoxes.count(); ++i)
+	{
+		connect(spinBoxes.at(i), SIGNAL(valueChanged(int)), this, SLOT(markModified()));
 	}
 
 	QList<ItemViewWidget*> viewWidgets(widget->findChildren<ItemViewWidget*>());
