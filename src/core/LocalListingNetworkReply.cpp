@@ -43,6 +43,7 @@ LocalListingNetworkReply::LocalListingNetworkReply(QObject *parent, const QNetwo
 	open(QIODevice::ReadOnly | QIODevice::Unbuffered);
 
 	QString entriesHtml;
+	QString specialEntriesHtml;
 	QRegularExpression entryExpression(QLatin1String("<!--entry:begin-->(.*)<!--entry:end-->"), (QRegularExpression::DotMatchesEverythingOption | QRegularExpression::MultilineOption));
 	QFile file(SessionsManager::getReadableDataPath(QLatin1String("files/listing.html")));
 	file.open(QIODevice::ReadOnly | QIODevice::Text);
@@ -112,8 +113,21 @@ LocalListingNetworkReply::LocalListingNetworkReply(QObject *parent, const QNetwo
 			entryHtml.replace(QStringLiteral("{%1}").arg(iterator.key()), iterator.value());
 		}
 
-		entriesHtml.append(entryHtml);
+		if (entries.at(i).fileName() == QLatin1String("."))
+		{
+			specialEntriesHtml.prepend(entryHtml);
+		}
+		else if (entries.at(i).fileName() == QLatin1String(".."))
+		{
+			specialEntriesHtml.append(entryHtml);
+		}
+		else
+		{
+			entriesHtml.append(entryHtml);
+		}
 	}
+
+	entriesHtml.prepend(specialEntriesHtml);
 
 	mainTemplate.replace(entryExpression, entriesHtml);
 
