@@ -95,6 +95,10 @@ void QtWebKitWebBackend::optionChanged(int identifier)
 			QWebSettings::setMaximumPagesInCache(SettingsManager::getValue(SettingsManager::Cache_PagesInMemoryLimitOption).toInt());
 
 			return;
+		case SettingsManager::Interface_EnableSmoothScrollingOption:
+			QWebSettings::globalSettings()->setAttribute(QWebSettings::ScrollAnimatorEnabled, SettingsManager::getValue(SettingsManager::Interface_EnableSmoothScrollingOption).toBool());
+
+			return;
 		default:
 			break;
 	}
@@ -207,6 +211,7 @@ WebWidget* QtWebKitWebBackend::createWidget(bool isPrivate, ContentsWidget *pare
 		QWebSettings::globalSettings()->setAttribute(QWebSettings::FullScreenSupportEnabled, true);
 #endif
 		QWebSettings::globalSettings()->setAttribute(QWebSettings::JavascriptCanCloseWindows, true);
+		QWebSettings::globalSettings()->setAttribute(QWebSettings::ScrollAnimatorEnabled, SettingsManager::getValue(SettingsManager::Interface_EnableSmoothScrollingOption).toBool());
 		QWebSettings::globalSettings()->setOfflineStorageDefaultQuota(SettingsManager::getValue(SettingsManager::Browser_OfflineStorageLimitOption).toInt() * 1024);
 		QWebSettings::globalSettings()->setOfflineWebApplicationCacheQuota(SettingsManager::getValue(SettingsManager::Browser_OfflineWebApplicationCacheLimitOption).toInt() * 1024);
 

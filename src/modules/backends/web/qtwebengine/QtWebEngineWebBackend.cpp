@@ -61,6 +61,10 @@ void QtWebEngineWebBackend::optionChanged(int identifier)
 {
 	switch (identifier)
 	{
+		case SettingsManager::Interface_EnableSmoothScrollingOption:
+			QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::ScrollAnimatorEnabled, SettingsManager::getValue(SettingsManager::Interface_EnableSmoothScrollingOption).toBool());
+
+			return;
 		case SettingsManager::Network_AcceptLanguageOption:
 			QWebEngineProfile::defaultProfile()->setHttpAcceptLanguage(NetworkManagerFactory::getAcceptLanguage());
 
@@ -215,6 +219,7 @@ WebWidget* QtWebEngineWebBackend::createWidget(bool isPrivate, ContentsWidget *p
 #if QT_VERSION >= 0x050800
 		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::FocusOnNavigationEnabled, false);
 #endif
+		QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::ScrollAnimatorEnabled, SettingsManager::getValue(SettingsManager::Interface_EnableSmoothScrollingOption).toBool());
 
 		const QString cachePath(SessionsManager::getCachePath());
 
