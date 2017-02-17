@@ -93,6 +93,9 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 
 	updatePageSwitcher();
 
+	m_ui->browsingEnableSmoothScrollingCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Interface_EnableSmoothScrollingOption).toBool());
+	m_ui->browsingEnableSpellCheckCheckBox->setChecked(SettingsManager::getValue(SettingsManager::Browser_EnableSpellCheckOption).toBool());
+
 	m_ui->browsingSuggestBookmarksCheckBox->setChecked(SettingsManager::getValue(SettingsManager::AddressField_SuggestBookmarksOption).toBool());
 	m_ui->browsingSuggestHistoryCheckBox->setChecked(SettingsManager::getValue(SettingsManager::AddressField_SuggestHistoryOption).toBool());
 	m_ui->browsingSuggestLocalPathsCheckBox->setChecked(SettingsManager::getValue(SettingsManager::AddressField_SuggestLocalPathsOption).toBool());
@@ -1493,6 +1496,8 @@ void PreferencesAdvancedPageWidget::save()
 
 	m_filesToRemove.clear();
 
+	SettingsManager::setValue(SettingsManager::Interface_EnableSmoothScrollingOption, m_ui->browsingEnableSmoothScrollingCheckBox->isChecked());
+	SettingsManager::setValue(SettingsManager::Browser_EnableSpellCheckOption, m_ui->browsingEnableSpellCheckCheckBox->isChecked());
 	SettingsManager::setValue(SettingsManager::AddressField_SuggestBookmarksOption, m_ui->browsingSuggestBookmarksCheckBox->isChecked());
 	SettingsManager::setValue(SettingsManager::AddressField_SuggestHistoryOption, m_ui->browsingSuggestHistoryCheckBox->isChecked());
 	SettingsManager::setValue(SettingsManager::AddressField_SuggestLocalPathsOption, m_ui->browsingSuggestLocalPathsCheckBox->isChecked());

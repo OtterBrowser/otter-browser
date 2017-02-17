@@ -44,7 +44,34 @@
      <widget class="QWidget" name="browsingPage">
       <layout class="QVBoxLayout" name="browsingLayout">
        <item>
-        <widget class="QLabel" name="browsingSuggestionsHeader">
+        <widget class="QLabel" name="browsingGeneralHeaderLabel">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>General</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="browsingEnableSmoothScrollingCheckBox">
+         <property name="text">
+          <string>Smooth scrolling</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="browsingEnableSpellCheckCheckBox">
+         <property name="text">
+          <string>Check spelling</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="browsingSuggestionsHeaderLabel">
          <property name="font">
           <font>
            <weight>75</weight>
@@ -92,7 +119,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QLabel" name="browsingCompletionHeader">
+        <widget class="QLabel" name="browsingCompletionHeaderLabel">
          <property name="font">
           <font>
            <weight>75</weight>
