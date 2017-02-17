@@ -50,7 +50,7 @@ public:
 
 	explicit ProgressInformationWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = nullptr);
 
-	QSize sizeHint() const;
+	QSize sizeHint() const override;
 
 protected slots:
 	void updateStatus(WebWidget::PageInformation key, const QVariant &value = QVariant());

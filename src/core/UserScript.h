@@ -42,19 +42,19 @@ public:
 	explicit UserScript(const QString &path, QObject *parent = nullptr);
 
 	QString getName() const;
-	QString getTitle() const;
-	QString getDescription() const;
-	QString getVersion() const;
+	QString getTitle() const override;
+	QString getDescription() const override;
+	QString getVersion() const override;
 	QString getSource();
-	QUrl getHomePage() const;
-	QUrl getUpdateUrl() const;
-	QIcon getIcon() const;
+	QUrl getHomePage() const override;
+	QUrl getUpdateUrl() const override;
+	QIcon getIcon() const override;
 	QStringList getExcludeRules() const;
 	QStringList getIncludeRules() const;
 	QStringList getMatchRules() const;
 	static QList<UserScript*> getUserScriptsForUrl(const QUrl &url, InjectionTime injectionTime = AnyTime, bool isSubFrame = false);
 	InjectionTime getInjectionTime() const;
-	AddonType getType() const;
+	AddonType getType() const override;
 	bool isEnabledForUrl(const QUrl &url);
 	bool shouldRunOnSubFrames() const;
 

@@ -82,7 +82,7 @@ protected:
 
 	explicit GesturesManager(QObject *parent);
 
-	void timerEvent(QTimerEvent *event);
+	void timerEvent(QTimerEvent *event) override;
 	static void releaseObject();
 	static GestureStep deserializeStep(const QString &string);
 	static QList<GestureStep> recognizeMoveStep(QInputEvent *event);
@@ -90,7 +90,7 @@ protected:
 	static int getLastMoveDistance(bool measureFinished = false);
 	static int gesturesDifference(QList<GestureStep> defined);
 	static bool triggerAction(int gestureIdentifier);
-	bool eventFilter(QObject *object, QEvent *event);
+	bool eventFilter(QObject *object, QEvent *event) override;
 
 protected slots:
 	void optionChanged(int identifier);

@@ -41,7 +41,7 @@ class ProgressBarDelegate : public ItemDelegate
 public:
 	explicit ProgressBarDelegate(QObject *parent);
 
-	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 };
 
 class TransfersContentsWidget : public ContentsWidget
@@ -52,20 +52,20 @@ public:
 	explicit TransfersContentsWidget(Window *window);
 	~TransfersContentsWidget();
 
-	void print(QPrinter *printer);
-	Action* getAction(int identifier);
-	QString getTitle() const;
-	QLatin1String getType() const;
-	QUrl getUrl() const;
-	QIcon getIcon() const;
-	WindowsManager::LoadingState getLoadingState() const;
-	bool eventFilter(QObject *object, QEvent *event);
+	void print(QPrinter *printer) override;
+	Action* getAction(int identifier) override;
+	QString getTitle() const override;
+	QLatin1String getType() const override;
+	QUrl getUrl() const override;
+	QIcon getIcon() const override;
+	WindowsManager::LoadingState getLoadingState() const override;
+	bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:
-	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
+	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap()) override;
 
 protected:
-	void changeEvent(QEvent *event);
+	void changeEvent(QEvent *event) override;
 	Transfer* getTransfer(const QModelIndex &index);
 	int findTransfer(Transfer *transfer) const;
 

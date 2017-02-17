@@ -34,8 +34,8 @@ class QtWebKitPlugin : public QObject, public QWebKitPlatformPlugin
 public:
 	explicit QtWebKitPlugin();
 
-	QObject* createExtension(Extension extension) const;
-	bool supportsExtension(Extension extension) const;
+	QObject* createExtension(Extension extension) const override;
+	bool supportsExtension(Extension extension) const override;
 };
 
 }

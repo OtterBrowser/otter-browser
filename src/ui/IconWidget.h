@@ -38,11 +38,11 @@ public:
 	void setDefaultIcon(const QString &data);
 	void setDefaultIcon(const QIcon &icon);
 	QString getIcon() const;
-	int heightForWidth(int width) const;
-	bool hasHeightForWidth() const;
+	int heightForWidth(int width) const override;
+	bool hasHeightForWidth() const override;
 
 protected:
-	void resizeEvent(QResizeEvent *event);
+	void resizeEvent(QResizeEvent *event) override;
 	QString createData(const QIcon &icon) const;
 	QIcon createIcon(const QString &data) const;
 

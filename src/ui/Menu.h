@@ -62,9 +62,9 @@ public:
 	static MenuRole getRole(const QString &identifier);
 
 protected:
-	void changeEvent(QEvent *event);
-	void mouseReleaseEvent(QMouseEvent *event);
-	void contextMenuEvent(QContextMenuEvent *event);
+	void changeEvent(QEvent *event) override;
+	void mouseReleaseEvent(QMouseEvent *event) override;
+	void contextMenuEvent(QContextMenuEvent *event) override;
 
 protected slots:
 	void populateModelMenu();

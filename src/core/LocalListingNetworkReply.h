@@ -32,12 +32,12 @@ class LocalListingNetworkReply : public QNetworkReply
 public:
 	LocalListingNetworkReply(QObject *parent, const QNetworkRequest &request);
 
-	qint64 bytesAvailable() const;
-	qint64 readData(char *data, qint64 maxSize);
-	bool isSequential() const;
+	qint64 bytesAvailable() const override;
+	qint64 readData(char *data, qint64 maxSize) override;
+	bool isSequential() const override;
 
 public slots:
-	void abort();
+	void abort() override;
 
 private:
 	QByteArray m_content;

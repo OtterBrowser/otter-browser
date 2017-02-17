@@ -41,8 +41,8 @@ class SearchDelegate : public QItemDelegate
 public:
 	explicit SearchDelegate(QObject *parent = nullptr);
 
-	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+	void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+	QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 };
 
 class SearchWidget : public ComboBoxWidget
@@ -52,10 +52,10 @@ class SearchWidget : public ComboBoxWidget
 public:
 	explicit SearchWidget(Window *window, QWidget *parent = nullptr);
 
-	void hidePopup();
+	void hidePopup() override;
 	QString getCurrentSearchEngine() const;
 	QVariantMap getOptions() const;
-	bool event(QEvent *event);
+	bool event(QEvent *event) override;
 
 public slots:
 	void activate(Qt::FocusReason reason);
@@ -64,15 +64,15 @@ public slots:
 	void setOptions(const QVariantMap &options);
 
 protected:
-	void changeEvent(QEvent *event);
-	void paintEvent(QPaintEvent *event);
-	void resizeEvent(QResizeEvent *event);
-	void focusInEvent(QFocusEvent *event);
-	void keyPressEvent(QKeyEvent *event);
-	void contextMenuEvent(QContextMenuEvent *event);
-	void mousePressEvent(QMouseEvent *event);
-	void mouseReleaseEvent(QMouseEvent *event);
-	void wheelEvent(QWheelEvent *event);
+	void changeEvent(QEvent *event) override;
+	void paintEvent(QPaintEvent *event) override;
+	void resizeEvent(QResizeEvent *event) override;
+	void focusInEvent(QFocusEvent *event) override;
+	void keyPressEvent(QKeyEvent *event) override;
+	void contextMenuEvent(QContextMenuEvent *event) override;
+	void mousePressEvent(QMouseEvent *event) override;
+	void mouseReleaseEvent(QMouseEvent *event) override;
+	void wheelEvent(QWheelEvent *event) override;
 
 protected slots:
 	void optionChanged(int identifier, const QVariant &value);

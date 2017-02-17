@@ -74,7 +74,7 @@ public slots:
 protected:
 	explicit ContentBlockingManager(QObject *parent = nullptr);
 
-	void timerEvent(QTimerEvent *event);
+	void timerEvent(QTimerEvent *event) override;
 
 protected slots:
 	void optionChanged(int identifier, const QVariant &value);

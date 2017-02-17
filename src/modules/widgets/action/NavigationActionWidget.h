@@ -33,11 +33,11 @@ class NavigationActionWidget : public ActionWidget
 public:
 	explicit NavigationActionWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = nullptr);
 
-	bool eventFilter(QObject *object, QEvent *event);
+	bool eventFilter(QObject *object, QEvent *event) override;
 
 protected:
 	void addMenuEntry(int index, const WindowHistoryEntry &entry);
-	bool event(QEvent *event);
+	bool event(QEvent *event) override;
 
 protected slots:
 	void goToHistoryIndex(QAction *action);

@@ -57,12 +57,12 @@ public:
 
 	void clearCookies(int period = 0);
 	CookieJar* clone(QObject *parent = nullptr);
-	QList<QNetworkCookie> cookiesForUrl(const QUrl &url) const;
+	QList<QNetworkCookie> cookiesForUrl(const QUrl &url) const override;
 	QList<QNetworkCookie> getCookiesForUrl(const QUrl &url) const;
 	QList<QNetworkCookie> getCookies(const QString &domain = QString()) const;
-	bool insertCookie(const QNetworkCookie &cookie);
-	bool updateCookie(const QNetworkCookie &cookie);
-	bool deleteCookie(const QNetworkCookie &cookie);
+	bool insertCookie(const QNetworkCookie &cookie) override;
+	bool updateCookie(const QNetworkCookie &cookie) override;
+	bool deleteCookie(const QNetworkCookie &cookie) override;
 	bool forceInsertCookie(const QNetworkCookie &cookie);
 	bool forceUpdateCookie(const QNetworkCookie &cookie);
 	bool forceDeleteCookie(const QNetworkCookie &cookie);
@@ -70,7 +70,7 @@ public:
 	static bool isDomainTheSame(const QUrl &first, const QUrl &second);
 
 protected:
-	void timerEvent(QTimerEvent *event);
+	void timerEvent(QTimerEvent *event) override;
 	void scheduleSave();
 	void save();
 

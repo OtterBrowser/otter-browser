@@ -31,12 +31,12 @@ class OptionDelegate : public ItemDelegate
 public:
 	explicit OptionDelegate(bool isSimple, QObject *parent);
 
-	void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
-	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+	void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+	void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
+	QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 
 protected:
-	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const;
+	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
 
 private:
 	bool m_isSimple;

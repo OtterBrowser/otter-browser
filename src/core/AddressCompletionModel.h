@@ -89,17 +89,17 @@ public:
 
 	explicit AddressCompletionModel(QObject *parent = nullptr);
 
-	QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-	QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
-	Qt::ItemFlags flags(const QModelIndex &index) const;
-	int rowCount(const QModelIndex &index = QModelIndex()) const;
-	bool event(QEvent *event);
+	QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+	QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+	Qt::ItemFlags flags(const QModelIndex &index) const override;
+	int rowCount(const QModelIndex &index = QModelIndex()) const override;
+	bool event(QEvent *event) override;
 
 public slots:
 	void setFilter(const QString &filter = QString(), CompletionTypes types = UnknownCompletionType);
 
 protected:
-	void timerEvent(QTimerEvent *event);
+	void timerEvent(QTimerEvent *event) override;
 	void updateModel();
 
 private:

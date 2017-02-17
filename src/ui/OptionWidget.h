@@ -74,7 +74,7 @@ public:
 	bool isModified() const;
 
 protected:
-	void focusInEvent(QFocusEvent *event);
+	void focusInEvent(QFocusEvent *event) override;
 
 protected slots:
 	void markModified();

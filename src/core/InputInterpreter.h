@@ -37,7 +37,7 @@ public:
 	void interpret(const QString &text, WindowsManager::OpenHints hints, bool ignoreBookmarks = false);
 
 protected:
-	void timerEvent(QTimerEvent *event);
+	void timerEvent(QTimerEvent *event) override;
 
 protected slots:
 	void verifyLookup(const QHostInfo &host);

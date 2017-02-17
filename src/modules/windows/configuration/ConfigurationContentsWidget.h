@@ -42,18 +42,18 @@ public:
 	explicit ConfigurationContentsWidget(Window *window);
 	~ConfigurationContentsWidget();
 
-	void print(QPrinter *printer);
-	QString getTitle() const;
-	QLatin1String getType() const;
-	QUrl getUrl() const;
-	QIcon getIcon() const;
-	bool eventFilter(QObject *object, QEvent *event);
+	void print(QPrinter *printer) override;
+	QString getTitle() const override;
+	QLatin1String getType() const override;
+	QUrl getUrl() const override;
+	QIcon getIcon() const override;
+	bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:
-	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
+	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap()) override;
 
 protected:
-	void changeEvent(QEvent *event);
+	void changeEvent(QEvent *event) override;
 
 protected slots:
 	void optionChanged(int identifier, const QVariant &value);

@@ -31,7 +31,7 @@ class FileSystemCompleterModel : public QFileSystemModel
 public:
 	explicit FileSystemCompleterModel(QObject *parent = nullptr);
 
-	QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+	QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 };
 
 }

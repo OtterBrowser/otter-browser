@@ -37,10 +37,10 @@ class MdiWidget : public QMdiArea
 public:
 	explicit MdiWidget(QWidget *parent);
 
-	bool eventFilter(QObject *object, QEvent *event);
+	bool eventFilter(QObject *object, QEvent *event) override;
 
 protected:
-	void contextMenuEvent(QContextMenuEvent *event);
+	void contextMenuEvent(QContextMenuEvent *event) override;
 };
 
 class MdiWindow : public QMdiSubWindow
@@ -54,12 +54,12 @@ public:
 	void restoreState();
 
 protected:
-	void changeEvent(QEvent *event);
-	void closeEvent(QCloseEvent *event);
-	void moveEvent(QMoveEvent *event);
-	void resizeEvent(QResizeEvent *event);
-	void mouseReleaseEvent(QMouseEvent *event);
-	void mouseDoubleClickEvent(QMouseEvent *event);
+	void changeEvent(QEvent *event) override;
+	void closeEvent(QCloseEvent *event) override;
+	void moveEvent(QMoveEvent *event) override;
+	void resizeEvent(QResizeEvent *event) override;
+	void mouseReleaseEvent(QMouseEvent *event) override;
+	void mouseDoubleClickEvent(QMouseEvent *event) override;
 
 private:
 	bool m_wasMaximized;
@@ -82,8 +82,8 @@ public slots:
 	void updateActions();
 
 protected:
-	void timerEvent(QTimerEvent *event);
-	void resizeEvent(QResizeEvent *event);
+	void timerEvent(QTimerEvent *event) override;
+	void resizeEvent(QResizeEvent *event) override;
 	void createMdi();
 
 protected slots:

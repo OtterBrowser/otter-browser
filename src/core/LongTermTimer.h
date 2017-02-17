@@ -35,7 +35,7 @@ public:
 	static void runTimer(quint64 seconds, QObject *receiver, const char *member);
 
 protected:
-	void timerEvent(QTimerEvent *event);
+	void timerEvent(QTimerEvent *event) override;
 	void updateTimer(const quint64 secondsLeft, const bool updateCounter = false);
 
 private:

@@ -78,9 +78,9 @@ public slots:
 	virtual void setUrl(const QUrl &url, bool typed = true);
 
 protected:
-	void timerEvent(QTimerEvent *event);
-	void showEvent(QShowEvent *event);
-	void resizeEvent(QResizeEvent *event);
+	void timerEvent(QTimerEvent *event) override;
+	void showEvent(QShowEvent *event) override;
+	void resizeEvent(QResizeEvent *event) override;
 
 protected slots:
 	void triggerAction();

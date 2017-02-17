@@ -89,7 +89,7 @@ public slots:
 	virtual bool setTarget(const QString &target, bool canOverwriteExisting = false);
 
 protected:
-	void timerEvent(QTimerEvent *event);
+	void timerEvent(QTimerEvent *event) override;
 	void start(QNetworkReply *reply, const QString &target);
 
 protected slots:
@@ -148,7 +148,7 @@ public:
 protected:
 	explicit TransfersManager(QObject *parent = nullptr);
 
-	void timerEvent(QTimerEvent *event);
+	void timerEvent(QTimerEvent *event) override;
 	void scheduleSave();
 
 protected slots:

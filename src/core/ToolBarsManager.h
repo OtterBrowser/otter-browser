@@ -106,7 +106,7 @@ public slots:
 	void removeToolBar(int identifier = -1);
 
 protected:
-	void timerEvent(QTimerEvent *event);
+	void timerEvent(QTimerEvent *event) override;
 	static QJsonValue encodeEntry(const ActionsManager::ActionEntryDefinition &definition);
 	static ActionsManager::ActionEntryDefinition decodeEntry(const QJsonValue &value);
 	static QHash<QString, ToolBarsManager::ToolBarDefinition> loadToolBars(const QString &path, bool isDefault);

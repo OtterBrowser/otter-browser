@@ -51,9 +51,9 @@ public:
 	virtual QWidget* getOptionsWidget() = 0;
 	virtual QString getSuggestedPath(const QString &path = QString()) const = 0;
 	virtual QString getBrowser() const = 0;
-	QUrl getUpdateUrl() const;
+	QUrl getUpdateUrl() const override;
 	virtual QStringList getFileFilters() const = 0;
-	AddonType getType() const;
+	AddonType getType() const override;
 	virtual ImportType getImportType() const = 0;
 
 public slots:

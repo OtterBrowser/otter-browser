@@ -152,7 +152,7 @@ public:
 protected:
 	explicit SessionsManager(QObject *parent = nullptr);
 
-	void timerEvent(QTimerEvent *event);
+	void timerEvent(QTimerEvent *event) override;
 	void scheduleSave();
 
 private:

@@ -33,8 +33,8 @@ class PanelChooserWidget : public ToolButtonWidget
 public:
 	explicit PanelChooserWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent);
 
-	void changeEvent(QEvent *event);
-	QSize minimumSizeHint() const;
+	void changeEvent(QEvent *event) override;
+	QSize minimumSizeHint() const override;
 
 protected:
 	void updateText();

@@ -41,8 +41,8 @@ public:
 	int getIdentifier() const;
 
 protected:
-	void mouseReleaseEvent(QMouseEvent *event);
-	bool event(QEvent *event);
+	void mouseReleaseEvent(QMouseEvent *event) override;
+	bool event(QEvent *event) override;
 
 protected slots:
 	void resetAction();

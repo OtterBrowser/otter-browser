@@ -42,8 +42,8 @@ public slots:
 	void setSort(int column, Qt::SortOrder order);
 
 protected:
-	void showEvent(QShowEvent *event);
-	void contextMenuEvent(QContextMenuEvent *event);
+	void showEvent(QShowEvent *event) override;
+	void contextMenuEvent(QContextMenuEvent *event) override;
 
 protected slots:
 	void toggleColumnVisibility(QAction *action);
@@ -69,7 +69,7 @@ public:
 	explicit ItemViewWidget(QWidget *parent = nullptr);
 
 	void setData(const QModelIndex &index, const QVariant &value, int role);
-	void setModel(QAbstractItemModel *model);
+	void setModel(QAbstractItemModel *model) override;
 	void setModel(QAbstractItemModel *model, bool useSortProxy);
 	void setViewMode(ViewMode mode);
 	QStandardItemModel* getSourceModel();
@@ -79,7 +79,7 @@ public:
 	QModelIndex getCheckedIndex(const QModelIndex &parent = QModelIndex()) const;
 	QModelIndex getCurrentIndex(int column = 0) const;
 	QModelIndex getIndex(int row, int column = 0, const QModelIndex &parent = QModelIndex()) const;
-	QSize sizeHint() const;
+	QSize sizeHint() const override;
 	ViewMode getViewMode() const;
 	Qt::SortOrder getSortOrder() const;
 	int getSortColumn() const;
@@ -105,17 +105,17 @@ public slots:
 	void setFilterRoles(const QSet<int> &roles);
 
 protected:
-	void showEvent(QShowEvent *event);
-	void keyPressEvent(QKeyEvent *event);
-	void dropEvent(QDropEvent *event);
-	void startDrag(Qt::DropActions supportedActions);
+	void showEvent(QShowEvent *event) override;
+	void keyPressEvent(QKeyEvent *event) override;
+	void dropEvent(QDropEvent *event) override;
+	void startDrag(Qt::DropActions supportedActions) override;
 	void ensureInitialized();
 	void moveRow(bool up);
 	bool applyFilter(const QModelIndex &index);
 
 protected slots:
 	void optionChanged(int identifier, const QVariant &value);
-	void currentChanged(const QModelIndex &current, const QModelIndex &previous);
+	void currentChanged(const QModelIndex &current, const QModelIndex &previous) override;
 	void saveState();
 	void notifySelectionChanged();
 	void updateDropSelection();

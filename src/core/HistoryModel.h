@@ -31,7 +31,7 @@ namespace Otter
 class HistoryEntryItem : public QStandardItem
 {
 public:
-	void setData(const QVariant &value, int role);
+	void setData(const QVariant &value, int role) override;
 	void setItemData(const QVariant &value, int role);
 
 protected:
@@ -78,7 +78,7 @@ public:
 	HistoryType getType() const;
 	bool hasEntry(const QUrl &url) const;
 	bool save(const QString &path) const;
-	bool setData(const QModelIndex &index, const QVariant &value, int role);
+	bool setData(const QModelIndex &index, const QVariant &value, int role) override;
 
 private:
 	QHash<QUrl, QList<HistoryEntryItem*> > m_urls;

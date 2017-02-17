@@ -40,7 +40,7 @@ public:
 protected:
 	explicit NotesManager(QObject *parent = nullptr);
 
-	void timerEvent(QTimerEvent *event);
+	void timerEvent(QTimerEvent *event) override;
 
 protected slots:
 	void scheduleSave();

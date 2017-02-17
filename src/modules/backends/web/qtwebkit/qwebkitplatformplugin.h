@@ -58,7 +58,7 @@ public:
 class QWebSelectMethod : public QObject {
     Q_OBJECT
 public:
-    virtual ~QWebSelectMethod() {}
+    virtual ~QWebSelectMethod() override {}
 
     virtual void show(const QWebSelectData&) = 0;
     virtual void hide() = 0;
@@ -84,7 +84,7 @@ class QWebNotificationPresenter : public QObject {
     Q_OBJECT
 public:
     QWebNotificationPresenter() {}
-    virtual ~QWebNotificationPresenter() {}
+    virtual ~QWebNotificationPresenter() override {}
 
     virtual void showNotification(const QWebNotificationData*) = 0;
 
@@ -97,7 +97,7 @@ class QWebHapticFeedbackPlayer: public QObject {
     Q_OBJECT
 public:
     QWebHapticFeedbackPlayer() {}
-    virtual ~QWebHapticFeedbackPlayer() {}
+    virtual ~QWebHapticFeedbackPlayer() override {}
 
     enum HapticStrength {
         None, Weak, Medium, Strong
@@ -113,7 +113,7 @@ public:
 class QWebTouchModifier : public QObject {
     Q_OBJECT
 public:
-    virtual ~QWebTouchModifier() {}
+    virtual ~QWebTouchModifier() override {}
 
     enum PaddingDirection {
         Up, Right, Down, Left

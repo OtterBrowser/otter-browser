@@ -51,20 +51,20 @@ public:
 	explicit PasswordsContentsWidget(Window *window);
 	~PasswordsContentsWidget();
 
-	void print(QPrinter *printer);
-	Action* getAction(int identifier);
-	QString getTitle() const;
-	QLatin1String getType() const;
-	QUrl getUrl() const;
-	QIcon getIcon() const;
-	WindowsManager::LoadingState getLoadingState() const;
-	bool eventFilter(QObject *object, QEvent *event);
+	void print(QPrinter *printer) override;
+	Action* getAction(int identifier) override;
+	QString getTitle() const override;
+	QLatin1String getType() const override;
+	QUrl getUrl() const override;
+	QIcon getIcon() const override;
+	WindowsManager::LoadingState getLoadingState() const override;
+	bool eventFilter(QObject *object, QEvent *event) override;
 
 public slots:
-	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
+	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap()) override;
 
 protected:
-	void changeEvent(QEvent *event);
+	void changeEvent(QEvent *event) override;
 	PasswordsManager::PasswordInformation getPassword(const QModelIndex &index) const;
 
 protected slots:

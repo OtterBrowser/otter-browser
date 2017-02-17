@@ -33,7 +33,7 @@ class TextLabelWidget : public QLineEdit
 public:
 	explicit TextLabelWidget(QWidget *parent = nullptr);
 
-	bool event(QEvent *event);
+	bool event(QEvent *event) override;
 
 public slots:
 	void clear();
@@ -41,9 +41,9 @@ public slots:
 	void setUrl(const QUrl &url);
 
 protected:
-	void mousePressEvent(QMouseEvent *event);
-	void mouseReleaseEvent(QMouseEvent *event);
-	void contextMenuEvent(QContextMenuEvent *event);
+	void mousePressEvent(QMouseEvent *event) override;
+	void mouseReleaseEvent(QMouseEvent *event) override;
+	void contextMenuEvent(QContextMenuEvent *event) override;
 	void updateStyle();
 
 protected slots:

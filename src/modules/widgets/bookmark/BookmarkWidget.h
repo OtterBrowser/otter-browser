@@ -36,7 +36,7 @@ public:
 	explicit BookmarkWidget(const QString &path, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = nullptr);
 
 protected:
-	void mouseReleaseEvent(QMouseEvent *event);
+	void mouseReleaseEvent(QMouseEvent *event) override;
 
 protected slots:
 	void removeBookmark(BookmarksItem *bookmark);

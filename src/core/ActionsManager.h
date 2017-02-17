@@ -42,7 +42,7 @@ public:
 	QVariantMap getParameters() const;
 	QList<QKeySequence> getShortcuts() const;
 	int getIdentifier() const;
-	bool event(QEvent *event);
+	bool event(QEvent *event) override;
 	static bool calculateCheckedState(const QVariantMap &parameters, Action *action = nullptr);
 	static bool isLocal(int identifier);
 
@@ -303,7 +303,7 @@ public:
 protected:
 	explicit ActionsManager(QObject *parent);
 
-	void timerEvent(QTimerEvent *event);
+	void timerEvent(QTimerEvent *event) override;
 	static void registerAction(int identifier, const QString &text, const QString &description = QString(), const QIcon &icon = QIcon(), ActionFlags flags = IsEnabledFlag);
 
 protected slots:

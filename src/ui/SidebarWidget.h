@@ -45,10 +45,10 @@ public:
 
 	static QString getPanelTitle(const QString &identifier);
 	static QUrl getPanelUrl(const QString &identifier);
-	QSize sizeHint() const;
+	QSize sizeHint() const override;
 
 protected:
-	void changeEvent(QEvent *event);
+	void changeEvent(QEvent *event) override;
 	void selectPanel(const QString &identifier);
 
 protected slots:

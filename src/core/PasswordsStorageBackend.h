@@ -37,10 +37,10 @@ public:
 	virtual void clearPasswords(int period = 0);
 	virtual void addPassword(const PasswordsManager::PasswordInformation &password);
 	virtual void removePassword(const PasswordsManager::PasswordInformation &password);
-	QUrl getUpdateUrl() const;
+	QUrl getUpdateUrl() const override;
 	virtual QStringList getHosts();
 	virtual QList<PasswordsManager::PasswordInformation> getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types = PasswordsManager::AnyPassword);
-	AddonType getType() const;
+	AddonType getType() const override;
 	virtual PasswordsManager::PasswordMatch hasPassword(const PasswordsManager::PasswordInformation &password);
 	virtual bool hasPasswords(const QUrl &url, PasswordsManager::PasswordTypes types = PasswordsManager::AnyPassword);
 

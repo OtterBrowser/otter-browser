@@ -37,11 +37,11 @@ class NotificationDialog : public QDialog
 public:
 	explicit NotificationDialog(Notification *notification, QWidget *parent = nullptr);
 
-	bool eventFilter(QObject *object, QEvent *event);
+	bool eventFilter(QObject *object, QEvent *event) override;
 
 protected:
-	void closeEvent(QCloseEvent *event);
-	void resizeEvent(QResizeEvent *event);
+	void closeEvent(QCloseEvent *event) override;
+	void resizeEvent(QResizeEvent *event) override;
 
 protected slots:
 	void aboutToClose();

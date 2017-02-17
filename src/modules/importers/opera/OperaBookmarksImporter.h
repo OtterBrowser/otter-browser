@@ -37,18 +37,18 @@ public:
 	explicit OperaBookmarksImporter(QObject *parent = nullptr);
 	~OperaBookmarksImporter();
 
-	QWidget* getOptionsWidget();
-	QString getTitle() const;
-	QString getDescription() const;
-	QString getVersion() const;
-	QString getSuggestedPath(const QString &path = QString()) const;
-	QString getBrowser() const;
-	QUrl getHomePage() const;
-	QIcon getIcon() const;
-	QStringList getFileFilters() const;
+	QWidget* getOptionsWidget() override;
+	QString getTitle() const override;
+	QString getDescription() const override;
+	QString getVersion() const override;
+	QString getSuggestedPath(const QString &path = QString()) const override;
+	QString getBrowser() const override;
+	QUrl getHomePage() const override;
+	QIcon getIcon() const override;
+	QStringList getFileFilters() const override;
 
 public slots:
-	bool import(const QString &path);
+	bool import(const QString &path) override;
 
 protected:
 	enum OperaBookmarkEntry

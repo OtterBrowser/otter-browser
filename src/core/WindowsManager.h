@@ -116,7 +116,7 @@ public slots:
 protected:
 	void openTab(const QUrl &url, WindowsManager::OpenHints hints = DefaultOpen, int index = -1);
 	void closeOther(int index = -1);
-	bool event(QEvent *event);
+	bool event(QEvent *event) override;
 
 protected slots:
 	void addWindow(Window *window, WindowsManager::OpenHints hints = DefaultOpen, int index = -1, const QRect &geometry = QRect(), WindowState state = NormalWindowState, bool isAlwaysOnTop = false);

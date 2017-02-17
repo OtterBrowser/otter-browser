@@ -49,10 +49,10 @@ public slots:
 	void setCompletion(const QString &completion);
 
 protected:
-	void keyPressEvent(QKeyEvent *event);
-	void mousePressEvent(QMouseEvent *event);
-	void mouseReleaseEvent(QMouseEvent *event);
-	void dropEvent(QDropEvent *event);
+	void keyPressEvent(QKeyEvent *event) override;
+	void mousePressEvent(QMouseEvent *event) override;
+	void mouseReleaseEvent(QMouseEvent *event) override;
+	void dropEvent(QDropEvent *event) override;
 
 protected slots:
 	void clearSelectAllOnRelease();

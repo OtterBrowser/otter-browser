@@ -39,7 +39,7 @@ public:
 	QString getCommand() const;
 
 protected:
-	void changeEvent(QEvent *event);
+	void changeEvent(QEvent *event) override;
 
 protected slots:
 	void indexChanged(int index);

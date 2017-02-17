@@ -32,19 +32,19 @@ class FilePasswordsStorageBackend : public PasswordsStorageBackend
 public:
 	explicit FilePasswordsStorageBackend(QObject *parent = nullptr);
 
-	void clearPasswords(const QString &host);
-	void clearPasswords(int period = 0);
-	void addPassword(const PasswordsManager::PasswordInformation &password);
-	void removePassword(const PasswordsManager::PasswordInformation &password);
-	QString getTitle() const;
-	QString getDescription() const;
-	QString getVersion() const;
-	QUrl getHomePage() const;
-	QIcon getIcon() const;
-	QStringList getHosts();
-	QList<PasswordsManager::PasswordInformation> getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types = PasswordsManager::AnyPassword);
-	PasswordsManager::PasswordMatch hasPassword(const PasswordsManager::PasswordInformation &password);
-	bool hasPasswords(const QUrl &url, PasswordsManager::PasswordTypes types = PasswordsManager::AnyPassword);
+	void clearPasswords(const QString &host) override;
+	void clearPasswords(int period = 0) override;
+	void addPassword(const PasswordsManager::PasswordInformation &password) override;
+	void removePassword(const PasswordsManager::PasswordInformation &password) override;
+	QString getTitle() const override;
+	QString getDescription() const override;
+	QString getVersion() const override;
+	QUrl getHomePage() const override;
+	QIcon getIcon() const override;
+	QStringList getHosts() override;
+	QList<PasswordsManager::PasswordInformation> getPasswords(const QUrl &url, PasswordsManager::PasswordTypes types = PasswordsManager::AnyPassword) override;
+	PasswordsManager::PasswordMatch hasPassword(const PasswordsManager::PasswordInformation &password) override;
+	bool hasPasswords(const QUrl &url, PasswordsManager::PasswordTypes types = PasswordsManager::AnyPassword) override;
 
 protected:
 	void initialize();

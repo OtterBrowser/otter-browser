@@ -33,11 +33,11 @@ public:
 	explicit NetworkCache(QObject *parent = nullptr);
 
 	void clearCache(int period = 0);
-	void insert(QIODevice *device);
-	QIODevice* prepare(const QNetworkCacheMetaData &metaData);
+	void insert(QIODevice *device) override;
+	QIODevice* prepare(const QNetworkCacheMetaData &metaData) override;
 	QString getPathForUrl(const QUrl &url);
 	QList<QUrl> getEntries() const;
-	bool remove(const QUrl &url);
+	bool remove(const QUrl &url) override;
 
 protected slots:
 	void optionChanged(int identifier, const QVariant &value);

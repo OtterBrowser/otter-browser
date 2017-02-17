@@ -67,7 +67,7 @@ public:
 	CookieJar* getCookieJar();
 
 protected:
-	virtual QNetworkReply* createRequest(Operation operation, const QNetworkRequest &request, QIODevice *outgoingData);
+	QNetworkReply* createRequest(Operation operation, const QNetworkRequest &request, QIODevice *outgoingData) override;
 
 protected slots:
 	void handleAuthenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator);
