@@ -253,9 +253,25 @@ bool ToolButtonWidget::isCustomized() const
 
 bool ToolButtonWidget::event(QEvent *event)
 {
-	if (event->type() == QEvent::ContextMenu && contextMenuPolicy() == Qt::NoContextMenu)
+	switch (event->type())
 	{
-		return false;
+		case QEvent::MouseButtonPress:
+		case QEvent::MouseButtonRelease:
+			if (!isEnabled())
+			{
+				return false;
+			}
+
+			break;
+		case QEvent::ContextMenu:
+			if (contextMenuPolicy() == Qt::NoContextMenu)
+			{
+				return false;
+			}
+
+			break;
+		default:
+			break;
 	}
 
 	return QToolButton::event(event);
