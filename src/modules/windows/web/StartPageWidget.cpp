@@ -656,7 +656,7 @@ bool StartPageWidget::event(QEvent *event)
 
 bool StartPageWidget::eventFilter(QObject *object, QEvent *event)
 {
-	if ((object == m_listView || object == m_listView->viewport()) && (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel))
+	if ((object == m_contentsWidget || object == m_listView || object == m_listView->viewport()) && (event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonDblClick || event->type() == QEvent::Wheel))
 	{
 		if (event->type() == QEvent::Wheel)
 		{
