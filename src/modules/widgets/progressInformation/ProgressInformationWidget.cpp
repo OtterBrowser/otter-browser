@@ -105,8 +105,10 @@ void ProgressInformationWidget::updateStatus(WebWidget::PageInformation key, con
 		case DocumentProgressType:
 			if (key == WebWidget::DocumentLoadingProgressInformation)
 			{
-				m_progressBar->setFormat((value.toInt() < 0) ? tr("Document: ?") : tr("Document: %p%"));
-				m_progressBar->setValue(value.toInt());
+				const bool isValid(value.toInt() >= 0);
+
+				m_progressBar->setFormat(isValid ? tr("Document: %p%") : tr("Document: ?"));
+				m_progressBar->setValue(isValid ? value.toInt() : 0);
 			}
 
 			break;
