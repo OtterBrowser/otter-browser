@@ -654,19 +654,19 @@ void ToolBarWidget::updateToggleGeometry()
 	switch (getArea())
 	{
 		case Qt::BottomToolBarArea:
-			m_toggleButton->move(0, 0);
+			m_toggleButton->move(0, (height() - 6));
 
 			break;
 		case Qt::LeftToolBarArea:
-			m_toggleButton->move((width() - 6), 0);
-
-			break;
-		case Qt::RightToolBarArea:
 			m_toggleButton->move(0, 0);
 
 			break;
+		case Qt::RightToolBarArea:
+			m_toggleButton->move((width() - 6), 0);
+
+			break;
 		default:
-			m_toggleButton->move(0, (height() - 6));
+			m_toggleButton->move(0, 0);
 
 			break;
 	}

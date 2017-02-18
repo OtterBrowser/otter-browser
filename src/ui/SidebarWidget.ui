@@ -27,6 +27,16 @@
     <number>0</number>
    </property>
    <item>
+    <spacer name="toggleSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+    </spacer>
+   </item>
+   <item>
     <layout class="QVBoxLayout" name="buttonsLayout">
      <property name="spacing">
       <number>0</number>
@@ -79,16 +89,6 @@
       </property>
      </layout>
     </widget>
-   </item>
-   <item>
-    <spacer name="toggleSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>
