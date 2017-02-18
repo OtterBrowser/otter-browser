@@ -823,8 +823,19 @@ void AddressWidget::updateGeometries()
 	QList<EntryDefinition> leadingEntries;
 	QList<EntryDefinition> trailingEntries;
 	QMargins margins(qMax(((height() - 16) / 2), 2), 0, 2, 0);
+	int availableWidth(width() - margins.left() - margins.right());
 	bool isLeading(true);
 	bool isRightToLeft(layoutDirection() == Qt::RightToLeft);
+
+	if (m_layout.contains(WebsiteInformationEntry))
+	{
+		availableWidth -= 20;
+	}
+
+	if (m_layout.contains(HistoryDropdownEntry))
+	{
+		availableWidth -= 16;
+	}
 
 	if (isRightToLeft)
 	{
@@ -948,6 +959,23 @@ void AddressWidget::updateGeometries()
 
 				break;
 			default:
+				break;
+		}
+
+		switch (m_layout.at(i))
+		{
+			case AddressEntry:
+			case HistoryDropdownEntry:
+			case WebsiteInformationEntry:
+				break;
+			default:
+				availableWidth -= 20;
+
+				if (availableWidth < 100)
+				{
+					continue;
+				}
+
 				break;
 		}
 
