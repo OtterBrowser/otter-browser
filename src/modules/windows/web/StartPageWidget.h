@@ -71,9 +71,6 @@ public:
 	bool event(QEvent *event) override;
 	bool eventFilter(QObject *object, QEvent *event) override;
 
-public slots:
-	void showContextMenu(const QPoint &position = QPoint());
-
 protected:
 	void resizeEvent(QResizeEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
@@ -92,6 +89,7 @@ protected slots:
 	void updateTile(const QModelIndex &index);
 	void updateSize();
 	void updateTiles();
+	void showContextMenu(const QPoint &position = QPoint());
 
 private:
 	Window *m_window;
