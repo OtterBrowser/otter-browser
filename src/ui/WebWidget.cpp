@@ -1148,6 +1148,13 @@ void WebWidget::setOptions(const QHash<int, QVariant> &options, const QStringLis
 			m_options.remove(identifier);
 		}
 	}
+
+	const QList<int> identifiers(m_options.keys());
+
+	for (int i = 0; i < identifiers.count(); ++i)
+	{
+		emit optionChanged(identifiers.at(i), m_options[identifiers.at(i)]);
+	}
 }
 
 void WebWidget::setRequestedUrl(const QUrl &url, bool isTyped, bool onlyUpdate)
