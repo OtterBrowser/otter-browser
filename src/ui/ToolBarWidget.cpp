@@ -381,12 +381,16 @@ void ToolBarWidget::mousePressEvent(QMouseEvent *event)
 		{
 			m_dragStartPosition = event->pos();
 		}
+		else
+		{
+			m_dragStartPosition = QPoint();
+		}
 	}
 }
 
 void ToolBarWidget::mouseMoveEvent(QMouseEvent *event)
 {
-	if (!m_mainWindow || !event->buttons().testFlag(Qt::LeftButton) || (event->pos() - m_dragStartPosition).manhattanLength() < QApplication::startDragDistance() || !isMovable())
+	if (!m_mainWindow || !event->buttons().testFlag(Qt::LeftButton) || m_dragStartPosition.isNull() || !isMovable() || (event->pos() - m_dragStartPosition).manhattanLength() < QApplication::startDragDistance())
 	{
 		return;
 	}
