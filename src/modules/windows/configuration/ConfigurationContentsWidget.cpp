@@ -93,7 +93,7 @@ ConfigurationContentsWidget::ConfigurationContentsWidget(Window *window) : Conte
 	m_ui->configurationViewWidget->setFilterRoles(QSet<int>({Qt::DisplayRole, Qt::UserRole}));
 	m_ui->filterLineEdit->installEventFilter(this);
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 	connect(m_ui->configurationViewWidget, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showContextMenu(QPoint)));
 	connect(m_ui->configurationViewWidget->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), this, SLOT(currentChanged(QModelIndex,QModelIndex)));
 	connect(m_ui->filterLineEdit, SIGNAL(textChanged(QString)), m_ui->configurationViewWidget, SLOT(setFilterString(QString)));
@@ -111,38 +111,6 @@ void ConfigurationContentsWidget::changeEvent(QEvent *event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		m_ui->retranslateUi(this);
-	}
-}
-
-void ConfigurationContentsWidget::optionChanged(int identifier, const QVariant &value)
-{
-	const QString name(SettingsManager::getOptionName(identifier));
-
-	for (int i = 0; i < m_model->rowCount(); ++i)
-	{
-		QStandardItem *groupItem(m_model->item(i, 0));
-
-		if (!groupItem || !name.startsWith(groupItem->text()))
-		{
-			continue;
-		}
-
-		for (int j = 0; j < groupItem->rowCount(); ++j)
-		{
-			QStandardItem *optionItem(groupItem->child(j, 0));
-
-			if (optionItem && name == QStringLiteral("%1/%2").arg(groupItem->text()).arg(optionItem->text()))
-			{
-				QFont font(optionItem->font());
-				font.setBold(value != SettingsManager::getOptionDefinition(identifier).defaultValue);
-
-				optionItem->setFont(font);
-
-				groupItem->child(j, 2)->setText(value.toString());
-
-				break;
-			}
-		}
 	}
 }
 
@@ -214,6 +182,38 @@ void ConfigurationContentsWidget::restoreDefaults()
 
 		m_ui->configurationViewWidget->setCurrentIndex(QModelIndex());
 		m_ui->configurationViewWidget->setCurrentIndex(index);
+	}
+}
+
+void ConfigurationContentsWidget::handleOptionChanged(int identifier, const QVariant &value)
+{
+	const QString name(SettingsManager::getOptionName(identifier));
+
+	for (int i = 0; i < m_model->rowCount(); ++i)
+	{
+		QStandardItem *groupItem(m_model->item(i, 0));
+
+		if (!groupItem || !name.startsWith(groupItem->text()))
+		{
+			continue;
+		}
+
+		for (int j = 0; j < groupItem->rowCount(); ++j)
+		{
+			QStandardItem *optionItem(groupItem->child(j, 0));
+
+			if (optionItem && name == QStringLiteral("%1/%2").arg(groupItem->text()).arg(optionItem->text()))
+			{
+				QFont font(optionItem->font());
+				font.setBold(value != SettingsManager::getOptionDefinition(identifier).defaultValue);
+
+				optionItem->setFont(font);
+
+				groupItem->child(j, 2)->setText(value.toString());
+
+				break;
+			}
+		}
 	}
 }
 

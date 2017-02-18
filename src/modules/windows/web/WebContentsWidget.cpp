@@ -333,25 +333,6 @@ void WebContentsWidget::mouseMoveEvent(QMouseEvent *event)
 	}
 }
 
-void WebContentsWidget::optionChanged(int identifier, const QVariant &value)
-{
-	if (identifier == SettingsManager::Search_EnableFindInPageAsYouTypeOption && m_searchBarWidget)
-	{
-		if (value.toBool())
-		{
-			connect(m_searchBarWidget, SIGNAL(queryChanged(QString)), this, SLOT(findInPage()));
-		}
-		else
-		{
-			disconnect(m_searchBarWidget, SIGNAL(queryChanged(QString)), this, SLOT(findInPage()));
-		}
-	}
-	else if (identifier == SettingsManager::StartPage_EnableStartPageOption)
-	{
-		m_showStartPage = value.toBool();
-	}
-}
-
 void WebContentsWidget::search(const QString &search, const QString &query)
 {
 	m_webWidget->search(search, query);
@@ -714,6 +695,25 @@ void WebContentsWidget::scrollContents(const QPoint &delta)
 	else if (m_webWidget)
 	{
 		m_webWidget->setScrollPosition(m_webWidget->getScrollPosition() + delta);
+	}
+}
+
+void WebContentsWidget::handleOptionChanged(int identifier, const QVariant &value)
+{
+	if (identifier == SettingsManager::Search_EnableFindInPageAsYouTypeOption && m_searchBarWidget)
+	{
+		if (value.toBool())
+		{
+			connect(m_searchBarWidget, SIGNAL(queryChanged(QString)), this, SLOT(findInPage()));
+		}
+		else
+		{
+			disconnect(m_searchBarWidget, SIGNAL(queryChanged(QString)), this, SLOT(findInPage()));
+		}
+	}
+	else if (identifier == SettingsManager::StartPage_EnableStartPageOption)
+	{
+		m_showStartPage = value.toBool();
 	}
 }
 
@@ -1096,7 +1096,7 @@ void WebContentsWidget::setWidget(WebWidget *widget, bool isPrivate)
 
 	handleLoadingStateChange(m_webWidget->getLoadingState());
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 	connect(m_webWidget, SIGNAL(aboutToNavigate()), this, SIGNAL(aboutToNavigate()));
 	connect(m_webWidget, SIGNAL(aboutToNavigate()), this, SLOT(closePopupsBar()));
 	connect(m_webWidget, SIGNAL(needsAttention()), this, SIGNAL(needsAttention()));

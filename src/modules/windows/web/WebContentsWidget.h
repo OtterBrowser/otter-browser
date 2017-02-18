@@ -121,10 +121,10 @@ protected:
 	void setWidget(WebWidget *widget, bool isPrivate);
 
 protected slots:
-	void optionChanged(int identifier, const QVariant &value);
 	void findInPage(WebWidget::FindFlags flags = WebWidget::NoFlagsFind);
 	void closePasswordBar();
 	void closePopupsBar();
+	void handleOptionChanged(int identifier, const QVariant &value);
 	void handleUrlChange(const QUrl &url);
 	void handleSavePasswordRequest(const PasswordsManager::PasswordInformation &password, bool isUpdate);
 	void handlePopupWindowRequest(const QUrl &parentUrl, const QUrl &popupUrl);

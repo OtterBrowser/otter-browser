@@ -56,11 +56,11 @@ protected:
 	void changeEvent(QEvent *event) override;
 
 protected slots:
-	void optionChanged(int identifier, const QVariant &value);
 	void currentChanged(const QModelIndex &currentIndex, const QModelIndex &previousIndex);
 	void copyOptionName();
 	void copyOptionValue();
 	void restoreDefaults();
+	void handleOptionChanged(int identifier, const QVariant &value);
 	void showContextMenu(const QPoint &point);
 
 private:
