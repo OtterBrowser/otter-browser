@@ -336,10 +336,11 @@ signals:
 	void titleChanged(const QString &title);
 	void urlChanged(const QUrl &url);
 	void iconChanged(const QIcon &icon);
+	void requestBlocked(const NetworkManager::ResourceInformation &request);
 	void contentStateChanged(WindowsManager::ContentStates state);
 	void loadingStateChanged(WindowsManager::LoadingState state);
 	void pageInformationChanged(WebWidget::PageInformation, const QVariant &value);
-	void requestBlocked(const NetworkManager::ResourceInformation &request);
+	void optionChanged(int identifier, const QVariant &value);
 	void zoomChanged(int zoom);
 	void isFullScreenChanged(bool isFullScreen);
 };

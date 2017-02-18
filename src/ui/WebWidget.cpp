@@ -1085,52 +1085,9 @@ void WebWidget::setPermission(FeaturePermission feature, const QUrl &url, Permis
 
 void WebWidget::setOption(int identifier, const QVariant &value)
 {
-	if (identifier == SettingsManager::Search_DefaultQuickSearchEngineOption)
+	if (value == m_options.value(identifier))
 	{
-		const QString quickSearchEngine(value.toString());
-
-		if (quickSearchEngine != m_options.value(SettingsManager::Search_DefaultQuickSearchEngineOption).toString())
-		{
-			if (value.isNull())
-			{
-				m_options.remove(identifier);
-			}
-			else
-			{
-				m_options[identifier] = value;
-			}
-
-			updateQuickSearch();
-		}
-
 		return;
-	}
-
-	if (identifier == SettingsManager::Content_PageReloadTimeOption)
-	{
-		const int reloadTime(value.toInt());
-
-		if (reloadTime == m_options.value(SettingsManager::Content_PageReloadTimeOption, -1).toInt())
-		{
-			return;
-		}
-
-		if (m_reloadTimer != 0)
-		{
-			killTimer(m_reloadTimer);
-
-			m_reloadTimer = 0;
-		}
-
-		if (reloadTime >= 0)
-		{
-			triggerAction(ActionsManager::StopScheduledReloadAction);
-
-			if (reloadTime > 0)
-			{
-				m_reloadTimer = startTimer(reloadTime * 1000);
-			}
-		}
 	}
 
 	if (value.isNull())
@@ -1140,6 +1097,41 @@ void WebWidget::setOption(int identifier, const QVariant &value)
 	else
 	{
 		m_options[identifier] = value;
+	}
+
+	emit optionChanged(identifier, (value.isNull() ? getOption(identifier) : value));
+
+	switch (identifier)
+	{
+		case SettingsManager::Content_PageReloadTimeOption:
+			{
+				const int reloadTime(value.toInt());
+
+				if (m_reloadTimer != 0)
+				{
+					killTimer(m_reloadTimer);
+
+					m_reloadTimer = 0;
+				}
+
+				if (reloadTime >= 0)
+				{
+					triggerAction(ActionsManager::StopScheduledReloadAction);
+
+					if (reloadTime > 0)
+					{
+						m_reloadTimer = startTimer(reloadTime * 1000);
+					}
+				}
+			}
+
+			break;
+		case SettingsManager::Search_DefaultQuickSearchEngineOption:
+			updateQuickSearch();
+
+			break;
+		default:
+			break;
 	}
 }
 
