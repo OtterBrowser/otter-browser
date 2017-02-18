@@ -355,9 +355,6 @@ void ToolBarWidget::enterEvent(QEvent *event)
 	if (m_toggleButton && !m_isCollapsed)
 	{
 		updateToggleGeometry();
-
-		m_toggleButton->show();
-		m_toggleButton->raise();
 	}
 }
 
@@ -639,17 +636,25 @@ void ToolBarWidget::updateToggleGeometry()
 		return;
 	}
 
+	if (m_isCollapsed || underMouse())
+	{
+		m_toggleButton->show();
+		m_toggleButton->raise();
+	}
+
 	const bool isHorizontal(orientation() == Qt::Horizontal);
 
-	m_toggleButton->setParent(this);
 	m_toggleButton->setMaximumSize((isHorizontal ? QWIDGETSIZE_MAX : 6), (isHorizontal ? 6 : QWIDGETSIZE_MAX));
+	m_toggleButton->resize((isHorizontal ? width() : 6), (isHorizontal ? 6 : height()));
 
 	if (m_isCollapsed)
 	{
-		return;
+		setMaximumSize((isHorizontal ? QWIDGETSIZE_MAX : 8), (isHorizontal ? 8 : QWIDGETSIZE_MAX));
 	}
-
-	m_toggleButton->resize((isHorizontal ? width() : 6), (isHorizontal ? 6 : height()));
+	else
+	{
+		setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
+	}
 
 	switch (getArea())
 	{
@@ -727,10 +732,6 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 
 		if (m_isCollapsed)
 		{
-			m_toggleButton->show();
-
-			addWidget(m_toggleButton);
-
 			return;
 		}
 	}
@@ -762,8 +763,6 @@ void ToolBarWidget::setDefinition(const ToolBarsManager::ToolBarDefinition &defi
 
 			if (m_toggleButton)
 			{
-				m_toggleButton->show();
-
 				updateToggleGeometry();
 			}
 
