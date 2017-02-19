@@ -501,7 +501,11 @@ void NetworkManagerFactory::readUserAgent(const QJsonValue &value, UserAgentDefi
 		userAgent.identifier = identifier;
 		userAgent.title = userAgentObject.value(QLatin1String("title")).toString();
 
-		if (userAgentObject.contains(QLatin1String("children")))
+		if (identifier == QLatin1String("default"))
+		{
+			userAgent.value = QLatin1String("Mozilla/5.0 {platform} {engineVersion} {applicationVersion}");
+		}
+		else if (userAgentObject.contains(QLatin1String("children")))
 		{
 			userAgent.isFolder = true;
 
