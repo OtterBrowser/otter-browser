@@ -26,10 +26,12 @@
 #include "../../../core/BookmarksModel.h"
 #include "../../../core/GesturesManager.h"
 #include "../../../core/SettingsManager.h"
+#include "../../../core/ThemesManager.h"
 #include "../../../core/Utils.h"
 #include "../../../core/WindowsManager.h"
 #include "../../../modules/widgets/search/SearchWidget.h"
 #include "../../../ui/BookmarkPropertiesDialog.h"
+#include "../../../ui/ContentsDialog.h"
 #include "../../../ui/MainWindow.h"
 #include "../../../ui/Menu.h"
 #include "../../../ui/OpenAddressDialog.h"
@@ -422,8 +424,12 @@ void StartPageWidget::scrollContents(const QPoint &delta)
 
 void StartPageWidget::configure()
 {
-	StartPagePreferencesDialog dialog(this);
-	dialog.exec();
+	StartPagePreferencesDialog *preferencesDialog(new StartPagePreferencesDialog(this));
+	ContentsDialog *dialog(new ContentsDialog(ThemesManager::getIcon(QLatin1String("configure")), preferencesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, preferencesDialog, this));
+
+	connect(preferencesDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
+
+	m_window->getContentsWidget()->showDialog(dialog, false);
 }
 
 void StartPageWidget::addTile()
