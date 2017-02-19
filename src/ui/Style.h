@@ -47,12 +47,11 @@ public:
 	int styleHint(QStyle::StyleHint hint, const QStyleOption *option = nullptr, const QWidget *widget = nullptr, QStyleHintReturn *returnData = nullptr) const override;
 
 protected slots:
-	void optionChanged(int identifier, const QVariant &value);
+	void handleOptionChanged(int identifier, const QVariant &value);
 
 private:
 	bool m_areToolTipsEnabled;
 };
-
 }
 
 #endif

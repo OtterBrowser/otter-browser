@@ -33,15 +33,7 @@ namespace Otter
 Style::Style(const QString &name) : QProxyStyle(name.isEmpty() ? nullptr : QStyleFactory::create(name)),
 	m_areToolTipsEnabled(SettingsManager::getValue(SettingsManager::Browser_ToolTipsModeOption).toString() != QLatin1String("disabled"))
 {
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
-}
-
-void Style::optionChanged(int identifier, const QVariant &value)
-{
-	if (identifier == SettingsManager::Browser_ToolTipsModeOption)
-	{
-		m_areToolTipsEnabled = (value.toString() != QLatin1String("disabled"));
-	}
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 }
 
 void Style::drawDropZone(const QLine &line, QPainter *painter)
@@ -76,6 +68,13 @@ void Style::drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption *
 	QProxyStyle::drawPrimitive(element, option, painter, widget);
 }
 
+void Style::handleOptionChanged(int identifier, const QVariant &value)
+{
+	if (identifier == SettingsManager::Browser_ToolTipsModeOption)
+	{
+		m_areToolTipsEnabled = (value.toString() != QLatin1String("disabled"));
+	}
+}
 
 QString Style::getName() const
 {

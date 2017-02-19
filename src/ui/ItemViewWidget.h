@@ -114,9 +114,9 @@ protected:
 	bool applyFilter(const QModelIndex &index);
 
 protected slots:
-	void optionChanged(int identifier, const QVariant &value);
 	void currentChanged(const QModelIndex &current, const QModelIndex &previous) override;
 	void saveState();
+	void handleOptionChanged(int identifier, const QVariant &value);
 	void notifySelectionChanged();
 	void updateDropSelection();
 	void updateFilter();

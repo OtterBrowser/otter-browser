@@ -111,7 +111,7 @@ protected:
 	void wheelEvent(QWheelEvent *event) override;
 
 protected slots:
-	void optionChanged(int identifier, const QVariant &value);
+	void handleOptionChanged(int identifier, const QVariant &value);
 	void updateTextCursor();
 	void updateSelection();
 

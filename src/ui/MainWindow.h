@@ -82,12 +82,12 @@ protected:
 	bool event(QEvent *event) override;
 
 protected slots:
-	void optionChanged(int identifier, const QVariant &value);
 	void triggerAction();
 	void triggerAction(bool checked);
 	void addBookmark(const QUrl &url = QUrl(), const QString &title = QString(), const QString &description = QString(), bool warn = false);
 	void editBookmark(const QUrl &url);
 	void saveToolBarPositions();
+	void handleOptionChanged(int identifier, const QVariant &value);
 	void handleToolBarAdded(int identifier);
 	void handleToolBarModified(int identifier);
 	void handleToolBarMoved(int identifier);

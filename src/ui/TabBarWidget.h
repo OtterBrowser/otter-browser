@@ -123,7 +123,7 @@ protected:
 	bool event(QEvent *event) override;
 
 protected slots:
-	void optionChanged(int identifier, const QVariant &value);
+	void handleOptionChanged(int identifier, const QVariant &value);
 	void updatePreviewPosition();
 	void updatePinnedTabsAmount(Window *modifiedWindow = nullptr);
 	void updateStyle();

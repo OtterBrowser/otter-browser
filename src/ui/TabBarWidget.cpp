@@ -479,10 +479,10 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 	setMaximumSize(0, 0);
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
 	updateStyle();
-	optionChanged(SettingsManager::TabBar_MaximumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MaximumTabHeightOption));
-	optionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabHeightOption));
-	optionChanged(SettingsManager::TabBar_MaximumTabWidthOption, SettingsManager::getValue(SettingsManager::TabBar_MaximumTabWidthOption));
-	optionChanged(SettingsManager::TabBar_MinimumTabWidthOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabWidthOption));
+	handleOptionChanged(SettingsManager::TabBar_MaximumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MaximumTabHeightOption));
+	handleOptionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabHeightOption));
+	handleOptionChanged(SettingsManager::TabBar_MaximumTabWidthOption, SettingsManager::getValue(SettingsManager::TabBar_MaximumTabWidthOption));
+	handleOptionChanged(SettingsManager::TabBar_MinimumTabWidthOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabWidthOption));
 
 	ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
 
@@ -493,7 +493,7 @@ TabBarWidget::TabBarWidget(QWidget *parent) : QTabBar(parent),
 		connect(toolBar, SIGNAL(areaChanged(Qt::ToolBarArea)), this, SLOT(setArea(Qt::ToolBarArea)));
 	}
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 	connect(ThemesManager::getInstance(), SIGNAL(widgetStyleChanged()), this, SLOT(updateStyle()));
 	connect(this, SIGNAL(currentChanged(int)), this, SLOT(updatePreviewPosition()));
 }
@@ -510,7 +510,7 @@ void TabBarWidget::changeEvent(QEvent *event)
 
 			break;
 		case QEvent::FontChange:
-			optionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabHeightOption));
+			handleOptionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabHeightOption));
 
 			break;
 		default:
@@ -1282,7 +1282,7 @@ void TabBarWidget::hidePreview()
 	}
 }
 
-void TabBarWidget::optionChanged(int identifier, const QVariant &value)
+void TabBarWidget::handleOptionChanged(int identifier, const QVariant &value)
 {
 	switch (identifier)
 	{
@@ -1478,8 +1478,8 @@ void TabBarWidget::updateStyle()
 		m_isLayoutReversed = !m_isLayoutReversed;
 	}
 
-	optionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabHeightOption));
-	optionChanged(SettingsManager::TabBar_MinimumTabWidthOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabWidthOption));
+	handleOptionChanged(SettingsManager::TabBar_MinimumTabHeightOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabHeightOption));
+	handleOptionChanged(SettingsManager::TabBar_MinimumTabWidthOption, SettingsManager::getValue(SettingsManager::TabBar_MinimumTabWidthOption));
 
 	emit needsGeometriesUpdate();
 }

@@ -149,7 +149,7 @@ MainWindow::MainWindow(Application::MainWindowFlags flags, const SessionMainWind
 	}
 
 	connect(ActionsManager::getInstance(), SIGNAL(shortcutsChanged()), this, SLOT(updateShortcuts()));
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarAdded(int)), this, SLOT(handleToolBarAdded(int)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarModified(int)), this, SLOT(handleToolBarModified(int)));
 	connect(ToolBarsManager::getInstance(), SIGNAL(toolBarMoved(int)), this, SLOT(handleToolBarMoved(int)));
@@ -355,21 +355,6 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 	}
 
 	QMainWindow::mouseReleaseEvent(event);
-}
-
-void MainWindow::optionChanged(int identifier, const QVariant &value)
-{
-	switch (identifier)
-	{
-		case SettingsManager::Interface_LockToolBarsOption:
-			getAction(ActionsManager::LockToolBarsAction)->setChecked(value.toBool());
-
-			break;
-		case SettingsManager::Network_WorkOfflineOption:
-			getAction(ActionsManager::WorkOfflineAction)->setChecked(value.toBool());
-
-			break;
-	}
 }
 
 void MainWindow::triggerAction(int identifier, const QVariantMap &parameters)
@@ -946,6 +931,21 @@ void MainWindow::saveToolBarPositions()
 
 			ToolBarsManager::setToolBar(definition);
 		}
+	}
+}
+
+void MainWindow::handleOptionChanged(int identifier, const QVariant &value)
+{
+	switch (identifier)
+	{
+		case SettingsManager::Interface_LockToolBarsOption:
+			getAction(ActionsManager::LockToolBarsAction)->setChecked(value.toBool());
+
+			break;
+		case SettingsManager::Network_WorkOfflineOption:
+			getAction(ActionsManager::WorkOfflineAction)->setChecked(value.toBool());
+
+			break;
 	}
 }
 

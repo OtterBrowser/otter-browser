@@ -35,7 +35,7 @@ namespace Otter
 StatusBarWidget::StatusBarWidget(MainWindow *parent) : QStatusBar(parent),
 	m_toolBar(new ToolBarWidget(ToolBarsManager::StatusBar, nullptr, this))
 {
-	optionChanged(SettingsManager::Interface_ShowSizeGripOption, SettingsManager::getValue(SettingsManager::Interface_ShowSizeGripOption));
+	handleOptionChanged(SettingsManager::Interface_ShowSizeGripOption, SettingsManager::getValue(SettingsManager::Interface_ShowSizeGripOption));
 	setFixedHeight(m_toolBar->getIconSize());
 
 	QTimer::singleShot(100, this, SLOT(updateGeometries()));
@@ -44,7 +44,7 @@ StatusBarWidget::StatusBarWidget(MainWindow *parent) : QStatusBar(parent),
 	{
 		setFixedHeight(iconSize);
 	});
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 }
 
 void StatusBarWidget::changeEvent(QEvent *event)
@@ -82,7 +82,7 @@ void StatusBarWidget::contextMenuEvent(QContextMenuEvent *event)
 	menu->deleteLater();
 }
 
-void StatusBarWidget::optionChanged(int identifier, const QVariant &value)
+void StatusBarWidget::handleOptionChanged(int identifier, const QVariant &value)
 {
 	if (identifier == SettingsManager::Interface_ShowSizeGripOption)
 	{

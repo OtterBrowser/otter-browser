@@ -222,11 +222,11 @@ WorkspaceWidget::WorkspaceWidget(MainWindow *parent) : QWidget(parent),
 	layout->setContentsMargins(0, 0, 0, 0);
 	layout->setSpacing(0);
 
-	optionChanged(SettingsManager::Interface_NewTabOpeningActionOption, SettingsManager::getValue(SettingsManager::Interface_NewTabOpeningActionOption));
+	handleOptionChanged(SettingsManager::Interface_NewTabOpeningActionOption, SettingsManager::getValue(SettingsManager::Interface_NewTabOpeningActionOption));
 
 	if (!m_mdi)
 	{
-		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
+		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 	}
 }
 
@@ -238,7 +238,7 @@ void WorkspaceWidget::timerEvent(QTimerEvent *event)
 
 		m_restoreTimer = 0;
 
-		connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
+		connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
 	}
 }
 
@@ -252,14 +252,6 @@ void WorkspaceWidget::resizeEvent(QResizeEvent *event)
 	}
 }
 
-void WorkspaceWidget::optionChanged(int identifier, const QVariant &value)
-{
-	if (!m_mdi && identifier == SettingsManager::Interface_NewTabOpeningActionOption && value.toString() != QLatin1String("maximizeTab"))
-	{
-		createMdi();
-	}
-}
-
 void WorkspaceWidget::createMdi()
 {
 	if (m_mdi)
@@ -267,7 +259,7 @@ void WorkspaceWidget::createMdi()
 		return;
 	}
 
-	disconnect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
+	disconnect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 
 	Window *activeWindow(m_activeWindow);
 
@@ -395,7 +387,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 			break;
 		case ActionsManager::MaximizeAllAction:
 			{
-				disconnect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
+				disconnect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
 
 				const QList<QMdiSubWindow*> subWindows(m_mdi->subWindowList());
 
@@ -411,7 +403,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 					}
 				}
 
-				connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
+				connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
 
 				setActiveWindow(m_activeWindow, true);
 			}
@@ -419,7 +411,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 			break;
 		case ActionsManager::MinimizeAllAction:
 			{
-				disconnect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
+				disconnect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
 
 				const QList<QMdiSubWindow*> subWindows(m_mdi->subWindowList());
 
@@ -435,7 +427,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 					}
 				}
 
-				connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
+				connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
 
 				m_mainWindow->getWindowsManager()->setActiveWindowByIndex(-1);
 			}
@@ -443,7 +435,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 			break;
 		case ActionsManager::RestoreAllAction:
 			{
-				disconnect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
+				disconnect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
 
 				const QList<QMdiSubWindow*> subWindows(m_mdi->subWindowList());
 
@@ -459,7 +451,7 @@ void WorkspaceWidget::triggerAction(int identifier, const QVariantMap &parameter
 					}
 				}
 
-				connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
+				connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
 
 				setActiveWindow(m_activeWindow, true);
 			}
@@ -505,7 +497,7 @@ void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowSta
 
 		if (m_mdi)
 		{
-			disconnect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
+			disconnect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
 
 			QMdiSubWindow *activeWindow(m_mdi->currentSubWindow());
 			MdiWindow *mdiWindow(new MdiWindow(window, m_mdi));
@@ -568,7 +560,7 @@ void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowSta
 
 			if (m_isRestored)
 			{
-				connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(activeSubWindowChanged(QMdiSubWindow*)));
+				connect(m_mdi, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(handleActiveSubWindowChanged(QMdiSubWindow*)));
 			}
 
 			connect(closeAction, SIGNAL(triggered()), window, SLOT(close()));
@@ -586,7 +578,7 @@ void WorkspaceWidget::addWindow(Window *window, const QRect &geometry, WindowSta
 	}
 }
 
-void WorkspaceWidget::activeSubWindowChanged(QMdiSubWindow *subWindow)
+void WorkspaceWidget::handleActiveSubWindowChanged(QMdiSubWindow *subWindow)
 {
 	if (subWindow)
 	{
@@ -600,6 +592,14 @@ void WorkspaceWidget::activeSubWindowChanged(QMdiSubWindow *subWindow)
 	else
 	{
 		updateActions();
+	}
+}
+
+void WorkspaceWidget::handleOptionChanged(int identifier, const QVariant &value)
+{
+	if (!m_mdi && identifier == SettingsManager::Interface_NewTabOpeningActionOption && value.toString() != QLatin1String("maximizeTab"))
+	{
+		createMdi();
 	}
 }
 

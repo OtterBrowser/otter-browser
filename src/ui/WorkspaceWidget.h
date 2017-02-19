@@ -87,8 +87,8 @@ protected:
 	void createMdi();
 
 protected slots:
-	void optionChanged(int identifier, const QVariant &value);
-	void activeSubWindowChanged(QMdiSubWindow *subWindow);
+	void handleActiveSubWindowChanged(QMdiSubWindow *subWindow);
+	void handleOptionChanged(int identifier, const QVariant &value);
 	void showContextMenu(const QPoint &position);
 
 private:

@@ -208,7 +208,7 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 {
 	m_treeIndentation = indentation();
 
-	optionChanged(SettingsManager::Interface_ShowScrollBarsOption, SettingsManager::getValue(SettingsManager::Interface_ShowScrollBarsOption));
+	handleOptionChanged(SettingsManager::Interface_ShowScrollBarsOption, SettingsManager::getValue(SettingsManager::Interface_ShowScrollBarsOption));
 	setHeader(m_headerWidget);
 	setItemDelegate(new ItemDelegate(this));
 	setIndentation(0);
@@ -218,7 +218,7 @@ ItemViewWidget::ItemViewWidget(QWidget *parent) : QTreeView(parent),
 
 	viewport()->setAcceptDrops(true);
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 	connect(this, SIGNAL(sortChanged(int,Qt::SortOrder)), m_headerWidget, SLOT(setSort(int,Qt::SortOrder)));
 	connect(m_headerWidget, SIGNAL(sortChanged(int,Qt::SortOrder)), this, SLOT(setSort(int,Qt::SortOrder)));
 	connect(m_headerWidget, SIGNAL(columnVisibilityChanged(int,bool)), this, SLOT(setColumnVisibility(int,bool)));
@@ -334,15 +334,6 @@ void ItemViewWidget::startDrag(Qt::DropActions supportedActions)
 	m_dragRow = currentIndex().row();
 
 	QTreeView::startDrag(supportedActions);
-}
-
-void ItemViewWidget::optionChanged(int identifier, const QVariant &value)
-{
-	if (identifier == SettingsManager::Interface_ShowScrollBarsOption)
-	{
-		setHorizontalScrollBarPolicy(value.toBool() ? Qt::ScrollBarAsNeeded : Qt::ScrollBarAlwaysOff);
-		setVerticalScrollBarPolicy(value.toBool() ? Qt::ScrollBarAsNeeded : Qt::ScrollBarAlwaysOff);
-	}
 }
 
 void ItemViewWidget::ensureInitialized()
@@ -561,6 +552,15 @@ void ItemViewWidget::saveState()
 	settings.setValue(QLatin1String("sortColumn"), ((m_sortColumn >= 0) ? QVariant(m_sortColumn) : QVariant()));
 	settings.setValue(QLatin1String("sortOrder"), ((m_sortColumn >= 0) ? QVariant((m_sortOrder == Qt::AscendingOrder) ? QLatin1String("ascending") : QLatin1String("descending")) : QVariant()));
 	settings.save();
+}
+
+void ItemViewWidget::handleOptionChanged(int identifier, const QVariant &value)
+{
+	if (identifier == SettingsManager::Interface_ShowScrollBarsOption)
+	{
+		setHorizontalScrollBarPolicy(value.toBool() ? Qt::ScrollBarAsNeeded : Qt::ScrollBarAlwaysOff);
+		setVerticalScrollBarPolicy(value.toBool() ? Qt::ScrollBarAsNeeded : Qt::ScrollBarAlwaysOff);
+	}
 }
 
 void ItemViewWidget::notifySelectionChanged()
