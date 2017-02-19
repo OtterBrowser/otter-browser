@@ -73,6 +73,7 @@ QtWebEngineWebWidget::QtWebEngineWebWidget(bool isPrivate, WebBackend *backend, 
 #else
 	m_scrollTimer(0),
 #endif
+	m_updateNavigationActionsTimer(0),
 	m_isEditing(false),
 	m_isFullScreen(false),
 	m_isTyped(false)
@@ -128,6 +129,14 @@ void QtWebEngineWebWidget::timerEvent(QTimerEvent *event)
 				m_scrollPosition = QPoint(result.toList()[0].toInt(), result.toList()[1].toInt());
 			}
 		});
+	}
+	else if (event->timerId() == m_updateNavigationActionsTimer)
+	{
+		killTimer(m_updateNavigationActionsTimer);
+
+		m_updateNavigationActionsTimer = 0;
+
+		WebWidget::updateNavigationActions();
 	}
 	else
 	{
@@ -672,7 +681,19 @@ void QtWebEngineWebWidget::triggerAction(int identifier, const QVariantMap &para
 
 			return;
 		case ActionsManager::FastForwardAction:
-			m_page->history()->goToItem(m_page->history()->itemAt(m_page->history()->count() - 1));
+			m_page->runJavaScript(getFastForwardScript(true), [&](const QVariant &result)
+			{
+				const QUrl url(result.toUrl());
+
+				if (url.isValid())
+				{
+					setUrl(url);
+				}
+				else if (canGoForward())
+				{
+					m_page->triggerAction(QWebEnginePage::Forward);
+				}
+			});
 
 			return;
 		case ActionsManager::StopAction:
@@ -1209,6 +1230,14 @@ void QtWebEngineWebWidget::notifyDocumentLoadingProgress(int progress)
 	emit pageInformationChanged(DocumentLoadingProgressInformation, progress);
 }
 
+void QtWebEngineWebWidget::updateNavigationActions()
+{
+	if (m_updateNavigationActionsTimer == 0)
+	{
+		m_updateNavigationActionsTimer = startTimer(0);
+	}
+}
+
 void QtWebEngineWebWidget::updateUndo()
 {
 	Action *action(getExistingAction(ActionsManager::UndoAction));
@@ -1691,6 +1720,31 @@ bool QtWebEngineWebWidget::canGoBack() const
 bool QtWebEngineWebWidget::canGoForward() const
 {
 	return m_page->history()->canGoForward();
+}
+
+bool QtWebEngineWebWidget::canFastForward() const
+{
+	if (canGoForward())
+	{
+		return true;
+	}
+
+	QEventLoop eventLoop;
+	bool canFastFoward(false);
+
+	m_page->runJavaScript(getFastForwardScript(false), [&](const QVariant &result)
+	{
+		canFastFoward = result.toBool();
+
+		eventLoop.quit();
+	});
+
+	connect(this, SIGNAL(aboutToReload()), &eventLoop, SLOT(quit()));
+	connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
+
+	eventLoop.exec();
+
+	return canFastFoward;
 }
 
 bool QtWebEngineWebWidget::canShowContextMenu(const QPoint &position) const

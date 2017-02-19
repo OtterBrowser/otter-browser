@@ -94,6 +94,7 @@ protected:
 	QDateTime getLastUrlClickTime() const;
 	bool canGoBack() const override;
 	bool canGoForward() const override;
+	bool canFastForward() const override;
 	bool canShowContextMenu(const QPoint &position) const override;
 	bool canViewSource() const override;
 	bool isScrollBar(const QPoint &position) const override;
@@ -117,6 +118,7 @@ protected slots:
 	void notifyPermissionRequested(const QUrl &url, QWebEnginePage::Feature nativeFeature, bool cancel);
 	void notifyRenderProcessTerminated(QWebEnginePage::RenderProcessTerminationStatus status);
 	void notifyDocumentLoadingProgress(int progress);
+	void updateNavigationActions() override;
 	void updateUndo();
 	void updateRedo();
 
@@ -134,6 +136,7 @@ private:
 	int m_documentLoadingProgress;
 	int m_focusProxyTimer;
 	int m_scrollTimer;
+	int m_updateNavigationActionsTimer;
 	bool m_isEditing;
 	bool m_isFullScreen;
 	bool m_isTyped;
