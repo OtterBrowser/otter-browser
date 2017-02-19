@@ -44,7 +44,9 @@
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QSettings>
 #include <QtCore/QTimer>
+#ifdef OTTER_ENABLE_MULTIMEDIA
 #include <QtMultimedia/QSoundEffect>
+#endif
 #include <QtNetwork/QSslSocket>
 #include <QtNetwork/QSslCipher>
 #include <QtWidgets/QInputDialog>
@@ -461,6 +463,7 @@ void PreferencesAdvancedPageWidget::resizeEvent(QResizeEvent *event)
 
 void PreferencesAdvancedPageWidget::playNotificationSound()
 {
+#ifdef OTTER_ENABLE_MULTIMEDIA
 	QSoundEffect *effect(new QSoundEffect(this));
 	effect->setSource(QUrl::fromLocalFile(m_ui->notificationsPlaySoundFilePathWidget->getPath()));
 	effect->setLoopCount(1);
@@ -476,6 +479,7 @@ void PreferencesAdvancedPageWidget::playNotificationSound()
 
 		effect->play();
 	}
+#endif
 }
 
 void PreferencesAdvancedPageWidget::updateNotificationsActions()

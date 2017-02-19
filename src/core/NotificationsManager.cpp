@@ -27,7 +27,9 @@
 #include <QtCore/QMetaEnum>
 #include <QtCore/QSettings>
 #include <QtCore/QTimer>
+#ifdef OTTER_ENABLE_MULTIMEDIA
 #include <QtMultimedia/QSoundEffect>
+#endif
 
 namespace Otter
 {
@@ -106,6 +108,7 @@ Notification* NotificationsManager::createNotification(int event, const QString 
 
 	if (!definition.playSound.isEmpty())
 	{
+#ifdef OTTER_ENABLE_MULTIMEDIA
 		QSoundEffect *effect(new QSoundEffect(m_instance));
 		effect->setSource(QUrl::fromLocalFile(definition.playSound));
 		effect->setLoopCount(1);
@@ -121,6 +124,7 @@ Notification* NotificationsManager::createNotification(int event, const QString 
 
 			effect->play();
 		}
+#endif
 	}
 
 	if (definition.showAlert)
