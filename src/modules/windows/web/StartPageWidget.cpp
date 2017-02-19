@@ -20,7 +20,6 @@
 
 #include "StartPageWidget.h"
 #include "StartPageModel.h"
-#include "StartPagePreferencesDialog.h"
 #include "TileDelegate.h"
 #include "WebContentsWidget.h"
 #include "../../../core/BookmarksModel.h"
@@ -50,6 +49,7 @@ namespace Otter
 {
 
 StartPageModel* StartPageWidget::m_model(nullptr);
+QPointer<StartPagePreferencesDialog> StartPageWidget::m_preferencesDialog(nullptr);
 
 StartPageContentsWidget::StartPageContentsWidget(QWidget *parent) : QWidget(parent),
 	m_color(Qt::transparent),
@@ -424,10 +424,16 @@ void StartPageWidget::scrollContents(const QPoint &delta)
 
 void StartPageWidget::configure()
 {
-	StartPagePreferencesDialog *preferencesDialog(new StartPagePreferencesDialog(this));
-	ContentsDialog *dialog(new ContentsDialog(ThemesManager::getIcon(QLatin1String("configure")), preferencesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, preferencesDialog, this));
+	if (m_preferencesDialog)
+	{
+		m_preferencesDialog->reject();
+	}
 
-	connect(preferencesDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
+	m_preferencesDialog = new StartPagePreferencesDialog(this);
+
+	ContentsDialog *dialog(new ContentsDialog(ThemesManager::getIcon(QLatin1String("configure")), m_preferencesDialog->windowTitle(), QString(), QString(), QDialogButtonBox::NoButton, m_preferencesDialog, this));
+
+	connect(m_preferencesDialog, SIGNAL(finished(int)), dialog, SLOT(close()));
 
 	m_window->getContentsWidget()->showDialog(dialog, false);
 }

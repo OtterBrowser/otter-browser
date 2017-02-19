@@ -21,6 +21,8 @@
 #ifndef OTTER_STARTPAGEWIDGET_H
 #define OTTER_STARTPAGEWIDGET_H
 
+#include "StartPagePreferencesDialog.h"
+
 #include <QtCore/QTime>
 #include <QtWidgets/QListView>
 #include <QtWidgets/QScrollArea>
@@ -102,6 +104,7 @@ private:
 	bool m_ignoreEnter;
 
 	static StartPageModel *m_model;
+	static QPointer<StartPagePreferencesDialog> m_preferencesDialog;
 };
 
 }
