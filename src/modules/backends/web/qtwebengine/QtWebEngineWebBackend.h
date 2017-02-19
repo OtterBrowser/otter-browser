@@ -52,8 +52,8 @@ public:
 	bool requestThumbnail(const QUrl &url, const QSize &size) override;
 
 protected slots:
-	void optionChanged(int identifier);
 	void downloadFile(QWebEngineDownloadItem *item);
+	void handleOptionChanged(int identifier);
 
 private:
 	QtWebEngineUrlRequestInterceptor *m_requestInterceptor;

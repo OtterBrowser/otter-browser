@@ -35,20 +35,8 @@ QtWebEngineUrlRequestInterceptor::QtWebEngineUrlRequestInterceptor(QObject *pare
 {
 	QTimer::singleShot(1800000, this, SLOT(clearContentBlockingInformation()));
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant,QUrl)), this, SLOT(optionChanged(int)));
-}
-
-void QtWebEngineUrlRequestInterceptor::optionChanged(int identifier)
-{
-	if (identifier == SettingsManager::Permissions_EnableImagesOption)
-	{
-		m_areImagesEnabled = (SettingsManager::getValue(SettingsManager::Permissions_EnableImagesOption).toString() != QLatin1String("disabled"));
-	}
-	else if (identifier == SettingsManager::ContentBlocking_ProfilesOption)
-	{
-		clearContentBlockingInformation();
-	}
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant,QUrl)), this, SLOT(handleOptionChanged(int)));
 }
 
 void QtWebEngineUrlRequestInterceptor::clearContentBlockingInformation()
@@ -57,6 +45,23 @@ void QtWebEngineUrlRequestInterceptor::clearContentBlockingInformation()
 	m_contentBlockingProfiles.clear();
 
 	QTimer::singleShot(1800000, this, SLOT(clearContentBlockingInformation()));
+}
+
+void QtWebEngineUrlRequestInterceptor::handleOptionChanged(int identifier)
+{
+	switch (identifier)
+	{
+		case SettingsManager::ContentBlocking_ProfilesOption:
+			clearContentBlockingInformation();
+
+			break;
+		case SettingsManager::Permissions_EnableImagesOption:
+			m_areImagesEnabled = (SettingsManager::getValue(SettingsManager::Permissions_EnableImagesOption).toString() != QLatin1String("disabled"));
+
+			break;
+		default:
+			break;
+	}
 }
 
 QStringList QtWebEngineUrlRequestInterceptor::getBlockedElements(const QString &domain) const

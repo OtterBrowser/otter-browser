@@ -79,7 +79,57 @@ QtWebKitWebBackend::~QtWebKitWebBackend()
 	m_thumbnailRequests.clear();
 }
 
-void QtWebKitWebBackend::optionChanged(int identifier)
+void QtWebKitWebBackend::pageLoaded(bool success)
+{
+	QtWebKitPage *page(qobject_cast<QtWebKitPage*>(sender()));
+
+	if (!page)
+	{
+		return;
+	}
+
+	if (success)
+	{
+		QPixmap pixmap;
+
+		if (!m_thumbnailRequests[page].second.isEmpty())
+		{
+			QSize contentsSize(page->mainFrame()->contentsSize());
+
+			page->setViewportSize(contentsSize);
+
+			if (contentsSize.width() > 2000)
+			{
+				contentsSize.setWidth(2000);
+			}
+
+			contentsSize.setHeight(m_thumbnailRequests[page].second.height() * (qreal(contentsSize.width()) / m_thumbnailRequests[page].second.width()));
+
+			pixmap = QPixmap(contentsSize);
+			pixmap.fill(Qt::white);
+
+			QPainter painter(&pixmap);
+
+			page->mainFrame()->render(&painter, QWebFrame::ContentsLayer, QRegion(QRect(QPoint(0, 0), contentsSize)));
+
+			painter.end();
+
+			pixmap = pixmap.scaled(m_thumbnailRequests[page].second, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+		}
+
+		emit thumbnailAvailable(m_thumbnailRequests[page].first, pixmap, page->mainFrame()->title());
+	}
+	else
+	{
+		emit thumbnailAvailable(m_thumbnailRequests[page].first, QPixmap(), QString());
+	}
+
+	m_thumbnailRequests.remove(page);
+
+	page->deleteLater();
+}
+
+void QtWebKitWebBackend::handleOptionChanged(int identifier)
 {
 	switch (identifier)
 	{
@@ -134,56 +184,6 @@ void QtWebKitWebBackend::optionChanged(int identifier)
 	}
 }
 
-void QtWebKitWebBackend::pageLoaded(bool success)
-{
-	QtWebKitPage *page(qobject_cast<QtWebKitPage*>(sender()));
-
-	if (!page)
-	{
-		return;
-	}
-
-	if (success)
-	{
-		QPixmap pixmap;
-
-		if (!m_thumbnailRequests[page].second.isEmpty())
-		{
-			QSize contentsSize(page->mainFrame()->contentsSize());
-
-			page->setViewportSize(contentsSize);
-
-			if (contentsSize.width() > 2000)
-			{
-				contentsSize.setWidth(2000);
-			}
-
-			contentsSize.setHeight(m_thumbnailRequests[page].second.height() * (qreal(contentsSize.width()) / m_thumbnailRequests[page].second.width()));
-
-			pixmap = QPixmap(contentsSize);
-			pixmap.fill(Qt::white);
-
-			QPainter painter(&pixmap);
-
-			page->mainFrame()->render(&painter, QWebFrame::ContentsLayer, QRegion(QRect(QPoint(0, 0), contentsSize)));
-
-			painter.end();
-
-			pixmap = pixmap.scaled(m_thumbnailRequests[page].second, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-		}
-
-		emit thumbnailAvailable(m_thumbnailRequests[page].first, pixmap, page->mainFrame()->title());
-	}
-	else
-	{
-		emit thumbnailAvailable(m_thumbnailRequests[page].first, QPixmap(), QString());
-	}
-
-	m_thumbnailRequests.remove(page);
-
-	page->deleteLater();
-}
-
 void QtWebKitWebBackend::setActiveWidget(WebWidget *widget)
 {
 	m_activeWidget = widget;
@@ -215,10 +215,10 @@ WebWidget* QtWebKitWebBackend::createWidget(bool isPrivate, ContentsWidget *pare
 		QWebSettings::globalSettings()->setOfflineStorageDefaultQuota(SettingsManager::getValue(SettingsManager::Browser_OfflineStorageLimitOption).toInt() * 1024);
 		QWebSettings::globalSettings()->setOfflineWebApplicationCacheQuota(SettingsManager::getValue(SettingsManager::Browser_OfflineWebApplicationCacheLimitOption).toInt() * 1024);
 
-		optionChanged(SettingsManager::Content_DefaultFontSizeOption);
-		optionChanged(SettingsManager::Permissions_EnableFullScreenOption);
+		handleOptionChanged(SettingsManager::Content_DefaultFontSizeOption);
+		handleOptionChanged(SettingsManager::Permissions_EnableFullScreenOption);
 
-		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
+		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
 	}
 
 	QtWebKitWebWidget *widget(new QtWebKitWebWidget(isPrivate, this, nullptr, parent));

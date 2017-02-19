@@ -146,7 +146,6 @@ protected:
 	bool isScrollBar(const QPoint &position) const override;
 
 protected slots:
-	void optionChanged(int identifier, const QVariant &value);
 	void navigating(const QUrl &url, QWebFrame *frame, QWebPage::NavigationType type);
 	void pageLoadStarted();
 	void pageLoadFinished();
@@ -157,6 +156,7 @@ protected slots:
 	void linkHovered(const QString &link);
 	void openFormRequest();
 	void viewSourceReplyFinished(QNetworkReply::NetworkError error = QNetworkReply::NoError);
+	void hnadleOptionChanged(int identifier, const QVariant &value);
 	void handleLoadProgress(int progress);
 	void handlePrintRequest(QWebFrame *frame);
 	void handleWindowCloseRequest();

@@ -39,8 +39,8 @@ public:
 	void interceptRequest(QWebEngineUrlRequestInfo &request) override;
 
 protected slots:
-	void optionChanged(int identifier);
 	void clearContentBlockingInformation();
+	void handleOptionChanged(int identifier);
 
 private:
 	QMap<QString, QStringList> m_blockedElements;

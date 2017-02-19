@@ -128,14 +128,14 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 
 	QShortcut *selectAllShortcut(new QShortcut(QKeySequence(QKeySequence::SelectAll), this, 0, 0, Qt::WidgetWithChildrenShortcut));
 
-	optionChanged(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption, SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption));
-	optionChanged(SettingsManager::Content_BackgroundColorOption, SettingsManager::getValue(SettingsManager::Content_BackgroundColorOption));
-	optionChanged(SettingsManager::History_BrowsingLimitAmountWindowOption, SettingsManager::getValue(SettingsManager::History_BrowsingLimitAmountWindowOption));
+	hnadleOptionChanged(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption, SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption));
+	hnadleOptionChanged(SettingsManager::Content_BackgroundColorOption, SettingsManager::getValue(SettingsManager::Content_BackgroundColorOption));
+	hnadleOptionChanged(SettingsManager::History_BrowsingLimitAmountWindowOption, SettingsManager::getValue(SettingsManager::History_BrowsingLimitAmountWindowOption));
 	updateEditActions();
 	setZoom(SettingsManager::getValue(SettingsManager::Content_DefaultZoomOption).toInt());
 
 	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(updateBookmarkActions()));
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(hnadleOptionChanged(int,QVariant)));
 	connect(m_page, SIGNAL(aboutToNavigate(QUrl,QWebFrame*,QWebPage::NavigationType)), this, SLOT(navigating(QUrl,QWebFrame*,QWebPage::NavigationType)));
 	connect(m_page, SIGNAL(requestedNewWindow(WebWidget*,WindowsManager::OpenHints)), this, SIGNAL(requestedNewWindow(WebWidget*,WindowsManager::OpenHints)));
 	connect(m_page, SIGNAL(requestedPopupWindow(QUrl,QUrl)), this, SIGNAL(requestedPopupWindow(QUrl,QUrl)));
@@ -245,34 +245,6 @@ void QtWebKitWebWidget::search(const QString &query, const QString &searchEngine
 void QtWebKitWebWidget::print(QPrinter *printer)
 {
 	m_webView->print(printer);
-}
-
-void QtWebKitWebWidget::optionChanged(int identifier, const QVariant &value)
-{
-	if (identifier == SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption)
-	{
-		disconnect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
-
-		if (value.toBool() || SettingsManager::getValue(identifier, getUrl()).toBool())
-		{
-			connect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
-		}
-		else
-		{
-			setStatusMessage(QString());
-		}
-	}
-	else if (identifier == SettingsManager::Content_BackgroundColorOption)
-	{
-		QPalette palette(m_page->palette());
-		palette.setColor(QPalette::Base, QColor(value.toString()));
-
-		m_page->setPalette(palette);
-	}
-	else if (identifier == SettingsManager::History_BrowsingLimitAmountWindowOption)
-	{
-		m_webView->page()->history()->setMaximumItemCount(value.toInt());
-	}
 }
 
 void QtWebKitWebWidget::navigating(const QUrl &url, QWebFrame *frame, QWebPage::NavigationType type)
@@ -568,6 +540,34 @@ void QtWebKitWebWidget::viewSourceReplyFinished(QNetworkReply::NetworkError erro
 	m_viewSourceReplies.remove(reply);
 
 	reply->deleteLater();
+}
+
+void QtWebKitWebWidget::hnadleOptionChanged(int identifier, const QVariant &value)
+{
+	if (identifier == SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption)
+	{
+		disconnect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
+
+		if (value.toBool() || SettingsManager::getValue(identifier, getUrl()).toBool())
+		{
+			connect(m_webView->page(), SIGNAL(statusBarMessage(QString)), this, SLOT(setStatusMessage(QString)));
+		}
+		else
+		{
+			setStatusMessage(QString());
+		}
+	}
+	else if (identifier == SettingsManager::Content_BackgroundColorOption)
+	{
+		QPalette palette(m_page->palette());
+		palette.setColor(QPalette::Base, QColor(value.toString()));
+
+		m_page->setPalette(palette);
+	}
+	else if (identifier == SettingsManager::History_BrowsingLimitAmountWindowOption)
+	{
+		m_webView->page()->history()->setMaximumItemCount(value.toInt());
+	}
 }
 
 void QtWebKitWebWidget::handleLoadProgress(int progress)

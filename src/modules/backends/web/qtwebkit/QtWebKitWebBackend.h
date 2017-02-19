@@ -61,8 +61,8 @@ protected:
 	static QString getActiveDictionary();
 
 protected slots:
-	void optionChanged(int identifier);
 	void pageLoaded(bool success);
+	void handleOptionChanged(int identifier);
 	void setActiveWidget(WebWidget *widget);
 
 private:

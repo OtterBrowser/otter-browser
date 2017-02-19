@@ -169,7 +169,7 @@ QtWebKitPage::QtWebKitPage(QtWebKitNetworkManager *networkManager, QtWebKitWebWi
 	updateStyleSheets();
 	handleFrameCreation(mainFrame());
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
 	connect(this, SIGNAL(frameCreated(QWebFrame*)), this, SLOT(handleFrameCreation(QWebFrame*)));
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 	connect(this, SIGNAL(consoleMessageReceived(MessageSource,MessageLevel,QString,int,QString)), this, SLOT(handleConsoleMessage(MessageSource,MessageLevel,QString,int,QString)));
@@ -192,14 +192,6 @@ QtWebKitPage::~QtWebKitPage()
 	qDeleteAll(m_popups);
 
 	m_popups.clear();
-}
-
-void QtWebKitPage::optionChanged(int identifier)
-{
-	if (SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Content/")) || identifier == SettingsManager::Interface_ShowScrollBarsOption)
-	{
-		updateStyleSheets();
-	}
 }
 
 void QtWebKitPage::pageLoadFinished()
@@ -226,6 +218,14 @@ void QtWebKitPage::removePopup(const QUrl &url)
 void QtWebKitPage::markAsPopup()
 {
 	m_isPopup = true;
+}
+
+void QtWebKitPage::handleOptionChanged(int identifier)
+{
+	if (SettingsManager::getOptionName(identifier).startsWith(QLatin1String("Content/")) || identifier == SettingsManager::Interface_ShowScrollBarsOption)
+	{
+		updateStyleSheets();
+	}
 }
 
 void QtWebKitPage::handleFrameCreation(QWebFrame *frame)
