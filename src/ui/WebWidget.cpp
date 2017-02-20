@@ -494,6 +494,42 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 	event->accept();
 }
 
+void WebWidget::handleWindowCloseRequest()
+{
+	const QString mode(SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanCloseWindowsOption, getUrl()).toString());
+
+	if (mode != QLatin1String("ask"))
+	{
+		if (mode == QLatin1String("allow"))
+		{
+			emit requestedCloseWindow();
+		}
+
+		return;
+	}
+
+	ContentsDialog *dialog(new ContentsDialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), tr("JavaScript"), tr("Webpage wants to close this tab, do you want to allow to close it?"), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), nullptr, this));
+	dialog->setCheckBox(tr("Do not show this message again"), false);
+
+	connect(this, SIGNAL(aboutToReload()), dialog, SLOT(close()));
+	connect(dialog, &ContentsDialog::finished, [&](int result, bool isChecked)
+	{
+		const bool isAccepted(result == QDialog::Accepted);
+
+		if (isChecked)
+		{
+			SettingsManager::setValue(SettingsManager::Permissions_ScriptsCanCloseWindowsOption, (isAccepted ? QLatin1String("allow") : QLatin1String("disallow")));
+		}
+
+		if (isAccepted)
+		{
+			emit requestedCloseWindow();
+		}
+	});
+
+	showDialog(dialog, false);
+}
+
 void WebWidget::updateHitTestResult(const QPoint &position)
 {
 	m_hitResult = getHitTestResult(position);

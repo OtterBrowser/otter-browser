@@ -624,36 +624,6 @@ void QtWebKitWebWidget::handleHistory()
 	}
 }
 
-void QtWebKitWebWidget::handleWindowCloseRequest()
-{
-	const QString mode(SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanCloseWindowsOption, getUrl()).toString());
-
-	if (mode != QLatin1String("ask"))
-	{
-		if (mode == QLatin1String("allow"))
-		{
-			emit requestedCloseWindow();
-		}
-
-		return;
-	}
-
-	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-warning")), tr("JavaScript"), tr("Webpage wants to close this tab, do you want to allow to close it?"), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), nullptr, this);
-	dialog.setCheckBox(tr("Do not show this message again"), false);
-
-	connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
-
-	if (dialog.getCheckBoxState())
-	{
-		SettingsManager::setValue(SettingsManager::Permissions_ScriptsCanCloseWindowsOption, (dialog.isAccepted() ? QLatin1String("allow") : QLatin1String("disallow")));
-	}
-
-	if (dialog.isAccepted())
-	{
-		emit requestedCloseWindow();
-	}
-}
-
 #ifndef OTTER_ENABLE_QTWEBKIT_LEGACY
 void QtWebKitWebWidget::handleFullScreenRequest(QWebFullScreenRequest request)
 {

@@ -281,6 +281,7 @@ protected slots:
 	void quickSearchMenuAboutToShow();
 	void handleLoadingStateChange(WindowsManager::LoadingState state);
 	void handleAudibleStateChange(bool isAudible);
+	void handleWindowCloseRequest();
 	void updatePasswords();
 	void updateQuickSearch();
 	virtual void updatePageActions(const QUrl &url);
