@@ -56,7 +56,7 @@ protected:
 	void scheduleSave();
 
 protected slots:
-	void optionChanged(int identifier);
+	void handleOptionChanged(int identifier);
 
 private:
 	int m_dayTimer;

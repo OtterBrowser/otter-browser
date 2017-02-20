@@ -93,8 +93,8 @@ protected:
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 protected slots:
-	void optionChanged(int identifier);
 	void endGesture();
+	void handleOptionChanged(int identifier);
 
 private:
 	int m_reloadTimer;

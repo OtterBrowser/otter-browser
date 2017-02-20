@@ -54,7 +54,7 @@ protected:
 #endif
 
 protected slots:
-	void optionChanged(int identifier, const QVariant &value);
+	void handleOptionChanged(int identifier, const QVariant &value);
 
 private:
 	static ThemesManager *m_instance;

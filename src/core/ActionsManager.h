@@ -307,7 +307,7 @@ protected:
 	static void registerAction(int identifier, const QString &text, const QString &description = QString(), const QIcon &icon = QIcon(), ActionFlags flags = IsEnabledFlag);
 
 protected slots:
-	void optionChanged(int identifier);
+	void handleOptionChanged(int identifier);
 
 signals:
 	void shortcutsChanged();

@@ -44,9 +44,9 @@ ContentBlockingManager::ContentBlockingManager(QObject *parent) : QObject(parent
 {
 	m_areWildcardsEnabled = SettingsManager::getValue(SettingsManager::ContentBlocking_EnableWildcardsOption).toBool();
 
-	optionChanged(SettingsManager::ContentBlocking_CosmeticFiltersModeOption, SettingsManager::getValue(SettingsManager::ContentBlocking_CosmeticFiltersModeOption).toString());
+	handleOptionChanged(SettingsManager::ContentBlocking_CosmeticFiltersModeOption, SettingsManager::getValue(SettingsManager::ContentBlocking_CosmeticFiltersModeOption).toString());
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 }
 
 void ContentBlockingManager::createInstance(QObject *parent)
@@ -127,7 +127,27 @@ void ContentBlockingManager::timerEvent(QTimerEvent *event)
 	}
 }
 
-void ContentBlockingManager::optionChanged(int identifier, const QVariant &value)
+void ContentBlockingManager::scheduleSave()
+{
+	if (m_saveTimer == 0)
+	{
+		m_saveTimer = startTimer(1000);
+	}
+}
+
+void ContentBlockingManager::addProfile(ContentBlockingProfile *profile)
+{
+	if (profile)
+	{
+		m_profiles.append(profile);
+
+		getInstance()->scheduleSave();
+
+		connect(profile, SIGNAL(profileModified(QString)), m_instance, SLOT(scheduleSave()));
+	}
+}
+
+void ContentBlockingManager::handleOptionChanged(int identifier, const QVariant &value)
 {
 	switch (identifier)
 	{
@@ -161,26 +181,6 @@ void ContentBlockingManager::optionChanged(int identifier, const QVariant &value
 	for (int i = 0; i < m_profiles.count(); ++i)
 	{
 		m_profiles[i]->clear();
-	}
-}
-
-void ContentBlockingManager::scheduleSave()
-{
-	if (m_saveTimer == 0)
-	{
-		m_saveTimer = startTimer(1000);
-	}
-}
-
-void ContentBlockingManager::addProfile(ContentBlockingProfile *profile)
-{
-	if (profile)
-	{
-		m_profiles.append(profile);
-
-		getInstance()->scheduleSave();
-
-		connect(profile, SIGNAL(profileModified(QString)), m_instance, SLOT(scheduleSave()));
 	}
 }
 

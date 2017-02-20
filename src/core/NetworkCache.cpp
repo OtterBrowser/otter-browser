@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2016 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ NetworkCache::NetworkCache(QObject *parent) : QNetworkDiskCache(parent)
 		setMaximumCacheSize(SettingsManager::getValue(SettingsManager::Cache_DiskCacheLimitOption).toInt() * 1024);
 	}
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 }
 
 void NetworkCache::clearCache(int period)
@@ -185,7 +185,7 @@ bool NetworkCache::remove(const QUrl &url)
 	return result;
 }
 
-void NetworkCache::optionChanged(int identifier, const QVariant &value)
+void NetworkCache::handleOptionChanged(int identifier, const QVariant &value)
 {
 	if (identifier == SettingsManager::Cache_DiskCacheLimitOption)
 	{

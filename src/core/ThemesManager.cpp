@@ -47,9 +47,9 @@ ThemesManager::ThemesManager(QObject *parent) : QObject(parent)
 {
 	m_useSystemIconTheme = SettingsManager::getValue(SettingsManager::Interface_UseSystemIconThemeOption).toBool();
 
-	optionChanged(SettingsManager::Interface_IconThemePathOption, SettingsManager::getValue(SettingsManager::Interface_IconThemePathOption));
+	handleOptionChanged(SettingsManager::Interface_IconThemePathOption, SettingsManager::getValue(SettingsManager::Interface_IconThemePathOption));
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 }
 
 void ThemesManager::createInstance(QObject *parent)
@@ -68,7 +68,7 @@ void ThemesManager::createInstance(QObject *parent)
 	}
 }
 
-void ThemesManager::optionChanged(int identifier, const QVariant &value)
+void ThemesManager::handleOptionChanged(int identifier, const QVariant &value)
 {
 	switch (identifier)
 	{

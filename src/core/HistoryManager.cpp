@@ -43,10 +43,10 @@ HistoryManager::HistoryManager(QObject *parent) : QObject(parent),
 {
 	m_dayTimer = startTimer(QTime::currentTime().msecsTo(QTime(23, 59, 59, 999)));
 
-	optionChanged(SettingsManager::History_RememberBrowsingOption);
-	optionChanged(SettingsManager::History_StoreFaviconsOption);
+	handleOptionChanged(SettingsManager::History_RememberBrowsingOption);
+	handleOptionChanged(SettingsManager::History_StoreFaviconsOption);
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
 }
 
 void HistoryManager::createInstance(QObject *parent)
@@ -99,56 +99,6 @@ void HistoryManager::timerEvent(QTimerEvent *event)
 		emit dayChanged();
 
 		m_dayTimer = startTimer(QTime::currentTime().msecsTo(QTime(23, 59, 59, 999)));
-	}
-}
-
-void HistoryManager::optionChanged(int identifier)
-{
-	if (identifier == SettingsManager::History_RememberBrowsingOption || identifier == SettingsManager::Browser_PrivateModeOption)
-	{
-		m_isEnabled = (SettingsManager::getValue(SettingsManager::History_RememberBrowsingOption).toBool() && !SettingsManager::getValue(SettingsManager::Browser_PrivateModeOption).toBool());
-	}
-	else if (identifier == SettingsManager::History_StoreFaviconsOption)
-	{
-		m_isStoringFavicons = SettingsManager::getValue(identifier).toBool();
-	}
-	else if (identifier == SettingsManager::History_BrowsingLimitAmountGlobalOption)
-	{
-		if (!m_browsingHistoryModel)
-		{
-			getBrowsingHistoryModel();
-		}
-
-		if (!m_typedHistoryModel)
-		{
-			getTypedHistoryModel();
-		}
-
-		const int limit(SettingsManager::getValue(SettingsManager::History_BrowsingLimitAmountGlobalOption).toInt());
-
-		m_browsingHistoryModel->clearExcessEntries(limit);
-		m_typedHistoryModel->clearExcessEntries(limit);
-
-		scheduleSave();
-	}
-	else if (identifier == SettingsManager::History_BrowsingLimitPeriodOption)
-	{
-		if (!m_browsingHistoryModel)
-		{
-			getBrowsingHistoryModel();
-		}
-
-		if (!m_typedHistoryModel)
-		{
-			getTypedHistoryModel();
-		}
-
-		const int period(SettingsManager::getValue(SettingsManager::History_BrowsingLimitPeriodOption).toInt());
-
-		m_browsingHistoryModel->clearOldestEntries(period);
-		m_typedHistoryModel->clearOldestEntries(period);
-
-		scheduleSave();
 	}
 }
 
@@ -244,6 +194,66 @@ void HistoryManager::updateEntry(quint64 identifier, const QUrl &url, const QStr
 	}
 
 	m_instance->scheduleSave();
+}
+
+void HistoryManager::handleOptionChanged(int identifier)
+{
+	switch (identifier)
+	{
+		case SettingsManager::Browser_PrivateModeOption:
+		case SettingsManager::History_RememberBrowsingOption:
+			m_isEnabled = (SettingsManager::getValue(SettingsManager::History_RememberBrowsingOption).toBool() && !SettingsManager::getValue(SettingsManager::Browser_PrivateModeOption).toBool());
+
+			break;
+		case SettingsManager::History_BrowsingLimitAmountGlobalOption:
+			{
+				if (!m_browsingHistoryModel)
+				{
+					getBrowsingHistoryModel();
+				}
+
+				if (!m_typedHistoryModel)
+				{
+					getTypedHistoryModel();
+				}
+
+				const int limit(SettingsManager::getValue(SettingsManager::History_BrowsingLimitAmountGlobalOption).toInt());
+
+				m_browsingHistoryModel->clearExcessEntries(limit);
+				m_typedHistoryModel->clearExcessEntries(limit);
+
+				scheduleSave();
+			}
+
+			break;
+		case SettingsManager::History_BrowsingLimitPeriodOption:
+			{
+				if (!m_browsingHistoryModel)
+				{
+					getBrowsingHistoryModel();
+				}
+
+				if (!m_typedHistoryModel)
+				{
+					getTypedHistoryModel();
+				}
+
+				const int period(SettingsManager::getValue(SettingsManager::History_BrowsingLimitPeriodOption).toInt());
+
+				m_browsingHistoryModel->clearOldestEntries(period);
+				m_typedHistoryModel->clearOldestEntries(period);
+
+				scheduleSave();
+			}
+
+			break;
+		case SettingsManager::History_StoreFaviconsOption:
+			m_isStoringFavicons = SettingsManager::getValue(identifier).toBool();
+
+			break;
+		default:
+			break;
+	}
 }
 
 HistoryManager* HistoryManager::getInstance()

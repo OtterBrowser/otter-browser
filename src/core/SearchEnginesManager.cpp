@@ -62,15 +62,7 @@ void SearchEnginesManager::ensureInitialized()
 
 		loadSearchEngines();
 
-		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), m_instance, SLOT(optionChanged(int)));
-	}
-}
-
-void SearchEnginesManager::optionChanged(int identifier)
-{
-	if (identifier == SettingsManager::Search_SearchEnginesOrderOption)
-	{
-		loadSearchEngines();
+		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), m_instance, SLOT(handleOptionChanged(int)));
 	}
 }
 
@@ -133,6 +125,14 @@ void SearchEnginesManager::addSearchEngine(const SearchEngineDefinition &searchE
 		m_searchEnginesOrder.append(searchEngine.identifier);
 
 		SettingsManager::setValue(SettingsManager::Search_SearchEnginesOrderOption, m_searchEnginesOrder);
+	}
+}
+
+void SearchEnginesManager::handleOptionChanged(int identifier)
+{
+	if (identifier == SettingsManager::Search_SearchEnginesOrderOption)
+	{
+		loadSearchEngines();
 	}
 }
 

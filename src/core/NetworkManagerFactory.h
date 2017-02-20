@@ -181,7 +181,7 @@ protected:
 	static void readUserAgent(const QJsonValue &value, UserAgentDefinition *parent);
 
 protected slots:
-	void optionChanged(int identifier, const QVariant &value);
+	void handleOptionChanged(int identifier, const QVariant &value);
 
 private:
 	static NetworkManagerFactory *m_instance;

@@ -87,7 +87,7 @@ protected:
 	static void updateSearchEnginesOptions();
 
 protected slots:
-	void optionChanged(int identifier);
+	void handleOptionChanged(int identifier);
 
 private:
 	static SearchEnginesManager *m_instance;

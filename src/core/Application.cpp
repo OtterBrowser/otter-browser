@@ -467,7 +467,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 	QDesktopServices::setUrlHandler(QLatin1String("http"), this, "openUrl");
 	QDesktopServices::setUrlHandler(QLatin1String("https"), this, "openUrl");
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 	connect(this, SIGNAL(aboutToQuit()), this, SLOT(clearHistory()));
 }
 
@@ -476,22 +476,6 @@ Application::~Application()
 	for (int i = 0; i < m_windows.count(); ++i)
 	{
 		m_windows.at(i)->deleteLater();
-	}
-}
-
-void Application::optionChanged(int identifier, const QVariant &value)
-{
-	if (identifier == SettingsManager::Browser_EnableTrayIconOption)
-	{
-		if (!m_trayIcon && value.toBool())
-		{
-			m_trayIcon = new TrayIcon(this);
-		}
-		else if (m_trayIcon && !value.toBool())
-		{
-			m_trayIcon->deleteLater();
-			m_trayIcon = nullptr;
-		}
 	}
 }
 
@@ -606,6 +590,22 @@ void Application::updateCheckFinished(const QList<UpdateInformation> &availableU
 		notification->setData(QVariant::fromValue<QList<UpdateInformation> >(availableUpdates));
 
 		connect(notification, SIGNAL(clicked()), this, SLOT(showUpdateDetails()));
+	}
+}
+
+void Application::handleOptionChanged(int identifier, const QVariant &value)
+{
+	if (identifier == SettingsManager::Browser_EnableTrayIconOption)
+	{
+		if (!m_trayIcon && value.toBool())
+		{
+			m_trayIcon = new TrayIcon(this);
+		}
+		else if (m_trayIcon && !value.toBool())
+		{
+			m_trayIcon->deleteLater();
+			m_trayIcon = nullptr;
+		}
 	}
 }
 

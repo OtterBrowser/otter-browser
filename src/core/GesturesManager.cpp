@@ -129,7 +129,7 @@ bool GesturesManager::m_afterScroll(false);
 GesturesManager::GesturesManager(QObject *parent) : QObject(parent),
 	m_reloadTimer(0)
 {
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
 }
 
 void GesturesManager::createInstance(QObject *parent)
@@ -171,14 +171,6 @@ void GesturesManager::timerEvent(QTimerEvent *event)
 		m_reloadTimer = 0;
 
 		loadProfiles();
-	}
-}
-
-void GesturesManager::optionChanged(int identifier)
-{
-	if ((identifier == SettingsManager::Browser_MouseProfilesOrderOption || identifier == SettingsManager::Browser_EnableMouseGesturesOption) && m_reloadTimer == 0)
-	{
-		m_reloadTimer = startTimer(250);
 	}
 }
 
@@ -320,6 +312,23 @@ void GesturesManager::releaseObject()
 void GesturesManager::endGesture()
 {
 	cancelGesture();
+}
+
+void GesturesManager::handleOptionChanged(int identifier)
+{
+	switch (identifier)
+	{
+		case SettingsManager::Browser_EnableMouseGesturesOption:
+		case SettingsManager::Browser_MouseProfilesOrderOption:
+			if (m_reloadTimer == 0)
+			{
+				m_reloadTimer = startTimer(250);
+			}
+
+			break;
+		default:
+			break;
+	}
 }
 
 GesturesManager* GesturesManager::getInstance()

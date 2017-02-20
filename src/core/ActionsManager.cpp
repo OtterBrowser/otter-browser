@@ -512,7 +512,7 @@ ActionsManager::ActionsManager(QObject *parent) : QObject(parent),
 	registerAction(AboutQtAction, QT_TRANSLATE_NOOP("actions", "About Qt…"), QString(), ThemesManager::getIcon(QLatin1String("qt"), NoFlags));
 	registerAction(ExitAction, QT_TRANSLATE_NOOP("actions", "Exit"), QString(), ThemesManager::getIcon(QLatin1String("application-exit")));
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int)));
 }
 
 void ActionsManager::createInstance(QObject *parent)
@@ -535,14 +535,6 @@ void ActionsManager::timerEvent(QTimerEvent *event)
 		m_reloadTimer = 0;
 
 		loadProfiles();
-	}
-}
-
-void ActionsManager::optionChanged(int identifier)
-{
-	if ((identifier == SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption || identifier == SettingsManager::Browser_EnableSingleKeyShortcutsOption) && m_reloadTimer == 0)
-	{
-		m_reloadTimer = startTimer(250);
 	}
 }
 
@@ -621,6 +613,23 @@ void ActionsManager::registerAction(int identifier, const QString &text, const Q
 	action.flags = flags;
 
 	m_definitions.append(action);
+}
+
+void ActionsManager::handleOptionChanged(int identifier)
+{
+	switch (identifier)
+	{
+		case SettingsManager::Browser_EnableSingleKeyShortcutsOption:
+		case SettingsManager::Browser_KeyboardShortcutsProfilesOrderOption:
+			if (m_reloadTimer == 0)
+			{
+				m_reloadTimer = startTimer(250);
+			}
+
+			break;
+		default:
+			break;
+	}
 }
 
 ActionsManager* ActionsManager::getInstance()

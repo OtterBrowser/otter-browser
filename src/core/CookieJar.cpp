@@ -1,6 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
-* Copyright (C) 2013 - 2015 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -73,10 +73,10 @@ CookieJar::CookieJar(bool isPrivate, QObject *parent) : QNetworkCookieJar(parent
 		}
 	}
 
-	optionChanged(SettingsManager::Network_CookiesPolicyOption, SettingsManager::getValue(SettingsManager::Network_CookiesPolicyOption));
+	handleOptionChanged(SettingsManager::Network_CookiesPolicyOption, SettingsManager::getValue(SettingsManager::Network_CookiesPolicyOption));
 	setAllCookies(allCookies);
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 }
 
 void CookieJar::timerEvent(QTimerEvent *event)
@@ -91,33 +91,6 @@ void CookieJar::timerEvent(QTimerEvent *event)
 	m_saveTimer = 0;
 
 	save();
-}
-
-void CookieJar::optionChanged(int identifier, const QVariant &value)
-{
-	if (identifier == SettingsManager::Browser_PrivateModeOption && value.toBool())
-	{
-		m_generalCookiesPolicy = IgnoreCookies;
-	}
-	else if (identifier == SettingsManager::Network_CookiesPolicyOption)
-	{
-		if (SettingsManager::getValue(SettingsManager::Browser_PrivateModeOption).toBool() || value.toString() == QLatin1String("ignore"))
-		{
-			m_generalCookiesPolicy = IgnoreCookies;
-		}
-		else if (value.toString() == QLatin1String("readOnly"))
-		{
-			m_generalCookiesPolicy = ReadOnlyCookies;
-		}
-		else if (value.toString() == QLatin1String("acceptExisting"))
-		{
-			m_generalCookiesPolicy = AcceptExistingCookies;
-		}
-		else
-		{
-			m_generalCookiesPolicy = AcceptAllCookies;
-		}
-	}
 }
 
 void CookieJar::clearCookies(int period)
@@ -141,6 +114,41 @@ void CookieJar::scheduleSave()
 	if (!m_isPrivate && m_saveTimer == 0)
 	{
 		m_saveTimer = startTimer(500);
+	}
+}
+
+void CookieJar::handleOptionChanged(int identifier, const QVariant &value)
+{
+	switch (identifier)
+	{
+		case SettingsManager::Browser_PrivateModeOption:
+			if (value.toBool())
+			{
+				m_generalCookiesPolicy = IgnoreCookies;
+			}
+
+			break;
+		case SettingsManager::Network_CookiesPolicyOption:
+			if (SettingsManager::getValue(SettingsManager::Browser_PrivateModeOption).toBool() || value.toString() == QLatin1String("ignore"))
+			{
+				m_generalCookiesPolicy = IgnoreCookies;
+			}
+			else if (value.toString() == QLatin1String("readOnly"))
+			{
+				m_generalCookiesPolicy = ReadOnlyCookies;
+			}
+			else if (value.toString() == QLatin1String("acceptExisting"))
+			{
+				m_generalCookiesPolicy = AcceptExistingCookies;
+			}
+			else
+			{
+				m_generalCookiesPolicy = AcceptAllCookies;
+			}
+
+			break;
+		default:
+			break;
 	}
 }
 

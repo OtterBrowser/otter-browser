@@ -95,11 +95,11 @@ public slots:
 	void setHidden(bool hidden);
 
 protected slots:
-	void optionChanged(int identifier, const QVariant &value);
 	void openUrl(const QUrl &url);
 	void updateCheckFinished(const QList<UpdateInformation> &availableUpdates);
 	void clearHistory();
 	void periodicUpdateCheck();
+	void handleOptionChanged(int identifier, const QVariant &value);
 	void handleNewConnection();
 	void showUpdateDetails();
 	void setActiveWindow(MainWindow *window);

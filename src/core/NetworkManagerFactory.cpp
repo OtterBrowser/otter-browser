@@ -237,82 +237,14 @@ void NetworkManagerFactory::initialize()
 	loadProxies();
 	loadUserAgents();
 
-	m_instance->optionChanged(SettingsManager::Network_AcceptLanguageOption, SettingsManager::getValue(SettingsManager::Network_AcceptLanguageOption));
-	m_instance->optionChanged(SettingsManager::Network_DoNotTrackPolicyOption, SettingsManager::getValue(SettingsManager::Network_DoNotTrackPolicyOption));
-	m_instance->optionChanged(SettingsManager::Network_EnableReferrerOption, SettingsManager::getValue(SettingsManager::Network_EnableReferrerOption));
-	m_instance->optionChanged(SettingsManager::Network_ProxyOption, SettingsManager::getValue(SettingsManager::Network_ProxyOption));
-	m_instance->optionChanged(SettingsManager::Network_WorkOfflineOption, SettingsManager::getValue(SettingsManager::Network_WorkOfflineOption));
-	m_instance->optionChanged(SettingsManager::Security_CiphersOption, SettingsManager::getValue(SettingsManager::Security_CiphersOption));
+	m_instance->handleOptionChanged(SettingsManager::Network_AcceptLanguageOption, SettingsManager::getValue(SettingsManager::Network_AcceptLanguageOption));
+	m_instance->handleOptionChanged(SettingsManager::Network_DoNotTrackPolicyOption, SettingsManager::getValue(SettingsManager::Network_DoNotTrackPolicyOption));
+	m_instance->handleOptionChanged(SettingsManager::Network_EnableReferrerOption, SettingsManager::getValue(SettingsManager::Network_EnableReferrerOption));
+	m_instance->handleOptionChanged(SettingsManager::Network_ProxyOption, SettingsManager::getValue(SettingsManager::Network_ProxyOption));
+	m_instance->handleOptionChanged(SettingsManager::Network_WorkOfflineOption, SettingsManager::getValue(SettingsManager::Network_WorkOfflineOption));
+	m_instance->handleOptionChanged(SettingsManager::Security_CiphersOption, SettingsManager::getValue(SettingsManager::Security_CiphersOption));
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), m_instance, SLOT(optionChanged(int,QVariant)));
-}
-
-void NetworkManagerFactory::optionChanged(int identifier, const QVariant &value)
-{
-	switch (identifier)
-	{
-		case SettingsManager::Network_AcceptLanguageOption:
-			m_acceptLanguage = ((value.toString().isEmpty()) ? QLatin1String(" ") : value.toString().replace(QLatin1String("system"), QLocale::system().bcp47Name()));
-
-			break;
-		case SettingsManager::Network_DoNotTrackPolicyOption:
-			{
-				const QString policyValue(value.toString());
-
-				if (policyValue == QLatin1String("allow"))
-				{
-					m_doNotTrackPolicy = AllowToTrackPolicy;
-				}
-				else if (policyValue == QLatin1String("doNotAllow"))
-				{
-					m_doNotTrackPolicy = DoNotAllowToTrackPolicy;
-				}
-				else
-				{
-					m_doNotTrackPolicy = SkipTrackPolicy;
-				}
-			}
-
-			break;
-		case SettingsManager::Network_EnableReferrerOption:
-			m_canSendReferrer = value.toBool();
-
-			break;
-		case SettingsManager::Network_ProxyOption:
-			m_proxyFactory->setProxy(value.toString());
-
-			break;
-		case SettingsManager::Network_WorkOfflineOption:
-			m_isWorkingOffline = value.toBool();
-
-			break;
-		case SettingsManager::Security_CiphersOption:
-			if (value.toString() == QLatin1String("default"))
-			{
-				QSslSocket::setDefaultCiphers(m_defaultCiphers);
-			}
-			else
-			{
-				const QStringList selectedCiphers(value.toStringList());
-				QList<QSslCipher> ciphers;
-
-				for (int i = 0; i < selectedCiphers.count(); ++i)
-				{
-					const QSslCipher cipher(selectedCiphers.at(i));
-
-					if (!cipher.isNull())
-					{
-						ciphers.append(cipher);
-					}
-				}
-
-				QSslSocket::setDefaultCiphers(ciphers);
-			}
-
-			break;
-		default:
-			break;
-	}
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), m_instance, SLOT(handleOptionChanged(int,QVariant)));
 }
 
 void NetworkManagerFactory::clearCookies(int period)
@@ -525,6 +457,74 @@ void NetworkManagerFactory::readUserAgent(const QJsonValue &value, UserAgentDefi
 	}
 
 	parent->children.append(identifier);
+}
+
+void NetworkManagerFactory::handleOptionChanged(int identifier, const QVariant &value)
+{
+	switch (identifier)
+	{
+		case SettingsManager::Network_AcceptLanguageOption:
+			m_acceptLanguage = ((value.toString().isEmpty()) ? QLatin1String(" ") : value.toString().replace(QLatin1String("system"), QLocale::system().bcp47Name()));
+
+			break;
+		case SettingsManager::Network_DoNotTrackPolicyOption:
+			{
+				const QString policyValue(value.toString());
+
+				if (policyValue == QLatin1String("allow"))
+				{
+					m_doNotTrackPolicy = AllowToTrackPolicy;
+				}
+				else if (policyValue == QLatin1String("doNotAllow"))
+				{
+					m_doNotTrackPolicy = DoNotAllowToTrackPolicy;
+				}
+				else
+				{
+					m_doNotTrackPolicy = SkipTrackPolicy;
+				}
+			}
+
+			break;
+		case SettingsManager::Network_EnableReferrerOption:
+			m_canSendReferrer = value.toBool();
+
+			break;
+		case SettingsManager::Network_ProxyOption:
+			m_proxyFactory->setProxy(value.toString());
+
+			break;
+		case SettingsManager::Network_WorkOfflineOption:
+			m_isWorkingOffline = value.toBool();
+
+			break;
+		case SettingsManager::Security_CiphersOption:
+			if (value.toString() == QLatin1String("default"))
+			{
+				QSslSocket::setDefaultCiphers(m_defaultCiphers);
+			}
+			else
+			{
+				const QStringList selectedCiphers(value.toStringList());
+				QList<QSslCipher> ciphers;
+
+				for (int i = 0; i < selectedCiphers.count(); ++i)
+				{
+					const QSslCipher cipher(selectedCiphers.at(i));
+
+					if (!cipher.isNull())
+					{
+						ciphers.append(cipher);
+					}
+				}
+
+				QSslSocket::setDefaultCiphers(ciphers);
+			}
+
+			break;
+		default:
+			break;
+	}
 }
 
 void NetworkManagerFactory::notifyAuthenticated(QAuthenticator *authenticator, bool wasAccepted)
