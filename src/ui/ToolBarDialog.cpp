@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -348,6 +348,12 @@ void ToolBarDialog::editEntry()
 			optionNameWidget->setChoices(SettingsManager::getOptions());
 
 			widgets.append(qMakePair(tr("Option:"), optionNameWidget));
+
+			OptionWidget *scopeWidget(new OptionWidget(QLatin1String("scope"), options.value(QLatin1String("scope")), SettingsManager::BooleanType, this));
+			scopeWidget->setChoices(QList<OptionWidget::EnumerationChoice>{{tr("Global"), QLatin1String("global"), QIcon()}, {tr("Tab"), QLatin1String("window"), QIcon()}});
+			scopeWidget->setDefaultValue(QLatin1String("window"));
+
+			widgets.append(qMakePair(tr("Scope:"), scopeWidget));
 
 			textOptionWidget->setDefaultValue(options.value(QLatin1String("optionName"), choices.first()).toString().section(QLatin1Char('/'), -1));
 

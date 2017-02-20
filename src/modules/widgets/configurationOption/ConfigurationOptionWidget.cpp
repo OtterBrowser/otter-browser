@@ -1,5 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -21,6 +22,7 @@
 #include "../../../core/ActionsManager.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../ui/OptionWidget.h"
+#include "../../../ui/ToolBarWidget.h"
 
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
@@ -28,8 +30,10 @@
 namespace Otter
 {
 
-ConfigurationOptionWidget::ConfigurationOptionWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent) : QWidget(parent),
+ConfigurationOptionWidget::ConfigurationOptionWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent) : QWidget(parent),
 	m_optionWidget(nullptr),
+	m_window(window),
+	m_scope(WindowScope),
 	m_identifier(SettingsManager::getOptionIdentifier(definition.options.value(QLatin1String("optionName")).toString()))
 {
 	QHBoxLayout *layout(new QHBoxLayout(this));
@@ -42,6 +46,11 @@ ConfigurationOptionWidget::ConfigurationOptionWidget(const ActionsManager::Actio
 		layout->addWidget(new QLabel(tr("Choose option"), this));
 
 		return;
+	}
+
+	if (definition.options.value(QLatin1String("scope")).toString() == QLatin1String("global"))
+	{
+		m_scope = GlobalScope;
 	}
 
 	QString text;
@@ -59,8 +68,9 @@ ConfigurationOptionWidget::ConfigurationOptionWidget(const ActionsManager::Actio
 	layout->addWidget(new QLabel(text, this));
 
 	const SettingsManager::OptionDefinition optionDefinition(SettingsManager::getOptionDefinition(m_identifier));
+	const QVariant value((m_scope == GlobalScope || !m_window) ? SettingsManager::getValue(m_identifier) : m_window->getOption(m_identifier));
 
-	m_optionWidget = new OptionWidget(key, SettingsManager::getValue(m_identifier), optionDefinition.type, this);
+	m_optionWidget = new OptionWidget(key, value, optionDefinition.type, this);
 	m_optionWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
 
 	if (optionDefinition.type == SettingsManager::EnumerationType)
@@ -70,11 +80,25 @@ ConfigurationOptionWidget::ConfigurationOptionWidget(const ActionsManager::Actio
 
 	layout->addWidget(m_optionWidget);
 
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(optionChanged(int,QVariant)));
+	if (m_scope == WindowScope)
+	{
+		setWindow(window);
+
+		ToolBarWidget *toolBar(qobject_cast<ToolBarWidget*>(parent));
+
+		if (toolBar && toolBar->getIdentifier() != ToolBarsManager::NavigationBar)
+		{
+			connect(toolBar, SIGNAL(windowChanged(Window*)), this, SLOT(setWindow(Window*)));
+		}
+
+		connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant,QUrl)), this, SLOT(updateValue(int)));
+	}
+
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 	connect(m_optionWidget, SIGNAL(commitData(QWidget*)), this, SLOT(save()));
 }
 
-void ConfigurationOptionWidget::optionChanged(int option, const QVariant &value)
+void ConfigurationOptionWidget::handleOptionChanged(int option, const QVariant &value)
 {
 	if (option == m_identifier)
 	{
@@ -82,9 +106,42 @@ void ConfigurationOptionWidget::optionChanged(int option, const QVariant &value)
 	}
 }
 
+void ConfigurationOptionWidget::updateValue(int option)
+{
+	if (option == m_identifier && m_window)
+	{
+		m_optionWidget->setValue(m_window->getOption(m_identifier));
+	}
+}
+
+void ConfigurationOptionWidget::setWindow(Window *window)
+{
+	if (m_window && !m_window->isAboutToClose())
+	{
+		disconnect(m_window, SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	}
+
+	m_window = window;
+
+	m_optionWidget->setEnabled(m_window != nullptr);
+	m_optionWidget->setValue(m_window ? m_window->getOption(m_identifier) : SettingsManager::getValue(m_identifier));
+
+	if (window)
+	{
+		connect(m_window, SIGNAL(optionChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
+	}
+}
+
 void ConfigurationOptionWidget::save()
 {
-	SettingsManager::setValue(m_identifier, m_optionWidget->getValue());
+	if (m_scope == GlobalScope)
+	{
+		SettingsManager::setValue(m_identifier, m_optionWidget->getValue());
+	}
+	else if (m_window)
+	{
+		m_window->setOption(m_identifier, m_optionWidget->getValue());
+	}
 }
 
 }

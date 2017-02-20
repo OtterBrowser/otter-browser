@@ -1,5 +1,6 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
+* Copyright (C) 2013 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
 * Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
@@ -21,6 +22,7 @@
 #define OTTER_CONFIGURATIONOPTIONWIDGET_H
 
 #include "../../../core/ActionsManager.h"
+#include "../../../ui/Window.h"
 
 #include <QtWidgets/QWidget>
 
@@ -34,14 +36,25 @@ class ConfigurationOptionWidget : public QWidget
 	Q_OBJECT
 
 public:
-	explicit ConfigurationOptionWidget(const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = 0);
+	explicit ConfigurationOptionWidget(Window *window, const ActionsManager::ActionEntryDefinition &definition, QWidget *parent = nullptr);
+
+protected:
+	enum OptionScope
+	{
+		WindowScope = 0,
+		GlobalScope
+	};
 
 protected slots:
-	void optionChanged(int option, const QVariant &value);
+	void handleOptionChanged(int option, const QVariant &value);
+	void updateValue(int option);
+	void setWindow(Window *window);
 	void save();
 
 private:
 	OptionWidget *m_optionWidget;
+	QPointer<Window> m_window;
+	OptionScope m_scope;
 	int m_identifier;
 };
 
