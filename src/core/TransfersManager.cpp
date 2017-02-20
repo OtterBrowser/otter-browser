@@ -123,7 +123,7 @@ Transfer::Transfer(const QNetworkRequest &request, const QString &target, Transf
 
 Transfer::Transfer(QNetworkReply *reply, const QString &target, TransferOptions options, QObject *parent) : QObject(parent ? parent : TransfersManager::getInstance()),
 	m_reply(reply),
-	m_source(m_reply->url().adjusted(QUrl::RemovePassword | QUrl::PreferLocalFile)),
+	m_source((m_reply->url().isValid() ? m_reply->url() : m_reply->request().url()).adjusted(QUrl::RemovePassword | QUrl::PreferLocalFile)),
 	m_target(target),
 	m_speed(0),
 	m_bytesStart(0),
