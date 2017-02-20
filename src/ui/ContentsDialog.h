@@ -66,7 +66,7 @@ private:
 signals:
 	void accepted();
 	void rejected();
-	void finished();
+	void finished(int result);
 };
 
 }

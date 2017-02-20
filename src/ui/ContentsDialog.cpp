@@ -207,7 +207,7 @@ void ContentsDialog::closeEvent(QCloseEvent *event)
 		emit rejected();
 	}
 
-	emit finished();
+	emit finished(m_isAccepted ? QDialog::Accepted : QDialog::Rejected);
 
 	event->accept();
 }

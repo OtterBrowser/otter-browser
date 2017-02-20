@@ -181,7 +181,7 @@ void ContentsWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 		m_layer->raise();
 	}
 
-	connect(dialog, SIGNAL(finished()), this, SLOT(cleanupDialog()));
+	connect(dialog, SIGNAL(finished(int)), this, SLOT(cleanupDialog()));
 
 	dialog->setParent(m_layer);
 	dialog->show();
@@ -195,7 +195,7 @@ void ContentsWidget::showDialog(ContentsDialog *dialog, bool lockEventLoop)
 	{
 		QEventLoop eventLoop;
 
-		connect(dialog, SIGNAL(finished()), &eventLoop, SLOT(quit()));
+		connect(dialog, SIGNAL(finished(int)), &eventLoop, SLOT(quit()));
 		connect(this, SIGNAL(destroyed()), &eventLoop, SLOT(quit()));
 
 		eventLoop.exec();
