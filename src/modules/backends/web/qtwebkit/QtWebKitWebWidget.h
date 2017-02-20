@@ -156,7 +156,7 @@ protected slots:
 	void linkHovered(const QString &link);
 	void openFormRequest();
 	void viewSourceReplyFinished(QNetworkReply::NetworkError error = QNetworkReply::NoError);
-	void hnadleOptionChanged(int identifier, const QVariant &value);
+	void handleOptionChanged(int identifier, const QVariant &value);
 	void handleLoadProgress(int progress);
 	void handlePrintRequest(QWebFrame *frame);
 	void handleWindowCloseRequest();

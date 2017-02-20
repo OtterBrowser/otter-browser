@@ -128,14 +128,14 @@ QtWebKitWebWidget::QtWebKitWebWidget(bool isPrivate, WebBackend *backend, QtWebK
 
 	QShortcut *selectAllShortcut(new QShortcut(QKeySequence(QKeySequence::SelectAll), this, 0, 0, Qt::WidgetWithChildrenShortcut));
 
-	hnadleOptionChanged(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption, SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption));
-	hnadleOptionChanged(SettingsManager::Content_BackgroundColorOption, SettingsManager::getValue(SettingsManager::Content_BackgroundColorOption));
-	hnadleOptionChanged(SettingsManager::History_BrowsingLimitAmountWindowOption, SettingsManager::getValue(SettingsManager::History_BrowsingLimitAmountWindowOption));
+	handleOptionChanged(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption, SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption));
+	handleOptionChanged(SettingsManager::Content_BackgroundColorOption, SettingsManager::getValue(SettingsManager::Content_BackgroundColorOption));
+	handleOptionChanged(SettingsManager::History_BrowsingLimitAmountWindowOption, SettingsManager::getValue(SettingsManager::History_BrowsingLimitAmountWindowOption));
 	updateEditActions();
 	setZoom(SettingsManager::getValue(SettingsManager::Content_DefaultZoomOption).toInt());
 
 	connect(BookmarksManager::getModel(), SIGNAL(modelModified()), this, SLOT(updateBookmarkActions()));
-	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(hnadleOptionChanged(int,QVariant)));
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 	connect(m_page, SIGNAL(aboutToNavigate(QUrl,QWebFrame*,QWebPage::NavigationType)), this, SLOT(navigating(QUrl,QWebFrame*,QWebPage::NavigationType)));
 	connect(m_page, SIGNAL(requestedNewWindow(WebWidget*,WindowsManager::OpenHints)), this, SIGNAL(requestedNewWindow(WebWidget*,WindowsManager::OpenHints)));
 	connect(m_page, SIGNAL(requestedPopupWindow(QUrl,QUrl)), this, SIGNAL(requestedPopupWindow(QUrl,QUrl)));
@@ -542,7 +542,7 @@ void QtWebKitWebWidget::viewSourceReplyFinished(QNetworkReply::NetworkError erro
 	reply->deleteLater();
 }
 
-void QtWebKitWebWidget::hnadleOptionChanged(int identifier, const QVariant &value)
+void QtWebKitWebWidget::handleOptionChanged(int identifier, const QVariant &value)
 {
 	if (identifier == SettingsManager::Permissions_ScriptsCanShowStatusMessagesOption)
 	{
