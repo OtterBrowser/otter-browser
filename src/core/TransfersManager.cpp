@@ -177,8 +177,10 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 		return;
 	}
 
+	const QMimeDatabase mimeDatabase;
+
 	m_reply = reply;
-	m_mimeType = QMimeDatabase().mimeTypeForName(m_reply->header(QNetworkRequest::ContentTypeHeader).toString());
+	m_mimeType = mimeDatabase.mimeTypeForName(m_reply->header(QNetworkRequest::ContentTypeHeader).toString());
 
 	QString temporaryFileName(getSuggestedFileName());
 
@@ -188,10 +190,15 @@ void Transfer::start(QNetworkReply *reply, const QString &target)
 	}
 	else if (temporaryFileName.contains(QLatin1Char('.')))
 	{
-		QStringList parts(temporaryFileName.split(QLatin1Char('.')));
-		parts[parts.count() - 2].append(QLatin1String("-XXXXXX"));
+		const QString suffix(mimeDatabase.suffixForFileName(temporaryFileName));
+		int position(temporaryFileName.lastIndexOf(QLatin1Char('.')));
 
-		temporaryFileName = parts.join(QLatin1Char('.'));
+		if (!suffix.isEmpty() && temporaryFileName.endsWith(suffix, Qt::CaseInsensitive))
+		{
+			position = (temporaryFileName.length() - suffix.length() - 1);
+		}
+
+		temporaryFileName = temporaryFileName.insert(position, QLatin1String("-XXXXXX"));
 	}
 
 	m_device = new QTemporaryFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QDir::separator() + temporaryFileName, this);
