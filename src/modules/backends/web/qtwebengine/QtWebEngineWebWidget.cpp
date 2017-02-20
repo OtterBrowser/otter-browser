@@ -1029,7 +1029,7 @@ void QtWebEngineWebWidget::handleAuthenticationRequired(const QUrl &url, QAuthen
 
 	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, this);
 
-	connect(&dialog, SIGNAL(accepted()), authenticationDialog, SLOT(accept()));
+	connect(&dialog, SIGNAL(accepted(bool)), authenticationDialog, SLOT(accept()));
 	connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
 	showDialog(&dialog);
@@ -1044,7 +1044,7 @@ void QtWebEngineWebWidget::handleProxyAuthenticationRequired(const QUrl &url, QA
 
 	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, this);
 
-	connect(&dialog, SIGNAL(accepted()), authenticationDialog, SLOT(accept()));
+	connect(&dialog, SIGNAL(accepted(bool)), authenticationDialog, SLOT(accept()));
 	connect(this, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 
 	showDialog(&dialog);

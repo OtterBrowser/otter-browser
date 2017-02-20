@@ -278,7 +278,7 @@ void QtWebKitNetworkManager::handleAuthenticationRequired(QNetworkReply *reply, 
 
 	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, m_widget);
 
-	connect(&dialog, SIGNAL(accepted()), authenticationDialog, SLOT(accept()));
+	connect(&dialog, SIGNAL(accepted(bool)), authenticationDialog, SLOT(accept()));
 	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 	connect(NetworkManagerFactory::getInstance(), SIGNAL(authenticated(QAuthenticator*,bool)), authenticationDialog, SLOT(authenticated(QAuthenticator*,bool)));
 
@@ -303,7 +303,7 @@ void QtWebKitNetworkManager::handleProxyAuthenticationRequired(const QNetworkPro
 
 	ContentsDialog dialog(ThemesManager::getIcon(QLatin1String("dialog-password")), authenticationDialog->windowTitle(), QString(), QString(), (QDialogButtonBox::Ok | QDialogButtonBox::Cancel), authenticationDialog, m_widget);
 
-	connect(&dialog, SIGNAL(accepted()), authenticationDialog, SLOT(accept()));
+	connect(&dialog, SIGNAL(accepted(bool)), authenticationDialog, SLOT(accept()));
 	connect(m_widget, SIGNAL(aboutToReload()), &dialog, SLOT(close()));
 	connect(NetworkManagerFactory::getInstance(), SIGNAL(authenticated(QAuthenticator*,bool)), authenticationDialog, SLOT(authenticated(QAuthenticator*,bool)));
 

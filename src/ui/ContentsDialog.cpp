@@ -150,8 +150,8 @@ ContentsDialog::ContentsDialog(const QIcon &icon, const QString &title, const QS
 
 			if (dialog)
 			{
-				connect(this, SIGNAL(accepted()), dialog, SLOT(accept()));
-				connect(this, SIGNAL(rejected()), dialog, SLOT(reject()));
+				connect(this, SIGNAL(accepted(bool)), dialog, SLOT(accept()));
+				connect(this, SIGNAL(rejected(bool)), dialog, SLOT(reject()));
 				connect(dialog, &QDialog::finished, [&](int result)
 				{
 					m_isAccepted = (result == QDialog::Accepted);
@@ -198,16 +198,18 @@ void ContentsDialog::showEvent(QShowEvent *event)
 
 void ContentsDialog::closeEvent(QCloseEvent *event)
 {
+	const bool isChecked(getCheckBoxState());
+
 	if (m_isAccepted)
 	{
-		emit accepted();
+		emit accepted(isChecked);
 	}
 	else
 	{
-		emit rejected();
+		emit rejected(isChecked);
 	}
 
-	emit finished(m_isAccepted ? QDialog::Accepted : QDialog::Rejected);
+	emit finished((m_isAccepted ? QDialog::Accepted : QDialog::Rejected), isChecked);
 
 	event->accept();
 }

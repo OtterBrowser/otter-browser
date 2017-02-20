@@ -64,9 +64,9 @@ private:
 	bool m_isAccepted;
 
 signals:
-	void accepted();
-	void rejected();
-	void finished(int result);
+	void accepted(bool isChecked);
+	void rejected(bool isChecked);
+	void finished(int result, bool isChecked);
 };
 
 }
