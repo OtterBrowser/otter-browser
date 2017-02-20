@@ -50,6 +50,8 @@ ToolBarsManager::ToolBarsManager(QObject *parent) : QObject(parent),
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Progress Bar"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Sidebar"))
 	Q_UNUSED(QT_TRANSLATE_NOOP("actions", "Status Bar"))
+
+	connect(SettingsManager::getInstance(), SIGNAL(valueChanged(int,QVariant)), this, SLOT(handleOptionChanged(int,QVariant)));
 }
 
 void ToolBarsManager::createInstance(QObject *parent)
@@ -207,16 +209,6 @@ void ToolBarsManager::timerEvent(QTimerEvent *event)
 	}
 }
 
-void ToolBarsManager::optionChanged(const QString &key, const QVariant &value)
-{
-	if (key == QLatin1String("Interface/LockToolBars"))
-	{
-		m_areToolBarsLocked = value.toBool();
-
-		emit toolBarsLockedChanged(m_areToolBarsLocked);
-	}
-}
-
 void ToolBarsManager::addToolBar()
 {
 	ToolBarDialog dialog;
@@ -349,6 +341,16 @@ void ToolBarsManager::resetToolBars()
 	emit m_instance->toolBarMoved(TabBar);
 
 	m_instance->scheduleSave();
+}
+
+void ToolBarsManager::handleOptionChanged(int identifier, const QVariant &value)
+{
+	if (identifier == SettingsManager::Interface_LockToolBarsOption)
+	{
+		m_areToolBarsLocked = value.toBool();
+
+		emit toolBarsLockedChanged(m_areToolBarsLocked);
+	}
 }
 
 void ToolBarsManager::setToolBar(ToolBarsManager::ToolBarDefinition definition)

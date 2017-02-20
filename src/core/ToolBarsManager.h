@@ -106,20 +106,19 @@ public slots:
 	void removeToolBar(int identifier = -1);
 
 protected:
+	explicit ToolBarsManager(QObject *parent = nullptr);
+
 	void timerEvent(QTimerEvent *event) override;
 	static QJsonValue encodeEntry(const ActionsManager::ActionEntryDefinition &definition);
 	static ActionsManager::ActionEntryDefinition decodeEntry(const QJsonValue &value);
 	static QHash<QString, ToolBarsManager::ToolBarDefinition> loadToolBars(const QString &path, bool isDefault);
 
 protected slots:
-	void optionChanged(const QString &key, const QVariant &value);
 	void scheduleSave();
+	void handleOptionChanged(int identifier, const QVariant &value);
 
 private:
 	int m_saveTimer;
-
-private:
-	explicit ToolBarsManager(QObject *parent = nullptr);
 
 	static ToolBarsManager *m_instance;
 	static QMap<int, QString> m_identifiers;
