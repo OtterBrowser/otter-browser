@@ -20,6 +20,7 @@
 #include "IniSettings.h"
 
 #include <QtCore/QFile>
+#include <QtCore/QSaveFile>
 #include <QtCore/QTextStream>
 
 namespace Otter
@@ -192,7 +193,7 @@ QStringList IniSettings::getKeys() const
 	return keys;
 }
 
-bool IniSettings::save(const QString &path)
+bool IniSettings::save(const QString &path, bool isAtomic)
 {
 	if (path.isEmpty() && m_path.isEmpty())
 	{
@@ -201,11 +202,22 @@ bool IniSettings::save(const QString &path)
 		return false;
 	}
 
-	QFile file(path.isEmpty() ? m_path : path);
+	QFileDevice *file(nullptr);
 
-	if (!file.open(QIODevice::WriteOnly))
+	if (isAtomic)
+	{
+		file = new QSaveFile(path.isEmpty() ? m_path : path);
+	}
+	else
+	{
+		file = new QFile(path.isEmpty() ? m_path : path);
+	}
+
+	if (!file->open(QIODevice::WriteOnly))
 	{
 		m_hasError = true;
+
+		file->deleteLater();
 
 		return false;
 	}
@@ -213,7 +225,7 @@ bool IniSettings::save(const QString &path)
 	m_hasError = false;
 
 	bool canAddNewLine(false);
-	QTextStream stream(&file);
+	QTextStream stream(file);
 	stream.setCodec("UTF-8");
 
 	if (!m_comment.isEmpty())
@@ -256,7 +268,18 @@ bool IniSettings::save(const QString &path)
 		}
 	}
 
-	file.close();
+	bool result(true);
+
+	if (isAtomic)
+	{
+		result = qobject_cast<QSaveFile*>(file)->commit();
+	}
+	else
+	{
+		file->close();
+	}
+
+	file->deleteLater();
 
 	return true;
 }

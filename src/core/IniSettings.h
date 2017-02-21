@@ -44,7 +44,7 @@ public:
 	QVariant getValue(const QString &key, const QVariant &fallback = QVariant()) const;
 	QStringList getGroups() const;
 	QStringList getKeys() const;
-	bool save(const QString &path = QString());
+	bool save(const QString &path = QString(), bool isAtomic = true);
 	bool hasError() const;
 
 private:
