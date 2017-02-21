@@ -17,8 +17,8 @@
 *
 **************************************************************************/
 
-#ifndef OTTER_SETTINGS_H
-#define OTTER_SETTINGS_H
+#ifndef OTTER_INISETTINGS_H
+#define OTTER_INISETTINGS_H
 
 #include <QtCore/QObject>
 #include <QtCore/QVariantMap>
@@ -26,13 +26,13 @@
 namespace Otter
 {
 
-class Settings : public QObject
+class IniSettings : public QObject
 {
 	Q_OBJECT
 
 public:
-	explicit Settings(QObject *parent = nullptr);
-	Settings(const QString &path, QObject *parent = nullptr);
+	explicit IniSettings(QObject *parent = nullptr);
+	IniSettings(const QString &path, QObject *parent = nullptr);
 
 	void clear();
 	void beginGroup(const QString &group);

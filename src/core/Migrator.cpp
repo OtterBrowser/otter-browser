@@ -18,8 +18,8 @@
 **************************************************************************/
 
 #include "Migrator.h"
+#include "IniSettings.h"
 #include "SessionsManager.h"
-#include "Settings.h"
 #include "SettingsManager.h"
 #include "ToolBarsManager.h"
 

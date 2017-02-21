@@ -19,8 +19,8 @@
 **************************************************************************/
 
 #include "GesturesManager.h"
+#include "IniSettings.h"
 #include "SessionsManager.h"
-#include "Settings.h"
 #include "SettingsManager.h"
 #include "../ui/MainWindow.h"
 
@@ -195,7 +195,7 @@ void GesturesManager::loadProfiles()
 
 	for (int i = 0; i < gestureProfiles.count(); ++i)
 	{
-		Settings profile(SessionsManager::getReadableDataPath(QLatin1String("mouse/") + gestureProfiles.at(i) + QLatin1String(".ini")));
+		IniSettings profile(SessionsManager::getReadableDataPath(QLatin1String("mouse/") + gestureProfiles.at(i) + QLatin1String(".ini")));
 		const QStringList contexts(profile.getGroups());
 
 		for (int j = 0; j < contexts.count(); ++j)

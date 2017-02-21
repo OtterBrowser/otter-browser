@@ -18,8 +18,8 @@
 **************************************************************************/
 
 #include "HandlersManager.h"
+#include "IniSettings.h"
 #include "SessionsManager.h"
-#include "Settings.h"
 #include "SettingsManager.h"
 
 #include <QtCore/QFile>
@@ -48,7 +48,7 @@ HandlersManager* HandlersManager::getInstance()
 
 HandlerDefinition HandlersManager::getHandler(const QString &type)
 {
-	Settings settings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
+	IniSettings settings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
 	HandlerDefinition definition;
 	definition.isExplicit = settings.getGroups().contains(type);
 
@@ -99,7 +99,7 @@ void HandlersManager::setHandler(const QString &type, const HandlerDefinition &d
 	}
 
 	const QString path(SessionsManager::getWritableDataPath(QLatin1String("handlers.ini")));
-	Settings settings(QFile::exists(path) ? path : SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
+	IniSettings settings(QFile::exists(path) ? path : SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
 	QString transferMode(QLatin1String("ask"));
 
 	if (definition.transferMode == IgnoreTransferMode)

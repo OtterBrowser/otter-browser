@@ -19,9 +19,9 @@
 **************************************************************************/
 
 #include "OperaSearchEnginesImporter.h"
+#include "../../../core/IniSettings.h"
 #include "../../../core/SearchEnginesManager.h"
 #include "../../../core/SessionsManager.h"
-#include "../../../core/Settings.h"
 #include "../../../core/SettingsManager.h"
 #include "../../../core/Utils.h"
 
@@ -117,7 +117,7 @@ ImportType OperaSearchEnginesImporter::getImportType() const
 
 bool OperaSearchEnginesImporter::import(const QString &path)
 {
-	Settings settings(getSuggestedPath(path), this);
+	IniSettings settings(getSuggestedPath(path), this);
 
 	if (m_optionsWidget->isChecked())
 	{

@@ -30,9 +30,9 @@
 #include "../core/ActionsManager.h"
 #include "../core/BookmarksManager.h"
 #include "../core/HandlersManager.h"
+#include "../core/IniSettings.h"
 #include "../core/NotesManager.h"
 #include "../core/SearchEnginesManager.h"
-#include "../core/Settings.h"
 #include "../core/SettingsManager.h"
 #include "../core/ThemesManager.h"
 #include "../core/TransfersManager.h"
@@ -1545,7 +1545,7 @@ QString WebWidget::getFastForwardScript(bool isSelectingTheBestLink)
 {
 	if (m_fastForwardScript.isEmpty())
 	{
-		Settings settings(SessionsManager::getReadableDataPath(QLatin1String("fastforward.ini")));
+		IniSettings settings(SessionsManager::getReadableDataPath(QLatin1String("fastforward.ini")));
 		QFile file(SessionsManager::getReadableDataPath(QLatin1String("fastforward.js")));
 
 		if (!file.open(QIODevice::ReadOnly))

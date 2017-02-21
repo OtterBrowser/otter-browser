@@ -21,8 +21,8 @@
 
 #include "ItemViewWidget.h"
 #include "ItemDelegate.h"
+#include "../core/IniSettings.h"
 #include "../core/SessionsManager.h"
-#include "../core/Settings.h"
 
 #include <QtCore/QTimer>
 #include <QtGui/QDropEvent>
@@ -351,7 +351,7 @@ void ItemViewWidget::ensureInitialized()
 		return;
 	}
 
-	Settings settings(SessionsManager::getReadableDataPath(QLatin1String("views.ini")));
+	IniSettings settings(SessionsManager::getReadableDataPath(QLatin1String("views.ini")));
 	settings.beginGroup(type);
 
 	setSort(settings.getValue(QLatin1String("sortColumn"), -1).toInt(), ((settings.getValue(QLatin1String("sortOrder"), QLatin1String("ascending")).toString() == QLatin1String("ascending")) ? Qt::AscendingOrder : Qt::DescendingOrder));
@@ -533,7 +533,7 @@ void ItemViewWidget::saveState()
 		return;
 	}
 
-	Settings settings(SessionsManager::getWritableDataPath(QLatin1String("views.ini")));
+	IniSettings settings(SessionsManager::getWritableDataPath(QLatin1String("views.ini")));
 	settings.beginGroup(type);
 
 	QStringList columns;

@@ -17,7 +17,7 @@
 *
 **************************************************************************/
 
-#include "Settings.h"
+#include "IniSettings.h"
 
 #include <QtCore/QFile>
 #include <QtCore/QTextStream>
@@ -25,12 +25,12 @@
 namespace Otter
 {
 
-Settings::Settings(QObject *parent) : QObject(parent),
+IniSettings::IniSettings(QObject *parent) : QObject(parent),
 	m_hasError(false)
 {
 }
 
-Settings::Settings(const QString &path, QObject *parent) : QObject(parent)
+IniSettings::IniSettings(const QString &path, QObject *parent) : QObject(parent)
 {
 	m_path = path;
 
@@ -93,17 +93,17 @@ Settings::Settings(const QString &path, QObject *parent) : QObject(parent)
 	file.close();
 }
 
-void Settings::clear()
+void IniSettings::clear()
 {
 	m_data.clear();
 }
 
-void Settings::beginGroup(const QString &group)
+void IniSettings::beginGroup(const QString &group)
 {
 	m_group = group;
 }
 
-void Settings::removeGroup(const QString &group)
+void IniSettings::removeGroup(const QString &group)
 {
 	if (m_data.contains(group))
 	{
@@ -116,17 +116,17 @@ void Settings::removeGroup(const QString &group)
 	}
 }
 
-void Settings::endGroup()
+void IniSettings::endGroup()
 {
 	m_group = QString();
 }
 
-void Settings::setComment(const QString &comment)
+void IniSettings::setComment(const QString &comment)
 {
 	m_comment = comment;
 }
 
-void Settings::setValue(const QString &key, const QVariant &value)
+void IniSettings::setValue(const QString &key, const QVariant &value)
 {
 	if (!m_group.isEmpty())
 	{
@@ -149,12 +149,12 @@ void Settings::setValue(const QString &key, const QVariant &value)
 	}
 }
 
-QString Settings::getComment() const
+QString IniSettings::getComment() const
 {
 	return m_comment;
 }
 
-QVariant Settings::getValue(const QString &key, const QVariant &fallback) const
+QVariant IniSettings::getValue(const QString &key, const QVariant &fallback) const
 {
 	if (m_data.contains(m_group) && m_data[m_group].contains(key))
 	{
@@ -164,12 +164,12 @@ QVariant Settings::getValue(const QString &key, const QVariant &fallback) const
 	return fallback;
 }
 
-QStringList Settings::getGroups() const
+QStringList IniSettings::getGroups() const
 {
 	return m_data.keys();
 }
 
-QStringList Settings::getKeys() const
+QStringList IniSettings::getKeys() const
 {
 	if (!m_group.isEmpty())
 	{
@@ -192,7 +192,7 @@ QStringList Settings::getKeys() const
 	return keys;
 }
 
-bool Settings::save(const QString &path)
+bool IniSettings::save(const QString &path)
 {
 	if (path.isEmpty() && m_path.isEmpty())
 	{
@@ -261,7 +261,7 @@ bool Settings::save(const QString &path)
 	return true;
 }
 
-bool Settings::hasError() const
+bool IniSettings::hasError() const
 {
 	return m_hasError;
 }

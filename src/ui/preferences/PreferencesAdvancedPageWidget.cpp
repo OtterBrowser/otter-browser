@@ -29,10 +29,10 @@
 #include "../../core/ActionsManager.h"
 #include "../../core/Application.h"
 #include "../../core/GesturesManager.h"
+#include "../../core/IniSettings.h"
 #include "../../core/JsonSettings.h"
 #include "../../core/NotificationsManager.h"
 #include "../../core/SessionsManager.h"
-#include "../../core/Settings.h"
 #include "../../core/SettingsManager.h"
 #include "../../core/ThemesManager.h"
 #include "../../core/Utils.h"
@@ -168,7 +168,7 @@ PreferencesAdvancedPageWidget::PreferencesAdvancedPageWidget(QWidget *parent) : 
 	QStandardItemModel *downloadsModel(new QStandardItemModel(this));
 	downloadsModel->setHorizontalHeaderLabels(QStringList(tr("Name")));
 
-	Settings handlersSettings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
+	IniSettings handlersSettings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
 	const QStringList handlers(handlersSettings.getGroups());
 
 	for (int i = 0; i < handlers.count(); ++i)
@@ -1563,7 +1563,7 @@ void PreferencesAdvancedPageWidget::save()
 	SettingsManager::setValue(SettingsManager::Permissions_EnablePluginsOption, m_ui->enablePluginsComboBox->currentData(Qt::UserRole).toString());
 	SettingsManager::setValue(SettingsManager::Content_UserStyleSheetOption, m_ui->userStyleSheetFilePathWidget->getPath());
 
-	Settings handlersSettings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
+	IniSettings handlersSettings(SessionsManager::getReadableDataPath(QLatin1String("handlers.ini")));
 	const QStringList handlers(handlersSettings.getGroups());
 
 	for (int i = 0; i < handlers.count(); ++i)
@@ -1651,7 +1651,7 @@ void PreferencesAdvancedPageWidget::save()
 			continue;
 		}
 
-		Settings settings(SessionsManager::getWritableDataPath(QLatin1String("keyboard/") + keyboardProfilesIterator.key() + QLatin1String(".ini")));
+		IniSettings settings(SessionsManager::getWritableDataPath(QLatin1String("keyboard/") + keyboardProfilesIterator.key() + QLatin1String(".ini")));
 		settings.clear();
 
 		QString comment;
@@ -1721,7 +1721,7 @@ void PreferencesAdvancedPageWidget::save()
 			continue;
 		}
 
-		Settings settings(SessionsManager::getWritableDataPath(QLatin1String("mouse/") + mouseProfilesIterator.key() + QLatin1String(".ini")));
+		IniSettings settings(SessionsManager::getWritableDataPath(QLatin1String("mouse/") + mouseProfilesIterator.key() + QLatin1String(".ini")));
 		settings.clear();
 
 		QString comment;
@@ -1843,7 +1843,7 @@ QStringList PreferencesAdvancedPageWidget::getSelectedUpdateChannels() const
 
 KeyboardProfile PreferencesAdvancedPageWidget::loadKeyboardProfile(const QString &identifier, bool loadShortcuts) const
 {
-	Settings settings(SessionsManager::getReadableDataPath(QLatin1String("keyboard/") + identifier + QLatin1String(".ini")));
+	IniSettings settings(SessionsManager::getReadableDataPath(QLatin1String("keyboard/") + identifier + QLatin1String(".ini")));
 	const QStringList comments(settings.getComment().split(QLatin1Char('\n')));
 	KeyboardProfile profile;
 	profile.identifier = identifier;
@@ -1916,7 +1916,7 @@ KeyboardProfile PreferencesAdvancedPageWidget::loadKeyboardProfile(const QString
 
 MouseProfile PreferencesAdvancedPageWidget::loadMouseProfile(const QString &identifier, bool loadGestures) const
 {
-	Settings settings(SessionsManager::getReadableDataPath(QLatin1String("mouse/") + identifier + QLatin1String(".ini")));
+	IniSettings settings(SessionsManager::getReadableDataPath(QLatin1String("mouse/") + identifier + QLatin1String(".ini")));
 	const QStringList comments(settings.getComment().split(QLatin1Char('\n')));
 	MouseProfile profile;
 	profile.identifier = identifier;

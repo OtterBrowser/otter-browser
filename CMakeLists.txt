@@ -112,6 +112,7 @@ set(otter_src
 	src/core/HistoryManager.cpp
 	src/core/HistoryModel.cpp
 	src/core/Importer.cpp
+	src/core/IniSettings.cpp
 	src/core/InputInterpreter.cpp
 	src/core/JsonSettings.cpp
 	src/core/LocalListingNetworkReply.cpp
@@ -131,7 +132,6 @@ set(otter_src
 	src/core/SearchSuggester.cpp
 	src/core/SessionModel.cpp
 	src/core/SessionsManager.cpp
-	src/core/Settings.cpp
 	src/core/SettingsManager.cpp
 	src/core/SpellCheckManager.cpp
 	src/core/ThemesManager.cpp

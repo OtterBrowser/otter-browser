@@ -19,8 +19,8 @@
 **************************************************************************/
 
 #include "OperaSessionImporter.h"
+#include "../../../core/IniSettings.h"
 #include "../../../core/SessionsManager.h"
-#include "../../../core/Settings.h"
 
 #include <QtCore/QDir>
 #include <QtCore/QStandardPaths>
@@ -105,7 +105,7 @@ ImportType OperaSessionImporter::getImportType() const
 bool OperaSessionImporter::import(const QString &path)
 {
 	QHash<int, SessionMainWindow*> mainWindows;
-	Settings originalSession(getSuggestedPath(path));
+	IniSettings originalSession(getSuggestedPath(path));
 	originalSession.beginGroup(QLatin1String("session"));
 
 	if (originalSession.getValue(QLatin1String("version")).toInt() == 0)
