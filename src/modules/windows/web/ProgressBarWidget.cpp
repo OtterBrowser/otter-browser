@@ -19,7 +19,6 @@
 
 #include "ProgressBarWidget.h"
 #include "WebContentsWidget.h"
-#include "../../../core/Utils.h"
 #include "../../../ui/ToolBarWidget.h"
 #include "../../../ui/WebWidget.h"
 #include "../../../ui/Window.h"

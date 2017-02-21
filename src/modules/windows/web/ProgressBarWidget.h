@@ -23,8 +23,6 @@
 #include "../../../core/WindowsManager.h"
 
 #include <QtWidgets/QFrame>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QProgressBar>
 
 namespace Otter
 {
