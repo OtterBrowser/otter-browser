@@ -143,6 +143,7 @@ protected:
 	bool canViewSource() const override;
 	bool isInspecting() const override;
 	bool isNavigating() const;
+	bool isPopup() const override;
 	bool isScrollBar(const QPoint &position) const override;
 
 protected slots:

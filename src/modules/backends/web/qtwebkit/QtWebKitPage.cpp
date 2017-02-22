@@ -748,6 +748,11 @@ bool QtWebKitPage::supportsExtension(QWebPage::Extension extension) const
 	return (extension == QWebPage::ChooseMultipleFilesExtension || extension == QWebPage::ErrorPageExtension);
 }
 
+bool QtWebKitPage::isPopup() const
+{
+	return m_isPopup;
+}
+
 bool QtWebKitPage::isViewingMedia() const
 {
 	return m_isViewingMedia;

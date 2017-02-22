@@ -38,6 +38,7 @@ class QtWebEnginePage : public QWebEnginePage
 public:
 	explicit QtWebEnginePage(bool isPrivate, QtWebEngineWebWidget *parent);
 
+	bool isPopup() const;
 	bool isViewingMedia() const;
 
 protected:

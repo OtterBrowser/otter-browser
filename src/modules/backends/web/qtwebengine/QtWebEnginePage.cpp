@@ -451,6 +451,11 @@ bool QtWebEnginePage::javaScriptPrompt(const QUrl &url, const QString &message, 
 	return dialog.isAccepted();
 }
 
+bool QtWebEnginePage::isPopup() const
+{
+	return m_isPopup;
+}
+
 bool QtWebEnginePage::isViewingMedia() const
 {
 	return m_isViewingMedia;

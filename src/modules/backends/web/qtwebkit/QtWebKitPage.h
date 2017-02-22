@@ -69,6 +69,7 @@ public:
 	bool extension(Extension extension, const ExtensionOption *option = nullptr, ExtensionReturn *output = nullptr) override;
 	bool shouldInterruptJavaScript() override;
 	bool supportsExtension(Extension extension) const override;
+	bool isPopup() const;
 	bool isViewingMedia() const;
 
 public slots:

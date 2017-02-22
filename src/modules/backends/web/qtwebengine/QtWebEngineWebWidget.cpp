@@ -1749,6 +1749,11 @@ bool QtWebEngineWebWidget::isFullScreen() const
 	return m_isFullScreen;
 }
 
+bool QtWebEngineWebWidget::isPopup() const
+{
+	return m_page->isPopup();
+}
+
 bool QtWebEngineWebWidget::isPrivate() const
 {
 	return m_page->profile()->isOffTheRecord();

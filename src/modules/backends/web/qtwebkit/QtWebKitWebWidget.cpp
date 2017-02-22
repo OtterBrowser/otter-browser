@@ -2633,11 +2633,6 @@ bool QtWebKitWebWidget::isFullScreen() const
 	return m_isFullScreen;
 }
 
-bool QtWebKitWebWidget::isPrivate() const
-{
-	return m_webView->settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled);
-}
-
 bool QtWebKitWebWidget::isInspecting() const
 {
 	return (m_inspector && m_inspector->isVisible());
@@ -2646,6 +2641,16 @@ bool QtWebKitWebWidget::isInspecting() const
 bool QtWebKitWebWidget::isNavigating() const
 {
 	return m_isNavigating;
+}
+
+bool QtWebKitWebWidget::isPopup() const
+{
+	return m_page->isPopup();
+}
+
+bool QtWebKitWebWidget::isPrivate() const
+{
+	return m_webView->settings()->testAttribute(QWebSettings::PrivateBrowsingEnabled);
 }
 
 bool QtWebKitWebWidget::isScrollBar(const QPoint &position) const
