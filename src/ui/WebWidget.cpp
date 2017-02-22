@@ -496,6 +496,13 @@ void WebWidget::handleToolTipEvent(QHelpEvent *event, QWidget *widget)
 
 void WebWidget::handleWindowCloseRequest()
 {
+	if (isPopup() && SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanCloseSelfOpenedWindowsOption, getUrl()).toBool())
+	{
+		emit requestedCloseWindow();
+
+		return;
+	}
+
 	const QString mode(SettingsManager::getValue(SettingsManager::Permissions_ScriptsCanCloseWindowsOption, getUrl()).toString());
 
 	if (mode != QLatin1String("ask"))
