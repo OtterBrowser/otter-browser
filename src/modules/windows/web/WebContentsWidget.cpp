@@ -68,7 +68,6 @@ WebContentsWidget::WebContentsWidget(bool isPrivate, WebWidget *widget, Window *
 	m_popupsBarWidget(nullptr),
 	m_scrollMode(NoScroll),
 	m_createStartPageTimer(0),
-	m_deleteStartPageTimer(0),
 	m_quickFindTimer(0),
 	m_scrollTimer(0),
 	m_isTabPreferencesMenuVisible(false),
@@ -96,31 +95,6 @@ void WebContentsWidget::timerEvent(QTimerEvent *event)
 		m_createStartPageTimer = 0;
 
 		handleUrlChange(m_webWidget->getRequestedUrl());
-	}
-	else if (event->timerId() == m_deleteStartPageTimer)
-	{
-		killTimer(m_deleteStartPageTimer);
-
-		m_deleteStartPageTimer = 0;
-
-		if (m_startPageWidget)
-		{
-			layout()->removeWidget(m_startPageWidget);
-
-			m_startPageWidget->hide();
-			m_startPageWidget->deleteLater();
-			m_startPageWidget = nullptr;
-
-			if (GesturesManager::isTracking() && GesturesManager::getTrackedObject() == m_startPageWidget && m_webWidget)
-			{
-				GesturesManager::continueGesture(m_webWidget->getViewport());
-			}
-		}
-
-		if (m_webWidget)
-		{
-			m_webWidget->setFocus();
-		}
 	}
 	else if (event->timerId() == m_quickFindTimer && m_searchBarWidget)
 	{
@@ -603,7 +577,7 @@ void WebContentsWidget::triggerAction(int identifier, const QVariantMap &paramet
 		default:
 			if (!parameters.contains(QLatin1String("isBounced")))
 			{
-				if (m_startPageWidget && m_deleteStartPageTimer == 0)
+				if (m_startPageWidget)
 				{
 					switch (identifier)
 					{
@@ -688,7 +662,7 @@ void WebContentsWidget::closePopupsBar()
 
 void WebContentsWidget::scrollContents(const QPoint &delta)
 {
-	if (m_startPageWidget && m_deleteStartPageTimer == 0)
+	if (m_startPageWidget)
 	{
 		m_startPageWidget->scrollContents(delta);
 	}
@@ -746,12 +720,6 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 			m_startPageWidget = new StartPageWidget(m_window);
 			m_startPageWidget->setParent(this);
 		}
-		else if (m_deleteStartPageTimer != 0)
-		{
-			killTimer(m_deleteStartPageTimer);
-
-			m_deleteStartPageTimer = 0;
-		}
 
 		if (m_layout->indexOf(m_startPageWidget) < 0)
 		{
@@ -793,9 +761,20 @@ void WebContentsWidget::handleUrlChange(const QUrl &url)
 				GesturesManager::continueGesture(m_webWidget->getViewport());
 			}
 
-			if (m_deleteStartPageTimer == 0)
+			layout()->removeWidget(m_startPageWidget);
+
+			m_startPageWidget->hide();
+			m_startPageWidget->markForDeletion();
+			m_startPageWidget = nullptr;
+
+			if (GesturesManager::isTracking() && GesturesManager::getTrackedObject() == m_startPageWidget && m_webWidget)
 			{
-				m_deleteStartPageTimer = startTimer(250);
+				GesturesManager::continueGesture(m_webWidget->getViewport());
+			}
+
+			if (m_webWidget)
+			{
+				m_webWidget->setFocus();
 			}
 		}
 	}

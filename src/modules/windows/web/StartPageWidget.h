@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -69,11 +69,13 @@ public:
 
 	void triggerAction(int identifier, const QVariantMap &parameters = QVariantMap());
 	void scrollContents(const QPoint &delta);
+	void markForDeletion();
 	QPixmap getThumbnail();
 	bool event(QEvent *event) override;
 	bool eventFilter(QObject *object, QEvent *event) override;
 
 protected:
+	void timerEvent(QTimerEvent *event) override;
 	void resizeEvent(QResizeEvent *event) override;
 	void contextMenuEvent(QContextMenuEvent *event) override;
 	void wheelEvent(QWheelEvent *event) override;
@@ -101,6 +103,7 @@ private:
 	QPixmap m_thumbnail;
 	QTime m_urlOpenTime;
 	QModelIndex m_currentIndex;
+	int m_deleteTimer;
 	bool m_ignoreEnter;
 
 	static StartPageModel *m_model;

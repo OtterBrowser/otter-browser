@@ -1,7 +1,7 @@
 /**************************************************************************
 * Otter Browser: Web browser controlled by the user, not vice-versa.
 * Copyright (C) 2015 - 2017 Michal Dutkiewicz aka Emdek <michal@emdek.pl>
-* Copyright (C) 2016 Piotr Wójcik <chocimier@tlen.pl>
+* Copyright (C) 2016 - 2017 Piotr Wójcik <chocimier@tlen.pl>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -164,6 +164,7 @@ StartPageWidget::StartPageWidget(Window *parent) : QScrollArea(parent),
 	m_contentsWidget(new StartPageContentsWidget(this)),
 	m_listView(new QListView(this)),
 	m_searchWidget(nullptr),
+	m_deleteTimer(0),
 	m_ignoreEnter(false)
 {
 	if (!m_model)
@@ -206,6 +207,18 @@ StartPageWidget::~StartPageWidget()
 #if QT_VERSION >= 0x050700
 	QDrag::cancel();
 #endif
+}
+
+void StartPageWidget::timerEvent(QTimerEvent *event)
+{
+	if (event->timerId() == m_deleteTimer && m_listView->findChildren<QDrag*>().isEmpty())
+	{
+		killTimer(m_deleteTimer);
+
+		m_deleteTimer = 0;
+
+		deleteLater();
+	}
 }
 
 void StartPageWidget::resizeEvent(QResizeEvent *event)
@@ -542,6 +555,14 @@ void StartPageWidget::removeTile()
 		}
 
 		bookmark->remove();
+	}
+}
+
+void StartPageWidget::markForDeletion()
+{
+	if (m_deleteTimer == 0)
+	{
+		m_deleteTimer = startTimer(250);
 	}
 }
 

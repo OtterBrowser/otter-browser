@@ -152,7 +152,6 @@ private:
 	QList<PermissionBarWidget*> m_permissionBarWidgets;
 	ScrollMode m_scrollMode;
 	int m_createStartPageTimer;
-	int m_deleteStartPageTimer;
 	int m_quickFindTimer;
 	int m_scrollTimer;
 	bool m_isTabPreferencesMenuVisible;
