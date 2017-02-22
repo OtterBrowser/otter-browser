@@ -183,6 +183,7 @@ void SettingsManager::createInstance(const QString &path, QObject *parent)
 	registerOption(Permissions_EnableWebglOption, true, BooleanType);
 	registerOption(Permissions_ScriptsCanAccessClipboardOption, false, BooleanType);
 	registerOption(Permissions_ScriptsCanChangeWindowGeometryOption, true, BooleanType);
+	registerOption(Permissions_ScriptsCanCloseSelfOpenedWindowsOption, true, BooleanType);
 	registerOption(Permissions_ScriptsCanCloseWindowsOption, QLatin1String("ask"), EnumerationType, QStringList({QLatin1String("ask"), QLatin1String("allow"), QLatin1String("disallow")}));
 	registerOption(Permissions_ScriptsCanOpenWindowsOption, QLatin1String("ask"), EnumerationType, QStringList({QLatin1String("ask"), QLatin1String("blockAll"), QLatin1String("openAll"), QLatin1String("openAllInBackground")}));
 	registerOption(Permissions_ScriptsCanReceiveRightClicksOption, true, BooleanType);

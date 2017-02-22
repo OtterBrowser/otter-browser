@@ -162,6 +162,7 @@ public:
 		Permissions_EnableWebglOption,
 		Permissions_ScriptsCanAccessClipboardOption,
 		Permissions_ScriptsCanChangeWindowGeometryOption,
+		Permissions_ScriptsCanCloseSelfOpenedWindowsOption,
 		Permissions_ScriptsCanCloseWindowsOption,
 		Permissions_ScriptsCanOpenWindowsOption,
 		Permissions_ScriptsCanReceiveRightClicksOption,

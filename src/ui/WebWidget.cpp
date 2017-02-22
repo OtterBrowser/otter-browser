@@ -1859,6 +1859,11 @@ bool WebWidget::isInspecting() const
 	return false;
 }
 
+bool WebWidget::isPopup() const
+{
+	return false;
+}
+
 bool WebWidget::isScrollBar(const QPoint &position) const
 {
 	Q_UNUSED(position)

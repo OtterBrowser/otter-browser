@@ -267,6 +267,7 @@ protected:
 	virtual bool canShowContextMenu(const QPoint &position) const;
 	virtual bool canViewSource() const;
 	virtual bool isInspecting() const;
+	virtual bool isPopup() const;
 	virtual bool isScrollBar(const QPoint &position) const;
 
 protected slots:
