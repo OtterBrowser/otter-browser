@@ -15,7 +15,7 @@ Selection of planned features:
 * [Mail client](https://github.com/OtterBrowser/otter-browser/issues/37)
 * RSS client
 
-A more complete list is available in the *TODO* file. Details on already implemented features are available in the *CHANGELOG* file.
+A more complete list is available in the *TODO* file. Details on already implemented features are available in the *CHANGELOG* file. If you have an idea that has not yet been proposed or refused, feel free to [open a new issue](https://github.com/OtterBrowser/otter-browser/issues/new).
 
 ## Install
 
