@@ -1,4 +1,5 @@
-# Otter Browser
+# ![Otter Browser logo](resources/icons/otter-browser-64.png) Otter Browser
+
 
 ## A browser controlled by the user, not vice-versa
 
