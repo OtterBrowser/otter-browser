@@ -297,6 +297,7 @@ void BookmarksModel::trashBookmark(BookmarksItem *bookmark)
 		else
 		{
 			BookmarksItem *trashItem(getTrashItem());
+			BookmarksItem *previousParent(dynamic_cast<BookmarksItem*>(bookmark->parent()));
 
 			m_trash[bookmark] = qMakePair(bookmark->parent()->index(), bookmark->row());
 
@@ -306,7 +307,7 @@ void BookmarksModel::trashBookmark(BookmarksItem *bookmark)
 			removeBookmarkUrl(bookmark);
 
 			emit bookmarkModified(bookmark);
-			emit bookmarkTrashed(bookmark);
+			emit bookmarkTrashed(bookmark, previousParent);
 			emit modelModified();
 		}
 	}
@@ -369,7 +370,7 @@ void BookmarksModel::removeBookmark(BookmarksItem *bookmark)
 		m_keywords.remove(bookmark->data(KeywordRole).toString());
 	}
 
-	emit bookmarkRemoved(bookmark);
+	emit bookmarkRemoved(bookmark, dynamic_cast<BookmarksItem*>(bookmark->parent()));
 
 	bookmark->parent()->removeRow(bookmark->row());
 

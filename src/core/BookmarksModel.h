@@ -139,9 +139,9 @@ signals:
 	void bookmarkAdded(BookmarksItem *bookmark);
 	void bookmarkModified(BookmarksItem *bookmark);
 	void bookmarkMoved(BookmarksItem *bookmark, BookmarksItem *previousParent, int previousRow);
-	void bookmarkTrashed(BookmarksItem *bookmark);
+	void bookmarkTrashed(BookmarksItem *bookmark, BookmarksItem *previousParent);
 	void bookmarkRestored(BookmarksItem *bookmark);
-	void bookmarkRemoved(BookmarksItem *bookmark);
+	void bookmarkRemoved(BookmarksItem *bookmark, BookmarksItem *previousParent);
 	void modelModified();
 
 friend class BookmarksItem;
