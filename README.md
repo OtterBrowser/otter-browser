@@ -1,7 +1,7 @@
 # ![Otter Browser logo](resources/icons/otter-browser-64.png) Otter Browser
 
 
-## A browser controlled by the user, not vice-versa
+***A browser controlled by the user, not vice-versa***
 
 [**Otter Browser**](https://otter-browser.org/) aims to recreate the best aspects of **Opera 12** and to revive its spirit. We are working on providing the powerful features power users want while keeping the browser fast and lightweight. We also learned from History and decided to release the browser under the GNU GPL v3.
 
@@ -9,11 +9,11 @@ We have [an official forum](http://thedndsanctuary.eu/index.php?board=9.0) and t
 
 Selection of planned features:
 
-* Extensions support (WebExtensions like Chrome and Firefox)
-* Tab grouping (stacking *and* panorama)
-* Browser synchronisation
+* [Extensions support (WebExtensions like Chrome and Firefox)](https://github.com/OtterBrowser/otter-browser/issues/42)
+* Tab grouping ([stacking](https://github.com/OtterBrowser/otter-browser/issues/190) *and* [panorama](https://github.com/OtterBrowser/otter-browser/issues/6))
+* [Browser synchronisation](https://github.com/OtterBrowser/otter-browser/issues/307)
+* [Mail client](https://github.com/OtterBrowser/otter-browser/issues/37)
 * RSS client
-* Mail client
 
 A more complete list is available in the *TODO* file. Details on already implemented features are available in the *CHANGELOG* file.
 
