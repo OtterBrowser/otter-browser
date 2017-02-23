@@ -88,23 +88,36 @@ void QtWebKitWebBackend::pageLoaded(bool success)
 		return;
 	}
 
-	if (success)
+	const QUrl url(m_thumbnailRequests[page].first);
+	const QSize thumbnailSize(m_thumbnailRequests[page].second);
+
+	m_thumbnailRequests.remove(page);
+
+	if (!success)
 	{
-		QPixmap pixmap;
+		page->deleteLater();
 
-		if (!m_thumbnailRequests[page].second.isEmpty())
+		emit thumbnailAvailable(url, QPixmap(), QString());
+
+		return;
+	}
+
+	QPixmap pixmap;
+	QSize contentsSize(page->mainFrame()->contentsSize());
+
+	if (!thumbnailSize.isNull() && !contentsSize.isNull())
+	{
+		page->setViewportSize(contentsSize);
+
+		if (contentsSize.width() > 2000)
 		{
-			QSize contentsSize(page->mainFrame()->contentsSize());
+			contentsSize.setWidth(2000);
+		}
 
-			page->setViewportSize(contentsSize);
+		contentsSize.setHeight(thumbnailSize.height() * (qreal(contentsSize.width()) / thumbnailSize.width()));
 
-			if (contentsSize.width() > 2000)
-			{
-				contentsSize.setWidth(2000);
-			}
-
-			contentsSize.setHeight(m_thumbnailRequests[page].second.height() * (qreal(contentsSize.width()) / m_thumbnailRequests[page].second.width()));
-
+		if (!contentsSize.isNull())
+		{
 			pixmap = QPixmap(contentsSize);
 			pixmap.fill(Qt::white);
 
@@ -114,17 +127,11 @@ void QtWebKitWebBackend::pageLoaded(bool success)
 
 			painter.end();
 
-			pixmap = pixmap.scaled(m_thumbnailRequests[page].second, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+			pixmap = pixmap.scaled(thumbnailSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 		}
-
-		emit thumbnailAvailable(m_thumbnailRequests[page].first, pixmap, page->mainFrame()->title());
-	}
-	else
-	{
-		emit thumbnailAvailable(m_thumbnailRequests[page].first, QPixmap(), QString());
 	}
 
-	m_thumbnailRequests.remove(page);
+	emit thumbnailAvailable(url, pixmap, page->mainFrame()->title());
 
 	page->deleteLater();
 }
