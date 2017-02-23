@@ -40,7 +40,6 @@ public:
 	};
 
 	explicit QtWebKitWebBackend(QObject *parent = nullptr);
-	~QtWebKitWebBackend();
 
 	WebWidget* createWidget(bool isPrivate = false, ContentsWidget *parent = nullptr) override;
 	QString getTitle() const override;
@@ -61,12 +60,10 @@ protected:
 	static QString getActiveDictionary();
 
 protected slots:
-	void pageLoaded(bool success);
 	void handleOptionChanged(int identifier);
 	void setActiveWidget(WebWidget *widget);
 
 private:
-	QHash<QtWebKitPage*, QPair<QUrl, QSize> > m_thumbnailRequests;
 	bool m_isInitialized;
 
 	static QtWebKitWebBackend* m_instance;
@@ -80,6 +77,25 @@ signals:
 	void activeDictionaryChanged(const QString &dictionary);
 
 friend class QtWebKitSpellChecker;
+};
+
+class QtWebKitThumbnailFetchJob : public QObject
+{
+	Q_OBJECT
+
+public:
+	explicit QtWebKitThumbnailFetchJob(const QUrl &url, const QSize &size, QObject *parent = nullptr);
+
+protected slots:
+	void handlePageLoadFinished(bool result);
+
+private:
+	QtWebKitPage *m_page;
+	const QUrl m_url;
+	QSize m_size;
+
+signals:
+	void thumbnailAvailable(const QUrl &url, const QPixmap &thumbnail, const QString &title);
 };
 
 }

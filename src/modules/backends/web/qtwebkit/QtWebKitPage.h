@@ -115,6 +115,7 @@ signals:
 	void aboutToNavigate(const QUrl &url, QWebFrame *frame, QWebPage::NavigationType navigationType);
 	void viewingMediaChanged(bool viewingMedia);
 
+friend class QtWebKitThumbnailFetchJob;
 friend class QtWebKitWebBackend;
 };
 

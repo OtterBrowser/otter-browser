@@ -72,70 +72,6 @@ QtWebKitWebBackend::QtWebKitWebBackend(QObject *parent) : WebBackend(parent),
 	page->deleteLater();
 }
 
-QtWebKitWebBackend::~QtWebKitWebBackend()
-{
-	qDeleteAll(m_thumbnailRequests.keys());
-
-	m_thumbnailRequests.clear();
-}
-
-void QtWebKitWebBackend::pageLoaded(bool success)
-{
-	QtWebKitPage *page(qobject_cast<QtWebKitPage*>(sender()));
-
-	if (!page)
-	{
-		return;
-	}
-
-	const QUrl url(m_thumbnailRequests[page].first);
-	const QSize thumbnailSize(m_thumbnailRequests[page].second);
-
-	m_thumbnailRequests.remove(page);
-
-	if (!success)
-	{
-		page->deleteLater();
-
-		emit thumbnailAvailable(url, QPixmap(), QString());
-
-		return;
-	}
-
-	QPixmap pixmap;
-	QSize contentsSize(page->mainFrame()->contentsSize());
-
-	if (!thumbnailSize.isNull() && !contentsSize.isNull())
-	{
-		page->setViewportSize(contentsSize);
-
-		if (contentsSize.width() > 2000)
-		{
-			contentsSize.setWidth(2000);
-		}
-
-		contentsSize.setHeight(thumbnailSize.height() * (qreal(contentsSize.width()) / thumbnailSize.width()));
-
-		if (!contentsSize.isNull())
-		{
-			pixmap = QPixmap(contentsSize);
-			pixmap.fill(Qt::white);
-
-			QPainter painter(&pixmap);
-
-			page->mainFrame()->render(&painter, QWebFrame::ContentsLayer, QRegion(QRect(QPoint(0, 0), contentsSize)));
-
-			painter.end();
-
-			pixmap = pixmap.scaled(thumbnailSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-		}
-	}
-
-	emit thumbnailAvailable(url, pixmap, page->mainFrame()->title());
-
-	page->deleteLater();
-}
-
 void QtWebKitWebBackend::handleOptionChanged(int identifier)
 {
 	switch (identifier)
@@ -345,19 +281,68 @@ int QtWebKitWebBackend::getOptionIdentifier(QtWebKitWebBackend::OptionIdentifier
 
 bool QtWebKitWebBackend::requestThumbnail(const QUrl &url, const QSize &size)
 {
-	QtWebKitPage *page(new QtWebKitPage());
-
-	m_thumbnailRequests[page] = qMakePair(url, size);
-
-	connect(page, SIGNAL(loadFinished(bool)), this, SLOT(pageLoaded(bool)));
-
-	page->setParent(this);
-	page->settings()->setAttribute(QWebSettings::JavaEnabled, false);
-	page->settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
-	page->settings()->setAttribute(QWebSettings::PluginsEnabled, false);
-	page->mainFrame()->setUrl(url);
+	connect(new QtWebKitThumbnailFetchJob(url, size, this), SIGNAL(thumbnailAvailable(QUrl,QPixmap,QString)), this, SIGNAL(thumbnailAvailable(QUrl,QPixmap,QString)));
 
 	return true;
+}
+
+QtWebKitThumbnailFetchJob::QtWebKitThumbnailFetchJob(const QUrl &url, const QSize &size, QObject *parent) : QObject(parent),
+	m_page(new QtWebKitPage()),
+	m_url(url),
+	m_size(size)
+{
+	m_page->setParent(this);
+	m_page->settings()->setAttribute(QWebSettings::JavaEnabled, false);
+	m_page->settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
+	m_page->settings()->setAttribute(QWebSettings::PluginsEnabled, false);
+	m_page->mainFrame()->setUrl(url);
+
+	connect(m_page, SIGNAL(loadFinished(bool)), this, SLOT(handlePageLoadFinished(bool)));
+}
+
+void QtWebKitThumbnailFetchJob::handlePageLoadFinished(bool result)
+{
+	if (!result)
+	{
+		deleteLater();
+
+		emit thumbnailAvailable(m_url, QPixmap(), QString());
+
+		return;
+	}
+
+	QPixmap pixmap;
+	QSize contentsSize(m_page->mainFrame()->contentsSize());
+
+	if (!m_size.isNull() && !contentsSize.isNull())
+	{
+		m_page->setViewportSize(contentsSize);
+
+		if (contentsSize.width() > 2000)
+		{
+			contentsSize.setWidth(2000);
+		}
+
+		contentsSize.setHeight(m_size.height() * (qreal(contentsSize.width()) / m_size.width()));
+
+		if (!contentsSize.isNull())
+		{
+			pixmap = QPixmap(contentsSize);
+			pixmap.fill(Qt::white);
+
+			QPainter painter(&pixmap);
+
+			m_page->mainFrame()->render(&painter, QWebFrame::ContentsLayer, QRegion(QRect(QPoint(0, 0), contentsSize)));
+
+			painter.end();
+
+			pixmap = pixmap.scaled(m_size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+		}
+	}
+
+	deleteLater();
+
+	emit thumbnailAvailable(m_url, pixmap, m_page->mainFrame()->title());
 }
 
 }
