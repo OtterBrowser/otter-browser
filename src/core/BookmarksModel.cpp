@@ -195,6 +195,28 @@ QList<QUrl> BookmarksItem::getUrls() const
 	return urls;
 }
 
+bool BookmarksItem::isAncestorOf(BookmarksItem *child) const
+{
+	if (child == nullptr || child == this)
+	{
+		return false;
+	}
+
+	QStandardItem *parent(child->parent());
+
+	while (parent)
+	{
+		if (parent == this)
+		{
+			return true;
+		}
+
+		parent = parent->parent();
+	}
+
+	return false;
+}
+
 BookmarksModel::BookmarksModel(const QString &path, FormatMode mode, QObject *parent) : QStandardItemModel(parent),
 	m_rootItem(new BookmarksItem()),
 	m_trashItem(new BookmarksItem()),

@@ -37,6 +37,7 @@ public:
 	QStandardItem* clone() const override;
 	QVariant data(int role) const override;
 	QList<QUrl> getUrls() const;
+	bool isAncestorOf(BookmarksItem *child) const;
 
 protected:
 	explicit BookmarksItem();
