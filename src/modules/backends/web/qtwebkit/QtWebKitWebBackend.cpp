@@ -295,6 +295,8 @@ QtWebKitThumbnailFetchJob::QtWebKitThumbnailFetchJob(const QUrl &url, const QSiz
 	m_page->settings()->setAttribute(QWebSettings::JavaEnabled, false);
 	m_page->settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
 	m_page->settings()->setAttribute(QWebSettings::PluginsEnabled, false);
+	m_page->mainFrame()->setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
+	m_page->mainFrame()->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
 	m_page->mainFrame()->setUrl(url);
 
 	connect(m_page, SIGNAL(loadFinished(bool)), this, SLOT(handlePageLoadFinished(bool)));
@@ -314,16 +316,27 @@ void QtWebKitThumbnailFetchJob::handlePageLoadFinished(bool result)
 	QPixmap pixmap;
 	QSize contentsSize(m_page->mainFrame()->contentsSize());
 
+	if (contentsSize.isNull())
+	{
+		m_page->setViewportSize(QSize(1280, 760));
+
+		contentsSize = m_page->mainFrame()->contentsSize();
+	}
+
 	if (!m_size.isNull() && !contentsSize.isNull())
 	{
-		m_page->setViewportSize(contentsSize);
-
-		if (contentsSize.width() > 2000)
+		if (contentsSize.width() < m_size.width())
+		{
+			contentsSize.setWidth(m_size.width());
+		}
+		else if (contentsSize.width() > 2000)
 		{
 			contentsSize.setWidth(2000);
 		}
 
 		contentsSize.setHeight(m_size.height() * (qreal(contentsSize.width()) / m_size.width()));
+
+		m_page->setViewportSize(contentsSize);
 
 		if (!contentsSize.isNull())
 		{
@@ -336,7 +349,10 @@ void QtWebKitThumbnailFetchJob::handlePageLoadFinished(bool result)
 
 			painter.end();
 
-			pixmap = pixmap.scaled(m_size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+			if (pixmap.size() != m_size)
+			{
+				pixmap = pixmap.scaled(m_size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+			}
 		}
 	}
 
